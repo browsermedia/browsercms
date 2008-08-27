@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+home_main:
+  page: home
+  container: main
+  content_block: hello_world (HtmlBlock)
+
+home_sidebar:
+  page: home
+  container: sidebar
+  content_block: sidebar (HtmlBlock)
+  
+about_main:
+  page: about
+  container: main
+  content_block: about_us (HtmlBlock)
+  
+about_sidebar:
+  page: about
+  container: sidebar
+  content_block: sidebar (HtmlBlock)  

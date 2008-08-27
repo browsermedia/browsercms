@@ -1,0 +1,5 @@
+- content_for(:title) do
+  = @page.name
+- @page.connectors.each do |c|
+  - content_for(c.container.to_sym) do
+    = render_connector c

@@ -1,0 +1,7 @@
+.edit_block
+  .header
+    = connector.content_block.name
+    .actions
+      = link_to icon(:edit), send("edit_cms_#{connector.content_block.class.content_block_type}_path", connector.content_block, :_redirect_to => @page.path)
+      = link_to icon(:delete), send("cms_#{connector.content_block.class.content_block_type}_path", connector.content_block, :_redirect_to => @page.path), :method => :delete, :confirm => "Are you sure you want to remove this item from this page?"
+  .content= render_content_block(connector.content_block)

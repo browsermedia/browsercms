@@ -1,0 +1,10 @@
+!!!
+%html
+  %head
+    %title= yield :title
+    = stylesheet_link_tag 'cms'
+  %body
+    = cms_toolbar
+    #cms_administration
+      #sidebar= render :partial => 'cms/shared/admin_sidebar'
+      #main= yield

@@ -1,0 +1,5 @@
+= link_to 'Edit', "#{polymorphic_path([:cms, @block])}/edit"
+%h2== #{@block.name}
+#block_content
+  .header Block Contents
+  .content= render_content_block(@block)

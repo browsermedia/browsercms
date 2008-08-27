@@ -1,0 +1,84 @@
+#This is meant to be extended by other controller
+#Provides basic Restful CRUD
+class Cms::ResourceController < Cms::BaseController
+
+  def index
+    instance_variable_set("@#{variable_name.pluralize}", resource.all(:order => "name"))
+  end
+
+  def new
+    instance_variable_set("@#{variable_name}", build_object)
+  end
+  
+  def create
+    @object = build_object(params[variable_name])
+    if @object.save
+      flash[:notice] = "#{resource_name.singularize.titleize} '#{object_name}' was created"
+      redirect_to show_url
+    else
+      instance_variable_set("@#{variable_name}", @object)
+      render :action => 'new'
+    end
+  end
+  
+  def show
+    instance_variable_set("@#{variable_name}", resource.find(params[:id]))
+  end
+  
+  def edit
+    instance_variable_set("@#{variable_name}", resource.find(params[:id]))
+  end
+  
+  def update
+    @object = resource.find(params[:id])
+    if @object.update_attributes(params[variable_name])
+      flash[:notice] = "#{resource_name.singularize.titleize} '#{object_name}' was updated"
+      redirect_to show_url
+    else
+      instance_variable_set("@#{variable_name}", @object)
+      render :action => 'edit'
+    end
+  end
+  
+  def destroy
+    @object = resource.find(params[:id])
+    if @object.destroy
+      flash[:notice] = "#{resource_name.singularize.titleize} '#{object_name}' was deleted"
+    end
+    redirect_to index_url
+  end
+  
+  protected
+    def resource_name
+      controller_name
+    end
+    
+    def variable_name
+      resource_name.singularize
+    end
+    
+    def resource
+      resource_name.classify.constantize
+    end
+    
+    def build_object(params={})
+      resource.new(params)
+    end
+    
+    def object_name
+      return nil unless @object
+      @object.respond_to?(:name) ? @object.name : @object.to_s
+    end
+    
+    def index_url
+      send("cms_#{resource_name}_url")
+    end
+    
+    def show_url
+      [:cms, @object]
+    end
+    
+    def new_template; 'cms/blocks/new' end
+    def edit_template; 'cms/blocks/edit' end    
+  
+end

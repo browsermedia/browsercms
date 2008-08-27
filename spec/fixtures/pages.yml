@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+home:
+  name: Home
+  path: /
+  section: root
+  template: two_column
+
+about:
+  name: About Us
+  path: /about
+  section: root
+  template: two_column

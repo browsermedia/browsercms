@@ -1,0 +1,13 @@
+!!!
+%html
+  %head
+    %title= yield :title
+    = stylesheet_link_tag 'cms'
+  %body
+    = cms_toolbar
+    %table{:width => 960}
+      %tr
+        %td{:width => 720}
+          = container :main
+        %td{:width => 240}
+          = container :sidebar

@@ -1,0 +1,87 @@
+img {
+  border: none; }
+
+label {
+  display: block; }
+
+label.inline {
+  display: inline; }
+
+.field {
+  margin-bottom: 10px; }
+
+li.section {
+  list-style-image: url(/images/cms/icons/folder.png); }
+
+li.page {
+  list-style-image: url(/images/cms/icons/page.png); }
+
+div#cms_toolbar {
+  padding: 10px;
+  margin: 0 0 10px 0;
+  border-bottom: 1px solid #999; }
+  div#cms_toolbar a {
+    text-decoration: none; }
+  div#cms_toolbar a:hover {
+    text-decoration: underline; }
+  div#cms_toolbar h1 {
+    margin: 0;
+    display: inline; }
+  div#cms_toolbar #nav {
+    display: inline;
+    margin-right: 25px; }
+    div#cms_toolbar #nav li {
+      display: inline;
+      margin-right: 5px; }
+
+#cms_administration #sidebar, #cms_content_library #sidebar {
+  float: left;
+  margin-right: 25px; }
+  #cms_administration #sidebar h2,   #cms_content_library #sidebar h2 {
+    margin: 0 0 10px 0; }
+
+div#flash {
+  margin: 10px auto;
+  text-align: center;
+  width: 250px;
+  padding: 5px;
+  border-width: 2px;
+  border-style: solid; }
+
+div.error {
+  background-color: #FCC;
+  border-color: #C99; }
+
+div.notice {
+  background-color: #CFC;
+  border-color: #9C9; }
+
+.edit_container .header, #block_content .header {
+  background-color: #CCF;
+  border: 1px solid black;
+  margin: 0;
+  padding: 5px; }
+.edit_container .content, #block_content .content {
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  margin: 0;
+  padding: 5px; }
+.edit_container .edit_renderable .header, #block_content .edit_renderable .header {
+  background-color: #CCC; }
+.edit_container .actions, #block_content .actions {
+  display: inline;
+  padding: 0 5px; }
+
+table#blocks {
+  border-collapse: collapse; }
+  table#blocks th, table#blocks td {
+    border: 1px solid black;
+    padding: 5px; }
+  table#blocks th {
+    background-color: #CCF;
+    text-align: center; }
+  table#blocks td {
+    text-align: left; }
+  table#blocks td.uses, table#blocks td.view, table#blocks td.edit, table#blocks td.delete, table#blocks td.select {
+    text-align: center; }

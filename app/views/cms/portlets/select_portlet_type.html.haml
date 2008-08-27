@@ -1,0 +1,3 @@
+%h1 Select Portlet Type
+- PortletType.all(:order => "name").each do |portlet_type|
+  %p= link_to h(portlet_type.name.titleize), new_cms_portlet_path(:portlet_type_id => portlet_type.id)

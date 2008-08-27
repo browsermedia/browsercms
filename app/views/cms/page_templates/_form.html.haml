@@ -1,0 +1,10 @@
+- form_for([:cms, @page_template]) do |f|
+  = f.error_messages
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :file_name
+    = f.text_field :file_name
+  .buttons
+    = f.submit "Save"

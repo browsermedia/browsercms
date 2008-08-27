@@ -1,0 +1,14 @@
+!!!
+%html
+  %head
+    %title= yield :title
+    = stylesheet_link_tag 'cms'
+  %body
+    = cms_toolbar
+    #cms_content_library
+      #sidebar
+        %h2 Content Types
+        %ul
+          - RegisteredBlock.all(:order => "name").each do |block|
+            %li= link_to block.name.titleize, send("cms_#{block.name.pluralize.underscore}_path")
+      #main= yield

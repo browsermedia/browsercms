@@ -1,0 +1,8 @@
+!!!
+%html
+  %head
+    %title= yield :title
+    = stylesheet_link_tag 'cms'
+  %body
+    = cms_toolbar
+    = yield

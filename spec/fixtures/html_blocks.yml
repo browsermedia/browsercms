@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+hello_world:
+  name: Hello World
+  content: "<h1>Hello, World!</h1>"
+  
+sidebar:
+  name: Sidebar
+  content: "<ul><li><a href=\"/\">Home</a></li><li><a href=\"/about\">About Us</a></li></ul>"
+  
+about_us:
+  name: About Us
+  content: We are super fantastic

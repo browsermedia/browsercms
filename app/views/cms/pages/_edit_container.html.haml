@@ -1,0 +1,6 @@
+.edit_container
+  .header
+    = name
+    .actions
+      = link_to icon(:add), new_cms_page_connector_path(@page, :container => name)
+  .content= content
