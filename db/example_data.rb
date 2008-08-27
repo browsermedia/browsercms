@@ -39,8 +39,8 @@ module FixtureReplacement
   attributes_for :ruby_haml_portlet do |a|
   end
 
-	attributes_for :user do |a|
-	  a.first_name = "Test"
+  attributes_for :user do |a|
+    a.first_name = "Test"
     a.last_name = "User"
     a.login = "test_#{String.random(6)}"
     a.email = "#{a.login}@example.com"

@@ -2,3 +2,14 @@
   #page_toolbar
     = link_to((@mode == "edit" ? "Switch to View Mode" : "Switch to Edit Mode"), "#{@page.path}?mode=#{@mode == "edit" ? "view" : "edit"}")
     = link_to "Edit Page Properties", edit_cms_page_path(@page)
+  %div
+    Status: Published (Live)
+    %br
+    Page:
+    =h @page.name
+    %br
+    Section:
+    =h @page.section.name
+    %br
+    Template:
+    =h @page.template_name

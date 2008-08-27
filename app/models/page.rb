@@ -20,5 +20,9 @@ class Page < ActiveRecord::Base
   def layout
     template ? template.file_name : nil
   end
+
+  def template_name
+    template ? template.name : nil
+  end
   
 end
