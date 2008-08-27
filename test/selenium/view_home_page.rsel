@@ -1,0 +1,3 @@
+setup :fixtures => :all
+open '/'
+assert_title 'Home'

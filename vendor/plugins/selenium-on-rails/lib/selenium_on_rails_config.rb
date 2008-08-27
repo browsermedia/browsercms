@@ -15,7 +15,12 @@ class SeleniumOnRailsConfig
     def self.configs
       unless defined? @@configs
         files = [File.expand_path(File.dirname(__FILE__) + '/../config.yml')]
-        files << File.join(RAILS_ROOT, 'config', 'selenium.yml')
+        if RUBY_PLATFORM =~ /mswin/
+          files << File.join(RAILS_ROOT, 'config', 'platforms', 'windows', 'selenium.yml')
+        #elsif RUBY_PLATFORM =~ /darwin/i && command =~ /safari/i
+        else
+          files << File.join(RAILS_ROOT, 'config', 'platforms', 'mac', 'selenium.yml')
+        end
         files.each do |file|
           @@configs = YAML.load(ERB.new(IO.read(file)).result) if File.exist?(file)
         end

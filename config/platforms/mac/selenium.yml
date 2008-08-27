@@ -1,0 +1,7 @@
+environments:
+  - test
+
+browsers:
+  firefox: 'open -a Firefox.app'
+  opera: 'open -a Opera.app'
+  safari: 'open -a Safari.app'

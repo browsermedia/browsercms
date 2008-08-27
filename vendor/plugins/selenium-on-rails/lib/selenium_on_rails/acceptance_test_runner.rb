@@ -108,7 +108,7 @@ module SeleniumOnRails
         puts "Starting #{browser}"
         base_url = "http://#{HOST}:#{@port}#{BASE_URL_PATH}"
         log = log_file browser
-        command = "\"#{path}\" \"http://#{HOST}:#{@port}#{TEST_RUNNER_URL}?test=tests&auto=true&baseUrl=#{base_url}&resultsUrl=postResults/#{log}&multiWindow=#{MULTI_WINDOW}\""
+        command = "#{path} \"http://#{HOST}:#{@port}#{TEST_RUNNER_URL}?test=tests&auto=true&baseUrl=#{base_url}&resultsUrl=postResults/#{log}&multiWindow=#{MULTI_WINDOW}\""
         @browser = start_subprocess command    
         log_path log
       end
@@ -120,8 +120,8 @@ module SeleniumOnRails
       def start_subprocess command
         if RUBY_PLATFORM =~ /mswin/
           SeleniumOnRails::AcceptanceTestRunner::Win32SubProcess.new command
-        elsif RUBY_PLATFORM =~ /darwin/i && command =~ /safari/i
-          SeleniumOnRails::AcceptanceTestRunner::SafariSubProcess.new command
+        #elsif RUBY_PLATFORM =~ /darwin/i && command =~ /safari/i
+        #  SeleniumOnRails::AcceptanceTestRunner::SafariSubProcess.new command
         else
           SeleniumOnRails::AcceptanceTestRunner::UnixSubProcess.new command
         end
@@ -193,21 +193,14 @@ end
 # The path to Safari should look like this: /Applications/Safari.app/Contents/MacOS/Safari
 class SeleniumOnRails::AcceptanceTestRunner::SafariSubProcess < SeleniumOnRails::AcceptanceTestRunner::UnixSubProcess
   def initialize command
-    f = File.open(Tempfile.new('selenium-on-rails').path, 'w')
-    f.puts <<-HTML
-      <html>
-        <head>
-          <script type="text/javascript" charset="utf-8">
-            window.location.href = #{command.split.last};
-          </script>
-        </head>
-        <body></body>
-      </html>
-    HTML
-    f.close
-    
-    super "#{command.split.first} #{f.path}"
-   end
-  
+    puts command
+    @pid = fork do
+      # Since we can't use shell redirects without screwing 
+      # up the pid, we'll reopen stdin and stdout instead
+      # to get the same effect.
+      [STDOUT,STDERR].each {|f| f.reopen '/dev/null', 'w' }
+      exec command
+    end
+  end
 end
   
