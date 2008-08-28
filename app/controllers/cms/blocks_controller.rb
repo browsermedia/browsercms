@@ -10,7 +10,7 @@ class Cms::BlocksController < Cms::BaseController
   end
 
   def new
-    @block = model.new
+    @block = model.new(params[model_name])
     render :template => new_template
   end
   
@@ -18,7 +18,11 @@ class Cms::BlocksController < Cms::BaseController
     @block = model.new(params[model_name])
     if @block.save
       flash[:notice] = "#{block_type.titleize} '#{@block.name}' was created"
-      redirect_to_first params[:_redirect_to], [:cms, @block]
+      if @block.connected_page
+        redirect_to @block.connected_page.path
+      else
+        redirect_to_first params[:_redirect_to], [:cms, @block]
+      end
     else
       render :template => new_template
     end

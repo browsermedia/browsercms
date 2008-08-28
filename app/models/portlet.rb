@@ -1,4 +1,6 @@
 class Portlet < ActiveRecord::Base
+
+  include Cms::BlockSupport
   
   belongs_to :portlet_type
   

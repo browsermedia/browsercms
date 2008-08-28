@@ -2,7 +2,7 @@
 %h1== Edit #{@block.name}
 - form_for([:cms, @block]) do |f|
   = f.error_messages
-  = hidden_field_tag :_redirect_to, params[:_redirect_to]
+  = render :partial => 'cms/blocks/hidden_fields'
   = render :partial => 'form', :locals => {:f => f}
   .buttons
     = f.submit "Save"

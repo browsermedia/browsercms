@@ -9,13 +9,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20080820134509) do
+ActiveRecord::Schema.define(:version => 20080828203501) do
 
   create_table "connectors", :force => true do |t|
     t.integer  "page_id",            :limit => 11
     t.string   "container"
     t.integer  "content_block_id",   :limit => 11
     t.string   "content_block_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "content_types", :force => true do |t|
+    t.string   "name"
+    t.string   "label"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

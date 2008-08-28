@@ -1,0 +1,7 @@
+html_block:
+  name: HtmlBlock
+  label: Html Block
+
+portlet:
+  name: Portlet
+  label: Portlet

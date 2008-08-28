@@ -9,6 +9,7 @@ ActionController::Routing::Routes.draw do |map|
     cms.administration '/administration', :controller => 'page_templates'
 
     cms.resources :connectors
+    cms.resources :content_types, :collection => {:select => :get}
     cms.resources :html_blocks
     cms.resources :pages, :has_many => [:connectors]
     cms.resources :page_templates
