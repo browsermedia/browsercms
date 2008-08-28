@@ -30,7 +30,7 @@ module Cms
     end
   
     def connect_to_page
-      if connect_to_page_id && connect_to_container
+      unless connect_to_page_id.blank? || connect_to_container.blank?
         self.connected_page = Page.find(connect_to_page_id)
         connected_page.connectors.create(:container => connect_to_container, :content_block => self)
       end

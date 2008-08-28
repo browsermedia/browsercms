@@ -18,10 +18,10 @@ class Cms::BlocksController < Cms::BaseController
     @block = model.new(params[model_name])
     if @block.save
       flash[:notice] = "#{block_type.titleize} '#{@block.name}' was created"
-      if @block.connected_page
-        redirect_to @block.connected_page.path
-      else
+      if @block.connected_page.blank?
         redirect_to_first params[:_redirect_to], [:cms, @block]
+      else
+        redirect_to @block.connected_page.path        
       end
     else
       render :template => new_template
