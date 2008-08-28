@@ -8,7 +8,7 @@ class Cms::ConnectorsController < Cms::BaseController
     @connector = @page.connectors.build(:container => @container)
     @blocks = @block_type.classify.constantize.all(:order => "name")      
   end
-  
+
   def create
     @connector = @page.connectors.build(params[:connector])
     if @connector.save
