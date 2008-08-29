@@ -51,7 +51,7 @@ class Cms::BlocksController < Cms::BaseController
   def destroy
     @block = model.find(params[:id])
     if @block.destroy
-      flash[:notice] = "#{block_type.titelize} '#{@block.name}' was deleted"
+      flash[:notice] = "#{block_type.titleize} '#{@block.name}' was deleted"
     else
       flash[:error] = "#{block_type.titleize} '#{@block.name}' could not be deleted"
     end
