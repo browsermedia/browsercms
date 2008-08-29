@@ -11,27 +11,12 @@ describe Connector do
     blocks.should_not include(bar)
   end
 
-
-
-
- # Question: Why does c.delete throw a 'NoSuchMethod' error?
- # Isn't 'c' an ActiveRecord object or is there some weird scoping rules I'm not aware of?
-
-
-=begin
-it "should not delete blocks when deleting a connector" do
+  it "should not delete blocks when deleting a connector" do
     b = create_html_block
     c = create_connector(:content_block => b)
-    c.delete                            # Exception thrown here
-
+    c.destroy
     f = HtmlBlock.find(b)
     f.should_not be_nil
   end
-=end
-
-
-
-
-
 
 end
