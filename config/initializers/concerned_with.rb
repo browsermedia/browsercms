@@ -1,12 +1,8 @@
-#See http://paulbarry.com/
-
+#See http://paulbarry.com/articles/2008/08/30/concerned-with-skinny-controller-skinny-model
 class << ActiveRecord::Base
-
-  # Macro to aid in refactoring large Models into concerns
   def concerned_with(*concerns)
     concerns.each do |concern|
       require_dependency "#{name.underscore}/#{concern}"
     end
   end
-
 end
