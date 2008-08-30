@@ -18,4 +18,23 @@ describe Connector do
     HtmlBlock.find(b).should_not be_nil
   end
 
+  it "should be able to be re-order blocks within a connector" do
+    page = create_page
+    one = create_connector(:page => page, :container => "foo")
+    two = create_connector(:page => page, :container => "foo")
+    three = create_connector(:page => page, :container => "foo")
+    
+    two.reload.move_up
+    page.connectors.for_container("foo").should == [two, one, three]    
+    
+    two.reload.move_down
+    page.connectors.for_container("foo").should == [one, two, three]    
+    
+    three.reload.move_to_top
+    page.connectors.for_container("foo").should == [three, one, two]    
+    
+    one.reload.move_to_bottom
+    page.connectors.for_container("foo").should == [three, two, one]    
+  end
+
 end

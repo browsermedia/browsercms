@@ -26,6 +26,7 @@ Rails::Initializer.run do |config|
   # config.gem "hpricot", :version => '0.6', :source => "http://code.whytheluckystiff.net"
   # config.gem "aws-s3", :lib => "aws/s3"
   config.gem "haml", :version => '>= 2.1.0'
+  config.gem 'ryanb-acts-as-list', :lib => 'acts_as_list', :source => 'http://gems.github.com'
   
   #This doesn't work, github isn't publishing my gem for some reason :(
   #config.gem 'pjb3-flex-attributes', :version => '~> 0.1', :lib => 'flex-attributes', :source => 'http://gems.github.com'

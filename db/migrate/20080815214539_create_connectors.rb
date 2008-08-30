@@ -5,6 +5,7 @@ class CreateConnectors < ActiveRecord::Migration
       t.string :container
       t.integer :content_block_id
       t.string :content_block_type
+      t.string :position
 
       t.timestamps
     end

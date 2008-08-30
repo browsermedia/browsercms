@@ -4,18 +4,22 @@ home_main:
   page: home
   container: main
   content_block: hello_world (HtmlBlock)
+  position: 1
 
 home_sidebar:
   page: home
   container: sidebar
   content_block: sidebar (HtmlBlock)
+  position: 1
   
 about_main:
   page: about
   container: main
   content_block: about_us (HtmlBlock)
+  position: 1
   
 about_sidebar:
   page: about
   container: sidebar
   content_block: sidebar (HtmlBlock)  
+  position: 1

@@ -25,8 +25,29 @@ class Cms::ConnectorsController < Cms::BaseController
     @content_block = @connector.content_block
     if @connector.destroy
       flash[:notice] = "Removed '#{@content_block.name}' from the '#{@connector.container}' container"
+    else
+      flash[:error] = "Failed to remove '#{@content_block.name}' from the '#{@connector.container}' container"
     end
     redirect_to @page.path
+  end
+
+  { #Define actions for moving connectors around
+    :move_up => "up in",
+    :move_down => "down in",
+    :move_to_top => "to the top of",
+    :move_to_bottom => "to the bottom of"    
+  }.each do |move, where|
+    define_method move do
+      @connector = Connector.find(params[:id])
+      @page = @connector.page
+      @content_block = @connector.content_block
+      if @connector.send(move)
+        flash[:notice] = "Moved '#{@content_block.name}' #{where} the '#{@connector.container}' container"
+      else
+        flash[:error] = "Failed to move '#{@content_block.name}' #{where} the '#{@connector.container}' container"
+      end
+      redirect_to @page.path    
+    end
   end
   
   private

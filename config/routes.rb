@@ -8,7 +8,7 @@ ActionController::Routing::Routes.draw do |map|
     cms.content_library '/content_library', :controller => 'html_blocks'
     cms.administration '/administration', :controller => 'page_templates'
 
-    cms.resources :connectors
+    cms.resources :connectors, :member => {:move_up => :put, :move_down => :put, :move_to_top => :put, :move_to_bottom => :put}
     cms.resources :content_types, :collection => {:select => :get}
     cms.resources :html_blocks
     cms.resources :pages, :has_many => [:connectors], :member => {:publish => :put, :hide => :put, :archive => :put}
