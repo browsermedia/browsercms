@@ -38,4 +38,34 @@ describe Page do
     page.path.should == "/"    
   end
   
+  describe "status" do
+    it "should be in progress when it is created" do
+      page = create_page
+      page.should be_in_progress
+      page.should be_published
+    end
+
+    it "should be able to be published when creating" do
+      page = new_page
+      page.publish.should be_true
+      page.should be_published
+    end
+
+    it "should be able to be hidden" do
+      page = create_page
+      page.hide!
+      page.should be_hidden
+    end
+
+    it "should not allow invalid statuses" do
+      page = new_page(:status => "FAIL")
+      page.should have(1).error_on(:status)
+    end
+
+    it "should have status options" do
+      Page.status_options.should == [["In Progress", "IN_PROGRESS"], ["Published", "PUBLISHED"], ["Hidden", "HIDDEN"], ["Archived", "ARCHIVED"]]
+    end
+  end
+  
+  
 end

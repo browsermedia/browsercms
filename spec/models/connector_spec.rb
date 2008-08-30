@@ -15,8 +15,7 @@ describe Connector do
     b = create_html_block
     c = create_connector(:content_block => b)
     this_block{ c.destroy }.should change(Connector, :count).by(-1)
-    f = HtmlBlock.find(b)
-    f.should_not be_nil
+    HtmlBlock.find(b).should_not be_nil
   end
 
 end

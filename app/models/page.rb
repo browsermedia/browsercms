@@ -1,5 +1,8 @@
 class Page < ActiveRecord::Base
   
+  #See config/initializers/concered_with.rb
+  concerned_with :status
+  
   belongs_to :section
   belongs_to :template, :class_name => "PageTemplate"
   has_many :connectors, :dependent => :destroy
@@ -8,6 +11,7 @@ class Page < ActiveRecord::Base
   
   validates_presence_of :section_id
   validates_uniqueness_of :path
+
   
   def append_leading_slash_to_path
     if path.blank?

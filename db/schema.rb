@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(:version => 20080828203501) do
     t.integer  "template_id", :limit => 11
     t.string   "name"
     t.string   "path"
+    t.string   "status"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
