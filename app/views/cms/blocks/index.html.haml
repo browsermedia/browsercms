@@ -1,4 +1,4 @@
-%p= link_to "#{icon(:add)} New #{model_name.titleize}", send("new_cms_#{model_name}_path")
+%p= link_to "#{action_icon(:add)} New #{model_name.titleize}", send("new_cms_#{model_name}_path")
 
 %table#blocks
   %tr
@@ -13,6 +13,6 @@
       %td= block.name
       %td= block.updated_at.strftime("%m/%d/%y")
       %td.uses= Connector.for_block(block).count
-      %td.view= link_to icon(:view), [:cms, block]
-      %td.edit= link_to icon(:edit), "#{polymorphic_path([:cms, block])}/edit"      
-      %td.delete= link_to icon(:delete), [:cms, block], :method => :delete, :confirm => "Are you sure you want to delete '#{block.name}'?"
+      %td.view= link_to action_icon(:view), [:cms, block]
+      %td.edit= link_to action_icon(:edit), "#{polymorphic_path([:cms, block])}/edit"      
+      %td.delete= link_to action_icon(:delete), [:cms, block], :method => :delete, :confirm => "Are you sure you want to delete '#{block.name}'?"

@@ -2,8 +2,14 @@
   #page_toolbar
     = link_to((@mode == "edit" ? "Switch to View Mode" : "Switch to Edit Mode"), "#{@page.path}?mode=#{@mode == "edit" ? "view" : "edit"}")
     = link_to "Edit Page Properties", edit_cms_page_path(@page)
+    
+    = link_to_function "Assign"
+    = @page.published? ? "Publish" : link_to("Publish", publish_cms_page_path(@page), :method => :put)
+    = @page.hidden? ? "Hide" : link_to("Hide", hide_cms_page_path(@page), :method => :put)
+    = @page.archived? ? "Archive" : link_to("Archive", archive_cms_page_path(@page), :method => :put)
+    
   %div
-    Status: Published (Live)
+    == Status: #{@page.status_name} (Live)
     %br
     Page:
     =h @page.name

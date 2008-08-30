@@ -42,7 +42,7 @@ describe Page do
     it "should be in progress when it is created" do
       page = create_page
       page.should be_in_progress
-      page.should be_published
+      page.should_not be_published
     end
 
     it "should be able to be published when creating" do

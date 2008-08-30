@@ -24,11 +24,15 @@ class Page
     self.status = DEFAULT_STATUS if status.blank?
   end
   
+  def status_name
+    status.titleize
+  end
+  
   #Metaprogramming FTW :)
   #Define the boolean methods for each status, like published?
   statuses.each do |status|
     define_method "#{status.underscore}?" do
-      status == status
+      self.status == status
     end
   end
   

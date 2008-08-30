@@ -2,6 +2,6 @@
   .header
     = name
     .actions
-      = link_to icon(:add), select_cms_content_types_path(:connect_to_page_id => @page, :connect_to_container => name)
-      = link_to icon(:connect), new_cms_page_connector_path(@page, :container => name)
+      = link_to action_icon(:add), select_cms_content_types_path(:connect_to_page_id => @page, :connect_to_container => name)
+      = link_to action_icon(:connect), new_cms_page_connector_path(@page, :container => name)
   .content= content

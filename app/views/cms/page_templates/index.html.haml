@@ -1,4 +1,4 @@
-%p= link_to "#{icon(:add)} New Page Template", new_cms_page_template_path
+%p= link_to "#{action_icon(:add)} New Page Template", new_cms_page_template_path
 
 %table#blocks
   %tr
@@ -10,5 +10,5 @@
     %tr
       %td=h page_template.name
       %td=h page_template.file_name
-      %td.edit= link_to icon(:edit), edit_cms_page_template_path(page_template)      
-      %td.delete= link_to icon(:delete), [:cms, page_template], :method => :delete, :confirm => "Are you sure you want to delete '#{page_template.name}'?"
+      %td.edit= link_to action_icon(:edit), edit_cms_page_template_path(page_template)      
+      %td.delete= link_to action_icon(:delete), [:cms, page_template], :method => :delete, :confirm => "Are you sure you want to delete '#{page_template.name}'?"

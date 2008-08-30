@@ -26,8 +26,12 @@ module ApplicationHelper
     end
   end
   
-  def icon(name, options={})
-    image_tag "cms/icons/#{name}.png", {:alt => name.to_s.titleize}.merge(options)
+  def action_icon(name, options={})
+    image_tag "cms/icons/actions/#{name}.png", {:alt => name.to_s.titleize}.merge(options)
+  end
+
+  def status_icon(status, options={})
+    image_tag "cms/icons/actions/#{status.underscore}.png", {:alt => status.titleize}.merge(options)
   end
   
   def cms_toolbar

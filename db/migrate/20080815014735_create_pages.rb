@@ -5,7 +5,7 @@ class CreatePages < ActiveRecord::Migration
       t.integer :template_id
       t.string :name
       t.string :path
-      t.string :status
+      t.string :status, :default => Page::DEFAULT_STATUS
       
       t.timestamps
     end

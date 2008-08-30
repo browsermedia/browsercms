@@ -51,6 +51,17 @@ class Cms::PagesController < Cms::BaseController
     redirect_to(cms_pages_url)
   end
   
+  #status actions
+  {:publish => "Published", :hide => "Hidden", :archive => "Archived"}.each do |status, verb|
+    define_method status do
+      @page = Page.find(params[:id])
+      if @page.send(status)
+        flash[:notice] = "Page was '#{verb}'."
+      end
+      redirect_to [:cms, @page]
+    end
+  end
+  
   private
   
     def load_section
