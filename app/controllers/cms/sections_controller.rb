@@ -53,6 +53,24 @@ class Cms::SectionsController < Cms::BaseController
     end
   end  
   
+  def move
+    @section = Section.find(params[:id])
+    if params[:section_id]
+      @move_to = Section.find(params[:section_id])
+    else
+      @move_to = Section.root.first
+    end
+  end
+  
+  def move_to
+    @section = Section.find(params[:id])
+    @move_to = Section.find(params[:section_id])
+    if @section.move_to(@move_to)
+      flash[:notice] = "Section '#{@section.name}' was moved to '#{@move_to.name}'."
+    end
+    redirect_to [:cms, @move_to]
+  end  
+  
   protected
     def load_parent
       @parent = Section.find(params[:section_id])

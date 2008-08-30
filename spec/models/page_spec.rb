@@ -67,5 +67,13 @@ describe Page do
     end
   end
   
+  it "should be able to be moved to another section" do
+    root = create_section
+    section = create_section(:name => "Another", :parent => root)
+    page = create_page(:section => root)
+    page.section.should_not == section
+    page.move_to(section)
+    page.section.should == section
+  end
   
 end

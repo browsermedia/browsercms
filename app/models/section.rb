@@ -20,4 +20,17 @@ class Section < ActiveRecord::Base
     end    
   end
   
+  def root?
+    parent_id.nil?
+  end
+  
+  def move_to(section)
+    if root?
+      false
+    else
+      self.parent = section
+      save
+    end
+  end
+  
 end

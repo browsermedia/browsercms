@@ -20,6 +20,11 @@ class Page < ActiveRecord::Base
     end
   end
   
+  def move_to(section)
+    self.section = section
+    save
+  end
+  
   def layout
     template ? template.file_name : nil
   end

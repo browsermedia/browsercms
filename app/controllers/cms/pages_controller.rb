@@ -1,7 +1,7 @@
 class Cms::PagesController < Cms::BaseController
   
   skip_before_filter :login_required, :only => [:show]
-  before_filter :load_section, :only => [:new, :create]
+  before_filter :load_section, :only => [:new, :create, :move_to]
 
   def show
     if params[:path]
@@ -56,10 +56,28 @@ class Cms::PagesController < Cms::BaseController
     define_method status do
       @page = Page.find(params[:id])
       if @page.send(status)
-        flash[:notice] = "Page was '#{verb}'."
+        flash[:notice] = "Page '#{@page.name}' was '#{verb}'."
       end
-      redirect_to [:cms, @page]
+      redirect_to @page.path
     end
+  end
+  
+  def move
+    @hide_page_toolbar = true
+    @page = Page.find(params[:id])
+    if params[:section_id]
+      @section = Section.find(params[:section_id])
+    else
+      @section = Section.root.first
+    end
+  end
+  
+  def move_to
+    @page = Page.find(params[:id])
+    if @page.move_to(@section)
+      flash[:notice] = "Page '#{@page.name}' was moved to '#{@section.name}'."
+    end
+    redirect_to [:cms, @section]
   end
   
   private

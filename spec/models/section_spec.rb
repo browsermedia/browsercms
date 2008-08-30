@@ -20,4 +20,19 @@ describe Section do
     section.errors.on(:parent_id).should == "Parent section is required"
   end
   
+  it "should be able to be moved into another section if it is not the root" do
+    root = create_section
+    foo = create_section(:name => "Foo", :parent => root)
+    bar = create_section(:name => "Bar", :parent => root)
+    foo.parent.should == root
+    foo.move_to(bar).should be_true
+    foo.parent.should == bar
+  end
+  
+  it "should not be able to be moved into another section if it is the root" do
+    root = create_section
+    foo = create_section(:name => "Foo", :parent => root)
+    root.move_to(foo).should be_false
+  end
+  
 end

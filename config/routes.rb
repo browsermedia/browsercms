@@ -11,11 +11,13 @@ ActionController::Routing::Routes.draw do |map|
     cms.resources :connectors, :member => {:move_up => :put, :move_down => :put, :move_to_top => :put, :move_to_bottom => :put}
     cms.resources :content_types, :collection => {:select => :get}
     cms.resources :html_blocks
-    cms.resources :pages, :has_many => [:connectors], :member => {:publish => :put, :hide => :put, :archive => :put}
+    cms.move_page_to_section '/pages/:id/move_to/:section_id', :controller => 'pages', :action => 'move_to', :conditions => { :method => :put }
+    cms.resources :pages, :has_many => [:connectors], :member => {:publish => :put, :hide => :put, :archive => :put, :move => :get}
     cms.resources :page_templates
     cms.resources :portlet_types, :has_many => [:portlets]
     cms.resources :portlets
-    cms.resources :sections, :has_many => [:pages, :sections]
+    cms.move_section_to '/sections/:id/move_to/:section_id', :controller => 'sections', :action => 'move_to', :conditions => { :method => :put }
+    cms.resources :sections, :has_many => [:pages, :sections], :member => {:move => :get}
     cms.resource :session
     cms.resources :users
   end
