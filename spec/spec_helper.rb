@@ -51,10 +51,6 @@ Spec::Runner.configure do |config|
   # For more information take a look at Spec::Example::Configuration and Spec::Runner
 end
 
-def block_should(matcher, &block)
-  block.should matcher
-end
-
-def block_should_not(matcher, &block)
-  block.should_not matcher
+def this_block(&block)
+  block
 end

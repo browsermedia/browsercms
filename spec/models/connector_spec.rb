@@ -14,9 +14,7 @@ describe Connector do
   it "should not delete blocks when deleting a connector" do
     b = create_html_block
     c = create_connector(:content_block => b)
-    block_should change(Connector, :count).by(-1) do
-      c.destroy
-    end
+    this_block{ c.destroy }.should change(Connector, :count).by(-1)
     f = HtmlBlock.find(b)
     f.should_not be_nil
   end
