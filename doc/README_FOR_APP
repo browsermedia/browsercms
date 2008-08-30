@@ -1,2 +1,33 @@
-Use this README file to introduce your application and point to useful places in the API for learning more.
-Run "rake doc:app" to generate API documentation for your models, controllers, helpers, and libraries.
+= BrowserCMS
+
+BrowserCMS provides Content Management functionality for Rails applications.  Once you have installed BrowserCMS into a Rails app, point your browser to http://localhost:3000/cms to log in.  You will be taken to the dashboard, the first section of the BrowserCMS Administration Interface.  I will refer to the BrowserCMS Administration Interface as the "CMS", because I *am* into the whole brevity thing.  The four main sections of the CMS are:
+
+== Dashboard
+
+The Dashboard shows you a list of tasks that are assigned to you, as well as the quick links.
+
+== Site Map
+
+The site map shows you the organization of all sections and pages in your site.
+
+== Content Library
+
+The content library is where you view/manage all of the content blocks in your CMS.
+
+== Administration
+
+All other tasks, especially ones left to Administrators and Developers, are in this section.
+
+To understand the CMS, it is bet to understand a few key objects that exist in the CMS
+
+== Sections
+
+A Section is a ...
+
+== Pages
+
+A Page is a ...
+
+== Block
+
+A Block is a ...
