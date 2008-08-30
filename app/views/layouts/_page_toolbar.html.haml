@@ -12,10 +12,10 @@
     == Status: #{@page.status_name} (Live)
     %br
     Page:
-    =h @page.name
+    = link_to h(@page.name), @page.path
     %br
     Section:
-    =h @page.section.name
+    = link_to h(@page.section.name), [:cms, @page.section]
     %br
     Template:
-    =h @page.template_name
+    = link_to h(@page.template_name), cms_page_templates_path
