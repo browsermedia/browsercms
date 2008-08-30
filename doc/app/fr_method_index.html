@@ -1,0 +1,139 @@
+
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<!--
+
+    Methods
+
+  -->
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Methods</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" href="rdoc-style.css" type="text/css" />
+  <base target="docwin" />
+</head>
+<body>
+<div id="index">
+  <h1 class="section-bar">Methods</h1>
+  <div id="index-entries">
+    <a href="classes/AuthenticatedSystem.html#M000028">access_denied (AuthenticatedSystem)</a><br />
+    <a href="classes/ApplicationHelper.html#M000044">action_icon (ApplicationHelper)</a><br />
+    <a href="classes/Page.html#M000010">append_leading_slash_to_path (Page)</a><br />
+    <a href="classes/User.html#M000002">authenticate (User)</a><br />
+    <a href="classes/AuthenticatedTestHelper.html#M000021">authorize_as (AuthenticatedTestHelper)</a><br />
+    <a href="classes/AuthenticatedSystem.html#M000026">authorized? (AuthenticatedSystem)</a><br />
+    <a href="classes/Cms/BlocksController.html#M000070">block_type (Cms::BlocksController)</a><br />
+    <a href="classes/Cms/ResourceController.html#M000108">build_object (Cms::ResourceController)</a><br />
+    <a href="classes/ApplicationHelper.html#M000046">cms_toolbar (ApplicationHelper)</a><br />
+    <a href="classes/Cms/BlockSupport.html#M000051">connect_to_page (Cms::BlockSupport)</a><br />
+    <a href="classes/ApplicationHelper.html#M000043">container (ApplicationHelper)</a><br />
+    <a href="classes/Cms/BlockSupport.html#M000050">content_block_label (Cms::BlockSupport)</a><br />
+    <a href="classes/Cms/BlockSupport/ClassMethods.html#M000053">content_block_label (Cms::BlockSupport::ClassMethods)</a><br />
+    <a href="classes/Cms/BlockSupport.html#M000049">content_block_type (Cms::BlockSupport)</a><br />
+    <a href="classes/Portlet.html#M000004">content_block_type (Portlet)</a><br />
+    <a href="classes/Cms/BlockSupport/ClassMethods.html#M000052">content_block_type (Cms::BlockSupport::ClassMethods)</a><br />
+    <a href="classes/Cms/BlocksController.html#M000065">create (Cms::BlocksController)</a><br />
+    <a href="classes/Cms/ConnectorsController.html#M000061">create (Cms::ConnectorsController)</a><br />
+    <a href="classes/Cms/PagesController.html#M000057">create (Cms::PagesController)</a><br />
+    <a href="classes/Cms/SessionsController.html#M000078">create (Cms::SessionsController)</a><br />
+    <a href="classes/Cms/ResourceController.html#M000100">create (Cms::ResourceController)</a><br />
+    <a href="classes/Cms/SectionsController.html#M000093">create (Cms::SectionsController)</a><br />
+    <a href="classes/AuthenticatedSystem.html#M000024">current_user (AuthenticatedSystem)</a><br />
+    <a href="classes/AuthenticatedSystem.html#M000025">current_user= (AuthenticatedSystem)</a><br />
+    <a href="classes/Cms/ResourceController.html#M000104">destroy (Cms::ResourceController)</a><br />
+    <a href="classes/Cms/PagesController.html#M000059">destroy (Cms::PagesController)</a><br />
+    <a href="classes/Cms/BlocksController.html#M000069">destroy (Cms::BlocksController)</a><br />
+    <a href="classes/Cms/SessionsController.html#M000079">destroy (Cms::SessionsController)</a><br />
+    <a href="classes/Cms/SectionsController.html#M000096">destroy (Cms::SectionsController)</a><br />
+    <a href="classes/Cms/ConnectorsController.html#M000062">destroy (Cms::ConnectorsController)</a><br />
+    <a href="classes/Cms/ResourceController.html#M000102">edit (Cms::ResourceController)</a><br />
+    <a href="classes/Cms/PagesController.html#M000056">edit (Cms::PagesController)</a><br />
+    <a href="classes/Cms/BlocksController.html#M000067">edit (Cms::BlocksController)</a><br />
+    <a href="classes/Cms/SectionsController.html#M000094">edit (Cms::SectionsController)</a><br />
+    <a href="classes/Cms/ResourceController.html#M000113">edit_template (Cms::ResourceController)</a><br />
+    <a href="classes/Cms/BlocksController.html#M000075">edit_template (Cms::BlocksController)</a><br />
+    <a href="classes/ApplicationHelper.html#M000047">eval_haml (ApplicationHelper)</a><br />
+    <a href="classes/Portlet.html#M000003">form_partial (Portlet)</a><br />
+    <a href="classes/AuthenticatedSystem.html#M000038">handle_remember_cookie! (AuthenticatedSystem)</a><br />
+    <a href="classes/UsersHelper.html#M000015">if_authorized? (UsersHelper)</a><br />
+    <a href="classes/AuthenticatedSystem.html#M000031">included (AuthenticatedSystem)</a><br />
+    <a href="classes/Cms/BlockSupport.html#M000048">included (Cms::BlockSupport)</a><br />
+    <a href="classes/Cms/BlocksController.html#M000063">index (Cms::BlocksController)</a><br />
+    <a href="classes/Cms/ResourceController.html#M000098">index (Cms::ResourceController)</a><br />
+    <a href="classes/Cms/SectionsController.html#M000090">index (Cms::SectionsController)</a><br />
+    <a href="classes/Cms/BlocksController.html#M000073">index_template (Cms::BlocksController)</a><br />
+    <a href="classes/Cms/PortletsController.html#M000084">index_url (Cms::PortletsController)</a><br />
+    <a href="classes/Cms/ResourceController.html#M000110">index_url (Cms::ResourceController)</a><br />
+    <a href="classes/AuthenticatedSystem.html#M000039">kill_remember_cookie! (AuthenticatedSystem)</a><br />
+    <a href="classes/Page.html#M000011">layout (Page)</a><br />
+    <a href="classes/UsersHelper.html#M000018">link_to_current_user (UsersHelper)</a><br />
+    <a href="classes/UsersHelper.html#M000017">link_to_login_with_IP (UsersHelper)</a><br />
+    <a href="classes/UsersHelper.html#M000016">link_to_user (UsersHelper)</a><br />
+    <a href="classes/Cms/SectionsController.html#M000097">load_parent (Cms::SectionsController)</a><br />
+    <a href="classes/AuthenticatedSystem.html#M000023">logged_in? (AuthenticatedSystem)</a><br />
+    <a href="classes/AuthenticatedTestHelper.html#M000019">login_as (AuthenticatedTestHelper)</a><br />
+    <a href="classes/AuthenticatedTestHelper.html#M000020">login_as_user (AuthenticatedTestHelper)</a><br />
+    <a href="classes/AuthenticatedSystem.html#M000033">login_from_basic_auth (AuthenticatedSystem)</a><br />
+    <a href="classes/AuthenticatedSystem.html#M000034">login_from_cookie (AuthenticatedSystem)</a><br />
+    <a href="classes/AuthenticatedSystem.html#M000032">login_from_session (AuthenticatedSystem)</a><br />
+    <a href="classes/AuthenticatedSystem.html#M000027">login_required (AuthenticatedSystem)</a><br />
+    <a href="classes/AuthenticatedSystem.html#M000035">logout_keeping_session! (AuthenticatedSystem)</a><br />
+    <a href="classes/AuthenticatedSystem.html#M000036">logout_killing_session! (AuthenticatedSystem)</a><br />
+    <a href="classes/AuthenticatedTestHelper.html#M000022">mock_user (AuthenticatedTestHelper)</a><br />
+    <a href="classes/Cms/BlocksController.html#M000072">model (Cms::BlocksController)</a><br />
+    <a href="classes/Cms/BlocksController.html#M000071">model_name (Cms::BlocksController)</a><br />
+    <a href="classes/Section.html#M000013">move_children_and_pages_to_parent (Section)</a><br />
+    <a href="classes/Cms/BlocksController.html#M000064">new (Cms::BlocksController)</a><br />
+    <a href="classes/Cms/PagesController.html#M000055">new (Cms::PagesController)</a><br />
+    <a href="classes/Cms/PortletsController.html#M000081">new (Cms::PortletsController)</a><br />
+    <a href="classes/Cms/SessionsController.html#M000077">new (Cms::SessionsController)</a><br />
+    <a href="classes/Cms/SectionsController.html#M000092">new (Cms::SectionsController)</a><br />
+    <a href="classes/Cms/ConnectorsController.html#M000060">new (Cms::ConnectorsController)</a><br />
+    <a href="classes/Cms/ResourceController.html#M000099">new (Cms::ResourceController)</a><br />
+    <a href="classes/Cms/BlocksController.html#M000074">new_template (Cms::BlocksController)</a><br />
+    <a href="classes/Cms/ResourceController.html#M000112">new_template (Cms::ResourceController)</a><br />
+    <a href="classes/Cms/SessionsController.html#M000080">note_failed_signin (Cms::SessionsController)</a><br />
+    <a href="classes/Cms/ResourceController.html#M000109">object_name (Cms::ResourceController)</a><br />
+    <a href="classes/AuthenticatedSystem.html#M000030">redirect_back_or_default (AuthenticatedSystem)</a><br />
+    <a href="classes/Cms/BaseController.html#M000088">redirect_to_first (Cms::BaseController)</a><br />
+    <a href="classes/Portlet.html#M000005">render (Portlet)</a><br />
+    <a href="classes/PortletType.html#M000014">render (PortletType)</a><br />
+    <a href="classes/HtmlBlock.html#M000001">render (HtmlBlock)</a><br />
+    <a href="classes/ApplicationHelper.html#M000041">render_connector (ApplicationHelper)</a><br />
+    <a href="classes/ApplicationHelper.html#M000042">render_content_block (ApplicationHelper)</a><br />
+    <a href="classes/Cms/ResourceController.html#M000107">resource (Cms::ResourceController)</a><br />
+    <a href="classes/Cms/PortletsController.html#M000082">resource_name (Cms::PortletsController)</a><br />
+    <a href="classes/Cms/ResourceController.html#M000105">resource_name (Cms::ResourceController)</a><br />
+    <a href="classes/Cms/ContentTypesController.html#M000087">select (Cms::ContentTypesController)</a><br />
+    <a href="classes/AuthenticatedSystem.html#M000040">send_remember_cookie! (AuthenticatedSystem)</a><br />
+    <a href="classes/Page.html#M000008">set_default_status (Page)</a><br />
+    <a href="classes/Cms/BlocksController.html#M000066">show (Cms::BlocksController)</a><br />
+    <a href="classes/Cms/SectionsController.html#M000091">show (Cms::SectionsController)</a><br />
+    <a href="classes/Cms/PagesController.html#M000054">show (Cms::PagesController)</a><br />
+    <a href="classes/Cms/ResourceController.html#M000101">show (Cms::ResourceController)</a><br />
+    <a href="classes/Cms/BlocksController.html#M000076">show_template (Cms::BlocksController)</a><br />
+    <a href="classes/Cms/PageTemplatesController.html#M000086">show_url (Cms::PageTemplatesController)</a><br />
+    <a href="classes/Cms/ResourceController.html#M000111">show_url (Cms::ResourceController)</a><br />
+    <a href="classes/Cms/PortletTypesController.html#M000089">show_url (Cms::PortletTypesController)</a><br />
+    <a href="classes/Cms/PortletsController.html#M000085">show_url (Cms::PortletsController)</a><br />
+    <a href="classes/ApplicationHelper.html#M000045">status_icon (ApplicationHelper)</a><br />
+    <a href="classes/Page.html#M000009">status_name (Page)</a><br />
+    <a href="classes/Page.html#M000007">status_options (Page)</a><br />
+    <a href="classes/Page.html#M000006">statuses (Page)</a><br />
+    <a href="classes/AuthenticatedSystem.html#M000029">store_location (AuthenticatedSystem)</a><br />
+    <a href="classes/Page.html#M000012">template_name (Page)</a><br />
+    <a href="classes/Cms/BlocksController.html#M000068">update (Cms::BlocksController)</a><br />
+    <a href="classes/Cms/ResourceController.html#M000103">update (Cms::ResourceController)</a><br />
+    <a href="classes/Cms/PagesController.html#M000058">update (Cms::PagesController)</a><br />
+    <a href="classes/Cms/SectionsController.html#M000095">update (Cms::SectionsController)</a><br />
+    <a href="classes/AuthenticatedSystem.html#M000037">valid_remember_cookie? (AuthenticatedSystem)</a><br />
+    <a href="classes/Cms/ResourceController.html#M000106">variable_name (Cms::ResourceController)</a><br />
+    <a href="classes/Cms/PortletsController.html#M000083">variable_name (Cms::PortletsController)</a><br />
+  </div>
+</div>
+</body>
+</html>
