@@ -70,7 +70,7 @@ class Cms::SectionsController < Cms::BaseController
     
     respond_to do |format|
       format.html { redirect_to [:cms, @move_to] }
-      format.js
+      format.js { render :template => 'cms/shared/show_notice' }
     end
   end  
   

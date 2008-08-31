@@ -77,7 +77,11 @@ class Cms::PagesController < Cms::BaseController
     if @page.move_to(@section)
       flash[:notice] = "Page '#{@page.name}' was moved to '#{@section.name}'."
     end
-    redirect_to [:cms, @section]
+    
+    respond_to do |format|
+      format.html { redirect_to [:cms, @section] }
+      format.js { render :template => 'cms/shared/show_notice' }
+    end    
   end
   
   private
