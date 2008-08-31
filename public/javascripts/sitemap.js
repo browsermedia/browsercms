@@ -10,8 +10,17 @@ document.observe('dom:loaded', function() {
     
     //Attach the click handler
     e.observe('click', function(event) {
+      
+      //Unselect all other pages/sections
       $$('#sitemap span').each(function(e) { e.removeClassName('selected') })
+      
+      //Disable All Buttons
+      
+      //Set actions and enable buttons where appropriate
+      
+      //Show this page as selected
       event.element().addClassName('selected');
+      
     });
     
   });
