@@ -104,6 +104,11 @@ div.buttons form.button-to {
     padding-left: 25px; }
   #sitemap li {
     margin: 5px 0; }
+  #sitemap span.section, #sitemap span.page {
+    padding: 2px;
+    border: 2px solid #fff; }
+  #sitemap span.drop-target {
+    border-color: #9bf; }
   #sitemap span {
     padding: 2px 5px; }
   #sitemap span.hover {
