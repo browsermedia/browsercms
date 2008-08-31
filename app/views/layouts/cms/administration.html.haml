@@ -3,6 +3,8 @@
   %head
     %title= yield :title
     = stylesheet_link_tag 'cms'
+    = javascript_include_tag :defaults    
+    = yield :html_head
   %body
     = cms_toolbar
     #cms_administration

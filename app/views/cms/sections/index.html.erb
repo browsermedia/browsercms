@@ -1,0 +1,16 @@
+<% content_for :html_head do %>
+  <%= javascript_include_tag 'sitemap' %>
+<% end %>
+<div class="buttons">
+  <%= button_to "Edit", {}, :id => 'edit-button', :disabled => "disabled", :method => :get %>
+  <%= button_to "Properties", {}, :id => 'properties-button', :disabled => "disabled", :method => :get %>
+  <%= button_to "Delete", {}, :id => 'delete-button', :disabled => "disabled", :method => :delete %>
+  <%= button_to "Add Page", {}, :id => 'add-page-button', :disabled => "disabled", :method => :get %>
+  <%= button_to "Add Section", {}, :id => 'add-section-button', :disabled => "disabled", :method => :get %>
+  <%= button_to "Add Link", {}, :id => 'add-link-button', :disabled => "disabled", :method => :get %>
+</div>
+<div id="sitemap">
+  <ul>
+    <%= render :partial => 'section', :member => @section %>
+  </ul>
+</div>

@@ -10,12 +10,6 @@ label.inline {
 .field {
   margin-bottom: 10px; }
 
-li.section {
-  list-style-image: url(/images/cms/icons/actions/folder.png); }
-
-li.page {
-  list-style-image: url(/images/cms/icons/actions/page.png); }
-
 li.in_progress {
   list-style-image: url(/images/cms/icons/status/in_progress.gif); }
 
@@ -97,3 +91,23 @@ table#blocks {
     text-align: left; }
   table#blocks td.uses, table#blocks td.view, table#blocks td.edit, table#blocks td.delete, table#blocks td.select {
     text-align: center; }
+
+div.buttons form.button-to {
+  display: inline; }
+  div.buttons form.button-to div {
+    display: inline; }
+
+#sitemap {
+  margin: 10px 0; }
+  #sitemap ul {
+    list-style-type: none;
+    padding-left: 25px; }
+  #sitemap li {
+    margin: 5px 0; }
+  #sitemap span {
+    padding: 2px 5px; }
+  #sitemap span.hover {
+    background-color: #cdf;
+    cursor: pointer; }
+  #sitemap span.selected {
+    background-color: #9bf; }

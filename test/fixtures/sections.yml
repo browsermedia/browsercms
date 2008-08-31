@@ -1,4 +1,33 @@
 root:
   name: My Site
-  lft: 1
-  rgt: 2 
+  position: 1
+  
+products:
+  name: Products
+  parent: root
+  position: 1
+    
+browsercms:
+  name: BrowserCMS
+  parent: products
+  position: 1
+  
+browserams:
+  name: BrowserAMS
+  parent: products
+  position: 2
+  
+about: 
+  name: About
+  parent: root
+  position: 2
+    
+people:
+  name: People
+  parent: about
+  position: 1
+  
+careers:
+  name: Careers
+  parent: about
+  position: 2

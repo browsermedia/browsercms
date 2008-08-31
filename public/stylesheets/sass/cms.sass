@@ -10,12 +10,6 @@ label.inline
 .field
   margin-bottom: 10px
 
-li.section
-  list-style-image: url(/images/cms/icons/actions/folder.png)
-
-li.page
-  list-style-image: url(/images/cms/icons/actions/page.png)
-
 li.in_progress
   list-style-image: url(/images/cms/icons/status/in_progress.gif)
 li.published
@@ -84,8 +78,6 @@ div.notice
     display: inline
     padding: 0 5px
       
-      
-      
 table#blocks
   border-collapse: collapse
   th, td
@@ -98,3 +90,24 @@ table#blocks
     text-align: left
   td.uses, td.view, td.edit, td.delete, td.select
     text-align: center
+    
+div.buttons
+  form.button-to
+    display: inline
+    div
+      display: inline
+      
+#sitemap
+  margin: 10px 0
+  ul
+    list-style-type: none
+    padding-left: 25px
+  li
+    margin: 5px 0
+  span
+    padding: 2px 5px
+  span.hover
+    background-color: #cdf
+    cursor: pointer
+  span.selected
+    background-color: #9bf

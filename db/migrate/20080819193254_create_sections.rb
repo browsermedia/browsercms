@@ -3,8 +3,7 @@ class CreateSections < ActiveRecord::Migration
     create_table :sections do |t|
       t.string :name
       t.integer :parent_id
-      t.integer :lft
-      t.integer :rgt
+      t.integer :position
       t.timestamps
     end
   end

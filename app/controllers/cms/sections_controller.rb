@@ -4,7 +4,6 @@ class Cms::SectionsController < Cms::BaseController
 
   def index
     @section = Section.root.first
-    render :template => 'cms/sections/show'
   end
 
   def show

@@ -9,5 +9,23 @@ home:
 about:
   name: About Us
   path: /about
-  section: root
+  section: about
   template: two_column
+  
+kerry:
+  name: Kerry Gunther
+  path: /people/kerry  
+  section: people
+  template: two_column
+  
+pat:
+  name: Patrick Peak
+  path: /people/pat  
+  section: people
+  template: two_column  
+  
+paul:
+  name: Paul Barry
+  path: /people/paul
+  section: people
+  template: two_column  
