@@ -27,14 +27,8 @@ Rails::Initializer.run do |config|
   # config.gem "aws-s3", :lib => "aws/s3"
   config.gem "haml", :version => '>= 2.1.0'
   config.gem 'ryanb-acts-as-list', :lib => 'acts_as_list', :source => 'http://gems.github.com'
-  
-  #This doesn't work, github isn't publishing my gem for some reason :(
-  #config.gem 'pjb3-flex-attributes', :version => '~> 0.1', :lib => 'flex-attributes', :source => 'http://gems.github.com'
-  
-  #This works for now, except that you can't use 'rake gems:install' to get the gem
-  #You have to clone the gem and build/install it locally
-  config.gem 'flex-attributes', :version => '~> 0.1'
-  
+  config.gem 'pjb3-flex-attributes', :version => '~> 0.1', :lib => 'flex-attributes', :source => 'http://gems.github.com'
+    
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.
   # :all can be used as a placeholder for all plugins not explicitly named

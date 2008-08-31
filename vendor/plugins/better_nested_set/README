@@ -1,0 +1,224 @@
+= Better nested set
+
+This plugin provides an enhanced acts_as_nested_set mixin for ActiveRecord, the 
+object-relational mapping layer of the framework Ruby on Rails. The original 
+nested set in Rails lacks many important features, such as moving branches within a tree.
+
+= Installation
+
+  script/plugin install svn://rubyforge.org/var/svn/betternestedset/trunk
+
+== Details
+
+A nested set is a smart way to implement an _ordered_ tree that allows for
+fast, non-recursive queries. For example, you can fetch all descendants of 
+a node in a single query, no matter how deep the tree. The drawback is that 
+insertions/moves/deletes require complex SQL, but that is handled behind 
+the curtains by this plugin!
+
+Nested sets are appropriate for ordered trees 
+(e.g. menus, commercial categories) and big trees that must be queried 
+efficiently (e.g. threaded posts).
+
+See http://www.dbmsmag.com/9603d06.html for nested sets theory, and a tutorial here:
+http://threebit.net/tutorials/nestedset/tutorial1.html
+
+== Small nested set theory reminder
+
+An easy way to visualize how a nested set works is to think of a parent entity surrounding all
+of its children, and its parent surrounding it, etc. So this tree:
+  root
+    |_ Child 1
+      |_ Child 1.1
+      |_ Child 1.2
+    |_ Child 2
+      |_ Child 2.1
+      |_ Child 2.2
+
+Could be visualized like this:
+    ___________________________________________________________________
+   |  Root                                                             |
+   |    ____________________________    ____________________________   |
+   |   |  Child 1                  |   |  Child 2                  |   |
+   |   |   __________   _________  |   |   __________   _________  |   |
+   |   |  |  C 1.1  |  |  C 1.2 |  |   |  |  C 2.1  |  |  C 2.2 |  |   |
+   1   2  3_________4  5________6  7   8  9_________10 11_______12 13  14
+   |   |___________________________|   |___________________________|   |
+   |___________________________________________________________________| 
+
+The numbers represent the left and right boundaries.  The table then might
+look like this:
+   id | parent_id | lft  | rgt  | data
+    1 |           |    1 |   14 | root
+    2 |         1 |    2 |    7 | Child 1
+    3 |         2 |    3 |    4 | Child 1.1
+    4 |         2 |    5 |    6 | Child 1.2
+    5 |         1 |    8 |   13 | Child 2
+    6 |         5 |    9 |   10 | Child 2.1
+    7 |         5 |   11 |   12 | Child 2.2
+
+To get all children of an entry +parent+, you
+    SELECT * WHERE lft IS BETWEEN parent.lft AND parent.rgt
+
+To get the number of children, it's 
+    (right - left - 1)/2
+
+To get a node and all its ancestors going back to the root, you
+    SELECT * WHERE node.lft IS BETWEEN lft AND rgt
+
+As you can see, queries that would be recursive and prohibitively slow on ordinary trees are suddenly quite fast. Nifty, isn't it? There are instance methods for each of the above, plus many others.
+
+
+= API
+Method names are mostly the same as in acts_as_tree, to make replacment from one 
+by another easier, except for object creation:
+
+in acts_as_tree:
+
+  my_item.children.create(:name => "child1")
+
+in acts_as_nested_set:
+
+  # adds a new item at the "end" of the tree, i.e. with child.left = max(tree.right) + 1
+  child = MyClass.create(:name => "child1")
+  # now move the item to its desired location
+  child.move_to_child_of my_item
+
+You can use:
+* <tt>move_to_child_of</tt>
+* <tt>move_to_right_of</tt>
+* <tt>move_to_left_of</tt>
+and pass them an id or an object.
+
+Other instance methods added by this plugin include:
+* <tt>root</tt> - root item of the tree (the one that has a nil parent)
+* <tt>roots</tt> - root items, in case of multiple roots (the ones that have a nil parent)
+* <tt>level</tt> - number indicating the level, a root being level 0
+* <tt>ancestors</tt> - array of all parents, with root as first item
+* <tt>self_and_ancestors</tt> - array of all parents and self
+* <tt>siblings</tt> - array of all siblings (items sharing the same parent)
+* <tt>self_and_siblings</tt> - array of itself and all siblings
+* <tt>children_count</tt> - count of all direct children
+* <tt>children</tt> - array of all immediate children
+* <tt>all_children</tt> - array of all children and nested children
+* <tt>all_children_count</tt> - count of all nested children
+* <tt>full_set</tt> - array of itself and all children and nested children
+* <tt>leaves</tt> - array of the children of this node who do not have children
+* <tt>leaves_count</tt> - the number of leaves
+* <tt>check_subtree</tt> - check the left/right indexes of this node and all descendants
+* <tt>check_full_tree</tt> - check the whole tree this node belongs to
+* <tt>renumber_full_tree</tt> - recreate the left/right indexes for the whole tree
+
+These should not be of interest, unless you want to write schema-independent SQL:
+* <tt>left_col_name</tt> - name of the left column passed on the declaration line
+* <tt>right_col_name</tt> - name of the right column passed on the declaration line    
+* <tt>parent_col_name</tt> - name of the parent column passed on the declaration line
+
+Please see the generated RDoc files in doc/ for the full API (run 'rake rdoc' if they need to be created).
+
+== Concurrency and callbacks
+
+ActiveRecord does not yet provide a way to treat columns as read-only, which causes problems for 
+nested sets and other things (http://dev.rubyonrails.org/ticket/6896). As a workaround, we have overridden 
+ActiveRecord::Base#update to prevent it from writing to the left/right columns. This protects the left/right 
+values from corruption under concurrent usage, but it breaks the update-related callbacks (before_update and friends).
+If you need the callbacks and aren't worried about concurrency, you can comment out the update method and the two
+methods below it (all at the very bottom of better_nested_set.rb).
+
+If this situation bugs you as much as it does us, leave a comment on the above ticket asking the core team to
+please apply the patch soon.
+
+
+== Scopes and roots
+
+Scope separates trees from each other, and roots are nodes without a parent. The complication is that a tree can 
+have multiple ("virtual") roots.
+
+Virtual roots?! In some situations, such as a menu, the root of the tree is ignored, and becomes a nuisance to the programmer.
+In that case it makes sense to remove the root, turning each of its children into a 'virtual root'. These virtual roots 
+are still members of the same tree, sharing a single continuous left/right index.
+
+Here's an example that demonstrates scopes, roots and virtual roots:
+  class Set < ActiveRecord::Base
+    acts_as_nested_set :scope => :tree_id
+  end
+
+  # This will create two trees, each with a single (real) root.
+  a = Set.create(:tree_id => 1)
+  b = Set.create(:tree_id => 2)
+
+  # This will add a second root to tree #2, so it will have two (virtual) roots.
+  # New objects are by default created as virtual roots at the right side of the tree.
+  c = Set.create(:tree_id => 2)  # c.lft is 3, c.rgt is 4 -- the lft/rgt values are contiguous between the two roots
+
+  # When we move c to be a child of b, tree #2 will have a single (real) root again. 
+  c.move_to_child_of(b)
+
+  # The table would now look like this:
+  id | parent_id | tree_id | lft | rgt | data
+   1 |      NULL |       1 |   1 |   2 | a
+   2 |      NULL |       2 |   1 |   4 | b
+   3 |         2 |       2 |   2 |   3 | c
+     
+== Recommendations
+
+Don't name your left and right columns 'left' and 'right', since most databases reserve these words.
+Use something like 'lft' and 'rgt' instead.
+
+If you have a choice between multiple separate trees or one large tree with multiple roots, separate trees will 
+offer better performance when altering tree structure (inserts/moves/deletes).
+
+= Where to find better_nested_set
+
+This plugin is provided by Jean-Christophe Michel from Symétrie, and the home page is:
+
+  http://opensource.symetrie.com/trac/better_nested_set/
+  
+= What databases?
+
+The code has so far been tested on MySQL 5, SQLite3 and PostgreSQL 8, but is thought to work on others.
+Databases featuring transactions will help protect the left/right indexes from corruption during concurrent usage.
+
+= Compatibility
+
+Future versions of this code will break compatibility with the original acts_as_nested_set, but this version
+is intended to be (almost completely) compatible. Differences include:
+* New records automatically have their left/right values set to place them at the far right of the tree.
+* Very minor changes to the deprecated method #root?.
+
+
+= Running the unit tests
+
+1) Set up a test database as specified in database.yml. Example for MySQL:
+
+    create database acts_as_nested_set_plugin_test;
+    grant all on acts_as_nested_set_plugin_test.* to 'rails'@'localhost' identified by '';
+
+2) The tests must be run with the plugin installed in a Rails project, so do that if you haven't already.
+
+3) Run 'rake test_mysql' (or test_sqlite3 or test_postgresql) in plugins/betternestedset. The default rake task attempts to use 
+all three adapters.
+
+= License
+
+Copyright (c) 2006 Jean-Christophe Michel, Symétrie
+
+The MIT License
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE

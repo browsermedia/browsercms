@@ -1,2 +1,4 @@
 root:
   name: My Site
+  lft: 1
+  rgt: 2 

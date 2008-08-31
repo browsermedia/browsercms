@@ -1,12 +1,19 @@
 class Section < ActiveRecord::Base
-  belongs_to :parent, :class_name => "Section"
-  has_many :children, :class_name => "Section", :foreign_key => "parent_id"
+  
+  acts_as_nested_set
+  
+  after_save :move_to_child_of_parent
+  
   has_many :pages
-  
-  named_scope :root, :conditions => ['sections.parent_id is null']
-  
-  validates_presence_of :parent_id, :if => Proc.new {root.count > 0}, :message => "Parent section is required"
-  
+    
+  def move_to_child_of_parent
+    self.move_to_child_of(@section_to_move_to) unless @section_to_move_to.blank?
+  end  
+
+  def parent=(section)
+    @section_to_move_to = section
+  end
+
   before_destroy :move_children_and_pages_to_parent
   
   def move_children_and_pages_to_parent
@@ -20,17 +27,8 @@ class Section < ActiveRecord::Base
     end    
   end
   
-  def root?
-    parent_id.nil?
-  end
-  
-  def move_to(section)
-    if root?
-      false
-    else
-      self.parent = section
-      save
-    end
+  def move_to_section(section)
+    root? ? false : self.move_to_child_of(section)
   end
   
 end
