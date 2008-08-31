@@ -6,11 +6,14 @@
     = javascript_include_tag :defaults    
     = yield :html_head
   %body
-    = cms_toolbar
-    #cms_content_library
-      #sidebar
-        %h2 Content Types
-        %ul
-          - RegisteredBlock.all(:order => "name").each do |block|
-            %li= link_to block.name.titleize, send("cms_#{block.name.pluralize.underscore}_path")
-      #main= yield
+    #page
+      = cms_toolbar
+      #cms_content_library
+        %table{:width => '100%', :cellpadding => 5}
+          %tr
+            %td{:valign=>'top', :width => 240}
+              %h2{:style=>'margin-top: 0'} Content Types
+              %ul
+              - RegisteredBlock.all(:order => "name").each do |block|
+                %li= link_to block.name.titleize, send("cms_#{block.name.pluralize.underscore}_path")
+            %td{:valign=>'top'}= yield

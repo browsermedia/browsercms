@@ -67,7 +67,11 @@ class Cms::SectionsController < Cms::BaseController
     if @section.move_to(@move_to)
       flash[:notice] = "Section '#{@section.name}' was moved to '#{@move_to.name}'."
     end
-    redirect_to [:cms, @move_to]
+    
+    respond_to do |format|
+      format.html { redirect_to [:cms, @move_to] }
+      format.js
+    end
   end  
   
   protected

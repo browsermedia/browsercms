@@ -1,3 +1,7 @@
+#page {
+  margin: 10px auto;
+  width: 960px; }
+
 img {
   border: none; }
 
@@ -24,7 +28,7 @@ li.archived {
 
 div#cms_toolbar {
   padding: 10px;
-  margin: 0 0 10px 0;
+  margin: 0;
   border-bottom: 1px solid #999; }
   div#cms_toolbar a {
     text-decoration: none; }
@@ -40,25 +44,22 @@ div#cms_toolbar {
       display: inline;
       margin-right: 5px; }
 
-#cms_administration #sidebar, #cms_content_library #sidebar {
-  float: left;
-  margin-right: 25px; }
-  #cms_administration #sidebar h2,   #cms_content_library #sidebar h2 {
-    margin: 0 0 10px 0; }
+#flash {
+  width: 400px;
+  height: 50px;
+  padding: 5px 0;
+  margin: 0 auto; }
+  #flash #message {
+    padding: 5px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: #FFF; }
 
-div#flash {
-  margin: 10px auto;
-  text-align: center;
-  width: 250px;
-  padding: 5px;
-  border-width: 2px;
-  border-style: solid; }
-
-div.error {
+.error {
   background-color: #FCC;
   border-color: #C99; }
 
-div.notice {
+.notice {
   background-color: #CFC;
   border-color: #9C9; }
 

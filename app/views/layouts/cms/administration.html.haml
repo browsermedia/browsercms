@@ -6,7 +6,10 @@
     = javascript_include_tag :defaults    
     = yield :html_head
   %body
-    = cms_toolbar
-    #cms_administration
-      #sidebar= render :partial => 'cms/shared/admin_sidebar'
-      #main= yield
+    #page
+      = cms_toolbar
+      #cms_content_library
+        %table{:width => '100%', :cellpadding => 5}
+          %tr
+            %td{:valign=>'top', :width => 240}= render :partial => 'cms/shared/admin_sidebar'
+            %td{:valign=>'top'}= yield

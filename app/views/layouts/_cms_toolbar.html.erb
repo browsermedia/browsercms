@@ -1,0 +1,33 @@
+<% content_for :html_head do %>
+  <%= javascript_include_tag :defaults %>
+<% end %>
+<% if(logged_in?) %>
+  <div id="cms_toolbar">
+    <table border="0" width="100%">
+      <tr>
+        <td valign="bottom"><h1><%= link_to "BrowserCMS", "/" %></h1></td>
+        <td width="100%" valign="bottom" align="center">
+          <ul id="nav">
+            <li><%= link_to "Dashboard", cms_dashboard_path %></li>
+            <li><%= link_to "Sitemap", cms_sitemap_path %></li>
+            <li><%= link_to "Content Library", cms_content_library_path %></li>
+            <li><%= link_to "Administration", cms_administration_path %></li>
+          </ul>
+        </td>
+        <td valign="bottom">
+          <%= link_to "Logout", cms_logout_path %>
+        </td>
+      </tr>
+    </table>
+    <%= render :partial => 'layouts/page_toolbar' %>
+  </div>
+  <% flash_class, flash_message = flash.to_a.first %>
+  <div id="flash">
+    <div id="message" class="<%= flash_class %>">
+      <% if(flash_message) %>
+        <%= flash_message %>
+        <%= javascript_tag visual_effect(:fade, 'message', :delay => 3)%>
+      <% end %>
+    </div>
+  </div>
+<% end %>
