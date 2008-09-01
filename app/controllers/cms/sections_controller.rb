@@ -9,7 +9,7 @@ class Cms::SectionsController < Cms::BaseController
   def show
     #TODO: It would be nice if we have show do the same thing as index,
     #except open up the path to that section
-    #@section = Section.find(params[:id])
+    @current_section = Section.find(params[:id])
     @section = Section.root.first
     render :action => 'index'
   end

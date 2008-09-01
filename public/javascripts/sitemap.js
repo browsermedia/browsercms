@@ -11,7 +11,7 @@ document.observe('dom:loaded', function() {
     //Attach the click handler
     e.observe('click', function(event) {
 
-      doubleClick = event.element().hasClassName('selected');
+      var doubleClick = event.element().hasClassName('selected');
       
       //Unselect all other pages/sections
       $$('#sitemap span').each(function(e) { e.removeClassName('selected') })
@@ -20,10 +20,10 @@ document.observe('dom:loaded', function() {
       $$('.button-to input[type=submit]').each(function(e){ e.disabled = true })
       
       //Set actions and enable buttons where appropriate
-      e = event.element();
+      var e = $(event.element());
       if(e.hasClassName('page')) {
-        page_id = e.up('li').id.sub('page_','');
-        url = '/cms/pages/'+page_id;
+        var page_id = e.up('li').id.sub('page_','');
+        var url = '/cms/pages/'+page_id;
         
         //WARING: Questionable usability decision
         //If the page is already selected, 
@@ -40,8 +40,8 @@ document.observe('dom:loaded', function() {
         $('properties-button').disabled = false;
         
       } else if(e.hasClassName('section')) {
-        section_id = e.up('li').id.sub('section_','');
-        url = '/cms/sections/'+section_id;
+        var section_id = e.up('li').id.sub('section_','');
+        var url = '/cms/sections/'+section_id;
         
         $('properties-button').form.action = url+'/edit';
         $('properties-button').disabled = false;        
@@ -55,7 +55,7 @@ document.observe('dom:loaded', function() {
       }
       
       //Show this page as selected
-      event.element().addClassName('selected');
+      e.addClassName('selected');
       
     });
     
@@ -75,22 +75,22 @@ document.observe('dom:loaded', function() {
           
           //Figure out the id of the page/section
           if(e.hasClassName('page')) {
-            url = '/cms/pages/'+e.id.sub('page_','');
+            var url = '/cms/pages/'+e.id.sub('page_','');
           } else if(e.hasClassName('section')) {
-            url = '/cms/sections/'+e.id.sub('section_','');
+            var url = '/cms/sections/'+e.id.sub('section_','');
           } else {
             return; //WTF?
           }
           
           //Figure out section we are moving to
-          section = this.element.up();
+          var section = this.element.up();
           
           //Let the server know about the move
           url += '/move_to/'+section.id.sub('section_','')+'.js';
           new Ajax.Request(url, {method: 'put'});
 
           //Open the section and put the page/section into it
-          list = section.down('ul');
+          var list = section.down('ul');
           list.show();
           section.down('img').src = '/images/cms/icons/actions/folder_open.png';
           list.appendChild(e);  
@@ -103,8 +103,9 @@ document.observe('dom:loaded', function() {
   //Attach click handlers to the icons
   $$('#sitemap a.section').each(function(e){
     e.observe('click', function(event){ 
-      parent = event.element().up().up();
-      list = parent.down('ul');
+      var a = $(event.element());
+      var parent = a.up('li');
+      var list = parent.down('ul');
       list.toggle();
       if(list.visible()) {
         parent.down('img').src = '/images/cms/icons/actions/folder_open.png';
