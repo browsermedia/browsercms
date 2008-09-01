@@ -7,9 +7,14 @@ class Cms::SectionsController < Cms::BaseController
   end
 
   def show
-    #TODO: It would be nice if we have show do the same thing as index,
-    #except open up the path to that section
-    @current_section = Section.find(params[:id])
+    #If the route is /cms/pages/123/section, the page_id will be 123
+    if(params[:page_id])
+      @selected_page = Page.find(params[:page_id])
+      @selected_section = @selected_page.section
+    #Otherwise the route should be the typical /cms/sections/123
+    else
+      @selected_section = Section.find(params[:id])
+    end    
     @section = Section.root.first
     render :action => 'index'
   end

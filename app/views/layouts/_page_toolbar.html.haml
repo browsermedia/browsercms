@@ -15,7 +15,7 @@
     = link_to h(@page.name), @page.path
     %br
     Section:
-    = link_to h(@page.section.name), [:cms, @page.section]
+    = link_to h(@page.section.name), cms_page_section_path(@page)
     %br
     Template:
     = link_to h(@page.template_name), cms_page_templates_path
