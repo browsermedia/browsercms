@@ -1,4 +1,8 @@
+- content_for :title do
+  Log In
 %h1 Log In
+
+.error= flash[:error]
 
 - form_tag cms_session_path do
   .field

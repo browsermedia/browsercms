@@ -1,0 +1,11 @@
+setup :fixtures => :all
+include_partial 'login_as_cmsadmin'
+open '/cms/sitemap'
+assert_title 'Sitemap'
+assert_not_editable 'edit-button'
+assert_not_editable 'properties-button'
+click "//span[@class='page' and text()='Home']"
+assert_editable 'edit-button'
+assert_editable 'properties-button'
+assert_attribute "//input[@id='edit-button']/../..", 'action', '/cms/pages/516519628'
+assert_attribute "//input[@id='properties-button']/../..", 'action', '/cms/pages/516519628/edit'

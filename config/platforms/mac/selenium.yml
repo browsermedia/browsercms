@@ -3,5 +3,7 @@ environments:
 
 browsers:
   firefox: 'open -a Firefox.app'
-  opera: 'open -a Opera.app'
-  safari: 'open -a Safari.app'
+  #opera: 'open -a Opera.app'
+  #safari: 'open -a Safari.app'
+  
+selenium_path: <%= File.join(Rails.root, "test", "selenium-core") %>

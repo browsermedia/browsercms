@@ -1,0 +1,4 @@
+setup :fixtures => :all
+open '/'
+assert_title 'Home'
+verify_text_present 'Hello, World!'

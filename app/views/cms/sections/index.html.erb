@@ -1,6 +1,8 @@
 <% content_for :html_head do %>
   <%= javascript_include_tag 'sitemap' %>
 <% end %>
+<% content_for :title do %>Sitemap<% end %>
+
 <div class="buttons">
   <%= button_to "Edit", {}, :id => 'edit-button', :disabled => "disabled", :method => :get %>
   <%= button_to "Properties", {}, :id => 'properties-button', :disabled => "disabled", :method => :get %>

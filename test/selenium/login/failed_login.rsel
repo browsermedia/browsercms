@@ -1,0 +1,8 @@
+setup :fixtures => :all
+open '/cms'
+assert_title 'Log In'
+verify_text_present 'Log In'
+type 'login', 'cmsadmin'
+type 'password', 'FAIL'
+click_and_wait 'commit'
+verify_text_present "Couldn't log you in as 'cmsadmin'"
