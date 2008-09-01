@@ -7,7 +7,11 @@ class Cms::SectionsController < Cms::BaseController
   end
 
   def show
-    @section = Section.find(params[:id])
+    #TODO: It would be nice if we have show do the same thing as index,
+    #except open up the path to that section
+    #@section = Section.find(params[:id])
+    @section = Section.root.first
+    render :action => 'index'
   end
   
   def new

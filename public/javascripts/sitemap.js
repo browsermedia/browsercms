@@ -10,13 +10,49 @@ document.observe('dom:loaded', function() {
     
     //Attach the click handler
     e.observe('click', function(event) {
+
+      doubleClick = event.element().hasClassName('selected');
       
       //Unselect all other pages/sections
       $$('#sitemap span').each(function(e) { e.removeClassName('selected') })
       
       //Disable All Buttons
+      $$('.button-to input[type=submit]').each(function(e){ e.disabled = true })
       
       //Set actions and enable buttons where appropriate
+      e = event.element();
+      if(e.hasClassName('page')) {
+        page_id = e.up('li').id.sub('page_','');
+        url = '/cms/pages/'+page_id;
+        
+        //WARING: Questionable usability decision
+        //If the page is already selected, 
+        //then clicking it again will result in going to that page
+        if(doubleClick) {
+          window.location = url;
+          return false;
+        }
+        
+        $('edit-button').form.action = url;
+        $('edit-button').disabled = false;
+
+        $('properties-button').form.action = url+'/edit';
+        $('properties-button').disabled = false;
+        
+      } else if(e.hasClassName('section')) {
+        section_id = e.up('li').id.sub('section_','');
+        url = '/cms/sections/'+section_id;
+        
+        $('properties-button').form.action = url+'/edit';
+        $('properties-button').disabled = false;        
+
+        $('add-page-button').form.action = url+'/pages/new';
+        $('add-page-button').disabled = false;        
+
+        $('add-section-button').form.action = url+'/sections/new';
+        $('add-section-button').disabled = false;        
+        
+      }
       
       //Show this page as selected
       event.element().addClassName('selected');

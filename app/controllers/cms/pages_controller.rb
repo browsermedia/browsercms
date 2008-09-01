@@ -2,17 +2,20 @@ class Cms::PagesController < Cms::BaseController
   
   skip_before_filter :login_required, :only => [:show]
   before_filter :load_section, :only => [:new, :create, :move_to]
+  before_filter :hide_toolbar, :only => [:new, :create, :move_to]
 
   def show
-    if params[:path]
+    if !params[:id].blank?
+      redirect_to Page.find(params[:id]).path
+    elsif params[:path].nil?
+      raise ActiveRecord::RecordNotFound.new("Page could not be found")
+    else
       set_page_mode
       @path = "/#{params[:path].join("/")}"
       @page = Page.find_by_path(@path)
       raise ActiveRecord::RecordNotFound.new("No page at '#{@path}'") unless @page    
-    else
-      @page = Page.find(params[:id])
+      render :layout => @page.layout
     end
-    render :layout => @page.layout
   end
 
   def new
@@ -63,7 +66,6 @@ class Cms::PagesController < Cms::BaseController
   end
   
   def move
-    @hide_page_toolbar = true
     @page = Page.find(params[:id])
     if params[:section_id]
       @section = Section.find(params[:section_id])
@@ -93,6 +95,10 @@ class Cms::PagesController < Cms::BaseController
     def set_page_mode
       @mode = params[:mode] || session[:page_mode] || "view"
       session[:page_mode] = @mode      
+    end
+  
+    def hide_toolbar
+      @hide_page_toolbar = true
     end
   
 end
