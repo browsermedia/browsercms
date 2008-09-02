@@ -1,6 +1,0 @@
-cmsadmin:
-  login: cmsadmin
-  email: cmsadmin@example.com
-  salt: bd78b6e6ad24308a60d206d2064713b897ac788c
-  crypted_password: 5dba9a5efa80d23707c3f266dd860038502533db
-  created_at: <%= Time.now.to_s :db  %>

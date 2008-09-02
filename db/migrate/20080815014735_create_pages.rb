@@ -1,17 +1,29 @@
 class CreatePages < ActiveRecord::Migration
-  def self.up
+  def self.up    
     create_table :pages do |t|
-      t.integer :section_id
-      t.integer :template_id
+      t.integer :version, :default => 1
+      t.integer :section_id, :integer
+      t.integer :template_id, :integer
       t.string :name
       t.string :path
-      t.string :status, :default => Page::DEFAULT_STATUS
-      
+      t.string :status
       t.timestamps
     end
+    
+    create_table :page_versions do |t|
+      t.integer :page_id
+      t.integer :version, :default => 1
+      t.integer :section_id, :integer
+      t.integer :template_id, :integer
+      t.string :name
+      t.string :path
+      t.string :status
+      t.timestamps
+    end    
   end
 
   def self.down
+    drop_table :page_versions
     drop_table :pages
   end
 end

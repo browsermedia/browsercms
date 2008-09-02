@@ -1,0 +1,19 @@
+welcome_1:
+  id: 1
+  page_id: 1
+  version: 1
+  title: Welcome
+  body: Initial body
+  created_at: <%= 1.hour.ago.to_s :db %>
+  updated_at: <%= 1.hour.ago.to_s :db %>
+  author_id: 1
+  
+welcome_2:
+  id: 2
+  page_id: 1
+  version: 2
+  title: Version 2
+  body: two
+  created_at: <%= 30.minutes.ago.to_s :db %>
+  updated_at: <%= 30.minutes.ago.to_s :db %>
+  author_id: 2

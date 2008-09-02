@@ -76,4 +76,11 @@ describe Page do
     page.section.should == section
   end
   
+  describe "Versioning" do
+    it "should be save a version when creating a page" do
+      page = create_page
+      page.versions.latest.page.should == page
+    end
+  end
+  
 end

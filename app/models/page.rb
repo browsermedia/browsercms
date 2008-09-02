@@ -1,5 +1,7 @@
 class Page < ActiveRecord::Base
   
+  version_fu
+  
   #See config/initializers/concered_with.rb
   concerned_with :status
   

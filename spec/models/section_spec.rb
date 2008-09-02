@@ -17,7 +17,7 @@ describe Section do
     create_section(:name => "foo")
     section = new_section(:name => "bar")
     section.should_not be_valid
-    section.errors.on(:parent_id).should == "Parent section is required"
+    section.errors.on(:parent_id).should == "section is required"
   end
   
   it "should be able to be moved into another section if it is not the root" do

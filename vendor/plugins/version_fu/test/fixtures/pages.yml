@@ -1,0 +1,10 @@
+welcome:
+  id: 1
+  type: Page
+  version: 2
+  title: Version 2
+  body: two
+  created_at: <%= 1.hour.ago.to_s :db %>
+  updated_at: <%= 1.hour.ago.to_s :db %>
+  creator_id: 1
+  author_id: 2

@@ -1,7 +1,0 @@
-main:
-  name: Main
-  file_name: main
-
-two_column:
-  name: Two Column
-  file_name: two_column

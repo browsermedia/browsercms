@@ -1,3 +1,2 @@
-#Each Content Type should explicitly include this themselves
-#ActiveRecord::Base.send(:include, BlockSupport)
-
+#Once we gemify CMS, this stuff should go in rails/init.rb
+require 'cms/extensions'
