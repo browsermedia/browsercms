@@ -1,14 +1,9 @@
-# Created by IntelliJ IDEA.
-# User: Patrick Peak
-# Date: Sep 2, 2008
-# Time: 3:13:06 PM
-# To change this template use File | Settings | File Templates.
 module Cms::StatusSupport
 
   def self.included(base_class)
-      base_class.class_eval do
-        before_validation_on_create :set_default_status
-      end
+    base_class.class_eval do
+      before_validation_on_create :set_default_status
+    end
   end
   
   IN_PROGRESS = "IN_PROGRESS"

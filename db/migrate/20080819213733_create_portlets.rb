@@ -3,6 +3,7 @@ class CreatePortlets < ActiveRecord::Migration
     create_table :portlets do |t|
       t.string :portlet_type_id
       t.string :name
+      t.string :status
 
       t.timestamps
     end
