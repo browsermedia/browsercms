@@ -2,7 +2,7 @@ class Page < ActiveRecord::Base
   
   version_fu
   
-  #See config/initializers/concered_with.rb
+  #See config/initializers/concerned_with.rb
   concerned_with :status
   
   belongs_to :section

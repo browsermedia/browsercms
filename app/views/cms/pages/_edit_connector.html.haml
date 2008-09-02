@@ -2,6 +2,7 @@
   .header
     = connector.content_block.name
     .actions
+      = status_icon(connector.content_block.status)
       = link_to action_icon(:view), send("cms_#{connector.content_block.class.content_block_type}_path", connector.content_block)
       = link_to action_icon(:edit), send("edit_cms_#{connector.content_block.class.content_block_type}_path", connector.content_block, :_redirect_to => @page.path)
       -if @page.connectors.for_container(connector.container).count > 1

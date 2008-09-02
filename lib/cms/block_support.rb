@@ -1,6 +1,7 @@
 module Cms
   module BlockSupport
-
+    include Cms::StatusSupport
+    
     def self.included(base_class)
       base_class.send(:extend, ClassMethods)
       base_class.class_eval do

@@ -3,7 +3,7 @@ class CreateHtmlBlocks < ActiveRecord::Migration
     create_table :html_blocks do |t|
       t.string :name
       t.string :content
-
+      t.string :status
       t.timestamps
     end
   end

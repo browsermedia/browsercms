@@ -31,7 +31,7 @@ module ApplicationHelper
   end
 
   def status_icon(status, options={})
-    image_tag "cms/icons/actions/#{status.underscore}.png", {:alt => status.titleize}.merge(options)
+    image_tag "cms/icons/status/#{status.underscore}.gif", {:alt => status.titleize}.merge(options)
   end
   
   def cms_toolbar
