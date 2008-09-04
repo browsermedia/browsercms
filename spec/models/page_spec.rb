@@ -63,7 +63,7 @@ describe Page do
     end
 
     it "should have status options" do
-      Page.status_options.should == [["In Progress", "IN_PROGRESS"], ["Published", "PUBLISHED"], ["Hidden", "HIDDEN"], ["Archived", "ARCHIVED"]]
+      Page.status_options.should == [["In Progress", "IN_PROGRESS"], ["Published", "PUBLISHED"], ["Hidden", "HIDDEN"], ["Archived", "ARCHIVED"], ["Deleted", "DELETED"]]
     end
   end
   
