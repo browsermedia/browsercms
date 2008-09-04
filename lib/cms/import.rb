@@ -1,5 +1,7 @@
 require File.join(File.dirname(__FILE__), "..", "..", "config", "environment")
 
+#Meant to be called by rake task, for example:
+# rake cms:import CMS_PATH=/Users/pbarry/perforce/depot/microbicide CMS_DB_NAME=microbicide
 class Cms::Import < ActiveRecord::Base
   class << self        
     def import(options={})
@@ -9,14 +11,7 @@ class Cms::Import < ActiveRecord::Base
       load_page_templates
       load_pages
     end
-    
-    def connect(options={})
-      establish_connection({
-        :adapter  => "mysql",
-        :host     => "localhost"
-      }.merge(options || {}))
-    end
-    
+        
     def load_users
       copy_records(User, "select * from users", 
         :login => "username",
@@ -55,25 +50,15 @@ class Cms::Import < ActiveRecord::Base
         :template_id => "page_template_id"
       })
     end
-      
-    def copy_records(model, query, mapping, callbacks={})
-      select_all(query).each do |row|
-        record = model.new
-        mapping.each do |attr, col|
-          record.send("#{attr}=", row[col])
-        end
-        record.id = row["id"]
-        callbacks[:before_save].call(record, row) if callbacks[:before_save]
-        if record.save
-          puts "Created #{model} #{record.id}"
-        else
-          raise "Could not save #{model} #{record.id}:\n - #{record.errors.full_messages.join("\n - ")}"
-        end
-        callbacks[:after_save].call(record, row) if callbacks[:after_save]
-      end
-    end
-      
+            
     private
+      def connect(options={})
+        establish_connection({
+          :adapter  => "mysql",
+          :host     => "localhost"
+        }.merge(options || {}))
+      end
+    
       def select_all(sql)
         connection.select_all(sql)
       end
@@ -81,6 +66,23 @@ class Cms::Import < ActiveRecord::Base
       def select_one(sql)
         connection.select_one(sql)
       end
+      
+      def copy_records(model, query, mapping, callbacks={})
+        select_all(query).each do |row|
+          record = model.new
+          mapping.each do |attr, col|
+            record.send("#{attr}=", row[col])
+          end
+          record.id = row["id"]
+          callbacks[:before_save].call(record, row) if callbacks[:before_save]
+          if record.save
+            puts "Created #{model} #{record.id}"
+          else
+            raise "Could not save #{model} #{record.id}:\n - #{record.errors.full_messages.join("\n - ")}"
+          end
+          callbacks[:after_save].call(record, row) if callbacks[:after_save]
+        end
+      end      
         
       #This is obviously a pretty ambitious task to try to attempt
       #I'm thinking we can just try to deal with low hanging fruit here  
