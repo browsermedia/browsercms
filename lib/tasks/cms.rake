@@ -9,3 +9,15 @@ namespace :db do
   end
   
 end
+
+namespace :cms do
+  desc "Imports the data from a BrowserCMS 2.5 Schema"
+  task :import => [:environment, 'db:migrate:reset'] do
+    Cms::Import.import(:connection => {
+      :username => "root",
+      :password => "",
+      :database => "microbicide"
+    })
+  end
+  
+end
