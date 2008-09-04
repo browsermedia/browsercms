@@ -34,11 +34,6 @@ class Cms::Import < ActiveRecord::Base
     end
 
     def load_page_templates
-      #TODO: Obviously this will blow up because the template_view
-      #Will not be an existing layout in the Rails app.
-      #Idea: Specific the root of the CMS app
-      #Have it read in the jsp file, do some simple search and replace maybe,
-      #And store the file in the Rails app file system / database
       copy_records(PageTemplate, "select * from page_templates",
         { :name => "name" },
         { :before_save => lambda{|record, row| 
