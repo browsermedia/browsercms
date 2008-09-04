@@ -2,7 +2,7 @@ module Cms
   module BlockSupport
     
     def self.included(base_class)
-      base_class.send(:extend, ClassMethods)
+      base_class.extend ClassMethods
       base_class.class_eval do
         include Cms::StatusSupport
         attr_accessor :connect_to_page_id
@@ -11,6 +11,13 @@ module Cms
         
         after_create :connect_to_page        
       end
+
+      base_class.send(:include, Cms::StatusSupport)
+      base_class.send(:attr_accessor, :connect_to_page_id)
+      base_class.send(:attr_accessor, :connect_to_container)
+      base_class.send(:attr_accessor, :connected_page)      
+      base_class.send(:after_create, :connect_to_page)       
+
     end
 
     module ClassMethods
