@@ -9,8 +9,8 @@ create_section(:about, :name => "About", :parent => sections(:root))
 create_section(:people, :name => "People", :parent => sections(:about))
 create_section(:careers, :name => "Careers", :parent => sections(:about))
 
-create_page_template(:main, :name => "Main", :file_name => "main")
-create_page_template(:two_column, :name => "Two Column", :file_name => "two_column")
+create_page_template(:main, :name => "Main", :file_name => "main", :language => "haml", :body => "!!!\r\n%html\r\n  %head\r\n    %title= yield :title\r\n    = stylesheet_link_tag 'cms'\r\n    = yield :html_head\r\n  %body\r\n    = cms_toolbar\r\n    = container :main")
+create_page_template(:two_column, :name => "Two Column", :file_name => "two_column", :language => "haml", :body=> "!!!\r\n%html\r\n  %head\r\n    %title= yield :title\r\n    = stylesheet_link_tag 'cms'\r\n    = yield :html_head    \r\n  %body\r\n    = cms_toolbar\r\n    %table{:width => 960}\r\n      %tr\r\n        %td{:width => 720}\r\n          = container :main\r\n        %td{:width => 240}\r\n          = container :sidebar")
 
 create_page(:home, :name => "Home", :path => "/", :section => sections(:root), :template => page_templates(:two_column))
 create_page(:about, :name => "About Us", :path => "/about", :section => sections(:about), :template => page_templates(:two_column))

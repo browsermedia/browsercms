@@ -3,7 +3,8 @@ class CreatePageTemplates < ActiveRecord::Migration
     create_table :page_templates do |t|
       t.string :name
       t.string :file_name
-
+      t.string :language
+      t.text :body
       t.timestamps
     end
   end
