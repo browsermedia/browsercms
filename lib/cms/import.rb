@@ -90,6 +90,8 @@ class Cms::Import < ActiveRecord::Base
         s = content
         s.gsub!(/<page:container name="([^"]+)"\/>/) { "<%= container :#{$1} %>"}
         s.gsub!(/<%@\s*taglib[^%]*%>/, '')
+        s.gsub!(/<jsp:include\s*page="([^"]*).jsp"\s*\/>/) { "<%= render :partial => '#{$1}' %>" }
+        s.gsub!("<%= render :partial => '/site/inc/", "<%= render :partial => 'shared/")
         s.strip!
         s
       end  
