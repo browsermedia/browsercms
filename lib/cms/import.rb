@@ -40,8 +40,14 @@ class Cms::Import < ActiveRecord::Base
       #Have it read in the jsp file, do some simple search and replace maybe,
       #And store the file in the Rails app file system / database
       copy_records(PageTemplate, "select * from page_templates",
-        :name => "name",
-        :file_name => "template_view"
+        { :name => "name" },
+        { :before_save => lambda{|record, row| 
+            template_file = File.join(ENV['CMS_PATH'], "src", "webapp", row["template_view"])
+            record.language = "erb"
+            record.file_name = File.basename(template_file, ".jsp")
+            record.body = convert_jsp_to_erb(open(template_file) {|f| f.read })
+          }
+        }
       )
     end
     
@@ -80,6 +86,16 @@ class Cms::Import < ActiveRecord::Base
       def select_one(sql)
         connection.select_one(sql)
       end
+        
+      #This is obviously a pretty ambitious task to try to attempt
+      #I'm thinking we can just try to deal with low hanging fruit here  
+      def convert_jsp_to_erb(content)
+        s = content
+        s.gsub!(/<page:container name="([^"]+)"\/>/) { "<%= container :#{$1} %>"}
+        s.gsub!(/<%@\s*taglib[^%]*%>/, '')
+        s.strip!
+        s
+      end  
         
   end
 end

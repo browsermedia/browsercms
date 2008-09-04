@@ -11,6 +11,6 @@
     = f.select :language, [["ERB", "erb"], ["Haml", "haml"]]
   .field
     = f.label :body
-    = f.text_area :body, :rows => 12
+    = f.text_area :body, :rows => 25, :cols => 80
   .buttons
     = f.submit "Save"
