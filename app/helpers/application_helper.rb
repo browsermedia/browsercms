@@ -70,5 +70,9 @@ module ApplicationHelper
     end
     path
   end  
+  
+  def cms_url(*args)
+    "#{request.protocol}#{request.host_with_port}#{cms_path(*args)}"
+  end
     
 end
