@@ -1,6 +1,5 @@
-- content_for :title do
-  Log In
-%h1 Log In
+- @page_title = "Log In"
+%h1= @page_title
 
 .error= flash[:error]
 

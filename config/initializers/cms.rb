@@ -13,4 +13,3 @@ tmp_view_path = "#{Rails.root}/tmp/views"
 logger.info("~~ Writing page templates to #{tmp_view_path}")
 ActionController::Base.append_view_path tmp_view_path
 PageTemplate.all.each{|pt| pt.create_layout_file }
-

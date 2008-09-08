@@ -1,0 +1,24 @@
+<%= render :partial => 'layouts/cms/head' %>
+  <body>
+    <div id="page">
+      <%= cms_toolbar %>
+      <div id="cms_content_library">
+        <table width="100%" cellpadding="5">
+          <tr>
+            <td valign="top" width="240">
+              <h2 style="margin-top: 0">Content Types</h2>
+              <ul>
+                <% ContentType.all(:order => "name").each do |block| %>
+                  <li><%= link_to block.name.titleize, send("cms_#{block.name.pluralize.underscore}_path") %></li>
+                <% end %>
+              </ul>
+            </td>
+            <td valign="top">
+              <%= yield %>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
