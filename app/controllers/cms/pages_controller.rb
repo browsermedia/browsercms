@@ -1,8 +1,12 @@
 class Cms::PagesController < Cms::BaseController
   
-  skip_before_filter :login_required, :only => [:show]
+  skip_before_filter :login_required, :only => [:show, :foo]
   before_filter :load_section, :only => [:new, :create, :move_to]
   before_filter :hide_toolbar, :only => [:new, :create, :move_to]
+  
+  def foo
+    render :layout => 'two_column'
+  end
 
   def show
     if !params[:id].blank?

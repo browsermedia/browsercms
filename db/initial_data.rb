@@ -9,8 +9,43 @@ create_section(:about, :name => "About", :parent => sections(:root))
 create_section(:people, :name => "People", :parent => sections(:about))
 create_section(:careers, :name => "Careers", :parent => sections(:about))
 
-create_page_template(:main, :name => "Main", :file_name => "main", :language => "haml", :body => "!!!\r\n%html\r\n  %head\r\n    %title= yield :title\r\n    = stylesheet_link_tag 'cms'\r\n    = yield :html_head\r\n  %body\r\n    = cms_toolbar\r\n    = container :main")
-create_page_template(:two_column, :name => "Two Column", :file_name => "two_column", :language => "haml", :body=> "!!!\r\n%html\r\n  %head\r\n    %title= yield :title\r\n    = stylesheet_link_tag 'cms'\r\n    = yield :html_head    \r\n  %body\r\n    = cms_toolbar\r\n    %table{:width => 960}\r\n      %tr\r\n        %td{:width => 720}\r\n          = container :main\r\n        %td{:width => 240}\r\n          = container :sidebar")
+create_page_template(:main, :name => "Main", :file_name => "main", :language => "haml", :body => <<-TEMPLATE)
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title><%= @page_title %></title>
+    <%= stylesheet_link_tag 'cms' %>
+    <%= yield :html_head %>
+  </head>
+  <body>
+    <%= cms_toolbar %>
+    <%= container :main %>
+  </body>
+</html>
+TEMPLATE
+create_page_template(:two_column, :name => "Two Column", :file_name => "two_column", :language => "haml", :body=> <<-TEMPLATE)
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <title><%= @page_title %></title>
+    <%= stylesheet_link_tag 'cms' %>
+    <%= yield :html_head %>
+  </head>
+  <body>
+    <%= cms_toolbar %>
+    <table width ="960">
+      <tr>
+        <td width="720">
+          <%= container :main %>
+        </td>
+        <td width="240">
+          <%= container :sidebar %>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
+TEMPLATE
 
 create_page(:home, :name => "Home", :path => "/", :section => sections(:root), :template => page_templates(:two_column))
 create_page(:about, :name => "About Us", :path => "/about", :section => sections(:about), :template => page_templates(:two_column))

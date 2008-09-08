@@ -1,5 +1,7 @@
 ActionController::Routing::Routes.draw do |map|
 
+  map.connect '/foo', :controller => "cms/pages", :action => 'foo'
+
   map.namespace(:cms) do |cms|
     cms.logout '/logout', :controller => 'sessions', :action => 'destroy'
     cms.login '/login', :controller => 'sessions', :action => 'new'

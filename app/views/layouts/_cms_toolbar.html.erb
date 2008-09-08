@@ -1,6 +1,3 @@
-<% content_for :html_head do %>
-  <%= javascript_include_tag :defaults %>
-<% end %>
 <% if(logged_in?) %>
   <div id="cms_toolbar">
     <table border="0" width="100%">
@@ -26,7 +23,7 @@
     <div id="message" class="<%= flash_class %>">
       <% if(flash_message) %>
         <%= flash_message %>
-        <%= javascript_tag visual_effect(:fade, 'message', :delay => 3)%>
+        <%# javascript_tag visual_effect(:fade, 'message', :delay => 3)%>
       <% end %>
     </div>
   </div>

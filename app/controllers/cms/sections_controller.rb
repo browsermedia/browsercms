@@ -4,6 +4,7 @@ class Cms::SectionsController < Cms::BaseController
 
   def index
     @section = Section.root.first
+    render :layout => 'cms/sitemap'
   end
 
   def show
@@ -16,7 +17,7 @@ class Cms::SectionsController < Cms::BaseController
       @selected_section = Section.find(params[:id])
     end    
     @section = Section.root.first
-    render :action => 'index'
+    render :action => 'index', :layout => 'cms/sitemap'
   end
   
   def new

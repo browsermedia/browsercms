@@ -2,6 +2,6 @@
 %html
   %head
     %title= yield :title
-    = yield :html_head
+    %= javascript_include_tag :defaults
   %body
     = yield
