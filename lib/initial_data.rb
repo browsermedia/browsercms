@@ -26,6 +26,10 @@ class InitialData
     puts "-- create_#{model_name}(:#{record_name})"
     @data ||= {}
     @data[model_name.pluralize.to_sym] ||= {}
-    @data[model_name.pluralize.to_sym][record_name] = model_name.classify.constantize.create!(data)
+    model = model_name.classify.constantize.new(data)
+    #Set the id of the record to be a consistent value, as fixtures in Rails do    
+    model.id = record_name.to_s.hash.abs 
+    model.save!
+    @data[model_name.pluralize.to_sym][record_name] = model
   end
 end

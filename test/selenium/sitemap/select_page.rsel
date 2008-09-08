@@ -1,11 +1,12 @@
 setup :fixtures => :all
+@page = Page.find_by_name('Home')
 include_partial 'login_as_cmsadmin'
 open '/cms/sitemap'
 assert_title 'Sitemap'
 assert_not_editable 'edit-button'
 assert_not_editable 'properties-button'
-click "//span[@class='page' and text()='Home']"
+click "//span[@class='page' and text()='#{@page.name}']"
 assert_editable 'edit-button'
 assert_editable 'properties-button'
-assert_attribute "//input[@id='edit-button']/../..", 'action', '/cms/pages/516519628'
-assert_attribute "//input[@id='properties-button']/../..", 'action', '/cms/pages/516519628/edit'
+assert_attribute "//input[@id='edit-button']/../..", 'action', "/cms/pages/#{@page.id}"
+assert_attribute "//input[@id='properties-button']/../..", 'action', "/cms/pages/#{@page.id}/edit"
