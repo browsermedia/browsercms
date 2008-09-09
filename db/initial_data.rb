@@ -71,17 +71,21 @@ create_portlet_type(:recently_updated_pages,
   :name => 'Recently Updated Pages',  
   :code => "@pages = Page.all(:order => 'updated_at desc', :limit => @portlet.number_of_pages)",
   :form => <<-FORM,
-.field
-  = f.label :name
-  = f.text_field :name
-.field
-  = f.label :number_of_pages
-  = f.text_field :number_of_pages, :size => 2
+<div class="fields">
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+</div>
+<div class="field">
+  <%= f.label :number_of_pages %>
+  <%= f.text_field :number_of_pages, :size => 2 %>
+</div>
 FORM
   :template => <<-TEMPLATE
-%h2 Recent Updates
-%ul
-  - @pages.each do |page|
-    %li=h page.name
+<h2>Recent Updates</h2>
+<ul>
+  <% @pages.each do |page| %><li>
+    <%= page.name %>
+  </li><% end %>
+</ul>
 TEMPLATE
 )

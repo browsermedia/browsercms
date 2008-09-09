@@ -26,8 +26,12 @@ module ApplicationHelper
     end
   end
   
+  def action_icon_src(name)
+    "cms/icons/actions/#{name}.png"
+  end
+  
   def action_icon(name, options={})
-    image_tag "cms/icons/actions/#{name}.png", {:alt => name.to_s.titleize}.merge(options)
+    image_tag action_icon_src(name), {:alt => name.to_s.titleize}.merge(options)
   end
 
   def status_icon(status, options={})
@@ -36,12 +40,6 @@ module ApplicationHelper
   
   def cms_toolbar
     render :partial => 'layouts/cms_toolbar'    
-  end
-  
-  def eval_haml(haml, locals={})
-    obj = Object.new
-    Haml::Engine.new(haml).def_method(*([obj, :render] + locals.keys))
-    obj.render(locals)
   end
     
 end

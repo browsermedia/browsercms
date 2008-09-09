@@ -11,9 +11,9 @@ describe Portlet do
   end
   
   it "should be able to be rendered" do
-    portlet_type = create_portlet_type(:code => '@foo = "FOO"', :template => "%h1= @foo")
+    portlet_type = create_portlet_type(:code => '@foo = "FOO"', :template => "<h1><%= @foo %></h1>")
     portlet = create_portlet(:portlet_type => portlet_type)
-    portlet.render.should == "<h1>FOO</h1>\n"
+    portlet.render.should == "<h1>FOO</h1>"
   end
   
 end

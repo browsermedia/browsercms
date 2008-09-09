@@ -1,4 +1,5 @@
-<% form_tag new_cms_page_connector_path(@page), :method => :get do %>
+<% form_tag cms_path(:connectors, :new), :method => :get do %>
+  <%= hidden_field_tag :page_id, @page.to_param %>
   <%= hidden_field_tag :container, @container %>
   <label>
     Block Type
@@ -22,11 +23,15 @@
       <td><%= block.updated_at.strftime("%m/%d/%y") %></td>
       <td class="uses"><%= Connector.for_block(block).count %></td>
       <td class="view"><%= link_to action_icon(:view), cms_path(block) %></td>
-      <td class="select"><%= link_to action_icon(:connect), cms_path(:connectors, :page_id => @page, 
-        'connector[container]' => @container, 
-        'connector[content_block_type]' => block.class.to_s, 
-        'connector[content_block_id]' => block.id}
-        ), :method => :post %></td>
+      <td class="select">
+        <% form_for :connector, :url => cms_path(:connectors, :create) do |f| %>
+          <%= hidden_field_tag :page_id, @page.to_param %>
+          <%= f.hidden_field :container, :value => @container %>
+          <%= f.hidden_field :content_block_type, :value => block.class.to_s %>
+          <%= f.hidden_field :content_block_id, :value => block.id %>
+          <%= image_submit_tag action_icon_src(:connect) %>
+        <% end %>
+      </td>
     </tr>
   <% end %>
 </table>

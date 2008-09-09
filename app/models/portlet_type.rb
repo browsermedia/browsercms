@@ -5,11 +5,11 @@ class PortletType < ActiveRecord::Base
     @portlet = portlet
     eval(code)
     begin
-      Haml::Engine.new(template).render(self)
-    rescue 
+      ERB.new(template).result(binding)
+    rescue Exception
       CGI.escapeHTML "Could not render template: #{$!}\n"
     end      
-  rescue
+  rescue Exception
     CGI.escapeHTML "Could not evaluate code: #{$!}\n"
   end  
   

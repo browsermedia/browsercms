@@ -2,7 +2,7 @@
 <h1><%= @page_title %></h1>
 <% form_for(@portlet, :url => cms_path(@portlet, :update)) do |f| %>
   <%= f.error_messages %>
-  <%= eval_haml @portlet.portlet_type.form, :f => f %>
+  <%= render :inline => @portlet.portlet_type.form, :locals => {:f => f} %>
   <div class="buttons">
     <%= f.submit "Save" %>
   </div>

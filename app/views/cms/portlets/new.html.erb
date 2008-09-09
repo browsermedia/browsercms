@@ -3,7 +3,7 @@
 <% form_for(@portlet, :url => cms_path(:portlets, :create)) do |f| %>
   <%= f.error_messages %>
   <%= f.hidden_field :portlet_type_id %>
-  <%= eval_haml @portlet_type.form, :f => f %>
+  <%= render :inline => @portlet_type.form, :locals => {:f => f} %>
   <div class="buttons">
     <%= f.submit "Save" %>
   </div>
