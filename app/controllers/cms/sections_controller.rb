@@ -28,7 +28,7 @@ class Cms::SectionsController < Cms::BaseController
     @section = @parent.children.build(params[:section])
     if @section.save
       flash[:notice] = "Section '#{@section.name}' was created"
-      redirect_to [:cms, @section]
+      redirect_to cms_url(@section)
     else
       render :action => 'new'
     end    
@@ -42,7 +42,7 @@ class Cms::SectionsController < Cms::BaseController
     @section = Section.find(params[:id])
     if @section.update_attributes(params[:section])
       flash[:notice] = "Section '#{@section.name}' was updated"
-      redirect_to [:cms, @section]
+      redirect_to cms_url(@section)
     else
       render :action => 'edit'
     end      
@@ -55,10 +55,10 @@ class Cms::SectionsController < Cms::BaseController
       if @section.destroy
         flash[:notice] = "Section '#{@section.name}' was deleted"
       end
-      redirect_to [:cms, @parent]
+      redirect_to cms_url(@parent)
     else
       flash[:error] = "Section '#{@section.name}' cannot be deleted"
-      redirect_to [:cms, @section]
+      redirect_to cms_url(@section)
     end
   end  
   
@@ -79,7 +79,7 @@ class Cms::SectionsController < Cms::BaseController
     end
     
     respond_to do |format|
-      format.html { redirect_to [:cms, @move_to] }
+      format.html { redirect_to cms_url(@move_to) }
       format.js { render :template => 'cms/shared/show_notice' }
     end
   end  

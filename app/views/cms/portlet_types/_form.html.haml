@@ -1,16 +1,16 @@
 - form_for([:cms, @portlet_type]) do |f|
-  = f.error_messages
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :form
-    = f.text_area :form, :size => "80x20"
-  .field
-    = f.label :code
-    = f.text_area :code, :size => "80x20"
-  .field
-    = f.label :template
-    = f.text_area :template, :size => "80x20"
-  .buttons
-    = f.submit "Save"
+  <%= f.error_messages %>
+  <div class=2>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  <div class=2>
+    <%= f.label :form %>
+    <%= f.text_area :form, :size => "80x20" %>
+  <div class=2>
+    <%= f.label :code %>
+    <%= f.text_area :code, :size => "80x20" %>
+  <div class=2>
+    <%= f.label :template %>
+    <%= f.text_area :template, :size => "80x20" %>
+  <div class=2>
+    <%= f.submit "Save" %>

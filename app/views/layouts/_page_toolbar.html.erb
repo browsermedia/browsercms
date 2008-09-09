@@ -1,20 +1,20 @@
 <% if(logged_in? && @page && !@hide_page_toolbar) %>
   <div id="page_toolbar">
     <%= link_to((@mode == "edit" ? "Switch to View Mode" : "Switch to Edit Mode"), "#{@page.path}?mode=#{@mode == "edit" ? "view" : "edit"}") %>
-    <%= link_to "Edit Page Properties", "/cms/pages/#{@page.id}/edit" %>
+    <%= link_to "Edit Page Properties", cms_path(@page, :edit) %>
     
     <%= link_to_function "Assign" %>
-    <%= @page.published? ? "Publish" : link_to("Publish", "/cms/pages/#{@page.id}/publish", :method => :put) %>
-    <%= @page.hidden? ? "Hide" : link_to("Hide", "/cms/pages/#{@page.id}/hide", :method => :put) %>
-    <%= @page.archived? ? "Archive" : link_to("Archive", "/cms/pages/#{@page.id}/archive", :method => :put) %>
+    <%= @page.published? ? "Publish" : link_to("Publish", cms_path(@page, :publish), :method => :put) %>
+    <%= @page.hidden? ? "Hide" : link_to("Hide", cms_path(@page, :hide), :method => :put) %>
+    <%= @page.archived? ? "Archive" : link_to("Archive", cms_path(@page, :archive), :method => :put) %>
   </div>  
   <div>
     Status: <%= @page.status_name %> (Live)
     <br/>
     Page: <%= link_to h(@page.name), @page.path %>
     <br/>
-    Section: <%= link_to h(@page.section.name), "/cms/pages/#{@page.id}/section" %>
+    Section: <%= link_to h(@page.section.name), cms_path(:sections, :page_id => @page) %>
     <br/>
-    Template: <%= link_to h(@page.template_name), "/cms/page_templates" %>
+    Template: <%= link_to h(@page.template_name), cms_path(:page_templates) %>
   </div>
 <% end %>

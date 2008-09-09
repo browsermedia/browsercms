@@ -1,8 +1,0 @@
-= link_to 'View', [:cms, @block]
-%h1== Edit #{@block.name}
-- form_for([:cms, @block]) do |f|
-  = f.error_messages
-  = render :partial => 'cms/blocks/hidden_fields', :locals => { :f => f }
-  = render :partial => 'form', :locals => {:f => f}
-  .buttons
-    = f.submit "Save"

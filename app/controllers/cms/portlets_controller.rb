@@ -20,11 +20,11 @@ class Cms::PortletsController < Cms::ResourceController
   end
   
   def index_url
-    cms_portlets_path
+    cms_url :portlets
   end
   
   def show_url
-    cms_portlet_path(@portlet)
+    cms_url :portlets
   end
   
 end

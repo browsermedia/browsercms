@@ -1,5 +1,0 @@
-%h1 Select Content Type
-
-%ul
-  - @content_types.each do |type|
-    %li= link_to h(type.label), send("new_cms_#{type.name.underscore}_path", type.name.underscore.to_sym => {:connect_to_page_id => params[:connect_to_page_id], :connect_to_container => params[:connect_to_container]})

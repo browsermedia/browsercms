@@ -1,0 +1,22 @@
+<% @page_title = "Log In" %>
+<h1><%= @page_title %></h1>
+
+<div id="error"><%= flash[:error] %></div>
+
+<% form_tag cms_login_path do %>
+  <div class="field">
+    <%= label_tag 'login' %>
+    <%= text_field_tag 'login', @login %>
+  </div>
+  <div class="field">
+    <%= label_tag 'password' %>
+    <%= password_field_tag 'password', nil %>
+  </div>
+  <div class="field">
+    <%= label_tag 'remember_me', 'Remember me', :class => "inline" %>
+    <%= check_box_tag 'remember_me', '1', @remember_me %>
+  </div>
+  <div class="buttons">
+    <%= submit_tag 'Log in' %>
+  </div>
+<% end %>

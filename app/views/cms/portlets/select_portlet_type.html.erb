@@ -1,0 +1,5 @@
+<% @page_title = "Select Portlet Type" %>
+<h1><%= @page_title %></h1>
+<% PortletType.all(:order => "name").each do |portlet_type| %>
+  <p><%= link_to h(portlet_type.name.titleize), cms_path(:portlets, :new, :portlet_type_id => portlet_type.id) %></p>
+<% end %>

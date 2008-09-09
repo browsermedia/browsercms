@@ -1,0 +1,10 @@
+<% @page_title = "New #{@portlet.portlet_type.name.titleize}" %>
+<h1><%= @page_title %></h1>  
+<% form_for(@portlet, :url => cms_path(:portlets, :create)) do |f| %>
+  <%= f.error_messages %>
+  <%= f.hidden_field :portlet_type_id %>
+  <%= eval_haml @portlet_type.form, :f => f %>
+  <div class="buttons">
+    <%= f.submit "Save" %>
+  </div>
+<% end %>

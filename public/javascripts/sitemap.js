@@ -19,8 +19,7 @@ document.observe('dom:loaded', function() {
     //Set actions and enable buttons where appropriate
     if(element.hasClassName('page')) {
       var page_id = element.up('li').id.sub('page_','');
-      var url = '/cms/pages/'+page_id;
-      
+            
       //WARING: Questionable usability decision
       //If the page is already selected, 
       //then clicking it again will result in going to that page
@@ -29,23 +28,22 @@ document.observe('dom:loaded', function() {
         return false;
       }
       
-      $('edit-button').form.action = url;
+      $('edit-button').href = '/cms/pages/show/'+page_id;;
       $('edit-button').disabled = false;
 
-      $('properties-button').form.action = url+'/edit';
+      $('properties-button').href = '/cms/pages/edit/'+page_id;;
       $('properties-button').disabled = false;
       
     } else if(element.hasClassName('section')) {
       var section_id = element.up('li').id.sub('section_','');
-      var url = '/cms/sections/'+section_id;
       
-      $('properties-button').form.action = url+'/edit';
+      $('properties-button').href = '/cms/sections/edit/'+section_id;
       $('properties-button').disabled = false;        
 
-      $('add-page-button').form.action = url+'/pages/new';
+      $('add-page-button').href = '/cms/pages/new?section_id='+section_id;
       $('add-page-button').disabled = false;        
 
-      $('add-section-button').form.action = url+'/sections/new';
+      $('add-section-button').href = '/cms/sections/new?section_id='+section_id;
       $('add-section-button').disabled = false;        
       
     }
@@ -83,9 +81,9 @@ document.observe('dom:loaded', function() {
           
           //Figure out the id of the page/section
           if(e.hasClassName('page')) {
-            var url = '/cms/pages/'+e.id.sub('page_','');
+            var url = '/cms/pages/move_to/'+e.id.sub('page_','');
           } else if(e.hasClassName('section')) {
-            var url = '/cms/sections/'+e.id.sub('section_','');
+            var url = '/cms/sections/move_to/'+e.id.sub('section_','');
           } else {
             return; //WTF?
           }
@@ -94,7 +92,7 @@ document.observe('dom:loaded', function() {
           var section = this.element.up();
           
           //Let the server know about the move
-          url += '/move_to/'+section.id.sub('section_','')+'.js';
+          url += '.js?section_id='+section.id.sub('section_','');
           new Ajax.Request(url, {method: 'put'});
 
           //Open the section and put the page/section into it

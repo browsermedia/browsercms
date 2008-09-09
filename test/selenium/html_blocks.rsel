@@ -1,0 +1,5 @@
+setup :fixtures => :all
+include_partial 'login_as_cmsadmin'
+open '/cms/html_blocks'
+assert_title 'View HTML Blocks'
+verify_text_present "Welcome"

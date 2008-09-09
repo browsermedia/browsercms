@@ -19,7 +19,7 @@ class Cms::BlocksController < Cms::BaseController
     if @block.save
       flash[:notice] = "#{block_type.titleize} '#{@block.name}' was created"
       if @block.connected_page.blank?
-        redirect_to_first params[:_redirect_to], [:cms, @block]
+        redirect_to_first params[:_redirect_to], cms_url(@block)
       else
         redirect_to @block.connected_page.path        
       end
@@ -42,7 +42,7 @@ class Cms::BlocksController < Cms::BaseController
     @block = model.find(params[:id])
     if @block.update_attributes(params[model_name])
       flash[:notice] = "#{block_type.titleize} '#{@block.name}' was updated"
-      redirect_to_first params[:_redirect_to], [:cms, @block]
+      redirect_to_first params[:_redirect_to], cms_url(@block)
     else
       render :template => edit_template
     end    

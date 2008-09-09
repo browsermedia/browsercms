@@ -33,6 +33,7 @@ class Cms::ResourceController < Cms::BaseController
     @object = resource.find(params[:id])
     if @object.update_attributes(params[variable_name])
       flash[:notice] = "#{resource_name.singularize.titleize} '#{object_name}' was updated"
+      logger.debug "Redirecting to #{show_url}"
       redirect_to show_url
     else
       instance_variable_set("@#{variable_name}", @object)
@@ -71,11 +72,11 @@ class Cms::ResourceController < Cms::BaseController
     end
     
     def index_url
-      send("cms_#{resource_name}_url")
+      cms_url resource_name
     end
     
     def show_url
-      [:cms, @object]
+      cms_url @object
     end
     
     def new_template; 'cms/blocks/new' end

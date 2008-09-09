@@ -1,5 +1,5 @@
 <% @page_title = "Edit '#{h(@page.name)}' Page" %>
 <h1><%= @page_title %></h1>
-<% form_for([:cms, @page]) do |f| %>
+<% form_for(@page, :url => cms_path(@page, :update)) do |f| %>
   <%= render :partial => 'form', :locals => {:f => f} %>
 <% end %>

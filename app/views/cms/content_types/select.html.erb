@@ -1,0 +1,10 @@
+<h1>Select Content Type</h1>
+
+<ul>
+  <% @content_types.each do |type| %>
+    <li><%= link_to h(type.label), cms_path(type.name.underscore.pluralize, :new, 
+        "#{type.name.underscore}[connect_to_page_id]" => params[:connect_to_page_id], 
+        "#{type.name.underscore}[connect_to_container]" => params[:connect_to_container]
+      ) %></li>
+  <% end %>
+</ul>

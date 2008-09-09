@@ -1,0 +1,6 @@
+<% @page_title = "New Page" %>
+<h1><%= @page_title %></h1>
+<% form_for(@page, :url => cms_path(:pages, :create)) do |f| %>
+  <%= hidden_field_tag :section_id, @page.section_id %>
+  <%= render :partial => 'form', :locals => {:f => f} %>
+<% end %>

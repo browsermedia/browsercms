@@ -1,3 +1,3 @@
 %h1 New Section
 - form_for(@section, :url => cms_section_sections_path(@parent)) do |f|
-  = render :partial => 'form', :locals => {:f => f}
+  <%= render :partial => 'form', :locals => {:f => f} %>

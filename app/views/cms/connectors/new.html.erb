@@ -1,0 +1,32 @@
+<% form_tag new_cms_page_connector_path(@page), :method => :get do %>
+  <%= hidden_field_tag :container, @container %>
+  <label>
+    Block Type
+    <%= select_tag "block_type", options_for_select(RegisteredBlock.all(:order => "name").map{|b| [b.name.titleize, b.name]}, @block_type), :onchange => 'this.form.submit()' %>
+  </label>
+<% end %>
+    
+<%= error_messages_for :connector %>
+    
+<table id="blocks">
+  <tr>
+    <th>Name</th>
+    <th>Updated</th>
+    <th>Uses</th>
+    <th>View</th>
+    <th>Select</th>
+  </tr>
+  <% @blocks.each do |block| %>
+    <tr>
+      <td><%= block.name %></td>
+      <td><%= block.updated_at.strftime("%m/%d/%y") %></td>
+      <td class="uses"><%= Connector.for_block(block).count %></td>
+      <td class="view"><%= link_to action_icon(:view), cms_path(block) %></td>
+      <td class="select"><%= link_to action_icon(:connect), cms_path(:connectors, :page_id => @page, 
+        'connector[container]' => @container, 
+        'connector[content_block_type]' => block.class.to_s, 
+        'connector[content_block_id]' => block.id}
+        ), :method => :post %></td>
+    </tr>
+  <% end %>
+</table>

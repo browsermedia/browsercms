@@ -30,7 +30,7 @@ class Cms::PagesController < Cms::BaseController
     @page = @section.pages.build(params[:page])
     if @page.save
       flash[:notice] = "Page was '#{@page.name}' created."
-      redirect_to([:cms, @page])
+      redirect_to cms_url(@page)
     else
       render :action => "new"
     end
@@ -40,7 +40,7 @@ class Cms::PagesController < Cms::BaseController
     @page = Page.find(params[:id])
     if @page.update_attributes(params[:page])
       flash[:notice] = "Page was '#{@page.name}' updated."
-      redirect_to([:cms, @page])
+      redirect_to cms_url(@page)
     else
       render :action => "edit"
     end
@@ -51,7 +51,7 @@ class Cms::PagesController < Cms::BaseController
     if @page.destroy
       flash[:notice] = "Page was '#{@page.name}' deleted."
     end
-    redirect_to(cms_pages_url)
+    redirect_to cms_url(:pages)
   end
   
   #status actions
@@ -81,7 +81,7 @@ class Cms::PagesController < Cms::BaseController
     end
     
     respond_to do |format|
-      format.html { redirect_to [:cms, @section] }
+      format.html { redirect_to cms_path(@section) }
       format.js { render :template => 'cms/shared/show_notice' }
     end    
   end

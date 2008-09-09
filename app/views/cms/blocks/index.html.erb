@@ -1,0 +1,24 @@
+<p>
+  <%= link_to "#{action_icon(:add)} New #{model_name.titleize}", cms_path(model_name.pluralize, :new) %>
+</p>
+
+<table id="blocks">
+  <tr>
+    <th>Name</th>
+    <th>Updated</th>
+    <th>Uses</th>
+    <th>View</th>
+    <th>Edit</th>
+    <th>Delete</th>
+  </tr>
+  <% @blocks.each do |block| %>
+    <tr>
+      <td><%= block.name %></td>
+      <td><%= block.updated_at.strftime("%m/%d/%y") %></td>
+      <td class="uses"><%= Connector.for_block(block).count %></td>
+      <td class="view"><%= link_to action_icon(:view), cms_path(block) %></td>
+      <td class="edit"><%= link_to action_icon(:edit), cms_path(block, :edit) %></td>      
+      <td class="delete"><%= link_to action_icon(:delete), cms_path(block, :destroy), :method => :delete, :confirm => "Are you sure you want to delete '#{block.name}'?" %></td>
+    </tr>
+  <% end %>
+</table>

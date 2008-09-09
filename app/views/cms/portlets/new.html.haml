@@ -1,7 +1,0 @@
-%h1= "New #{@portlet.portlet_type.name.titleize}" 
-- form_for([:cms, @portlet]) do |f|
-  = f.error_messages
-  = f.hidden_field :portlet_type_id
-  = eval_haml @portlet_type.form, :f => f
-  .buttons
-    = f.submit "Save"

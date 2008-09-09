@@ -1,6 +1,0 @@
-%h1= "Edit #{@portlet.class.to_s.titleize}" 
-- form_for(:portlet, @portlet, :url => cms_portlet_path(@portlet), :html => {:method => :put}) do |f|
-  = f.error_messages
-  = eval_haml @portlet.portlet_type.form, :f => f
-  .buttons
-    = f.submit "Save"

@@ -9,7 +9,7 @@
               <h2 style="margin-top: 0">Content Types</h2>
               <ul>
                 <% ContentType.all(:order => "name").each do |block| %>
-                  <li><%= link_to block.name.titleize, send("cms_#{block.name.pluralize.underscore}_path") %></li>
+                  <li><%= link_to block.name.titleize, cms_path(block.name.pluralize.underscore) %></li>
                 <% end %>
               </ul>
             </td>

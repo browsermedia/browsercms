@@ -1,12 +1,17 @@
 <% content_for :title do %>Sitemap<% end %>
 
 <div class="buttons">
-  <%= button_to "Edit", {}, :id => 'edit-button', :disabled => "disabled", :method => :get %>
-  <%= button_to "Properties", {}, :id => 'properties-button', :disabled => "disabled", :method => :get %>
-  <%= button_to "Delete", {}, :id => 'delete-button', :disabled => "disabled", :method => :delete %>
-  <%= button_to "Add Page", {}, :id => 'add-page-button', :disabled => "disabled", :method => :get %>
-  <%= button_to "Add Section", {}, :id => 'add-section-button', :disabled => "disabled", :method => :get %>
-  <%= button_to "Add Link", {}, :id => 'add-link-button', :disabled => "disabled", :method => :get %>
+  <%= link_to "Edit", '#', :id => 'edit-button', :disabled => "disabled" %>
+  |
+  <%= link_to "Properties", '#', :id => 'properties-button', :disabled => "disabled" %>
+  |
+  <%= link_to "Delete", '#', :id => 'delete-button', :disabled => "disabled" %>
+  |
+  <%= link_to "Add Page", '#', :id => 'add-page-button', :disabled => "disabled" %>
+  |
+  <%= link_to "Add Section", '#', :id => 'add-section-button', :disabled => "disabled" %>
+  |
+  <%= link_to "Add Link", '#', :id => 'add-link-button', :disabled => "disabled" %>
 </div>
 <div id="sitemap">
   <ul>
