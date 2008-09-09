@@ -18,6 +18,10 @@ describe Cms::PageTemplatesController do
     it_should_assign(:page_template)
     it_should_render(:new)
     it_should_be_successful
+    it "should be render valid html" do
+      pending "Figure out a way to test for valid HTML"
+      response.body.should be_valid_html
+    end
   end
   
   describe "create new page template" do

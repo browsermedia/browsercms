@@ -9,7 +9,7 @@ create_section(:about, :name => "About", :parent => sections(:root))
 create_section(:people, :name => "People", :parent => sections(:about))
 create_section(:careers, :name => "Careers", :parent => sections(:about))
 
-create_page_template(:main, :name => "Main", :file_name => "main", :language => "haml", :body => <<-TEMPLATE)
+create_page_template(:main, :name => "Main", :file_name => "main", :language => "erb", :body => <<-TEMPLATE)
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
@@ -24,7 +24,7 @@ create_page_template(:main, :name => "Main", :file_name => "main", :language => 
   </body>
 </html>
 TEMPLATE
-create_page_template(:two_column, :name => "Two Column", :file_name => "two_column", :language => "haml", :body=> <<-TEMPLATE)
+create_page_template(:two_column, :name => "Two Column", :file_name => "two_column", :language => "erb", :body=> <<-TEMPLATE)
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
