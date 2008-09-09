@@ -24,14 +24,14 @@ document.observe('dom:loaded', function() {
       //If the page is already selected, 
       //then clicking it again will result in going to that page
       if(doubleClick) {
-        window.location = url;
+        window.location = '/cms/pages/show/'+page_id;
         return false;
       }
       
-      $('edit-button').href = '/cms/pages/show/'+page_id;;
+      $('edit-button').href = '/cms/pages/show/'+page_id;
       $('edit-button').disabled = false;
 
-      $('properties-button').href = '/cms/pages/edit/'+page_id;;
+      $('properties-button').href = '/cms/pages/edit/'+page_id;
       $('properties-button').disabled = false;
       
     } else if(element.hasClassName('section')) {

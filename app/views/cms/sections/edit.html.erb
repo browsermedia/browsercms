@@ -1,0 +1,5 @@
+<% @page_title = "Edit '#{h(@section.name)}' Section" %>
+<h1><%= @page_title %></h1> 
+<% form_for(@section, :url => cms_path(@section, :update)) do |f| %>
+  <%= render :partial => 'form', :locals => {:f => f} %>
+<% end %>
