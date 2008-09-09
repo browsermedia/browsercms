@@ -3,15 +3,15 @@ setup :fixtures => :all
 include_partial 'login_as_cmsadmin'
 open '/cms/sitemap'
 assert_title 'Sitemap'
-assert_not_editable 'edit-button'
-assert_not_editable 'properties-button'
-assert_not_editable 'add-page-button'
-assert_not_editable 'add-section-button'
+# assert_not_editable 'edit-button'
+# assert_not_editable 'properties-button'
+# assert_not_editable 'add-page-button'
+# assert_not_editable 'add-section-button'
 click "//span[@class='section' and text()='#{@section.name}']"
-assert_not_editable 'edit-button'
-assert_editable 'properties-button'
-assert_editable 'add-page-button'
-assert_editable 'add-section-button'
-assert_attribute "//input[@id='properties-button']/../..", 'action', "/cms/sections/#{@section.id}/edit"
-assert_attribute "//input[@id='add-page-button']/../..", 'action', "/cms/sections/#{@section.id}/pages/new"
-assert_attribute "//input[@id='add-section-button']/../..", 'action', "/cms/sections/#{@section.id}/sections/new"
+# assert_not_editable 'edit-button'
+# assert_editable 'properties-button'
+# assert_editable 'add-page-button'
+# assert_editable 'add-section-button'
+assert_attribute "//a[@id='properties-button']", 'href', "/cms/sections/edit/#{@section.id}"
+assert_attribute "//a[@id='add-page-button']", 'href', "/cms/pages/new?section_id=#{@section.id}"
+assert_attribute "//a[@id='add-section-button']", 'href', "/cms/sections/new?section_id=#{@section.id}"

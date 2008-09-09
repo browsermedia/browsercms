@@ -3,10 +3,10 @@ setup :fixtures => :all
 include_partial 'login_as_cmsadmin'
 open '/cms/sitemap'
 assert_title 'Sitemap'
-assert_not_editable 'edit-button'
-assert_not_editable 'properties-button'
+#assert_not_editable 'edit-button'
+#assert_not_editable 'properties-button'
 click "//span[@class='page' and text()='#{@page.name}']"
-assert_editable 'edit-button'
-assert_editable 'properties-button'
-assert_attribute "//input[@id='edit-button']/../..", 'action', "/cms/pages/#{@page.id}"
-assert_attribute "//input[@id='properties-button']/../..", 'action', "/cms/pages/#{@page.id}/edit"
+#assert_editable 'edit-button'
+#assert_editable 'properties-button'
+assert_attribute "//a[@id='edit-button']", 'href', "/cms/pages/show/#{@page.id}"
+assert_attribute "//a[@id='properties-button']", 'href', "/cms/pages/edit/#{@page.id}"

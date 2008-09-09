@@ -1,4 +1,4 @@
-<% form_for(@page_template, :url => cms_path(@page_template, :create_or_update) do |f| %>
+<% form_for(@page_template, :url => cms_path(@page_template, :create_or_update)) do |f| %>
   <%= f.error_messages %>
   <div class="fields">
     <%= f.label :name %>

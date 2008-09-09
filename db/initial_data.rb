@@ -11,8 +11,9 @@ create_section(:careers, :name => "Careers", :parent => sections(:about))
 
 create_page_template(:main, :name => "Main", :file_name => "main", :language => "haml", :body => <<-TEMPLATE)
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <title><%= @page_title %></title>
     <%= stylesheet_link_tag 'cms' %>
     <%= yield :html_head %>
@@ -25,15 +26,16 @@ create_page_template(:main, :name => "Main", :file_name => "main", :language => 
 TEMPLATE
 create_page_template(:two_column, :name => "Two Column", :file_name => "two_column", :language => "haml", :body=> <<-TEMPLATE)
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <title><%= @page_title %></title>
     <%= stylesheet_link_tag 'cms' %>
     <%= yield :html_head %>
   </head>
   <body>
     <%= cms_toolbar %>
-    <table width ="960">
+    <table width="960">
       <tr>
         <td width="720">
           <%= container :main %>

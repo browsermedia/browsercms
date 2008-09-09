@@ -1,5 +1,5 @@
 setup :fixtures => :all
 @page = Page.find_by_name('Home')
 include_partial 'login_as_cmsadmin'
-open "/cms/pages/#{@page.id}/edit"
+open "/cms/pages/edit/#{@page.id}"
 assert_title "Edit '#{@page.name}' Page"

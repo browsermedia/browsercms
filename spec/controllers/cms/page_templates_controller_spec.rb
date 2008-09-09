@@ -2,6 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Cms::PageTemplatesController do
   integrate_views
+  include Cms::PathHelper
   
   before { login_as_user }
 
@@ -43,7 +44,7 @@ describe Cms::PageTemplatesController do
       end
       it "should redirect to the page templates url" do
         do_post
-        response.should redirect_to(cms_page_templates_url)
+        response.should redirect_to(cms_url(:page_templates))
       end
     end
     describe "with invalid attributes" do
@@ -94,7 +95,7 @@ describe Cms::PageTemplatesController do
       end
       it "should redirect to the page templates url" do
         do_put
-        response.should redirect_to(cms_page_templates_url)
+        response.should redirect_to(cms_url(:page_templates))
       end
     end
     describe "with invalid attributes" do
@@ -132,7 +133,7 @@ describe Cms::PageTemplatesController do
     end    
     it "should redirect to the page templates url" do
       do_delete
-      response.should redirect_to(cms_page_templates_url)      
+      response.should redirect_to(cms_url(:page_templates))      
     end
   end
   
