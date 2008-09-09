@@ -10,10 +10,10 @@ module ApplicationHelper
   end
   
   def render_content_block(block)
-    # block.request = request if block.respond_to?(:request=)
-    # block.response = request if block.respond_to?(:response=)
-    # block.params = request if block.respond_to?(:params=)    
-    # block.session = request if block.respond_to?(:session=)    
+    block.request = request if block.respond_to?(:request=)
+    block.response = request if block.respond_to?(:response=)
+    block.params = request if block.respond_to?(:params=)
+    block.session = request if block.respond_to?(:session=)
     block.render
   end
   

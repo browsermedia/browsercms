@@ -1,14 +1,22 @@
 module Cms
+  ###
+  #
+  # Any programmer defined Block's should include BlockSupport via:
+  #
+  # include Cms::BlockSupport
+  #
+  # This will grant them instance and class methods from both BlockSupport and StatusSupport
+  #
   module BlockSupport
     
     def self.included(base_class)
       base_class.extend ClassMethods
       base_class.class_eval do
         include Cms::StatusSupport
+
         attr_accessor :connect_to_page_id
         attr_accessor :connect_to_container
         attr_accessor :connected_page
-        
         after_create :connect_to_page        
       end
     end
