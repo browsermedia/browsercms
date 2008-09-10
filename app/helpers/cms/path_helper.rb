@@ -15,7 +15,12 @@ module Cms
       if [String, Symbol, Hash, Array, Numeric, Date, Time].detect{|e| e === first}
         paths << first.to_s.sub(/^\//,'')
       else
-        paths << first.class.to_s.pluralize.underscore
+        if first.respond_to?(:content_block_type)
+          paths << 'blocks'
+          paths << first.content_block_type
+        else
+          paths << first.class.to_s.pluralize.underscore
+        end
         action = (args.delete_at(0) || "show")
         if action.to_sym == :create_or_update
           if first.new_record?

@@ -1,4 +1,8 @@
 <%= link_to 'Edit', cms_path(@block, :edit) %>
+<%= link_to 'Assign', cms_path(@block, :assign), :method => :post %>
+<%= link_to 'Publish', cms_path(@block, :publish), :method => :post %>
+<%= link_to 'Hide', cms_path(@block, :hide), :method => :post %>
+
 <h2><%= @block.name %></h2>
 <div id="block_content">
   <div class="header">Block Contents</div>

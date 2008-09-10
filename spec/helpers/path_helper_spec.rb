@@ -4,8 +4,8 @@ describe Cms::PathHelper do
 
   describe "path generation" do
     before do
-      @new_block = mock("html_block", :new_record? => true, :class => HtmlBlock)
-      @existing_block = mock("html_block", :new_record? => false, :to_param => 7, :class => HtmlBlock)      
+      @new_block = mock("html_block", :new_record? => true, :class => HtmlBlock, :content_block_type => 'html')
+      @existing_block = mock("html_block", :new_record? => false, :to_param => 7, :class => HtmlBlock, :content_block_type => 'html')      
     end
     {
                                       "'blocks'" => "/cms/blocks",
@@ -19,26 +19,30 @@ describe Cms::PathHelper do
                                  ":blocks, :new" => "/cms/blocks/new",
           ":blocks, :new, :type => 'html_block'" => "/cms/blocks/new?type=html_block",
          "'blocks', :new, :type => 'html_block'" => "/cms/blocks/new?type=html_block",
-        "'/blocks', :new, :type => 'html_block'" => "/cms/blocks/new?type=html_block",
-                               "@existing_block" => "/cms/html_blocks/show/7",
-               ":blocks, :show, @existing_block" => "/cms/blocks/show/7",
+        "'/blocks', :new, :type => 'html_block'" => "/cms/blocks/new?type=html_block",                               
                        "'html_blocks', :id => 7" => "/cms/html_blocks?id=7",
                       "'/html_blocks', :id => 7" => "/cms/html_blocks?id=7",
                         ":html_blocks, :id => 7" => "/cms/html_blocks?id=7",
                               "'html_blocks', 7" => "/cms/html_blocks/7",
                            "'/html_blocks', '7'" => "/cms/html_blocks/7",
-                        "@existing_block, :edit" => "/cms/html_blocks/edit/7",
                 "'html_blocks', :edit, :id => 7" => "/cms/html_blocks/edit?id=7",
                "'/html_blocks', :edit, :id => 7" => "/cms/html_blocks/edit?id=7",
                  ":html_blocks, :edit, :id => 7" => "/cms/html_blocks/edit?id=7",
                        "'html_blocks', :edit, 7" => "/cms/html_blocks/edit/7",
                     "'/html_blocks', :edit, '7'" => "/cms/html_blocks/edit/7",
-         "@existing_block, :edit, :foo => 'bar'" => "/cms/html_blocks/edit/7?foo=bar",
-               ":blocks, :edit, @existing_block" => "/cms/blocks/edit/7",
-":blocks, :edit, @existing_block, :foo => 'bar'" => "/cms/blocks/edit/7?foo=bar",
-                 "@new_block, :create_or_update" => "/cms/html_blocks/create",
-            "@existing_block, :create_or_update" => "/cms/html_blocks/update/7",
                 "'somewhere', :msg => 'foo bar'" => "/cms/somewhere?msg=foo+bar",
+   
+                # First value = controller, 2nd = actions, 3rd = id
+                ":blocks, :edit, @existing_block" => "/cms/blocks/edit/7",
+                ":blocks, :show, @existing_block" => "/cms/blocks/show/7",
+                ":blocks, :edit, @existing_block, :foo => 'bar'" => "/cms/blocks/edit/7?foo=bar",
+                          
+                        "@existing_block, :edit" => "/cms/blocks/html/edit/7",
+         "@existing_block, :edit, :foo => 'bar'" => "/cms/blocks/html/edit/7?foo=bar",
+                 "@new_block, :create_or_update" => "/cms/blocks/html/create",
+            "@existing_block, :create_or_update" => "/cms/blocks/html/update/7",                
+                               "@existing_block" => "/cms/blocks/html/show/7",
+               
      "'somewhere', :block_id => @existing_block" => "/cms/somewhere?block_id=7"
       #TODO: Some possible enhancements
       #"'/foo?x=1', :x => 2, :y => 3" => "/cms/foo?x=2&y=3"

@@ -28,6 +28,7 @@ module Cms
       end
     end
 
+    # Instance Methods
     def content_block_type
       self.class.content_block_type
     end

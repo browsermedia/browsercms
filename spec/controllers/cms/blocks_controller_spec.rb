@@ -43,4 +43,8 @@ describe Cms::BlocksController do
       end    
     end
   end
+  
+  it "should route to block controller based on block type in URL" do
+    params_from(:get, '/cms/blocks/html_block/show/1').should == {:controller => 'cms/blocks', :action=>'show', :id => '1', :block_type=>'html_block'}
+  end
 end
