@@ -77,10 +77,59 @@ describe Page do
   end
   
   describe "Versioning" do
-    it "should be save a version when creating a page" do
-      page = create_page
-      page.versions.latest.page.should == page
+    
+    describe "when creating a record" do
+      before do
+        @page = create_page
+      end
+      it "should create a version when creating a page" do
+        @page.versions.latest.page.should == @page
+      end
     end
+    
+    describe "when updating attributes" do
+      describe "with different values" do
+        before do
+          @page = create_page(:name => "Original Value")
+          @page.update_attributes(:name => "Something Different")
+        end
+        it "should create a version with the changed values" do
+          @page.versions.latest.page.should == @page
+          @page.versions.latest.name.should == "Something Different"
+          @page.name.should == "Something Different"
+        end
+        it "should not affect the values in previous versions" do
+          @page.versions.first.name.should == "Original Value"
+        end
+      end      
+      describe "with the unchanged values" do
+        before do
+          @page = create_page(:name => "Original Value")
+          @update_attributes = lambda { @page.update_attributes(:name => "Original Value") }
+        end
+        it "should not create a new version" do
+          @update_attributes.should_not change(@page.versions, :count)
+        end
+      end
+    end
+    
+    describe "when destroying a record" do
+      before do
+        @page = create_page
+        @destroy_page = lambda { @page.destroy }
+      end
+      
+      it "should not actually delete the row" do
+        @destroy_page.should_not change(Page, :count)
+      end
+      it "should create a new version" do
+        @destroy_page.should change(@page.versions, :count).by(1)
+      end
+      it "should set the status to DELETED" do
+        @page.should be_deleted
+      end
+    end
+    
   end
   
 end
