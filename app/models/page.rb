@@ -1,10 +1,9 @@
 class Page < ActiveRecord::Base
   
-  version_fu
-  
-  #See config/initializers/concerned_with.rb
   concerned_with :status
   
+  version_fu
+    
   belongs_to :section
   belongs_to :template, :class_name => "PageTemplate"
   has_many :connectors, :order => "position"

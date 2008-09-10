@@ -62,9 +62,6 @@ describe Page do
       page.should have(1).error_on(:status)
     end
 
-    it "should have status options" do
-      Page.status_options.should == [["In Progress", "IN_PROGRESS"], ["Published", "PUBLISHED"], ["Hidden", "HIDDEN"], ["Archived", "ARCHIVED"], ["Deleted", "DELETED"]]
-    end
   end
   
   it "should be able to be moved to another section" do

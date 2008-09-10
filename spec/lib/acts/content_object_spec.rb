@@ -1,13 +1,13 @@
-require File.dirname(__FILE__) + '/../spec_helper'
+require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe Cms::StatusSupport do
+describe "A Content Object" do
   before(:each) do
     @b = HtmlBlock.new
   end
 
   it "should add a default status to a block" do
-    @b.save
-    @b.reload.status.should == "IN_PROGRESS"
+    @b.valid?
+    @b.status.should == "IN_PROGRESS"
   end
 
   it "should allow blocks to be published" do
@@ -35,10 +35,6 @@ describe Cms::StatusSupport do
     @b.should respond_to(:archive!)
     @b.should respond_to(:publish!)
     @b.should_not respond_to(:hide!)
-  end
-
-  it "should have status options" do
-    HtmlBlock.status_options.should == [["In Progress", "IN_PROGRESS"], ["Published", "PUBLISHED"], ["Archived", "ARCHIVED"], ["Deleted", "DELETED"]]
   end
 
   it "should not allow invalid statuses" do

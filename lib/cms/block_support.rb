@@ -12,8 +12,6 @@ module Cms
     def self.included(base_class)
       base_class.extend ClassMethods
       base_class.class_eval do
-        include Cms::StatusSupport
-
         attr_accessor :connect_to_page_id
         attr_accessor :connect_to_container
         attr_accessor :connected_page
