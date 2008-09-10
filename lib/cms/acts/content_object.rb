@@ -21,32 +21,39 @@ module Cms
         
           validates_inclusion_of :status, :in => @statuses
         
-          #Create query methods like pubished?
-          @statuses.each do |status|
-            define_method "#{status.underscore}?" do
-              self.status == status
-            end
-          end        
-        
-          #Define the action methods for each status, like publish and publish!, which set the status and call save
-          {
-              "PUBLISHED" => :publish,
-              "ARCHIVED" => :archive,
-              "IN_PROGRESS" => :in_progress,
-              "DELETED" => :delete
-              }.each do |status, method_name|
-            define_method method_name do
-              self.status = status
-              save
-            end
-            define_method "#{method_name}!" do
-              self.status = status
-              save!
-            end
-          end        
+          define_status_query_methods
+          define_status_action_methods
         
           include InstanceMethods
-        end      
+        end
+        
+        private
+          def define_status_query_methods
+            @statuses.each do |status|
+              define_method "#{status.underscore}?" do
+                self.status == status
+              end
+            end        
+          end        
+          
+          def define_status_action_methods
+            {
+                "PUBLISHED" => :publish,
+                "ARCHIVED" => :archive,
+                "IN_PROGRESS" => :in_progress,
+                "DELETED" => :delete
+                }.each do |status, method_name|
+              define_method method_name do
+                self.status = status
+                save
+              end
+              define_method "#{method_name}!" do
+                self.status = status
+                save!
+              end
+            end                    
+          end
+          
       end
     
       module InstanceMethods
