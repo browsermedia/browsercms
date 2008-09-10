@@ -113,19 +113,20 @@ describe Page do
       end
     end
     
-    describe "when destroying a record" do
+    describe "when deleting a record" do
       before do
         @page = create_page
-        @destroy_page = lambda { @page.destroy }
+        @delete_page = lambda { @page.delete! }
       end
       
       it "should not actually delete the row" do
-        @destroy_page.should_not change(Page, :count)
+        @delete_page.should_not change(Page, :count)
       end
       it "should create a new version" do
-        @destroy_page.should change(@page.versions, :count).by(1)
+        @delete_page.should change(@page.versions, :count).by(1)
       end
       it "should set the status to DELETED" do
+        @delete_page.call
         @page.should be_deleted
       end
     end

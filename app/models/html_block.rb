@@ -1,5 +1,7 @@
 class HtmlBlock < ActiveRecord::Base
-  include Cms::BlockSupport
+
+  acts_as_content_object
+  
   def render
     content
   end

@@ -43,25 +43,28 @@ describe Cms::StatusSupport do
 
   it "should not allow invalid statuses" do
     @b = HtmlBlock.new(:status => "FAIL")
-    @b.save
-#    @b.should have(1).error_on(:status)
-    pending "Might just be an improperly written test"
+    @b.should_not be_valid
+    @b.should have(1).error_on(:status)
   end
 
   it "should respond to publish?" do
     @b.publish
-    @b.published?.should
+    @b.should be_published
   end
 
   it "should respond to archive?" do
     @b.archive
-    @b.archived?.should
+    @b.should be_archived
   end
 
   it "should respond to in_progress?" do
     @b.in_progress
-    @b.in_progress?.should
+    @b.should be_in_progress
   end
 
+  it "should respond to deleted?" do
+    @b.delete
+    @b.should be_deleted
+  end
 
 end

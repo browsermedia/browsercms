@@ -9,6 +9,8 @@ rescue Exception
   logger.warn("~~ Could not load Erubis.  'gem install erubis' for faster template rendering")
 end
 
+ActiveRecord::Base.send(:include, Cms::Acts::ContentObject)
+
 if ActiveRecord::Base.connection.tables.include?("page_templates")
   tmp_view_path = "#{Rails.root}/tmp/views"
   logger.info("~~ Writing page templates to #{tmp_view_path}")

@@ -7,7 +7,7 @@ module Cms::StatusSupport
     base_class.class_eval do
       base_class.extend ClassMethods
       before_validation_on_create :set_default_status
-
+      validates_inclusion_of :status, :in => STATUSES
       #Metaprogramming FTW :)
       #Define the boolean methods for each status, like published?
       statuses.each do |status|
@@ -52,6 +52,7 @@ module Cms::StatusSupport
       PUBLISHED => :publish,
       ARCHIVED => :archive,
       IN_PROGRESS => :in_progress,
+      DELETED => :delete
       }.each do |status, method_name|
     define_method method_name do
       self.status = status

@@ -52,4 +52,9 @@ class Page
     end
   end
     
+  def delete!
+    self.status = DELETED
+    save!
+  end  
+    
 end
