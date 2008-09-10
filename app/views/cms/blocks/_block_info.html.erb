@@ -1,0 +1,6 @@
+<h2 style="margin-top: 0">File Information</h2>
+<ul>
+  <li>Name: <%= @block.name %></li>
+  <li>Type: <%= @block.content_block_type.titleize %></li>
+  <li>Status: <%= status_icon(@block.status) %> <%= @block.status_name %>  </li>
+</ul>

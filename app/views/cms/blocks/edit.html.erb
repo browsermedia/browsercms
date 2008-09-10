@@ -2,8 +2,8 @@
 <h1>Edit <%= @block.name %></h1>
 <% form_for(@block, :url => cms_path(@block, :update)) do |f| %>
   <%= f.error_messages %>
-  <%= render :partial => 'cms/blocks/hidden_fields', :locals => { :f => f } %>
-  <%= render :partial => 'form', :locals => {:f => f} %>
+  <%= render :partial => 'hidden_fields', :locals => { :f => f } %>
+  <%= render :partial => "cms/#{@block.content_block_type.pluralize}/form", :locals => {:f => f} %>
   <div class="fields">
     <%= f.submit "Save" %>
   </div>

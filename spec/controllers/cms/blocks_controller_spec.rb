@@ -44,6 +44,29 @@ describe Cms::BlocksController do
     end
   end
   
+  describe "publish" do
+    before do
+      login_as_user
+      @block = HtmlBlock.new
+      @block.id = "7"
+      @block.stub!(:publish).and_return(true)
+      @model = mock("HtmlBlock", :find => @block)
+      @controller.stub!(:model).and_return(@model)
+    end
+    it "should find the block" do
+      @model.should_receive(:find).with("7").and_return(@block)
+      post :publish, :id => "7"
+    end      
+    it "should be able to update the status of a block" do
+      @block.should_receive(:publish).and_return(true)
+      post :publish, :id => "7"
+    end
+    it "should redirect to the block show action" do
+      post :publish, :id => "7"
+      response.should redirect_to("http://test.host/cms/blocks/html_block/show/7")
+    end
+  end
+  
   it "should route to block controller based on block type in URL" do
     params_from(:get, '/cms/blocks/html_block/show/1').should == {:controller => 'cms/blocks', :action=>'show', :id => '1', :block_type=>'html_block'}
   end

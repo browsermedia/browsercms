@@ -49,17 +49,30 @@ class Cms::BlocksController < Cms::BaseController
   end
   
   def destroy
-    @block = model.find(params[:id])
-    if @block.destroy
-      flash[:notice] = "#{block_type.titleize} '#{@block.name}' was deleted"
-    else
-      flash[:error] = "#{block_type.titleize} '#{@block.name}' could not be deleted"
-    end
+    do_command(:destroy, "deleted")
     redirect_to_first params[:_redirect_to], cms_content_library_url
+  end
+ 
+  def publish
+    do_command(:publish, "published")
+    redirect_to cms_url(@block) 
+  end
+  
+  def archive
+    do_command(:archive, "archived")
+    redirect_to cms_url(@block)
   end
   
   protected
-  
+    def do_command (cmd, result)
+      @block = model.find(params[:id])
+      if @block.send(cmd)
+        flash[:notice] = "#{block_type.titleize} '#{@block.name}' was #{result}"
+      else
+        flash[:error] = "#{block_type.titleize} '#{@block.name}' could not be #{result}"
+      end
+    end
+    
     def block_type
       controller_name.singularize
     end

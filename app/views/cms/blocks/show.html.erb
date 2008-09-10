@@ -1,7 +1,10 @@
+<% content_for(:sidebar) do %>
+<%= render :partial => "block_info" %>
+<% end -%>
 <%= link_to 'Edit', cms_path(@block, :edit) %>
-<%= link_to 'Assign', cms_path(@block, :assign), :method => :post %>
-<%= link_to 'Publish', cms_path(@block, :publish), :method => :post %>
-<%= link_to 'Hide', cms_path(@block, :hide), :method => :post %>
+<%= false ? (link_to 'Assign', cms_path(@block, :assign), :method => :post) : "Assign" %>
+<%= !@block.published? ? link_to('Publish', cms_path(@block, :publish), :method => :post) : "Publish" %>
+<%= !@block.archived? ? link_to('Archive', cms_path(@block, :archive), :method => :post) : "Archive" %>
 
 <h2><%= @block.name %></h2>
 <div id="block_content">

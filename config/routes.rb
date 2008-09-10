@@ -6,7 +6,7 @@ ActionController::Routing::Routes.draw do |map|
     cms.login '/login', :controller => 'sessions', :action => 'new'
     cms.dashboard '/', :controller => 'dashboard'
     cms.sitemap '/sitemap', :controller => 'sections'
-    cms.content_library '/content_library', :controller => 'html_blocks'
+    cms.content_library '/content_library', :controller => 'blocks'
     cms.administration '/administration', :controller => 'page_templates'
     cms.connect '/blocks/:block_type/:action/:id', :controller => 'blocks'
   end
