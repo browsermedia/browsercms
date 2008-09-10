@@ -8,25 +8,26 @@ module Cms
     
       module MacroMethods
         
-        STATUSES = ["IN_PROGRESS", "PUBLISHED", "ARCHIVED", "DELETED"]
+        STATUSES = {"IN_PROGRESS" => :in_progress, "PUBLISHED" => :publish, "ARCHIVED" => :archive, "DELETED" => :delete}
         
         def acts_as_content_block(options={})
-          @statuses = STATUSES
+          @statuses = STATUSES.dup
           acts_as_content_object(options)
           include Cms::BlockSupport          
         end
 
-        def acts_as_content_page(options={})
-          @statuses = STATUSES + ["HIDDEN"]
+        def acts_as_content_page(options={})          
+          @statuses = STATUSES.dup 
+          @statuses["HIDDEN"] = :hide 
           acts_as_content_object(options)
         end
                 
         private
           def acts_as_content_object(options={})                   
-            @default_status = @statuses.first      
+            @default_status = "IN_PROGRESS"      
             before_validation_on_create :set_default_status
         
-            validates_inclusion_of :status, :in => @statuses
+            validates_inclusion_of :status, :in => @statuses.keys
         
             define_status_query_methods
             define_status_action_methods
@@ -35,7 +36,7 @@ module Cms
           end
         
           def define_status_query_methods
-            @statuses.each do |status|
+            @statuses.keys.each do |status|
               define_method "#{status.underscore}?" do
                 self.status == status
               end
@@ -43,12 +44,7 @@ module Cms
           end        
           
           def define_status_action_methods
-            {
-                "PUBLISHED" => :publish,
-                "ARCHIVED" => :archive,
-                "IN_PROGRESS" => :in_progress,
-                "DELETED" => :delete
-                }.each do |status, method_name|
+            @statuses.each do |status, method_name|
               define_method method_name do
                 self.status = status
                 save

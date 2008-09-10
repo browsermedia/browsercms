@@ -1,6 +1,7 @@
 class Page < ActiveRecord::Base
   
-  concerned_with :status
+  # concerned_with :status
+  acts_as_content_page
   
   version_fu
     
