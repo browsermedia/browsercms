@@ -21,6 +21,7 @@ describe Cms::StatusSupport do
   end
 
   it "should allow blocks to be marked 'in progress'" do
+    @b.publish
     @b.in_progress
     @b.reload.status.should == 'IN_PROGRESS'
   end
@@ -35,4 +36,32 @@ describe Cms::StatusSupport do
     @b.should respond_to(:publish!)
     @b.should_not respond_to(:hide!)
   end
+
+  it "should have status options" do
+    HtmlBlock.status_options.should == [["In Progress", "IN_PROGRESS"], ["Published", "PUBLISHED"], ["Archived", "ARCHIVED"], ["Deleted", "DELETED"]]
+  end
+
+  it "should not allow invalid statuses" do
+    @b = HtmlBlock.new(:status => "FAIL")
+    @b.save
+#    @b.should have(1).error_on(:status)
+    pending "Might just be an improperly written test"
+  end
+
+  it "should respond to publish?" do
+    @b.publish
+    @b.published?.should
+  end
+
+  it "should respond to archive?" do
+    @b.archive
+    @b.archived?.should
+  end
+
+  it "should respond to in_progress?" do
+    @b.in_progress
+    @b.in_progress?.should
+  end
+
+
 end
