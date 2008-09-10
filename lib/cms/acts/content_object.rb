@@ -26,7 +26,7 @@ module Cms
           def acts_as_content_object(options={})                   
             @default_status = "IN_PROGRESS"      
             before_validation_on_create :set_default_status
-        
+            
             validates_inclusion_of :status, :in => @statuses.keys
         
             define_status_query_methods
@@ -68,6 +68,10 @@ module Cms
           self.status = self.class.default_status if status.blank?
         end
       
+        def status_name
+          status.titleize
+        end
+        
         module ClassMethods   
           def default_status
             @default_status

@@ -3,10 +3,10 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 describe "A Content Object" do
   before(:each) do
     @b = HtmlBlock.new
+    @b.valid?
   end
 
   it "should add a default status to a block" do
-    @b.valid?
     @b.status.should == "IN_PROGRESS"
   end
 
@@ -67,4 +67,9 @@ describe "A Content Object" do
     Page.new
     HtmlBlock.statuses.keys.should_not include("HIDDEN")
   end
+  
+  it "should respond to status_name" do
+    @b.status_name.should == "In Progress"
+  end
+  
 end
