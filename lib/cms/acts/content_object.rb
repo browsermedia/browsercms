@@ -7,27 +7,33 @@ module Cms
       end
     
       module MacroMethods
-        def acts_as_content_object(options={})
-                   
-          @statuses = ["IN_PROGRESS", "PUBLISHED", "ARCHIVED", "DELETED"]
-          if options[:status] == :page
-            @statuses << "HIDDEN"
-          else
-            include Cms::BlockSupport
-          end
-
-          @default_status = @statuses.first      
-          before_validation_on_create :set_default_status
         
-          validates_inclusion_of :status, :in => @statuses
+        STATUSES = ["IN_PROGRESS", "PUBLISHED", "ARCHIVED", "DELETED"]
         
-          define_status_query_methods
-          define_status_action_methods
-        
-          include InstanceMethods
+        def acts_as_content_block(options={})
+          @statuses = STATUSES
+          acts_as_content_object(options)
+          include Cms::BlockSupport          
         end
-        
+
+        def acts_as_content_page(options={})
+          @statuses = STATUSES + ["HIDDEN"]
+          acts_as_content_object(options)
+        end
+                
         private
+          def acts_as_content_object(options={})                   
+            @default_status = @statuses.first      
+            before_validation_on_create :set_default_status
+        
+            validates_inclusion_of :status, :in => @statuses
+        
+            define_status_query_methods
+            define_status_action_methods
+        
+            include InstanceMethods
+          end
+        
           def define_status_query_methods
             @statuses.each do |status|
               define_method "#{status.underscore}?" do
