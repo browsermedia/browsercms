@@ -24,13 +24,8 @@ module Cms
         to_s.underscore
       end
 
-      # Might be able to kill this method as duplicate of display_name ?
-      def content_block_label
-        to_s.titleize
-      end
-
       def display_name
-        content_block_label
+        to_s.titleize
       end
 
       def display_name_plural
@@ -43,10 +38,6 @@ module Cms
       self.class.content_block_type
     end
   
-    def content_block_label
-      self.class.content_block_label
-    end
-
     def display_name
       self.class.display_name
     end
