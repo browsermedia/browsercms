@@ -5,5 +5,13 @@ class HtmlBlock < ActiveRecord::Base
   def render
     content
   end
+
+  def self.display_name
+    "Html"
+  end
+
+  def self.display_name_plural
+    "Html"
+  end
   
 end

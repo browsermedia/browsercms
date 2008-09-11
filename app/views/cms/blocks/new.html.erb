@@ -1,4 +1,5 @@
-<h1>New <%= @block.content_block_label %></h1>
+<% @page_title = "Content Library / Add New #{@model.display_name}" %>
+<h1>New <%= @block.display_name %></h1>
 <% form_for(@block, :url => cms_path(@block, :create)) do |f| %>
   <%= f.error_messages %>
   <%= render :partial => 'hidden_fields', :locals => {:f => f} %>

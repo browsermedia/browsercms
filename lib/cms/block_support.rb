@@ -23,8 +23,18 @@ module Cms
       def content_block_type
         to_s.underscore
       end
+
+      # Might be able to kill this method as duplicate of display_name ?
       def content_block_label
         to_s.titleize
+      end
+
+      def display_name
+        content_block_label
+      end
+
+      def display_name_plural
+        display_name.pluralize
       end
     end
 
@@ -36,7 +46,15 @@ module Cms
     def content_block_label
       self.class.content_block_label
     end
-  
+
+    def display_name
+      self.class.display_name
+    end
+
+    def display_name_plural
+      self.class.display_name_plural
+    end
+    
     def connect_to_page
       unless connect_to_page_id.blank? || connect_to_container.blank?
         self.connected_page = Page.find(connect_to_page_id)

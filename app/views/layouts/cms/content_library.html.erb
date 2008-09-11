@@ -9,8 +9,8 @@
               <%= yield :sidebar %>
               <h2 style="margin-top: 0">Content Types</h2>
               <ul>
-                <% ContentType.all(:order => "name").each do |block| %>
-                  <li><%= link_to block.name.titleize, cms_path("/blocks/#{block.name.pluralize.underscore}") %></li>
+                <% ContentType.all(:order => "name").each do |content_type| %>
+                  <li><%= link_to content_type.display_name, cms_path("/blocks/#{content_type.content_block_type}") %></li>
                 <% end %>
               </ul>
             </td>
