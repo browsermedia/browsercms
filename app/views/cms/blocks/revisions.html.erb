@@ -1,0 +1,17 @@
+<% @page_title = "Content Library / View #{@model.display_name}" %>
+<%= render :partial => 'toolbar' %>
+
+<table width="100%">
+  <tr>
+    <th align="left">Version</th>
+    <th align="left">Date</th>
+    <th align="left">Editor</th>
+    <th align="left">Actions</th>
+  </tr>
+  <% @block.versions.all(:order => "version desc").each_with_index do |r, i| %><tr>
+    <td><%= link_to "v. #{r.version}", cms_path(@block, :version => r.version)%><%= " CURRENT" if i == 0 %></td>
+    <td><%= r.created_at.strftime("%b %e, %Y %l:%M %p") %></td>
+    <td>root</td>
+    <td><% if i > 0 %><%= link_to "Revert to this", cms_path(@block, :revert, :version => r.version) %><% end %></td>
+  </tr><% end %>
+</table>

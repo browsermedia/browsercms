@@ -63,6 +63,10 @@ class Cms::BlocksController < Cms::BaseController
     redirect_to cms_url(@block)
   end
   
+  def revisions
+    @block = model.find(params[:id])
+  end
+  
   protected
     def do_command (cmd, result)
       @block = model.find(params[:id])

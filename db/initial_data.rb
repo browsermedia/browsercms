@@ -64,8 +64,8 @@ create_connector(:home_sidebar, :page => pages(:home), :container => "sidebar", 
 create_connector(:about_main, :page => pages(:about), :container => "main", :content_block => html_blocks(:hello_world))
 create_connector(:about_sidebar, :page => pages(:about), :container => "sidebar", :content_block => html_blocks(:sidebar))
 
-create_content_type(:html_block, :name => "HtmlBlock", :label => "Html Block")
-create_content_type(:portlet, :name => "Portlet", :label => "Portlet")
+create_content_type(:html_block, :name => "HtmlBlock")
+create_content_type(:portlet, :name => "Portlet")
 
 create_portlet_type(:recently_updated_pages,
   :name => 'Recently Updated Pages',  

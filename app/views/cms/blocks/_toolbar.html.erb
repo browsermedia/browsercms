@@ -1,0 +1,10 @@
+<% content_for(:sidebar) do %>
+<%= render :partial => "block_info" %>
+<% end -%>
+<%= link_to 'Edit', cms_path(@block, :edit) %>
+<%= link_to 'Revisions', cms_path(@block, :revisions) %>
+<%= link_to "Delete", cms_path(@block, :destroy), :method => :delete, :confirm => "Are you sure you want to delete '#{@block.name}'?" %>
+<%= false ? (link_to 'Assign', cms_path(@block, :assign), :method => :post) : "Assign" %>
+<%= !@block.published? ? link_to('Publish', cms_path(@block, :publish), :method => :post) : "Publish" %>
+<%= !@block.archived? ? link_to('Archive', cms_path(@block, :archive), :method => :post) : "Archive" %>
+<h2><%= @block.name %></h2>
