@@ -97,6 +97,22 @@ describe HtmlBlock do
         @html_block.created_at.to_i.should == @v1_created_at.to_i        
       end
     end
+    
+    describe "when getting previous version of a block" do
+      before do
+        @html_block = create_html_block(:name => "V1")
+        @html_block.update_attributes(:name => "V2")
+        
+      end
+      it "should return HtmlBlock, rather than HtmlBlock::Version, with all fields" do
+        v = @html_block.get_version(1)
+        v.class.should == HtmlBlock
+        v.name.should == "V1"
+        v.version.should == 1
+        v.id.should == @html_block.id
+        v.should be_frozen
+      end
+    end
   end
   
 end

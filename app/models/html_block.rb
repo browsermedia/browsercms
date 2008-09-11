@@ -24,4 +24,13 @@ class HtmlBlock < ActiveRecord::Base
     save
   end
   
+  def get_version(version)
+    v = find_version(version)
+    attrs = v.attributes.dup
+    attrs.delete("html_block_id")
+    wrapper = self.class.new(attrs)
+    wrapper.id = v.html_block_id
+    wrapper.created_at = v.created_at
+    wrapper.freeze
+  end
 end
