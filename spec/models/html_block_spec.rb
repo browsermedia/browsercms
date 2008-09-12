@@ -82,14 +82,14 @@ describe HtmlBlock do
       end
       it "should be able to revert" do
         @html_block.name.should == "Version Two"
-        @html_block.revert(1)
+        @html_block.revert_to 1
         @html_block.reload.version.should == 3
         @html_block.name.should == "Version One" 
       end
       it "should keep the original created at time" do        
         @html_block.find_version(1).created_at.to_i.should == @v1_created_at.to_i
         @html_block.find_version(2).created_at.to_i.should == @v2_created_at.to_i
-        @html_block.revert(1)
+        @html_block.revert_to 1
         @html_block.reload
         @html_block.find_version(1).created_at.to_i.should == @v1_created_at.to_i
         @html_block.find_version(2).created_at.to_i.should == @v2_created_at.to_i
@@ -105,7 +105,7 @@ describe HtmlBlock do
         
       end
       it "should return HtmlBlock, rather than HtmlBlock::Version, with all fields" do
-        v = @html_block.get_version(1)
+        v = @html_block.as_of_version 1
         v.class.should == HtmlBlock
         v.name.should == "V1"
         v.version.should == 1

@@ -1,8 +1,0 @@
-This plugin should be inside a Rails project in the vendor/plugins/version_fu folder.
-
-The project should also have Rails froze in vendor/rails
-
-You'll probably want to test with sqlite3, so make sure you have the sqlite3-ruby gem installed
-
-Inside the vendor/plugins/version_fu directory, run the test suite with:
-  $ ruby test/version_fu_test.rb

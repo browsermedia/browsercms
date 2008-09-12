@@ -36,10 +36,11 @@ class Cms::BlocksController < Cms::BaseController
   def show_version
     @block = model.find(params[:id])
     if params[:version]
-      @block = @block.get_version(params[:version])
+      @block = @block.as_of_version(params[:version])
     end
     render :template => show_template
   end
+  
   def edit
     @block = model.find(params[:id])
     render :template => edit_template    

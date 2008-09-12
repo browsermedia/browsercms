@@ -15,7 +15,7 @@ module Cms
         attr_accessor :connect_to_page_id
         attr_accessor :connect_to_container
         attr_accessor :connected_page
-        after_create :connect_to_page        
+        after_create :connect_to_page 
       end
     end
 

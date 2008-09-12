@@ -1,6 +1,6 @@
 class Portlet < ActiveRecord::Base
 
-  include Cms::BlockSupport
+  acts_as_content_block :versioning => false
   
   belongs_to :portlet_type
   

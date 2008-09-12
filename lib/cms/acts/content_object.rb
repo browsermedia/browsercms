@@ -24,6 +24,10 @@ module Cms
                 
         private
           def acts_as_content_object(options={})                   
+            unless options[:versioning] == false
+              version_fu 
+            end
+            
             @default_status = "IN_PROGRESS"      
             before_validation_on_create :set_default_status
             
