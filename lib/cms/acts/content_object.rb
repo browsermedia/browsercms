@@ -59,9 +59,11 @@ module Cms
               end
             end                    
           end
-          
+
+
       end
-    
+
+      # These methods will be added to any object marked as acts_as_content_object or acts_as_content_page
       module InstanceMethods
       
         def self.included(cls)
@@ -75,8 +77,13 @@ module Cms
         def status_name
           status.titleize
         end
-        
-        module ClassMethods   
+
+        def mark_as_deleted
+          self.status = "DELETED"
+          save!
+        end
+
+        module ClassMethods
           def default_status
             @default_status
           end 

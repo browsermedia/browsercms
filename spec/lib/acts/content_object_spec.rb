@@ -58,18 +58,42 @@ describe "A Content Object" do
     @b.should be_in_progress
   end
 
-  it "should respond to deleted?" do
-    @b.delete
-    @b.should be_deleted
-  end
-
   it "should not dirty initial STATUSES" do
     Page.new
     HtmlBlock.statuses.keys.should_not include("HIDDEN")
   end
-  
+
   it "should respond to status_name" do
     @b.status_name.should == "In Progress"
   end
-  
+
+  describe "dealing with DELETE operations" do
+    it "should respond to delete" do
+      @b.should respond_to(:delete)
+    end
+
+    it "should respond to deleted?" do
+      @b.should respond_to(:deleted?)
+
+    end
+    it "should mark itself as deleted using the delete method, but not save the row." do
+      @b.delete
+      @b.status.should == "DELETED"
+      @b.should be_deleted
+      @b.version.should == 1
+    end
+
+    it "should create a new version when marking as deleted" do
+      @b.save
+      @b.reload.versions.size.should == 1
+      @b.mark_as_deleted
+      @b.reload.versions.size.should == 2
+      @b.version.should == 2
+      @b.versions.first.version.should == 1
+    end
+
+    it "should override destroy to prevent real destruction" do
+      pending "Not sure if we should allow block.destroy method calls to really remove the row from the db (probably not)"
+    end
+  end
 end
