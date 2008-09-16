@@ -63,7 +63,7 @@ module VersionFu
         :foreign_key => versioned_foreign_key
       
       # Block extension
-      versioned_class.class_eval &block if block_given?
+      versioned_class.class_eval(&block) if block_given?
       
       # Finally setup which columns to version
       self.versioned_columns =  versioned_class.new.attributes.keys - 

@@ -443,7 +443,7 @@ module FlexAttributes
     def exec_if_related(attr_name)
       return false if self.class.column_names.include? attr_name
       each_flex_relation do |model|
-        if is_flex_attribute? attr_name, model
+        if is_flex_attribute?(attr_name, model)
           yield model
         end
       end
@@ -463,7 +463,7 @@ module FlexAttributes
     def nonversioned_class(kls)
       if kls.name =~ /\:\:Version$/
         base_class = kls.name
-        base_class.sub! /\:\:Version$/, ''
+        base_class.sub!(/\:\:Version$/, '')
         return base_class.constantize
       end
       kls

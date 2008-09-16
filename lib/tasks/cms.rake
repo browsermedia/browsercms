@@ -18,14 +18,13 @@ namespace :cms do
   
   desc "Copies the public assets from the CMS gem into your project"
   task :install => [:environment] do
-    CmsRoot = File.expand_path(File.join(File.dirname(__FILE__), "..", ".."))
     file = File.expand_path(File.join(Rails.root, "public/index.html"))
     if File.exists?(file)
       puts "Removing #{file}..."
       FileUtils.rm(file)
     end
     %w[public/javascripts/cms public/stylesheets/cms public/images/cms].each do |f|
-      from = File.expand_path(File.join(CmsRoot, f))
+      from = File.expand_path(File.join(Cms.root, f))
       to = File.expand_path(File.join(Rails.root, f))
       if File.exists?(to)
         puts "Removing #{to}..."
