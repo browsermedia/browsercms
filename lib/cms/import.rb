@@ -53,10 +53,7 @@ class Cms::Import < ActiveRecord::Base
             
     private
       def connect(options={})
-        establish_connection({
-          :adapter  => "mysql",
-          :host     => "localhost"
-        }.merge(options || {}))
+        establish_connection(options)
       end
     
       def select_all(sql)

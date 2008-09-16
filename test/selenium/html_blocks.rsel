@@ -1,4 +1,4 @@
 setup :fixtures => :all
 include_partial 'login_as_cmsadmin'
 open '/cms/blocks/html_blocks'
-assert_title 'View Html Blocks'
+assert_title 'Content Library / List Html'
