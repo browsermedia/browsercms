@@ -1,7 +1,6 @@
 class HtmlBlock < ActiveRecord::Base
 
   acts_as_content_block
-  is_paranoid
   
   def render
     content

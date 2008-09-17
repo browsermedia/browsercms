@@ -11,16 +11,13 @@ module Cms
         include InstanceMethods
       end
     end
+    
     module ClassMethods
       def find(*args)
         not_deleted.find_with_deleted(*args)
       end
-
-      # This could be more efficent
-      #      def exists?(*args)
-      #        not_deleted.find_with_deleted(*args).size > 0
-      #      end
     end
+
     module InstanceMethods
       def destroy
         update_attribute(:status, "DELETED")
