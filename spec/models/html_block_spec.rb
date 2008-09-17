@@ -102,15 +102,28 @@ describe HtmlBlock do
       before do
         @html_block = create_html_block(:name => "V1")
         @html_block.update_attributes(:name => "V2")
-        
+        @version = @html_block.as_of_version 1
       end
-      it "should return HtmlBlock, rather than HtmlBlock::Version, with all fields" do
-        v = @html_block.as_of_version 1
-        v.class.should == HtmlBlock
-        v.name.should == "V1"
-        v.version.should == 1
-        v.id.should == @html_block.id
-        v.should be_frozen
+      it "should return an HtmlBlock, rather than an HtmlBlock::Version" do
+        @version.class.should == HtmlBlock
+      end
+      it "should have the name set to the name of the older version" do
+        @version.name.should == "V1"
+      end
+      it "should have the version set to the version of the older version" do
+        @version.version.should == 1
+      end
+      it "should have the same id" do
+        @version.id.should == @html_block.id
+      end
+      it "should be frozen" do
+        @version.should be_frozen
+      end
+      it "current_version? should be false" do
+        @version.current_version?.should be_false
+      end
+      it "current_version? should be true for the original object" do
+        @html_block.current_version?.should be_true
       end
     end
   end

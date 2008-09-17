@@ -1,6 +1,9 @@
 <h2 style="margin-top: 0">File Information</h2>
-<ul>
-  <li>Name: <%= @block.name %></li>
-  <li>Type: <%= @block.display_name %></li>
-  <li>Status: <%= status_icon(@block.status) %> <%= @block.status_name %>  </li>
+<ul class="block_info">
+  <li><b>Name:</b> <%= @block.name %></li>
+  <li><b>Type:</b> <%= @block.display_name %></li>
+  <li><b>Status:</b> <%= status_icon(@block.status) %> <%= @block.status_name %></li>
+  <% unless @block.current_version? %><li>
+    <b>Version:</b> v. <%= @block.version %> ( <%= link_to "Current", cms_path(@block) %> )
+  </li><% end %>
 </ul>

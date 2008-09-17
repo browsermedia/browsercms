@@ -117,3 +117,7 @@ div.buttons form.button-to {
     cursor: pointer; }
   #sitemap span.selected {
     background-color: #9bf; }
+
+ul.block_info {
+  list-style-type: none; 
+  padding-left: 0; }

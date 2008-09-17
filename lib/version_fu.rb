@@ -124,5 +124,9 @@ module VersionFu
       obj.freeze      
     end
     
+    def current_version?
+      self.class.find(id).version == version
+    end
+    
   end
 end
