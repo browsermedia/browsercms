@@ -73,6 +73,25 @@ describe Page do
     page.section.should == section
   end
   
+  describe "move_to" do
+    before do
+      @from_section = create_section(:name => "From", :parent => root_section)
+      @to_section = create_section(:name => "To", :parent => root_section)
+      @page = create_page(:section => @from_section, :name => "Mover")
+      @action = lambda { @page.move_to(@to_section) }
+    end
+    it "should create a new version of the page" do
+      @action.should change(Page::Version, :count).by(1)
+    end
+    it "should not create a new page" do
+      @action.should_not change(Page, :count)
+    end    
+    it "should update the page's section_id" do
+      @action.call
+      @page.reload.section_id.should == @to_section.id
+    end    
+  end
+  
   describe "Versioning" do
     
     describe "when creating a record" do

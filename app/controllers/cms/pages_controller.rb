@@ -4,6 +4,8 @@ class Cms::PagesController < Cms::BaseController
   before_filter :load_section, :only => [:new, :create, :move_to]
   before_filter :hide_toolbar, :only => [:new, :create, :move_to]
 
+  verify :method => :put, :only => [:move_to]
+
   def show
     if !params[:id].blank?
       redirect_to Page.find(params[:id]).path
@@ -65,15 +67,6 @@ class Cms::PagesController < Cms::BaseController
     end
   end
   
-  def move
-    @page = Page.find(params[:id])
-    if params[:section_id]
-      @section = Section.find(params[:section_id])
-    else
-      @section = Section.root.first
-    end
-  end
-  
   def move_to
     @page = Page.find(params[:id])
     if @page.move_to(@section)
@@ -81,7 +74,7 @@ class Cms::PagesController < Cms::BaseController
     end
     
     respond_to do |format|
-      format.html { redirect_to cms_path(@section) }
+      format.html { redirect_to cms_path(@section, :page_id => @page) }
       format.js { render :template => 'cms/shared/show_notice' }
     end    
   end

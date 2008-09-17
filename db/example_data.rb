@@ -33,7 +33,7 @@ module FixtureReplacement
   end
   
   attributes_for :section do |a|
-    a.name = "My Site"
+    a.name = "Test"
   end
 
   attributes_for :ruby_haml_portlet do |a|

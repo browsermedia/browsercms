@@ -54,3 +54,7 @@ end
 def this_block(&block)
   block
 end
+
+def root_section
+  Section.first || create_section
+end
