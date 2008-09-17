@@ -12,8 +12,10 @@ describe Cms::ContentTypesController do
       login_as_user
     end
     it "should contain links to create a new block" do
-      pending "Case 1612"
       get :select, :connect_to_page_id => @page.to_param, :connect_to_container => @container
+      response.should have_tag("a[href=?]", cms_path(:blocks, :html_blocks, :new, 
+        "html_block[connect_to_container]" => @container,
+        "html_block[connect_to_page_id]" => @page), @html_block.display_name)
     end
   end
   
