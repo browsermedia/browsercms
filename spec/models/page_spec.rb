@@ -132,7 +132,7 @@ describe Page do
     describe "when deleting a record" do
       before do
         @page = create_page
-        @delete_page = lambda { @page.delete! }
+        @delete_page = lambda { @page.mark_as_deleted! }
       end
       
       it "should not actually delete the row" do
@@ -144,6 +144,10 @@ describe Page do
       it "should set the status to DELETED" do
         @delete_page.call
         @page.should be_deleted
+      end
+
+      it "should mark row as 'deleted_at' via acts_as_paranoid" do
+        pending "Make paranoid work w/ pages."
       end
     end
     

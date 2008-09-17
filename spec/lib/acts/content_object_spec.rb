@@ -67,33 +67,61 @@ describe "A Content Object" do
     @b.status_name.should == "In Progress"
   end
 
-  describe "dealing with DELETE operations" do
-    it "should respond to delete" do
-      @b.should respond_to(:delete)
-    end
-
-    it "should respond to deleted?" do
-      @b.should respond_to(:deleted?)
-
-    end
-    it "should mark itself as deleted using the delete method, but not save the row." do
-      @b.delete
-      @b.status.should == "DELETED"
-      @b.should be_deleted
-      @b.version.should == 1
-    end
-
-    it "should create a new version when marking as deleted" do
+  describe "when destroying a content object" do
+    before(:each) do
       @b.save
-      @b.reload.versions.size.should == 1
-      @b.mark_as_deleted
-      @b.reload.versions.size.should == 2
-      @b.version.should == 2
-      @b.versions.first.version.should == 1
+      @b.reload
     end
 
-    it "should override destroy to prevent real destruction" do
-      pending "Not sure if we should allow block.destroy method calls to really remove the row from the db (probably not)"
+    it "should implement deleted? so that it uses status" do
+      @b.status = "DELETED"
+      @b.deleted?.should == true
+    end
+
+    it "should not exist?" do
+      pending "Make exist? not find deleted objects"
+      @b.destroy
+      HtmlBlock.exists?(@b.id).should == false
+    end
+
+    it "should not be counted" do
+      pending "Make count work"
+    end
+
+    it "should make delete_all not return deleted objects" do
+      pending "Make delete_all work"
+    end
+
+    it "should not be findable" do
+      @b.destroy
+      lambda { HtmlBlock.find(@b) }.should raise_error(ActiveRecord::RecordNotFound)
+    end
+
+    it "should mark the latest row as deleted" do
+      @b.destroy
+      d = HtmlBlock.find_with_deleted(@b)
+      d.status.should == "DELETED"
+      d.should be_deleted
+    end
+
+    it "should create a new version when destroying" do
+      @b.versions.size.should == 1
+      @b.destroy
+      d = HtmlBlock.find_with_deleted(@b)
+      d.versions.size.should == 2
+      d.version.should == 2
+      d.versions.first.version.should == 1
+    end
+
+    it "should not remove all versions as well when doing a destroy" do
+      @b.destroy
+      HtmlBlock::Version.find(:all, "html_block_id =>#{@b.id}").size.should == 2
+    end
+
+    it "should remove all versions when doing destroy!" do
+      @b.destroy!
+      lambda { HtmlBlock.find_with_deleted(@b) }.should raise_error(ActiveRecord::RecordNotFound)
+      HtmlBlock::Version.find(:all, "html_block_id =>#{@b.id}").size.should == 0
     end
   end
 end

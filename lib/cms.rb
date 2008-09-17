@@ -19,3 +19,4 @@ ActiveRecord::Base.send(:include, VersionFu)
 
 #Include CMS extensions
 ActiveRecord::Base.send(:include, Cms::Acts::ContentObject)
+ActiveRecord::Base.extend(Cms::Acts::Paranoid)
