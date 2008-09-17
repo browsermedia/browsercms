@@ -6,6 +6,10 @@ module FixtureReplacement
     a.content_block = default_html_block
 	end
 
+  attributes_for :content_type do |a|
+    a.name = "Test"
+  end
+
   attributes_for :html_block do |a|
     a.name = "About Us"
     a.content = "<h1>About Us</h1>\n<p>Lorem ipsum dolor sit amet...</p>"
