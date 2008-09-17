@@ -3,7 +3,7 @@
 class Cms::ResourceController < Cms::BaseController
 
   def index
-    instance_variable_set("@#{variable_name.pluralize}", resource.all(:order => "name"))
+    instance_variable_set("@#{variable_name.pluralize}", resource.all(:order => order_by_column))
   end
 
   def new
@@ -77,6 +77,10 @@ class Cms::ResourceController < Cms::BaseController
     
     def show_url
       cms_url @object
+    end
+    
+    def order_by_column
+      "name"
     end
     
     def new_template; 'cms/blocks/new' end

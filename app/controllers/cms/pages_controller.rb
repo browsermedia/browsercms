@@ -2,6 +2,7 @@ class Cms::PagesController < Cms::BaseController
   
   skip_before_filter :login_required, :only => [:show, :foo]
   before_filter :load_section, :only => [:new, :create, :move_to]
+  before_filter :load_page, :only => [:confirm_destroy, :destroy]
   before_filter :hide_toolbar, :only => [:new, :create, :move_to]
 
   verify :method => :put, :only => [:move_to]
@@ -15,8 +16,15 @@ class Cms::PagesController < Cms::BaseController
       set_page_mode
       @path = "/#{params[:path].join("/")}"
       @page = Page.find_by_path(@path)
-      raise ActiveRecord::RecordNotFound.new("No page at '#{@path}'") unless @page    
-      render :layout => @page.layout
+      if @page
+        render :layout => @page.layout
+      else
+        if redirect = Redirect.find_by_from_path(@path)
+          redirect_to redirect.to_path
+        else
+          raise ActiveRecord::RecordNotFound.new("No page at '#{@path}'") unless @page    
+        end
+      end
     end
   end
 
@@ -49,18 +57,14 @@ class Cms::PagesController < Cms::BaseController
     end
   end
 
-  def confirm_destroy
-    page
-  end
-  
   def destroy
-    # Exists only because I couldn't figure out how to do a JS popup confirm for sitemap.page.delete
+    # TODO: remove this, exists only because I couldn't figure out how to do a JS popup confirm for sitemap.page.delete
     if(params[:commit] == "No")
-      return redirect_to cms_url(:sitemap)
+      return redirect_to(cms_url(:sitemap))
     end
 
-    if page.destroy
-      flash[:notice] = "Page was '#{page.name}' deleted."
+    if @page.destroy
+      flash[:notice] = "Page was '#{@page.name}' deleted."
     end
     redirect_to cms_url(:sitemap)
   end
@@ -90,8 +94,8 @@ class Cms::PagesController < Cms::BaseController
   
   private
 
-    def page
-      @page ||= Page.find(params[:id])
+    def load_page
+      @page = Page.find(params[:id])
     end
   
     def load_section

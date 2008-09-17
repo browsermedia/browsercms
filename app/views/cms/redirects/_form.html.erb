@@ -1,0 +1,14 @@
+<% form_for(@redirect, :url => cms_path(@redirect, :create_or_update)) do |f| %>
+  <%= f.error_messages %>
+  <div class="fields">
+    <%= f.label :from_path, "From" %>
+    <%= f.text_field :from_path, :size => 50 %>
+  </div>
+  <div class="fields">
+    <%= f.label :to_path, "To" %>
+    <%= f.text_field :to_path, :size => 50 %>
+  </div>
+  <div class="buttons">
+    <%= f.submit "Save" %>
+  </div>
+<% end %>
