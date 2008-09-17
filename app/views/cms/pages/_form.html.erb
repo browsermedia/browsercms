@@ -12,5 +12,25 @@
   <%= f.collection_select :template_id, PageTemplate.all(:order => 'name'), :id, :name %>
 </div>
 <div class="fields">
+  <%= f.label :description %>
+  <%= f.text_area :description %>
+</div>
+<div class="fields">
+  <%= f.label :user_date %>
+  <%= f.text_field :user_date %>
+</div>
+<div class="fields">
+  <%= f.label :author %>
+  <%= f.text_field :author %>
+</div>
+<div class="fields">
+  <%= f.label :source %>
+  <%= f.text_field :source %>
+</div>
+<div class="fields">
+  <%= f.label :language %>
+  <%= f.text_field :language %>
+</div>
+<div class="fields">
   <%= f.submit "Save" %>
 </div>

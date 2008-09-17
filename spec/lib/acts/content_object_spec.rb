@@ -88,7 +88,7 @@ describe "A Content Object" do
       pending "Make count work"
     end
 
-    it "should make delete_all not return deleted objects" do
+    it "should make delete_all mark as deleted" do
       pending "Make delete_all work"
     end
 
