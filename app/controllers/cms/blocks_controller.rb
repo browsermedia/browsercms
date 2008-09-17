@@ -2,7 +2,7 @@ class Cms::BlocksController < Cms::BaseController
 
   layout 'cms/content_library'
 
-  before_filter :load_model, :only => [:show, :show_version, :edit, :revisions, :destroy, :publish, :archive, :revert_to, :update]
+  before_filter :load_block, :only => [:show, :show_version, :edit, :revisions, :destroy, :publish, :archive, :revert_to, :update]
 
   helper_method :model_name
 
@@ -80,7 +80,7 @@ class Cms::BlocksController < Cms::BaseController
   end
     
   protected
-    def load_model
+    def load_block
       @block = model.find(params[:id])
     end
   
