@@ -46,6 +46,36 @@ describe Cms::BlocksController do
     end
   end
   
+  describe "updates to a block" do
+    before do
+      login_as_user
+      @block = create_html_block(:name => "V1")
+      @action = lambda { put :update, :id => @block.id, :html_block => {:name => "V2"} }
+    end
+    it "should create a new version of the block" do
+      @action.should change(HtmlBlock::Version, :count).by(1)
+    end
+    it "should not create a new record in the block table" do
+      @action.should_not change(HtmlBlock, :count)
+    end
+    it "should change the attributes of the block" do
+      @action.call
+      @block.reload.name.should == "V2"
+    end
+    it "should not change the attributes of previous versions of the block" do
+      @action.call
+      @block.as_of_version(1).name.should == "V1"
+    end
+    it "should set the flash message" do
+      @action.call
+      flash[:notice].should == "Html Block 'V2' was updated"      
+    end
+    it "should redirect to the block" do
+      @action.call
+      response.should redirect_to(cms_url(@block))
+    end
+  end
+  
   describe "publish" do
     before do
       login_as_user
@@ -77,7 +107,7 @@ describe Cms::BlocksController do
     end
     describe "with a valid version" do
       before do
-        @action = lambda { post :revert_to, :id => @block, :version => "1" }
+        @action = lambda { post :revert_to, :id => @block.id, :version => "1" }
       end
       it "should create a new version of the block" do
         @action.call

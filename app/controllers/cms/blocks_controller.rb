@@ -2,7 +2,7 @@ class Cms::BlocksController < Cms::BaseController
 
   layout 'cms/content_library'
 
-  before_filter :load_model, :only => [:show, :show_version, :edit, :revisions, :destroy, :publish, :archive, :revert_to]
+  before_filter :load_model, :only => [:show, :show_version, :edit, :revisions, :destroy, :publish, :archive, :revert_to, :update]
 
   helper_method :model_name
 
@@ -19,7 +19,7 @@ class Cms::BlocksController < Cms::BaseController
   def create
     @block = model.new(params[model_name])
     if @block.save
-      flash[:notice] = "#{block_type.titleize} '#{@block.name}' was created"
+      flash[:notice] = "#{model_name.titleize} '#{@block.name}' was created"
       if @block.connected_page.blank?
         redirect_to_first params[:_redirect_to], cms_url(@block)
       else
@@ -46,9 +46,8 @@ class Cms::BlocksController < Cms::BaseController
   end
   
   def update
-    @block = model.find(params[:id])
     if @block.update_attributes(params[model_name])
-      flash[:notice] = "#{block_type.titleize} '#{@block.name}' was updated"
+      flash[:notice] = "#{model_name.titleize} '#{@block.name}' was updated"
       redirect_to_first params[:_redirect_to], cms_url(@block)
     else
       render :template => edit_template
@@ -87,22 +86,18 @@ class Cms::BlocksController < Cms::BaseController
   
     def do_command (cmd, result)
       if @block.send(cmd)
-        flash[:notice] = "#{block_type.titleize} '#{@block.name}' was #{result}"
+        flash[:notice] = "#{model_name.titleize} '#{@block.name}' was #{result}"
       else
-        flash[:error] = "#{block_type.titleize} '#{@block.name}' could not be #{result}"
+        flash[:error] = "#{model_name.titleize} '#{@block.name}' could not be #{result}"
       end
-    end
-    
-    def block_type
-      controller_name.singularize
     end
   
     def model_name
       @model_name ||= begin
-        if block_type == 'block'
+        if params[:block_type].blank?
           session[:last_block_type] = params[:block_type] ? params[:block_type] : (session[:last_block_type] || 'html_block')
         else
-          session[:last_block_type] = block_type
+          session[:last_block_type] = params[:block_type]
         end  
       end
     end
