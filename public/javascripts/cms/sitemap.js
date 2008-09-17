@@ -19,6 +19,7 @@ document.observe('dom:loaded', function() {
     //Set actions and enable buttons where appropriate
     if(element.hasClassName('page')) {
       var page_id = element.up('li').id.sub('page_','');
+      var page_name = element.innerHTML; 
             
       //WARING: Questionable usability decision
       //If the page is already selected, 
@@ -34,7 +35,13 @@ document.observe('dom:loaded', function() {
       $('properties-button').href = '/cms/pages/edit/'+page_id;
       $('properties-button').disabled = false;
 
-      $('delete-button').href = "/cms/pages/confirm_destroy/"+page_id
+      $('delete-button').onclick = function() { 
+        if(confirm("Are you sure you want to delete '"+page_name+"'?")) {
+          new Ajax.Request("/cms/pages/destroy/"+page_id, {method: 'delete'});
+          $('page_'+page_id).remove()
+        }
+        return false;
+      }
       $('delete-button').disabled = false
 
 

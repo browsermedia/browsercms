@@ -2,7 +2,7 @@ class Cms::PagesController < Cms::BaseController
   
   skip_before_filter :login_required, :only => [:show, :foo]
   before_filter :load_section, :only => [:new, :create, :move_to]
-  before_filter :load_page, :only => [:confirm_destroy, :destroy]
+  before_filter :load_page, :only => [:destroy]
   before_filter :hide_toolbar, :only => [:new, :create, :move_to]
 
   verify :method => :put, :only => [:move_to]
@@ -58,15 +58,14 @@ class Cms::PagesController < Cms::BaseController
   end
 
   def destroy
-    # TODO: remove this, exists only because I couldn't figure out how to do a JS popup confirm for sitemap.page.delete
-    if(params[:commit] == "No")
-      return redirect_to(cms_url(:sitemap))
-    end
-
     if @page.destroy
       flash[:notice] = "Page was '#{@page.name}' deleted."
     end
-    redirect_to cms_url(:sitemap)
+    respond_to do |format|
+      format.html { redirect_to cms_url(:sitemap) }
+      format.js { render :template => 'cms/shared/show_notice' }
+    end
+    
   end
   
   #status actions
