@@ -58,6 +58,10 @@ describe "A Content Object" do
     @b.should be_in_progress
   end
 
+  it "should not respond to mark_as_deleted" do
+    pending "This needs to be removed, as destroy will handle this operation."
+  end
+  
   it "should not dirty initial STATUSES" do
     Page.new
     HtmlBlock.statuses.keys.should_not include("HIDDEN")

@@ -48,12 +48,20 @@ class Cms::PagesController < Cms::BaseController
     end
   end
 
+  def confirm_destroy
+    page
+  end
+  
   def destroy
-    @page = Page.find(params[:id])
-    if @page.destroy
-      flash[:notice] = "Page was '#{@page.name}' deleted."
+    # Exists only because I couldn't figure out how to do a JS popup confirm for sitemap.page.delete
+    if(params[:commit] == "No")
+      return redirect_to cms_url(:sitemap)
     end
-    redirect_to cms_url(:pages)
+
+    if page.destroy
+      flash[:notice] = "Page was '#{page.name}' deleted."
+    end
+    redirect_to cms_url(:sitemap)
   end
   
   #status actions
@@ -80,6 +88,10 @@ class Cms::PagesController < Cms::BaseController
   end
   
   private
+
+    def page
+      @page ||= Page.find(params[:id])
+    end
   
     def load_section
       @section = Section.find(params[:section_id])

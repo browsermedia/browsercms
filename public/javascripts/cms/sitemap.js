@@ -33,7 +33,11 @@ document.observe('dom:loaded', function() {
 
       $('properties-button').href = '/cms/pages/edit/'+page_id;
       $('properties-button').disabled = false;
-      
+
+      $('delete-button').href = "/cms/pages/confirm_destroy/"+page_id
+      $('delete-button').disabled = false
+
+
     } else if(element.hasClassName('section')) {
       var section_id = element.up('li').id.sub('section_','');
       
@@ -45,7 +49,7 @@ document.observe('dom:loaded', function() {
 
       $('add-section-button').href = '/cms/sections/new?section_id='+section_id;
       $('add-section-button').disabled = false;        
-      
+
     }
     
     //Show this page as selected

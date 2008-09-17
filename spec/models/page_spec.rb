@@ -8,7 +8,7 @@ describe Page do
     page.should_not be_valid
     page.should have(1).error_on(:path)
   end
-  
+
   describe ".find_by_path" do
     it "should be able to find the home page" do
       @page = create_page(:path => nil)
@@ -19,25 +19,25 @@ describe Page do
       Page.find_by_path("/about").should == @page
     end
   end
-  
+
   it "should prepend a '/' to the path" do
     page = new_page(:path => 'foo/bar')
     page.should be_valid
     page.path.should == "/foo/bar"
   end
-  
+
   it "should not prepened a '/' to the path if there already is one" do
     page = new_page(:path => '/foo/bar')
     page.should be_valid
     page.path.should == "/foo/bar"
   end
-  
+
   it "should set path to '/' if it is nil" do
     page = new_page(:path => nil)
     page.should be_valid
-    page.path.should == "/"    
+    page.path.should == "/"
   end
-  
+
   describe "status" do
     it "should be in progress when it is created" do
       page = create_page
@@ -63,7 +63,7 @@ describe Page do
     end
 
   end
-  
+
   it "should be able to be moved to another section" do
     root = create_section
     section = create_section(:name => "Another", :parent => root)
@@ -72,7 +72,7 @@ describe Page do
     page.move_to(section)
     page.section.should == section
   end
-  
+
   describe "move_to" do
     before do
       @from_section = create_section(:name => "From", :parent => root_section)
@@ -85,15 +85,15 @@ describe Page do
     end
     it "should not create a new page" do
       @action.should_not change(Page, :count)
-    end    
+    end
     it "should update the page's section_id" do
       @action.call
       @page.reload.section_id.should == @to_section.id
-    end    
+    end
   end
-  
+
   describe "Versioning" do
-    
+
     describe "when creating a record" do
       before do
         @page = create_page
@@ -102,7 +102,7 @@ describe Page do
         @page.versions.latest.page.should == @page
       end
     end
-    
+
     describe "when updating attributes" do
       describe "with different values" do
         before do
@@ -117,7 +117,7 @@ describe Page do
         it "should not affect the values in previous versions" do
           @page.versions.first.name.should == "Original Value"
         end
-      end      
+      end
       describe "with the unchanged values" do
         before do
           @page = create_page(:name => "Original Value")
@@ -128,29 +128,70 @@ describe Page do
         end
       end
     end
-    
+
     describe "when deleting a record" do
+      # This section duplicates a bit of content_object_spec for handling destroy
       before do
         @page = create_page
-        @delete_page = lambda { @page.mark_as_deleted! }
+        @delete_page = lambda { @page.destroy }
       end
-      
+
       it "should not actually delete the row" do
         @delete_page.should_not change(Page, :count)
       end
       it "should create a new version" do
         @delete_page.should change(@page.versions, :count).by(1)
       end
+
+      it "should create a new version when destroying" do
+        @page.versions.size.should == 1
+        @page.destroy
+        d = Page.find_with_deleted(@page)
+        d.versions.size.should == 2
+        d.version.should == 2
+        d.versions.first.version.should == 1
+      end
+
       it "should set the status to DELETED" do
         @delete_page.call
         @page.should be_deleted
       end
 
-      it "should mark row as 'deleted_at' via acts_as_paranoid" do
-        pending "Make paranoid work w/ pages."
+      it "should not be findable" do
+        @page.destroy
+        lambda { Page.find(@page) }.should raise_error(ActiveRecord::RecordNotFound)
+      end
+
+      it "should not remove all versions as well when doing a destroy" do
+        @page.destroy
+        Page::Version.find(:all, "page_id =>#{@page.id}").size.should == 2
+      end
+
+      it "should remove all versions when doing destroy!" do
+        @page.destroy!
+        lambda { Page.find_with_deleted(@page) }.should raise_error(ActiveRecord::RecordNotFound)
+        Page::Version.find(:all, "page_id =>#{@page.id}").size.should == 0
+      end
+
+      describe "with its associated blocks" do
+        it "should remove all associations with that block" do
+          pending "Make this work"
+
+          # Trying to figure out how to easily add a block to a page.
+          @p = Page.create(:name => "Page")
+          @b = HtmlBlock.create(:name => "Block")
+
+          @connector = @p.connectors.build(:container => @container)
+          @c = Connector.new(:container => "main")
+          @c.page = @p
+          @c.content_block = @b
+          @c.save
+
+
+        end
       end
     end
-    
+
   end
-  
+
 end

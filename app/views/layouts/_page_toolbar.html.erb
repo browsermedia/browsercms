@@ -2,7 +2,8 @@
   <div id="page_toolbar">
     <%= link_to((@mode == "edit" ? "Switch to View Mode" : "Switch to Edit Mode"), "#{@page.path}?mode=#{@mode == "edit" ? "view" : "edit"}") %>
     <%= link_to "Edit Page Properties", cms_path(@page, :edit) %>
-    
+    <%= link_to "Delete", cms_path(@page, :destroy), :method => :delete, :confirm => "Are you sure you want to delete '#{@page.name}'?" %>
+
     <%= link_to_function "Assign" %>
     <%= @page.published? ? "Publish" : link_to("Publish", cms_path(@page, :publish), :method => :put) %>
     <%= @page.hidden? ? "Hide" : link_to("Hide", cms_path(@page, :hide), :method => :put) %>

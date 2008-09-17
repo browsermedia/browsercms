@@ -7,14 +7,13 @@ module Cms
       end
 
       module MacroMethods
-
-        STATUSES = {"IN_PROGRESS" => :in_progress, "PUBLISHED" => :publish, "ARCHIVED" => :archive, "DELETED" => :mark_as_deleted}
+        DELETED = "DELETED"
+        STATUSES = {"IN_PROGRESS" => :in_progress, "PUBLISHED" => :publish, "ARCHIVED" => :archive, DELETED => :mark_as_deleted}
 
         def acts_as_content_block(options={})
           @statuses = STATUSES.dup
           acts_as_content_object(options)
           include Cms::BlockSupport
-          is_paranoid
         end
 
         def acts_as_content_page(options={})
@@ -28,7 +27,8 @@ module Cms
           unless options[:versioning] == false
             version_fu
           end
-
+          is_paranoid
+          
           @default_status = "IN_PROGRESS"
           before_validation_on_create :set_default_status
 

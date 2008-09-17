@@ -1,0 +1,10 @@
+<% @page_title = "Confirm delete page" %>
+
+Are you sure you want to delete '<%= @page.name %>'?
+
+<% form_tag(cms_path(@page, :destroy), :method => :delete) do %>
+    <div class="fields">
+        <%= submit_tag "Yes" %>
+        <%= submit_tag "No" %>
+    </div>
+<% end %>
