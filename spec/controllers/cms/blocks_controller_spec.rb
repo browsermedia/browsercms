@@ -3,6 +3,8 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 describe Cms::BlocksController do
   include Cms::PathHelper
   
+  before { login_as_user }
+  
   describe "#model_name" do
     describe "with no last_block_type or block_type parameter" do
       before do
@@ -46,9 +48,43 @@ describe Cms::BlocksController do
     end
   end
   
+  describe "getting the form to create a new block" do
+    before do
+      @page = create_page(:path => "/test", :section => root_section)
+      @action = lambda { get :new, :html_block => new_html_block.attributes.merge({:connect_to_page_id => @page.id, :connect_to_container => "test"}) }
+    end
+    it "should have a hidden input with the connect_to_page_id set" do
+      pending "Case 1617"
+      @action.call
+      response.should have_tag("input[name=?][value=?]", "html_block[connect_to_page_id]", @page.id.to_s)
+    end
+    it "should have a hidden input with the connect_to_container set" do
+      pending "Case 1617"
+      @action.call
+      response.should have_tag("input[name=?][value=?]", "html_block[connect_to_container]", "test")
+    end
+  end
+  
+  describe "creating a block that should be connected to a page" do
+    before do
+      @page = create_page(:path => "/test", :section => root_section)
+      @action = lambda { post :create, :html_block => new_html_block.attributes.merge({:connect_to_page_id => @page.id, :connect_to_container => "test"}) }
+    end
+    it "should create the block" do
+      @action.should change(HtmlBlock, :count).by(1)
+    end
+    it "should create the connector" do
+      @action.call
+      @page.connectors.first.container.should == "test"
+    end
+    it "should redirect to the page" do
+      @action.call
+      response.should redirect_to(@page.path)
+    end
+  end
+  
   describe "updates to a block" do
     before do
-      login_as_user
       @block = create_html_block(:name => "V1")
       @action = lambda { put :update, :id => @block.id, :html_block => {:name => "V2"} }
     end
@@ -78,7 +114,6 @@ describe Cms::BlocksController do
   
   describe "publish" do
     before do
-      login_as_user
       @block = HtmlBlock.new
       @block.id = "7"
       @block.stub!(:publish).and_return(true)
@@ -101,7 +136,6 @@ describe Cms::BlocksController do
   
   describe "revert_to" do
     before do
-      login_as_user
       @block = create_html_block(:name => "V1")
       @block.update_attribute(:name, "V2")
     end
