@@ -14,6 +14,12 @@ describe HtmlBlock do
     @html_block.connected_page.should == @page
   end
   
+  it "should be able to assign the connect_to values in the constructor" do
+    @block = HtmlBlock.new("connect_to_container"=>"main", "connect_to_page_id"=>"516519628")
+    @block.connect_to_page_id.should == "516519628"
+    @block.connect_to_container.should == "main"
+  end
+  
   describe "versioning for blocks" do
     describe "when creating a record" do
       before do

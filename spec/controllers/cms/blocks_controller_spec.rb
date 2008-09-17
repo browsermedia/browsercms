@@ -2,6 +2,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Cms::BlocksController do
   include Cms::PathHelper
+  integrate_views
   
   before { login_as_user }
   
@@ -46,20 +47,27 @@ describe Cms::BlocksController do
         @controller.session[:last_block_type].should == "bar"
       end    
     end
+    describe "with block_type parameter of html_blocks" do
+      before do
+        @controller.stub!(:params).and_return({:block_type => "html_blocks"})
+      end
+      it "should return 'html_block' for the model_name" do
+        @controller.send(:model_name).should == "html_block"
+        @controller.session[:last_block_type].should == "html_block"
+      end    
+    end
   end
   
   describe "getting the form to create a new block" do
     before do
       @page = create_page(:path => "/test", :section => root_section)
-      @action = lambda { get :new, :html_block => new_html_block.attributes.merge({:connect_to_page_id => @page.id, :connect_to_container => "test"}) }
+      @action = lambda { get :new, :html_block => {:connect_to_page_id => @page.id, :connect_to_container => "test"} }
     end
     it "should have a hidden input with the connect_to_page_id set" do
-      pending "Case 1617"
       @action.call
       response.should have_tag("input[name=?][value=?]", "html_block[connect_to_page_id]", @page.id.to_s)
     end
     it "should have a hidden input with the connect_to_container set" do
-      pending "Case 1617"
       @action.call
       response.should have_tag("input[name=?][value=?]", "html_block[connect_to_container]", "test")
     end
