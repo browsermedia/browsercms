@@ -16,6 +16,7 @@ class Cms::BlocksController < Cms::BaseController
     @block = model.new(params[model_name])
     logger.info "@block.connect_to_page_id => #{@block.connect_to_page_id}"
     logger.info "@block.connect_to_container => #{@block.connect_to_container}"
+    render :layout => 'cms/application'
   end
   
   def create
