@@ -96,6 +96,40 @@ describe HtmlBlock do
         @html_block.find_version(3).created_at.to_i.should >= @v2_created_at.to_i
         @html_block.created_at.to_i.should == @v1_created_at.to_i        
       end
+      describe "without specifying a version number" do
+        before do
+          @action = lambda { @html_block.revert_to nil }
+        end
+        it "should raise 'Version parameter missing'" do
+          @action.should raise_error("Version parameter missing")
+        end
+        it "should not create a new version" do
+          lambda {
+            begin
+              @action.call
+            rescue Exception
+              nil
+            end
+          }.should_not change(HtmlBlock::Version, :count)
+        end
+      end
+      describe "with an invalid version number" do
+        before do
+          @action = lambda { @html_block.revert_to 99 }
+        end
+        it "should raise 'Could not find version 99'" do
+          @action.should raise_error("Could not find version 99")
+        end
+        it "should not create a new version" do
+          lambda {
+            begin
+              @action.call
+            rescue Exception
+              nil
+            end
+          }.should_not change(HtmlBlock::Version, :count)
+        end
+      end      
     end
     
     describe "when getting previous version of a block" do

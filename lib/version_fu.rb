@@ -107,7 +107,9 @@ module VersionFu
     end
     
     def revert_to(version)
+      raise "Version parameter missing" if version.blank?
       revert_to_version = find_version(version)
+      raise "Could not find version #{version}" unless revert_to_version
       versioned_columns.each do |a|
         send("#{a}=", revert_to_version.send(a))
       end  

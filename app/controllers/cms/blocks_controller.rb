@@ -2,6 +2,8 @@ class Cms::BlocksController < Cms::BaseController
 
   layout 'cms/content_library'
 
+  before_filter :load_model, :only => [:show, :show_version, :edit, :revisions, :destroy, :publish, :archive, :revert_to]
+
   helper_method :model_name
 
   def index
@@ -29,12 +31,10 @@ class Cms::BlocksController < Cms::BaseController
   end
   
   def show
-    @block = model.find(params[:id])
     render :template => show_template
   end
   
   def show_version
-    @block = model.find(params[:id])
     if params[:version]
       @block = @block.as_of_version(params[:version])
     end
@@ -42,7 +42,6 @@ class Cms::BlocksController < Cms::BaseController
   end
   
   def edit
-    @block = model.find(params[:id])
     render :template => edit_template    
   end
   
@@ -71,13 +70,22 @@ class Cms::BlocksController < Cms::BaseController
     redirect_to cms_url(@block)
   end
   
-  def revisions
-    @block = model.find(params[:id])
+  def revert_to
+    begin
+      @block.revert_to(params[:version])
+      flash[:notice] = "Reverted '#{@block.name}' to version #{params[:version]}"
+    rescue Exception => e
+      flash[:error] = "Could not revert '#{@block.name}': #{e}"
+    end
+    redirect_to cms_url(@block)
   end
-  
+    
   protected
-    def do_command (cmd, result)
+    def load_model
       @block = model.find(params[:id])
+    end
+  
+    def do_command (cmd, result)
       if @block.send(cmd)
         flash[:notice] = "#{block_type.titleize} '#{@block.name}' was #{result}"
       else

@@ -1,6 +1,8 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Cms::BlocksController do
+  include Cms::PathHelper
+  
   describe "#model_name" do
     describe "with no last_block_type or block_type parameter" do
       before do
@@ -63,7 +65,68 @@ describe Cms::BlocksController do
     end
     it "should redirect to the block show action" do
       post :publish, :id => "7"
-      response.should redirect_to("http://test.host/cms/blocks/html_block/show/7")
+      response.should redirect_to(cms_url(@block))
+    end
+  end
+  
+  describe "revert_to" do
+    before do
+      login_as_user
+      @block = create_html_block(:name => "V1")
+      @block.update_attribute(:name, "V2")
+    end
+    describe "with a valid version" do
+      before do
+        @action = lambda { post :revert_to, :id => @block, :version => "1" }
+      end
+      it "should create a new version of the block" do
+        @action.call
+        @block.reload.version.should == 3
+      end
+      it "should set the name of the block to the original name" do
+        @action.call
+        @block.reload.name.should == "V1"
+      end    
+      it "should set the flash message" do
+        @action.call
+        flash[:notice].should == "Reverted 'V1' to version 1"
+      end
+      it "should redirect to the block show action" do
+        @action.call
+        response.should redirect_to(cms_url(@block))
+      end
+    end
+    describe "without a version parameter" do
+      before do
+        @action = lambda { post :revert_to, :id => @block}
+      end
+      it "should not create a new version of the block" do
+        @action.should_not change(HtmlBlock::Version, :count)
+      end
+      it "should set the flash error message" do
+        @action.call
+        flash[:error].should == "Could not revert 'V2': Version parameter missing"
+      end
+      it "should redirect to the block show action" do
+        @action.call
+        response.should redirect_to(cms_url(@block))
+      end
+    end
+    describe "with an invalid version parameter" do
+      before do
+        @action = lambda { post :revert_to, :id => @block, :version => 99}
+      end
+      it "should not create a new version of the block" do
+        @action.should_not change(HtmlBlock::Version, :count)
+      end
+      it "should set the flash error message" do
+        @action.call
+        flash[:error].should == "Could not revert 'V2': Could not find version 99"
+      end
+      it "should redirect to the block show action" do
+        @action.call
+        response.should redirect_to(cms_url(@block))
+      end
     end
   end
   
