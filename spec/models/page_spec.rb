@@ -202,4 +202,9 @@ describe "A page with associated blocks" do
       @block.should_not be_deleted
     end
   end
+  describe "when destroyed!" do
+    it "should do what it does (TBD)"
+  end
 end
+
+
