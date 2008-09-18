@@ -6,7 +6,7 @@ module Cms
         class << self
           alias_method :find_with_deleted, :find
         end
-        alias_method :destroy!, :destroy
+        alias_method :destroy_without_callbacks!, :destroy_without_callbacks
         extend ClassMethods
         include InstanceMethods
       end
@@ -19,12 +19,29 @@ module Cms
     end
 
     module InstanceMethods
-      def destroy
+      #Overrides original destroy method
+      def destroy_without_callbacks
         update_attribute(:status, "DELETED")
+      end
+
+      def destroy_with_callbacks!
+        return false if callback(:before_destroy) == false
+        result = destroy_without_callbacks!
+        @destroyed = true
+        callback(:after_destroy)
+        result
+      end
+
+      def destroy!
+        transaction { destroy_with_callbacks! }
       end
 
       def deleted?
         status == "DELETED"
+      end
+      
+      def destroyed?
+        @destroyed
       end
     end
   end

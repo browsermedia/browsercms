@@ -172,26 +172,34 @@ describe Page do
         lambda { Page.find_with_deleted(@page) }.should raise_error(ActiveRecord::RecordNotFound)
         Page::Version.find(:all, "page_id =>#{@page.id}").size.should == 0
       end
-
-      describe "with its associated blocks" do
-        it "should remove all associations with that block" do
-          pending "Make this work"
-
-          # Trying to figure out how to easily add a block to a page.
-          @p = Page.create(:name => "Page")
-          @b = HtmlBlock.create(:name => "Block")
-
-          @connector = @p.connectors.build(:container => @container)
-          @c = Connector.new(:container => "main")
-          @c.page = @p
-          @c.content_block = @b
-          @c.save
-
-
-        end
-      end
     end
-
   end
+end
 
+describe "A page with associated blocks" do
+  before do
+    @page = create_page(:section => root_section)
+    @block = create_html_block
+    @other_connector = create_connector(:page => create_page(:section => root_section), :content_block => @block)
+    @page_connector = create_connector(:page => @page, :content_block => @block)          
+    @destroying_the_page = lambda { @page.destroy }
+  end
+  describe "when deleted" do
+    it "should remove one record from the connectors table" do
+      @destroying_the_page.should change(Connector, :count).by(-1)
+    end
+    it "should deleted the page's connectors" do
+      @destroying_the_page.call
+      Connector.exists?(@page_connector.id).should be_false
+    end
+    it "should not deleted other connectors" do
+      @destroying_the_page.call
+      Connector.exists?(@other_connector.id).should be_true
+    end
+    it "should not delete the blocks" do
+      @destroying_the_page.call
+      HtmlBlock.exists?(@block.id).should be_true
+      @block.should_not be_deleted
+    end
+  end
 end

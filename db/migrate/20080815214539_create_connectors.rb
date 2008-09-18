@@ -8,6 +8,7 @@ class CreateConnectors < ActiveRecord::Migration
       t.string :position
 
       t.timestamps
+      
     end
   end
 

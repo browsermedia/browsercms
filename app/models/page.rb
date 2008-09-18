@@ -9,9 +9,15 @@ class Page < ActiveRecord::Base
   has_many :connectors, :order => "position"
   
   before_validation :append_leading_slash_to_path
+  before_destroy :delete_connectors
   
   validates_presence_of :section_id
   validates_uniqueness_of :path
+  
+  def delete_connectors
+    logger.info "deleting connectors"
+    Connector.delete_all "page_id = #{id}"
+  end
   
   def append_leading_slash_to_path
     if path.blank?

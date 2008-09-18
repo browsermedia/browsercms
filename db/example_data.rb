@@ -16,8 +16,8 @@ module FixtureReplacement
 	end
 
   attributes_for :page do |a|
-    a.name = "Home"
-    a.path = "/"
+    a.name = "Home #{String.random(12)}"
+    a.path = "/#{a.name.underscore}"
     a.template = default_page_template
     a.section = default_section
 	end
