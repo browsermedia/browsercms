@@ -173,6 +173,26 @@ describe Page do
         Page::Version.find(:all, "page_id =>#{@page.id}").size.should == 0
       end
     end
+    
+    describe "#increment_version!" do
+      before do
+        @page = create_page(:section => root_section)
+        @increment_version = lambda { @page.increment_version! }
+      end
+      it "should increase the version number" do
+        @increment_version.call
+        @page.reload.version.should == 2
+      end
+      it "should create a new version" do
+        @increment_version.should change(Page::Version, :count).by(1)
+      end
+      it "should recieve normal update callbacks" do
+        @page.should_receive(:before_update).and_return(true)
+        @page.should_receive(:after_update).and_return(true)
+        @increment_version.call
+      end
+      
+    end 
   end
 end
 
@@ -203,8 +223,30 @@ describe "A page with associated blocks" do
     end
   end
   describe "when destroyed!" do
-    it "should do what it does (TBD)"
+    it "should do what it does (TBD)" do
+      pending "Make work"
+    end
   end
+end
+
+describe "When adding a block to a page" do
+  before do
+    @page = create_page(:section => root_section)
+    @block = create_html_block()
+    @adding_block = lambda { @conn = Connector.create(:page => @page, :content_block => @block, :container => "testing") }
+  end
+  it "should set the page version to new page version" do
+    @adding_block.call
+    @conn.page_version.should == 2
+  end
+  it "should set the content block version to existing block version" do
+    @adding_block.call
+    @conn.content_block_version.should == 1
+  end
+  it "should increment the page version by 1" do
+    @adding_block.should change(@page, :version).by(1)
+  end
+  
 end
 
 

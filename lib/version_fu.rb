@@ -129,5 +129,9 @@ module VersionFu
       self.class.find(id).version == version
     end
     
+    def increment_version!
+      instatiate_revision
+      update
+    end
   end
 end

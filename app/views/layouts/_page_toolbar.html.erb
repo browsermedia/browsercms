@@ -12,7 +12,7 @@
   <div>
     Status: <%= @page.status_name %> (Live)
     <br/>
-    Page: <%= link_to h(@page.name), @page.path %>
+    Page: <%= link_to h(@page.name), @page.path %> (v<%= @page.version%>)
     <br/>
     Section: <%= link_to h(@page.section.name), cms_path(:sections, :page_id => @page) %>
     <br/>

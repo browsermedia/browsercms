@@ -11,4 +11,11 @@ class Connector < ActiveRecord::Base
   named_scope :for_block, lambda {|b| {:conditions => ['connectors.content_block_id = ? and connectors.content_block_type = ?', b.id, b.class.name]}}
   named_scope :for_container, lambda{|container| {:conditions => ['connectors.container = ?', container]} }
   
+  before_save :sync_versions
+  
+  def sync_versions
+    page.increment_version!
+    self.page_version = page.version
+    self.content_block_version = content_block.version
+  end
 end
