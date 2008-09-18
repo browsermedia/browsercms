@@ -58,12 +58,16 @@ class Cms::PagesController < Cms::BaseController
   end
 
   def destroy
-    if @page.destroy
-      flash[:notice] = "Page was '#{@page.name}' deleted."
-    end
     respond_to do |format|
-      format.html { redirect_to cms_url(:sitemap) }
-      format.js { render :template => 'cms/shared/show_notice' }
+      if @page.destroy
+        flash[:notice] = "Page '#{@page.name}' was deleted."
+        format.html { redirect_to cms_url(:sitemap) }
+        format.js { }
+      else
+        flash[:error] = "Page '#{@page.name}' could not be deleted"
+        format.html { redirect_to cms_url(:sitemap) }
+        format.js { render :template => 'cms/shared/show_error' }
+      end
     end
     
   end

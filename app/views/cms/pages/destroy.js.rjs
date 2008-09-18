@@ -1,0 +1,2 @@
+page["page_#{@page.id}"].remove
+show_notice(page)

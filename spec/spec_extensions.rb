@@ -47,4 +47,5 @@ def it_should_render(template)
   it "should render the '#{template}' template" do
     response.should render_template(template)
   end
-end
+end   
+      

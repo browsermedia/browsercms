@@ -36,9 +36,8 @@ document.observe('dom:loaded', function() {
       $('properties-button').disabled = false;
 
       $('delete-button').onclick = function() { 
-        if(confirm("Are you sure you want to delete '"+page_name+"'?")) {
+        if(confirm("Are you sure you want to delete the '"+page_name+"' page?")) {
           new Ajax.Request("/cms/pages/destroy/"+page_id, {method: 'delete'});
-          $('page_'+page_id).remove()
         }
         return false;
       }
@@ -47,9 +46,18 @@ document.observe('dom:loaded', function() {
 
     } else if(element.hasClassName('section')) {
       var section_id = element.up('li').id.sub('section_','');
+      var section_name = element.innerHTML; 
       
       $('properties-button').href = '/cms/sections/edit/'+section_id;
       $('properties-button').disabled = false;        
+
+      $('delete-button').onclick = function() { 
+        if(confirm("Are you sure you want to delete the '"+section_name+"' section?")) {
+          new Ajax.Request("/cms/sections/destroy/"+section_id, {method: 'delete'});
+        }
+        return false;
+      }
+      $('delete-button').disabled = false
 
       $('add-page-button').href = '/cms/pages/new?section_id='+section_id;
       $('add-page-button').disabled = false;        

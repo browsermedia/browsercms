@@ -10,18 +10,7 @@ class Section < ActiveRecord::Base
   
   validates_presence_of :parent_id, :if => Proc.new {root.count > 0}, :message => "section is required"
   
-  before_destroy :move_children_and_pages_to_parent
-  
-  def move_children_and_pages_to_parent
-    children.each do |section|
-      section.parent = self.parent
-      section.save!
-    end
-    pages.each do |page|
-      page.section = self.parent
-      page.save!
-    end    
-  end
+  before_destroy :deletable?
   
   def root?
     parent_id.nil?
@@ -34,6 +23,14 @@ class Section < ActiveRecord::Base
       self.parent = section
       save
     end
+  end
+  
+  def empty?
+    children.count + pages.count == 0
+  end
+  
+  def deletable?
+    !root? && empty?
   end
   
 end

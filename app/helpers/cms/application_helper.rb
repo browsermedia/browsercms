@@ -43,5 +43,23 @@ module Cms
       render :partial => 'layouts/cms_toolbar'    
     end
     
+    def show_notice(page)
+      page[:message].replace_html flash[:notice]
+      flash.discard(:notice)
+      page[:message].add_class_name 'notice'
+      page[:message].remove_class_name 'error'
+      page[:message].show
+      page[:message].visual_effect :fade, :delay => 3      
+    end
+    
+    def show_error(page)
+      page[:message].replace_html flash[:error]
+      flash.discard(:error)
+      page[:message].add_class_name 'error'
+      page[:message].remove_class_name 'notice'
+      page[:message].show
+      page[:message].visual_effect :fade, :delay => 3      
+    end
+    
   end
 end

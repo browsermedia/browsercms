@@ -49,15 +49,18 @@ class Cms::SectionsController < Cms::BaseController
   def destroy
     @section = Section.find(params[:id])
     @parent = @section.parent
-    if @parent
-      if @section.destroy
+    
+    respond_to do |format|
+      if @parent && @section.destroy
         flash[:notice] = "Section '#{@section.name}' was deleted"
+        format.html { redirect_to cms_url(@parent) }
+        format.js {  }
+      else
+        flash[:error] = "Section '#{@section.name}' cannot be deleted"
+        format.html { redirect_to cms_url(@parent) }
+        format.js { render :template => 'cms/shared/show_error' }
       end
-      redirect_to cms_url(@parent)
-    else
-      flash[:error] = "Section '#{@section.name}' cannot be deleted"
-      redirect_to cms_url(@section)
-    end
+    end    
   end  
   
   def move
