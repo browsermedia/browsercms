@@ -24,6 +24,15 @@ module Cms
         to_s.underscore
       end
 
+      #This is needed by path helper
+      #We originally didn't have this and just used respond_to(:content_block_type)
+      #In order to determine if the object is a content block, 
+      #but that became a problem for connector, which is not a content block,
+      #but does have a content_block_type method
+      def content_block?
+        true
+      end
+
       def display_name
         to_s.titleize
       end

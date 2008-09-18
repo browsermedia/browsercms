@@ -15,7 +15,7 @@ module Cms
       if [String, Symbol, Hash, Array, Numeric, Date, Time].detect{|e| e === first}
         paths << first.to_s.sub(/^\//,'')
       else
-        if first.respond_to?(:content_block_type)
+        if first.class.respond_to?(:content_block?) && first.class.content_block?
           paths << 'blocks'
           paths << first.content_block_type
         else

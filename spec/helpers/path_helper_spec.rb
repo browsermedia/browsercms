@@ -5,7 +5,8 @@ describe Cms::PathHelper do
   describe "path generation" do
     before do
       @new_block = mock("html_block", :new_record? => true, :class => HtmlBlock, :content_block_type => 'html')
-      @existing_block = mock("html_block", :new_record? => false, :to_param => 7, :class => HtmlBlock, :content_block_type => 'html')      
+      @existing_block = mock("html_block", :new_record? => false, :to_param => 7, :class => HtmlBlock, :content_block_type => 'html') 
+      @page_template = mock("page_template", :to_param => 7, :class => PageTemplate)     
     end
     {
                                       "'blocks'" => "/cms/blocks",
@@ -32,6 +33,10 @@ describe Cms::PathHelper do
                     "'/html_blocks', :edit, '7'" => "/cms/html_blocks/edit/7",
                 "'somewhere', :msg => 'foo bar'" => "/cms/somewhere?msg=foo+bar",
    
+                #Non block objects
+                                "@page_template" => "/cms/page_templates/show/7",
+                         "@page_template, :edit" => "/cms/page_templates/edit/7",                
+                
                 # First value = controller, 2nd = actions, 3rd = id
                 ":blocks, :edit, @existing_block" => "/cms/blocks/edit/7",
                 ":blocks, :show, @existing_block" => "/cms/blocks/show/7",
