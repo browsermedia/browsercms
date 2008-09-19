@@ -2,7 +2,7 @@ class Cms::PagesController < Cms::BaseController
   
   skip_before_filter :login_required, :only => [:show, :foo]
   before_filter :load_section, :only => [:new, :create, :move_to]
-  before_filter :load_page, :only => [:destroy]
+  before_filter :load_page, :only => [:edit, :revisions, :move_to, :destroy]
   before_filter :hide_toolbar, :only => [:new, :create, :move_to]
 
   verify :method => :put, :only => [:move_to]
@@ -30,10 +30,6 @@ class Cms::PagesController < Cms::BaseController
 
   def new
     @page = @section.pages.build
-  end
-
-  def edit
-    @page = Page.find(params[:id])
   end
 
   def create
@@ -75,7 +71,7 @@ class Cms::PagesController < Cms::BaseController
   #status actions
   {:publish => "Published", :hide => "Hidden", :archive => "Archived"}.each do |status, verb|
     define_method status do
-      @page = Page.find(params[:id])
+      load_page
       if @page.send(status)
         flash[:notice] = "Page '#{@page.name}' was '#{verb}'."
       end
@@ -84,7 +80,6 @@ class Cms::PagesController < Cms::BaseController
   end
   
   def move_to
-    @page = Page.find(params[:id])
     if @page.move_to(@section)
       flash[:notice] = "Page '#{@page.name}' was moved to '#{@section.name}'."
     end

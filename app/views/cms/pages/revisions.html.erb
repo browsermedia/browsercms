@@ -1,0 +1,18 @@
+<% @page_title = "Page Revision History" %>
+
+<table width="100%">
+  <tr>
+    <th align="left">Version</th>
+    <th align="left">Status</th>
+    <th align="left">Date Created</th>
+    <th align="left">Created By</th>
+    <th align="left">Actions</th>    
+  </tr>
+  <% @page.versions.all(:order => "version desc").each_with_index do |r, i| %><tr>
+    <td><%= link_to "v.#{r.version}", cms_path(@page, :show_version, :version => r.version)%></td>
+    <td><%= status_icon(r.status) %></td>
+    <td><%= r.created_at.strftime("%b %e, %Y %l:%M %p") %></td>
+    <td>root</td>
+    <td><% if i > 0 %><%= link_to "Revert", cms_path(@page, :revert_to, :version => r.version) %><% end %></td>
+  </tr><% end %>
+</table>
