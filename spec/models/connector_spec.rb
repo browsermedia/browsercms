@@ -25,7 +25,7 @@ describe Connector do
     three = create_connector(:page => page, :container => "foo")
     
     two.reload.move_up
-    page.connectors.for_container("foo").should == [two, one, three]    
+    page.connectors.for_container("foo").map(&:id).should == [two, one, three].map(&:id)
     
     two.reload.move_down
     page.connectors.for_container("foo").should == [one, two, three]    

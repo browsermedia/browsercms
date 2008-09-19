@@ -83,7 +83,7 @@ describe Cms::BlocksController do
     end
     it "should create the connector" do
       @action.call
-      @page.connectors.first.container.should == "test"
+      @page.reload.connectors.first.container.should == "test"
     end
     it "should redirect to the page" do
       @action.call

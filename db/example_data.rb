@@ -2,6 +2,7 @@ module FixtureReplacement
 
   attributes_for :connector do |a|
     a.page = default_page
+    a.page_version = 1
     a.container = "main"
     a.content_block = default_html_block
 	end
@@ -20,6 +21,7 @@ module FixtureReplacement
     a.path = "/#{a.name.underscore}"
     a.template = default_page_template
     a.section = default_section
+    a.version = 1
 	end
 
   attributes_for :page_template do |a|

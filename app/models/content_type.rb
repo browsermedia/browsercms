@@ -1,5 +1,9 @@
 class ContentType < ActiveRecord::Base
 
+  def self.find_by_key(key)
+    find_by_name(key.classify)
+  end
+  
   def display_name
     model_class.display_name
   end

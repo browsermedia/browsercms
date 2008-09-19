@@ -2,19 +2,21 @@ class Cms::ConnectorsController < Cms::BaseController
   
   before_filter :load_page, :only => [:new, :create]
   
-  def new
-    @block_type = params[:block_type] || session[:last_block_type] || 'html_block'
+  def new    
+    @block_type = ContentType.find_by_key(params[:block_type] || session[:last_block_type] || 'html_block')
     @container = params[:container]
     @connector = @page.connectors.build(:container => @container)
-    @blocks = @block_type.classify.constantize.all(:order => "name")      
+    @blocks = @block_type.model_class.all(:order => "name")      
   end
 
   def create
-    @connector = @page.connectors.build(params[:connector])
-    if @connector.save
+    @block_type = ContentType.find_by_key(params[:content_block_type])
+    raise "Unknown block type" unless @block_type
+    @block = @block_type.model_class.find(params[:content_block_id])
+    if @page.add_content_block!(@block, params[:container])
       redirect_to @page.path
     else
-      @blocks = @connector.content_block_type.classify.constantize.all(:order => "name")      
+      @blocks = @block_type.model_class.all(:order => "name")      
       render :action => 'new'
     end
   end

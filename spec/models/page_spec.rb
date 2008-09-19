@@ -233,7 +233,7 @@ describe "When adding a block to a page" do
   before do
     @page = create_page(:section => root_section)
     @block = create_html_block()
-    @adding_block = lambda { @conn = Connector.create(:page => @page, :content_block => @block, :container => "testing") }
+    @adding_block = lambda { @conn = @page.add_content_block!(@block, "testing") }
   end
   it "should set the page version to new page version" do
     @adding_block.call
@@ -246,7 +246,133 @@ describe "When adding a block to a page" do
   it "should increment the page version by 1" do
     @adding_block.should change(@page, :version).by(1)
   end
-  
+  it "should create 1 new connector" do
+    @adding_block.should change(Connector, :count).by(1)
+  end
 end
 
+describe "When adding a second block to a page" do
+  before do
+    @page = create_page(:section => root_section)
+    @block = create_html_block()
+    @block2 = create_html_block()
+    @first_conn = @page.add_content_block!(@block, "testing")
+    @adding_block = lambda do
+      @conn = @page.add_content_block!(@block2, "testing")      
+    end
+  end
+  it "should set the page version to new page version" do
+    @adding_block.call
+    @conn.page_version.should == 3
+  end
+  it "should set the content block version to existing block version" do
+    @adding_block.call
+    @conn.content_block_version.should == 1
+  end
+  it "should increment the page version by 1" do
+    @adding_block.should change(@page, :version).by(1)
+  end    
+  it "should add 2 new connectors to the page" do
+    @adding_block.call 
+    @page.connectors.count.should == 2
+  end
+  it "should create 2 new connectors" do
+    @adding_block.should change(Connector, :count).by(2)
+  end
+  it "should leave the connector for the first block untouched" do
+    @adding_block.call
+    @first_conn.reload
+    @first_conn.content_block.should == @block
+    @first_conn.page.should == @page
+    @first_conn.page_version.should == 2
+    @first_conn.content_block_version.should == 1
+  end
+  it "should correctly wire up the 2 new connectors" do
+    @adding_block.call
+    @conns = Connector.all(:conditions => {:page_version => 3}, :order => "id")
+    @conns.size.should == 2
+    @conns[0].content_block.should == @block
+    @conns[0].page.should == @page
+    @conns[0].page_version.should == 3
+    @conns[0].content_block_version.should == 1
+    
+    @conns[1].content_block.should == @block2
+    @conns[1].page.should == @page
+    @conns[1].page_version.should == 3
+    @conns[1].content_block_version.should == 1
+  end
+end
 
+describe "When adding a third block to a page" do
+  before do
+    @page = create_page(:section => root_section)
+    @block = create_html_block()
+    @block2 = create_html_block()
+    @first_conn = @page.add_content_block!(@block, "testing")
+    @second_conn = @page.add_content_block!(@block2, "testing")
+    @adding_block = lambda do
+      @conn = @page.add_content_block!(@block2, "testing")
+    end
+  end
+  it "should set the page version to 4" do
+    @adding_block.call
+    @page.reload.version.should == 4
+  end
+  it "should set the page version to new page version" do
+    @adding_block.call
+    @conn.page_version.should == 4
+  end
+  it "should set the content block version to existing block version" do
+    @adding_block.call
+    @conn.content_block_version.should == 1
+  end
+  it "should increment the page version by 1" do
+    @adding_block.should change(@page, :version).by(1)
+  end    
+  it "should add 3 new connectors to the page" do
+    @adding_block.call 
+    @page.connectors.count.should == 3
+  end
+  it "should create 3 new connectors" do
+    @adding_block.should change(Connector, :count).by(3)
+  end
+  it "should leave the previous connectors untouched" do
+    @adding_block.call
+    @conns = Connector.all(:conditions => ["page_version < 4"], :order => "id")
+    @conns.size.should == 3
+
+    @conns[0].content_block.should == @block
+    @conns[0].page.should == @page
+    @conns[0].page_version.should == 2
+    @conns[0].content_block_version.should == 1
+        
+    @conns[1].content_block.should == @block
+    @conns[1].page.should == @page
+    @conns[1].page_version.should == 3
+    @conns[1].content_block_version.should == 1
+    
+    @conns[2].content_block.should == @block2
+    @conns[2].page.should == @page
+    @conns[2].page_version.should == 3
+    @conns[2].content_block_version.should == 1    
+  end
+  it "should correctly wire up the 3 new connectors" do
+    @adding_block.call
+    @conns = Connector.all(:conditions => {:page_version => 4}, :order => "id")
+    @conns.size.should == 3
+    @conns[0].content_block.should == @block
+    @conns[0].page.should == @page
+    @conns[0].page_version.should == 4
+    @conns[0].content_block_version.should == 1
+
+    @conns[1].content_block.should == @block2
+    @conns[1].page.should == @page
+    @conns[1].page_version.should == 4
+    @conns[1].content_block_version.should == 1
+    
+    @conns[2].content_block.should == @block2
+    @conns[2].page.should == @page
+    @conns[2].page_version.should == 4
+    @conns[2].content_block_version.should == 1
+  end
+end

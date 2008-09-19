@@ -3,7 +3,7 @@
   <%= hidden_field_tag :container, @container %>
   <label>
     Block Type
-    <%= select_tag "block_type", options_for_select(RegisteredBlock.all(:order => "name").map{|b| [b.name.titleize, b.name]}, @block_type), :onchange => 'this.form.submit()' %>
+    <%= select_tag "block_type", options_for_select(ContentType.all(:order => "name").map{|ct| [ct.display_name, ct.content_block_type]}, @block_type.content_block_type), :onchange => 'this.form.submit()' %>
   </label>
 <% end %>
     
@@ -26,9 +26,9 @@
       <td class="select">
         <% form_for :connector, :url => cms_path(:connectors, :create) do |f| %>
           <%= hidden_field_tag :page_id, @page.to_param %>
-          <%= f.hidden_field :container, :value => @container %>
-          <%= f.hidden_field :content_block_type, :value => block.class.to_s %>
-          <%= f.hidden_field :content_block_id, :value => block.id %>
+          <%= hidden_field_tag :container,  @container %>
+          <%= hidden_field_tag :content_block_type, block.content_block_type %>
+          <%= hidden_field_tag :content_block_id, block.id %>
           <%= image_submit_tag action_icon_src(:connect) %>
         <% end %>
       </td>

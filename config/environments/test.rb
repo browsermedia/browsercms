@@ -20,3 +20,9 @@ config.action_controller.allow_forgery_protection    = false
 # The :test delivery method accumulates sent emails in the
 # ActionMailer::Base.deliveries array.
 config.action_mailer.delivery_method = :test
+
+begin
+  require 'ruby-debug'
+rescue
+  puts "WARNING: gem install ruby-debug for debugging support"
+end
