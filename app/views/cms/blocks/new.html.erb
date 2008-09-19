@@ -6,5 +6,6 @@
   <%= render :partial => "cms/#{@block.content_block_type.pluralize}/form", :locals => {:f => f} %>
   <div class="fields">
     <%= f.submit "Save" %>
+    <button type="submit" name="<%= @block.content_block_type%>[status]" value="PUBLISHED">Save And Publish</button>    
   </div>
 <% end %>
