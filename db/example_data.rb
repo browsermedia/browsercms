@@ -36,6 +36,11 @@ module FixtureReplacement
     a.name = "Test"
   end
   
+  attributes_for :redirect do |a|
+    a.from_path = "/#{String.random(12).downcase}"
+    a.to_path = "/#{String.random(12).downcase}"
+  end
+  
   attributes_for :section do |a|
     a.name = "Test"
   end
