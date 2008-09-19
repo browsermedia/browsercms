@@ -47,5 +47,50 @@ def it_should_render(template)
   it "should render the '#{template}' template" do
     response.should render_template(template)
   end
-end   
-      
+end
+
+class Object
+  def should_meet_expectations(expectations)
+    expectations.each do |method, expectation|
+      send(method).should == expectation
+    end
+  end
+end
+
+class Array
+  def to_table(*columns)
+    lengths = columns.map{|m| m.to_s.length }
+  
+    each do |r|
+      columns.each_with_index do |m, i|
+        v = r.send(m)
+        if v.to_s.length > lengths[i]
+          lengths[i] = v.to_s.length
+        end
+      end
+    end
+
+    str = "  "
+    columns.each_with_index do |m, i|
+      str << "%#{lengths[i]}s" % m
+      str << "  "
+    end
+    str << "\n  "
+
+    columns.each_with_index do |m, i|
+      str << ("-"*lengths[i])
+      str << "  "
+    end
+    str << "\n  "
+  
+    each do |r|
+      columns.each_with_index do |m, i|
+        str << "%#{lengths[i]}s" % r.send(m)
+        str << "  "
+      end
+      str << "\n  "      
+    end
+  
+    str
+  end   
+end      

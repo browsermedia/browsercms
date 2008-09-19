@@ -1,10 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Cms::BlocksController do
-  include Cms::PathHelper
-  integrate_views
-  
-  before { login_as_user }
+  controller_setup
   
   describe "#model_name" do
     describe "with no last_block_type or block_type parameter" do

@@ -58,3 +58,10 @@ end
 def root_section
   Section.first || create_section
 end
+
+def controller_setup
+  include Cms::PathHelper
+  integrate_views  
+  before { login_as_user }
+end
+  

@@ -25,7 +25,7 @@ class Cms::ConnectorsController < Cms::BaseController
     @connector = Connector.find(params[:id])
     @page = @connector.page
     @content_block = @connector.content_block
-    if @connector.destroy
+    if @page.destroy_connector(@connector)
       flash[:notice] = "Removed '#{@content_block.name}' from the '#{@connector.container}' container"
     else
       flash[:error] = "Failed to remove '#{@content_block.name}' from the '#{@connector.container}' container"

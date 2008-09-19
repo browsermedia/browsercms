@@ -376,3 +376,97 @@ describe "When adding a third block to a page" do
     @conns[2].content_block_version.should == 1
   end
 end
+
+describe "Removing a connector from a page" do
+  before do
+    @page = create_page(:section => root_section)
+    @block = create_html_block()
+    @conn = @page.add_content_block!(@block, "testing") 
+    @destroy_connector = lambda { @page.destroy_connector(@conn) } 
+  end
+  
+  it "should create a new version the page" do
+    @destroy_connector.should change(Page::Version, :count).by(1)
+  end
+  
+  it "should should increment the page version by 1" do
+    @destroy_connector.should change(@page, :version).by(1)
+  end
+  
+  it "should not alter the original connector" do
+    @destroy_connector.call
+    conns = Connector.find(:all)
+    conns.size.should == 1
+    
+    conns[0].page.should == @page
+    conns[0].page_version.should == 2
+    conns[0].content_block.should == @block
+    conns[0].content_block_version.should == 1
+    
+  end
+  it "should destroy the connector" do
+    @destroy_connector.call
+    @page.reload.connectors.should be_empty
+  end
+  
+  it "should return the frozen connector" do
+    c = @destroy_connector.call
+    c.should be_frozen
+    c.should == @conn
+  end
+end
+
+describe "Removing multiple blocks from a page" do
+  before do
+    @page = create_page(:section => root_section)
+    @block1 = create_html_block()
+    @block2 = create_html_block()
+    @conn = @page.add_content_block!(@block1, "bar") 
+    @conn2 = @page.add_content_block!(@block2, "bar")
+    @conn3 = @page.add_content_block!(@block2, "foo")
+    #Need to get the new connector that matches @conn2, otherwise you will delete an older version, not the latest connector
+    @conn2 = Connector.first(:conditions => {:page_id => @page.reload.id, :page_version => @page.version, :content_block_id => @block2.id, :content_block_version => @block2.version, :container => "bar"})
+    @page.destroy_connector(@conn2)
+    @destroy_connector = lambda { 
+      @conn = Connector.first(:conditions => {:page_id => @page.reload.id, :page_version => @page.version, :content_block_id => @block2.id, :content_block_version => @block2.version, :container => "foo"})
+      @page.destroy_connector(@conn) 
+    } 
+  end
+  
+  it "should create a new version the page" do
+    @destroy_connector.should change(Page::Version, :count).by(1)
+  end
+  
+  it "should have 5 total versions" do
+    @destroy_connector.call
+    Page::Version.count.should == 6
+  end
+  it "should should increment the page version by 1" do
+    @destroy_connector.should change(@page, :version).by(1)
+  end
+  
+  it "should end up with the correct connectors" do
+    
+    @destroy_connector.call
+    conns = Connector.find(:all, :order => "page_version, content_block_id, container")
+    #Rails.logger.info conns.to_table(:id, :page_id, :page_version, :content_block_id, :content_block_version, :container)
+    
+    conns.size.should == 9
+    
+    conns[0].should_meet_expectations(:page => @page, :page_version => 2, :content_block => @block1, :content_block_version => 1, :container => "bar")
+    conns[1].should_meet_expectations(:page => @page, :page_version => 3, :content_block => @block1, :content_block_version => 1, :container => "bar")
+    conns[2].should_meet_expectations(:page => @page, :page_version => 3, :content_block => @block2, :content_block_version => 1, :container => "bar")
+    conns[3].should_meet_expectations(:page => @page, :page_version => 4, :content_block => @block1, :content_block_version => 1, :container => "bar")
+    conns[4].should_meet_expectations(:page => @page, :page_version => 4, :content_block => @block2, :content_block_version => 1, :container => "bar")
+    conns[5].should_meet_expectations(:page => @page, :page_version => 4, :content_block => @block2, :content_block_version => 1, :container => "foo")
+    conns[6].should_meet_expectations(:page => @page, :page_version => 5, :content_block => @block1, :content_block_version => 1, :container => "bar")
+    conns[7].should_meet_expectations(:page => @page, :page_version => 5, :content_block => @block2, :content_block_version => 1, :container => "foo")
+    conns[8].should_meet_expectations(:page => @page, :page_version => 6, :content_block => @block1, :content_block_version => 1, :container => "bar")
+   
+  end
+  it "should destroy one of the connectors" do
+    @destroy_connector.call
+    @page.reload.connectors.size.should == 1
+  end
+  
+end

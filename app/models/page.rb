@@ -35,8 +35,28 @@ class Page < ActiveRecord::Base
     end
   end
   
+  def destroy_connector(connector)
+    transaction do
+      new_connectors = []
+      connectors.each do |c|
+        unless c == connector
+          con = Connector.new(c.attributes)
+          con.id = nil
+          new_connectors << con
+        end
+      end
+      increment_version!
+      
+      new_connectors.each do |c|
+        c.page_version = version
+        c.save!
+      end
+      reload
+      connector.freeze
+    end
+  end
+  
   def delete_connectors
-    logger.info "deleting connectors"
     Connector.delete_all "page_id = #{id}"
   end
   
