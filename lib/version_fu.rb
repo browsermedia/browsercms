@@ -12,8 +12,8 @@ module VersionFu
                      :version_column, :versioned_columns
 
       self.versioned_class_name         = options[:class_name]  || 'Version'
-      self.versioned_foreign_key        = options[:foreign_key] || self.to_s.foreign_key
-      self.versioned_table_name         = options[:table_name]  || "#{table_name_prefix}#{base_class.name.demodulize.underscore}_versions#{table_name_suffix}"
+      self.versioned_foreign_key        = options[:foreign_key] || table_name.singularize.foreign_key
+      self.versioned_table_name         = options[:table_name]  || "#{table_name_prefix}#{table_name.singularize}_versions#{table_name_suffix}"
       self.version_column               = options[:version_column]    || 'version'
 
       # Setup versions association

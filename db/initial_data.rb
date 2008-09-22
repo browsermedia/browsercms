@@ -75,6 +75,9 @@ create_cms_file_datum(:logo, :data => open(File.join(Rails.root, "public/images/
 create_cms_file(:xml, :file_type => "text/xml", :file_extension => "xml", :file_size => 36, :file_name => "test.xml", :cms_file_datum => cms_file_data(:xml))
 create_cms_image(:logo, :file_type => "image/png", :file_extension => "png", :file_size => 2305, :file_name => "logo.png", :cms_file_datum => cms_file_data(:logo))
 
+create_file_block(:xml, :name => "XML", :section => sections(:root), :cms_file => cms_files(:xml))
+create_image_block(:logo, :name => "Logo", :section => sections(:root), :cms_file => cms_images(:logo))
+
 create_portlet_type(:recently_updated_pages,
   :name => 'Recently Updated Pages',  
   :code => "@pages = Page.all(:order => 'updated_at desc', :limit => @portlet.number_of_pages)",

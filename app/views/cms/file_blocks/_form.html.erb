@@ -1,0 +1,12 @@
+<div class="fields">
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+</div>
+<div class="fields">
+  <%= f.label :file %>
+  <%= f.file_field :file %>
+</div>
+<div class="fields">
+  <%= f.label :section_id, "Section" %>
+  <%= f.collection_select :section_id, Section.all(:order => "name"), :id, :name %>
+</div>

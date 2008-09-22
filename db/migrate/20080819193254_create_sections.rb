@@ -4,7 +4,7 @@ class CreateSections < ActiveRecord::Migration
       t.string :name
       t.integer :parent_id
       t.integer :position
-      t.text :path
+      t.string :path
       t.string :nav_image
       t.string :nav_rollover_image
       t.string :current_nav_image

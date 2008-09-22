@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  type: MyString
+  section_id: 1
+  cms_file_id: 1
+  cms_file_type: MyString
+  name: MyString
+
+two:
+  type: MyString
+  section_id: 1
+  cms_file_id: 1
+  cms_file_type: MyString
+  name: MyString

@@ -1,6 +1,6 @@
 <% @page_title = "Content Library / Add New #{@content_type.display_name}" %>
 <h1>New <%= @block.display_name %></h1>
-<% form_for(@block, :url => cms_path(@block, :create)) do |f| %>
+<% form_for(@block, :url => cms_path(@block, :create), :html => {:multipart => true}) do |f| %>
   <%= f.error_messages %>
   <%= render :partial => 'hidden_fields', :locals => {:f => f} %>
   <%= render :partial => "cms/#{@block.content_block_type.pluralize}/form", :locals => {:f => f} %>

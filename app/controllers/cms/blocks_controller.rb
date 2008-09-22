@@ -12,10 +12,7 @@ class Cms::BlocksController < Cms::BaseController
 
   def new
     @content_type = ContentType.find_by_key(model_name)
-    logger.info "model_name = #{model_name}"
-    logger.info "@content_type = #{@content_type}"
     @block = @content_type.new_content(params[model_name])
-
     render :template => @content_type.template_for_new, :layout => 'cms/application'
   end
   

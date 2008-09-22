@@ -7,6 +7,10 @@ module FixtureReplacement
     a.cms_file_datum = default_cms_file_datum
   end
 
+  attributes_for :file_block do |a|
+    a.cms_file = default_cms_file
+  end
+
   attributes_for :connector do |a|
     a.page = default_page
     a.page_version = 1
