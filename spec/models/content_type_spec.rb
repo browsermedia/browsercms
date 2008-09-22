@@ -26,4 +26,23 @@ describe ContentType do
   it "should have content_block_type to help build urls" do
     @c.content_block_type.should == "html_blocks"
   end
+
+  it "should create a new instance of its class via new_content with no params" do
+    @b = @c.new_content
+    @b.class.should == HtmlBlock
+  end
+
+  it "should create a new instance with params" do
+    @b = @c.new_content(:name => "Test")
+    @b.name.should == "Test"
+  end
+
+  it "should return the standard view for new" do
+    @c.template_for_new.should == "cms/blocks/new"
+  end
+
+  it "should return custom new if model class overrides it" do
+    content_type = ContentType.new({:name => "Portlet"})
+    content_type.template_for_new.should == "cms/portlets/select_portlet_type"
+  end
 end

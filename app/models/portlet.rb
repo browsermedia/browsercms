@@ -20,6 +20,10 @@ class Portlet < ActiveRecord::Base
   
   def render
     portlet_type.render(self)
-  end  
+  end
+
+  def self.template_for_new
+    "cms/portlets/select_portlet_type"
+  end
   
 end

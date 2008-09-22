@@ -1,4 +1,4 @@
-<% @page_title = "Content Library / Add New #{@model.display_name}" %>
+<% @page_title = "Content Library / Add New #{@content_type.display_name}" %>
 <h1>New <%= @block.display_name %></h1>
 <% form_for(@block, :url => cms_path(@block, :create)) do |f| %>
   <%= f.error_messages %>
