@@ -2,8 +2,6 @@ class Page < ActiveRecord::Base
   
   acts_as_content_page
   
-  version_fu
-    
   belongs_to :section
   belongs_to :template, :class_name => "PageTemplate"
   has_many :connectors, :conditions => 'page_version = #{version}', :order => "position"
