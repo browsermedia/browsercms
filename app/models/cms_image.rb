@@ -1,0 +1,2 @@
+class CmsImage < CmsAbstractFile
+end

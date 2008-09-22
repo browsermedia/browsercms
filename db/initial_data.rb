@@ -65,7 +65,15 @@ create_connector(:about_main, :page => pages(:about), :container => "main", :con
 create_connector(:about_sidebar, :page => pages(:about), :container => "sidebar", :content_block => html_blocks(:sidebar))
 
 create_content_type(:html_block, :name => "HtmlBlock")
+create_content_type(:file_block, :name => "FileBlock")
+create_content_type(:image_block, :name => "ImageBlock")
 create_content_type(:portlet, :name => "Portlet")
+
+create_cms_file_datum(:xml, :data => "<root>\n  <data>Test</data>\n</root>\n")
+create_cms_file_datum(:logo, :data => open(File.join(Rails.root, "public/images/cms/browser_media_logo.png")){|f| f.read})
+
+create_cms_file(:xml, :file_type => "text/xml", :file_extension => "xml", :file_size => 36, :file_name => "test.xml", :cms_file_datum => cms_file_data(:xml))
+create_cms_image(:logo, :file_type => "image/png", :file_extension => "png", :file_size => 2305, :file_name => "logo.png", :cms_file_datum => cms_file_data(:logo))
 
 create_portlet_type(:recently_updated_pages,
   :name => 'Recently Updated Pages',  

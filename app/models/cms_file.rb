@@ -1,0 +1,2 @@
+class CmsFile < CmsAbstractFile
+end
