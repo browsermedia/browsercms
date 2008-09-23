@@ -1,2 +1,0 @@
-class CmsFile < CmsAbstractFile
-end
