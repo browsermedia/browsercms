@@ -1,8 +1,8 @@
 class FileBlock < AbstractFileBlock
 
-  validates_presence_of :section_id
-
   acts_as_content_block
+  before_save :save_file
+  
   def self.display_name
     "File"
   end
@@ -11,17 +11,13 @@ class FileBlock < AbstractFileBlock
     #TODO: Escape values
     <<-HTML
       <div id="file_block_#{id}" class="file_block">
-        <img src="/images/cms/icons/file_types/#{cms_file.icon}.png" alt=""/> 
+        <img src="/images/cms/icons/file_types/#{file_metadata.icon}.png" alt=""/>
         <a href="#{path}">#{name}</a>
-        #{cms_file.file_size.round_bytes}
+        #{file_metadata.file_size.round_bytes}
       </div>
     HTML
   end
 
-  def save_file
-    unless file.blank?
-      self.cms_file = CmsFile.create(:file => file)
-    end
-  end
+  
 
 end

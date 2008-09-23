@@ -1,15 +1,19 @@
 class AbstractFileBlock < ActiveRecord::Base
   set_table_name "file_blocks"
   
-  attr_accessor :file
-  
-  belongs_to :cms_file, :polymorphic => true
-  belongs_to :section
-  
-  before_save :save_file
+  attr_accessor :file, :section
+
+  belongs_to :file_metadata, :polymorphic => true
+
   
   def path
-    [section.path, cms_file.file_name].join("/").gsub(/\/{2,}/,"/")
+    [section.path, "#{file_metadata.id}_#{file_metadata.file_name}"].join("/").gsub(/\/{2,}/,"/")
   end
-  
+
+  def save_file
+    unless file.blank?
+      self.file_metadata = FileMetadata.create!(:file => file, :section => section)
+    end
+  end
+
 end

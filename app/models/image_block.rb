@@ -9,11 +9,4 @@ class ImageBlock < AbstractFileBlock
     #TODO: Escape values
     %Q{<img src="#{path}" alt="#{name}"/>}
   end
-
-  def save_file
-    unless file.blank?
-      self.cms_file = CmsImage.create(:file => file)
-    end
-  end
-
 end

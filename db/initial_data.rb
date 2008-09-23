@@ -69,14 +69,14 @@ create_content_type(:file_block, :name => "FileBlock")
 create_content_type(:image_block, :name => "ImageBlock")
 create_content_type(:portlet, :name => "Portlet")
 
-create_cms_file_datum(:xml, :data => "<root>\n  <data>Test</data>\n</root>\n")
-create_cms_file_datum(:logo, :data => open(File.join(Rails.root, "public/images/cms/browser_media_logo.png")){|f| f.read})
+create_file_binary_data(:xml, :data => "<root>\n  <data>Test</data>\n</root>\n")
+create_file_binary_data(:logo, :data => open(File.join(Rails.root, "public/images/cms/browser_media_logo.png")){|f| f.read})
 
-create_cms_file(:xml, :file_type => "text/xml", :file_extension => "xml", :file_size => 36, :file_name => "test.xml", :cms_file_datum => cms_file_data(:xml))
-create_cms_image(:logo, :file_type => "image/png", :file_extension => "png", :file_size => 2305, :file_name => "logo.png", :cms_file_datum => cms_file_data(:logo))
+create_file_metadata(:xml, :file_type => "text/xml", :section => sections(:root), :file_extension => "xml", :file_size => 36, :file_name => "test.xml", :file_binary_data => file_binary_data(:xml))
+create_file_metadata(:logo, :file_type => "image/png", :section => sections(:root), :file_extension => "png", :file_size => 2305, :file_name => "logo.png", :file_binary_data => file_binary_data(:logo))
 
-create_file_block(:xml, :name => "XML", :section => sections(:root), :cms_file => cms_files(:xml))
-create_image_block(:logo, :name => "Logo", :section => sections(:root), :cms_file => cms_images(:logo))
+create_file_block(:xml, :name => "XML", :file_metadata => file_metadata(:xml))
+create_image_block(:logo, :name => "Logo", :file_metadata => file_metadata(:logo))
 
 create_portlet_type(:recently_updated_pages,
   :name => 'Recently Updated Pages',  

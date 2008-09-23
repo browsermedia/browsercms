@@ -1,14 +1,14 @@
 module FixtureReplacement
 
-  attributes_for :cms_file_datum do |a|
+  attributes_for :file_binary_data do |a|
   end
 
-  attributes_for :cms_file do |a|
-    a.cms_file_datum = default_cms_file_datum
+  attributes_for :file_metadata do |a|
+    a.file_binary_data = default_file_binary_data
   end
 
   attributes_for :file_block do |a|
-    a.cms_file = default_cms_file
+    a.cms_file = default_file_metadata
   end
 
   attributes_for :connector do |a|
@@ -56,6 +56,7 @@ module FixtureReplacement
   
   attributes_for :section do |a|
     a.name = "Test"
+    a.path = "/"
   end
 
   attributes_for :ruby_haml_portlet do |a|
