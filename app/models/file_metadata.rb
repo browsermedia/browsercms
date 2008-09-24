@@ -6,7 +6,6 @@ class FileMetadata < ActiveRecord::Base
 
   before_save :process_file
   after_save :write_file
-  before_update :delete_file
   after_destroy :delete_file
 
   validates_presence_of :section_id
@@ -25,6 +24,7 @@ class FileMetadata < ActiveRecord::Base
       file.rewind
 
       create_file_binary_data(:data => file.read)
+      
     end
   end
 

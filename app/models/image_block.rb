@@ -1,6 +1,7 @@
 class ImageBlock < AbstractFileBlock
 
   acts_as_content_block
+
   def self.display_name
     "Image"
   end  
