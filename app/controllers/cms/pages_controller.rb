@@ -13,8 +13,15 @@ class Cms::PagesController < Cms::BaseController
     elsif params[:path].nil?
       raise ActiveRecord::RecordNotFound.new("Page could not be found")
     else
-      set_page_mode
       @path = "/#{params[:path].join("/")}"
+
+      @file = File.join(ActionController::Base.cache_store.cache_path, @path)
+      if File.exists?(@file)
+        send_file(@file,  :type => 'text/plain')
+        return
+      end
+      
+      set_page_mode
       @page = Page.find_by_path(@path)
       if @page
         render :layout => @page.layout

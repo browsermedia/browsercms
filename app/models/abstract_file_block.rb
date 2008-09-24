@@ -7,8 +7,17 @@ class AbstractFileBlock < ActiveRecord::Base
 
   before_save :save_file
   
+  def section_id=(section_id)
+    self.section = Section.find(section_id)
+  end
+  
+  def section_id
+    return section.id unless section.nil?
+    file_metadata.section_id unless file_metadata.nil?
+  end
+  
   def path
-    [section.path, "#{file_metadata.id}_#{file_metadata.file_name}"].join("/").gsub(/\/{2,}/,"/")
+    [file_metadata.section.path, "#{file_metadata.id}_#{file_metadata.file_name}"].join("/").gsub(/\/{2,}/,"/")
   end
 
   def save_file

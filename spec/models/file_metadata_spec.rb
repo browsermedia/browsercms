@@ -5,9 +5,7 @@ describe FileMetadata do
   describe "when saving with a file" do
     before do
       #@file is a mock of the object that Rails wraps file uploads in
-      @file = mock("file", :original_filename => "test.jpg", 
-        :content_type => "image/jpeg", :rewind => true,
-        :size => "99", :read => "01010010101010101")
+      @file = mock_file
         
       @saving_the_cms_file = lambda {@file_metadata = FileMetadata.create!(:file => @file, :section => root_section) }
     end

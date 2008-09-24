@@ -8,9 +8,13 @@ module FixtureReplacement
   end
 
   attributes_for :file_block do |a|
-    a.cms_file = default_file_metadata
   end
 
+  attributes_for :image_block do |a|
+    a.name = "Sample Image"
+    
+  end
+  
   attributes_for :connector do |a|
     a.page = default_page
     a.page_version = 1

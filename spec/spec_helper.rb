@@ -64,4 +64,9 @@ def controller_setup
   integrate_views  
   before { login_as_user }
 end
-  
+
+def mock_file(options = {})
+  mock("file", {:original_filename => "test.jpg", 
+    :content_type => "image/jpeg", :rewind => true,
+    :size => "99", :read => "01010010101010101"}.merge(options))
+end

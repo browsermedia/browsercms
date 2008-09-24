@@ -1,13 +1,13 @@
 #See /lib/initial_data.rb for info on how this works
 create_user(:cmsadmin, :login => "cmsadmin", :email => "cmsadmin@example.com", :password => "cmsadmin", :password_confirmation => "cmsadmin")
 
-create_section(:root, :name => "My Site")
-create_section(:products, :name => "Products", :parent => sections(:root))
-create_section(:browsercms, :name => "BrowserCMS", :parent => sections(:products))
-create_section(:browserams, :name => "BrowserAMS", :parent => sections(:products))
-create_section(:about, :name => "About", :parent => sections(:root))
-create_section(:people, :name => "People", :parent => sections(:about))
-create_section(:careers, :name => "Careers", :parent => sections(:about))
+create_section(:root, :name => "My Site", :path => "/")
+create_section(:products, :name => "Products", :parent => sections(:root), :path => "/products")
+create_section(:browsercms, :name => "BrowserCMS", :parent => sections(:products), :path => "/browsercms")
+create_section(:browserams, :name => "BrowserAMS", :parent => sections(:products), :path => "/browserams")
+create_section(:about, :name => "About", :parent => sections(:root), :path => "/about")
+create_section(:people, :name => "People", :parent => sections(:about), :path => "/people")
+create_section(:careers, :name => "Careers", :parent => sections(:about), :path => "/careers")
 
 create_page_template(:main, :name => "Main", :file_name => "main", :language => "erb", :body => <<-TEMPLATE)
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -59,10 +59,10 @@ create_html_block(:hello_world, :name => "Hello World", :content => "<h1>Hello, 
 create_html_block(:sidebar, :name => "Sidebar", :content => "<ul><li><a href=\"/\">Home</a></li><li><a href=\"/about\">About Us</a></li></ul>")
 create_html_block(:about_us, :name => "About Us", :content => "We are super fantastic")
 
-create_connector(:home_main, :page => pages(:home), :container => "main", :content_block => html_blocks(:hello_world))
-create_connector(:home_sidebar, :page => pages(:home), :container => "sidebar", :content_block => html_blocks(:sidebar))
-create_connector(:about_main, :page => pages(:about), :container => "main", :content_block => html_blocks(:hello_world))
-create_connector(:about_sidebar, :page => pages(:about), :container => "sidebar", :content_block => html_blocks(:sidebar))
+create_connector(:home_main, :page => pages(:home), :page_version => 1, :container => "main", :content_block => html_blocks(:hello_world), :content_block_version => 1)
+create_connector(:home_sidebar, :page => pages(:home), :page_version => 1, :container => "sidebar", :content_block => html_blocks(:sidebar), :content_block_version => 1)
+create_connector(:about_main, :page => pages(:about), :page_version => 1, :container => "main", :content_block => html_blocks(:hello_world), :content_block_version => 1)
+create_connector(:about_sidebar, :page => pages(:about), :page_version => 1, :container => "sidebar", :content_block => html_blocks(:sidebar), :content_block_version => 1)
 
 create_content_type(:html_block, :name => "HtmlBlock")
 create_content_type(:file_block, :name => "FileBlock")

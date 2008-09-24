@@ -4,6 +4,49 @@ describe Cms::PagesController do
   include Cms::PathHelper
   integrate_views
   
+  describe "show" do
+    before do
+      #@file = create_file_block(:file => )
+      @action = lambda { get :show, :path => ['/test.txt'] }
+    end
+    describe "a file that has not been written to the cache dir" do
+      it "should write out the file" do 
+        pending
+      end
+      it "should return a 200" do 
+        pending
+      end
+      it "return the contents of the file" do 
+        pending
+      end
+    end
+    describe "a file that has been written to the cache dir" do
+      before do
+        open("#{ActionController::Base.cache_store.cache_path}/test.txt", "w") do |f|
+          f << "Foo\n"
+        end
+      end
+      it "should not overrite the file" do 
+        pending
+      end
+      it "should return a 200" do 
+        @action.call
+        response.should be_success
+      end
+      it "return the contents of the file" do 
+        @action.call
+      
+        @streamer = response.body
+        @streamer.class.should == Proc
+        
+        @output = mock("output")
+        @output.should_receive(:write).with("Foo\n")
+              
+        @streamer.call(response, @output)
+      end      
+    end
+  end
+  
   describe "moving a page" do
     describe "with a valid section id" do
       before do
