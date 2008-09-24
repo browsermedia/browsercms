@@ -5,6 +5,7 @@ class AbstractFileBlock < ActiveRecord::Base
 
   belongs_to :file_metadata, :polymorphic => true
 
+  before_save :save_file
   
   def path
     [section.path, "#{file_metadata.id}_#{file_metadata.file_name}"].join("/").gsub(/\/{2,}/,"/")

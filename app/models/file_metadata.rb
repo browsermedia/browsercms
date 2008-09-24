@@ -5,7 +5,7 @@ class FileMetadata < ActiveRecord::Base
   belongs_to :section
 
   before_save :process_file
-#  after_save :write_file
+  after_save :write_file
   before_update :delete_file
   after_destroy :delete_file
 
@@ -51,10 +51,11 @@ class FileMetadata < ActiveRecord::Base
   end
 
   def absolute_path
-    File.join(Rails.root, "public", section.path, "#{id}_#{file_name}")
+    File.join(ActionController::Base.cache_store.cache_path, section.path, "#{id}_#{file_name}")
   end
 
   def write_file
+    FileUtils.mkdir_p File.dirname(absolute_path)
     open(absolute_path, "wb") {|f| f << data }
   end
 

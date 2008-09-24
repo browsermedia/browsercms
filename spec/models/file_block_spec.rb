@@ -33,9 +33,8 @@ describe FileBlock do
   end
 
   it "should write out the file" do
-    pending "Make work"
     f = FileBlock.create!(:file => @file, :section => root_section)
-    file = File.join(Rails.root, "public", "#{f.file_metadata_id}_test.jpg")
+    file = File.join(ActionController::Base.cache_store.cache_path, "#{f.file_metadata_id}_test.jpg")
     File.exists?(file).should be_true
     open(file){|f| f.read}.should == @file.read
   end

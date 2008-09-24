@@ -1,7 +1,6 @@
 class FileBlock < AbstractFileBlock
 
   acts_as_content_block
-  before_save :save_file
   
   def self.display_name
     "File"
