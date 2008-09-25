@@ -1,7 +1,7 @@
 <% @page_title = "Content Library / Edit #{@model.display_name}" %>
 <%= render :partial => 'toolbar' %>
 <h1>Edit <%= @block.name %></h1>
-<% form_for(@block, :url => cms_path(@block, :update)) do |f| %>
+<% form_for(@block, :url => cms_path(@block, :update), :html => {:multipart => true}) do |f| %>
   <%= f.error_messages %>
   <%= render :partial => 'hidden_fields', :locals => { :f => f } %>
   <%= render :partial => "cms/#{@block.content_block_type.pluralize}/form", :locals => {:f => f} %>

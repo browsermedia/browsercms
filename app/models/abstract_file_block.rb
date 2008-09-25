@@ -38,11 +38,12 @@ class AbstractFileBlock < ActiveRecord::Base
   def file=(file)
     build_file_metadata if new_record? && file_metadata.nil?
     file_metadata.file = file
+    @file_metadata_changed = true
   end
 
   def create_new_file_metadata
-    unless new_record? 
-      if file_metadata.changed? 
+    unless new_record?
+      if file_metadata.changed? || @file_metadata_changed
         new_file_metadata = FileMetadata.new(file_metadata.attributes.without("id"))
         logger.info "\n\n\n#{file_metadata.file.inspect}\n\n\n"
         new_file_metadata.file = file_metadata.file      

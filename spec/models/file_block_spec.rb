@@ -100,18 +100,15 @@ describe FileBlock do
         @updating_the_file_block = lambda { @file_block.update_attribute(:file, mock_file(:read => "foo")) }
       end
       it "should create a new file metadata" do
-        pending "TODO: FIX ME SOON!"
         @updating_the_file_block.should change(FileMetadata, :count).by(1)
       end
       it "should change the file block's version by 1" do
-        pending "TODO: FIX ME SOON!"
         @updating_the_file_block.should change(@file_block, :version).by(1)
       end
-      it "should not change the number of file_binary_data records" do
-        @updating_the_file_block.should_not change(FileBinaryData, :count)
+      it "should change the number of file_binary_data records by 1" do
+        @updating_the_file_block.should change(FileBinaryData, :count).by(1)
       end
       it "should change the data" do
-        pending "TODO: FIX ME SOON!"
         @updating_the_file_block.call
         @file_block = FileBlock.find(@file_block.id)
         @file_block.file_metadata.data.should == "foo"
