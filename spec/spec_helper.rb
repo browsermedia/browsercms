@@ -70,3 +70,20 @@ def mock_file(options = {})
     :content_type => "image/jpeg", :rewind => true,
     :size => "99", :read => "01010010101010101"}.merge(options))
 end
+
+def streaming_file_contents(response)
+  #The body of a streaming response is a proc
+  streamer = response.body
+  streamer.class.should == Proc
+
+  #Create a dummy object for the proc to write to
+  output = Object.new
+  def output.write(contents); (@contents ||= "") << contents end
+  
+  #run the proc
+  streamer.call(response, output)  
+  
+  #run what it wrote to the dummy object
+  output.instance_variable_get("@contents")
+end
+

@@ -4,58 +4,48 @@ describe Cms::PagesController do
   include Cms::PathHelper
   integrate_views
   
-  describe "show" do
-    before do
-      #@file = create_file_block(:file => )
-      @action = lambda { get :show, :path => ['/test.txt'] }
-    end
-    describe "homepage" do
-      it "should show correctly" do
-        @page = create_page(:path => "/")
-        home_page = lambda {get :show, :path => []}
-        def controller.render (conditions={})
-          response.content_type = "mock_response_to_avoid_fails"
-        end
-
-        home_page.call
-        response.content_type.should == "mock_response_to_avoid_fails"
+  describe "showing" do
+    describe "the home page" do
+      it "should display the page with a title" do
+        @page_template = create_page_template(:file_name => "application")
+        @page = create_page(:path => "/", :name => "Test Homepage", :template => @page_template)
+        get :show, :path => []
+        response.should have_tag("title", "Test Homepage")
       end
     end
-    describe "a file that has not been written to the cache dir" do
-      it "should write out the file" do 
-        pending
-      end
-      it "should return a 200" do 
-        pending
-      end
-      it "return the contents of the file" do 
-        pending
-      end
-    end
-    describe "a file that has been written to the cache dir" do
+    describe "a file" do
       before do
-        open("#{ActionController::Base.cache_store.cache_path}/test.txt", "w") do |f|
-          f << "Foo"
+        @file = mock_file(:original_filename => "test.txt", :read => "This is a test\n")
+        @file_block = create_file_block(:section => root_section, :file => @file)
+        @action = lambda { get :show, :path => ["#{@file_block.file_metadata_id}_test.txt"] }
+        @path_to_file = "#{ActionController::Base.cache_store.cache_path}/#{@file_block.file_metadata_id}_test.txt"
+      end
+      describe "that has not been written to the cache dir" do
+        before do
+          File.delete(@path_to_file) if File.exists?(@path_to_file)
+        end
+        it "should write out the file" do 
+          @action.call
+          File.exists?(@path_to_file).should be_true
+        end
+        it "return the contents of the file" do 
+          @action.call
+          streaming_file_contents(response).should == "This is a test\n"
+        end
+        it "should set the content type properly" do
+          @action.call
+          response.content_type.should == "text/plain"
         end
       end
-      it "should not overrite the file" do 
-        pending
+      describe "that has been written to the cache dir" do
+        before do
+          open(@path_to_file, "w") {|f| f << "Don't Overwrite Me!\n"}          
+        end
+        it "return the contents of the file" do 
+          @action.call
+          streaming_file_contents(response).should == "Don't Overwrite Me!\n"
+        end      
       end
-      it "should return a 200" do 
-        @action.call
-        response.should be_success
-      end
-      it "return the contents of the file" do 
-        @action.call
-      
-        @streamer = response.body
-        @streamer.class.should == Proc
-        
-        @output = mock("output")
-        @output.should_receive(:write).with("Foo")
-              
-        @streamer.call(response, @output)
-      end      
     end
   end
   

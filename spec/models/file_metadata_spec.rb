@@ -2,6 +2,32 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe FileMetadata do
   
+  describe "an existing record" do
+    before do
+      @file_metadata = create_file_metadata(:section => root_section, :file => mock_file)
+    end
+    describe "in the root section" do
+      it "should be able to be found by path with a leading /" do
+        FileMetadata.find_by_path("/#{@file_metadata.file_name}").should == @file_metadata
+      end
+      it "should be able to be found by path without a leading /" do
+        FileMetadata.find_by_path(@file_metadata.file_name).should == @file_metadata
+      end
+    end
+    describe "in a sub section" do
+      before do
+        @sub_section = create_section(:parent => root_section, :path => "/sub")
+        @file_metadata.update_attribute(:section, @sub_section)
+      end
+      it "should be able to be found by path with a leading slash" do
+        FileMetadata.find_by_path("/sub/#{@file_metadata.file_name}").should == @file_metadata
+      end
+      it "should be able to be found by path without a leading slash" do
+        FileMetadata.find_by_path("sub/#{@file_metadata.file_name}").should == @file_metadata
+      end
+    end    
+  end  
+  
   describe "when saving with a file" do
     before do
       #@file is a mock of the object that Rails wraps file uploads in
@@ -11,7 +37,7 @@ describe FileMetadata do
     end
     it "should set the file_name" do
       @saving_the_cms_file.call
-      @file_metadata.file_name.should == "test.jpg"
+      @file_metadata.file_name.should == "#{@file_metadata.id}_test.jpg"
     end
     it "should set the file_extension" do
       @saving_the_cms_file.call

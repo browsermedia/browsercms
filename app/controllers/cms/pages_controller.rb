@@ -8,35 +8,45 @@ class Cms::PagesController < Cms::BaseController
   verify :method => :put, :only => [:move_to]
 
   def show
-    if !params[:id].blank?
-      redirect_to Page.find(params[:id]).path
-    elsif params[:path].nil?
-      raise ActiveRecord::RecordNotFound.new("Page could not be found")
-    else
-      @path = "/#{params[:path].join("/")}"
+    return redirect_to(Page.find(params[:id]).path) unless params[:id].blank?
+    raise ActiveRecord::RecordNotFound.new("Page could not be found") if params[:path].nil?
 
-      @file = File.join(ActionController::Base.cache_store.cache_path, @path)
+    #Reconstruct the path from an array into a string
+    @path = "/#{params[:path].join("/")}"
 
-      if is_not_root_path? && File.exists?(@file)
-        send_file(@file, 
-          :type => Mime::Type.lookup_by_extension(@file.split(/\./).last.to_s.downcase).to_s,
-          :disposition => false #see monkey patch in lib/action_controller/streaming.rb
-        ) 
-        return
-      end
-      
-      set_page_mode
-      @page = Page.find_by_path(@path)
-      if @page
-        render :layout => @page.layout
-      else
-        if redirect = Redirect.find_by_from_path(@path)
-          redirect_to redirect.to_path
-        else
-          raise ActiveRecord::RecordNotFound.new("No page at '#{@path}'") unless @page    
-        end
-      end
+    #Try to Redirect
+    if redirect = Redirect.find_by_from_path(@path)
+      redirect_to redirect.to_path
+      return
     end
+    
+    #Construct a path to where this file would be if it were cached
+    @file = File.join(ActionController::Base.cache_store.cache_path, @path)
+
+    #Write the file out if it doesn't exist
+    unless File.exists?(@file)
+      @file_metadata = FileMetadata.find_by_path(@path)
+      @file_metadata.write_file if @file_metadata
+    end
+    
+    #Stream the file if it exists
+    if @path != "/" && File.exists?(@file)
+      send_file(@file, 
+        :type => Mime::Type.lookup_by_extension(@file.split(/\./).last.to_s.downcase).to_s,
+        :disposition => false #see monkey patch in lib/action_controller/streaming.rb
+      ) 
+      return
+    end
+    
+    #Last, but not least, to to render a page for this path
+    set_page_mode
+    @page = Page.find_by_path(@path)
+    if @page
+      render :layout => @page.layout
+    else
+      raise ActiveRecord::RecordNotFound.new("No page at '#{@path}'") unless @page    
+    end
+    
   end
 
   def new
@@ -118,10 +128,6 @@ class Cms::PagesController < Cms::BaseController
   
     def hide_toolbar
       @hide_page_toolbar = true
-    end
-
-    def is_not_root_path?
-      params[:path] != []
     end
   
 end

@@ -10,10 +10,10 @@ class AbstractFileBlock < ActiveRecord::Base
   #Apparently in rails, when updating a record,
   #all before_save's are called in the order they are defined,
   #then all before_updates's are called in the order they are defined
-  before_save :create_new_file_metadata      
+  before_save :create_new_file_metadata
   
   def path
-    [file_metadata.section.path, "#{file_metadata.id}_#{file_metadata.file_name}"].join("/").gsub(/\/{2,}/,"/")
+    [file_metadata.section.path, file_metadata.file_name].join("/").gsub(/\/{2,}/,"/")
   end
 
   #Delagate getter/setters for file_metadata

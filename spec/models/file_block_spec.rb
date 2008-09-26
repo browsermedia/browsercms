@@ -1,6 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe FileBlock do
+  
   describe "when saving a new record" do
     before(:each) do
       #@file is a mock of the object that Rails wraps file uploads in
