@@ -28,11 +28,11 @@ module Cms
             version_fu
           end
           is_paranoid
-          
+
           @default_status = "IN_PROGRESS"
           before_validation_on_create :set_default_status
           after_destroy :destroy_versions_if_destroyed
-          
+
           validates_inclusion_of :status, :in => @statuses.keys
 
           define_status_query_methods
@@ -82,11 +82,10 @@ module Cms
         end
 
         def destroy_versions_if_destroyed
-          logger.info "versioned_class => #{self.class.versioned_class}"
-          logger.info "versioned_foreign_key => #{self.class.versioned_foreign_key}"
+          return unless supports_versioning?
           self.class.versioned_class.delete_all("#{self.class.versioned_foreign_key} = #{id}") if destroyed?
         end
-        
+
         module ClassMethods
           def default_status
             @default_status

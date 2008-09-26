@@ -94,7 +94,7 @@ describe Cms::BlocksController do
     end
     it "should have link to revisions" do
       @action.call
-      response.should have_tag("a#revisions_link")      
+      response.should have_tag("a#revisions_link")
     end
   end
 
@@ -406,6 +406,17 @@ describe Cms::BlocksController do
       it "should render the correct template for editing a portlet" do
         @action.call
         response.should have_tag("h2", "Edit Portlet")
+      end
+    end
+
+    describe "destroying" do
+      before(:each) do
+        @action = lambda { delete :destroy, :id => @block.id, :block_type => "portlets" }
+      end
+      it "should remove the row" do
+        @action.call
+        delete = lambda {Portlet.find(@block.id)}
+        delete.should raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end

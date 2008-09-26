@@ -72,7 +72,8 @@ describe "A Content Object" do
   end
 
   describe "when destroying a content object" do
-    before(:each) do
+    describe "which is versioned" do
+        before(:each) do
       @b.save
       @b.reload
     end
@@ -129,6 +130,16 @@ describe "A Content Object" do
       @b.destroy!
       lambda { HtmlBlock.find_with_deleted(@b) }.should raise_error(ActiveRecord::RecordNotFound)
       HtmlBlock::Version.find(:all, "html_block_id =>#{@b.id}").size.should == 0
+    end
+    end
+
+    describe "that is not versionable" do
+      before(:each) do
+        @p = create_portlet
+      end
+      it "should be deleted" do
+        @p.destroy.should be_true
+      end
     end
   end
 end
