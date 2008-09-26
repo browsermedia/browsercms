@@ -92,6 +92,10 @@ describe Cms::BlocksController do
       @action.call
       response.should have_tag("div.content", "I worked.")
     end
+    it "should have link to revisions" do
+      @action.call
+      response.should have_tag("a#revisions_link")      
+    end
   end
 
   describe "list blocks" do
@@ -126,6 +130,8 @@ describe Cms::BlocksController do
       response.should have_tag("input[id=?][value=?]", "html_block_name", "Test")
     end
   end
+
+
   describe "updates to a block" do
     before do
       @block = create_html_block(:name => "V1")
@@ -174,7 +180,16 @@ describe Cms::BlocksController do
       response.should redirect_to(cms_url(@block))
     end
   end
-
+  describe "list revisions" do
+    before(:each) do
+      @block = create_html_block(:name => "V1")
+      @action = lambda { get :revisions, :id => @block.id }
+    end
+    it "should be success" do
+      @action.call
+      response.should be_success
+    end
+  end
   describe "revert_to" do
     before do
       @block = create_html_block(:name => "V1")
@@ -333,6 +348,29 @@ describe Cms::BlocksController do
   describe "CRUD for Portlets (which have custom page flow)" do
     before(:each) do
       create_content_type(:name => "Portlet")
+      @block = create_portlet(:name => "V1")
+    end
+
+    describe "show" do
+      before(:each) do
+        @action = lambda { get :show, :id => @block.id, :block_type => "portlets" }
+      end
+      it "should be success" do
+        @action.call
+        response.should be_success
+      end
+      it "should disable revisions (as portlets are not versionable" do
+        @action.call
+        response.should_not have_tag("a#revisions_link")
+      end
+    end
+
+    describe "revisioning" do
+      it "should return Not Implemented" do
+        pending 'Make the BlockController#revisions return a response code of 501 rather than throwing an exception'
+        @action = lambda { get :revisions, :id => @block.id, :block_type => "portlets" }
+        response.should == "501" # Http 'Not Implemented'
+      end
     end
 
     describe "adding new content" do
@@ -357,7 +395,6 @@ describe Cms::BlocksController do
 
     describe "edit a block" do
       before do
-        @block = create_portlet(:name => "Test")
         @action = lambda { get :edit, :id => @block.id, :block_type => "portlets" }
       end
 

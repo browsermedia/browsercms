@@ -108,6 +108,9 @@ describe "A Content Object" do
       d.should be_deleted
     end
 
+    it "should support versioning" do
+      @b.supports_versioning?.should be_true
+    end
     it "should create a new version when destroying" do
       @b.versions.size.should == 1
       @b.destroy

@@ -15,5 +15,9 @@ describe Portlet do
     portlet = create_portlet(:portlet_type => portlet_type)
     portlet.render.should == "<h1>FOO</h1>"
   end
-  
+
+  it "should be marked as not supporting revisioning" do
+    p = Portlet.new
+    p.supports_versioning?.should be_false
+  end
 end

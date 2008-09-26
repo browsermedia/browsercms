@@ -20,6 +20,11 @@ describe HtmlBlock do
   end
   
   describe "versioning for blocks" do
+    it "should support versioning" do
+      h = HtmlBlock.new
+      h.supports_versioning?.should be_true
+    end
+
     describe "when creating a record" do
       before do
         @html_block = create_html_block
