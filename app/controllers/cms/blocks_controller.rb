@@ -35,6 +35,10 @@ class Cms::BlocksController < Cms::BaseController
     end
   end
 
+  def edit
+    render :template => content_type.template_for_edit, :layout => 'cms/application'
+  end
+  
   def update
     if @block.update_attributes(params[model_name])
       flash[:notice] = "#{model_name.titleize} '#{@block.name}' was updated"

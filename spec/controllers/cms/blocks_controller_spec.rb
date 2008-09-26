@@ -109,6 +109,23 @@ describe Cms::BlocksController do
       response.should have_tag("td.block_name", "Test")
     end
   end
+
+  describe "edit a block" do
+    before do
+      @block = create_html_block(:name => "Test")
+      @action = lambda { get :edit, :id => @block.id }
+    end
+
+    it "should be successful" do
+      @action.call
+      response.should be_success
+    end
+
+    it "should load block and display form with fields loaded" do
+      @action.call
+      response.should have_tag("input[id=?][value=?]", "html_block_name", "Test")
+    end
+  end
   describe "updates to a block" do
     before do
       @block = create_html_block(:name => "V1")
@@ -253,7 +270,7 @@ describe Cms::BlocksController do
 
       it "should call standard /new for normal blocks" do
         @action.call
-        response.should have_tag("h1", "New Html")
+        response.should have_tag("h2", "New Html")
       end
     end
   end
@@ -274,7 +291,7 @@ describe Cms::BlocksController do
 
       it "should call standard /new for normal blocks" do
         @action.call
-        response.should have_tag("h1", "New Image")
+        response.should have_tag("h2", "New Image")
       end
     end
     describe "editing content" do
@@ -291,7 +308,7 @@ describe Cms::BlocksController do
       it "should call standard /edit for normal blocks" do
         @action.call
         assigns[:block].section_id.should == root_section.id
-        response.should have_tag("h1", "Edit #{@image.name}")
+        response.should have_tag("h2", "Edit #{@image.name}")
         response.should have_tag("select[name=?]", "image_block[section_id]") do
           with_tag("option[value=?][selected=?]", root_section.id, "selected")
         end
@@ -313,7 +330,7 @@ describe Cms::BlocksController do
     end
   end
 
-  describe "CRUD for Portlets (special case content types)" do
+  describe "CRUD for Portlets (which have custom page flow)" do
     before(:each) do
       create_content_type(:name => "Portlet")
     end
@@ -322,7 +339,6 @@ describe Cms::BlocksController do
       before(:each) do
         @action = lambda { get :new,  :block_type => "portlets"}
       end
-
 
       it "should have the correct test setup (i.e. have HtmlBlocks in the db as a ContentType)" do
         ContentType.find_by_key("portlet").should_not == nil
@@ -336,6 +352,23 @@ describe Cms::BlocksController do
       it "should render custom view for /new" do
         @action.call
         response.should have_tag("h1", "Select Portlet Type")
+      end
+    end
+
+    describe "edit a block" do
+      before do
+        @block = create_portlet(:name => "Test")
+        @action = lambda { get :edit, :id => @block.id, :block_type => "portlets" }
+      end
+
+      it "should be successful" do
+        @action.call
+        response.should be_success
+      end
+
+      it "should render the correct template for editing a portlet" do
+        @action.call
+        response.should have_tag("h2", "Edit Portlet")
       end
     end
   end

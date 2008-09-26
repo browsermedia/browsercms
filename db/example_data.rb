@@ -26,6 +26,15 @@ module FixtureReplacement
     a.name = "Test"
   end
 
+  attributes_for :portlet_type do |a|
+    a.name = "Find Stuff"
+  end
+
+  attributes_for :portlet do |a|
+    a.name = "Find X"
+    a.portlet_type = default_portlet_type
+  end
+  
   attributes_for :html_block do |a|
     a.name = "About Us"
     a.content = "<h1>About Us</h1>\n<p>Lorem ipsum dolor sit amet...</p>"

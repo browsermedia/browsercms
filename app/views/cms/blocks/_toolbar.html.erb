@@ -8,4 +8,3 @@
 <%= false ? (link_to 'Assign', cms_path(@block, :assign), :method => :post) : "Assign" %>
 <%= !@block.published? ? link_to('Publish', cms_path(@block, :publish), :method => :post) : "Publish" %>
 <%= !@block.archived? ? link_to('Archive', cms_path(@block, :archive), :method => :post) : "Archive" %>
-<h2><%= @block.name %></h2>

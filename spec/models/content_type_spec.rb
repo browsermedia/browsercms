@@ -14,7 +14,7 @@ describe ContentType do
   it "should have model_class method" do
     @c.model_class.should == HtmlBlock
   end
-  
+
   it "should have display_name that shows renderable name from class" do
     @c.display_name.should == "Html"
   end
@@ -37,17 +37,44 @@ describe ContentType do
     @b.name.should == "Test"
   end
 
-  it "should return the standard view for new" do
-    @c.template_for_new.should == "cms/blocks/new"
+  describe "find_by_key" do
+    before(:each) do
+      create_content_type(:name=>"HtmlBlock")
+    end
+    it "should find based on key" do
+      @content_type = ContentType.find_by_key("html_block")
+      @content_type.model_class.should == HtmlBlock
+    end
+
+    it "should raise exception if no block was registered of that type" do
+      @find = lambda{ ContentType.find_by_key("non_existant_type") }
+      @find.should raise_error
+    end
   end
 
-  it "should return custom new if model class overrides it" do
-    content_type = ContentType.new({:name => "Portlet"})
-    content_type.template_for_new.should == "cms/portlets/select_portlet_type"
-  end
+  describe "templates to render CRUD actions" do
+    describe "with core blocks (no overrides)" do
+      it "should return the standard view for :new" do
+        @c.template_for_new.should == "cms/blocks/new"
+      end
 
-  it "should raise exception if no block was registered of that type" do
-    @find = lambda{ ContentType.find_by_key("non_existant_type") }
-    @find.should raise_error
+      it "should return basic edit for :edit" do
+        @c.template_for_edit.should == "cms/blocks/edit"
+      end
+
+    end
+    describe "with blocks (like portlets) that override template methods" do
+      before(:each) do
+        @content_type = ContentType.new({:name => "Portlet"})
+      end
+      it "should return custom new" do
+        @content_type.template_for_new.should == "cms/portlets/select_portlet_type"
+      end
+      it "should return custom edit" do
+        @content_type.template_for_edit.should == "cms/portlets/edit"
+      end
+    end
+
+
   end
 end

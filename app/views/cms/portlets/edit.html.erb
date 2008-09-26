@@ -1,8 +1,8 @@
-<% @page_title = "Edit #{@portlet.class.to_s.titleize}" %>
-<h1><%= @page_title %></h1>
-<% form_for(@portlet, :url => cms_path(@portlet, :update)) do |f| %>
+<% @page_title = "Edit #{@content_type.display_name}" %>
+<h2><%= @page_title %></h2>
+<% form_for(@block, :url => cms_path(@block, :update)) do |f| %>
   <%= f.error_messages %>
-  <%= render :inline => @portlet.portlet_type.form, :locals => {:f => f} %>
+  <%= render :inline => @block.portlet_type.form, :locals => {:f => f} %>
   <div class="buttons">
     <%= f.submit "Save" %>
   </div>

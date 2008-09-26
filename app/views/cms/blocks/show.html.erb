@@ -1,6 +1,6 @@
 <% @page_title = "Content Library / View #{@content_type.display_name}" %>
 <%= render :partial => 'toolbar' %>
-
+<h2>View <%= @block.name %></h2>
 <div id="block_content">
   <div class="header">Block Contents</div>
   <div class="content"><%= render_content_block(@block) %></div>

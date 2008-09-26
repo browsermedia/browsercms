@@ -1,9 +1,6 @@
 <% @page_title = "Content Library / List #{@content_type.display_name_plural}" %>
+<%= link_to "#{action_icon(:add)} Add New #{@content_type.display_name}", cms_path("/blocks/#{@content_type.content_block_type.pluralize}", :new) %>
 <h2>List <%=  @content_type.display_name_plural %></h2>
-<p>
-  <%= link_to "#{action_icon(:add)} Add New #{@content_type.display_name}", cms_path("/blocks/#{@content_type.content_block_type.pluralize}", :new) %>
-</p>
-
 <table id="blocks">
   <tr>
     <th>Name</th>

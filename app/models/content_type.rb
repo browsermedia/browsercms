@@ -37,7 +37,15 @@ class ContentType < ActiveRecord::Base
     end
     "cms/blocks/new"
   end
-  
+
+   # Allows models to override which view is displayed with BlockController#edit is called.
+  def template_for_edit
+    if model_class.respond_to?("template_for_edit")
+      return model_class.template_for_edit
+    end
+    "cms/blocks/edit"
+  end
+
   # Used in ERB for pathing
   def content_block_type
     name.pluralize.underscore
