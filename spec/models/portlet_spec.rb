@@ -20,4 +20,9 @@ describe Portlet do
     p = Portlet.new
     p.supports_versioning?.should be_false
   end
+
+  it "should have custom view for new" do
+    content_type = ContentType.new(:name => "Portlet")
+    content_type.template_for_new.should == "cms/portlets/select_portlet_type"
+  end
 end

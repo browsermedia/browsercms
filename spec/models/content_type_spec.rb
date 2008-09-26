@@ -63,15 +63,23 @@ describe ContentType do
       end
 
     end
-    describe "with blocks (like portlets) that override template methods" do
+    describe "with blocks that override template methods" do
       before(:each) do
-        @content_type = ContentType.new({:name => "Portlet"})
+        class MyModel
+          def self.template_for_new
+            "cms/my_models/special_view"
+          end
+          def self.template_for_edit
+            "cms/my_models/special_edit"
+          end
+        end
+        @content_type = ContentType.new({:name => "MyModel"})
       end
       it "should return custom new" do
-        @content_type.template_for_new.should == "cms/portlets/select_portlet_type"
+        @content_type.template_for_new.should == "cms/my_models/special_view"
       end
       it "should return custom edit" do
-        @content_type.template_for_edit.should == "cms/portlets/edit"
+        @content_type.template_for_edit.should == "cms/my_models/special_edit"
       end
     end
 

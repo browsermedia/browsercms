@@ -405,7 +405,7 @@ describe Cms::BlocksController do
 
       it "should render the correct template for editing a portlet" do
         @action.call
-        response.should have_tag("h2", "Edit Portlet")
+        response.should have_tag("h2", "Edit V1")
       end
     end
 

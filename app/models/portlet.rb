@@ -25,7 +25,5 @@ class Portlet < ActiveRecord::Base
   def self.template_for_new
     "cms/portlets/select_portlet_type"
   end
-  def self.template_for_edit
-    "cms/portlets/edit"
-  end
+
 end
