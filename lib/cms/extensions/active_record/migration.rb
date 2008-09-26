@@ -2,6 +2,7 @@
 #The Rails core team doesn't like this idea, Pratik (a.k.a lifo) specifically, but there is an open ticket to see this added to rails:
 #http://rails.lighthouseapp.com/projects/8994/tickets/1039-add-ability-to-specify-addtional-paths-for-migrations
 #Until it does get added, we have this fragile monkey patch
+
 module ActiveRecord
   class Migrator
     class << self

@@ -18,7 +18,10 @@ class Cms::PagesController < Cms::BaseController
       @file = File.join(ActionController::Base.cache_store.cache_path, @path)
 
       if is_not_root_path? && File.exists?(@file)
-        send_file(@file,  :type => 'text/plain')
+        send_file(@file, 
+          :type => Mime::Type.lookup_by_extension(@file.split(/\./).last.to_s.downcase).to_s,
+          :disposition => false #see monkey patch in lib/action_controller/streaming.rb
+        ) 
         return
       end
       
