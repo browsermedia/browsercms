@@ -1,6 +1,8 @@
 <% content_for(:sidebar) do %>
 <%= render :partial => "block_info" %>
 <% end -%>
+<%= link_to "List All", cms_path("/blocks/#{@content_type.content_block_type}") %>
+<%= link_to "Add New #{@content_type.display_name}", cms_path("/blocks/#{@content_type.content_block_type.pluralize}", :new) %>
 <%= link_to 'View', cms_path(@block, :show) %>
 <%= link_to 'Edit', cms_path(@block, :edit) %>
 <%= @block.supports_versioning? ? (link_to 'Revisions', cms_path(@block, :revisions), {:id => "revisions_link"}) : 'Revisions' %>
