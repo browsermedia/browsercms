@@ -2,7 +2,7 @@
 <h2>New <%= @block.display_name %></h2>
 <% form_for(@block, :url => cms_path(@block, :create), :html => {:multipart => true}) do |f| %>
   <%= f.error_messages %>
-  <%= render :partial => 'hidden_fields', :locals => {:f => f} %>
+  <%= render :partial => 'cms/blocks/hidden_fields', :locals => {:f => f} %>
   <%= render :partial => "cms/#{@block.content_block_type.pluralize}/form", :locals => {:f => f} %>
   <div class="fields">
     <%= f.submit "Save" %>
