@@ -45,4 +45,9 @@ describe ContentType do
     content_type = ContentType.new({:name => "Portlet"})
     content_type.template_for_new.should == "cms/portlets/select_portlet_type"
   end
+
+  it "should raise exception if no block was registered of that type" do
+    @find = lambda{ ContentType.find_by_key("non_existant_type") }
+    @find.should raise_error
+  end
 end

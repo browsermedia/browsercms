@@ -9,8 +9,13 @@ class ContentType < ActiveRecord::Base
   end
   
   # Given a 'key' like 'html_blocks' or 'portlet'
+  # Raises exception if nothing was found.
   def self.find_by_key(key)
-    find_by_name(key.classify)
+    content_type = find_by_name(key.classify)
+    if content_type.nil?
+      raise "Couldn't find ContentType of class '#{key.classify}'"
+    end
+    content_type
   end
   
   def display_name

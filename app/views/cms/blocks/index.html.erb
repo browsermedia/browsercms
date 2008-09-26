@@ -1,7 +1,7 @@
-<% @page_title = "Content Library / List #{@model.display_name_plural}" %>
-
+<% @page_title = "Content Library / List #{@content_type.display_name_plural}" %>
+<h2>List <%=  @content_type.display_name_plural %></h2>
 <p>
-  <%= link_to "#{action_icon(:add)} Add New #{@model.display_name}", cms_path("/blocks/#{@model.content_block_type.pluralize}", :new) %>
+  <%= link_to "#{action_icon(:add)} Add New #{@content_type.display_name}", cms_path("/blocks/#{@content_type.content_block_type.pluralize}", :new) %>
 </p>
 
 <table id="blocks">
@@ -15,7 +15,7 @@
   </tr>
   <% @blocks.each do |block| %>
     <tr>
-      <td><%= block.name %></td>
+      <td class="block_name"><%= block.name %></td>
       <td><%= block.updated_at.strftime("%m/%d/%y") %></td>
       <td class="uses"><%= Connector.for_block(block).count %></td>
       <td class="view"><%= link_to action_icon(:view), cms_path(block) %></td>

@@ -2,6 +2,9 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 describe Cms::BlocksController do
   controller_setup
+  before(:each) do
+    create_content_type(:name => "HtmlBlock")
+  end
 
   describe "#model_name" do
     describe "with no last_block_type or block_type parameter" do
@@ -75,6 +78,37 @@ describe Cms::BlocksController do
     end
   end
 
+  describe "showing a block" do
+    before do
+      @block = create_html_block(:name => "Test", :content => "I worked.")
+      @action = lambda { put :show, :id => @block.id }
+    end
+    it "should be success" do
+      @action.call
+      response.should be_success
+    end
+
+    it "should render block html body as content " do
+      @action.call
+      response.should have_tag("div.content", "I worked.")
+    end
+  end
+
+  describe "list blocks" do
+    before(:each) do
+      @block = create_html_block(:name => "Test", :content => "I worked.")
+      @action = lambda { put :index }
+    end
+    it "should be successful" do
+      @action.call
+      response.should be_success
+    end
+
+    it "should list the blocks's name" do
+      @action.call
+      response.should have_tag("td.block_name", "Test")
+    end
+  end
   describe "updates to a block" do
     before do
       @block = create_html_block(:name => "V1")
@@ -106,22 +140,20 @@ describe Cms::BlocksController do
 
   describe "publish" do
     before do
-      @block = HtmlBlock.new
-      @block.id = "7"
-      @block.stub!(:publish).and_return(true)
-      @model = mock("HtmlBlock", :find => @block)
-      @controller.stub!(:model).and_return(@model)
+      @block = create_html_block
+      @action = lambda { post :publish, :id => @block.id }
     end
-    it "should find the block" do
-      @model.should_receive(:find).with("7").and_return(@block)
-      post :publish, :id => "7"
+    it "should be redirect" do
+      @action.call
+      response.should be_redirect
     end
     it "should be able to update the status of a block" do
-      @block.should_receive(:publish).and_return(true)
-      post :publish, :id => "7"
+      @block.published?.should be_false
+      @action.call
+      @block.reload.published?.should be_true
     end
     it "should redirect to the block show action" do
-      post :publish, :id => "7"
+      @action.call
       response.should redirect_to(cms_url(@block))
     end
   end
@@ -234,7 +266,7 @@ describe Cms::BlocksController do
       before(:each) do
         @action = lambda { get :new,  :block_type => "image_blocks"}
       end
-     
+
       it "should be using image_blocks content_type" do
         @action.call
         @controller.send(:model_name).should == "image_block"
@@ -250,7 +282,7 @@ describe Cms::BlocksController do
         @image = create_image_block(:section => root_section, :file => mock_file)
         @action = lambda { get :edit,  :block_type => "image_blocks", :id => @image.id}
       end
-     
+
       it "should be using image_blocks content_type" do
         @action.call
         @controller.send(:model_name).should == "image_block"
@@ -264,7 +296,7 @@ describe Cms::BlocksController do
           with_tag("option[value=?][selected=?]", root_section.id, "selected")
         end
       end
-      
+
     end
     describe "updating content" do
       before(:each) do
@@ -272,7 +304,7 @@ describe Cms::BlocksController do
         @other_section = create_section(:parent => root_section, :name => "Other")
         @action = lambda { put :update, :block_type => "image_blocks", :id => @image.id, :image_block => {:section_id => @other_section.id} }
       end
-      
+
       it "should move images to a new section" do
         @action.call
         @image = ImageBlock.find(@image.id)
@@ -280,8 +312,8 @@ describe Cms::BlocksController do
       end
     end
   end
-  
-  describe "CRUD for special case content types" do
+
+  describe "CRUD for Portlets (special case content types)" do
     before(:each) do
       create_content_type(:name => "Portlet")
     end
@@ -289,8 +321,9 @@ describe Cms::BlocksController do
     describe "adding new content" do
       before(:each) do
         @action = lambda { get :new,  :block_type => "portlets"}
-
       end
+
+
       it "should have the correct test setup (i.e. have HtmlBlocks in the db as a ContentType)" do
         ContentType.find_by_key("portlet").should_not == nil
       end
