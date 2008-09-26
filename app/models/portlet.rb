@@ -22,8 +22,16 @@ class Portlet < ActiveRecord::Base
     portlet_type.render(self)
   end
 
+  # For column in list
+  def portlet_type_name
+    portlet_type.name
+  end
+
   def self.template_for_new
     "cms/portlets/select_portlet_type"
   end
 
+  def self.columns_to_list
+    [{:label => "Portlet Type", :method => "portlet_type_name"}]
+  end
 end

@@ -46,6 +46,23 @@ class ContentType < ActiveRecord::Base
     "cms/blocks/edit"
   end
 
+  # Allows models to show additional columns when being shown in a list.
+  def columns_to_list
+    if model_class.respond_to?("columns_to_list")
+      columns_to_list = model_class.columns_to_list
+      final_list = []
+      columns_to_list.each do |column|
+        if column.respond_to?(:humanize)
+          final_list << {:label => column.humanize, :method => column}
+        else
+          final_list << column
+        end
+      end
+      return final_list
+    end
+    return []
+  end
+
   # Used in ERB for pathing
   def content_block_type
     name.pluralize.underscore

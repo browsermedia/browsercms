@@ -61,7 +61,10 @@ describe ContentType do
       it "should return basic edit for :edit" do
         @c.template_for_edit.should == "cms/blocks/edit"
       end
-
+      it "should not add any extra columns" do
+        cols = @c.columns_to_list
+        cols.size.should == 0
+      end
     end
     describe "with blocks that override template methods" do
       before(:each) do
@@ -72,6 +75,10 @@ describe ContentType do
           def self.template_for_edit
             "cms/my_models/special_edit"
           end
+
+          def self.columns_to_list
+            ["stuff", {:label =>"More Stuff", :method => "more"}]
+          end
         end
         @content_type = ContentType.new({:name => "MyModel"})
       end
@@ -81,7 +88,14 @@ describe ContentType do
       it "should return custom edit" do
         @content_type.template_for_edit.should == "cms/my_models/special_edit"
       end
+      it "should add additional columns to the view" do
+        cols = @content_type.columns_to_list
+        cols.size.should == 2
+        cols.should == [{:label => "Stuff", :method => "stuff"}, {:label => "More Stuff", :method => "more"}]
+      end
     end
+
+
 
 
   end

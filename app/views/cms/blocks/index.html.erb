@@ -4,6 +4,9 @@
 <table id="blocks">
   <tr>
     <th>Name</th>
+    <% @content_type.columns_to_list.each do |column| %>
+      <th><%= column[:label] %></th>
+    <% end %>
     <th>Updated</th>
     <th>Uses</th>
     <th>View</th>
@@ -13,10 +16,13 @@
   <% @blocks.each do |block| %>
     <tr>
       <td class="block_name"><%= block.name %></td>
+      <% @content_type.columns_to_list.each do |column| %>
+        <td><%= block.send(column[:method]) %></td>      
+      <% end %>
       <td><%= block.updated_at.strftime("%m/%d/%y") %></td>
       <td class="uses"><%= Connector.for_block(block).count %></td>
       <td class="view"><%= link_to action_icon(:view), cms_path(block) %></td>
-      <td class="edit"><%= link_to action_icon(:edit), cms_path(block, :edit) %></td>      
+      <td class="edit"><%= link_to action_icon(:edit), cms_path(block, :edit) %></td>
       <td class="delete"><%= link_to action_icon(:delete), cms_path(block, :destroy), :method => :delete, :confirm => "Are you sure you want to delete '#{block.name}'?" %></td>
     </tr>
   <% end %>
