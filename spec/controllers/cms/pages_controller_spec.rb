@@ -23,7 +23,7 @@ describe Cms::PagesController do
     describe "a file that has been written to the cache dir" do
       before do
         open("#{ActionController::Base.cache_store.cache_path}/test.txt", "w") do |f|
-          f << "Foo\n"
+          f << "Foo"
         end
       end
       it "should not overrite the file" do 
@@ -40,7 +40,7 @@ describe Cms::PagesController do
         @streamer.class.should == Proc
         
         @output = mock("output")
-        @output.should_receive(:write).with("Foo\n")
+        @output.should_receive(:write).with("Foo")
               
         @streamer.call(response, @output)
       end      
