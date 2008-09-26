@@ -16,7 +16,8 @@ class Cms::PagesController < Cms::BaseController
       @path = "/#{params[:path].join("/")}"
 
       @file = File.join(ActionController::Base.cache_store.cache_path, @path)
-      if File.exists?(@file)
+
+      if is_not_root_path? && File.exists?(@file)
         send_file(@file,  :type => 'text/plain')
         return
       end
@@ -114,6 +115,10 @@ class Cms::PagesController < Cms::BaseController
   
     def hide_toolbar
       @hide_page_toolbar = true
+    end
+
+    def is_not_root_path?
+      params[:path] != []
     end
   
 end

@@ -9,6 +9,18 @@ describe Cms::PagesController do
       #@file = create_file_block(:file => )
       @action = lambda { get :show, :path => ['/test.txt'] }
     end
+    describe "homepage" do
+      it "should show correctly" do
+        @page = create_page(:path => "/")
+        home_page = lambda {get :show, :path => []}
+        def controller.render (conditions={})
+          response.content_type = "mock_response_to_avoid_fails"
+        end
+
+        home_page.call
+        response.content_type.should == "mock_response_to_avoid_fails"
+      end
+    end
     describe "a file that has not been written to the cache dir" do
       it "should write out the file" do 
         pending
