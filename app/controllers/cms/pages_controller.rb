@@ -1,6 +1,6 @@
 class Cms::PagesController < Cms::BaseController
   
-  skip_before_filter :login_required, :only => [:show, :foo]
+  skip_before_filter :login_required, :only => [:show]
   before_filter :load_section, :only => [:new, :create, :move_to]
   before_filter :load_page, :only => [:edit, :revisions, :move_to, :destroy]
   before_filter :hide_toolbar, :only => [:new, :create, :move_to]
