@@ -15,7 +15,6 @@ describe Cms::PagesController do
     end
     describe "the about page" do
       it "should display the page with a title" do
-        pending "Case 1553"
         @page_template = create_page_template(:file_name => "application")
         @page = create_page(:path => "/about", :name => "Test About", :template => @page_template)
         get :show, :path => ["about"]

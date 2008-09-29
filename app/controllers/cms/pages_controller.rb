@@ -20,22 +20,31 @@ class Cms::PagesController < Cms::BaseController
       return
     end
     
-    #Construct a path to where this file would be if it were cached
-    @file = File.join(ActionController::Base.cache_store.cache_path, @path)
-
-    #Write the file out if it doesn't exist
-    unless File.exists?(@file)
-      @file_metadata = FileMetadata.find_by_path(@path)
-      @file_metadata.write_file if @file_metadata
-    end
+    #Get the extentions
+    split = params[:path].last.to_s.split('.')
+    ext = split.size > 1 ? split.last.to_s.downcase : nil
     
-    #Stream the file if it exists
-    if @path != "/" && File.exists?(@file)
-      send_file(@file, 
-        :type => Mime::Type.lookup_by_extension(@file.split(/\./).last.to_s.downcase).to_s,
-        :disposition => false #see monkey patch in lib/action_controller/streaming.rb
-      ) 
-      return
+    logger.info "ext => #{ext}"
+    
+    #Only try to stream cache file if it has an extension
+    unless ext.blank?
+      #Construct a path to where this file would be if it were cached
+      @file = File.join(ActionController::Base.cache_store.cache_path, @path)
+
+      #Write the file out if it doesn't exist
+      unless File.exists?(@file)
+        @file_metadata = FileMetadata.find_by_path(@path)
+        @file_metadata.write_file if @file_metadata
+      end
+    
+      #Stream the file if it exists
+      if @path != "/" && File.exists?(@file)
+        send_file(@file, 
+          :type => Mime::Type.lookup_by_extension(ext).to_s,
+          :disposition => false #see monkey patch in lib/action_controller/streaming.rb
+        ) 
+        return
+      end    
     end
     
     #Last, but not least, to to render a page for this path
