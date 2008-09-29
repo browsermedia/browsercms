@@ -15,7 +15,7 @@ describe Cms::PagesController do
     end
     describe "a file" do
       before do
-        @file = mock_file(:original_filename => "test.txt", :read => "This is a test\n")
+        @file = mock_file(:original_filename => "test.txt", :read => "This is a test")
         @file_block = create_file_block(:section => root_section, :file => @file)
         @action = lambda { get :show, :path => ["#{@file_block.file_metadata_id}_test.txt"] }
         @path_to_file = "#{ActionController::Base.cache_store.cache_path}/#{@file_block.file_metadata_id}_test.txt"
@@ -30,7 +30,7 @@ describe Cms::PagesController do
         end
         it "return the contents of the file" do 
           @action.call
-          streaming_file_contents(response).should == "This is a test\n"
+          streaming_file_contents(response).should == "This is a test"
         end
         it "should set the content type properly" do
           @action.call
@@ -39,11 +39,11 @@ describe Cms::PagesController do
       end
       describe "that has been written to the cache dir" do
         before do
-          open(@path_to_file, "w") {|f| f << "Don't Overwrite Me!\n"}          
+          open(@path_to_file, "w") {|f| f << "Don't Overwrite Me!"}
         end
         it "return the contents of the file" do 
           @action.call
-          streaming_file_contents(response).should == "Don't Overwrite Me!\n"
+          streaming_file_contents(response).should == "Don't Overwrite Me!"
         end      
       end
     end
