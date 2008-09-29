@@ -156,8 +156,11 @@ document.observe('dom:loaded', function() {
   
   //Select the selected_page, if there is one
   var selectedPage = $('sitemap').down('span.selected_page');
+  var selectedSection = $('sitemap').down('span.selected_section');
   if(selectedPage) {
     clickHandler(selectedPage);
+  } else if(selectedSection) {
+    clickHandler(selectedSection);
   }
   
 });

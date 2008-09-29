@@ -9,6 +9,7 @@ namespace(:cms) do |cms|
   cms.connect '/blocks/:block_type/:action/:id', :controller => 'blocks'
 end
 
+connect '/:controller/:action/:id.:format'
 connect '/:controller/:action/:id'
 
 page '*path', :controller => 'cms/pages', :action => 'show'

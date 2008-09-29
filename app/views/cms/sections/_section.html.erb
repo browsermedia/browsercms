@@ -1,6 +1,6 @@
-<li id="section_<%= section.id %>" class="section<%= @selected_section == section ? ' selected_section' : ''%>">
+<li id="section_<%= section.id %>">
   <%= link_to_function action_icon(section.root? ? :folder_open : :folder), {}, {:class => "section"} %>
-  <span class="section"><%=h section.name %></span>
+  <span class="section<%= @selected_section == section ? ' selected_section' : ''%>"><%=h section.name %></span>
   <ul<%= section.root? ? ' ' : ' style="display: none"' %>>
     <%= render :partial => 'section', :collection => section.children.all(:include => :pages) %>
     <%= render :partial => 'page', :collection => section.pages %>

@@ -4,11 +4,13 @@ class Cms::SectionsController < Cms::BaseController
 
   def index
     #If the route is /cms/sections?page_id=123, the page_id will be 123
+    @section = Section.root.first
     if(params[:page_id])
       @selected_page = Page.find(params[:page_id])
       @selected_section = @selected_page.section
+    else
+      @selected_section = @section
     end
-    @section = Section.root.first
     render :layout => 'cms/sitemap'
   end
 
