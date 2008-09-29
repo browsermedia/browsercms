@@ -33,6 +33,7 @@ class Cms::BlocksController < Cms::BaseController
     if params[:version]
       @block = @block.as_of_version(params[:version])
     end
+    render :action => 'show'
   end
 
   def edit
