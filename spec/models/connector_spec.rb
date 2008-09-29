@@ -11,6 +11,22 @@ describe Connector do
     blocks.should_not include(bar)
   end
 
+  it "should only find connectors for a block that match the current version" do
+    foo = create_html_block(:name => "foo")
+    foo.update_attribute(:name, "foo v2")
+    bar = create_html_block(:name => "bar")
+    create_connector(:content_block => foo)
+    Connector.for_block(foo).size.should == 1
+  end
+  
+  it "should only find connectors for current versions of pages" do
+    pending "Page updates don't create new connectors"
+    @page = create_page(:section => root_section)
+    @connector = create_connector(:page => @page)
+    @page.update_attribute(:name, "Updated")
+    Connector.of_current_pages.size.should == 2
+  end
+
   it "should not delete blocks when deleting a connector" do
     b = create_html_block
     c = create_connector(:content_block => b)
