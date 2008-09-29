@@ -1,0 +1,17 @@
+<% @page_title = "Content Library / View Usages" %>
+<%= render :partial => 'cms/blocks/toolbar' %>
+<h2>View Usages</h2>
+<p>The following pages use the <%=  @block.display_name %> Block named '<%= @block.name %>'.</p>
+
+<table id="blocks">
+  <tr>
+    <th>Page Name</th>
+    <th>Path</th>
+  </tr>
+  <% @connectors.each do |conn| %>
+    <tr>
+      <td class="page_name"><%=  conn.page.name %></td>
+      <td class="path"><%=  link_to conn.page.path, conn.page.path %></td>
+    </tr>
+  <% end %>
+</table>
