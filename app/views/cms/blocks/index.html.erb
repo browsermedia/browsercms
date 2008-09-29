@@ -9,7 +9,7 @@
       <th><%= column[:label] %></th>
     <% end %>
     <th>Updated</th>
-    <th>Uses</th>
+    <th>Used</th>
     <th>View</th>
     <th>Edit</th>
     <th>Delete</th>
@@ -22,7 +22,7 @@
         <td><%= block.send(column[:method]) %></td>      
       <% end %>
       <td><%= block.updated_at.strftime("%m/%d/%y") %></td>
-      <td class="uses"><%= Connector.for_block(block).count %></td>
+      <td class="used"><%= link_to_usages(block) %></td>
       <td class="view"><%= link_to action_icon(:view), cms_path(block) %></td>
       <td class="edit"><%= link_to action_icon(:edit), cms_path(block, :edit) %></td>
       <td class="delete"><%= link_to action_icon(:delete), cms_path(block, :destroy), :method => :delete, :confirm => "Are you sure you want to delete '#{block.name}'?" %></td>

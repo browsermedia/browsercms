@@ -51,7 +51,15 @@ class Cms::ConnectorsController < Cms::BaseController
       redirect_to @page.path    
     end
   end
-  
+
+  def usages
+    @content_type = ContentType.find_by_key(params[:block_type])
+    @block = @content_type.model_class.find(params[:id])
+    @connectors = Connector.for_block(@block)
+
+    render :layout => 'cms/content_library'
+  end
+
   private
     def load_page
       @page = Page.find(params[:page_id])

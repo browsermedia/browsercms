@@ -59,6 +59,10 @@ def root_section
   Section.first || create_section
 end
 
+def register_type(content_type_class)
+  create_content_type(:name => content_type_class.to_s)
+end
+
 def controller_setup
   include Cms::PathHelper
   integrate_views  
