@@ -15,11 +15,7 @@ class FileMetadata < ActiveRecord::Base
     paths = p.sub(/^\//,'').split("/")
     file_name = paths.slice!(-1)
     path = "/#{paths.join("/")}"
-    if path != "/"
-      {:include => :section, :conditions => ['sections.path = ? and file_metadata.file_name = ?', path, file_name]}
-    else
-      {:conditions => ['file_metadata.file_name = ?', file_name]}
-    end
+    {:include => :section, :conditions => ['sections.path = ? and file_metadata.file_name = ?', path, file_name]}
   })
   
   def self.find_by_path(path)
