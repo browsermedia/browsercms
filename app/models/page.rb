@@ -1,15 +1,20 @@
 class Page < ActiveRecord::Base
   
   acts_as_content_page
+  versioned_class.belongs_to :updated_by, :class_name => "User"
   
+  attr_accessor :updated_by_user
+  
+  belongs_to :updated_by, :class_name => "User"
   belongs_to :section
   belongs_to :template, :class_name => "PageTemplate"
   has_many :connectors, :conditions => 'page_version = #{version}', :order => "position"
   
+  before_validation :set_updated_by
   before_validation :append_leading_slash_to_path
   before_destroy :delete_connectors
   
-  validates_presence_of :section_id
+  validates_presence_of :section_id, :updated_by_id
   validates_uniqueness_of :path
   
   def add_content_block!(content_block, container)
@@ -66,8 +71,15 @@ class Page < ActiveRecord::Base
     end
   end
   
-  def move_to(section)
+  #We set the value of the the association to the value in the virtual attriute
+  #This makes sute that updated_by_user is explictly set on each update
+  def set_updated_by
+    self.updated_by = updated_by_user
+  end
+  
+  def move_to(section, user)
     self.section = section
+    self.updated_by_user = user
     save
   end
   

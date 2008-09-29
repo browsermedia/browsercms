@@ -2,11 +2,30 @@ require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
 
 describe Page do
   it "should validate uniqueness of path" do
-    root = create_section
-    create_page(:path => "test", :section => root)
-    page = new_page(:path => "test", :section => root)
+    create_page(:path => "test", :section => root_section)
+    page = new_page(:path => "test", :section => root_section)
     page.should_not be_valid
     page.should have(1).error_on(:path)
+  end
+  
+  it "should require an updated_by_user on create" do
+    page = new_page(:path => "test", :section => root_section, :updated_by_user => nil)    
+    page.should_not be_valid
+    page.should have(1).error_on(:updated_by_id)
+  end
+  
+  it "should require an updated_by_user on update" do
+    page = create_page(:path => "test", :section => root_section)
+    page = Page.find(page.id)
+    page.should_not be_valid
+    page.should have(1).error_on(:updated_by_id)
+  end
+
+  it "should be valid if an updated_by_user is specified" do
+    page = create_page(:path => "test", :section => root_section)
+    page = Page.find(page.id)
+    page.updated_by_user = User.first
+    page.should be_valid
   end
 
   describe ".find_by_path" do
@@ -69,7 +88,7 @@ describe Page do
     section = create_section(:name => "Another", :parent => root)
     page = create_page(:section => root)
     page.section.should_not == section
-    page.move_to(section)
+    page.move_to(section, User.first)
     page.section.should == section
   end
 
@@ -78,7 +97,7 @@ describe Page do
       @from_section = create_section(:name => "From", :parent => root_section)
       @to_section = create_section(:name => "To", :parent => root_section)
       @page = create_page(:section => @from_section, :name => "Mover")
-      @action = lambda { @page.move_to(@to_section) }
+      @action = lambda { @page.move_to(@to_section, User.first) }
     end
     it "should create a new version of the page" do
       @action.should change(Page::Version, :count).by(1)
@@ -106,8 +125,11 @@ describe Page do
     describe "when updating attributes" do
       describe "with different values" do
         before do
-          @page = create_page(:name => "Original Value")
-          @page.update_attributes(:name => "Something Different")
+          @first_guy = create_user(:login => "first_guy")
+          @page = create_page(:name => "Original Value", :updated_by_user => @first_guy)
+          @page = Page.find(@page.id)
+          @new_guy = create_user(:login => "new_guy")
+          @page.update_attributes(:name => "Something Different", :updated_by_user => @new_guy)
         end
         it "should create a version with the changed values" do
           @page.versions.latest.page.should == @page
@@ -116,6 +138,10 @@ describe Page do
         end
         it "should not affect the values in previous versions" do
           @page.versions.first.name.should == "Original Value"
+        end
+        it "should be able to tell who created each revision" do
+          @page.versions.first.updated_by.should == @first_guy
+          @page.versions.last.updated_by.should == @new_guy          
         end
       end
       describe "with the unchanged values" do

@@ -45,6 +45,7 @@ module FixtureReplacement
     a.path = "/#{a.name.underscore}"
     a.template = default_page_template
     a.section = default_section
+    a.updated_by_user = default_user
     a.version = 1
 	end
 

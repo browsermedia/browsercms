@@ -49,11 +49,11 @@ create_page_template(:two_column, :name => "Two Column", :file_name => "two_colu
 </html>
 TEMPLATE
 
-create_page(:home, :name => "Home", :path => "/", :section => sections(:root), :template => page_templates(:two_column))
-create_page(:about, :name => "About Us", :path => "/about", :section => sections(:about), :template => page_templates(:two_column))
-create_page(:kerry, :name => "Kerry Gunther", :path => "/people/kerry", :section => sections(:people), :template => page_templates(:two_column))
-create_page(:pat, :name => "Patrick Peak", :path => "/people/pat", :section => sections(:people), :template => page_templates(:two_column))
-create_page(:paul, :name => "Paul Barry", :path => "/people/paul", :section => sections(:people), :template => page_templates(:two_column))
+create_page(:home, :name => "Home", :path => "/", :section => sections(:root), :template => page_templates(:two_column), :updated_by_user => users(:cmsadmin))
+create_page(:about, :name => "About Us", :path => "/about", :section => sections(:about), :template => page_templates(:two_column), :updated_by_user => users(:cmsadmin))
+create_page(:kerry, :name => "Kerry Gunther", :path => "/people/kerry", :section => sections(:people), :template => page_templates(:two_column), :updated_by_user => users(:cmsadmin))
+create_page(:pat, :name => "Patrick Peak", :path => "/people/pat", :section => sections(:people), :template => page_templates(:two_column), :updated_by_user => users(:cmsadmin))
+create_page(:paul, :name => "Paul Barry", :path => "/people/paul", :section => sections(:people), :template => page_templates(:two_column), :updated_by_user => users(:cmsadmin))
 
 create_html_block(:hello_world, :name => "Hello World", :content => "<h1>Hello, World!</h1>")
 create_html_block(:sidebar, :name => "Sidebar", :content => "<ul><li><a href=\"/\">Home</a></li><li><a href=\"/about\">About Us</a></li></ul>")
