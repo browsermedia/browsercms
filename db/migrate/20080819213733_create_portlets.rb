@@ -17,7 +17,7 @@ class CreatePortlets < ActiveRecord::Migration
   end
 
   def self.down
+    drop_table :portlet_attributes
     drop_table :portlets
-    drop_table :porlet_attributes
   end
 end
