@@ -112,6 +112,13 @@ describe Cms::BlocksController do
       @action.call
       response.should have_tag("td.block_name", "Test")
     end
+
+    it "should show the status of each block" do
+      @action.call
+      response.should have_tag("td.block_status")  do
+        with_tag("img[alt=?]", "In Progress")
+      end
+    end
   end
 
   describe "edit a block" do

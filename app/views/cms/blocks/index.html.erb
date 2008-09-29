@@ -3,6 +3,7 @@
 <h2>List <%=  @content_type.display_name_plural %></h2>
 <table id="blocks">
   <tr>
+    <th>Status</th>
     <th>Name</th>
     <% @content_type.columns_to_list.each do |column| %>
       <th><%= column[:label] %></th>
@@ -15,6 +16,7 @@
   </tr>
   <% @blocks.each do |block| %>
     <tr>
+      <td class="block_status"><%=  status_icon(block.status) %></td>
       <td class="block_name"><%= block.name %></td>
       <% @content_type.columns_to_list.each do |column| %>
         <td><%= block.send(column[:method]) %></td>      
