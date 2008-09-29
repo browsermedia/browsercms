@@ -13,6 +13,15 @@ describe Cms::PagesController do
         response.should have_tag("title", "Test Homepage")
       end
     end
+    describe "the about page" do
+      it "should display the page with a title" do
+        pending "Case 1553"
+        @page_template = create_page_template(:file_name => "application")
+        @page = create_page(:path => "/about", :name => "Test About", :template => @page_template)
+        get :show, :path => ["about"]
+        response.should have_tag("title", "Test About")
+      end
+    end
     describe "a file" do
       before do
         @file = mock_file(:original_filename => "test.txt", :read => "This is a test")
