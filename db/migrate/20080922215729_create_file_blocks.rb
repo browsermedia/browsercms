@@ -6,8 +6,6 @@ class CreateFileBlocks < ActiveRecord::Migration
       t.string :file_metadata_type
       t.string :name
       t.string :status
-
-      t.timestamps
     end
   end
 

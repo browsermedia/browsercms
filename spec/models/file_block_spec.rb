@@ -11,19 +11,19 @@ describe FileBlock do
     end
 
     it "should create FileMetadata when passed a rails file object" do
-      f = FileBlock.create!(:file => @file, :section => root_section)
+      f = create_file_block(:file => @file, :section => root_section)
       f.file_metadata.should_not be_nil
       f.file_metadata.file_type.should == "image/jpeg"
     end
 
     it "should use / when in the root section" do
-      f = FileBlock.create!(:file => @file, :section => root_section)
+      f = create_file_block(:file => @file, :section => root_section)
       f.path.should == "/#{f.file_metadata.id}_test.jpg"
     end
 
     it "should file path should include section name" do
       s = create_section(:path => "/section_name")
-      f = FileBlock.create!(:file => @file, :section => s)
+      f = create_file_block(:file => @file, :section => s)
 
       #Need to make sure section transient attribute is cleared
       f = FileBlock.find(f.id)
@@ -32,7 +32,7 @@ describe FileBlock do
     end
 
     it "should set the section correctly" do
-      f = FileBlock.create!(:file => @file, :section => root_section)
+      f = create_file_block(:file => @file, :section => root_section)
       f.file_metadata.section.should == root_section
     end
 
@@ -43,27 +43,27 @@ describe FileBlock do
     end
 
     it "should return correct section id after loading from database" do
-      f = FileBlock.create!(:file => @file, :section_id => root_section.id)
+      f = create_file_block(:file => @file, :section_id => root_section.id)
       f = FileBlock.find(f.id)
       f.section_id.should == root_section.id
       f.section.should == root_section
     end
 
     it "should set the section correctly using section_id param" do
-      f = FileBlock.create!(:file => @file, :section_id => root_section.id)
+      f = create_file_block(:file => @file, :section_id => root_section.id)
       f = FileBlock.find(f.id)
       f.file_metadata.section.should == root_section
     end
 
     #Yes, this test was actually failing at one point
     it "should set the updated_at" do
-      f = FileBlock.create!(:file => @file, :section_id => root_section.id)
+      f = create_file_block(:file => @file, :section_id => root_section.id)
       f = FileBlock.find(f.id)
       f.updated_at.should_not be_nil      
     end
 
     it "should write out the file" do
-      f = FileBlock.create!(:file => @file, :section => root_section)
+      f = create_file_block(:file => @file, :section => root_section)
       file = File.join(ActionController::Base.cache_store.cache_path, "#{f.file_metadata_id}_test.jpg")
       File.exists?(file).should be_true
       open(file){|f| f.read}.should == @file.read

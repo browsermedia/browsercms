@@ -101,17 +101,18 @@ module VersionFu
       self.version = version_number
     end
     
-    def revert
-      revert_to(version-1) unless version == 1
+    def revert(user)
+      revert_to(version-1, user) unless version == 1
     end
     
-    def revert_to(version)
+    def revert_to(version, user)
       raise "Version parameter missing" if version.blank?
       revert_to_version = find_version(version)
       raise "Could not find version #{version}" unless revert_to_version
       versioned_columns.each do |a|
         send("#{a}=", revert_to_version.send(a))
       end  
+      self.updated_by_user = user
       save
     end    
     

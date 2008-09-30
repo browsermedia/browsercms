@@ -58,8 +58,6 @@ describe Cms::BlocksController do
     end
   end
 
-
-
   describe "creating a block that should be connected to a page" do
     before do
       @page = create_page(:path => "/test", :section => root_section)

@@ -17,6 +17,7 @@ class Cms::BlocksController < Cms::BaseController
 
   def create
     @block = content_type.new_content(params[model_name])
+    @block.updated_by_user = current_user
     if @block.save
       flash[:notice] = "#{content_type.display_name} '#{@block.name}' was created"
       if @block.connected_page.blank?
@@ -66,7 +67,7 @@ class Cms::BlocksController < Cms::BaseController
 
   def revert_to
     begin
-      @block.revert_to(params[:version])
+      @block.revert_to(params[:version], current_user)
       flash[:notice] = "Reverted '#{@block.name}' to version #{params[:version]}"
     rescue Exception => e
       flash[:error] = "Could not revert '#{@block.name}': #{e}"

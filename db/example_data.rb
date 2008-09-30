@@ -1,19 +1,4 @@
 module FixtureReplacement
-
-  attributes_for :file_binary_data do |a|
-  end
-
-  attributes_for :file_metadata do |a|
-    a.file_binary_data = default_file_binary_data
-  end
-
-  attributes_for :file_block do |a|
-  end
-
-  attributes_for :image_block do |a|
-    a.name = "Sample Image"
-    
-  end
   
   attributes_for :connector do |a|
     a.page = default_page
@@ -26,19 +11,27 @@ module FixtureReplacement
     a.name = "Test"
   end
 
-  attributes_for :portlet_type do |a|
-    a.name = "Find Stuff"
+  attributes_for :file_binary_data do |a|
   end
 
-  attributes_for :portlet do |a|
-    a.name = "Find X"
-    a.portlet_type = default_portlet_type
+  attributes_for :file_block do |a|
+    a.updated_by_user = default_user    
   end
-  
+
+  attributes_for :file_metadata do |a|
+    a.file_binary_data = default_file_binary_data
+  end
+
   attributes_for :html_block do |a|
     a.name = "About Us"
     a.content = "<h1>About Us</h1>\n<p>Lorem ipsum dolor sit amet...</p>"
+    a.updated_by_user = default_user
 	end
+
+  attributes_for :image_block do |a|
+    a.name = "Sample Image"
+    a.updated_by_user = default_user
+  end
 
   attributes_for :page do |a|
     a.name = "Home #{String.random(12)}"
@@ -55,12 +48,12 @@ module FixtureReplacement
   end
 
   attributes_for :portlet do |a|
-    a.name = "Test"
+    a.name = "Find X"
     a.portlet_type = default_portlet_type
   end
 
   attributes_for :portlet_type do |a|
-    a.name = "Test"
+    a.name = "Find Stuff"
   end
   
   attributes_for :redirect do |a|
@@ -71,9 +64,6 @@ module FixtureReplacement
   attributes_for :section do |a|
     a.name = "Test"
     a.path = "/"
-  end
-
-  attributes_for :ruby_haml_portlet do |a|
   end
 
   attributes_for :user do |a|

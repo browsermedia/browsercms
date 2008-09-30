@@ -6,11 +6,10 @@ class Page < ActiveRecord::Base
   belongs_to :template, :class_name => "PageTemplate"
   has_many :connectors, :conditions => 'page_version = #{version}', :order => "position"
   
-
   before_validation :append_leading_slash_to_path
   before_destroy :delete_connectors
   
-  validates_presence_of :section_id, :updated_by_id
+  validates_presence_of :section_id
   validates_uniqueness_of :path
   
   def add_content_block!(content_block, container)

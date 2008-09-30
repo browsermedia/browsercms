@@ -11,8 +11,6 @@ class CreatePages < ActiveRecord::Migration
       t.text :author
       t.text :source
       t.text :language
-      t.integer :updated_by_id
-      t.timestamps
     end
     
   end

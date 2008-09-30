@@ -2,8 +2,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "A Content Object" do
   before(:each) do
-    @b = HtmlBlock.new
-    @b.valid?
+    @b = create_html_block
   end
 
   it "should add a default status to a block" do
@@ -70,64 +69,63 @@ describe "A Content Object" do
 
   describe "when destroying a content object" do
     describe "which is versioned" do
-        before(:each) do
-      @b.save
-      @b.reload
-    end
+      before(:each) do
+        @b = HtmlBlock.find(@b.id)
+      end
 
-    it "should implement deleted? so that it uses status" do
-      @b.status = "DELETED"
-      @b.deleted?.should == true
-    end
+      it "should implement deleted? so that it uses status" do
+        @b.status = "DELETED"
+        @b.deleted?.should == true
+      end
 
-    it "should not exist?" do
-      pending "Make exist? not find deleted objects"
-      @b.destroy
-      HtmlBlock.exists?(@b.id).should == false
-    end
+      it "should not exist?" do
+        pending "Make exist? not find deleted objects"
+        @b.destroy
+        HtmlBlock.exists?(@b.id).should == false
+      end
 
-    it "should not be counted" do
-      pending "Make count work"
-    end
+      it "should not be counted" do
+        pending "Make count work"
+      end
 
-    it "should make delete_all mark as deleted" do
-      pending "Make delete_all work"
-    end
+      it "should make delete_all mark as deleted" do
+        pending "Make delete_all work"
+      end
 
-    it "should not be findable" do
-      @b.destroy
-      lambda { HtmlBlock.find(@b) }.should raise_error(ActiveRecord::RecordNotFound)
-    end
+      it "should not be findable" do
+        @b.destroy
+        lambda { HtmlBlock.find(@b) }.should raise_error(ActiveRecord::RecordNotFound)
+      end
 
-    it "should mark the latest row as deleted" do
-      @b.destroy
-      d = HtmlBlock.find_with_deleted(@b)
-      d.status.should == "DELETED"
-      d.should be_deleted
-    end
+      it "should mark the latest row as deleted" do
+        @b.destroy
+        d = HtmlBlock.find_with_deleted(@b)
+        d.status.should == "DELETED"
+        d.should be_deleted
+      end
 
-    it "should support versioning" do
-      @b.supports_versioning?.should be_true
-    end
-    it "should create a new version when destroying" do
-      @b.versions.size.should == 1
-      @b.destroy
-      d = HtmlBlock.find_with_deleted(@b)
-      d.versions.size.should == 2
-      d.version.should == 2
-      d.versions.first.version.should == 1
-    end
+      it "should support versioning" do
+        @b.supports_versioning?.should be_true
+      end
+      it "should create a new version when destroying" do
+        @b.versions.size.should == 1
+        @b.destroy
+        d = HtmlBlock.find_with_deleted(@b)
+        d.versions.size.should == 2
+        d.version.should == 2
+        d.versions.first.version.should == 1
+      end
 
-    it "should not remove all versions as well when doing a destroy" do
-      @b.destroy
-      HtmlBlock::Version.find(:all, "html_block_id =>#{@b.id}").size.should == 2
-    end
+      it "should not remove all versions as well when doing a destroy" do
+        @b.destroy
+        HtmlBlock::Version.find(:all, "html_block_id =>#{@b.id}").size.should == 2
+      end
 
-    it "should remove all versions when doing destroy!" do
-      @b.destroy!
-      lambda { HtmlBlock.find_with_deleted(@b) }.should raise_error(ActiveRecord::RecordNotFound)
-      HtmlBlock::Version.find(:all, "html_block_id =>#{@b.id}").size.should == 0
-    end
+      it "should remove all versions when doing destroy!" do
+        @b.destroy!
+        lambda { HtmlBlock.find_with_deleted(@b) }.should raise_error(ActiveRecord::RecordNotFound)
+        HtmlBlock::Version.find(:all, "html_block_id =>#{@b.id}").size.should == 0
+      end
     end
 
     describe "that is not versionable" do

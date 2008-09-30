@@ -11,7 +11,7 @@
   <% @block.versions.all(:order => "version desc").each_with_index do |r, i| %><tr>
     <td><%= link_to "v. #{r.version}", cms_path(@block, :show_version, :version => r.version)%><%= " CURRENT" if i == 0 %></td>
     <td><%= r.created_at.strftime("%b %e, %Y %l:%M %p") %></td>
-    <td>root</td>
+    <td><%= r.updated_by.login %></td>
     <td><% if i > 0 %><%= link_to "Revert To This", cms_path(@block, :revert_to, :version => r.version) %><% end %></td>
   </tr><% end %>
 </table>

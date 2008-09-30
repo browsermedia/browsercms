@@ -92,14 +92,14 @@ describe HtmlBlock do
       end
       it "should be able to revert" do
         @html_block.name.should == "Version Two"
-        @html_block.revert_to 1
+        @html_block.revert_to 1, create_user
         @html_block.reload.version.should == 3
         @html_block.name.should == "Version One" 
       end
       it "should keep the original created at time" do        
         @html_block.find_version(1).created_at.to_i.should == @v1_created_at.to_i
         @html_block.find_version(2).created_at.to_i.should == @v2_created_at.to_i
-        @html_block.revert_to 1
+        @html_block.revert_to 1, create_user
         @html_block.reload
         @html_block.find_version(1).created_at.to_i.should == @v1_created_at.to_i
         @html_block.find_version(2).created_at.to_i.should == @v2_created_at.to_i
@@ -108,7 +108,7 @@ describe HtmlBlock do
       end
       describe "without specifying a version number" do
         before do
-          @action = lambda { @html_block.revert_to nil }
+          @action = lambda { @html_block.revert_to nil, create_user }
         end
         it "should raise 'Version parameter missing'" do
           @action.should raise_error("Version parameter missing")
@@ -125,7 +125,7 @@ describe HtmlBlock do
       end
       describe "with an invalid version number" do
         before do
-          @action = lambda { @html_block.revert_to 99 }
+          @action = lambda { @html_block.revert_to 99, create_user }
         end
         it "should raise 'Could not find version 99'" do
           @action.should raise_error("Could not find version 99")

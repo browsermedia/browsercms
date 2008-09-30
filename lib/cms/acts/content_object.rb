@@ -34,6 +34,8 @@ module Cms
             belongs_to :updated_by, :class_name => "User"
             before_validation :set_updated_by
             
+            validates_presence_of :updated_by_id
+            
           end
           is_paranoid
 

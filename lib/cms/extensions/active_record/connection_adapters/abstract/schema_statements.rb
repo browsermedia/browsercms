@@ -9,7 +9,9 @@ module ActiveRecord
 
         t.integer :version, :default => 1
         yield t
-
+        t.timestamps
+        t.integer :updated_by_id
+        
         create_table_from_definition(table_name, options, t)
 
         #Do the versions table
@@ -18,7 +20,9 @@ module ActiveRecord
 
         vt.integer "#{table_name.singularize}_id".to_sym
         vt.integer :version, :default => 1
-        yield vt        
+        yield vt    
+        vt.timestamps            
+        vt.integer :updated_by_id
         
         create_table_from_definition("#{table_name.singularize}_versions".to_sym, options, vt)
         

@@ -55,9 +55,9 @@ create_page(:kerry, :name => "Kerry Gunther", :path => "/people/kerry", :section
 create_page(:pat, :name => "Patrick Peak", :path => "/people/pat", :section => sections(:people), :template => page_templates(:two_column), :updated_by_user => users(:cmsadmin))
 create_page(:paul, :name => "Paul Barry", :path => "/people/paul", :section => sections(:people), :template => page_templates(:two_column), :updated_by_user => users(:cmsadmin))
 
-create_html_block(:hello_world, :name => "Hello World", :content => "<h1>Hello, World!</h1>")
-create_html_block(:sidebar, :name => "Sidebar", :content => "<ul><li><a href=\"/\">Home</a></li><li><a href=\"/about\">About Us</a></li></ul>")
-create_html_block(:about_us, :name => "About Us", :content => "We are super fantastic")
+create_html_block(:hello_world, :name => "Hello World", :content => "<h1>Hello, World!</h1>", :updated_by_user => users(:cmsadmin))
+create_html_block(:sidebar, :name => "Sidebar", :content => "<ul><li><a href=\"/\">Home</a></li><li><a href=\"/about\">About Us</a></li></ul>", :updated_by_user => users(:cmsadmin))
+create_html_block(:about_us, :name => "About Us", :content => "We are super fantastic", :updated_by_user => users(:cmsadmin))
 
 create_connector(:home_main, :page => pages(:home), :page_version => 1, :container => "main", :content_block => html_blocks(:hello_world), :content_block_version => 1)
 create_connector(:home_sidebar, :page => pages(:home), :page_version => 1, :container => "sidebar", :content_block => html_blocks(:sidebar), :content_block_version => 1)
@@ -75,8 +75,8 @@ create_file_binary_data(:logo, :data => open(File.join(Rails.root, "public/image
 create_file_metadata(:xml, :file_type => "text/xml", :section => sections(:root), :file_extension => "xml", :file_size => 36, :file_name => "test.xml", :file_binary_data => file_binary_data(:xml))
 create_file_metadata(:logo, :file_type => "image/png", :section => sections(:root), :file_extension => "png", :file_size => 2305, :file_name => "logo.png", :file_binary_data => file_binary_data(:logo))
 
-create_file_block(:xml, :name => "XML", :file_metadata => file_metadata(:xml))
-create_image_block(:logo, :name => "Logo", :file_metadata => file_metadata(:logo))
+create_file_block(:xml, :name => "XML", :file_metadata => file_metadata(:xml), :updated_by_user => users(:cmsadmin))
+create_image_block(:logo, :name => "Logo", :file_metadata => file_metadata(:logo), :updated_by_user => users(:cmsadmin))
 
 create_portlet_type(:recently_updated_pages,
   :name => 'Recently Updated Pages',  

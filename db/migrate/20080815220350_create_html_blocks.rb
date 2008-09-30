@@ -5,7 +5,6 @@ class CreateHtmlBlocks < ActiveRecord::Migration
       t.string :content
       t.string :status
       t.datetime :deleted_at
-      t.timestamps
     end
   end
 
