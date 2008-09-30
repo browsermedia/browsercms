@@ -11,23 +11,24 @@ describe "A Content Object" do
   end
 
   it "should allow blocks to be published" do
-    @b.publish
-    @b.reload.status.should == "PUBLISHED"
+    @b.publish(create_user)
+    @b = HtmlBlock.find(@b.id)
+    @b.status.should == "PUBLISHED"
   end
 
   it "should allow blocks to be archived" do
-    @b.archive
+    @b.archive(create_user)
     @b.reload.status.should == 'ARCHIVED'
   end
 
   it "should allow blocks to be marked 'in progress'" do
-    @b.publish
-    @b.in_progress
+    @b.publish(create_user)
+    @b.in_progress(create_user)
     @b.reload.status.should == 'IN_PROGRESS'
   end
 
   it "should not add 'hide' to blocks, since they can't be hidden" do
-    lambda { @b.hide }.should raise_error(NoMethodError)
+    lambda { @b.hide(create_user) }.should raise_error(NoMethodError)
   end
 
   it "should respond to ! versions of same status methods" do
@@ -44,24 +45,20 @@ describe "A Content Object" do
   end
 
   it "should respond to publish?" do
-    @b.publish
+    @b.publish(create_user)
     @b.should be_published
   end
 
   it "should respond to archive?" do
-    @b.archive
+    @b.archive(create_user)
     @b.should be_archived
   end
 
   it "should respond to in_progress?" do
-    @b.in_progress
+    @b.in_progress(create_user)
     @b.should be_in_progress
   end
 
-  it "should not respond to mark_as_deleted" do
-    pending "This needs to be removed, as destroy will handle this operation."
-  end
-  
   it "should not dirty initial STATUSES" do
     Page.new
     HtmlBlock.statuses.keys.should_not include("HIDDEN")

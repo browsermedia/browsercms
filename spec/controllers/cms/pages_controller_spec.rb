@@ -80,6 +80,27 @@ describe Cms::PagesController do
       end
     end
   end
+
+  describe "publishing a page" do
+    before do
+      login_as_user
+      @page = create_page(:section => root_section, :name => "Test", :path => "test")
+      @action = lambda { put :publish, :id => @page.to_param }
+    end
+    it "should change the status of the page to PUBLISHED" do
+      @action.call
+      @page.reload.status == "PUBLISHED"
+    end
+    it "should set the flash message" do
+      @action.call
+      flash[:notice].should  == "Page 'Test' was published"        
+    end
+    it "should redirect to the page_" do
+      @action.call
+      response.should redirect_to(cms_url(@page.path))
+    end
+  end
+
   
   describe "revisions" do
     before do

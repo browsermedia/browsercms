@@ -99,13 +99,13 @@ class Cms::PagesController < Cms::BaseController
   end
   
   #status actions
-  {:publish => "Published", :hide => "Hidden", :archive => "Archived"}.each do |status, verb|
+  {:publish => "published", :hide => "hidden", :archive => "archived"}.each do |status, verb|
     define_method status do
       load_page
-      if @page.send(status)
-        flash[:notice] = "Page '#{@page.name}' was '#{verb}'."
+      if @page.send(status, current_user)
+        flash[:notice] = "Page '#{@page.name}' was #{verb}"
       end
-      redirect_to @page.path
+      redirect_to cms_url(@page.path)
     end
   end
   

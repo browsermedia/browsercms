@@ -41,7 +41,7 @@ class Cms::BlocksController < Cms::BaseController
   end
   
   def update
-    if @block.update_attributes(params[model_name])
+    if @block.update_attributes(params[model_name].merge(:updated_by_user => current_user))
       flash[:notice] = "#{model_name.titleize} '#{@block.name}' was updated"
       redirect_to_first params[:_redirect_to], cms_url(@block)
     else
@@ -50,17 +50,17 @@ class Cms::BlocksController < Cms::BaseController
   end
 
   def destroy
-    do_command(:destroy, "deleted")
+    do_command("deleted") { @block.destroy }
     redirect_to_first params[:_redirect_to], cms_content_library_url
   end
 
   def publish
-    do_command(:publish, "published")
+    do_command("published") { @block.publish(current_user) }
     redirect_to cms_url(@block)
   end
 
   def archive
-    do_command(:archive, "archived")
+    do_command("archived") { @block.archive(current_user) }
     redirect_to cms_url(@block)
   end
 
@@ -88,8 +88,8 @@ class Cms::BlocksController < Cms::BaseController
       @block = model_class.find(params[:id])
     end
 
-    def do_command (cmd, result)
-      if @block.send(cmd)
+    def do_command(result)
+      if yield
         flash[:notice] = "#{model_name.titleize} '#{@block.name}' was #{result}"
       else
         flash[:error] = "#{model_name.titleize} '#{@block.name}' could not be #{result}"

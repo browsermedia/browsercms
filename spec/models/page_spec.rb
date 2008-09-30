@@ -66,19 +66,26 @@ describe Page do
 
     it "should be able to be published when creating" do
       page = new_page
-      page.publish.should be_true
+      page.publish(create_user).should be_true
       page.should be_published
     end
 
     it "should be able to be hidden" do
       page = create_page
-      page.hide!
+      page.hide!(create_user)
       page.should be_hidden
     end
 
     it "should not allow invalid statuses" do
       page = new_page(:status => "FAIL")
       page.should have(1).error_on(:status)
+    end
+
+    it "should be able to be published" do
+      page = create_page(:section => root_section)
+      page = Page.find(page.id)
+      page.publish(create_user).should be_true  
+      page.reload.status.should == "PUBLISHED"
     end
 
   end

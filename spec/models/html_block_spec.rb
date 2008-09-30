@@ -63,7 +63,7 @@ describe HtmlBlock do
     describe "when deleting a record" do
       before do
         @html_block = create_html_block
-        @delete_html_block = lambda { @html_block.mark_as_deleted! }
+        @delete_html_block = lambda { @html_block.mark_as_deleted!(create_user) }
       end
       
       it "should not actually delete the row" do

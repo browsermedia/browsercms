@@ -26,6 +26,14 @@ module Cms
         def acts_as_content_object(options={})
           unless options[:versioning] == false
             version_fu
+            
+            #We set the value of the the association to the value in the virtual attriute
+            #This makes sute that updated_by_user is explictly set on each update
+            versioned_class.belongs_to :updated_by, :class_name => "User"
+            attr_accessor :updated_by_user
+            belongs_to :updated_by, :class_name => "User"
+            before_validation :set_updated_by
+            
           end
           is_paranoid
 
@@ -51,12 +59,14 @@ module Cms
 
         def define_status_action_methods
           @statuses.each do |status, method_name|
-            define_method method_name do
+            define_method method_name do |updated_by|
               self.status = status
+              self.updated_by_user = updated_by
               save
             end
-            define_method "#{method_name}!" do
+            define_method "#{method_name}!" do |updated_by|
               self.status = status
+              self.updated_by_user = updated_by
               save!
             end
           end
@@ -84,6 +94,10 @@ module Cms
         def destroy_versions_if_destroyed
           return unless supports_versioning?
           self.class.versioned_class.delete_all("#{self.class.versioned_foreign_key} = #{id}") if destroyed?
+        end
+
+        def set_updated_by
+          self.updated_by = updated_by_user
         end
 
         module ClassMethods
