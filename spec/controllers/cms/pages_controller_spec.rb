@@ -118,4 +118,24 @@ describe Cms::PagesController do
     end
   end
   
+  describe "reverting" do
+    before do
+      login_as_user
+      @page = create_page(:section => root_section, :name => "V1", :path => "/test")
+      @page.update_attribute(:name, "V2")
+      @page.update_attribute(:name, "V3")
+      @action = lambda { put :revert_to, :id => @page.to_param, :version => 1 }
+    end
+    it "should revert to version 1" do
+      @action.call
+      @page = Page.find(@page.id)
+      @page.name.should == "V1"
+      @page.version.should == 4
+    end
+    it "should redirect to the page" do
+      @action.call
+      response.should redirect_to(@page.path)
+    end
+  end
+  
 end
