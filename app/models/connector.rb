@@ -4,7 +4,7 @@ class Connector < ActiveRecord::Base
   #Can't use just 'block', because 'block_type' is used by rails
   belongs_to :content_block, :polymorphic => true
 
-  acts_as_list :scope => 'connectors.page_id = #{page_id} and connectors.container = \'#{container}\' and connectors.page_version'
+  acts_as_list :scope => 'connectors.page_id = #{page_id} and connectors.page_version = #{page_version} and connectors.container = \'#{container}\''
   alias :move_up :move_higher 
   alias :move_down :move_lower 
   

@@ -231,11 +231,35 @@ end
 
 describe "A page with associated blocks" do
   before do
-    @page = create_page(:section => root_section)
+    @page = create_page(:section => root_section, :name => "Bar")
     @block = create_html_block
     @other_connector = create_connector(:page => create_page(:section => root_section), :content_block => @block)
     @page_connector = create_connector(:page => @page, :content_block => @block)          
     @destroying_the_page = lambda { @page.destroy }
+  end
+  describe "when updating" do
+    describe "with changes" do
+      before do
+        @updating_the_page = lambda{ @page.update_attribute(:name, "Foo") }
+      end
+      it "should create new copies of the connectors" do
+        @updating_the_page.should change(Connector, :count).by(1)
+      end
+      it "should change the version by 1" do
+        @updating_the_page.should change(@page, :version).by(1)
+      end
+    end
+    describe "without changes" do
+      before do
+        @updating_the_page = lambda{ @page.update_attribute(:name, "Bar") }
+      end
+      it "should not create new copies of the connectors" do
+        @updating_the_page.should_not change(Connector, :count).by(1)
+      end
+      it "should not change the version" do
+        @updating_the_page.should_not change(@page, :version)
+      end
+    end
   end
   describe "when deleted" do
     it "should remove one record from the connectors table" do
