@@ -9,6 +9,7 @@
         <%= link_to action_icon(:up), cms_path(connector, :move_up), :method => :put %>
         <%= link_to action_icon(:down), cms_path(connector, :move_down), :method => :put %>
       <% end %>
+      <%= link_to action_icon(:history, :alt => "View Revision History"), cms_path(connector.content_block), :title => "View Revision History" %>
       <%= link_to action_icon(:delete), cms_path(connector, :destroy, :_redirect_to => @page.path), :method => :delete, :confirm => "Are you sure you want to remove this block from this page?" %>
     </div>
   </div>

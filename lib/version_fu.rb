@@ -24,7 +24,10 @@ module VersionFu
             find :first, :order=>'version desc'
           end                    
         end
-
+        
+        attr_accessor :new_revision_comment
+        
+        before_save :set_revision_comment        
         before_save :check_for_new_version
       end
       
@@ -114,6 +117,7 @@ module VersionFu
         send("#{a}=", revert_to_version.send(a))
       end  
       self.updated_by_user = user
+      self.new_revision_comment = "Reverted to version #{version}"      
       save
     end    
     
@@ -138,5 +142,21 @@ module VersionFu
       instatiate_revision.save!
       update_without_callbacks
     end
+    
+    def set_revision_comment
+      if changed?
+        if @new_revision_comment.blank?
+          if new_record?
+            self.revision_comment = 'Created'
+          else
+            changed_attributes = changes.keys-["version"]
+            self.revision_comment = "#{changed_attributes.map(&:humanize).join(", ")} edited"
+          end
+        else
+          self.revision_comment = @new_revision_comment
+        end
+      end
+    end
+    
   end
 end

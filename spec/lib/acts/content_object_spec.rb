@@ -137,4 +137,31 @@ describe "A Content Object" do
       end
     end
   end
+  
+  describe "revision comment" do
+    it "should be set to 'Created' if it is a new instance" do
+      @b.revision_comment.should == 'Created'
+      @b.as_of_version(@b.version).revision_comment.should == 'Created'
+    end
+    it "should be set to 'Name, Content edited' if name and content were changed" do
+      @b.name = "Something Else"
+      @b.content = "Whatever"
+      @b.save
+      @b.revision_comment.should == 'Name, Content edited'
+      @b.as_of_version(@b.version).revision_comment.should == 'Name, Content edited'
+    end
+    it "should not be changed if the object is not changed" do
+      @b.reload.save
+      @b.revision_comment.should == 'Created'
+      @b.as_of_version(@b.version).revision_comment.should == 'Created'
+    end
+    it "should be set to the value of new_revision_comment if one is set" do
+      @b.update_attributes(:name => "Something Else", :new_revision_comment => "Something Changed")
+      @b.save
+      @b.revision_comment.should == "Something Changed"
+      @b.as_of_version(@b.version).revision_comment.should == "Something Changed"
+    end
+  end
+  
+  
 end

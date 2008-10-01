@@ -57,6 +57,57 @@ describe Page do
     page.path.should == "/"
   end
 
+  describe "revision comment" do
+    before { @page = create_page(:section => root_section, :name => "V1") }
+    it "should be set to 'Created' when the page is created" do
+      @page.revision_comment.should == 'Created'
+    end
+    it "should not be changed if the object is not changed" do
+      @page.reload.save
+      @page.reload.revision_comment.should == 'Created'
+      @page.as_of_version(@page.version).revision_comment.should == 'Created'
+    end
+    it "should be set to 'Name edited' when the name is changed" do
+      @page.update_attributes(:name => "V2")
+      @page.revision_comment.should == 'Name edited'
+      @page.as_of_version(@page.version).revision_comment.should == 'Name edited'
+    end
+    it "should be set to 'Html 'Hello, World!' was added to the 'main' container'" do
+      @block = create_html_block(:name => "Hello, World!")
+      @page.add_content_block!(@block, "main")
+      @page.revision_comment.should == "Html 'Hello, World!' was added to the 'main' container"
+      @page.as_of_version(@page.version).revision_comment.should == "Html 'Hello, World!' was added to the 'main' container"
+    end
+    it "should be set to 'HtmlBlock 'Hello, World!' was moved up within the 'main' container'" do
+      @block = create_html_block(:name => "Hello, World!")
+      @page.add_content_block!(create_html_block(:name => "Whatever"), "main")
+      @page.add_content_block!(@block, "main")
+      pending "How do we move blocks within containers?"
+      @page.revision_comment.should == "HtmlBlock 'Hello, World!' was moved up within the 'main' container"
+      @page.as_of_version(@page.version).revision_comment.should == "HtmlBlock 'Hello, World!' was moved up within the 'main' container"
+    end
+    it "should be set to 'HtmlBlock 'Hello, World!' was moved down within the 'main' container'" do
+      @block = create_html_block(:name => "Hello, World!")
+      @page.add_content_block!(@block, "main")
+      @page.add_content_block!(create_html_block(:name => "Whatever"), "main")
+      pending "How do we move blocks within containers?"
+      @page.revision_comment.should == "HtmlBlock 'Hello, World!' was moved down within the 'main' container"
+      @page.as_of_version(@page.version).revision_comment.should == "HtmlBlock 'Hello, World!' was moved down within the 'main' container"
+    end
+    it "should be set to 'Html 'Hello, World!' was removed from the 'main' container'" do
+      @block = create_html_block(:name => "Hello, World!")      
+      @page.destroy_connector(@page.add_content_block!(@block, "main"))
+      @page.revision_comment.should == "Html 'Hello, World!' was removed from the 'main' container"
+      @page.as_of_version(@page.version).revision_comment.should == "Html 'Hello, World!' was removed from the 'main' container"
+    end
+    it "should be set to 'Reverted to version 1'" do
+      @page.update_attribute(:name, "V2")
+      @page.revert_to(1, create_user)
+      @page.revision_comment.should == "Reverted to version 1"
+      @page.as_of_version(@page.version).revision_comment.should == "Reverted to version 1"
+    end    
+  end
+
   describe "status" do
     it "should be in progress when it is created" do
       page = create_page

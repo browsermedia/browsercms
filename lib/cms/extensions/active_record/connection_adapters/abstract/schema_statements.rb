@@ -11,6 +11,7 @@ module ActiveRecord
         yield t
         t.timestamps
         t.integer :updated_by_id
+        t.string :revision_comment
         
         create_table_from_definition(table_name, options, t)
 
@@ -23,6 +24,7 @@ module ActiveRecord
         yield vt    
         vt.timestamps            
         vt.integer :updated_by_id
+        vt.string :revision_comment
         
         create_table_from_definition("#{table_name.singularize}_versions".to_sym, options, vt)
         
