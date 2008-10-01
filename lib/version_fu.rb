@@ -119,12 +119,15 @@ module VersionFu
     
     def as_of_version(version)
       v = find_version(version)
+      raise ActiveRecord::RecordNotFound.new("version #{version} does not exist for <#{self.class}:#{id}>") unless v
       obj = self.class.new
       (versioned_columns + [:version, :updated_at]).each do |a|
         obj.send("#{a}=", v.send(a))
       end
       obj.id = id
-      obj.freeze      
+      #Need to do this so associations can be loaded
+      obj.instance_variable_set("@new_record", false)
+      obj      
     end
     
     def current_version?

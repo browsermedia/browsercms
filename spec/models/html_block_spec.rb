@@ -160,8 +160,9 @@ describe HtmlBlock do
       it "should have the same id" do
         @version.id.should == @html_block.id
       end
-      it "should be frozen" do
-        @version.should be_frozen
+      it "should not be frozen" do
+        #We can't freeze the version because we need to be able to load assocations
+        @version.should_not be_frozen
       end
       it "current_version? should be false" do
         @version.current_version?.should be_false

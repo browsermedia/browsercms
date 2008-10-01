@@ -2,7 +2,7 @@ class Cms::PagesController < Cms::BaseController
   
   skip_before_filter :login_required, :only => [:show]
   before_filter :load_section, :only => [:new, :create, :move_to]
-  before_filter :load_page, :only => [:edit, :revisions, :move_to, :revert_to, :destroy]
+  before_filter :load_page, :only => [:edit, :revisions, :show_version, :move_to, :revert_to, :destroy]
   before_filter :hide_toolbar, :only => [:new, :create, :move_to]
 
   verify :method => :put, :only => [:move_to]
@@ -108,6 +108,11 @@ class Cms::PagesController < Cms::BaseController
       redirect_to cms_url(@page.path)
     end
   end
+  
+  def show_version
+    @page = @page.as_of_version(params[:version])
+    render :layout => @page.layout, :action => 'show'
+  end  
   
   def move_to
     if @page.move_to(@section, current_user)
