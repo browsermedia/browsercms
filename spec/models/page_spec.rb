@@ -138,8 +138,23 @@ describe Page do
       page.publish(create_user).should be_true  
       page.reload.status.should == "PUBLISHED"
     end
-
   end
+
+  describe "#container_live?" do
+    it "should be true if all blocks are published" do
+      page = create_page(:section => root_section)
+      page.add_content_block!(create_html_block(:status => 'PUBLISHED'), "main")
+      page.add_content_block!(create_html_block(:status => 'PUBLISHED'), "main")
+      page.container_live?("main").should be_true
+    end
+    it "should be false if there are any non-published blocks" do
+      page = create_page(:section => root_section)
+      page.add_content_block!(create_html_block(:status => 'PUBLISHED'), "main")
+      page.add_content_block!(create_html_block(:status => 'IN_PROGRESS'), "main")
+      page.container_live?("main").should be_false
+    end  
+  end
+
 
   it "should be able to be moved to another section" do
     root = create_section

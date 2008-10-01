@@ -2,6 +2,6 @@
 <%= render :partial => 'toolbar' %>
 <h2>View <%= @block.name %></h2>
 <div id="block_content">
-  <div class="header">Block Contents</div>
+  <div class="header <%= @block.live? ? 'live' : 'draft' %>">Block Contents</div>
   <div class="content"><%= render_content_block(@block) %></div>
 </div>

@@ -1,5 +1,5 @@
 <div class="edit_container">
-  <div class="header">
+  <div class="header <%= @page.container_live?(name) ? 'live' : 'draft' %>">
     <%= name %>
     <div class="actions">
       <%= link_to action_icon(:add), cms_path(:content_types, :select, :connect_to_page_id => @page, :connect_to_container => name) %>

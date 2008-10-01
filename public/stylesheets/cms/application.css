@@ -64,10 +64,15 @@ div#cms_toolbar {
   border-color: #9C9; }
 
 .edit_container .header, #block_content .header {
-  background-color: #CCF;
   border: 1px solid black;
   margin: 0;
   padding: 5px; }
+.live {
+  background-color: #CCFFCC;
+}
+.draft {
+  background-color: #FF6666;
+}
 .edit_container .content, #block_content .content {
   border-left: 1px solid black;
   border-bottom: 1px solid black;

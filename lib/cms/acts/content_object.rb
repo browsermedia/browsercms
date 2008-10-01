@@ -57,6 +57,7 @@ module Cms
               self.status == status
             end
           end
+          alias_method :live?, :published?
         end
 
         def define_status_action_methods

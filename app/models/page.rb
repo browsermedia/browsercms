@@ -92,4 +92,9 @@ class Page < ActiveRecord::Base
     template ? template.name : nil
   end
   
+  #Returns true if the block attached to each connector in the given container is live
+  def container_live?(container)
+    connectors.all(:conditions => {:container => container.to_s}).all?{|c| c.content_block.live?}
+  end
+  
 end

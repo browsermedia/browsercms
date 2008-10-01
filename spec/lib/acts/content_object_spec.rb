@@ -15,6 +15,15 @@ describe "A Content Object" do
     @b.status.should == "PUBLISHED"
   end
 
+  it "should be live if the status is PUBLISHED" do
+    @b.publish(create_user)
+    @b.should be_live
+  end
+
+  it "should not be live if the status is not PUBLISHED" do
+    @b.should_not be_live
+  end
+
   it "should allow blocks to be archived" do
     @b.archive(create_user)
     @b.reload.status.should == 'ARCHIVED'
