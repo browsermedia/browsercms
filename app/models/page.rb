@@ -16,8 +16,10 @@ class Page < ActiveRecord::Base
   #Valid options:
   #  except = An array of connector ids not to copy
   #  from_version = Which page version to copy from, default to version-1
+  #    also you can set an instance variable @_copy_connectors_from_version,
+  #    which will be used if there is no from_version option
   def copy_connectors!(options={})
-    page_version = options[:from_version] || (version-1)
+    page_version = options[:from_version] || @_copy_connectors_from_version || (version-1)
     conditions = ['page_id = ? and page_version = ?', id, page_version]
     
     if options[:except]
@@ -53,7 +55,15 @@ class Page < ActiveRecord::Base
       connector.freeze
     end
   end
-  
+
+  #This is done to let copy_connectors! know which version to pull from
+  #copy_connectors! will get called later as an after_update callback
+  alias_method :original_revert_to, :revert_to
+  def revert_to(version, user)
+    @_copy_connectors_from_version = version
+    original_revert_to(version, user)
+  end
+    
   def delete_connectors
     Connector.delete_all "page_id = #{id}"
   end

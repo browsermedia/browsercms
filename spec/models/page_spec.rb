@@ -307,8 +307,25 @@ describe "A page that had 2 blocks added to it and then had them removed" do
     @page.destroy_connector(@page.connectors.reload.first(:order => "position"))
     @page.destroy_connector(@page.connectors.reload.first(:order => "position"))
   end
-  it "should have no connectors" do
-    @page.connectors.reload.should be_empty
+  describe "when reverting to the previous version" do
+    before do
+      @reverting_to_the_previous_version = lambda { @page.revert(create_user) }
+    end
+    it "should restore the connectors from the version being reverted to" do
+      @reverting_to_the_previous_version.should change(Connector, :count).by(1)
+      @page.connectors.reload.first.should_meet_expectations(:page => @page, :page_version => 6, :content_block => @bar_block, :content_block_version => 1, :container => "whatever")
+    end
+  end
+  describe "when reverting to the version that had both connectors" do
+    before do
+      @reverting_to_the_previous_version = lambda { @page.revert_to(3, create_user) }
+    end
+    it "should restore the connectors from version 3" do
+      @reverting_to_the_previous_version.should change(Connector, :count).by(2)
+      foo, bar = @page.connectors.reload.all(:order => "position")
+      foo.should_meet_expectations(:page => @page, :page_version => 6, :content_block => @foo_block, :content_block_version => 1, :container => "whatever")
+      bar.should_meet_expectations(:page => @page, :page_version => 6, :content_block => @bar_block, :content_block_version => 1, :container => "whatever")
+    end
   end
 end
 
