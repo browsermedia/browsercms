@@ -13,10 +13,19 @@
   <div>
     Status: <%= @page.status_name %> (Live)
     <br/>
-    Page: <%= link_to h(@page.name), @page.path %> (v<%= @page.version%>)
+    Page: <%= link_to h(@page.name), @page.path %>
     <br/>
     Section: <%= link_to h(@page.section.name), cms_path(:sections, :page_id => @page) %>
     <br/>
     Template: <%= link_to h(@page.template_name), cms_path(:page_templates) %>
+    <br/>
+    Version: <strong>v<%= @page.version %></strong> <%=h @page.revision_comment %> by <strong><%=h @page.updated_by.login %></strong> at <em><%= @page.updated_at.strftime("%b %e, %Y %l:%M %p") %></em>
+    <br/>
+    <% if @page.version > 1 %>
+      <%= link_to "<< Previous Version (v#{@page.version-1})", cms_path(@page, :show_version, :version => @page.version-1) %>
+    <% end %>
+    <% unless @page.current_version? %>
+      <%= link_to "Next Version (v#{@page.version+1}) >> ", cms_path(@page, :show_version, :version => @page.version+1) %>
+    <% end %>
   </div>
 <% end %>

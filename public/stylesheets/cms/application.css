@@ -121,3 +121,29 @@ div.buttons form.button-to {
 ul.block_info {
   list-style-type: none; 
   padding-left: 0; }
+
+.block_revision_history {
+  background-color: #eee;
+  position: absolute;
+  padding: 10px;
+  margin: 0;
+}
+
+.block_revision_history h3 {
+  margin: 0 0 10px 0;
+  padding: 0;
+}
+
+.block_revision_history ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.block_revision_history li {
+  padding: 3px;
+}
+
+.block_revision_history li.hover {
+  background-color: #ccf;
+  cursor: pointer;
+}

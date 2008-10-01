@@ -16,6 +16,7 @@ create_page_template(:main, :name => "Main", :file_name => "main", :language => 
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <title><%= @page_title %></title>
     <%= stylesheet_link_tag 'cms/application' %>
+    <%= javascript_include_tag :defaults %>    
     <%= yield :html_head %>
   </head>
   <body>
@@ -31,6 +32,7 @@ create_page_template(:two_column, :name => "Two Column", :file_name => "two_colu
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <title><%= @page_title %></title>
     <%= stylesheet_link_tag 'cms/application' %>
+    <%= javascript_include_tag :defaults %>    
     <%= yield :html_head %>
   </head>
   <body>

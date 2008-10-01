@@ -64,6 +64,7 @@ class Cms::PagesController < Cms::BaseController
 
   def create
     @page = @section.pages.build(params[:page])
+    @page.updated_by_user = current_user
     if @page.save
       flash[:notice] = "Page was '#{@page.name}' created."
       redirect_to cms_url(@page)
