@@ -207,10 +207,10 @@ describe Page do
       end
     end
     
-    describe "#increment_version!" do
+    describe "#create_new_version!" do
       before do
         @page = create_page(:section => root_section)
-        @increment_version = lambda { @page.increment_version! }
+        @increment_version = lambda { @page.create_new_version! }
       end
       it "should increase the version number" do
         @increment_version.call
@@ -219,13 +219,22 @@ describe Page do
       it "should create a new version" do
         @increment_version.should change(Page::Version, :count).by(1)
       end
-      it "should recieve normal update callbacks" do
-        @page.should_receive(:before_update).and_return(true)
-        @page.should_receive(:after_update).and_return(true)
-        @increment_version.call
-      end
-      
     end 
+    
+    describe "reverting" do
+      before do
+        @page = create_page(:section => root_section, :name => "V1")
+        @page.update_attribute(:name, "V2")
+        @revert_the_page = lambda { @page.revert_to(1, create_user)}
+      end
+      it "should change the version by 1" do
+        @revert_the_page.should change(@page, :version).by(1)
+      end
+      it "should update the attributes" do
+        @revert_the_page.call
+        @page.name.should == "V1"
+      end
+    end
   end
 end
 
@@ -283,6 +292,23 @@ describe "A page with associated blocks" do
     it "should do what it does (TBD)" do
       pending "Make work"
     end
+  end
+end
+
+describe "A page that had 2 blocks added to it and then had them removed" do
+  before do
+    @page = create_page(:section => root_section)
+    @foo_block = create_html_block(:name => "Foo Block")
+    @bar_block = create_html_block(:name => "Bar Block")
+    @page.add_content_block!(@foo_block, "whatever")
+    @page.reload
+    @page.add_content_block!(@bar_block, "whatever")
+    @page.reload
+    @page.destroy_connector(@page.connectors.reload.first(:order => "position"))
+    @page.destroy_connector(@page.connectors.reload.first(:order => "position"))
+  end
+  it "should have no connectors" do
+    @page.connectors.reload.should be_empty
   end
 end
 

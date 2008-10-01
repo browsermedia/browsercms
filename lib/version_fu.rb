@@ -99,6 +99,7 @@ module VersionFu
       version_number = new_record? ? 1 : version + 1
       new_version.version = version_number
       self.version = version_number
+      new_version
     end
     
     def revert(user)
@@ -130,9 +131,9 @@ module VersionFu
       self.class.find(id).version == version
     end
     
-    def increment_version!
-      instatiate_revision
-      update
+    def create_new_version!
+      instatiate_revision.save!
+      update_without_callbacks
     end
   end
 end
