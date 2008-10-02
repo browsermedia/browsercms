@@ -19,13 +19,13 @@
     <br/>
     Template: <%= link_to h(@page.template_name), cms_path(:page_templates) %>
     <br/>
-    Version: <strong>v<%= @page.version %></strong> <%=h @page.revision_comment %> by <strong><%=h @page.updated_by.login %></strong> at <em><%= @page.updated_at.strftime("%b %e, %Y %l:%M %p") %></em>
-    <br/>
-    <% if @page.version > 1 %>
-      <%= link_to "<< Previous Version (v#{@page.version-1})", cms_path(@page, :show_version, :version => @page.version-1) %>
+    Version:
+    <% form_tag cms_path(@page, :show_version), :method => :get, :style => "display: inline" do %>
+      <%= hidden_field_tag :mode, @mode %>
+      <%= select_tag :version, options_for_select(@page.versions.all(:order => "version desc").map{|r| ["v#{r.version}: #{r.revision_comment} by #{r.updated_by.login} at #{r.updated_at.strftime("%l:%M %p")} on #{r.updated_at.strftime("%b %e, %Y")}", r.version]}, @page.version), :onchange => 'this.form.submit(); return false' %>
     <% end %>
     <% unless @page.current_version? %>
-      <%= link_to "Next Version (v#{@page.version+1}) >> ", cms_path(@page, :show_version, :version => @page.version+1) %>
+      <%= link_to "Revert to this Version", cms_path(@page, :revert_to, :version => @page.version) %>
     <% end %>
   </div>
 <% end %>
