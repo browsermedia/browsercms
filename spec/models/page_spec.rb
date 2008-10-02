@@ -415,6 +415,11 @@ describe "When adding a block to a page" do
   it "should create 1 new connector" do
     @adding_block.should change(Connector, :count).by(1)
   end
+  it "should mark the page as in_progress" do
+    @page.publish(create_user)
+    @adding_block.call
+    @page.status.should == "IN_PROGRESS"
+  end
 end
 
 describe "When adding a second block to a page" do

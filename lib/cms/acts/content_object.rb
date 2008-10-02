@@ -40,7 +40,7 @@ module Cms
           is_paranoid
 
           attr_accessor :new_status
-          before_validation :set_status
+          before_validation :reset_status
 
           @default_status = "IN_PROGRESS"
           after_destroy :destroy_versions_if_destroyed
@@ -88,7 +88,7 @@ module Cms
           cls.extend ClassMethods
         end
 
-        def set_status
+        def reset_status
           self.status = new_status || self.class.default_status
           self.new_status = nil
           status
