@@ -585,6 +585,11 @@ describe "Removing a connector from a page" do
     c.should be_frozen
     c.should == @conn
   end
+  it "should set the page status to inprogress" do
+    @page.publish!(create_user)
+    @destroy_connector.call
+    @page.status.should == "IN_PROGRESS"
+  end
 end
 
 describe "Removing multiple blocks from a page" do

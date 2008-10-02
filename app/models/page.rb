@@ -52,6 +52,7 @@ class Page < ActiveRecord::Base
   def destroy_connector(connector)
     transaction do
       self.revision_comment = "#{connector.content_block.display_name} '#{connector.content_block.name}' was removed from the '#{connector.container}' container"
+      self.reset_status
       create_new_version!
       copy_connectors!(:except => [connector.id])
       reload
