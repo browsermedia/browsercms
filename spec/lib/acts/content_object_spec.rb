@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../../spec_helper'
 
 describe "A Content Object" do
   before(:each) do
-    @b = create_html_block
+    @b = create_html_block(:name => "Test")
   end
 
   it "should add a default status to a block" do
@@ -47,9 +47,10 @@ describe "A Content Object" do
   end
 
   it "should not allow invalid statuses" do
-    @b = HtmlBlock.new(:status => "FAIL")
+    @b = HtmlBlock.new(:new_status => "FAIL")
     @b.should_not be_valid
-    @b.should have(1).error_on(:status)
+    @b.errors.on(:status).should_not be_empty
+    #@b.should have(1).error_on(:status)
   end
 
   it "should respond to publish?" do
@@ -172,5 +173,22 @@ describe "A Content Object" do
     end
   end
   
+  describe "saving" do
+    describe "with a new status" do
+      it "should should be published" do
+        @b.update_attribute(:new_status, "PUBLISHED")
+        @b.save
+        @b.should be_published
+      end
+    end
+    describe "without a new status" do
+      it "should be in progress" do
+        @b.publish!(create_user)
+        @b.update_attribute(:name, "Whatever")
+        @b.save
+        @b.should be_in_progress
+      end
+    end
+  end
   
 end

@@ -128,7 +128,7 @@ describe Page do
     end
 
     it "should not allow invalid statuses" do
-      page = new_page(:status => "FAIL")
+      page = new_page(:new_status => "FAIL")
       page.should have(1).error_on(:status)
     end
 
@@ -143,14 +143,14 @@ describe Page do
   describe "#container_live?" do
     it "should be true if all blocks are published" do
       page = create_page(:section => root_section)
-      page.add_content_block!(create_html_block(:status => 'PUBLISHED'), "main")
-      page.add_content_block!(create_html_block(:status => 'PUBLISHED'), "main")
+      page.add_content_block!(create_html_block(:new_status => 'PUBLISHED'), "main")
+      page.add_content_block!(create_html_block(:new_status => 'PUBLISHED'), "main")
       page.container_live?("main").should be_true
     end
     it "should be false if there are any non-published blocks" do
       page = create_page(:section => root_section)
-      page.add_content_block!(create_html_block(:status => 'PUBLISHED'), "main")
-      page.add_content_block!(create_html_block(:status => 'IN_PROGRESS'), "main")
+      page.add_content_block!(create_html_block(:new_status => 'PUBLISHED'), "main")
+      page.add_content_block!(create_html_block(:new_status => 'IN_PROGRESS'), "main")
       page.container_live?("main").should be_false
     end  
   end

@@ -34,13 +34,15 @@ module Cms
             belongs_to :updated_by, :class_name => "User"
             before_validation :set_updated_by
             
-            validates_presence_of :updated_by_id
+            validates_presence_of :updated_by_id            
             
           end
           is_paranoid
 
+          attr_accessor :new_status
+          before_validation :set_status
+
           @default_status = "IN_PROGRESS"
-          before_validation_on_create :set_default_status
           after_destroy :destroy_versions_if_destroyed
 
           validates_inclusion_of :status, :in => @statuses.keys
@@ -63,12 +65,12 @@ module Cms
         def define_status_action_methods
           @statuses.each do |status, method_name|
             define_method method_name do |updated_by|
-              self.status = status
+              self.new_status = status
               self.updated_by_user = updated_by
               save
             end
             define_method "#{method_name}!" do |updated_by|
-              self.status = status
+              self.new_status = status
               self.updated_by_user = updated_by
               save!
             end
@@ -86,8 +88,10 @@ module Cms
           cls.extend ClassMethods
         end
 
-        def set_default_status
-          self.status = self.class.default_status if status.blank?
+        def set_status
+          self.status = new_status || self.class.default_status
+          self.new_status = nil
+          status
         end
 
         def status_name
