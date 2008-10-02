@@ -24,8 +24,6 @@ class Cms::PagesController < Cms::BaseController
     split = params[:path].last.to_s.split('.')
     ext = split.size > 1 ? split.last.to_s.downcase : nil
     
-    logger.info "ext => #{ext}"
-    
     #Only try to stream cache file if it has an extension
     unless ext.blank?
       #Construct a path to where this file would be if it were cached
