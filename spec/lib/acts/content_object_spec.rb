@@ -190,5 +190,52 @@ describe "A Content Object" do
       end
     end
   end
+  describe "a block that is connected to a page" do
+    describe "when it is edited" do
+      before do
+        @page = create_page(:section => root_section)
+        @page.add_content_block!(@b, "main")
+        @editing_the_block = lambda {@b.update_attribute(:name, "something different")}
+      end
+      it "should work" do
+        pending "Need to test for blocks that don't have versioning"
+      end
+      it "should change page version by 1" do
+        @editing_the_block.call
+        @page.reload.version.should == 3
+      end
+      it "should create a new page version" do
+        @editing_the_block.should change(Page::Version, :count).by(1)
+      end
+      it "should set the revision comment on the page" do
+        @editing_the_block.call
+        @page.reload.revision_comment.should =~ /^Edited block.*/
+      end
+      it "should create the right connectors" do
+        @editing_the_block.call
+        conns = Connector.all(:conditions => ["content_block_id = ? and content_block_type = ?", @b.id, @b.class.name], :order => 'id')
+        conns.size.should == 2
+        conns[0].should_meet_expectations(:page => @page, :page_version => 2, :content_block => @b, :content_block_version => 1, :container => "main")        
+        conns[1].should_meet_expectations(:page => @page, :page_version => 3, :content_block => @b, :content_block_version => 2, :container => "main")        
+      end
+      describe "and saved" do
+        it "the page should not be live" do
+          @editing_the_block.call
+          @page.should_not be_live
+        end
+      end
+      describe "and save and published" do
+        before do
+          @editing_the_block = lambda {@b.update_attributes(:name => "something different", :new_status => "PUBLISHED")}
+        end
+        it "the page should be live" do
+          @editing_the_block.call
+          @page.reload.should be_live
+        end
+      end
+    end
+  end
+  
+  
   
 end

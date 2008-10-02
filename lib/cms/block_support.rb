@@ -15,7 +15,7 @@ module Cms
         attr_accessor :connect_to_page_id
         attr_accessor :connect_to_container
         attr_accessor :connected_page
-        after_create :connect_to_page 
+        after_create :connect_to_page         
       end
     end
 
@@ -60,6 +60,15 @@ module Cms
         self.connected_page = Page.find(connect_to_page_id)
         connected_page.add_content_block!(self, connect_to_container)
       end
+    end
+    
+    def update_page_version
+      Connector.all(:conditions => ['content_block_id = ? and content_block_type = ? and content_block_version = ?', id, self.class.name, version-1]).each do |c|
+        c.page.update_attributes!(:new_revision_comment => "Edited block", :new_status => status, :updated_by_user => updated_by)
+        c.page.connectors.all(:conditions => {:content_block_id => self.id, :content_block_type => self.class.name }).each do |conn|
+          conn.increment!(:content_block_version)
+        end
+      end      
     end
   
   end

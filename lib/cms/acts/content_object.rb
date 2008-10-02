@@ -14,6 +14,14 @@ module Cms
           @statuses = STATUSES.dup
           acts_as_content_object(options)
           include Cms::BlockSupport
+          if options[:versioning] == false
+            #has_many :connectors, :conditions => 'content_block_id = #{id} and content_block_type = #{self.class}', :order => "position"          
+            has_many :connectors, :order => "position"          
+          else
+            after_update :update_page_version
+            #has_many :connectors, :conditions => 'content_block_id = #{id} and content_block_type = #{self.class} and content_block_version = #{version}', :order => "position"          
+            has_many :connectors, :foreign_key => 'content_block_id', :conditions => 'content_block_type = \'#{self.class}\' and content_block_version = #{version}', :order => "position"          
+          end          
         end
 
         def acts_as_content_page(options={})
