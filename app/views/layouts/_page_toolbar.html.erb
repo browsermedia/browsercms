@@ -11,7 +11,7 @@
     <%= @page.archived? ? "Archive" : link_to("Archive", cms_path(@page, :archive), :method => :put) %>
   </div>  
   <div>
-    Status: <%= @page.status_name %> (Live)
+    Status: <strong class="<%= @page.live? ? 'live': 'draft' %>"><%= @page.live? ? 'Live': 'Draft' %></strong>
     <br/>
     Page: <%= link_to h(@page.name), @page.path %>
     <br/>

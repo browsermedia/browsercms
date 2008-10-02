@@ -97,7 +97,7 @@ describe Cms::PagesController do
     end
     it "should redirect to the page_" do
       @action.call
-      response.should redirect_to(cms_url(@page.path))
+      response.should redirect_to(@page.path)
     end
   end
 

@@ -73,6 +73,16 @@ div#cms_toolbar {
 .draft {
   background-color: #FF6666;
 }
+strong.live, strong.draft {
+  background-color: #FFFFFF;  
+}
+strong.live {
+  color: #009900;
+}
+strong.draft {
+  color: #990000;
+}
+
 .edit_container .content, #block_content .content {
   border-left: 1px solid black;
   border-bottom: 1px solid black;

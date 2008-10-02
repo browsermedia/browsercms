@@ -106,7 +106,7 @@ class Cms::PagesController < Cms::BaseController
       if @page.send(status, current_user)
         flash[:notice] = "Page '#{@page.name}' was #{verb}"
       end
-      redirect_to cms_url(@page.path)
+      redirect_to @page.path
     end
   end
   

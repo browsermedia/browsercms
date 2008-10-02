@@ -13,8 +13,8 @@
         <%= link_to_function action_icon(:history, :alt => "View Revision History"), "$('block_revision_history_#{connector.content_block_id}').toggle()", :title => "View Revision History" %>
         <div id="block_revision_history_<%= connector.content_block_id %>" class="block_revision_history" style="display: none">
           <h3>Revision History for <%=h connector.content_block.name %></h3>
-          <ul><% connector.content_block.versions.each do |r| %>
-            <li onmouseover="$(this).addClassName('hover')" onmouseout="$(this).removeClassName('hover')"><%=h r.revision_comment %> by <strong><%=h r.updated_by.login %></strong> at <em><%= r.updated_at.strftime("%b %e, %Y %l:%M %p") %></em></li>
+          <ul><% connector.content_block.versions.all(:order => "version desc").each do |r| %>
+            <li onmouseover="$(this).addClassName('hover')" onmouseout="$(this).removeClassName('hover')">v<%= r.version %>: <%=h r.revision_comment %> by <strong><%=h r.updated_by.login %></strong> at <em><%= r.updated_at.strftime("%b %e, %Y %l:%M %p") %></em></li>
           <% end %></ul>
         </div>
       <% end %>
