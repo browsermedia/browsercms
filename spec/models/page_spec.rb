@@ -388,7 +388,7 @@ describe "A page that had 2 blocks added to it and then had them removed" do
     end
     it "should restore the connectors from version 3" do
       @reverting_to_the_previous_version.should change(Connector, :count).by(2)
-      foo, bar = @page.connectors.reload.all(:order => "position")
+      foo, bar = @page.connectors.reload.find(:all, :order => "position")
       foo.should_meet_expectations(:page => @page, :page_version => 6, :content_block => @foo_block, :content_block_version => 1, :container => "whatever")
       bar.should_meet_expectations(:page => @page, :page_version => 6, :content_block => @bar_block, :content_block_version => 1, :container => "whatever")
     end
@@ -649,22 +649,40 @@ end
 
 describe "A published page with an unpublished block" do
   before do
-    @page = create_page(:section => root_section)
-    @block = create_html_block()
-    @page.add_content_block!(@block, "testing") 
-    @page.publish!(create_user)
-    @publishing_the_block = lambda { @block.publish!(create_user) } 
+    @user = create_user
+    @page = create_page(:section => root_section, :updated_by_user => @user)
+    @block = create_html_block(:connect_to_page_id => @page.id, :connect_to_container => "testing", :updated_by_user => @user)
+    @page = Page.find(@page.id)
+    @page.publish!(@user)
+    @publishing_the_block = lambda { @block = HtmlBlock.find(@block); @block.publish(@user) } 
   end
   describe "when publishing the block" do
+    it "should validate all the assumptions about dirty checking" do
+      @page.revision_comment.should == "Status edited"
+      @page.updated_by.should ==  @user
+      @page.status.should == "PUBLISHED"
+      @publishing_the_block.call
+      @page.reload #No Identity Map
+      @page.revision_comment.should == "Edited block"
+      @page.updated_by.should ==  @user
+      @page.status.should == "PUBLISHED"
+    end
     it "should change the connector count by 1" do
-      pending "TODO: Fix this bug"
-      @publishing_the_block.should change(Connector, :count).by(1)
+      #Rails.logger.info Connector.to_table(:exclude_columns => [:created_at, :updated_at])
+      @publishing_the_block.call
+      Rails.logger.info Connector.to_table(:exclude_columns => [:created_at, :updated_at])
+      Connector.count.should == 3
     end
     it "should make the page have one connector" do
-      Rails.logger.info Connector.all.to_table(:id, :page_id, :page_version, :content_block_id, :content_block_version, :container)
       @publishing_the_block.call
-      Rails.logger.info Connector.all.to_table(:id, :page_id, :page_version, :content_block_id, :content_block_version, :container)
       @page.connectors.reload.size.should == 1
+    end
+
+    it "should set the page version to 4" do
+      Rails.logger.info Page.to_table(:exclude_columns => [:created_at, :updated_at, :description, :revision_comment, :path, :user_date, :author, :source, :language])
+      Rails.logger.info Connector.to_table(:exclude_columns => [:created_at, :updated_at])
+      @publishing_the_block.call
+      @page.reload.version.should == 4
     end
 
     it "should set the block version to 2" do

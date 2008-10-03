@@ -25,7 +25,7 @@ module VersionFu
           end                    
         end
         
-        attr_accessor :new_revision_comment
+        attr_reader :new_revision_comment
         
         before_save :set_revision_comment        
         before_save :check_for_new_version
@@ -141,6 +141,11 @@ module VersionFu
     def create_new_version!
       instatiate_revision.save!
       update_without_callbacks
+    end
+    
+    def new_revision_comment=(comment)
+      revision_comment_will_change!
+      @new_revision_comment = comment      
     end
     
     def set_revision_comment

@@ -4,7 +4,8 @@ class Page < ActiveRecord::Base
   
   belongs_to :section
   belongs_to :template, :class_name => "PageTemplate"
-  has_many :connectors, :conditions => 'page_version = #{version}', :order => "position"
+  #has_many :connectors, :conditions => 'page_version = #{version}', :order => "position"
+  has_many :connectors, :include => :page, :conditions => 'pages.version = connectors.page_version', :order => "position"
   
   after_update :copy_connectors!
   before_validation :append_leading_slash_to_path
@@ -12,6 +13,13 @@ class Page < ActiveRecord::Base
   
   validates_presence_of :section_id
   validates_uniqueness_of :path
+  
+  def self.find_by_content_block(content_block, content_block_version=nil)
+    logger.info "content_block => #{content_block.inspect}"
+    all(:include => :connectors,
+      :conditions => ['connectors.content_block_id = ? and connectors.content_block_type = ? and connectors.content_block_version = ?', 
+        content_block.id, content_block.class.name, (content_block_version || content_block.version)])
+  end
   
   #Valid options:
   #  except = An array of connector ids not to copy
@@ -93,7 +101,7 @@ class Page < ActiveRecord::Base
   
   #Returns true if the block attached to each connector in the given container is live
   def container_live?(container)
-    connectors.all(:conditions => {:container => container.to_s}).all?{|c| c.content_block.live?}
+    connectors.all(:include => :page, :conditions => {:container => container.to_s}).all?{|c| c.content_block.live?}
   end
   
 end

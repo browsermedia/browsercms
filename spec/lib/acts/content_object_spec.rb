@@ -190,6 +190,12 @@ describe "A Content Object" do
       end
     end
   end
+  describe "updating revision" do
+    it "should mark a content object as dirty anytime a comment is updated" do
+      @b.new_revision_comment = @b.revision_comment
+      @b.should be_changed
+    end
+  end
   describe "a block that is connected to a page" do
     describe "when it is edited" do
       before do
