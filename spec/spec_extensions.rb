@@ -93,4 +93,16 @@ class Array
   
     str
   end   
-end      
+end     
+class ActiveRecord::Base
+  def self.to_table(options={})
+    if options[:include_columns]
+      columns = options[:include_columns]
+    elsif options[:exclude_columns]
+      columns = column_names - options[:exclude_columns].map(&:to_s)
+    else
+      columns = column_names      
+    end
+    all.to_table(*columns)
+  end
+end 

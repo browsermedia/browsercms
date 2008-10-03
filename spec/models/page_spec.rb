@@ -646,3 +646,31 @@ describe "Removing multiple blocks from a page" do
   end
   
 end
+
+describe "A published page with an unpublished block" do
+  before do
+    @page = create_page(:section => root_section)
+    @block = create_html_block()
+    @page.add_content_block!(@block, "testing") 
+    @page.publish!(create_user)
+    @publishing_the_block = lambda { @block.publish!(create_user) } 
+  end
+  describe "when publishing the block" do
+    it "should change the connector count by 1" do
+      pending "TODO: Fix this bug"
+      @publishing_the_block.should change(Connector, :count).by(1)
+    end
+    it "should make the page have one connector" do
+      Rails.logger.info Connector.all.to_table(:id, :page_id, :page_version, :content_block_id, :content_block_version, :container)
+      @publishing_the_block.call
+      Rails.logger.info Connector.all.to_table(:id, :page_id, :page_version, :content_block_id, :content_block_version, :container)
+      @page.connectors.reload.size.should == 1
+    end
+
+    it "should set the block version to 2" do
+      @publishing_the_block.call
+      @block.version.should == 2
+    end
+  end
+
+end

@@ -5,7 +5,9 @@ describe Connector do
   it "should be able to find by block" do
     foo = create_html_block(:name => "foo")
     bar = create_html_block(:name => "bar")
-    create_connector(:content_block => foo)
+    create_connector(:content_block => foo, :content_block_version => foo.version)
+    # Rails.logger.info Connector.to_table(:exclude_columns => [:created_at, :updated_at])
+    # Rails.logger.info HtmlBlock.to_table(:exclude_columns => [:created_at, :updated_at, :content])    
     blocks = Connector.for_block(foo).map(&:content_block)
     blocks.should include(foo)
     blocks.should_not include(bar)
@@ -15,8 +17,9 @@ describe Connector do
     foo = create_html_block(:name => "foo")
     foo.update_attribute(:name, "foo v2")
     bar = create_html_block(:name => "bar")
-    create_connector(:content_block => foo)
-    Connector.for_block(foo).size.should == 1
+    con = create_connector(:content_block => foo)
+    con.update_attribute(:content_block_version, 99)
+    lambda { con.content_block }.should raise_error(ActiveRecord::RecordNotFound)
   end
   
   it "should only find connectors for the current version of the page" do

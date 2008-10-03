@@ -65,5 +65,10 @@ module Cms
       count = Connector.for_block(block).count
       count > 0 ? (link_to count,  :controller => "connectors", :action => "usages", :id => block.id, :block_type => block.content_block_type) : count
     end
+    
+    def time_on_date(time)
+      "#{time.strftime("%l:%M %p")} on #{time.strftime("%b %e, %Y")}"
+    end
+    
   end
 end

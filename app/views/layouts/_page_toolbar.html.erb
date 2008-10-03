@@ -22,7 +22,7 @@
     Version:
     <% form_tag cms_path(@page, :show_version), :method => :get, :style => "display: inline" do %>
       <%= hidden_field_tag :mode, @mode %>
-      <%= select_tag :version, options_for_select(@page.versions.all(:order => "version desc").map{|r| ["v#{r.version}: #{r.revision_comment} by #{r.updated_by.login} at #{r.updated_at.strftime("%l:%M %p")} on #{r.updated_at.strftime("%b %e, %Y")}", r.version]}, @page.version), :onchange => 'this.form.submit(); return false' %>
+      <%= select_tag :version, options_for_select(@page.versions.all(:order => "version desc").map{|r| ["v#{r.version}: #{r.revision_comment} by #{r.updated_by.login} at #{time_on_date(r.updated_at)}", r.version]}, @page.version), :onchange => 'this.form.submit(); return false' %>
     <% end %>
     <% unless @page.current_version? %>
       <%= link_to "Revert to this Version", cms_path(@page, :revert_to, :version => @page.version) %>
