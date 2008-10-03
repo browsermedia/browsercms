@@ -19,12 +19,11 @@ describe Connector do
     Connector.for_block(foo).size.should == 1
   end
   
-  it "should only find connectors for current versions of pages" do
-    pending "Page updates don't create new connectors"
+  it "should only find connectors for the current version of the page" do
     @page = create_page(:section => root_section)
     @connector = create_connector(:page => @page)
-    @page.update_attribute(:name, "Updated")
-    Connector.of_current_pages.size.should == 2
+    @page.update_attributes(:name => "Updated")
+    @page.connectors.reload.size.should == 1
   end
 
   it "should not delete blocks when deleting a connector" do

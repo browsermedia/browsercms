@@ -11,7 +11,6 @@ class Connector < ActiveRecord::Base
   validates_presence_of :container
   
   named_scope :for_block, lambda {|b| {:conditions => ['connectors.content_block_id = ? and connectors.content_block_type = ?', b.id, b.class.name]}}
-  #named_scope :of_current_pages, {:conditions => ['connectors.page_version = pages.version'], :include => :page }
   named_scope :for_container, lambda{|container| {:conditions => ['connectors.container = ?', container]} }
   
 end
