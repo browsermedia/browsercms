@@ -95,12 +95,12 @@ strong.draft {
   display: inline;
   padding: 0 5px; }
 
-table#blocks {
+table#blocks, table.data {
   border-collapse: collapse; }
-  table#blocks th, table#blocks td {
+  table#blocks th, table#blocks td, table.data td, table.data th {
     border: 1px solid black;
     padding: 5px; }
-  table#blocks th {
+  table#blocks th, table.data th {
     background-color: #CCF;
     text-align: center; }
   table#blocks td {

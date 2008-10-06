@@ -9,38 +9,38 @@ class Cms::ResourceController < Cms::BaseController
   def new
     instance_variable_set("@#{variable_name}", build_object)
   end
-  
+
   def create
     @object = build_object(params[variable_name])
     if @object.save
       flash[:notice] = "#{resource_name.singularize.titleize} '#{object_name}' was created"
-      redirect_to show_url
+      redirect_to after_create_url
     else
       instance_variable_set("@#{variable_name}", @object)
       render :action => 'new'
     end
   end
-  
+
   def show
     instance_variable_set("@#{variable_name}", resource.find(params[:id]))
   end
-  
+
   def edit
     instance_variable_set("@#{variable_name}", resource.find(params[:id]))
   end
-  
+
   def update
     @object = resource.find(params[:id])
     if @object.update_attributes(params[variable_name])
       flash[:notice] = "#{resource_name.singularize.titleize} '#{object_name}' was updated"
-      logger.debug "Redirecting to #{show_url}"
-      redirect_to show_url
+      logger.debug "Redirecting to #{after_update_url}"
+      redirect_to after_update_url
     else
       instance_variable_set("@#{variable_name}", @object)
       render :action => 'edit'
     end
   end
-  
+
   def destroy
     @object = resource.find(params[:id])
     if @object.destroy
@@ -48,42 +48,50 @@ class Cms::ResourceController < Cms::BaseController
     end
     redirect_to index_url
   end
-  
+
   protected
     def resource_name
       controller_name
     end
-    
+
     def variable_name
       resource_name.singularize
     end
-    
+
     def resource
       resource_name.classify.constantize
     end
-    
+
     def build_object(params={})
       resource.new(params)
     end
-    
+
     def object_name
       return nil unless @object
       @object.respond_to?(:name) ? @object.name : @object.to_s
     end
-    
+
     def index_url
       cms_url resource_name
     end
-    
+
+    def after_create_url
+      show_url
+    end
+
+    def after_update_url
+      show_url
+    end
+
     def show_url
       cms_url @object
     end
-    
+
     def order_by_column
       "name"
     end
-    
+
     def new_template; 'cms/blocks/new' end
-    def edit_template; 'cms/blocks/edit' end    
-  
+    def edit_template; 'cms/blocks/edit' end
+
 end

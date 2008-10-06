@@ -1,0 +1,64 @@
+<% @page_title = "Administration / User Browser" %>
+<h2><%= @page_title %></h2>
+<p>The User Browser allows you to browse all the users in the system.
+<%= link_to "Add a User", :controller=>"users", :action=> "new" %>
+</p>
+
+<form action="#">
+<table>
+    <tr>
+        <td>Search by Username, Email or Name: <input name="keyword"></td>
+        <td>
+            Display:
+            <select name="max">
+                <option value="10">10 per page</option>
+                <option value="20" selected>20 per page</option>
+                <option value="50">50 per page</option>
+                <option value="100">100 per page</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td>Filter by:
+            <select name="groupId">
+                <option value="">Any Group</option>
+                <option value="1">Cms Administrators</option>
+            </select>
+            <br>
+            <input type='checkbox' value='true' name="showExpired" > Show disabled users?
+        </td>
+        <td align="right">
+            <input type="image" class="imageButton" alt="Search"/>
+        </td>
+    </tr>
+</table>
+</form>
+<br />
+Displaying 1 to 8 of 8 results.
+<table class="data">
+    <tr>
+        <th>General Information</th>
+        <th>Groups</th>
+        <th>Actions</th>
+    </tr>
+    <% @users.each do |user|%>
+    <tr>
+        <td>
+            <span class="username"><%= user.login  %></span><br/>
+            Full Name: <%= "#{user.first_name} #{user.last_name}" %> <br/>
+            Email: <%= user.email %> <br/>
+            Expires: Never
+        </td>
+        <td>
+            - Member <br/>
+            - Guest <br/>
+            - Board Member <br/>
+        </td>
+        <td>
+            Edit <br/>
+            Change Password <br/>
+            Disable User <br/>
+        </td>
+    </tr>
+    <% end %>
+</table>

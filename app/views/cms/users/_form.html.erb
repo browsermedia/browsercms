@@ -1,0 +1,30 @@
+<% form_for(@user, :url => cms_path(@user, :create_or_update)) do |f| %>
+  <%= f.error_messages %>
+  <div class="fields">
+    <%= f.label :login, "Username" %>
+    <%= f.text_field :login %>
+  </div>
+  <div class="fields">
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </div>
+  <div class="fields">
+    <%= f.label :first_name, "First Name" %>
+    <%= f.text_field :first_name %>
+  </div>
+  <div class="fields">
+    <%= f.label :last_name, "Last Name" %>
+    <%= f.text_field :last_name %>
+  </div>
+  <div class="fields">
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </div>
+  <div class="fields">
+    <%= f.label :password_confirmation, "Confirm Password" %>
+    <%= f.password_field :password_confirmation %>
+  </div>
+  <div class="buttons">
+    <%= f.submit "Save" %>
+  </div>
+<% end %>
