@@ -105,4 +105,10 @@ class ActiveRecord::Base
     end
     all.to_table(*columns)
   end
+  def self.to_table_with(*columns)
+    to_table(:include_columns => columns)
+  end
+  def self.to_table_without(*columns)
+    to_table(:exclude_columns => columns)
+  end
 end 

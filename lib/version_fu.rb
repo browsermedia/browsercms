@@ -109,7 +109,7 @@ module VersionFu
       revert_to(version-1, user) unless version == 1
     end
     
-    def revert_to(version, user)
+    def revert_to_without_save(version, user)
       raise "Version parameter missing" if version.blank?
       revert_to_version = find_version(version)
       raise "Could not find version #{version}" unless revert_to_version
@@ -117,10 +117,15 @@ module VersionFu
         send("#{a}=", revert_to_version.send(a))
       end  
       self.updated_by_user = user
-      self.new_revision_comment = "Reverted to version #{version}"      
-      save
+      self.new_revision_comment = "Reverted to version #{version}"
+      self            
     end    
     
+    def revert_to(version, user)
+      revert_to_without_save(version, user)
+      save
+    end    
+        
     def as_of_version(version)
       v = find_version(version)
       raise ActiveRecord::RecordNotFound.new("version #{version} does not exist for <#{self.class}:#{id}>") unless v

@@ -15,7 +15,6 @@ class Page < ActiveRecord::Base
   validates_uniqueness_of :path
   
   def self.find_by_content_block(content_block, content_block_version=nil)
-    logger.info "content_block => #{content_block.inspect}"
     all(:include => :connectors,
       :conditions => ['connectors.content_block_id = ? and connectors.content_block_type = ? and connectors.content_block_version = ?', 
         content_block.id, content_block.class.name, (content_block_version || content_block.version)])
@@ -24,20 +23,46 @@ class Page < ActiveRecord::Base
   #Valid options:
   #  except = An array of connector ids not to copy
   def copy_connectors!(options={})
+
+    #@_copy_connectors_from_version gets set in the revert_to method, otherwise is unset    
     page_version = @_copy_connectors_from_version || (version-1)
     conditions = ['page_id = ? and page_version = ?', id, page_version]
-    
+
+    #This is primarily for the case of removing a connector, 
+    #where there is a connector we want to not carry forward
     if options[:except]
       conditions.first << ' and id not in(?)'
       conditions << options[:except]
     end
-    
+
     Connector.all(:conditions => conditions, :order => "page_id, page_version, container, position").each do |c|
       attrs = c.attributes.without("id", "created_at", "updated_at")
-      con = Connector.new(attrs)
+      con = Connector.new(attrs)        
+
+      #If we are copying connectors from a previous version, that means we are reverting this page,
+      #in which case we should create a new version of the block, and connect this page to that block
+      if @_copy_connectors_from_version
+        block = c.content_block
+        
+        #If this is connected to an older version of the block,
+        #then we have to get the latest version of the block,
+        #revert that to whatever version this connector is pointing to
+        #and connect the page to the new version of the block
+        unless block.current_version?
+          block = block.class.find(block.id)
+          block.revert_to_without_save(c.content_block_version, updated_by)
+          block.instatiate_revision.save!
+          block.send(:update_without_callbacks)
+        end
+        
+        con.content_block = block
+        con.content_block_version = block.version
+      end
+
       con.page_version = version
-      con.save!
+      con.save!      
     end
+
   end
   
   def add_content_block!(content_block, container)

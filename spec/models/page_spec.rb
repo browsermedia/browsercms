@@ -366,7 +366,7 @@ describe "A page with associated blocks" do
   end
 end
 
-describe "A page that had 2 blocks added to it and then had them removed" do
+describe "A page that had 2 blocks added to it" do
   before do
     @page = create_page(:section => root_section)
     @foo_block = create_html_block(:name => "Foo Block")
@@ -375,32 +375,61 @@ describe "A page that had 2 blocks added to it and then had them removed" do
     @page.reload
     @page.add_content_block!(@bar_block, "whatever")
     @page.reload
-    @page.destroy_connector(@page.connectors.reload.first(:order => "position"))
-    @page.destroy_connector(@page.connectors.reload.first(:order => "position"))
   end
-  describe "when reverting to the previous version" do
+  describe "and then had then removed," do
     before do
-      @reverting_to_the_previous_version = lambda { @page.revert(create_user) }
+      @page.destroy_connector(@page.connectors.reload.first(:order => "position"))
+      @page.destroy_connector(@page.connectors.reload.first(:order => "position"))      
     end
-    it "should restore the connectors from the version being reverted to" do
-      @reverting_to_the_previous_version.should change(Connector, :count).by(1)
-      @page.connectors.reload.first.should_meet_expectations(:page => @page, :page_version => 6, :content_block => @bar_block, :content_block_version => 1, :container => "whatever")
+    describe "when reverting to the previous version," do
+      before do
+        @reverting_to_the_previous_version = lambda { @page.revert(create_user) }
+      end
+      it "should restore the connectors from the version being reverted to" do
+        @reverting_to_the_previous_version.should change(Connector, :count).by(1)
+        @page.connectors.reload.first.should_meet_expectations(:page => @page, :page_version => 6, :content_block => @bar_block, :content_block_version => 1, :container => "whatever")
+      end
+    end
+    describe "when reverting to the version that had both connectors," do
+      before do
+        @reverting_to_the_previous_version = lambda { @page.revert_to(3, create_user) }
+      end
+      it "should restore the connectors from version 3" do
+        @reverting_to_the_previous_version.should change(Connector, :count).by(2)
+        foo, bar = @page.connectors.reload.find(:all, :order => "position")
+        foo.should_meet_expectations(:page => @page, :page_version => 6, :content_block => @foo_block, :content_block_version => 1, :container => "whatever")
+        bar.should_meet_expectations(:page => @page, :page_version => 6, :content_block => @bar_block, :content_block_version => 1, :container => "whatever")
+      end
     end
   end
-  describe "when reverting to the version that had both connectors" do
+  describe "and then had one of those block updated," do
     before do
-      @reverting_to_the_previous_version = lambda { @page.revert_to(3, create_user) }
+      @foo_block.reload.update_attributes!(:name => "Foo V2")
+      @page.reload
     end
-    it "should restore the connectors from version 3" do
-      @reverting_to_the_previous_version.should change(Connector, :count).by(2)
-      foo, bar = @page.connectors.reload.find(:all, :order => "position")
-      foo.should_meet_expectations(:page => @page, :page_version => 6, :content_block => @foo_block, :content_block_version => 1, :container => "whatever")
-      bar.should_meet_expectations(:page => @page, :page_version => 6, :content_block => @bar_block, :content_block_version => 1, :container => "whatever")
+    describe "when reverting to a version of the page from before the update to the block," do
+      before do
+        @reverting_the_page = lambda { @page.revert_to(3, create_user) }
+      end
+      it "should change the block version from 2 to 3" do
+        @foo_block.version.should == 2
+        @reverting_the_page.call
+        @foo_block.reload.version.should == 3        
+      end
+      it "should return the block to the state as of the original version" do
+        @reverting_the_page.call
+        @page.connectors.reload.first.content_block.name.should == "Foo Block"
+      end
+      it "should change the the page version from 4 to 5" do
+        @page.version.should == 4
+        @reverting_the_page.call
+        @page.version.should == 5
+      end
     end
   end
 end
 
-describe "When adding a block to a page" do
+describe "Adding a block to a page" do
   before do
     @page = create_page(:section => root_section)
     @block = create_html_block()
@@ -427,7 +456,7 @@ describe "When adding a block to a page" do
   end
 end
 
-describe "When adding a second block to a page" do
+describe "Adding a second block to a page" do
   before do
     @page = create_page(:section => root_section)
     @block = create_html_block()
@@ -479,7 +508,7 @@ describe "When adding a second block to a page" do
   end
 end
 
-describe "When adding a third block to a page" do
+describe "Adding a third block to a page" do
   before do
     @page = create_page(:section => root_section)
     @block = create_html_block()
@@ -630,7 +659,6 @@ describe "Removing multiple blocks from a page" do
     
     @destroy_connector.call
     conns = Connector.find(:all, :order => "page_version, content_block_id, container")
-    #Rails.logger.info conns.to_table(:id, :page_id, :page_version, :content_block_id, :content_block_version, :container)
     
     conns.size.should == 9
     
@@ -673,9 +701,7 @@ describe "A published page with an unpublished block" do
       @page.status.should == "PUBLISHED"
     end
     it "should change the connector count by 1" do
-      #Rails.logger.info Connector.to_table(:exclude_columns => [:created_at, :updated_at])
       @publishing_the_block.call
-      Rails.logger.info Connector.to_table(:exclude_columns => [:created_at, :updated_at])
       Connector.count.should == 3
     end
     it "should make the page have one connector" do
@@ -684,8 +710,6 @@ describe "A published page with an unpublished block" do
     end
 
     it "should set the page version to 4" do
-      Rails.logger.info Page.to_table(:exclude_columns => [:created_at, :updated_at, :description, :revision_comment, :path, :user_date, :author, :source, :language])
-      Rails.logger.info Connector.to_table(:exclude_columns => [:created_at, :updated_at])
       @publishing_the_block.call
       @page.reload.version.should == 4
     end
