@@ -359,6 +359,11 @@ describe "A page with associated blocks" do
       pending "Make work"
     end
   end
+  describe "when reverting" do
+    it "should restore all connectors to their previous state" do
+      pending "Case 1551"
+    end    
+  end
 end
 
 describe "A page that had 2 blocks added to it and then had them removed" do
