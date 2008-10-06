@@ -40,7 +40,7 @@ module Cms
       path = paths.join("/")    
       unless params.empty? 
         path << "?"
-        path << params.to_a.map{|k,v| "#{k}=#{CGI::escape(v.to_param.to_s)}"}.join("&")
+        path << params.to_a.sort_by {|e| e.first.to_s}.map {|k,v| "#{k}=#{CGI::escape(v.to_param.to_s)}"}.join("&")
       end
       path
     end  
