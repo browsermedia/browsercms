@@ -19,7 +19,28 @@ class User < ActiveRecord::Base
 
   def self.authenticate(login, password)
     u = find_by_login(login) # need to get the salt
-    u && u.authenticated?(password) ? u : nil
+    u && u.authenticated?(password) && !u.expired? ? u : nil
   end
 
+  def disable
+    self.expires_at = Time.now
+  end
+
+  def disable!
+    disable
+    save!
+  end
+
+  def expired?
+    expires_at && expires_at <= Time.now
+  end
+  
+  def enable
+    self.expires_at = nil
+  end
+
+  def enable!
+    enable
+    save!
+  end
 end

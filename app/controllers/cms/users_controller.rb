@@ -6,9 +6,19 @@ class Cms::UsersController < Cms::ResourceController
   end
 
   def change_password
-    @user = User.find(params[:id])
-    @change_password = true
+    user
   end
+
+  def disable
+    user.disable!
+    redirect_to :action => "index"
+  end
+  
+  def enable
+    user.enable!
+    redirect_to :action => "index"
+  end
+
   protected
     def after_create_url
       index_url
@@ -16,5 +26,10 @@ class Cms::UsersController < Cms::ResourceController
 
     def after_update_url
       index_url
+    end
+
+  private
+    def user
+      @user ||= User.find(params[:id])
     end
 end

@@ -98,8 +98,10 @@ describe Cms::UsersController do
     end
     it "should not add a user to the database" do
       @action.should change(User, :count).by(0)
-    end                           
+    end
 
+    # Test #4 - Fails if user_params in before is inlined. (in IDE)
+    # Always fails from command line. Why?
     it "should update the user's name" do
       @action.call
       u = User.find(@user.id)
@@ -112,6 +114,7 @@ describe Cms::UsersController do
       @user = create_user
       @action = lambda { get :change_password, :id => @user.id }
     end
+
     it "should be success" do
       @action.call
       response.should be_success
@@ -128,6 +131,23 @@ describe Cms::UsersController do
   end
 
   describe "update password" do
-    it "should route back to change_password if validation fails, not edit (like it does now)"
+    before(:each) do
+      @user = create_user
+      @action = lambda { put :update, :id => @user.id, :on_fail_action => "change_password",
+          :user => {:password => "will_fail_validation", :confirm_password => "something_else"} }
+    end
+
+    describe "on failure" do
+      it "should not redirect" do
+        @action.call
+        response.should_not be_redirect
+        response.should be_success
+      end
+      it "should display change_password" do
+        @action.call
+        response.should have_tag("h2", "Set New Password")
+      end
+    end
+
   end
-end 
+end

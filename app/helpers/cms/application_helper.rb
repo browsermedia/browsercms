@@ -69,6 +69,9 @@ module Cms
     def time_on_date(time)
       "#{time.strftime("%l:%M %p")} on #{time.strftime("%b %e, %Y")}"
     end
-    
+
+    def format_date(time)
+      "#{time.strftime("%b %d, %Y")}"
+    end
   end
 end

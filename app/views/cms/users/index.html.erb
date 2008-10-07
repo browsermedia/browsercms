@@ -47,7 +47,7 @@ Displaying 1 to 8 of 8 results.
             <span class="username"><%= user.login  %></span><br/>
             Full Name: <%= "#{user.first_name} #{user.last_name}" %> <br/>
             Email: <%= user.email %> <br/>
-            Expires: Never
+            Expires: <%= user.expires_at ? format_date(user.expires_at) : "Never" %>
         </td>
         <td>
             - Member <br/>
@@ -57,7 +57,8 @@ Displaying 1 to 8 of 8 results.
         <td>
             <%= link_to "Edit", :controller=>"users", :action=> "edit", :id => user.id %><br/>
             <%= link_to "Change Password", :controller=>"users", :action=> "change_password", :id => user.id %> <br/>
-            Disable User <br/>
+            <%= link_to "Disable User", :controller=>"users", :action=> "disable", :id => user.id unless user.expires_at %>
+            <%= link_to "Enable User", :controller=>"users", :action=> "enable", :id => user.id if user.expires_at %> <br/>
         </td>
     </tr>
     <% end %>
