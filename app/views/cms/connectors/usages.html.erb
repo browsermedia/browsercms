@@ -8,10 +8,10 @@
     <th>Page Name</th>
     <th>Path</th>
   </tr>
-  <% @connectors.each do |conn| %>
+  <% @pages.each do |page| %>
     <tr>
-      <td class="page_name"><%=  conn.page.name %></td>
-      <td class="path"><%=  link_to conn.page.path, conn.page.path %></td>
+      <td class="page_name"><%=  page.name %></td>
+      <td class="path"><%=  link_to page.path, page.path %></td>
     </tr>
   <% end %>
 </table>

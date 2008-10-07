@@ -13,6 +13,8 @@ class Page < ActiveRecord::Base
   
   validates_presence_of :section_id
   validates_uniqueness_of :path
+
+  named_scope :connected_to_block, lambda { |b| {:include => :connectors, :conditions => ['connectors.content_block_id = ? and connectors.content_block_type = ? and connectors.content_block_version = ?', b.id, b.class.name, b.version]} }
   
   def self.find_by_content_block(content_block, content_block_version=nil)
     all(:include => :connectors,

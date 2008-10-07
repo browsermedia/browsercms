@@ -55,7 +55,7 @@ class Cms::ConnectorsController < Cms::BaseController
   def usages
     @content_type = ContentType.find_by_key(params[:block_type])
     @block = @content_type.model_class.find(params[:id])
-    @connectors = Connector.for_block(@block)
+    @pages = @block.connected_pages
 
     render :layout => 'cms/content_library'
   end

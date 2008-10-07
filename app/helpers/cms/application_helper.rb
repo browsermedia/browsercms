@@ -62,7 +62,7 @@ module Cms
     end
 
     def link_to_usages(block)
-      count = Connector.for_block(block).count
+      count = block.connected_page_count
       count > 0 ? (link_to count,  :controller => "connectors", :action => "usages", :id => block.id, :block_type => block.content_block_type) : count
     end
     
