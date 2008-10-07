@@ -51,8 +51,8 @@ Spec::Runner.configure do |config|
   # For more information take a look at Spec::Example::Configuration and Spec::Runner
 end
 
-def this_block(&block)
-  block
+def log(msg)
+  Rails.logger.info msg
 end
 
 def root_section

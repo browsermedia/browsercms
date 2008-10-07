@@ -2,7 +2,7 @@ class Cms::BlocksController < Cms::BaseController
 
   layout 'cms/content_library'
 
-  before_filter :load_block, :only => [:show, :show_version, :edit, :revisions, :destroy, :publish, :archive, :revert_to, :update]
+  before_filter :load_block, :only => [:show, :show_version, :edit, :destroy, :publish, :archive, :revert_to, :update]
 
   helper_method :model_name
 
@@ -35,6 +35,14 @@ class Cms::BlocksController < Cms::BaseController
       @block = @block.as_of_version(params[:version])
     end
     render :action => 'show'
+  end
+
+  def revisions
+    if model_class.respond_to?(:versioned_class_name)
+      load_block
+    else
+      render :text => "Not Implemented", :status => :not_implemented
+    end
   end
 
   def edit

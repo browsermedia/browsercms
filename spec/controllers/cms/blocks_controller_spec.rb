@@ -190,6 +190,10 @@ describe Cms::BlocksController do
       @block = create_html_block(:name => "V1")
       @action = lambda { get :revisions, :id => @block.id }
     end
+    it "should assign the block" do
+      @action.call
+      assigns[:block].should == @block
+    end
     it "should be success" do
       @action.call
       response.should be_success
@@ -372,9 +376,8 @@ describe Cms::BlocksController do
 
     describe "revisioning" do
       it "should return Not Implemented" do
-        pending 'Make the BlockController#revisions return a response code of 501 rather than throwing an exception'
-        @action = lambda { get :revisions, :id => @block.id, :block_type => "portlets" }
-        response.should == "501" # Http 'Not Implemented'
+        get :revisions, :id => @block.id, :block_type => "portlets"
+        response.code.should == "501"
       end
     end
 
