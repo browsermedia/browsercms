@@ -53,7 +53,4 @@ describe Cms::BlockSupport do
     m.display_name_plural.should == "Html"
   end
 
-  it "should " do
-    
-  end
 end

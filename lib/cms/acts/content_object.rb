@@ -88,7 +88,7 @@ module Cms
 
       # These methods will be added to any object marked as acts_as_content_object or acts_as_content_page
       module InstanceMethods
-        def supports_versioning?
+        def versionable?
           self.respond_to?(:versions)
         end
 
@@ -107,7 +107,7 @@ module Cms
         end
 
         def destroy_versions_if_destroyed
-          return unless supports_versioning?
+          return unless versionable?
           self.class.versioned_class.delete_all("#{self.class.versioned_foreign_key} = #{id}") if destroyed?
         end
 

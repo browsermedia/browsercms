@@ -12,7 +12,7 @@ class Page < ActiveRecord::Base
   before_destroy :delete_connectors
   
   validates_presence_of :section_id
-  validates_uniqueness_of :path
+  validate :path_unique?
 
   named_scope :connected_to_block, lambda { |b| {:include => :connectors, :conditions => ['connectors.content_block_id = ? and connectors.content_block_type = ? and connectors.content_block_version = ?', b.id, b.class.name, b.version]} }
   
@@ -112,6 +112,17 @@ class Page < ActiveRecord::Base
     end
   end
   
+  def path_unique?
+    conditions = ["path = ?", path]
+    unless new_record?
+      conditions.first << " and id != ?"
+      conditions << id
+    end
+    if self.class.count(:conditions => conditions) > 0
+      errors.add(:path, "must be unique")
+    end
+  end
+  
   def move_to(section, user)
     self.section = section
     self.updated_by_user = user
@@ -132,13 +143,13 @@ class Page < ActiveRecord::Base
   end
   
   def self.find_live_by_path(path)
-    page = find_by_path(path)
-    logger.info "\n\npage => #{page.inspect}"
+    page = find(:first, :conditions => {:path => path})
+
     if page
       if page.published?
         page
       else
-        live_version = page.versions.first(:conditions => {:status => "PUBLISHED"}, :order => "version desc")
+        live_version = page.versions.first(:conditions => {:status => "PUBLISHED"}, :order => "version desc, id desc")
         live_version ? page.as_of_version(live_version.version) : nil
       end      
     else

@@ -18,7 +18,7 @@ describe Portlet do
 
   it "should be marked as not supporting revisioning" do
     p = Portlet.new
-    p.supports_versioning?.should be_false
+    p.versionable?.should be_false
   end
 
   describe "when appearing in a list" do

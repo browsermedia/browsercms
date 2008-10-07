@@ -5,7 +5,7 @@
 <%= link_to "Add New #{@content_type.display_name}", cms_path("/blocks/#{@content_type.content_block_type.pluralize}", :new) %>
 <%= link_to 'View', cms_path(@block, :show) %>
 <%= link_to 'Edit', cms_path(@block, :edit) %>
-<%= @block.supports_versioning? ? (link_to 'Revisions', cms_path(@block, :revisions), {:id => "revisions_link"}) : 'Revisions' %>
+<%= @block.versionable? ? (link_to 'Revisions', cms_path(@block, :revisions), {:id => "revisions_link"}) : 'Revisions' %>
 <%= link_to "Delete", cms_path(@block, :destroy), :method => :delete, :confirm => "Are you sure you want to delete '#{@block.name}'?" %>
 <%= false ? (link_to 'Assign', cms_path(@block, :assign), :method => :post) : "Assign" %>
 <%= !@block.published? ? link_to('Publish', cms_path(@block, :publish), :method => :post) : "Publish" %>

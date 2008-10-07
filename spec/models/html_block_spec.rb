@@ -22,7 +22,7 @@ describe HtmlBlock do
   describe "versioning for blocks" do
     it "should support versioning" do
       h = HtmlBlock.new
-      h.supports_versioning?.should be_true
+      h.versionable?.should be_true
     end
 
     describe "when creating a record" do
@@ -67,7 +67,7 @@ describe HtmlBlock do
       end
       
       it "should not actually delete the row" do
-        @delete_html_block.should_not change(HtmlBlock, :count)
+        @delete_html_block.should_not change(HtmlBlock, :count_with_deleted)
       end
       it "should create a new version" do
         @delete_html_block.should change(@html_block.versions, :count).by(1)

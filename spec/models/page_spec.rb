@@ -31,17 +31,18 @@ describe Page do
   describe ".find_by_path" do
     it "should be able to find the home page" do
       @page = create_page(:path => nil)
-      Page.find_by_path("/").should == @page
+      Page.first(:conditions => {:path => "/"}).should == @page
     end
     it "should be able to find another page" do
       @page = create_page(:path => "about")
-      Page.find_by_path("/about").should == @page
+      Page.first(:conditions => {:path => "/about"}).should == @page
     end
   end
 
   describe ".find_live_by_path" do
     before do
-      @page = create_page(:name => "v1", :path => "test", :section => root_section, :new_status => "PUBLISHED")
+      create_page(:name => "Deleted Me", :path => "/test", :section => root_section).destroy
+      @page = create_page(:name => "v1", :path => "/test", :section => root_section, :new_status => "PUBLISHED")
       @page = Page.find(@page.id)
       @page.update_attributes!(:name => "v2", :updated_by_user => create_user)
     end
@@ -248,7 +249,7 @@ describe Page do
       end
 
       it "should not actually delete the row" do
-        @delete_page.should_not change(Page, :count)
+        @delete_page.should_not change(Page, :count_with_deleted)
       end
       it "should create a new version" do
         @delete_page.should change(@page.versions, :count).by(1)
@@ -732,4 +733,16 @@ describe "A published page with an unpublished block" do
     end
   end
 
+end
+
+describe "When there is a deleted page" do
+  before do
+    create_page(:section => root_section, :path => "/").destroy    
+    @page = new_page(:section => root_section, :path => '/')
+  end
+  describe "and you create another page with the same path" do
+    it "should be valid" do      
+      @page.should be_valid      
+    end
+  end
 end
