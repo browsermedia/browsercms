@@ -1,0 +1,23 @@
+<% @page_title = "Administration / Group Browser" %>
+<h2><%= @page_title %></h2>
+
+<table>
+  <tr>
+    <th>Group</th>
+    <th>Actions</th>
+  </tr>
+  <% @groups.each do |g| %>
+  <tr>
+    <td><%=h g.name %></td>
+    <td>[<%= link_to "Edit", cms_path(g, :edit) %>]</td>
+  </tr>
+  <% end %>
+</table>
+
+<fieldset>
+  <legend>Add</legend>
+  <% @group ||= Group.new %>
+  <% form_for @group, :url => cms_path(:groups, :create) do |f| %>
+	<%= render :partial => 'form', :locals => {:f => f} %>
+  <% end %>
+</fieldset>

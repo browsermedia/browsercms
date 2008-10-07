@@ -1,0 +1,6 @@
+<% @page_title = "Administration / Edit #{@group.name}" %>
+<h2><%= @page_title %></h2>
+
+<% form_for @group, :url => cms_path(@group, :update) do |f| %>
+  <%= render :partial => 'form', :locals => {:f => f} %>
+<% end %>
