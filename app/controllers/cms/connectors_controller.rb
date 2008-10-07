@@ -43,7 +43,7 @@ class Cms::ConnectorsController < Cms::BaseController
       @connector = Connector.find(params[:id])
       @page = @connector.page
       @content_block = @connector.content_block
-      if @connector.send(move)
+      if @page.send(move, @connector)
         flash[:notice] = "Moved '#{@content_block.name}' #{where} the '#{@connector.container}' container"
       else
         flash[:error] = "Failed to move '#{@content_block.name}' #{where} the '#{@connector.container}' container"

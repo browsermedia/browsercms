@@ -24,6 +24,44 @@ describe Cms::BlockSupport do
     end
   end
   
+  describe "a page with multiple blocks" do
+    before do
+      @page = create_page({ :name => "v1", :section => root_section })
+      @foo = create_html_block(:name => 'foo')
+      @bar = create_html_block(:name => 'bar')
+      @page.add_content_block!(@foo, 'main')
+      @page.add_content_block!(@bar, 'main')
+    end
+
+    describe "when a block is moved up" do
+      before do
+        @moving_the_block = lambda { @page.move_up(@page.connectors.last) }
+      end
+      it "should get a new version" do
+        @moving_the_block.should change(Page::Version, :count).by(1)
+      end
+      it "should update the position in the connectors" do
+        @moving_the_block.call
+        @page.reload.connectors.first.content_block.should == @bar
+        @page.reload.connectors.last.content_block.should == @foo
+      end
+    end
+
+    describe "when a block is moved to bottom of" do
+      before do
+        @moving_the_block = lambda { @page.move_to_bottom(@page.connectors.first) }
+      end
+      it "should get a new version" do
+        @moving_the_block.should change(Page::Version, :count).by(1)
+      end
+      it "should update the position in the connectors" do
+        @moving_the_block.call
+        @page.reload.connectors.first.content_block.should == @bar
+        @page.reload.connectors.last.content_block.should == @foo
+      end
+    end
+  end
+  
   it "should respond to content_block_type? for path generation" do
     HtmlBlock.new.should respond_to(:content_block_type)
   end

@@ -15,7 +15,7 @@ class Page < ActiveRecord::Base
   validate :path_unique?
 
   named_scope :connected_to_block, lambda { |b| {:include => :connectors, :conditions => ['connectors.content_block_id = ? and connectors.content_block_type = ? and connectors.content_block_version = ?', b.id, b.class.name, b.version]} }
-  
+    
   def self.find_by_content_block(content_block, content_block_version=nil)
     all(:include => :connectors,
       :conditions => ['connectors.content_block_id = ? and connectors.content_block_type = ? and connectors.content_block_version = ?', 
@@ -66,7 +66,29 @@ class Page < ActiveRecord::Base
     end
 
   end
-  
+
+  %w(up down to_top to_bottom).each do |d|
+    define_method("move_#{d}") do |connector|
+      move(connector, d)
+    end
+  end
+
+  def move(connector, direction)
+    transaction do
+      orientation = direction[/_/] ? "#{direction.sub('_', ' the ')} of" : "#{direction} within"
+      self.revision_comment = "#{connector.content_block.display_name} '#{connector.content_block.name}' was moved #{orientation} #{connector.container}"
+      self.reset_status
+      create_new_version!
+      copy_connectors!
+      Connector.first(:conditions => { :page_id => id, 
+        :page_version => version, 
+        :content_block_id => connector.content_block_id, 
+        :content_block_type => connector.content_block_type,
+        :content_block_version => connector.content_block_version,
+        :container => connector.container }).send("move_#{direction}")
+    end    
+  end
+
   def add_content_block!(content_block, container)
     transaction do
       self.revision_comment = "#{content_block.display_name} '#{content_block.name}' was added to the '#{container}' container"

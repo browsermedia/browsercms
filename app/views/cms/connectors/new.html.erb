@@ -21,7 +21,7 @@
     <tr>
       <td><%= block.name %></td>
       <td><%= block.updated_at.strftime("%m/%d/%y") %></td>
-      <td class="uses"><%= Connector.for_block(block).count %></td>
+      <td class="uses"><%= link_to_usages(block) %></td>
       <td class="view"><%= link_to action_icon(:view), cms_path(block) %></td>
       <td class="select">
         <% form_for :connector, :url => cms_path(:connectors, :create) do |f| %>
