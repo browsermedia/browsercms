@@ -1,6 +1,6 @@
 <% @page_title = "Administration / User Browser" %>
 <h2><%= @page_title %></h2>
-<p>The User Browser allows you to browse all the users in the system.
+<p>The User Browser allows you to browse all the users in the system. <br />
 <%= link_to "Add a User", :controller=>"users", :action=> "new" %>
 </p>
 
@@ -55,8 +55,8 @@ Displaying 1 to 8 of 8 results.
             - Board Member <br/>
         </td>
         <td>
-            Edit <br/>
-            Change Password <br/>
+            <%= link_to "Edit", :controller=>"users", :action=> "edit", :id => user.id %><br/>
+            <%= link_to "Change Password", :controller=>"users", :action=> "change_password", :id => user.id %> <br/>
             Disable User <br/>
         </td>
     </tr>
