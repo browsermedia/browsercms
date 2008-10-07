@@ -1,5 +1,5 @@
 module FixtureReplacement
-  
+
   attributes_for :connector do |a|
     a.page = default_page
     a.page_version = 1
@@ -20,6 +20,10 @@ module FixtureReplacement
 
   attributes_for :file_metadata do |a|
     a.file_binary_data = default_file_binary_data
+  end
+
+  attributes_for :group do |a|
+    a.name = "TestGroup_#{String.random(12).downcase}"
   end
 
   attributes_for :html_block do |a|

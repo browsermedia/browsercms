@@ -86,10 +86,7 @@ describe Cms::UsersController do
   describe "update" do
     before(:each) do
       @user = create_user
-
-      # For some reason I can't figure out, inlining this variable causes Test #4 below to fail.
-      user_params = @user.attributes.merge({ :first_name => "First" })
-      @action = lambda { put :update, :id => @user.id, :user => user_params }
+      @action = lambda { put :update, :id => @user.id, :user => { :first_name => "First"} }
     end
     it "should be redirect" do
       @action.call
@@ -103,7 +100,6 @@ describe Cms::UsersController do
       @action.should change(User, :count).by(0)
     end                           
 
-    # Test #4 - Fails if user_params in before is inlined.
     it "should update the user's name" do
       @action.call
       u = User.find(@user.id)
