@@ -17,11 +17,10 @@ describe Cms::BlockSupport do
       @page.update_attributes!(:name => "v2")
     end
     it "should be able to get a distinct set of pages" do
-      # log Connector.to_table_without(:created_at, :updated_at)
-      @block.connected_pages.should == [@page]
+      @block.connected_pages.all(:order => "name").should == [@page]
     end
     it "should have one page" do
-      @block.connected_page_count.should == 1
+      @block.connected_pages.count.should == 1
     end
   end
   

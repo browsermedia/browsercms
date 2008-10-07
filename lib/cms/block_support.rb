@@ -44,11 +44,7 @@ module Cms
 
     # Instance Methods
     def connected_pages
-      Page.connected_to_block(self).all
-    end
-
-    def connected_page_count
-      Page.connected_to_block(self).count
+      Page.connected_to_block(self)
     end
 
     def content_block_type
