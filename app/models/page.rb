@@ -129,4 +129,19 @@ class Page < ActiveRecord::Base
     connectors.all(:include => :page, :conditions => {:container => container.to_s}).all?{|c| c.content_block.live?}
   end
   
+  def self.find_live_by_path(path)
+    page = find_by_path(path)
+    logger.info "\n\npage => #{page.inspect}"
+    if page
+      if page.published?
+        page
+      else
+        live_version = page.versions.first(:conditions => {:status => "PUBLISHED"}, :order => "version desc")
+        live_version ? page.as_of_version(live_version.version) : nil
+      end      
+    else
+      nil
+    end
+  end
+  
 end

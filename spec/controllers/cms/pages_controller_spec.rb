@@ -8,7 +8,7 @@ describe Cms::PagesController do
     describe "the home page" do
       it "should display the page with a title" do
         @page_template = create_page_template(:file_name => "application")
-        @page = create_page(:path => "/", :name => "Test Homepage", :template => @page_template)
+        @page = create_page(:path => "/", :name => "Test Homepage", :template => @page_template, :new_status => "PUBLISHED")
         get :show, :path => []
         response.should have_tag("title", "Test Homepage")
       end
@@ -16,7 +16,7 @@ describe Cms::PagesController do
     describe "the about page" do
       it "should display the page with a title" do
         @page_template = create_page_template(:file_name => "application")
-        @page = create_page(:path => "/about", :name => "Test About", :template => @page_template)
+        @page = create_page(:path => "/about", :name => "Test About", :template => @page_template, :new_status => "PUBLISHED")
         get :show, :path => ["about"]
         response.should have_tag("title", "Test About")
       end

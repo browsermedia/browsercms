@@ -59,16 +59,19 @@ create_page(:paul, :name => "Paul Barry", :path => "/people/paul", :section => s
 
 create_page(:test, :name => "Test", :path => "/test", :section => sections(:root), :template => page_templates(:main), :updated_by_user => users(:cmsadmin))
 create_html_block(:test, :name => "Test", :connect_to_page_id => pages(:test).id, :connect_to_container => "main", :updated_by_user => users(:cmsadmin))
-Page.find(pages(:test).id).publish!(users(:cmsadmin))
+pages(:test).publish!(users(:cmsadmin))
 
-create_html_block(:hello_world, :name => "Hello World", :content => "<h1>Hello, World!</h1>", :updated_by_user => users(:cmsadmin))
-create_html_block(:sidebar, :name => "Sidebar", :content => "<ul><li><a href=\"/\">Home</a></li><li><a href=\"/about\">About Us</a></li></ul>", :updated_by_user => users(:cmsadmin))
-create_html_block(:about_us, :name => "About Us", :content => "We are super fantastic", :updated_by_user => users(:cmsadmin))
+create_html_block(:hello_world, :name => "Hello World", :content => "<h1>Hello, World!</h1>", :new_status => "PUBLISHED", :updated_by_user => users(:cmsadmin))
+create_html_block(:sidebar, :name => "Sidebar", :content => "<ul><li><a href=\"/\">Home</a></li><li><a href=\"/about\">About Us</a></li></ul>", :new_status => "PUBLISHED", :updated_by_user => users(:cmsadmin))
+create_html_block(:about_us, :name => "About Us", :content => "We are super fantastic", :new_status => "PUBLISHED", :updated_by_user => users(:cmsadmin))
 
-create_connector(:home_main, :page => pages(:home), :page_version => 1, :container => "main", :content_block => html_blocks(:hello_world), :content_block_version => 1)
-create_connector(:home_sidebar, :page => pages(:home), :page_version => 1, :container => "sidebar", :content_block => html_blocks(:sidebar), :content_block_version => 1)
-create_connector(:about_main, :page => pages(:about), :page_version => 1, :container => "main", :content_block => html_blocks(:hello_world), :content_block_version => 1)
-create_connector(:about_sidebar, :page => pages(:about), :page_version => 1, :container => "sidebar", :content_block => html_blocks(:sidebar), :content_block_version => 1)
+pages(:home).add_content_block!(html_blocks(:hello_world), "main")
+pages(:home).add_content_block!(html_blocks(:sidebar), "sidebar")
+pages(:home).publish!(users(:cmsadmin))
+
+pages(:about).add_content_block!(html_blocks(:about_us), "main")
+pages(:about).add_content_block!(html_blocks(:sidebar), "sidebar")
+pages(:about).publish!(users(:cmsadmin))
 
 create_content_type(:html_block, :name => "HtmlBlock")
 create_content_type(:file_block, :name => "FileBlock")

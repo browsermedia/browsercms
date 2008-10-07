@@ -45,9 +45,14 @@ class Cms::PagesController < Cms::BaseController
       end    
     end
     
-    #Last, but not least, to to render a page for this path
+    #Last, but not least, try to render a page for this path
     set_page_mode
-    @page = Page.find_by_path(@path)
+    if logged_in?
+      @page = Page.find_by_path(@path)
+    else
+      @page = Page.find_live_by_path(@path)
+    end
+    
     if @page
       render :layout => @page.layout
     else

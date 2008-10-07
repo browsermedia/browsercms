@@ -39,6 +39,18 @@ describe Page do
     end
   end
 
+  describe ".find_live_by_path" do
+    before do
+      @page = create_page(:name => "v1", :path => "test", :section => root_section, :new_status => "PUBLISHED")
+      @page = Page.find(@page.id)
+      @page.update_attributes!(:name => "v2", :updated_by_user => create_user)
+    end
+    it "should return the latest version of the page" do
+      Page.find_live_by_path("/test").name.should == "v1"
+      Page.find_live_by_path("/test").version.should == 1
+    end
+  end
+
   it "should prepend a '/' to the path" do
     page = new_page(:path => 'foo/bar')
     page.should be_valid

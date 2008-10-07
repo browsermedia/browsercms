@@ -17,7 +17,8 @@ class InitialData
     if method_name.to_s.match(/\Acreate_(.+)\Z/)
       self.create($1, args[0], args[1] || {})
     elsif @data && @data.has_key?(method_name)
-      @data[method_name][args.first]
+      record = @data[method_name][args.first]
+      record ? record.class.find(record.id) : nil
     else
       super
     end
