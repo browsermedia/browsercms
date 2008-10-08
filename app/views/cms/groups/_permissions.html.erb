@@ -1,0 +1,32 @@
+<div class='fields'>
+	<%= label_tag "What kind of user does this group represent?" %>
+  <select name="groupType" onchange="showSectionsByGroupType()" id="groupType">
+  <option value="Registered Public User" >Registered Public User</option>
+	<option value="CMS User" selected=selected>CMS User</option>
+	<option value="Search Engine Crawler" >Search Engine Crawler</option>
+  </select>
+</div>
+
+<table>
+  <tr>
+    <th colspan="3">What kind of tasks should group members be allowed to do?</th>
+	</tr>	
+	<tr>
+		<td colspan="2">Permissions</td>
+		<td>Description</td>
+	</tr>
+	<% permission_ids = (params[:permission_ids] || @group.permission_ids).collect { |p| p.to_i } %>
+	<% Permission.find(:all).each do |p|%>
+	<tr>
+		<td><%= check_box_tag("permission_ids[]", p.id, permission_ids.include?(p.id)) %></td>
+		<td><%= p.full_name%></td>
+		<td><%= p.description %></td>
+	</tr>
+	<% end %>
+	<tr>
+		<td colspan="3">
+			<a href="">Check All</a>
+  		<a href="">Check None</a>
+		</td>
+	</tr>
+</table>

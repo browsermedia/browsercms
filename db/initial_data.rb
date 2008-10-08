@@ -6,6 +6,13 @@ create_group(:content_editor, :name => 'Content Editors', :code => 'content-edit
 users(:cmsadmin).groups << groups(:content_admin)
 users(:cmsadmin).groups << groups(:content_editor)
 
+create_permission(:admin, :name => "cms-administrator", :full_name => "Administer CMS" , :description => "Allows users to administer the CMS, including adding users and groups.")
+create_permission(:author, :name => "editor", :full_name => "Author Content" , :description => "Allows users to Add, Edit and Delete both Pages and Blocks. Can Save (but not Publish) and Assign them as well.")
+create_permission(:publish, :name => "publish-page", :full_name => "Publish Content" , :description => "Allows users to Save and Publish, Hide and Archive both Pages and Blocks.")
+groups(:content_admin).permissions<<permissions(:admin)
+groups(:content_editor).permissions<<permissions(:author)
+groups(:content_editor).permissions<<permissions(:publish)
+
 create_section(:root, :name => "My Site", :path => "/")
 create_section(:products, :name => "Products", :parent => sections(:root), :path => "/products")
 create_section(:browsercms, :name => "BrowserCMS", :parent => sections(:products), :path => "/browsercms")

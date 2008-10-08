@@ -31,7 +31,7 @@ class Cms::UsersController < Cms::ResourceController
     end
 
     def update_group_membership
-      @object.group_ids = params[:group_ids] if params[:group_ids]
+      @object.group_ids = params[:group_ids] unless params[:on_fail_action] == "change_password"
     end
 
   private

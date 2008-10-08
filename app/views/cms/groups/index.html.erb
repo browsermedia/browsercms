@@ -4,12 +4,18 @@
 <table>
   <tr>
     <th>Group</th>
+		<th>Permissions</th>
     <th>Actions</th>
   </tr>
   <% @groups.each do |g| %>
   <tr>
     <td><%=h g.name %></td>
-    <td>[<%= link_to "Edit", cms_path(g, :edit) %>]</td>
+    <td>
+			<% g.permissions.each do |p| %>
+			- <%= p.full_name %> <br />
+			<% end %>
+		</td>
+		<td>[<%= link_to "Edit", cms_path(g, :edit) %>]</td>
   </tr>
   <% end %>
 </table>

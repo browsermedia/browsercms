@@ -2,6 +2,9 @@
   <%= f.label :name, "Group Name" %>
   <%= f.text_field :name %>
 </div>
+
+<%= render :partial => 'permissions' unless params[:action] == "index" %>
+
 <div class="buttons">
   <%= f.submit "Save" %>
 </div>
