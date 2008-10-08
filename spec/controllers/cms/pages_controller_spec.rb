@@ -99,6 +99,14 @@ describe Cms::PagesController do
       @action.call
       response.should redirect_to(@page.path)
     end
+    it "should publish all blocks on the page" do
+      pending "Need to fix page published so that all children blocks are published within the same transaction per case 1693"
+      @block = create_html_block(:name => 'foo')
+      @page.add_content_block!(@block, 'main')
+      @action.call
+      #log "**#{@foo.status}**"
+      @block.should be_published
+    end
   end
 
   
@@ -135,6 +143,10 @@ describe Cms::PagesController do
     it "should redirect to the page" do
       @action.call
       response.should redirect_to(@page.path)
+    end
+    it "should update the status" do
+      @action.call
+      @page.should be_in_progress
     end
   end
   
