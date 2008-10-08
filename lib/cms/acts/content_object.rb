@@ -38,7 +38,7 @@ module Cms
             #We set the value of the the association to the value in the virtual attriute
             #This makes sute that updated_by_user is explictly set on each update
             versioned_class.belongs_to :updated_by, :class_name => "User"
-            attr_accessor :updated_by_user
+            attr_accessor :updated_by_user, :updated_by_user_id
             belongs_to :updated_by, :class_name => "User"
             before_validation :set_updated_by
             
@@ -112,7 +112,11 @@ module Cms
         end
 
         def set_updated_by
-          self.updated_by = updated_by_user
+          if updated_by_user_id
+            self.updated_by_id = updated_by_user_id
+          else
+            self.updated_by = updated_by_user
+          end
         end
 
         module ClassMethods

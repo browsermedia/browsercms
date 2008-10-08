@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), "..", "..", "config", "environment")
+#require File.join(File.dirname(__FILE__), "..", "..", "config", "environment")
 
 #Meant to be called by rake task, for example:
 # rake cms:import CMS_PATH=/Users/pbarry/perforce/depot/microbicide CMS_DB_NAME=microbicide
@@ -47,7 +47,8 @@ class Cms::Import < ActiveRecord::Base
         :path => "custom_url",
         :status => "page_status",
         :section_id => "section_id",
-        :template_id => "page_template_id"
+        :template_id => "page_template_id",
+        :updated_by_user_id => "last_modifier_id"
       })
     end
             
@@ -75,7 +76,7 @@ class Cms::Import < ActiveRecord::Base
           if record.save
             puts "Created #{model} #{record.id}"
           else
-            raise "Could not save #{model} #{record.id}:\n - #{record.errors.full_messages.join("\n - ")}"
+            puts "WARNING: Could not save #{model} #{record.id}:\n - #{record.errors.full_messages.join("\n - ")}"
           end
           callbacks[:after_save].call(record, row) if callbacks[:after_save]
         end

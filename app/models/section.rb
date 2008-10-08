@@ -8,7 +8,7 @@ class Section < ActiveRecord::Base
   
   named_scope :root, :conditions => ['sections.parent_id is null']
   
-  validates_presence_of :parent_id, :if => Proc.new {root.count > 0}, :message => "section is required"
+  #validates_presence_of :parent_id, :if => Proc.new {root.count > 0}, :message => "section is required"
   
   before_destroy :deletable?
   
