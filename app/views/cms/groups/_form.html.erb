@@ -1,9 +1,11 @@
+<%= f.error_messages %>
+
 <div class="fields">
   <%= f.label :name, "Group Name" %>
   <%= f.text_field :name %>
 </div>
 
-<%= render :partial => 'permissions' unless params[:action] == "index" %>
+<%= render :partial => 'permissions' unless (params[:action] == "index" or params[:action] == "create") %>
 
 <div class="buttons">
   <%= f.submit "Save" %>

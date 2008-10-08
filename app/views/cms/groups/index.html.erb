@@ -7,7 +7,7 @@
 		<th>Permissions</th>
     <th>Actions</th>
   </tr>
-  <% @groups.each do |g| %>
+  <% Group.find(:all).each do |g| %>
   <tr>
     <td><%=h g.name %></td>
     <td>
@@ -24,6 +24,7 @@
   <legend>Add</legend>
   <% @group ||= Group.new %>
   <% form_for @group, :url => cms_path(:groups, :create) do |f| %>
+	<%= hidden_field_tag "on_fail_action", "index" %>
 	<%= render :partial => 'form', :locals => {:f => f} %>
   <% end %>
 </fieldset>

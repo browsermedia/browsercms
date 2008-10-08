@@ -26,6 +26,10 @@ module FixtureReplacement
     a.name = "TestGroup_#{String.random(12).downcase}"
   end
 
+  attributes_for :permission do |a|
+    a.name = "TestPermission_#{String.random(12).downcase}"
+  end
+
   attributes_for :html_block do |a|
     a.name = "About Us"
     a.content = "<h1>About Us</h1>\n<p>Lorem ipsum dolor sit amet...</p>"

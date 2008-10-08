@@ -17,7 +17,11 @@ class Cms::ResourceController < Cms::BaseController
       redirect_to after_create_url
     else
       instance_variable_set("@#{variable_name}", @object)
-      render :action => 'new'
+      if (params[:on_fail_action])
+        render :action => params[:on_fail_action]
+      else
+        render :action => 'new'
+      end
     end
   end
 
