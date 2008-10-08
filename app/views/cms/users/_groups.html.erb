@@ -1,0 +1,8 @@
+Groups<br/>
+<div class="fields">
+  <ul>
+  <% Group.find(:all).each do |g| %>
+		<li><%= check_box_tag("group_ids[]", g.id, group_ids.include?(g.id)) %> <%= g.name %></li>
+	<% end %>
+	</ul>
+</div>

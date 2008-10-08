@@ -17,6 +17,8 @@ class User < ActiveRecord::Base
 
   attr_accessible :login, :email, :name, :first_name, :last_name, :password, :password_confirmation
 
+  has_and_belongs_to_many :groups
+
   def self.authenticate(login, password)
     u = find_by_login(login) # need to get the salt
     u && u.authenticated?(password) && !u.expired? ? u : nil

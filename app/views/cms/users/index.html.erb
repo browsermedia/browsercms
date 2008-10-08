@@ -50,9 +50,9 @@ Displaying 1 to 8 of 8 results.
             Expires: <%= user.expires_at ? format_date(user.expires_at) : "Never" %>
         </td>
         <td>
-            - Member <br/>
-            - Guest <br/>
-            - Board Member <br/>
+            <% user.groups.each do |g| %>
+			- <%= g.name %><br/>
+			<% end %>
         </td>
         <td>
             <%= link_to "Edit", :controller=>"users", :action=> "edit", :id => user.id %><br/>

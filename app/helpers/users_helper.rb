@@ -1,5 +1,9 @@
 module UsersHelper
-  
+
+  def group_ids
+   (params[:group_ids] || @user.group_ids).collect { |g| g.to_i }
+  end
+
   #
   # Use this to wrap view elements that the user can't access.
   # !! Note: this is an *interface*, not *security* feature !!

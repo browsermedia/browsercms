@@ -1,5 +1,10 @@
 #See /lib/initial_data.rb for info on how this works
 create_user(:cmsadmin, :login => "cmsadmin", :email => "cmsadmin@example.com", :password => "cmsadmin", :password_confirmation => "cmsadmin")
+create_group(:guest, :name => 'Guest', :code => 'guest', :group_type => 'Guest')
+create_group(:content_admin, :name => 'Cms Administrators', :code => 'cms-admin', :group_type => 'CMS User')
+create_group(:content_editor, :name => 'Content Editors', :code => 'content-editor', :group_type => 'CMS User')
+users(:cmsadmin).groups << groups(:content_admin)
+users(:cmsadmin).groups << groups(:content_editor)
 
 create_section(:root, :name => "My Site", :path => "/")
 create_section(:products, :name => "Products", :parent => sections(:root), :path => "/products")

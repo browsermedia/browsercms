@@ -1,6 +1,8 @@
 class Cms::UsersController < Cms::ResourceController
   layout 'cms/administration'
   
+  after_filter :update_group_membership, :only => [:update, :create]
+  
   def index
     @users = User.find(:all)
   end
@@ -26,6 +28,10 @@ class Cms::UsersController < Cms::ResourceController
 
     def after_update_url
       index_url
+    end
+
+    def update_group_membership
+      @object.group_ids = params[:group_ids] if params[:group_ids]
     end
 
   private

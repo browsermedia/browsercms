@@ -148,6 +148,21 @@ describe Cms::UsersController do
         response.should have_tag("h2", "Set New Password")
       end
     end
-
+  end
+  
+  describe "add to groups" do
+    before(:each) do
+      @user = create_user
+      @groups = [create_group.id, create_group.id]
+      @action = lambda { put :update, :id => @user.id, :group_ids => @groups }
+    end
+    it "should be redirect" do
+      @action.call
+      response.should be_redirect
+    end
+    it "should change group membership" do
+      @action.call
+      @user.groups.count.should == 2 
+    end
   end
 end
