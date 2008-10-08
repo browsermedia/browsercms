@@ -32,10 +32,15 @@ class Cms::Import < ActiveRecord::Base
       copy_records(PageTemplate, "select * from page_templates",
         { :name => "name" },
         { :before_save => lambda{|record, row| 
-            template_file = File.join(ENV['CMS_PATH'], "src", "webapp", row["template_view"])
+            puts ENV['CMS_PATH']
+            template_file = File.expand_path(File.join(ENV['CMS_PATH'], "src", "webapp", row["template_view"]))
             record.language = "erb"
             record.file_name = File.basename(template_file, ".jsp")
-            record.body = convert_jsp_to_erb(open(template_file) {|f| f.read })
+            if File.exists?(template_file)
+              record.body = convert_jsp_to_erb(open(template_file, "r") {|f| f.read })
+            else
+              puts "WARNING: Could not load file '#{template_file}'"
+            end
           }
         }
       )
