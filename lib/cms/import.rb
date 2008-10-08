@@ -32,7 +32,6 @@ class Cms::Import < ActiveRecord::Base
       copy_records(PageTemplate, "select * from page_templates",
         { :name => "name" },
         { :before_save => lambda{|record, row| 
-            puts ENV['CMS_PATH']
             template_file = File.expand_path(File.join(ENV['CMS_PATH'], "src", "webapp", row["template_view"]))
             record.language = "erb"
             record.file_name = File.basename(template_file, ".jsp")
