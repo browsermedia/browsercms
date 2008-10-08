@@ -66,4 +66,27 @@ describe User do
       end
     end
   end
+  
+  describe "authorization" do
+    before do
+      @user = new_user
+      @have = new_permission(:name => "have")
+      @havenot = new_permission(:name => "have_not")
+      @group_a = new_group
+      @group_b = new_group
+      
+      @group_a.permissions << @have
+      @group_b.permissions << @havenot
+      
+      @user.groups<<@group_a
+    end
+    
+    it "should have permission" do
+      @user.has_permission("have").should be_true
+    end
+    
+    it "should not have permission" do
+      @user.has_permission("havenot").should be_false
+    end
+  end
 end

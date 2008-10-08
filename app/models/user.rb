@@ -45,4 +45,16 @@ class User < ActiveRecord::Base
     enable
     save!
   end
+  
+  # TODO: Could probably be written in a more Railsy fashion.
+  # This will result in a few too many database look ups as well.
+  # Should eager load permissions to avoid N+1 problem.
+  def has_permission(name)
+    groups.each do |g|
+      g.permissions.each do |p|
+        return true if p.name == name
+      end
+    end
+    false
+  end
 end
