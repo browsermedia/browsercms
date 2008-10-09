@@ -746,3 +746,63 @@ describe "When there is a deleted page" do
     end
   end
 end
+
+describe "An unpublished page with 1 published and an 1 unpublished block," do
+  before do
+    @page = create_page(:section => root_section)
+    @published_block = create_html_block(:name => "Published")
+    @unpublished_block = create_html_block(:name => "Unpublished")
+    @page.add_content_block!(@published_block, "main")
+    @page.add_content_block!(@unpublished_block, "main")
+    log Page::Version.to_table_with(:id, :page_id, :name, :version, :status)
+    @published_block.publish!(create_user)
+    log Page::Version.to_table_with(:id, :page_id, :name, :version, :status)
+    @page.reload
+    #log Connector.to_table_without(:created_at, :updated_at)
+  end
+  describe "when publishing the block" do
+    it "the block should be live" do
+      @published_block.should be_live
+    end
+    it "the page should not be live" do
+      @page.should_not be_live
+    end
+  end
+  describe "when publishing the page," do
+    before { @publishing_the_page = lambda { @page.publish!(create_user) } }
+    it "should create a new version of the page" do
+      @publishing_the_page.should change(Page::Version, :count).by(1)
+    end
+    it "should create a new version of the unpublished block" do
+      pending "Case 1693"
+      @publishing_the_page.should change(@unpublished_block.versions, :count).by(1)
+    end
+    it "should not create a new version of the published block" do
+      @publishing_the_page.should_not change(@published_block.versions, :count)
+    end
+    it "the page should be live" do
+      @publishing_the_page.call
+      @page.should be_live
+    end
+    it "the unpublished block should be live" do
+      pending "Case 1693"      
+      @publishing_the_page.call
+      @unpublished_block.reload.should be_live
+    end
+    it "the published block should be live" do
+      @publishing_the_page.call
+      @published_block.reload.should be_live
+    end
+    it "the page should be connected to the latest version of the unpublished block" do
+      pending "Case 1693"      
+      log Page::Version.to_table_with(:id, :page_id, :name, :version, :status)
+      @publishing_the_page.call
+      log Connector.to_table_without(:created_at, :updated_at)
+      log Page.to_table_with(:id, :name, :version, :status)
+      log Page::Version.to_table_with(:id, :page_id, :name, :version, :status)
+      @page.reload.connectors.last.content_block_version.should == 2
+    end
+  end
+end
+
+

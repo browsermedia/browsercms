@@ -14,7 +14,7 @@ describe Cms::GroupsController do
     it "should not fail" do
       @action.call
       response.should be_redirect 
-      response.should redirect_to :action => "index"
+      response.should redirect_to(:action => "index")
     end
     it "should add core permissions" do
       @action.call

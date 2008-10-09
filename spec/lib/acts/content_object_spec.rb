@@ -175,12 +175,25 @@ describe "A Content Object" do
         end
       end
       describe "and save and published" do
-        before do
-          @editing_the_block = lambda {@block.update_attributes(:name => "something different", :new_status => "PUBLISHED")}
+        describe "and the page is draft then," do
+          before do
+            @editing_the_block = lambda {@block.update_attributes(:name => "something different", :new_status => "PUBLISHED")}
+          end
+          it "the page should be live" do
+            @editing_the_block.call
+            @page.reload.should_not be_live
+          end
         end
-        it "the page should be live" do
-          @editing_the_block.call
-          @page.reload.should be_live
+        describe "and the page is live then," do
+          before do
+            @page.publish!(create_user)
+            @page.reload
+            @editing_the_block = lambda {@block.update_attributes(:name => "something different", :new_status => "PUBLISHED")}
+          end
+          it "the page should be live" do
+            @editing_the_block.call
+            @page.reload.should be_live
+          end
         end
       end
     end

@@ -65,10 +65,11 @@ module Cms
         connected_page.add_content_block!(self, connect_to_container)
       end
     end
-        
+                
     def update_page_version
       Page.find_by_content_block(self, (version-1)).each do |page|
-        page.update_attributes!(:new_revision_comment => "Edited block", :new_status => status, :updated_by_user => updated_by)
+        new_status = status == 'PUBLISHED' && page.status == 'PUBLISHED' ? 'PUBLISHED' : 'IN_PROGRESS'
+        page.update_attributes!(:new_revision_comment => "Edited block", :new_status => new_status, :updated_by_user => updated_by)
         page.connectors.all(:include => :page, :conditions => {:content_block_id => self.id, :content_block_type => self.class.name }).each do |conn|
           conn.increment!(:content_block_version)
         end
