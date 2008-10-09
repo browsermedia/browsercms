@@ -36,6 +36,7 @@ describe Cms::UsersController do
       response.should have_tag("input#user_last_name")
       response.should have_tag("input#user_email")
       response.should have_tag("input#user_password")
+      response.should have_tag("input#user_expires_at")
       response.should have_tag("input#user_password_confirmation")
     end
     describe "with groups" do
@@ -102,6 +103,7 @@ describe Cms::UsersController do
       response.should have_tag("input#user_first_name")
       response.should have_tag("input#user_last_name")
       response.should have_tag("input#user_email")
+      response.should have_tag("input#user_expires_at")
       response.should_not have_tag("input#user_password")
       response.should_not have_tag("input#user_password_confirmation")
     end
@@ -128,6 +130,14 @@ describe Cms::UsersController do
       @action.call
       u = User.find(@user.id)
       u.first_name.should == "First"
+    end
+    it "should set expires_at" do
+      action =  lambda { put :update, :id => @user.id, :user => { :expires_at => "1/2/2008" } }
+      action.call
+      u = User.find(@user.id)
+      u.expires_at.month.should == 1
+      u.expires_at.day.should == 2
+      u.expires_at.year.should == 2008
     end
   end
 

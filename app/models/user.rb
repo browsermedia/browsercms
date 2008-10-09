@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   #validates_uniqueness_of   :email,    :case_sensitive => false
   validates_format_of       :email,    :with => RE_EMAIL_OK, :message => MSG_EMAIL_BAD
 
-  attr_accessible :login, :email, :name, :first_name, :last_name, :password, :password_confirmation
+  attr_accessible :login, :email, :name, :first_name, :last_name, :password, :password_confirmation, :expires_at
 
   has_and_belongs_to_many :groups
 
@@ -45,7 +45,13 @@ class User < ActiveRecord::Base
     enable
     save!
   end
-  
+
+  # This is to show a formated date on the input form. I'm unsure that
+  # this is the best way to solve this, but it works.
+  def expires_at_formatted
+    expires_at ? (expires_at.strftime '%m/%d/%Y' ): nil
+  end
+
   # TODO: Could probably be written in a more Railsy fashion.
   # This will result in a few too many database look ups as well.
   # Should eager load permissions to avoid N+1 problem.

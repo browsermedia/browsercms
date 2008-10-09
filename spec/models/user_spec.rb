@@ -28,6 +28,12 @@ describe User do
     before(:each) do
       @user = new_user
     end
+
+    it "should return nill from expires_at_formatted if expires_at is nil" do
+      @user.expires_at = nil
+      @user.expires_at_formatted.should be_nil
+    end
+
     describe "as related to expired" do
       it "should not be marked as expired if set in the future" do
         @user.expires_at = 1.day.from_now

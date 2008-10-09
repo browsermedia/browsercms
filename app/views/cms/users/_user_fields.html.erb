@@ -14,3 +14,7 @@
     <%= f.label :last_name, "Last Name" %>
     <%= f.text_field :last_name %>
 </div>
+<div class="fields">
+    <%= f.label :expires_at, "Expiration Date (mm/dd/yyyy). Leave blank for users that never expire." %>
+    <%= f.text_field :expires_at, :value => @user.expires_at_formatted %>
+</div>
