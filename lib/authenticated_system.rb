@@ -9,7 +9,7 @@ module AuthenticatedSystem
     # Accesses the current user from the session.
     # Future calls avoid the database because nil is not equal to false.
     def current_user
-      @current_user ||= (login_from_session || login_from_basic_auth || login_from_cookie) unless @current_user == false
+      @current_user ||= (login_from_session || login_from_cookie) unless @current_user == false
     end
 
     # Store the given user id in the session.
@@ -69,9 +69,9 @@ module AuthenticatedSystem
         end
         # format.any doesn't work in rails version < http://dev.rubyonrails.org/changeset/8987
         # you may want to change format.any to e.g. format.any(:js, :xml)
-        format.any do
-          request_http_basic_authentication 'Web Password'
-        end
+        # format.any do
+        #   request_http_basic_authentication 'Web Password'
+        # end
       end
     end
 
