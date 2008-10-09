@@ -693,43 +693,67 @@ describe "Removing multiple blocks from a page" do
   
 end
 
-describe "A published page with an unpublished block" do
+describe "A published page" do
   before do
     @user = create_user
     @page = create_page(:section => root_section, :updated_by_user => @user)
-    @block = create_html_block(:connect_to_page_id => @page.id, :connect_to_container => "testing", :updated_by_user => @user)
-    @page = Page.find(@page.id)
     @page.publish!(@user)
-    @publishing_the_block = lambda { @block = HtmlBlock.find(@block); @block.publish(@user) } 
+    @page = Page.find(@page.id)
   end
-  describe "when publishing the block" do
-    it "should validate all the assumptions about dirty checking" do
-      @page.revision_comment.should == "Status edited"
-      @page.updated_by.should ==  @user
-      @page.status.should == "PUBLISHED"
-      @publishing_the_block.call
-      @page.reload #No Identity Map
-      @page.revision_comment.should == "Edited block"
-      @page.updated_by.should ==  @user
-      @page.status.should == "PUBLISHED"
+  describe "when adding a block by 'save and publish'" do
+    before do
+      @save_and_publish_the_block = lambda { @block = create_html_block(:connect_to_page_id => @page.id, :new_status => "PUBLISHED", :connect_to_container => "testing", :updated_by_user => @user, :name => "Home") }
     end
+
     it "should change the connector count by 1" do
-      @publishing_the_block.call
-      Connector.count.should == 3
+      @save_and_publish_the_block.should change(Connector, :count).by(1)
     end
+
     it "should make the page have one connector" do
-      @publishing_the_block.call
-      @page.connectors.reload.size.should == 1
+      @save_and_publish_the_block.should change(@page.connectors, :count).by(1)
     end
 
     it "should set the page version to 4" do
-      @publishing_the_block.call
-      @page.reload.version.should == 4
+      @save_and_publish_the_block.call
+      @page.reload.version.should == 3
     end
 
     it "should set the block version to 2" do
-      @publishing_the_block.call
-      @block.version.should == 2
+      @save_and_publish_the_block.call
+      @block.version.should == 1
+    end
+    
+    it "should set the page status to PUBLISHED" do
+      @save_and_publish_the_block.call
+      @page.reload.status.should == "PUBLISHED"
+    end
+  end
+  describe "when adding a block by 'save'" do
+    before do
+      @save_the_block = lambda { @block = create_html_block(:connect_to_page_id => @page.id, :connect_to_container => "testing", :updated_by_user => @user, :name => "Home") }
+    end
+
+    it "should change the connector count by 1" do
+      @save_the_block.should change(Connector, :count).by(1)
+    end
+
+    it "should make the page have one connector" do
+      @save_the_block.should change(@page.connectors, :count).by(1)
+    end
+
+    it "should set the page version to 4" do
+      @save_the_block.call
+      @page.reload.version.should == 3
+    end
+
+    it "should set the block version to 2" do
+      @save_the_block.call
+      @block.version.should == 1
+    end
+    
+    it "should not set the page status to PUBLISHED" do
+      @save_the_block.call
+      @page.reload.status.should_not == "PUBLISHED"
     end
   end
 
@@ -774,7 +798,6 @@ describe "An unpublished page with 1 published and an 1 unpublished block," do
       @publishing_the_page.should change(Page::Version, :count).by(1)
     end
     it "should create a new version of the unpublished block" do
-      pending "Case 1693"
       @publishing_the_page.should change(@unpublished_block.versions, :count).by(1)
     end
     it "should not create a new version of the published block" do
@@ -785,7 +808,6 @@ describe "An unpublished page with 1 published and an 1 unpublished block," do
       @page.should be_live
     end
     it "the unpublished block should be live" do
-      pending "Case 1693"      
       @publishing_the_page.call
       @unpublished_block.reload.should be_live
     end
@@ -794,7 +816,6 @@ describe "An unpublished page with 1 published and an 1 unpublished block," do
       @published_block.reload.should be_live
     end
     it "the page should be connected to the latest version of the unpublished block" do
-      pending "Case 1693"      
       log Page::Version.to_table_with(:id, :page_id, :name, :version, :status)
       @publishing_the_page.call
       log Connector.to_table_without(:created_at, :updated_at)

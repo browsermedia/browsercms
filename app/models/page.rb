@@ -41,6 +41,12 @@ class Page < ActiveRecord::Base
       attrs = c.attributes.without("id", "created_at", "updated_at")
       con = Connector.new(attrs)        
 
+      if status == "PUBLISHED" && con.content_block.status != "PUBLISHED"
+        con.content_block.publish_by_page = self
+        con.content_block.publish!(updated_by)
+        con.content_block_version += 1 
+      end
+
       #If we are copying connectors from a previous version, that means we are reverting this page,
       #in which case we should create a new version of the block, and connect this page to that block
       if @_copy_connectors_from_version
@@ -92,7 +98,11 @@ class Page < ActiveRecord::Base
   def add_content_block!(content_block, container)
     transaction do
       self.revision_comment = "#{content_block.display_name} '#{content_block.name}' was added to the '#{container}' container"
-      self.reset_status
+      if status == 'PUBLISHED' && content_block.status == 'PUBLISHED'
+        self.new_status = 'PUBLISHED'
+      else
+        self.reset_status
+      end
       create_new_version!
       copy_connectors!
       Connector.create!(:page_id => id, 

@@ -18,7 +18,8 @@ module Cms
             #has_many :connectors, :conditions => 'content_block_id = #{id} and content_block_type = #{self.class}', :order => "position"          
             has_many :connectors, :as => :content_block, :order => "position"          
           else
-            after_update :update_page_version
+            #after_create :update_connected_page
+            after_update :update_connected_pages
             #has_many :connectors, :conditions => 'content_block_id = #{id} and content_block_type = #{self.class} and content_block_version = #{version}', :order => "position"          
             has_many :connectors, :as => :content_block, :include => table_name, :conditions => "#{table_name}.version = connectors.content_block_version", :order => "position"          
           end
