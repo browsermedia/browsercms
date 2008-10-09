@@ -5,6 +5,7 @@ class Section < ActiveRecord::Base
   belongs_to :parent, :class_name => "Section"
   has_many :children, :class_name => "Section", :foreign_key => "parent_id", :order => "sections.position"
   has_many :pages
+  has_and_belongs_to_many :groups
   
   named_scope :root, :conditions => ['sections.parent_id is null']
   
@@ -31,6 +32,10 @@ class Section < ActiveRecord::Base
   
   def deletable?
     !root? && empty?
+  end
+  
+  def editable_by_group?(group)
+    group.editable_by_section(self)
   end
   
 end
