@@ -26,6 +26,14 @@ class User < ActiveRecord::Base
     u = find_by_login(login) # need to get the salt
     u && u.authenticated?(password) && !u.expired? ? u : nil
   end
+  
+  def self.guest
+    GuestUser.new
+  end
+
+  def guest?
+    !!@guest
+  end
 
   def disable
     self.expires_at = Time.now

@@ -53,10 +53,12 @@ class Cms::PagesController < Cms::BaseController
       @page = Page.find_live_by_path(@path)
     end
     
-    if @page
+    raise ActiveRecord::RecordNotFound.new("No page at '#{@path}'") unless @page
+
+    if current_user.able_to_view?(@page)
       render :layout => @page.layout
     else
-      raise ActiveRecord::RecordNotFound.new("No page at '#{@path}'") unless @page    
+      raise "Access Denied"
     end
     
   end

@@ -81,13 +81,19 @@ describe User do
       users = User.active
       users.should be_empty
     end
-
   end
 end
 
 describe "A User" do
   before do
     @user = create_user
+    @guest_group = create_group(:code => "guest")
+  end
+  it "should not be a guest" do
+    @user.should_not be_guest
+  end
+  it "should not be in the guest group" do
+    @user.groups.should_not include(@guest_group)
   end
   it "should be able to be added to groups by group_ids" do
     group = create_group(:name => "foo")
@@ -167,4 +173,29 @@ describe "A User" do
       @user.should_not be_able_to_view(@noneditable_page)      
     end
   end  
+end
+
+describe "The Guest User" do
+  before do
+    @guest_group = create_group(:code => "guest")
+    @public_page = create_page(:section => root_section)
+    @protected_section = create_section(:parent => root_section)
+    @protected_page = create_page(:section => @protected_section)
+  end
+  it "should be guest" do
+    User.guest.should be_guest
+  end
+  it "should be in the guest group" do
+    User.guest.group.should == @guest_group
+    User.guest.groups.should include(@guest_group)
+  end
+  it "should not be able to do anything global" do
+    User.guest.should_not be_able_to("do anything global")
+  end
+  it "should be able to view pages that are in a section in the guest group" do
+    User.guest.should be_able_to_view(@public_page)
+  end
+  it "should not be able to view pages that are in a section that is not in the guest group" do
+    User.guest.should_not be_able_to_view(@protected_page)
+  end
 end

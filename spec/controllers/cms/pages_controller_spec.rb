@@ -8,7 +8,7 @@ describe Cms::PagesController do
     describe "the home page" do
       it "should display the page with a title" do
         @page_template = create_page_template(:file_name => "application")
-        @page = create_page(:path => "/", :name => "Test Homepage", :template => @page_template, :new_status => "PUBLISHED")
+        @page = create_page(:section => root_section, :path => "/", :name => "Test Homepage", :template => @page_template, :new_status => "PUBLISHED")
         get :show, :path => []
         response.should have_tag("title", "Test Homepage")
       end
@@ -16,9 +16,28 @@ describe Cms::PagesController do
     describe "the about page" do
       it "should display the page with a title" do
         @page_template = create_page_template(:file_name => "application")
-        @page = create_page(:path => "/about", :name => "Test About", :template => @page_template, :new_status => "PUBLISHED")
+        @page = create_page(:section => root_section, :path => "/about", :name => "Test About", :template => @page_template, :new_status => "PUBLISHED")
         get :show, :path => ["about"]
         response.should have_tag("title", "Test About")
+      end
+    end
+    describe "a protected page" do
+      before do
+        @page_template = create_page_template(:file_name => "application")
+        @protected_section = create_section(:parent => root_section)
+        @page = create_page(:section => @protected_section, :path => "/secret", :name => "Shhh... It's a Secret", :template => @page_template, :new_status => "PUBLISHED")
+      end
+      it "should raise an error if the user is a guest" do
+        lambda { get :show, :path => ["secret"] }.should raise_error      
+      end
+      it "should show the page is the user has access" do
+        @secret_group = create_group(:name => "Secret")
+        @secret_group.sections << @protected_section
+        @privileged_user = create_user(:login => "privileged")
+        @privileged_user.groups << @secret_group
+        login_as @privileged_user
+        get :show, :path => ["secret"]
+        response.should have_tag("title", "Shhh... It's a Secret")
       end
     end
     describe "a file" do

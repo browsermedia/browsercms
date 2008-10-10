@@ -56,7 +56,15 @@ def log(msg)
 end
 
 def root_section
-  Section.first || create_section
+  root = Section.root.first
+  return root unless root.nil?
+  root = create_section
+  root.groups << guest_group
+  root
+end
+
+def guest_group
+  Group.find_by_code("guest") || create_group(:code => "guest")
 end
 
 def register_type(content_type_class)

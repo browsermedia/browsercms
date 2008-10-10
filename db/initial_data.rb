@@ -21,6 +21,8 @@ create_section(:about, :name => "About", :parent => sections(:root), :path => "/
 create_section(:people, :name => "People", :parent => sections(:about), :path => "/people")
 create_section(:careers, :name => "Careers", :parent => sections(:about), :path => "/careers")
 
+groups(:guest).sections << sections(:root)
+
 create_page_template(:main, :name => "Main", :file_name => "main", :language => "erb", :body => <<-TEMPLATE)
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
