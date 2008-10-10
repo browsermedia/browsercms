@@ -18,15 +18,15 @@
 	<% permission_ids = (params[:permission_ids] || @group.permission_ids).collect { |p| p.to_i } %>
 	<% Permission.find(:all).each do |p|%>
 	<tr>
-		<td><%= check_box_tag("permission_ids[]", p.id, permission_ids.include?(p.id)) %></td>
+		<td><%= check_box_tag("permission_ids[]", p.id, permission_ids.include?(p.id), :id => 'permission_ids') %></td>
 		<td><%= p.full_name%></td>
 		<td><%= p.description %></td>
 	</tr>
 	<% end %>
 	<tr>
 		<td colspan="3">
-			<a href="">Check All</a>
-  		<a href="">Check None</a>
+			<%= link_to_function "Check All", "$$('#permission_ids').each(function(box){ box.checked = true })" %>
+			<%= link_to_function "Check None", "$$('#permission_ids').each(function(box){ box.checked = false })" %>
 		</td>
 	</tr>
 </table>
