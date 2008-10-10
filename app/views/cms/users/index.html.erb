@@ -24,7 +24,7 @@
     <tr>
         <td>Filter by:
            <%=  select_tag("group_id",
-                  options_from_collection_for_select(Group.all.insert(0, Group.new(:id=>nil, :name=>"All")), "id", "name", params[:group_id]),
+                  options_from_collection_for_select(Group.all.insert(0, Group.new(:id=>nil, :name=>"All")), "id", "name", params[:group_id].to_i),
                   { :include_blank => true }
                 )  %>
             <br>
