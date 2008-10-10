@@ -83,26 +83,88 @@ describe User do
     end
 
   end
-  describe "authorization" do
+end
+
+describe "A User" do
+  before do
+    @user = create_user
+  end
+  it "should be able to be added to groups by group_ids" do
+    group = create_group(:name => "foo")
+    @user.group_ids = [group.id]
+    @user.save
+    @user.groups.should == [group]
+  end
+  it "should be able to be added to groups by <<" do
+    group = create_group(:name => "foo")
+    @user.groups << group
+    @user.groups.should == [group]
+  end
+  describe "in a group" do
     before do
-      @user = new_user
-      @have = new_permission(:name => "have")
-      @havenot = new_permission(:name => "have_not")
+      @have = new_permission(:name => "do something the group has permission to do")
+      @havenot = new_permission(:name => "do something the group does not have permission to do")
       @group_a = new_group
       @group_b = new_group
-      
+
       @group_a.permissions << @have
       @group_b.permissions << @havenot
-      
-      @user.groups<<@group_a
+
+      @user.groups << @group_a  
     end
     
-    it "should have permission" do
-      @user.has_permission("have").should be_true
+    it "should be able to do something the group has permission to do" do
+      @user.should be_able_to("do something the group has permission to do")
     end
     
-    it "should not have permission" do
-      @user.has_permission("havenot").should be_false
+    it "should not be able to do something the groups does not have permission to do" do
+      @user.should_not be_able_to("do something the group does not have permission to do")
+    end  
+  end
+  describe "in a CMS User group with one section" do
+    before do
+      @group = create_group(:name => "Test", :group_type => "CMS User")
+      @user.groups << @group
+      @editable_section = create_section(:parent => root_section, :name => "Editable")
+      @group.sections << @editable_section
+      @noneditable_section = create_section(:parent => root_section, :name => "Not Editable")
+      @editable_page = create_page(:section => @editable_section)
+      @noneditable_page = create_page(:section => @noneditable_section)
+    end
+    it "should be able to edit the section" do
+      @user.should be_able_to_edit(@editable_section)
+    end
+    it "should not be able to edit a section that is not in the group" do
+      @user.should_not be_able_to_edit(@noneditable_section)
+    end
+    it "should be able to view a page in the section" do
+      @user.should be_able_to_view(@editable_page)      
+    end
+    it "should be able to view a page not in the section" do
+      @user.should be_able_to_view(@noneditable_page)      
     end
   end
+  describe "in a non-CMS User group with one section" do
+    before do
+      @group = create_group(:name => "Test", :group_type => "Registered User")
+      @user.groups << @group
+      @editable_section = create_section(:parent => root_section, :name => "Editable")
+      @group.sections << @editable_section
+      @noneditable_section = create_section(:parent => root_section, :name => "Not Editable")
+      @editable_page = create_page(:section => @editable_section)
+      @noneditable_page = create_page(:section => @noneditable_section)
+    end
+    it "should not be able to edit the section" do
+      @user.should_not be_able_to_edit(@editable_section)
+    end
+    it "should not be able to edit a section that is not in the group" do
+      @user.should_not be_able_to_edit(@noneditable_section)
+    end
+    it "should be able to view a page in the section" do
+      @user.should be_able_to_view(@editable_page)      
+    end
+    it "should not be able to view a page not in the section" do
+      @user.should_not be_able_to_view(@noneditable_page)      
+    end
+  end  
 end

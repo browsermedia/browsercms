@@ -7,14 +7,14 @@ class CreateGroups < ActiveRecord::Migration
       t.timestamps
     end
     
-    create_table :groups_users, :id => false do |t|
+    create_table :user_group_memberships do |t|
       t.integer :user_id
       t.integer :group_id
     end
   end
 
   def self.down
-    drop_table :groups_users
+    drop_table :user_group_memberships
     drop_table :groups
   end
 end

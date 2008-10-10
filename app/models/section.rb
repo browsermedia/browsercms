@@ -5,7 +5,9 @@ class Section < ActiveRecord::Base
   belongs_to :parent, :class_name => "Section"
   has_many :children, :class_name => "Section", :foreign_key => "parent_id", :order => "sections.position"
   has_many :pages
-  has_and_belongs_to_many :groups
+
+  has_many :group_sections
+  has_many :groups, :through => :group_sections
   
   named_scope :root, :conditions => ['sections.parent_id is null']
   

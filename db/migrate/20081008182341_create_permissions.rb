@@ -9,14 +9,14 @@ class CreatePermissions < ActiveRecord::Migration
       t.timestamps
     end
     
-    create_table :groups_permissions, :id => false do |t|
+    create_table :group_permissions do |t|
       t.integer :group_id
       t.integer :permission_id
     end
   end
 
   def self.down
-    drop_table :groups_permissions
+    drop_table :group_permissions
     drop_table :permissions
   end
 end

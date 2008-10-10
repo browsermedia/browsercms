@@ -17,14 +17,15 @@ class User < ActiveRecord::Base
 
   attr_accessible :login, :email, :name, :first_name, :last_name, :password, :password_confirmation, :expires_at
 
-  has_and_belongs_to_many :groups
-
+  has_many :user_group_memberships
+  has_many :groups, :through => :user_group_memberships
+    
   named_scope :active, :conditions => {:expires_at => nil }
   named_scope :key_word, lambda { |key_word|
     { :conditions => ["login like :key_word or email like :key_word or first_name like :key_word or last_name like :key_word", {:key_word => "%#{key_word}%"}] }
   }
   named_scope :in_group, lambda { |group_id|
-    { :joins => " left outer join groups_users on users.id = groups_users.user_id join groups on groups_users.group_id = groups.id ", :conditions => ["groups.id = ?", group_id] }
+    { :include => :groups, :conditions => ["groups.id = ?", group_id] }
   }
 
   def self.authenticate(login, password)
@@ -60,15 +61,28 @@ class User < ActiveRecord::Base
     expires_at ? (expires_at.strftime '%m/%d/%Y' ): nil
   end
 
-  # TODO: Could probably be written in a more Railsy fashion.
-  # This will result in a few too many database look ups as well.
-  # Should eager load permissions to avoid N+1 problem.
-  def has_permission(name)
-    groups.each do |g|
-      g.permissions.each do |p|
-        return true if p.name == name
-      end
-    end
-    false
+  def permissions
+    @permissions ||= Permission.find(:all, :include => {:groups => :users}, :conditions => ["users.id = ?", id])
   end
+
+  def viewable_sections
+    @viewable_sections ||= Section.find(:all, :include => {:groups => :users}, :conditions => ["users.id = ?", id])
+  end
+
+  def editable_sections
+    @editable_sections ||= Section.find(:all, :include => {:groups => :users}, :conditions => ["users.id = ? and groups.group_type = 'CMS User'", id])
+  end
+
+  def able_to?(name)
+    permissions.detect{|p| p.name == name }
+  end
+  
+  def able_to_view?(page)
+    groups.count(:conditions => {:group_type => 'CMS User'}) > 0 || viewable_sections.include?(page.section)
+  end
+  
+  def able_to_edit?(section)
+    editable_sections.include?(section)
+  end
+  
 end
