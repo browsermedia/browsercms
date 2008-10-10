@@ -2,6 +2,7 @@ class Cms::UsersController < Cms::ResourceController
   layout 'cms/administration'
   
   after_filter :update_group_membership, :only => [:update, :create]
+  after_filter :update_flash, :only => :update
   
   def index
     query, conditions = [], []
@@ -49,6 +50,10 @@ class Cms::UsersController < Cms::ResourceController
 
     def after_update_url
       index_url
+    end
+
+    def update_flash
+      flash[:notice] = "Password for '#{@object.login}' changed" if params[:on_fail_action] == "change_password"
     end
 
     def update_group_membership

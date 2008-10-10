@@ -314,6 +314,10 @@ describe Cms::UsersController do
         @action.call
         response.should have_tag("h2", "Set New Password")
       end
+      it "should update the flash appropriately" do
+        @action.call 
+        flash[:notice].should == "Password for '#{@user.login}' changed"
+      end
     end
     describe "while dealing w/ groups" do
       before do
