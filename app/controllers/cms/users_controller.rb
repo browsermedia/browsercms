@@ -4,17 +4,27 @@ class Cms::UsersController < Cms::ResourceController
   after_filter :update_group_membership, :only => [:update, :create]
   
   def index
-    criteria = User
-    if(!params[:show_expired])
-      criteria = criteria.active
+    query, conditions = [], []
+    
+    unless params[:show_expired]
+      query << "expires_at IS NULL OR expires_at > ?"
+      conditions << Time.now
     end
-    if(params[:key_word])
-      criteria = criteria.key_word(params[:key_word])
+
+    unless params[:key_word].blank?
+      query << "login LIKE ? OR email LIKE ? OR first_name LIKE ? OR last_name LIKE ?"
+      4.times { conditions << "%#{params[:key_word]}%" }
     end
-    if(params[:group_id])
-      criteria = criteria.in_group(params[:group_id])
+    
+    unless params[:group_id].to_i == 0
+      query << "user_group_memberships.group_id = ?"
+      conditions << params[:group_id]
     end
-    @users = criteria.all
+    
+    query.collect! { |q| "(#{q})"}
+    conditions = conditions.insert(0, query.join(" AND "))
+    
+    @users = User.find(:all, :include => :groups, :conditions => conditions)
   end
 
   def change_password

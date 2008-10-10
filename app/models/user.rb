@@ -21,12 +21,6 @@ class User < ActiveRecord::Base
   has_many :groups, :through => :user_group_memberships
     
   named_scope :active, :conditions => {:expires_at => nil }
-  named_scope :key_word, lambda { |key_word|
-    { :conditions => ["login like :key_word or email like :key_word or first_name like :key_word or last_name like :key_word", {:key_word => "%#{key_word}%"}] }
-  }
-  named_scope :in_group, lambda { |group_id|
-    { :include => :groups, :conditions => ["groups.id = ?", group_id] }
-  }
 
   def self.authenticate(login, password)
     u = find_by_login(login) # need to get the salt

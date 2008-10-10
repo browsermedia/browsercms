@@ -61,7 +61,8 @@ describe Cms::UsersController do
     describe "with disabled users" do
       before(:each) do
         @disabled_user = new_user
-        @disabled_user.disable!
+        @disabled_user.expires_at = Time.now - 1.day
+        @disabled_user.save!
       end
 
       it "should not list disabled users by default" do
@@ -94,9 +95,13 @@ describe Cms::UsersController do
     describe "with all conditions" do
       before(:each) do
         @disabled_user = new_user(:first_name => "SomethingElse")
-        @disabled_user.disable!
+        @disabled_user.expires_at = Time.now - 1.day
+        @disabled_user.save!
         @found_user = create_user(:first_name => "Stan")
-        @found_user.disable!
+        @found_user.expires_at = Time.now - 1.day
+        @new_group = create_group
+        @found_user.groups << @new_group
+        @found_user.save!
         @live_user = create_user(:first_name => "Stan")
       end
       it "should find disabled users with a keyword and show_expired" do
@@ -114,7 +119,11 @@ describe Cms::UsersController do
         response.should     have_tag("span[class=?]", "username", "#{@live_user.login}")
       end
       it "should find users only in a group, who are are disabled, by name" do
-        pending "Make me work"
+        action = lambda { get :index, :show_expired => "true", :key_word => "stan", :group_id => @new_group.id }
+        action.call
+        response.should_not have_tag("span[class=?]", "username", "#{@disabled_user.login}")
+        response.should     have_tag("span[class=?]", "username", "#{@found_user.login}")
+        response.should_not have_tag("span[class=?]", "username", "#{@live_user.login}")        
       end
     end
 
