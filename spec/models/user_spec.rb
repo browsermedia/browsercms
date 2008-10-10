@@ -72,7 +72,17 @@ describe User do
       end
     end
   end
-  
+
+  describe "named scopes" do
+    before(:each) do
+      @user = create_user(:expires_at => 1.day.ago)
+    end
+    it "should find not find expired user" do
+      users = User.active
+      users.should be_empty
+    end
+
+  end
   describe "authorization" do
     before do
       @user = new_user

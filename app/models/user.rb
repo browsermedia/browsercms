@@ -19,6 +19,14 @@ class User < ActiveRecord::Base
 
   has_and_belongs_to_many :groups
 
+  named_scope :active, :conditions => {:expires_at => nil }
+  named_scope :key_word, lambda { |key_word|
+    { :conditions => ["login like :key_word or email like :key_word or first_name like :key_word or last_name like :key_word", {:key_word => "%#{key_word}%"}] }
+  }
+  named_scope :in_group, lambda { |group_id|
+    { :joins => " left outer join groups_users on users.id = groups_users.user_id join groups on groups_users.group_id = groups.id ", :conditions => ["groups.id = ?", group_id] }
+  }
+
   def self.authenticate(login, password)
     u = find_by_login(login) # need to get the salt
     u && u.authenticated?(password) && !u.expired? ? u : nil
@@ -36,7 +44,7 @@ class User < ActiveRecord::Base
   def expired?
     expires_at && expires_at <= Time.now
   end
-  
+
   def enable
     self.expires_at = nil
   end

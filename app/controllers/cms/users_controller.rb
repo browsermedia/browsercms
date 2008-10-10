@@ -4,7 +4,17 @@ class Cms::UsersController < Cms::ResourceController
   after_filter :update_group_membership, :only => [:update, :create]
   
   def index
-    @users = User.find(:all)
+    criteria = User
+    if(!params[:show_expired])
+      criteria = criteria.active
+    end
+    if(params[:key_word])
+      criteria = criteria.key_word(params[:key_word])
+    end
+    if(params[:group_id])
+      criteria = criteria.in_group(params[:group_id])
+    end
+    @users = criteria.all
   end
 
   def change_password

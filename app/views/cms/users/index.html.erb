@@ -4,10 +4,13 @@
 <%= link_to "Add a User", :controller=>"users", :action=> "new" %>
 </p>
 
-<form action="#">
+<% form_tag(cms_path(:users), :method => :get ) do %>
+
 <table>
     <tr>
-        <td>Search by Username, Email or Name: <input name="keyword"></td>
+        <td>Search by Username, Email or Name:
+            <%= text_field_tag "key_word", params[:key_word] %>
+        </td>
         <td>
             Display:
             <select name="max">
@@ -20,19 +23,19 @@
     </tr>
     <tr>
         <td>Filter by:
-            <select name="groupId">
-                <option value="">Any Group</option>
-                <option value="1">Cms Administrators</option>
-            </select>
+           <%=  select_tag("group_id",
+                  options_from_collection_for_select(Group.all.insert(0, Group.new(:id=>nil, :name=>"All")), "id", "name", params[:group_id]),
+                  { :include_blank => true }
+                )  %>
             <br>
-            <input type='checkbox' value='true' name="showExpired" > Show disabled users?
+            <%= check_box_tag "show_expired", "yes", params[:show_expired] %>Show disabled users?
         </td>
         <td align="right">
             <input type="image" class="imageButton" alt="Search"/>
         </td>
     </tr>
 </table>
-</form>
+<% end %>
 <br />
 Displaying 1 to 8 of 8 results.
 <table class="data">

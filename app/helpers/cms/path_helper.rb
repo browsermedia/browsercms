@@ -7,6 +7,12 @@ module Cms
     #If the action is :create_or_update, this will generate the proper url based on the status of the model.
     #For example, if you call cms_path(@block, :create_or_update), if the block is a new record, it will return '/cms/blocks/create',
     #but if the record is not a new record, if will return '/cms/blocks/update/1'
+    #
+    # Examples:
+    # cms_path(:user) -> /cms/user
+    #
+    #
+    #
     def cms_path(*args)    
       paths = ["", "cms"]
       params = Hash === args.last ? args.pop : {}

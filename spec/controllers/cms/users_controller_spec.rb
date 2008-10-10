@@ -18,6 +18,106 @@ describe Cms::UsersController do
       @action.call
       response.should have_tag("span[class=?]", "username", "#{@user.login}")
     end
+
+    describe "by keyword" do
+      before(:each) do
+        @user_with_email = create_user(:email => "somekid@southpark.com")
+        @user_with_name = create_user(:first_name => "Stan", :last_name => "Marsh")
+        @user_with_login = create_user(:login => "mylogin")
+      end
+      it "should find users by email" do
+        action = lambda { get :index, :key_word => "somekid" }
+        action.call
+        response.should     have_tag("span[class=?]", "username", "#{@user_with_email.login}")
+        response.should_not have_tag("span[class=?]", "username", "#{@user_with_name.login}")
+        response.should_not have_tag("span[class=?]", "username", "#{@user_with_login.login}")
+        response.should_not have_tag("span[class=?]", "username", "#{@user.login}")
+      end
+      it "should find users by login" do
+        action = lambda { get :index, :key_word => "mylogin" }
+        action.call
+        response.should_not have_tag("span[class=?]", "username", "#{@user_with_email.login}")
+        response.should_not have_tag("span[class=?]", "username", "#{@user_with_name.login}")
+        response.should     have_tag("span[class=?]", "username", "#{@user_with_login.login}")
+        response.should_not have_tag("span[class=?]", "username", "#{@user.login}")
+      end
+      it "should find users by first name" do
+        action = lambda { get :index, :key_word => "stan" }
+        action.call
+        response.should_not have_tag("span[class=?]", "username", "#{@user_with_email.login}")
+        response.should     have_tag("span[class=?]", "username", "#{@user_with_name.login}")
+        response.should_not have_tag("span[class=?]", "username", "#{@user_with_login.login}")
+        response.should_not have_tag("span[class=?]", "username", "#{@user.login}")
+      end
+      it "should find users by last name" do
+        action = lambda { get :index, :key_word => "marsh" }
+        action.call
+        response.should_not have_tag("span[class=?]", "username", "#{@user_with_email.login}")
+        response.should     have_tag("span[class=?]", "username", "#{@user_with_name.login}")
+        response.should_not have_tag("span[class=?]", "username", "#{@user_with_login.login}")
+        response.should_not have_tag("span[class=?]", "username", "#{@user.login}")
+      end
+    end
+    describe "with disabled users" do
+      before(:each) do
+        @disabled_user = new_user
+        @disabled_user.disable!
+      end
+
+      it "should not list disabled users by default" do
+        @action.call
+        response.should_not have_tag("span[class=?]", "username", "#{@disabled_user.login}")
+      end
+
+      it "should list disabled users if asked for" do
+        action = lambda { get :index, :show_expired => "true" }
+        action.call
+        response.should have_tag("span[class=?]", "username", "#{@disabled_user.login}")
+      end
+    end
+
+    describe "in groups" do
+      before(:each) do
+        @not_found = create_user
+
+        @in_group = create_group
+        @not_in_group = create_group
+        @user.groups << @in_group
+      end
+      it "should find users in groups" do
+        action = lambda { get :index, :group_id => @in_group.id }
+        action.call
+        response.should     have_tag("span[class=?]", "username", "#{@user.login}")
+        response.should_not have_tag("span[class=?]", "username", "#{@not_found.login}")
+      end
+    end
+    describe "with all conditions" do
+      before(:each) do
+        @disabled_user = new_user(:first_name => "SomethingElse")
+        @disabled_user.disable!
+        @found_user = create_user(:first_name => "Stan")
+        @found_user.disable!
+        @live_user = create_user(:first_name => "Stan")
+      end
+      it "should find disabled users with a keyword and show_expired" do
+        action = lambda { get :index, :show_expired => "true", :key_word => "stan" }
+        action.call
+        response.should_not have_tag("span[class=?]", "username", "#{@disabled_user.login}")
+        response.should     have_tag("span[class=?]", "username", "#{@found_user.login}")
+        response.should     have_tag("span[class=?]", "username", "#{@live_user.login}")
+      end
+      it "should find not disabled users with a keyword" do
+        action = lambda { get :index, :key_word => "stan" }
+        action.call
+        response.should_not have_tag("span[class=?]", "username", "#{@disabled_user.login}")
+        response.should_not have_tag("span[class=?]", "username", "#{@found_user.login}")
+        response.should     have_tag("span[class=?]", "username", "#{@live_user.login}")
+      end
+      it "should find users only in a group, who are are disabled, by name" do
+        pending "Make me work"
+      end
+    end
+
   end
 
   describe "new" do
@@ -72,12 +172,12 @@ describe Cms::UsersController do
     it "should add a user to the database" do
       @action.should change(User, :count).by(1)
     end
-    
+
     describe "with groups" do
       before do
         @group = create_group
         @action = lambda { post :create, :group_ids => [@group.id], :user => @new_user.attributes.merge({:password=>"123456", :password_confirmation=>"123456"})}
-        
+
       end
       it "should set the group on the user" do
         @action.call
@@ -192,11 +292,11 @@ describe Cms::UsersController do
       it "should not remove the existing groups" do
         @action.call
         user = User.find(@user.id)
-        user.groups.count.should == 1        
+        user.groups.count.should == 1
       end
     end
   end
-  
+
   describe "add to groups" do
     before(:each) do
       @user = create_user
@@ -209,7 +309,7 @@ describe Cms::UsersController do
     end
     it "should change group membership" do
       @action.call
-      @user.groups.count.should == 2 
+      @user.groups.count.should == 2
     end
   end
 end
