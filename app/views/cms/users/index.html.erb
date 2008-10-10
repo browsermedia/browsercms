@@ -13,31 +13,23 @@
         </td>
         <td>
             Display:
-            <select name="max">
-                <option value="10">10 per page</option>
-                <option value="20" selected>20 per page</option>
-                <option value="50">50 per page</option>
-                <option value="100">100 per page</option>
-            </select>
+						<%= select_per_page %>
         </td>
     </tr>
     <tr>
         <td>Filter by:
-           <%=  select_tag("group_id",
-                  options_from_collection_for_select(Group.all.insert(0, Group.new(:id=>nil, :name=>"All")), "id", "name", params[:group_id].to_i),
-                  { :include_blank => true }
-                )  %>
+           <%= group_filter %>
             <br>
             <%= check_box_tag "show_expired", "yes", params[:show_expired] %>Show disabled users?
         </td>
         <td align="right">
-            <input type="image" class="imageButton" alt="Search"/>
+            <input type="submit" alt="Search"/>
         </td>
     </tr>
 </table>
 <% end %>
 <br />
-Displaying 1 to 8 of 8 results.
+<%= page_entries_info(@users) %>
 <table class="data">
     <tr>
         <th>General Information</th>
@@ -66,3 +58,5 @@ Displaying 1 to 8 of 8 results.
     </tr>
     <% end %>
 </table>
+
+<%= will_paginate(@users) %>

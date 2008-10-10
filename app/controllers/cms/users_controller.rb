@@ -12,7 +12,7 @@ class Cms::UsersController < Cms::ResourceController
     end
 
     unless params[:key_word].blank?
-      query << "login LIKE ? OR email LIKE ? OR first_name LIKE ? OR last_name LIKE ?"
+      query << %w(login email first_name last_name).collect { |f| "#{f} LIKE ?" }.join(" OR ")
       4.times { conditions << "%#{params[:key_word]}%" }
     end
     
@@ -23,8 +23,9 @@ class Cms::UsersController < Cms::ResourceController
     
     query.collect! { |q| "(#{q})"}
     conditions = conditions.insert(0, query.join(" AND "))
+    per_page = params[:per_page] || 10
     
-    @users = User.find(:all, :include => :groups, :conditions => conditions)
+    @users = User.paginate(:page => params[:page], :per_page => per_page, :include => :user_group_memberships, :conditions => conditions)
   end
 
   def change_password

@@ -127,7 +127,30 @@ describe Cms::UsersController do
         response.should_not have_tag("span[class=?]", "username", "#{@live_user.login}")        
       end
     end
-
+    describe "pagination" do
+      before do
+        @user1 = create_user(:first_name => "Adama")
+        @user2 = create_user(:first_name => "Adama")
+      end
+      it "should show all results" do
+        action = lambda { get :index, :key_word => "Adama" }
+        action.call
+        response.should     have_tag("span[class=?]", "username", "#{@user1.login}")
+        response.should     have_tag("span[class=?]", "username", "#{@user2.login}")
+      end
+      it "should show only first result" do
+        action = lambda { get :index, :key_word => "Adama", :per_page => 1 }
+        action.call
+        response.should     have_tag("span[class=?]", "username", "#{@user1.login}")
+        response.should_not have_tag("span[class=?]", "username", "#{@user2.login}")
+      end
+      it "should show only second result" do
+        action = lambda { get :index, :key_word => "Adama", :per_page => 1, :page => 2 }
+        action.call
+        response.should_not have_tag("span[class=?]", "username", "#{@user1.login}")
+        response.should     have_tag("span[class=?]", "username", "#{@user2.login}")
+      end
+    end
   end
 
   describe "new" do
