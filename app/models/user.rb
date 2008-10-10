@@ -84,7 +84,7 @@ class User < ActiveRecord::Base
   #Expects page to be a Page
   #returns true if any of the sections of the groups the user is in matches the page's section.
   def able_to_view?(page)
-    !!(groups.count(:conditions => {:group_type => 'CMS User'}) > 0 || viewable_sections.include?(page.section))
+    !!(groups.cms.count > 0 || viewable_sections.include?(page.section))
   end
   
   #Expects section to be a Section

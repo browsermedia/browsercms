@@ -11,4 +11,7 @@ class Group < ActiveRecord::Base
     
   validates_presence_of :name
   
+  named_scope :public, :conditions => ["group_type != ?", 'CMS User']
+  named_scope :cms, :conditions => ["group_type = ?", 'CMS User']
+  
 end

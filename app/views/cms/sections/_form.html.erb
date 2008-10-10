@@ -20,9 +20,35 @@
   <%= f.text_field :current_nav_image %>
 </div>
 <div class="fields">
-  <%= f.label :hide_from_menus %>
-  <%= f.check_box :hide_from_menus %>
+  <label>
+    <%= f.check_box :hide_from_menus %>
+    Hide from menus?
+  </label>
 </div>
+
+<fieldset>
+  <legend>Which 'Public' groups can view pages in this section?</legend>
+  <%= hidden_field_tag "section[group_ids][]", "" %>
+  <% for group in Group.public.all(:order => "name") %><div class="fields">
+    <label>
+      <%= check_box_tag "section[group_ids][]", group.id,
+        @section.groups.include?(group) %>
+      <%= group.name %>
+    </label>
+  </div><% end %>
+</fieldset>
+
+<fieldset>
+  <legend>Which 'CMS' groups can edit pages and content in this section?</legend>
+  <%= hidden_field_tag "section[group_ids][]", "" %>
+  <% for group in Group.cms.all(:order => "name") %><div class="fields">
+    <label>
+      <%= check_box_tag "section[group_ids][]", group.id,
+        @section.groups.include?(group) %>
+      <%= group.name %>
+    </label>
+  </div><% end %>
+</fieldset>
 
 <div class="buttons">
   <%= f.submit "Save" %>
