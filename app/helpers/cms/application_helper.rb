@@ -73,5 +73,13 @@ module Cms
     def format_date(time)
       "#{time.strftime("%b %d, %Y")}"
     end
+    
+    def link_to_check_all(selector, name="Check All")
+	    link_to_function name, "$$('#{selector}').each(function(box){ box.checked = true })"
+	  end
+
+    def link_to_uncheck_all(selector, name="Uncheck All")
+	    link_to_function name, "$$('#{selector}').each(function(box){ box.checked = false })"
+	  end
   end
 end

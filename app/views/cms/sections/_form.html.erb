@@ -32,10 +32,12 @@
   <% for group in Group.public.all(:order => "name") %><div class="fields">
     <label>
       <%= check_box_tag "section[group_ids][]", group.id,
-        @section.groups.include?(group) %>
+        @section.groups.include?(group), :class => "public_group_ids", :id => "public_group_ids_#{group.id}" %>
       <%= group.name %>
     </label>
   </div><% end %>
+  <%= link_to_check_all 'input.public_group_ids' %>
+  <%= link_to_uncheck_all 'input.public_group_ids' %>
 </fieldset>
 
 <fieldset>
@@ -44,10 +46,12 @@
   <% for group in Group.cms.all(:order => "name") %><div class="fields">
     <label>
       <%= check_box_tag "section[group_ids][]", group.id,
-        @section.groups.include?(group) %>
+        @section.groups.include?(group), :class => "cms_group_ids", :id => "cms_group_ids_#{group.id}" %>
       <%= group.name %>
     </label>
   </div><% end %>
+  <%= link_to_check_all 'input.cms_group_ids' %>
+  <%= link_to_uncheck_all 'input.cms_group_ids' %>
 </fieldset>
 
 <div class="buttons">

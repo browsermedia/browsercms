@@ -17,8 +17,8 @@
 	</tr><% end %>
 	<tr>
 		<td colspan="3">
-			<%= link_to_function "Check All", "$$('input.permission_ids').each(function(box){ box.checked = true })" %>
-			<%= link_to_function "Check None", "$$('input.permission_ids').each(function(box){ box.checked = false })" %>
+		  <%= link_to_check_all 'input.permission_ids' %>
+		  <%= link_to_uncheck_all 'input.permission_ids' %>
 		</td>
 	</tr>
 </table>
