@@ -11,9 +11,8 @@ describe Cms::GroupsController do
       @random = create_permission(:name => "shouldnt-be-included")
       @action = lambda { post :create, :group => @group.attributes }
     end
-    it "should not fail" do
+    it "should redirect to the index" do
       @action.call
-      response.should be_redirect 
       response.should redirect_to(:action => "index")
     end
     it "should add core permissions" do

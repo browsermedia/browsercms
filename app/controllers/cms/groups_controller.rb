@@ -1,11 +1,11 @@
 class Cms::GroupsController < Cms::ResourceController
   layout 'cms/administration'
   
-  after_filter :update_permissions, :only => :update
-  after_filter :add_permissions, :only => :create
+  after_filter :add_default_permissions, :only => [:create]
   
   def index
-    # Look up in the view instead of here.
+    #Groups get loaded in the view
+    #We're doing this because the new form is on the index page
   end
   
   protected
@@ -15,12 +15,11 @@ class Cms::GroupsController < Cms::ResourceController
     def after_update_url
       index_url
     end
-
-    def add_permissions
-      @object.permissions << [Permission.find_by_name("editor"), Permission.find_by_name("publish-page")]
+    
+    #The group has been created and we add these permissions to it
+    def add_default_permissions
+      @object.permissions << Permission.find_by_name('editor')
+      @object.permissions << Permission.find_by_name('publish-page')
     end
-
-    def update_permissions
-      @object.permission_ids = params[:permission_ids]     
-    end
+    
 end

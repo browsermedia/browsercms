@@ -7,7 +7,7 @@
 		<th>Permissions</th>
     <th>Actions</th>
   </tr>
-  <% Group.find(:all).each do |g| %>
+  <% Group.all(:order => "name").each do |g| %>
   <tr>
     <td><%=h g.name %></td>
     <td>

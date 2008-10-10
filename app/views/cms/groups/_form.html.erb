@@ -5,7 +5,13 @@
   <%= f.text_field :name %>
 </div>
 
+<div class='fields'>
+	<%= f.label :group_type, "What kind of user does this group represent?" %>
+	<%= f.select :group_type, ["Registered Public User", "CMS User", "Search Engine Crawler"] %>
+</div>
+
 <%= render :partial => 'permissions' unless (params[:action] == "index" or params[:action] == "create") %>
+<%= render :partial => 'sections' unless (params[:action] == "index" or params[:action] == "create") %>
 
 <div class="buttons">
   <%= f.submit "Save" %>

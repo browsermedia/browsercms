@@ -1,0 +1,24 @@
+<table>
+  <tr>
+    <th colspan="3">
+      What sections should group members be allowed to edit?
+      <%= hidden_field_tag "group[section_ids][]", "" %>
+    </th>
+	</tr>	
+	<tr>
+	  <th>&nbsp;</td>
+		<th>Name</th>
+		<th>Path</th>
+	</tr>
+	<% Section.all(:order => "path").each do |s|%><tr>
+		<td><%= check_box_tag "group[section_ids][]", s.id, @group.sections.include?(s), :id => "section_ids_#{s.id}", :class => "section_ids" %></td>
+		<td><%=h s.name %></td>
+		<td><%=h s.path %></td>
+	</tr><% end %>
+	<tr>
+		<td colspan="3">
+			<%= link_to_function "Check All", "$$('input.section_ids').each(function(box){ box.checked = true })" %>
+			<%= link_to_function "Check None", "$$('input.section_ids').each(function(box){ box.checked = false })" %>
+		</td>
+	</tr>
+</table>
