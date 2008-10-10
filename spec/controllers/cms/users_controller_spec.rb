@@ -123,6 +123,7 @@ describe Cms::UsersController do
         action.call
         response.should_not have_tag("span[class=?]", "username", "#{@disabled_user.login}")
         response.should     have_tag("span[class=?]", "username", "#{@found_user.login}")
+        response.should     have_tag("option[value=?][selected=?]", "#{@new_group.id}", "selected")
         response.should_not have_tag("span[class=?]", "username", "#{@live_user.login}")        
       end
     end
