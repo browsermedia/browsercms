@@ -73,16 +73,25 @@ class User < ActiveRecord::Base
     @editable_sections ||= Section.find(:all, :include => {:groups => :users}, :conditions => ["users.id = ? and groups.group_type = 'CMS User'", id])
   end
 
+  #Expects name to be the name of a Permission
+  #Return the Permission that matches that name 
+  #one of the groups the user is in has that permission
+  #Otherwise returns nil
   def able_to?(name)
     permissions.detect{|p| p.name == name }
   end
   
+  #Expects page to be a Page
+  #returns true if any of the sections of the groups the user is in matches the page's section.
   def able_to_view?(page)
-    groups.count(:conditions => {:group_type => 'CMS User'}) > 0 || viewable_sections.include?(page.section)
+    !!(groups.count(:conditions => {:group_type => 'CMS User'}) > 0 || viewable_sections.include?(page.section))
   end
   
+  #Expects section to be a Section
+  #Returns true if any of the sections of the groups that have group_type = 'CMS User' 
+  #that the user is in match the section.
   def able_to_edit?(section)
-    editable_sections.include?(section)
+    !!(editable_sections.include?(section))
   end
   
 end
