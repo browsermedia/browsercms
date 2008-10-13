@@ -23,7 +23,7 @@ class Cms::UsersController < Cms::ResourceController
     end
     
     query.collect! { |q| "(#{q})"}
-    conditions = conditions.insert(0, query.join(" AND "))
+    conditions = conditions.unshift(query.join(" AND "))
     per_page = params[:per_page] || 10
     
     @users = User.paginate(:page => params[:page], :per_page => per_page, :include => :user_group_memberships, :conditions => conditions)
