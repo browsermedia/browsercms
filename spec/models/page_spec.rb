@@ -826,4 +826,54 @@ describe "An unpublished page with 1 published and an 1 unpublished block," do
   end
 end
 
+describe "Reverting a block that is on multiple pages" do
+
+  it "should revert both pages" do
+    pending "Case 1551"
+    
+    reset = lambda do 
+      @page1 = Page.find(@page1.id)
+      @page2 = Page.find(@page2.id)
+      @block = HtmlBlock.find(@block.id)
+    end
+
+    # 1. Create a new page (Page 1, v1)    
+    @page1 = create_page(:section => root_section, :name => "Page 1")
+    @page1.version.should == 1
+    
+    # 2. Create a new page (Page 2, v1)
+    @page2 = create_page(:section => root_section, :name => "Page 2")
+    
+    # 3. Add a new html block to Page 1. Save, don't publish. (Page 1, v2)    
+    @block = create_html_block(:name => "Block v1", :connect_to_page_id => @page1.id, :connect_to_container => "main")
+    reset.call
+    @page1.version.should == 2
+    @page2.version.should == 1
+
+    # 4. Goto page 2, and select that block. (Page 2, v2)    
+    @page2.add_content_block!(@block, "main")
+    reset.call
+    @page1.version.should == 2
+    @page2.version.should == 2
+
+    # 5. Edit the block (Page 1, v3, Page 2, v3, Block v2)
+    @block.update_attributes!(:name => "Block v2", :updated_by_user => create_user)
+    reset.call
+    @page1.version.should == 3
+    @page2.version.should == 3
+    @block.version.should == 2
+    
+    # 6. Revert page 1 to version 2. (Page 1, v4, Page 2, v4, Block v3)
+    @page1.revert_to(1, create_user)
+    reset.call
+    @page1.version.should == 4
+    @page2.version.should == 4
+    @block.version.should == 3    
+    
+    # Expected: Both page 1 and 2 will display the same version of the block (v1).
+    @page1.connectors.first.content_block.name.should == "Block v1"
+    @page2.connectors.first.content_block.name.should == "Block v1"
+    
+  end
+end
 
