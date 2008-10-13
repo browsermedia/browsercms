@@ -4,7 +4,13 @@ class Page < ActiveRecord::Base
   
   belongs_to :section
   belongs_to :template, :class_name => "PageTemplate"
-  #has_many :connectors, :conditions => 'page_version = #{version}', :order => "position"
+  
+  #This association uses the version of the instance
+  #This should be used when you have a page object that may or may not be the latest version of the page
+  #Because it will give you the connectors for the specific version
+  has_many :version_connectors, :class_name => "Connector", :conditions => 'page_version = #{version}', :order => "position"
+  
+  #This joins with the pages table, so therefore is only used when working with the latest version of the page
   has_many :connectors, :include => :page, :conditions => 'pages.version = connectors.page_version', :order => "position"
   
   after_update :copy_connectors!

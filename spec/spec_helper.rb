@@ -58,7 +58,7 @@ end
 def root_section
   root = Section.root.first
   return root unless root.nil?
-  root = create_section
+  root = create_section(:name => "My Site")
   root.groups << guest_group
   root
 end

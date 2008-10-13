@@ -873,8 +873,30 @@ describe "Reverting a block that is on multiple pages" do
 end
 
 describe "Viewing a previous version of a page" do
+  
+  it "should show the right section" do
+    @page = create_page(:section => root_section)
+    @section = create_section(:parent => root_section, :name => "Other")
+    reset(:page)
+    @page.update_attributes!(:section => @section, :updated_by_user => create_user)
+    reset(:page)
+    @page.section.should == @section
+    @page.as_of_version(1).section.should == root_section
+  end  
+
+  it "should show the page template" do
+    @foo = create_page_template(:name => "Foo")
+    @bar = create_page_template(:name => "Bar")
+    @page = create_page(:section => root_section, :template => @foo)
+    reset(:page)
+    @page.update_attributes!(:template => @bar, :updated_by_user => create_user)
+    reset(:page)
+    @page.template.should == @bar
+    @page.as_of_version(1).template.should == @foo
+  end 
+  
   it "should show the correct version of the blocks it is connected to" do
-    pending "Case 1624"
+    #pending "Case 1624"
 
     # 1. Create Page A (v1)
     @page = create_page(:section => root_section)
@@ -900,7 +922,7 @@ describe "Viewing a previous version of a page" do
     # Open Page A in a different browser (as guest)
     @live_page = Page.find_live_by_path(@page.path)
     @live_page.version.should == 3
-    @live_page.connectors.first.content_block.name.should == "Block 1"
+    @live_page.version_connectors.first.content_block.name.should == "Block 1"
      
   end
 end
