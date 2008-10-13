@@ -9,13 +9,19 @@ module AuthenticatedSystem
     # Accesses the current user from the session.
     # If the user is not logged in, this will be set to the guest user
     def current_user
-      @current_user ||= (login_from_session || login_from_cookie || User.guest)
+      @current_user ||= (login_from_session || login_from_cookie || search_bot || User.guest)
     end
 
     # Store the given user id in the session.
     def current_user=(new_user)
       session[:user_id] = new_user ? new_user.id : nil
       @current_user = new_user || false
+    end
+
+    def search_bot
+      user_agent = request.user_agent.downcase
+      bot = [ 'msnbot', 'slurp', 'googlebot' ].detect { |b| user_agent.include? b }
+      return User.guest({ :login => "search_bot", :first_name => bot }) if bot
     end
 
     # Check if the user is authorized

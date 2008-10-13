@@ -198,4 +198,28 @@ describe "The Guest User" do
   it "should not be able to view pages that are in a section that is not in the guest group" do
     User.guest.should_not be_able_to_view(@protected_page)
   end
+  describe "who is a search bot" do
+    before do
+      @search_bot_group = create_group(:code => "search_bot")
+      @search_bot_root = create_section(:parent => root_section)
+      @search_bot_root.groups << @search_bot_group
+      @search_bot_page = create_page(:section => @search_bot_root)
+      @search_bot = User.guest({ :login => "search_bot", :first_name => "browsermedia webcrawler" })
+    end
+    it "should be a guest and a search bot" do
+      @search_bot.should be_guest
+      @search_bot.should be_search_bot
+    end
+    it "should not be able to do anything global" do
+      @search_bot.should_not be_able_to("do anything global")
+    end
+    it "should be able to view pages that are in a section in the search_bot group" do
+      @search_bot.should be_able_to_view(@search_bot_page)
+    end
+    it "should not be able to view pages that are in a section that is not in the search_bot group" do
+      @search_bot.should_not be_able_to_view(@public_page)
+      @search_bot.should_not be_able_to_view(@protected_page)
+    end
+  end
 end
+

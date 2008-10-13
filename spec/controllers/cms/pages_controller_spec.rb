@@ -30,7 +30,7 @@ describe Cms::PagesController do
       it "should raise an error if the user is a guest" do
         lambda { get :show, :path => ["secret"] }.should raise_error      
       end
-      it "should show the page is the user has access" do
+      it "should show the page if the user has access" do
         @secret_group = create_group(:name => "Secret")
         @secret_group.sections << @protected_section
         @privileged_user = create_user(:login => "privileged")
@@ -192,6 +192,30 @@ describe Cms::PagesController do
     it "should update the status" do
       @action.call
       @page.should be_in_progress
+    end
+  end
+  
+  describe "a search bot" do
+    before do
+      @page_template = create_page_template(:file_name => "application")
+      @public_page = create_page(:section => root_section, :path => "/", :name => "Test Homepage", :template => @page_template, :new_status => "PUBLISHED")
+      root_section.groups << create_group(:code => "search_bot")
+      @secret_section = create_section(:parent => root_section)
+      @secret_page = create_page(:section => @secret_section, :path => "/secret", :name => "Shhh... It's a Secret", :template => @page_template, :new_status => "PUBLISHED") 
+      request.stub!(:user_agent).and_return("googlebot") 
+    end
+    it "should be a guest" do
+      current_user.should be_guest
+    end
+    it "should be a search_bot" do
+      current_user.should be_search_bot
+    end
+    it "should have access to a public page" do
+      get :show, :path => []
+      response.should have_tag("title", "Test Homepage")
+    end
+    it "should not have access to a non-public page" do
+      lambda { get :show, :path => ["secret"] }.should raise_error("Access Denied")
     end
   end
   

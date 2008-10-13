@@ -17,8 +17,12 @@ class GuestUser < User
     false
   end
   
+  def search_bot?
+    login == "search_bot"
+  end
+  
   def group
-    @group ||= Group.find_by_code("guest")
+    @group ||= (search_bot? ? Group.find_by_code("search_bot") : Group.find_by_code("guest"))
   end
   
   def groups

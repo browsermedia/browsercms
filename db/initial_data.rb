@@ -1,6 +1,7 @@
 #See /lib/initial_data.rb for info on how this works
 create_user(:cmsadmin, :login => "cmsadmin", :email => "cmsadmin@example.com", :password => "cmsadmin", :password_confirmation => "cmsadmin")
 create_group(:guest, :name => 'Guest', :code => 'guest', :group_type => 'Guest')
+create_group(:search_bot, :name => 'Search Bot', :code => 'search_bot', :group_type => 'Search Bot')
 create_group(:content_admin, :name => 'Cms Administrators', :code => 'cms-admin', :group_type => 'CMS User')
 create_group(:content_editor, :name => 'Content Editors', :code => 'content-editor', :group_type => 'CMS User')
 users(:cmsadmin).groups << groups(:content_admin)
@@ -22,6 +23,7 @@ create_section(:people, :name => "People", :parent => sections(:about), :path =>
 create_section(:careers, :name => "Careers", :parent => sections(:about), :path => "/careers")
 
 groups(:guest).sections << sections(:root)
+groups(:search_bot).sections << sections(:root)
 
 create_page_template(:main, :name => "Main", :file_name => "main", :language => "erb", :body => <<-TEMPLATE)
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

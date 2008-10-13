@@ -27,8 +27,8 @@ class User < ActiveRecord::Base
     u && u.authenticated?(password) && !u.expired? ? u : nil
   end
   
-  def self.guest
-    GuestUser.new
+  def self.guest(options = {})
+    GuestUser.new(options)
   end
 
   def guest?
