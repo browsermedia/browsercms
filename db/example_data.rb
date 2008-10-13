@@ -23,11 +23,11 @@ module FixtureReplacement
   end
 
   attributes_for :group do |a|
-    a.name = "TestGroup_#{String.random(12).downcase}"
+    a.name = "TestGroup#{Sequence.next}"
   end
 
   attributes_for :permission do |a|
-    a.name = "TestPermission_#{String.random(12).downcase}"
+    a.name = "TestPermission#{Sequence.next}"
   end
 
   attributes_for :html_block do |a|
@@ -42,8 +42,8 @@ module FixtureReplacement
   end
 
   attributes_for :page do |a|
-    a.name = "Home #{String.random(12)}"
-    a.path = "/#{a.name.underscore}"
+    a.name = "Home #{Sequence.next}"
+    a.path = "/#{a.name.gsub(/\s/,'_').downcase}"
     a.template = default_page_template
     a.section = default_section
     a.updated_by_user = default_user
@@ -65,8 +65,8 @@ module FixtureReplacement
   end
   
   attributes_for :redirect do |a|
-    a.from_path = "/#{String.random(12).downcase}"
-    a.to_path = "/#{String.random(12).downcase}"
+    a.from_path = "/from#{Sequence.next}"
+    a.to_path = "/to#{Sequence.next}"
   end
   
   attributes_for :section do |a|
@@ -74,10 +74,15 @@ module FixtureReplacement
     a.path = "/"
   end
 
+  attributes_for :site do |a|
+    a.name = "Test #{Sequence.next}"
+    a.domain = "#{a.name.gsub(/\s/,"_").downcase}.com"
+  end
+
   attributes_for :user do |a|
     a.first_name = "Test"
     a.last_name = "User"
-    a.login = "test_#{String.random(6)}"
+    a.login = "test_#{Sequence.next}"
     a.email = "#{a.login}@example.com"
     a.password = a.password_confirmation = "password"
     a.created_at = 5.days.ago
