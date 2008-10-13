@@ -83,10 +83,13 @@ class User < ActiveRecord::Base
     permissions.detect{|p| p.name == name }
   end
   
-  #Expects page to be a Page
+  #Expects object to be an object or a section
+  #If it's a section, that will be used
+  #If it's not a section, it will call section on the object
   #returns true if any of the sections of the groups the user is in matches the page's section.
-  def able_to_view?(page)
-    !!(groups.cms.count > 0 || viewable_sections.include?(page.section))
+  def able_to_view?(object)
+    section = object.is_a?(Section) ? object : object.section
+    !!(viewable_sections.include?(section) || groups.cms.count > 0)
   end
   
   #Expects section to be a Section

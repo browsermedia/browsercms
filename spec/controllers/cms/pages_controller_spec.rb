@@ -74,6 +74,34 @@ describe Cms::PagesController do
         end      
       end
     end
+    describe "a protected file" do
+      before do
+        @protected_section = create_section(:parent => root_section)
+        @secret_group = create_group(:name => "Secret")
+        @secret_group.sections << @protected_section
+        @privileged_user = create_user(:login => "privileged")
+        @privileged_user.groups << @secret_group
+                
+        @file = mock_file(:original_filename => "test.txt", :read => "This is a test")
+        @file_block = create_file_block(:section => @protected_section, :file => @file)
+        @action = lambda { get :show, :path => ["#{@file_block.file_metadata_id}_test.txt"] }
+        @path_to_file = "#{ActionController::Base.cache_store.cache_path}/#{@file_block.file_metadata_id}_test.txt"
+      end
+      describe "when viewed by a guest user" do
+        it "should raise an error" do 
+          @action.should raise_error("Access Denied")
+        end
+      end
+      describe "when viewed by a privileged user" do
+        before do
+          login_as @privileged_user
+        end
+        it "return the contents of the file" do 
+          @action.call
+          streaming_file_contents(response).should == "This is a test"
+        end      
+      end
+    end    
   end
   
   describe "moving a page" do
@@ -119,12 +147,10 @@ describe Cms::PagesController do
       response.should redirect_to(@page.path)
     end
     it "should publish all blocks on the page" do
-      pending "Need to fix page published so that all children blocks are published within the same transaction per case 1693"
       @block = create_html_block(:name => 'foo')
       @page.add_content_block!(@block, 'main')
       @action.call
-      #log "**#{@foo.status}**"
-      @block.should be_published
+      @block.reload.should be_published
     end
   end
 

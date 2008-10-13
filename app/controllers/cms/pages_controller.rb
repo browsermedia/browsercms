@@ -26,13 +26,17 @@ class Cms::PagesController < Cms::BaseController
     
     #Only try to stream cache file if it has an extension
     unless ext.blank?
+      
+      #Check access to file
+      @file_metadata = FileMetadata.find_by_path(@path)
+      raise "Access Denied" unless current_user.able_to_view?(@file_metadata)
+
       #Construct a path to where this file would be if it were cached
       @file = File.join(ActionController::Base.cache_store.cache_path, @path)
 
       #Write the file out if it doesn't exist
       unless File.exists?(@file)
-        @file_metadata = FileMetadata.find_by_path(@path)
-        @file_metadata.write_file if @file_metadata
+        @file_metadata.write_file
       end
     
       #Stream the file if it exists

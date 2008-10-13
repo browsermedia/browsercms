@@ -78,7 +78,7 @@ describe FileBlock do
     describe "with changes to the file metadata's section" do
       before do
         @section = create_section(:parent => root_section, :name => "New")
-        @updating_the_file_block = lambda { @file_block.update_attribute(:section_id, @section.id) }
+        @updating_the_file_block = lambda { @file_block.update_attributes!(:section => @section, :updated_by_user => create_user) }
       end
       it "should create a new file metadata" do
         @updating_the_file_block.should change(FileMetadata, :count).by(1)
@@ -93,6 +93,10 @@ describe FileBlock do
         @updating_the_file_block.call
         @file_block = FileBlock.find(@file_block.id)
         @file_block.section.should == @section
+      end
+      it "should set the file metadata name" do
+        @updating_the_file_block.call
+        @file_block.file_metadata.file_name.should =~ /\d*_test.jpg/
       end
     end
     describe "with changes to the file metadata's file data" do

@@ -40,8 +40,22 @@ class FileMetadata < ActiveRecord::Base
     end
   end
 
+  def updating_file!
+    logger.info "Updating file"
+    @_updating_file = true
+  end
+
   def prepend_id_to_file_name
-    update_attribute(:file_name, "#{id}_#{file_name}")
+    if @_updating_file
+      if m = file_name.match(/^\d+(_.*)/)
+        new_file_name = "#{id}#{m[1]}"
+      else
+        new_file_name = file_name
+      end
+    else
+      new_file_name = "#{id}_#{file_name}"
+    end
+    update_attribute(:file_name, new_file_name) 
   end
   
   def data

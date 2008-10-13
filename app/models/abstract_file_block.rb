@@ -45,7 +45,7 @@ class AbstractFileBlock < ActiveRecord::Base
     unless new_record?
       if file_metadata.changed? || @file_metadata_changed
         new_file_metadata = FileMetadata.new(file_metadata.attributes.without("id"))
-        logger.info "\n\n\n#{file_metadata.file.inspect}\n\n\n"
+        new_file_metadata.updating_file!
         new_file_metadata.file = file_metadata.file      
         new_file_metadata.save!
         self.file_metadata = new_file_metadata
