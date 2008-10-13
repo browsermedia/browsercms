@@ -826,12 +826,6 @@ describe "Reverting a block that is on multiple pages" do
   it "should revert both pages" do
     #pending "Case 1551"
     
-    reset = lambda do 
-      @page1 = Page.find(@page1.id)
-      @page2 = Page.find(@page2.id)
-      @block = HtmlBlock.find(@block.id)
-    end
-
     # 1. Create a new page (Page 1, v1)    
     @page1 = create_page(:section => root_section, :name => "Page 1")
     @page1.version.should == 1
@@ -841,19 +835,19 @@ describe "Reverting a block that is on multiple pages" do
     
     # 3. Add a new html block to Page 1. Save, don't publish. (Page 1, v2)    
     @block = create_html_block(:name => "Block v1", :connect_to_page_id => @page1.id, :connect_to_container => "main")
-    reset.call
+    reset(:page1, :page2, :block)
     @page1.version.should == 2
     @page2.version.should == 1
 
     # 4. Goto page 2, and select that block. (Page 2, v2)    
     @page2.add_content_block!(@block, "main")
-    reset.call
+    reset(:page1, :page2, :block)
     @page1.version.should == 2
     @page2.version.should == 2
 
     # 5. Edit the block (Page 1, v3, Page 2, v3, Block v2)
     @block.update_attributes!(:name => "Block v2", :updated_by_user => create_user)
-    reset.call
+    reset(:page1, :page2, :block)
     @page1.version.should == 3
     @page2.version.should == 3
     @block.version.should == 2
@@ -866,7 +860,7 @@ describe "Reverting a block that is on multiple pages" do
     log Page.to_table_with(:id, :version, :name)
     log HtmlBlock.to_table_with(:id, :version, :name)
     log Connector.to_table_without(:created_at, :updated_at)
-    reset.call
+    reset(:page1, :page2, :block)
     @page1.version.should == 4
     @page2.version.should == 4
     @block.version.should == 3    
@@ -878,3 +872,35 @@ describe "Reverting a block that is on multiple pages" do
   end
 end
 
+describe "Viewing a previous version of a page" do
+  it "should show the correct version of the blocks it is connected to" do
+    pending "Case 1624"
+
+    # 1. Create Page A (v1)
+    @page = create_page(:section => root_section)
+    
+    # 2. Add new Html Block A to Page A (Page A v2, Block A v1)
+    @block = create_html_block(:name => "Block 1", :connect_to_page_id => @page.id, :connect_to_container => "main")
+    reset(:page, :block)
+    @page.version.should == 2
+    @block.version.should == 1 
+    
+    # 3. Publish Page A (Page A v3, Block A v2)
+    @page.publish!(create_user)
+    reset(:page, :block)
+    @page.version.should == 3
+    @block.version.should == 2 
+    
+    # 4. Edit Block A (Page A v4, Block A v3)
+    @block.update_attributes!(:name => "Block 2", :updated_by_user => create_user)
+    reset(:page, :block)
+    @page.version.should == 4
+    @block.version.should == 3 
+     
+    # Open Page A in a different browser (as guest)
+    @live_page = Page.find_live_by_path(@page.path)
+    @live_page.version.should == 3
+    @live_page.connectors.first.content_block.name.should == "Block 1"
+     
+  end
+end

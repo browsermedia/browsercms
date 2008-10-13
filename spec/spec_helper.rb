@@ -99,3 +99,12 @@ def streaming_file_contents(response)
   output.instance_variable_get("@contents")
 end
 
+#Takes a list of the names of instance variables to "reset"
+#Each instance variable will be set to a new instance
+#That is found by looking that object by id
+def reset(*args)
+  args.each do |v|
+    val = instance_variable_get("@#{v}")
+    instance_variable_set("@#{v}", val.class.find(val.id))
+  end
+end
