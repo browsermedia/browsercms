@@ -6,7 +6,17 @@ module Cms
       options = [10, 20, 50, 100].collect { |c| ["#{c} per page", c] }
       select_tag("per_page", options_for_select(options, params[:per_page].to_i))
     end
-  
+
+    def page_versions(page)
+      text = select_tag(:version, 
+                        options_for_select(page.versions.all(:order => "version desc").map { |r| 
+                          ["v#{r.version}: #{r.revision_comment} by #{r.updated_by.login} at #{time_on_date(r.updated_at)}", r.version] 
+                        }, page.version), 
+                        :onchange => 'this.form.submit(); return false')
+      text << javascript_tag("$('version').selectedIndex = 0") if page.current_version?
+      text
+    end
+
     def render_connector(connector)
       if logged_in? && @mode == "edit"
         render :partial => 'cms/pages/edit_connector', :locals => {:connector => connector}
