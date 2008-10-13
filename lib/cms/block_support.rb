@@ -66,13 +66,13 @@ module Cms
       end
     end
 
-    def publish_by_page=(page)
-      @publish_by_page = page
+    def updated_by_page=(page)
+      @updated_by_page = page
     end
 
     def update_connected_pages
       Page.find_by_content_block(self, (version-1)).each do |page|
-        update_page(page) unless @publish_by_page == page
+        update_page(page) unless @updated_by_page == page
       end      
     end
 

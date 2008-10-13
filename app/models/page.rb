@@ -42,7 +42,7 @@ class Page < ActiveRecord::Base
       con = Connector.new(attrs)        
 
       if status == "PUBLISHED" && con.content_block.status != "PUBLISHED"
-        con.content_block.publish_by_page = self
+        con.content_block.updated_by_page = self
         con.content_block.publish!(updated_by)
         con.content_block_version += 1 
       end
@@ -58,9 +58,11 @@ class Page < ActiveRecord::Base
         #and connect the page to the new version of the block
         unless block.current_version?
           block = block.class.find(block.id)
-          block.revert_to_without_save(c.content_block_version, updated_by)
-          block.instatiate_revision.save!
-          block.send(:update_without_callbacks)
+          block.updated_by_page = self
+          block.revert_to(c.content_block_version, updated_by)
+          # block.revert_to_without_save(c.content_block_version, updated_by)
+          # block.instatiate_revision.save!
+          # block.send(:update_without_callbacks)
         end
         
         con.content_block = block

@@ -372,11 +372,6 @@ describe "A page with associated blocks" do
       pending "Make work"
     end
   end
-  describe "when reverting" do
-    it "should restore all connectors to their previous state" do
-      pending "Case 1551"
-    end    
-  end
 end
 
 describe "A page that had 2 blocks added to it" do
@@ -829,7 +824,7 @@ end
 describe "Reverting a block that is on multiple pages" do
 
   it "should revert both pages" do
-    pending "Case 1551"
+    #pending "Case 1551"
     
     reset = lambda do 
       @page1 = Page.find(@page1.id)
@@ -864,7 +859,13 @@ describe "Reverting a block that is on multiple pages" do
     @block.version.should == 2
     
     # 6. Revert page 1 to version 2. (Page 1, v4, Page 2, v4, Block v3)
-    @page1.revert_to(1, create_user)
+    log Page.to_table_with(:id, :version, :name)
+    log HtmlBlock.to_table_with(:id, :version, :name)
+    log Connector.to_table_without(:created_at, :updated_at)
+    @page1.revert_to(2, create_user)
+    log Page.to_table_with(:id, :version, :name)
+    log HtmlBlock.to_table_with(:id, :version, :name)
+    log Connector.to_table_without(:created_at, :updated_at)
     reset.call
     @page1.version.should == 4
     @page2.version.should == 4
