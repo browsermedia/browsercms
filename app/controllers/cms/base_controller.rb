@@ -21,4 +21,9 @@ class Cms::BaseController < ApplicationController
         end
       end
     end
+    
+    def current_site
+      @current_site ||= Site.find_by_domain(request.host)
+    end
+    
 end
