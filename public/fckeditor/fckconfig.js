@@ -359,3 +359,6 @@ FCKConfig.LinkBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/bro
 FCKConfig.ImageBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Type=Image&Connector=connectors/fileconnector.jsp' ;
 // @ End CMS Customization
 
+// @CMS Customization
+FCKConfig.ToolbarCanCollapse = false;
+// @ End CMS Customization

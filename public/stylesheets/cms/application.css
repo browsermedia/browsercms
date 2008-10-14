@@ -162,3 +162,7 @@ ul.block_info {
   background-color: #ccf;
   cursor: pointer;
 }
+
+textarea.wysiwyg {
+  display: block;
+}
