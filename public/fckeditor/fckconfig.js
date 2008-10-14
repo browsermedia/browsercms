@@ -323,3 +323,39 @@ FCKConfig.BackgroundBlockerOpacity = 0.50 ;
 FCKConfig.MsWebBrowserControlCompat = false ;
 
 FCKConfig.PreventSubmitHandler = false ;
+
+// @ CMS CUSTOMIZATION
+// Custom config file  (CMS-0)
+FCKConfig.CustomConfigurationsPath = FCKConfig.BasePath + '../../site/customconfig.js' ;
+// @ END CMS CUSTOMIZATION
+
+// @ CMS Customization (CMS-1)
+FCKConfig.SkinPath = FCKConfig.BasePath + 'skins/silver/' ;
+// @ End CMS Customization
+
+// @ CMS CUSTOMIZATION
+// Custom configuration for Basic CMS editor   (CMS-2)
+FCKConfig.ToolbarSets["CMS"] = [
+	['Source','-','Cut','Copy','Paste','PasteText','PasteWord','SpellCheck','-','Undo','Redo','Find','Replace','RemoveFormat','-','OrderedList','UnorderedList','Outdent','Indent','Rule'],
+	['Link','Unlink','Anchor','Image','Table','SpecialChar','-','Bold','Italic','Underline','JustifyLeft','JustifyCenter','JustifyRight','JustifyFull','-','TextColor','Style']
+
+] ;
+
+// Custom configuration for Basic CMS Forms editor   (CMS-2)
+FCKConfig.ToolbarSets["CMSForms"] = [
+	['Source','-','Cut','Copy','Paste','PasteText','PasteWord','SpellCheck','-','Undo','Redo','Find','Replace','RemoveFormat','-','OrderedList','UnorderedList','Outdent','Indent','Rule'],
+	['Link','Unlink','Anchor','Image','Table','SpecialChar','Bold','Italic','Underline','JustifyLeft','JustifyCenter','JustifyRight','JustifyFull','TextColor','Style'],
+	['TextField','Select','Checkbox','Radio','Textarea','Button','ImageButton','HiddenField']
+] ;
+// @ END CMS CUSTOMIZATION
+
+// @CMS Customization   (CMS-4)
+// Use BrowserCMS fileconnector instead.
+FCKConfig.LinkBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Connector=connectors/fileconnector.jsp' ;
+// @ End CMS Customization
+
+// @CMS Customization  (CMS-5)
+// Use BrowserCMS fileconnector instead.
+FCKConfig.ImageBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Type=Image&Connector=connectors/fileconnector.jsp' ;
+// @ End CMS Customization
+
