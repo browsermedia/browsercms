@@ -931,13 +931,14 @@ describe "Selecting a block" do
   before do
     @page = create_page(:section => root_section, :new_status => "PUBLISHED")
     @block = create_html_block(:new_status => "PUBLISHED")
+    reset(:page, :block)
     @page.should be_published
     @block.should be_published
     @page.add_content_block!(@block, "main")
     reset(:page, :block)
   end
   it "should put the page into draft mode" do
-    pending "Case 1714"
+    #pending "Case 1714"
     @page.should_not be_published
   end
 end

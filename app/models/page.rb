@@ -106,7 +106,7 @@ class Page < ActiveRecord::Base
   def add_content_block!(content_block, container)
     transaction do
       self.revision_comment = "#{content_block.display_name} '#{content_block.name}' was added to the '#{container}' container"
-      if status == 'PUBLISHED' && content_block.status == 'PUBLISHED'
+      if status == 'PUBLISHED' && content_block.status == 'PUBLISHED' && content_block.connected_page
         self.new_status = 'PUBLISHED'
       else
         self.reset_status
