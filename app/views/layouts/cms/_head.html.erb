@@ -4,6 +4,6 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <title><%= @page_title %></title>
     <%= stylesheet_link_tag 'cms/application' %>
-    <%= javascript_include_tag :defaults, '/fckeditor/fckeditor', 'cms/load_wysiwyg' %>
+    <%= javascript_include_tag :defaults, 'cookiejar', '/fckeditor/fckeditor', 'cms/wysiwyg' %>
     <%= yield :html_head %>
   </head>

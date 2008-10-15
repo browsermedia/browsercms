@@ -4,6 +4,6 @@
 </div>
 <div class="fields">
   <%= f.label :content, "Content", :class => "inline" %>
-  <%= link_to_function "Toggle DHTML Editor", "$('html_block_content___Frame').toggle(); $('html_block_content').toggle();" %>
+  <%= link_to_function "Toggle DHTML Editor", "toggleWysiwyg('html_block_content')" %>
   <%= f.text_area :content, :size => "80x20", :class => "wysiwyg" %>
 </div>
