@@ -13,6 +13,9 @@ class Cms::BaseController < ApplicationController
   helper Cms::PathHelper
   
   protected
+    def escape_javascript(javascript)
+      (javascript || '').gsub('\\','\0\0').gsub('</','<\/').gsub(/\r\n|\n|\r/, "\\n").gsub(/["']/) { |m| "\\#{m}" }
+    end
   
     def redirect_to_first(*urls)
       urls.each do |url|

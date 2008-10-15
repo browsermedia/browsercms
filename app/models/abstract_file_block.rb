@@ -3,6 +3,9 @@ class AbstractFileBlock < ActiveRecord::Base
   
   belongs_to :file_metadata
 
+  after_create :set_name
+  validates_presence_of :name, :on => :update
+
   #Note that it is important that the create_new_file_metadata callback
   #run before the callbacks defined in acts_as_content_block
   #If not, the versioning will not work as expected
@@ -57,6 +60,10 @@ class AbstractFileBlock < ActiveRecord::Base
         self.file_metadata = new_file_metadata
       end
     end
+  end
+
+  def set_name
+    update_attribute(:name, file_metadata.file_name) if name.blank?
   end
 
 end

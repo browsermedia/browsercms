@@ -88,23 +88,45 @@ class Cms::SectionsController < Cms::BaseController
   end  
   
   def file_browser              
-    headers['Content-Type'] = "text/xml"
-    @section = Section.find_by_name_path(params[:CurrentFolder])
-    @files = case params[:Type].downcase
-             when "file"
-               FileBlock.by_section(@section)
-             when "image" 
-               ImageBlock.by_section(@section)
-             else
-               @section.pages
-             end
-
-    render :layout => false
+    @section = Section.find_by_name_path(params[:CurrentFolder])      
+    if request.post? && params[:NewFile]
+      handle_file_browser_upload
+    else
+      render_file_browser
+    end
   end
   
   protected
     def load_parent
       @parent = Section.find(params[:section_id])
+    end
+
+    def handle_file_browser_upload
+      begin
+        case params[:Type].downcase
+        when "file"
+          FileBlock.create!(:section => @section, :file => params[:NewFile], :updated_by_user => current_user)
+        when "image" 
+          ImageBlock.create!(:section => @section, :file => params[:NewFile], :updated_by_user => current_user)
+        end
+        result = "0"
+      rescue Exception => e
+        result = "1,'#{escape_javascript(e.message)}'"
+      end  
+      render :text => %Q{<script type="text/javascript">window.parent.frames['frmUpload'].OnUploadCompleted(#{result});</script>}, :layout => false      
+    end
+    
+    def render_file_browser
+      headers['Content-Type'] = "text/xml"
+      @files = case params[:Type].downcase
+               when "file"
+                 FileBlock.by_section(@section)
+               when "image" 
+                 ImageBlock.by_section(@section)
+               else
+                 @section.pages
+               end
+      render :layout => false      
     end
 
 end
