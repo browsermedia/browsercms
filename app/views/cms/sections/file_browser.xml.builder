@@ -7,8 +7,8 @@ xml.tag! 'Connector', "command" => params["Command"], "resourceType" => params["
     end
   end
   xml.tag! 'Files' do
-    for page in @section.pages do
-      xml.tag! 'File', "name" => page.name, "url" => page.path, "size" => "?"
+    for file in @files do
+      xml.tag! 'File', "name" => file.name, "url" => file.path, "size" => file.file_size
     end
   end
 end

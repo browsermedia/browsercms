@@ -12,6 +12,8 @@ class Section < ActiveRecord::Base
   named_scope :root, :conditions => ['sections.parent_id is null']
   
   #validates_presence_of :parent_id, :if => Proc.new {root.count > 0}, :message => "section is required"
+  
+  # Disabling '/' in section name for interoperability with FCKEditor file browser
   validates_format_of :name, :with => /\A[^\/]*\Z/, :message => "cannot contain '/'"
   
   before_destroy :deletable?

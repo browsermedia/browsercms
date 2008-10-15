@@ -92,7 +92,7 @@ oConnector.ResourceType		= GetUrlParam( 'Type' ) ;
 oConnector.ShowAllTypes		= ( oConnector.ResourceType.length == 0 ) ;
 
 if ( oConnector.ShowAllTypes )
-	oConnector.ResourceType = 'File' ;
+	oConnector.ResourceType = 'Page' ;
 
 oConnector.SendCommand = function( command, params, callBackFunction )
 {

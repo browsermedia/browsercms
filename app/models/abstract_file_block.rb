@@ -12,8 +12,14 @@ class AbstractFileBlock < ActiveRecord::Base
   #then all before_updates's are called in the order they are defined
   before_save :create_new_file_metadata
   
+  named_scope :by_section, lambda { |section| { :include => :file_metadata, :conditions => ["file_metadata.section_id = ?", section.id] } }
+  
   def path
     [file_metadata.section.path, file_metadata.file_name].join("/").gsub(/\/{2,}/,"/")
+  end
+
+  def file_size
+    file_metadata ? "%0.2f" % (file_metadata.file_size / 1024.0) : "?"
   end
 
   #Delagate getter/setters for file_metadata

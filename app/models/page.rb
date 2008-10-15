@@ -28,6 +28,10 @@ class Page < ActiveRecord::Base
         content_block.id, content_block.class.name, (content_block_version || content_block.version)])
   end
   
+  def file_size
+    "?"
+  end
+  
   #Valid options:
   #  except = An array of connector ids not to copy
   def copy_connectors!(options={})

@@ -87,9 +87,18 @@ class Cms::SectionsController < Cms::BaseController
     end
   end  
   
-  def file_browser
-    @section = Section.find_by_name_path(params[:CurrentFolder])
+  def file_browser              
     headers['Content-Type'] = "text/xml"
+    @section = Section.find_by_name_path(params[:CurrentFolder])
+    @files = case params[:Type].downcase
+             when "file"
+               FileBlock.by_section(@section)
+             when "image" 
+               ImageBlock.by_section(@section)
+             else
+               @section.pages
+             end
+
     render :layout => false
   end
   
