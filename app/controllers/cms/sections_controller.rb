@@ -87,6 +87,12 @@ class Cms::SectionsController < Cms::BaseController
     end
   end  
   
+  def file_browser
+    @section = Section.find_by_name_path(params[:CurrentFolder])
+    headers['Content-Type'] = "text/xml"
+    render :layout => false
+  end
+  
   protected
     def load_parent
       @parent = Section.find(params[:section_id])

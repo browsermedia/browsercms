@@ -12,6 +12,7 @@ class Section < ActiveRecord::Base
   named_scope :root, :conditions => ['sections.parent_id is null']
   
   #validates_presence_of :parent_id, :if => Proc.new {root.count > 0}, :message => "section is required"
+  validates_format_of :name, :with => /\A[^\/]*\Z/, :message => "cannot contain '/'"
   
   before_destroy :deletable?
   
@@ -38,6 +39,15 @@ class Section < ActiveRecord::Base
   
   def editable_by_group?(group)
     group.editable_by_section(self)
+  end
+  
+  def self.find_by_name_path(name_path)
+    section = Section.root.first
+    children = name_path.split("/")[1..-1] || []
+    children.each do |name|
+      section = section.children.first(:conditions => {:name => name})
+    end
+    section
   end
   
 end

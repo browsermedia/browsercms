@@ -6,6 +6,12 @@ describe Section do
     create_section(:name => "My Site")
   end
   
+  it "should not allow '/' characters in the name" do
+    @section = new_section(:name => "OMG / WTF / BBQ")
+    @section.should_not be_valid
+    @section.errors.full_messages.should == ["Name cannot contain '/'"]
+  end
+  
   it "should be able to create sub-sections" do
     sub = create_section(:name => "Sub Section", :parent => root_section)
     root_section.children.first(:order => "created_at desc").should == sub
@@ -34,6 +40,27 @@ describe Section do
     foo = create_section(:name => "Foo", :parent => root)
     root.move_to(foo).should be_false
   end  
+  
+  describe "#find_by_name_path" do
+    before do
+      @a = create_section(:parent => root_section, :name => "A")
+      @b = create_section(:parent => @a, :name => "B")
+      @c = create_section(:parent => @b, :name => "C")
+    end
+    it "should find the root section" do
+      Section.find_by_name_path("/").should == root_section
+    end
+    it "should find a section 1 level deep" do
+      Section.find_by_name_path("/A/").should == @a
+    end
+    it "should find a section 2 level deep" do
+      Section.find_by_name_path("/A/B/").should == @b
+    end
+    it "should find a section 3 level deep" do
+      Section.find_by_name_path("/A/B/C/").should == @c
+    end
+  end
+  
   
 end
 
@@ -142,3 +169,4 @@ describe "An empty section" do
   end
     
 end
+

@@ -10,6 +10,7 @@ namespace(:cms) do |cms|
 end
 
 connect '/:controller/:action/:id.:format'
+connect '/:controller/:action.:format'
 connect '/:controller/:action/:id'
 
 page '*path', :controller => 'cms/pages', :action => 'show'
