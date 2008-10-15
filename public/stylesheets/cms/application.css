@@ -163,6 +163,7 @@ ul.block_info {
   cursor: pointer;
 }
 
-textarea.wysiwyg {
+.editor textarea, .editor iframe {
   display: block;
+  width: 540px;
 }

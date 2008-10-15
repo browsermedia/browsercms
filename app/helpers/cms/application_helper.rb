@@ -96,5 +96,6 @@ module Cms
     def link_to_uncheck_all(selector, name="Uncheck All")
 	    link_to_function name, "$$('#{selector}').each(function(box){ box.checked = false })"
 	  end
+	  	  
   end
 end

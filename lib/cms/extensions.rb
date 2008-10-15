@@ -14,6 +14,7 @@ module Cms
         ActionController::Base.append_view_path tmp_view_path
         PageTemplate.all.each{|pt| pt.create_layout_file }
       end      
+      ActionView::Base.default_form_builder = Cms::FormBuilder
     end    
   end
 end
