@@ -7,10 +7,11 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
       opts[:class] = "editor"
     end 
     id = opts[:id] || "#{@object_name}_#{method}"
-    html = "<div class='editor'>"
-    html << @template.link_to_function("Toggle DHTML Editor", "toggleEditor('#{id}')")
+    html = "<div class='editor'>\n"
+    html << @template.link_to_function("Toggle DHTML Editor", "toggleEditor('#{id}')", :class => "toggleEditor")
+    html << "\n"
     html << text_area(method, opts)
-    html << "</div>"
+    html << "\n</div>"
     html
   end  
 end

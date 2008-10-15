@@ -166,4 +166,5 @@ ul.block_info {
 .editor textarea, .editor iframe {
   display: block;
   width: 540px;
+  height: 400px;
 }
