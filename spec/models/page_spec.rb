@@ -386,8 +386,8 @@ describe "A page that had 2 blocks added to it" do
   end
   describe "and then had then removed," do
     before do
-      @page.destroy_connector(@page.connectors.reload.first(:order => "position"))
-      @page.destroy_connector(@page.connectors.reload.first(:order => "position"))      
+      @page.destroy_connector(@page.connectors.reload.first(:order => "connectors.position"))
+      @page.destroy_connector(@page.connectors.reload.first(:order => "connectors.position"))      
     end
     describe "when reverting to the previous version," do
       before do
@@ -404,7 +404,7 @@ describe "A page that had 2 blocks added to it" do
       end
       it "should restore the connectors from version 3" do
         @reverting_to_the_previous_version.should change(Connector, :count).by(2)
-        foo, bar = @page.connectors.reload.find(:all, :order => "position")
+        foo, bar = @page.connectors.reload.find(:all, :order => "connectors.position")
         foo.should_meet_expectations(:page => @page, :page_version => 6, :content_block => @foo_block, :content_block_version => 1, :container => "whatever")
         bar.should_meet_expectations(:page => @page, :page_version => 6, :content_block => @bar_block, :content_block_version => 1, :container => "whatever")
       end
@@ -940,5 +940,51 @@ describe "Selecting a block" do
   it "should put the page into draft mode" do
     #pending "Case 1714"
     @page.should_not be_published
+  end
+end
+
+describe "A page," do
+  before do
+    @user = create_user
+    @a = create_section(:parent => root_section, :name => "A")
+    @a1 = create_page(:section => @a, :name => "A1")
+    @a2 = create_page(:section => @a, :name => "A2")
+    @a3 = create_page(:section => @a, :name => "A3")
+    @b = create_section(:parent => root_section, :name => "B")
+    @b1 = create_page(:section => @b, :name => "B1")
+    @b2 = create_page(:section => @b, :name => "B2")
+    @b3 = create_page(:section => @b, :name => "B3")
+  end
+  describe "when moved ahead of another page" do
+    describe "in the same section" do
+      before do 
+        @a3.move_ahead_of(@a1, @user) 
+        reset(:a, :a1, :a2, :a3, :b, :b1, :b2, :b3)
+      end
+      it "should correctly re-order the pages" do
+        pending "Case 1503"
+        @a1.should_meet_expectations(:section_id => @a.id, :position => 2)
+        @a2.should_meet_expectations(:section_id => @a.id, :position => 3)
+        @a3.should_meet_expectations(:section_id => @a.id, :position => 1)
+        @b1.should_meet_expectations(:section_id => @b.id, :position => 1)
+        @b2.should_meet_expectations(:section_id => @b.id, :position => 2)
+        @b3.should_meet_expectations(:section_id => @b.id, :position => 3)
+      end
+    end
+    describe "in another section" do
+      before do 
+        @a2.move_ahead_of(@b1, @user) 
+        reset(:a, :a1, :a2, :a3, :b, :b1, :b2, :b3)
+      end
+      it "should correctly re-order the pages" do
+        pending "Case 1503"        
+        @a1.should_meet_expectations(:section_id => @a.id, :position => 1)
+        @a2.should_meet_expectations(:section_id => @b.id, :position => 1)
+        @a3.should_meet_expectations(:section_id => @a.id, :position => 2)
+        @b1.should_meet_expectations(:section_id => @b.id, :position => 2)
+        @b2.should_meet_expectations(:section_id => @b.id, :position => 3)
+        @b3.should_meet_expectations(:section_id => @b.id, :position => 4)
+      end
+    end
   end
 end

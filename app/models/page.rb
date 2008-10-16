@@ -2,16 +2,18 @@ class Page < ActiveRecord::Base
   
   acts_as_content_page
   
+  acts_as_list :scope => :section_id
+  
   belongs_to :section
   belongs_to :template, :class_name => "PageTemplate"
   
   #This association uses the version of the instance
   #This should be used when you have a page object that may or may not be the latest version of the page
   #Because it will give you the connectors for the specific version
-  has_many :version_connectors, :class_name => "Connector", :conditions => 'page_version = #{version}', :order => "position"
+  has_many :version_connectors, :class_name => "Connector", :conditions => 'connectors.page_version = #{version}', :order => "connectors.position"
   
   #This joins with the pages table, so therefore is only used when working with the latest version of the page
-  has_many :connectors, :include => :page, :conditions => 'pages.version = connectors.page_version', :order => "position"
+  has_many :connectors, :include => :page, :conditions => 'pages.version = connectors.page_version', :order => "connectors.position"
   
   after_update :copy_connectors!
   before_validation :append_leading_slash_to_path
@@ -167,10 +169,21 @@ class Page < ActiveRecord::Base
     end
   end
   
+  #Should remove this method in favor of move_ahead_of and move_to_the_bottom_of
   def move_to(section, user)
     self.section = section
     self.updated_by_user = user
     save
+  end
+  
+  #Move this page ahead of some other page, changing the section of the page if necessary
+  def move_ahead_of(page, user)
+    
+  end
+  
+  #Move this page to the end of the section, changing the section of the page if necessary
+  def move_to_the_bottom_of(section, user)
+    
   end
   
   def layout

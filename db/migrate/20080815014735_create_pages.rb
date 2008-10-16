@@ -8,9 +8,10 @@ class CreatePages < ActiveRecord::Migration
       t.string :status
       t.text :description
       t.string :user_date
-      t.text :author
-      t.text :source
-      t.text :language
+      t.string :author
+      t.string :source
+      t.string :language
+      t.integer :position
     end
     
   end
