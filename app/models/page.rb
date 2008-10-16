@@ -2,7 +2,7 @@ class Page < ActiveRecord::Base
   
   acts_as_content_page
   
-  acts_as_list :scope => :section_id
+  acts_as_list :scope => :section
   
   belongs_to :section
   belongs_to :template, :class_name => "PageTemplate"
@@ -15,7 +15,7 @@ class Page < ActiveRecord::Base
   #This joins with the pages table, so therefore is only used when working with the latest version of the page
   has_many :connectors, :include => :page, :conditions => 'pages.version = connectors.page_version', :order => "connectors.position"
   
-  after_update :copy_connectors!
+  after_update :copy_connectors!, :if => Proc.new {|page| page.create_new_version? }
   before_validation :append_leading_slash_to_path
   before_destroy :delete_connectors
   
@@ -37,7 +37,7 @@ class Page < ActiveRecord::Base
   #Valid options:
   #  except = An array of connector ids not to copy
   def copy_connectors!(options={})
-
+          
     #@_copy_connectors_from_version gets set in the revert_to method, otherwise is unset    
     page_version = @_copy_connectors_from_version || (version-1)
     conditions = ['page_id = ? and page_version = ?', id, page_version]
@@ -88,12 +88,12 @@ class Page < ActiveRecord::Base
   end
 
   %w(up down to_top to_bottom).each do |d|
-    define_method("move_#{d}") do |connector|
-      move(connector, d)
+    define_method("move_connector_#{d}") do |connector|
+      move_connector(connector, d)
     end
   end
 
-  def move(connector, direction)
+  def move_connector(connector, direction)
     transaction do
       orientation = direction[/_/] ? "#{direction.sub('_', ' the ')} of" : "#{direction} within"
       self.revision_comment = "#{connector.content_block.display_name} '#{connector.content_block.name}' was moved #{orientation} #{connector.container}"
@@ -178,12 +178,31 @@ class Page < ActiveRecord::Base
   
   #Move this page ahead of some other page, changing the section of the page if necessary
   def move_ahead_of(page, user)
-    
+    if section != page.section
+      #argh.  acts_as_list is apparently not smart enough to handle 
+      #when an item moves from one scope to the next.  
+      #So we need to remove it from the list of the section it's current in
+      remove_from_list
+      self.section = page.section
+      self.updated_by_user = user
+      save!
+    end
+    insert_at(page.position)      
   end
   
   #Move this page to the end of the section, changing the section of the page if necessary
-  def move_to_the_bottom_of(section, user)
-    
+  def move_to_the_bottom_of(other_section, user)
+    if self.section != other_section
+      remove_from_list
+      self.section = other_section
+      self.updated_by_user = user
+      save!
+    end
+    if position
+      move_to_bottom
+    else
+      insert_at(section.pages.first(:order => "pages.position desc").position+1)
+    end
   end
   
   def layout

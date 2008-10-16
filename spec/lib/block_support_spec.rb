@@ -35,7 +35,7 @@ describe Cms::BlockSupport do
 
     describe "when a block is moved up" do
       before do
-        @moving_the_block = lambda { @page.move_up(@page.connectors.last) }
+        @moving_the_block = lambda { @page.move_connector_up(@page.connectors.last) }
       end
       it "should get a new version" do
         @moving_the_block.should change(Page::Version, :count).by(1)
@@ -49,7 +49,7 @@ describe Cms::BlockSupport do
 
     describe "when a block is moved to bottom of" do
       before do
-        @moving_the_block = lambda { @page.move_to_bottom(@page.connectors.first) }
+        @moving_the_block = lambda { @page.move_connector_to_bottom(@page.connectors.first) }
       end
       it "should get a new version" do
         @moving_the_block.should change(Page::Version, :count).by(1)

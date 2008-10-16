@@ -159,8 +159,10 @@ module VersionFu
           if new_record?
             self.revision_comment = 'Created'
           else
-            changed_attributes = changes.keys-["version"]
-            self.revision_comment = "#{changed_attributes.map(&:humanize).join(", ")} edited"
+            if create_new_version?
+              changed_attributes = changes.keys-["version"]
+              self.revision_comment = "#{changed_attributes.map(&:humanize).join(", ")} edited"
+            end
           end
         else
           self.revision_comment = @new_revision_comment

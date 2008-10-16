@@ -34,16 +34,16 @@ class Cms::ConnectorsController < Cms::BaseController
   end
 
   { #Define actions for moving connectors around
-    :move_up => "up in",
-    :move_down => "down in",
-    :move_to_top => "to the top of",
-    :move_to_bottom => "to the bottom of"    
+    :up => "up in",
+    :down => "down in",
+    :to_top => "to the top of",
+    :to_bottom => "to the bottom of"    
   }.each do |move, where|
-    define_method move do
+    define_method "move_#{move}" do
       @connector = Connector.find(params[:id])
       @page = @connector.page
       @content_block = @connector.content_block
-      if @page.send(move, @connector)
+      if @page.send("move_connector_#{move}", @connector)
         flash[:notice] = "Moved '#{@content_block.name}' #{where} the '#{@connector.container}' container"
       else
         flash[:error] = "Failed to move '#{@content_block.name}' #{where} the '#{@connector.container}' container"

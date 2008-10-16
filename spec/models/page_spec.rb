@@ -962,13 +962,13 @@ describe "A page," do
         reset(:a, :a1, :a2, :a3, :b, :b1, :b2, :b3)
       end
       it "should correctly re-order the pages" do
-        pending "Case 1503"
-        @a1.should_meet_expectations(:section_id => @a.id, :position => 2)
-        @a2.should_meet_expectations(:section_id => @a.id, :position => 3)
-        @a3.should_meet_expectations(:section_id => @a.id, :position => 1)
-        @b1.should_meet_expectations(:section_id => @b.id, :position => 1)
-        @b2.should_meet_expectations(:section_id => @b.id, :position => 2)
-        @b3.should_meet_expectations(:section_id => @b.id, :position => 3)
+        #log Page.to_table_with(:id, :name, :section_id, :position, :version)
+        @a1.should_meet_expectations(:section_id => @a.id, :position => 2, :version => 1)
+        @a2.should_meet_expectations(:section_id => @a.id, :position => 3, :version => 1)
+        @a3.should_meet_expectations(:section_id => @a.id, :position => 1, :version => 1)
+        @b1.should_meet_expectations(:section_id => @b.id, :position => 1, :version => 1)
+        @b2.should_meet_expectations(:section_id => @b.id, :position => 2, :version => 1)
+        @b3.should_meet_expectations(:section_id => @b.id, :position => 3, :version => 1)
       end
     end
     describe "in another section" do
@@ -977,14 +977,47 @@ describe "A page," do
         reset(:a, :a1, :a2, :a3, :b, :b1, :b2, :b3)
       end
       it "should correctly re-order the pages" do
-        pending "Case 1503"        
-        @a1.should_meet_expectations(:section_id => @a.id, :position => 1)
-        @a2.should_meet_expectations(:section_id => @b.id, :position => 1)
-        @a3.should_meet_expectations(:section_id => @a.id, :position => 2)
-        @b1.should_meet_expectations(:section_id => @b.id, :position => 2)
-        @b2.should_meet_expectations(:section_id => @b.id, :position => 3)
-        @b3.should_meet_expectations(:section_id => @b.id, :position => 4)
+        #log Page.to_table_with(:id, :name, :section_id, :position, :version)
+        @a1.should_meet_expectations(:section_id => @a.id, :position => 1, :version => 1)
+        @a2.should_meet_expectations(:section_id => @b.id, :position => 1, :version => 2)
+        @a3.should_meet_expectations(:section_id => @a.id, :position => 2, :version => 1)
+        @b1.should_meet_expectations(:section_id => @b.id, :position => 2, :version => 1)
+        @b2.should_meet_expectations(:section_id => @b.id, :position => 3, :version => 1)
+        @b3.should_meet_expectations(:section_id => @b.id, :position => 4, :version => 1)
       end
     end
+  end
+  describe "when moved to the bottom" do
+    describe "of the section the page is already in" do
+      before do 
+        @a2.move_to_the_bottom_of(@a, @user) 
+        reset(:a, :a1, :a2, :a3, :b, :b1, :b2, :b3)
+      end
+      it "should correctly re-order the pages" do
+        #log Page.to_table_with(:id, :name, :section_id, :position, :version)
+        @a1.should_meet_expectations(:section_id => @a.id, :position => 1, :version => 1)
+        @a2.should_meet_expectations(:section_id => @a.id, :position => 3, :version => 1)
+        @a3.should_meet_expectations(:section_id => @a.id, :position => 2, :version => 1)
+        @b1.should_meet_expectations(:section_id => @b.id, :position => 1, :version => 1)
+        @b2.should_meet_expectations(:section_id => @b.id, :position => 2, :version => 1)
+        @b3.should_meet_expectations(:section_id => @b.id, :position => 3, :version => 1)
+      end
+    end
+    describe "of another section" do
+      before do 
+        @a2.move_to_the_bottom_of(@b, @user) 
+        reset(:a, :a1, :a2, :a3, :b, :b1, :b2, :b3)
+      end
+      it "should correctly re-order the pages" do
+        log Page.to_table_with(:id, :name, :section_id, :position, :version)
+        @a1.should_meet_expectations(:section_id => @a.id, :position => 1, :version => 1)
+        @a2.should_meet_expectations(:section_id => @b.id, :position => 4, :version => 2)
+        @a3.should_meet_expectations(:section_id => @a.id, :position => 2, :version => 1)
+        @b1.should_meet_expectations(:section_id => @b.id, :position => 1, :version => 1)
+        @b2.should_meet_expectations(:section_id => @b.id, :position => 2, :version => 1)
+        @b3.should_meet_expectations(:section_id => @b.id, :position => 3, :version => 1)
+      end
+    end
+    
   end
 end
