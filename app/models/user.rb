@@ -36,7 +36,7 @@ class User < ActiveRecord::Base
   end
 
   def disable
-    self.expires_at = Time.now
+    self.expires_at = Time.now - 1.minutes
   end
 
   def disable!

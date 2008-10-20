@@ -8,8 +8,8 @@ class Cms::UsersController < Cms::ResourceController
     query, conditions = [], []
     
     unless params[:show_expired]
-      query << "expires_at IS NULL OR expires_at > ?"
-      conditions << Time.now
+      query << "expires_at IS NULL OR expires_at >= ?"
+      conditions << Time.now.utc
     end
 
     unless params[:key_word].blank?

@@ -61,8 +61,7 @@ describe Cms::UsersController do
     describe "with disabled users" do
       before(:each) do
         @disabled_user = new_user
-        @disabled_user.expires_at = Time.now - 1.day
-        @disabled_user.save!
+        @disabled_user.disable!
       end
 
       it "should not list disabled users by default" do
@@ -95,10 +94,9 @@ describe Cms::UsersController do
     describe "with all conditions" do
       before(:each) do
         @disabled_user = new_user(:first_name => "SomethingElse")
-        @disabled_user.expires_at = Time.now - 1.day
-        @disabled_user.save!
+        @disabled_user.disable!
         @found_user = create_user(:first_name => "Stan")
-        @found_user.expires_at = Time.now - 1.day
+        @found_user.disable!
         @new_group = create_group
         @found_user.groups << @new_group
         @found_user.save!
