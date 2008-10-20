@@ -2,7 +2,7 @@ class Cms::UsersController < Cms::ResourceController
   layout 'cms/administration'
   
   after_filter :update_group_membership, :only => [:update, :create]
-  after_filter :update_flash, :only => :update
+  after_filter :update_flash, :only => [ :update, :create ]
   
   def index
     query, conditions = [], []
@@ -53,7 +53,13 @@ class Cms::UsersController < Cms::ResourceController
     end
 
     def update_flash
-      flash[:notice] = "Password for '#{@object.login}' changed" if params[:on_fail_action] == "change_password"
+      if params[:on_fail_action] == "change_password"
+        flash[:notice] = "Password for '#{@object.login}' changed"
+      elsif params[:action] == "create"
+        flash[:notice] = "User '#{@object.login}' was created"
+      else
+        flash[:notice] = "User '#{@object.login}' was updated"
+      end
     end
 
     def update_group_membership

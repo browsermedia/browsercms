@@ -205,6 +205,10 @@ describe Cms::UsersController do
     it "should add a user to the database" do
       @action.should change(User, :count).by(1)
     end
+    it "should update the flash accordingly" do
+      @action.call 
+      flash[:notice].should == "User '#{@new_user.login}' was created"
+    end
 
     describe "with groups" do
       before do
@@ -271,6 +275,11 @@ describe Cms::UsersController do
       u.expires_at.month.should == 1
       u.expires_at.day.should == 2
       u.expires_at.year.should == 2008
+    end
+    
+    it "should update the flash accordingly" do
+      @action.call 
+      flash[:notice].should == "User '#{@user.login}' was updated"
     end
   end
 
