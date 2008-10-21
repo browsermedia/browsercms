@@ -27,6 +27,10 @@ class User < ActiveRecord::Base
     u && u.authenticated?(password) && !u.expired? ? u : nil
   end
   
+  def can_login?
+    self.class.find_by_login(login, :include => { :groups => :permissions }, :conditions => ["permissions.name in (?)", %w(cms-administrator editor publish-page)])
+  end
+  
   def self.guest(options = {})
     GuestUser.new(options)
   end

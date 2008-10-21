@@ -106,6 +106,9 @@ describe "A User" do
     @user.groups << group
     @user.groups.should == [group]
   end
+  it "should not be able to login if not in one of the proper groups" do
+    @user.can_login?.should == nil
+  end
   describe "in a group" do
     before do
       @have = new_permission(:name => "do something the group has permission to do")
@@ -114,9 +117,14 @@ describe "A User" do
       @group_b = new_group
 
       @group_a.permissions << @have
+      @group_a.permissions << new_permission(:name => "cms-administrator")
       @group_b.permissions << @havenot
 
       @user.groups << @group_a  
+    end
+    
+    it "should be able to login" do
+      @user.can_login?.should == @user
     end
     
     it "should be able to do something the group has permission to do" do
