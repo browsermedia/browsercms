@@ -11,11 +11,12 @@ class Cms::SectionsController < Cms::BaseController
   end
   
   def new
-    @section = @parent.children.build
+    @section = @parent.sections.build
   end
   
   def create
-    @section = @parent.children.build(params[:section])
+    @section = Section.new(params[:section])
+    @section.parent = @parent
     if @section.save
       flash[:notice] = "Section '#{@section.name}' was created"
       redirect_to cms_url(@section)

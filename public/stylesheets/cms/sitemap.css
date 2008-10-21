@@ -1,1 +1,7 @@
+#buttons a.disabled {
+  opacity: 0.5;
+}
 
+#sitemap span.selected {
+  background-color: #9bf;
+}

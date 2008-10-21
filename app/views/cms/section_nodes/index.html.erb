@@ -1,10 +1,34 @@
 <% content_for :html_head do %>
   <%= stylesheet_link_tag 'cms/sitemap' %>
+  <%= javascript_include_tag 'cms/sitemap' %>  
 <% end %>
+<% @page_title = "Sitemap" %>
+
+<div id="buttons">
+  <%= link_to "Edit", '#', :id => 'edit-button', :class => "disabled" %>
+  |
+  <%= link_to "Properties", '#', :id => 'properties-button', :class => "disabled" %>
+  |
+  <%= link_to "Delete", '#', :id => 'delete-button', :class => "disabled" %>
+  |
+  <%= link_to "Add Page", '#', :id => 'add-page-button', :class => "disabled" %>
+  |
+  <%= link_to "Add Section", '#', :id => 'add-section-button', :class => "disabled" %>
+  |
+  <%= link_to "Add Link", '#', :id => 'add-link-button', :class => "disabled" %>
+</div>
+
 <table id="sitemap">
   <tr>
     <th>Status</th>
     <th>Site Structure</th>
   </th>
+  <tr>
+    <td><%= status_icon(:unlocked) %></td>
+    <td>
+      <%= action_icon(:home) %>
+      <span id="section_<%= @section.id %>" class="root node"><%= h(@section.name) %></span>
+    </td>
+  </tr>  
   <%= render :partial => 'section_node', :collection => @section.child_nodes(:order => 'position'), :locals => {:depth => 1} %>
 </table>
