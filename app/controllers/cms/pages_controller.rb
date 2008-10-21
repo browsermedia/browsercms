@@ -124,17 +124,6 @@ class Cms::PagesController < Cms::BaseController
     render :layout => @page.layout, :action => 'show'
   end  
   
-  def move_to
-    if @page.move_to(@section, current_user)
-      flash[:notice] = "Page '#{@page.name}' was moved to '#{@section.name}'."
-    end
-    
-    respond_to do |format|
-      format.html { redirect_to cms_path(@section, :page_id => @page) }
-      format.js { render :template => 'cms/shared/show_notice' }
-    end    
-  end
-  
   def revert_to
     if @page.revert_to(params[:version], current_user)
       flash[:notice] = "Page '#{@page.name}' was reverted to version #{params[:version]}"

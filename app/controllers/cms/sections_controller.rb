@@ -74,19 +74,6 @@ class Cms::SectionsController < Cms::BaseController
     end
   end
   
-  def move_to
-    @section = Section.find(params[:id])
-    @move_to = Section.find(params[:section_id])
-    if @section.move_to(@move_to)
-      flash[:notice] = "Section '#{@section.name}' was moved to '#{@move_to.name}'."
-    end
-    
-    respond_to do |format|
-      format.html { redirect_to cms_url(@move_to) }
-      format.js { render :template => 'cms/shared/show_notice' }
-    end
-  end  
-  
   def file_browser              
     @section = Section.find_by_name_path(params[:CurrentFolder])      
     if request.post? && params[:NewFile]

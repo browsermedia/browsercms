@@ -174,27 +174,9 @@ describe Page do
     section = create_section(:name => "Another", :parent => root)
     page = create_page(:section => root)
     page.section.should_not == section
-    page.move_to(section, User.first)
+    page.section = section
+    page.save
     page.section.should == section
-  end
-
-  describe "move_to" do
-    before do
-      @from_section = create_section(:name => "From", :parent => root_section)
-      @to_section = create_section(:name => "To", :parent => root_section)
-      @page = create_page(:section => @from_section, :name => "Mover")
-      @action = lambda { @page.move_to(@to_section, User.first) }
-    end
-    it "should create a new version of the page" do
-      @action.should change(Page::Version, :count).by(1)
-    end
-    it "should not create a new page" do
-      @action.should_not change(Page, :count)
-    end
-    it "should update the page's section_id" do
-      @action.call
-      @page.reload.section_id.should == @to_section.id
-    end
   end
 
   describe "Versioning" do
@@ -940,84 +922,5 @@ describe "Selecting a block" do
   it "should put the page into draft mode" do
     #pending "Case 1714"
     @page.should_not be_published
-  end
-end
-
-describe "A page," do
-  before do
-    @user = create_user
-    @a = create_section(:parent => root_section, :name => "A")
-    @a1 = create_page(:section => @a, :name => "A1")
-    @a2 = create_page(:section => @a, :name => "A2")
-    @a3 = create_page(:section => @a, :name => "A3")
-    @b = create_section(:parent => root_section, :name => "B")
-    @b1 = create_page(:section => @b, :name => "B1")
-    @b2 = create_page(:section => @b, :name => "B2")
-    @b3 = create_page(:section => @b, :name => "B3")
-  end
-  describe "when moved ahead of another page" do
-    describe "in the same section" do
-      before do 
-        @a3.move_ahead_of(@a1, @user) 
-        reset(:a, :a1, :a2, :a3, :b, :b1, :b2, :b3)
-      end
-      it "should correctly re-order the pages" do
-        #log Page.to_table_with(:id, :name, :section_id, :position, :version)
-        @a1.should_meet_expectations(:section_id => @a.id, :position => 2, :version => 1)
-        @a2.should_meet_expectations(:section_id => @a.id, :position => 3, :version => 1)
-        @a3.should_meet_expectations(:section_id => @a.id, :position => 1, :version => 1)
-        @b1.should_meet_expectations(:section_id => @b.id, :position => 1, :version => 1)
-        @b2.should_meet_expectations(:section_id => @b.id, :position => 2, :version => 1)
-        @b3.should_meet_expectations(:section_id => @b.id, :position => 3, :version => 1)
-      end
-    end
-    describe "in another section" do
-      before do 
-        @a2.move_ahead_of(@b1, @user) 
-        reset(:a, :a1, :a2, :a3, :b, :b1, :b2, :b3)
-      end
-      it "should correctly re-order the pages" do
-        #log Page.to_table_with(:id, :name, :section_id, :position, :version)
-        @a1.should_meet_expectations(:section_id => @a.id, :position => 1, :version => 1)
-        @a2.should_meet_expectations(:section_id => @b.id, :position => 1, :version => 2)
-        @a3.should_meet_expectations(:section_id => @a.id, :position => 2, :version => 1)
-        @b1.should_meet_expectations(:section_id => @b.id, :position => 2, :version => 1)
-        @b2.should_meet_expectations(:section_id => @b.id, :position => 3, :version => 1)
-        @b3.should_meet_expectations(:section_id => @b.id, :position => 4, :version => 1)
-      end
-    end
-  end
-  describe "when moved to the bottom" do
-    describe "of the section the page is already in" do
-      before do 
-        @a2.move_to_the_bottom_of(@a, @user) 
-        reset(:a, :a1, :a2, :a3, :b, :b1, :b2, :b3)
-      end
-      it "should correctly re-order the pages" do
-        #log Page.to_table_with(:id, :name, :section_id, :position, :version)
-        @a1.should_meet_expectations(:section_id => @a.id, :position => 1, :version => 1)
-        @a2.should_meet_expectations(:section_id => @a.id, :position => 3, :version => 1)
-        @a3.should_meet_expectations(:section_id => @a.id, :position => 2, :version => 1)
-        @b1.should_meet_expectations(:section_id => @b.id, :position => 1, :version => 1)
-        @b2.should_meet_expectations(:section_id => @b.id, :position => 2, :version => 1)
-        @b3.should_meet_expectations(:section_id => @b.id, :position => 3, :version => 1)
-      end
-    end
-    describe "of another section" do
-      before do 
-        @a2.move_to_the_bottom_of(@b, @user) 
-        reset(:a, :a1, :a2, :a3, :b, :b1, :b2, :b3)
-      end
-      it "should correctly re-order the pages" do
-        log Page.to_table_with(:id, :name, :section_id, :position, :version)
-        @a1.should_meet_expectations(:section_id => @a.id, :position => 1, :version => 1)
-        @a2.should_meet_expectations(:section_id => @b.id, :position => 4, :version => 2)
-        @a3.should_meet_expectations(:section_id => @a.id, :position => 2, :version => 1)
-        @b1.should_meet_expectations(:section_id => @b.id, :position => 1, :version => 1)
-        @b2.should_meet_expectations(:section_id => @b.id, :position => 2, :version => 1)
-        @b3.should_meet_expectations(:section_id => @b.id, :position => 3, :version => 1)
-      end
-    end
-    
   end
 end

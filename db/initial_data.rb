@@ -15,7 +15,7 @@ groups(:content_editor).permissions<<permissions(:author)
 groups(:content_editor).permissions<<permissions(:publish)
 
 create_site(:default, :name => "Default", :domain => "example.com")
-create_section(:root, :name => "My Site", :path => "/")
+create_section(:root, :name => "My Site", :path => "/", :root => true)
 create_section(:products, :name => "Products", :parent => sections(:root), :path => "/products")
 create_section(:browsercms, :name => "BrowserCMS", :parent => sections(:products), :path => "/browsercms")
 create_section(:browserams, :name => "BrowserAMS", :parent => sections(:products), :path => "/browserams")

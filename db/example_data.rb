@@ -74,6 +74,11 @@ module FixtureReplacement
     a.path = "/"
   end
 
+  attributes_for :section_node do |a|
+    a.section = default_section
+    a.node = default_page  
+  end
+
   attributes_for :site do |a|
     a.name = "Test #{Sequence.next}"
     a.domain = "#{a.name.gsub(/\s/,"_").downcase}.com"

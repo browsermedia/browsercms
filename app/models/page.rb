@@ -2,9 +2,8 @@ class Page < ActiveRecord::Base
   
   acts_as_content_page
   
-  acts_as_list :scope => :section
+  has_one :section_node, :as => :node
   
-  belongs_to :section
   belongs_to :template, :class_name => "PageTemplate"
   
   #This association uses the version of the instance
@@ -15,11 +14,10 @@ class Page < ActiveRecord::Base
   #This joins with the pages table, so therefore is only used when working with the latest version of the page
   has_many :connectors, :include => :page, :conditions => 'pages.version = connectors.page_version', :order => "connectors.position"
   
-  after_update :copy_connectors!, :if => Proc.new {|page| page.create_new_version? }
+  after_update :copy_connectors!
   before_validation :append_leading_slash_to_path
   before_destroy :delete_connectors
   
-  validates_presence_of :section_id
   validate :path_unique?
 
   named_scope :connected_to_block, lambda { |b| {:include => :connectors, :conditions => ['connectors.content_block_id = ? and connectors.content_block_type = ? and connectors.content_block_version = ?', b.id, b.class.name, b.version]} }
@@ -32,6 +30,26 @@ class Page < ActiveRecord::Base
   
   def file_size
     "?"
+  end
+  
+  def section_id
+    section ? section.id : nil
+  end
+  
+  def section
+    section_node ? section_node.section : nil
+  end
+  
+  def section_id=(sec_id)
+    self.section = Section.find(sec_id)
+  end
+  
+  def section=(sec)
+    if section_node
+      section_node.move_to_end(sec)
+    else
+      build_section_node(:node => self, :section => sec)
+    end      
   end
   
   #Valid options:
@@ -168,43 +186,7 @@ class Page < ActiveRecord::Base
       errors.add(:path, "must be unique")
     end
   end
-  
-  #Should remove this method in favor of move_ahead_of and move_to_the_bottom_of
-  def move_to(section, user)
-    self.section = section
-    self.updated_by_user = user
-    save
-  end
-  
-  #Move this page ahead of some other page, changing the section of the page if necessary
-  def move_ahead_of(page, user)
-    if section != page.section
-      #argh.  acts_as_list is apparently not smart enough to handle 
-      #when an item moves from one scope to the next.  
-      #So we need to remove it from the list of the section it's current in
-      remove_from_list
-      self.section = page.section
-      self.updated_by_user = user
-      save!
-    end
-    insert_at(page.position)      
-  end
-  
-  #Move this page to the end of the section, changing the section of the page if necessary
-  def move_to_the_bottom_of(other_section, user)
-    if self.section != other_section
-      remove_from_list
-      self.section = other_section
-      self.updated_by_user = user
-      save!
-    end
-    if position
-      move_to_bottom
-    else
-      insert_at(section.pages.first(:order => "pages.position desc").position+1)
-    end
-  end
-  
+      
   def layout
     template ? template.file_name : nil
   end

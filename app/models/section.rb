@@ -1,15 +1,19 @@
 class Section < ActiveRecord::Base
   
-  acts_as_list :scope => :parent
+  #The node that links this section to its parent
+  has_one :parent_node, :class_name => "SectionNode", :as => :node
   
-  belongs_to :parent, :class_name => "Section"
-  has_many :children, :class_name => "Section", :foreign_key => "parent_id", :order => "sections.position"
-  has_many :pages
+  #The nodes that link this section to its children
+  has_many :child_nodes, :class_name => "SectionNode"
+
+  has_many :pages, :through => :child_nodes, :source => :node, :source_type => 'Page'
+  has_many :sections, :through => :child_nodes, :source => :node, :source_type => 'Section'
 
   has_many :group_sections
   has_many :groups, :through => :group_sections
   
-  named_scope :root, :conditions => ['sections.parent_id is null']
+  named_scope :root, :conditions => ['root = ?', true]
+  
   
   #validates_presence_of :parent_id, :if => Proc.new {root.count > 0}, :message => "section is required"
   
@@ -18,21 +22,36 @@ class Section < ActiveRecord::Base
   
   before_destroy :deletable?
   
-  def root?
-    parent_id.nil?
+  def parent_id
+    parent ? parent.id : nil
   end
+  
+  def parent
+    parent_node ? parent_node.section : nil
+  end
+  
+  def parent_id=(sec_id)
+    self.parent = Section.find(sec_id)
+  end
+  
+  def parent=(sec)
+    if parent_node
+      parent_node.move_to_end(sec)
+    else
+      build_parent_node(:node => self, :section => sec)
+    end      
+  end  
   
   def move_to(section)
     if root?
       false
     else
-      self.parent = section
-      save
+      parent_node.move_to_end(section)
     end
   end
   
   def empty?
-    children.count + pages.count == 0
+    child_nodes.count == 0
   end
   
   def deletable?
@@ -47,7 +66,7 @@ class Section < ActiveRecord::Base
     section = Section.root.first
     children = name_path.split("/")[1..-1] || []
     children.each do |name|
-      section = section.children.first(:conditions => {:name => name})
+      section = section.sections.first(:conditions => {:name => name})
     end
     section
   end

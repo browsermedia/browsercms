@@ -2,9 +2,8 @@ class CreateSections < ActiveRecord::Migration
   def self.up
     create_table :sections do |t|
       t.string :name
-      t.integer :parent_id
-      t.integer :position
       t.string :path
+      t.boolean :root
       t.string :nav_image
       t.string :nav_rollover_image
       t.string :current_nav_image

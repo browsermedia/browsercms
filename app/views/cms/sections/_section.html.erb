@@ -1,8 +1,8 @@
 <li id="section_<%= section.id %>">
-  <%= link_to_function action_icon(section.root? ? :folder_open : :folder), {}, {:class => "section"} %>
+  <%= link_to_function action_icon(:folder_open), {}, {:class => "section"} %>
   <span class="section<%= @selected_section == section ? ' selected_section' : ''%>"><%=h section.name %></span>
-  <ul<%= section.root? ? ' ' : ' style="display: none"' %>>
-    <%= render :partial => 'section', :collection => section.children.all(:include => :pages) %>
+  <ul>
+    <%= render :partial => 'section', :collection => section.sections %>
     <%= render :partial => 'page', :collection => section.pages %>
   </ul>
 </li>

@@ -14,7 +14,7 @@ describe Section do
   
   it "should be able to create sub-sections" do
     sub = create_section(:name => "Sub Section", :parent => root_section)
-    root_section.children.first(:order => "created_at desc").should == sub
+    root_section.sections.first(:order => "created_at desc").should == sub
     sub.parent.should == root_section
   end
 
@@ -27,18 +27,16 @@ describe Section do
   # end
   
   it "should be able to be moved into another section if it is not the root" do
-    root = create_section
-    foo = create_section(:name => "Foo", :parent => root)
-    bar = create_section(:name => "Bar", :parent => root)
-    foo.parent.should == root
+    foo = create_section(:name => "Foo", :parent => root_section)
+    bar = create_section(:name => "Bar", :parent => root_section)
+    foo.parent.should == root_section
     foo.move_to(bar).should be_true
     foo.parent.should == bar
   end
   
   it "should not be able to be moved into another section if it is the root" do
-    root = create_section
-    foo = create_section(:name => "Foo", :parent => root)
-    root.move_to(foo).should be_false
+    foo = create_section(:name => "Foo", :parent => root_section)
+    root_section.move_to(foo).should be_false
   end  
   
   describe "#find_by_name_path" do

@@ -2,7 +2,7 @@ xml.instruct!
 xml.tag! 'Connector', "command" => params["Command"], "resourceType" => params["Type"] do
   xml.tag! 'CurrentFolder', "path" => params[:CurrentFolder], "url" => params[:CurrentFolder]
   xml.tag! 'Folders' do
-    for section in @section.children do
+    for section in @section.sections do
       xml.tag! 'Folder', "name" => section.name
     end
   end
