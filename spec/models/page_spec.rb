@@ -855,16 +855,17 @@ describe "Reverting a block that is on multiple pages" do
 end
 
 describe "Viewing a previous version of a page" do
-  
-  it "should show the right section" do
-    @page = create_page(:section => root_section)
-    @section = create_section(:parent => root_section, :name => "Other")
-    reset(:page)
-    @page.update_attributes!(:section => @section, :updated_by_user => create_user)
-    reset(:page)
-    @page.section.should == @section
-    @page.as_of_version(1).section.should == root_section
-  end  
+
+  #Not true anymore, changing a page's section is no longer a versionable thing
+  # it "should show the right section" do
+  #   @page = create_page(:section => root_section)
+  #   @section = create_section(:parent => root_section, :name => "Other")
+  #   reset(:page)
+  #   @page.update_attributes!(:section => @section, :updated_by_user => create_user)
+  #   reset(:page)
+  #   @page.section.should == @section
+  #   @page.as_of_version(1).section.should == root_section
+  # end  
 
   it "should show the page template" do
     @foo = create_page_template(:name => "Foo")

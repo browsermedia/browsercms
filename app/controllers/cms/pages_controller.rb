@@ -68,11 +68,12 @@ class Cms::PagesController < Cms::BaseController
   end
 
   def new
-    @page = @section.pages.build
+    @page = Page.new(:section => @section)
   end
 
   def create
-    @page = @section.pages.build(params[:page])
+    @page = Page.new(params[:page])
+    @page.section = @section
     @page.updated_by_user = current_user
     if @page.save
       flash[:notice] = "Page was '#{@page.name}' created."

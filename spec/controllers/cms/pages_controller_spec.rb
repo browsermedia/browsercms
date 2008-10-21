@@ -4,6 +4,17 @@ describe Cms::PagesController do
   include Cms::PathHelper
   integrate_views
   
+  describe "creating a new page" do
+    before do
+      login_as_user
+      @section = root_section
+      get :new, :section_id => @section.id
+    end
+    it "should be a success" do
+      response.should be_success
+    end
+  end
+  
   describe "showing" do
     describe "the home page" do
       it "should display the page with a title" do
