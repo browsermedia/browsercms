@@ -3,6 +3,16 @@ class SectionNode < ActiveRecord::Base
   belongs_to :node, :polymorphic => :true
 
   acts_as_list :scope => :section
+
+  #Is this node a section
+  def section?
+    node_type == 'Section'
+  end
+
+  #Is this node a page
+  def page?
+    node_type == 'Page'
+  end
   
   def move_to(sec, pos)
     transaction do

@@ -113,26 +113,6 @@ div.buttons form.button-to {
   div.buttons form.button-to div {
     display: inline; }
 
-#sitemap {
-  margin: 10px 0; }
-  #sitemap ul {
-    list-style-type: none;
-    padding-left: 25px; }
-  #sitemap li {
-    margin: 5px 0; }
-  #sitemap span.section, #sitemap span.page {
-    padding: 2px;
-    border: 2px solid #fff; }
-  #sitemap span.drop-target {
-    border-color: #9bf; }
-  #sitemap span {
-    padding: 2px 5px; }
-  #sitemap span.hover {
-    background-color: #cdf;
-    cursor: pointer; }
-  #sitemap span.selected {
-    background-color: #9bf; }
-
 ul.block_info {
   list-style-type: none; 
   padding-left: 0; }

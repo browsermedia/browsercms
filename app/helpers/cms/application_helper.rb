@@ -51,7 +51,7 @@ module Cms
     end
 
     def status_icon(status, options={})
-      image_tag "cms/icons/status/#{status.underscore}.gif", {:alt => status.titleize}.merge(options)
+      image_tag "cms/icons/status/#{status.to_s.underscore}.gif", {:alt => status.to_s.titleize}.merge(options)
     end
   
     def cms_toolbar

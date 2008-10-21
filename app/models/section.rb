@@ -50,6 +50,10 @@ class Section < ActiveRecord::Base
     end
   end
   
+  def public?
+    !!(groups.find_by_code('guest'))
+  end
+  
   def empty?
     child_nodes.count == 0
   end

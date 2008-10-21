@@ -1,0 +1,8 @@
+<tr id="section_node_<%= node.id %>">
+  <td><%= status_icon(section.public? ? :unlocked : :locked) %></td>
+  <td class="section" style="padding-left: <%= depth*15 %>px">
+    <%= action_icon(:folder) %>
+    <%= link_to h(section.name), cms_path(section, :edit) %>
+  </td>
+</tr>
+<%= render :partial => 'section_node', :collection => section.child_nodes(:order => 'position'), :locals => {:depth => depth+1} %>

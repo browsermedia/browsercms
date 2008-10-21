@@ -1,0 +1,7 @@
+<tr id="section_node_<%= node.id %>">
+  <td><%= status_icon(page.status) %></td>
+  <td class="page" style="padding-left: <%= depth*15 %>px">
+    <%= action_icon(:page) %>
+    <%= link_to h(page.name), page.path %>
+  </td>
+</tr>

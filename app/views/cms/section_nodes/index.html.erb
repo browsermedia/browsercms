@@ -1,0 +1,10 @@
+<% content_for :html_head do %>
+  <%= stylesheet_link_tag 'cms/sitemap' %>
+<% end %>
+<table id="sitemap">
+  <tr>
+    <th>Status</th>
+    <th>Site Structure</th>
+  </th>
+  <%= render :partial => 'section_node', :collection => @section.child_nodes(:order => 'position'), :locals => {:depth => 1} %>
+</table>

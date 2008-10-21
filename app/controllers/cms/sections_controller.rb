@@ -3,21 +3,11 @@ class Cms::SectionsController < Cms::BaseController
   before_filter :load_parent, :only => [:new, :create]
 
   def index
-    #If the route is /cms/sections?page_id=123, the page_id will be 123
-    @section = Section.root.first
-    if(params[:page_id])
-      @selected_page = Page.find(params[:page_id])
-      @selected_section = @selected_page.section
-    else
-      @selected_section = @section
-    end
-    render :layout => 'cms/sitemap'
+    redirect_to cms_url(:sitemap)
   end
 
   def show
-    @selected_section = Section.find(params[:id])
-    @section = Section.root.first
-    render :action => 'index', :layout => 'cms/sitemap'
+    redirect_to cms_url(:sitemap)
   end
   
   def new
