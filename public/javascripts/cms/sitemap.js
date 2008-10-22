@@ -1,6 +1,25 @@
 $J(document).ready(function(){
+  
+  //Disable all "buttons"
   $J('#buttons a.disabled').click(function(){ return false })
   
+  //onClick for the folder icon for each section, show/hide section
+  $J('#sitemap a.folder').click(function(){ 
+    var id = this.id.replace(/folder_/,'')
+    
+    if($J(this).hasClass("folder-open")) {
+      $J('.p'+id+', .a'+id).hide()
+      $J(this).find('img').attr('src','/images/cms/icons/actions/folder.png')
+      $J(this).removeClass("folder-open")
+    } else {
+      $J('.p'+id).show()
+      $J(this).find('img').attr('src','/images/cms/icons/actions/folder_open.png')
+      $J(this).addClass("folder-open")
+    }
+    return false 
+  })
+  
+  //onClick for the name of a section/page
   $J('#sitemap span.node').click(function(){
     $J('#buttons a').addClass('disabled').click(function(){return false})
     $J('#sitemap span.node').removeClass('selected')

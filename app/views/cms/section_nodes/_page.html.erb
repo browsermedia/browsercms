@@ -1,4 +1,6 @@
-<tr id="section_node_<%= node.id %>">
+<tr id="section_node_<%= node.id %>"<% unless ancestors.empty? %>
+    class="<%= a = []; ancestors.each_with_index{|sn, i| a << "#{i == ancestors.size-1 ? 'p' : 'a'}#{sn.id}"}; a.join(" ") %>" 
+    style="display: none"<% end %>>
   <td><%= status_icon(page.status) %></td>
   <td style="padding-left: <%= depth*15 %>px">
     <%= action_icon(:page) %>

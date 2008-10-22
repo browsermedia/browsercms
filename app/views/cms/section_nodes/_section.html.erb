@@ -1,8 +1,11 @@
-<tr id="section_node_<%= node.id %>">
+<tr id="section_node_<%= node.id %>"<% unless ancestors.empty? %>
+    class="<%= a = []; ancestors.each_with_index{|sn, i| a << "#{i == ancestors.size-1 ? 'p' : 'a'}#{sn.id}"}; a.join(" ") %>" 
+    style="display: none"<% end %>>
   <td><%= status_icon(section.public? ? :unlocked : :locked) %></td>
   <td style="padding-left: <%= depth*15 %>px">
-    <%= action_icon(:folder) %>
+    <%= link_to action_icon(:folder), "#", :id => "folder_#{node.id}", :class => "folder" %>
     <span id="section_<%= section.id %>" class="section node"><%= h(section.name) %></span>
   </td>
 </tr>
-<%= render :partial => 'section_node', :collection => section.child_nodes(:order => 'position'), :locals => {:depth => depth+1} %>
+<%= render :partial => 'section_node', :collection => section.child_nodes(:order => 'position'), :locals => {:depth => depth+1, :ancestors => ancestors.push(node)} %>
+<% ancestors.pop %>

@@ -30,5 +30,5 @@
       <span id="section_<%= @section.id %>" class="root node"><%= h(@section.name) %></span>
     </td>
   </tr>  
-  <%= render :partial => 'section_node', :collection => @section.child_nodes(:order => 'position'), :locals => {:depth => 1} %>
+  <%= render :partial => 'section_node', :collection => @section.child_nodes(:order => 'position'), :locals => {:depth => 1, :ancestors => []} %>
 </table>

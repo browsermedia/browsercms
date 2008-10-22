@@ -1,1 +1,1 @@
-<%= render :partial => section_node.node_type.underscore, :locals => {:depth => depth, :node => section_node, section_node.node_type.underscore.to_sym => section_node.node} %>
+<%= render :partial => section_node.node_type.underscore, :locals => {:depth => depth, :node => section_node, section_node.node_type.underscore.to_sym => section_node.node, :ancestors => ancestors} %>
