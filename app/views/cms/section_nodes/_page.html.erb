@@ -1,9 +1,11 @@
 <tr id="section_node_<%= node.id %>"<% unless ancestors.empty? %>
     class="<%= a = []; ancestors.each_with_index{|sn, i| a << "#{i == ancestors.size-1 ? 'p' : 'a'}#{sn.id}"}; a.join(" ") %>" 
     style="display: none"<% end %>>
-  <td><%= status_icon(page.status) %></td>
-  <td style="padding-left: <%= depth*15 %>px">
-    <%= action_icon(:page) %>
-    <span id="page_<%= page.id %>" class="page node"><%= h(page.name) %></span>
+  <td class="status"><%= status_icon(page.status) %></td>
+  <td class="node" style="padding-left: <%= (depth+1)*15 %>px">
+    <div class="icon_node">
+      <%= action_icon(:page) %>
+      <span id="page_<%= page.id %>" class="page node"><%= h(page.name) %></span>
+    </div>
   </td>
 </tr>

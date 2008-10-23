@@ -19,16 +19,20 @@
 </div>
 
 <table id="sitemap">
-  <tr>
-    <th>Status</th>
-    <th>Site Structure</th>
-  </th>
-  <tr>
-    <td><%= status_icon(:unlocked) %></td>
-    <td>
-      <%= action_icon(:home) %>
-      <span id="section_<%= @section.id %>" class="root node"><%= h(@section.name) %></span>
-    </td>
-  </tr>  
-  <%= render :partial => 'section_node', :collection => @section.child_nodes(:order => 'position'), :locals => {:depth => 1, :ancestors => []} %>
+  <thead>
+    <tr>
+      <th class="status">Status</th>
+      <th class="node">Site Structure</th>
+    </th>
+    <tr>
+      <td class="status"><%= status_icon(:unlocked) %></td>
+      <td class="node">
+        <%= action_icon(:home) %>
+        <span id="section_<%= @section.id %>" class="root node"><%= h(@section.name) %></span>
+      </td>
+    </tr>  
+  </thead>
+  <tbody>
+    <%= render :partial => 'section_node', :collection => @section.child_nodes(:order => 'position'), :locals => {:depth => 1, :ancestors => []} %>
+  </tbody>
 </table>

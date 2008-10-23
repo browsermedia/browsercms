@@ -1,5 +1,47 @@
+#sitemap {
+  width: 100%;
+  border-collapse: collapse;   
+  margin: 10px 0;
+  padding: 10px;
+}
+
+#sitemap th, #sitemap td {
+  margin: 0;
+} 
+
+#sitemap th {
+  margin: 0;
+  padding: 5px; 
+} 
+
+#sitemap td {
+  margin: 0;
+  padding: 3px 0; 
+} 
+
+#sitemap th.status, #sitemap td.status {
+  text-align: center;
+  width: 50px;
+}
+
+#sitemap th.node, #sitemap td.node {
+  padding-left: 15px;
+}
+
+#sitemap th.node {
+  text-align: left;
+}
+
+#sitemap td.status {
+  border-right: 1px solid #999;
+}
+
 #buttons a.disabled {
   opacity: 0.5;
+}
+
+#sitemap td div.icon_node {
+  display: inline;
 }
 
 #sitemap span.selected {

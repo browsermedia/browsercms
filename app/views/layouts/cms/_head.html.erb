@@ -6,8 +6,15 @@
     <%= stylesheet_link_tag 'cms/application' %>
     <%= javascript_include_tag :defaults, 'jquery' %>
     <script type="text/javascript">
-      var $J = jQuery.noConflict();
+      jQuery.noConflict();
+      var $J = jQuery;
+      jQuery.log = function(message) {
+        if(window.console) {
+           console.debug(message);
+        }
+      };    
     </script>
+    <%= javascript_include_tag 'jquery-ui' %>
     <%= javascript_include_tag 'cookiejar', '/fckeditor/fckeditor', 'cms/editor' %>
     <%= yield :html_head %>
   </head>
