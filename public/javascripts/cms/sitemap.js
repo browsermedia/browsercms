@@ -35,7 +35,12 @@ jQuery(function($){
     var id = this.id.replace(/folder_/,'')
     
     if($(this).hasClass("folder-open")) {
+      //close children
       $('.p'+id+', .a'+id).hide()
+        .find('a').removeClass("folder-open")
+          .find('img').attr('src','/images/cms/icons/actions/folder.png')
+
+      //close this
       $(this).find('img').attr('src','/images/cms/icons/actions/folder.png')
       $(this).removeClass("folder-open")
     } else {
