@@ -16,7 +16,7 @@
 
 #sitemap td {
   margin: 0;
-  padding: 3px 0; 
+  padding: 0; 
 } 
 
 #sitemap th.status, #sitemap td.status {
@@ -46,4 +46,21 @@
 
 #sitemap span.selected {
   background-color: #9bf;
+}
+
+#sitemap .node td.drop_before, #sitemap .node td.drop_after {
+  height: 5px;
+  margin: 0;
+  padding: 0;
+}
+
+#sitemap table {
+  margin: 0;
+  padding: 0;
+  border-spacing: 0;
+}
+
+#sitemap table td {
+  margin: 0;
+  padding: 0;
 }

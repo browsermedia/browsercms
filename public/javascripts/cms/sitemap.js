@@ -7,18 +7,20 @@ jQuery(function($){
   var origNode = false;
   
   //drag/drop functionality
-  $('#sitemap tbody div').draggable({
+  $('#sitemap .icon_node div').draggable({
     revert: true,
     revertDuration: 200,
-    refreshPositions: true,
+    helper: 'clone',
     delay: 200
-  }).droppable({
+  })
+  $('#sitemap .node .drop_before, #sitemap .node .drop_after').droppable({
     accept: 'div',
+    tolerance: 'pointer',
     over: function(e, ui) {
-      $(this).css('border-bottom','1px dotted #999')
+      $(this).css('background-color','#00c')
     },
     out: function(e, ui) {
-      $(this).css('border', 'none')
+      $(this).css('background-color', '#fff')
     },
     drop: function(e, ui) {
       $.log(ui.element[0])
@@ -27,44 +29,7 @@ jQuery(function($){
       return false;
     }
   });
-  // $('#sitemap tbody td').mousedown(function(e){
-  //   origNode = $(this);
-  //   var div = $('>div', origNode);
-  //   var offset = div.offset();
-  //   var clone = div.clone();
-  //   origNode.hide();
-  //   dragNode = clone.css({display: "block", position: "absolute", left: offset.left+"px", top: offset.top+"px", opacity: 0.6, border:'none'}).appendTo('body');   
-  // }).mousemove(function(e){
-  //   if(dragNode) {
-  //     var offset = $(this).offset();
-  //     var x = e.pageX - offset.left;
-  //     var y = e.pageY - offset.top;
-  //     if(y > $(this).height()/2) {
-  //       $('div', this).css('border','none').css('border-bottom','1px dotted #999')
-  //     } else {
-  //       $('div', this).css('border','none').css('border-top','1px dotted #999')
-  //     }      
-  //   }
-  // }).mouseout(function(e){
-  //   $('div', this).css('border','none')
-  // }).mouseup(function(e){
-  //   $.log('td up')
-  // })
-  // 
-  // $('body').mousemove(function(e){
-  //   if(dragNode) {
-  //     dragNode.css({left: e.pageX, top: e.pageY})
-  //   }
-  // }).mouseup(function(e){
-  //   if(dragNode && origNode) {
-  //     dragNode.remove()
-  //     dragNode = false;
-  //     origNode.show();
-  //     origNode = false;
-  //     $.log('body up')
-  //   }
-  // })
-  
+
   //onClick for the folder icon for each section, show/hide section
   $('#sitemap a.folder').click(function(){ 
     var id = this.id.replace(/folder_/,'')

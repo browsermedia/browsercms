@@ -1,12 +1,16 @@
-<tr id="section_node_<%= node.id %>"<% unless ancestors.empty? %>
+<tr<% unless ancestors.empty? %>
     class="<%= a = []; ancestors.each_with_index{|sn, i| a << "#{i == ancestors.size-1 ? 'p' : 'a'}#{sn.id}"}; a.join(" ") %>" 
     style="display: none"<% end %>>
   <td class="status"><%= status_icon(section.public? ? :unlocked : :locked) %></td>
   <td class="node" style="padding-left: <%= (depth+1)*15 %>px">
-    <div class="icon_node">
-      <%= link_to action_icon(:folder), "#", :id => "folder_#{node.id}", :class => "folder" %>
-      <span id="section_<%= section.id %>" class="section node"><%= h(section.name) %></span>
-    </div>
+    <table id="section_node_<%= node.id %>" cellpadding="0" cellspacing="0">
+      <tr><td class="drop_before"><div></div></td></tr>
+      <tr><td class="icon_node"><div>
+        <%= link_to action_icon(:folder), "#", :id => "folder_#{node.id}", :class => "folder" %>
+        <span id="section_<%= section.id %>" class="section node"><%= h(section.name) %></span>        
+      </div></td></tr>
+      <tr><td class="drop_after"><div></div></td></tr>
+    </table>
   </td>
 </tr>
 <%= render :partial => 'section_node', :collection => section.child_nodes(:order => 'position'), :locals => {:depth => depth+1, :ancestors => ancestors.push(node)} %>
