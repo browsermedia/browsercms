@@ -8,7 +8,7 @@ jQuery(function($){
   
   //drag/drop functionality
   $('#sitemap .icon_node div').draggable({
-    revert: true,
+    revert: 'invalid',
     revertDuration: 200,
     helper: 'clone',
     delay: 200
@@ -23,10 +23,67 @@ jQuery(function($){
       $(this).css('background-color', '#fff')
     },
     drop: function(e, ui) {
-      $.log(ui.element[0])
-      $.log('landed on')
-      $.log(this)
-      return false;
+      //Remove any drop zone highlights still hanging out
+      $('#sitemap .node .drop_before, #sitemap .node .drop_after').css('background-color', '#fff')
+      
+      //Get the object and the id for the src (what we are droping) 
+      //and the dest (where we are dropping)
+      var src = ui.draggable.parent('td').parent('tr').parents('tr')
+      var sid = src[0].id.replace(/section_node_/,'')
+      var dest = $(this).parent('tr').parents('tr')
+      var did = dest[0].id.replace(/section_node_/,'')
+      
+      //insert before or after, bsed on the class of the drop zone
+      if($(this).hasClass('drop_before') || $(this).hasClass('drop_after')) {
+        if($(this).hasClass('drop_before')) {
+          src.insertBefore(dest)
+        } else {
+          src.insertAfter(dest)
+        }
+        
+        //Update the parent/ancestors as well as the depth
+        var old_class = src.attr('class')
+        var old_depth = parseInt($('td.node', src).css('padding-left').replace('px','')) || 0
+        var new_class = dest.attr('class')
+        var new_depth = parseInt($('td.node', dest).css('padding-left').replace('px','')) || 0
+
+        src.attr('class', new_class).addClass('section_node')
+        $('td.node', src).css('padding-left', new_depth+'px')
+
+        //Modify the depth of all children
+        $('.p'+sid+' td.node, .a'+sid+' td.node').each(function(){
+          var cur_depth = parseInt(($(this).css('padding-left').replace('px','')) || 0);
+          $(this).css('padding-left', (new_depth - old_depth + cur_depth)+'px')
+        })
+
+        //Now remove all the old ancestors and add back the new ones on the children
+        old_class.replace('p','a').split(' ').each(function(e){ 
+          $('.p'+sid+', .a'+sid).removeClass(e) 
+        })
+        new_class.replace('p','a').split(' ').each(function(e){ 
+          $('.p'+sid+', .a'+sid).addClass(e) 
+        })
+
+        //Now we move over all the decendents of the src
+        var prev_node = src;
+        $('#sitemap tr.section_node').each(function(){
+          if($(this).hasClass('p'+sid) || $(this).hasClass('a'+sid)) {
+            $(this).insertAfter(prev_node)
+            prev_node = $(this)
+          }
+        })
+
+        //Now we move over all the decendents of the dest
+        prev_node = dest;
+        $('#sitemap tr.section_node').each(function(){
+          if($(this).hasClass('p'+did) || $(this).hasClass('a'+did)) {
+            $(this).insertAfter(prev_node)
+            prev_node = $(this)
+          }
+        })
+
+      }
+      
     }
   });
 
