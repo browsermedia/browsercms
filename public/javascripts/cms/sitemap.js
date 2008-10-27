@@ -1,4 +1,12 @@
 jQuery(function($){
+  Cms = {
+    showNotice: function(msg) {
+      $('#message').removeClass('error').addClass('notice').html(msg).show().animate({opacity: 1.0}, 3000).fadeOut("normal")
+    },
+    showError: function(msg) {
+      $('#message').removeClass('notice').addClass('error').html(msg).show().animate({opacity: 1.0}, 3000).fadeOut("normal")
+    }
+  }
   
   //Disable all "buttons"
   $('#buttons a.disabled').click(function(){ return false })
@@ -89,7 +97,11 @@ jQuery(function($){
         //Finally do the ajax request
         $.post(url, { _method: "PUT", section_node_id: did },
           function(data){
-            console.log(data.message);
+            if(data.success) {
+              Cms.showNotice(data.message)
+            } else {
+              Cms.showError(data.message)
+            }
           }, "json");
       }
       
