@@ -32,14 +32,18 @@ jQuery(function($){
       var sid = src[0].id.replace(/section_node_/,'')
       var dest = $(this).parent('tr').parents('tr')
       var did = dest[0].id.replace(/section_node_/,'')
-      
+            
       //insert before or after, bsed on the class of the drop zone
       if($(this).hasClass('drop_before') || $(this).hasClass('drop_after')) {
         if($(this).hasClass('drop_before')) {
+          var move = 'before'
           src.insertBefore(dest)
         } else {
+          var move = 'after'          
           src.insertAfter(dest)
         }
+        
+        var url = '/cms/section_nodes/move_'+move+'/'+sid
         
         //Update the parent/ancestors as well as the depth
         var old_class = src.attr('class')
@@ -82,6 +86,11 @@ jQuery(function($){
           }
         })
 
+        //Finally do the ajax request
+        $.post(url, { _method: "PUT", section_node_id: did },
+          function(data){
+            console.log(data.message);
+          }, "json");
       }
       
     }

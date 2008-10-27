@@ -33,6 +33,6 @@
     </tr>  
   </thead>
   <tbody>
-    <%= render :partial => 'section_node', :collection => @section.child_nodes(:order => 'position'), :locals => {:depth => 1, :ancestors => []} %>
+    <%= render :partial => 'section_node', :collection => @section.child_nodes.all(:order => 'position'), :locals => {:depth => 1, :ancestors => []} %>
   </tbody>
 </table>

@@ -13,5 +13,5 @@
     </table>
   </td>
 </tr>
-<%= render :partial => 'section_node', :collection => section.child_nodes(:order => 'position'), :locals => {:depth => depth+1, :ancestors => ancestors.push(node)} %>
+<%= render :partial => 'section_node', :collection => section.child_nodes.all(:order => 'position'), :locals => {:depth => depth+1, :ancestors => ancestors.push(node)} %>
 <% ancestors.pop %>

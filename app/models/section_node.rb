@@ -22,14 +22,36 @@ class SectionNode < ActiveRecord::Base
         save
       end
       
-      #This helps prevent the position from getting out of whack
-      #If you pass in a really high number for position, 
-      #this just corrects it to the right number
-      node_count = SectionNode.count(:conditions => {:section_id => section_id})
-      pos = node_count if pos > node_count
+      if pos < 0
+        pos = 0
+      else
+        #This helps prevent the position from getting out of whack
+        #If you pass in a really high number for position, 
+        #this just corrects it to the right number
+        node_count = SectionNode.count(:conditions => {:section_id => section_id})
+        pos = node_count if pos > node_count
+      end
       
       insert_at_position(pos)
     end
+  end
+  
+  def move_before(section_node)
+    if section == section_node.section && position < section_node.position
+      pos = section_node.position - 1
+    else
+      pos = section_node.position
+    end
+    move_to(section_node.section, pos)
+  end
+  
+  def move_after(section_node)
+    if section == section_node.section && position < section_node.position
+      pos = section_node.position
+    else
+      pos = section_node.position + 1
+    end
+    move_to(section_node.section, pos)
   end
   
   def move_to_end(sec)
