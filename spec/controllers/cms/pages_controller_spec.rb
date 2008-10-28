@@ -19,7 +19,7 @@ describe Cms::PagesController do
     describe "the home page" do
       it "should display the page with a title" do
         @page_template = create_page_template(:file_name => "application")
-        @page = create_page(:section => root_section, :path => "/", :name => "Test Homepage", :template => @page_template, :new_status => "PUBLISHED")
+        @page = create_page(:section => root_section, :path => "/", :name => "Test Homepage", :template => @page_template, :publish_on_save => true)
         get :show, :path => []
         response.should have_tag("title", "Test Homepage")
       end
@@ -27,7 +27,7 @@ describe Cms::PagesController do
     describe "the about page" do
       it "should display the page with a title" do
         @page_template = create_page_template(:file_name => "application")
-        @page = create_page(:section => root_section, :path => "/about", :name => "Test About", :template => @page_template, :new_status => "PUBLISHED")
+        @page = create_page(:section => root_section, :path => "/about", :name => "Test About", :template => @page_template, :publish_on_save => true)
         get :show, :path => ["about"]
         response.should have_tag("title", "Test About")
       end
@@ -36,7 +36,7 @@ describe Cms::PagesController do
       before do
         @page_template = create_page_template(:file_name => "application")
         @protected_section = create_section(:parent => root_section)
-        @page = create_page(:section => @protected_section, :path => "/secret", :name => "Shhh... It's a Secret", :template => @page_template, :new_status => "PUBLISHED")
+        @page = create_page(:section => @protected_section, :path => "/secret", :name => "Shhh... It's a Secret", :template => @page_template, :publish_on_save => true)
       end
       it "should raise an error if the user is a guest" do
         lambda { get :show, :path => ["secret"] }.should raise_error      
@@ -185,10 +185,10 @@ describe Cms::PagesController do
   describe "a search bot" do
     before do
       @page_template = create_page_template(:file_name => "application")
-      @public_page = create_page(:section => root_section, :path => "/", :name => "Test Homepage", :template => @page_template, :new_status => "PUBLISHED")
+      @public_page = create_page(:section => root_section, :path => "/", :name => "Test Homepage", :template => @page_template, :publish_on_save => true)
       root_section.groups << create_group(:code => "search_bot")
       @secret_section = create_section(:parent => root_section)
-      @secret_page = create_page(:section => @secret_section, :path => "/secret", :name => "Shhh... It's a Secret", :template => @page_template, :new_status => "PUBLISHED") 
+      @secret_page = create_page(:section => @secret_section, :path => "/secret", :name => "Shhh... It's a Secret", :template => @page_template, :publish_on_save => true) 
       request.stub!(:user_agent).and_return("googlebot") 
     end
     it "should be a guest" do

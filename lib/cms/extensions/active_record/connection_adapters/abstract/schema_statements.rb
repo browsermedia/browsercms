@@ -9,6 +9,8 @@ module ActiveRecord
 
         t.integer :version, :default => 1
         yield t
+        t.boolean :published, :default => false
+        t.boolean :deleted, :default => false
         t.timestamps
         t.integer :updated_by_id
         t.string :revision_comment
@@ -22,6 +24,8 @@ module ActiveRecord
         vt.integer "#{table_name.singularize}_id".to_sym
         vt.integer :version, :default => 1
         yield vt    
+        vt.boolean :published, :default => false
+        vt.boolean :deleted, :default => false
         vt.timestamps            
         vt.integer :updated_by_id
         vt.string :revision_comment

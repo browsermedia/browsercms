@@ -77,8 +77,7 @@ module Cms
     end
 
     def update_page(page)
-      new_status = status == 'PUBLISHED' && page.status == 'PUBLISHED' ? 'PUBLISHED' : 'IN_PROGRESS'
-      page.update_attributes!(:new_revision_comment => "Edited block", :new_status => new_status, :updated_by_user => updated_by)
+      page.update_attributes!(:new_revision_comment => "Edited block", :publish_on_save => (published? && page.published?), :updated_by_user => updated_by)
       page.connectors.all(:include => :page, :conditions => {:content_block_id => self.id, :content_block_type => self.class.name }).each do |conn|
         conn.increment!(:content_block_version)
       end      

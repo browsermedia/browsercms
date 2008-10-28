@@ -7,11 +7,8 @@ module Cms
       end
 
       module MacroMethods
-        DELETED = "DELETED"
-        STATUSES = {"IN_PROGRESS" => :in_progress, "PUBLISHED" => :publish, "ARCHIVED" => :archive, DELETED => :mark_as_deleted}
 
         def acts_as_content_block(options={})
-          @statuses = STATUSES.dup
           acts_as_content_object(options)
           include Cms::BlockSupport
           if options[:versioning] == false
@@ -26,13 +23,15 @@ module Cms
         end
 
         def acts_as_content_page(options={})
-          @statuses = STATUSES.dup
-          @statuses["HIDDEN"] = :hide
           acts_as_content_object(options)
         end
 
         private
         def acts_as_content_object(options={})
+          attr_accessor :publish_on_save
+          
+          before_save :set_published
+                    
           unless options[:versioning] == false
             version_fu
             
@@ -48,43 +47,11 @@ module Cms
           end
           is_paranoid
 
-          attr_accessor :new_status
-          before_validation :reset_status
-
-          @default_status = "IN_PROGRESS"
           after_destroy :destroy_versions_if_destroyed
-
-          validates_inclusion_of :status, :in => @statuses.keys
-
-          define_status_query_methods
-          define_status_action_methods
 
           include InstanceMethods
         end
 
-        def define_status_query_methods
-          @statuses.keys.each do |status|
-            define_method "#{status.underscore}?" do
-              self.status == status
-            end
-          end
-          alias_method :live?, :published?
-        end
-
-        def define_status_action_methods
-          @statuses.each do |status, method_name|
-            define_method method_name do |updated_by|
-              self.new_status = status
-              self.updated_by_user = updated_by
-              save
-            end
-            define_method "#{method_name}!" do |updated_by|
-              self.new_status = status
-              self.updated_by_user = updated_by
-              save!
-            end
-          end
-        end
       end
 
       # These methods will be added to any object marked as acts_as_content_object or acts_as_content_page
@@ -97,15 +64,36 @@ module Cms
           cls.extend ClassMethods
         end
 
-        def reset_status
-          self.status = new_status || self.class.default_status
-          self.new_status = nil
-          status
+        def status_name
+          published? ? "Published" : "Draft"
         end
 
-        def status_name
-          status.titleize
+        def set_published
+          self.published = !!(publish_on_save)
+          true
         end
+
+        def publish(updated_by)
+          self.publish_on_save = true
+          self.updated_by_user = updated_by
+          save          
+        end
+
+        def publish!(updated_by)
+          self.publish_on_save = true
+          self.updated_by_user = updated_by
+          save!          
+        end
+        
+        def live?
+          versions.count(:conditions => ['version > ? AND published = ?', version, true]) == 0 && published?
+        end
+        
+        def draft?
+          !published?
+        end
+
+        alias_method :in_progress?, :draft? 
 
         def destroy_versions_if_destroyed
           return unless versionable?
@@ -117,15 +105,6 @@ module Cms
             self.updated_by_id = updated_by_user_id
           else
             self.updated_by = updated_by_user
-          end
-        end
-
-        module ClassMethods
-          def default_status
-            @default_status
-          end
-          def statuses
-            @statuses
           end
         end
 

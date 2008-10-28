@@ -42,11 +42,13 @@ describe Page do
   describe ".find_live_by_path" do
     before do
       create_page(:name => "Deleted Me", :path => "/test", :section => root_section).destroy
-      @page = create_page(:name => "v1", :path => "/test", :section => root_section, :new_status => "PUBLISHED")
+      @page = create_page(:name => "v1", :path => "/test", :section => root_section, :publish_on_save => true)
       @page = Page.find(@page.id)
       @page.update_attributes!(:name => "v2", :updated_by_user => create_user)
     end
     it "should return the latest version of the page" do
+      log Page.to_table_with(:id, :name, :version, :deleted, :published)
+      log Page::Version.to_table_with(:id, :name, :version, :deleted, :published)
       Page.find_live_by_path("/test").name.should == "v1"
       Page.find_live_by_path("/test").version.should == 1
     end
@@ -140,30 +142,25 @@ describe Page do
       page.should be_hidden
     end
 
-    it "should not allow invalid statuses" do
-      page = new_page(:new_status => "FAIL")
-      page.should have(1).error_on(:status)
-    end
-
     it "should be able to be published" do
       page = create_page(:section => root_section)
       page = Page.find(page.id)
       page.publish(create_user).should be_true  
-      page.reload.status.should == "PUBLISHED"
+      page.reload.should be_published
     end
   end
 
   describe "#container_live?" do
     it "should be true if all blocks are published" do
       page = create_page(:section => root_section)
-      page.add_content_block!(create_html_block(:new_status => 'PUBLISHED'), "main")
-      page.add_content_block!(create_html_block(:new_status => 'PUBLISHED'), "main")
+      page.add_content_block!(create_html_block(:publish_on_save => true), "main")
+      page.add_content_block!(create_html_block(:publish_on_save => true), "main")
       page.container_live?("main").should be_true
     end
     it "should be false if there are any non-published blocks" do
       page = create_page(:section => root_section)
-      page.add_content_block!(create_html_block(:new_status => 'PUBLISHED'), "main")
-      page.add_content_block!(create_html_block(:new_status => 'IN_PROGRESS'), "main")
+      page.add_content_block!(create_html_block(:publish_on_save => true), "main")
+      page.add_content_block!(create_html_block, "main")
       page.container_live?("main").should be_false
     end  
   end
@@ -439,10 +436,10 @@ describe "Adding a block to a page" do
   it "should create 1 new connector" do
     @adding_block.should change(Connector, :count).by(1)
   end
-  it "should mark the page as in_progress" do
+  it "should make the page be draft" do
     @page.publish(create_user)
     @adding_block.call
-    @page.status.should == "IN_PROGRESS"
+    @page.should be_draft
   end
 end
 
@@ -679,7 +676,7 @@ describe "A published page" do
   end
   describe "when adding a block by 'save and publish'" do
     before do
-      @save_and_publish_the_block = lambda { @block = create_html_block(:connect_to_page_id => @page.id, :new_status => "PUBLISHED", :connect_to_container => "testing", :updated_by_user => @user, :name => "Home") }
+      @save_and_publish_the_block = lambda { @block = create_html_block(:connect_to_page_id => @page.id, :publish_on_save => true, :connect_to_container => "testing", :updated_by_user => @user, :name => "Home") }
     end
 
     it "should change the connector count by 1" do
@@ -912,8 +909,8 @@ end
 
 describe "Selecting a block" do
   before do
-    @page = create_page(:section => root_section, :new_status => "PUBLISHED")
-    @block = create_html_block(:new_status => "PUBLISHED")
+    @page = create_page(:section => root_section, :publish_on_save => true)
+    @block = create_html_block(:publish_on_save => true)
     reset(:page, :block)
     @page.should be_published
     @block.should be_published

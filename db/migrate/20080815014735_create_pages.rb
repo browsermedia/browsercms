@@ -4,13 +4,13 @@ class CreatePages < ActiveRecord::Migration
       t.integer :template_id
       t.string :name
       t.string :path
-      t.string :status
       t.text :description
       t.string :user_date
       t.string :author
       t.string :source
       t.string :language
-      t.integer :position
+      t.boolean :hidden
+      t.boolean :archived
     end
     
   end

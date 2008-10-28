@@ -78,9 +78,9 @@ create_page(:test, :name => "Test", :path => "/test", :section => sections(:root
 create_html_block(:test, :name => "Test", :connect_to_page_id => pages(:test).id, :connect_to_container => "main", :updated_by_user => users(:cmsadmin))
 pages(:test).publish!(users(:cmsadmin))
 
-create_html_block(:hello_world, :name => "Hello World", :content => "<h1>Hello, World!</h1>", :new_status => "PUBLISHED", :updated_by_user => users(:cmsadmin))
-create_html_block(:sidebar, :name => "Sidebar", :content => "<ul><li><a href=\"/\">Home</a></li><li><a href=\"/about\">About Us</a></li></ul>", :new_status => "PUBLISHED", :updated_by_user => users(:cmsadmin))
-create_html_block(:about_us, :name => "About Us", :content => "We are super fantastic", :new_status => "PUBLISHED", :updated_by_user => users(:cmsadmin))
+create_html_block(:hello_world, :name => "Hello World", :content => "<h1>Hello, World!</h1>", :publish_on_save => true, :updated_by_user => users(:cmsadmin))
+create_html_block(:sidebar, :name => "Sidebar", :content => "<ul><li><a href=\"/\">Home</a></li><li><a href=\"/about\">About Us</a></li></ul>", :publish_on_save => true, :updated_by_user => users(:cmsadmin))
+create_html_block(:about_us, :name => "About Us", :content => "We are super fantastic", :publish_on_save => true, :updated_by_user => users(:cmsadmin))
 
 pages(:home).add_content_block!(html_blocks(:hello_world), "main")
 pages(:home).add_content_block!(html_blocks(:sidebar), "sidebar")

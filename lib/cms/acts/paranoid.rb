@@ -2,7 +2,7 @@ module Cms
   module Acts
     module Paranoid
       def is_paranoid
-        named_scope :not_deleted, :conditions => ["(status != ? OR status is null)", "DELETED"]
+        named_scope :not_deleted, :conditions => ["deleted = ?", false]
         class << self
           alias_method :find_with_deleted, :find
           alias_method :count_with_deleted, :count
@@ -33,7 +33,7 @@ module Cms
     module InstanceMethods
       #Overrides original destroy method
       def destroy_without_callbacks
-        update_attribute(:status, "DELETED")
+        update_attribute(:deleted, true)
       end
 
       def destroy_with_callbacks!
@@ -46,10 +46,6 @@ module Cms
 
       def destroy!
         transaction { destroy_with_callbacks! }
-      end
-
-      def deleted?
-        status == "DELETED"
       end
       
       def destroyed?
