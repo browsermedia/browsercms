@@ -24,11 +24,6 @@ describe "A Content Object" do
     @block.should_not be_live
   end
 
-  it "should allow blocks to be archived" do
-    @block.archive(create_user)
-    @block.reload.should be_archived
-  end
-
   it "should allow blocks to be marked as draft" do
     @block.publish(create_user)
     @block.publish_on_save = false
@@ -40,39 +35,18 @@ describe "A Content Object" do
     @block.should be_versionable
   end
 
-  it "should not add 'hide' to blocks, since they can't be hidden" do
-    lambda { @block.hide(create_user) }.should raise_error(NoMethodError)
-  end
-
-  it "should respond to ! versions of same status methods" do
-    @block.should respond_to(:in_progress!)
-    @block.should respond_to(:archive!)
-    @block.should respond_to(:publish!)
-    @block.should_not respond_to(:hide!)
-  end
-
   it "should respond to publish?" do
     @block.publish(create_user)
     @block.should be_published
   end
 
-  it "should respond to archive?" do
-    @block.archive(create_user)
-    @block.should be_archived
-  end
-
   it "should respond to in_progress?" do
-    @block.in_progress(create_user)
-    @block.should be_in_progress
-  end
-
-  it "should not dirty initial STATUSES" do
-    Page.new
-    HtmlBlock.statuses.keys.should_not include("HIDDEN")
+    @block.publish_on_save = false
+    @block.should be_draft
   end
 
   it "should respond to status_name" do
-    @block.status_name.should == "In Progress"
+    @block.status_name.should == "Draft"
   end
 
   describe "when destroying a content object" do
@@ -120,10 +94,10 @@ describe "A Content Object" do
       end
     end
     describe "without a new status" do
-      it "should be in progress" do
+      it "should be draft" do
         @block.publish!(create_user)
-        @block.update_attribute(:name, "Whatever")
-        @block.save
+        @block.name = "Whatever"
+        @block.save!
         @block.should be_draft
       end
     end
@@ -194,70 +168,61 @@ describe "A Content Object" do
   end 
 end
 
-describe "When there is a block" do
+describe "Destroying a block" do
   before do
     @block = create_html_block
+    @destroying_the_block = lambda { @block.destroy }
   end
-  describe "that has been deleted" do
-    before do
-      @block.status = "DELETED"
-    end
-    describe "the block" do
-      it "should be deleted" do
-        @block.should be_deleted
-      end
-      it "should not exist?" do
-        pending "Make exist? not find deleted objects"
-        @block.destroy
-        HtmlBlock.exists?(@block.id).should == false
-      end
-      it "should not be findable" do
-        @block.destroy
-        lambda { HtmlBlock.find(@b) }.should raise_error(ActiveRecord::RecordNotFound)
-      end
-      it "should not be counted" do
-        lambda { @block.destroy }.should change(HtmlBlock, :count).by(-1)        
-      end
-      
-      it "should raise an error when a dynamic finder is called" do
-        lambda { HtmlBlock.find_by_name("foo") }.should raise_error
-      end
 
-      it "should make delete_all mark as deleted" do
-        pending "Make delete_all work"
-      end
-    end
-    describe "destroying the block" do
-      before do
-        @destroying_the_block = lambda { @block.destroy }
-      end
-      
-      it "should mark the latest row as deleted" do
-        @destroying_the_block.call
-        d = HtmlBlock.find_with_deleted(@block)
-        d.status.should == "DELETED"
-        d.should be_deleted
-      end
-
-      it "should create a new version when destroying" do
-        @block.versions.size.should == 1
-        @destroying_the_block.call
-        d = HtmlBlock.find_with_deleted(@block)
-        d.versions.size.should == 2
-        d.version.should == 2
-        d.versions.first.version.should == 1
-      end
-
-      it "should not remove all versions as well when doing a destroy" do
-        @destroying_the_block.call
-        HtmlBlock::Version.find(:all, "html_block_id =>#{@block.id}").size.should == 2
-      end
-
-      it "should remove all versions when doing destroy!" do
-        @block.destroy!
-        lambda { HtmlBlock.find_with_deleted(@b) }.should raise_error(ActiveRecord::RecordNotFound)
-        HtmlBlock::Version.find(:all, "html_block_id =>#{@block.id}").size.should == 0
-      end    
-    end  
+  it "should make the block be deleted" do
+    @destroying_the_block.call 
+    @block.should be_deleted
   end
+  it "should make the block not exist?" do
+    pending "Make exist? not find deleted objects"
+    @destroying_the_block.call
+    HtmlBlock.exists?(@block.id).should == false
+  end
+  it "should make the block be not findable" do
+    @destroying_the_block.call
+    lambda { HtmlBlock.find(@b) }.should raise_error(ActiveRecord::RecordNotFound)
+  end
+  it "should make the block be not be counted" do
+    @destroying_the_block.should change(HtmlBlock, :count).by(-1)
+  end
+
+  it "should raise an error when a dynamic finder is called" do
+    @destroying_the_block.call    
+    lambda { HtmlBlock.find_by_name("foo") }.should raise_error
+  end
+
+  it "should make delete_all mark as deleted" do
+    pending "Make delete_all work"
+  end
+
+  it "should mark the latest row as deleted" do
+    @destroying_the_block.call
+    d = HtmlBlock.find_with_deleted(@block)
+    d.should be_deleted
+  end
+
+  it "should create a new version when destroying" do
+    @block.versions.size.should == 1
+    @destroying_the_block.call
+    d = HtmlBlock.find_with_deleted(@block)
+    d.versions.size.should == 2
+    d.version.should == 2
+    d.versions.first.version.should == 1
+  end
+
+  it "should not remove all versions as well when doing a destroy" do
+    @destroying_the_block.call
+    HtmlBlock::Version.find(:all, "html_block_id =>#{@block.id}").size.should == 2
+  end
+
+  it "should remove all versions when doing destroy!" do
+    @block.destroy!
+    lambda { HtmlBlock.find_with_deleted(@b) }.should raise_error(ActiveRecord::RecordNotFound)
+    HtmlBlock::Version.find(:all, "html_block_id =>#{@block.id}").size.should == 0
+  end    
 end

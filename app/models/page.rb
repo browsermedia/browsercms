@@ -71,7 +71,7 @@ class Page < ActiveRecord::Base
       attrs = c.attributes.without("id", "created_at", "updated_at")
       con = Connector.new(attrs)        
 
-      if published? && con.content_block.published?
+      if published? && !con.content_block.published?
         con.content_block.updated_by_page = self
         con.content_block.publish!(updated_by)
         con.content_block_version += 1 
@@ -131,6 +131,8 @@ class Page < ActiveRecord::Base
       self.revision_comment = "#{content_block.display_name} '#{content_block.name}' was added to the '#{container}' container"
       if published? && content_block.published? && content_block.connected_page
         self.published = true
+      else
+        set_published
       end
       create_new_version!
       copy_connectors!
@@ -145,6 +147,7 @@ class Page < ActiveRecord::Base
   def destroy_connector(connector)
     transaction do
       self.revision_comment = "#{connector.content_block.display_name} '#{connector.content_block.name}' was removed from the '#{connector.container}' container"
+      set_published
       create_new_version!
       copy_connectors!(:except => [connector.id])
       reload

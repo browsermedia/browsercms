@@ -66,6 +66,10 @@ class Section < ActiveRecord::Base
     group.editable_by_section(self)
   end
   
+  def status
+    public? ? :unlocked : :locked
+  end
+  
   def self.find_by_name_path(name_path)
     section = Section.root.first
     children = name_path.split("/")[1..-1] || []

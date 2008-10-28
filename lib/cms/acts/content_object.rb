@@ -70,6 +70,7 @@ module Cms
 
         def set_published
           self.published = !!(publish_on_save)
+          self.publish_on_save = nil
           true
         end
 
@@ -86,7 +87,7 @@ module Cms
         end
         
         def live?
-          versions.count(:conditions => ['version > ? AND published = ?', version, true]) == 0 && published?
+          versionable? ? versions.count(:conditions => ['version > ? AND published = ?', version, true]) == 0 && published? : true
         end
         
         def draft?
@@ -98,6 +99,10 @@ module Cms
         def destroy_versions_if_destroyed
           return unless versionable?
           self.class.versioned_class.delete_all("#{self.class.versioned_foreign_key} = #{id}") if destroyed?
+        end
+
+        def status
+          published? ? :published : :draft
         end
 
         def set_updated_by

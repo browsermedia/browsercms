@@ -85,7 +85,6 @@ class Cms::PagesController < Cms::BaseController
 
   def update
     @page = Page.find(params[:id])
-    #@page.status = params[:status] || "IN_PROGRESS"
     if @page.update_attributes(params[:page].merge(:updated_by_user => current_user))
       flash[:notice] = "Page was '#{@page.name}' updated."
       redirect_to cms_url(@page)

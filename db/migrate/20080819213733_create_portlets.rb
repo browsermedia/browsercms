@@ -4,7 +4,7 @@ class CreatePortlets < ActiveRecord::Migration
       t.string :portlet_type_id
       t.string :name
       t.string :status
-
+      t.boolean :deleted, :default => false
       t.timestamps
     end
     

@@ -727,7 +727,7 @@ describe "A published page" do
     
     it "should not publish the page" do
       @save_the_block.call
-      @page.reload.should !published?
+      @page.reload.should_not be_published
     end
   end
 

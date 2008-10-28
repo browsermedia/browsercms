@@ -114,7 +114,7 @@ describe Cms::BlocksController do
     it "should show the status of each block" do
       @action.call
       response.should have_tag("td.block_status")  do
-        with_tag("img[alt=?]", "In Progress")
+        with_tag("img[alt=?]", "Draft")
       end
     end
   end

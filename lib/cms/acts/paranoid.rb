@@ -36,6 +36,11 @@ module Cms
         update_attribute(:deleted, true)
       end
 
+      def mark_as_deleted!(updated_by)
+        self.updated_by_user = updated_by
+        destroy_without_callbacks
+      end
+
       def destroy_with_callbacks!
         return false if callback(:before_destroy) == false
         result = destroy_without_callbacks!
