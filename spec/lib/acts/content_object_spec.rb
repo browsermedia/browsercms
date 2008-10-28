@@ -6,33 +6,34 @@ describe "A Content Object" do
   end
 
   it "should add a default status to a block" do
-    @block.status.should == "IN_PROGRESS"
+    @block.should be_draft
   end
 
   it "should allow blocks to be published" do
     @block.publish(create_user)
     @block = HtmlBlock.find(@block.id)
-    @block.status.should == "PUBLISHED"
+    @block.should be_published
   end
 
-  it "should be live if the status is PUBLISHED" do
+  it "should be live if it is published" do
     @block.publish(create_user)
     @block.should be_live
   end
 
-  it "should not be live if the status is not PUBLISHED" do
+  it "should not be live if it is not published" do
     @block.should_not be_live
   end
 
   it "should allow blocks to be archived" do
     @block.archive(create_user)
-    @block.reload.status.should == 'ARCHIVED'
+    @block.reload.should be_archived
   end
 
-  it "should allow blocks to be marked 'in progress'" do
+  it "should allow blocks to be marked as draft" do
     @block.publish(create_user)
-    @block.in_progress(create_user)
-    @block.reload.status.should == 'IN_PROGRESS'
+    @block.publish_on_save = false
+    @block.save!
+    @block.reload.should be_draft
   end
 
   it "should support versioning" do
@@ -48,13 +49,6 @@ describe "A Content Object" do
     @block.should respond_to(:archive!)
     @block.should respond_to(:publish!)
     @block.should_not respond_to(:hide!)
-  end
-
-  it "should not allow invalid statuses" do
-    @block = HtmlBlock.new(:new_status => "FAIL")
-    @block.should_not be_valid
-    @block.errors.on(:status).should_not be_empty
-    #@block.should have(1).error_on(:status)
   end
 
   it "should respond to publish?" do
@@ -120,7 +114,7 @@ describe "A Content Object" do
   describe "saving" do
     describe "with a new status" do
       it "should should be published" do
-        @block.update_attribute(:new_status, "PUBLISHED")
+        @block.publish_on_save = true
         @block.save
         @block.should be_published
       end
@@ -130,7 +124,7 @@ describe "A Content Object" do
         @block.publish!(create_user)
         @block.update_attribute(:name, "Whatever")
         @block.save
-        @block.should be_in_progress
+        @block.should be_draft
       end
     end
   end

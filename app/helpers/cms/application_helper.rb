@@ -51,6 +51,7 @@ module Cms
     end
 
     def status_icon(status, options={})
+      status = status ? "published" : "in_progress"
       image_tag "cms/icons/status/#{status.to_s.underscore}.gif", {:alt => status.to_s.titleize}.merge(options)
     end
   

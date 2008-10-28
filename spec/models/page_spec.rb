@@ -606,10 +606,10 @@ describe "Removing a connector from a page" do
     c.should be_frozen
     c.should == @conn
   end
-  it "should set the page status to inprogress" do
+  it "should mark the page as draft" do
     @page.publish!(create_user)
     @destroy_connector.call
-    @page.status.should == "IN_PROGRESS"
+    @page.should be_draft
   end
 end
 
@@ -697,9 +697,9 @@ describe "A published page" do
       @block.version.should == 1
     end
     
-    it "should set the page status to PUBLISHED" do
+    it "should publish the page" do
       @save_and_publish_the_block.call
-      @page.reload.status.should == "PUBLISHED"
+      @page.reload.should be_published
     end
   end
   describe "when adding a block by 'save'" do
@@ -725,9 +725,9 @@ describe "A published page" do
       @block.version.should == 1
     end
     
-    it "should not set the page status to PUBLISHED" do
+    it "should not publish the page" do
       @save_the_block.call
-      @page.reload.status.should_not == "PUBLISHED"
+      @page.reload.should !published?
     end
   end
 
@@ -752,11 +752,8 @@ describe "An unpublished page with 1 published and an 1 unpublished block," do
     @unpublished_block = create_html_block(:name => "Unpublished")
     @page.add_content_block!(@published_block, "main")
     @page.add_content_block!(@unpublished_block, "main")
-    log Page::Version.to_table_with(:id, :page_id, :name, :version, :status)
     @published_block.publish!(create_user)
-    log Page::Version.to_table_with(:id, :page_id, :name, :version, :status)
     @page.reload
-    #log Connector.to_table_without(:created_at, :updated_at)
   end
   describe "when publishing the block" do
     it "the block should be live" do
@@ -790,11 +787,7 @@ describe "An unpublished page with 1 published and an 1 unpublished block," do
       @published_block.reload.should be_live
     end
     it "the page should be connected to the latest version of the unpublished block" do
-      log Page::Version.to_table_with(:id, :page_id, :name, :version, :status)
       @publishing_the_page.call
-      log Connector.to_table_without(:created_at, :updated_at)
-      log Page.to_table_with(:id, :name, :version, :status)
-      log Page::Version.to_table_with(:id, :page_id, :name, :version, :status)
       @page.reload.connectors.last.content_block_version.should == 2
     end
   end

@@ -123,7 +123,7 @@ describe Cms::PagesController do
     end
     it "should change the status of the page to PUBLISHED" do
       @action.call
-      @page.reload.status == "PUBLISHED"
+      @page.reload.should be_published
     end
     it "should set the flash message" do
       @action.call
