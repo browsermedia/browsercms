@@ -3,11 +3,10 @@ class CreatePages < ActiveRecord::Migration
     create_versioned_table :pages do |t|
       t.integer :template_id
       t.string :name
+      t.string :title
       t.string :path
       t.text :description
-      t.string :user_date
-      t.string :author
-      t.string :source
+      t.text :keywords
       t.string :language
       t.boolean :hidden, :default => false
       t.boolean :archived, :default => false

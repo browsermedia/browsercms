@@ -4,32 +4,16 @@
   <%= f.text_field :name %>
 </div>
 <div class="fields">
+  <%= f.label :title, "Title", :class => "inline" %> (Leave blank if same as name)<br/>
+  <%= f.text_field :title %>
+</div>
+<div class="fields">
   <%= f.label :path %>
   <%= f.text_field :path %>
 </div>
 <div class="fields">
   <%= f.label :template_id %>
   <%= f.collection_select :template_id, PageTemplate.all(:order => 'name'), :id, :name %>
-</div>
-<div class="fields">
-  <%= f.label :description %>
-  <%= f.text_area :description %>
-</div>
-<div class="fields">
-  <%= f.label :user_date %>
-  <%= f.text_field :user_date %>
-</div>
-<div class="fields">
-  <%= f.label :author %>
-  <%= f.text_field :author %>
-</div>
-<div class="fields">
-  <%= f.label :source %>
-  <%= f.text_field :source %>
-</div>
-<div class="fields">
-  <%= f.label :language %>
-  <%= f.text_field :language %>
 </div>
 <div class="fields">
   <label>
@@ -42,6 +26,18 @@
     <%= f.check_box :archived %>
     Archived?
   </label>
+</div>
+<div class="fields">
+  <%= f.label :description %>
+  <%= f.text_area :description, :size => "80x5" %>
+</div>
+<div class="fields">
+  <%= f.label :keywords %>
+  <%= f.text_area :keywords, :size => "80x3" %>
+</div>
+<div class="fields">
+  <%= f.label :language %>
+  <%= f.text_field :language %>
 </div>
 <div class="fields">
   <%= f.submit "Save" %>

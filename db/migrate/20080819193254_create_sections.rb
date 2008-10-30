@@ -4,9 +4,6 @@ class CreateSections < ActiveRecord::Migration
       t.string :name
       t.string :path
       t.boolean :root
-      t.string :nav_image
-      t.string :nav_rollover_image
-      t.string :current_nav_image
       t.boolean :hidden
       t.timestamps
     end

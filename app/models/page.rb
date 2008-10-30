@@ -55,6 +55,10 @@ class Page < ActiveRecord::Base
     end      
   end
   
+  def page_title
+    title.blank? ? name : title
+  end
+  
   #Valid options:
   #  except = An array of connector ids not to copy
   def copy_connectors!(options={})
