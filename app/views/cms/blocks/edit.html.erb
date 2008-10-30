@@ -7,6 +7,8 @@
   <%= render :partial => "cms/#{@block.content_block_type.pluralize}/form", :locals => {:f => f} %>
   <div class="fields">
     <%= f.submit "Save" %>
-    <button type="submit" name="<%= @block.content_block_type%>[publish_on_save]" value="true">Save And Publish</button>        
+    <% unless @block.connected_pages.count > 0 %>
+      <button type="submit" name="<%= @block.content_block_type%>[publish_on_save]" value="true">Save And Publish</button>
+    <% end %>
   </div>
 <% end %>
