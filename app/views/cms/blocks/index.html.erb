@@ -1,5 +1,14 @@
 <% @page_title = "Content Library / List #{@content_type.display_name_plural}" %>
 <%= link_to "#{action_icon(:add)} Add New #{@content_type.display_name}", cms_path("/blocks/#{@content_type.content_block_type.pluralize}", :new) %>
+
+<% form_tag '', :method => :get do -%>
+  Search
+  <%= text_field_tag :search, params[:search] %>
+  <% if @content_type.name == "HtmlBlock" -%>
+    <p><%= check_box_tag :include_body, true, params[:include_body] %> Include body?</p>
+  <% end -%>
+<% end -%>
+
 <h2>List <%=  @content_type.display_name_plural %></h2>
 <table id="blocks">
   <tr>

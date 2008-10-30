@@ -7,7 +7,16 @@ class Cms::BlocksController < Cms::BaseController
   helper_method :model_name
 
   def index
-    @blocks = model_class.find(:all, :order => "name")
+    conditions = []
+    unless params[:search].blank?
+      conditions = ["name like ?", "%#{params[:search]}%"]
+      if params[:include_body]
+        conditions[0] += " or content like ?"
+        conditions << "%#{params[:search]}%"
+      end
+    end
+
+    @blocks = model_class.find(:all, :order => "name", :conditions => conditions)
   end
 
   def new

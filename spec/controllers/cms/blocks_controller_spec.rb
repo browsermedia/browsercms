@@ -119,6 +119,24 @@ describe Cms::BlocksController do
     end
   end
 
+  describe "searching blocks" do
+    before(:each) do
+      @block = create_html_block(:name => "Test", :content => "I worked.")
+    end
+    it "should list the search results" do
+      lambda { get :index, :search => 'test' }.call
+      response.should have_tag("td.block_name", "Test")
+    end
+    it "should include the content in the search" do
+      lambda { get :index, :search => 'worked', :include_body => true }.call
+      response.should have_tag("td.block_name", "Test")
+    end
+    it "should not list any results with a bad search term" do
+      lambda { get :index, :search => 'invalid' }.call
+      response.should_not have_tag("td.block_name", "Test")
+    end
+  end
+
   describe "edit a block" do
     before do
       @block = create_html_block(:name => "Test")
