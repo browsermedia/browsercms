@@ -49,7 +49,7 @@ describe Cms::MenuHelper do
 HTML
       assigns[:page] = @bal
     end
-    it "should produce the desired output" do      
+    it "should produce the desired output" do 
       helper.render_menu.should == @desired_output
     end
     
@@ -187,7 +187,7 @@ HTML
       assigns[:page] = @bal
     end
 
-    it "should produce the desired output" do      
+    it "should produce the desired output" do 
       helper.render_menu(:depth => 2, :show_all_siblings => true).should == @desired_output
     end
 

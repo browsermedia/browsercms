@@ -30,29 +30,83 @@ module Cms
     #
     #   render_menu
     #   # => <div class="menu">
-    #    <ul>
-    #      <li class="first open">
-    #        <a href="/buf">AFC</a>
-    #        <ul>
-    #          <li class="first"><a href="/buf">East</a></li>
-    #          <li class="open">
-    #            <a href="/bal">North</a>
-    #            <ul>
-    #              <li class="first on"><a href="/bal">Baltimore Ravens</a></li>
-    #              <li><a href="/bal">Cincinnati Bengals</a></li>
-    #              <li><a href="/bal">Cleveland Browns</a></li>
-    #              <li class="last"><a href="/bal">Pittsburgh Steelers</a></li>
-    #            </ul>
-    #          </li>
-    #          <li><a href="/hou">South</a></li>
-    #          <li class="last"><a href="/den">East</a></li>
-    #        </ul>
-    #      </li>
-    #      <li class="last">
-    #        <a href="/dal">NFC</a>
-    #      </li>
-    #    </ul>
+    #     <ul>
+    #       <li id="section_2" class="first open">
+    #         <a href="/buf">AFC</a>
+    #         <ul>
+    #           <li id="section_3" class="first">
+    #             <a href="/buf">East</a>
+    #           </li>
+    #           <li id="section_4" class="open">
+    #             <a href="/bal">North</a>
+    #             <ul>
+    #               <li id="page_5" class="first on">
+    #                 <a href="/bal">Baltimore Ravens</a>
+    #               </li>
+    #               <li id="page_6">
+    #                 <a href="/cin">Cincinnati Bengals</a>
+    #               </li>
+    #               <li id="page_7">
+    #                 <a href="/cle">Cleveland Browns</a>
+    #               </li>
+    #               <li id="page_8" class="last">
+    #                 <a href="/pit">Pittsburgh Steelers</a>
+    #               </li>
+    #             </ul>
+    #           </li>
+    #           <li id="section_5">
+    #             <a href="/hou">South</a>
+    #           </li>
+    #           <li id="section_6" class="last">
+    #             <a href="/den">West</a>
+    #           </li>
+    #         </ul>
+    #       </li>
+    #       <li id="section_7" class="last">
+    #         <a href="/dal">NFC</a>
+    #       </li>
+    #     </ul>
     #   </div>
+    #
+    #   render_menu(:depth => 2, :show_all_siblings => true)
+    #   # => <div class="menu">
+    #     <ul>
+    #       <li id="section_2" class="first open">
+    #         <a href="/buf">AFC</a>
+    #         <ul>
+    #           <li id="section_3" class="first">
+    #             <a href="/buf">East</a>
+    #           </li>
+    #           <li id="section_4" class="open">
+    #             <a href="/bal">North</a>
+    #           </li>
+    #           <li id="section_5">
+    #             <a href="/hou">South</a>
+    #           </li>
+    #           <li id="section_6" class="last">
+    #             <a href="/den">West</a>
+    #           </li>
+    #         </ul>
+    #       </li>
+    #       <li id="section_7" class="last">
+    #         <a href="/dal">NFC</a>
+    #         <ul>
+    #           <li id="section_8" class="first">
+    #             <a href="/dal">East</a>
+    #           </li>
+    #           <li id="section_9">
+    #             <a href="/chi">North</a>
+    #           </li>
+    #           <li id="section_10">
+    #             <a href="/atl">South</a>
+    #           </li>
+    #           <li id="section_11" class="last">
+    #             <a href="/ari">West</a>
+    #           </li>
+    #         </ul>
+    #       </li>
+    #     </ul>
+    #   </div>    
     def render_menu(options={})
       #Intialize parameters
       page = options[:page] || @page
