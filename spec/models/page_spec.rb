@@ -90,8 +90,8 @@ describe Page do
     it "should be set to 'Html 'Hello, World!' was added to the 'main' container'" do
       @block = create_html_block(:name => "Hello, World!")
       @page.add_content_block!(@block, "main")
-      @page.revision_comment.should == "Html 'Hello, World!' was added to the 'main' container"
-      @page.as_of_version(@page.version).revision_comment.should == "Html 'Hello, World!' was added to the 'main' container"
+      @page.revision_comment.should == "Text 'Hello, World!' was added to the 'main' container"
+      @page.as_of_version(@page.version).revision_comment.should == "Text 'Hello, World!' was added to the 'main' container"
     end
     it "should be set to 'HtmlBlock 'Hello, World!' was moved up within the 'main' container'" do
       @block = create_html_block(:name => "Hello, World!")
@@ -112,8 +112,8 @@ describe Page do
     it "should be set to 'Html 'Hello, World!' was removed from the 'main' container'" do
       @block = create_html_block(:name => "Hello, World!")      
       @page.destroy_connector(@page.add_content_block!(@block, "main"))
-      @page.revision_comment.should == "Html 'Hello, World!' was removed from the 'main' container"
-      @page.as_of_version(@page.version).revision_comment.should == "Html 'Hello, World!' was removed from the 'main' container"
+      @page.revision_comment.should == "Text 'Hello, World!' was removed from the 'main' container"
+      @page.as_of_version(@page.version).revision_comment.should == "Text 'Hello, World!' was removed from the 'main' container"
     end
     it "should be set to 'Reverted to version 1'" do
       @page.update_attribute(:name, "V2")

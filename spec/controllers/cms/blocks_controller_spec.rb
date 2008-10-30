@@ -294,7 +294,7 @@ describe Cms::BlocksController do
 
       it "should call standard /new for normal blocks" do
         @action.call
-        response.should have_tag("h2", "New Html")
+        response.should have_tag("h2", "New Text")
       end
     end
   end

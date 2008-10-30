@@ -7,11 +7,11 @@ class HtmlBlock < ActiveRecord::Base
   end
 
   def self.display_name
-    "Html"
+    "Text"
   end
 
   def self.display_name_plural
-    "Html"
+    "Text"
   end
   
 end

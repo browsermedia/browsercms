@@ -72,11 +72,11 @@ describe Cms::BlockSupport do
   end
   
   it "should have overrideable display name" do
-    HtmlBlock.display_name.should == "Html"
+    HtmlBlock.display_name.should == "Text"
   end
 
   it "should make display name plural overrideable" do
-    HtmlBlock.display_name_plural.should == "Html"
+    HtmlBlock.display_name_plural.should == "Text"
   end
 
   it "should add display_name to each block itself" do
@@ -87,8 +87,8 @@ describe Cms::BlockSupport do
 
   it "should add overridable display_name to each block itself" do
     m = HtmlBlock.new
-    m.display_name.should == "Html"
-    m.display_name_plural.should == "Html"
+    m.display_name.should == "Text"
+    m.display_name_plural.should == "Text"
   end
 
 end

@@ -16,11 +16,11 @@ describe ContentType do
   end
 
   it "should have display_name that shows renderable name from class" do
-    @c.display_name.should == "Html"
+    @c.display_name.should == "Text"
   end
 
   it "should have plural display_name" do
-    @c.display_name_plural.should == "Html"
+    @c.display_name_plural.should == "Text"
   end
 
   it "should have content_block_type to help build urls" do
