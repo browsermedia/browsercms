@@ -7,7 +7,7 @@ class CreateSections < ActiveRecord::Migration
       t.string :nav_image
       t.string :nav_rollover_image
       t.string :current_nav_image
-      t.boolean :hide_from_menus
+      t.boolean :hidden
       t.timestamps
     end
   end

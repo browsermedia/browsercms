@@ -201,9 +201,9 @@ class Page < ActiveRecord::Base
     section_node.ancestors
   end
     
-  #Returns true if the block attached to each connector in the given container is live
-  def container_live?(container)
-    connectors.all(:include => :page, :conditions => {:container => container.to_s}).all?{|c| c.content_block.live?}
+  #Returns true if the block attached to each connector in the given container are published
+  def container_published?(container)
+    connectors.all(:include => :page, :conditions => {:container => container.to_s}).all?{|c| c.content_block.published?}
   end
   
   def hide(updated_by)

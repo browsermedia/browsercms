@@ -1,5 +1,5 @@
 <div class="edit_block">
-  <div class="header <%= connector.content_block.live? ? 'live' : 'draft' %>">
+  <div class="header <%= connector.content_block.published? ? 'published' : 'draft' %>">
     <%= connector.content_block.name %>
     <div class="actions">
       <%= link_to status_icon(connector.content_block.status), cms_path(connector.content_block)  %>

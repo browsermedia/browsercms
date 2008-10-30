@@ -155,13 +155,13 @@ describe Page do
       page = create_page(:section => root_section)
       page.add_content_block!(create_html_block(:publish_on_save => true), "main")
       page.add_content_block!(create_html_block(:publish_on_save => true), "main")
-      page.container_live?("main").should be_true
+      page.container_published?("main").should be_true
     end
     it "should be false if there are any non-published blocks" do
       page = create_page(:section => root_section)
       page.add_content_block!(create_html_block(:publish_on_save => true), "main")
       page.add_content_block!(create_html_block, "main")
-      page.container_live?("main").should be_false
+      page.container_published?("main").should be_false
     end  
   end
 

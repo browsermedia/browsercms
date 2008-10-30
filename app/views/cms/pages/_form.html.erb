@@ -32,6 +32,18 @@
   <%= f.text_field :language %>
 </div>
 <div class="fields">
+  <label>
+    <%= f.check_box :hidden %>
+    Hide From Menus?
+  </label>
+</div>
+<div class="fields">
+  <label>
+    <%= f.check_box :archived %>
+    Archived?
+  </label>
+</div>
+<div class="fields">
   <%= f.submit "Save" %>
   <button type="submit" name="page[publish_on_save]" value="true">Save And Publish</button>
 </div>

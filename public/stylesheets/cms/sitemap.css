@@ -28,6 +28,11 @@
   padding: 0; 
 } 
 
+#sitemap td.attributes {
+  text-align: right;
+  padding-right: 5px;
+}
+
 #sitemap th.status, #sitemap td.status {
   width: 100px;
   padding-left: 5px;

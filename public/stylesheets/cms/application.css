@@ -67,16 +67,16 @@ div#cms_toolbar {
   border: 1px solid black;
   margin: 0;
   padding: 5px; }
-.live {
+.published {
   background-color: #CCFFCC;
 }
 .draft {
   background-color: #FF6666;
 }
-strong.live, strong.draft {
+strong.published, strong.draft {
   background-color: #FFFFFF;  
 }
-strong.live {
+strong.published {
   color: #009900;
 }
 strong.draft {
