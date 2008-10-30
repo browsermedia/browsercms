@@ -22,6 +22,7 @@ class Page < ActiveRecord::Base
 
   named_scope :connected_to_block, lambda { |b| {:include => :connectors, :conditions => ['connectors.content_block_id = ? and connectors.content_block_type = ? and connectors.content_block_version = ?', b.id, b.class.name, b.version]} }
     
+  named_scope :draft, :conditions => {:published => false}
   named_scope :not_archived, :conditions => {:archived => false}
   named_scope :not_hidden, :conditions => {:hidden => false}
     

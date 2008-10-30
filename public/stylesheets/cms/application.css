@@ -148,3 +148,24 @@ ul.block_info {
   width: 540px;
   height: 400px;
 }
+
+table#draft {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table#draft th, table#draft td {
+  margin: 0;
+  border: 1px solid black;
+  padding: 5px;
+}
+
+table#draft th {
+  background-color: #CCF;
+}
+
+table#draft td.updated_by,
+table#draft td.updated_at,
+table#draft td.select {
+  text-align: center;
+}

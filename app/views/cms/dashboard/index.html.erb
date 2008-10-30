@@ -1,4 +1,33 @@
 <% @page_title = "Dashboard" %>
-<h1>Welcome</h1>
 
-<p>You are logged in as <%= current_user.login %>.</p>
+<h2>Draft Pages</h2>
+
+<% if @draft_pages.empty? %>
+  <p>All pages are published</p>
+<% else %>  
+  <% form_tag cms_path(:pages, :publish) do %>
+    <div style="text-align: right; padding: 10px 0">
+      <%= submit_tag "Published Selected" %>
+    </div>
+    <table id="draft">
+      <tr>
+        <th>Name</th>
+        <th>Path</th>
+        <th>Revision Comment</th>
+        <th>Updated By</th>    
+        <th>Updated At</th>
+        <th></th>
+      </tr>
+      <% @draft_pages.each do |page| %>
+        <tr>
+          <td class="name"><%=h page.name %></td>
+          <td class="path"><%= link_to page.path, page.path %></td>
+          <td class="comment"><%=h page.revision_comment %></td>
+          <td class="updated_by"><%=h page.updated_by.login %></td>
+          <td class="updated_at"><%= page.updated_at.strftime("%m/%d/%y %l:%M %p") %></td>
+          <td class="select"><%= check_box_tag "page_ids[]", page.id, false, :id => "publish_page_#{page.id}" %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+<% end %>
