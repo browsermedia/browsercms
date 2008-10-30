@@ -1,51 +1,61 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require File.expand_path(File.dirname(__FILE__) + '/../data/nfl')
 
 describe Cms::MenuHelper do
-
+  before do
+    create_nfl
+  end
   describe "render_menu" do
     before do
-      #/                    (Section)
-      #/fruits/             (Section)
-      @fruits = create_section(:parent => root_section, :name => "Fruits", :path => "/fruits")
-      # /fruits/overview     (Page)
-      @overview = create_page(:section => @fruits, :name => "Overview", :path => "/fruits/overview")
-      # /fruits/red/         (Section)
-      @red = create_section(:parent => @fruits, :name => "Red", :path => "/fruits/red")
-      # /fruits/red/apples   (Page)
-      @apples = create_page(:section => @red, :name => "Apples", :path => "/fruits/red/apples")      
-      # /fruits/red/grapes   (Page)
-      @apples = create_page(:section => @red, :name => "Grapes", :path => "/fruits/red/grapes")
-      # /fruits/bananas      (Page)
-      @apples = create_page(:section => @fruits, :name => "Bananas", :path => "/fruits/bananas")
-      # /veggies/            (Section)
-      @veggies = create_section(:parent => root_section, :name => "Veggies", :path => "/veggies")
-      # /veggies/spinach     (Page)
-      @spinach = create_page(:section => @veggies, :name => "Spinach", :path => "/veggies/spinach")
-      # /veggies/carrots     (Page)
-      @spinach = create_page(:section => @veggies, :name => "Carrots", :path => "/veggies/carrots")
-      log Section.to_table_with(:id, :name, :path, :root)
-      log Page.to_table_with(:id, :name, :path)
-      log SectionNode.to_table_without(:created_at, :updated_at)
-      assigns[:page] = @apples
-    end
-    it "should render the menu" do
-      pending "Case 1508"
-      html = <<-HTML
-<div class="leftnav">
+      @desired_output = <<HTML 
+<div class="menu">
   <ul>
-    <li><a class="open" href="/fruits/overview">Fruits</a></li>
-       <ul>
-          <li><a class="open" href="/fruits/red/apples">Red</a></li>
-             <ul>
-                <li><a class="on" href="/fruits/apples">Apples</a></li>
-            </ul>
-            <li><a href="/fruits/bananas">Bananas</a></li>
-       </ul>           
-    <li><a href="/fruits/veggies">Veggies</a></li>
+    <li id="section_#{@afc.id}" class="first open">
+      <a href="/buf">AFC</a>
+      <ul>
+        <li id="section_#{@afc_east.id}" class="first">
+          <a href="/buf">East</a>
+        </li>
+        <li id="section_#{@afc_north.id}" class="open">
+          <a href="/bal">North</a>
+          <ul>
+            <li id="page_#{@bal.id}" class="first on">
+              <a href="/bal">Baltimore Ravens</a>
+            </li>
+            <li id="page_#{@cin.id}">
+              <a href="/cin">Cincinnati Bengals</a>
+            </li>
+            <li id="page_#{@cle.id}">
+              <a href="/cle">Cleveland Browns</a>
+            </li>
+            <li id="page_#{@pit.id}" class="last">
+              <a href="/pit">Pittsburgh Steelers</a>
+            </li>
+          </ul>
+        </li>
+        <li id="section_#{@afc_south.id}">
+          <a href="/hou">South</a>
+        </li>
+        <li id="section_#{@afc_west.id}" class="last">
+          <a href="/den">West</a>
+        </li>
+      </ul>
+    </li>
+    <li id="section_#{@nfc.id}" class="last">
+      <a href="/dal">NFC</a>
+    </li>
   </ul>
-</div>      
-      HTML
-      helper.render_menu.should == html
+</div>
+HTML
+      assigns[:page] = @bal
+    end
+    it "should produce the desired output" do      
+      helper.render_menu.should == @desired_output
+      # @desired_output.should have_tag("div.menu") do |menu|
+      #   menu.first.should have_tag("li#section_#{@afc.id}") do |afc|
+      #     afc.first.attributes["class"].should == "first open"
+      #   end
+      # end
     end
   end
   

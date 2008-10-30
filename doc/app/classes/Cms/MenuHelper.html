@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Cms::MenuHelper</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Cms::MenuHelper</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/app/helpers/cms/menu_helper_rb.html">
+                app/helpers/cms/menu_helper.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000248">render_menu</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000248" class="method-detail">
+        <a name="M000248"></a>
+
+        <div class="method-heading">
+          <a href="#M000248" class="method-signature">
+          <span class="method-name">render_menu</span><span class="method-args">(options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+This will render a menu based on the page With no options passed, it will
+render a menu that shows all the child sections of the root and then it
+will show the path of decendent sections all the way to the current page.
+The resulting HTML is a DIV with a UL in it. Each LI will have an A in it.
+If the item is a <a href="../Section.html">Section</a>, the HREF of the A
+will be the URL of the first non-archived page that is a direct child of
+that <a href="../Section.html">Section</a>. Hidden pages will not show up,
+but if the first page in a <a href="../Section.html">Section</a> is hidden,
+it will be used as the URL for that <a href="../Section.html">Section</a>.
+This is commonly done to have a page for a <a
+href="../Section.html">Section</a> and avoid having duplicates in the
+navigation.
+</p>
+<p>
+You can change the behavior with the following options:
+</p>
+<h4>Options</h4>
+<ul>
+<li><tt>:page</tt> - What page should be used. If this value is omitted, the
+value in @page will be used.
+
+</li>
+<li><tt>:from_top</tt> - How many below levels from the root the tree should
+start at. All sections at this level will be shown. The default is 0, which
+means show all section that are direct children of the root
+
+</li>
+<li><tt>:depth</tt> - How many levels deep should the tree go. If no value is
+supplied, the tree will go all the way down to the current page. Must be
+greater than from_top.
+
+</li>
+<li><tt>:class</tt> - The CSS Class that will be applied to the div. The
+default value is &quot;menu&quot;.
+
+</li>
+<li><tt>:show_all_siblings</tt> -
+
+</li>
+</ul>
+<h4>Examples</h4>
+<p>
+Assume you have the structure the NFL, which is NFL &gt; Conference &gt;
+Division &gt; Team, with teams being a <a href="../Page.html">Page</a>,
+everything else a <a href="../Section.html">Section</a>. Also, assume we
+are on the Baltimore Ravens page. If you&#8216;re not a footbal fan, see <a
+href="http://sports.yahoo.com/nfl/teams">sports.yahoo.com/nfl/teams</a>
+</p>
+<pre>
+  render_menu
+  # =&gt; &lt;div class=&quot;menu&quot;&gt;
+   &lt;ul&gt;
+     &lt;li class=&quot;first open&quot;&gt;
+       &lt;a href=&quot;/buf&quot;&gt;AFC&lt;/a&gt;
+       &lt;ul&gt;
+         &lt;li class=&quot;first&quot;&gt;&lt;a href=&quot;/buf&quot;&gt;East&lt;/a&gt;&lt;/li&gt;
+         &lt;li class=&quot;open&quot;&gt;
+           &lt;a href=&quot;/bal&quot;&gt;North&lt;/a&gt;
+           &lt;ul&gt;
+             &lt;li class=&quot;first on&quot;&gt;&lt;a href=&quot;/bal&quot;&gt;Baltimore Ravens&lt;/a&gt;&lt;/li&gt;
+             &lt;li&gt;&lt;a href=&quot;/bal&quot;&gt;Cincinnati Bengals&lt;/a&gt;&lt;/li&gt;
+             &lt;li&gt;&lt;a href=&quot;/bal&quot;&gt;Cleveland Browns&lt;/a&gt;&lt;/li&gt;
+             &lt;li class=&quot;last&quot;&gt;&lt;a href=&quot;/bal&quot;&gt;Pittsburgh Steelers&lt;/a&gt;&lt;/li&gt;
+           &lt;/ul&gt;
+         &lt;/li&gt;
+         &lt;li&gt;&lt;a href=&quot;/hou&quot;&gt;South&lt;/a&gt;&lt;/li&gt;
+         &lt;li class=&quot;last&quot;&gt;&lt;a href=&quot;/den&quot;&gt;East&lt;/a&gt;&lt;/li&gt;
+       &lt;/ul&gt;
+     &lt;/li&gt;
+     &lt;li class=&quot;last&quot;&gt;
+       &lt;a href=&quot;/dal&quot;&gt;NFC&lt;/a&gt;
+     &lt;/li&gt;
+   &lt;/ul&gt;
+  &lt;/div&gt;
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000248-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000248-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/helpers/cms/menu_helper.rb, line 55</span>
+55:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_menu</span>(<span class="ruby-identifier">options</span>={})
+56:       <span class="ruby-identifier">page</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:page</span>] <span class="ruby-operator">||</span> <span class="ruby-ivar">@page</span>
+57:       <span class="ruby-identifier">from_top</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">:from_top</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:from_top</span>].<span class="ruby-identifier">to_i</span> <span class="ruby-operator">:</span> <span class="ruby-value">0</span>
+58:       <span class="ruby-identifier">depth</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">:depth</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:depth</span>].<span class="ruby-identifier">to_i</span> <span class="ruby-operator">:</span> <span class="ruby-value">1.0</span><span class="ruby-operator">/</span><span class="ruby-value">0</span>
+59:       <span class="ruby-identifier">css_class</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:class</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;menu&quot;</span>
+60:       
+61:       <span class="ruby-identifier">ancestors</span> = <span class="ruby-identifier">page</span>.<span class="ruby-identifier">ancestors</span>[<span class="ruby-identifier">from_top</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]
+62:       
+63:       <span class="ruby-identifier">html</span> = <span class="ruby-node">&quot;&lt;div class=\&quot;#{css_class}\&quot;&gt;\n&quot;</span>
+64:       <span class="ruby-identifier">fn</span> = <span class="ruby-identifier">lambda</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">nodes</span>, <span class="ruby-identifier">d</span><span class="ruby-operator">|</span>
+65:         <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&lt;ul&gt;\n&quot;</span>.<span class="ruby-identifier">indent</span>(<span class="ruby-identifier">d</span><span class="ruby-operator">+</span><span class="ruby-value">2</span>)
+66:         <span class="ruby-identifier">nodes</span>.<span class="ruby-identifier">each_with_index</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">sn</span>, <span class="ruby-identifier">i</span><span class="ruby-operator">|</span>
+67: 
+68:           <span class="ruby-identifier">classes</span> = []          
+69:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">==</span> <span class="ruby-value">0</span>
+70:             <span class="ruby-identifier">classes</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;first&quot;</span>
+71:           <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">nodes</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>
+72:             <span class="ruby-identifier">classes</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;last&quot;</span>
+73:           <span class="ruby-keyword kw">end</span>
+74:           
+75:           <span class="ruby-identifier">classes</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;open&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ancestors</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">sn</span>.<span class="ruby-identifier">node</span>)
+76:           <span class="ruby-identifier">classes</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;on&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">page</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">sn</span>.<span class="ruby-identifier">node</span>
+77:           <span class="ruby-identifier">cls</span> = <span class="ruby-identifier">classes</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">nil</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">classes</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot; &quot;</span>)
+78:           <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">%Q{&lt;li id=&quot;#{sn.node_type.underscore}_#{sn.node.id}&quot;#{cls ? &quot; class=\&quot;#{cls}\&quot;&quot; : ''}&gt;\n}</span>.<span class="ruby-identifier">indent</span>(<span class="ruby-identifier">d</span><span class="ruby-operator">+</span><span class="ruby-value">4</span>)
+79:           <span class="ruby-identifier">p</span> = <span class="ruby-identifier">sn</span>.<span class="ruby-identifier">node_type</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;Section&quot;</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">sn</span>.<span class="ruby-identifier">node</span>.<span class="ruby-identifier">first_page</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">sn</span>.<span class="ruby-identifier">node</span>
+80:           <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">%Q{&lt;a href=&quot;#{p ? p.path : '#'}&quot;&gt;#{sn.node.name}&lt;/a&gt;\n}</span>.<span class="ruby-identifier">indent</span>(<span class="ruby-identifier">d</span><span class="ruby-operator">+</span><span class="ruby-value">6</span>)
+81:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">sn</span>.<span class="ruby-identifier">node_type</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;Section&quot;</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">ancestors</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">sn</span>.<span class="ruby-identifier">node</span>)
+82:             <span class="ruby-identifier">fn</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">sn</span>.<span class="ruby-identifier">node</span>.<span class="ruby-identifier">child_nodes</span>, <span class="ruby-identifier">d</span><span class="ruby-operator">+</span><span class="ruby-value">4</span>)
+83:           <span class="ruby-keyword kw">end</span>
+84:           <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">%Q{&lt;/li&gt;\n}</span>.<span class="ruby-identifier">indent</span>(<span class="ruby-identifier">d</span><span class="ruby-operator">+</span><span class="ruby-value">4</span>)
+85: 
+86:         <span class="ruby-keyword kw">end</span>
+87:         <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&lt;/ul&gt;\n&quot;</span>.<span class="ruby-identifier">indent</span>(<span class="ruby-identifier">d</span><span class="ruby-operator">+</span><span class="ruby-value">2</span>)
+88:       <span class="ruby-keyword kw">end</span>
+89:       <span class="ruby-identifier">fn</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">ancestors</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">child_nodes</span>, <span class="ruby-value">0</span>)
+90:       <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&lt;/div&gt;\n&quot;</span>
+91:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

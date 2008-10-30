@@ -86,7 +86,7 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000014">render</a>&nbsp;&nbsp;
+      <a href="#M000120">render</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -108,30 +108,30 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000014" class="method-detail">
-        <a name="M000014"></a>
+      <div id="method-M000120" class="method-detail">
+        <a name="M000120"></a>
 
         <div class="method-heading">
-          <a href="#M000014" class="method-signature">
+          <a href="#M000120" class="method-signature">
           <span class="method-name">render</span><span class="method-args">(portlet)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000014-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000014-source">
+            onclick="toggleCode('M000120-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000120-source">
 <pre>
     <span class="ruby-comment cmt"># File app/models/portlet_type.rb, line 4</span>
  4:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>(<span class="ruby-identifier">portlet</span>)
  5:     <span class="ruby-ivar">@portlet</span> = <span class="ruby-identifier">portlet</span>
  6:     <span class="ruby-identifier">eval</span>(<span class="ruby-identifier">code</span>)
  7:     <span class="ruby-keyword kw">begin</span>
- 8:       <span class="ruby-constant">Haml</span><span class="ruby-operator">::</span><span class="ruby-constant">Engine</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">template</span>).<span class="ruby-identifier">render</span>(<span class="ruby-keyword kw">self</span>)
- 9:     <span class="ruby-keyword kw">rescue</span> 
+ 8:       <span class="ruby-constant">ERB</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">template</span>).<span class="ruby-identifier">result</span>(<span class="ruby-identifier">binding</span>)
+ 9:     <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span>
 10:       <span class="ruby-constant">CGI</span>.<span class="ruby-identifier">escapeHTML</span> <span class="ruby-node">&quot;Could not render template: #{$!}\n&quot;</span>
 11:     <span class="ruby-keyword kw">end</span>      
-12:   <span class="ruby-keyword kw">rescue</span>
+12:   <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span>
 13:     <span class="ruby-constant">CGI</span>.<span class="ruby-identifier">escapeHTML</span> <span class="ruby-node">&quot;Could not evaluate code: #{$!}\n&quot;</span>
 14:   <span class="ruby-keyword kw">end</span>
 </pre>

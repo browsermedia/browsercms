@@ -39,6 +39,19 @@ describe Section do
     root_section.move_to(foo).should be_false
   end  
   
+  it "should be able to find the first page in a section" do
+    @a = create_section(:parent => root_section, :name => "A")
+    @a1 = create_section(:parent => @a, :name => "A1")
+    @a1a = create_section(:parent => @a1, :name => "A1a")
+    @foo = create_page(:section => @a1a, :name => "Foo")
+    @b = create_section(:parent => root_section, :name => "B")
+    root_section.first_page.should == @foo
+    @a.first_page.should == @foo
+    @a1.first_page.should == @foo
+    @a1a.first_page.should == @foo
+    @b.first_page.should be_nil
+  end
+  
   describe "#find_by_name_path" do
     before do
       @a = create_section(:parent => root_section, :name => "A")

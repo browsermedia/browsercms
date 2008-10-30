@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Cms::Acts::ContentObject::InstanceMethods</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Cms::Acts::ContentObject::InstanceMethods</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../../../files/lib/cms/acts/content_object_rb.html">
+                lib/cms/acts/content_object.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+These methods will be added to any object marked as acts_as_content_object
+or acts_as_content_page
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000223">destroy_versions_if_destroyed</a>&nbsp;&nbsp;
+      <a href="#M000221">draft?</a>&nbsp;&nbsp;
+      <a href="#M000222">in_progress?</a>&nbsp;&nbsp;
+      <a href="#M000215">included</a>&nbsp;&nbsp;
+      <a href="#M000220">live?</a>&nbsp;&nbsp;
+      <a href="#M000218">publish</a>&nbsp;&nbsp;
+      <a href="#M000219">publish!</a>&nbsp;&nbsp;
+      <a href="#M000217">set_published</a>&nbsp;&nbsp;
+      <a href="#M000225">set_updated_by</a>&nbsp;&nbsp;
+      <a href="#M000224">status</a>&nbsp;&nbsp;
+      <a href="#M000216">status_name</a>&nbsp;&nbsp;
+      <a href="#M000214">versionable?</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000215" class="method-detail">
+        <a name="M000215"></a>
+
+        <div class="method-heading">
+          <a href="#M000215" class="method-signature">
+          <span class="method-name">included</span><span class="method-args">(cls)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000215-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000215-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/acts/content_object.rb, line 63</span>
+63:         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">included</span>(<span class="ruby-identifier">cls</span>)
+64:           <span class="ruby-identifier">cls</span>.<span class="ruby-identifier">extend</span> <span class="ruby-constant">ClassMethods</span>
+65:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000223" class="method-detail">
+        <a name="M000223"></a>
+
+        <div class="method-heading">
+          <a href="#M000223" class="method-signature">
+          <span class="method-name">destroy_versions_if_destroyed</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000223-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000223-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/cms/acts/content_object.rb, line 99</span>
+ 99:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroy_versions_if_destroyed</span>
+100:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">versionable?</span>
+101:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned_class</span>.<span class="ruby-identifier">delete_all</span>(<span class="ruby-node">&quot;#{self.class.versioned_foreign_key} = #{id}&quot;</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">destroyed?</span>
+102:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000221" class="method-detail">
+        <a name="M000221"></a>
+
+        <div class="method-heading">
+          <a href="#M000221" class="method-signature">
+          <span class="method-name">draft?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000221-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000221-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/acts/content_object.rb, line 93</span>
+93:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">draft?</span>
+94:           <span class="ruby-operator">!</span><span class="ruby-identifier">published?</span>
+95:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000222" class="method-detail">
+        <a name="M000222"></a>
+
+        <div class="method-heading">
+          <span class="method-name">in_progress?</span><span class="method-args">()</span>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Alias for draft?
+</p>
+        </div>
+      </div>
+
+      <div id="method-M000220" class="method-detail">
+        <a name="M000220"></a>
+
+        <div class="method-heading">
+          <a href="#M000220" class="method-signature">
+          <span class="method-name">live?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000220-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000220-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/acts/content_object.rb, line 89</span>
+89:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">live?</span>
+90:           <span class="ruby-identifier">versionable?</span> <span class="ruby-value">? </span><span class="ruby-identifier">versions</span>.<span class="ruby-identifier">count</span>(<span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value str">'version &gt; ? AND published = ?'</span>, <span class="ruby-identifier">version</span>, <span class="ruby-keyword kw">true</span>]) <span class="ruby-operator">==</span> <span class="ruby-value">0</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">published?</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">true</span>
+91:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000218" class="method-detail">
+        <a name="M000218"></a>
+
+        <div class="method-heading">
+          <a href="#M000218" class="method-signature">
+          <span class="method-name">publish</span><span class="method-args">(updated_by)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000218-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000218-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/acts/content_object.rb, line 77</span>
+77:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">publish</span>(<span class="ruby-identifier">updated_by</span>)
+78:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">publish_on_save</span> = <span class="ruby-keyword kw">true</span>
+79:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">updated_by_user</span> = <span class="ruby-identifier">updated_by</span>
+80:           <span class="ruby-identifier">save</span>          
+81:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000219" class="method-detail">
+        <a name="M000219"></a>
+
+        <div class="method-heading">
+          <a href="#M000219" class="method-signature">
+          <span class="method-name">publish!</span><span class="method-args">(updated_by)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000219-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000219-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/acts/content_object.rb, line 83</span>
+83:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">publish!</span>(<span class="ruby-identifier">updated_by</span>)
+84:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">publish_on_save</span> = <span class="ruby-keyword kw">true</span>
+85:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">updated_by_user</span> = <span class="ruby-identifier">updated_by</span>
+86:           <span class="ruby-identifier">save!</span>          
+87:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000217" class="method-detail">
+        <a name="M000217"></a>
+
+        <div class="method-heading">
+          <a href="#M000217" class="method-signature">
+          <span class="method-name">set_published</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000217-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000217-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/acts/content_object.rb, line 71</span>
+71:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_published</span>
+72:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">published</span> = <span class="ruby-operator">!</span><span class="ruby-operator">!</span>(<span class="ruby-identifier">publish_on_save</span>)
+73:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">publish_on_save</span> = <span class="ruby-keyword kw">nil</span>
+74:           <span class="ruby-keyword kw">true</span>
+75:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000225" class="method-detail">
+        <a name="M000225"></a>
+
+        <div class="method-heading">
+          <a href="#M000225" class="method-signature">
+          <span class="method-name">set_updated_by</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000225-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000225-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/cms/acts/content_object.rb, line 108</span>
+108:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_updated_by</span>
+109:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">updated_by_user_id</span>
+110:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">updated_by_id</span> = <span class="ruby-identifier">updated_by_user_id</span>
+111:           <span class="ruby-keyword kw">else</span>
+112:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">updated_by</span> = <span class="ruby-identifier">updated_by_user</span>
+113:           <span class="ruby-keyword kw">end</span>
+114:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000224" class="method-detail">
+        <a name="M000224"></a>
+
+        <div class="method-heading">
+          <a href="#M000224" class="method-signature">
+          <span class="method-name">status</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000224-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000224-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/cms/acts/content_object.rb, line 104</span>
+104:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">status</span>
+105:           <span class="ruby-identifier">published?</span> <span class="ruby-value">? </span><span class="ruby-operator">:</span><span class="ruby-identifier">published</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">:draft</span>
+106:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000216" class="method-detail">
+        <a name="M000216"></a>
+
+        <div class="method-heading">
+          <a href="#M000216" class="method-signature">
+          <span class="method-name">status_name</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000216-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000216-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/acts/content_object.rb, line 67</span>
+67:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">status_name</span>
+68:           <span class="ruby-identifier">published?</span> <span class="ruby-value">? </span><span class="ruby-value str">&quot;Published&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-value str">&quot;Draft&quot;</span>
+69:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000214" class="method-detail">
+        <a name="M000214"></a>
+
+        <div class="method-heading">
+          <a href="#M000214" class="method-signature">
+          <span class="method-name">versionable?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000214-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000214-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/acts/content_object.rb, line 59</span>
+59:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">versionable?</span>
+60:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:versions</span>)
+61:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

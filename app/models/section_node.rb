@@ -59,4 +59,16 @@ class SectionNode < ActiveRecord::Base
     move_to(sec, 1.0/0)
   end
   
+  def ancestors()
+    ancestors = []
+    fn = lambda do |sn|
+      ancestors << sn.section
+      unless sn.section.root?
+        fn.call(sn.section.node)
+      end
+    end
+    fn.call(self)
+    ancestors.reverse
+  end
+  
 end

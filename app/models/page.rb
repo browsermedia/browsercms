@@ -22,6 +22,9 @@ class Page < ActiveRecord::Base
 
   named_scope :connected_to_block, lambda { |b| {:include => :connectors, :conditions => ['connectors.content_block_id = ? and connectors.content_block_type = ? and connectors.content_block_version = ?', b.id, b.class.name, b.version]} }
     
+  named_scope :not_archived, :conditions => {:archived => false}
+  named_scope :not_hidden, :conditions => {:hidden => false}
+    
   def self.find_by_content_block(content_block, content_block_version=nil)
     all(:include => :connectors,
       :conditions => ['connectors.content_block_id = ? and connectors.content_block_type = ? and connectors.content_block_version = ?', 
@@ -194,6 +197,10 @@ class Page < ActiveRecord::Base
     template ? template.name : nil
   end
   
+  def ancestors
+    section_node.ancestors
+  end
+    
   #Returns true if the block attached to each connector in the given container is live
   def container_live?(container)
     connectors.all(:include => :page, :conditions => {:container => container.to_s}).all?{|c| c.content_block.live?}

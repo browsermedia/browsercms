@@ -88,9 +88,10 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000061">create</a>&nbsp;&nbsp;
-      <a href="#M000062">destroy</a>&nbsp;&nbsp;
-      <a href="#M000060">new</a>&nbsp;&nbsp;
+      <a href="#M000279">create</a>&nbsp;&nbsp;
+      <a href="#M000280">destroy</a>&nbsp;&nbsp;
+      <a href="#M000278">new</a>&nbsp;&nbsp;
+      <a href="#M000281">usages</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -112,85 +113,116 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000061" class="method-detail">
-        <a name="M000061"></a>
+      <div id="method-M000279" class="method-detail">
+        <a name="M000279"></a>
 
         <div class="method-heading">
-          <a href="#M000061" class="method-signature">
+          <a href="#M000279" class="method-signature">
           <span class="method-name">create</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000061-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000061-source">
+            onclick="toggleCode('M000279-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000279-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/cms/connectors_controller.rb, line 12</span>
 12:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create</span>
-13:     <span class="ruby-ivar">@connector</span> = <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">connectors</span>.<span class="ruby-identifier">build</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:connector</span>])
-14:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@connector</span>.<span class="ruby-identifier">save</span>
-15:       <span class="ruby-identifier">redirect_to</span> <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">path</span>
-16:     <span class="ruby-keyword kw">else</span>
-17:       <span class="ruby-ivar">@blocks</span> = <span class="ruby-ivar">@connector</span>.<span class="ruby-identifier">content_block_type</span>.<span class="ruby-identifier">classify</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">all</span>(<span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;name&quot;</span>)      
-18:       <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'new'</span>
-19:     <span class="ruby-keyword kw">end</span>
-20:   <span class="ruby-keyword kw">end</span>
+13:     <span class="ruby-ivar">@block_type</span> = <span class="ruby-constant">ContentType</span>.<span class="ruby-identifier">find_by_key</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:content_block_type</span>])
+14:     <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Unknown block type&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@block_type</span>
+15:     <span class="ruby-ivar">@block</span> = <span class="ruby-ivar">@block_type</span>.<span class="ruby-identifier">model_class</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:content_block_id</span>])
+16:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">add_content_block!</span>(<span class="ruby-ivar">@block</span>, <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:container</span>])
+17:       <span class="ruby-identifier">redirect_to</span> <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">path</span>
+18:     <span class="ruby-keyword kw">else</span>
+19:       <span class="ruby-ivar">@blocks</span> = <span class="ruby-ivar">@block_type</span>.<span class="ruby-identifier">model_class</span>.<span class="ruby-identifier">all</span>(<span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;name&quot;</span>)      
+20:       <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'new'</span>
+21:     <span class="ruby-keyword kw">end</span>
+22:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000062" class="method-detail">
-        <a name="M000062"></a>
+      <div id="method-M000280" class="method-detail">
+        <a name="M000280"></a>
 
         <div class="method-heading">
-          <a href="#M000062" class="method-signature">
+          <a href="#M000280" class="method-signature">
           <span class="method-name">destroy</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000062-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000062-source">
+            onclick="toggleCode('M000280-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000280-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/connectors_controller.rb, line 22</span>
-22:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroy</span>
-23:     <span class="ruby-ivar">@connector</span> = <span class="ruby-constant">Connector</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])
-24:     <span class="ruby-ivar">@page</span> = <span class="ruby-ivar">@connector</span>.<span class="ruby-identifier">page</span>
-25:     <span class="ruby-ivar">@content_block</span> = <span class="ruby-ivar">@connector</span>.<span class="ruby-identifier">content_block</span>
-26:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@connector</span>.<span class="ruby-identifier">destroy</span>
-27:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-node">&quot;Removed '#{@content_block.name}' from the '#{@connector.container}' container&quot;</span>
-28:     <span class="ruby-keyword kw">end</span>
-29:     <span class="ruby-identifier">redirect_to</span> <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">path</span>
-30:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/connectors_controller.rb, line 24</span>
+24:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroy</span>
+25:     <span class="ruby-ivar">@connector</span> = <span class="ruby-constant">Connector</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])
+26:     <span class="ruby-ivar">@page</span> = <span class="ruby-ivar">@connector</span>.<span class="ruby-identifier">page</span>
+27:     <span class="ruby-ivar">@content_block</span> = <span class="ruby-ivar">@connector</span>.<span class="ruby-identifier">content_block</span>
+28:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">destroy_connector</span>(<span class="ruby-ivar">@connector</span>)
+29:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-node">&quot;Removed '#{@content_block.name}' from the '#{@connector.container}' container&quot;</span>
+30:     <span class="ruby-keyword kw">else</span>
+31:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:error</span>] = <span class="ruby-node">&quot;Failed to remove '#{@content_block.name}' from the '#{@connector.container}' container&quot;</span>
+32:     <span class="ruby-keyword kw">end</span>
+33:     <span class="ruby-identifier">redirect_to</span> <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">path</span>
+34:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000060" class="method-detail">
-        <a name="M000060"></a>
+      <div id="method-M000278" class="method-detail">
+        <a name="M000278"></a>
 
         <div class="method-heading">
-          <a href="#M000060" class="method-signature">
+          <a href="#M000278" class="method-signature">
           <span class="method-name">new</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000060-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000060-source">
+            onclick="toggleCode('M000278-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000278-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/cms/connectors_controller.rb, line 5</span>
- 5:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new</span>
- 6:     <span class="ruby-ivar">@block_type</span> = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:block_type</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:last_block_type</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">'html_block'</span>
+ 5:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new</span>    
+ 6:     <span class="ruby-ivar">@block_type</span> = <span class="ruby-constant">ContentType</span>.<span class="ruby-identifier">find_by_key</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:block_type</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:last_block_type</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">'html_block'</span>)
  7:     <span class="ruby-ivar">@container</span> = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:container</span>]
  8:     <span class="ruby-ivar">@connector</span> = <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">connectors</span>.<span class="ruby-identifier">build</span>(<span class="ruby-identifier">:container</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@container</span>)
- 9:     <span class="ruby-ivar">@blocks</span> = <span class="ruby-ivar">@block_type</span>.<span class="ruby-identifier">classify</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">all</span>(<span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;name&quot;</span>)      
+ 9:     <span class="ruby-ivar">@blocks</span> = <span class="ruby-ivar">@block_type</span>.<span class="ruby-identifier">model_class</span>.<span class="ruby-identifier">all</span>(<span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;name&quot;</span>)      
 10:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000281" class="method-detail">
+        <a name="M000281"></a>
+
+        <div class="method-heading">
+          <a href="#M000281" class="method-signature">
+          <span class="method-name">usages</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000281-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000281-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/cms/connectors_controller.rb, line 55</span>
+55:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">usages</span>
+56:     <span class="ruby-ivar">@content_type</span> = <span class="ruby-constant">ContentType</span>.<span class="ruby-identifier">find_by_key</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:block_type</span>])
+57:     <span class="ruby-ivar">@block</span> = <span class="ruby-ivar">@content_type</span>.<span class="ruby-identifier">model_class</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])
+58:     <span class="ruby-ivar">@pages</span> = <span class="ruby-ivar">@block</span>.<span class="ruby-identifier">connected_pages</span>.<span class="ruby-identifier">all</span>(<span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'name'</span>)
+59: 
+60:     <span class="ruby-identifier">render</span> <span class="ruby-identifier">:layout</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'cms/content_library'</span>
+61:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

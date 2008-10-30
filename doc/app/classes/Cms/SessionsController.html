@@ -94,10 +94,10 @@ This controller handles the login/logout function of the site.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000078">create</a>&nbsp;&nbsp;
-      <a href="#M000079">destroy</a>&nbsp;&nbsp;
-      <a href="#M000077">new</a>&nbsp;&nbsp;
-      <a href="#M000080">note_failed_signin</a>&nbsp;&nbsp;
+      <a href="#M000299">create</a>&nbsp;&nbsp;
+      <a href="#M000300">destroy</a>&nbsp;&nbsp;
+      <a href="#M000298">new</a>&nbsp;&nbsp;
+      <a href="#M000301">note_failed_signin</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -119,25 +119,25 @@ This controller handles the login/logout function of the site.
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000078" class="method-detail">
-        <a name="M000078"></a>
+      <div id="method-M000299" class="method-detail">
+        <a name="M000299"></a>
 
         <div class="method-heading">
-          <a href="#M000078" class="method-signature">
+          <a href="#M000299" class="method-signature">
           <span class="method-name">create</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000078-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000078-source">
+            onclick="toggleCode('M000299-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000299-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/cms/sessions_controller.rb, line 10</span>
 10:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create</span>
 11:     <span class="ruby-identifier">logout_keeping_session!</span>
 12:     <span class="ruby-identifier">user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">authenticate</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:login</span>], <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:password</span>])
-13:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">user</span>
+13:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">user</span> <span class="ruby-keyword kw">and</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">can_login?</span>
 14:       <span class="ruby-comment cmt"># Protects against session fixation attacks, causes request forgery</span>
 15:       <span class="ruby-comment cmt"># protection if user resubmits an earlier form using back</span>
 16:       <span class="ruby-comment cmt"># button. Uncomment if you understand the tradeoffs.</span>
@@ -159,19 +159,19 @@ This controller handles the login/logout function of the site.
         </div>
       </div>
 
-      <div id="method-M000079" class="method-detail">
-        <a name="M000079"></a>
+      <div id="method-M000300" class="method-detail">
+        <a name="M000300"></a>
 
         <div class="method-heading">
-          <a href="#M000079" class="method-signature">
+          <a href="#M000300" class="method-signature">
           <span class="method-name">destroy</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000079-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000079-source">
+            onclick="toggleCode('M000300-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000300-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/cms/sessions_controller.rb, line 31</span>
 31:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroy</span>
@@ -184,11 +184,11 @@ This controller handles the login/logout function of the site.
         </div>
       </div>
 
-      <div id="method-M000077" class="method-detail">
-        <a name="M000077"></a>
+      <div id="method-M000298" class="method-detail">
+        <a name="M000298"></a>
 
         <div class="method-heading">
-          <a href="#M000077" class="method-signature">
+          <a href="#M000298" class="method-signature">
           <span class="method-name">new</span><span class="method-args">()</span>
           </a>
         </div>
@@ -198,8 +198,8 @@ This controller handles the login/logout function of the site.
 render new.rhtml
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000077-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000077-source">
+            onclick="toggleCode('M000298-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000298-source">
 <pre>
    <span class="ruby-comment cmt"># File app/controllers/cms/sessions_controller.rb, line 7</span>
 7:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new</span>
@@ -211,11 +211,11 @@ render new.rhtml
 
       <h3 class="section-bar">Protected Instance methods</h3>
 
-      <div id="method-M000080" class="method-detail">
-        <a name="M000080"></a>
+      <div id="method-M000301" class="method-detail">
+        <a name="M000301"></a>
 
         <div class="method-heading">
-          <a href="#M000080" class="method-signature">
+          <a href="#M000301" class="method-signature">
           <span class="method-name">note_failed_signin</span><span class="method-args">()</span>
           </a>
         </div>
@@ -225,8 +225,8 @@ render new.rhtml
 Track failed login attempts
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000080-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000080-source">
+            onclick="toggleCode('M000301-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000301-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/cms/sessions_controller.rb, line 39</span>
 39:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">note_failed_signin</span>

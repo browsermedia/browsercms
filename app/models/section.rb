@@ -1,13 +1,13 @@
 class Section < ActiveRecord::Base
   
   #The node that links this section to its parent
-  has_one :parent_node, :class_name => "SectionNode", :as => :node
+  has_one :node, :class_name => "SectionNode", :as => :node
   
   #The nodes that link this section to its children
   has_many :child_nodes, :class_name => "SectionNode"
 
-  has_many :pages, :through => :child_nodes, :source => :node, :source_type => 'Page'
-  has_many :sections, :through => :child_nodes, :source => :node, :source_type => 'Section'
+  has_many :pages, :through => :child_nodes, :source => :node, :source_type => 'Page', :order => 'section_nodes.position'
+  has_many :sections, :through => :child_nodes, :source => :node, :source_type => 'Section', :order => 'section_nodes.position'
 
   has_many :group_sections
   has_many :groups, :through => :group_sections
@@ -27,7 +27,7 @@ class Section < ActiveRecord::Base
   end
   
   def parent
-    parent_node ? parent_node.section : nil
+    node ? node.section : nil
   end
   
   def parent_id=(sec_id)
@@ -35,18 +35,22 @@ class Section < ActiveRecord::Base
   end
   
   def parent=(sec)
-    if parent_node
-      parent_node.move_to_end(sec)
+    if node
+      node.move_to_end(sec)
     else
-      build_parent_node(:node => self, :section => sec)
+      build_node(:node => self, :section => sec)
     end      
   end  
+  
+  def ancestors
+    node ? node.ancestors : []
+  end
   
   def move_to(section)
     if root?
       false
     else
-      parent_node.move_to_end(section)
+      node.move_to_end(section)
     end
   end
   
@@ -77,6 +81,17 @@ class Section < ActiveRecord::Base
       section = section.sections.first(:conditions => {:name => name})
     end
     section
+  end
+  
+  #The first page that is a decendent of this section
+  def first_page
+    page = pages.not_archived.first 
+    return page if page
+    sections.each do |s| 
+      page = s.first_page
+      return page if page
+    end
+    nil
   end
   
 end

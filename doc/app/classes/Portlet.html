@@ -86,9 +86,12 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000004">content_block_type</a>&nbsp;&nbsp;
-      <a href="#M000003">form_partial</a>&nbsp;&nbsp;
-      <a href="#M000005">render</a>&nbsp;&nbsp;
+      <a href="#M000056">columns_to_list</a>&nbsp;&nbsp;
+      <a href="#M000052">content_block_type</a>&nbsp;&nbsp;
+      <a href="#M000051">form_partial</a>&nbsp;&nbsp;
+      <a href="#M000054">portlet_type_name</a>&nbsp;&nbsp;
+      <a href="#M000053">render</a>&nbsp;&nbsp;
+      <a href="#M000055">template_for_new</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -96,13 +99,6 @@
 
 
     <!-- if includes -->
-    <div id="includes">
-      <h3 class="section-bar">Included Modules</h3>
-
-      <div id="includes-list">
-        <span class="include-name"><a href="Cms/BlockSupport.html">Cms::BlockSupport</a></span>
-      </div>
-    </div>
 
     <div id="section">
 
@@ -145,19 +141,42 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000004" class="method-detail">
-        <a name="M000004"></a>
+      <div id="method-M000056" class="method-detail">
+        <a name="M000056"></a>
 
         <div class="method-heading">
-          <a href="#M000004" class="method-signature">
+          <a href="#M000056" class="method-signature">
+          <span class="method-name">columns_to_list</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000056-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000056-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/portlet.rb, line 34</span>
+34:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">columns_to_list</span>
+35:     [{<span class="ruby-identifier">:label</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Portlet Type&quot;</span>, <span class="ruby-identifier">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;portlet_type_name&quot;</span>}]
+36:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000052" class="method-detail">
+        <a name="M000052"></a>
+
+        <div class="method-heading">
+          <a href="#M000052" class="method-signature">
           <span class="method-name">content_block_type</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000004-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000004-source">
+            onclick="toggleCode('M000052-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000052-source">
 <pre>
     <span class="ruby-comment cmt"># File app/models/portlet.rb, line 16</span>
 16:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">content_block_type</span>
@@ -168,19 +187,19 @@
         </div>
       </div>
 
-      <div id="method-M000003" class="method-detail">
-        <a name="M000003"></a>
+      <div id="method-M000051" class="method-detail">
+        <a name="M000051"></a>
 
         <div class="method-heading">
-          <a href="#M000003" class="method-signature">
+          <a href="#M000051" class="method-signature">
           <span class="method-name">form_partial</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000003-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000003-source">
+            onclick="toggleCode('M000051-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000051-source">
 <pre>
     <span class="ruby-comment cmt"># File app/models/portlet.rb, line 13</span>
 13:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">form_partial</span>
@@ -191,21 +210,70 @@
         </div>
       </div>
 
-      <h3 class="section-bar">Public Instance methods</h3>
-
-      <div id="method-M000005" class="method-detail">
-        <a name="M000005"></a>
+      <div id="method-M000055" class="method-detail">
+        <a name="M000055"></a>
 
         <div class="method-heading">
-          <a href="#M000005" class="method-signature">
+          <a href="#M000055" class="method-signature">
+          <span class="method-name">template_for_new</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000055-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000055-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/portlet.rb, line 30</span>
+30:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">template_for_new</span>
+31:     <span class="ruby-value str">&quot;cms/portlets/select_portlet_type&quot;</span>
+32:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000054" class="method-detail">
+        <a name="M000054"></a>
+
+        <div class="method-heading">
+          <a href="#M000054" class="method-signature">
+          <span class="method-name">portlet_type_name</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+For column in list
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000054-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000054-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/portlet.rb, line 26</span>
+26:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">portlet_type_name</span>
+27:     <span class="ruby-identifier">portlet_type</span>.<span class="ruby-identifier">name</span>
+28:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000053" class="method-detail">
+        <a name="M000053"></a>
+
+        <div class="method-heading">
+          <a href="#M000053" class="method-signature">
           <span class="method-name">render</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000005-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000005-source">
+            onclick="toggleCode('M000053-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000053-source">
 <pre>
     <span class="ruby-comment cmt"># File app/models/portlet.rb, line 21</span>
 21:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>

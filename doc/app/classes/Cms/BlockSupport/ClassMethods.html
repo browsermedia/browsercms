@@ -80,8 +80,10 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000053">content_block_label</a>&nbsp;&nbsp;
-      <a href="#M000052">content_block_type</a>&nbsp;&nbsp;
+      <a href="#M000245">content_block?</a>&nbsp;&nbsp;
+      <a href="#M000244">content_block_type</a>&nbsp;&nbsp;
+      <a href="#M000246">display_name</a>&nbsp;&nbsp;
+      <a href="#M000247">display_name_plural</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -103,47 +105,101 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000053" class="method-detail">
-        <a name="M000053"></a>
+      <div id="method-M000245" class="method-detail">
+        <a name="M000245"></a>
 
         <div class="method-heading">
-          <a href="#M000053" class="method-signature">
-          <span class="method-name">content_block_label</span><span class="method-args">()</span>
+          <a href="#M000245" class="method-signature">
+          <span class="method-name">content_block?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
+          <p>
+This is needed by path helper We originally didn&#8216;t have this and just
+used respond_to(:<a
+href="ClassMethods.html#M000244">content_block_type</a>) In order to
+determine if the object is a content block, but that became a problem for
+connector, which is not a content block, but does have a <a
+href="ClassMethods.html#M000244">content_block_type</a> method
+</p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000053-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000053-source">
+            onclick="toggleCode('M000245-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000245-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/block_support.rb, line 19</span>
-19:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">content_block_label</span>
-20:         <span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">titleize</span>
-21:       <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/block_support.rb, line 32</span>
+32:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">content_block?</span>
+33:         <span class="ruby-keyword kw">true</span>
+34:       <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000052" class="method-detail">
-        <a name="M000052"></a>
+      <div id="method-M000244" class="method-detail">
+        <a name="M000244"></a>
 
         <div class="method-heading">
-          <a href="#M000052" class="method-signature">
+          <a href="#M000244" class="method-signature">
           <span class="method-name">content_block_type</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000052-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000052-source">
+            onclick="toggleCode('M000244-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000244-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/block_support.rb, line 16</span>
-16:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">content_block_type</span>
-17:         <span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">underscore</span>
-18:       <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/block_support.rb, line 23</span>
+23:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">content_block_type</span>
+24:         <span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">underscore</span>
+25:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000246" class="method-detail">
+        <a name="M000246"></a>
+
+        <div class="method-heading">
+          <a href="#M000246" class="method-signature">
+          <span class="method-name">display_name</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000246-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000246-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/block_support.rb, line 36</span>
+36:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">display_name</span>
+37:         <span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">titleize</span>
+38:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000247" class="method-detail">
+        <a name="M000247"></a>
+
+        <div class="method-heading">
+          <a href="#M000247" class="method-signature">
+          <span class="method-name">display_name_plural</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000247-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000247-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/block_support.rb, line 40</span>
+40:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">display_name_plural</span>
+41:         <span class="ruby-identifier">display_name</span>.<span class="ruby-identifier">pluralize</span>
+42:       <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

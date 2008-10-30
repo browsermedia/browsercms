@@ -88,7 +88,9 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000088">redirect_to_first</a>&nbsp;&nbsp;
+      <a href="#M000319">current_site</a>&nbsp;&nbsp;
+      <a href="#M000317">escape_javascript</a>&nbsp;&nbsp;
+      <a href="#M000318">redirect_to_first</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -96,6 +98,14 @@
 
 
     <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name"><a href="../AuthenticatedSystem.html">AuthenticatedSystem</a></span>
+        <span class="include-name"><a href="PathHelper.html">Cms::PathHelper</a></span>
+      </div>
+    </div>
 
     <div id="section">
 
@@ -110,28 +120,74 @@
     <div id="methods">
       <h3 class="section-bar">Protected Instance methods</h3>
 
-      <div id="method-M000088" class="method-detail">
-        <a name="M000088"></a>
+      <div id="method-M000319" class="method-detail">
+        <a name="M000319"></a>
 
         <div class="method-heading">
-          <a href="#M000088" class="method-signature">
+          <a href="#M000319" class="method-signature">
+          <span class="method-name">current_site</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000319-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000319-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/cms/base_controller.rb, line 28</span>
+28:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">current_site</span>
+29:       <span class="ruby-ivar">@current_site</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Site</span>.<span class="ruby-identifier">find_by_domain</span>(<span class="ruby-identifier">request</span>.<span class="ruby-identifier">host</span>)
+30:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000317" class="method-detail">
+        <a name="M000317"></a>
+
+        <div class="method-heading">
+          <a href="#M000317" class="method-signature">
+          <span class="method-name">escape_javascript</span><span class="method-args">(javascript)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000317-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000317-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/cms/base_controller.rb, line 16</span>
+16:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">escape_javascript</span>(<span class="ruby-identifier">javascript</span>)
+17:       (<span class="ruby-identifier">javascript</span> <span class="ruby-operator">||</span> <span class="ruby-value str">''</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">'\\'</span>,<span class="ruby-value str">'\0\0'</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-value str">'&lt;/'</span>,<span class="ruby-value str">'&lt;\/'</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\r\n|\n|\r/</span>, <span class="ruby-value str">&quot;\\n&quot;</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/[&quot;']/</span>) { <span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span> <span class="ruby-node">&quot;\\#{m}&quot;</span> }
+18:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000318" class="method-detail">
+        <a name="M000318"></a>
+
+        <div class="method-heading">
+          <a href="#M000318" class="method-signature">
           <span class="method-name">redirect_to_first</span><span class="method-args">(*urls)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000088-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000088-source">
+            onclick="toggleCode('M000318-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000318-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/base_controller.rb, line 7</span>
- 7:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">redirect_to_first</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">urls</span>)
- 8:       <span class="ruby-identifier">urls</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">url</span><span class="ruby-operator">|</span>
- 9:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">url</span>.<span class="ruby-identifier">blank?</span>
-10:           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">url</span>)
-11:         <span class="ruby-keyword kw">end</span>
-12:       <span class="ruby-keyword kw">end</span>
-13:     <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/base_controller.rb, line 20</span>
+20:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">redirect_to_first</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">urls</span>)
+21:       <span class="ruby-identifier">urls</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">url</span><span class="ruby-operator">|</span>
+22:         <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">url</span>.<span class="ruby-identifier">blank?</span>
+23:           <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">url</span>)
+24:         <span class="ruby-keyword kw">end</span>
+25:       <span class="ruby-keyword kw">end</span>
+26:     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

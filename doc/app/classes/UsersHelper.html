@@ -80,10 +80,12 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000015">if_authorized?</a>&nbsp;&nbsp;
-      <a href="#M000018">link_to_current_user</a>&nbsp;&nbsp;
-      <a href="#M000017">link_to_login_with_IP</a>&nbsp;&nbsp;
-      <a href="#M000016">link_to_user</a>&nbsp;&nbsp;
+      <a href="#M000169">group_filter</a>&nbsp;&nbsp;
+      <a href="#M000168">group_ids</a>&nbsp;&nbsp;
+      <a href="#M000170">if_authorized?</a>&nbsp;&nbsp;
+      <a href="#M000173">link_to_current_user</a>&nbsp;&nbsp;
+      <a href="#M000172">link_to_login_with_IP</a>&nbsp;&nbsp;
+      <a href="#M000171">link_to_user</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -105,11 +107,57 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000015" class="method-detail">
-        <a name="M000015"></a>
+      <div id="method-M000169" class="method-detail">
+        <a name="M000169"></a>
 
         <div class="method-heading">
-          <a href="#M000015" class="method-signature">
+          <a href="#M000169" class="method-signature">
+          <span class="method-name">group_filter</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000169-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000169-source">
+<pre>
+   <span class="ruby-comment cmt"># File app/helpers/users_helper.rb, line 7</span>
+7:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">group_filter</span>
+8:     <span class="ruby-identifier">select_tag</span>(<span class="ruby-value str">&quot;group_id&quot;</span>, <span class="ruby-identifier">options_from_collection_for_select</span>(<span class="ruby-constant">Group</span>.<span class="ruby-identifier">all</span>.<span class="ruby-identifier">insert</span>(<span class="ruby-value">0</span>, <span class="ruby-constant">Group</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;All&quot;</span>)), <span class="ruby-value str">&quot;id&quot;</span>, <span class="ruby-value str">&quot;name&quot;</span>, <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:group_id</span>].<span class="ruby-identifier">to_i</span>))
+9:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000168" class="method-detail">
+        <a name="M000168"></a>
+
+        <div class="method-heading">
+          <a href="#M000168" class="method-signature">
+          <span class="method-name">group_ids</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000168-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000168-source">
+<pre>
+   <span class="ruby-comment cmt"># File app/helpers/users_helper.rb, line 3</span>
+3:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">group_ids</span>
+4:    (<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:group_ids</span>] <span class="ruby-operator">||</span> <span class="ruby-ivar">@user</span>.<span class="ruby-identifier">group_ids</span>).<span class="ruby-identifier">collect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">g</span><span class="ruby-operator">|</span> <span class="ruby-identifier">g</span>.<span class="ruby-identifier">to_i</span> }
+5:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000170" class="method-detail">
+        <a name="M000170"></a>
+
+        <div class="method-heading">
+          <a href="#M000170" class="method-signature">
           <span class="method-name">if_authorized?</span><span class="method-args">(action, resource) {|action, resource| ...}</span>
           </a>
         </div>
@@ -122,35 +170,35 @@ all access control at the controller level.
 </p>
 <p>
 Example: &lt;%= <a
-href="UsersHelper.html#M000015">if_authorized?</a>(:index, <a
+href="UsersHelper.html#M000170">if_authorized?</a>(:index, <a
 href="User.html">User</a>) do link_to(&#8216;List all users&#8217;,
 users_path) end %&gt; | &lt;%= <a
-href="UsersHelper.html#M000015">if_authorized?</a>(:edit, @user) do
+href="UsersHelper.html#M000170">if_authorized?</a>(:edit, @user) do
 link_to(&#8216;Edit this user&#8217;, edit_user_path) end %&gt; | &lt;%= <a
-href="UsersHelper.html#M000015">if_authorized?</a>(:destroy, @user) do
+href="UsersHelper.html#M000170">if_authorized?</a>(:destroy, @user) do
 link_to &#8216;Destroy&#8217;, @user, :confirm =&gt; &#8216;Are you
 sure?&#8217;, :method =&gt; :delete end %&gt;
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000015-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000015-source">
+            onclick="toggleCode('M000170-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000170-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/helpers/users_helper.rb, line 14</span>
-14:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">if_authorized?</span>(<span class="ruby-identifier">action</span>, <span class="ruby-identifier">resource</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-15:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">authorized?</span>(<span class="ruby-identifier">action</span>, <span class="ruby-identifier">resource</span>)
-16:       <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">action</span>, <span class="ruby-identifier">resource</span>
-17:     <span class="ruby-keyword kw">end</span>
-18:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/helpers/users_helper.rb, line 22</span>
+22:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">if_authorized?</span>(<span class="ruby-identifier">action</span>, <span class="ruby-identifier">resource</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+23:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">authorized?</span>(<span class="ruby-identifier">action</span>, <span class="ruby-identifier">resource</span>)
+24:       <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">action</span>, <span class="ruby-identifier">resource</span>
+25:     <span class="ruby-keyword kw">end</span>
+26:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000018" class="method-detail">
-        <a name="M000018"></a>
+      <div id="method-M000173" class="method-detail">
+        <a name="M000173"></a>
 
         <div class="method-heading">
-          <a href="#M000018" class="method-signature">
+          <a href="#M000173" class="method-signature">
           <span class="method-name">link_to_current_user</span><span class="method-args">(options={})</span>
           </a>
         </div>
@@ -158,34 +206,34 @@ sure?&#8217;, :method =&gt; :delete end %&gt;
         <div class="method-description">
           <p>
 Link to the current user&#8216;s page (using <a
-href="UsersHelper.html#M000016">link_to_user</a>) or to the login page
-(using <a href="UsersHelper.html#M000017">link_to_login_with_IP</a>).
+href="UsersHelper.html#M000171">link_to_user</a>) or to the login page
+(using <a href="UsersHelper.html#M000172">link_to_login_with_IP</a>).
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000018-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000018-source">
+            onclick="toggleCode('M000173-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000173-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/helpers/users_helper.rb, line 82</span>
-82:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">link_to_current_user</span>(<span class="ruby-identifier">options</span>={})
-83:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">current_user</span>
-84:       <span class="ruby-identifier">link_to_user</span> <span class="ruby-identifier">current_user</span>, <span class="ruby-identifier">options</span>
-85:     <span class="ruby-keyword kw">else</span>
-86:       <span class="ruby-identifier">content_text</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:content_text</span>) <span class="ruby-operator">||</span> <span class="ruby-value str">'not signed in'</span>
-87:       <span class="ruby-comment cmt"># kill ignored options from link_to_user</span>
-88:       [<span class="ruby-identifier">:content_method</span>, <span class="ruby-identifier">:title_method</span>].<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">opt</span><span class="ruby-operator">|</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">opt</span>)} 
-89:       <span class="ruby-identifier">link_to_login_with_IP</span> <span class="ruby-identifier">content_text</span>, <span class="ruby-identifier">options</span>
-90:     <span class="ruby-keyword kw">end</span>
-91:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/helpers/users_helper.rb, line 90</span>
+90:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">link_to_current_user</span>(<span class="ruby-identifier">options</span>={})
+91:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">current_user</span>
+92:       <span class="ruby-identifier">link_to_user</span> <span class="ruby-identifier">current_user</span>, <span class="ruby-identifier">options</span>
+93:     <span class="ruby-keyword kw">else</span>
+94:       <span class="ruby-identifier">content_text</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:content_text</span>) <span class="ruby-operator">||</span> <span class="ruby-value str">'not signed in'</span>
+95:       <span class="ruby-comment cmt"># kill ignored options from link_to_user</span>
+96:       [<span class="ruby-identifier">:content_method</span>, <span class="ruby-identifier">:title_method</span>].<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">opt</span><span class="ruby-operator">|</span> <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">opt</span>)} 
+97:       <span class="ruby-identifier">link_to_login_with_IP</span> <span class="ruby-identifier">content_text</span>, <span class="ruby-identifier">options</span>
+98:     <span class="ruby-keyword kw">end</span>
+99:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000017" class="method-detail">
-        <a name="M000017"></a>
+      <div id="method-M000172" class="method-detail">
+        <a name="M000172"></a>
 
         <div class="method-heading">
-          <a href="#M000017" class="method-signature">
+          <a href="#M000172" class="method-signature">
           <span class="method-name">link_to_login_with_IP</span><span class="method-args">(content_text=nil, options={})</span>
           </a>
         </div>
@@ -208,30 +256,30 @@ Examples:
   # =&gt; &lt;a href=&quot;/login&quot; title=&quot;169.69.69.69&quot;&gt;not signed in&lt;/a&gt;
 </pre>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000017-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000017-source">
+            onclick="toggleCode('M000172-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000172-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/helpers/users_helper.rb, line 67</span>
-67:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">link_to_login_with_IP</span> <span class="ruby-identifier">content_text</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">options</span>={}
-68:     <span class="ruby-identifier">ip_addr</span>           = <span class="ruby-identifier">request</span>.<span class="ruby-identifier">remote_ip</span>
-69:     <span class="ruby-identifier">content_text</span>    <span class="ruby-operator">||=</span> <span class="ruby-identifier">ip_addr</span>
-70:     <span class="ruby-identifier">options</span>.<span class="ruby-identifier">reverse_merge!</span> <span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ip_addr</span>
-71:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">tag</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:tag</span>)
-72:       <span class="ruby-identifier">content_tag</span> <span class="ruby-identifier">tag</span>, <span class="ruby-identifier">h</span>(<span class="ruby-identifier">content_text</span>), <span class="ruby-identifier">options</span>
-73:     <span class="ruby-keyword kw">else</span>
-74:       <span class="ruby-identifier">link_to</span> <span class="ruby-identifier">h</span>(<span class="ruby-identifier">content_text</span>), <span class="ruby-identifier">login_path</span>, <span class="ruby-identifier">options</span>
-75:     <span class="ruby-keyword kw">end</span>
-76:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/helpers/users_helper.rb, line 75</span>
+75:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">link_to_login_with_IP</span> <span class="ruby-identifier">content_text</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-identifier">options</span>={}
+76:     <span class="ruby-identifier">ip_addr</span>           = <span class="ruby-identifier">request</span>.<span class="ruby-identifier">remote_ip</span>
+77:     <span class="ruby-identifier">content_text</span>    <span class="ruby-operator">||=</span> <span class="ruby-identifier">ip_addr</span>
+78:     <span class="ruby-identifier">options</span>.<span class="ruby-identifier">reverse_merge!</span> <span class="ruby-identifier">:title</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">ip_addr</span>
+79:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">tag</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:tag</span>)
+80:       <span class="ruby-identifier">content_tag</span> <span class="ruby-identifier">tag</span>, <span class="ruby-identifier">h</span>(<span class="ruby-identifier">content_text</span>), <span class="ruby-identifier">options</span>
+81:     <span class="ruby-keyword kw">else</span>
+82:       <span class="ruby-identifier">link_to</span> <span class="ruby-identifier">h</span>(<span class="ruby-identifier">content_text</span>), <span class="ruby-identifier">login_path</span>, <span class="ruby-identifier">options</span>
+83:     <span class="ruby-keyword kw">end</span>
+84:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000016" class="method-detail">
-        <a name="M000016"></a>
+      <div id="method-M000171" class="method-detail">
+        <a name="M000171"></a>
 
         <div class="method-heading">
-          <a href="#M000016" class="method-signature">
+          <a href="#M000171" class="method-signature">
           <span class="method-name">link_to_user</span><span class="method-args">(user, options={})</span>
           </a>
         </div>
@@ -279,18 +327,18 @@ Examples:
   # =&gt; &lt;a href=&quot;/users/3&quot; title=&quot;barmy&quot; class=&quot;nickname&quot;&gt;Your user page&lt;/a&gt;
 </pre>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000016-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000016-source">
+            onclick="toggleCode('M000171-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000171-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/helpers/users_helper.rb, line 46</span>
-46:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">link_to_user</span>(<span class="ruby-identifier">user</span>, <span class="ruby-identifier">options</span>={})
-47:     <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Invalid user&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">user</span>
-48:     <span class="ruby-identifier">options</span>.<span class="ruby-identifier">reverse_merge!</span> <span class="ruby-identifier">:content_method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:login</span>, <span class="ruby-identifier">:title_method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:login</span>, <span class="ruby-identifier">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:nickname</span>
-49:     <span class="ruby-identifier">content_text</span>      = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:content_text</span>)
-50:     <span class="ruby-identifier">content_text</span>    <span class="ruby-operator">||=</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:content_method</span>))
-51:     <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:title</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:title_method</span>))
-52:     <span class="ruby-identifier">link_to</span> <span class="ruby-identifier">h</span>(<span class="ruby-identifier">content_text</span>), <span class="ruby-identifier">user_path</span>(<span class="ruby-identifier">user</span>), <span class="ruby-identifier">options</span>
-53:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/helpers/users_helper.rb, line 54</span>
+54:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">link_to_user</span>(<span class="ruby-identifier">user</span>, <span class="ruby-identifier">options</span>={})
+55:     <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Invalid user&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">user</span>
+56:     <span class="ruby-identifier">options</span>.<span class="ruby-identifier">reverse_merge!</span> <span class="ruby-identifier">:content_method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:login</span>, <span class="ruby-identifier">:title_method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:login</span>, <span class="ruby-identifier">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:nickname</span>
+57:     <span class="ruby-identifier">content_text</span>      = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:content_text</span>)
+58:     <span class="ruby-identifier">content_text</span>    <span class="ruby-operator">||=</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:content_method</span>))
+59:     <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:title</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">user</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:title_method</span>))
+60:     <span class="ruby-identifier">link_to</span> <span class="ruby-identifier">h</span>(<span class="ruby-identifier">content_text</span>), <span class="ruby-identifier">user_path</span>(<span class="ruby-identifier">user</span>), <span class="ruby-identifier">options</span>
+61:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

@@ -9,8 +9,8 @@ class CreatePages < ActiveRecord::Migration
       t.string :author
       t.string :source
       t.string :language
-      t.boolean :hidden
-      t.boolean :archived
+      t.boolean :hidden, :default => false
+      t.boolean :archived, :default => false
     end
     
   end

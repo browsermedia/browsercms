@@ -11,8 +11,8 @@ describe SectionNode do
     @b2 = create_page(:section => @b, :name => "B2")
     @b3 = create_page(:section => @b, :name => "B3")    
     
-    @node_a = @a.parent_node
-    @node_b = @b.parent_node
+    @node_a = @a.node
+    @node_b = @b.node
     @node_a1 = @a1.section_node
     @node_a2 = @a2.section_node
     @node_a3 = @a3.section_node
@@ -85,5 +85,10 @@ describe SectionNode do
     @node_b1.should_meet_expectations(:section_id => @b.id, :node_type => "Page", :node_id => @b1.id, :position => 1)
     @node_b2.should_meet_expectations(:section_id => @b.id, :node_type => "Page", :node_id => @b2.id, :position => 2)
     @node_b3.should_meet_expectations(:section_id => @b.id, :node_type => "Page", :node_id => @b3.id, :position => 3)
+  end
+  it "should be able to find it's ancestors" do
+    root_section.ancestors.should be_empty
+    @a.ancestors.should == [root_section]    
+    @a1.ancestors.should == [root_section, @a]
   end
 end
