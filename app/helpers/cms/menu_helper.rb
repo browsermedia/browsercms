@@ -19,7 +19,8 @@ module Cms
     # * <tt>:depth</tt> - How many levels deep should the tree go.  If no value is supplied,
     #   the tree will go all the way down to the current page.  Must be greater than from_top.
     # * <tt>:class</tt> - The CSS Class that will be applied to the div.  The default value is "menu".
-    # * <tt>:show_all_siblings</tt> - 
+    # * <tt>:show_all_siblings</tt> - Passing true for this option will make all sibilings appear in the tree.
+    #   the default is false, in which case only the siblings of nodes within the open path will appear.
     # 
     # ==== Examples
     #
@@ -53,36 +54,57 @@ module Cms
     #    </ul>
     #   </div>
     def render_menu(options={})
+      #Intialize parameters
       page = options[:page] || @page
       from_top = options.has_key?(:from_top) ? options[:from_top].to_i : 0
-      depth = options.has_key?(:depth) ? opts[:depth].to_i : 1.0/0
+      depth = options.has_key?(:depth) ? options[:depth].to_i : 1.0/0
       css_class = options[:class] || "menu"
+      show_all_siblings = !!(options[:show_all_siblings])
       
       ancestors = page.ancestors[from_top..-1]
       
       html = "<div class=\"#{css_class}\">\n"
+      
+      #We are defining a recursive lambda that takes the top-level sections
+      #d is the current depth
       fn = lambda do |nodes, d|
+        
         html << "<ul>\n".indent(d+2)
         nodes.each_with_index do |sn, i|
 
-          classes = []          
-          if i == 0
-            classes << "first"
-          elsif i == nodes.size-1
-            classes << "last"
+          #If the node is a hidden page, then we aren't going to display it
+          unless sn.node_type == "Page" && sn.node.hidden?
+            
+            #Construct the CSS classes that the LI should have
+            classes = []          
+            if i == 0
+              classes << "first"
+            elsif i == nodes.size-1
+              classes << "last"
+            end
+            classes << "open" if ancestors.include?(sn.node)
+            classes << "on" if page == sn.node
+            cls = classes.empty? ? nil : classes.join(" ")
+            
+            html << %Q{<li id="#{sn.node_type.underscore}_#{sn.node.id}"#{cls ? " class=\"#{cls}\"" : ''}>\n}.indent(d+4)
+            
+            #Figure out what this link for this node should be
+            #If it is a page, then the page will simply be used
+            #But if is a page, we call the first_page method
+            p = sn.node_type == "Section" ? sn.node.first_page : sn.node
+            html << %Q{<a href="#{p ? p.path : '#'}">#{sn.node.name}</a>\n}.indent(d+6)
+            
+            #Now if this is a section, we do the child nodes, 
+            #but only if the show_all_siblings parameter is true, 
+            #or if this section is one of the current page's ancestors
+            #and also if the current depth is less than the target depth
+            if sn.node_type == "Section" && (show_all_siblings || ancestors.include?(sn.node)) && d < depth
+              fn.call(sn.node.child_nodes, d+4)
+            end
+            
+            html << %Q{</li>\n}.indent(d+4)
           end
           
-          classes << "open" if ancestors.include?(sn.node)
-          classes << "on" if page == sn.node
-          cls = classes.empty? ? nil : classes.join(" ")
-          html << %Q{<li id="#{sn.node_type.underscore}_#{sn.node.id}"#{cls ? " class=\"#{cls}\"" : ''}>\n}.indent(d+4)
-          p = sn.node_type == "Section" ? sn.node.first_page : sn.node
-          html << %Q{<a href="#{p ? p.path : '#'}">#{sn.node.name}</a>\n}.indent(d+6)
-          if sn.node_type == "Section" && ancestors.include?(sn.node)
-            fn.call(sn.node.child_nodes, d+4)
-          end
-          html << %Q{</li>\n}.indent(d+4)
-
         end
         html << "</ul>\n".indent(d+2)
       end
