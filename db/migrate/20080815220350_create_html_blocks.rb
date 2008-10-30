@@ -3,8 +3,6 @@ class CreateHtmlBlocks < ActiveRecord::Migration
     create_versioned_table :html_blocks do |t|
       t.string :name
       t.text :content, :limit => 64.kilobytes + 1      
-      t.string :status
-      t.datetime :deleted_at
     end
   end
 

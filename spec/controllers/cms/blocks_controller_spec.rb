@@ -220,15 +220,15 @@ describe Cms::BlocksController do
   describe "revert_to" do
     before do
       @block = create_html_block(:name => "V1")
-      @block.update_attribute(:name, "V2")
+      @block.update_attributes(:name => "V2")
     end
     describe "with a valid version" do
       before do
-        @action = lambda { post :revert_to, :id => @block.id, :version => "1" }
+        @action = lambda { reset(:block); post :revert_to, :id => @block.id, :version => "1"; reset(:block) }
       end
       it "should create a new version of the block" do
         @action.call
-        @block.reload.version.should == 3
+        @block.version.should == 3
       end
       it "should set the name of the block to the original name" do
         @action.call
@@ -245,7 +245,7 @@ describe Cms::BlocksController do
     end
     describe "without a version parameter" do
       before do
-        @action = lambda { post :revert_to, :id => @block}
+        @action = lambda { reset(:block); post :revert_to, :id => @block; reset(:block) }
       end
       it "should not create a new version of the block" do
         @action.should_not change(HtmlBlock::Version, :count)

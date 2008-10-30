@@ -65,6 +65,9 @@ class Cms::BlocksController < Cms::BaseController
     else
       render :action => "edit"
     end
+  rescue ActiveRecord::StaleObjectError => e
+    @block.errors.add_to_base(e.message)
+    render :action => "edit"
   end
 
   def destroy

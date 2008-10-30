@@ -162,13 +162,12 @@ describe Cms::PagesController do
     before do
       login_as_user
       @page = create_page(:section => root_section, :name => "V1", :path => "/test")
-      @page.update_attribute(:name, "V2")
-      @page.update_attribute(:name, "V3")
-      @action = lambda { put :revert_to, :id => @page.to_param, :version => 1 }
+      @page.update_attributes(:name => "V2")
+      @page.update_attributes(:name => "V3")      
+      @action = lambda { reset(:page); put :revert_to, :id => @page.to_param, :version => 1; reset(:page) }
     end
     it "should revert to version 1" do
       @action.call
-      @page = Page.find(@page.id)
       @page.name.should == "V1"
       @page.version.should == 4
     end

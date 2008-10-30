@@ -91,6 +91,9 @@ class Cms::PagesController < Cms::BaseController
     else
       render :action => "edit"
     end
+  rescue ActiveRecord::StaleObjectError => e
+    @page.errors.add_to_base(e.message)
+    render :action => "edit"
   end
 
   def destroy

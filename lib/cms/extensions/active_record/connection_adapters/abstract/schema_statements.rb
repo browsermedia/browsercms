@@ -8,6 +8,7 @@ module ActiveRecord
         t.primary_key(options[:primary_key] || Base.get_primary_key(table_name)) unless options[:id] == false
 
         t.integer :version, :default => 1
+        t.integer :lock_version, :default => 0
         yield t
         t.boolean :published, :default => false
         t.boolean :deleted, :default => false

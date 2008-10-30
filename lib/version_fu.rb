@@ -69,7 +69,7 @@ module VersionFu
       
       # Finally setup which columns to version
       self.versioned_columns =  versioned_class.new.attributes.keys - 
-        [versioned_class.primary_key, versioned_foreign_key, version_column, 'position', 'created_at', 'updated_at']
+        [versioned_class.primary_key, versioned_foreign_key, version_column, 'lock_version', 'position', 'created_at', 'updated_at']
     end
     
     def versioned_class

@@ -1,5 +1,6 @@
 <% if params[:_redirect_to] %>
   <%= hidden_field_tag :_redirect_to, params[:_redirect_to] %>
 <% end %>
+<%= f.hidden_field :lock_version %>
 <%= f.hidden_field :connect_to_page_id %>
 <%= f.hidden_field :connect_to_container %>

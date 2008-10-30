@@ -113,6 +113,7 @@ describe "A Content Object" do
       before do
         @page = create_page(:section => root_section)
         @page.add_content_block!(@block, "main")
+        reset(:page, :block)
         @editing_the_block = lambda {@block.update_attribute(:name, "something different")}
       end
       it "should work" do
