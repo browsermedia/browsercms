@@ -2,7 +2,7 @@ class Cms::PagesController < Cms::BaseController
   
   skip_before_filter :login_required, :only => [:show]
   before_filter :load_section, :only => [:new, :create, :move_to]
-  before_filter :load_page, :only => [:edit, :revisions, :show_version, :move_to, :revert_to, :destroy]
+  before_filter :load_page, :only => [:edit, :revisions, :show_version, :move_to, :revert_to, :destroy, :publish, :hide, :archive]
   before_filter :hide_toolbar, :only => [:new, :create, :move_to]
 
   verify :method => :put, :only => [:move_to]
@@ -111,7 +111,6 @@ class Cms::PagesController < Cms::BaseController
   #status actions
   {:publish => "published", :hide => "hidden", :archive => "archived"}.each do |status, verb|
     define_method status do
-      load_page
       if @page.send(status, current_user)
         flash[:notice] = "Page '#{@page.name}' was #{verb}"
       end

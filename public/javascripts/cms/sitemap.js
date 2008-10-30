@@ -8,6 +8,13 @@ jQuery(function($){
     }
   }
   
+  //Add hover to tr
+  $('#sitemap tr.section_node').hover(
+    function() { $(this).addClass('hover')},
+    function() { $(this).removeClass('hover')}
+  )
+    
+  
   //Disable all "buttons"
   $('#buttons a.disabled').click(function(){ return false })
 
@@ -25,14 +32,14 @@ jQuery(function($){
     accept: 'div',
     tolerance: 'pointer',
     over: function(e, ui) {
-      $(this).css('background-color','#00c')
+      $(this).addClass('drop-over')
     },
     out: function(e, ui) {
-      $(this).css('background-color', '#fff')
+      $(this).removeClass('drop-over')
     },
     drop: function(e, ui) {
       //Remove any drop zone highlights still hanging out
-      $('#sitemap .node .drop_before, #sitemap .node .drop_after').css('background-color', '#fff')
+      $('#sitemap .node .drop_before, #sitemap .node .drop_after').removeClass('drop-over')
       
       //Get the object and the id for the src (what we are droping) 
       //and the dest (where we are dropping)

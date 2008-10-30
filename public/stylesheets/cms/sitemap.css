@@ -5,9 +5,18 @@
   padding: 10px;
 }
 
+#sitemap tr.hover {
+  background-color: #ccf;
+}
+
+#sitemap td.drop-over {
+  background-color: #99c;
+}
+
 #sitemap th, #sitemap td {
   margin: 0;
 } 
+
 
 #sitemap th {
   margin: 0;
@@ -20,8 +29,8 @@
 } 
 
 #sitemap th.status, #sitemap td.status {
-  text-align: center;
-  width: 50px;
+  width: 100px;
+  padding-left: 5px;
 }
 
 #sitemap th.node, #sitemap td.node {
@@ -33,7 +42,7 @@
 }
 
 #sitemap td.status {
-  border-right: 1px solid #999;
+  border-left: 1px solid #999;
 }
 
 #buttons a.disabled {

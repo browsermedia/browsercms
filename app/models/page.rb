@@ -206,11 +206,25 @@ class Page < ActiveRecord::Base
     connectors.all(:include => :page, :conditions => {:container => container.to_s}).all?{|c| c.content_block.live?}
   end
   
+  def hide(updated_by)
+    self.publish_on_save = published?
+    self.hidden = true
+    self.updated_by_user = updated_by
+    save    
+  end
+  
   def hide!(updated_by)
     self.publish_on_save = published?
     self.hidden = true
     self.updated_by_user = updated_by
     save!    
+  end
+
+  def archive(updated_by)
+    self.publish_on_save = published?
+    self.archived = true
+    self.updated_by_user = updated_by
+    save
   end
 
   def archive!(updated_by)

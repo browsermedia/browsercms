@@ -21,15 +21,17 @@
 <table id="sitemap">
   <thead>
     <tr>
-      <th class="status">Status</th>
       <th class="node">Site Structure</th>
+      <th>&nbsp;</th>
+      <th class="status">Status</th>
     </th>
     <tr>
-      <td class="status"><%= status_icon(:unlocked) %></td>
       <td class="node">
         <%= action_icon(:home) %>
         <span id="section_<%= @section.id %>" class="root node"><%= h(@section.name) %></span>
       </td>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
     </tr>  
   </thead>
   <tbody>
