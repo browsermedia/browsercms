@@ -68,6 +68,13 @@ HTML
       helper.render_menu.should_not have_tag("a[href=#{@pit.path}]")
     end
     
+    it "should show the pages in the correct order" do
+      @afc_west.node.move_to(@afc, 0)
+      output = helper.render_menu
+      output.should have_tag("li#section_#{@afc_west.id}.first")
+      output.should_not have_tag("li#section_#{@afc_east.id}.first")
+    end
+    
   end
   describe "render_menu(:depth => 2)" do
     before do
