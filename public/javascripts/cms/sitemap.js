@@ -142,7 +142,7 @@ jQuery(function($){
     $('#sitemap span.node').removeClass('selected')
     $(this).addClass('selected')
         
-    var id = this.id.replace(/(section|page)_/,'');
+    var id = this.id.replace(/(section|page|link)_/,'');
     
     if($(this).hasClass('root') || $(this).hasClass('section')) {
       $('#properties-button')
@@ -163,6 +163,12 @@ jQuery(function($){
         .unbind('click')
         .click(function(){return true})
         
+      $('#add-link-button')
+        .removeClass('disabled')
+        .attr('href','/cms/links/new?section_id='+id)
+        .unbind('click')
+        .click(function(){return true})
+        
     } else if($(this).hasClass('page')) {
       $('#edit-button')
         .removeClass('disabled')
@@ -176,6 +182,13 @@ jQuery(function($){
         .unbind('click')
         .click(function(){return true})
       
+    } else if($(this).hasClass('link')) {
+      $('#properties-button')
+        .removeClass('disabled')
+        .attr('href','/cms/links/edit/'+id)
+        .unbind('click')
+        .click(function(){return true})
+
     }
   })
 })

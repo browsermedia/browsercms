@@ -1,0 +1,10 @@
+<% @link_title = "New Link" %>
+<h1><%= @link_title %></h1>
+<% form_for(@link, :url => cms_path(:links, :create)) do |f| %>
+  <%= hidden_field_tag :section_id, @link.section_id %>
+  <%= render :partial => 'form', :locals => {:f => f} %>
+  <div class="fields">  
+    <%= f.submit "Save" %>
+    <button type="submit" name="link[publish_on_save]" value="true">Save And Publish</button>
+  </div>  
+<% end %>

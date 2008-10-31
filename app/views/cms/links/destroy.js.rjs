@@ -1,0 +1,2 @@
+page["link_#{@link.id}"].remove
+show_notice(link)
