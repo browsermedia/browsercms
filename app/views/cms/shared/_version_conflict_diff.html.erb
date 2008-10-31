@@ -1,0 +1,11 @@
+<h3>Their Version (v<%= other_version.version %>)</h3>
+<table id="diff">
+  <tr>
+    <th>Field</th>
+    <th>Value</th>
+  </tr>
+  <% other_version.attributes.to_a.reject{|e| ['id', 'deleted','version','lock_version','created_at','updated_by_id','updated_at','revision_comment', 'published','hidden','archived'].include?(e.first) }.sort_by(&:first).each do |field, value| %><tr>
+    <td><%=h field %></td>
+    <td><%=h value %></td>
+  </tr><% end %>
+</table>

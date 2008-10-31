@@ -92,7 +92,7 @@ class Cms::PagesController < Cms::BaseController
       render :action => "edit"
     end
   rescue ActiveRecord::StaleObjectError => e
-    @page.errors.add_to_base(e.message)
+    @other_version = @page.class.find(@page.id) 
     render :action => "edit"
   end
 

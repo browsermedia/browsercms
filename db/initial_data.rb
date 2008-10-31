@@ -1,5 +1,5 @@
 #See /lib/initial_data.rb for info on how this works
-create_user(:cmsadmin, :login => "cmsadmin", :email => "cmsadmin@example.com", :password => "cmsadmin", :password_confirmation => "cmsadmin")
+create_user(:cmsadmin, :login => "cmsadmin", :first_name => "CMS", :last_name => "Administrator", :email => "cmsadmin@example.com", :password => "cmsadmin", :password_confirmation => "cmsadmin")
 create_group(:guest, :name => 'Guest', :code => 'guest', :group_type => 'Guest')
 create_group(:search_bot, :name => 'Search Bot', :code => 'search_bot', :group_type => 'Search Bot')
 create_group(:content_admin, :name => 'Cms Administrators', :code => 'cms-admin', :group_type => 'CMS User')

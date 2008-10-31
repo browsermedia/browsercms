@@ -1,0 +1,6 @@
+<div id="version-conflict" class="error">
+  <span class="label">Version Conflict!</span>
+  <br/>
+  You are currently working with an out of date version of this content. Your work was based off <b>version <%=  other_version.version - (other_version.lock_version - your_version.lock_version) %></b>, while another user <b><%= other_version.updated_by.full_name %></b> has already committed <b>version <%= other_version.version %></b>. Compare your changes below with their changes at the bottom and submit a final copy.
+</div>
+<h3>Your Version (v<%=  other_version.version - (other_version.lock_version - your_version.lock_version) %>)</h3>

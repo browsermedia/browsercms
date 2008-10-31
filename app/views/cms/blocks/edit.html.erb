@@ -3,8 +3,14 @@
 <h2>Edit <%= @block.name %></h2>
 <% form_for(@block, :url => cms_path(@block, :update), :html => {:multipart => true}) do |f| %>
   <%= f.error_messages %>
+  <% if @other_version %>
+    <%= render :partial => 'cms/shared/version_conflict_error', :locals => {:other_version => @other_version, :your_version => @block} %>
+  <% end %>  
   <%= render :partial => 'hidden_fields', :locals => { :f => f } %>
   <%= render :partial => "cms/#{@block.content_block_type.pluralize}/form", :locals => {:f => f} %>
+  <% if @other_version %>
+    <%= render :partial => "cms/shared/version_conflict_diff", :locals => {:other_version => @other_version, :your_version => @block} %>
+  <% end %>
   <div class="fields">
     <%= f.submit "Save" %>
     <% unless @block.connected_pages.count > 0 %>

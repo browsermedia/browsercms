@@ -57,7 +57,13 @@ div#cms_toolbar {
 
 .error {
   background-color: #FCC;
-  border-color: #C99; }
+  border: 1px solid #C00; 
+  padding: 25px; }
+  .error .label {
+    color: #C00;
+    font-weight: bold;
+    padding-bottom: 3px;
+  }
 
 .notice {
   background-color: #CFC;
@@ -168,4 +174,26 @@ table#draft td.updated_by,
 table#draft td.updated_at,
 table#draft td.select {
   text-align: center;
+}
+
+table#diff {
+  width: 100%;
+  margin: 10px 0;
+}
+table#diff th,
+table#diff td {
+  border: 1px solid #ccc;
+  padding: 4px;
+}
+table#diff th {
+  background-color: #C3DCF3;
+  color: #000000;
+  padding: 4px;
+  text-align: left;
+}
+
+h3 {
+  color: #0068B5;
+  font-size: 16px;
+  font-weight: bold;  
 }

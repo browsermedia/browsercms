@@ -1,5 +1,18 @@
 <% @page_title = "Edit '#{h(@page.name)}' Page" %>
 <h1><%= @page_title %></h1>
 <% form_for(@page, :url => cms_path(@page, :update)) do |f| %>
+  <% if @other_version %>
+    <%= render :partial => 'cms/shared/version_conflict_error', :locals => {:other_version => @other_version, :your_version => @page} %>
+    <%= f.hidden_field :lock_version, :value => @other_version.lock_version %>
+  <% else %>
+    <%= f.hidden_field :lock_version %>
+  <% end %>
   <%= render :partial => 'form', :locals => {:f => f} %>
+  <% if @other_version %>
+    <%= render :partial => "cms/shared/version_conflict_diff", :locals => {:other_version => @other_version, :your_version => @page} %>
+  <% end %>  
+  <div class="fields">  
+    <%= f.submit "Save" %>
+    <button type="submit" name="page[publish_on_save]" value="true">Save And Publish</button>
+  </div>  
 <% end %>

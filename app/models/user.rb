@@ -61,6 +61,10 @@ class User < ActiveRecord::Base
     save!
   end
 
+  def full_name
+    [first_name, last_name].reject{|e| e.nil?}.join(" ")
+  end
+
   # This is to show a formated date on the input form. I'm unsure that
   # this is the best way to solve this, but it works.
   def expires_at_formatted

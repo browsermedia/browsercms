@@ -66,7 +66,7 @@ class Cms::BlocksController < Cms::BaseController
       render :action => "edit"
     end
   rescue ActiveRecord::StaleObjectError => e
-    @block.errors.add_to_base(e.message)
+    @other_version = @block.class.find(@block.id) 
     render :action => "edit"
   end
 
