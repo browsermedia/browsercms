@@ -7,10 +7,6 @@ describe Link do
       create_link.should be_valid
     end
     
-    it "should be unsuccessful with bad url" do
-      new_link(:url => "bad url").should_not be_valid
-    end
-    
     it "should be unsuccessful with no name given" do
       new_link(:name => "").should_not be_valid
     end
