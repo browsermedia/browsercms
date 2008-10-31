@@ -69,6 +69,11 @@ class Cms::PagesController < Cms::BaseController
 
   def new
     @page = Page.new(:section => @section)
+    if @section.pages.count < 1
+      @page.name = "Overview"
+      @page.path = @section.path
+      @page.hidden = true
+    end
   end
 
   def create
