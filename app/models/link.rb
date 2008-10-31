@@ -25,4 +25,9 @@ class Link < ActiveRecord::Base
     end      
   end
 
+  #needed by menu_helper
+  def path
+    url
+  end
+
 end

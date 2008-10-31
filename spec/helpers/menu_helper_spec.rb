@@ -63,6 +63,11 @@ HTML
       helper.render_menu.should == @desired_output.gsub('/buf','/afc_east')
     end
     
+    it "should not show archived pages" do
+      @pit.archive(create_user)
+      helper.render_menu.should_not have_tag("a[href=#{@pit.path}]")
+    end
+    
   end
   describe "render_menu(:depth => 2)" do
     before do
