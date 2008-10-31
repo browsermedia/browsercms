@@ -93,4 +93,10 @@ module FixtureReplacement
     a.created_at = 5.days.ago
   end
 
+  attributes_for :link do |a|
+    a.name = "Test"
+    a.url = "http://www.example.com"
+    a.updated_by_user = default_user
+  end
+
 end
