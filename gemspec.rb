@@ -9,6 +9,7 @@ SPEC = Gem::Specification.new do |spec|
   spec.files += Dir["app/**/*"]
   spec.files += Dir["db/migrate/[0-9]*_*.rb"]
   spec.files += Dir["lib/**/*"]
+  spec.files += Dir["rails_generators/**/*"]
   spec.files += Dir["public/stylesheets/cms/**/*"]
   spec.files += Dir["public/javascripts/cms/**/*"]
   spec.files += Dir["public/images/cms/**/*"]
