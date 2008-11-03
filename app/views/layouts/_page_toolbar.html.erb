@@ -6,7 +6,9 @@
     <%= link_to "Delete", cms_path(@page, :destroy), :method => :delete, :confirm => "Are you sure you want to delete '#{@page.name}'?" %>
 
     <%= link_to_function "Assign" %>
-    <%= @page.published? ? "Publish" : link_to("Publish", cms_path(@page, :publish), :method => :put) %>
+    <% able_to? :publish_content do %>
+      <%= @page.published? ? "Publish" : link_to("Publish", cms_path(@page, :publish), :method => :put) %>
+    <% end %>
   </div>  
   <div>
     Status: <strong class="<%= @page.published? ? 'published': 'draft' %>"><%= @page.published? ? 'Published': 'Draft' %></strong>
