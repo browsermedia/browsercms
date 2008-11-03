@@ -1,7 +1,6 @@
 namespace(:cms) do |cms|
-  cms.logout '/logout', :controller => 'sessions', :action => 'destroy'
-  cms.connect '/login', :controller => 'sessions', :action => 'create', :conditions => { :method => :post }
-  cms.login '/login', :controller => 'sessions', :action => 'new'
+  cms.logout '/logout', :controller => 'sessions', :action => 'logout'
+  cms.login '/login', :controller => 'sessions', :action => 'login'
   cms.dashboard '/', :controller => 'dashboard'
   cms.sitemap '/sitemap', :controller => 'section_nodes'
   cms.content_library '/content_library', :controller => 'blocks'

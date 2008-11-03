@@ -1,4 +1,4 @@
-<% if(logged_in?) %>
+<% able_to? :edit_content, :publish_content do -%>
   <div id="cms_toolbar">
     <table border="0" width="100%">
       <tr>
@@ -27,4 +27,4 @@
       <% end %>
     </div>
   </div>
-<% end %>
+<% end -%>

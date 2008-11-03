@@ -56,7 +56,7 @@ class Cms::ContentController < ApplicationController
   def check_access_to_page
     set_page_mode
 
-    if logged_in?
+    if current_user.able_to?(:edit_content, :publish_content)
       @page = Page.first(:conditions => {:path => @path})
       page_not_found unless @page
     else

@@ -36,6 +36,7 @@ class Cms::BaseController < ApplicationController
     end
 
   public
-  check_permissions :administrate, :publish_content, :edit_content
+  
+  check_permissions :administrate, :publish_content, :edit_content, :except => [:login, :logout]
     
 end

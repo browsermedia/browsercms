@@ -5,8 +5,8 @@ class GuestUser < User
     @guest = true
   end
     
-  def able_to?(name)
-    group && !!(group.permissions.find_by_name(name))
+  def able_to?(*name)
+    group && group.permissions.count(:conditions => ["name in (?)", name.map(&:to_s)]) > 0
   end
   
   def able_to_view?(page)
