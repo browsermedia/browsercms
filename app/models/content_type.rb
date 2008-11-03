@@ -7,6 +7,10 @@ class ContentType < ActiveRecord::Base
   def new_content(params = {})
     model_class.new(params)
   end
+
+  def self.list
+    all.map { |f| f.name.underscore.to_sym }
+  end
   
   # Given a 'key' like 'html_blocks' or 'portlet'
   # Raises exception if nothing was found.
