@@ -17,7 +17,7 @@
 <fieldset>
   <legend>Which 'Public' groups can view pages in this section?</legend>
   <%= hidden_field_tag "section[group_ids][]", "" %>
-  <% for group in Group.public.all(:order => "name") %><div class="fields">
+  <% for group in public_groups %><div class="fields">
     <label>
       <%= check_box_tag "section[group_ids][]", group.id,
         @section.groups.include?(group), :class => "public_group_ids", :id => "public_group_ids_#{group.id}" %>
@@ -31,7 +31,7 @@
 <fieldset>
   <legend>Which 'CMS' groups can edit pages and content in this section?</legend>
   <%= hidden_field_tag "section[group_ids][]", "" %>
-  <% for group in Group.cms.all(:order => "name") %><div class="fields">
+  <% for group in cms_groups %><div class="fields">
     <label>
       <%= check_box_tag "section[group_ids][]", group.id,
         @section.groups.include?(group), :class => "cms_group_ids", :id => "cms_group_ids_#{group.id}" %>

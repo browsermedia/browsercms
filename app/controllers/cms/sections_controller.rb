@@ -1,6 +1,9 @@
 class Cms::SectionsController < Cms::BaseController
 
   before_filter :load_parent, :only => [:new, :create]
+  
+  helper_method :public_groups
+  helper_method :cms_groups
 
   def index
     redirect_to cms_url(:sitemap)
@@ -12,6 +15,7 @@ class Cms::SectionsController < Cms::BaseController
   
   def new
     @section = @parent.sections.build
+    @section.groups = public_groups + cms_groups
   end
   
   def create
@@ -105,6 +109,14 @@ class Cms::SectionsController < Cms::BaseController
                  @section.pages
                end
       render :layout => false      
+    end
+
+    def public_groups
+      @public_groups ||= Group.public.all(:order => "name")
+    end
+
+    def cms_groups
+      @cms_groups ||= Group.cms.all(:order => "name")
     end
 
 end
