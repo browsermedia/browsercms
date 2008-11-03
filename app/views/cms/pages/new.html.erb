@@ -16,7 +16,7 @@ function suggestPath(event) {
   if (page_name == section.name || page_name == 'Overview')
     $("page_path").value = section.path;
   else
-    $("page_path").value = section.path + "/" + page_name.toLowerCase().gsub(/-|_/, '').gsub(/ /, '_').gsub(/\W/, '')
+    $("page_path").value = section.path.replace(/\/$/, '') + "/" + page_name.toLowerCase().gsub(/-|_/, '').gsub(/ /, '_').gsub(/\W/, '')
 }
 
 $("page_name").observe('blur', suggestPath);
