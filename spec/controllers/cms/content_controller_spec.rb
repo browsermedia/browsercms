@@ -40,6 +40,22 @@ describe Cms::ContentController do
         response.should have_tag("title", "Shhh... It's a Secret")
       end
     end
+    describe "an archived page" do
+      before do
+        @page_template = create_page_template(:file_name => "application")
+        @page = create_page(:section => root_section, :path => "/archived", :name => "Archived", :archived => true, :template => @page_template, :publish_on_save => true)
+        @getting_an_archived_page = lambda { get :show, :path => ["archived"] }        
+      end
+      it "should raise an error" do
+        @getting_an_archived_page.should raise_error("No page at '#{@page.path}'")
+      end
+      describe "as a logged in user" do
+        before { login_as_user } 
+        it "should not raise an error" do
+          @getting_an_archived_page.should_not raise_error("No page at '#{@page.path}'")
+        end        
+      end
+    end
     describe "a file" do
       before do
         @file = mock_file(:original_filename => "test.txt", :read => "This is a test")

@@ -56,9 +56,13 @@ class Cms::ContentController < ApplicationController
   def check_access_to_page
     set_page_mode
 
-    @page = logged_in? ? Page.first(:conditions => {:path => @path}) : Page.find_live_by_path(@path)
-
-    page_not_found unless @page
+    if logged_in?
+      @page = Page.first(:conditions => {:path => @path})
+      page_not_found unless @page
+    else
+      @page = Page.find_live_by_path(@path)
+      page_not_found unless (@page && !@page.archived?)
+    end
 
     unless current_user.able_to_view?(@page)
       raise "Access Denied"

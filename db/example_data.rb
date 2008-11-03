@@ -26,10 +26,6 @@ module FixtureReplacement
     a.name = "TestGroup#{Sequence.next}"
   end
 
-  attributes_for :permission do |a|
-    a.name = "TestPermission#{Sequence.next}"
-  end
-
   attributes_for :html_block do |a|
     a.name = "About Us"
     a.content = "<h1>About Us</h1>\n<p>Lorem ipsum dolor sit amet...</p>"
@@ -53,6 +49,10 @@ module FixtureReplacement
   attributes_for :page_template do |a|
     a.name = "Foo"
     a.file_name = "foo"
+  end
+
+  attributes_for :permission do |a|
+    a.name = "TestPermission#{Sequence.next}"
   end
 
   attributes_for :portlet do |a|
