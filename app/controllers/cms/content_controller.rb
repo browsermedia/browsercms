@@ -65,7 +65,13 @@ class Cms::ContentController < ApplicationController
     end
 
     #Doing this so if you are logged in, you never see the cached page
-    render_page if logged_in? || params[:cms_no_cache]
+    if logged_in?
+      logger.info "Not Caching, user is logged in"
+      render_page
+    elsif params[:cms_cache] == "false"
+      logger.info "Not Caching, cms_cache is false"
+      render_page
+    end
 
   end
   
