@@ -23,13 +23,13 @@
 </div>
 <div class="fields">
   <label>
-    <%= f.check_box :hidden %>
+    <%= f.check_box :hidden, :disabled => (!current_user.able_to?(:publish_content)) %>
     Hide From Menus?
   </label>
 </div>
 <div class="fields">
   <label>
-    <%= f.check_box :archived %>
+    <%= f.check_box :archived, :disabled => (!current_user.able_to?(:publish_content)) %>
     Archived?
   </label>
 </div>
