@@ -162,7 +162,6 @@ module Cms
         end
         html << "</ul>\n".indent(d+2)
       end
-      logger.info "\n\n\n>>>>>>>>>>>>>>>>>"
       fn.call(ancestors.first.child_nodes.all(:order => 'section_nodes.position'), 0)
       html << "</div>\n"
     end

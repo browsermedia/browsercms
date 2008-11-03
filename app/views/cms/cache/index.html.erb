@@ -1,0 +1,5 @@
+<% @page_title = "Page Cache Info" %>
+
+<p>The CMS System caches pages which are frequently accessed by guest users to increase throughput. If data appears stale, you may manually clear this page cache.</p>
+
+<%= button_to "Clear Page Cache", cms_path(:cache, :expire) %>

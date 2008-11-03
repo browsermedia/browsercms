@@ -1,17 +1,29 @@
 class Cms::ContentController < ApplicationController
   
-  def show
+  before_filter :construct_path
+  before_filter :try_to_redirect
+  before_filter :try_to_stream_file
+  before_filter :check_access_to_page
+  caches_action :show
+  
+  def show        
+    render_page
+  end
 
-    #Reconstruct the path from an array into a string
-    @path = "/#{params[:path].join("/")}"
+  private
 
-    #Try to Redirect
+  #-- Filters --
+  def construct_path
+    @path = "/#{params[:path].join("/")}"    
+  end
+  
+  def try_to_redirect
     if redirect = Redirect.find_by_from_path(@path)
       redirect_to redirect.to_path
-      return
-    end
-    
-    #Get the extentions
+    end    
+  end
+
+  def try_to_stream_file
     split = params[:path].last.to_s.split('.')
     ext = split.size > 1 ? split.last.to_s.downcase : nil
     
@@ -36,29 +48,36 @@ class Cms::ContentController < ApplicationController
           :type => Mime::Type.lookup_by_extension(ext).to_s,
           :disposition => false #see monkey patch in lib/action_controller/streaming.rb
         ) 
-        return
       end    
-    end
-    
-    #Last, but not least, try to render a page for this path
-    set_page_mode
-    if logged_in?
-      @page = Page.first(:conditions => {:path => @path})
-    else
-      @page = Page.find_live_by_path(@path)
-    end
-    
-    raise ActiveRecord::RecordNotFound.new("No page at '#{@path}'") unless @page
-
-    if current_user.able_to_view?(@page)
-      render :layout => @page.layout
-    else
-      raise "Access Denied"
-    end
+    end    
     
   end
 
-  private
+  def check_access_to_page
+    set_page_mode
+
+    @page = logged_in? ? Page.first(:conditions => {:path => @path}) : Page.find_live_by_path(@path)
+
+    page_not_found unless @page
+
+    unless current_user.able_to_view?(@page)
+      raise "Access Denied"
+    end
+
+    #Doing this so if you are logged in, you never see the cached page
+    render_page if logged_in? || params[:cms_no_cache]
+
+  end
+  
+  #-- Other Methods --
+  def render_page
+    render :layout => @page.layout, :action => 'show'
+  end
+  
+  def page_not_found
+    raise ActiveRecord::RecordNotFound.new("No page at '#{@path}'")
+  end
+
   def set_page_mode
     @mode = params[:mode] || session[:page_mode] || "view"
     session[:page_mode] = @mode      
