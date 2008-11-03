@@ -3,6 +3,7 @@ class Cms::PagesController < Cms::BaseController
   before_filter :load_section, :only => [:new, :create, :move_to]
   before_filter :load_page, :only => [:edit, :revisions, :show_version, :move_to, :revert_to, :destroy]
   before_filter :hide_toolbar, :only => [:new, :create, :move_to]
+  before_filter :strip_publish_params, :only => [:create, :update]
 
   verify :method => :put, :only => [:move_to]
 
@@ -96,6 +97,12 @@ class Cms::PagesController < Cms::BaseController
   end
   
   private
+    def strip_publish_params
+      unless current_user.able_to?(:publish_content)
+        params[:page].delete :hidden
+        params[:page].delete :archived
+      end
+    end
 
     def load_page
       @page = Page.find(params[:id])
