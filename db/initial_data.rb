@@ -7,12 +7,12 @@ create_group(:content_editor, :name => 'Content Editors', :code => 'content-edit
 users(:cmsadmin).groups << groups(:content_admin)
 users(:cmsadmin).groups << groups(:content_editor)
 
-create_permission(:admin, :name => "cms-administrator", :full_name => "Administer CMS" , :description => "Allows users to administer the CMS, including adding users and groups.")
-create_permission(:author, :name => "editor", :full_name => "Author Content" , :description => "Allows users to Add, Edit and Delete both Pages and Blocks. Can Save (but not Publish) and Assign them as well.")
-create_permission(:publish, :name => "publish-page", :full_name => "Publish Content" , :description => "Allows users to Save and Publish, Hide and Archive both Pages and Blocks.")
-groups(:content_admin).permissions<<permissions(:admin)
-groups(:content_editor).permissions<<permissions(:author)
-groups(:content_editor).permissions<<permissions(:publish)
+create_permission(:administrate, :name => "administrate", :full_name => "Administrate CMS" , :description => "Allows users to administer the CMS, including adding users and groups.")
+create_permission(:edit_content, :name => "edit_content", :full_name => "Edit Content" , :description => "Allows users to Add, Edit and Delete both Pages and Blocks. Can Save (but not Publish) and Assign them as well.")
+create_permission(:publish_content, :name => "publish_content", :full_name => "Publish Content" , :description => "Allows users to Save and Publish, Hide and Archive both Pages and Blocks.")
+groups(:content_admin).permissions<<permissions(:administrate)
+groups(:content_editor).permissions<<permissions(:edit_content)
+groups(:content_editor).permissions<<permissions(:publish_content)
 
 create_site(:default, :name => "Default", :domain => "example.com")
 create_section(:root, :name => "My Site", :path => "/", :root => true)

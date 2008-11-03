@@ -1,6 +1,8 @@
 class Cms::GroupsController < Cms::ResourceController
   layout 'cms/administration'
   
+  check_permissions :administrate  
+  
   after_filter :add_default_permissions, :only => [:create]
   after_filter :add_default_sections, :only => [:create]
   
@@ -19,8 +21,8 @@ class Cms::GroupsController < Cms::ResourceController
     
     #The group has been created and we add these permissions to it
     def add_default_permissions
-      @object.permissions << Permission.find_by_name('editor')
-      @object.permissions << Permission.find_by_name('publish-page')
+      @object.permissions << Permission.find_by_name('edit_content')
+      @object.permissions << Permission.find_by_name('publish_content')
     end
 
     def add_default_sections

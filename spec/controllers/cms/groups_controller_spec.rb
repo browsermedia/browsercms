@@ -5,11 +5,10 @@ describe Cms::GroupsController do
 
   describe "create" do
     before do
-      @group = new_group
-      @editor = create_permission(:name => "editor")
-      @publisher = create_permission(:name => "publish-page")
+      @edit_content = Permission.find_by_name("edit_content")
+      @publish_content = Permission.find_by_name("publish_content")
       @random = create_permission(:name => "shouldnt-be-included")
-      @action = lambda { post :create, :group => @group.attributes }
+      @action = lambda { post :create, :group => new_group.attributes }
     end
     it "should redirect to the index" do
       @action.call
@@ -17,13 +16,13 @@ describe Cms::GroupsController do
     end
     it "should add core permissions" do
       @action.call
-      group = Group.first
+      group = assigns[:object]
       group.permissions.count.should == 2
-      group.permission_ids.include? @editor.id
-      group.permission_ids.include? @publisher.id
+      group.permission_ids.include? @edit_content.id
+      group.permission_ids.include? @publish_content.id
     end
     it "should fail" do
-      @action = lambda { post :create, :on_fail_action => :index, :group => @group.attributes.merge(:name => "") }
+      @action = lambda { post :create, :on_fail_action => :index, :group => new_group(:name => "").attributes }
       @action.call
       response.should be_success
       response.should have_tag("div#errorExplanation")

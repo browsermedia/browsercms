@@ -1,6 +1,6 @@
 class Cms::CacheController < Cms::BaseController
   layout 'cms/administration'
-  
+  check_permissions :administrate  
   verify :method => :post, :only => :expire
   
   def expire

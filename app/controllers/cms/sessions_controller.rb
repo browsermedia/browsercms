@@ -10,7 +10,7 @@ class Cms::SessionsController < Cms::BaseController
   def create
     logout_keeping_session!
     user = User.authenticate(params[:login], params[:password])
-    if user and user.can_login?
+    if user
       # Protects against session fixation attacks, causes request forgery
       # protection if user resubmits an earlier form using back
       # button. Uncomment if you understand the tradeoffs.

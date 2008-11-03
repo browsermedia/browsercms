@@ -106,25 +106,17 @@ describe "A User" do
     @user.groups << group
     @user.groups.should == [group]
   end
-  it "should not be able to login if not in one of the proper groups" do
-    @user.can_login?.should == nil
-  end
   describe "in a group" do
     before do
       @have = new_permission(:name => "do something the group has permission to do")
       @havenot = new_permission(:name => "do something the group does not have permission to do")
-      @group_a = new_group
-      @group_b = new_group
+      @group_a = create_group
+      @group_b = create_group
 
       @group_a.permissions << @have
-      @group_a.permissions << new_permission(:name => "cms-administrator")
       @group_b.permissions << @havenot
 
       @user.groups << @group_a  
-    end
-    
-    it "should be able to login" do
-      @user.can_login?.should == @user
     end
     
     it "should be able to do something the group has permission to do" do
@@ -135,9 +127,11 @@ describe "A User" do
       @user.should_not be_able_to("do something the group does not have permission to do")
     end  
   end
-  describe "in a CMS User group with one section" do
+  describe "in a CMS User group with one section with edit permission" do
     before do
       @group = create_group(:name => "Test", :group_type => "CMS User")
+      @group.permissions << create_permission(:name => "edit_content")
+      @group.permissions << create_permission(:name => "publish_content")
       @user.groups << @group
       @editable_section = create_section(:parent => root_section, :name => "Editable")
       @group.sections << @editable_section

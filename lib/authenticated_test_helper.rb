@@ -5,7 +5,7 @@ module AuthenticatedTestHelper
   end
 
   def login_as_user(attrs={})
-    login_as create_user(attrs)
+    login_as admin_user
   end
 
   def authorize_as(user)

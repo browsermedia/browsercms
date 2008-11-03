@@ -1,5 +1,7 @@
 class Cms::UsersController < Cms::ResourceController
   layout 'cms/administration'
+
+  check_permissions :administrate
   
   after_filter :update_group_membership, :only => [:update, :create]
   after_filter :update_flash, :only => [ :update, :create ]

@@ -6,9 +6,9 @@
         <td width="100%" valign="bottom" align="center">
           <ul id="nav">
             <li><%= link_to "Dashboard", cms_dashboard_path %></li>
-            <li><%= link_to "Sitemap", cms_sitemap_path %></li>
-            <li><%= link_to "Content Library", cms_content_library_path %></li>
-            <li><%= link_to "Administration", cms_administration_path %></li>
+            <% able_to?(:edit_content, :publish_content) do %><li><%= link_to "Sitemap", cms_sitemap_path %></li><% end %>
+            <% able_to?(:edit_content, :publish_content) do %><li><%= link_to "Content Library", cms_content_library_path %></li><% end %>
+            <% able_to?(:administrate) do %><li><%= link_to "Administration", cms_administration_path %></li><% end %>
           </ul>
         </td>
         <td valign="bottom">

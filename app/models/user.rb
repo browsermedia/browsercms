@@ -26,11 +26,7 @@ class User < ActiveRecord::Base
     u = find_by_login(login) # need to get the salt
     u && u.authenticated?(password) && !u.expired? ? u : nil
   end
-  
-  def can_login?
-    self.class.find_by_login(login, :include => { :groups => :permissions }, :conditions => ["permissions.name in (?)", %w(cms-administrator editor publish-page)])
-  end
-  
+    
   def self.guest(options = {})
     GuestUser.new(options)
   end
@@ -83,14 +79,15 @@ class User < ActiveRecord::Base
     @editable_sections ||= Section.find(:all, :include => {:groups => :users}, :conditions => ["users.id = ? and groups.group_type = 'CMS User'", id])
   end
 
-  #Expects name to be the name of a Permission
-  #Return the Permission that matches that name 
-  #one of the groups the user is in has that permission
-  #Otherwise returns nil
-  def able_to?(name)
-    permissions.detect{|p| p.name == name }
+  #Expects a list of names of Permissions
+  #true if the user has any of the permissions
+  def able_to?(*required_permissions)
+    perms = required_permissions.map(&:to_sym)
+    permissions.any? do |p| 
+      perms.include?(p.name.to_sym) 
+    end
   end
-  
+    
   #Expects object to be an object or a section
   #If it's a section, that will be used
   #If it's not a section, it will call section on the object
@@ -104,7 +101,7 @@ class User < ActiveRecord::Base
   #Returns true if any of the sections of the groups that have group_type = 'CMS User' 
   #that the user is in match the section.
   def able_to_edit?(section)
-    !!(editable_sections.include?(section))
+    !!(editable_sections.include?(section) && able_to?(:edit_content))
   end
   
 end

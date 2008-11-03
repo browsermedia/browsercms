@@ -63,6 +63,16 @@ def root_section
   root
 end
 
+def admin_user(attrs={})
+  user = create_user(attrs)
+  group = create_group
+  group.permissions << create_permission(:name => "administrate")
+  group.permissions << create_permission(:name => "edit_content")
+  group.permissions << create_permission(:name => "publish_content")
+  user.groups << group
+  user
+end
+
 def guest_group
   Group.find_by_code("guest") || create_group(:code => "guest")
 end
