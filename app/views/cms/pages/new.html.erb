@@ -13,7 +13,7 @@
 function suggestPath(event) {
   var section = { name: "<%= @page.section.name %>", path: "<%= @page.section.path %>" };
   var page_name = $F("page_name").strip();
-  if (page_name == section.name)
+  if (page_name == section.name || page_name == 'Overview')
     $("page_path").value = section.path;
   else
     $("page_path").value = section.path + "/" + page_name.toLowerCase().gsub(/-|_/, '').gsub(/ /, '_').gsub(/\W/, '')
