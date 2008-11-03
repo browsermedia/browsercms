@@ -22,7 +22,7 @@ jQuery(function($){
   var origNode = false;
   
   //drag/drop functionality
-  $('#sitemap .icon_node div').draggable({
+  $('#sitemap .icon_node div.movable').draggable({
     revert: 'invalid',
     revertDuration: 200,
     helper: 'clone',

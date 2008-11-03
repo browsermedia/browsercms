@@ -4,7 +4,7 @@
   <td class="node" style="padding-left: <%= (depth+1)*15 %>px">
     <table cellpadding="0" cellspacing="0">
       <tr><td class="drop_before"><div></div></td></tr>
-      <tr><td class="icon_node"><div>
+      <tr><td class="icon_node"><div<% able_to? :publish_content do -%> class="movable"<% end -%>>
         <%= link_to action_icon(:folder), "#", :id => "folder_#{node.id}", :class => "folder" %>
         <span id="section_<%= section.id %>" class="section node"><%= h(section.name) %></span>        
       </div></td></tr>
