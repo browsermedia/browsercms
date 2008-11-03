@@ -58,6 +58,10 @@
   display: inline;
 }
 
+#sitemap span.node {
+  cursor: default;
+}
+
 #sitemap span.selected {
   background-color: #9bf;
 }
