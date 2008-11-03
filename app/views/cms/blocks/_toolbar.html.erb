@@ -8,5 +8,7 @@
 <%= @block.versionable? ? (link_to 'Revisions', cms_path(@block, :revisions), {:id => "revisions_link"}) : 'Revisions' %>
 <%= link_to "Delete", cms_path(@block, :destroy), :method => :delete, :confirm => "Are you sure you want to delete '#{@block.name}'?" %>
 <%= false ? (link_to 'Assign', cms_path(@block, :assign), :method => :post) : "Assign" %>
+<% able_to? :publish_content do -%>
 <%= !@block.published? ? link_to('Publish', cms_path(@block, :publish), :method => :post) : "Publish" %>
+<% end -%>
 <%#= !@block.archived? ? link_to('Archive', cms_path(@block, :archive), :method => :post) : "Archive" %>
