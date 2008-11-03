@@ -2,6 +2,7 @@ class Cms::GroupsController < Cms::ResourceController
   layout 'cms/administration'
   
   after_filter :add_default_permissions, :only => [:create]
+  after_filter :add_default_sections, :only => [:create]
   
   def index
     #Groups get loaded in the view
@@ -21,5 +22,10 @@ class Cms::GroupsController < Cms::ResourceController
       @object.permissions << Permission.find_by_name('editor')
       @object.permissions << Permission.find_by_name('publish-page')
     end
+
+    def add_default_sections
+      @object.sections = Section.all
+    end
+
     
 end
