@@ -13,4 +13,4 @@ connect '/:controller/:action/:id.:format'
 connect '/:controller/:action.:format'
 connect '/:controller/:action/:id'
 
-page '*path', :controller => 'cms/pages', :action => 'show'
+connect '*path', :controller => 'cms/content', :action => 'show'
