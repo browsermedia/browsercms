@@ -68,6 +68,9 @@ class Cms::ContentController < ApplicationController
     if logged_in?
       logger.info "Not Caching, user is logged in"
       render_page
+    elsif !@page.cacheable?
+      logger.info "Not Caching, page cachable is false"
+      render_page
     elsif params[:cms_cache] == "false"
       logger.info "Not Caching, cms_cache is false"
       render_page

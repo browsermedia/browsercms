@@ -13,6 +13,7 @@ class Cms::PagesController < Cms::BaseController
       @page.path = @section.path
       @page.hidden = true
     end
+    @page.cacheable = true
   end
 
   def show

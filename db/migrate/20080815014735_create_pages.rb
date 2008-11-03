@@ -8,6 +8,7 @@ class CreatePages < ActiveRecord::Migration
       t.text :description
       t.text :keywords
       t.string :language
+      t.boolean :cacheable, :default => false
       t.boolean :hidden, :default => false
       t.boolean :archived, :default => false
     end
