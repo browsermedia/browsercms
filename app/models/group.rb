@@ -8,10 +8,12 @@ class Group < ActiveRecord::Base
   
   has_many :group_sections
   has_many :sections, :through => :group_sections
+  
+  belongs_to :group_type
     
   validates_presence_of :name
   
-  named_scope :public, :conditions => ["group_type != ?", 'CMS User']
-  named_scope :cms, :conditions => ["group_type = ?", 'CMS User']
+  named_scope :public, :include => :group_type, :conditions => ["group_types.cms_access = ?", false]
+  named_scope :cms, :include => :group_type, :conditions => ["group_types.cms_access = ?", true]
   
 end

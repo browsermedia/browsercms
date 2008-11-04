@@ -6,8 +6,8 @@
 </div>
 
 <div class='fields'>
-	<%= f.label :group_type, "What kind of user does this group represent?" %>
-	<%= f.select :group_type, ["Registered Public User", "CMS User", "Search Engine Crawler"] %>
+	<%= f.label :group_type_id, "What kind of user does this group represent?" %>
+	<%= f.select :group_type_id, GroupType.find(:all).map { |g| [g.name, g.id] } %>
 </div>
 
 <%= render :partial => 'permissions' unless (params[:action] == "index" or params[:action] == "create") %>

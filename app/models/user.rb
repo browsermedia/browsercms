@@ -76,7 +76,7 @@ class User < ActiveRecord::Base
   end
 
   def editable_sections
-    @editable_sections ||= Section.find(:all, :include => {:groups => :users}, :conditions => ["users.id = ? and groups.group_type = 'CMS User'", id])
+    @editable_sections ||= Section.find(:all, :include => {:groups => [:group_type, :users]}, :conditions => ["users.id = ? and group_types.cms_access = ?", id, true])
   end
 
   #Expects a list of names of Permissions
@@ -100,7 +100,7 @@ class User < ActiveRecord::Base
   #Expects section to be a Section
   #Returns true if any of the sections of the groups that have group_type = 'CMS User' 
   #that the user is in match the section.
-  def able_to_edit?(section)
+  def able_to_edit?(section)    
     !!(editable_sections.include?(section) && able_to?(:edit_content))
   end
   

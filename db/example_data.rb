@@ -22,6 +22,10 @@ module FixtureReplacement
     a.file_binary_data = default_file_binary_data
   end
 
+  attributes_for :group_type do |a|
+    a.name = "TestGroupType#{Sequence.next}"
+  end
+
   attributes_for :group do |a|
     a.name = "TestGroup#{Sequence.next}"
   end

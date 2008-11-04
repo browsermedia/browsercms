@@ -129,7 +129,7 @@ describe "A User" do
   end
   describe "in a CMS User group with one section with edit permission" do
     before do
-      @group = create_group(:name => "Test", :group_type => "CMS User")
+      @group = create_group(:name => "Test", :group_type => create_group_type(:name => "CMS User", :cms_access => true))
       @group.permissions << create_permission(:name => "edit_content")
       @group.permissions << create_permission(:name => "publish_content")
       @user.groups << @group
@@ -154,7 +154,7 @@ describe "A User" do
   end
   describe "in a non-CMS User group with one section" do
     before do
-      @group = create_group(:name => "Test", :group_type => "Registered User")
+      @group = create_group(:name => "Test", :group_type => create_group_type(:name => "Registered User"))
       @user.groups << @group
       @editable_section = create_section(:parent => root_section, :name => "Editable")
       @group.sections << @editable_section

@@ -1,15 +1,24 @@
 #See /lib/initial_data.rb for info on how this works
 create_user(:cmsadmin, :login => "cmsadmin", :first_name => "CMS", :last_name => "Administrator", :email => "cmsadmin@example.com", :password => "cmsadmin", :password_confirmation => "cmsadmin")
-create_group(:guest, :name => 'Guest', :code => 'guest', :group_type => 'Guest')
-create_group(:search_bot, :name => 'Search Bot', :code => 'search_bot', :group_type => 'Search Bot')
-create_group(:content_admin, :name => 'Cms Administrators', :code => 'cms-admin', :group_type => 'CMS User')
-create_group(:content_editor, :name => 'Content Editors', :code => 'content-editor', :group_type => 'CMS User')
-users(:cmsadmin).groups << groups(:content_admin)
-users(:cmsadmin).groups << groups(:content_editor)
 
 create_permission(:administrate, :name => "administrate", :full_name => "Administrate CMS" , :description => "Allows users to administer the CMS, including adding users and groups.")
 create_permission(:edit_content, :name => "edit_content", :full_name => "Edit Content" , :description => "Allows users to Add, Edit and Delete both Pages and Blocks. Can Save (but not Publish) and Assign them as well.")
 create_permission(:publish_content, :name => "publish_content", :full_name => "Publish Content" , :description => "Allows users to Save and Publish, Hide and Archive both Pages and Blocks.")
+
+create_group_type(:guest_group_type, :name => "Guest", :guest => true)
+create_group_type(:registered_public_user, :name => "Registered Public User")
+create_group_type(:search_bot, :name => "Search Bot")
+create_group_type(:cms_user, :name => "CMS User", :cms_access => true)
+group_types(:cms_user).permissions<<permissions(:edit_content)
+group_types(:cms_user).permissions<<permissions(:publish_content)
+
+create_group(:guest, :name => 'Guest', :code => 'guest', :group_type => group_types(:guest_group_type))
+create_group(:search_bot, :name => 'Search Bot', :code => 'search_bot', :group_type => group_types(:search_bot))
+create_group(:content_admin, :name => 'Cms Administrators', :code => 'cms-admin', :group_type => group_types(:cms_user))
+create_group(:content_editor, :name => 'Content Editors', :code => 'content-editor', :group_type => group_types(:cms_user))
+users(:cmsadmin).groups << groups(:content_admin)
+users(:cmsadmin).groups << groups(:content_editor)
+
 groups(:content_admin).permissions<<permissions(:administrate)
 groups(:content_editor).permissions<<permissions(:edit_content)
 groups(:content_editor).permissions<<permissions(:publish_content)

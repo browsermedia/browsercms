@@ -3,7 +3,7 @@ class CreateGroups < ActiveRecord::Migration
     create_table :groups do |t|
       t.string :name
       t.string :code
-      t.string :group_type
+      t.integer :group_type_id
       t.timestamps
     end
     

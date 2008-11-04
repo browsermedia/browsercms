@@ -1,4 +1,4 @@
-<table>
+<table id="permissions">
   <tr>
     <th colspan="3">
       What kind of tasks should group members be allowed to do?
@@ -22,3 +22,13 @@
 		</td>
 	</tr>
 </table>
+
+<script>
+document.observe('dom:loaded', function() {
+  <% unless @group.group_type.cms_access? %>$('permissions').hide();<% end -%>
+  $('group_group_type_id').observe('change', function() {
+    if ($F('group_group_type_id') != '<%= GroupType.cms_accessible %>') $('permissions').hide();
+    else $('permissions').show();
+  });
+});
+</script>
