@@ -4,3 +4,13 @@
   <%= hidden_field_tag :section_id, @parent.id %>
   <%= render :partial => 'form', :locals => {:f => f} %>
 <% end %>
+
+<script>
+function suggestPath(event) {
+  var section = { name: null, path: "<%= @parent.path %>".replace(/\/$/, '') };
+  section.name = $F("section_name").strip().toLowerCase().gsub(/-|_/, '').gsub(/ /, '_').gsub(/\W/, '');
+  $("section_path").value = section.path + "/" + section.name;
+}
+
+$("section_name").observe('blur', suggestPath);
+</script>
