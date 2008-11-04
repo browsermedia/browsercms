@@ -7,6 +7,7 @@
   <% if @content_type.name == "HtmlBlock" -%>
     <p><%= check_box_tag :include_body, true, params[:include_body] %> Include body?</p>
   <% end -%>
+  <%= submit_tag "Search" %>
 <% end -%>
 
 <h2>List <%=  @content_type.display_name_plural %></h2>
