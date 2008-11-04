@@ -16,8 +16,9 @@ module Cms
     # * <tt>:from_top</tt> - How many below levels from the root the tree should start at.  
     #   All sections at this level will be shown.  The default is 0, which means show all
     #   section that are direct children of the root
-    # * <tt>:depth</tt> - How many levels deep should the tree go.  If no value is supplied,
-    #   the tree will go all the way down to the current page.  Must be greater than from_top.
+    # * <tt>:depth</tt> - How many levels deep should the tree go, relative to from_top.  
+    #   If no value is supplied, the tree will go all the way down to the current page.
+    #   If a value is supplied, the tree will be that many levels underneath from_top deep.
     # * <tt>:class</tt> - The CSS Class that will be applied to the div.  The default value is "menu".
     # * <tt>:show_all_siblings</tt> - Passing true for this option will make all sibilings appear in the tree.
     #   the default is false, in which case only the siblings of nodes within the open path will appear.
@@ -122,8 +123,8 @@ module Cms
       #We are defining a recursive lambda that takes the top-level sections
       #d is the current depth
       fn = lambda do |nodes, d|
-        
-        html << "<ul>\n".indent(d+2)
+        indent = (d-1)*4
+        html << "<ul>\n".indent(indent+2)
         nodes.each_with_index do |sn, i|
 
           #If the node is a hidden page, then we aren't going to display it
@@ -140,29 +141,29 @@ module Cms
             classes << "on" if page == sn.node
             cls = classes.empty? ? nil : classes.join(" ")
             
-            html << %Q{<li id="#{sn.node_type.underscore}_#{sn.node.id}"#{cls ? " class=\"#{cls}\"" : ''}>\n}.indent(d+4)
+            html << %Q{<li id="#{sn.node_type.underscore}_#{sn.node.id}"#{cls ? " class=\"#{cls}\"" : ''}>\n}.indent(indent+4)
             
             #Figure out what this link for this node should be
             #If it is a page, then the page will simply be used
             #But if is a page, we call the first_page method
             p = sn.node_type == "Section" ? sn.node.first_page : sn.node
-            html << %Q{<a href="#{p ? p.path : '#'}">#{sn.node.name}</a>\n}.indent(d+6)
+            html << %Q{<a href="#{p ? p.path : '#'}">#{sn.node.name}</a>\n}.indent(indent+6)
             
             #Now if this is a section, we do the child nodes, 
             #but only if the show_all_siblings parameter is true, 
             #or if this section is one of the current page's ancestors
             #and also if the current depth is less than the target depth
             if sn.node_type == "Section" && (show_all_siblings || ancestors.include?(sn.node)) && d < depth
-              fn.call(sn.node.child_nodes.all(:order => 'section_nodes.position'), d+4)
+              fn.call(sn.node.child_nodes.all(:order => 'section_nodes.position'), d+1)
             end
             
-            html << %Q{</li>\n}.indent(d+4)
+            html << %Q{</li>\n}.indent(indent+4)
           end
           
         end
-        html << "</ul>\n".indent(d+2)
+        html << "</ul>\n".indent(indent+2)
       end
-      fn.call(ancestors.first.child_nodes.all(:order => 'section_nodes.position'), 0)
+      fn.call(ancestors.first.child_nodes.all(:order => 'section_nodes.position'), 1)
       html << "</div>\n"
     end
   end

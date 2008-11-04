@@ -205,4 +205,55 @@ HTML
 
   end  
 
+  describe "render_menu(:depth => 1)" do
+    before do
+      @desired_output = <<HTML 
+<div class="menu">
+  <ul>
+    <li id="section_#{@afc.id}" class="first open">
+      <a href="/buf">AFC</a>
+    </li>
+    <li id="section_#{@nfc.id}" class="last">
+      <a href="/dal">NFC</a>
+    </li>
+  </ul>
+</div>
+HTML
+      assigns[:page] = @bal
+    end
+    it "should produce the desired output" do 
+      helper.render_menu(:depth => 1).should == @desired_output
+    end
+  end
+
+  describe "render_menu(:from_top => 1, :depth => 1)" do
+    before do
+      @desired_output = <<HTML 
+<div class="menu">
+  <ul>
+    <li id="section_#{@afc_east.id}" class="first">
+      <a href="/buf">East</a>
+    </li>
+    <li id="section_#{@afc_north.id}" class="open">
+      <a href="/bal">North</a>
+    </li>
+    <li id="section_#{@afc_south.id}">
+      <a href="/hou">South</a>
+    </li>
+    <li id="section_#{@afc_west.id}" class="last">
+      <a href="/den">West</a>
+    </li>
+  </ul>
+</div>
+HTML
+      assigns[:page] = @bal
+    end
+
+    it "should produce the desired output" do 
+      helper.render_menu(:from_top => 1, :depth => 1).should == @desired_output
+    end
+
+  end  
+
+
 end
