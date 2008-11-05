@@ -5,10 +5,12 @@
   <%= f.text_field :name %>
 </div>
 
-<div class='fields'>
-	<%= f.label :group_type_id, "What kind of user does this group represent?" %>
-	<%= f.select :group_type_id, GroupType.find(:all).map { |g| [g.name, g.id] } %>
-</div>
+<% unless @group.guest? %>
+  <div class='fields'>
+  	<%= f.label :group_type_id, "What kind of user does this group represent?" %>
+  	<%= f.select :group_type_id, GroupType.non_guest.map { |g| [g.name, g.id] } %>
+  </div>
+<% end %>
 
 <%= render :partial => 'permissions' unless (params[:action] == "index" or params[:action] == "create") %>
 <%= render :partial => 'sections' unless (params[:action] == "index" or params[:action] == "create") %>
