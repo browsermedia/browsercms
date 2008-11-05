@@ -30,7 +30,7 @@
 <% end %>
 <br />
 <%= page_entries_info(@users) %>
-<table class="data">
+<table class="data" width="100%">
     <tr>
         <th>General Information</th>
         <th>Groups</th>
@@ -45,7 +45,7 @@
             Expires: <%= user.expires_at ? format_date(user.expires_at) : "Never" %>
         </td>
         <td>
-            <% user.groups.each do |g| %>
+            <% user.groups.all(:order => "groups.name").each do |g| %>
 			- <%= g.name %><br/>
 			<% end %>
         </td>
