@@ -1,3 +1,16 @@
+<% @sections = Section.all(:order => "name") %>
+<% content_for :html_head do %>
+  <% if @block.new_record? %>
+    <script type="text/javascript">
+    jQuery(function($){
+      var sectionIdPathMap = <%= @sections.inject({}){|map, sec| map[sec.id.to_s] = sec.path.sub(/\/$/,''); map}.to_json %>
+      $('#file_block_file, #file_block_section_id').change(function(){ 
+        $('#filename').val(sectionIdPathMap[$('#file_block_section_id').val()]+'/'+$('#file_block_file').val()) 
+      }) 
+    })
+    </script>
+  <% end %>
+<% end %>
 <div class="fields">
   <%= f.label :name %>
   <%= f.text_field :name %>
@@ -8,5 +21,9 @@
 </div>
 <div class="fields">
   <%= f.label :section_id, "Section" %>
-  <%= f.collection_select :section_id, Section.all(:order => "name"), :id, :name %>
+  <%= f.collection_select :section_id, @sections, :id, :name %>
+</div>
+<div class="fields">
+  <label>File Name</label>
+  <input type="text" id="filename" name="filename"/>
 </div>
