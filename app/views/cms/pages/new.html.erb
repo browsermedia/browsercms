@@ -1,3 +1,19 @@
+<% content_for :html_head do %>
+<script type="text/javascript">
+jQuery(function($){
+  $("#page_name").blur(function(){
+    var section = { name: <%= @page.section.name.to_json %>, path: <%= @page.section.path.to_json %> }
+    var page_name = $("#page_name").val().strip()
+    if (page_name == section.name || page_name == 'Overview') {
+      $("#page_path").val(section.path)
+    } else {
+      $("#page_path").val(section.path.replace(/\/$/, '') + "/" + page_name.toLowerCase().gsub(/-|_/, '').gsub(/ /, '_').gsub(/\W/, ''))
+    }
+  })
+})
+</script>
+<% end %>
+
 <% @page_title = "New Page" %>
 <h1><%= @page_title %></h1>
 <% form_for(@page, :url => cms_path(:pages, :create)) do |f| %>
@@ -8,15 +24,3 @@
   </div>  
 <% end %>
 
-<script>
-function suggestPath(event) {
-  var section = { name: "<%= @page.section.name %>", path: "<%= @page.section.path %>" };
-  var page_name = $F("page_name").strip();
-  if (page_name == section.name || page_name == 'Overview')
-    $("page_path").value = section.path;
-  else
-    $("page_path").value = section.path.replace(/\/$/, '') + "/" + page_name.toLowerCase().gsub(/-|_/, '').gsub(/ /, '_').gsub(/\W/, '')
-}
-
-$("page_name").observe('blur', suggestPath);
-</script>
