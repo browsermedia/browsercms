@@ -6,7 +6,7 @@ class GroupType < ActiveRecord::Base
   named_scope :guest, :conditions => ["group_types.guest = ?", true]
   named_scope :non_guest, :conditions => ["group_types.guest = ?", false]
   
-  def self.cms_accessible
-    return GroupType.find_by_name('CMS User').id
-  end
+  named_scope :cms_access, :conditions => ["group_types.cms_access = ?", true]
+  named_scope :non_cms_access, :conditions => ["group_types.cms_access = ?", false]
+  
 end

@@ -94,7 +94,7 @@ class User < ActiveRecord::Base
   #returns true if any of the sections of the groups the user is in matches the page's section.
   def able_to_view?(object)
     section = object.is_a?(Section) ? object : object.section
-    !!(viewable_sections.include?(section) || groups.cms.count > 0)
+    !!(viewable_sections.include?(section) || groups.cms_access.count > 0)
   end
   
   #Expects section to be a Section

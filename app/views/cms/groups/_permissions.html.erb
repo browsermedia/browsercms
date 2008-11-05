@@ -1,3 +1,18 @@
+<% content_for :html_head do %>
+<script type="text/javascript">
+jQuery(function($){
+  var cms_access_group_ids = <%= GroupType.cms_access.all.map{|e| e.id.to_s}.to_json %>
+  $('#group_group_type_id').change(function() {
+    if ($.inArray($('#group_group_type_id')[0].value, cms_access_group_ids)) {
+      $('#permissions').hide()
+    } else {
+      $('#permissions').show()
+    }
+  }).change()
+});
+</script>
+<% end %>
+
 <table id="permissions">
   <tr>
     <th colspan="3">
@@ -22,13 +37,3 @@
 		</td>
 	</tr>
 </table>
-
-<script>
-document.observe('dom:loaded', function() {
-  <% unless @group.group_type.cms_access? %>$('permissions').hide();<% end -%>
-  $('group_group_type_id').observe('change', function() {
-    if ($F('group_group_type_id') != '<%= GroupType.cms_accessible %>') $('permissions').hide();
-    else $('permissions').show();
-  });
-});
-</script>

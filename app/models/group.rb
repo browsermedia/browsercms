@@ -14,10 +14,14 @@ class Group < ActiveRecord::Base
   validates_presence_of :name
     
   named_scope :public, :include => :group_type, :conditions => ["group_types.cms_access = ?", false]
-  named_scope :cms, :include => :group_type, :conditions => ["group_types.cms_access = ?", true]
+  named_scope :cms_access, :include => :group_type, :conditions => ["group_types.cms_access = ?", true]
   
   def guest?
     group_type && group_type.guest?
+  end
+  
+  def cms_access?
+    group_type && group_type.cms_access?
   end
   
 end

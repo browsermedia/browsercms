@@ -116,7 +116,7 @@ class Cms::SectionsController < Cms::BaseController
     end
 
     def cms_groups
-      @cms_groups ||= Group.cms.all(:order => "groups.name")
+      @cms_groups ||= Group.cms_access.all(:order => "groups.name")
     end
 
 end
