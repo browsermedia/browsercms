@@ -8,12 +8,12 @@ jQuery(function($){
     } else {
       $('#permissions').show()
     }
-  }).change()
+  })
 });
 </script>
 <% end %>
 
-<table id="permissions">
+<table id="permissions"<%= ' style="display: none"' unless @group.cms_access?%>>
   <tr>
     <th colspan="3">
       What kind of tasks should group members be allowed to do?

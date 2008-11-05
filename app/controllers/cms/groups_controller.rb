@@ -21,8 +21,12 @@ class Cms::GroupsController < Cms::ResourceController
     
     #The group has been created and we add these permissions to it
     def add_default_permissions
-      @object.permissions << Permission.find_by_name('edit_content')
-      @object.permissions << Permission.find_by_name('publish_content')
+      #TODO: These shouldn't be hard-coded here, 
+      #these values should be stored in the database to make them easy to change
+      if @object.cms_access?
+        @object.permissions << Permission.find_by_name('edit_content')
+        @object.permissions << Permission.find_by_name('publish_content')
+      end
     end
 
     def add_default_sections
