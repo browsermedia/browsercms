@@ -1,10 +1,10 @@
-class CreateFileMetadata < ActiveRecord::Migration
+class CreateAttachments < ActiveRecord::Migration
   def self.up
-    create_table :file_metadata do |t|
+    create_table :attachments do |t|
       t.string :file_name
       t.string :file_extension
       t.string :file_type
-      t.integer :file_binary_data_id
+      t.integer :attachment_file_id
       t.integer :file_size
       t.integer :image_width
       t.integer :image_height
@@ -16,6 +16,6 @@ class CreateFileMetadata < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :file_metadata
+    drop_table :attachments
   end
 end

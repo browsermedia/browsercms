@@ -1,7 +1,7 @@
-class FileMetadata < ActiveRecord::Base
+class Attachment < ActiveRecord::Base
   attr_accessor :file
 
-  belongs_to :file_binary_data
+  belongs_to :attachment_file
   belongs_to :section
 
   before_save :process_file
@@ -15,7 +15,7 @@ class FileMetadata < ActiveRecord::Base
     paths = p.sub(/^\//,'').split("/")
     file_name = paths.slice!(-1)
     path = "/#{paths.join("/")}"
-    {:include => :section, :conditions => ['sections.path = ? and file_metadata.file_name = ?', path, file_name]}
+    {:include => :section, :conditions => ['sections.path = ? and attachments.file_name = ?', path, file_name]}
   })
   
   def self.find_by_path(path)
@@ -35,7 +35,7 @@ class FileMetadata < ActiveRecord::Base
       #because we have advanced it by looking at other values
       file.rewind
 
-      create_file_binary_data(:data => file.read)
+      create_attachment_file(:data => file.read)
       self.file = nil
     end
   end
@@ -59,7 +59,7 @@ class FileMetadata < ActiveRecord::Base
   end
   
   def data
-    file_binary_data.data
+    attachment_file.data
   end
 
   def icon

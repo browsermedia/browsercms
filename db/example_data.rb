@@ -11,15 +11,15 @@ module FixtureReplacement
     a.name = "Test"
   end
 
-  attributes_for :file_binary_data do |a|
+  attributes_for :attachment_file do |a|
   end
 
   attributes_for :file_block do |a|
     a.updated_by_user = default_user    
   end
 
-  attributes_for :file_metadata do |a|
-    a.file_binary_data = default_file_binary_data
+  attributes_for :attachment do |a|
+    a.attachment_file = default_attachment_file
   end
 
   attributes_for :group_type do |a|

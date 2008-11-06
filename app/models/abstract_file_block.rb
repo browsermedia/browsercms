@@ -1,69 +1,69 @@
 class AbstractFileBlock < ActiveRecord::Base
   set_table_name "file_blocks"
   
-  belongs_to :file_metadata
+  belongs_to :attachment
 
   after_create :set_name
   validates_presence_of :name, :on => :update
 
-  #Note that it is important that the create_new_file_metadata callback
+  #Note that it is important that the create_new_attachment callback
   #run before the callbacks defined in acts_as_content_block
   #If not, the versioning will not work as expected
   #that is also why this is a before_save and not a before_update
   #Apparently in rails, when updating a record,
   #all before_save's are called in the order they are defined,
   #then all before_updates's are called in the order they are defined
-  before_save :create_new_file_metadata
+  before_save :create_new_attachment
   
-  named_scope :by_section, lambda { |section| { :include => :file_metadata, :conditions => ["file_metadata.section_id = ?", section.id] } }
+  named_scope :by_section, lambda { |section| { :include => :attachment, :conditions => ["attachment.section_id = ?", section.id] } }
   
   def path
-    [file_metadata.section.path, file_metadata.file_name].join("/").gsub(/\/{2,}/,"/")
+    [attachment.section.path, attachment.file_name].join("/").gsub(/\/{2,}/,"/")
   end
 
   def file_size
-    file_metadata ? "%0.2f" % (file_metadata.file_size / 1024.0) : "?"
+    attachment ? "%0.2f" % (attachment.file_size / 1024.0) : "?"
   end
 
-  #Delagate getter/setters for file_metadata
+  #Delagate getter/setters for attachment
   def section
-    file_metadata.section unless file_metadata.nil?
+    attachment.section unless attachment.nil?
   end
 
   def section_id
-    file_metadata.section_id unless file_metadata.nil?
+    attachment.section_id unless attachment.nil?
   end
 
   def section=(section)
-    build_file_metadata if new_record? && file_metadata.nil?
-    file_metadata.section = section
+    build_attachment if new_record? && attachment.nil?
+    attachment.section = section
   end
 
   def section_id=(section_id)
-    build_file_metadata if new_record? && file_metadata.nil?
-    file_metadata.section_id = section_id
+    build_attachment if new_record? && attachment.nil?
+    attachment.section_id = section_id
   end
 
   def file=(file)
-    build_file_metadata if new_record? && file_metadata.nil?
-    file_metadata.file = file
-    @file_metadata_changed = true
+    build_attachment if new_record? && attachment.nil?
+    attachment.file = file
+    @attachment_changed = true
   end
 
-  def create_new_file_metadata
+  def create_new_attachment
     unless new_record?
-      if file_metadata.changed? || @file_metadata_changed
-        new_file_metadata = FileMetadata.new(file_metadata.attributes.without("id"))
-        new_file_metadata.updating_file!
-        new_file_metadata.file = file_metadata.file      
-        new_file_metadata.save!
-        self.file_metadata = new_file_metadata
+      if attachment.changed? || @attachment_changed
+        new_attachment = Attachment.new(attachment.attributes.without("id"))
+        new_attachment.updating_file!
+        new_attachment.file = attachment.file      
+        new_attachment.save!
+        self.attachment = new_attachment
       end
     end
   end
 
   def set_name
-    update_attribute(:name, file_metadata.file_name) if name.blank?
+    update_attribute(:name, attachment.file_name) if name.blank?
   end
 
 end

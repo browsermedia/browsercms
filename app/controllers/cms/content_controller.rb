@@ -31,15 +31,15 @@ class Cms::ContentController < ApplicationController
     unless ext.blank?
       
       #Check access to file
-      @file_metadata = FileMetadata.find_by_path(@path)
-      raise "Access Denied" unless current_user.able_to_view?(@file_metadata)
+      @attachment = Attachment.find_by_path(@path)
+      raise "Access Denied" unless current_user.able_to_view?(@attachment)
 
       #Construct a path to where this file would be if it were cached
       @file = File.join(ActionController::Base.cache_store.cache_path, @path)
 
       #Write the file out if it doesn't exist
       unless File.exists?(@file)
-        @file_metadata.write_file
+        @attachment.write_file
       end
     
       #Stream the file if it exists

@@ -10,9 +10,9 @@ class FileBlock < AbstractFileBlock
     #TODO: Escape values
     <<-HTML
       <div id="file_block_#{id}" class="file_block">
-        <img src="/images/cms/icons/file_types/#{file_metadata.icon}.png" alt=""/>
+        <img src="/images/cms/icons/file_types/#{attachment.icon}.png" alt=""/>
         <a href="#{path}">#{name}</a>
-        #{file_metadata.file_size.round_bytes}
+        #{attachment.file_size.round_bytes}
       </div>
     HTML
   end
