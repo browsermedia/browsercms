@@ -10,7 +10,6 @@ class CreateAttachments < ActiveRecord::Migration
       t.integer :image_height
       t.integer :parent_id
       t.string :thumbnail_dimensions
-      t.integer :section_id
       t.timestamps
     end
   end

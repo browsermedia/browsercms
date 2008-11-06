@@ -1,24 +1,26 @@
 class AbstractFileBlock < ActiveRecord::Base
   set_table_name "file_blocks"
   
+  attr_accessor :file, :file_name
+  
   belongs_to :attachment
 
-  after_create :set_name
-  validates_presence_of :name, :on => :update
+  before_validation :process_attachment
 
-  #Note that it is important that the create_new_attachment callback
-  #run before the callbacks defined in acts_as_content_block
-  #If not, the versioning will not work as expected
-  #that is also why this is a before_save and not a before_update
-  #Apparently in rails, when updating a record,
-  #all before_save's are called in the order they are defined,
-  #then all before_updates's are called in the order they are defined
-  before_save :create_new_attachment
+  validates_presence_of :name
+  
+  def validate
+    unless attachment.valid?
+      attachment.errors.each do |err_field, err_value|
+        errors.add(:file_name, err_value)
+      end      
+    end
+  end
   
   named_scope :by_section, lambda { |section| { :include => :attachment, :conditions => ["attachment.section_id = ?", section.id] } }
   
   def path
-    [attachment.section.path, attachment.file_name].join("/").gsub(/\/{2,}/,"/")
+    attachment.file_name
   end
 
   def file_size
@@ -44,26 +46,12 @@ class AbstractFileBlock < ActiveRecord::Base
     attachment.section_id = section_id
   end
 
-  def file=(file)
-    build_attachment if new_record? && attachment.nil?
-    attachment.file = file
-    @attachment_changed = true
-  end
-
-  def create_new_attachment
-    unless new_record?
-      if attachment.changed? || @attachment_changed
-        new_attachment = Attachment.new(attachment.attributes.without("id"))
-        new_attachment.updating_file!
-        new_attachment.file = attachment.file      
-        new_attachment.save!
-        self.attachment = new_attachment
-      end
+  def process_attachment
+    if new_record? && (attachment.nil? || attachment.new_record?)
+      build_attachment
+      attachment.file = file
+      attachment.file_name = file_name
     end
-  end
-
-  def set_name
-    update_attribute(:name, attachment.file_name) if name.blank?
   end
 
 end

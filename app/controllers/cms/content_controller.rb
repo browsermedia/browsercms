@@ -32,23 +32,25 @@ class Cms::ContentController < ApplicationController
       
       #Check access to file
       @attachment = Attachment.find_by_path(@path)
-      raise "Access Denied" unless current_user.able_to_view?(@attachment)
+      if @attachment
+        raise "Access Denied" unless current_user.able_to_view?(@attachment)
 
-      #Construct a path to where this file would be if it were cached
-      @file = File.join(ActionController::Base.cache_store.cache_path, @path)
+        #Construct a path to where this file would be if it were cached
+        @file = File.join(ActionController::Base.cache_store.cache_path, @path)
 
-      #Write the file out if it doesn't exist
-      unless File.exists?(@file)
-        @attachment.write_file
-      end
+        #Write the file out if it doesn't exist
+        unless File.exists?(@file)
+          @attachment.write_file
+        end
     
-      #Stream the file if it exists
-      if @path != "/" && File.exists?(@file)
-        send_file(@file, 
-          :type => Mime::Type.lookup_by_extension(ext).to_s,
-          :disposition => false #see monkey patch in lib/action_controller/streaming.rb
-        ) 
-      end    
+        #Stream the file if it exists
+        if @path != "/" && File.exists?(@file)
+          send_file(@file, 
+            :type => Mime::Type.lookup_by_extension(ext).to_s,
+            :disposition => false #see monkey patch in lib/action_controller/streaming.rb
+          ) 
+        end    
+      end
     end    
     
   end

@@ -58,10 +58,10 @@ describe Cms::ContentController do
     end
     describe "a file" do
       before do
-        @file = mock_file(:original_filename => "test.txt", :read => "This is a test")
-        @file_block = create_file_block(:section => root_section, :file => @file)
-        @action = lambda { get :show, :path => ["#{@file_block.attachment_id}_test.txt"] }
-        @path_to_file = "#{ActionController::Base.cache_store.cache_path}/#{@file_block.attachment_id}_test.txt"
+        @file = mock_file(:read => "This is a test")
+        @file_block = create_file_block(:section => root_section, :file => @file, :file_name => "/test.txt")
+        @action = lambda { get :show, :path => ["test.txt"] }
+        @path_to_file = "#{ActionController::Base.cache_store.cache_path}/test.txt"
       end
       describe "that has not been written to the cache dir" do
         before do
@@ -98,10 +98,10 @@ describe Cms::ContentController do
         @privileged_user = create_user(:login => "privileged")
         @privileged_user.groups << @secret_group
                 
-        @file = mock_file(:original_filename => "test.txt", :read => "This is a test")
-        @file_block = create_file_block(:section => @protected_section, :file => @file)
-        @action = lambda { get :show, :path => ["#{@file_block.attachment_id}_test.txt"] }
-        @path_to_file = "#{ActionController::Base.cache_store.cache_path}/#{@file_block.attachment_id}_test.txt"
+        @file = mock_file(:read => "This is a test")
+        @file_block = create_file_block(:section => @protected_section, :file => @file, :file_name => "/test.txt")
+        @action = lambda { get :show, :path => ["test.txt"] }
+        @path_to_file = "#{ActionController::Base.cache_store.cache_path}/test.txt"
       end
       describe "when viewed by a guest user" do
         it "should raise an error" do 

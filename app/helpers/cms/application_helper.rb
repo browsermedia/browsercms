@@ -4,8 +4,8 @@ module Cms
 
     def searchable_sections(selected = nil)
       root = Section.root.first
-      options = [['All sections', 'all'], ['/', root.id]]
-      root.all_children_with_path.each { |s|  options << [s.full_path, s.id] }
+      options = [['All sections', 'all'], [root.name, root.id]]
+      root.all_children_with_name.each { |s|  options << [s.full_path, s.id] }
       options_for_select(options, selected)
     end
 

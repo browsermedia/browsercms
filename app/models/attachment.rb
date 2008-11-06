@@ -1,30 +1,49 @@
 class Attachment < ActiveRecord::Base
   attr_accessor :file
 
+  has_one :section_node, :as => :node
+
   belongs_to :attachment_file
-  belongs_to :section
 
   before_save :process_file
-  after_create :prepend_id_to_file_name
   after_save :write_file
   after_destroy :delete_file
+  
+  validates_presence_of :file_name
+  
+  #This is just the name part of the file_name.
+  #Example, file_name (the column in the database), will be /foo/bar.pdf,
+  #this will return bar.pdf
+  def name
+    file_name.blank? ? nil : file_name.split("/").last
+  end
+  
+  def section_id
+    section ? section.id : nil
+  end
 
-  validates_presence_of :section_id
+  def section
+    section_node ? section_node.section : nil
+  end
 
-  named_scope(:with_path, lambda { |p| 
-    paths = p.sub(/^\//,'').split("/")
-    file_name = paths.slice!(-1)
-    path = "/#{paths.join("/")}"
-    {:include => :section, :conditions => ['sections.path = ? and attachments.file_name = ?', path, file_name]}
-  })
+  def section_id=(sec_id)
+    self.section = Section.find(sec_id)
+  end
+
+  def section=(sec)
+    if section_node
+      section_node.move_to_end(sec)
+    else
+      build_section_node(:node => self, :section => sec)
+    end      
+  end
   
   def self.find_by_path(path)
-    with_path(path).first
+    find_by_file_name(path)
   end
 
   def process_file
     unless file.blank? || file.size.to_i < 1
-      self.file_name = file.original_filename
       unless file_name.blank?
         self.file_extension = file_name.split('.').last.to_s.downcase
       end
@@ -38,24 +57,6 @@ class Attachment < ActiveRecord::Base
       create_attachment_file(:data => file.read)
       self.file = nil
     end
-  end
-
-  def updating_file!
-    logger.info "Updating file"
-    @_updating_file = true
-  end
-
-  def prepend_id_to_file_name
-    if @_updating_file
-      if m = file_name.match(/^\d+(_.*)/)
-        new_file_name = "#{id}#{m[1]}"
-      else
-        new_file_name = file_name
-      end
-    else
-      new_file_name = "#{id}_#{file_name}"
-    end
-    update_attribute(:file_name, new_file_name) 
   end
   
   def data
@@ -81,7 +82,7 @@ class Attachment < ActiveRecord::Base
   end
 
   def absolute_path
-    File.join(ActionController::Base.cache_store.cache_path, section.path, file_name)
+    File.join(ActionController::Base.cache_store.cache_path, file_name)
   end
 
   def write_file

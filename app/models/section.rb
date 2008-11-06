@@ -5,7 +5,7 @@ class Section < ActiveRecord::Base
   
   #The nodes that link this section to its children
   has_many :child_nodes, :class_name => "SectionNode"
-  has_many :child_sections, :class_name => "SectionNode", :conditions => ["node_type = ?", "Section"]
+  has_many :child_sections, :class_name => "SectionNode", :conditions => ["node_type = ?", "Section"], :order => 'section_nodes.position'
 
   has_many :pages, :through => :child_nodes, :source => :node, :source_type => 'Page', :order => 'section_nodes.position'
   has_many :sections, :through => :child_nodes, :source => :node, :source_type => 'Section', :order => 'section_nodes.position'
@@ -23,12 +23,12 @@ class Section < ActiveRecord::Base
   
   before_destroy :deletable?
   
-  attr_reader :full_path
+  attr_accessor :full_path
   
-  def all_children_with_path
+  def all_children_with_name
     child_sections.map do |s|
-      s.node.instance_variable_set(:@full_path, "#{path unless root?}#{s.node.path}")
-      [s.node] << s.node.all_children_with_path
+      s.node.full_path = root? ? s.node.name : "#{name} / #{s.node.name}"
+      [s.node] << s.node.all_children_with_name
     end.flatten
   end
   

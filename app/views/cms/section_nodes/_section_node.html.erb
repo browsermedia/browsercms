@@ -1,1 +1,3 @@
+<% if %w[Link Page Section].include? section_node.node_type %>
 <%= render :partial => section_node.node_type.underscore, :locals => {:depth => depth, :node => section_node, section_node.node_type.underscore.to_sym => section_node.node, :ancestors => ancestors} %>
+<% end %>
