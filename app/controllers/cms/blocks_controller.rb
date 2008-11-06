@@ -14,6 +14,12 @@ class Cms::BlocksController < Cms::BaseController
         conditions[0] += " or content like ?"
         conditions << "%#{params[:search]}%"
       end
+      unless params[:section_id] != 'all'
+        #Connector.find(:all, :include => { :page => { :section_node => :section }, :conditions => ['section.id = ?', params[:section_id]])
+        
+        conditions[0] += " and sections.section_id = ?"
+        conditions << params[:section_id]
+      end
     end
 
     @blocks = model_class.find(:all, :order => "name", :conditions => conditions)

@@ -2,6 +2,13 @@
 module Cms
   module ApplicationHelper
 
+    def searchable_sections(selected = nil)
+      root = Section.root.first
+      options = [['All sections', 'all'], ['/', root.id]]
+      root.all_children_with_path.each { |s|  options << [s.full_path, s.id] }
+      options_for_select(options, selected)
+    end
+
     def select_per_page
       options = [10, 20, 50, 100].collect { |c| ["#{c} per page", c] }
       select_tag("per_page", options_for_select(options, params[:per_page].to_i))
