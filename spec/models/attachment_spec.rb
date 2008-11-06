@@ -74,7 +74,7 @@ describe Attachment do
     it "should write out the file to a sub-drectory, creating it if necessary" do
       root_section.update_attribute :path, "/test"
       @saving_the_cms_file.call
-      file = File.join(ActionController::Base.cache_store.cache_path, "test", "test.jpg")
+      file = File.join(ActionController::Base.cache_store.cache_path, "test.jpg")
       File.exists?(file).should be_true
       open(file){|f| f.read}.should == @file.read
     end

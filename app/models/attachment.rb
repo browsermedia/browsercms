@@ -1,15 +1,22 @@
 class Attachment < ActiveRecord::Base
+
+  before_validation :process_file
+  before_save :update_file
+  
+  version_fu
+  is_paranoid
+  
   attr_accessor :file
 
   has_one :section_node, :as => :node
 
   belongs_to :attachment_file
 
-  before_save :process_file
   after_save :write_file
   after_destroy :delete_file
   
   validates_presence_of :file_name
+  validates_presence_of :file_size, :message => "You must upload a file"
   
   #This is just the name part of the file_name.
   #Example, file_name (the column in the database), will be /foo/bar.pdf,
@@ -39,23 +46,24 @@ class Attachment < ActiveRecord::Base
   end
   
   def self.find_by_path(path)
-    find_by_file_name(path)
+    find(:first, :conditions => {:file_name => path})
   end
 
   def process_file
     unless file.blank? || file.size.to_i < 1
-      unless file_name.blank?
+      unless file_name.blank? || !file_name['.']
         self.file_extension = file_name.split('.').last.to_s.downcase
       end
       self.file_type = file.content_type
       self.file_size = file.size
+    end
+  end
 
-      #I think this is needed to return the StringIO to the beginning
-      #because we have advanced it by looking at other values
-      file.rewind
-
+  def update_file
+    unless file.blank? || file.size.to_i < 1
+      file.rewind      
       create_attachment_file(:data => file.read)
-      self.file = nil
+      self.file = nil    
     end
   end
   

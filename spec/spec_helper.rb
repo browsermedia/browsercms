@@ -64,7 +64,9 @@ def root_section
 end
 
 def admin_user(attrs={})
-  user = create_user(attrs)
+  user = User.find_by_login("cmsadmin")
+  return user if user
+  user = create_user({:login => "cmsadmin"}.merge(attrs))
   group = create_group
   group.permissions << create_permission(:name => "administrate")
   group.permissions << create_permission(:name => "edit_content")

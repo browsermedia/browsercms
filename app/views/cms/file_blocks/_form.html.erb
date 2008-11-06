@@ -5,7 +5,7 @@
     jQuery(function($){
       var sectionIdPathMap = <%= @sections.inject({}){|map, sec| map[sec.id.to_s] = sec.path.sub(/\/$/,''); map}.to_json %>
       $('#file_block_file, #file_block_section_id').change(function(){ 
-        $('#filename').val(sectionIdPathMap[$('#file_block_section_id').val()]+'/'+$('#file_block_file').val()) 
+        $('#file_block_file_name').val(sectionIdPathMap[$('#file_block_section_id').val()]+'/'+$('#file_block_file').val()) 
       }) 
     })
     </script>
@@ -24,6 +24,6 @@
   <%= f.collection_select :section_id, @sections, :id, :name %>
 </div>
 <div class="fields">
-  <label>File Name</label>
-  <input type="text" id="filename" name="filename"/>
+  <%= f.label :file_name %>
+  <%= f.text_field :file_name %>
 </div>

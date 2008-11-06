@@ -91,7 +91,9 @@ module VersionFu
     # This the method to override if you want to have more control over when to version
     def create_new_version?
       # Any versioned column changed?
-      self.class.versioned_columns.detect {|a| __send__ "#{a}_changed?"}
+      result = self.class.versioned_columns.detect {|a| __send__ "#{a}_changed?"}
+      #logger.info "#{self.class.name}##{id} create_new_version? => #{result.inspect}"
+      result
     end
     
     def instatiate_revision

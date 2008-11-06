@@ -1,6 +1,6 @@
 class CreateAttachments < ActiveRecord::Migration
   def self.up
-    create_table :attachments do |t|
+    create_versioned_table :attachments do |t|
       t.string :file_name
       t.string :file_extension
       t.string :file_type

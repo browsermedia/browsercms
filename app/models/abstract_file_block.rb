@@ -5,17 +5,22 @@ class AbstractFileBlock < ActiveRecord::Base
   
   belongs_to :attachment
 
-  before_validation :process_attachment
-
-  validates_presence_of :name
-  
+  before_validation :process_attachment  
   def validate
     unless attachment.valid?
       attachment.errors.each do |err_field, err_value|
-        errors.add(:file_name, err_value)
+        if err_field.to_sym == :file_name
+          errors.add(:file_name, err_value)
+        else  
+          errors.add(:file, err_value)
+        end
       end      
     end
   end
+  
+  before_update :update_attachment_if_changed
+  
+  validates_presence_of :name  
   
   named_scope :by_section, lambda { |section| { :include => :attachment, :conditions => ["attachment.section_id = ?", section.id] } }
   
@@ -37,21 +42,23 @@ class AbstractFileBlock < ActiveRecord::Base
   end
 
   def section=(section)
-    build_attachment if new_record? && attachment.nil?
+    build_attachment if attachment.nil?
     attachment.section = section
   end
 
   def section_id=(section_id)
-    build_attachment if new_record? && attachment.nil?
+    build_attachment if attachment.nil?
     attachment.section_id = section_id
   end
 
   def process_attachment
-    if new_record? && (attachment.nil? || attachment.new_record?)
-      build_attachment
-      attachment.file = file
-      attachment.file_name = file_name
-    end
+    build_attachment if attachment.nil?
+    attachment.file = file if file
+    attachment.file_name = file_name if file_name
+  end
+
+  def update_attachment_if_changed
+    attachment.save if attachment.changed? || attachment.file
   end
 
 end
