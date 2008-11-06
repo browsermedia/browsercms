@@ -82,7 +82,7 @@ class Cms::PagesController < Cms::BaseController
   
   def show_version
     @page = @page.as_of_version(params[:version])
-    render :layout => @page.layout, :action => 'show'
+    render :layout => @page.layout, :template => 'cms/content/show'
   end  
   
   def revert_to

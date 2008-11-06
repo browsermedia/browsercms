@@ -98,6 +98,7 @@ describe Cms::BlocksController do
 
   describe "list blocks" do
     before(:each) do
+      root_section
       @block = create_html_block(:name => "Test", :content => "I worked.")
       @action = lambda { put :index }
     end
@@ -121,6 +122,7 @@ describe Cms::BlocksController do
 
   describe "searching blocks" do
     before(:each) do
+      root_section
       @block = create_html_block(:name => "Test", :content => "I worked.")
     end
     it "should list the search results" do
