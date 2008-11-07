@@ -97,17 +97,17 @@ describe Page do
       @block = create_html_block(:name => "Hello, World!")
       @page.add_content_block!(create_html_block(:name => "Whatever"), "main")
       @page.add_content_block!(@block, "main")
-      pending "How do we move blocks within containers?"
-      @page.revision_comment.should == "HtmlBlock 'Hello, World!' was moved up within the 'main' container"
-      @page.as_of_version(@page.version).revision_comment.should == "HtmlBlock 'Hello, World!' was moved up within the 'main' container"
+      @page.move_connector_up(Connector.first(:conditions => {:content_block_id => @block.id}))
+      @page.revision_comment.should == "Text 'Hello, World!' was moved up within the 'main' container"
+      @page.as_of_version(@page.version).revision_comment.should == @page.revision_comment
     end
     it "should be set to 'HtmlBlock 'Hello, World!' was moved down within the 'main' container'" do
       @block = create_html_block(:name => "Hello, World!")
       @page.add_content_block!(@block, "main")
       @page.add_content_block!(create_html_block(:name => "Whatever"), "main")
-      pending "How do we move blocks within containers?"
-      @page.revision_comment.should == "HtmlBlock 'Hello, World!' was moved down within the 'main' container"
-      @page.as_of_version(@page.version).revision_comment.should == "HtmlBlock 'Hello, World!' was moved down within the 'main' container"
+      @page.move_connector_down(Connector.first(:conditions => {:content_block_id => @block.id}))
+      @page.revision_comment.should == "Text 'Hello, World!' was moved down within the 'main' container"
+      @page.as_of_version(@page.version).revision_comment.should == @page.revision_comment
     end
     it "should be set to 'Html 'Hello, World!' was removed from the 'main' container'" do
       @block = create_html_block(:name => "Hello, World!")      
@@ -344,11 +344,6 @@ describe "A page with associated blocks" do
       @destroying_the_page.call
       HtmlBlock.exists?(@block.id).should be_true
       @block.should_not be_deleted
-    end
-  end
-  describe "when destroyed!" do
-    it "should do what it does (TBD)" do
-      pending "Make work"
     end
   end
 end

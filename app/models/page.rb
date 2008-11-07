@@ -122,7 +122,7 @@ class Page < ActiveRecord::Base
   def move_connector(connector, direction)
     transaction do
       orientation = direction[/_/] ? "#{direction.sub('_', ' the ')} of" : "#{direction} within"
-      self.revision_comment = "#{connector.content_block.display_name} '#{connector.content_block.name}' was moved #{orientation} #{connector.container}"
+      self.revision_comment = "#{connector.content_block.display_name} '#{connector.content_block.name}' was moved #{orientation} the '#{connector.container}' container"
       create_new_version!
       copy_connectors!
       Connector.first(:conditions => { :page_id => id, 
