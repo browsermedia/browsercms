@@ -8,7 +8,7 @@ class AbstractFileBlock < ActiveRecord::Base
   named_scope :by_section, lambda { |section| { :include => :attachment, :conditions => ["attachment.section_id = ?", section.id] } }
   
   def path
-    attachment.file_name
+    live? ? attachment.file_name : "/cms/attachments/show/#{id}?version=#{version}"
   end
 
 end
