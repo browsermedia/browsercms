@@ -243,4 +243,21 @@ describe FileBlock do
     end
   end
 
+  describe do
+    before do
+      @one = create_file_block(:file => mock_file, :file_name => "/one.txt", :section => root_section, :updated_by_user => admin_user)
+      @two = create_file_block(:file => mock_file, :file_name => "/two.txt", :section => root_section, :updated_by_user => admin_user)
+      @section = create_section(:name => "A")
+      @a1 = create_file_block(:file => mock_file, :file_name => "/a/1.txt", :section => @section, :updated_by_user => admin_user)
+      @a2 = create_file_block(:file => mock_file, :file_name => "/2.txt", :section => @section, :updated_by_user => admin_user)
+      reset(:one, :two, :a1, :a2)
+    end
+    it "should be able to find file blocks in the root section" do
+      FileBlock.by_section(root_section).all(:order => "file_blocks.id").should == [@one, @two]
+    end
+    it "should be able to find file blocks in a sub-section" do
+      FileBlock.by_section(@section).all(:order => "file_blocks.id").should == [@a1, @a2]
+    end
+  end
+
 end

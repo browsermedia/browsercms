@@ -4,8 +4,7 @@ class AbstractFileBlock < ActiveRecord::Base
       
   validates_presence_of :name  
   
-  #TODO: Fix, Case 1781
-  named_scope :by_section, lambda { |section| { :include => :attachment, :conditions => ["attachment.section_id = ?", section.id] } }
+  named_scope :by_section, lambda { |section| { :include => {:attachment => :section_node }, :conditions => ["section_nodes.section_id = ?", section.id] } }
   
   def path
     live? ? attachment.file_name : "/cms/attachments/show/#{id}?version=#{version}"
