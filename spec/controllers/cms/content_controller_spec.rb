@@ -89,6 +89,14 @@ describe Cms::ContentController do
           streaming_file_contents(response).should == "Don't Overwrite Me!"
         end      
       end
+      describe "that has been archived" do
+        it "should not be able to be found" do
+          @file_block.update_attributes(:archived => true, :updated_by_user => admin_user)
+          reset(:file_block)
+          @file_block.attachment.should be_archived
+          @action.should raise_error("No page at '/test.txt'")
+        end
+      end
     end
     describe "a protected file" do
       before do

@@ -80,7 +80,9 @@ class Attachment < ActiveRecord::Base
   end
 
   def live_version
-    if published?
+    if archived?
+      nil
+    elsif published?
       self
     else
       live_version = versions.first(:conditions => {:published => true}, :order => "version desc, id desc")
@@ -117,7 +119,7 @@ class Attachment < ActiveRecord::Base
   def write_file
     if archived?
       logger.info "Deleting #{absolute_path}"
-      FileUtils.rm File.dirname(absolute_path)
+      FileUtils.rm_f File.dirname(absolute_path)
     elsif published?
       FileUtils.mkdir_p File.dirname(absolute_path)
       logger.info "Writing out #{absolute_path}"

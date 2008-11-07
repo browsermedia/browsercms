@@ -48,7 +48,7 @@ module Attachable
 
   def update_attachment_if_changed
     attachment.updated_by = updated_by_user
-    #attachment.archived = archived
+    attachment.archived = archived
     attachment.published = !!(publish_on_save)
     attachment.save if new_record? || attachment.changed? || attachment.file
     self.attachment_version = attachment.version
