@@ -69,7 +69,7 @@ module Cms
         def publishable?
           if versionable?
             if new_record?
-              !!connect_to_page_id              
+              !connect_to_page_id              
             else
               connected_pages.count < 1
             end
