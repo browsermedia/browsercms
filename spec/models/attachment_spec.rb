@@ -4,11 +4,11 @@ describe Attachment do
   
   describe "an existing record" do
     before do
-      @attachment = create_attachment(:section => root_section, :file => mock_file, :file_name => "/test.file")
+      @attachment = create_attachment(:section => root_section, :file => mock_file, :file_name => "/test.file", :published => true)
     end
     describe "in the root section" do
       it "should be able to be found by path without a leading /" do
-        Attachment.find_by_path(@attachment.file_name).should == @attachment
+        Attachment.find_live_by_file_name(@attachment.file_name).should == @attachment
       end
     end
     describe "in a sub section" do
@@ -17,7 +17,7 @@ describe Attachment do
         @attachment.update_attribute(:section, @sub_section)
       end
       it "should not change the file name" do
-        Attachment.find_by_path(@attachment.file_name).should == @attachment
+        Attachment.find_live_by_file_name(@attachment.file_name).should == @attachment
       end
     end    
   end  
@@ -27,11 +27,11 @@ describe Attachment do
       #@file is a mock of the object that Rails wraps file uploads in
       @file = mock_file
         
-      @saving_the_cms_file = lambda {@attachment = Attachment.create!(:file_name => "test.jpg", :file => @file, :section => root_section) }
+      @saving_the_cms_file = lambda {@attachment = Attachment.create!(:file_name => "test.jpg", :file => @file, :section => root_section, :published => true) }
     end
     it "should set the file_name" do
       @saving_the_cms_file.call
-      @attachment.file_name.should == "test.jpg"
+      @attachment.file_name.should == "/test.jpg"
     end
     it "should set the file_extension" do
       @saving_the_cms_file.call

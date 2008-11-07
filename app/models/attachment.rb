@@ -1,6 +1,7 @@
 class Attachment < ActiveRecord::Base
 
   before_validation :process_file
+  before_validation :prepend_slash
   before_save :update_file
   
   version_fu
@@ -11,6 +12,7 @@ class Attachment < ActiveRecord::Base
   has_one :section_node, :as => :node
 
   belongs_to :attachment_file
+  belongs_to :updated_by, :class_name => "User"
 
   after_save :write_file
   after_destroy :delete_file
@@ -45,10 +47,6 @@ class Attachment < ActiveRecord::Base
     end      
   end
   
-  def self.find_by_path(path)
-    find(:first, :conditions => {:file_name => path})
-  end
-
   def process_file
     unless file.blank? || file.size.to_i < 1
       unless file_name.blank? || !file_name['.']
@@ -58,6 +56,11 @@ class Attachment < ActiveRecord::Base
       self.file_size = file.size
     end
   end
+  
+  def prepend_slash    
+    self.file_name = "/#{file_name}" unless file_name =~ /^\//
+    self.file_name = nil if file_name.strip == "/"
+  end  
 
   def update_file
     unless file.blank? || file.size.to_i < 1
@@ -66,6 +69,24 @@ class Attachment < ActiveRecord::Base
       self.file = nil    
     end
   end
+  
+  def self.find_live_by_file_name(file_name)
+    page = find(:first, :conditions => {:file_name => file_name})
+    page ? page.live_version : nil
+  end  
+  
+  def live?
+    versionable? ? versions.count(:conditions => ['version > ? AND published = ?', version, true]) == 0 && published? : true
+  end
+
+  def live_version
+    if published?
+      self
+    else
+      live_version = versions.first(:conditions => {:published => true}, :order => "version desc, id desc")
+      live_version ? as_of_version(live_version.version) : nil
+    end                
+  end  
   
   def data
     attachment_file.data
@@ -94,9 +115,14 @@ class Attachment < ActiveRecord::Base
   end
 
   def write_file
-    FileUtils.mkdir_p File.dirname(absolute_path)
-    logger.info "Writing out #{absolute_path}"
-    open(absolute_path, "wb") {|f| f << data }
+    if archived?
+      logger.info "Deleting #{absolute_path}"
+      FileUtils.rm File.dirname(absolute_path)
+    elsif published?
+      FileUtils.mkdir_p File.dirname(absolute_path)
+      logger.info "Writing out #{absolute_path}"
+      open(absolute_path, "wb") {|f| f << data }
+    end
   end
 
 end

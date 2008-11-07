@@ -241,17 +241,7 @@ class Page < ActiveRecord::Base
   
   def self.find_live_by_path(path)
     page = find(:first, :conditions => {:path => path})
-
-    if page
-      if page.published?
-        page
-      else
-        live_version = page.versions.first(:conditions => {:published => true}, :order => "version desc, id desc")
-        live_version ? page.as_of_version(live_version.version) : nil
-      end      
-    else
-      nil
-    end
+    page ? page.live_version : nil
   end
   
 end

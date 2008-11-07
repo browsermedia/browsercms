@@ -89,6 +89,15 @@ module Cms
         def live?
           versionable? ? versions.count(:conditions => ['version > ? AND published = ?', version, true]) == 0 && published? : true
         end
+
+        def live_version
+          if published?
+            self
+          else
+            live_version = versions.first(:conditions => {:published => true}, :order => "version desc, id desc")
+            live_version ? as_of_version(live_version.version) : nil
+          end                
+        end
         
         def draft?
           !published?

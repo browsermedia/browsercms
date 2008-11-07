@@ -31,9 +31,12 @@ class Cms::ContentController < ApplicationController
     unless ext.blank?
       
       #Check access to file
-      @attachment = Attachment.find_by_path(@path)
+      @attachment = Attachment.find_live_by_file_name(@path)
       if @attachment
         raise "Access Denied" unless current_user.able_to_view?(@attachment)
+
+        #Make sure we get the live version of this page
+        @attachment = @attachment.live_version
 
         #Construct a path to where this file would be if it were cached
         @file = File.join(ActionController::Base.cache_store.cache_path, @path)

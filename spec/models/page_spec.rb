@@ -911,7 +911,6 @@ describe "Selecting a block" do
     reset(:page, :block)
   end
   it "should put the page into draft mode" do
-    #pending "Case 1714"
     @page.should_not be_published
   end
 end

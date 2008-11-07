@@ -1,5 +1,5 @@
 class FileBlock < AbstractFileBlock
-  
+  include Attachable
   acts_as_content_block
   
   def self.display_name

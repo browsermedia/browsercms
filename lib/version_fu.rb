@@ -92,7 +92,7 @@ module VersionFu
     def create_new_version?
       # Any versioned column changed?
       result = self.class.versioned_columns.detect {|a| __send__ "#{a}_changed?"}
-      #logger.info "#{self.class.name}##{id} create_new_version? => #{result.inspect}"
+      logger.info "#{self.class.name}##{id} create_new_version? => #{result.inspect}"
       result
     end
     
@@ -128,9 +128,10 @@ module VersionFu
       save
     end    
         
+        
     def as_of_version(version)
       v = find_version(version)
-      raise ActiveRecord::RecordNotFound.new("version #{version} does not exist for <#{self.class}:#{id}>") unless v
+      raise ActiveRecord::RecordNotFound.new("version #{version.inspect} does not exist for <#{self.class}:#{id}>") unless v
       obj = self.class.new
       (versioned_columns + [:version, :updated_at]).each do |a|
         obj.send("#{a}=", v.send(a))
@@ -138,6 +139,10 @@ module VersionFu
       obj.id = id
       #Need to do this so associations can be loaded
       obj.instance_variable_set("@new_record", false)
+
+      #Callback to allow us to load other data when an older version is loaded
+      obj.after_as_of_version if obj.respond_to?(:after_as_of_version)
+      
       obj      
     end
     

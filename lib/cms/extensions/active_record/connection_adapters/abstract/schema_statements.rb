@@ -12,6 +12,7 @@ module ActiveRecord
         yield t
         t.boolean :published, :default => false
         t.boolean :deleted, :default => false
+        t.boolean :archived, :default => false        
         t.timestamps
         t.integer :updated_by_id
         t.string :revision_comment
@@ -27,6 +28,7 @@ module ActiveRecord
         yield vt    
         vt.boolean :published, :default => false
         vt.boolean :deleted, :default => false
+        t.boolean :archived, :default => false        
         vt.timestamps            
         vt.integer :updated_by_id
         vt.string :revision_comment

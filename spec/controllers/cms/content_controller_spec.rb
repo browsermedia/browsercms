@@ -59,7 +59,7 @@ describe Cms::ContentController do
     describe "a file" do
       before do
         @file = mock_file(:read => "This is a test")
-        @file_block = create_file_block(:section => root_section, :file => @file, :file_name => "/test.txt")
+        @file_block = create_file_block(:section => root_section, :file => @file, :file_name => "/test.txt", :publish_on_save => true)
         @action = lambda { get :show, :path => ["test.txt"] }
         @path_to_file = "#{ActionController::Base.cache_store.cache_path}/test.txt"
       end
@@ -99,7 +99,7 @@ describe Cms::ContentController do
         @privileged_user.groups << @secret_group
                 
         @file = mock_file(:read => "This is a test")
-        @file_block = create_file_block(:section => @protected_section, :file => @file, :file_name => "/test.txt")
+        @file_block = create_file_block(:section => @protected_section, :file => @file, :file_name => "/test.txt", :publish_on_save => true)
         @action = lambda { get :show, :path => ["test.txt"] }
         @path_to_file = "#{ActionController::Base.cache_store.cache_path}/test.txt"
       end
