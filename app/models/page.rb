@@ -82,7 +82,7 @@ class Page < ActiveRecord::Base
       if published? && !con.content_block.published?
         con.content_block.updated_by_page = self
         con.content_block.publish!(updated_by)
-        con.content_block_version += 1 
+        con.content_block_version += 1 if con.content_block.versionable?
       end
 
       #If we are copying connectors from a previous version, that means we are reverting this page,

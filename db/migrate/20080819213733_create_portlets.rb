@@ -1,8 +1,9 @@
 class CreatePortlets < ActiveRecord::Migration
   def self.up
     create_table :portlets do |t|
-      t.string :portlet_type_id
+      t.integer :portlet_type_id
       t.string :name
+      t.boolean :archived, :default => false      
       t.boolean :deleted, :default => false
       t.timestamps
     end

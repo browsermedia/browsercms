@@ -2,9 +2,11 @@
 <ul class="block_info">
   <li><b>Name:</b> <%= @block.name %></li>
   <li><b>Type:</b> <%= @block.display_name %></li>
-  <li><b>Status:</b> <%= status_icon(@block.status) %> <%= @block.status_name %></li>
+  <% if @block.versionable? %>
+    <li><b>Status:</b> <%= status_icon(@block.status) %> <%= @block.status_name %></li>
+  <% end -%>
   <li><b>Used on:</b> <%= link_to_usages(@block) %> pages</li>
-  <% unless @block.current_version? %><li>
+  <% if @block.versionable? && !@block.current_version? %><li>
     <b>Version:</b> v. <%= @block.version %> ( <%= link_to "Current", cms_path(@block) %> )
-  </li><% end %>
+  </li><% end -%>
 </ul>

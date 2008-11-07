@@ -108,6 +108,63 @@ describe "A Content Object" do
       @block.should be_changed
     end
   end
+  describe "a non-versioned block that is connected to a page" do
+    describe "when it is edited" do
+      before do
+        @page = create_page(:section => root_section)
+        @block = create_portlet(:name => "Test Portlet")
+        @page.add_content_block!(@block, "main")
+        reset(:page, :block)
+        @editing_the_block = lambda {@block.update_attribute(:name, "something different")}
+      end
+      it "should not change the page version" do
+        @editing_the_block.call
+        @page.reload.version.should == 2
+      end
+      it "should not create a new page version" do
+        @editing_the_block.should_not change(Page::Version, :count)
+      end
+      it "should set the revision comment on the page" do
+        @editing_the_block.call
+        @page.reload.revision_comment.should == "Portlet 'Test Portlet' was added to the 'main' container"
+      end
+      it "should create the right connectors" do
+        @editing_the_block.call
+        conns = Connector.all(:conditions => ["content_block_id = ? and content_block_type = ?", @block.id, @block.class.name], :order => 'id')
+        conns.size.should == 1
+        conns[0].should_meet_expectations(:page => @page, :page_version => 2, :content_block => @block, :content_block_version => nil, :container => "main")        
+      end
+      describe "and saved" do
+        it "the page should not be live" do
+          @editing_the_block.call
+          @page.should_not be_live
+        end
+      end
+      describe "and save and published" do
+        describe "and the page is draft then," do
+          before do
+            @editing_the_block = lambda {@block.update_attributes(:name => "something different", :publish_on_save => true)}
+          end
+          it "the page should be live" do
+            @editing_the_block.call
+            @page.reload.should_not be_live
+          end
+        end
+        describe "and the page is live then," do
+          before do
+            @page.publish!(create_user)
+            reset(:page)
+            @editing_the_block = lambda {@block.update_attributes(:name => "something different", :publish_on_save => true)}
+          end
+          it "the page should be live" do
+            @editing_the_block.call
+            reset(:page)
+            @page.should be_live
+          end
+        end
+      end
+    end    
+  end
   describe "a block that is connected to a page" do
     describe "when it is edited" do
       before do
@@ -115,9 +172,6 @@ describe "A Content Object" do
         @page.add_content_block!(@block, "main")
         reset(:page, :block)
         @editing_the_block = lambda {@block.update_attribute(:name, "something different")}
-      end
-      it "should work" do
-        pending "Need to test for blocks that don't have versioning"
       end
       it "should change page version by 1" do
         @editing_the_block.call

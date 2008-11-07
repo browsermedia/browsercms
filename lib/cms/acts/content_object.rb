@@ -32,7 +32,9 @@ module Cms
           
           before_save :set_published
                     
-          unless options[:versioning] == false
+          if options[:versioning] == false
+            include NotVersionable
+          else
             version_fu
             
             #We set the value of the the association to the value in the virtual attriute
@@ -54,8 +56,27 @@ module Cms
 
       end
 
+      module NotVersionable
+        #NotVersionable content objects are always published
+        attr_accessor :published
+        def published?
+          true
+        end
+      end
+
       # These methods will be added to any object marked as acts_as_content_object or acts_as_content_page
       module InstanceMethods
+        def publishable?
+          if versionable?
+            if new_record?
+              !!connect_to_page_id              
+            else
+              connected_pages.count < 1
+            end
+          else
+            false
+          end
+        end
         def versionable?
           self.respond_to?(:versions)
         end
