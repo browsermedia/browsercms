@@ -9,20 +9,20 @@ class Cms::BlocksController < Cms::BaseController
   def index
     conditions = []
     unless params[:search].blank?
-      conditions = ["name like ?", "%#{params[:search]}%"]
+      conditions = ["#{model_class.table_name}.name like ?", "%#{params[:search]}%"]
       if params[:include_body]
-        conditions[0] += " or content like ?"
+        conditions[0] += " or #{model_class.table_name}.content like ?"
         conditions << "%#{params[:search]}%"
       end
-      # unless params[:section_id] != 'all'
-      #   #Connector.find(:all, :include => { :page => { :section_node => :section }, :conditions => ['section.id = ?', params[:section_id]])
-      #   
-      #   conditions[0] += " and sections.section_id = ?"
-      #   conditions << params[:section_id]
-      # end
     end
 
-    @blocks = model_class.find(:all, :order => "name", :conditions => conditions)
+    if params[:section_id] and params[:section_id] != 'all'
+      conditions[0] = conditions.empty? ? "sections.id = ?" : conditions[0] + " and sections.id = ?"
+      conditions << params[:section_id]
+      @blocks = model_class.find(:all, :order => "#{model_class.table_name}.name", :include => { :attachment => { :section_node => :section }}, :conditions => conditions)
+    else
+      @blocks = model_class.find(:all, :order => "#{model_class.table_name}.name", :conditions => conditions)
+    end
   end
 
   def new

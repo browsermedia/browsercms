@@ -2,7 +2,7 @@ module Cms
   module Acts
     module Paranoid
       def is_paranoid
-        named_scope :not_deleted, :conditions => ["deleted = ?", false]
+        named_scope :not_deleted, :conditions => ["#{table_name}.deleted = ?", false]
         class << self
           alias_method :find_with_deleted, :find
           alias_method :count_with_deleted, :count

@@ -8,7 +8,7 @@
     <p><%= check_box_tag :include_body, true, params[:include_body] %> Include body?</p>
   <% end -%>
   <% if %w[FileBlock ImageBlock].include?(@content_type.name) %>
-    <p><%= select_tag 'section_id', searchable_sections %></p>
+    <p><%= select_tag 'section_id', searchable_sections(params[:section_id]) %></p>
   <% end -%>
   <%= submit_tag "Search" %>
 <% end -%>

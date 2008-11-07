@@ -137,6 +137,26 @@ describe Cms::BlocksController do
       lambda { get :index, :search => 'invalid' }.call
       response.should_not have_tag("td.block_name", "Test")
     end
+    describe "which are file blocks" do
+      before do
+        @file = mock_file(:read => "This is a test")
+        create_content_type(:name => "FileBlock")
+        @file_block = create_file_block(:section => root_section, :file => @file, :file_name => "/test.txt", :name => "Test File", :publish_on_save => true)
+        @foo_section = create_section(:name => "Foo", :parent => root_section)
+      end
+      it "should find a file in the section specified" do
+        lambda { get :index, :block_type => 'file_block', :section_id => root_section.id }.call
+        response.should have_tag("td.block_name", "Test File")
+      end
+      it "should not find a file if it's in another section" do
+        lambda { get :index, :block_type => 'file_block', :section_id => @foo_section.id }.call
+        response.should_not have_tag("td.block_name", "Test File")
+      end
+      it "should find a file when searching all sections" do
+        lambda { get :index, :block_type => 'file_block', :section_id => 'all' }.call
+        response.should have_tag("td.block_name", "Test File")
+      end
+    end
   end
 
   describe "edit a block" do

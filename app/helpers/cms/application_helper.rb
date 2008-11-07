@@ -6,7 +6,7 @@ module Cms
       root = Section.root.first
       options = [['All sections', 'all'], [root.name, root.id]]
       root.all_children_with_name.each { |s|  options << [s.full_path, s.id] }
-      options_for_select(options, selected)
+      options_for_select(options, selected.to_i)
     end
 
     def select_per_page
