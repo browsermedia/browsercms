@@ -202,12 +202,15 @@ describe "Destroying a block" do
   end
 
   it "should make delete_all mark as deleted" do
-    pending "Make delete_all work"
+    HtmlBlock.delete_all(["name = ?", @block.name])
+    lambda { HtmlBlock.find(@block.id)}.should raise_error
+    d = HtmlBlock.find_with_deleted(@block.id)
+    d.should be_deleted  
   end
 
   it "should mark the latest row as deleted" do
     @destroying_the_block.call
-    d = HtmlBlock.find_with_deleted(@block)
+    d = HtmlBlock.find_with_deleted(@block.id)
     d.should be_deleted
   end
 

@@ -6,6 +6,7 @@ module Cms
         class << self
           alias_method :find_with_deleted, :find
           alias_method :count_with_deleted, :count
+          alias_method :delete_all!, :delete_all
         end
         alias_method :destroy_without_callbacks!, :destroy_without_callbacks
         extend ClassMethods
@@ -19,6 +20,9 @@ module Cms
       end
       def count(*args)
         not_deleted.count_with_deleted(*args)
+      end
+      def delete_all(conditions)
+        update_all("deleted = 1", conditions)
       end
       def exists?(id_or_conditions)
         if id_or_conditions.is_a?(Hash) || id_or_conditions.is_a?(Array)
