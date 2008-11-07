@@ -223,14 +223,23 @@ describe FileBlock do
   end
 
   describe "when archiving a file block" do
+    before do
+      @file_block = create_file_block(:file => mock_file, :file_name => "/test.txt", :section => root_section, :updated_by_user => admin_user)
+      @file_block.update_attributes(:archived => true, :updated_by_user => admin_user)
+      reset(:file_block)
+    end
     it "should archive the attachment" do
-      pending
+      @file_block.attachment.should be_archived
     end
   end
 
   describe "when deleting a file block" do
+    before do
+      @file_block = create_file_block(:file => mock_file, :file_name => "/test.txt", :section => root_section, :updated_by_user => admin_user)
+      @file_block.destroy      
+    end
     it "should delete the attachment" do
-      pending
+      Attachment.find_live_by_file_name("/test.txt").should be_nil
     end
   end
 

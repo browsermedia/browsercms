@@ -80,7 +80,7 @@ class Attachment < ActiveRecord::Base
   end
 
   def live_version
-    if archived?
+    if archived? || deleted?
       nil
     elsif published?
       self
@@ -117,7 +117,7 @@ class Attachment < ActiveRecord::Base
   end
 
   def write_file
-    if archived?
+    if archived? || deleted?
       logger.info "Deleting #{absolute_path}"
       FileUtils.rm_f File.dirname(absolute_path)
     elsif published?
