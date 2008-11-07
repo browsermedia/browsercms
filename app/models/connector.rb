@@ -15,10 +15,16 @@ class Connector < ActiveRecord::Base
 
   #Returns the content block that this connector is connected to
   def content_block
-    b = content_block_type.constantize.first(:conditions => {:id => content_block_id, :version => content_block_version})
+    @__content_block__ ||= begin
+      if content_block_type.constantize.respond_to?(:versioned_class_name)
+        b = content_block_type.constantize.first(:conditions => {:id => content_block_id, :version => content_block_version})
     
-    #If this connector is referring to an older version of the block, we have to look in the versions table
-    b ? b : content_block_type.constantize.find(content_block_id).as_of_version(content_block_version)
+        #If this connector is referring to an older version of the block, we have to look in the versions table
+        b ? b : content_block_type.constantize.find(content_block_id).as_of_version(content_block_version)
+      else
+        content_block_type.constantize.find(content_block_id)
+      end
+    end
   end
   
 end

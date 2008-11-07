@@ -156,12 +156,13 @@ describe "A Content Object" do
         describe "and the page is live then," do
           before do
             @page.publish!(create_user)
-            @page.reload
+            reset(:page)
             @editing_the_block = lambda {@block.update_attributes(:name => "something different", :publish_on_save => true)}
           end
           it "the page should be live" do
             @editing_the_block.call
-            @page.reload.should be_live
+            reset(:page)
+            @page.should be_live
           end
         end
       end
