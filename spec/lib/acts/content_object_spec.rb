@@ -181,9 +181,12 @@ describe "Destroying a block" do
     @block.should be_deleted
   end
   it "should make the block not exist?" do
-    pending "Make exist? not find deleted objects"
     @destroying_the_block.call
-    HtmlBlock.exists?(@block.id).should == false
+    HtmlBlock.exists?(@block.id).should be_false
+  end
+  it "should make the block not exist? if called with conditions" do
+    @destroying_the_block.call
+    HtmlBlock.exists?(["name = ?", @block.name]).should be_false
   end
   it "should make the block be not findable" do
     @destroying_the_block.call

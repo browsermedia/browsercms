@@ -20,6 +20,14 @@ module Cms
       def count(*args)
         not_deleted.count_with_deleted(*args)
       end
+      def exists?(id_or_conditions)
+        if id_or_conditions.is_a?(Hash) || id_or_conditions.is_a?(Array)
+          conditions = {:conditions => id_or_conditions}
+        else
+          conditions = {:conditions => {:id => id_or_conditions}}
+        end
+        count(conditions) > 0
+      end
       alias_method :original_method_missing, :method_missing
       def method_missing(method_id, *arguments)
         if matches_dynamic_finder?(method_id) || matches_dynamic_finder_with_initialize_or_create?(method_id)
