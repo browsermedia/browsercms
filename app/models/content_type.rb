@@ -23,11 +23,11 @@ class ContentType < ActiveRecord::Base
   end
   
   def display_name
-    model_class.display_name
+    model_class.respond_to?(:display_name) ? model_class.display_name : model_class.to_s.titleize
   end
 
   def display_name_plural
-    model_class.display_name_plural
+    model_class.respond_to?(:display_name_plural) ? model_class.display_name_plural : display_name.pluralize
   end
 
   def model_class
@@ -51,11 +51,11 @@ class ContentType < ActiveRecord::Base
   end
 
   # Allows models to show additional columns when being shown in a list.
-  def columns_to_list
-    if model_class.respond_to?("columns_to_list")
-      columns_to_list = model_class.columns_to_list
+  def columns_for_index
+    if model_class.respond_to?("columns_for_index")
+      columns_for_index = model_class.columns_for_index
       final_list = []
-      columns_to_list.each do |column|
+      columns_for_index.each do |column|
         if column.respond_to?(:humanize)
           final_list << {:label => column.humanize, :method => column}
         else

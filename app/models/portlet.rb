@@ -31,7 +31,7 @@ class Portlet < ActiveRecord::Base
     "cms/portlets/select_portlet_type"
   end
 
-  def self.columns_to_list
+  def self.columns_for_index
     [{:label => "Portlet Type", :method => "portlet_type_name"}]
   end
 end

@@ -1,0 +1,8 @@
+<div class="fields">
+  <%= f.label :category_type_id, "Type" %>
+  <%= f.collection_select :category_type_id, CategoryType.all(:order => "name"), :id, :name %>
+</div>
+<div class="fields">
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+</div>

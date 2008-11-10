@@ -1,14 +1,16 @@
 <% content_for(:sidebar) do %>
 <%= render :partial => "cms/blocks/block_info" %>
 <% end -%>
-<%= link_to "List All", cms_path("/blocks/#{@content_type.content_block_type}"), :id=>"list_all" %>
-<%= link_to "Add New #{@content_type.display_name}", cms_path("/blocks/#{@content_type.content_block_type.pluralize}", :new) %>
-<%= link_to 'View', cms_path(@block, :show) %>
-<%= link_to 'Edit', cms_path(@block, :edit) %>
-<%= @block.versionable? ? (link_to 'Revisions', cms_path(@block, :revisions), {:id => "revisions_link"}) : 'Revisions' %>
-<%= link_to "Delete", cms_path(@block, :destroy), :method => :delete, :confirm => "Are you sure you want to delete '#{@block.name}'?" %>
+<%= link_to "List All", cms_path(:blocks, @content_type.content_block_type), :id=>"list_all" %>
+<%= link_to "Add New #{@content_type.display_name}", cms_path(:blocks, @content_type.content_block_type.pluralize, :new) %>
+<%= link_to 'View', cms_path(:blocks, @content_type.content_block_type.pluralize, :show, @block) %>
+<%= link_to 'Edit', cms_path(:blocks, @content_type.content_block_type.pluralize, :edit, @block) %>
+<%= @block.respond_to?(:versionable?) && @block.versionable? ? (link_to 'Revisions', cms_path(@block, :revisions), {:id => "revisions_link"}) : 'Revisions' %>
+<%= link_to "Delete", cms_path(:blocks, @content_type.name.underscore.pluralize, :destroy, @block), :method => :delete, :confirm => "Are you sure you want to delete '#{@block.name}'?" %>
 <%= false ? (link_to 'Assign', cms_path(@block, :assign), :method => :post) : "Assign" %>
 <% able_to? :publish_content do -%>
-<%= !@block.published? ? link_to('Publish', cms_path(@block, :publish), :method => :post) : "Publish" %>
+  <% if @block.respond_to?(:published?) %>
+    <%= !@block.published? ? link_to('Publish', cms_path(@block, :publish), :method => :post) : "Publish" %>
+  <% end -%>
 <% end -%>
 <%#= !@block.archived? ? link_to('Archive', cms_path(@block, :archive), :method => :post) : "Archive" %>

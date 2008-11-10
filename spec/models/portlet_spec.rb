@@ -39,7 +39,7 @@ describe Portlet do
     end
 
     it "should have portlet_type_name" do
-      @content_type.columns_to_list.should == [{:label => "Portlet Type", :method => "portlet_type_name"}]
+      @content_type.columns_for_index.should == [{:label => "Portlet Type", :method => "portlet_type_name"}]
     end
   end
 

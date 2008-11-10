@@ -1,12 +1,14 @@
 <h2 id="file_information" style="margin-top: 0">File Information</h2>
 <ul class="block_info">
   <li><b>Name:</b> <%= @block.name %></li>
-  <li><b>Type:</b> <%= @block.display_name %></li>
-  <% if @block.versionable? %>
+  <li><b>Type:</b> <%= @content_type.display_name %></li>
+  <% if @block.respond_to?(:versionable?) && @block.versionable? %>
     <li><b>Status:</b> <%= status_icon(@block.status) %> <%= @block.status_name %></li>
   <% end -%>
-  <li><b>Used on:</b> <%= link_to_usages(@block) %> pages</li>
-  <% if @block.versionable? && !@block.current_version? %><li>
+  <% if @block.respond_to?(:connected_pages) %>
+    <li><b>Used on:</b> <%= link_to_usages(@block) %> pages</li>
+  <% end -%>
+  <% if @block.respond_to?(:versionable?) && @block.versionable? && !@block.current_version? %><li>
     <b>Version:</b> v. <%= @block.version %> ( <%= link_to "Current", cms_path(@block) %> )
   </li><% end -%>
 </ul>

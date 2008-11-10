@@ -17,8 +17,8 @@ describe Cms::PortletsController do
 
     it "should render form with link to BlocksController#create" do
       @action.call
-      Rails.logger.info response.body
-      response.should have_tag("form.new_portlet[action=?]", "/cms/blocks/portlet/create/")
+      log response.body
+      response.should have_tag("form.new_portlet[action=?]", "/cms/blocks/portlet/create")
     end
   end
 

@@ -62,7 +62,7 @@ describe ContentType do
         @c.template_for_edit.should == "cms/blocks/edit"
       end
       it "should not add any extra columns" do
-        cols = @c.columns_to_list
+        cols = @c.columns_for_index
         cols.size.should == 0
       end
     end
@@ -76,7 +76,7 @@ describe ContentType do
             "cms/my_models/special_edit"
           end
 
-          def self.columns_to_list
+          def self.columns_for_index
             ["stuff", {:label =>"More Stuff", :method => "more"}]
           end
         end
@@ -89,7 +89,7 @@ describe ContentType do
         @content_type.template_for_edit.should == "cms/my_models/special_edit"
       end
       it "should add additional columns to the view" do
-        cols = @content_type.columns_to_list
+        cols = @content_type.columns_for_index
         cols.size.should == 2
         cols.should == [{:label => "Stuff", :method => "stuff"}, {:label => "More Stuff", :method => "more"}]
       end

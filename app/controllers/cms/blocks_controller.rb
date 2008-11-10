@@ -32,13 +32,13 @@ class Cms::BlocksController < Cms::BaseController
 
   def create
     @block = content_type.new_content(params[model_name])
-    @block.updated_by_user = current_user
+    @block.updated_by_user = current_user if @block.respond_to?(:updated_by_user)
     if @block.save
       flash[:notice] = "#{content_type.display_name} '#{@block.name}' was created"
-      if @block.connected_page.blank?
-        redirect_to_first params[:_redirect_to], cms_url(@block)
-      else
+      if @block.respond_to?(:connected_page) && !@block.connected_page.blank?
         redirect_to @block.connected_page.path
+      else
+        redirect_to_first params[:_redirect_to], cms_url(:blocks, content_type.name.underscore.pluralize)
       end
     else
       render :action => "new"
@@ -65,9 +65,11 @@ class Cms::BlocksController < Cms::BaseController
   end
   
   def update
-    if @block.update_attributes(params[model_name].merge(:updated_by_user => current_user))
+    attrs = params[model_name]
+    attrs[:updated_by_user] = current_user if @block.respond_to?(:updated_by_user=)
+    if @block.update_attributes(attrs)
       flash[:notice] = "#{model_name.titleize} '#{@block.name}' was updated"
-      redirect_to_first params[:_redirect_to], cms_url(@block)
+      redirect_to_first params[:_redirect_to], cms_url(:blocks, @block.class.name.underscore, :show, @block)
     else
       render :action => "edit"
     end

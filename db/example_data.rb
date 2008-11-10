@@ -1,5 +1,14 @@
 module FixtureReplacement
 
+  attributes_for :category_type do |a|
+    a.name = "TestCategoryType#{Sequence.next}"
+  end
+
+  attributes_for :category do |a|
+    a.category_type = default_category_type
+    a.name = "TestCategory#{Sequence.next}"
+  end
+
   attributes_for :connector do |a|
     a.page = default_page
     a.page_version = 1

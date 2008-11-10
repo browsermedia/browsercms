@@ -16,29 +16,29 @@
 <h2>List <%=  @content_type.display_name_plural %></h2>
 <table id="blocks">
   <tr>
-    <th>Status</th>
-    <th>Name</th>
-    <% @content_type.columns_to_list.each do |column| %>
+    <% if @blocks.first.respond_to?(:status) %><th>Status</th><% end %>
+    <% if @blocks.first.respond_to?(:name) %><th>Name</th><% end %>
+    <% @content_type.columns_for_index.each do |column| %>
       <th><%= column[:label] %></th>
     <% end %>
     <th>Updated</th>
-    <th>Used</th>
+    <% if @blocks.first.respond_to?(:connected_pages) %><th>Used</th><% end %>
     <th>View</th>
     <th>Edit</th>
     <th>Delete</th>
   </tr>
   <% @blocks.each do |block| %>
     <tr>
-      <td class="block_status"><%=  status_icon(block.status) %></td>
-      <td class="block_name"><%= block.name %></td>
-      <% @content_type.columns_to_list.each do |column| %>
+      <% if @blocks.first.respond_to?(:status) %><td class="block_status"><%=  status_icon(block.status) %></td><% end %>
+      <% if @blocks.first.respond_to?(:name) %><td class="block_name"><%= block.name %></td><% end %>
+      <% @content_type.columns_for_index.each do |column| %>
         <td><%= block.send(column[:method]) %></td>      
       <% end %>
       <td><%= block.updated_at.strftime("%m/%d/%y") %></td>
-      <td class="used"><%= link_to_usages(block) %></td>
-      <td class="view"><%= link_to action_icon(:view), cms_path(block) %></td>
-      <td class="edit"><%= link_to action_icon(:edit), cms_path(block, :edit) %></td>
-      <td class="delete"><%= link_to action_icon(:delete), cms_path(block, :destroy), :method => :delete, :confirm => "Are you sure you want to delete '#{block.name}'?" %></td>
+      <% if @blocks.first.respond_to?(:connected_pages) %><td class="used"><%= link_to_usages(block) %></td><% end %>
+      <td class="view"><%= link_to action_icon(:view), cms_path(:blocks, @content_type.name.underscore.pluralize, :edit, block) %></td>
+      <td class="edit"><%= link_to action_icon(:edit), cms_path(:blocks, @content_type.name.underscore.pluralize, :edit, block) %></td>
+      <td class="delete"><%= link_to action_icon(:delete), cms_path(:blocks, @content_type.name.underscore.pluralize, :destroy, block), :method => :delete, :confirm => "Are you sure you want to delete '#{block.name}'?" %></td>
     </tr>
   <% end %>
 </table>
