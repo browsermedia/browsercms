@@ -47,8 +47,6 @@ describe Page do
       @page.update_attributes!(:name => "v2", :updated_by_user => create_user)
     end
     it "should return the latest version of the page" do
-      log Page.to_table_with(:id, :name, :version, :deleted, :published)
-      log Page::Version.to_table_with(:id, :name, :version, :deleted, :published)
       Page.find_live_by_path("/test").name.should == "v1"
       Page.find_live_by_path("/test").version.should == 1
     end
