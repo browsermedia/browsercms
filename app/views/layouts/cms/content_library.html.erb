@@ -1,25 +1,45 @@
 <%= render :partial => 'layouts/cms/head' %>
   <body>
+		<div id="wrapper">
     <div id="page">
       <%= cms_toolbar %>
+			
+			<div id="main">
+				<div id="functions">
+					<a href="#" class="button"><span>VIEW</span></a>
+					<a href="#" class="button left"><span>ADD A RELEASE</span></a><a href="#" class="button right"><span>ADD A CATEGORY</span></a>
+					<a href="#" class="button disabled"><span>DELETE</span></a>
+					<br clear="all" />
+				</div>
       <div id="cms_content_library">
-        <table width="100%" cellpadding="5">
-          <tr>
-            <td valign="top" width="240">
-              <%= yield :sidebar %>
-              <h2 id="content_types" style="margin-top: 0">Content Types</h2>
-              <ul>
-                <% ContentType.all(:order => "name").each do |content_type| %>
-                  <li><%= link_to content_type.display_name, cms_path("/blocks/#{content_type.content_block_type}") %></li>
-                <% end %>
-              </ul>
-            </td>
-            <td valign="top">
-              <%= yield %>
-            </td>
-          </tr>
-        </table>
+							<div id="menu">
+								<div class="pad">
+              	<%= yield :sidebar %>
+	              <h3 id="content_types">Content Types</h3>
+	              <ul>
+	                <% ContentType.all(:order => "name").each do |content_type| %>
+	                  <li><%= link_to content_type.display_name, cms_path("/blocks/#{content_type.content_block_type}") %></li>
+	                <% end %>
+	              </ul>
+								</div>
+							</div>
+							
+							<div id="contentwrap">
+								<div id="content">
+									<div class="pad">
+										<%= yield %>
+									</div>
+								</div>
+							</div>
+							<br clear="all" />
+						</div>
+					<div id="footer">
+						<p>&copy; 1998-2008 <a href="#">BrowserMedia</a>. All Rights Reserved</p>
+						<p>Browser CMS v3</p>
+					</div>
       </div>
+			</div>
     </div>
+		</div>
   </body>
 </html>

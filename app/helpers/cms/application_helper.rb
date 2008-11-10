@@ -107,6 +107,10 @@ module Cms
 	  def able_to?(*perms, &block)
 	    yield if current_user.able_to?(*perms)
 	  end
+	  
+	  def span_tag(content)
+	    content_tag :span, content
+    end
 	  	  
   end
 end

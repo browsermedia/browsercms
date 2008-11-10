@@ -1,6 +1,7 @@
 class Cms::SectionNodesController < Cms::BaseController
   check_permissions :publish_content, :only => [:move_before, :move_after]
-
+  layout "cms/sitemap"
+  
   def index
     @section = Section.root.first
   end

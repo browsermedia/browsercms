@@ -1,19 +1,10 @@
 <%= render :partial => 'layouts/cms/head' %>
   <body>
-    <div id="page">
+		<div id="wrapper">
       <%= cms_toolbar %>
-      <div id="cms_content_library">
-        <table width="100%" cellpadding="5">
-          <tr>
-            <td valign="top" width="240">
-              <%= render :partial => 'cms/shared/admin_sidebar' %>
-            </td>
-            <td valign="top">
-              <%= yield %>
-            </td>
-          </tr>
-        </table>
+      <%= render :partial => 'cms/shared/admin_sidebar' %>
+      <%= yield %>
       </div>
-    </div>
+		</div>
   </body>
 </html>

@@ -4,20 +4,45 @@
 <% end %>
 <% @page_title = "Sitemap" %>
 
-<div id="buttons">
-  <%= link_to "Edit", '#', :id => 'edit-button', :class => "disabled" %>
-  |
-  <%= link_to "Properties", '#', :id => 'properties-button', :class => "disabled" %>
-  |
-  <%= link_to "Delete", '#', :id => 'delete-button', :class => "disabled" %>
-  |
-  <%= link_to "Add Page", '#', :id => 'add-page-button', :class => "disabled" %>
-  |
-  <%= link_to "Add Section", '#', :id => 'add-section-button', :class => "disabled" %>
-  |
-  <%= link_to "Add Link", '#', :id => 'add-link-button', :class => "disabled" %>
-</div>
+<div id="main">
+	<div id="functions">
+  	<%= link_to span_tag("Edit"), '#', :id => 'edit-button', :class => "button" %>
+  	<%= link_to span_tag("Properties"), '#', :id => 'properties-button', :class => "button" %>
+  	<%= link_to span_tag("Delete"), '#', :id => 'delete-button', :class => "button" %>
+  	<%= link_to "Add Page", '#', :id => 'add-page-button', :class => "button" %>
+  	<%= link_to "Add Section", '#', :id => 'add-section-button', :class => "button" %>
+		<%= link_to "Add Link", '#', :id => 'add-link-button', :class => "button" %>
+		<br clear="all" />
+	</div>
 
+	<div id="menu">
+		<div class="pad">
+			<h3>CONTENT TYPES</h3>
+			<ul>
+				<li><a href="#">Core</a></li>
+				<li><a href="#">Portlets</a></li>
+				<li><a href="#">Podcasts</a></li>
+				<li class="open"><a href="#">News</a>
+					<ul>
+						<li><a href="#">Releases</a></li>
+						<li><a href="#">Categories</a></li>
+						<li><a href="#">Detail Page</a></li>
+					</ul>
+				</li>
+				<li><a href="#">Polls</a></li>
+			</ul>
+		</div>
+			<div class="pad">
+				<h3>LIBRARY SEARCH</h3>
+				<div class="searchbox" style="background: #FFF; padding: 8px">
+					<input type="text" value="Search here..." style="width: 145px; padding: 2px;" />
+				</div>
+			</div>
+	</div>
+	
+	<div id="contentwrap">
+		<div id="content">
+			<div class="pad">
 <table id="sitemap">
   <thead>
     <tr>
@@ -38,3 +63,12 @@
     <%= render :partial => 'section_node', :collection => @section.child_nodes.all(:order => 'position'), :locals => {:depth => 1, :ancestors => []} %>
   </tbody>
 </table>
+</div>
+</div>
+</div>
+<br clear="all" />
+</div>
+<div id="footer">
+<p>&copy; 1998-2008 <a href="#">BrowserMedia</a>. All Rights Reserved</p>
+<p>Browser CMS v3</p>
+</div>

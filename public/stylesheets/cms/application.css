@@ -1,3 +1,245 @@
+@import url(/stylesheets/cms/reset.css);
+
+body {
+background: #FFF url(/images/cms/bg.png) repeat-x 0 0;
+text-align: center;
+font: 62.5%/100% "Trebuchet MS", Helvetica, Verdana, Arial, sans-serif;
+color: #727171;
+}
+
+
+
+a img { border: 0 }
+
+
+/* Layout
+*/
+
+#wrapper {
+margin: 0 auto;
+text-align: left;
+width: 1000px;
+}
+
+#nav {
+position: relative;
+height: 89px;
+}
+
+#nav h1 {
+float: left;
+}
+
+#nav ul#section {
+margin-top: 49px;
+margin-left: 25px;
+list-style-type: none;
+float: left;
+}
+
+#nav ul#section li {
+display: block;
+float: left;
+}
+
+	#nav ul#section li {
+	
+	}
+	
+	#nav ul#section li a {
+	float: left;
+	display: block;
+	padding: 15px;
+	color: #5F5F5F;
+	font-weight: bold;
+	text-decoration: none;
+	font-size: 12px;
+	}
+
+	#nav ul#section li.on {
+	background: url(/images/cms/nav.png) no-repeat 0 0;
+	}
+	
+	#nav ul#section li.on a {
+	background: url(/images/cms/nav_cap.png) no-repeat 100% 0;
+	color: #FFF;
+	}
+
+#nav ul#userlinks {
+list-style-type: none;
+float: left;
+position: absolute;
+top: 0;
+right: 0;
+}
+
+#nav ul#userlinks li {
+display: inline;
+float: left;
+background: url(/images/cms/usercontrols_bg.png) no-repeat 0 0;
+margin-left: 10px;
+}
+
+	#nav ul#userlinks li a {
+	padding: 9px 15px;
+	background: url(/images/cms/usercontrols_bg_cap.png) no-repeat 100% 0;
+	color: #666;
+	display: block;
+	float: left;
+	text-decoration: none;
+	font-weight: bold;
+	}
+	
+	#nav ul#userlinks li span {
+	background: url(/images/cms/icons/user.png) no-repeat 7px 45%; 
+	float: left; 
+	padding-left: 15px
+	}
+
+#nav .cmssearch {
+position: absolute;
+right: 0;
+bottom: 9px;
+}
+
+#main { 
+margin-top: 30px;
+}
+
+#functions {
+padding: 10px 0 10px 188px;
+background: #747D87;
+}
+
+#menu { 
+float: left;
+background: #747D87;
+width: 174px;
+}
+
+	#menu h3 {
+	background: url(/images/cms/menu_header.png) no-repeat 0 0;
+	padding: 6px 6px 6px 15px;
+	font-weight: bold;
+	}
+	
+	#menu ul {
+	margin-top: 1px;
+	}
+	
+	#menu ul li {
+	background: url(/images/cms/menu.png) no-repeat 0 0;
+	margin-bottom: 2px;
+	}
+	
+	#menu ul li:last-child { margin-bottom: 0 }
+	
+		#menu ul li ul li {
+		background: none;
+		margin-left: 10px;
+		}
+	
+	#menu ul li.open {
+	background: #BCD3F0;
+	margin-bottom: 2px;
+	}
+	
+	#menu ul li a {
+	color: #36659D;
+	font-weight: bold;
+	text-decoration: none;
+	display: block;
+	padding: 8px;
+	}
+	
+	#menu ul li.open a {
+	border-bottom: 1px solid #666
+	}
+	
+	#menu ul li.open ul li a {
+	border-bottom: 1px dotted #999
+	}
+	
+	#menu ul li.open ul li:last-child a { border-bottom: none }
+
+#contentwrap {
+background: #747D87;
+float: left;
+width: 826px;
+padding-bottom: 5px;
+}
+#content {
+background: #FFF;
+width: 816px;
+margin-left: 5px;
+}
+
+#footer {
+text-align: right;
+padding: 15px 15px 0 0;
+}
+
+	#footer p {
+	color: #BBB;
+	}
+	
+	#footer a { 
+	color: #5489C7;
+	text-decoration: none;
+	}
+
+
+/* Utility
+*/
+
+#menu .pad, #content .pad { padding: 5px }
+#menu .pad { padding-top: 0; padding-right: 0; background: #747D87 }
+
+
+/* TRASH THESE
+*/
+
+table tr th { background: #AAA; color: #333; }
+table tr td, table tr th { padding: 8px; }
+table tr td { border-bottom: 1px solid #EEE; }
+
+
+
+/* FUNCTION BUTTONS
+*/
+
+a.button { 
+	display: block;
+	line-height: 27px;
+	padding-right: 18px;
+	background: url(/images/cms/buttons/sprite.png) no-repeat top right;
+	float: left;
+	color: #FFF;
+	text-decoration: none;
+	margin-right: 5px;
+}
+
+a.button.left {
+	background: url(/images/cms/buttons/sprite.png) no-repeat -175px -27px;
+	margin-right: 0;
+}
+
+a.button.disabled {
+	color: #88A8D2;
+}
+
+a.button span {
+	display: block;
+	background: url(/images/cms/buttons/sprite.png) no-repeat 0 0;
+	padding: 0 0 0 18px;
+}
+
+a.button.right span {
+	background: url(/images/cms/buttons/sprite.png) no-repeat 0 -54px;
+}
+
+
+/*
 #page {
   margin: 10px auto;
   width: 960px; }
@@ -15,16 +257,16 @@ label.inline {
   margin-bottom: 10px; }
 
 li.in_progress {
-  list-style-image: url(/images/cms/icons/status/in_progress.gif); }
+  list-style-image: url(/images/cms/cms/icons/status/in_progress.gif); }
 
 li.published {
-  list-style-image: url(/images/cms/icons/actions/published.gif); }
+  list-style-image: url(/images/cms/cms/icons/actions/published.gif); }
 
 li.hidden {
-  list-style-image: url(/images/cms/icons/actions/hidden.gif); }
+  list-style-image: url(/images/cms/cms/icons/actions/hidden.gif); }
 
 li.archived {
-  list-style-image: url(/images/cms/icons/actions/archived.gif); }
+  list-style-image: url(/images/cms/cms/icons/actions/archived.gif); }
 
 div#cms_toolbar {
   padding: 10px;
@@ -197,3 +439,4 @@ h3 {
   font-size: 16px;
   font-weight: bold;  
 }
+*/
