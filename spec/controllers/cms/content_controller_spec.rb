@@ -31,6 +31,7 @@ describe Cms::ContentController do
       it "should raise an error if the user is a guest" do
         get :show, :path => ["secret"]
         response.should have_tag("title", "Access Denied")
+        response.code.should == "403"
       end
       it "should show the page if the user has access" do
         @secret_group = create_group(:name => "Secret")
@@ -102,6 +103,7 @@ describe Cms::ContentController do
           @file_block.attachment.should be_archived
           @action.call
           response.should have_tag("title", "Not Found") 
+          response.code.should == "404"
         end
       end
     end

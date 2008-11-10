@@ -9,32 +9,33 @@ module Cms
     end
 
     def cms_not_found(exception)
-      handler_error_with_cms_page('/system/not_found', exception)
+      handler_error_with_cms_page('/system/not_found', exception, :not_found)
     end
 
     def cms_access_denied(exception)
-      handler_error_with_cms_page('/system/access_denied', exception)
+      handler_error_with_cms_page('/system/access_denied', exception, :forbidden)
     end
 
     def cms_server_error(exception)
-      handler_error_with_cms_page('/system/server_error', exception)
+      handler_error_with_cms_page('/system/server_error', exception, :internal_server_error)
     end        
     
     private
-    def handler_error_with_cms_page(error_page_path, exception)
+    def handler_error_with_cms_page(error_page_path, exception, status)
       Rails.logger.warn "Exception: #{exception.message}\n"
       Rails.logger.warn "#{exception.backtrace.join("\n")}\n"
       if @page = Page.find_live_by_path(error_page_path)
         @exception = exception
-        render :layout => @page.layout, :template => 'cms/content/show'
+        render :layout => @page.layout, :template => 'cms/content/show', :status => status
       else
         Rails.logger.warn "There is no page at #{error_page_path}"
-        render :text => "<h1>Missing Error Page</h1><p>There should be an error page at #{error_page_path}.  The original error is '#{exception.message}'</p>"
+        render :text => "<h1>Missing Error Page</h1><p>There should be an error page at #{error_page_path}.  The original error is '#{exception.message}'</p>", 
+          :status => :internal_server_error
       end      
     rescue Exception => e
       Rails.logger.error "CMS EXCEPTION HANDLING FAIL: #{e.message}\n"
       Rails.logger.error e.backtrace.join("\n")
-      render :text => exception.message
+      render :text => exception.message, :status => :internal_server_error
     end    
         
   end
