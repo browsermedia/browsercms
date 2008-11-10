@@ -31,6 +31,7 @@ class Cms::SectionsController < Cms::BaseController
 
   def edit
     @section = Section.find(params[:id])
+    raise "Access Denied" unless current_user.able_to_edit?(@section)
   end
   
   def update

@@ -33,6 +33,7 @@ create_section(:about, :name => "About", :parent => sections(:root), :path => "/
 create_section(:people, :name => "People", :parent => sections(:about), :path => "/people")
 create_section(:careers, :name => "Careers", :parent => sections(:about), :path => "/careers")
 
+groups(:content_editor).sections << Section.all
 groups(:guest).sections << sections(:root)
 groups(:search_bot).sections << sections(:root)
 

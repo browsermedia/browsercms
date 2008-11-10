@@ -7,8 +7,10 @@ describe Cms::SectionsController do
   before { login_as_user }
   
   describe "Editing a section" do
-    it "should show the edit form the the name prepopulated" do
+    it "should show the edit form with the name prepopulated" do
       @section = create_section(:parent => root_section)
+      group = admin_user.groups.first
+      group.sections << @section
       get :edit, :id => @section.to_param
       response.should have_tag("input[name=?][value=?]", "section[name]", @section.name)
     end

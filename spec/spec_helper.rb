@@ -67,7 +67,7 @@ def admin_user(attrs={})
   user = User.find_by_login("cmsadmin")
   return user if user
   user = create_user({:login => "cmsadmin"}.merge(attrs))
-  group = create_group
+  group = create_group(:group_type => create_group_type(:cms_access => true))
   group.permissions << create_permission(:name => "administrate")
   group.permissions << create_permission(:name => "edit_content")
   group.permissions << create_permission(:name => "publish_content")
