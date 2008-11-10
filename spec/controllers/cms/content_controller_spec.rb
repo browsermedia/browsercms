@@ -23,12 +23,14 @@ describe Cms::ContentController do
     end
     describe "a protected page" do
       before do
+        create_system_pages
         @page_template = create_page_template(:file_name => "application")
         @protected_section = create_section(:parent => root_section)
         @page = create_page(:section => @protected_section, :path => "/secret", :name => "Shhh... It's a Secret", :template => @page_template, :publish_on_save => true)
       end
       it "should raise an error if the user is a guest" do
-        lambda { get :show, :path => ["secret"] }.should raise_error      
+        get :show, :path => ["secret"]
+        response.should have_tag("title", "Access Denied")
       end
       it "should show the page if the user has access" do
         @secret_group = create_group(:name => "Secret")
@@ -42,22 +44,26 @@ describe Cms::ContentController do
     end
     describe "an archived page" do
       before do
+        create_system_pages
         @page_template = create_page_template(:file_name => "application")
         @page = create_page(:section => root_section, :path => "/archived", :name => "Archived", :archived => true, :template => @page_template, :publish_on_save => true)
         @getting_an_archived_page = lambda { get :show, :path => ["archived"] }        
       end
       it "should raise an error" do
-        @getting_an_archived_page.should raise_error("No page at '#{@page.path}'")
+        @getting_an_archived_page.call
+        response.should have_tag("title", "Not Found")        
       end
       describe "as a logged in user" do
         before { login_as_user } 
         it "should not raise an error" do
-          @getting_an_archived_page.should_not raise_error("No page at '#{@page.path}'")
+          @getting_an_archived_page.call
+          response.should have_tag("title", "Archived")
         end        
       end
     end
     describe "a file" do
       before do
+        create_system_pages
         @file = mock_file(:read => "This is a test")
         @file_block = create_file_block(:section => root_section, :file => @file, :file_name => "/test.txt", :publish_on_save => true)
         @action = lambda { get :show, :path => ["test.txt"] }
@@ -94,12 +100,14 @@ describe Cms::ContentController do
           @file_block.update_attributes(:archived => true, :updated_by_user => admin_user)
           reset(:file_block)
           @file_block.attachment.should be_archived
-          @action.should raise_error("No page at '/test.txt'")
+          @action.call
+          response.should have_tag("title", "Not Found") 
         end
       end
     end
     describe "a protected file" do
       before do
+        create_system_pages
         @protected_section = create_section(:parent => root_section)
         @secret_group = create_group(:name => "Secret")
         @secret_group.sections << @protected_section
@@ -113,7 +121,8 @@ describe Cms::ContentController do
       end
       describe "when viewed by a guest user" do
         it "should raise an error" do 
-          @action.should raise_error("Access Denied")
+          @action.call
+          response.should have_tag("title", "Access Denied" )
         end
       end
       describe "when viewed by a privileged user" do
@@ -128,6 +137,7 @@ describe Cms::ContentController do
     end   
     describe "a search bot" do
       before do
+        create_system_pages
         @page_template = create_page_template(:file_name => "application")
         @public_page = create_page(:section => root_section, :path => "/", :name => "Test Homepage", :template => @page_template, :publish_on_save => true)
         root_section.groups << create_group(:code => "search_bot")
@@ -146,7 +156,8 @@ describe Cms::ContentController do
         response.should have_tag("title", "Test Homepage")
       end
       it "should not have access to a non-public page" do
-        lambda { get :show, :path => ["secret"] }.should raise_error("Access Denied")
+        get :show, :path => ["secret"]
+        response.should have_tag("title", "Access Denied")
       end
     end    
   end

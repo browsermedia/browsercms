@@ -66,7 +66,7 @@ describe Cms::ConnectorsController do
 
     it "should have block side menu" do
       @action.call
-      response.should have_tag("h2#content_types", "Content Types")
+      response.should have_tag("h3#content_types", "Content Types")
     end
 
     it "should have file info panel" do

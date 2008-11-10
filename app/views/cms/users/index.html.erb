@@ -7,25 +7,25 @@
 <% form_tag(cms_path(:users), :method => :get ) do %>
 
 <table>
-    <tr>
-        <td>Search by Username, Email or Name:
-            <%= text_field_tag "key_word", params[:key_word] %>
-        </td>
-        <td>
-            Display:
-						<%= select_per_page %>
-        </td>
-    </tr>
-    <tr>
-        <td>Filter by:
-           <%= group_filter %>
-            <br>
-            <%= check_box_tag "show_expired", "yes", params[:show_expired] %>Show disabled users?
-        </td>
-        <td align="right">
-            <input type="submit" alt="Search"/>
-        </td>
-    </tr>
+  <tr>
+    <td>Search by Username, Email or Name:
+      <%= text_field_tag "key_word", params[:key_word] %>
+    </td>
+    <td>
+      Display:
+      <%= select_per_page %>
+    </td>
+  </tr>
+  <tr>
+    <td>Filter by:
+      <%= group_filter %>
+      <br/>
+      <%= check_box_tag "show_expired", "yes", params[:show_expired] %>Show disabled users?
+    </td>
+    <td align="right">
+      <input type="submit" alt="Search"/>
+    </td>
+  </tr>
 </table>
 <% end %>
 <br />
@@ -46,8 +46,8 @@
         </td>
         <td>
             <% user.groups.all(:order => "groups.name").each do |g| %>
-			- <%= g.name %><br/>
-			<% end %>
+      - <%= g.name %><br/>
+      <% end %>
         </td>
         <td>
             <%= link_to "Edit", :controller=>"users", :action=> "edit", :id => user.id %><br/>

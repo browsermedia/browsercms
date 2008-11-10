@@ -1,4 +1,4 @@
-<tr id="section_node_<%= node.id %>"<% if ancestors.empty? %>class="section_node"<% else %>
+<tr id="section_node_<%= node.id %>"<% if ancestors.empty? %> class="section_node"<% else %>
     class="section_node <%= a = []; ancestors.each_with_index{|sn, i| a << "#{i == ancestors.size-1 ? 'p' : 'a'}#{sn.id}"}; a.join(" ") %>" 
     style="display: none"<% end %>>
   <td class="node" style="padding-left: <%= (depth+1)*15 %>px">
