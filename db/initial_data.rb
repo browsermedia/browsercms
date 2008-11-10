@@ -85,9 +85,9 @@ create_page(:kerry, :name => "Kerry Gunther", :path => "/people/kerry", :section
 create_page(:pat, :name => "Patrick Peak", :path => "/people/pat", :section => sections(:people), :template => page_templates(:two_column), :updated_by_user => users(:cmsadmin))
 create_page(:paul, :name => "Paul Barry", :path => "/people/paul", :section => sections(:people), :template => page_templates(:two_column), :updated_by_user => users(:cmsadmin))
 
-create_page(:not_found, :name => "Not Found", :path => "/system/not_found", :section => sections(:system), :template => page_templates(:main), :updated_by_user => users(:cmsadmin))
-create_page(:access_denied, :name => "Access Denied", :path => "/system/access_denied", :section => sections(:system), :template => page_templates(:main), :updated_by_user => users(:cmsadmin))
-create_page(:server_error, :name => "Server Error", :path => "/system/server_error", :section => sections(:system), :template => page_templates(:main), :updated_by_user => users(:cmsadmin))
+create_page(:not_found, :name => "Not Found", :path => "/system/not_found", :section => sections(:system), :template => page_templates(:main), :updated_by_user => users(:cmsadmin), :publish_on_save => true)
+create_page(:access_denied, :name => "Access Denied", :path => "/system/access_denied", :section => sections(:system), :template => page_templates(:main), :updated_by_user => users(:cmsadmin), :publish_on_save => true)
+create_page(:server_error, :name => "Server Error", :path => "/system/server_error", :section => sections(:system), :template => page_templates(:main), :updated_by_user => users(:cmsadmin), :publish_on_save => true)
 
 create_page(:test, :name => "Test", :path => "/test", :section => sections(:root), :template => page_templates(:main), :updated_by_user => users(:cmsadmin))
 create_html_block(:test, :name => "Test", :connect_to_page_id => pages(:test).id, :connect_to_container => "main", :updated_by_user => users(:cmsadmin))

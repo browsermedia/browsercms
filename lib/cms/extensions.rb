@@ -17,6 +17,13 @@ module Cms
       ActionView::Base.default_form_builder = Cms::FormBuilder
     end    
   end
+  module Errors
+    class AccessDenied < StandardError
+      def initialize
+        super("Access Denied")
+      end
+    end
+  end
 end
 
 Dir["#{File.join(File.dirname(__FILE__), "extensions")}/**/*.rb"].each do |f| 

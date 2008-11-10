@@ -3,6 +3,7 @@
 
 class ApplicationController < ActionController::Base
   include AuthenticatedSystem
+  include Cms::ErrorHandling
     
   helper :all # include all helpers, all the time
 

@@ -33,7 +33,7 @@ class Cms::ContentController < ApplicationController
       #Check access to file
       @attachment = Attachment.find_live_by_file_name(@path)
       if @attachment
-        raise "Access Denied" unless current_user.able_to_view?(@attachment)
+        raise Cms::Errors::AccessDenied unless current_user.able_to_view?(@attachment)
 
         #Construct a path to where this file would be if it were cached
         @file = File.join(ActionController::Base.cache_store.cache_path, @path)
@@ -67,7 +67,7 @@ class Cms::ContentController < ApplicationController
     end
 
     unless current_user.able_to_view?(@page)
-      raise "Access Denied"
+      raise Cms::Errors::AccessDenied
     end
 
     #Doing this so if you are logged in, you never see the cached page

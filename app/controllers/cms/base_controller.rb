@@ -31,7 +31,7 @@ class Cms::BaseController < ApplicationController
     def self.check_permissions(*perms)
       opts = Hash === perms.last ? perms.pop : {}
       before_filter(opts) do |controller|
-        raise "Access Denied" unless controller.send(:current_user).able_to?(*perms)
+        raise Cms::Errors::AccessDenied unless controller.send(:current_user).able_to?(*perms)
       end      
     end
 
