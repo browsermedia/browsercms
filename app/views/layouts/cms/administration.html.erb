@@ -2,8 +2,34 @@
   <body>
     <div id="wrapper">
       <%= cms_toolbar %>
-      <%= render :partial => 'cms/shared/admin_sidebar' %>
-      <%= yield %>
+			    <div id="main">
+            <div id="functions">
+              <a href="#" class="button"><span>VIEW</span></a>
+              <a href="#" class="button left"><span>ADD A RELEASE</span></a><a href="#" class="button right"><span>ADD A CATEGORY</span></a>
+              <a href="#" class="button disabled"><span>DELETE</span></a>
+              <br clear="all" />
+            </div>
+            
+			      <div id="menu">
+              <div class="pad">
+                <%= render :partial => 'cms/shared/admin_sidebar' %>                      
+              </div>
+            </div>
+			      <div id="contentwrap">
+              <div id="content">
+                <div class="pad">
+                  <%= yield %>
+                </div>
+              </div>
+            </div>
+            <br clear="all" />
+          </div>
+          <div id="footer">
+            <p>&copy; 1998-2008 <a href="#">BrowserMedia</a>. All Rights Reserved</p>
+            <p>Browser CMS v3</p>
+          </div>
+        </div>
+      </div>
     </div>
   </body>
 </html>
