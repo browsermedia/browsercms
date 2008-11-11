@@ -30,6 +30,7 @@ describe Cms::ContentController do
       end
       it "should raise an error if the user is a guest" do
         get :show, :path => ["secret"]
+        log response.body
         response.should have_tag("title", "Access Denied")
         response.code.should == "403"
       end

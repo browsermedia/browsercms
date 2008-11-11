@@ -1,22 +1,22 @@
-document.observe('dom:loaded', function() { 
-  $$('textarea.editor').each(function(e){
+jQuery(function($){
+  $('textarea.editor').each(function(e){
     if(editorEnabled()) {
-      loadEditor(e.id);
+      loadEditor(this.id);
     }
-  });
-});
+  });  
+})
 
 function editorEnabled() {
-  return Cookies.get('editorDisabled') != "true";
+  return $J.cookie('editorDisabled') != "true";
 }
 
 function toggleEditor(id) {
   if(loadEditor(id)) {
-    Cookies.put('editorDisabled', false);      
+    $J.cookie('editorDisabled', false, { expires: 90, path: '/' });      
   } else {
     $(id+'___Frame').toggle(); 
     $(id).toggle();  
-    Cookies.put('editorDisabled', $(id).visible());      
+    $J.cookie('editorDisabled', $(id).visible(), { expires: 90, path: '/' });      
   }
 }
 

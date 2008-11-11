@@ -77,9 +77,10 @@ end
 
 def create_system_pages
   @system_section = create_section(:parent => root_section)
-  create_page(:name => "Not Found", :path => "/system/not_found", :publish_on_save => true, :section => @system_section)  
-  create_page(:name => "Access Denied", :path => "/system/access_denied", :publish_on_save => true, :section => @system_section)  
-  create_page(:name => "Server Error", :path => "/system/server_error", :publish_on_save => true, :section => @system_section)  
+  @error_template = create_page_template(:name => "Error", :file_name => "error", :language => "erb", :body => "<html><head><title><%= @page_title %></title></head><body><%= yield %></body></html>")
+  create_page(:name => "Not Found", :path => "/system/not_found", :template => @error_template, :publish_on_save => true, :section => @system_section)  
+  create_page(:name => "Access Denied", :path => "/system/access_denied", :template => @error_template, :publish_on_save => true, :section => @system_section)  
+  create_page(:name => "Server Error", :path => "/system/server_error", :template => @error_template, :publish_on_save => true, :section => @system_section)  
 end
 
 def guest_group
