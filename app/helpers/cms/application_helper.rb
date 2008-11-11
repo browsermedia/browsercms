@@ -61,8 +61,8 @@ module Cms
       image_tag "cms/icons/status/#{status.to_s.underscore}.gif", {:alt => status.to_s.titleize}.merge(options)
     end
   
-    def cms_toolbar
-      render :partial => 'layouts/cms_toolbar'    
+    def cms_toolbar(tab=:dashboard)
+      render :partial => 'layouts/cms_toolbar', :locals => {:tab => tab}    
     end
     
     def show_notice(page)

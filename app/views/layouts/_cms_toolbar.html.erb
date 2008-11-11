@@ -2,10 +2,10 @@
   <div id="nav">
   	<h1><%= link_to image_tag("cms/browsercms_logo.png"), "/" %></h1>
     	<ul id="section">
-      	<li class="on"><%= link_to "Dashboard", cms_dashboard_path %></li>
-        <% able_to?(:edit_content, :publish_content) do %><li><%= link_to "Sitemap", cms_sitemap_path %></li><% end %>
-        <% able_to?(:edit_content, :publish_content) do %><li><%= link_to "Content Library", cms_content_library_path %></li><% end %>
-        <% able_to?(:administrate) do %><li><%= link_to "Administration", cms_administration_path %></li><% end %>
+      	<li<%= ' class="on"' if tab == :dashboard %>><%= link_to "Dashboard", cms_dashboard_path %></li>
+        <% able_to?(:edit_content, :publish_content) do %><li<%= ' class="on"' if tab == :sitemap %>><%= link_to "Sitemap", cms_sitemap_path %></li><% end %>
+        <% able_to?(:edit_content, :publish_content) do %><li<%= ' class="on"' if tab == :content_library %>><%= link_to "Content Library", cms_content_library_path %></li><% end %>
+        <% able_to?(:administrate) do %><li<%= ' class="on"' if tab == :administration %>><%= link_to "Administration", cms_administration_path %></li><% end %>
       </ul>
       <ul id="userlinks">
       	<li><%= link_to "Logout", cms_logout_path, :method => :delete %></li>
