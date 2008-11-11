@@ -1,5 +1,17 @@
+//CMS related functions
+jQuery(function($) {
+  $.cms = {
+    showNotice: function(msg) {
+      $('#message').removeClass('error').addClass('notice').html(msg).show().animate({opacity: 1.0}, 3000).fadeOut("normal")
+    },
+    showError: function(msg) {
+      $('#message').removeClass('notice').addClass('error').html(msg).show().animate({opacity: 1.0}, 3000).fadeOut("normal")
+    }
+  }
+})
+
 //CookieSet allows us to treat one cookie value as a set of values
-(function($) {
+jQuery(function($) {
   
   var sep = '|'
   
@@ -54,4 +66,4 @@
     }    
   }
   
-})(jQuery)
+})

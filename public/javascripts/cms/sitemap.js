@@ -1,19 +1,10 @@
 jQuery(function($){
-  Cms = {
-    showNotice: function(msg) {
-      $('#message').removeClass('error').addClass('notice').html(msg).show().animate({opacity: 1.0}, 3000).fadeOut("normal")
-    },
-    showError: function(msg) {
-      $('#message').removeClass('notice').addClass('error').html(msg).show().animate({opacity: 1.0}, 3000).fadeOut("normal")
-    }
-  }
   
   //Add hover to tr
   $('#sitemap tr.section_node').hover(
     function() { $(this).addClass('hover')},
     function() { $(this).removeClass('hover')}
-  )
-    
+  )    
   
   //Disable all "buttons"
   $('#buttons a.disabled').click(function(){ return false })
@@ -105,9 +96,9 @@ jQuery(function($){
         $.post(url, { _method: "PUT", section_node_id: did },
           function(data){
             if(data.success) {
-              Cms.showNotice(data.message)
+              $.cms.showNotice(data.message)
             } else {
-              Cms.showError(data.message)
+              $.cms.showError(data.message)
             }
           }, "json");
       }
@@ -120,6 +111,9 @@ jQuery(function($){
     var id = this.id.replace(/folder_/,'')
     
     if($(this).hasClass("folder-open")) {
+      //Remove this section from the set of open nodes
+      $.cookieSet.remove('openSectionNodes', id, {path: '/', expires: 90})
+
       //close children
       $('.p'+id+', .a'+id).hide()
         .find('a').removeClass("folder-open")
@@ -129,6 +123,9 @@ jQuery(function($){
       $(this).find('img').attr('src','/images/cms/icons/actions/folder.png')
       $(this).removeClass("folder-open")
     } else {
+      //Remember to re-open this section
+      $.cookieSet.add('openSectionNodes', id, {path: '/', expires: 90})
+      
       $('.p'+id).show()
       $(this).find('img').attr('src','/images/cms/icons/actions/folder_open.png')
       $(this).addClass("folder-open")
@@ -191,4 +188,14 @@ jQuery(function($){
 
     }
   })
+  
+})
+
+//Fire the click even for each section that should be open
+jQuery(function($){
+  var openSectionNodeIds = $.cookieSet.get('openSectionNodes')
+  if(openSectionNodeIds) {
+    var openSectionNodeSelector = $.map(openSectionNodeIds, function(e,i){ return "#folder_"+e }).join(', ')
+    $(openSectionNodeSelector).click()
+  }
 })
