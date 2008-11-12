@@ -1,13 +1,5 @@
 class ContentType < ActiveRecord::Base
 
-  # Factory Method to create a new instance of the Content Type
-  # (i.e. if model_class == HtmlBlock, create a new one of those)
-  #
-  # @params - Hash of request parameters which will bound to the new model
-  def new_content(params = {})
-    model_class.new(params)
-  end
-
   def self.list
     all.map { |f| f.name.underscore.to_sym }
   end
@@ -41,7 +33,7 @@ class ContentType < ActiveRecord::Base
     end
     "cms/blocks/new"
   end
-
+  
    # Allows models to override which view is displayed with BlockController#edit is called.
   def template_for_edit
     if model_class.respond_to?("template_for_edit")

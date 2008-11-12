@@ -13,7 +13,7 @@
   <% @portlet_types.each do |portlet_type| %>
     <tr>
       <td><%= portlet_type.name %></td>
-      <td><%= portlet_type.updated_at.strftime("%m/%d/%y") %></td>
+      <td><%= portlet_type.updated_at.to_s(:date) %></td>
       <td class="uses"><%= portlet_type.portlets.count %></td>
       <td class="view"><%= link_to action_icon(:view), cms_path(portlet_type) %></td>
       <td class="edit"><%= link_to action_icon(:edit), cms_path(portlet_type, :edit) %></td>

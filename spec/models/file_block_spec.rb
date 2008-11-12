@@ -5,11 +5,11 @@ describe FileBlock do
   describe "when saving a new record" do
     describe "without a file" do
       before do
-        @file_block = new_file_block(:file_name => "/test.jpg", :section => root_section)
+        @file_block = new_file_block(:attachment_file_name => "/test.jpg", :section => root_section)
       end
       it "should raise an error" do
         @file_block.should_not be_valid
-        @file_block.errors.on(:file).should == "You must upload a file"
+        @file_block.errors.on(:attachment_file).should == "You must upload a file"
       end
     end
     
@@ -19,20 +19,20 @@ describe FileBlock do
         @file = mock("file", :original_filename => "foo.jpg",
           :content_type => "image/jpeg", :rewind => true,
           :size => "99", :read => "01010010101010101")
-        @file_block = new_file_block(:file => @file, :section => root_section, :file_name => "/test.jpg", :publish_on_save => true)
+        @file_block = new_file_block(:attachment_file => @file, :section => root_section, :attachment_file_name => "/test.jpg", :publish_on_save => true)
       end
       
       describe "without a file_name" do
         it "should add an error" do
-          @file_block.file_name = nil
+          @file_block.attachment_file_name = nil
           @file_block.should_not be_valid
-          @file_block.errors.on(:file_name).should == "can't be blank"
+          @file_block.errors.on(:attachment_file_name).should == "can't be blank"
         end
       end
       
       describe "without a leading / in the file_name" do
         before do
-          @file_block.file_name = "test.jpg"
+          @file_block.attachment_file_name = "test.jpg"
         end
         it "should prepend a /" do
           @file_block.save!
@@ -78,14 +78,14 @@ describe FileBlock do
 
   describe "when updating an existing record" do
     before do
-      @file_block = create_file_block(:section => root_section, :file_name => "/test.jpg", :file => mock_file(:read => "original"), :name => "Test", :updated_by_user => admin_user, :publish_on_save => true)
+      @file_block = create_file_block(:section => root_section, :attachment_file_name => "/test.jpg", :attachment_file => mock_file(:read => "original"), :name => "Test", :updated_by_user => admin_user, :publish_on_save => true)
       reset(:file_block)
       @attachment = @file_block.attachment
     end
     describe "with changes to the attachment's file name" do
       before do
         log FileBlock.to_table_without(:created_at, :updated_at)
-        @update_file_block = lambda { @file_block.update_attributes!(:updated_by_user => admin_user, :file_name => "test_new.jpg", :file => nil, :publish_on_save => true) }        
+        @update_file_block = lambda { @file_block.update_attributes!(:updated_by_user => admin_user, :attachment_file_name => "test_new.jpg", :attachment_file => nil, :publish_on_save => true) }        
       end
       it "should create a new attachment version" do
         @update_file_block.should change(Attachment::Version, :count).by(1)
@@ -125,7 +125,7 @@ describe FileBlock do
     end
     describe "with changes to the attachment's file data" do
       before do
-        @updating_the_file_block = lambda { @file_block.update_attributes!(:file => mock_file(:read => "new"), :updated_by_user => admin_user) }
+        @updating_the_file_block = lambda { @file_block.update_attributes!(:attachment_file => mock_file(:read => "new"), :updated_by_user => admin_user) }
       end
       it "should not change the number of attachments" do
         @updating_the_file_block.should_not change(Attachment, :count)
@@ -158,7 +158,7 @@ describe FileBlock do
     end
     describe "with changes to the attachment's file data and publish on save" do
       before do
-        @updating_the_file_block = lambda { @file_block.update_attributes!(:file => mock_file(:read => "new"), :updated_by_user => admin_user, :publish_on_save => true) }
+        @updating_the_file_block = lambda { @file_block.update_attributes!(:attachment_file => mock_file(:read => "new"), :updated_by_user => admin_user, :publish_on_save => true) }
       end
       it "should not change the number of attachments" do
         @updating_the_file_block.should_not change(Attachment, :count)
@@ -213,8 +213,8 @@ describe FileBlock do
     before do
       @file1 = mock_file(:content_type => "text/plain", :read => "v1")      
       @file2 = mock_file(:content_type => "text/plain", :read => "v2")
-      @file_block = create_file_block(:file => @file1, :file_name => "/test.txt", :section => root_section, :updated_by_user => admin_user)
-      @file_block.update_attributes(:file => @file2, :updated_by_user => admin_user)
+      @file_block = create_file_block(:attachment_file => @file1, :attachment_file_name => "/test.txt", :section => root_section, :updated_by_user => admin_user)
+      @file_block.update_attributes(:attachment_file => @file2, :updated_by_user => admin_user)
       reset(:file_block)            
     end
     it "should show the correct content" do
@@ -224,7 +224,7 @@ describe FileBlock do
 
   describe "when archiving a file block" do
     before do
-      @file_block = create_file_block(:file => mock_file, :file_name => "/test.txt", :section => root_section, :updated_by_user => admin_user)
+      @file_block = create_file_block(:attachment_file => mock_file, :attachment_file_name => "/test.txt", :section => root_section, :updated_by_user => admin_user)
       @file_block.update_attributes(:archived => true, :updated_by_user => admin_user)
       reset(:file_block)
     end
@@ -235,7 +235,7 @@ describe FileBlock do
 
   describe "when deleting a file block" do
     before do
-      @file_block = create_file_block(:file => mock_file, :file_name => "/test.txt", :section => root_section, :updated_by_user => admin_user)
+      @file_block = create_file_block(:attachment_file => mock_file, :attachment_file_name => "/test.txt", :section => root_section, :updated_by_user => admin_user)
       @file_block.destroy      
     end
     it "should delete the attachment" do
@@ -245,11 +245,11 @@ describe FileBlock do
 
   describe do
     before do
-      @one = create_file_block(:file => mock_file, :file_name => "/one.txt", :section => root_section, :updated_by_user => admin_user)
-      @two = create_file_block(:file => mock_file, :file_name => "/two.txt", :section => root_section, :updated_by_user => admin_user)
+      @one = create_file_block(:attachment_file => mock_file, :attachment_file_name => "/one.txt", :section => root_section, :updated_by_user => admin_user)
+      @two = create_file_block(:attachment_file => mock_file, :attachment_file_name => "/two.txt", :section => root_section, :updated_by_user => admin_user)
       @section = create_section(:name => "A")
-      @a1 = create_file_block(:file => mock_file, :file_name => "/a/1.txt", :section => @section, :updated_by_user => admin_user)
-      @a2 = create_file_block(:file => mock_file, :file_name => "/2.txt", :section => @section, :updated_by_user => admin_user)
+      @a1 = create_file_block(:attachment_file => mock_file, :attachment_file_name => "/a/1.txt", :section => @section, :updated_by_user => admin_user)
+      @a2 = create_file_block(:attachment_file => mock_file, :attachment_file_name => "/2.txt", :section => @section, :updated_by_user => admin_user)
       reset(:one, :two, :a1, :a2)
     end
     it "should be able to find file blocks in the root section" do

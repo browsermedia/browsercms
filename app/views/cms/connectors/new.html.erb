@@ -20,7 +20,7 @@
   <% @blocks.each do |block| %>
     <tr>
       <td><%= block.name %></td>
-      <td><%= block.updated_at.strftime("%m/%d/%y") %></td>
+      <td><%= block.updated_at.to_s(:date) %></td>
       <td class="uses"><%= link_to_usages(block) %></td>
       <td class="view"><%= link_to action_icon(:view), cms_path(block) %></td>
       <td class="select">

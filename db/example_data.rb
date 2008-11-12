@@ -25,7 +25,7 @@ module FixtureReplacement
 
   attributes_for :file_block do |a|
     a.name = "TestFileBlock#{Sequence.next}"
-    a.file_name = "#{a.name.underscore}.pdf"    
+    a.attachment_file_name = "#{a.name.to_slug}.pdf"    
     a.updated_by_user = default_user    
   end
 
@@ -49,7 +49,7 @@ module FixtureReplacement
 
   attributes_for :image_block do |a|
     a.name = "TestImageBlock#{Sequence.next}"
-    a.file_name = "#{a.name.underscore}.jpg"
+    a.attachment_file_name = "#{a.name.to_slug}.jpg"
     a.updated_by_user = default_user
   end
 

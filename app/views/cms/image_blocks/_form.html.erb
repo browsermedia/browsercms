@@ -1,6 +1,6 @@
 <% 
   @sections = Section.all(:order => "name") 
-  @block.file_name = @block.attachment.file_name if @block.file_name.blank? && !@block.new_record?
+  @block.attachment_file_name = @block.attachment.file_name if @block.attachment_file_name.blank? && !@block.new_record?
 %>
 <% content_for :html_head do %>
   <% if @block.new_record? %>
@@ -19,14 +19,14 @@
   <%= f.text_field :name %>
 </div>
 <div class="fields">
-  <%= f.label :file %>
-  <%= f.file_field :file %>
+  <%= f.label :attachment_file %>
+  <%= f.file_field :attachment_file %>
 </div>
 <div class="fields">
   <%= f.label :section_id, "Section" %>
   <%= f.collection_select :section_id, @sections, :id, :name %>
 </div>
 <div class="fields">
-  <%= f.label :file_name %>
-  <%= f.text_field :file_name %>
+  <%= f.label :attachment_file_name %>
+  <%= f.text_field :attachment_file_name %>
 </div>

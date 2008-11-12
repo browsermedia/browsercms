@@ -27,31 +27,6 @@ describe ContentType do
     @c.content_block_type.should == "html_blocks"
   end
 
-  it "should create a new instance of its class via new_content with no params" do
-    @b = @c.new_content
-    @b.class.should == HtmlBlock
-  end
-
-  it "should create a new instance with params" do
-    @b = @c.new_content(:name => "Test")
-    @b.name.should == "Test"
-  end
-
-  describe "find_by_key" do
-    before(:each) do
-      create_content_type(:name=>"HtmlBlock")
-    end
-    it "should find based on key" do
-      @content_type = ContentType.find_by_key("html_block")
-      @content_type.model_class.should == HtmlBlock
-    end
-
-    it "should raise exception if no block was registered of that type" do
-      @find = lambda{ ContentType.find_by_key("non_existant_type") }
-      @find.should raise_error
-    end
-  end
-
   describe "templates to render CRUD actions" do
     describe "with core blocks (no overrides)" do
       it "should return the standard view for :new" do

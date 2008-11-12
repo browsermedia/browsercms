@@ -69,5 +69,5 @@ Rails::Initializer.run do |config|
   
   #ActionController::Base.cache_store = :file_store, "/path/to/cache/directory"
   config.action_controller.cache_store = :file_store, "#{RAILS_ROOT}/tmp/cache"
-  config.active_record.observers = :content_observer
+  #config.active_record.observers = :content_observer
 end  

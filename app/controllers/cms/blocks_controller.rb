@@ -26,15 +26,15 @@ class Cms::BlocksController < Cms::BaseController
   end
 
   def new
-    @block = content_type.new_content(params[model_name])
-    if @last_block = content_type.last
-      @block.category = @last_block.category.category_type if @block.respond_to?(:category=)
+    @block = content_type.model_class.new(params[model_name])
+    if @last_block = content_type.model_class.last
+      @block.category = @last_block.category if @block.respond_to?(:category=)
     end
     render :template => content_type.template_for_new, :layout => 'cms/application'
   end
 
   def create
-    @block = content_type.new_content(params[model_name])
+    @block = content_type.model_class.new(params[model_name])
     @block.updated_by_user = current_user if @block.respond_to?(:updated_by_user)
     if @block.save
       flash[:notice] = "#{content_type.display_name} '#{@block.name}' was created"
@@ -44,7 +44,7 @@ class Cms::BlocksController < Cms::BaseController
         redirect_to_first params[:_redirect_to], cms_url(:blocks, content_type.name.underscore.pluralize)
       end
     else
-      render :action => "new"
+      render :template => content_type.template_for_new, :layout => 'cms/application'
     end
   end
 
@@ -74,7 +74,7 @@ class Cms::BlocksController < Cms::BaseController
       flash[:notice] = "#{model_name.titleize} '#{@block.name}' was updated"
       redirect_to_first params[:_redirect_to], cms_url(:blocks, @block.class.name.underscore, :show, @block)
     else
-      render :action => "edit"
+      render :template => content_type.template_for_edit, :layout => 'cms/application'
     end
   rescue ActiveRecord::StaleObjectError => e
     @other_version = @block.class.find(@block.id) 
@@ -87,7 +87,7 @@ class Cms::BlocksController < Cms::BaseController
   end
 
   def publish
-    do_command("published") { @block.publish(current_user) }
+    do_command("published") { @block.publish!(current_user) }
     redirect_to cms_url(@block)
   end
 

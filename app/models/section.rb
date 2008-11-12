@@ -14,7 +14,7 @@ class Section < ActiveRecord::Base
   has_many :groups, :through => :group_sections
   
   named_scope :root, :conditions => ['root = ?', true]
-  
+  named_scope :system, :conditions => {:name => 'system'}
   
   #validates_presence_of :parent_id, :if => Proc.new {root.count > 0}, :message => "section is required"
   

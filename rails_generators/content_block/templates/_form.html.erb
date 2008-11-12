@@ -3,6 +3,8 @@
   <%%= f.label :<%= attribute.name %> %>
   <%%= f.<%= 
     case attribute.type
+    when :attachment
+      "file_field :#{attribute.name}_file"
     when :category
       "collection_select :#{attribute.name}_id, Category.of_type('#{class_name.titleize}'), :id, :name"
     else

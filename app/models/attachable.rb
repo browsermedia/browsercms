@@ -3,9 +3,11 @@
 module Attachable
   def self.included(file_block_class)
     file_block_class.class_eval do
-      attr_accessor :file, :file_name
+      attr_accessor :attachment_file, :attachment_file_name
       before_save :update_attachment_if_changed
       before_validation :process_attachment  
+      before_validation :set_attachment_file_name
+      before_validation :set_section
       belongs_to :attachment      
     end
   end
@@ -13,9 +15,9 @@ module Attachable
     unless attachment.valid?
       attachment.errors.each do |err_field, err_value|
         if err_field.to_sym == :file_name
-          errors.add(:file_name, err_value)
+          errors.add(:attachment_file_name, err_value)
         else  
-          errors.add(:file, err_value)
+          errors.add(:attachment_file, err_value)
         end
       end      
     end
@@ -39,11 +41,17 @@ module Attachable
     attachment.section_id = section_id
   end
 
-
   def process_attachment
     build_attachment if attachment.nil?
-    attachment.file = file if file
-    attachment.file_name = file_name if file_name
+    attachment.file = attachment_file if attachment_file
+  end
+
+  def set_attachment_file_name
+    attachment.file_name = attachment_file_name if attachment_file_name   
+  end
+
+  def set_section
+    #Used if content block wants to automatically set the section
   end
 
   def update_attachment_if_changed
@@ -61,6 +69,18 @@ module Attachable
   
   def after_as_of_version
     self.attachment = Attachment.find(attachment_id).as_of_version(attachment_version)
+  end
+  
+  def attachment_path
+    attachment ? attachment.file_name : nil   
+  end
+  
+  def attachment_link
+    if attachment
+      live? ? attachment_path : "/cms/attachments/show/#{attachment.id}?version=#{version}"    
+    else
+      nil
+    end  
   end
   
 end

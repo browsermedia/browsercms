@@ -30,3 +30,8 @@ Dir["#{File.join(File.dirname(__FILE__), "extensions")}/**/*.rb"].each do |f|
   Rails.logger.info "~~ Loading extensions from #{f}"
   require f
 end
+
+ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(
+	:year_month_day => '%Y/%m/%d',
+	:date => '%m/%d/%Y'	
+)

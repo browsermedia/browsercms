@@ -141,7 +141,7 @@ describe Cms::BlocksController do
       before do
         @file = mock_file(:read => "This is a test")
         create_content_type(:name => "FileBlock")
-        @file_block = create_file_block(:section => root_section, :file => @file, :file_name => "/test.txt", :name => "Test File", :publish_on_save => true)
+        @file_block = create_file_block(:section => root_section, :attachment_file => @file, :attachment_file_name => "/test.txt", :name => "Test File", :publish_on_save => true)
         @foo_section = create_section(:name => "Foo", :parent => root_section)
       end
       it "should find a file in the section specified" do
@@ -360,7 +360,7 @@ describe Cms::BlocksController do
     end
     describe "editing content" do
       before(:each) do
-        @image = create_image_block(:section => root_section, :file => mock_file, :file_name => "test.jpg")
+        @image = create_image_block(:section => root_section, :attachment_file => mock_file, :attachment_file_name => "test.jpg")
         @action = lambda { get :edit,  :block_type => "image_blocks", :id => @image.id}
       end
 
@@ -381,7 +381,7 @@ describe Cms::BlocksController do
     end
     describe "updating content" do
       before(:each) do
-        @image = create_image_block(:section => root_section, :file => mock_file, :file_name => "test.jpg")
+        @image = create_image_block(:section => root_section, :attachment_file => mock_file, :attachment_file_name => "test.jpg")
         @other_section = create_section(:parent => root_section, :name => "Other")
         @action = lambda { put :update, :block_type => "image_blocks", :id => @image.id, :image_block => {:section_id => @other_section.id} }
       end
