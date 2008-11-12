@@ -1,38 +1,37 @@
 <%= render :partial => 'layouts/cms/head' %>
-  <body>
-		<div id="wrapper">
+<body>
+  <div id="wrapper">
 
-      <%= cms_toolbar(:dashboard) %>
-      <div id="main">
-        <div id="functions">
-          <a href="#" class="button"><span>VIEW</span></a>
-          <br clear="all" />
+    <%= cms_toolbar(:dashboard) %>
+    <div id="main">
+      <div id="functions">
+        <a href="#" class="button"><span>VIEW</span></a>
+        <br clear="all" />
+      </div>
+      <div id="cms_content_library">
+        <div id="menu">
+          <div class="pad">
+            <h3 id="content_types">Content Types</h3>
+            <ul>
+              <li><a href="#">One</a></li>
+            </ul>
+          </div>
         </div>
-        <div id="cms_content_library">
-          <div id="menu">
+
+        <div id="contentwrap">
+          <div id="content">
             <div class="pad">
-              <h3 id="content_types">Content Types</h3>
-              <ul>
-                  <li><a href="#">One</a></li>
-              </ul>
+              <%= yield %>
             </div>
           </div>
-            
-          <div id="contentwrap">
-            <div id="content">
-              <div class="pad">
-                <%= yield %>
-              </div>
-            </div>
-          </div>
-          <br clear="all" />
         </div>
-        <div id="footer">
-          <p>&copy; 1998-2008 <a href="#">BrowserMedia</a>. All Rights Reserved</p>
-          <p>Browser CMS v3</p>
-        </div>
+        <br clear="all" />
+      </div>
+      <div id="footer">
+        <p>&copy; 1998-2008 <a href="#">BrowserMedia</a>. All Rights Reserved</p>
+        <p>Browser CMS v3</p>
       </div>
     </div>
-		</div>
-  </body>
+  </div>
+</body>
 </html>
