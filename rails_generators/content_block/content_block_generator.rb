@@ -12,6 +12,10 @@ class ContentBlockGenerator < Rails::Generator::NamedBase
       # Create the content block
       m.template 'content_block.rb', File.join('app/models', class_path, "#{file_name}.rb")
 
+      # Create the edit form for the content type
+      m.directory File.join('app/views/cms/', file_name.pluralize)
+      m.template '_form.html.erb', File.join('app/views/cms/', file_name.pluralize, "_form.html.erb")
+
       unless options[:skip_migration]
         m.migration_template 'migration.rb', 'db/migrate', :assigns => {
           :migration_name => "Create#{class_name.pluralize.gsub(/::/, '')}"

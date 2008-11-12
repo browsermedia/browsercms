@@ -1,0 +1,13 @@
+<% for attribute in attributes -%>
+<div class="fields">
+  <%%= f.label :<%= attribute.name %> %>
+  <%%= f.<%= 
+    case attribute.type
+    when :category
+      "collection_select :#{attribute.name}_id, Category.of_type('#{class_name.titleize}'), :id, :name"
+    else
+      "#{attribute.field_type} :#{attribute.name}"
+    end 
+  -%> %>
+</div>
+<% end -%>

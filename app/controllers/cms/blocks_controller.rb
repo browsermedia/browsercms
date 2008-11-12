@@ -27,6 +27,9 @@ class Cms::BlocksController < Cms::BaseController
 
   def new
     @block = content_type.new_content(params[model_name])
+    if @last_block = content_type.last
+      @block.category = @last_block.category.category_type if @block.respond_to?(:category=)
+    end
     render :template => content_type.template_for_new, :layout => 'cms/application'
   end
 
