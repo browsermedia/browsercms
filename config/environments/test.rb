@@ -23,6 +23,6 @@ config.action_mailer.delivery_method = :test
 
 begin
   require 'ruby-debug'
-rescue
+rescue Exception
   puts "WARNING: gem install ruby-debug for debugging support"
 end
