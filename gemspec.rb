@@ -1,7 +1,7 @@
 SPEC = Gem::Specification.new do |spec| 
   spec.name = "BrowserCMS" 
   spec.version = "3.0.0" 
-  spec.summary = "A " 
+  spec.summary = "A Content Management System for Rails" 
   spec.author = "Browsermedia" 
   spec.email = "admin@browsercms.com" 
   spec.homepage = "http://www.browsercms.com" 
@@ -11,6 +11,7 @@ SPEC = Gem::Specification.new do |spec|
   spec.files += Dir["lib/**/*"]
   spec.files += Dir["rails_generators/**/*"]
   spec.files += Dir["public/stylesheets/cms/**/*"]
+  spec.files += Dir["public/javascripts/jquery*"]
   spec.files += Dir["public/javascripts/cms/**/*"]
   spec.files += Dir["public/images/cms/**/*"]
   spec.has_rdoc = true
