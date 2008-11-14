@@ -1,0 +1,24 @@
+<div class="fields">
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+</div>
+<div class="fields">
+  <%= f.label :release_date %>
+  <%= f.date_picker :release_date %>
+</div>
+<div class="fields">
+  <%= f.label :category %>
+  <%= f.collection_select :category_id, Category.of_type('News Release'), :id, :name %>
+</div>
+<div class="fields">
+  <%= f.label :attachment %>
+  <%= f.file_field :attachment_file %>
+</div>
+<div class="fields">
+  <%= f.label :summary %>
+  <%= f.text_area :summary %>
+</div>
+<div class="fields">
+  <%= f.label :body %>
+  <%= f.text_editor :body %>
+</div>

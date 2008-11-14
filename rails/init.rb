@@ -1,12 +1,5 @@
-require 'cms'
-ActiveRecord::Migrator.add_path File.join(Cms.root, "db", "migrate")
-Dependencies.load_paths += [
-  File.join(Cms.root, "app", "controllers"),
-  File.join(Cms.root, "app", "helpers"),
-  File.join(Cms.root, "app", "models")
-]
-Rails.configuration.controller_paths << File.join(Cms.root, "app", "controllers")
-ActionController::Base.append_view_path File.join(Cms.root, "app", "views")
+require 'BrowserCMS'
+Cms.add_to_rails_paths(Cms.root)
 
 cms_routes = open(File.join(Cms.root, "rails/routes.rb")){|f| f.read }
 ActionController::Routing::RouteSet.send(:define_method, :load_routes!) do

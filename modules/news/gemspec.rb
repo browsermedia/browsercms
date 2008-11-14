@@ -8,6 +8,7 @@ SPEC = Gem::Specification.new do |spec|
   spec.files += Dir["app/**/*"]
   spec.files += Dir["db/migrate/[0-9]*_*.rb"]
   spec.files += Dir["lib/**/*"]
+  spec.files += Dir["rails/*"]
   spec.has_rdoc = true
   spec.extra_rdoc_files = ["README"]
   spec.require_path "lib"

@@ -11,6 +11,8 @@ class <%= migration_name %> < ActiveRecord::Migration
           @attachment_section = class_name.titleize
           "t.belongs_to :#{attribute.name}" +
           "\n      t.integer :#{attribute.name}_version"
+        when :html
+          "t.text :#{attribute.name}, :size => (64.kilobytes + 1)"
         else
           "t.#{attribute.type} :#{attribute.name}"
         end

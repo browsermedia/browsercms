@@ -27,7 +27,18 @@ module Cms
     
     def generator_paths
       @generator_paths ||= []
-    end    
+    end   
+    
+    def add_to_rails_paths(path)
+      Dependencies.load_paths += [
+        File.join(path, "app", "controllers"),
+        File.join(path, "app", "helpers"),
+        File.join(path, "app", "models")
+      ]
+      Rails.configuration.controller_paths << File.join(path, "app", "controllers")
+      ActionController::Base.append_view_path File.join(path, "app", "views")      
+    end
+     
   end
   module Errors
     class AccessDenied < StandardError

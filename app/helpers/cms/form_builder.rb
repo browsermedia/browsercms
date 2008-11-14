@@ -14,4 +14,8 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
     html << "\n</div>"
     html
   end  
+  
+  def date_picker(method, options={})
+    text_field(method, {:size => 10, :class => "date_picker"}.merge(options))
+  end
 end
