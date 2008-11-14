@@ -1,4 +1,4 @@
-class Cms::BaseController < ApplicationController
+class Cms::BaseController < Cms::ApplicationController
   
   before_filter :login_required
   layout 'cms/application'
@@ -6,10 +6,6 @@ class Cms::BaseController < ApplicationController
   verify :method => :post, :only => [:create]
   verify :method => :put, :only => [:update]
   verify :method => :delete, :only => [:destroy]
-
-  helper Cms::ApplicationHelper
-  include Cms::PathHelper
-  helper Cms::PathHelper
     
   protected
     def escape_javascript(javascript)

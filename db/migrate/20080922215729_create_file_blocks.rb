@@ -6,6 +6,8 @@ class CreateFileBlocks < ActiveRecord::Migration
       t.integer :attachment_id
       t.integer :attachment_version
     end
+    ContentType.create!(:name => "FileBlock")
+    ContentType.create!(:name => "ImageBlock")        
   end
 
   def self.down

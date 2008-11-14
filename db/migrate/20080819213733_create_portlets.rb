@@ -13,6 +13,7 @@ class CreatePortlets < ActiveRecord::Migration
       t.string :name
       t.string :value
     end
+    ContentType.create!(:name => "Portlet")
     
   end
 

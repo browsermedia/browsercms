@@ -7,7 +7,10 @@ namespace :db do
   
   desc "Loads initial data"
   task :load_initial_data => :environment do
+    t0 = Time.now
+    puts "== Initial Data: creating ====================================================="    
     InitialData.load_data
+    puts "== Initial Data: created (%0.4fs) ============================================\n" % (Time.now - t0)    
   end
   
 end

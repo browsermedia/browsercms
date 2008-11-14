@@ -1,4 +1,4 @@
-class Cms::ContentController < ApplicationController
+class Cms::ContentController < Cms::ApplicationController
   
   before_filter :construct_path
   before_filter :try_to_redirect

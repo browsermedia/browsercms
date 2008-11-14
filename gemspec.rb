@@ -13,6 +13,7 @@ SPEC = Gem::Specification.new do |spec|
   spec.files += Dir["public/stylesheets/cms/**/*"]
   spec.files += Dir["public/javascripts/jquery*"]
   spec.files += Dir["public/javascripts/cms/**/*"]
+  spec.files += Dir["public/fckeditor/**/*"]
   spec.files += Dir["public/images/cms/**/*"]
   spec.has_rdoc = true
   spec.extra_rdoc_files = ["README"]

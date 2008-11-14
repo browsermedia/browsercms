@@ -6,7 +6,6 @@ class CmsGenerator < Rails::Generator::Base
     "/"
   end
   def manifest
-    puts "Cms.generator_paths => #{Cms.generator_paths.inspect}"
     record do |m|
       
       #Cms.generator_paths is an Array of Arrays
@@ -14,8 +13,6 @@ class CmsGenerator < Rails::Generator::Base
       #and the array of "files" as the second element
       #Each element in files is actually a Dir.glob pattern string
       Cms.generator_paths.each do |src_root, files|
-        puts "src_root => #{src_root.inspect}"
-        puts "files => #{files.inspect}"
         copy_files m, src_root, files
       end
     end

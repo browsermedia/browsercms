@@ -60,8 +60,9 @@ ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(
 )
 
 Cms.add_generator_paths(Cms.root, 
-  "public/javascript/jquery*", 
+  "public/javascripts/jquery*", 
   "public/javascripts/cms/**/*", 
+  "public/fckeditor/**/*", 
   "public/stylesheets/cms/**/*", 
   "public/images/cms/**/*", 
   "db/migrate/[0-9]*_*.rb")
