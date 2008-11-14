@@ -1,3 +1,4 @@
+require 'will_paginate'
 require 'cms/extensions'
 
 #Load Erubis, if we can

@@ -340,12 +340,6 @@ class FinderTest < ActiveRecordTestCase
       Developer.paginate :select => 'DISTINCT salary', :page => 2
     end
 
-    def test_count_with_scoped_select_when_distinct
-      Developer.stubs(:find).returns([])
-      Developer.expects(:count).with(:select => 'DISTINCT users.id').returns(0)
-      Developer.distinct.paginate :page => 2
-    end
-
     def test_should_use_scoped_finders_if_present
       # scope-out compatibility
       Topic.expects(:find_best).returns(Array.new(5))
@@ -396,20 +390,12 @@ class FinderTest < ActiveRecordTestCase
 
     def test_paginating_finder_doesnt_mangle_options
       Developer.expects(:find).returns([])
-      options = { :page => 1, :per_page => 2, :foo => 'bar' }
+      options = { :page => 1 }
+      options.expects(:delete).never
       options_before = options.dup
       
       Developer.paginate(options)
-      assert_equal options_before, options
-    end
-    
-    def test_paginate_by_sql_doesnt_change_original_query
-      query = 'SQL QUERY'
-      original_query = query.dup
-      Developer.expects(:find_by_sql).returns([])
-      
-      Developer.paginate_by_sql query, :page => 1
-      assert_equal original_query, query
+      assert_equal options, options_before
     end
 
     def test_paginated_each
@@ -425,24 +411,6 @@ class FinderTest < ActiveRecordTestCase
       Developer.expects(:paginate).with(params.merge(:page => 4)).returns(last_collection)
       
       assert_equal 14, Developer.paginated_each(:page => '2') { }
-    end
-
-    # detect ActiveRecord 2.1
-    if ActiveRecord::Base.private_methods.include?('references_eager_loaded_tables?')
-      def test_removes_irrelevant_includes_in_count
-        Developer.expects(:find).returns([1])
-        Developer.expects(:count).with({}).returns(0)
-
-        Developer.paginate :page => 1, :per_page => 1, :include => :projects
-      end
-
-      def test_doesnt_remove_referenced_includes_in_count
-        Developer.expects(:find).returns([1])
-        Developer.expects(:count).with({ :include => :projects, :conditions => 'projects.id > 2' }).returns(0)
-
-        Developer.paginate :page => 1, :per_page => 1,
-          :include => :projects, :conditions => 'projects.id > 2'
-      end
     end
   end
 end

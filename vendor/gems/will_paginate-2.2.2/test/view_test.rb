@@ -1,19 +1,22 @@
 require 'helper'
+require 'action_controller'
 require 'lib/view_test_process'
 
-class AdditionalLinkAttributesRenderer < WillPaginate::LinkRenderer
-  def initialize(link_attributes = nil)
-    super()
-    @additional_link_attributes = link_attributes || { :default => 'true' }
-  end
-
-  def page_link(page, text, attributes = {})
-    @template.link_to text, url_for(page), attributes.merge(@additional_link_attributes)
-  end
-end
-
-class ViewTest < WillPaginate::ViewTestCase
+class ViewTest < Test::Unit::TestCase
   
+  def setup
+    super
+    @controller  = DummyController.new
+    @request     = @controller.request
+    @html_result = nil
+    @template    = '<%= will_paginate collection, options %>'
+    
+    @view = ActionView::Base.new
+    @view.assigns['controller'] = @controller
+    @view.assigns['_request']   = @request
+    @view.assigns['_params']    = @request.params
+  end
+
   ## basic pagination ##
 
   def test_will_paginate
@@ -36,7 +39,7 @@ class ViewTest < WillPaginate::ViewTestCase
 
   def test_will_paginate_with_options
     paginate({ :page => 2 },
-             :class => 'will_paginate', :previous_label => 'Prev', :next_label => 'Next') do
+             :class => 'will_paginate', :prev_label => 'Prev', :next_label => 'Next') do
       assert_select 'a[href]', 4 do |elements|
         validate_page_numbers [1,1,3,3], elements
         # test rel attribute values:
@@ -54,38 +57,10 @@ class ViewTest < WillPaginate::ViewTestCase
     end
   end
 
-  def test_will_paginate_using_renderer_class
-    paginate({}, :renderer => AdditionalLinkAttributesRenderer) do
-      assert_select 'a[default=true]', 3
-    end
-  end
-
-  def test_will_paginate_using_renderer_instance
-    renderer = WillPaginate::LinkRenderer.new
-    renderer.gap_marker = '<span class="my-gap">~~</span>'
-    
-    paginate({ :per_page => 2 }, :inner_window => 0, :outer_window => 0, :renderer => renderer) do
-      assert_select 'span.my-gap', '~~'
-    end
-    
-    renderer = AdditionalLinkAttributesRenderer.new(:title => 'rendered')
-    paginate({}, :renderer => renderer) do
-      assert_select 'a[title=rendered]', 3
-    end
-  end
-
   def test_prev_next_links_have_classnames
     paginate do |pagination|
       assert_select 'span.disabled.prev_page:first-child'
       assert_select 'a.next_page[href]:last-child'
-    end
-  end
-  
-  def test_prev_label_deprecated
-    assert_deprecated ':previous_label' do
-      paginate({ :page => 2 }, :prev_label => 'Deprecated') do
-        assert_select 'a[href]:first-child', 'Deprecated'
-      end
     end
   end
 
@@ -101,16 +76,6 @@ class ViewTest < WillPaginate::ViewTestCase
     expected.strip!.gsub!(/\s{2,}/, ' ')
     
     assert_dom_equal expected, @html_result
-  end
-
-  def test_escaping_of_urls
-    paginate({:page => 1, :per_page => 1, :total_entries => 2},
-             :page_links => false, :params => { :tag => '<br>' })
-    
-    assert_select 'a[href]', 1 do |links|
-      query = links.first['href'].split('?', 2)[1]
-      assert_equal %w(page=2 tag=%3Cbr%3E), query.split('&amp;').sort
-    end
   end
 
   ## advanced options for pagination ##
@@ -184,52 +149,25 @@ class ViewTest < WillPaginate::ViewTestCase
     array = ('a'..'z').to_a
     
     paginate array.paginate(:page => 2, :per_page => 5)
-    assert_equal %{Displaying strings <b>6&nbsp;-&nbsp;10</b> of <b>26</b> in total},
+    assert_equal %{Displaying entries <b>6&nbsp;-&nbsp;10</b> of <b>26</b> in total},
       @html_result
     
     paginate array.paginate(:page => 7, :per_page => 4)
-    assert_equal %{Displaying strings <b>25&nbsp;-&nbsp;26</b> of <b>26</b> in total},
+    assert_equal %{Displaying entries <b>25&nbsp;-&nbsp;26</b> of <b>26</b> in total},
       @html_result
-  end
-
-  def test_page_entries_info_with_longer_class_name
-    @template = '<%= page_entries_info collection %>'
-    collection = ('a'..'z').to_a.paginate
-    collection.first.stubs(:class).returns(mock('class', :name => 'ProjectType'))
-    
-    paginate collection
-    assert @html_result.index('project types'), "expected <#{@html_result.inspect}> to mention 'project types'"
   end
 
   def test_page_entries_info_with_single_page_collection
     @template = '<%= page_entries_info collection %>'
     
     paginate(('a'..'d').to_a.paginate(:page => 1, :per_page => 5))
-    assert_equal %{Displaying <b>all 4</b> strings}, @html_result
+    assert_equal %{Displaying <b>all 4</b> entries}, @html_result
     
     paginate(['a'].paginate(:page => 1, :per_page => 5))
-    assert_equal %{Displaying <b>1</b> string}, @html_result
+    assert_equal %{Displaying <b>1</b> entry}, @html_result
     
     paginate([].paginate(:page => 1, :per_page => 5))
     assert_equal %{No entries found}, @html_result
-  end
-  
-  def test_page_entries_info_with_custom_entry_name
-    @template = '<%= page_entries_info collection, :entry_name => "author" %>'
-    
-    entries = (1..20).to_a
-    
-    paginate(entries.paginate(:page => 1, :per_page => 5))
-    assert_equal %{Displaying authors <b>1&nbsp;-&nbsp;5</b> of <b>20</b> in total}, @html_result
-    
-    paginate(entries.paginate(:page => 1, :per_page => 20))
-    assert_equal %{Displaying <b>all 20</b> authors}, @html_result
-    
-    paginate(['a'].paginate(:page => 1, :per_page => 5))
-    assert_equal %{Displaying <b>1</b> author}, @html_result
-    
-    paginate([].paginate(:page => 1, :per_page => 5))
-    assert_equal %{No authors found}, @html_result
   end
   
   ## parameter handling in page links ##
@@ -250,11 +188,6 @@ class ViewTest < WillPaginate::ViewTestCase
   def test_adding_additional_parameters
     paginate({}, :params => { :foo => 'bar' })
     assert_links_match /foo=bar/
-  end
-  
-  def test_adding_anchor_parameter
-    paginate({}, :params => { :anchor => 'anchor' })
-    assert_links_match /#anchor$/
   end
   
   def test_removing_arbitrary_parameters
@@ -292,24 +225,6 @@ class ViewTest < WillPaginate::ViewTestCase
     paginate :per_page => 2 do
       assert_select 'a[href]', 6 do |links|
         assert_links_match %r{/page/(\d+)$}, links, [2, 3, 4, 5, 6, 2]
-      end
-    end
-  end
-
-  def test_custom_routing_page_param_with_dot_separator
-    @request.symbolized_path_parameters.update :controller => 'dummy', :action => 'dots'
-    paginate :per_page => 2 do
-      assert_select 'a[href]', 6 do |links|
-        assert_links_match %r{/page\.(\d+)$}, links, [2, 3, 4, 5, 6, 2]
-      end
-    end
-  end
-
-  def test_custom_routing_with_first_page_hidden
-    @request.symbolized_path_parameters.update :controller => 'ibocorp', :action => nil
-    paginate :page => 2, :per_page => 2 do
-      assert_select 'a[href]', 7 do |links|
-        assert_links_match %r{/ibocorp(?:/(\d+))?$}, links, [nil, nil, 3, 4, 5, 6, 3]
       end
     end
   end
@@ -360,4 +275,70 @@ class ViewTest < WillPaginate::ViewTestCase
     end
   end
   
+  
+  protected
+
+    def paginate(collection = {}, options = {}, &block)
+      if collection.instance_of? Hash
+        page_options = { :page => 1, :total_entries => 11, :per_page => 4 }.merge(collection)
+        collection = [1].paginate(page_options)
+      end
+
+      locals = { :collection => collection, :options => options }
+
+      if defined? ActionView::Template
+        # Rails 2.1
+        args = [ ActionView::Template.new(@view, @template, false, locals, true, nil) ]
+      else
+        # older Rails versions
+        args = [nil, @template, nil, locals]
+      end
+      
+      @html_result = @view.render_template(*args)
+      @html_document = HTML::Document.new(@html_result, true, false)
+
+      if block_given?
+        classname = options[:class] || WillPaginate::ViewHelpers.pagination_options[:class]
+        assert_select("div.#{classname}", 1, 'no main DIV', &block)
+      end
+    end
+
+    def response_from_page_or_rjs
+      @html_document.root
+    end
+
+    def validate_page_numbers expected, links, param_name = :page
+      param_pattern = /\W#{CGI.escape(param_name.to_s)}=([^&]*)/
+      
+      assert_equal(expected, links.map { |e|
+        e['href'] =~ param_pattern
+        $1 ? $1.to_i : $1
+      })
+    end
+
+    def assert_links_match pattern, links = nil, numbers = nil
+      links ||= assert_select 'div.pagination a[href]' do |elements|
+        elements
+      end
+
+      pages = [] if numbers
+      
+      links.each do |el|
+        assert_match pattern, el['href']
+        if numbers
+          el['href'] =~ pattern
+          pages << $1.to_i
+        end
+      end
+
+      assert_equal pages, numbers, "page numbers don't match" if numbers
+    end
+
+    def assert_no_links_match pattern
+      assert_select 'div.pagination a[href]' do |elements|
+        elements.each do |el|
+          assert_no_match pattern, el['href']
+        end
+      end
+    end
 end

@@ -112,5 +112,13 @@ module Cms
 	    content_tag :span, content
     end
 	  	  
+    def group_ids
+     (params[:group_ids] || @user.group_ids).collect { |g| g.to_i }
+    end
+
+    def group_filter
+      select_tag("group_id", options_from_collection_for_select(Group.all.insert(0, Group.new(:id => nil, :name => "All")), "id", "name", params[:group_id].to_i))
+    end	  	  
+	  	  
   end
 end

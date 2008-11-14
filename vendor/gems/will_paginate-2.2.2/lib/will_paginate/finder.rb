@@ -94,8 +94,8 @@ module WillPaginate
       # You can specify a starting page with <tt>:page</tt> (default is 1). Default
       # <tt>:order</tt> is <tt>"id"</tt>, override if necessary.
       #
-      # See {Faking Cursors in ActiveRecord}[http://weblog.jamisbuck.org/2007/4/6/faking-cursors-in-activerecord]
-      # where Jamis Buck describes this and a more efficient way for MySQL.
+      # See http://weblog.jamisbuck.org/2007/4/6/faking-cursors-in-activerecord where
+      # Jamis Buck describes this and also uses a more efficient way for MySQL.
       def paginated_each(options = {}, &block)
         options = { :order => 'id', :page => 1 }.merge options
         options[:page] = options[:page].to_i
@@ -127,7 +127,7 @@ module WillPaginate
       # 
       def paginate_by_sql(sql, options)
         WillPaginate::Collection.create(*wp_parse_options(options)) do |pager|
-          query = sanitize_sql(sql.dup)
+          query = sanitize_sql(sql)
           original_query = query.dup
           # add limit, offset
           add_limit! query, :offset => pager.offset, :limit => pager.per_page
@@ -181,22 +181,9 @@ module WillPaginate
       # in the database. It relies on the ActiveRecord +count+ method.
       def wp_count(options, args, finder)
         excludees = [:count, :order, :limit, :offset, :readonly]
-
-        # we may be in a model or an association proxy
-        klass = (@owner and @reflection) ? @reflection.klass : self
-
-        # Use :select from scope if it isn't already present.
-        options[:select] = scope(:find, :select) unless options[:select]
-
-        if options[:select] and options[:select] =~ /^\s*DISTINCT\b/i
-          # Remove quoting and check for table_name.*-like statement.
-          if options[:select].gsub('`', '') =~ /\w+\.\*/
-            options[:select] = "DISTINCT #{klass.table_name}.#{klass.primary_key}"
-          end
-        else
+        unless options[:select] and options[:select] =~ /^\s*DISTINCT\b/i
           excludees << :select # only exclude the select param if it doesn't begin with DISTINCT
         end
-
         # count expects (almost) the same options as find
         count_options = options.except *excludees
 
@@ -204,15 +191,11 @@ module WillPaginate
         # this allows you to specify :select, :order, or anything else just for the count query
         count_options.update options[:count] if options[:count]
 
-        # forget about includes if they are irrelevant (Rails 2.1)
-        if count_options[:include] and
-            klass.private_methods.include?('references_eager_loaded_tables?') and
-            !klass.send(:references_eager_loaded_tables?, count_options)
-          count_options.delete :include
-        end
-
         # we may have to scope ...
         counter = Proc.new { count(count_options) }
+
+        # we may be in a model or an association proxy!
+        klass = (@owner and @reflection) ? @reflection.klass : self
 
         count = if finder.index('find_') == 0 and klass.respond_to?(scoper = finder.sub('find', 'with'))
                   # scope_out adds a 'with_finder' method which acts like with_scope, if it's present

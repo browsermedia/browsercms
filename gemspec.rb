@@ -18,4 +18,5 @@ SPEC = Gem::Specification.new do |spec|
   spec.has_rdoc = true
   spec.extra_rdoc_files = ["README"]
   spec.require_path "lib"
+  spec.add_dependency('will_paginate', '= 2.2.2')  
 end
