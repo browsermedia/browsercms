@@ -1,5 +1,22 @@
+<% content_for(:html_head) do %>
+  <% javascript_tag do %>
+    jQuery(function($){
+      $('#blocks tbody tr').hover(function(){
+        $(this).addClass('hover')
+      }, function(){
+        $(this).removeClass('hover')
+      }).click(function(){
+        var id = this.id.replace(/block_/,'')
+        $('#blocks tbody tr').removeClass('selected')
+        $(this).addClass('selected')
+        $('#view_button').removeClass('disabled').attr('href', '/cms/blocks/<%= @content_type.content_block_type.pluralize %>/show/'+id)
+        $('#edit_button').removeClass('disabled').attr('href', '/cms/blocks/<%= @content_type.content_block_type.pluralize %>/edit/'+id)
+        $('#delete_button').removeClass('disabled').attr('href', '/cms/blocks/<%= @content_type.content_block_type.pluralize %>/delete/'+id)        
+      })
+    })
+  <% end %>
+<% end %>
 <% @page_title = "Content Library / List #{@content_type.display_name_plural}" %>
-<%= link_to "#{action_icon(:add)} Add New #{@content_type.display_name}", cms_path("/blocks/#{@content_type.content_block_type.pluralize}", :new) %>
 
 <% form_tag '', :method => :get do -%>
   Search
@@ -13,32 +30,29 @@
   <%= submit_tag "Search" %>
 <% end -%>
 
-<h2>List <%=  @content_type.display_name_plural %></h2>
 <table id="blocks">
-  <tr>
-    <% if @blocks.first.respond_to?(:status) %><th>Status</th><% end %>
-    <% if @blocks.first.respond_to?(:name) %><th>Name</th><% end %>
-    <% @content_type.columns_for_index.each do |column| %>
-      <th><%= column[:label] %></th>
-    <% end %>
-    <th>Updated</th>
-    <% if @blocks.first.respond_to?(:connected_pages) %><th>Used</th><% end %>
-    <th>View</th>
-    <th>Edit</th>
-    <th>Delete</th>
-  </tr>
-  <% @blocks.each do |block| %>
+  <thead>
     <tr>
-      <% if @blocks.first.respond_to?(:status) %><td class="block_status"><%=  status_icon(block.status) %></td><% end %>
-      <% if @blocks.first.respond_to?(:name) %><td class="block_name"><%= block.name %></td><% end %>
+      <% if @blocks.first.respond_to?(:name) %><th>Name</th><% end %>
       <% @content_type.columns_for_index.each do |column| %>
-        <td><%= block.send(column[:method]) %></td>      
+        <th><%= column[:label] %></th>
       <% end %>
-      <td><%= block.updated_at.to_s(:date) %></td>
-      <% if @blocks.first.respond_to?(:connected_pages) %><td class="used"><%= link_to_usages(block) %></td><% end %>
-      <td class="view"><%= link_to action_icon(:view), cms_path(:blocks, @content_type.name.underscore.pluralize, :show, block) %></td>
-      <td class="edit"><%= link_to action_icon(:edit), cms_path(:blocks, @content_type.name.underscore.pluralize, :edit, block) %></td>
-      <td class="delete"><%= link_to action_icon(:delete), cms_path(:blocks, @content_type.name.underscore.pluralize, :destroy, block), :method => :delete, :confirm => "Are you sure you want to delete '#{block.name}'?" %></td>
+      <th>Updated</th>
+      <% if @blocks.first.respond_to?(:connected_pages) %><th>Used</th><% end %>
+      <% if @blocks.first.respond_to?(:status) %><th>Status</th><% end %>
     </tr>
-  <% end %>
+  </thead>
+  <tbody>
+    <% @blocks.each do |block| %>
+      <tr id="block_<%= block.id %>">
+        <% if @blocks.first.respond_to?(:name) %><td class="block_name"><%= block.name %></td><% end %>
+        <% @content_type.columns_for_index.each do |column| %>
+          <td><%= block.send(column[:method]) %></td>      
+        <% end %>
+        <td><%= block.updated_at.to_s(:date) %></td>
+        <% if @blocks.first.respond_to?(:connected_pages) %><td class="used"><%= link_to_usages(block) %></td><% end %>
+        <% if @blocks.first.respond_to?(:status) %><td class="block_status"><%=  status_icon(block.status) %></td><% end %>
+      </tr>
+    <% end %>
+  </tbody>
 </table>

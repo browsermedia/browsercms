@@ -15,8 +15,6 @@ module Cms
       @data ||= {}
       @data[model_name.pluralize.to_sym] ||= {}
       model = model_name.classify.constantize.new(data)
-      #Set the id of the record to be a consistent value, as fixtures in Rails do    
-      model.id = record_name.to_s.hash.abs 
       model.save!
       @data[model_name.pluralize.to_sym][record_name] = model
     end

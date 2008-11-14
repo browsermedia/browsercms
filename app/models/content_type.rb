@@ -1,5 +1,10 @@
 class ContentType < ActiveRecord::Base
 
+  attr_accessor :group_name
+  belongs_to :content_type_group
+  validates_presence_of :content_type_group
+  before_validation :set_content_type_group
+
   def self.list
     all.map { |f| f.name.underscore.to_sym }
   end
@@ -63,4 +68,13 @@ class ContentType < ActiveRecord::Base
   def content_block_type
     name.pluralize.underscore
   end
+  
+  def set_content_type_group
+    if group_name
+      group = ContentTypeGroup.first(:conditions => {:name => group_name})
+      self.content_type_group = group || build_content_type_group(:name => group_name)
+    end
+  end
+  
+  
 end

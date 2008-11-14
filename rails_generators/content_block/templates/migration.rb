@@ -21,7 +21,7 @@ class <%= migration_name %> < ActiveRecord::Migration
     end
     <% if @category_type %>CategoryType.create!(:name => "<%= @category_type %>")<% end %>
     <% if @attachment_section %>Section.create!(:name => "<%= @attachment_section %>", :parent => Section.system.first, :group_ids => Group.all(&:id))<% end %>      
-    ContentType.create!(:name => "<%= class_name %>")
+    ContentType.create!(:name => "<%= class_name %>", :group_name => "<%= class_name %>")
   end
 
   def self.down

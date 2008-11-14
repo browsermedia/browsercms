@@ -16,8 +16,13 @@ module FixtureReplacement
     a.content_block = default_html_block
 	end
 
+  attributes_for :content_type_group do |a|
+    a.name = "TestContentTypeGroup#{Sequence.next}"
+  end
+
   attributes_for :content_type do |a|
     a.name = "Test"
+    a.content_type_group = default_content_type_group
   end
 
   attributes_for :attachment_file do |a|

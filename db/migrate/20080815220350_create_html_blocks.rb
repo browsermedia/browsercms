@@ -4,7 +4,7 @@ class CreateHtmlBlocks < ActiveRecord::Migration
       t.string :name
       t.text :content, :limit => 64.kilobytes + 1      
     end
-    ContentType.create!(:name => "HtmlBlock")
+    ContentType.create!(:name => "HtmlBlock", :group_name => "Core")
   end
 
   def self.down

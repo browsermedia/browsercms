@@ -6,9 +6,10 @@
       
         <div id="main">
           <div id="functions">
-            <a href="#" class="button"><span>VIEW</span></a>
-            <a href="#" class="button left"><span>ADD A RELEASE</span></a><a href="#" class="button right"><span>ADD A CATEGORY</span></a>
-            <a href="#" class="button disabled"><span>DELETE</span></a>
+            <%= link_to span_tag("VIEW"), "#", :id => "view_button", :class => "button disabled" %>
+            <%= link_to span_tag("EDIT"), "#", :id => "edit_button", :class => "button disabled" %>
+            <%= link_to span_tag("ADD A #{@content_type.display_name.upcase}"), cms_path("/blocks/#{@content_type.content_block_type.pluralize}", :new), :id => "add_button", :class => "button" %>
+            <%= link_to span_tag("DELETE"), "#", :id => "delete_button", :class => "button disabled", :onclick => "return confirm('Are you sure you want to delete this record?')" %>
             <br clear="all" />
           </div>
           <div id="cms_content_library">
@@ -16,11 +17,19 @@
               <div class="pad">
                 <%= yield :sidebar %>              
                 <h3 id="content_types">Content Types</h3>
-                <ul>
-                  <% ContentType.all(:order => "name").each do |content_type| %>
-                    <li><%= link_to content_type.display_name, cms_path("/blocks/#{content_type.content_block_type}") %></li>
-                  <% end %>
-                </ul>
+                <ul><% ContentTypeGroup.all(:order => "content_type_groups.id").each do |g| %>
+          				<li<%= ' class="open"' if g == @content_type.content_type_group %>>
+          				  <% if g.content_types.blank? %>
+          				  <%= link_to h(g.name), "#" %>          				  
+          				  <% else %>
+          				  <%= link_to h(g.name), cms_path("/blocks/#{g.content_types.first.content_block_type}") %>          				  
+          				  <ul>
+          				    <% g.content_types.each do |t| %>
+          				      <li<%= ' class="on"' if t == @content_type %>><%= link_to h(t.display_name), cms_path("/blocks/#{t.content_block_type}") %></li>
+          				    <% end -%>
+          				  </ul><% end -%>
+          				</li>
+          			<% end %></ul>
               </div>
             </div>
               

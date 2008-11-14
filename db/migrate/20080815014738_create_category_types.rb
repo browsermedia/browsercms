@@ -5,7 +5,7 @@ class CreateCategoryTypes < ActiveRecord::Migration
 
       t.timestamps
     end
-    ContentType.create!(:name => "CategoryType")
+    ContentType.create!(:name => "CategoryType", :group_name => "Categories")
   end
 
   def self.down
