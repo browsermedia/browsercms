@@ -1,29 +1,38 @@
 class CmsGenerator < Rails::Generator::Base
+  #We need to be able to define a different source root for each gem
+  #So we'll just set the baseline source root to "/",
+  #and append the appropriate path when we call file
   def source_root
-    Cms.root
+    "/"
   end
   def manifest
+    puts "Cms.generator_paths => #{Cms.generator_paths.inspect}"
     record do |m|
-      dirs = []
-      [
-        "public/javascript/jquery*", 
-        "public/javascripts/cms/**/*", 
-        "public/stylesheets/cms/**/*", 
-        "public/images/cms/**/*", 
-        "db/migrate/[0-9]*_*.rb"
-      ].each do |d|
-        Dir[File.join(Cms.root, d)].each do |f|
-          if File.file?(f)
-            dir = File.dirname(f.gsub("#{Cms.root}/",''))
-            unless dirs.include?(dir)
-              m.directory dir 
-              dirs << dir
-            end
-            file = f.gsub("#{Cms.root}/", "")
-            m.file file, file
-          end
-        end        
-      end      
+      
+      #Cms.generator_paths is an Array of Arrays
+      #Each Array has the root as the first element
+      #and the array of "files" as the second element
+      #Each element in files is actually a Dir.glob pattern string
+      Cms.generator_paths.each do |src_root, files|
+        puts "src_root => #{src_root.inspect}"
+        puts "files => #{files.inspect}"
+        copy_files m, src_root, files
+      end
     end
+  end
+  def copy_files(m, src_root, files)
+    dirs = []
+    files.each do |d|
+      Dir[File.join(src_root, d)].each do |f|
+        if File.file?(f)
+          dir = File.dirname(f.gsub("#{src_root}/",''))
+          unless dirs.include?(dir)
+            m.directory dir 
+            dirs << dir
+          end
+          m.file f, f.gsub("#{src_root}/", "")
+        end
+      end        
+    end            
   end
 end

@@ -5,7 +5,7 @@ module Cms
     def load_rake_tasks
       load "#{Cms.root}/lib/tasks/cms.rake"
     end
-    #This is called after the environment is ready
+    # This is called after the environment is ready
     def init
       #Write out the page templates to the file system
       if ActiveRecord::Base.connection.tables.include?("page_templates")
@@ -15,6 +15,18 @@ module Cms
         PageTemplate.all.each{|pt| pt.create_layout_file }
       end      
       ActionView::Base.default_form_builder = Cms::FormBuilder
+    end
+    
+    # This is used by CMS modules to register with the CMS generator
+    # which files should be copied over to the app when the CMS generator is run.
+    # src_root is the absolute path to the root of the files,
+    # then each argument after that is a Dir.glob pattern string.
+    def add_generator_paths(src_root, *files)
+      generator_paths << [src_root, files]
+    end
+    
+    def generator_paths
+      @generator_paths ||= []
     end    
   end
   module Errors
@@ -35,3 +47,10 @@ ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(
 	:year_month_day => '%Y/%m/%d',
 	:date => '%m/%d/%Y'	
 )
+
+Cms.add_generator_paths(Cms.root, 
+  "public/javascript/jquery*", 
+  "public/javascripts/cms/**/*", 
+  "public/stylesheets/cms/**/*", 
+  "public/images/cms/**/*", 
+  "db/migrate/[0-9]*_*.rb")

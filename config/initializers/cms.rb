@@ -1,2 +1,2 @@
-require 'cms'
+require 'BrowserCMS'
 Cms.init
