@@ -52,7 +52,7 @@ describe "A Content Object" do
   describe "when destroying a content object" do
     describe "that is not versionable" do
       before(:each) do
-        @p = create_portlet
+        @p = create_dynamic_portlet
       end
       it "should be deleted" do
         @p.destroy.should be_true
@@ -112,7 +112,7 @@ describe "A Content Object" do
     describe "when it is edited" do
       before do
         @page = create_page(:section => root_section)
-        @block = create_portlet(:name => "Test Portlet")
+        @block = create_dynamic_portlet(:name => "Test Portlet")
         @page.add_content_block!(@block, "main")
         reset(:page, :block)
         @editing_the_block = lambda {@block.update_attribute(:name, "something different")}
@@ -126,11 +126,11 @@ describe "A Content Object" do
       end
       it "should set the revision comment on the page" do
         @editing_the_block.call
-        @page.reload.revision_comment.should == "Portlet 'Test Portlet' was added to the 'main' container"
+        @page.reload.revision_comment.should == "Dynamic Portlet 'Test Portlet' was added to the 'main' container"
       end
       it "should create the right connectors" do
         @editing_the_block.call
-        conns = Connector.all(:conditions => ["content_block_id = ? and content_block_type = ?", @block.id, @block.class.name], :order => 'id')
+        conns = Connector.all(:conditions => ["content_block_id = ? and content_block_type = ?", @block.id, @block.class.base_class.name], :order => 'id')
         conns.size.should == 1
         conns[0].should_meet_expectations(:page => @page, :page_version => 2, :content_block => @block, :content_block_version => nil, :container => "main")        
       end

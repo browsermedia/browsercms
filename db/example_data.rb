@@ -1,12 +1,19 @@
 module FixtureReplacement
 
-  attributes_for :category_type do |a|
-    a.name = "TestCategoryType#{Sequence.next}"
+  attributes_for :attachment do |a|
+    a.attachment_file = default_attachment_file
+  end
+
+  attributes_for :attachment_file do |a|
   end
 
   attributes_for :category do |a|
     a.category_type = default_category_type
     a.name = "TestCategory#{Sequence.next}"
+  end
+
+  attributes_for :category_type do |a|
+    a.name = "TestCategoryType#{Sequence.next}"
   end
 
   attributes_for :connector do |a|
@@ -16,16 +23,17 @@ module FixtureReplacement
     a.content_block = default_html_block
 	end
 
-  attributes_for :content_type_group do |a|
-    a.name = "TestContentTypeGroup#{Sequence.next}"
-  end
-
   attributes_for :content_type do |a|
     a.name = "Test"
     a.content_type_group = default_content_type_group
   end
 
-  attributes_for :attachment_file do |a|
+  attributes_for :content_type_group do |a|
+    a.name = "TestContentTypeGroup#{Sequence.next}"
+  end
+
+  attributes_for :dynamic_portlet do |a|
+    a.name = "Find X"
   end
 
   attributes_for :file_block do |a|
@@ -34,16 +42,12 @@ module FixtureReplacement
     a.updated_by_user = default_user    
   end
 
-  attributes_for :attachment do |a|
-    a.attachment_file = default_attachment_file
+  attributes_for :group do |a|
+    a.name = "TestGroup#{Sequence.next}"
   end
 
   attributes_for :group_type do |a|
     a.name = "TestGroupType#{Sequence.next}"
-  end
-
-  attributes_for :group do |a|
-    a.name = "TestGroup#{Sequence.next}"
   end
 
   attributes_for :html_block do |a|
@@ -55,6 +59,12 @@ module FixtureReplacement
   attributes_for :image_block do |a|
     a.name = "TestImageBlock#{Sequence.next}"
     a.attachment_file_name = "#{a.name.to_slug}.jpg"
+    a.updated_by_user = default_user
+  end
+
+  attributes_for :link do |a|
+    a.name = "ExampleLink#{Sequence.next}"
+    a.url = "http://www.example#{Sequence.next}.com"
     a.updated_by_user = default_user
   end
 
@@ -75,15 +85,6 @@ module FixtureReplacement
 
   attributes_for :permission do |a|
     a.name = "TestPermission#{Sequence.next}"
-  end
-
-  attributes_for :portlet do |a|
-    a.name = "Find X"
-    a.portlet_type = default_portlet_type
-  end
-
-  attributes_for :portlet_type do |a|
-    a.name = "Find Stuff"
   end
   
   attributes_for :redirect do |a|
@@ -113,12 +114,6 @@ module FixtureReplacement
     a.email = "#{a.login}@example.com"
     a.password = a.password_confirmation = "password"
     a.created_at = 5.days.ago
-  end
-
-  attributes_for :link do |a|
-    a.name = "Test"
-    a.url = "http://www.example.com"
-    a.updated_by_user = default_user
   end
 
 end

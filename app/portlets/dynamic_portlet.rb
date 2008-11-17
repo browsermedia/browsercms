@@ -1,11 +1,9 @@
-class PortletType < ActiveRecord::Base
-  has_many :portlets
+class DynamicPortlet < Portlet
   
-  def render(portlet)
-    @portlet = portlet
-    eval(code)
+  def render
+    eval(self.code)
     begin
-      ERB.new(template).result(binding)
+      ERB.new(self.template).result(binding)
     rescue Exception
       CGI.escapeHTML "Could not render template: #{$!}\n"
     end      

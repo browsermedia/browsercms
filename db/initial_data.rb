@@ -65,19 +65,9 @@ create_attachment(:logo, :file_type => "image/png", :section => sections(:root),
 create_file_block(:xml, :name => "XML", :attachment => attachments(:xml), :updated_by_user => cmsadmin)
 create_image_block(:logo, :name => "Logo", :attachment => attachments(:logo), :updated_by_user => cmsadmin)
 
-create_portlet_type(:recently_updated_pages,
+create_dynamic_portlet(:recently_updated_pages,
   :name => 'Recently Updated Pages',  
-  :code => "@pages = Page.all(:order => 'updated_at desc', :limit => @portlet.number_of_pages)",
-  :form => <<-FORM,
-<div class="fields">
-  <%= f.label :name %>
-  <%= f.text_field :name %>
-</div>
-<div class="field">
-  <%= f.label :number_of_pages %>
-  <%= f.text_field :number_of_pages, :size => 2 %>
-</div>
-FORM
+  :code => "@pages = Page.all(:order => 'updated_at desc', :limit => 3)",
   :template => <<-TEMPLATE
 <h2>Recent Updates</h2>
 <ul>

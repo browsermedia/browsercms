@@ -6,58 +6,6 @@ describe Cms::BlocksController do
     create_content_type(:name => "HtmlBlock")
   end
 
-  describe "#model_name" do
-    describe "with no last_block_type or block_type parameter" do
-      before do
-        @controller.stub!(:session).and_return({})
-        @controller.stub!(:params).and_return({})
-      end
-      it "should return 'html_block' and set the last_block_type" do
-        @controller.send(:model_name).should == "html_block"
-        @controller.session[:last_block_type].should == "html_block"
-      end
-    end
-    describe "with no last_block_type and block_type parameter of 'foo" do
-      before do
-        @controller.stub!(:session).and_return({})
-        @controller.stub!(:params).and_return({:block_type => "foo"})
-      end
-      it "should return 'foo' and set the last_block_type" do
-        @controller.send(:model_name).should == "foo"
-        @controller.session[:last_block_type].should == "foo"
-      end
-    end
-    describe "with last_block_type of 'bar' and block_type parameter of 'foo'" do
-      before do
-        @controller.stub!(:session).and_return({:last_block_type => "bar"})
-        @controller.stub!(:params).and_return({:block_type => "foo"})
-      end
-      it "should return 'foo' and set the last_block_type" do
-        @controller.send(:model_name).should == "foo"
-        @controller.session[:last_block_type].should == "foo"
-      end
-    end
-    describe "with last_block_type of 'bar' and no block_type parameter" do
-      before do
-        @controller.stub!(:session).and_return({:last_block_type => "bar"})
-        @controller.stub!(:params).and_return({})
-      end
-      it "should return 'foo' and set the last_block_type" do
-        @controller.send(:model_name).should == "bar"
-        @controller.session[:last_block_type].should == "bar"
-      end
-    end
-    describe "with block_type parameter of html_blocks" do
-      before do
-        @controller.stub!(:params).and_return({:block_type => "html_blocks"})
-      end
-      it "should return 'html_block' for the model_name" do
-        @controller.send(:model_name).should == "html_block"
-        @controller.session[:last_block_type].should == "html_block"
-      end
-    end
-  end
-
   describe "creating a block that should be connected to a page" do
     before do
       @page = create_page(:path => "/test", :section => root_section)
@@ -397,7 +345,7 @@ describe Cms::BlocksController do
   describe "CRUD for Portlets (which have custom page flow)" do
     before(:each) do
       create_content_type(:name => "Portlet")
-      @block = create_portlet(:name => "V1")
+      @block = create_dynamic_portlet(:name => "V1")
     end
 
     describe "show" do
@@ -423,7 +371,7 @@ describe Cms::BlocksController do
 
     describe "adding new content" do
       before(:each) do
-        @action = lambda { get :new,  :block_type => "portlets"}
+        @action = lambda { get :new,  :block_type => "portlet"}
       end
 
       it "should have the correct test setup (i.e. have HtmlBlocks in the db as a ContentType)" do
@@ -437,7 +385,7 @@ describe Cms::BlocksController do
 
       it "should render custom view for /new" do
         @action.call
-        response.should have_tag("h1", "Select Portlet Type")
+        response.should have_tag("title", "Content Library / Select Portlet Type")
       end
     end
 
@@ -459,7 +407,7 @@ describe Cms::BlocksController do
 
     describe "destroying" do
       before(:each) do
-        @action = lambda { delete :destroy, :id => @block.id, :block_type => "portlets" }
+        @action = lambda { delete :destroy, :id => @block.id, :block_type => "portlet" }
       end
       it "should remove the row" do
         @action.call

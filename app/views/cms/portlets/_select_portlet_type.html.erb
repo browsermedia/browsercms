@@ -1,0 +1,5 @@
+<% @page_title = "Content Library / Select Portlet Type" %>
+<% Portlet.types.sort_by{|t| t.name }.each do |portlet_type| %>
+  <p><%= link_to h(portlet_type.name.titleize), cms_path(:blocks, portlet_type.name.underscore, :new) %></p>
+<% end %>
+<% @hide_buttons = true %>

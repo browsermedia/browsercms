@@ -7,6 +7,7 @@ module Cms
     end
     # This is called after the environment is ready
     def init
+      
       #Write out the page templates to the file system
       if ActiveRecord::Base.connection.tables.include?("page_templates")
         tmp_view_path = "#{Rails.root}/tmp/views"
@@ -33,7 +34,8 @@ module Cms
       Dependencies.load_paths += [
         File.join(path, "app", "controllers"),
         File.join(path, "app", "helpers"),
-        File.join(path, "app", "models")
+        File.join(path, "app", "models"),
+        File.join(path, "app", "portlets")
       ]
       Rails.configuration.controller_paths << File.join(path, "app", "controllers")
       ActionController::Base.append_view_path File.join(path, "app", "views")      

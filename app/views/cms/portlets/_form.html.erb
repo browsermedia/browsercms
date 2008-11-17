@@ -1,2 +1,7 @@
-<%= f.hidden_field :portlet_type_id %>
-<%= render :inline => @block.portlet_type.form, :locals => {:f => f} %>
+<%= 
+  if @block.type.blank? || @block.type == "Portlet"
+    render :partial => 'cms/portlets/select_portlet_type'
+  else
+    render :partial => @block.form, :locals => {:f => f}
+  end 
+%>

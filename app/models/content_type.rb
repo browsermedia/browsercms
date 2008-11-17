@@ -12,11 +12,19 @@ class ContentType < ActiveRecord::Base
   # Given a 'key' like 'html_blocks' or 'portlet'
   # Raises exception if nothing was found.
   def self.find_by_key(key)
-    content_type = find_by_name(key.classify)
+    class_name = key.classify
+    content_type = find_by_name(class_name)
     if content_type.nil?
-      raise "Couldn't find ContentType of class '#{key.classify}'"
+      if class_name.constantize.ancestors.include?(Portlet)
+        ContentType.new(:name => class_name).freeze
+      else
+        raise "Not a Portlet"
+      end
+    else
+      content_type
     end
-    content_type
+  rescue Exception
+    raise "Couldn't find ContentType of class '#{class_name}'"    
   end
   
   def display_name
@@ -31,37 +39,12 @@ class ContentType < ActiveRecord::Base
     name.classify.constantize
   end
 
-  # Allows models to override which view is displayed with BlockController#new is called.
-  def template_for_new
-    if model_class.respond_to?("template_for_new")
-      return model_class.template_for_new
-    end
-    "cms/blocks/new"
-  end
-  
-   # Allows models to override which view is displayed with BlockController#edit is called.
-  def template_for_edit
-    if model_class.respond_to?("template_for_edit")
-      return model_class.template_for_edit
-    end
-    "cms/blocks/edit"
-  end
-
   # Allows models to show additional columns when being shown in a list.
   def columns_for_index
-    if model_class.respond_to?("columns_for_index")
-      columns_for_index = model_class.columns_for_index
-      final_list = []
-      columns_for_index.each do |column|
-        if column.respond_to?(:humanize)
-          final_list << {:label => column.humanize, :method => column}
-        else
-          final_list << column
-        end
-      end
-      return final_list
+    return [] unless model_class.respond_to?(:columns_for_index)
+    model_class.columns_for_index.map do |column|
+      column.respond_to?(:humanize) ? {:label => column.humanize, :method => column} : column
     end
-    return []
   end
 
   # Used in ERB for pathing
@@ -75,6 +58,5 @@ class ContentType < ActiveRecord::Base
       self.content_type_group = group || build_content_type_group(:name => group_name)
     end
   end
-  
   
 end

@@ -6,12 +6,14 @@
       }, function(){
         $(this).removeClass('hover')
       }).click(function(){
-        var id = this.id.replace(/block_/,'')
+        var match = this.id.match(/(.*)_(\d+)/) 
+        var type = match[1]
+        var id = match[2]
         $('#blocks tbody tr').removeClass('selected')
         $(this).addClass('selected')
-        $('#view_button').removeClass('disabled').attr('href', '/cms/blocks/<%= @content_type.content_block_type.pluralize %>/show/'+id)
-        $('#edit_button').removeClass('disabled').attr('href', '/cms/blocks/<%= @content_type.content_block_type.pluralize %>/edit/'+id)
-        $('#delete_button').removeClass('disabled').attr('href', '/cms/blocks/<%= @content_type.content_block_type.pluralize %>/delete/'+id)        
+        $('#view_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/show/'+id)
+        $('#edit_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/edit/'+id)
+        $('#delete_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/delete/'+id)        
       })
     })
   <% end %>
@@ -44,7 +46,7 @@
   </thead>
   <tbody>
     <% @blocks.each do |block| %>
-      <tr id="block_<%= block.id %>">
+      <tr id="<%= block.class.name.underscore %>_<%= block.id %>">
         <% if @blocks.first.respond_to?(:name) %><td class="block_name"><%= block.name %></td><% end %>
         <% @content_type.columns_for_index.each do |column| %>
           <td><%= block.send(column[:method]) %></td>      

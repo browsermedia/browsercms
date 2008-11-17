@@ -4,7 +4,7 @@ class Cms::BlocksController < Cms::BaseController
 
   before_filter :load_block, :only => [:show, :show_version, :edit, :destroy, :publish, :archive, :revert_to, :update]
 
-  helper_method :model_name
+  helper_method :content_type_name
 
   def index
     conditions = []
@@ -26,17 +26,20 @@ class Cms::BlocksController < Cms::BaseController
   end
 
   def new
-    @block = content_type.model_class.new(params[model_name])
-    if @last_block = content_type.model_class.last
+    @block = model_class.new(params[model_class.name.underscore])
+    if @last_block = model_class.last
       @block.category = @last_block.category if @block.respond_to?(:category=)
     end
-    render :template => content_type.template_for_new, :layout => 'cms/application'
+    render :layout => 'cms/application'
   end
 
   def create
-    @block = content_type.model_class.new(params[model_name])
+    logger.info "model_class #{model_class.inspect}"
+    logger.info "model_name #{model_name.inspect}"
+    logger.info "params #{params[model_class.name.underscore].inspect}"
+    @block = model_class.new(params[model_name])
     @block.updated_by_user = current_user if @block.respond_to?(:updated_by_user)
-    if @block.save
+    if @block.save!
       flash[:notice] = "#{content_type.display_name} '#{@block.name}' was created"
       if @block.respond_to?(:connected_page) && !@block.connected_page.blank?
         redirect_to @block.connected_page.path
@@ -44,7 +47,7 @@ class Cms::BlocksController < Cms::BaseController
         redirect_to_first params[:_redirect_to], cms_url(:blocks, content_type.name.underscore.pluralize)
       end
     else
-      render :template => content_type.template_for_new, :layout => 'cms/application'
+      render :action => 'new', :layout => 'cms/application'
     end
   end
 
@@ -64,17 +67,17 @@ class Cms::BlocksController < Cms::BaseController
   end
 
   def edit
-    render :template => content_type.template_for_edit, :layout => 'cms/application'
+    render :layout => 'cms/application'
   end
   
   def update
-    attrs = params[model_name]
+    attrs = params[model_class.name.underscore]
     attrs[:updated_by_user] = current_user if @block.respond_to?(:updated_by_user=)
     if @block.update_attributes(attrs)
-      flash[:notice] = "#{model_name.titleize} '#{@block.name}' was updated"
+      flash[:notice] = "#{content_type_name.titleize} '#{@block.name}' was updated"
       redirect_to_first params[:_redirect_to], cms_url(:blocks, @block.class.name.underscore, :show, @block)
     else
-      render :template => content_type.template_for_edit, :layout => 'cms/application'
+      render :action => "edit", :layout => 'cms/application'
     end
   rescue ActiveRecord::StaleObjectError => e
     @other_version = @block.class.find(@block.id) 
@@ -108,12 +111,26 @@ class Cms::BlocksController < Cms::BaseController
 
   protected
 
+    def content_type_name
+      @conten_type_name ||= begin
+        if params[:block_type].blank?
+          session[:last_block_type] ||= 'html_block'
+        else
+          session[:last_block_type] = params[:block_type].singularize
+        end
+      end
+    end
+
+    def content_type
+      @content_type ||= ContentType.find_by_key(content_type_name)
+    end
+
     def model_class
       content_type.model_class
     end
 
-    def content_type
-      @content_type ||= ContentType.find_by_key(model_name)
+    def model_name
+      model_class.name.underscore      
     end
 
     def load_block
@@ -122,19 +139,9 @@ class Cms::BlocksController < Cms::BaseController
 
     def do_command(result)
       if yield
-        flash[:notice] = "#{model_name.titleize} '#{@block.name}' was #{result}"
+        flash[:notice] = "#{content_type_name.titleize} '#{@block.name}' was #{result}"
       else
-        flash[:error] = "#{model_name.titleize} '#{@block.name}' could not be #{result}"
-      end
-    end
-
-    def model_name
-      @model_name ||= begin
-        if params[:block_type].blank?
-          session[:last_block_type] ||= 'html_block'
-        else
-          session[:last_block_type] = params[:block_type].singularize
-        end
+        flash[:error] = "#{content_type_name.titleize} '#{@block.name}' could not be #{result}"
       end
     end
 
