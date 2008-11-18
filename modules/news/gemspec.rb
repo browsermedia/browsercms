@@ -1,7 +1,8 @@
 SPEC = Gem::Specification.new do |spec| 
-  spec.name = "BrowserCMS-NewsModule" 
+  spec.name = "browser_cms_news_module" 
+  spec.rubyforge_project = spec.name
   spec.version = "3.0.0" 
-  spec.summary = "The News Modules for BrowserCMS" 
+  spec.summary = "The News Module for BrowserCMS" 
   spec.author = "Browsermedia" 
   spec.email = "admin@browsercms.com" 
   spec.homepage = "http://www.browsercms.com" 

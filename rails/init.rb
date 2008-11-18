@@ -1,4 +1,4 @@
-require 'BrowserCMS'
+require 'browser_cms'
 Cms.add_to_rails_paths(Cms.root)
 
 cms_routes = open(File.join(Cms.root, "rails/routes.rb")){|f| f.read }

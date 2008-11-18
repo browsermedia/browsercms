@@ -65,6 +65,7 @@ Cms.add_generator_paths(Cms.root,
   "public/javascripts/jquery*", 
   "public/javascripts/cms/**/*", 
   "public/fckeditor/**/*", 
+  "public/site/**/*",   
   "public/stylesheets/cms/**/*", 
   "public/images/cms/**/*", 
   "db/migrate/[0-9]*_*.rb")

@@ -1,4 +1,4 @@
-class CmsGenerator < Rails::Generator::Base
+class BrowserCmsGenerator < Rails::Generator::Base
   #We need to be able to define a different source root for each gem
   #So we'll just set the baseline source root to "/",
   #and append the appropriate path when we call file
