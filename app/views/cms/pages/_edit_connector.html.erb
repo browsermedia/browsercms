@@ -6,10 +6,10 @@
       <%= link_to action_icon(:view), cms_path(connector.content_block) %>
       <%= link_to action_icon(:edit), cms_path(connector.content_block, :edit, :_redirect_to => @page.path) %>
       <% if @page.connectors.for_container(connector.container).count > 1 %>
-        <%= link_to action_icon(:up), cms_path(connector, :move_up), :method => :put %>
-        <%= link_to action_icon(:down), cms_path(connector, :move_down), :method => :put %>
+        <%= link_to action_icon(:up), cms_path(connector, :move_up), :http_method => :put %>
+        <%= link_to action_icon(:down), cms_path(connector, :move_down), :http_method => :put %>
       <% end %>
-      <%= link_to action_icon(:delete), cms_path(connector, :destroy, :_redirect_to => @page.path), :method => :delete, :confirm => "Are you sure you want to remove this block from this page?" %>
+      <%= link_to action_icon(:delete), cms_path(connector, :destroy, :_redirect_to => @page.path), :http_method => :delete, :confirm => "Are you sure you want to remove this block from this page?" %>
     </div>
   </div>
   <div class="content">

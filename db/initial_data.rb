@@ -11,17 +11,17 @@ create_section(:about, :name => "About", :parent => sections(:root), :path => "/
 create_section(:people, :name => "People", :parent => sections(:about), :path => "/people")
 create_section(:careers, :name => "Careers", :parent => sections(:about), :path => "/careers")
 
+cmsadmin.groups.each{|g| g.sections << Section.all }
+
 create_page_template(:two_column, :name => "Two Column", :file_name => "two_column", :language => "erb", :body=> <<-TEMPLATE)
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <title><%= @page_title %></title>
-    <%= stylesheet_link_tag 'cms/application' %>
-    <%= javascript_include_tag :defaults %>    
     <%= yield :html_head %>
   </head>
-  <body>
+  <body style="margin: 0; padding: 0">
     <%= cms_toolbar %>
     <table width="960">
       <tr>

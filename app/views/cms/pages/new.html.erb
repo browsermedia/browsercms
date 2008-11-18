@@ -3,11 +3,11 @@
 jQuery(function($){
   $("#page_name").blur(function(){
     var section = { name: <%= @page.section.name.to_json %>, path: <%= @page.section.path.to_json %> }
-    var page_name = $("#page_name").val().strip()
+    var page_name = $.trim($("#page_name").val())
     if (page_name == section.name || page_name == 'Overview') {
       $("#page_path").val(section.path)
     } else {
-      $("#page_path").val(section.path.replace(/\/$/, '') + "/" + page_name.toLowerCase().gsub(/-|_/, '').gsub(/ /, '_').gsub(/\W/, ''))
+      $("#page_path").val(section.path.replace(/\/$/, '') + "/" + page_name.toLowerCase().replace(/-|_/g, '').replace(/ /g, '_').replace(/\W/g, ''))
     }
   })
 })

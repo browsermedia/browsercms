@@ -39,11 +39,9 @@ class LoadSeedData < ActiveRecord::Migration
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <title><%= @page_title %></title>
-    <%= stylesheet_link_tag 'cms/application' %>
-    <%= javascript_include_tag :defaults %>    
     <%= yield :html_head %>
   </head>
-  <body>
+  <body style="margin: 0; padding: 0">
     <%= cms_toolbar %>
     <%= container :main %>
   </body>

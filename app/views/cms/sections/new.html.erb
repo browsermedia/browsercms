@@ -1,16 +1,17 @@
+<% content_for :html_head do %>
+<script type="text/javascript">
+jQuery(function($){
+  $("#section_name").blur(function(){
+    var section = { name: null, path: "<%= @parent.path %>".replace(/\/$/, '') }
+    section.name = $.trim($(this).val()).toLowerCase().replace(/-|_/g, '').replace(/ /g, '_').replace(/\W/g, '')
+    $("#section_path").val(section.path + "/" + section.name)
+  })
+})
+</script>
+<% end %>
 <% @page_title = "New Section" %>
 <h1><%= @page_title %></h1>
 <% form_for(@section, :url => cms_path(:sections, :create)) do |f| %>
   <%= hidden_field_tag :section_id, @parent.id %>
   <%= render :partial => 'form', :locals => {:f => f} %>
 <% end %>
-
-<script>
-function suggestPath(event) {
-  var section = { name: null, path: "<%= @parent.path %>".replace(/\/$/, '') };
-  section.name = $F("section_name").strip().toLowerCase().gsub(/-|_/, '').gsub(/ /, '_').gsub(/\W/, '');
-  $("section_path").value = section.path + "/" + section.name;
-}
-
-$("section_name").observe('blur', suggestPath);
-</script>

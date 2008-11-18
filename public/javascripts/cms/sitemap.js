@@ -67,11 +67,11 @@ jQuery(function($){
         })
 
         //Now remove all the old ancestors and add back the new ones on the children
-        old_class.replace('p','a').split(' ').each(function(e){ 
-          $('.p'+sid+', .a'+sid).removeClass(e) 
+        $(old_class.replace('p','a').split(' ')).each(function(){ 
+          $('.p'+sid+', .a'+sid).removeClass(this) 
         })
-        new_class.replace('p','a').split(' ').each(function(e){ 
-          $('.p'+sid+', .a'+sid).addClass(e) 
+        $(new_class.replace('p','a').split(' ')).each(function(){ 
+          $('.p'+sid+', .a'+sid).addClass(this) 
         })
 
         //Now we move over all the decendents of the src
@@ -135,7 +135,7 @@ jQuery(function($){
   
   //onClick for the name of a section/page
   $('#sitemap span.node').click(function(){
-    $('#buttons a').addClass('disabled').click(function(){return false})
+    $('a.button').addClass('disabled').click(function(){return false})
     $('#sitemap span.node').removeClass('selected')
     $(this).addClass('selected')
         

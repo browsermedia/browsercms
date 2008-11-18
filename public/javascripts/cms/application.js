@@ -8,6 +8,20 @@ jQuery(function($) {
       $('#message').removeClass('notice').addClass('error').html(msg).show().animate({opacity: 1.0}, 3000).fadeOut("normal")
     }
   }
+  
+  $('a[http_method]').click(function() {
+    var f = document.createElement('form'); 
+    f.style.display = 'none'; 
+    this.parentNode.appendChild(f); 
+    f.method = "POST"
+    f.action = this.href;
+    $(f).attr('target', $(this).attr('target'));
+    var m = document.createElement('input');
+    $(m).attr('type', 'hidden').attr('name', '_method').attr('value', $(this).attr('method')); 
+    f.appendChild(m);
+    f.submit();
+    return false;
+  })
 })
 
 //CookieSet allows us to treat one cookie value as a set of values

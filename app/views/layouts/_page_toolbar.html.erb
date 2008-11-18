@@ -1,13 +1,18 @@
 <% if(logged_in? && @page && !@hide_page_toolbar) %>
   <div id="page_toolbar">
-    <%= link_to((@mode == "edit" ? "Switch to View Mode" : "Switch to Edit Mode"), "#{@page.path}?mode=#{@mode == "edit" ? "view" : "edit"}") %>
-    <%= link_to "Edit Page Properties", cms_path(@page, :edit) %>
-    <%= link_to "Revisions", cms_path(@page, :revisions) %>
-    <%= link_to "Delete", cms_path(@page, :destroy), :method => :delete, :confirm => "Are you sure you want to delete '#{@page.name}'?" %>
+    <% if @mode == "edit" %>
+      <%= link_to "Switch to View Mode", "#{@page.path}?mode=view", :target => "_top" %>
+    <% else %>
+      <%= link_to "Switch to View Mode", "#{@page.path}?mode=edit", :target => "_top" %>    
+    <% end %>
 
-    <%= link_to_function "Assign" %>
+    <%= link_to "Edit Page Properties", cms_path(@page, :edit), :target => "_top" %>
+    <%= link_to "Revisions", cms_path(@page, :revisions), :target => "_top" %>
+    <%= link_to "Delete", cms_path(@page, :destroy), :http_method => :delete, :confirm => "Are you sure you want to delete '#{@page.name}'?", :target => "_top" %>
+
+    <%= link_to "Assign", "#" %>
     <% able_to? :publish_content do %>
-      <%= @page.published? ? "Publish" : link_to("Publish", cms_path(@page, :publish), :method => :put) %>
+      <%= @page.published? ? "Publish" : link_to("Publish", cms_path(@page, :publish), :http_method => :put) %>
     <% end %>
   </div>  
   <div>
@@ -16,19 +21,10 @@
     <%= status_icon(:hidden) if @page.hidden? %>
     <%= status_icon(:archived) if @page.archived? %>
     <br/>
-    Page: <%= link_to h(@page.name), @page.path %>
+    Page: <%= link_to h(@page.name), @page.path, :target => "_top" %>
     <br/>
-    Section: <%= link_to h(@page.section.name), cms_path(:sections, :page_id => @page) %>
+    Section: <%= link_to h(@page.section.name), cms_path(:sections, :page_id => @page), :target => "_top" %>
     <br/>
-    Template: <%= link_to h(@page.template_name), cms_path(:page_templates) %>
-    <br/>
-    Version:
-    <% form_tag cms_path(@page, :show_version), :method => :get, :style => "display: inline" do %>
-      <%= hidden_field_tag :mode, @mode %>
-      <%= page_versions(@page) %>
-    <% end %>
-    <% unless @page.current_version? %>
-      <%= link_to "Revert to this Version", cms_path(@page, :revert_to, :version => @page.version) %>
-    <% end %>
+    Template: <%= link_to h(@page.template_name), cms_path(:page_templates), :target => "_top" %>
   </div>
 <% end %>
