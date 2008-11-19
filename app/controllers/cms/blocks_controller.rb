@@ -34,9 +34,6 @@ class Cms::BlocksController < Cms::BaseController
   end
 
   def create
-    logger.info "model_class #{model_class.inspect}"
-    logger.info "model_name #{model_name.inspect}"
-    logger.info "params #{params[model_class.name.underscore].inspect}"
     @block = model_class.new(params[model_name])
     @block.updated_by_user = current_user if @block.respond_to?(:updated_by_user)
     if @block.save!

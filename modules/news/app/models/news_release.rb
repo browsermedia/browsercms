@@ -11,7 +11,9 @@ class NewsRelease < ActiveRecord::Base
 
 
   def set_section
-    self.section = Section.first(:conditions => {:name => 'News Release'})
+    if new_record? && !attachment_file.blank?    
+      self.section = Section.first(:conditions => {:name => 'News Release'})
+    end
   end
   
   def set_attachment_file_name
@@ -20,14 +22,16 @@ class NewsRelease < ActiveRecord::Base
     end
   end
 
-  def render
-    buf = ""
-    buf += "<p><b>Name:</b> #{name}</p>"
-    buf += "<p><b>Release Date:</b> #{release_date}</p>"
-    buf += "<p><b>Category:</b> #{category.name}</p>"
-    buf += "<p><b>Attachment:</b> <a href=\"#{attachment_link}\">#{attachment_path}</a></p>"
-    buf += "<p><b>Summary:</b> #{summary}</p>"
-    buf += "<p><b>Body:</b> #{body}</p>"
+  def renderer(news_release)
+    lambda do
+      buf = ""
+      buf += "<p><b>Name:</b> #{news_release.name}</p>"
+      buf += "<p><b>Release Date:</b> #{news_release.release_date}</p>"
+      buf += "<p><b>Category:</b> #{news_release.category.name}</p>"
+      buf += "<p><b>Attachment:</b> <a href=\"#{news_release.attachment_link}\">#{news_release.attachment_path}</a></p>"
+      buf += "<p><b>Summary:</b> #{news_release.summary}</p>"
+      buf += "<p><b>Body:</b> #{news_release.body}</p>"
+    end
 
   end
 

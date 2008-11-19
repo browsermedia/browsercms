@@ -10,17 +10,17 @@ jQuery(function($) {
   }
   
   $('a[http_method]').click(function() {
-    var f = document.createElement('form'); 
-    f.style.display = 'none'; 
-    this.parentNode.appendChild(f); 
+    var f = document.createElement('form')
+    f.style.display = 'none'
+    this.parentNode.appendChild(f)
     f.method = "POST"
-    f.action = this.href;
-    $(f).attr('target', $(this).attr('target'));
-    var m = document.createElement('input');
-    $(m).attr('type', 'hidden').attr('name', '_method').attr('value', $(this).attr('method')); 
-    f.appendChild(m);
-    f.submit();
-    return false;
+    f.action = this.href
+    $(f).attr('target', $(this).attr('target'))
+    var m = document.createElement('input')
+    $(m).attr('type', 'hidden').attr('name', '_method').attr('value', $(this).attr('http_method'))
+    f.appendChild(m)
+    f.submit()
+    return false
   })
 })
 

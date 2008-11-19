@@ -10,7 +10,7 @@ class CreateNewsReleases < ActiveRecord::Migration
       t.text :body, :size => (64.kilobytes + 1) 
     end
     CategoryType.create!(:name => "News Release")
-    Section.create!(:name => "News Release", :parent => Section.system.first, :group_ids => Group.all(&:id))      
+    Section.create!(:name => "News Release", :path => "/system/news_releases", :parent => Section.system.first, :group_ids => Group.all(&:id))      
     ContentType.create!(:name => "NewsRelease", :group_name => "News")
   end
 

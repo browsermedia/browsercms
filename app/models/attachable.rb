@@ -12,7 +12,7 @@ module Attachable
     end
   end
   def validate
-    unless attachment.valid?
+    if attachment && !attachment.valid?
       attachment.errors.each do |err_field, err_value|
         if err_field.to_sym == :file_name
           errors.add(:attachment_file_name, err_value)
@@ -42,8 +42,10 @@ module Attachable
   end
 
   def process_attachment
-    build_attachment if attachment.nil?
-    attachment.file = attachment_file if attachment_file
+    unless attachment_file.blank?
+      build_attachment if attachment.nil?  
+      attachment.file = attachment_file    
+    end
   end
 
   def set_attachment_file_name
@@ -55,11 +57,13 @@ module Attachable
   end
 
   def update_attachment_if_changed
-    attachment.updated_by = updated_by_user
-    attachment.archived = archived
-    attachment.published = !!(publish_on_save)
-    attachment.save if new_record? || attachment.changed? || attachment.file
-    self.attachment_version = attachment.version
+    if attachment
+      attachment.updated_by = updated_by_user
+      attachment.archived = archived
+      attachment.published = !!(publish_on_save)
+      attachment.save if new_record? || attachment.changed? || attachment.file
+      self.attachment_version = attachment.version
+    end
   end
   
   #Size in kilobytes
