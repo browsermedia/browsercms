@@ -1,4 +1,10 @@
 <% @page_title = @page.page_title %>
+<% if @mode == "edit" %>
+  <% content_for :html_head do %>
+    <%= stylesheet_link_tag 'cms/page' %>
+  <% end %>
+  <iframe src="<%= cms_path(:toolbar, :page_id => @page.id, :page_version => @page.version, :mode => @mode) %>" width="100%" height="100" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" name="cms_toolbar"></iframe>
+<% end %>
 <% @page.version_connectors.each do |c| %>
   <% content_for(c.container.to_sym) do %>
     <%= render_connector c %>

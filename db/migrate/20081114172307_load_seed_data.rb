@@ -42,7 +42,7 @@ class LoadSeedData < ActiveRecord::Migration
     <%= yield :html_head %>
   </head>
   <body style="margin: 0; padding: 0">
-    <%= cms_toolbar %>
+    <%= yield %>
     <%= container :main %>
   </body>
 </html>
