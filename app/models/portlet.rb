@@ -16,16 +16,16 @@ class Portlet < ActiveRecord::Base
   # This method will load all portlets that are defined
   # in a app/portlets directory on the load path
   def self.load_portlets
-    $:.each do |d| 
+    Dependencies.load_paths.each do |d| 
       if d =~ /app\/portlets/
-        Dir["#{d}/*.rb"].each{|p| require_dependency(p) }
+        Dir["#{d}/*_portlet.rb"].each{|p| require_dependency(p) }
       end
     end
   end
   
   def self.types
     load_portlets
-    @subclasses
+    @subclasses || []
   end
 
   def self.get_subclass(type)

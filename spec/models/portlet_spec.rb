@@ -10,11 +10,6 @@ describe Portlet do
     Portlet.first(:order => "created_at desc").foo.should == "FOO"
   end
 
-  it "should be able to be rendered" do
-    portlet = create_dynamic_portlet(:code => '@foo = "FOO"', :template => "<h1><%= @foo %></h1>")
-    portlet.render.should == "<h1>FOO</h1>"
-  end
-
   it "should be marked as not supporting revisioning" do
     p = new_dynamic_portlet
     p.versionable?.should be_false

@@ -345,7 +345,7 @@ describe Cms::BlocksController do
   describe "CRUD for Portlets (which have custom page flow)" do
     before(:each) do
       create_content_type(:name => "Portlet")
-      @block = create_dynamic_portlet(:name => "V1")
+      @block = create_dynamic_portlet(:name => "V1", :code => "@foo = 42", :template => "<%= @foo %>")
     end
 
     describe "show" do

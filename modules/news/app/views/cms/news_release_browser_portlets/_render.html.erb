@@ -1,0 +1,4 @@
+<p><b>News Releases</b></p>
+<% for release in releases %><div class="news-item">
+  <%= link_to h(release.name), "/news/release?release_id=#{release.id}" %>
+</div><% end %>

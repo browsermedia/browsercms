@@ -15,7 +15,9 @@ class NewsRelease < ActiveRecord::Base
   end
   
   def set_attachment_file_name
-    attachment.file_name = "/news_releases/#{Time.now.to_s(:year_month_day)}/#{name.to_slug}.#{attachment_file.original_filename.split('.').last.to_s.downcase}" if new_record?
+    if new_record? && !attachment_file.blank?
+      attachment.file_name = "/news_releases/#{Time.now.to_s(:year_month_day)}/#{name.to_slug}.#{attachment_file.original_filename.split('.').last.to_s.downcase}" 
+    end
   end
 
   def render
