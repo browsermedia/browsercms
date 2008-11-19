@@ -40,9 +40,14 @@ module Cms
       def display_name_plural
         display_name.pluralize
       end
+            
     end
 
     # Instance Methods
+    def renderer(block)
+      lambda { "<b>ERROR</b>: #{block.class} does not have a renderer" }
+    end
+        
     def connected_pages
       Page.connected_to_block(self)
     end

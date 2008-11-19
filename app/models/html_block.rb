@@ -2,8 +2,8 @@ class HtmlBlock < ActiveRecord::Base
 
   acts_as_content_block
   
-  def render
-    content
+  def renderer(block)
+    lambda { block.content }
   end
 
   def self.display_name

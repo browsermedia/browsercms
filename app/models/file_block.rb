@@ -6,15 +6,16 @@ class FileBlock < AbstractFileBlock
     "File"
   end
 
-  def render
-    #TODO: Escape values
-    <<-HTML
-      <div id="file_block_#{id}" class="file_block">
-        <img src="/images/cms/icons/file_types/#{attachment.icon}.png" alt=""/>
-        <a href="#{path}">#{name}</a>
-        #{attachment.file_size.round_bytes}
-      </div>
-    HTML
+  def renderer(file_block)
+    lambda do
+      <<-HTML
+        <div id="file_block_#{file_block.id}" class="file_block">
+          <img src="/images/cms/icons/file_types/#{file_block.attachment.icon}.png" alt="#{h(file_block.attachment.icon)}"/>
+          #{link_to(file_block.name, file_block.path)}
+          #{file_block.attachment.file_size.round_bytes}
+        </div>
+      HTML
+    end
   end
 
   

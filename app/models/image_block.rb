@@ -6,8 +6,7 @@ class ImageBlock < AbstractFileBlock
     "Image"
   end  
 
-  def render
-    #TODO: Escape values
-    %Q{<img src="#{path}" alt="#{name}"/>}
+  def renderer(image_block)
+    lambda { %Q{<img src="#{image_block.path}" alt="#{h(image_block.name)}"/>} }    
   end
 end

@@ -62,8 +62,8 @@ create_attachment_file(:logo, :data => open(File.join(Rails.root, "public/images
 create_attachment(:xml, :file_type => "text/xml", :section => sections(:root), :file_extension => "xml", :file_size => 36, :file_name => "test.xml", :attachment_file => attachment_files(:xml))
 create_attachment(:logo, :file_type => "image/png", :section => sections(:root), :file_extension => "png", :file_size => 2305, :file_name => "logo.png", :attachment_file => attachment_files(:logo))
 
-create_file_block(:xml, :name => "XML", :attachment => attachments(:xml), :updated_by_user => cmsadmin)
-create_image_block(:logo, :name => "Logo", :attachment => attachments(:logo), :updated_by_user => cmsadmin)
+create_file_block(:xml, :name => "XML", :attachment => attachments(:xml), :updated_by_user => cmsadmin, :publish_on_save => true)
+create_image_block(:logo, :name => "Logo", :attachment => attachments(:logo), :updated_by_user => cmsadmin, :publish_on_save => true)
 
 create_dynamic_portlet(:recently_updated_pages,
   :name => 'Recently Updated Pages',  
