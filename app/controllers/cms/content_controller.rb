@@ -56,7 +56,7 @@ class Cms::ContentController < Cms::ApplicationController
   end
 
   def check_access_to_page
-
+    set_page_mode
     if current_user.able_to?(:edit_content, :publish_content)
       @page = Page.first(:conditions => {:path => @path})
       page_not_found unless @page
@@ -90,6 +90,11 @@ class Cms::ContentController < Cms::ApplicationController
   
   def page_not_found
     raise ActiveRecord::RecordNotFound.new("No page at '#{@path}'")
+  end
+
+  def set_page_mode
+    @mode = params[:mode] || session[:page_mode] || "edit"
+    session[:page_mode] = @mode      
   end
 
   
