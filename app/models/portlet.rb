@@ -45,6 +45,10 @@ class Portlet < ActiveRecord::Base
   def form
     "cms/#{self.class.name.tableize}/form"
   end
+  
+  def partial
+    "cms/#{self.class.name.tableize}/render"
+  end
 
   def self.columns_for_index
     [{:label => "Type", :method => "portlet_type_name"}]

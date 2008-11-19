@@ -9,7 +9,7 @@ class NewsReleaseBrowserPortlet < Portlet
       else
         locals[:releases] = NewsRelease.all(:order => "release_date desc")
       end
-      render :partial => 'cms/news_release_browser_portlets/render', :locals => locals
+      render :partial => portlet.partial, :locals => locals
     end
   end
     
