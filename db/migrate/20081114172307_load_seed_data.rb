@@ -1,7 +1,11 @@
 class LoadSeedData < ActiveRecord::Migration
   extend Cms::DataLoader
   def self.up
-    pwd = (0..8).inject(""){|s,i| s << (('a'..'z').to_a + ('A'..'Z').to_a + ('0'..'9').to_a).rand}
+    if Rails.env == "development"
+      pwd = "cmsadmin"
+    else
+      pwd = (0..8).inject(""){|s,i| s << (('a'..'z').to_a + ('A'..'Z').to_a + ('0'..'9').to_a).rand}
+    end
     create_user(:cmsadmin, :login => "cmsadmin", :first_name => "CMS", :last_name => "Administrator", :email => "cmsadmin@example.com", :password => pwd, :password_confirmation => pwd)
 
     create_permission(:administrate, :name => "administrate", :full_name => "Administrate CMS" , :description => "Allows users to administer the CMS, including adding users and groups.")
