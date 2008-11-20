@@ -81,7 +81,7 @@ module Attachable
   
   def attachment_link
     if attachment
-      live? ? attachment_path : "/cms/attachments/show/#{attachment.id}?version=#{version}"    
+      live? ? attachment_path : "/cms/attachments/show/#{attachment_id}?version=#{attachment_version}"    
     else
       nil
     end  

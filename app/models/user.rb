@@ -22,6 +22,16 @@ class User < ActiveRecord::Base
     
   named_scope :active, :conditions => {:expires_at => nil }
 
+  #Methods to easily change password from the console
+  #Not used in the app
+  def User.change_password(login, new_password)
+    User.find_by_login(login).change_password(new_password)
+  end
+
+  def change_password(new_password)
+    update_attributes(:password => new_password, :password_confirmation => new_password)
+  end
+
   def self.authenticate(login, password)
     u = find_by_login(login) # need to get the salt
     u && u.authenticated?(password) && !u.expired? ? u : nil

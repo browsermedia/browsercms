@@ -18,6 +18,10 @@ jQuery(function($) {
     $(f).attr('target', $(this).attr('target'))
     var m = document.createElement('input')
     $(m).attr('type', 'hidden').attr('name', '_method').attr('value', $(this).attr('http_method'))
+    if($.cms.authenticity_token && $.cms.authenticity_token != '') {
+      $(m).attr('type', 'hidden').attr('name', 'authenticity_token').attr('value', $.cms.authenticity_token)  
+    }
+    
     f.appendChild(m)
     f.submit()
     return false
