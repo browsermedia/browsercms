@@ -3,12 +3,16 @@ class NewsRelease < ActiveRecord::Base
   include Attachable
   acts_as_content_block
   
-  
   belongs_to :category
   belongs_to :attachment
   
-  
+  def year
+    release_date ? release_date.year : nil
+  end
 
+  def month
+    release_date ? release_date.month : nil
+  end
 
   def set_section
     if new_record? && !attachment_file.blank?    

@@ -1,0 +1,8 @@
+<div class="fields">
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+</div>
+<div class="fields">
+  <%= f.label :category_id, "Category" %>
+  <%= f.select :category_id, Category.of_type("News Release").map{|c| [c.name, c.id.to_s]}, :include_blank => true %>
+</div>

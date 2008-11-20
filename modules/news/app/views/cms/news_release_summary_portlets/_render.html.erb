@@ -1,0 +1,17 @@
+<p><b>News Releases</b></p>
+<% releases.group_by(&:year).sort_by(&:first).reverse.each do |year, year_releases| %>
+  <div class="news_release_year">
+    <%= year %>
+  </div>
+  <% year_releases.group_by(&:month).sort_by(&:first).reverse.each do |month, month_releases| %>
+    <div class="news_release_month">
+      <b><%= Date::MONTHNAMES[month] %></b><br/>
+      <% for release in month_releases.sort_by(&:release_date).reverse %><div class="news_release">
+        <% unless release.release_date.blank? %><%= release.release_date.to_s(:long) %><br/><% end %>
+        <% unless release.name.blank? %><b><%=h release.name %></b><br/><% end %>
+        <% unless release.summary.blank? %><p><%=h release.summary %></p><% end %>
+        <%= link_to "Read More", "/news/release?release_id=#{release.id}" %>
+      </div><% end %>
+    </div>
+  <% end %>
+<% end %>
