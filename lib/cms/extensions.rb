@@ -8,6 +8,9 @@ module Cms
     # This is called after the environment is ready
     def init
       
+      #Laod all the CMS Routes
+      ActionController::Routing::RouteSet::Mapper.send :include, Cms::Routes
+      
       #Write out the page templates to the file system
       if ActiveRecord::Base.connection.tables.include?("page_templates")
         tmp_view_path = "#{Rails.root}/tmp/views"

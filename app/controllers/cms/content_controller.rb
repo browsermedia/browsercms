@@ -14,7 +14,8 @@ class Cms::ContentController < Cms::ApplicationController
 
   #-- Filters --
   def construct_path
-    @path = "/#{params[:path].join("/")}"    
+    @paths = params[:page_path] || params[:path]
+    @path = "/#{@paths.join("/")}"
   end
   
   def try_to_redirect
@@ -24,7 +25,7 @@ class Cms::ContentController < Cms::ApplicationController
   end
 
   def try_to_stream_file
-    split = params[:path].last.to_s.split('.')
+    split = @paths.last.to_s.split('.')
     ext = split.size > 1 ? split.last.to_s.downcase : nil
     
     #Only try to stream cache file if it has an extension
@@ -84,7 +85,27 @@ class Cms::ContentController < Cms::ApplicationController
   end
   
   #-- Other Methods --
+  
+  # This method gives the content type a chance to set some params
+  # This is used to make SEO-friendly URLs possible
+  def prepare_params
+    logger.info "\n\npreparing_params..."
+    if params[:prepare_with] && params[:prepare_with][:content_type] && params[:prepare_with][:method]
+      content_type = params[:prepare_with][:content_type].constantize
+      if content_type.respond_to?(params[:prepare_with][:method])
+        # This call is expected to modify params
+        logger.debug "Calling #{content_type.name}.#{params[:prepare_with][:method]} prepare method"
+        content_type.send(params[:prepare_with][:method], params)
+      else
+        logger.debug "#{content_type.name} does not respond to #{params[:prepare_with][:method]}"
+      end
+    else
+      logger.debug "No Prepare Method"
+    end    
+  end
+  
   def render_page
+    prepare_params
     render :layout => @page.layout, :action => 'show'
   end
   

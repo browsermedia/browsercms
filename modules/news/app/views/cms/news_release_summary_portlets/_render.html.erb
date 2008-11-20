@@ -10,7 +10,7 @@
         <% unless release.release_date.blank? %><%= release.release_date.to_s(:long) %><br/><% end %>
         <% unless release.name.blank? %><b><%=h release.name %></b><br/><% end %>
         <% unless release.summary.blank? %><p><%=h release.summary %></p><% end %>
-        <%= link_to "Read More", "/news/release?release_id=#{release.id}" %>
+        <%= link_to "Read More", news_release_details_path(release.details_params) %>
       </div><% end %>
     </div>
   <% end %>

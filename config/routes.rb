@@ -1,3 +1,3 @@
 ActionController::Routing::Routes.draw do |map|
-  map.instance_eval(open("#{Rails.root}/rails/routes.rb"){|f| f.read})
+  map.routes_for_browser_cms
 end

@@ -2,6 +2,7 @@ class CreateNewsReleases < ActiveRecord::Migration
   def self.up
     create_versioned_table :news_releases do |t|
       t.string :name 
+      t.string :slug
       t.date :release_date 
       t.belongs_to :category 
       t.belongs_to :attachment

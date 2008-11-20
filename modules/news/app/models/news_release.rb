@@ -6,6 +6,23 @@ class NewsRelease < ActiveRecord::Base
   belongs_to :category
   belongs_to :attachment
   
+  before_validation :set_slug
+  
+  def set_slug
+    self.slug = name.to_slug unless name.blank?
+  end
+  
+  def self.prepare_params_for_details!(params)
+    release_date_string = "#{params[:month]}/#{params[:day]}/#{params[:year]}"
+    release_date = Date.parse(release_date_string)
+    news_release = NewsRelease.first(:conditions => ["release_date = ? and slug = ?", release_date, params[:slug]])
+    params[:news_release_id] = news_release.id if news_release
+  end
+  
+  def details_params
+    {:year => release_date.strftime("%Y"), :month => release_date.strftime("%m"), :day => release_date.strftime("%d"), :slug => slug}
+  end
+  
   def year
     release_date ? release_date.year : nil
   end

@@ -34,6 +34,9 @@ module Cms
   
     def render_content_block(block)
       instance_eval &block.renderer(block)
+    rescue Exception => e
+      logger.error "Error occurred while rendering #{block.class}:#{block.id}: #{e.message}\n#{e.backtrace.join("\n")}"
+      "ERROR: #{e.message}"
     end
   
     def container(name)

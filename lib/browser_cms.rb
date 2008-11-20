@@ -1,5 +1,6 @@
 require 'will_paginate'
 require 'cms/extensions'
+require 'cms/routes'
 
 #Load Erubis, if we can
 begin
