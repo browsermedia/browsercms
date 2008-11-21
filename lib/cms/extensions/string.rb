@@ -3,6 +3,6 @@ class String
     (" "*n.to_i) + self 
   end 
   def to_slug
-    gsub(/\W+/, ' ').strip.downcase.gsub(/\ +/, '_')
+    gsub(/\W+/, ' ').strip.downcase.gsub(/\ +/, '-')
   end  
 end
