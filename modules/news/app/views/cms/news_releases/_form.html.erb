@@ -8,7 +8,7 @@
 </div>
 <div class="fields">
   <%= f.label :category %>
-  <%= f.collection_select :category_id, Category.of_type('News Release'), :id, :name %>
+  <%= f.collection_select :category_id, categories_for('News Release'), :id, :path %>
 </div>
 <div class="fields">
   <%= f.label :attachment %>

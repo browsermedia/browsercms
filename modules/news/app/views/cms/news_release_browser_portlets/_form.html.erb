@@ -8,5 +8,5 @@
 </div>
 <div class="fields">
   <%= f.label :category_id, "Category" %>
-  <%= f.select :category_id, Category.of_type("News Release").map{|c| [c.name, c.id.to_s]}, :include_blank => true %>
+  <%= f.collection_select :category_id, categories_for('News Release'), :id, :path, :include_blank => true %>
 </div>

@@ -119,5 +119,9 @@ module Cms
       select_tag("group_id", options_from_collection_for_select(Group.all.insert(0, Group.new(:id => nil, :name => "All")), "id", "name", params[:group_id].to_i))
     end	  	  
 	  	  
+	  def categories_for(category_type_name)
+	    CategoryType.named(category_type_name).first.category_list
+	  end	  
+	  	  
   end
 end
