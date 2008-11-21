@@ -80,10 +80,10 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000188">authorize_as</a>&nbsp;&nbsp;
-      <a href="#M000186">login_as</a>&nbsp;&nbsp;
-      <a href="#M000187">login_as_user</a>&nbsp;&nbsp;
-      <a href="#M000189">mock_user</a>&nbsp;&nbsp;
+      <a href="#M000211">authorize_as</a>&nbsp;&nbsp;
+      <a href="#M000209">login_as</a>&nbsp;&nbsp;
+      <a href="#M000210">login_as_user</a>&nbsp;&nbsp;
+      <a href="#M000212">mock_user</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -105,19 +105,19 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000188" class="method-detail">
-        <a name="M000188"></a>
+      <div id="method-M000211" class="method-detail">
+        <a name="M000211"></a>
 
         <div class="method-heading">
-          <a href="#M000188" class="method-signature">
+          <a href="#M000211" class="method-signature">
           <span class="method-name">authorize_as</span><span class="method-args">(user)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000188-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000188-source">
+            onclick="toggleCode('M000211-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000211-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/authenticated_test_helper.rb, line 11</span>
 11:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">authorize_as</span>(<span class="ruby-identifier">user</span>)
@@ -128,11 +128,11 @@
         </div>
       </div>
 
-      <div id="method-M000186" class="method-detail">
-        <a name="M000186"></a>
+      <div id="method-M000209" class="method-detail">
+        <a name="M000209"></a>
 
         <div class="method-heading">
-          <a href="#M000186" class="method-signature">
+          <a href="#M000209" class="method-signature">
           <span class="method-name">login_as</span><span class="method-args">(user)</span>
           </a>
         </div>
@@ -142,8 +142,8 @@
 Sets the current user in the session from the user fixtures.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000186-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000186-source">
+            onclick="toggleCode('M000209-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000209-source">
 <pre>
    <span class="ruby-comment cmt"># File lib/authenticated_test_helper.rb, line 3</span>
 3:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">login_as</span>(<span class="ruby-identifier">user</span>)
@@ -154,34 +154,34 @@ Sets the current user in the session from the user fixtures.
         </div>
       </div>
 
-      <div id="method-M000187" class="method-detail">
-        <a name="M000187"></a>
+      <div id="method-M000210" class="method-detail">
+        <a name="M000210"></a>
 
         <div class="method-heading">
-          <a href="#M000187" class="method-signature">
+          <a href="#M000210" class="method-signature">
           <span class="method-name">login_as_user</span><span class="method-args">(attrs={})</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000187-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000187-source">
+            onclick="toggleCode('M000210-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000210-source">
 <pre>
    <span class="ruby-comment cmt"># File lib/authenticated_test_helper.rb, line 7</span>
 7:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">login_as_user</span>(<span class="ruby-identifier">attrs</span>={})
-8:     <span class="ruby-identifier">login_as</span> <span class="ruby-identifier">create_user</span>(<span class="ruby-identifier">attrs</span>)
+8:     <span class="ruby-identifier">login_as</span> <span class="ruby-identifier">admin_user</span>
 9:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000189" class="method-detail">
-        <a name="M000189"></a>
+      <div id="method-M000212" class="method-detail">
+        <a name="M000212"></a>
 
         <div class="method-heading">
-          <a href="#M000189" class="method-signature">
+          <a href="#M000212" class="method-signature">
           <span class="method-name">mock_user</span><span class="method-args">()</span>
           </a>
         </div>
@@ -191,8 +191,8 @@ Sets the current user in the session from the user fixtures.
 rspec
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000189-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000189-source">
+            onclick="toggleCode('M000212-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000212-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/authenticated_test_helper.rb, line 16</span>
 16:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mock_user</span>

@@ -86,15 +86,7 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000105">create_new_file_metadata</a>&nbsp;&nbsp;
-      <a href="#M000104">file=</a>&nbsp;&nbsp;
-      <a href="#M000099">file_size</a>&nbsp;&nbsp;
-      <a href="#M000098">path</a>&nbsp;&nbsp;
-      <a href="#M000100">section</a>&nbsp;&nbsp;
-      <a href="#M000102">section=</a>&nbsp;&nbsp;
-      <a href="#M000101">section_id</a>&nbsp;&nbsp;
-      <a href="#M000103">section_id=</a>&nbsp;&nbsp;
-      <a href="#M000106">set_name</a>&nbsp;&nbsp;
+      <a href="#M000122">path</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -116,223 +108,24 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000105" class="method-detail">
-        <a name="M000105"></a>
+      <div id="method-M000122" class="method-detail">
+        <a name="M000122"></a>
 
         <div class="method-heading">
-          <a href="#M000105" class="method-signature">
-          <span class="method-name">create_new_file_metadata</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000105-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000105-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/models/abstract_file_block.rb, line 53</span>
-53:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_new_file_metadata</span>
-54:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">new_record?</span>
-55:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">file_metadata</span>.<span class="ruby-identifier">changed?</span> <span class="ruby-operator">||</span> <span class="ruby-ivar">@file_metadata_changed</span>
-56:         <span class="ruby-identifier">new_file_metadata</span> = <span class="ruby-constant">FileMetadata</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">file_metadata</span>.<span class="ruby-identifier">attributes</span>.<span class="ruby-identifier">without</span>(<span class="ruby-value str">&quot;id&quot;</span>))
-57:         <span class="ruby-identifier">new_file_metadata</span>.<span class="ruby-identifier">updating_file!</span>
-58:         <span class="ruby-identifier">new_file_metadata</span>.<span class="ruby-identifier">file</span> = <span class="ruby-identifier">file_metadata</span>.<span class="ruby-identifier">file</span>      
-59:         <span class="ruby-identifier">new_file_metadata</span>.<span class="ruby-identifier">save!</span>
-60:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_metadata</span> = <span class="ruby-identifier">new_file_metadata</span>
-61:       <span class="ruby-keyword kw">end</span>
-62:     <span class="ruby-keyword kw">end</span>
-63:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000104" class="method-detail">
-        <a name="M000104"></a>
-
-        <div class="method-heading">
-          <a href="#M000104" class="method-signature">
-          <span class="method-name">file=</span><span class="method-args">(file)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000104-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000104-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/models/abstract_file_block.rb, line 47</span>
-47:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file=</span>(<span class="ruby-identifier">file</span>)
-48:     <span class="ruby-identifier">build_file_metadata</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">new_record?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">file_metadata</span>.<span class="ruby-identifier">nil?</span>
-49:     <span class="ruby-identifier">file_metadata</span>.<span class="ruby-identifier">file</span> = <span class="ruby-identifier">file</span>
-50:     <span class="ruby-ivar">@file_metadata_changed</span> = <span class="ruby-keyword kw">true</span>
-51:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000099" class="method-detail">
-        <a name="M000099"></a>
-
-        <div class="method-heading">
-          <a href="#M000099" class="method-signature">
-          <span class="method-name">file_size</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000099-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000099-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/models/abstract_file_block.rb, line 24</span>
-24:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_size</span>
-25:     <span class="ruby-identifier">file_metadata</span> <span class="ruby-value">? </span><span class="ruby-value str">&quot;%0.2f&quot;</span> <span class="ruby-operator">%</span> (<span class="ruby-identifier">file_metadata</span>.<span class="ruby-identifier">file_size</span> <span class="ruby-operator">/</span> <span class="ruby-value">1024.0</span>) <span class="ruby-operator">:</span> <span class="ruby-value str">&quot;?&quot;</span>
-26:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000098" class="method-detail">
-        <a name="M000098"></a>
-
-        <div class="method-heading">
-          <a href="#M000098" class="method-signature">
+          <a href="#M000122" class="method-signature">
           <span class="method-name">path</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000098-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000098-source">
+            onclick="toggleCode('M000122-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000122-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/abstract_file_block.rb, line 20</span>
-20:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">path</span>
-21:     [<span class="ruby-identifier">file_metadata</span>.<span class="ruby-identifier">section</span>.<span class="ruby-identifier">path</span>, <span class="ruby-identifier">file_metadata</span>.<span class="ruby-identifier">file_name</span>].<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;/&quot;</span>).<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\/{2,}/</span>,<span class="ruby-value str">&quot;/&quot;</span>)
-22:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000100" class="method-detail">
-        <a name="M000100"></a>
-
-        <div class="method-heading">
-          <a href="#M000100" class="method-signature">
-          <span class="method-name">section</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Delagate getter/setters for file_metadata
-</p>
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000100-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000100-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/models/abstract_file_block.rb, line 29</span>
-29:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">section</span>
-30:     <span class="ruby-identifier">file_metadata</span>.<span class="ruby-identifier">section</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">file_metadata</span>.<span class="ruby-identifier">nil?</span>
-31:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000102" class="method-detail">
-        <a name="M000102"></a>
-
-        <div class="method-heading">
-          <a href="#M000102" class="method-signature">
-          <span class="method-name">section=</span><span class="method-args">(section)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000102-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000102-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/models/abstract_file_block.rb, line 37</span>
-37:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">section=</span>(<span class="ruby-identifier">section</span>)
-38:     <span class="ruby-identifier">build_file_metadata</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">new_record?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">file_metadata</span>.<span class="ruby-identifier">nil?</span>
-39:     <span class="ruby-identifier">file_metadata</span>.<span class="ruby-identifier">section</span> = <span class="ruby-identifier">section</span>
-40:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000101" class="method-detail">
-        <a name="M000101"></a>
-
-        <div class="method-heading">
-          <a href="#M000101" class="method-signature">
-          <span class="method-name">section_id</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000101-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000101-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/models/abstract_file_block.rb, line 33</span>
-33:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">section_id</span>
-34:     <span class="ruby-identifier">file_metadata</span>.<span class="ruby-identifier">section_id</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">file_metadata</span>.<span class="ruby-identifier">nil?</span>
-35:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000103" class="method-detail">
-        <a name="M000103"></a>
-
-        <div class="method-heading">
-          <a href="#M000103" class="method-signature">
-          <span class="method-name">section_id=</span><span class="method-args">(section_id)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000103-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000103-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/models/abstract_file_block.rb, line 42</span>
-42:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">section_id=</span>(<span class="ruby-identifier">section_id</span>)
-43:     <span class="ruby-identifier">build_file_metadata</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">new_record?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">file_metadata</span>.<span class="ruby-identifier">nil?</span>
-44:     <span class="ruby-identifier">file_metadata</span>.<span class="ruby-identifier">section_id</span> = <span class="ruby-identifier">section_id</span>
-45:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000106" class="method-detail">
-        <a name="M000106"></a>
-
-        <div class="method-heading">
-          <a href="#M000106" class="method-signature">
-          <span class="method-name">set_name</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000106-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000106-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/models/abstract_file_block.rb, line 65</span>
-65:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_name</span>
-66:     <span class="ruby-identifier">update_attribute</span>(<span class="ruby-identifier">:name</span>, <span class="ruby-identifier">file_metadata</span>.<span class="ruby-identifier">file_name</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">blank?</span>
-67:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/abstract_file_block.rb, line 9</span>
+ 9:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">path</span>
+10:     <span class="ruby-identifier">attachment_path</span>
+11:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

@@ -94,15 +94,16 @@ href="BlockSupport.html">BlockSupport</a> and StatusSupport
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000240">connect_to_page</a>&nbsp;&nbsp;
-      <a href="#M000236">connected_pages</a>&nbsp;&nbsp;
-      <a href="#M000237">content_block_type</a>&nbsp;&nbsp;
-      <a href="#M000238">display_name</a>&nbsp;&nbsp;
-      <a href="#M000239">display_name_plural</a>&nbsp;&nbsp;
-      <a href="#M000235">included</a>&nbsp;&nbsp;
-      <a href="#M000242">update_connected_pages</a>&nbsp;&nbsp;
-      <a href="#M000243">update_page</a>&nbsp;&nbsp;
-      <a href="#M000241">updated_by_page=</a>&nbsp;&nbsp;
+      <a href="#M000275">connect_to_page</a>&nbsp;&nbsp;
+      <a href="#M000271">connected_pages</a>&nbsp;&nbsp;
+      <a href="#M000272">content_block_type</a>&nbsp;&nbsp;
+      <a href="#M000273">display_name</a>&nbsp;&nbsp;
+      <a href="#M000274">display_name_plural</a>&nbsp;&nbsp;
+      <a href="#M000269">included</a>&nbsp;&nbsp;
+      <a href="#M000270">renderer</a>&nbsp;&nbsp;
+      <a href="#M000277">update_connected_pages</a>&nbsp;&nbsp;
+      <a href="#M000278">update_page</a>&nbsp;&nbsp;
+      <a href="#M000276">updated_by_page=</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -130,19 +131,19 @@ href="BlockSupport.html">BlockSupport</a> and StatusSupport
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000235" class="method-detail">
-        <a name="M000235"></a>
+      <div id="method-M000269" class="method-detail">
+        <a name="M000269"></a>
 
         <div class="method-heading">
-          <a href="#M000235" class="method-signature">
+          <a href="#M000269" class="method-signature">
           <span class="method-name">included</span><span class="method-args">(base_class)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000235-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000235-source">
+            onclick="toggleCode('M000269-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000269-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/block_support.rb, line 12</span>
 12:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">included</span>(<span class="ruby-identifier">base_class</span>)
@@ -161,38 +162,130 @@ href="BlockSupport.html">BlockSupport</a> and StatusSupport
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000240" class="method-detail">
-        <a name="M000240"></a>
+      <div id="method-M000275" class="method-detail">
+        <a name="M000275"></a>
 
         <div class="method-heading">
-          <a href="#M000240" class="method-signature">
+          <a href="#M000275" class="method-signature">
           <span class="method-name">connect_to_page</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000240-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000240-source">
+            onclick="toggleCode('M000275-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000275-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/block_support.rb, line 62</span>
-62:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">connect_to_page</span>
-63:       <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">connect_to_page_id</span>.<span class="ruby-identifier">blank?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">connect_to_container</span>.<span class="ruby-identifier">blank?</span>
-64:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">connected_page</span> = <span class="ruby-constant">Page</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">connect_to_page_id</span>)
-65:         <span class="ruby-identifier">connected_page</span>.<span class="ruby-identifier">add_content_block!</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">connect_to_container</span>)
-66:       <span class="ruby-keyword kw">end</span>
-67:     <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/block_support.rb, line 67</span>
+67:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">connect_to_page</span>
+68:       <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">connect_to_page_id</span>.<span class="ruby-identifier">blank?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">connect_to_container</span>.<span class="ruby-identifier">blank?</span>
+69:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">connected_page</span> = <span class="ruby-constant">Page</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">connect_to_page_id</span>)
+70:         <span class="ruby-identifier">connected_page</span>.<span class="ruby-identifier">add_content_block!</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">connect_to_container</span>)
+71:       <span class="ruby-keyword kw">end</span>
+72:     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000236" class="method-detail">
-        <a name="M000236"></a>
+      <div id="method-M000271" class="method-detail">
+        <a name="M000271"></a>
 
         <div class="method-heading">
-          <a href="#M000236" class="method-signature">
+          <a href="#M000271" class="method-signature">
           <span class="method-name">connected_pages</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000271-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000271-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/block_support.rb, line 51</span>
+51:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">connected_pages</span>
+52:       <span class="ruby-constant">Page</span>.<span class="ruby-identifier">connected_to_block</span>(<span class="ruby-keyword kw">self</span>)
+53:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000272" class="method-detail">
+        <a name="M000272"></a>
+
+        <div class="method-heading">
+          <a href="#M000272" class="method-signature">
+          <span class="method-name">content_block_type</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000272-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000272-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/block_support.rb, line 55</span>
+55:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">content_block_type</span>
+56:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">content_block_type</span>
+57:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000273" class="method-detail">
+        <a name="M000273"></a>
+
+        <div class="method-heading">
+          <a href="#M000273" class="method-signature">
+          <span class="method-name">display_name</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000273-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000273-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/block_support.rb, line 59</span>
+59:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">display_name</span>
+60:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">display_name</span>
+61:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000274" class="method-detail">
+        <a name="M000274"></a>
+
+        <div class="method-heading">
+          <a href="#M000274" class="method-signature">
+          <span class="method-name">display_name_plural</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000274-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000274-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/block_support.rb, line 63</span>
+63:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">display_name_plural</span>
+64:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">display_name_plural</span>
+65:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000270" class="method-detail">
+        <a name="M000270"></a>
+
+        <div class="method-heading">
+          <a href="#M000270" class="method-signature">
+          <span class="method-name">renderer</span><span class="method-args">(block)</span>
           </a>
         </div>
       
@@ -201,156 +294,87 @@ href="BlockSupport.html">BlockSupport</a> and StatusSupport
 Instance Methods
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000236-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000236-source">
+            onclick="toggleCode('M000270-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000270-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/block_support.rb, line 46</span>
-46:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">connected_pages</span>
-47:       <span class="ruby-constant">Page</span>.<span class="ruby-identifier">connected_to_block</span>(<span class="ruby-keyword kw">self</span>)
-48:     <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/block_support.rb, line 47</span>
+47:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">renderer</span>(<span class="ruby-identifier">block</span>)
+48:       <span class="ruby-identifier">lambda</span> { <span class="ruby-node">&quot;&lt;b&gt;ERROR&lt;/b&gt;: #{block.class} does not have a renderer&quot;</span> }
+49:     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000237" class="method-detail">
-        <a name="M000237"></a>
+      <div id="method-M000277" class="method-detail">
+        <a name="M000277"></a>
 
         <div class="method-heading">
-          <a href="#M000237" class="method-signature">
-          <span class="method-name">content_block_type</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000237-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000237-source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/cms/block_support.rb, line 50</span>
-50:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">content_block_type</span>
-51:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">content_block_type</span>
-52:     <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000238" class="method-detail">
-        <a name="M000238"></a>
-
-        <div class="method-heading">
-          <a href="#M000238" class="method-signature">
-          <span class="method-name">display_name</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000238-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000238-source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/cms/block_support.rb, line 54</span>
-54:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">display_name</span>
-55:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">display_name</span>
-56:     <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000239" class="method-detail">
-        <a name="M000239"></a>
-
-        <div class="method-heading">
-          <a href="#M000239" class="method-signature">
-          <span class="method-name">display_name_plural</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000239-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000239-source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/cms/block_support.rb, line 58</span>
-58:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">display_name_plural</span>
-59:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">display_name_plural</span>
-60:     <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000242" class="method-detail">
-        <a name="M000242"></a>
-
-        <div class="method-heading">
-          <a href="#M000242" class="method-signature">
+          <a href="#M000277" class="method-signature">
           <span class="method-name">update_connected_pages</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000242-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000242-source">
+            onclick="toggleCode('M000277-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000277-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/block_support.rb, line 73</span>
-73:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update_connected_pages</span>
-74:       <span class="ruby-constant">Page</span>.<span class="ruby-identifier">find_by_content_block</span>(<span class="ruby-keyword kw">self</span>, (<span class="ruby-identifier">version</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">page</span><span class="ruby-operator">|</span>
-75:         <span class="ruby-identifier">update_page</span>(<span class="ruby-identifier">page</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@updated_by_page</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">page</span>
-76:       <span class="ruby-keyword kw">end</span>      
-77:     <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/block_support.rb, line 78</span>
+78:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update_connected_pages</span>
+79:       <span class="ruby-constant">Page</span>.<span class="ruby-identifier">find_by_content_block</span>(<span class="ruby-keyword kw">self</span>, (<span class="ruby-identifier">version</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>)).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">page</span><span class="ruby-operator">|</span>
+80:         <span class="ruby-identifier">update_page</span>(<span class="ruby-identifier">page</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@updated_by_page</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">page</span>
+81:       <span class="ruby-keyword kw">end</span>      
+82:     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000243" class="method-detail">
-        <a name="M000243"></a>
+      <div id="method-M000278" class="method-detail">
+        <a name="M000278"></a>
 
         <div class="method-heading">
-          <a href="#M000243" class="method-signature">
+          <a href="#M000278" class="method-signature">
           <span class="method-name">update_page</span><span class="method-args">(page)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000243-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000243-source">
+            onclick="toggleCode('M000278-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000278-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/block_support.rb, line 79</span>
-79:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update_page</span>(<span class="ruby-identifier">page</span>)
-80:       <span class="ruby-identifier">page</span>.<span class="ruby-identifier">update_attributes!</span>(<span class="ruby-identifier">:new_revision_comment</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Edited block&quot;</span>, <span class="ruby-identifier">:publish_on_save</span> =<span class="ruby-operator">&gt;</span> (<span class="ruby-identifier">published?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">page</span>.<span class="ruby-identifier">published?</span>), <span class="ruby-identifier">:updated_by_user</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">updated_by</span>)
-81:       <span class="ruby-identifier">page</span>.<span class="ruby-identifier">connectors</span>.<span class="ruby-identifier">all</span>(<span class="ruby-identifier">:include</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:page</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:content_block_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">id</span>, <span class="ruby-identifier">:content_block_type</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span> }).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">conn</span><span class="ruby-operator">|</span>
-82:         <span class="ruby-identifier">conn</span>.<span class="ruby-identifier">increment!</span>(<span class="ruby-identifier">:content_block_version</span>)
-83:       <span class="ruby-keyword kw">end</span>      
-84:     <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/block_support.rb, line 84</span>
+84:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update_page</span>(<span class="ruby-identifier">page</span>)
+85:       <span class="ruby-identifier">page</span>.<span class="ruby-identifier">update_attributes!</span>(<span class="ruby-identifier">:new_revision_comment</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Edited block&quot;</span>, <span class="ruby-identifier">:publish_on_save</span> =<span class="ruby-operator">&gt;</span> (<span class="ruby-identifier">published?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">page</span>.<span class="ruby-identifier">published?</span>), <span class="ruby-identifier">:updated_by_user</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">updated_by</span>)
+86:       <span class="ruby-identifier">page</span>.<span class="ruby-identifier">connectors</span>.<span class="ruby-identifier">all</span>(<span class="ruby-identifier">:include</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:page</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:content_block_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">id</span>, <span class="ruby-identifier">:content_block_type</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span> }).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">conn</span><span class="ruby-operator">|</span>
+87:         <span class="ruby-identifier">conn</span>.<span class="ruby-identifier">increment!</span>(<span class="ruby-identifier">:content_block_version</span>)
+88:       <span class="ruby-keyword kw">end</span>      
+89:     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000241" class="method-detail">
-        <a name="M000241"></a>
+      <div id="method-M000276" class="method-detail">
+        <a name="M000276"></a>
 
         <div class="method-heading">
-          <a href="#M000241" class="method-signature">
+          <a href="#M000276" class="method-signature">
           <span class="method-name">updated_by_page=</span><span class="method-args">(page)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000241-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000241-source">
+            onclick="toggleCode('M000276-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000276-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/block_support.rb, line 69</span>
-69:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">updated_by_page=</span>(<span class="ruby-identifier">page</span>)
-70:       <span class="ruby-ivar">@updated_by_page</span> = <span class="ruby-identifier">page</span>
-71:     <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/block_support.rb, line 74</span>
+74:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">updated_by_page=</span>(<span class="ruby-identifier">page</span>)
+75:       <span class="ruby-ivar">@updated_by_page</span> = <span class="ruby-identifier">page</span>
+76:     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

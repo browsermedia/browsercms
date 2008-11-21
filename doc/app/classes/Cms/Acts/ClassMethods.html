@@ -80,9 +80,11 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000227">count</a>&nbsp;&nbsp;
-      <a href="#M000226">find</a>&nbsp;&nbsp;
-      <a href="#M000228">method_missing</a>&nbsp;&nbsp;
+      <a href="#M000259">count</a>&nbsp;&nbsp;
+      <a href="#M000260">delete_all</a>&nbsp;&nbsp;
+      <a href="#M000261">exists?</a>&nbsp;&nbsp;
+      <a href="#M000258">find</a>&nbsp;&nbsp;
+      <a href="#M000262">method_missing</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -117,74 +119,125 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000227" class="method-detail">
-        <a name="M000227"></a>
+      <div id="method-M000259" class="method-detail">
+        <a name="M000259"></a>
 
         <div class="method-heading">
-          <a href="#M000227" class="method-signature">
+          <a href="#M000259" class="method-signature">
           <span class="method-name">count</span><span class="method-args">(*args)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000227-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000227-source">
+            onclick="toggleCode('M000259-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000259-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/acts/paranoid.rb, line 20</span>
-20:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">count</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
-21:         <span class="ruby-identifier">not_deleted</span>.<span class="ruby-identifier">count_with_deleted</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
-22:       <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/acts/paranoid.rb, line 21</span>
+21:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">count</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+22:         <span class="ruby-identifier">not_deleted</span>.<span class="ruby-identifier">count_with_deleted</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+23:       <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000226" class="method-detail">
-        <a name="M000226"></a>
+      <div id="method-M000260" class="method-detail">
+        <a name="M000260"></a>
 
         <div class="method-heading">
-          <a href="#M000226" class="method-signature">
+          <a href="#M000260" class="method-signature">
+          <span class="method-name">delete_all</span><span class="method-args">(conditions)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000260-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000260-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/acts/paranoid.rb, line 24</span>
+24:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete_all</span>(<span class="ruby-identifier">conditions</span>)
+25:         <span class="ruby-identifier">update_all</span>(<span class="ruby-value str">&quot;deleted = 1&quot;</span>, <span class="ruby-identifier">conditions</span>)
+26:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000261" class="method-detail">
+        <a name="M000261"></a>
+
+        <div class="method-heading">
+          <a href="#M000261" class="method-signature">
+          <span class="method-name">exists?</span><span class="method-args">(id_or_conditions)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000261-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000261-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/acts/paranoid.rb, line 27</span>
+27:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">id_or_conditions</span>)
+28:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">id_or_conditions</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Hash</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">id_or_conditions</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Array</span>)
+29:           <span class="ruby-identifier">conditions</span> = {<span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">id_or_conditions</span>}
+30:         <span class="ruby-keyword kw">else</span>
+31:           <span class="ruby-identifier">conditions</span> = {<span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">id_or_conditions</span>}}
+32:         <span class="ruby-keyword kw">end</span>
+33:         <span class="ruby-identifier">count</span>(<span class="ruby-identifier">conditions</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+34:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000258" class="method-detail">
+        <a name="M000258"></a>
+
+        <div class="method-heading">
+          <a href="#M000258" class="method-signature">
           <span class="method-name">find</span><span class="method-args">(*args)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000226-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000226-source">
+            onclick="toggleCode('M000258-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000258-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/acts/paranoid.rb, line 17</span>
-17:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
-18:         <span class="ruby-identifier">not_deleted</span>.<span class="ruby-identifier">find_with_deleted</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
-19:       <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/acts/paranoid.rb, line 18</span>
+18:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+19:         <span class="ruby-identifier">not_deleted</span>.<span class="ruby-identifier">find_with_deleted</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
+20:       <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000228" class="method-detail">
-        <a name="M000228"></a>
+      <div id="method-M000262" class="method-detail">
+        <a name="M000262"></a>
 
         <div class="method-heading">
-          <a href="#M000228" class="method-signature">
+          <a href="#M000262" class="method-signature">
           <span class="method-name">method_missing</span><span class="method-args">(method_id, *arguments)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000228-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000228-source">
+            onclick="toggleCode('M000262-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000262-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/acts/paranoid.rb, line 24</span>
-24:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">method_id</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">arguments</span>)
-25:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">matches_dynamic_finder?</span>(<span class="ruby-identifier">method_id</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">matches_dynamic_finder_with_initialize_or_create?</span>(<span class="ruby-identifier">method_id</span>)
-26:           <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Dynamic Finders are not currently supported by paranoid&quot;</span>
-27:         <span class="ruby-keyword kw">else</span>
-28:           <span class="ruby-identifier">original_method_missing</span>(<span class="ruby-identifier">method_id</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">arguments</span>)
-29:         <span class="ruby-keyword kw">end</span>
-30:       <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/acts/paranoid.rb, line 36</span>
+36:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">method_id</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">arguments</span>)
+37:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">matches_dynamic_finder?</span>(<span class="ruby-identifier">method_id</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">matches_dynamic_finder_with_initialize_or_create?</span>(<span class="ruby-identifier">method_id</span>)
+38:           <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Dynamic Finders are not currently supported by paranoid&quot;</span>
+39:         <span class="ruby-keyword kw">else</span>
+40:           <span class="ruby-identifier">original_method_missing</span>(<span class="ruby-identifier">method_id</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">arguments</span>)
+41:         <span class="ruby-keyword kw">end</span>
+42:       <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

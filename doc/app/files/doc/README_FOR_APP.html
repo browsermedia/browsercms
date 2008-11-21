@@ -56,7 +56,7 @@
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>Sat Aug 30 11:51:23 -0400 2008</td>
+      <td>Fri Nov 21 10:36:07 -0500 2008</td>
     </tr>
     </table>
   </div>
@@ -69,52 +69,99 @@
   <div id="contextContent">
 
     <div id="description">
-      <h1>BrowserCMS</h1>
+      <h2>Welcome to BrowserCMS</h2>
 <p>
-BrowserCMS provides Content Management functionality for Rails
-applications. Once you have installed BrowserCMS into a Rails app, point
-your browser to <a href="http://localhost:3000/cms">localhost:3000/cms</a>
-to log in. You will be taken to the dashboard, the first section of the
-BrowserCMS Administration Interface. I will refer to the BrowserCMS
-Administration Interface as the &quot;CMS&quot;, because I <b>am</b> into
-the whole brevity thing. The four main sections of the CMS are:
+BrowserCMS is Content Management System for the Rails web-application
+framework. BrowserCMS consists of the core cms product, as well as a set of
+modules that can be installed in your app on a case-by-case basis as
+needed. These instructions are for creating a BrowserCMS app that uses one
+module, the BrowserCMS News Module. You don&#8216;t have to install the
+BrowserCMS News Module, it is only shown here as an example of installing a
+module. You could install no modules or more than one module, and the steps
+to do so would be roughly equivalent to what you see here.
 </p>
-<h2>Dashboard</h2>
+<h2>Getting Started</h2>
+<ol>
+<li>Install Rails 2.1 or higher:
+
+<pre>
+  sudo gem install rails
+</pre>
+</li>
+<li>Install BrowserCMS and any BrowserCMS modules you plan to use.
+
+<pre>
+  sudo gem install browser_cms
+  sudo gem install browser_cms_news_module
+</pre>
+</li>
+<li>At the command prompt, start a new Rails application, specifying the
+database by using following command:
+
+<pre>
+  rails my_cms -d mysql
+</pre>
+</li>
+<li>Change directory into mycms
+
+<pre>
+  cd my_cms
+</pre>
+</li>
+<li>Remove the file at public/index.html
+
+<pre>
+  rm public/index.html
+</pre>
+</li>
+<li>Open config/routes.rb in a text editor. Replace the contents of the file
+with the following:
+
+<pre>
+  ActionController::Routing::Routes.draw do |map|
+    map.routes_for_browser_cms_news_module
+    map.routes_for_browser_cms
+  end
+</pre>
+</li>
+<li>Edit config/environments.rb and add BrowserCms as a gem dependency:
+
+<pre>
+  config.gem &quot;browser_cms&quot;
+  config.gem &quot;browser_cms_news_module&quot;
+</pre>
+</li>
+<li>Run the following command to install BrowserCMS:
+
+<pre>
+  script/generate browser_cms
+</pre>
+</li>
+<li>Run the following command to create your database:
+
+<pre>
+  rake db:migrate
+</pre>
 <p>
-The Dashboard shows you a list of tasks that are assigned to you, as well
-as the quick links.
+Be careful to &#8230;
 </p>
-<h2><a href="../../classes/Site.html">Site</a> Map</h2>
-<p>
-The site map shows you the organization of all sections and pages in your
-site.
-</p>
-<h2>Content Library</h2>
-<p>
-The content library is where you view/manage all of the content blocks in
-your CMS.
-</p>
-<h2>Administration</h2>
-<p>
-All other tasks, especially ones left to Administrators and Developers, are
-in this section.
-</p>
-<p>
-To understand the CMS, it is bet to understand a few key objects that exist
-in the CMS
-</p>
-<h2>Sections</h2>
-<p>
-A <a href="../../classes/Section.html">Section</a> is a &#8230;
-</p>
-<h2>Pages</h2>
-<p>
-A <a href="../../classes/Page.html">Page</a> is a &#8230;
-</p>
-<h2>Block</h2>
-<p>
-A Block is a &#8230;
-</p>
+</li>
+<li>Start the Rails web server with the following command:
+
+<pre>
+  ruby script/server
+</pre>
+</li>
+<li>Open <a href="http://localhost:3000">localhost:3000</a>/ in a web browser.
+You will see the &quot;Hello, World!&quot; cms page.
+
+</li>
+<li>Open <a href="http://localhost:3000/cms">localhost:3000/cms</a> in a web
+browser. Login with the username cmsadmin and password cmsadmin. You are
+now logged into the CMS.
+
+</li>
+</ol>
 
     </div>
 

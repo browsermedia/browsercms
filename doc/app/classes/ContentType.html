@@ -86,15 +86,14 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000026">columns_to_list</a>&nbsp;&nbsp;
-      <a href="#M000027">content_block_type</a>&nbsp;&nbsp;
-      <a href="#M000021">display_name</a>&nbsp;&nbsp;
-      <a href="#M000022">display_name_plural</a>&nbsp;&nbsp;
-      <a href="#M000020">find_by_key</a>&nbsp;&nbsp;
-      <a href="#M000023">model_class</a>&nbsp;&nbsp;
-      <a href="#M000019">new_content</a>&nbsp;&nbsp;
-      <a href="#M000025">template_for_edit</a>&nbsp;&nbsp;
-      <a href="#M000024">template_for_new</a>&nbsp;&nbsp;
+      <a href="#M000016">columns_for_index</a>&nbsp;&nbsp;
+      <a href="#M000017">content_block_type</a>&nbsp;&nbsp;
+      <a href="#M000013">display_name</a>&nbsp;&nbsp;
+      <a href="#M000014">display_name_plural</a>&nbsp;&nbsp;
+      <a href="#M000012">find_by_key</a>&nbsp;&nbsp;
+      <a href="#M000011">list</a>&nbsp;&nbsp;
+      <a href="#M000015">model_class</a>&nbsp;&nbsp;
+      <a href="#M000018">set_content_type_group</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -109,6 +108,19 @@
 
 
 
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">group_name</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        </table>
+      </div>
+    </div>
       
 
 
@@ -116,11 +128,11 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000020" class="method-detail">
-        <a name="M000020"></a>
+      <div id="method-M000012" class="method-detail">
+        <a name="M000012"></a>
 
         <div class="method-heading">
-          <a href="#M000020" class="method-signature">
+          <a href="#M000012" class="method-signature">
           <span class="method-name">find_by_key</span><span class="method-args">(key)</span>
           </a>
         </div>
@@ -131,17 +143,48 @@ Given a &#8216;key&#8217; like &#8216;html_blocks&#8217; or
 &#8216;portlet&#8217; Raises exception if nothing was found.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000020-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000020-source">
+            onclick="toggleCode('M000012-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000012-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/content_type.rb, line 13</span>
-13:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_by_key</span>(<span class="ruby-identifier">key</span>)
-14:     <span class="ruby-identifier">content_type</span> = <span class="ruby-identifier">find_by_name</span>(<span class="ruby-identifier">key</span>.<span class="ruby-identifier">classify</span>)
-15:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">content_type</span>.<span class="ruby-identifier">nil?</span>
-16:       <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Couldn't find ContentType of class '#{key.classify}'&quot;</span>
-17:     <span class="ruby-keyword kw">end</span>
-18:     <span class="ruby-identifier">content_type</span>
-19:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/content_type.rb, line 14</span>
+14:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_by_key</span>(<span class="ruby-identifier">key</span>)
+15:     <span class="ruby-identifier">class_name</span> = <span class="ruby-identifier">key</span>.<span class="ruby-identifier">classify</span>
+16:     <span class="ruby-identifier">content_type</span> = <span class="ruby-identifier">find_by_name</span>(<span class="ruby-identifier">class_name</span>)
+17:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">content_type</span>.<span class="ruby-identifier">nil?</span>
+18:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">class_name</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">ancestors</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-constant">Portlet</span>)
+19:         <span class="ruby-constant">ContentType</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">class_name</span>).<span class="ruby-identifier">freeze</span>
+20:       <span class="ruby-keyword kw">else</span>
+21:         <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Not a Portlet&quot;</span>
+22:       <span class="ruby-keyword kw">end</span>
+23:     <span class="ruby-keyword kw">else</span>
+24:       <span class="ruby-identifier">content_type</span>
+25:     <span class="ruby-keyword kw">end</span>
+26:   <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span>
+27:     <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Couldn't find ContentType of class '#{class_name}'&quot;</span>    
+28:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000011" class="method-detail">
+        <a name="M000011"></a>
+
+        <div class="method-heading">
+          <a href="#M000011" class="method-signature">
+          <span class="method-name">list</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000011-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000011-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/content_type.rb, line 8</span>
+ 8:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">list</span>
+ 9:     <span class="ruby-identifier">all</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">underscore</span>.<span class="ruby-identifier">to_sym</span> }
+10:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -149,49 +192,41 @@ Given a &#8216;key&#8217; like &#8216;html_blocks&#8217; or
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000026" class="method-detail">
-        <a name="M000026"></a>
+      <div id="method-M000016" class="method-detail">
+        <a name="M000016"></a>
 
         <div class="method-heading">
-          <a href="#M000026" class="method-signature">
-          <span class="method-name">columns_to_list</span><span class="method-args">()</span>
+          <a href="#M000016" class="method-signature">
+          <span class="method-name">columns_for_index</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Allows models to show additional columns when being shown in a list.
+Allows models to show additional columns when being shown in a <a
+href="ContentType.html#M000011">list</a>.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000026-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000026-source">
+            onclick="toggleCode('M000016-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000016-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/content_type.rb, line 50</span>
-50:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">columns_to_list</span>
-51:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">model_class</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value str">&quot;columns_to_list&quot;</span>)
-52:       <span class="ruby-identifier">columns_to_list</span> = <span class="ruby-identifier">model_class</span>.<span class="ruby-identifier">columns_to_list</span>
-53:       <span class="ruby-identifier">final_list</span> = []
-54:       <span class="ruby-identifier">columns_to_list</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">column</span><span class="ruby-operator">|</span>
-55:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">column</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:humanize</span>)
-56:           <span class="ruby-identifier">final_list</span> <span class="ruby-operator">&lt;&lt;</span> {<span class="ruby-identifier">:label</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">column</span>.<span class="ruby-identifier">humanize</span>, <span class="ruby-identifier">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">column</span>}
-57:         <span class="ruby-keyword kw">else</span>
-58:           <span class="ruby-identifier">final_list</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">column</span>
-59:         <span class="ruby-keyword kw">end</span>
-60:       <span class="ruby-keyword kw">end</span>
-61:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">final_list</span>
-62:     <span class="ruby-keyword kw">end</span>
-63:     <span class="ruby-keyword kw">return</span> []
-64:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/content_type.rb, line 43</span>
+43:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">columns_for_index</span>
+44:     <span class="ruby-keyword kw">return</span> [] <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">model_class</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:columns_for_index</span>)
+45:     <span class="ruby-identifier">model_class</span>.<span class="ruby-identifier">columns_for_index</span>.<span class="ruby-identifier">map</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">column</span><span class="ruby-operator">|</span>
+46:       <span class="ruby-identifier">column</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:humanize</span>) <span class="ruby-operator">?</span> {<span class="ruby-identifier">:label</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">column</span>.<span class="ruby-identifier">humanize</span>, <span class="ruby-identifier">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">column</span>} <span class="ruby-operator">:</span> <span class="ruby-identifier">column</span>
+47:     <span class="ruby-keyword kw">end</span>
+48:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000027" class="method-detail">
-        <a name="M000027"></a>
+      <div id="method-M000017" class="method-detail">
+        <a name="M000017"></a>
 
         <div class="method-heading">
-          <a href="#M000027" class="method-signature">
+          <a href="#M000017" class="method-signature">
           <span class="method-name">content_block_type</span><span class="method-args">()</span>
           </a>
         </div>
@@ -201,173 +236,108 @@ Allows models to show additional columns when being shown in a list.
 Used in ERB for pathing
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000027-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000027-source">
+            onclick="toggleCode('M000017-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000017-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/content_type.rb, line 67</span>
-67:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">content_block_type</span>
-68:     <span class="ruby-identifier">name</span>.<span class="ruby-identifier">pluralize</span>.<span class="ruby-identifier">underscore</span>
-69:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/content_type.rb, line 51</span>
+51:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">content_block_type</span>
+52:     <span class="ruby-identifier">name</span>.<span class="ruby-identifier">pluralize</span>.<span class="ruby-identifier">underscore</span>
+53:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000021" class="method-detail">
-        <a name="M000021"></a>
+      <div id="method-M000013" class="method-detail">
+        <a name="M000013"></a>
 
         <div class="method-heading">
-          <a href="#M000021" class="method-signature">
+          <a href="#M000013" class="method-signature">
           <span class="method-name">display_name</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000021-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000021-source">
+            onclick="toggleCode('M000013-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000013-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/content_type.rb, line 21</span>
-21:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">display_name</span>
-22:     <span class="ruby-identifier">model_class</span>.<span class="ruby-identifier">display_name</span>
-23:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/content_type.rb, line 30</span>
+30:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">display_name</span>
+31:     <span class="ruby-identifier">model_class</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:display_name</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">model_class</span>.<span class="ruby-identifier">display_name</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">model_class</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">titleize</span>
+32:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000022" class="method-detail">
-        <a name="M000022"></a>
+      <div id="method-M000014" class="method-detail">
+        <a name="M000014"></a>
 
         <div class="method-heading">
-          <a href="#M000022" class="method-signature">
+          <a href="#M000014" class="method-signature">
           <span class="method-name">display_name_plural</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000022-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000022-source">
+            onclick="toggleCode('M000014-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000014-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/content_type.rb, line 25</span>
-25:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">display_name_plural</span>
-26:     <span class="ruby-identifier">model_class</span>.<span class="ruby-identifier">display_name_plural</span>
-27:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/content_type.rb, line 34</span>
+34:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">display_name_plural</span>
+35:     <span class="ruby-identifier">model_class</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:display_name_plural</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">model_class</span>.<span class="ruby-identifier">display_name_plural</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">display_name</span>.<span class="ruby-identifier">pluralize</span>
+36:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000023" class="method-detail">
-        <a name="M000023"></a>
+      <div id="method-M000015" class="method-detail">
+        <a name="M000015"></a>
 
         <div class="method-heading">
-          <a href="#M000023" class="method-signature">
+          <a href="#M000015" class="method-signature">
           <span class="method-name">model_class</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000023-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000023-source">
+            onclick="toggleCode('M000015-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000015-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/content_type.rb, line 29</span>
-29:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">model_class</span>
-30:     <span class="ruby-identifier">name</span>.<span class="ruby-identifier">classify</span>.<span class="ruby-identifier">constantize</span>
-31:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/content_type.rb, line 38</span>
+38:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">model_class</span>
+39:     <span class="ruby-identifier">name</span>.<span class="ruby-identifier">classify</span>.<span class="ruby-identifier">constantize</span>
+40:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000019" class="method-detail">
-        <a name="M000019"></a>
+      <div id="method-M000018" class="method-detail">
+        <a name="M000018"></a>
 
         <div class="method-heading">
-          <a href="#M000019" class="method-signature">
-          <span class="method-name">new_content</span><span class="method-args">(params = {})</span>
+          <a href="#M000018" class="method-signature">
+          <span class="method-name">set_content_type_group</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
-          <p>
-Factory Method to create a new instance of the Content Type (i.e. if <a
-href="ContentType.html#M000023">model_class</a> == <a
-href="HtmlBlock.html">HtmlBlock</a>, create a new one of those)
-</p>
-<p>
-@params - Hash of request parameters which will bound to the new model
-</p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000019-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000019-source">
+            onclick="toggleCode('M000018-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000018-source">
 <pre>
-   <span class="ruby-comment cmt"># File app/models/content_type.rb, line 7</span>
-7:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new_content</span>(<span class="ruby-identifier">params</span> = {})
-8:     <span class="ruby-identifier">model_class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">params</span>)
-9:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000025" class="method-detail">
-        <a name="M000025"></a>
-
-        <div class="method-heading">
-          <a href="#M000025" class="method-signature">
-          <span class="method-name">template_for_edit</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Allows models to override which view is displayed with BlockController#edit
-is called.
-</p>
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000025-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000025-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/models/content_type.rb, line 42</span>
-42:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">template_for_edit</span>
-43:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">model_class</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value str">&quot;template_for_edit&quot;</span>)
-44:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">model_class</span>.<span class="ruby-identifier">template_for_edit</span>
-45:     <span class="ruby-keyword kw">end</span>
-46:     <span class="ruby-value str">&quot;cms/blocks/edit&quot;</span>
-47:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000024" class="method-detail">
-        <a name="M000024"></a>
-
-        <div class="method-heading">
-          <a href="#M000024" class="method-signature">
-          <span class="method-name">template_for_new</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-Allows models to override which view is displayed with BlockController#new
-is called.
-</p>
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000024-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000024-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/models/content_type.rb, line 34</span>
-34:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">template_for_new</span>
-35:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">model_class</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-value str">&quot;template_for_new&quot;</span>)
-36:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">model_class</span>.<span class="ruby-identifier">template_for_new</span>
-37:     <span class="ruby-keyword kw">end</span>
-38:     <span class="ruby-value str">&quot;cms/blocks/new&quot;</span>
-39:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/content_type.rb, line 55</span>
+55:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_content_type_group</span>
+56:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">group_name</span>
+57:       <span class="ruby-identifier">group</span> = <span class="ruby-constant">ContentTypeGroup</span>.<span class="ruby-identifier">first</span>(<span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">group_name</span>})
+58:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">content_type_group</span> = <span class="ruby-identifier">group</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">build_content_type_group</span>(<span class="ruby-identifier">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">group_name</span>)
+59:     <span class="ruby-keyword kw">end</span>
+60:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

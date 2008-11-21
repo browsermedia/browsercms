@@ -80,8 +80,8 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000249">cms_path</a>&nbsp;&nbsp;
-      <a href="#M000250">cms_url</a>&nbsp;&nbsp;
+      <a href="#M000288">cms_path</a>&nbsp;&nbsp;
+      <a href="#M000289">cms_url</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -103,11 +103,11 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000249" class="method-detail">
-        <a name="M000249"></a>
+      <div id="method-M000288" class="method-detail">
+        <a name="M000288"></a>
 
         <div class="method-heading">
-          <a href="#M000249" class="method-signature">
+          <a href="#M000288" class="method-signature">
           <span class="method-name">cms_path</span><span class="method-args">(*args)</span>
           </a>
         </div>
@@ -121,7 +121,7 @@ Record model, then it will construct the url for that model. If the last
 argument is a Hash, it will append those values as querystring parameters
 If the action is :create_or_update, this will generate the proper url based
 on the status of the model. For example, if you call <a
-href="PathHelper.html#M000249">cms_path</a>(@block, :create_or_update), if
+href="PathHelper.html#M000288">cms_path</a>(@block, :create_or_update), if
 the block is a new record, it will return &#8217;/cms/blocks/create&#8217;,
 but if the record is not a new record, if will return
 &#8217;/cms/blocks/update/1&#8216;
@@ -131,8 +131,8 @@ but if the record is not a new record, if will return
  cms_path(:user) -&gt; /cms/user
 </pre>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000249-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000249-source">
+            onclick="toggleCode('M000288-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000288-source">
 <pre>
     <span class="ruby-comment cmt"># File app/helpers/cms/path_helper.rb, line 16</span>
 16:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cms_path</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)    
@@ -177,19 +177,19 @@ but if the record is not a new record, if will return
         </div>
       </div>
 
-      <div id="method-M000250" class="method-detail">
-        <a name="M000250"></a>
+      <div id="method-M000289" class="method-detail">
+        <a name="M000289"></a>
 
         <div class="method-heading">
-          <a href="#M000250" class="method-signature">
+          <a href="#M000289" class="method-signature">
           <span class="method-name">cms_url</span><span class="method-args">(*args)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000250-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000250-source">
+            onclick="toggleCode('M000289-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000289-source">
 <pre>
     <span class="ruby-comment cmt"># File app/helpers/cms/path_helper.rb, line 54</span>
 54:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cms_url</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)

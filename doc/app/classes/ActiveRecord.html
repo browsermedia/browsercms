@@ -59,10 +59,6 @@
                 lib/cms/extensions/active_record/connection_adapters/abstract/schema_statements.rb
                 </a>
         <br />
-                <a href="../files/lib/cms/extensions/active_record/migration_rb.html">
-                lib/cms/extensions/active_record/migration.rb
-                </a>
-        <br />
             </td>
         </tr>
 
@@ -76,30 +72,10 @@
 
   <div id="contextContent">
 
-    <div id="description">
-      <p>
-This is a Monkey Patch against Rails 2.1 that allows for <a
-href="ActiveRecord.html#M000178">migrations</a> to be specified in multiple
-places The Rails core team doesn&#8216;t like this idea, Pratik (a.k.a
-lifo) specifically, but there is an open ticket to see this added to rails:
-<a
-href="http://rails.lighthouseapp.com/projects/8994/tickets/1039-add-ability-to-specify-addtional-paths-for-migrations">rails.lighthouseapp.com/projects/8994/tickets/1039-add-ability-to-specify-addtional-paths-for-migrations</a>
-Until it does get added, we have this fragile monkey patch
-</p>
-
-    </div>
 
 
    </div>
 
-    <div id="method-list">
-      <h3 class="section-bar">Methods</h3>
-
-      <div class="name-list">
-      <a href="#M000178">migrations</a>&nbsp;&nbsp;
-      <a href="#M000177">new</a>&nbsp;&nbsp;
-      </div>
-    </div>
 
   </div>
 
@@ -108,12 +84,6 @@ Until it does get added, we have this fragile monkey patch
 
     <div id="section">
 
-    <div id="class-list">
-      <h3 class="section-bar">Classes and Modules</h3>
-
-      Class <a href="ActiveRecord/Migrator.html" class="link">ActiveRecord::Migrator</a><br />
-
-    </div>
 
 
 
@@ -122,87 +92,6 @@ Until it does get added, we have this fragile monkey patch
 
 
     <!-- if method_list -->
-    <div id="methods">
-      <h3 class="section-bar">Public Class methods</h3>
-
-      <div id="method-M000177" class="method-detail">
-        <a name="M000177"></a>
-
-        <div class="method-heading">
-          <a href="#M000177" class="method-signature">
-          <span class="method-name">new</span><span class="method-args">(direction, migrations_path, target_version = nil)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000177-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000177-source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/cms/extensions/active_record/migration.rb, line 21</span>
-21:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">direction</span>, <span class="ruby-identifier">migrations_path</span>, <span class="ruby-identifier">target_version</span> = <span class="ruby-keyword kw">nil</span>)
-22:     <span class="ruby-identifier">raise</span> <span class="ruby-constant">StandardError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-value str">&quot;This database does not yet support migrations&quot;</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">supports_migrations?</span>
-23:     <span class="ruby-constant">Base</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">initialize_schema_migrations_table</span>
-24:     <span class="ruby-ivar">@direction</span>, <span class="ruby-ivar">@migrations_path</span>, <span class="ruby-ivar">@target_version</span> = <span class="ruby-identifier">direction</span>, [<span class="ruby-identifier">migrations_path</span>] <span class="ruby-operator">+</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">additional_migration_paths</span>, <span class="ruby-identifier">target_version</span>            
-25:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <h3 class="section-bar">Public Instance methods</h3>
-
-      <div id="method-M000178" class="method-detail">
-        <a name="M000178"></a>
-
-        <div class="method-heading">
-          <a href="#M000178" class="method-signature">
-          <span class="method-name">migrations</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000178-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000178-source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/cms/extensions/active_record/migration.rb, line 27</span>
-27:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">migrations</span>
-28:     <span class="ruby-ivar">@migrations</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword kw">begin</span>
-29:       <span class="ruby-identifier">files</span> = <span class="ruby-constant">Dir</span>[<span class="ruby-operator">*</span><span class="ruby-ivar">@migrations_path</span>.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-node">&quot;#{e}/[0-9]*_*.rb&quot;</span>}].<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">expand_path</span>(<span class="ruby-identifier">f</span>)}.<span class="ruby-identifier">uniq</span>
-30:       <span class="ruby-identifier">migrations</span> = <span class="ruby-identifier">files</span>.<span class="ruby-identifier">inject</span>([]) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">klasses</span>, <span class="ruby-identifier">file</span><span class="ruby-operator">|</span>
-31:         <span class="ruby-identifier">version</span>, <span class="ruby-identifier">name</span> = <span class="ruby-identifier">file</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp re">/([0-9]+)_([_a-z0-9]*).rb/</span>).<span class="ruby-identifier">first</span>
-32:         
-33:         <span class="ruby-identifier">raise</span> <span class="ruby-constant">IllegalMigrationNameError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">file</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">version</span>
-34:         <span class="ruby-identifier">version</span> = <span class="ruby-identifier">version</span>.<span class="ruby-identifier">to_i</span>
-35:         
-36:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">klasses</span>.<span class="ruby-identifier">detect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span> <span class="ruby-identifier">m</span>.<span class="ruby-identifier">version</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">version</span> }
-37:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">DuplicateMigrationVersionError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">version</span>) 
-38:         <span class="ruby-keyword kw">end</span>
-39: 
-40:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">klasses</span>.<span class="ruby-identifier">detect</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">m</span><span class="ruby-operator">|</span> <span class="ruby-identifier">m</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">name</span>.<span class="ruby-identifier">camelize</span> }
-41:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">DuplicateMigrationNameError</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">name</span>.<span class="ruby-identifier">camelize</span>) 
-42:         <span class="ruby-keyword kw">end</span>
-43:         
-44:         <span class="ruby-identifier">load</span>(<span class="ruby-identifier">file</span>)
-45:         
-46:         <span class="ruby-identifier">klasses</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">returning</span>(<span class="ruby-identifier">name</span>.<span class="ruby-identifier">camelize</span>.<span class="ruby-identifier">constantize</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">klass</span><span class="ruby-operator">|</span>
-47:           <span class="ruby-keyword kw">class</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">klass</span>; <span class="ruby-identifier">attr_accessor</span> <span class="ruby-identifier">:version</span> <span class="ruby-keyword kw">end</span>
-48:           <span class="ruby-identifier">klass</span>.<span class="ruby-identifier">version</span> = <span class="ruby-identifier">version</span>
-49:         <span class="ruby-keyword kw">end</span>
-50:       <span class="ruby-keyword kw">end</span>
-51:       
-52:       <span class="ruby-identifier">migrations</span> = <span class="ruby-identifier">migrations</span>.<span class="ruby-identifier">sort_by</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">:version</span>)
-53:       <span class="ruby-identifier">down?</span> <span class="ruby-value">? </span><span class="ruby-identifier">migrations</span>.<span class="ruby-identifier">reverse</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">migrations</span>
-54:     <span class="ruby-keyword kw">end</span>
-55:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-
-    </div>
 
 
   </div>

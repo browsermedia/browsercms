@@ -80,9 +80,9 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000180">create_table_from_definition</a>&nbsp;&nbsp;
-      <a href="#M000179">create_versioned_table</a>&nbsp;&nbsp;
-      <a href="#M000181">drop_versioned_table</a>&nbsp;&nbsp;
+      <a href="#M000205">create_table_from_definition</a>&nbsp;&nbsp;
+      <a href="#M000204">create_versioned_table</a>&nbsp;&nbsp;
+      <a href="#M000206">drop_versioned_table</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -104,50 +104,50 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000180" class="method-detail">
-        <a name="M000180"></a>
+      <div id="method-M000205" class="method-detail">
+        <a name="M000205"></a>
 
         <div class="method-heading">
-          <a href="#M000180" class="method-signature">
+          <a href="#M000205" class="method-signature">
           <span class="method-name">create_table_from_definition</span><span class="method-args">(table_name, options, table_definition)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000180-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000180-source">
+            onclick="toggleCode('M000205-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000205-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/extensions/active_record/connection_adapters/abstract/schema_statements.rb, line 37</span>
-37:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_table_from_definition</span>(<span class="ruby-identifier">table_name</span>, <span class="ruby-identifier">options</span>, <span class="ruby-identifier">table_definition</span>)
-38:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:force</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">table_exists?</span>(<span class="ruby-identifier">table_name</span>)
-39:          <span class="ruby-identifier">drop_table</span>(<span class="ruby-identifier">table_name</span>, <span class="ruby-identifier">options</span>)
-40:         <span class="ruby-keyword kw">end</span>
-41: 
-42:         <span class="ruby-identifier">create_sql</span> = <span class="ruby-node">&quot;CREATE#{' TEMPORARY' if options[:temporary]} TABLE &quot;</span>
-43:         <span class="ruby-identifier">create_sql</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{quote_table_name(table_name)} (&quot;</span>
-44:         <span class="ruby-identifier">create_sql</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">table_definition</span>.<span class="ruby-identifier">to_sql</span>
-45:         <span class="ruby-identifier">create_sql</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;) #{options[:options]}&quot;</span>
-46:         <span class="ruby-identifier">execute</span> <span class="ruby-identifier">create_sql</span>            
-47:       <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/extensions/active_record/connection_adapters/abstract/schema_statements.rb, line 40</span>
+40:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_table_from_definition</span>(<span class="ruby-identifier">table_name</span>, <span class="ruby-identifier">options</span>, <span class="ruby-identifier">table_definition</span>)
+41:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:force</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">table_exists?</span>(<span class="ruby-identifier">table_name</span>)
+42:          <span class="ruby-identifier">drop_table</span>(<span class="ruby-identifier">table_name</span>, <span class="ruby-identifier">options</span>)
+43:         <span class="ruby-keyword kw">end</span>
+44: 
+45:         <span class="ruby-identifier">create_sql</span> = <span class="ruby-node">&quot;CREATE#{' TEMPORARY' if options[:temporary]} TABLE &quot;</span>
+46:         <span class="ruby-identifier">create_sql</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;#{quote_table_name(table_name)} (&quot;</span>
+47:         <span class="ruby-identifier">create_sql</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">table_definition</span>.<span class="ruby-identifier">to_sql</span>
+48:         <span class="ruby-identifier">create_sql</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">&quot;) #{options[:options]}&quot;</span>
+49:         <span class="ruby-identifier">execute</span> <span class="ruby-identifier">create_sql</span>            
+50:       <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000179" class="method-detail">
-        <a name="M000179"></a>
+      <div id="method-M000204" class="method-detail">
+        <a name="M000204"></a>
 
         <div class="method-heading">
-          <a href="#M000179" class="method-signature">
+          <a href="#M000204" class="method-signature">
           <span class="method-name">create_versioned_table</span><span class="method-args">(table_name, options={}) {|t| ...}</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000179-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000179-source">
+            onclick="toggleCode('M000204-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000204-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/extensions/active_record/connection_adapters/abstract/schema_statements.rb, line 4</span>
  4:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_versioned_table</span>(<span class="ruby-identifier">table_name</span>, <span class="ruby-identifier">options</span>={}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
@@ -157,55 +157,58 @@
  8:         <span class="ruby-identifier">t</span>.<span class="ruby-identifier">primary_key</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:primary_key</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">get_primary_key</span>(<span class="ruby-identifier">table_name</span>)) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:id</span>] <span class="ruby-operator">==</span> <span class="ruby-keyword kw">false</span>
  9: 
 10:         <span class="ruby-identifier">t</span>.<span class="ruby-identifier">integer</span> <span class="ruby-identifier">:version</span>, <span class="ruby-identifier">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
-11:         <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">t</span>
-12:         <span class="ruby-identifier">t</span>.<span class="ruby-identifier">boolean</span> <span class="ruby-identifier">:published</span>, <span class="ruby-identifier">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>
-13:         <span class="ruby-identifier">t</span>.<span class="ruby-identifier">boolean</span> <span class="ruby-identifier">:deleted</span>, <span class="ruby-identifier">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>
-14:         <span class="ruby-identifier">t</span>.<span class="ruby-identifier">timestamps</span>
-15:         <span class="ruby-identifier">t</span>.<span class="ruby-identifier">integer</span> <span class="ruby-identifier">:updated_by_id</span>
-16:         <span class="ruby-identifier">t</span>.<span class="ruby-identifier">string</span> <span class="ruby-identifier">:revision_comment</span>
-17:         
-18:         <span class="ruby-identifier">create_table_from_definition</span>(<span class="ruby-identifier">table_name</span>, <span class="ruby-identifier">options</span>, <span class="ruby-identifier">t</span>)
-19: 
-20:         <span class="ruby-comment cmt">#Do the versions table</span>
-21:         <span class="ruby-identifier">vt</span> = <span class="ruby-constant">TableDefinition</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>)
-22:         <span class="ruby-identifier">vt</span>.<span class="ruby-identifier">primary_key</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:primary_key</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">get_primary_key</span>(<span class="ruby-identifier">table_name</span>)) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:id</span>] <span class="ruby-operator">==</span> <span class="ruby-keyword kw">false</span>
-23: 
-24:         <span class="ruby-identifier">vt</span>.<span class="ruby-identifier">integer</span> <span class="ruby-node">&quot;#{table_name.singularize}_id&quot;</span>.<span class="ruby-identifier">to_sym</span>
-25:         <span class="ruby-identifier">vt</span>.<span class="ruby-identifier">integer</span> <span class="ruby-identifier">:version</span>, <span class="ruby-identifier">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
-26:         <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">vt</span>    
-27:         <span class="ruby-identifier">vt</span>.<span class="ruby-identifier">boolean</span> <span class="ruby-identifier">:published</span>, <span class="ruby-identifier">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>
-28:         <span class="ruby-identifier">vt</span>.<span class="ruby-identifier">boolean</span> <span class="ruby-identifier">:deleted</span>, <span class="ruby-identifier">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>
-29:         <span class="ruby-identifier">vt</span>.<span class="ruby-identifier">timestamps</span>            
-30:         <span class="ruby-identifier">vt</span>.<span class="ruby-identifier">integer</span> <span class="ruby-identifier">:updated_by_id</span>
-31:         <span class="ruby-identifier">vt</span>.<span class="ruby-identifier">string</span> <span class="ruby-identifier">:revision_comment</span>
-32:         
-33:         <span class="ruby-identifier">create_table_from_definition</span>(<span class="ruby-node">&quot;#{table_name.singularize}_versions&quot;</span>.<span class="ruby-identifier">to_sym</span>, <span class="ruby-identifier">options</span>, <span class="ruby-identifier">vt</span>)
-34:         
-35:       <span class="ruby-keyword kw">end</span>
+11:         <span class="ruby-identifier">t</span>.<span class="ruby-identifier">integer</span> <span class="ruby-identifier">:lock_version</span>, <span class="ruby-identifier">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+12:         <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">t</span>
+13:         <span class="ruby-identifier">t</span>.<span class="ruby-identifier">boolean</span> <span class="ruby-identifier">:published</span>, <span class="ruby-identifier">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>
+14:         <span class="ruby-identifier">t</span>.<span class="ruby-identifier">boolean</span> <span class="ruby-identifier">:deleted</span>, <span class="ruby-identifier">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>
+15:         <span class="ruby-identifier">t</span>.<span class="ruby-identifier">boolean</span> <span class="ruby-identifier">:archived</span>, <span class="ruby-identifier">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>        
+16:         <span class="ruby-identifier">t</span>.<span class="ruby-identifier">timestamps</span>
+17:         <span class="ruby-identifier">t</span>.<span class="ruby-identifier">integer</span> <span class="ruby-identifier">:updated_by_id</span>
+18:         <span class="ruby-identifier">t</span>.<span class="ruby-identifier">string</span> <span class="ruby-identifier">:revision_comment</span>
+19:         
+20:         <span class="ruby-identifier">create_table_from_definition</span>(<span class="ruby-identifier">table_name</span>, <span class="ruby-identifier">options</span>, <span class="ruby-identifier">t</span>)
+21: 
+22:         <span class="ruby-comment cmt">#Do the versions table</span>
+23:         <span class="ruby-identifier">vt</span> = <span class="ruby-constant">TableDefinition</span>.<span class="ruby-identifier">new</span>(<span class="ruby-keyword kw">self</span>)
+24:         <span class="ruby-identifier">vt</span>.<span class="ruby-identifier">primary_key</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:primary_key</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">Base</span>.<span class="ruby-identifier">get_primary_key</span>(<span class="ruby-identifier">table_name</span>)) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:id</span>] <span class="ruby-operator">==</span> <span class="ruby-keyword kw">false</span>
+25: 
+26:         <span class="ruby-identifier">vt</span>.<span class="ruby-identifier">integer</span> <span class="ruby-node">&quot;#{table_name.singularize}_id&quot;</span>.<span class="ruby-identifier">to_sym</span>
+27:         <span class="ruby-identifier">vt</span>.<span class="ruby-identifier">integer</span> <span class="ruby-identifier">:version</span>, <span class="ruby-identifier">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">1</span>
+28:         <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">vt</span>    
+29:         <span class="ruby-identifier">vt</span>.<span class="ruby-identifier">boolean</span> <span class="ruby-identifier">:published</span>, <span class="ruby-identifier">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>
+30:         <span class="ruby-identifier">vt</span>.<span class="ruby-identifier">boolean</span> <span class="ruby-identifier">:deleted</span>, <span class="ruby-identifier">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>
+31:         <span class="ruby-identifier">t</span>.<span class="ruby-identifier">boolean</span> <span class="ruby-identifier">:archived</span>, <span class="ruby-identifier">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>        
+32:         <span class="ruby-identifier">vt</span>.<span class="ruby-identifier">timestamps</span>            
+33:         <span class="ruby-identifier">vt</span>.<span class="ruby-identifier">integer</span> <span class="ruby-identifier">:updated_by_id</span>
+34:         <span class="ruby-identifier">vt</span>.<span class="ruby-identifier">string</span> <span class="ruby-identifier">:revision_comment</span>
+35:         
+36:         <span class="ruby-identifier">create_table_from_definition</span>(<span class="ruby-node">&quot;#{table_name.singularize}_versions&quot;</span>.<span class="ruby-identifier">to_sym</span>, <span class="ruby-identifier">options</span>, <span class="ruby-identifier">vt</span>)
+37:         
+38:       <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000181" class="method-detail">
-        <a name="M000181"></a>
+      <div id="method-M000206" class="method-detail">
+        <a name="M000206"></a>
 
         <div class="method-heading">
-          <a href="#M000181" class="method-signature">
+          <a href="#M000206" class="method-signature">
           <span class="method-name">drop_versioned_table</span><span class="method-args">(table_name)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000181-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000181-source">
+            onclick="toggleCode('M000206-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000206-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/extensions/active_record/connection_adapters/abstract/schema_statements.rb, line 49</span>
-49:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">drop_versioned_table</span>(<span class="ruby-identifier">table_name</span>)
-50:         <span class="ruby-identifier">drop_table</span> <span class="ruby-node">&quot;#{table_name.singularize}_versions&quot;</span>.<span class="ruby-identifier">to_sym</span>
-51:         <span class="ruby-identifier">drop_table</span> <span class="ruby-identifier">table_name</span>
-52:       <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/extensions/active_record/connection_adapters/abstract/schema_statements.rb, line 52</span>
+52:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">drop_versioned_table</span>(<span class="ruby-identifier">table_name</span>)
+53:         <span class="ruby-identifier">drop_table</span> <span class="ruby-node">&quot;#{table_name.singularize}_versions&quot;</span>.<span class="ruby-identifier">to_sym</span>
+54:         <span class="ruby-identifier">drop_table</span> <span class="ruby-identifier">table_name</span>
+55:       <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

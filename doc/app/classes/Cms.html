@@ -55,6 +55,10 @@
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
+                <a href="../files/app/controllers/cms/error_handling_rb.html">
+                app/controllers/cms/error_handling.rb
+                </a>
+        <br />
                 <a href="../files/app/helpers/cms/application_helper_rb.html">
                 app/helpers/cms/application_helper.rb
                 </a>
@@ -77,6 +81,10 @@
         <br />
                 <a href="../files/lib/cms/block_support_rb.html">
                 lib/cms/block_support.rb
+                </a>
+        <br />
+                <a href="../files/lib/cms/data_loader_rb.html">
+                lib/cms/data_loader.rb
                 </a>
         <br />
                 <a href="../files/lib/cms/extensions/hash_rb.html">
@@ -114,8 +122,11 @@ Methods added to this helper will be available to all templates in the cms.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000210">init</a>&nbsp;&nbsp;
-      <a href="#M000209">load_rake_tasks</a>&nbsp;&nbsp;
+      <a href="#M000234">add_generator_paths</a>&nbsp;&nbsp;
+      <a href="#M000236">add_to_rails_paths</a>&nbsp;&nbsp;
+      <a href="#M000235">generator_paths</a>&nbsp;&nbsp;
+      <a href="#M000233">init</a>&nbsp;&nbsp;
+      <a href="#M000232">load_rake_tasks</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -132,26 +143,34 @@ Methods added to this helper will be available to all templates in the cms.
       Module <a href="Cms/Acts.html" class="link">Cms::Acts</a><br />
 Module <a href="Cms/ApplicationHelper.html" class="link">Cms::ApplicationHelper</a><br />
 Module <a href="Cms/BlockSupport.html" class="link">Cms::BlockSupport</a><br />
+Module <a href="Cms/DataLoader.html" class="link">Cms::DataLoader</a><br />
+Module <a href="Cms/ErrorHandling.html" class="link">Cms::ErrorHandling</a><br />
+Module <a href="Cms/Errors.html" class="link">Cms::Errors</a><br />
 Module <a href="Cms/Extensions.html" class="link">Cms::Extensions</a><br />
 Module <a href="Cms/MenuHelper.html" class="link">Cms::MenuHelper</a><br />
 Module <a href="Cms/PathHelper.html" class="link">Cms::PathHelper</a><br />
+Module <a href="Cms/Routes.html" class="link">Cms::Routes</a><br />
+Class <a href="Cms/ApplicationController.html" class="link">Cms::ApplicationController</a><br />
+Class <a href="Cms/AttachmentsController.html" class="link">Cms::AttachmentsController</a><br />
 Class <a href="Cms/BaseController.html" class="link">Cms::BaseController</a><br />
 Class <a href="Cms/BlocksController.html" class="link">Cms::BlocksController</a><br />
+Class <a href="Cms/CacheController.html" class="link">Cms::CacheController</a><br />
 Class <a href="Cms/ConnectorsController.html" class="link">Cms::ConnectorsController</a><br />
+Class <a href="Cms/ContentController.html" class="link">Cms::ContentController</a><br />
 Class <a href="Cms/ContentTypesController.html" class="link">Cms::ContentTypesController</a><br />
 Class <a href="Cms/DashboardController.html" class="link">Cms::DashboardController</a><br />
 Class <a href="Cms/FormBuilder.html" class="link">Cms::FormBuilder</a><br />
 Class <a href="Cms/GroupsController.html" class="link">Cms::GroupsController</a><br />
 Class <a href="Cms/Import.html" class="link">Cms::Import</a><br />
+Class <a href="Cms/LinksController.html" class="link">Cms::LinksController</a><br />
 Class <a href="Cms/PageTemplatesController.html" class="link">Cms::PageTemplatesController</a><br />
 Class <a href="Cms/PagesController.html" class="link">Cms::PagesController</a><br />
-Class <a href="Cms/PortletTypesController.html" class="link">Cms::PortletTypesController</a><br />
-Class <a href="Cms/PortletsController.html" class="link">Cms::PortletsController</a><br />
 Class <a href="Cms/RedirectsController.html" class="link">Cms::RedirectsController</a><br />
 Class <a href="Cms/ResourceController.html" class="link">Cms::ResourceController</a><br />
 Class <a href="Cms/SectionNodesController.html" class="link">Cms::SectionNodesController</a><br />
 Class <a href="Cms/SectionsController.html" class="link">Cms::SectionsController</a><br />
 Class <a href="Cms/SessionsController.html" class="link">Cms::SessionsController</a><br />
+Class <a href="Cms/ToolbarController.html" class="link">Cms::ToolbarController</a><br />
 Class <a href="Cms/UsersController.html" class="link">Cms::UsersController</a><br />
 
     </div>
@@ -166,11 +185,93 @@ Class <a href="Cms/UsersController.html" class="link">Cms::UsersController</a><b
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000210" class="method-detail">
-        <a name="M000210"></a>
+      <div id="method-M000234" class="method-detail">
+        <a name="M000234"></a>
 
         <div class="method-heading">
-          <a href="#M000210" class="method-signature">
+          <a href="#M000234" class="method-signature">
+          <span class="method-name">add_generator_paths</span><span class="method-args">(src_root, *files)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+This is used by CMS modules to register with the CMS generator which files
+should be copied over to the app when the CMS generator is run. src_root is
+the absolute path to the root of the files, then each argument after that
+is a Dir.glob pattern string.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000234-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000234-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/extensions.rb, line 28</span>
+28:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_generator_paths</span>(<span class="ruby-identifier">src_root</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">files</span>)
+29:       <span class="ruby-identifier">generator_paths</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">src_root</span>, <span class="ruby-identifier">files</span>]
+30:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000236" class="method-detail">
+        <a name="M000236"></a>
+
+        <div class="method-heading">
+          <a href="#M000236" class="method-signature">
+          <span class="method-name">add_to_rails_paths</span><span class="method-args">(path)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000236-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000236-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/extensions.rb, line 36</span>
+36:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_to_rails_paths</span>(<span class="ruby-identifier">path</span>)
+37:       <span class="ruby-constant">Dependencies</span>.<span class="ruby-identifier">load_paths</span> <span class="ruby-operator">+=</span> [
+38:         <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">path</span>, <span class="ruby-value str">&quot;app&quot;</span>, <span class="ruby-value str">&quot;controllers&quot;</span>),
+39:         <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">path</span>, <span class="ruby-value str">&quot;app&quot;</span>, <span class="ruby-value str">&quot;helpers&quot;</span>),
+40:         <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">path</span>, <span class="ruby-value str">&quot;app&quot;</span>, <span class="ruby-value str">&quot;models&quot;</span>),
+41:         <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">path</span>, <span class="ruby-value str">&quot;app&quot;</span>, <span class="ruby-value str">&quot;portlets&quot;</span>)
+42:       ]
+43:       <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">configuration</span>.<span class="ruby-identifier">controller_paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">path</span>, <span class="ruby-value str">&quot;app&quot;</span>, <span class="ruby-value str">&quot;controllers&quot;</span>)
+44:       <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">append_view_path</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">path</span>, <span class="ruby-value str">&quot;app&quot;</span>, <span class="ruby-value str">&quot;views&quot;</span>)      
+45:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000235" class="method-detail">
+        <a name="M000235"></a>
+
+        <div class="method-heading">
+          <a href="#M000235" class="method-signature">
+          <span class="method-name">generator_paths</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000235-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000235-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/extensions.rb, line 32</span>
+32:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">generator_paths</span>
+33:       <span class="ruby-ivar">@generator_paths</span> <span class="ruby-operator">||=</span> []
+34:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000233" class="method-detail">
+        <a name="M000233"></a>
+
+        <div class="method-heading">
+          <a href="#M000233" class="method-signature">
           <span class="method-name">init</span><span class="method-args">()</span>
           </a>
         </div>
@@ -180,38 +281,42 @@ Class <a href="Cms/UsersController.html" class="link">Cms::UsersController</a><b
 This is called after the environment is ready
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000210-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000210-source">
+            onclick="toggleCode('M000233-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000233-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/extensions.rb, line 9</span>
  9:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">init</span>
-10:       <span class="ruby-comment cmt">#Write out the page templates to the file system</span>
-11:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">tables</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-value str">&quot;page_templates&quot;</span>)
-12:         <span class="ruby-identifier">tmp_view_path</span> = <span class="ruby-node">&quot;#{Rails.root}/tmp/views&quot;</span>
-13:         <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span>(<span class="ruby-node">&quot;~~ Writing page templates to #{tmp_view_path}&quot;</span>)
-14:         <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">append_view_path</span> <span class="ruby-identifier">tmp_view_path</span>
-15:         <span class="ruby-constant">PageTemplate</span>.<span class="ruby-identifier">all</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">pt</span><span class="ruby-operator">|</span> <span class="ruby-identifier">pt</span>.<span class="ruby-identifier">create_layout_file</span> }
-16:       <span class="ruby-keyword kw">end</span>      
-17:       <span class="ruby-constant">ActionView</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">default_form_builder</span> = <span class="ruby-constant">Cms</span><span class="ruby-operator">::</span><span class="ruby-constant">FormBuilder</span>
-18:     <span class="ruby-keyword kw">end</span>
+10:       
+11:       <span class="ruby-comment cmt">#Laod all the CMS Routes</span>
+12:       <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">Routing</span><span class="ruby-operator">::</span><span class="ruby-constant">RouteSet</span><span class="ruby-operator">::</span><span class="ruby-constant">Mapper</span>.<span class="ruby-identifier">send</span> <span class="ruby-identifier">:include</span>, <span class="ruby-constant">Cms</span><span class="ruby-operator">::</span><span class="ruby-constant">Routes</span>
+13:       
+14:       <span class="ruby-comment cmt">#Write out the page templates to the file system</span>
+15:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">connection</span>.<span class="ruby-identifier">tables</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-value str">&quot;page_templates&quot;</span>)
+16:         <span class="ruby-identifier">tmp_view_path</span> = <span class="ruby-node">&quot;#{Rails.root}/tmp/views&quot;</span>
+17:         <span class="ruby-constant">Rails</span>.<span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span>(<span class="ruby-node">&quot;~~ Writing page templates to #{tmp_view_path}&quot;</span>)
+18:         <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">append_view_path</span> <span class="ruby-identifier">tmp_view_path</span>
+19:         <span class="ruby-constant">PageTemplate</span>.<span class="ruby-identifier">all</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">pt</span><span class="ruby-operator">|</span> <span class="ruby-identifier">pt</span>.<span class="ruby-identifier">create_layout_file</span> }
+20:       <span class="ruby-keyword kw">end</span>      
+21:       <span class="ruby-constant">ActionView</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">default_form_builder</span> = <span class="ruby-constant">Cms</span><span class="ruby-operator">::</span><span class="ruby-constant">FormBuilder</span>
+22:     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000209" class="method-detail">
-        <a name="M000209"></a>
+      <div id="method-M000232" class="method-detail">
+        <a name="M000232"></a>
 
         <div class="method-heading">
-          <a href="#M000209" class="method-signature">
+          <a href="#M000232" class="method-signature">
           <span class="method-name">load_rake_tasks</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000209-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000209-source">
+            onclick="toggleCode('M000232-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000232-source">
 <pre>
    <span class="ruby-comment cmt"># File lib/cms/extensions.rb, line 5</span>
 5:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">load_rake_tasks</span>

@@ -86,12 +86,12 @@ Instance Methods
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000155">forget_me</a>&nbsp;&nbsp;
-      <a href="#M000154">refresh_token</a>&nbsp;&nbsp;
-      <a href="#M000151">remember_me</a>&nbsp;&nbsp;
-      <a href="#M000152">remember_me_for</a>&nbsp;&nbsp;
-      <a href="#M000153">remember_me_until</a>&nbsp;&nbsp;
-      <a href="#M000150">remember_token?</a>&nbsp;&nbsp;
+      <a href="#M000174">forget_me</a>&nbsp;&nbsp;
+      <a href="#M000173">refresh_token</a>&nbsp;&nbsp;
+      <a href="#M000170">remember_me</a>&nbsp;&nbsp;
+      <a href="#M000171">remember_me_for</a>&nbsp;&nbsp;
+      <a href="#M000172">remember_me_until</a>&nbsp;&nbsp;
+      <a href="#M000169">remember_token?</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -113,11 +113,11 @@ Instance Methods
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000155" class="method-detail">
-        <a name="M000155"></a>
+      <div id="method-M000174" class="method-detail">
+        <a name="M000174"></a>
 
         <div class="method-heading">
-          <a href="#M000155" class="method-signature">
+          <a href="#M000174" class="method-signature">
           <span class="method-name">forget_me</span><span class="method-args">()</span>
           </a>
         </div>
@@ -129,8 +129,8 @@ Deletes the server-side record of the authentication token. The client-side
 deleted together.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000155-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000155-source">
+            onclick="toggleCode('M000174-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000174-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/authentication/by_cookie_token.rb, line 55</span>
 55:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">forget_me</span>
@@ -143,11 +143,11 @@ deleted together.
         </div>
       </div>
 
-      <div id="method-M000154" class="method-detail">
-        <a name="M000154"></a>
+      <div id="method-M000173" class="method-detail">
+        <a name="M000173"></a>
 
         <div class="method-heading">
-          <a href="#M000154" class="method-signature">
+          <a href="#M000173" class="method-signature">
           <span class="method-name">refresh_token</span><span class="method-args">()</span>
           </a>
         </div>
@@ -157,8 +157,8 @@ deleted together.
 refresh token (keeping same expires_at) if it exists
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000154-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000154-source">
+            onclick="toggleCode('M000173-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000173-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/authentication/by_cookie_token.rb, line 43</span>
 43:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">refresh_token</span>
@@ -172,11 +172,11 @@ refresh token (keeping same expires_at) if it exists
         </div>
       </div>
 
-      <div id="method-M000151" class="method-detail">
-        <a name="M000151"></a>
+      <div id="method-M000170" class="method-detail">
+        <a name="M000170"></a>
 
         <div class="method-heading">
-          <a href="#M000151" class="method-signature">
+          <a href="#M000170" class="method-signature">
           <span class="method-name">remember_me</span><span class="method-args">()</span>
           </a>
         </div>
@@ -187,8 +187,8 @@ These create and unset the fields required for remembering users between
 browser closes
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000151-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000151-source">
+            onclick="toggleCode('M000170-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000170-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/authentication/by_cookie_token.rb, line 28</span>
 28:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remember_me</span>
@@ -199,19 +199,19 @@ browser closes
         </div>
       </div>
 
-      <div id="method-M000152" class="method-detail">
-        <a name="M000152"></a>
+      <div id="method-M000171" class="method-detail">
+        <a name="M000171"></a>
 
         <div class="method-heading">
-          <a href="#M000152" class="method-signature">
+          <a href="#M000171" class="method-signature">
           <span class="method-name">remember_me_for</span><span class="method-args">(time)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000152-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000152-source">
+            onclick="toggleCode('M000171-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000171-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/authentication/by_cookie_token.rb, line 32</span>
 32:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remember_me_for</span>(<span class="ruby-identifier">time</span>)
@@ -222,19 +222,19 @@ browser closes
         </div>
       </div>
 
-      <div id="method-M000153" class="method-detail">
-        <a name="M000153"></a>
+      <div id="method-M000172" class="method-detail">
+        <a name="M000172"></a>
 
         <div class="method-heading">
-          <a href="#M000153" class="method-signature">
+          <a href="#M000172" class="method-signature">
           <span class="method-name">remember_me_until</span><span class="method-args">(time)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000153-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000153-source">
+            onclick="toggleCode('M000172-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000172-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/authentication/by_cookie_token.rb, line 36</span>
 36:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remember_me_until</span>(<span class="ruby-identifier">time</span>)
@@ -247,19 +247,19 @@ browser closes
         </div>
       </div>
 
-      <div id="method-M000150" class="method-detail">
-        <a name="M000150"></a>
+      <div id="method-M000169" class="method-detail">
+        <a name="M000169"></a>
 
         <div class="method-heading">
-          <a href="#M000150" class="method-signature">
+          <a href="#M000169" class="method-signature">
           <span class="method-name">remember_token?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000150-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000150-source">
+            onclick="toggleCode('M000169-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000169-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/authentication/by_cookie_token.rb, line 22</span>
 22:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remember_token?</span>

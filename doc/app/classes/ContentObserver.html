@@ -5,7 +5,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Class: PortletType</title>
+  <title>Class: ContentObserver</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
@@ -50,13 +50,13 @@
         <table class="header-table">
         <tr class="top-aligned-row">
           <td><strong>Class</strong></td>
-          <td class="class-name-in-header">PortletType</td>
+          <td class="class-name-in-header">ContentObserver</td>
         </tr>
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../files/app/models/portlet_type_rb.html">
-                app/models/portlet_type.rb
+                <a href="../files/app/models/content_observer_rb.html">
+                app/models/content_observer.rb
                 </a>
         <br />
             </td>
@@ -65,7 +65,7 @@
         <tr class="top-aligned-row">
             <td><strong>Parent:</strong></td>
             <td>
-                ActiveRecord::Base
+                ActiveRecord::Observer
             </td>
         </tr>
         </table>
@@ -86,7 +86,9 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000120">render</a>&nbsp;&nbsp;
+      <a href="#M000119">after_create</a>&nbsp;&nbsp;
+      <a href="#M000121">after_destroy</a>&nbsp;&nbsp;
+      <a href="#M000120">after_update</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -108,12 +110,58 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
+      <div id="method-M000119" class="method-detail">
+        <a name="M000119"></a>
+
+        <div class="method-heading">
+          <a href="#M000119" class="method-signature">
+          <span class="method-name">after_create</span><span class="method-args">(record)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000119-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000119-source">
+<pre>
+   <span class="ruby-comment cmt"># File app/models/content_observer.rb, line 4</span>
+4:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">after_create</span>(<span class="ruby-identifier">record</span>)
+5:     <span class="ruby-identifier">expire_cache</span>
+6:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000121" class="method-detail">
+        <a name="M000121"></a>
+
+        <div class="method-heading">
+          <a href="#M000121" class="method-signature">
+          <span class="method-name">after_destroy</span><span class="method-args">(record)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000121-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000121-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/content_observer.rb, line 12</span>
+12:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">after_destroy</span>(<span class="ruby-identifier">record</span>)
+13:     <span class="ruby-identifier">expire_cache</span>
+14:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
       <div id="method-M000120" class="method-detail">
         <a name="M000120"></a>
 
         <div class="method-heading">
           <a href="#M000120" class="method-signature">
-          <span class="method-name">render</span><span class="method-args">(portlet)</span>
+          <span class="method-name">after_update</span><span class="method-args">(record)</span>
           </a>
         </div>
       
@@ -122,18 +170,10 @@
             onclick="toggleCode('M000120-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000120-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/portlet_type.rb, line 4</span>
- 4:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>(<span class="ruby-identifier">portlet</span>)
- 5:     <span class="ruby-ivar">@portlet</span> = <span class="ruby-identifier">portlet</span>
- 6:     <span class="ruby-identifier">eval</span>(<span class="ruby-identifier">code</span>)
- 7:     <span class="ruby-keyword kw">begin</span>
- 8:       <span class="ruby-constant">ERB</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">template</span>).<span class="ruby-identifier">result</span>(<span class="ruby-identifier">binding</span>)
- 9:     <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span>
-10:       <span class="ruby-constant">CGI</span>.<span class="ruby-identifier">escapeHTML</span> <span class="ruby-node">&quot;Could not render template: #{$!}\n&quot;</span>
-11:     <span class="ruby-keyword kw">end</span>      
-12:   <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span>
-13:     <span class="ruby-constant">CGI</span>.<span class="ruby-identifier">escapeHTML</span> <span class="ruby-node">&quot;Could not evaluate code: #{$!}\n&quot;</span>
-14:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/content_observer.rb, line 8</span>
+ 8:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">after_update</span>(<span class="ruby-identifier">record</span>)
+ 9:     <span class="ruby-identifier">expire_cache</span>
+10:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

@@ -88,10 +88,11 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000314">add_default_permissions</a>&nbsp;&nbsp;
-      <a href="#M000312">after_create_url</a>&nbsp;&nbsp;
-      <a href="#M000313">after_update_url</a>&nbsp;&nbsp;
-      <a href="#M000311">index</a>&nbsp;&nbsp;
+      <a href="#M000368">add_default_permissions</a>&nbsp;&nbsp;
+      <a href="#M000369">add_default_sections</a>&nbsp;&nbsp;
+      <a href="#M000366">after_create_url</a>&nbsp;&nbsp;
+      <a href="#M000367">after_update_url</a>&nbsp;&nbsp;
+      <a href="#M000365">index</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -113,25 +114,25 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000311" class="method-detail">
-        <a name="M000311"></a>
+      <div id="method-M000365" class="method-detail">
+        <a name="M000365"></a>
 
         <div class="method-heading">
-          <a href="#M000311" class="method-signature">
+          <a href="#M000365" class="method-signature">
           <span class="method-name">index</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000311-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000311-source">
+            onclick="toggleCode('M000365-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000365-source">
 <pre>
-   <span class="ruby-comment cmt"># File app/controllers/cms/groups_controller.rb, line 6</span>
-6:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index</span>
-7:     <span class="ruby-comment cmt">#Groups get loaded in the view</span>
-8:     <span class="ruby-comment cmt">#We're doing this because the new form is on the index page</span>
-9:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/groups_controller.rb, line 9</span>
+ 9:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index</span>
+10:     <span class="ruby-comment cmt">#Groups get loaded in the view</span>
+11:     <span class="ruby-comment cmt">#We're doing this because the new form is on the index page</span>
+12:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -139,11 +140,11 @@
 
       <h3 class="section-bar">Protected Instance methods</h3>
 
-      <div id="method-M000314" class="method-detail">
-        <a name="M000314"></a>
+      <div id="method-M000368" class="method-detail">
+        <a name="M000368"></a>
 
         <div class="method-heading">
-          <a href="#M000314" class="method-signature">
+          <a href="#M000368" class="method-signature">
           <span class="method-name">add_default_permissions</span><span class="method-args">()</span>
           </a>
         </div>
@@ -153,60 +154,87 @@
 The group has been created and we add these permissions to it
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000314-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000314-source">
+            onclick="toggleCode('M000368-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000368-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/groups_controller.rb, line 20</span>
-20:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_default_permissions</span>
-21:       <span class="ruby-ivar">@object</span>.<span class="ruby-identifier">permissions</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Permission</span>.<span class="ruby-identifier">find_by_name</span>(<span class="ruby-value str">'editor'</span>)
-22:       <span class="ruby-ivar">@object</span>.<span class="ruby-identifier">permissions</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Permission</span>.<span class="ruby-identifier">find_by_name</span>(<span class="ruby-value str">'publish-page'</span>)
-23:     <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/groups_controller.rb, line 23</span>
+23:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_default_permissions</span>
+24:       <span class="ruby-comment cmt">#TODO: These shouldn't be hard-coded here, </span>
+25:       <span class="ruby-comment cmt">#these values should be stored in the database to make them easy to change</span>
+26:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@object</span>.<span class="ruby-identifier">cms_access?</span>
+27:         <span class="ruby-ivar">@object</span>.<span class="ruby-identifier">permissions</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Permission</span>.<span class="ruby-identifier">find_by_name</span>(<span class="ruby-value str">'edit_content'</span>)
+28:         <span class="ruby-ivar">@object</span>.<span class="ruby-identifier">permissions</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">Permission</span>.<span class="ruby-identifier">find_by_name</span>(<span class="ruby-value str">'publish_content'</span>)
+29:       <span class="ruby-keyword kw">end</span>
+30:     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000312" class="method-detail">
-        <a name="M000312"></a>
+      <div id="method-M000369" class="method-detail">
+        <a name="M000369"></a>
 
         <div class="method-heading">
-          <a href="#M000312" class="method-signature">
+          <a href="#M000369" class="method-signature">
+          <span class="method-name">add_default_sections</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000369-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000369-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/cms/groups_controller.rb, line 32</span>
+32:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_default_sections</span>
+33:       <span class="ruby-ivar">@object</span>.<span class="ruby-identifier">sections</span> = <span class="ruby-constant">Section</span>.<span class="ruby-identifier">all</span>
+34:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000366" class="method-detail">
+        <a name="M000366"></a>
+
+        <div class="method-heading">
+          <a href="#M000366" class="method-signature">
           <span class="method-name">after_create_url</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000312-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000312-source">
+            onclick="toggleCode('M000366-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000366-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/groups_controller.rb, line 12</span>
-12:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">after_create_url</span>
-13:       <span class="ruby-identifier">index_url</span>
-14:     <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/groups_controller.rb, line 15</span>
+15:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">after_create_url</span>
+16:       <span class="ruby-identifier">index_url</span>
+17:     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000313" class="method-detail">
-        <a name="M000313"></a>
+      <div id="method-M000367" class="method-detail">
+        <a name="M000367"></a>
 
         <div class="method-heading">
-          <a href="#M000313" class="method-signature">
+          <a href="#M000367" class="method-signature">
           <span class="method-name">after_update_url</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000313-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000313-source">
+            onclick="toggleCode('M000367-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000367-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/groups_controller.rb, line 15</span>
-15:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">after_update_url</span>
-16:       <span class="ruby-identifier">index_url</span>
-17:     <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/groups_controller.rb, line 18</span>
+18:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">after_update_url</span>
+19:       <span class="ruby-identifier">index_url</span>
+20:     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

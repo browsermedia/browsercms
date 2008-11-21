@@ -89,7 +89,7 @@
 
       <div class="name-list">
       <a href="#M000008">display_name</a>&nbsp;&nbsp;
-      <a href="#M000009">render</a>&nbsp;&nbsp;
+      <a href="#M000009">renderer</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -97,6 +97,13 @@
 
 
     <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name"><a href="Attachable.html">Attachable</a></span>
+      </div>
+    </div>
 
     <div id="section">
 
@@ -141,7 +148,7 @@
 
         <div class="method-heading">
           <a href="#M000009" class="method-signature">
-          <span class="method-name">render</span><span class="method-args">()</span>
+          <span class="method-name">renderer</span><span class="method-args">(image_block)</span>
           </a>
         </div>
       
@@ -151,10 +158,9 @@
           <div class="method-source-code" id="M000009-source">
 <pre>
     <span class="ruby-comment cmt"># File app/models/image_block.rb, line 9</span>
- 9:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>
-10:     <span class="ruby-comment cmt">#TODO: Escape values</span>
-11:     <span class="ruby-node">%Q{&lt;img src=&quot;#{path}&quot; alt=&quot;#{name}&quot;/&gt;}</span>
-12:   <span class="ruby-keyword kw">end</span>
+ 9:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">renderer</span>(<span class="ruby-identifier">image_block</span>)
+10:     <span class="ruby-identifier">lambda</span> { <span class="ruby-node">%Q{&lt;img src=&quot;#{image_block.attachment_link}&quot; alt=&quot;#{h(image_block.name)}&quot;/&gt;}</span> }    
+11:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

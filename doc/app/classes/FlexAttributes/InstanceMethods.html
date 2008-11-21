@@ -80,8 +80,8 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000176">flex_attributes</a>&nbsp;&nbsp;
-      <a href="#M000175">is_flex_attribute?</a>&nbsp;&nbsp;
+      <a href="#M000203">flex_attributes</a>&nbsp;&nbsp;
+      <a href="#M000202">is_flex_attribute?</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -103,11 +103,11 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000176" class="method-detail">
-        <a name="M000176"></a>
+      <div id="method-M000203" class="method-detail">
+        <a name="M000203"></a>
 
         <div class="method-heading">
-          <a href="#M000176" class="method-signature">
+          <a href="#M000203" class="method-signature">
           <span class="method-name">flex_attributes</span><span class="method-args">(model)</span>
           </a>
         </div>
@@ -120,8 +120,8 @@ empty array. If you just have a static list the :fields option is most
 likely easier.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000176-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000176-source">
+            onclick="toggleCode('M000203-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000203-source">
 <pre>
      <span class="ruby-comment cmt"># File lib/flex_attributes.rb, line 347</span>
 347:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">flex_attributes</span>(<span class="ruby-identifier">model</span>); <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">end</span>
@@ -130,11 +130,11 @@ likely easier.
         </div>
       </div>
 
-      <div id="method-M000175" class="method-detail">
-        <a name="M000175"></a>
+      <div id="method-M000202" class="method-detail">
+        <a name="M000202"></a>
 
         <div class="method-heading">
-          <a href="#M000175" class="method-signature">
+          <a href="#M000202" class="method-signature">
           <span class="method-name">is_flex_attribute?</span><span class="method-args">(attr, model)</span>
           </a>
         </div>
@@ -143,14 +143,14 @@ likely easier.
           <p>
 Will determine if the given attribute is a flex attribute on the given
 model. Override this in your class to provide custom logic if the <a
-href="InstanceMethods.html#M000176">flex_attributes</a> method or the
+href="InstanceMethods.html#M000203">flex_attributes</a> method or the
 :fields option are not flexible enough. If you override this method :fields
-and <a href="InstanceMethods.html#M000176">flex_attributes</a> will not
+and <a href="InstanceMethods.html#M000203">flex_attributes</a> will not
 apply at all unless you implement them yourself.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000175-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000175-source">
+            onclick="toggleCode('M000202-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000202-source">
 <pre>
      <span class="ruby-comment cmt"># File lib/flex_attributes.rb, line 334</span>
 334:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">is_flex_attribute?</span>(<span class="ruby-identifier">attr</span>, <span class="ruby-identifier">model</span>)

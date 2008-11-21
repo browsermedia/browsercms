@@ -5,7 +5,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Class: ActiveRecord::Migrator</title>
+  <title>Class: Cms::CacheController</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
@@ -50,13 +50,13 @@
         <table class="header-table">
         <tr class="top-aligned-row">
           <td><strong>Class</strong></td>
-          <td class="class-name-in-header">ActiveRecord::Migrator</td>
+          <td class="class-name-in-header">Cms::CacheController</td>
         </tr>
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../files/lib/cms/extensions/active_record/migration_rb.html">
-                lib/cms/extensions/active_record/migration.rb
+                <a href="../../files/app/controllers/cms/cache_controller_rb.html">
+                app/controllers/cms/cache_controller.rb
                 </a>
         <br />
             </td>
@@ -65,7 +65,9 @@
         <tr class="top-aligned-row">
             <td><strong>Parent:</strong></td>
             <td>
-                Object
+                <a href="BaseController.html">
+                Cms::BaseController
+               </a>
             </td>
         </tr>
         </table>
@@ -86,8 +88,7 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000183">add_path</a>&nbsp;&nbsp;
-      <a href="#M000182">additional_migration_paths</a>&nbsp;&nbsp;
+      <a href="#M000324">expire</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -107,49 +108,28 @@
 
     <!-- if method_list -->
     <div id="methods">
-      <h3 class="section-bar">Public Class methods</h3>
+      <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000183" class="method-detail">
-        <a name="M000183"></a>
+      <div id="method-M000324" class="method-detail">
+        <a name="M000324"></a>
 
         <div class="method-heading">
-          <a href="#M000183" class="method-signature">
-          <span class="method-name">add_path</span><span class="method-args">(path)</span>
+          <a href="#M000324" class="method-signature">
+          <span class="method-name">expire</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000183-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000183-source">
+            onclick="toggleCode('M000324-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000324-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/extensions/active_record/migration.rb, line 14</span>
-14:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_path</span>(<span class="ruby-identifier">path</span>)
-15:         <span class="ruby-identifier">additional_migration_paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">path</span>
-16:       <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000182" class="method-detail">
-        <a name="M000182"></a>
-
-        <div class="method-heading">
-          <a href="#M000182" class="method-signature">
-          <span class="method-name">additional_migration_paths</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000182-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000182-source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/cms/extensions/active_record/migration.rb, line 10</span>
-10:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">additional_migration_paths</span>
-11:         <span class="ruby-ivar">@additional_migration_paths</span> <span class="ruby-operator">||=</span> []  
-12:       <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/cache_controller.rb, line 6</span>
+ 6:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">expire</span>
+ 7:     <span class="ruby-identifier">cache_store</span>.<span class="ruby-identifier">delete_all</span>
+ 8:     <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-value str">&quot;Page Cache Flushed&quot;</span>
+ 9:     <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;index&quot;</span>
+10:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

@@ -80,7 +80,7 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000234">is_paranoid</a>&nbsp;&nbsp;
+      <a href="#M000268">is_paranoid</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -115,6 +115,11 @@
           <td>-&gt;</td>
           <td class="context-item-value">count_with_deleted</td>
         </tr>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">delete_all</td>
+          <td>-&gt;</td>
+          <td class="context-item-value">delete_all!</td>
+        </tr>
                         </table>
       </div>
     </div>
@@ -127,31 +132,32 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000234" class="method-detail">
-        <a name="M000234"></a>
+      <div id="method-M000268" class="method-detail">
+        <a name="M000268"></a>
 
         <div class="method-heading">
-          <a href="#M000234" class="method-signature">
+          <a href="#M000268" class="method-signature">
           <span class="method-name">is_paranoid</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000234-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000234-source">
+            onclick="toggleCode('M000268-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000268-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/acts/paranoid.rb, line 4</span>
  4:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">is_paranoid</span>
- 5:         <span class="ruby-identifier">named_scope</span> <span class="ruby-identifier">:not_deleted</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value str">&quot;deleted = ?&quot;</span>, <span class="ruby-keyword kw">false</span>]
+ 5:         <span class="ruby-identifier">named_scope</span> <span class="ruby-identifier">:not_deleted</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-node">&quot;#{table_name}.deleted = ?&quot;</span>, <span class="ruby-keyword kw">false</span>]
  6:         <span class="ruby-keyword kw">class</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-keyword kw">self</span>
  7:           <span class="ruby-identifier">alias_method</span> <span class="ruby-identifier">:find_with_deleted</span>, <span class="ruby-identifier">:find</span>
  8:           <span class="ruby-identifier">alias_method</span> <span class="ruby-identifier">:count_with_deleted</span>, <span class="ruby-identifier">:count</span>
- 9:         <span class="ruby-keyword kw">end</span>
-10:         <span class="ruby-identifier">alias_method</span> <span class="ruby-identifier">:destroy_without_callbacks!</span>, <span class="ruby-identifier">:destroy_without_callbacks</span>
-11:         <span class="ruby-identifier">extend</span> <span class="ruby-constant">ClassMethods</span>
-12:         <span class="ruby-identifier">include</span> <span class="ruby-constant">InstanceMethods</span>
-13:       <span class="ruby-keyword kw">end</span>
+ 9:           <span class="ruby-identifier">alias_method</span> <span class="ruby-identifier">:delete_all!</span>, <span class="ruby-identifier">:delete_all</span>
+10:         <span class="ruby-keyword kw">end</span>
+11:         <span class="ruby-identifier">alias_method</span> <span class="ruby-identifier">:destroy_without_callbacks!</span>, <span class="ruby-identifier">:destroy_without_callbacks</span>
+12:         <span class="ruby-identifier">extend</span> <span class="ruby-constant">ClassMethods</span>
+13:         <span class="ruby-identifier">include</span> <span class="ruby-constant">InstanceMethods</span>
+14:       <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

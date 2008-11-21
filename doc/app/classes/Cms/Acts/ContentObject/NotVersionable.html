@@ -5,10 +5,10 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Class: Cms::PortletsController</title>
+  <title>Module: Cms::Acts::ContentObject::NotVersionable</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
-  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
   // <![CDATA[
 
@@ -49,27 +49,19 @@
     <div id="classHeader">
         <table class="header-table">
         <tr class="top-aligned-row">
-          <td><strong>Class</strong></td>
-          <td class="class-name-in-header">Cms::PortletsController</td>
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Cms::Acts::ContentObject::NotVersionable</td>
         </tr>
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../files/app/controllers/cms/portlets_controller_rb.html">
-                app/controllers/cms/portlets_controller.rb
+                <a href="../../../../files/lib/cms/acts/content_object_rb.html">
+                lib/cms/acts/content_object.rb
                 </a>
         <br />
             </td>
         </tr>
 
-        <tr class="top-aligned-row">
-            <td><strong>Parent:</strong></td>
-            <td>
-                <a href="BaseController.html">
-                Cms::BaseController
-               </a>
-            </td>
-        </tr>
         </table>
     </div>
   <!-- banner header -->
@@ -88,7 +80,7 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000302">new</a>&nbsp;&nbsp;
+      <a href="#M000241">published?</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -103,6 +95,23 @@
 
 
 
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">published</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc">
+<a href="NotVersionable.html">NotVersionable</a> content objects are always
+published
+
+</td>
+        </tr>
+        </table>
+      </div>
+    </div>
       
 
 
@@ -110,27 +119,24 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000302" class="method-detail">
-        <a name="M000302"></a>
+      <div id="method-M000241" class="method-detail">
+        <a name="M000241"></a>
 
         <div class="method-heading">
-          <a href="#M000302" class="method-signature">
-          <span class="method-name">new</span><span class="method-args">()</span>
+          <a href="#M000241" class="method-signature">
+          <span class="method-name">published?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000302-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000302-source">
+            onclick="toggleCode('M000241-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000241-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/portlets_controller.rb, line 5</span>
- 5:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new</span>
- 6:     <span class="ruby-ivar">@portlet_type</span> = <span class="ruby-constant">PortletType</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:portlet_type_id</span>])
- 7:     <span class="ruby-ivar">@block</span> = <span class="ruby-ivar">@portlet_type</span>.<span class="ruby-identifier">portlets</span>.<span class="ruby-identifier">build</span>
- 8:     <span class="ruby-ivar">@content_type</span> = <span class="ruby-constant">ContentType</span>.<span class="ruby-identifier">find_by_key</span>(<span class="ruby-value str">&quot;portlet&quot;</span>)
- 9:     <span class="ruby-identifier">render</span> <span class="ruby-identifier">:template</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'cms/blocks/new'</span>
-10:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/acts/content_object.rb, line 62</span>
+62:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">published?</span>
+63:           <span class="ruby-keyword kw">true</span>
+64:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
