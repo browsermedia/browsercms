@@ -1,5 +1,33 @@
 //CMS related functions
 jQuery(function($) {
+  
+  //It would be cool if these were added to the real jQuery
+    //You can call this a few ways:
+    //createElement('p') => "<p/>"
+    //createElement('p','hi') => "<p>hi</p>"
+    //createElement('p', {align: 'center'}) => "<p align="center"/>"
+    //createElement('p','hi',{align: 'center'}) => "<p align="center">hi</p>"    
+    $.createElement = function(tag_name, tag_value, tag_attrs) {
+      var name = tag_name
+      if(typeof tag_value == "object") {
+        var value = null
+        var attrs = tag_value
+      } else {
+        var value = tag_value
+        var attrs = tag_attrs
+      }
+      var element = $(document.createElement(tag_name))
+      if(attrs) {
+        $.each(attrs, function(k,v) {
+          element.attr(k,v)
+        })
+      }
+      if(value) {
+        element.html(value)
+      }
+      return element
+    }
+  
   $.cms = {
     showNotice: function(msg) {
       $('#message').removeClass('error').addClass('notice').html(msg).show().animate({opacity: 1.0}, 3000).fadeOut("normal")
