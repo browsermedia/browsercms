@@ -1,5 +1,5 @@
 <% @page_title = @page.page_title %>
-<% if @mode == "edit" %>
+<% able_to?(:edit_content, :publish_content) do %>
   <% content_for :html_head do %>
     <%= stylesheet_link_tag 'cms/page' %>
   <% end %>

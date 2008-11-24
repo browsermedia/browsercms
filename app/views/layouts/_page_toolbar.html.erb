@@ -3,7 +3,7 @@
     <% if @mode == "edit" %>
       <%= link_to "Switch to View Mode", "#{@page.path}?mode=view", :target => "_top" %>
     <% else %>
-      <%= link_to "Switch to View Mode", "#{@page.path}?mode=edit", :target => "_top" %>    
+      <%= link_to "Switch to Edit Mode", "#{@page.path}?mode=edit", :target => "_top" %>    
     <% end %>
 
     <%= link_to "Edit Page Properties", cms_path(@page, :edit), :target => "_top" %>
