@@ -15,7 +15,25 @@
           <div id="cms_content_library">
             <div id="menu">
               <div class="pad">
-                <%= yield :sidebar %>              
+                
+                <h3>Search</h3>
+                <div class="searchbox">
+                <% form_tag '', :method => :get do -%>
+                  <%= text_field_tag :search, params[:search] %>
+                  <% if @content_type.name == "HtmlBlock" -%>
+                    <p><%= check_box_tag :include_body, true, params[:include_body] %> Include body?</p>
+                  <% end -%>
+                  <% if %w[FileBlock ImageBlock].include?(@content_type.name) %>
+                    <p><%= select_tag 'section_id', searchable_sections(params[:section_id]) %></p>
+                  <% end -%>
+                  <%= submit_tag "Search" %>
+                <% end -%>
+                </div>
+                
+              </div>
+              <div class="pad">
+                
+                <%= yield :sidebar %>
                 <h3 id="content_types">Content Types</h3>
                 <ul><% ContentTypeGroup.all(:order => "content_type_groups.id").each do |g| %>
           				<li<%= ' class="open"' if g == @content_type.content_type_group %>>

@@ -20,18 +20,6 @@
 <% end %>
 <% @page_title = "Content Library / List #{@content_type.display_name_plural}" %>
 
-<% form_tag '', :method => :get do -%>
-  Search
-  <%= text_field_tag :search, params[:search] %>
-  <% if @content_type.name == "HtmlBlock" -%>
-    <p><%= check_box_tag :include_body, true, params[:include_body] %> Include body?</p>
-  <% end -%>
-  <% if %w[FileBlock ImageBlock].include?(@content_type.name) %>
-    <p><%= select_tag 'section_id', searchable_sections(params[:section_id]) %></p>
-  <% end -%>
-  <%= submit_tag "Search" %>
-<% end -%>
-
 <table id="blocks">
   <thead>
     <tr>

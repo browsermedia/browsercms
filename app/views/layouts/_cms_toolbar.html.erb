@@ -16,11 +16,10 @@
     <%= render :partial => 'layouts/page_toolbar' %>
   </div>
   <% flash_class, flash_message = flash.to_a.first %>
-  <div id="flash">
-    <div id="message" class="<%= flash_class %>">
-      <% if(flash_message) %>
-        <%= flash_message %>
-      <% end %>
-    </div>
-  </div>
+    <% if(flash_message) %>
+    <div id="flash">
+      <div id="message" class="<%= flash_class %>">
+        <p><%= flash_message %></p>
+      </div>
+    <% end %>
 <% end -%>

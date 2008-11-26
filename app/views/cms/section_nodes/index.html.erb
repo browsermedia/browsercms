@@ -15,35 +15,35 @@
 		<br clear="all" />
 	</div>
 	
-	<div id="contentwrap">
+	<div id="contentwrapbig">
 		<div id="content">
 			<div class="pad">
-<table id="sitemap">
-  <thead>
-    <tr>
-      <th class="node">Site Structure</th>
-      <th>&nbsp;</th>
-      <th class="status">Status</th>
-    </tr>
-    <tr>
-      <td class="node">
-        <%= action_icon(:home) %>
-        <span id="section_<%= @section.id %>" class="root node"><%= h(@section.name) %></span>
-      </td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-    </tr>  
-  </thead>
-  <tbody>
-    <%= render :partial => 'section_node', :collection => @section.child_nodes.all(:order => 'position'), :locals => {:depth => 1, :ancestors => []} %>
-  </tbody>
-</table>
-</div>
-</div>
+        <table id="sitemap">
+          <thead>
+            <tr>
+              <th class="node">Site Structure</th>
+              <th>&nbsp;</th>
+              <th class="status">Status</th>
+            </tr>
+            <tr>
+              <td class="node">
+                <%= action_icon(:home) %>
+                <span id="section_<%= @section.id %>" class="root node"><%= h(@section.name) %></span>
+              </td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+            </tr>  
+          </thead>
+          <tbody>
+            <%= render :partial => 'section_node', :collection => @section.child_nodes.all(:order => 'position'), :locals => {:depth => 1, :ancestors => []} %>
+          </tbody>
+        </table>
+      </div>
+  </div>
 </div>
 <br clear="all" />
 </div>
 <div id="footer">
-<p>&copy; 1998-2008 <a href="#">BrowserMedia</a>. All Rights Reserved</p>
-<p>Browser CMS v3</p>
+  <p>&copy; 1998-2008 <a href="#">BrowserMedia</a>. All Rights Reserved</p>
+  <p>Browser CMS v3</p>
 </div>
