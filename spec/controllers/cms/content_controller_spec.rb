@@ -7,6 +7,7 @@ describe Cms::ContentController do
   describe "showing" do
     describe "the home page" do
       it "should display the page with a title" do
+        login_as nil        
         @page_template = create_page_template(:file_name => "application")
         @page = create_page(:section => root_section, :path => "/", :name => "Test Homepage", :template => @page_template, :publish_on_save => true)
         get :show, :path => []
@@ -15,6 +16,7 @@ describe Cms::ContentController do
     end
     describe "the about page" do
       it "should display the page with a title" do
+        login_as nil
         @page_template = create_page_template(:file_name => "application")
         @page = create_page(:section => root_section, :path => "/about", :name => "Test About", :template => @page_template, :publish_on_save => true)
         get :show, :path => ["about"]
@@ -23,6 +25,7 @@ describe Cms::ContentController do
     end
     describe "a protected page" do
       before do
+        login_as nil        
         create_system_pages
         @page_template = create_page_template(:file_name => "application")
         @protected_section = create_section(:parent => root_section)
@@ -46,6 +49,7 @@ describe Cms::ContentController do
     end
     describe "an archived page" do
       before do
+        login_as nil        
         create_system_pages
         @page_template = create_page_template(:file_name => "application")
         @page = create_page(:section => root_section, :path => "/archived", :name => "Archived", :archived => true, :template => @page_template, :publish_on_save => true)
@@ -65,6 +69,7 @@ describe Cms::ContentController do
     end
     describe "a file" do
       before do
+        login_as nil
         create_system_pages
         @file = mock_file(:read => "This is a test")
         @file_block = create_file_block(:section => root_section, :attachment_file => @file, :attachment_file_name => "/test.txt", :publish_on_save => true)
@@ -110,6 +115,7 @@ describe Cms::ContentController do
     end
     describe "a protected file" do
       before do
+        login_as nil
         create_system_pages
         @protected_section = create_section(:parent => root_section)
         @secret_group = create_group(:name => "Secret")
@@ -140,6 +146,7 @@ describe Cms::ContentController do
     end   
     describe "a search bot" do
       before do
+        login_as nil
         create_system_pages
         @page_template = create_page_template(:file_name => "application")
         @public_page = create_page(:section => root_section, :path => "/", :name => "Test Homepage", :template => @page_template, :publish_on_save => true)

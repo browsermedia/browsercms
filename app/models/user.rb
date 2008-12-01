@@ -24,8 +24,15 @@ class User < ActiveRecord::Base
 
   #Methods to easily change password from the console
   #Not used in the app
-  def User.change_password(login, new_password)
+  def self.change_password(login, new_password)
     User.find_by_login(login).change_password(new_password)
+  end
+
+  def self.current
+    Thread.current[:cms_user]
+  end
+  def self.current=(user)
+    Thread.current[:cms_user] = user
   end
 
   def change_password(new_password)

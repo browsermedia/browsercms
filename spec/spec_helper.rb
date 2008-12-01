@@ -128,3 +128,4 @@ def reset(*args)
     instance_variable_set("@#{v}", val.class.find(val.id))
   end
 end
+
