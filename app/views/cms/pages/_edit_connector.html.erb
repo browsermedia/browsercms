@@ -1,11 +1,11 @@
 <div class="edit_block">
-  <div class="header <%= connector.content_block.published? ? 'published' : 'draft' %>">
-    <%= connector.content_block.name %>
+  <div class="header <%= (connector.connectable.published? ? 'published' : 'draft') if connector.publishable? %>">
+    <%= connector.connectable.name %>
     <div class="actions">
-      <%= link_to status_icon(connector.content_block.status), cms_path(connector.content_block)  %>
-      <%= link_to action_icon(:view), cms_path(connector.content_block) %>
-      <%= link_to action_icon(:edit), cms_path(connector.content_block, :edit, :_redirect_to => @page.path) %>
-      <% if @page.connectors.for_container(connector.container).count > 1 %>
+      <%= link_to status_icon(connector.status), cms_path(connector.connectable)  %>
+      <%= link_to action_icon(:view), cms_path(connector.connectable) %>
+      <%= link_to action_icon(:edit), cms_path(connector.connectable, :edit, :_redirect_to => @page.path) %>
+      <% if @page.connectors.for_page_version(@page.version).in_container(connector.container).count > 1 %>
         <%= link_to action_icon(:up), cms_path(connector, :move_up), :http_method => :put %>
         <%= link_to action_icon(:down), cms_path(connector, :move_down), :http_method => :put %>
       <% end %>
@@ -13,6 +13,6 @@
     </div>
   </div>
   <div class="content">
-    <%= render_content_block(connector.content_block) %>
+    <%= render_connectable(connector.connectable) %>
   </div>
 </div>

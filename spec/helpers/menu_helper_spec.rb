@@ -64,7 +64,7 @@ HTML
     end
     
     it "should not show archived pages" do
-      @pit.archive(create_user)
+      @pit.archive
       helper.render_menu.should_not have_tag("a[href=#{@pit.path}]")
     end
     

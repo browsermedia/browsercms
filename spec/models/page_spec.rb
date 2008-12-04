@@ -7,26 +7,6 @@ describe Page do
     page.should_not be_valid
     page.should have(1).error_on(:path)
   end
-  
-  it "should require an updated_by_user on create" do
-    page = new_page(:path => "test", :section => root_section, :updated_by_user => nil)    
-    page.should_not be_valid
-    page.should have(1).error_on(:updated_by_id)
-  end
-  
-  it "should require an updated_by_user on update" do
-    page = create_page(:path => "test", :section => root_section)
-    page = Page.find(page.id)
-    page.should_not be_valid
-    page.should have(1).error_on(:updated_by_id)
-  end
-
-  it "should be valid if an updated_by_user is specified" do
-    page = create_page(:path => "test", :section => root_section)
-    page = Page.find(page.id)
-    page.updated_by_user = User.first
-    page.should be_valid
-  end
 
   describe ".find_by_path" do
     it "should be able to find the home page" do
@@ -44,7 +24,7 @@ describe Page do
       create_page(:name => "Deleted Me", :path => "/test", :section => root_section).destroy
       @page = create_page(:name => "v1", :path => "/test", :section => root_section, :publish_on_save => true)
       @page = Page.find(@page.id)
-      @page.update_attributes!(:name => "v2", :updated_by_user => create_user)
+      @page.update_attributes!(:name => "v2")
     end
     it "should return the latest version of the page" do
       Page.find_live_by_path("/test").name.should == "v1"
@@ -73,77 +53,78 @@ describe Page do
   describe "revision comment" do
     before { @page = create_page(:section => root_section, :name => "V1") }
     it "should be set to 'Created' when the page is created" do
-      @page.revision_comment.should == 'Created'
+      @page.current_version.version_comment.should == 'Created'
     end
     it "should not be changed if the object is not changed" do
       @page.reload.save
-      @page.reload.revision_comment.should == 'Created'
-      @page.as_of_version(@page.version).revision_comment.should == 'Created'
+      @page.reload.current_version.version_comment.should == 'Created'
+      @page.as_of_version(@page.version).current_version.version_comment.should == 'Created'
     end
     it "should be set to 'Name edited' when the name is changed" do
       @page.update_attributes(:name => "V2")
-      @page.revision_comment.should == 'Name edited'
-      @page.as_of_version(@page.version).revision_comment.should == 'Name edited'
+      @page.current_version.version_comment.should == 'Changed name'
+      @page.as_of_version(@page.version).current_version.version_comment.should == 'Changed name'
     end
     it "should be set to 'Html 'Hello, World!' was added to the 'main' container'" do
       @block = create_html_block(:name => "Hello, World!")
-      @page.add_content_block!(@block, "main")
-      @page.revision_comment.should == "Text 'Hello, World!' was added to the 'main' container"
-      @page.as_of_version(@page.version).revision_comment.should == "Text 'Hello, World!' was added to the 'main' container"
+      @page.create_connector(@block, "main")
+      @page.current_version.version_comment.should == "Html Block 'Hello, World!' was added to the 'main' container"
+      @page.as_of_version(@page.version).current_version.version_comment.should == "Html Block 'Hello, World!' was added to the 'main' container"
     end
     it "should be set to 'HtmlBlock 'Hello, World!' was moved up within the 'main' container'" do
       @block = create_html_block(:name => "Hello, World!")
-      @page.add_content_block!(create_html_block(:name => "Whatever"), "main")
-      @page.add_content_block!(@block, "main")
-      @page.move_connector_up(Connector.first(:conditions => {:content_block_id => @block.id}))
-      @page.revision_comment.should == "Text 'Hello, World!' was moved up within the 'main' container"
-      @page.as_of_version(@page.version).revision_comment.should == @page.revision_comment
+      @page.create_connector(create_html_block(:name => "Whatever"), "main")
+      @page.create_connector(@block, "main")
+      @page.move_connector_up(Connector.for_connectable(@block).first)
+      @page.current_version.version_comment.should == "Html Block 'Hello, World!' was moved up within the 'main' container"
+      @page.as_of_version(@page.version).current_version.version_comment.should == @page.current_version.version_comment
     end
     it "should be set to 'HtmlBlock 'Hello, World!' was moved down within the 'main' container'" do
       @block = create_html_block(:name => "Hello, World!")
-      @page.add_content_block!(@block, "main")
-      @page.add_content_block!(create_html_block(:name => "Whatever"), "main")
-      @page.move_connector_down(Connector.first(:conditions => {:content_block_id => @block.id}))
-      @page.revision_comment.should == "Text 'Hello, World!' was moved down within the 'main' container"
-      @page.as_of_version(@page.version).revision_comment.should == @page.revision_comment
+      @page.create_connector(@block, "main")
+      @page.create_connector(create_html_block(:name => "Whatever"), "main")
+      @page.move_connector_down(Connector.for_connectable(@block).first)
+      @page.current_version.version_comment.should == "Html Block 'Hello, World!' was moved down within the 'main' container"
+      @page.as_of_version(@page.version).current_version.version_comment.should == @page.current_version.version_comment
     end
     it "should be set to 'Html 'Hello, World!' was removed from the 'main' container'" do
       @block = create_html_block(:name => "Hello, World!")      
-      @page.destroy_connector(@page.add_content_block!(@block, "main"))
-      @page.revision_comment.should == "Text 'Hello, World!' was removed from the 'main' container"
-      @page.as_of_version(@page.version).revision_comment.should == "Text 'Hello, World!' was removed from the 'main' container"
+      @page.remove_connector(@page.create_connector(@block, "main"))
+      @page.current_version.version_comment.should == "Html Block 'Hello, World!' was removed from the 'main' container"
+      @page.as_of_version(@page.version).current_version.version_comment.should == "Html Block 'Hello, World!' was removed from the 'main' container"
     end
     it "should be set to 'Reverted to version 1'" do
       @page.update_attribute(:name, "V2")
-      @page.revert_to(1, create_user)
-      @page.revision_comment.should == "Reverted to version 1"
-      @page.as_of_version(@page.version).revision_comment.should == "Reverted to version 1"
+      @page.revert_to(1)
+      @page.reload.current_version.version_comment.should == "Reverted to version 1"
+      @page.as_of_version(1).current_version.version_comment.should == "Created"
+      @page.as_of_version(2).current_version.version_comment.should == "Changed name"
+      @page.as_of_version(3).current_version.version_comment.should == "Reverted to version 1"
     end    
   end
 
   describe "status" do
-    it "should be in progress when it is created" do
+    it "should not be published when it is created" do
       page = create_page
-      page.should be_in_progress
       page.should_not be_published
     end
 
     it "should be able to be published when creating" do
       page = new_page
-      page.publish(create_user).should be_true
+      page.publish.should be_true
       page.should be_published
     end
 
     it "should be able to be hidden" do
       page = create_page
-      page.hide!(create_user)
+      page.hide!
       page.should be_hidden
     end
 
     it "should be able to be published" do
       page = create_page(:section => root_section)
       page = Page.find(page.id)
-      page.publish(create_user).should be_true  
+      page.publish.should be_true  
       page.reload.should be_published
     end
   end
@@ -151,14 +132,14 @@ describe Page do
   describe "#container_live?" do
     it "should be true if all blocks are published" do
       page = create_page(:section => root_section)
-      page.add_content_block!(create_html_block(:publish_on_save => true), "main")
-      page.add_content_block!(create_html_block(:publish_on_save => true), "main")
+      page.create_connector(create_html_block(:publish_on_save => true), "main")
+      page.create_connector(create_html_block(:publish_on_save => true), "main")
       page.container_published?("main").should be_true
     end
     it "should be false if there are any non-published blocks" do
       page = create_page(:section => root_section)
-      page.add_content_block!(create_html_block(:publish_on_save => true), "main")
-      page.add_content_block!(create_html_block, "main")
+      page.create_connector(create_html_block(:publish_on_save => true), "main")
+      page.create_connector(create_html_block, "main")
       page.container_published?("main").should be_false
     end  
   end
@@ -181,7 +162,7 @@ describe Page do
         @page = create_page
       end
       it "should create a version when creating a page" do
-        @page.versions.latest.page.should == @page
+        @page.current_version.page.should == @page
       end
     end
 
@@ -189,14 +170,19 @@ describe Page do
       describe "with different values" do
         before do
           @first_guy = create_user(:login => "first_guy")
-          @page = create_page(:name => "Original Value", :updated_by_user => @first_guy)
+          User.current = @first_guy
+          @page = create_page(:name => "Original Value")
           @page = Page.find(@page.id)
           @new_guy = create_user(:login => "new_guy")
-          @page.update_attributes(:name => "Something Different", :updated_by_user => @new_guy)
+          User.current = @new_guy
+          @page.update_attributes(:name => "Something Different")
+        end
+        after do
+          User.current = nil
         end
         it "should create a version with the changed values" do
-          @page.versions.latest.page.should == @page
-          @page.versions.latest.name.should == "Something Different"
+          @page.current_version.page.should == @page
+          @page.current_version.name.should == "Something Different"
           @page.name.should == "Something Different"
         end
         it "should not affect the values in previous versions" do
@@ -228,6 +214,7 @@ describe Page do
       it "should not actually delete the row" do
         @delete_page.should_not change(Page, :count_with_deleted)
       end
+
       it "should create a new version" do
         @delete_page.should change(@page.versions, :count).by(1)
       end
@@ -253,35 +240,16 @@ describe Page do
 
       it "should not remove all versions as well when doing a destroy" do
         @page.destroy
-        Page::Version.find(:all, "page_id =>#{@page.id}").size.should == 2
+        Page::Version.count(:conditions => {:page_id => @page.id }).should == 2
       end
 
-      it "should remove all versions when doing destroy!" do
-        @page.destroy!
-        lambda { Page.find_with_deleted(@page) }.should raise_error(ActiveRecord::RecordNotFound)
-        Page::Version.find(:all, "page_id =>#{@page.id}").size.should == 0
-      end
     end
-    
-    describe "#create_new_version!" do
-      before do
-        @page = create_page(:section => root_section)
-        @increment_version = lambda { @page.create_new_version! }
-      end
-      it "should increase the version number" do
-        @increment_version.call
-        @page.reload.version.should == 2
-      end
-      it "should create a new version" do
-        @increment_version.should change(Page::Version, :count).by(1)
-      end
-    end 
     
     describe "reverting" do
       before do
         @page = create_page(:section => root_section, :name => "V1")
         @page.update_attribute(:name, "V2")
-        @revert_the_page = lambda { @page.revert_to(1, create_user)}
+        @revert_the_page = lambda { @page.revert_to(1)}
       end
       it "should change the version by 1" do
         @revert_the_page.should change(@page, :version).by(1)
@@ -298,8 +266,8 @@ describe "A page with associated blocks" do
   before do
     @page = create_page(:section => root_section, :name => "Bar")
     @block = create_html_block
-    @other_connector = create_connector(:page => create_page(:section => root_section), :content_block => @block)
-    @page_connector = create_connector(:page => @page, :content_block => @block)          
+    @other_connector = create_connector(:page => create_page(:section => root_section), :page_version => 1, :connectable => @block, :connectable_version => @block.version)
+    @page_connector = create_connector(:page => @page, :page_version => @page.version, :connectable => @block, :connectable_version => @block.version)          
     @destroying_the_page = lambda { @page.destroy }
   end
   describe "when updating" do
@@ -351,34 +319,36 @@ describe "A page that had 2 blocks added to it" do
     @page = create_page(:section => root_section)
     @foo_block = create_html_block(:name => "Foo Block")
     @bar_block = create_html_block(:name => "Bar Block")
-    @page.add_content_block!(@foo_block, "whatever")
+    @page.create_connector(@foo_block, "whatever")
     @page.reload
-    @page.add_content_block!(@bar_block, "whatever")
+    @page.create_connector(@bar_block, "whatever")
     @page.reload
   end
   describe "and then had then removed," do
     before do
-      @page.destroy_connector(@page.connectors.reload.first(:order => "connectors.position"))
-      @page.destroy_connector(@page.connectors.reload.first(:order => "connectors.position"))      
+      @page.remove_connector(@page.reload.connectors.for_page_version(@page.version).first(:order => "connectors.position"))
+      @page.remove_connector(@page.reload.connectors.for_page_version(@page.version).first(:order => "connectors.position"))      
     end
     describe "when reverting to the previous version," do
       before do
-        @reverting_to_the_previous_version = lambda { @page.revert(create_user) }
+        @reverting_to_the_previous_version = lambda { 
+          @page.reload.revert 
+        }
       end
       it "should restore the connectors from the version being reverted to" do
         @reverting_to_the_previous_version.should change(Connector, :count).by(1)
-        @page.connectors.reload.first.should_meet_expectations(:page => @page, :page_version => 6, :content_block => @bar_block, :content_block_version => 1, :container => "whatever")
+        @page.reload.connectors.for_page_version(@page.version).first.should_meet_expectations(:page => @page, :page_version => 6, :connectable => @bar_block, :connectable_version => 1, :container => "whatever")
       end
     end
     describe "when reverting to the version that had both connectors," do
       before do
-        @reverting_to_the_previous_version = lambda { @page.revert_to(3, create_user) }
+        @reverting_to_the_previous_version = lambda { @page.revert_to(3) }
       end
       it "should restore the connectors from version 3" do
         @reverting_to_the_previous_version.should change(Connector, :count).by(2)
-        foo, bar = @page.connectors.reload.find(:all, :order => "connectors.position")
-        foo.should_meet_expectations(:page => @page, :page_version => 6, :content_block => @foo_block, :content_block_version => 1, :container => "whatever")
-        bar.should_meet_expectations(:page => @page, :page_version => 6, :content_block => @bar_block, :content_block_version => 1, :container => "whatever")
+        foo, bar = @page.reload.connectors.for_page_version(@page.version).find(:all, :order => "connectors.position")
+        foo.should_meet_expectations(:page => @page, :page_version => 6, :connectable => @foo_block, :connectable_version => 1, :container => "whatever")
+        bar.should_meet_expectations(:page => @page, :page_version => 6, :connectable => @bar_block, :connectable_version => 1, :container => "whatever")
       end
     end
   end
@@ -389,7 +359,19 @@ describe "A page that had 2 blocks added to it" do
     end
     describe "when reverting to a version of the page from before the update to the block," do
       before do
-        @reverting_the_page = lambda { @page.revert_to(3, create_user) }
+        @reverting_the_page = lambda {
+          # log Page.to_table_without_stamps(:description, :language, :keywords, :cacheable, :template_id, :hidden)
+          # log Page::Version.to_table_without_stamps(:description, :language, :keywords, :cacheable, :template_id, :hidden, :version_comment)          
+          # log Connector.to_table_without_stamps(:container, :position)      
+          # log HtmlBlock.to_table_without_stamps(:content)
+          # log HtmlBlock::Version.to_table_without_stamps(:content)                    
+          @page.revert_to(3)
+          # log Page.to_table_without_stamps(:description, :language, :keywords, :cacheable, :template_id, :hidden)
+          # log Page::Version.to_table_without_stamps(:description, :language, :keywords, :cacheable, :template_id, :hidden, :version_comment)          
+          # log Connector.to_table_without_stamps(:container, :position)      
+          # log HtmlBlock.to_table_without_stamps(:content)
+          # log HtmlBlock::Version.to_table_without_stamps(:content)
+        }
       end
       it "should change the block version from 2 to 3" do
         @foo_block.version.should == 2
@@ -398,12 +380,10 @@ describe "A page that had 2 blocks added to it" do
       end
       it "should return the block to the state as of the original version" do
         @reverting_the_page.call
-        @page.connectors.reload.first.content_block.name.should == "Foo Block"
+        @page.connectors.for_page_version(@page.version).reload.first.connectable.name.should == "Foo Block"
       end
-      it "should change the the page version from 4 to 5" do
-        @page.version.should == 4
-        @reverting_the_page.call
-        @page.version.should == 5
+      it "should change the the page version by 1" do
+        @reverting_the_page.should change(@page, :version).by(1)
       end
     end
   end
@@ -413,7 +393,7 @@ describe "Adding a block to a page" do
   before do
     @page = create_page(:section => root_section)
     @block = create_html_block()
-    @adding_block = lambda { @conn = @page.add_content_block!(@block, "testing") }
+    @adding_block = lambda { @conn = @page.create_connector(@block, "testing") }
   end
   it "should set the page version to new page version" do
     @adding_block.call
@@ -421,7 +401,7 @@ describe "Adding a block to a page" do
   end
   it "should set the content block version to existing block version" do
     @adding_block.call
-    @conn.content_block_version.should == 1
+    @conn.connectable_version.should == 1
   end
   it "should increment the page version by 1" do
     @adding_block.should change(@page, :version).by(1)
@@ -430,9 +410,9 @@ describe "Adding a block to a page" do
     @adding_block.should change(Connector, :count).by(1)
   end
   it "should make the page be draft" do
-    @page.publish(create_user)
+    @page.publish
     @adding_block.call
-    @page.should be_draft
+    @page.should_not be_published
   end
 end
 
@@ -441,9 +421,9 @@ describe "Adding a second block to a page" do
     @page = create_page(:section => root_section)
     @block = create_html_block()
     @block2 = create_html_block()
-    @first_conn = @page.add_content_block!(@block, "testing")
+    @first_conn = @page.create_connector(@block, "testing")
     @adding_block = lambda do
-      @conn = @page.add_content_block!(@block2, "testing")      
+      @conn = @page.create_connector(@block2, "testing")      
     end
   end
   it "should set the page version to new page version" do
@@ -452,14 +432,14 @@ describe "Adding a second block to a page" do
   end
   it "should set the content block version to existing block version" do
     @adding_block.call
-    @conn.content_block_version.should == 1
+    @conn.connectable_version.should == 1
   end
   it "should increment the page version by 1" do
     @adding_block.should change(@page, :version).by(1)
   end    
   it "should add 2 new connectors to the page" do
     @adding_block.call 
-    @page.connectors.count.should == 2
+    @page.connectors.for_page_version(@page.version).count.should == 2
   end
   it "should create 2 new connectors" do
     @adding_block.should change(Connector, :count).by(2)
@@ -467,24 +447,24 @@ describe "Adding a second block to a page" do
   it "should leave the connector for the first block untouched" do
     @adding_block.call
     @first_conn.reload
-    @first_conn.content_block.should == @block
+    @first_conn.connectable.should == @block
     @first_conn.page.should == @page
     @first_conn.page_version.should == 2
-    @first_conn.content_block_version.should == 1
+    @first_conn.connectable_version.should == 1
   end
   it "should correctly wire up the 2 new connectors" do
     @adding_block.call
     @conns = Connector.all(:conditions => {:page_version => 3}, :order => "id")
     @conns.size.should == 2
-    @conns[0].content_block.should == @block
+    @conns[0].connectable.should == @block
     @conns[0].page.should == @page
     @conns[0].page_version.should == 3
-    @conns[0].content_block_version.should == 1
+    @conns[0].connectable_version.should == 1
     
-    @conns[1].content_block.should == @block2
+    @conns[1].connectable.should == @block2
     @conns[1].page.should == @page
     @conns[1].page_version.should == 3
-    @conns[1].content_block_version.should == 1
+    @conns[1].connectable_version.should == 1
   end
 end
 
@@ -493,10 +473,10 @@ describe "Adding a third block to a page" do
     @page = create_page(:section => root_section)
     @block = create_html_block()
     @block2 = create_html_block()
-    @first_conn = @page.add_content_block!(@block, "testing")
-    @second_conn = @page.add_content_block!(@block2, "testing")
+    @first_conn = @page.create_connector(@block, "testing")
+    @second_conn = @page.create_connector(@block2, "testing")
     @adding_block = lambda do
-      @conn = @page.add_content_block!(@block2, "testing")
+      @conn = @page.create_connector(@block2, "testing")
     end
   end
   it "should set the page version to 4" do
@@ -509,14 +489,14 @@ describe "Adding a third block to a page" do
   end
   it "should set the content block version to existing block version" do
     @adding_block.call
-    @conn.content_block_version.should == 1
+    @conn.connectable_version.should == 1
   end
   it "should increment the page version by 1" do
     @adding_block.should change(@page, :version).by(1)
   end    
   it "should add 3 new connectors to the page" do
     @adding_block.call 
-    @page.connectors.count.should == 3
+    @page.connectors.for_page_version(@page.version).count.should == 3
   end
   it "should create 3 new connectors" do
     @adding_block.should change(Connector, :count).by(3)
@@ -526,39 +506,39 @@ describe "Adding a third block to a page" do
     @conns = Connector.all(:conditions => ["page_version < 4"], :order => "id")
     @conns.size.should == 3
 
-    @conns[0].content_block.should == @block
+    @conns[0].connectable.should == @block
     @conns[0].page.should == @page
     @conns[0].page_version.should == 2
-    @conns[0].content_block_version.should == 1
+    @conns[0].connectable_version.should == 1
         
-    @conns[1].content_block.should == @block
+    @conns[1].connectable.should == @block
     @conns[1].page.should == @page
     @conns[1].page_version.should == 3
-    @conns[1].content_block_version.should == 1
+    @conns[1].connectable_version.should == 1
     
-    @conns[2].content_block.should == @block2
+    @conns[2].connectable.should == @block2
     @conns[2].page.should == @page
     @conns[2].page_version.should == 3
-    @conns[2].content_block_version.should == 1    
+    @conns[2].connectable_version.should == 1    
   end
   it "should correctly wire up the 3 new connectors" do
     @adding_block.call
     @conns = Connector.all(:conditions => {:page_version => 4}, :order => "id")
     @conns.size.should == 3
-    @conns[0].content_block.should == @block
+    @conns[0].connectable.should == @block
     @conns[0].page.should == @page
     @conns[0].page_version.should == 4
-    @conns[0].content_block_version.should == 1
+    @conns[0].connectable_version.should == 1
 
-    @conns[1].content_block.should == @block2
+    @conns[1].connectable.should == @block2
     @conns[1].page.should == @page
     @conns[1].page_version.should == 4
-    @conns[1].content_block_version.should == 1
+    @conns[1].connectable_version.should == 1
     
-    @conns[2].content_block.should == @block2
+    @conns[2].connectable.should == @block2
     @conns[2].page.should == @page
     @conns[2].page_version.should == 4
-    @conns[2].content_block_version.should == 1
+    @conns[2].connectable_version.should == 1
   end
 end
 
@@ -566,43 +546,40 @@ describe "Removing a connector from a page" do
   before do
     @page = create_page(:section => root_section)
     @block = create_html_block()
-    @conn = @page.add_content_block!(@block, "testing") 
-    @destroy_connector = lambda { @page.destroy_connector(@conn) } 
+    @conn = @page.create_connector(@block, "testing") 
+    @remove_connector = lambda { @page.remove_connector(@conn) } 
   end
   
   it "should create a new version the page" do
-    @destroy_connector.should change(Page::Version, :count).by(1)
+    @remove_connector.should change(Page::Version, :count).by(1)
   end
   
   it "should should increment the page version by 1" do
-    @destroy_connector.should change(@page, :version).by(1)
+    @remove_connector.should change(@page, :version).by(1)
   end
   
   it "should not alter the original connector" do
-    @destroy_connector.call
+    @remove_connector.call
     conns = Connector.find(:all)
     conns.size.should == 1
     
     conns[0].page.should == @page
     conns[0].page_version.should == 2
-    conns[0].content_block.should == @block
-    conns[0].content_block_version.should == 1
+    conns[0].connectable.should == @block
+    conns[0].connectable_version.should == 1
     
   end
   it "should destroy the connector" do
-    @destroy_connector.call
-    @page.reload.connectors.should be_empty
+    @remove_connector.call
+    @page.reload.connectors.for_page_version(@page.version).should be_empty
   end
   
-  it "should return the frozen connector" do
-    c = @destroy_connector.call
-    c.should be_frozen
-    c.should == @conn
-  end
-  it "should mark the page as draft" do
-    @page.publish!(create_user)
-    @destroy_connector.call
-    @page.should be_draft
+  it "should mark the page as not published" do
+    @page.reload.publish!
+    @conn.connectable_version += 1
+    con = @page.connectors.for_page_version(@page.version).like(@conn).first
+    @page.remove_connector(con)
+    @page.should_not be_published
   end
 end
 
@@ -611,51 +588,51 @@ describe "Removing multiple blocks from a page" do
     @page = create_page(:section => root_section)
     @block1 = create_html_block()
     @block2 = create_html_block()
-    @conn = @page.add_content_block!(@block1, "bar") 
-    @conn2 = @page.add_content_block!(@block2, "bar")
-    @conn3 = @page.add_content_block!(@block2, "foo")
+    @conn = @page.create_connector(@block1, "bar") 
+    @conn2 = @page.create_connector(@block2, "bar")
+    @conn3 = @page.create_connector(@block2, "foo")
     #Need to get the new connector that matches @conn2, otherwise you will delete an older version, not the latest connector
-    @conn2 = Connector.first(:conditions => {:page_id => @page.reload.id, :page_version => @page.version, :content_block_id => @block2.id, :content_block_version => @block2.version, :container => "bar"})
-    @page.destroy_connector(@conn2)
-    @destroy_connector = lambda { 
-      @conn = Connector.first(:conditions => {:page_id => @page.reload.id, :page_version => @page.version, :content_block_id => @block2.id, :content_block_version => @block2.version, :container => "foo"})
-      @page.destroy_connector(@conn) 
+    @conn2 = Connector.first(:conditions => {:page_id => @page.reload.id, :page_version => @page.version, :connectable_id => @block2.id, :connectable_version => @block2.version, :container => "bar"})
+    @page.remove_connector(@conn2)
+    @remove_connector = lambda { 
+      @conn = Connector.first(:conditions => {:page_id => @page.reload.id, :page_version => @page.version, :connectable_id => @block2.id, :connectable_version => @block2.version, :container => "foo"})
+      @page.remove_connector(@conn) 
     } 
   end
   
   it "should create a new version the page" do
-    @destroy_connector.should change(Page::Version, :count).by(1)
+    @remove_connector.should change(Page::Version, :count).by(1)
   end
   
   it "should have 5 total versions" do
-    @destroy_connector.call
+    @remove_connector.call
     Page::Version.count.should == 6
   end
   it "should should increment the page version by 1" do
-    @destroy_connector.should change(@page, :version).by(1)
+    @remove_connector.should change(@page, :version).by(1)
   end
   
   it "should end up with the correct connectors" do
     
-    @destroy_connector.call
-    conns = Connector.find(:all, :order => "page_version, content_block_id, container")
+    @remove_connector.call
+    conns = Connector.find(:all, :order => "page_version, connectable_id, container")
     
     conns.size.should == 9
     
-    conns[0].should_meet_expectations(:page => @page, :page_version => 2, :content_block => @block1, :content_block_version => 1, :container => "bar")
-    conns[1].should_meet_expectations(:page => @page, :page_version => 3, :content_block => @block1, :content_block_version => 1, :container => "bar")
-    conns[2].should_meet_expectations(:page => @page, :page_version => 3, :content_block => @block2, :content_block_version => 1, :container => "bar")
-    conns[3].should_meet_expectations(:page => @page, :page_version => 4, :content_block => @block1, :content_block_version => 1, :container => "bar")
-    conns[4].should_meet_expectations(:page => @page, :page_version => 4, :content_block => @block2, :content_block_version => 1, :container => "bar")
-    conns[5].should_meet_expectations(:page => @page, :page_version => 4, :content_block => @block2, :content_block_version => 1, :container => "foo")
-    conns[6].should_meet_expectations(:page => @page, :page_version => 5, :content_block => @block1, :content_block_version => 1, :container => "bar")
-    conns[7].should_meet_expectations(:page => @page, :page_version => 5, :content_block => @block2, :content_block_version => 1, :container => "foo")
-    conns[8].should_meet_expectations(:page => @page, :page_version => 6, :content_block => @block1, :content_block_version => 1, :container => "bar")
+    conns[0].should_meet_expectations(:page => @page, :page_version => 2, :connectable => @block1, :connectable_version => 1, :container => "bar")
+    conns[1].should_meet_expectations(:page => @page, :page_version => 3, :connectable => @block1, :connectable_version => 1, :container => "bar")
+    conns[2].should_meet_expectations(:page => @page, :page_version => 3, :connectable => @block2, :connectable_version => 1, :container => "bar")
+    conns[3].should_meet_expectations(:page => @page, :page_version => 4, :connectable => @block1, :connectable_version => 1, :container => "bar")
+    conns[4].should_meet_expectations(:page => @page, :page_version => 4, :connectable => @block2, :connectable_version => 1, :container => "bar")
+    conns[5].should_meet_expectations(:page => @page, :page_version => 4, :connectable => @block2, :connectable_version => 1, :container => "foo")
+    conns[6].should_meet_expectations(:page => @page, :page_version => 5, :connectable => @block1, :connectable_version => 1, :container => "bar")
+    conns[7].should_meet_expectations(:page => @page, :page_version => 5, :connectable => @block2, :connectable_version => 1, :container => "foo")
+    conns[8].should_meet_expectations(:page => @page, :page_version => 6, :connectable => @block1, :connectable_version => 1, :container => "bar")
    
   end
   it "should destroy one of the connectors" do
-    @destroy_connector.call
-    @page.reload.connectors.size.should == 1
+    @remove_connector.call
+    @page.reload.connectors.for_page_version(@page.version).size.should == 1
   end
   
 end
@@ -663,13 +640,17 @@ end
 describe "A published page" do
   before do
     @user = create_user
-    @page = create_page(:section => root_section, :updated_by_user => @user)
-    @page.publish!(@user)
+    User.current = @user
+    @page = create_page(:section => root_section)
+    @page.publish!
     @page = Page.find(@page.id)
+  end
+  after do
+    User.current = nil
   end
   describe "when adding a block by 'save and publish'" do
     before do
-      @save_and_publish_the_block = lambda { @block = create_html_block(:connect_to_page_id => @page.id, :publish_on_save => true, :connect_to_container => "testing", :updated_by_user => @user, :name => "Home") }
+      @save_and_publish_the_block = lambda { @block = create_html_block(:connect_to_page_id => @page.id, :publish_on_save => true, :connect_to_container => "testing", :name => "Home") }
     end
 
     it "should change the connector count by 1" do
@@ -677,7 +658,9 @@ describe "A published page" do
     end
 
     it "should make the page have one connector" do
-      @save_and_publish_the_block.should change(@page.connectors, :count).by(1)
+      count = @page.connectors.for_page_version(@page.version).count
+      @save_and_publish_the_block.call
+      @page.reload.connectors.for_page_version(@page.version).count.should == count + 1
     end
 
     it "should set the page version to 4" do
@@ -697,7 +680,7 @@ describe "A published page" do
   end
   describe "when adding a block by 'save'" do
     before do
-      @save_the_block = lambda { @block = create_html_block(:connect_to_page_id => @page.id, :connect_to_container => "testing", :updated_by_user => @user, :name => "Home") }
+      @save_the_block = lambda { @block = create_html_block(:connect_to_page_id => @page.id, :connect_to_container => "testing", :name => "Home") }
     end
 
     it "should change the connector count by 1" do
@@ -705,7 +688,9 @@ describe "A published page" do
     end
 
     it "should make the page have one connector" do
-      @save_the_block.should change(@page.connectors, :count).by(1)
+      count = @page.connectors.for_page_version(@page.version).count
+      @save_the_block.call
+      @page.reload.connectors.for_page_version(@page.version).count.should == count + 1
     end
 
     it "should set the page version to 4" do
@@ -743,21 +728,21 @@ describe "An unpublished page with 1 published and an 1 unpublished block," do
     @page = create_page(:section => root_section)
     @published_block = create_html_block(:name => "Published")
     @unpublished_block = create_html_block(:name => "Unpublished")
-    @page.add_content_block!(@published_block, "main")
-    @page.add_content_block!(@unpublished_block, "main")
-    @published_block.publish!(create_user)
+    @page.create_connector(@published_block, "main")
+    @page.create_connector(@unpublished_block, "main")
+    @published_block.publish!
     @page.reload
   end
   describe "when publishing the block" do
-    it "the block should be live" do
-      @published_block.should be_live
+    it "the block should be published" do
+      @published_block.should be_published
     end
-    it "the page should not be live" do
-      @page.should_not be_live
+    it "the page should not be published" do
+      @page.should_not be_published
     end
   end
   describe "when publishing the page," do
-    before { @publishing_the_page = lambda { @page.publish!(create_user) } }
+    before { @publishing_the_page = lambda { @page.publish! } }
     it "should create a new version of the page" do
       @publishing_the_page.should change(Page::Version, :count).by(1)
     end
@@ -767,21 +752,21 @@ describe "An unpublished page with 1 published and an 1 unpublished block," do
     it "should not create a new version of the published block" do
       @publishing_the_page.should_not change(@published_block.versions, :count)
     end
-    it "the page should be live" do
+    it "the page should be published" do
       @publishing_the_page.call
-      @page.should be_live
+      @page.should be_published
     end
-    it "the unpublished block should be live" do
+    it "the unpublished block should be published" do
       @publishing_the_page.call
-      @unpublished_block.reload.should be_live
+      @unpublished_block.reload.should be_published
     end
-    it "the published block should be live" do
+    it "the published block should be published" do
       @publishing_the_page.call
-      @published_block.reload.should be_live
+      @published_block.reload.should be_published
     end
     it "the page should be connected to the latest version of the unpublished block" do
       @publishing_the_page.call
-      @page.reload.connectors.last.content_block_version.should == 2
+      @page.reload.connectors.for_page_version(@page.version).last.connectable_version.should == 2
     end
   end
 end
@@ -805,34 +790,28 @@ describe "Reverting a block that is on multiple pages" do
     @page2.version.should == 1
 
     # 4. Goto page 2, and select that block. (Page 2, v2)    
-    @page2.add_content_block!(@block, "main")
+    @page2.create_connector(@block, "main")
     reset(:page1, :page2, :block)
     @page1.version.should == 2
     @page2.version.should == 2
 
     # 5. Edit the block (Page 1, v3, Page 2, v3, Block v2)
-    @block.update_attributes!(:name => "Block v2", :updated_by_user => create_user)
+    @block.update_attributes!(:name => "Block v2")
     reset(:page1, :page2, :block)
     @page1.version.should == 3
     @page2.version.should == 3
     @block.version.should == 2
     
     # 6. Revert page 1 to version 2. (Page 1, v4, Page 2, v4, Block v3)
-    log Page.to_table_with(:id, :version, :name)
-    log HtmlBlock.to_table_with(:id, :version, :name)
-    log Connector.to_table_without(:created_at, :updated_at)
-    @page1.revert_to(2, create_user)
-    log Page.to_table_with(:id, :version, :name)
-    log HtmlBlock.to_table_with(:id, :version, :name)
-    log Connector.to_table_without(:created_at, :updated_at)
+    @page1.revert_to(2)
     reset(:page1, :page2, :block)
     @page1.version.should == 4
     @page2.version.should == 4
     @block.version.should == 3    
     
     # Expected: Both page 1 and 2 will display the same version of the block (v1).
-    @page1.connectors.first.content_block.name.should == "Block v1"
-    @page2.connectors.first.content_block.name.should == "Block v1"
+    @page1.connectors.first.connectable.name.should == "Block v1"
+    @page2.connectors.first.connectable.name.should == "Block v1"
     
   end
 end
@@ -844,7 +823,7 @@ describe "Viewing a previous version of a page" do
   #   @page = create_page(:section => root_section)
   #   @section = create_section(:parent => root_section, :name => "Other")
   #   reset(:page)
-  #   @page.update_attributes!(:section => @section, :updated_by_user => create_user)
+  #   @page.update_attributes!(:section => @section)
   #   reset(:page)
   #   @page.section.should == @section
   #   @page.as_of_version(1).section.should == root_section
@@ -855,7 +834,7 @@ describe "Viewing a previous version of a page" do
     @bar = create_page_template(:name => "Bar")
     @page = create_page(:section => root_section, :template => @foo)
     reset(:page)
-    @page.update_attributes!(:template => @bar, :updated_by_user => create_user)
+    @page.update_attributes!(:template => @bar)
     reset(:page)
     @page.template.should == @bar
     @page.as_of_version(1).template.should == @foo
@@ -874,13 +853,13 @@ describe "Viewing a previous version of a page" do
     @block.version.should == 1 
     
     # 3. Publish Page A (Page A v3, Block A v2)
-    @page.publish!(create_user)
+    @page.publish!
     reset(:page, :block)
     @page.version.should == 3
     @block.version.should == 2 
     
     # 4. Edit Block A (Page A v4, Block A v3)
-    @block.update_attributes!(:name => "Block 2", :updated_by_user => create_user)
+    @block.update_attributes!(:name => "Block 2")
     reset(:page, :block)
     @page.version.should == 4
     @block.version.should == 3 
@@ -888,7 +867,7 @@ describe "Viewing a previous version of a page" do
     # Open Page A in a different browser (as guest)
     @live_page = Page.find_live_by_path(@page.path)
     @live_page.version.should == 3
-    @live_page.version_connectors.first.content_block.name.should == "Block 1"
+    @live_page.connectors.for_page_version(@live_page.version).first.connectable.live_version.name.should == "Block 1"
      
   end
 end
@@ -900,7 +879,7 @@ describe "Selecting a block" do
     reset(:page, :block)
     @page.should be_published
     @block.should be_published
-    @page.add_content_block!(@block, "main")
+    @page.create_connector(@block, "main")
     reset(:page, :block)
   end
   it "should put the page into draft mode" do

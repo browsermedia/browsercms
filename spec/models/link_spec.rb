@@ -15,7 +15,7 @@ describe Link do
   describe "versioning for links" do
     it "should support versioning" do
       h = Link.new
-      h.versionable?.should be_true
+      h.class.should be_versioned
     end
 
     describe "when creating a record" do
@@ -23,7 +23,7 @@ describe Link do
         @link = create_link
       end
       it "should create a version when creating a link" do
-        @link.versions.latest.link.should == @link
+        @link.versions.last.link.should == @link
       end
     end
 
@@ -34,8 +34,8 @@ describe Link do
           @link.update_attributes(:name => "Something Different")
         end
         it "should create a version with the changed values" do
-          @link.versions.latest.link.should == @link
-          @link.versions.latest.name.should == "Something Different"
+          @link.versions.last.link.should == @link
+          @link.versions.last.name.should == "Something Different"
           @link.name.should == "Something Different"
         end
         it "should not affect the values in previous versions" do
@@ -56,7 +56,7 @@ describe Link do
     describe "when deleting a record" do
       before do
         @link = create_link
-        @delete_link = lambda { @link.mark_as_deleted!(create_user) }
+        @delete_link = lambda { @link.mark_as_deleted! }
       end
       
       it "should not actually delete the row" do

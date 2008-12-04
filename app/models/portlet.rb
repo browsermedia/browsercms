@@ -1,7 +1,7 @@
 class Portlet < ActiveRecord::Base
 
   has_flex_attributes
-  acts_as_content_block :versioning => false
+  acts_as_content_block :versioned => false, :publishable => false
   validates_presence_of :name
 
   attr_accessor :request, :response, :params, :session

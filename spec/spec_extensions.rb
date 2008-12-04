@@ -103,7 +103,8 @@ class ActiveRecord::Base
     else
       columns = column_names      
     end
-    all.to_table(*columns)
+    (uses_soft_delete? ? find_with_deleted(:all) : all).to_table(*columns)
+    #connection.select_all("select * from #{table_name}").map{|r| OpenStruct.new(r)}.to_table(*columns)
   end
   def self.to_table_with(*columns)
     to_table(:include_columns => columns)
@@ -111,4 +112,7 @@ class ActiveRecord::Base
   def self.to_table_without(*columns)
     to_table(:exclude_columns => columns)
   end
+  def self.to_table_without_stamps(*columns)
+    to_table(:exclude_columns => %w[created_at updated_at created_by_id updated_by_id] + columns)
+  end  
 end 

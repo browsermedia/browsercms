@@ -3,11 +3,11 @@ class CreateConnectors < ActiveRecord::Migration
     create_table :connectors do |t|
       t.integer :page_id
       t.integer :page_version
+      t.integer :connectable_id
+      t.string :connectable_type
+      t.integer :connectable_version
       t.string :container
-      t.integer :content_block_id
-      t.string :content_block_type
-      t.integer :content_block_version
-      t.string :position
+      t.integer :position
       t.timestamps
       
     end

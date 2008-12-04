@@ -36,7 +36,7 @@ describe Cms::PagesController do
     end
     it "should publish all blocks on the page" do
       @block = create_html_block(:name => 'foo')
-      @page.add_content_block!(@block, 'main')
+      @page.create_connector(@block, 'main')
       @action.call
       @block.reload.should be_published
     end
@@ -78,7 +78,7 @@ describe Cms::PagesController do
     end
     it "should update the status" do
       @action.call
-      @page.should be_in_progress
+      @page.should_not be_published
     end
   end
   

@@ -24,7 +24,6 @@ class Cms::PagesController < Cms::BaseController
   def create
     @page = Page.new(params[:page])
     @page.section = @section
-    @page.updated_by_user = current_user
     if @page.save
       flash[:notice] = "Page was '#{@page.name}' created."
       redirect_to cms_url(@page)
@@ -35,7 +34,7 @@ class Cms::PagesController < Cms::BaseController
 
   def update
     @page = Page.find(params[:id])
-    if @page.update_attributes(params[:page].merge(:updated_by_user => current_user))
+    if @page.update_attributes(params[:page])
       flash[:notice] = "Page was '#{@page.name}' updated."
       redirect_to cms_url(@page)
     else
@@ -66,13 +65,13 @@ class Cms::PagesController < Cms::BaseController
     define_method status do
       if params[:page_ids]
         params[:page_ids].each do |id|
-          Page.find(id).send(status, current_user)
+          Page.find(id).send(status)
         end
         flash[:notice] = "#{params[:page_ids].size} pages #{verb}"
         redirect_to cms_dashboard_url
       else
         load_page
-        if @page.send(status, current_user)
+        if @page.send(status)
           flash[:notice] = "Page '#{@page.name}' was #{verb}"
         end
         redirect_to @page.path
@@ -86,7 +85,7 @@ class Cms::PagesController < Cms::BaseController
   end  
   
   def revert_to
-    if @page.revert_to(params[:version], current_user)
+    if @page.revert_to(params[:version])
       flash[:notice] = "Page '#{@page.name}' was reverted to version #{params[:version]}"
     end
     

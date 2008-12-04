@@ -2,7 +2,7 @@
 
 <h2>Draft Pages</h2>
 
-<% if @draft_pages.empty? %>
+<% if @unpublished_pages.empty? %>
   <p>All pages are published</p>
 <% else %>  
   <% form_tag cms_path(:pages, :publish) do %>
@@ -18,11 +18,11 @@
         <th>Updated At</th>
         <th></th>
       </tr>
-      <% @draft_pages.each do |page| %>
+      <% @unpublished_pages.each do |page| %>
         <tr>
           <td class="name"><%=h page.name %></td>
           <td class="path"><%= link_to page.path, page.path %></td>
-          <td class="comment"><%=h page.revision_comment %></td>
+          <td class="comment"><%=h page.version_comment %></td>
           <td class="updated_by"><%=h page.updated_by.login %></td>
           <td class="updated_at"><%= page.updated_at.strftime("%m/%d/%y %l:%M %p") %></td>
           <td class="select"><%= check_box_tag "page_ids[]", page.id, false, :id => "publish_page_#{page.id}" %></td>

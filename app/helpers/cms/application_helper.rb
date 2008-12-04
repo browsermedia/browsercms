@@ -17,7 +17,7 @@ module Cms
     def page_versions(page)
       text = select_tag(:version, 
                         options_for_select(page.versions.all(:order => "version desc").map { |r| 
-                          ["v#{r.version}: #{r.revision_comment} by #{r.updated_by.login} at #{time_on_date(r.updated_at)}", r.version] 
+                          ["v#{r.version}: #{r.version_comment} by #{r.updated_by.login} at #{time_on_date(r.updated_at)}", r.version] 
                         }, page.version), 
                         :onchange => 'this.form.submit(); return false')
       text << javascript_tag("$('version').selectedIndex = 0") if page.current_version?
@@ -28,11 +28,11 @@ module Cms
       if logged_in? && @mode == "edit"
         render :partial => 'cms/pages/edit_connector', :locals => {:connector => connector}
       else
-        render_content_block(connector.content_block)
+        render_connectable(connector.current_connectable)
       end
     end
   
-    def render_content_block(block)
+    def render_connectable(block)
       instance_eval &block.renderer(block)
     rescue Exception => e
       logger.error "Error occurred while rendering #{block.class}:#{block.id}: #{e.message}\n#{e.backtrace.join("\n")}"

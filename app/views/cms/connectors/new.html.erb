@@ -27,8 +27,8 @@
         <% form_for :connector, :url => cms_path(:connectors, :create) do |f| %>
           <%= hidden_field_tag :page_id, @page.to_param %>
           <%= hidden_field_tag :container,  @container %>
-          <%= hidden_field_tag :content_block_type, block.content_block_type %>
-          <%= hidden_field_tag :content_block_id, block.id %>
+          <%= hidden_field_tag :connectable_type, block.class.name %>
+          <%= hidden_field_tag :connectable_id, block.id %>
           <%= image_submit_tag action_icon_src(:connect) %>
         <% end %>
       </td>

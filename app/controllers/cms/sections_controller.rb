@@ -88,9 +88,9 @@ class Cms::SectionsController < Cms::BaseController
       begin
         case params[:Type].downcase
         when "file"
-          FileBlock.create!(:section => @section, :file => params[:NewFile], :updated_by_user => current_user)
+          FileBlock.create!(:section => @section, :file => params[:NewFile])
         when "image" 
-          ImageBlock.create!(:section => @section, :file => params[:NewFile], :updated_by_user => current_user)
+          ImageBlock.create!(:section => @section, :file => params[:NewFile])
         end
         result = "0"
       rescue Exception => e

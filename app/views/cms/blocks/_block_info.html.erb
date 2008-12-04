@@ -5,7 +5,7 @@
   <% if @block.respond_to?(:versionable?) && @block.versionable? %>
     <li><b>Status:</b> <%= status_icon(@block.status) %> <%= @block.status_name %></li>
   <% end -%>
-  <% if @block.respond_to?(:connected_pages) %>
+  <% if @block.class.connectable? %>
     <li><b>Used on:</b> <%= link_to_usages(@block) %> pages</li>
   <% end -%>
   <% if @block.respond_to?(:versionable?) && @block.versionable? && !@block.current_version? %><li>

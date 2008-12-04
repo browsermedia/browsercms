@@ -1,48 +1,48 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe "A Content Object" do
+describe "A Content Object", :type => :model do
   before(:each) do
     @block = create_html_block(:name => "Test")
   end
 
   it "should add a default status to a block" do
-    @block.should be_draft
+    @block.should_not be_published
   end
 
   it "should allow blocks to be published" do
-    @block.publish(create_user)
+    @block.publish
     @block = HtmlBlock.find(@block.id)
     @block.should be_published
   end
 
-  it "should be live if it is published" do
-    @block.publish(create_user)
-    @block.should be_live
+  it "should be published if it is published" do
+    @block.publish
+    @block.should be_published
   end
 
-  it "should not be live if it is not published" do
-    @block.should_not be_live
+  it "should not be published if it is not published" do
+    @block.should_not be_published
   end
 
   it "should allow blocks to be marked as draft" do
-    @block.publish(create_user)
+    @block.publish
     @block.publish_on_save = false
     @block.save!
-    @block.reload.should be_draft
+    @block.reload.should_not be_published
   end
 
-  it "should support versioning" do
-    @block.should be_versionable
+  it "should be versioned" do
+    @block.class.should be_versioned
   end
 
   it "should respond to publish?" do
-    @block.publish(create_user)
+    @block.publish
     @block.should be_published
   end
 
   it "should respond to in_progress?" do
     @block.publish_on_save = false
-    @block.should be_draft
+    @block.should_not be_published
   end
 
   it "should respond to status_name" do
@@ -62,26 +62,26 @@ describe "A Content Object" do
   
   describe "revision comment" do
     it "should be set to 'Created' if it is a new instance" do
-      @block.revision_comment.should == 'Created'
-      @block.as_of_version(@block.version).revision_comment.should == 'Created'
+      @block.current_version.version_comment.should == 'Created'
+      @block.as_of_version(@block.version).current_version.version_comment.should == 'Created'
     end
     it "should be set to 'Name, Content edited' if name and content were changed" do
       @block.name = "Something Else"
       @block.content = "Whatever"
       @block.save
-      @block.revision_comment.should == 'Name, Content edited'
-      @block.as_of_version(@block.version).revision_comment.should == 'Name, Content edited'
+      @block.current_version.version_comment.should == 'Changed content, name'
+      @block.as_of_version(@block.version).current_version.version_comment.should == 'Changed content, name'
     end
     it "should not be changed if the object is not changed" do
       @block.reload.save
-      @block.revision_comment.should == 'Created'
-      @block.as_of_version(@block.version).revision_comment.should == 'Created'
+      @block.current_version.version_comment.should == 'Created'
+      @block.as_of_version(@block.version).current_version.version_comment.should == 'Created'
     end
-    it "should be set to the value of new_revision_comment if one is set" do
-      @block.update_attributes(:name => "Something Else", :new_revision_comment => "Something Changed")
+    it "should be set to the value of version_comment if one is set" do
+      @block.update_attributes(:name => "Something Else", :version_comment => "Something Changed")
       @block.save
-      @block.revision_comment.should == "Something Changed"
-      @block.as_of_version(@block.version).revision_comment.should == "Something Changed"
+      @block.current_version.version_comment.should == "Something Changed"
+      @block.as_of_version(@block.version).current_version.version_comment.should == "Something Changed"
     end
   end
   
@@ -95,17 +95,11 @@ describe "A Content Object" do
     end
     describe "without a new status" do
       it "should be draft" do
-        @block.publish!(create_user)
+        @block.publish!
         @block.name = "Whatever"
         @block.save!
-        @block.should be_draft
+        @block.should_not be_published
       end
-    end
-  end
-  describe "updating revision" do
-    it "should mark a content object as dirty anytime a comment is updated" do
-      @block.new_revision_comment = @block.revision_comment
-      @block.should be_changed
     end
   end
   describe "a non-versioned block that is connected to a page" do
@@ -113,9 +107,9 @@ describe "A Content Object" do
       before do
         @page = create_page(:section => root_section)
         @block = create_dynamic_portlet(:name => "Test Portlet")
-        @page.add_content_block!(@block, "main")
+        @page.create_connector(@block, "main")
         reset(:page, :block)
-        @editing_the_block = lambda {@block.update_attribute(:name, "something different")}
+        @editing_the_block = lambda {@block.update_attributes(:name => "something different")}
       end
       it "should not change the page version" do
         @editing_the_block.call
@@ -126,18 +120,18 @@ describe "A Content Object" do
       end
       it "should set the revision comment on the page" do
         @editing_the_block.call
-        @page.reload.revision_comment.should == "Dynamic Portlet 'Test Portlet' was added to the 'main' container"
+        @page.reload.current_version.version_comment.should == "Dynamic Portlet 'Test Portlet' was added to the 'main' container"
       end
       it "should create the right connectors" do
         @editing_the_block.call
-        conns = Connector.all(:conditions => ["content_block_id = ? and content_block_type = ?", @block.id, @block.class.base_class.name], :order => 'id')
+        conns = Connector.for_connectable(@block).all(:order => 'id')
         conns.size.should == 1
-        conns[0].should_meet_expectations(:page => @page, :page_version => 2, :content_block => @block, :content_block_version => nil, :container => "main")        
+        conns[0].should_meet_expectations(:page => @page, :page_version => 2, :connectable => @block, :connectable_version => nil, :container => "main")        
       end
       describe "and saved" do
-        it "the page should not be live" do
+        it "the page should not be published" do
           @editing_the_block.call
-          @page.should_not be_live
+          @page.should_not be_published
         end
       end
       describe "and save and published" do
@@ -145,21 +139,21 @@ describe "A Content Object" do
           before do
             @editing_the_block = lambda {@block.update_attributes(:name => "something different", :publish_on_save => true)}
           end
-          it "the page should be live" do
+          it "the page should be published" do
             @editing_the_block.call
-            @page.reload.should_not be_live
+            @page.reload.should_not be_published
           end
         end
-        describe "and the page is live then," do
+        describe "and the page is published then," do
           before do
-            @page.publish!(create_user)
+            @page.publish!
             reset(:page)
             @editing_the_block = lambda {@block.update_attributes(:name => "something different", :publish_on_save => true)}
           end
-          it "the page should be live" do
+          it "the page should be published" do
             @editing_the_block.call
             reset(:page)
-            @page.should be_live
+            @page.should be_published
           end
         end
       end
@@ -169,7 +163,7 @@ describe "A Content Object" do
     describe "when it is edited" do
       before do
         @page = create_page(:section => root_section)
-        @page.add_content_block!(@block, "main")
+        @page.create_connector(@block, "main")
         reset(:page, :block)
         @editing_the_block = lambda {@block.update_attribute(:name, "something different")}
       end
@@ -182,41 +176,41 @@ describe "A Content Object" do
       end
       it "should set the revision comment on the page" do
         @editing_the_block.call
-        @page.reload.revision_comment.should =~ /^Edited block.*/
+        @page.reload.current_version.version_comment.should =~ /^Edited HtmlBlock#\d+/
       end
       it "should create the right connectors" do
         @editing_the_block.call
-        conns = Connector.all(:conditions => ["content_block_id = ? and content_block_type = ?", @block.id, @block.class.name], :order => 'id')
+        conns = @block.connectors.all(:order => 'id')
         conns.size.should == 2
-        conns[0].should_meet_expectations(:page => @page, :page_version => 2, :content_block => @block, :content_block_version => 1, :container => "main")        
-        conns[1].should_meet_expectations(:page => @page, :page_version => 3, :content_block => @block, :content_block_version => 2, :container => "main")        
+        conns[0].should_meet_expectations(:page => @page, :page_version => 2, :connectable => @block, :connectable_version => 1, :container => "main")        
+        conns[1].should_meet_expectations(:page => @page, :page_version => 3, :connectable => @block, :connectable_version => 2, :container => "main")        
       end
       describe "and saved" do
-        it "the page should not be live" do
+        it "the page should not be published" do
           @editing_the_block.call
-          @page.should_not be_live
+          @page.should_not be_published
         end
       end
       describe "and save and published" do
         describe "and the page is draft then," do
           before do
-            @editing_the_block = lambda {@block.update_attributes(:name => "something different", :publish_on_save => true)}
+            @editing_the_block = lambda {@block.reload.update_attributes(:name => "something different", :publish_on_save => true)}
           end
-          it "the page should be live" do
+          it "the page should be published" do
             @editing_the_block.call
-            @page.reload.should_not be_live
+            @page.reload.should_not be_published
           end
         end
-        describe "and the page is live then," do
+        describe "and the page is published then," do
           before do
-            @page.publish!(create_user)
+            @page.publish!
             reset(:page)
-            @editing_the_block = lambda {@block.update_attributes(:name => "something different", :publish_on_save => true)}
+            @editing_the_block = lambda {@block.reload.update_attributes(:name => "something different", :publish_on_save => true)}
           end
-          it "the page should be live" do
+          it "the page should be published" do
             @editing_the_block.call
             reset(:page)
-            @page.should be_live
+            @page.should be_published
           end
         end
       end
@@ -224,7 +218,7 @@ describe "A Content Object" do
   end 
 end
 
-describe "Destroying a block" do
+describe "Destroying a block", :type => :model do
   before do
     @block = create_html_block
     @destroying_the_block = lambda { @block.destroy }
@@ -282,9 +276,4 @@ describe "Destroying a block" do
     HtmlBlock::Version.find(:all, "html_block_id =>#{@block.id}").size.should == 2
   end
 
-  it "should remove all versions when doing destroy!" do
-    @block.destroy!
-    lambda { HtmlBlock.find_with_deleted(@b) }.should raise_error(ActiveRecord::RecordNotFound)
-    HtmlBlock::Version.find(:all, "html_block_id =>#{@block.id}").size.should == 0
-  end    
 end

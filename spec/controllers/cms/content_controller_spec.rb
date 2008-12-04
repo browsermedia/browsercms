@@ -104,7 +104,7 @@ describe Cms::ContentController do
       end
       describe "that has been archived" do
         it "should not be able to be found" do
-          @file_block.update_attributes(:archived => true, :updated_by_user => admin_user)
+          @file_block.update_attributes(:archived => true)
           reset(:file_block)
           @file_block.attachment.should be_archived
           @action.call

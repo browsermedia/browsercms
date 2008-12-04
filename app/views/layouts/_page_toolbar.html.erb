@@ -10,9 +10,9 @@
     <%= link_to "Revisions", cms_path(@page, :revisions), :target => "_top" %>
     <%= link_to "Delete", cms_path(@page, :destroy), :http_method => :delete, :confirm => "Are you sure you want to delete '#{@page.name}'?", :target => "_top" %>
 
-    <%= link_to "Assign", "#" %>
+    <%= link_to "Assign", "#", :target => "_top" %>
     <% able_to? :publish_content do %>
-      <%= @page.published? ? "Publish" : link_to("Publish", cms_path(@page, :publish), :http_method => :put) %>
+      <%= @page.published? ? "Publish" : link_to("Publish", cms_path(@page, :publish), :http_method => :put, :target => "_top") %>
     <% end %>
   </div>  
   <div>

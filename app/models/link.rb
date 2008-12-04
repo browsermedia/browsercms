@@ -1,5 +1,5 @@
 class Link < ActiveRecord::Base
-  acts_as_content_object
+  acts_as_content_block
   
   has_one :section_node, :as => :node
   

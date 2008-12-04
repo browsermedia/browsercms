@@ -67,7 +67,7 @@ module Cms
     def connect_to_page
       unless connect_to_page_id.blank? || connect_to_container.blank?
         self.connected_page = Page.find(connect_to_page_id)
-        connected_page.add_content_block!(self, connect_to_container)
+        connected_page.create_connector(self, connect_to_container)
       end
     end
 
@@ -82,7 +82,7 @@ module Cms
     end
 
     def update_page(page)
-      page.update_attributes!(:new_revision_comment => "Edited block", :publish_on_save => (published? && page.published?), :updated_by_user => updated_by)
+      page.update_attributes!(:new_version_comment => "Edited block", :publish_on_save => (published? && page.published?), :updated_by_user => updated_by)
       page.connectors.all(:include => :page, :conditions => {:content_block_id => self.id, :content_block_type => self.class.name }).each do |conn|
         conn.increment!(:content_block_version)
       end      

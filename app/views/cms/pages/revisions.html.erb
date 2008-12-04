@@ -12,7 +12,7 @@
   <% @page.versions.all(:order => "version desc").each_with_index do |r, i| %><tr>
     <td><%= link_to "v.#{r.version}", cms_path(@page, :show_version, :version => r.version)%></td>
     <td><%= status_icon(r.published?) %></td>
-    <td><%=h r.revision_comment %></td>
+    <td><%=h r.version_comment %></td>
     <td><%= r.created_at.strftime("%b %e, %Y %l:%M %p") %></td>
     <td><%= r.updated_by.login %></td>
     <td><% if i > 0 %><%= link_to "Revert", cms_path(@page, :revert_to, :version => r.version) %><% end %></td>

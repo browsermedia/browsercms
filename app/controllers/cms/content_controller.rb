@@ -89,7 +89,6 @@ class Cms::ContentController < Cms::ApplicationController
   # This method gives the content type a chance to set some params
   # This is used to make SEO-friendly URLs possible
   def prepare_params
-    logger.info "\n\npreparing_params..."
     if params[:prepare_with] && params[:prepare_with][:content_type] && params[:prepare_with][:method]
       content_type = params[:prepare_with][:content_type].constantize
       if content_type.respond_to?(params[:prepare_with][:method])

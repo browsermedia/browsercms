@@ -5,6 +5,7 @@ class CreatePortlets < ActiveRecord::Migration
       t.string :name
       t.boolean :archived, :default => false      
       t.boolean :deleted, :default => false
+      t.integer :created_by_id, :updated_by_id
       t.timestamps
     end
     

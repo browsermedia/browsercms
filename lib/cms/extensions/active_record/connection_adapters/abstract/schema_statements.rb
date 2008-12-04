@@ -7,15 +7,16 @@ module ActiveRecord
         t = TableDefinition.new(self)
         t.primary_key(options[:primary_key] || Base.get_primary_key(table_name)) unless options[:id] == false
 
-        t.integer :version, :default => 1
+        t.integer :version
         t.integer :lock_version, :default => 0
         yield t
         t.boolean :published, :default => false
         t.boolean :deleted, :default => false
-        t.boolean :archived, :default => false        
-        t.timestamps
+        t.boolean :archived, :default => false
+        t.integer :created_by_id
         t.integer :updated_by_id
-        t.string :revision_comment
+        t.timestamps
+
         
         create_table_from_definition(table_name, options, t)
 
@@ -24,14 +25,17 @@ module ActiveRecord
         vt.primary_key(options[:primary_key] || Base.get_primary_key(table_name)) unless options[:id] == false
 
         vt.integer "#{table_name.singularize}_id".to_sym
-        vt.integer :version, :default => 1
+        vt.integer :version
         yield vt    
         vt.boolean :published, :default => false
         vt.boolean :deleted, :default => false
         t.boolean :archived, :default => false        
-        vt.timestamps            
+        vt.string :version_comment
+        vt.integer :created_by_id
         vt.integer :updated_by_id
-        vt.string :revision_comment
+        vt.timestamps            
+        
+
         
         create_table_from_definition("#{table_name.singularize}_versions".to_sym, options, vt)
         

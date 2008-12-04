@@ -40,7 +40,7 @@ describe Cms::BlocksController do
     end
     it "should have link to revisions" do
       @action.call
-      response.should have_tag("a#revisions_link")
+      response.should have_tag("a", "Revisions")
     end
   end
 
@@ -406,13 +406,9 @@ describe Cms::BlocksController do
     end
 
     describe "destroying" do
-      before(:each) do
-        @action = lambda { delete :destroy, :id => @block.id, :block_type => "portlet" }
-      end
       it "should remove the row" do
-        @action.call
-        delete = lambda {Portlet.find(@block.id)}
-        delete.should raise_error(ActiveRecord::RecordNotFound)
+        delete :destroy, :id => @block.id, :block_type => "portlet"
+        lambda { Portlet.find(@block.id) }.should raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end

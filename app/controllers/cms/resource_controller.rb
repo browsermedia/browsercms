@@ -37,7 +37,6 @@ class Cms::ResourceController < Cms::BaseController
     @object = resource.find(params[:id])
     if @object.update_attributes(params[variable_name])
       flash[:notice] = "#{resource_name.singularize.titleize} '#{object_name}' was updated"
-      logger.debug "Redirecting to #{after_update_url}"
       redirect_to after_update_url
     else
       instance_variable_set("@#{variable_name}", @object)

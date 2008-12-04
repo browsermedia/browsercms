@@ -16,9 +16,6 @@ ActiveRecord::Base.send(:include, ActsAsList)
 require 'flex_attributes'
 ActiveRecord::Base.send(:include, FlexAttributes)
 
-require 'version_fu'
-ActiveRecord::Base.send(:include, VersionFu)
-
-#Include CMS extensions
-ActiveRecord::Base.send(:include, Cms::Acts::ContentObject)
-ActiveRecord::Base.extend(Cms::Acts::Paranoid)
+#Include CMS Behaviors
+ActiveRecord::Base.extend Cms::Acts::ContentObject
+require 'cms/behaviors'

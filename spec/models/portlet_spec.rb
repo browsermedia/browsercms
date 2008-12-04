@@ -12,7 +12,7 @@ describe Portlet do
 
   it "should be marked as not supporting revisioning" do
     p = new_dynamic_portlet
-    p.versionable?.should be_false
+    p.class.should_not be_versioned
   end
 
   describe "when appearing in a list" do

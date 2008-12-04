@@ -3,9 +3,9 @@ class Attachment < ActiveRecord::Base
   before_validation :process_file
   before_validation :prepend_slash
   before_save :update_file
-  
-  version_fu
-  is_paranoid
+
+  uses_soft_delete
+  is_versioned
   
   attr_accessor :file
 

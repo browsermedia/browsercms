@@ -3,5 +3,5 @@
 <h2>View <%= @block.name %></h2>
 <div id="block_content">
   <div class="header <%= @block.published? ? 'published' : 'draft' %>">Block Contents</div>
-  <div class="content"><%= render_content_block(@block) %></div>
+  <div class="content"><%= render_connectable(@block) %></div>
 </div>

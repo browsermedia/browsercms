@@ -1,30 +1,51 @@
 class Connector < ActiveRecord::Base
   belongs_to :page
+  belongs_to :connectable, :polymorphic => true
   
-  #Can't use just 'block', because 'block_type' is used by rails
-  belongs_to :content_block, :polymorphic => true
-
   acts_as_list :scope => 'connectors.page_id = #{page_id} and connectors.page_version = #{page_version} and connectors.container = \'#{container}\''
   alias :move_up :move_higher 
-  alias :move_down :move_lower 
+  alias :move_down :move_lower  
   
-  validates_presence_of :container
+  named_scope :for_page_version, lambda{|pv| {:conditions => {:page_version => pv}}}
+  named_scope :for_connectable_version, lambda{|cv| {:conditions => {:connectable_version => cv}}}
+  named_scope :for_connectable, lambda{|c| 
+    {:conditions => { :connectable_id => c.id, :connectable_type => c.class.base_class.name }}
+  }  
+  named_scope :in_container, lambda{|container| {:conditions => {:container => container}}}
+  named_scope :at_position, lambda{|position| {:conditions => {:position => position}}}  
+  named_scope :like, lambda{|connector|
+    {:conditions => { 
+      :connectable_id => connector.connectable_id, 
+      :connectable_type => connector.connectable_type,
+      :connectable_version => connector.connectable_version,
+      :container => connector.container,
+      :position => connector.position
+    }}
+  }
   
-  named_scope :for_block, lambda {|b| {:conditions => ['connectors.content_block_id = ? and connectors.content_block_type = ?', b.id, b.class.name]}}
-  named_scope :for_container, lambda{|container| {:conditions => ['connectors.container = ?', container]} }
-
-  #Returns the content block that this connector is connected to
-  def content_block
-    @__content_block__ ||= begin
-      if content_block_type.constantize.respond_to?(:versioned_class_name)
-        b = content_block_type.constantize.first(:conditions => {:id => content_block_id, :version => content_block_version})
-    
-        #If this connector is referring to an older version of the block, we have to look in the versions table
-        b ? b : content_block_type.constantize.find(content_block_id).as_of_version(content_block_version)
-      else
-        content_block_type.constantize.find(content_block_id)
-      end
-    end
+  validates_presence_of :page_id, :page_version, :connectable_id, :connectable_type, :container
+  
+  def current_connectable
+    versioned? ? connectable.as_of_version(connectable_version) : connectable
+  end
+  
+  def status
+    published? ? :published : :draft
+  end        
+  def status_name
+    status.to_s.titleize
+  end  
+  
+  def published?
+    publishable? ? connectable.published? : true
+  end
+  
+  def publishable?
+    connectable_type.constantize.publishable?
+  end
+  
+  def versioned?
+    connectable_type.constantize.versioned?
   end
   
 end

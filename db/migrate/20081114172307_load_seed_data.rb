@@ -53,16 +53,16 @@ class LoadSeedData < ActiveRecord::Migration
 </html>
     TEMPLATE
         
-    create_page(:home, :name => "Home", :path => "/", :section => sections(:root), :template => page_templates(:main), :updated_by_user => users(:cmsadmin))
-    create_page(:not_found, :name => "Not Found", :path => "/system/not_found", :section => sections(:system), :template => page_templates(:main), :updated_by_user => users(:cmsadmin), :publish_on_save => true)
-    create_page(:access_denied, :name => "Access Denied", :path => "/system/access_denied", :section => sections(:system), :template => page_templates(:main), :updated_by_user => users(:cmsadmin), :publish_on_save => true)
-    create_page(:server_error, :name => "Server Error", :path => "/system/server_error", :section => sections(:system), :template => page_templates(:main), :updated_by_user => users(:cmsadmin), :publish_on_save => true)
+    create_page(:home, :name => "Home", :path => "/", :section => sections(:root), :template => page_templates(:main))
+    create_page(:not_found, :name => "Not Found", :path => "/system/not_found", :section => sections(:system), :template => page_templates(:main), :publish_on_save => true)
+    create_page(:access_denied, :name => "Access Denied", :path => "/system/access_denied", :section => sections(:system), :template => page_templates(:main), :publish_on_save => true)
+    create_page(:server_error, :name => "Server Error", :path => "/system/server_error", :section => sections(:system), :template => page_templates(:main), :publish_on_save => true)
 
-    create_html_block(:hello_world, :name => "Hello World", :content => "<h1>Hello, World!</h1>", :publish_on_save => true, :updated_by_user => users(:cmsadmin))
+    create_html_block(:hello_world, :name => "Hello World", :content => "<h1>Hello, World!</h1>", :publish_on_save => true)
 
-    pages(:home).add_content_block!(html_blocks(:hello_world), "main")         
+    pages(:home).create_connector(html_blocks(:hello_world), "main")         
     
-    pages(:home).publish!(users(:cmsadmin))   
+    pages(:home).publish! 
         
     puts "*************************************************"    
     puts "* YOUR CMS username/password is: cmsadmin/#{pwd}"    

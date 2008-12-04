@@ -10,10 +10,10 @@ class Cms::ConnectorsController < Cms::BaseController
   end
 
   def create
-    @block_type = ContentType.find_by_key(params[:content_block_type])
+    @block_type = ContentType.find_by_key(params[:connectable_type])
     raise "Unknown block type" unless @block_type
-    @block = @block_type.model_class.find(params[:content_block_id])
-    if @page.add_content_block!(@block, params[:container])
+    @block = @block_type.model_class.find(params[:connectable_id])
+    if @page.create_connector(@block, params[:container])
       redirect_to @page.path
     else
       @blocks = @block_type.model_class.all(:order => "name")      
@@ -24,11 +24,11 @@ class Cms::ConnectorsController < Cms::BaseController
   def destroy
     @connector = Connector.find(params[:id])
     @page = @connector.page
-    @content_block = @connector.content_block
-    if @page.destroy_connector(@connector)
-      flash[:notice] = "Removed '#{@content_block.name}' from the '#{@connector.container}' container"
+    @connectable = @connector.connectable
+    if @page.remove_connector(@connector)
+      flash[:notice] = "Removed '#{@connectable.name}' from the '#{@connector.container}' container"
     else
-      flash[:error] = "Failed to remove '#{@content_block.name}' from the '#{@connector.container}' container"
+      flash[:error] = "Failed to remove '#{@connectable.name}' from the '#{@connector.container}' container"
     end
     redirect_to @page.path
   end
@@ -42,11 +42,11 @@ class Cms::ConnectorsController < Cms::BaseController
     define_method "move_#{move}" do
       @connector = Connector.find(params[:id])
       @page = @connector.page
-      @content_block = @connector.content_block
+      @connectable = @connector.connectable
       if @page.send("move_connector_#{move}", @connector)
-        flash[:notice] = "Moved '#{@content_block.name}' #{where} the '#{@connector.container}' container"
+        flash[:notice] = "Moved '#{@connectable.name}' #{where} the '#{@connector.container}' container"
       else
-        flash[:error] = "Failed to move '#{@content_block.name}' #{where} the '#{@connector.container}' container"
+        flash[:error] = "Failed to move '#{@connectable.name}' #{where} the '#{@connector.container}' container"
       end
       redirect_to @page.path    
     end

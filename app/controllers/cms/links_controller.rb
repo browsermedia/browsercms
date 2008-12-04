@@ -9,7 +9,6 @@ class Cms::LinksController < Cms::BaseController
   def create
     @link = Link.new(params[:link])
     @link.section = @section
-    @link.updated_by_user = current_user
     if @link.save
       flash[:notice] = "Link was '#{@link.name}' created."
       redirect_to cms_url(@section)
@@ -24,7 +23,7 @@ class Cms::LinksController < Cms::BaseController
   
   def update
     @link = Link.find(params[:id])
-    if @link.update_attributes(params[:link].merge(:updated_by_user => current_user))
+    if @link.update_attributes(params[:link])
       flash[:notice] = "Link '#{@link.name}' was updated"
       redirect_to cms_url(@link.section || :sitemap)
     else

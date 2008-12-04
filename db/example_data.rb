@@ -20,7 +20,8 @@ module FixtureReplacement
     a.page = default_page
     a.page_version = 1
     a.container = "main"
-    a.content_block = default_html_block
+    a.connectable = default_html_block
+    a.connectable_version = 1
 	end
 
   attributes_for :content_type do |a|
@@ -38,8 +39,7 @@ module FixtureReplacement
 
   attributes_for :file_block do |a|
     a.name = "TestFileBlock#{Sequence.next}"
-    a.attachment_file_name = "#{a.name.to_slug}.pdf"    
-    a.updated_by_user = default_user    
+    a.attachment_file_name = "#{a.name.to_slug}.pdf"  
   end
 
   attributes_for :group do |a|
@@ -53,28 +53,23 @@ module FixtureReplacement
   attributes_for :html_block do |a|
     a.name = "About Us"
     a.content = "<h1>About Us</h1>\n<p>Lorem ipsum dolor sit amet...</p>"
-    a.updated_by_user = default_user
 	end
 
   attributes_for :image_block do |a|
     a.name = "TestImageBlock#{Sequence.next}"
     a.attachment_file_name = "#{a.name.to_slug}.jpg"
-    a.updated_by_user = default_user
   end
 
   attributes_for :link do |a|
     a.name = "ExampleLink#{Sequence.next}"
     a.url = "http://www.example#{Sequence.next}.com"
-    a.updated_by_user = default_user
   end
 
   attributes_for :page do |a|
-    a.name = "Home #{Sequence.next}"
+    a.name = "Page #{Sequence.next}"
     a.path = "/#{a.name.gsub(/\s/,'_').downcase}"
     a.template = default_page_template
     a.section = default_section
-    a.updated_by_user = default_user
-    a.version = 1
 	end
 
   attributes_for :page_template do |a|
