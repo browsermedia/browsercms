@@ -2,6 +2,10 @@ require 'will_paginate'
 require 'cms/extensions'
 require 'cms/routes'
 
+module Cms
+  VERSION = "3.0.0"
+end
+
 #Load Erubis, if we can
 begin
   require 'erubis/helpers/rails_helper'
