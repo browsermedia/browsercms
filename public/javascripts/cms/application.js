@@ -30,12 +30,15 @@ jQuery(function($) {
   
   $.cms = {
     showNotice: function(msg) {
-      $('#message').removeClass('error').addClass('notice').html(msg).show().animate({opacity: 1.0}, 3000).fadeOut("normal")
+      $('#message').removeClass('error').addClass('notice').html(msg).parent().show().animate({opacity: 1.0}, 3000).fadeOut("normal")
     },
     showError: function(msg) {
-      $('#message').removeClass('notice').addClass('error').html(msg).show().animate({opacity: 1.0}, 3000).fadeOut("normal")
+      $('#message').removeClass('notice').addClass('error').html(msg).parent().show().animate({opacity: 1.0}, 3000).fadeOut("normal")
     }
   }
+  
+  $('#message.notice').parent().show().animate({opacity: 1.0}, 3000).fadeOut("normal")
+  $('#message.error').parent().show().animate({opacity: 1.0}, 3000).fadeOut("normal")
   
   $('a[http_method]').click(function() {
     var f = document.createElement('form')
