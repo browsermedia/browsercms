@@ -2,7 +2,11 @@
   <body>
 		<div id="wrapper">
       <%= cms_toolbar(:sitemap) %>
-      <%= yield %>
+      <div id="main">
+        <%= yield %>
+      </div>
+      <br clear="all" />
+      <%= render :partial => 'layouts/cms/footer' %>     
 		</div>
   </body>
 </html>

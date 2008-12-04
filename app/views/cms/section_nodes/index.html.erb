@@ -4,46 +4,39 @@
 <% end %>
 <% @page_title = "Sitemap" %>
 
-<div id="main">
-	<div id="functions">
-  	<%= link_to span_tag("Edit"), '#', :id => 'edit-button', :class => "button disabled" %>
-  	<%= link_to span_tag("Properties"), '#', :id => 'properties-button', :class => "button disabled" %>
-  	<%= link_to span_tag("Delete"), '#', :id => 'delete-button', :class => "button disabled" %>
-  	<%= link_to span_tag("Add Page"), '#', :id => 'add-page-button', :class => "button disabled" %>
-  	<%= link_to span_tag("Add Section"), '#', :id => 'add-section-button', :class => "button disabled" %>
-		<%= link_to span_tag("Add Link"), '#', :id => 'add-link-button', :class => "button disabled" %>
-		<br clear="all" />
-	</div>
-	
-	<div id="contentwrapbig">
-		<div id="content">
-			<div class="pad">
-        <table id="sitemap">
-          <thead>
-            <tr>
-              <th class="node">Site Structure</th>
-              <th>&nbsp;</th>
-              <th class="status">Status</th>
-            </tr>
-            <tr>
-              <td class="node">
-                <%= action_icon(:home) %>
-                <span id="section_<%= @section.id %>" class="root node"><%= h(@section.name) %></span>
-              </td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-            </tr>  
-          </thead>
-          <tbody>
-            <%= render :partial => 'section_node', :collection => @section.child_nodes.all(:order => 'position'), :locals => {:depth => 1, :ancestors => []} %>
-          </tbody>
-        </table>
-      </div>
+<div id="functions">
+	<%= link_to span_tag("Edit"), '#', :id => 'edit-button', :class => "button disabled" %>
+	<%= link_to span_tag("Properties"), '#', :id => 'properties-button', :class => "button disabled" %>
+	<%= link_to span_tag("Delete"), '#', :id => 'delete-button', :class => "button disabled" %>
+	<%= link_to span_tag("Add Page"), '#', :id => 'add-page-button', :class => "button disabled" %>
+	<%= link_to span_tag("Add Section"), '#', :id => 'add-section-button', :class => "button disabled" %>
+	<%= link_to span_tag("Add Link"), '#', :id => 'add-link-button', :class => "button disabled" %>
+	<br clear="all" />
+</div>
+
+<div id="contentwrapbig">
+	<div id="content">
+		<div class="pad">
+      <table id="sitemap">
+        <thead>
+          <tr>
+            <th class="node">Site Structure</th>
+            <th>&nbsp;</th>
+            <th class="status">Status</th>
+          </tr>
+          <tr>
+            <td class="node">
+              <%= action_icon(:home) %>
+              <span id="section_<%= @section.id %>" class="root node"><%= h(@section.name) %></span>
+            </td>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+          </tr>  
+        </thead>
+        <tbody>
+          <%= render :partial => 'section_node', :collection => @section.child_nodes.all(:order => 'position'), :locals => {:depth => 1, :ancestors => []} %>
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
-<br clear="all" />
-</div>
-<div id="footer">
-  <p>&copy; 1998-2008 <a href="#">BrowserMedia</a>. All Rights Reserved</p>
-  <p>Browser CMS v3</p>
 </div>
