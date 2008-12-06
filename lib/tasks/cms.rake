@@ -2,20 +2,24 @@ namespace :cms do
   
   desc "Builds and installs the cms gems"
   task :install do
-    FileUtils.rm(Dir["*.gem"])
-    system("gem", "build", "gemspec.rb")
-    Dir["#{Dir.pwd}/modules/*"].each do |m|
-      system("gem", "build", "#{m}/gemspec.rb")
-    end
-    Dir["*.gem"].each do |g|
-      if g =~ /(.*)-(\d\.\d\.\d)\.gem/
+    reinstall_gem = lambda do |gem_file|
+      if gem_file =~ /(.*)-(\d\.\d\.\d)\.gem/
         gem = $1
         version = $2
         args = RUBY_PLATFORM.match(/mswin/) ? [] : ["sudo"]
         system(*(args + ["gem", "uninstall", gem, "-v", version]))
-        system(*(args + ["gem", "install", g]))
+        system(*(args + ["gem", "install", gem_file]))
+      end      
+    end
+    
+    system("gem", "build", "gemspec.rb")
+    reinstall_gem[Dir["browser_cms-*.gem"].first]
+    Dir["#{Dir.pwd}/modules/*"].each do |m|
+      FileUtils.cd(m) do
+        system("gem", "build", "gemspec.rb")
+        reinstall_gem[Dir["browser_cms_*-*.gem"].first]
       end
     end
   end
-  
+    
 end
