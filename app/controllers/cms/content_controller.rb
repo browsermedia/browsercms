@@ -113,7 +113,7 @@ class Cms::ContentController < Cms::ApplicationController
   end
 
   def set_page_mode
-    @mode = params[:mode] || session[:page_mode] || "edit"
+    @mode = current_user.able_to?(:edit_content) ? (params[:mode] || session[:page_mode] || "edit") : "view"
     session[:page_mode] = @mode      
   end
 
