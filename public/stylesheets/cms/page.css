@@ -1,4 +1,44 @@
-/* CMS specific styling goes here */
-.cms img {
+/* CMS specific styling for page edit goes here */
+div.cms {
+  font: 12pt "Trebuchet MS", Helvetica, Verdana, Arial, sans-serif;
+  color: #727171;
+}
+
+div.cms img {
   border: 0;
 }
+
+div.cms div.actions {
+  display: inline;
+}
+
+div.cms_edit_container,
+div.cms_edit_connectable {
+  margin: 0;
+  padding: 0;
+  border: 1px solid #727171;
+}
+
+div.cms_edit_container .published,
+div.cms_edit_connectable .published {
+  background-color: #33cc33;
+}
+
+div.cms_edit_container .draft,
+div.cms_edit_connectable .draft {
+  background-color: #cc3333;
+}
+
+
+div.cms_container_header,
+div.cms_connectable_header {
+  padding: 5px;
+  border-bottom: 1px solid #727171;
+  color: white;
+}
+
+div.cms_container_content,
+div.cms_connectable_content {
+  padding: 5px;
+}
+

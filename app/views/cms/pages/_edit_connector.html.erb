@@ -1,5 +1,5 @@
-<div class="edit_block">
-  <div class="header <%= (connector.connectable.published? ? 'published' : 'draft') if connector.publishable? %>">
+<div class="cms_edit_connectable">
+  <div class="cms cms_connectable_header <%= (connector.connectable.published? ? 'published' : 'draft') if connector.publishable? %>">
     <%= connector.connectable.name %>
     <div class="actions">
       <%= link_to status_icon(connector.status), cms_path(connector.connectable)  %>
@@ -12,7 +12,7 @@
       <%= link_to action_icon(:delete), cms_path(connector, :destroy, :_redirect_to => @page.path), :http_method => :delete, :confirm => "Are you sure you want to remove this block from this page?" %>
     </div>
   </div>
-  <div class="content">
+  <div class="cms_connectable_content">
     <%= render_connectable(connector.connectable) %>
   </div>
 </div>
