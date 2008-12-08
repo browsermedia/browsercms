@@ -1,0 +1,18 @@
+<div class="fields">
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+</div>
+<div class="fields">
+  <%= f.label :limit %>
+  <%= f.text_field :limit, :size => 4 %>
+</div>
+<% @block.sizes = TagCloudPortlet.default_sizes if @block.sizes.blank? %>
+<div class="fields">
+  <%= f.label :sizes %>
+  <%= f.text_field :sizes %>
+</div>
+<% @block.template = TagCloudPortlet.default_template if @block.template.blank? %>
+<div class="fields">
+  <%= f.label :template %>
+  <%= f.text_area :template %>
+</div>

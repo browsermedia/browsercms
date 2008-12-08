@@ -1,16 +1,14 @@
 class Foo
-  def time
-    @time ||= Time.now
-  end
-  def reset!
-    @time = nil
+  def self.template
+    template = <<-HTML
+<div class="tag_cloud">
+  <% for tag in @cloud %>
+    <%= link_to h(tag.name), "/tags/\#{tag.name.to_slug}", :class => @portlet.tag_sizes[tag.size] %>
+  <% end %>
+</div> 
+    HTML
+    template.chomp
   end
 end
 
-foo = Foo.new
-puts foo.time
-sleep 2
-puts foo.time
-foo.reset!
-sleep 2
-puts foo.time
+puts "'#{Foo.template}'"

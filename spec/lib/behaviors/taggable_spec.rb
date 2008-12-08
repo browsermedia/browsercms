@@ -76,15 +76,15 @@ describe Article do
     tag_cloud = Tag.cloud(:sizes => 9)
     tag_cloud.size.should == 5
     tag_cloud[0].should == Tag.find_by_name("article")
-    tag_cloud[0].size.should == 7
+    tag_cloud[0].size.should == 6
     tag_cloud[1].should == Tag.find_by_name("Even")
-    tag_cloud[1].size.should == 4
+    tag_cloud[1].size.should == 3
     tag_cloud[2].should == Tag.find_by_name("Five")
-    tag_cloud[2].size.should == 2
+    tag_cloud[2].size.should == 1
     tag_cloud[3].should == Tag.find_by_name("First")
-    tag_cloud[3].size.should == 1
+    tag_cloud[3].size.should == 0
     tag_cloud[4].should == Tag.find_by_name("Last")
-    tag_cloud[4].size.should == 1
+    tag_cloud[4].size.should == 0    
     
   end
   

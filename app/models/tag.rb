@@ -19,8 +19,8 @@ class Tag < ActiveRecord::Base
   # which contols the number of sizes the tag cloud will have.
   # The default number of sizes is 5.
   def self.cloud(options={})
-    sizes = options.delete(:sizes) || 5
-    sizes = sizes - 1
+    sizes = (options.delete(:sizes) || 5) - 1
+    sizes = 1 if sizes < 1
     tags = counts(options)
     return [] if tags.blank?
     
@@ -34,7 +34,7 @@ class Tag < ActiveRecord::Base
 
     divisor = ((max - min) / sizes) + 1
     tags.each do |t|
-      t.size = ("%1.0f" % (t.count * 1.0 / divisor)).to_i + 1
+      t.size = ("%1.0f" % (t.count * 1.0 / divisor)).to_i
     end
     
     tags
