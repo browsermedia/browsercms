@@ -16,7 +16,7 @@ class Portlet < ActiveRecord::Base
   # This method will load all portlets that are defined
   # in a app/portlets directory on the load path
   def self.load_portlets
-    Dependencies.load_paths.each do |d| 
+    ActiveSupport::Dependencies.load_paths.each do |d| 
       if d =~ /app\/portlets/
         Dir["#{d}/*_portlet.rb"].each{|p| require_dependency(p) }
       end

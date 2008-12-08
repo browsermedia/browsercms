@@ -34,7 +34,7 @@ module Cms
     end   
     
     def add_to_rails_paths(path)
-      Dependencies.load_paths += [
+      ActiveSupport::Dependencies.load_paths += [
         File.join(path, "app", "controllers"),
         File.join(path, "app", "helpers"),
         File.join(path, "app", "models"),
