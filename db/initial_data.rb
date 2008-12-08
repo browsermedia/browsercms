@@ -7,7 +7,7 @@ home_page = Page.first(:conditions => {:name => "Home"})
 create_section(:products, :name => "Products", :parent => root_section, :path => "/products")
 create_section(:browsercms, :name => "BrowserCMS", :parent => sections(:products), :path => "/browsercms")
 create_section(:browserams, :name => "BrowserAMS", :parent => sections(:products), :path => "/browserams")
-create_section(:about, :name => "About", :parent => sections(:root), :path => "/about")
+create_section(:about, :name => "About", :parent => root_section, :path => "/about")
 create_section(:people, :name => "People", :parent => sections(:about), :path => "/people")
 create_section(:careers, :name => "Careers", :parent => sections(:about), :path => "/careers")
 
