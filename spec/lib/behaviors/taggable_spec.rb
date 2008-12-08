@@ -53,18 +53,39 @@ describe Article do
   end
   
   it "should have a tag cloud" do
-    pending
     25.times do |n|
-      tag_list = "article"
+      tag_list = ["article"]
       tag_list << "first" if n == 0
       tag_list << "even" if n.even?
       tag_list << "five" if n % 5 == 0
       tag_list << "last" if n == 24
-      Article.create!(:name => "Article ##{n}", :tag_list => "tag_list" )
+      Article.create!(:name => "Article ##{n}", :tag_list => tag_list.join(" ") )
     end
-    log Tag.cloud
-    #log ActiveRecord::Base.connection.select_all("SELECT * FROM tag").inspect
-    #Article.tag_cloud.should == [{"article" => 25}, {"even" => 14}]
+    
+    tag_counts = Tag.counts(:limit => 4)
+    tag_counts.size.should == 4
+    tag_counts[0].should == Tag.find_by_name("article")
+    tag_counts[0].count.should == "25"
+    tag_counts[1].should == Tag.find_by_name("Even")
+    tag_counts[1].count.should == "13"
+    tag_counts[2].should == Tag.find_by_name("Five")
+    tag_counts[2].count.should == "5"
+    tag_counts[3].should == Tag.find_by_name("First")
+    tag_counts[3].count.should == "1"
+    
+    tag_cloud = Tag.cloud(:sizes => 9)
+    tag_cloud.size.should == 5
+    tag_cloud[0].should == Tag.find_by_name("article")
+    tag_cloud[0].size.should == 7
+    tag_cloud[1].should == Tag.find_by_name("Even")
+    tag_cloud[1].size.should == 4
+    tag_cloud[2].should == Tag.find_by_name("Five")
+    tag_cloud[2].size.should == 2
+    tag_cloud[3].should == Tag.find_by_name("First")
+    tag_cloud[3].size.should == 1
+    tag_cloud[4].should == Tag.find_by_name("Last")
+    tag_cloud[4].size.should == 1
+    
   end
   
 end
