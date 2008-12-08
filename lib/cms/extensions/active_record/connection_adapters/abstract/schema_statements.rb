@@ -24,7 +24,7 @@ module ActiveRecord
         vt = TableDefinition.new(self)
         vt.primary_key(options[:primary_key] || Base.get_primary_key(table_name)) unless options[:id] == false
 
-        vt.integer "#{table_name.singularize}_id".to_sym
+        vt.integer "#{table_name.to_s.singularize}_id".to_sym
         vt.integer :version
         yield vt    
         vt.boolean :published, :default => false
@@ -37,7 +37,7 @@ module ActiveRecord
         
 
         
-        create_table_from_definition("#{table_name.singularize}_versions".to_sym, options, vt)
+        create_table_from_definition("#{table_name.to_s.singularize}_versions".to_sym, options, vt)
         
       end   
          

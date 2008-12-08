@@ -21,5 +21,5 @@ require 'flex_attributes'
 ActiveRecord::Base.send(:include, FlexAttributes)
 
 #Include CMS Behaviors
-ActiveRecord::Base.extend Cms::Acts::ContentObject
+ActiveRecord::Base.send(:include, Cms::Acts::ContentBlock)
 require 'cms/behaviors'

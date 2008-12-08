@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/../../spec_helper'
 
-describe "A Content Object", :type => :model do
+describe "A Content Block", :type => :model do
   before(:each) do
     @block = create_html_block(:name => "Test")
   end
