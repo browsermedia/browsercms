@@ -1,30 +1,30 @@
-<%= render :partial => 'layouts/cms/head' %>
-<body>
-  <div id="wrapper">
-    <%= cms_toolbar(:administration) %>
-    <div id="main">
-      <div id="functions">
-        <a href="#" class="button"><span>VIEW</span></a>
-        <a href="#" class="button left"><span>ADD A RELEASE</span></a><a href="#" class="button right"><span>ADD A CATEGORY</span></a>
-        <a href="#" class="button disabled"><span>DELETE</span></a>
-        <br clear="all" />
-      </div>
+  <%= render :partial => 'layouts/cms/head' %>
+  <body>
+    <div id="wrapper">
+      <%= cms_toolbar(:administration) %>
+      <div id="main">
+	<div id="functions">
+          <a href="#" class="button"><span>VIEW</span></a>
+          <a href="#" class="button left"><span>ADD A RELEASE</span></a><a href="#" class="button right"><span>ADD A CATEGORY</span></a>
+          <a href="#" class="button disabled"><span>DELETE</span></a>
+          <br clear="all" />
+	</div>
 
-      <div id="menu">
-        <div class="pad">
-          <%= render :partial => 'cms/shared/admin_sidebar' %>                      
-        </div>
-      </div>
-      <div id="contentwrap">
-        <div id="content">
+	<div id="menu">
           <div class="pad">
-            <%= yield %>
+            <%= render :partial => 'cms/shared/admin_sidebar' %>                      
           </div>
-        </div>
+	</div>
+	<div id="contentwrap">
+          <div id="content">
+            <div class="pad">
+              <%= yield %>
+            </div>
+          </div>
+	</div>
+	<br clear="all" />
+	<%= render :partial => 'layouts/cms/footer' %>
       </div>
-      <br clear="all" />
-      <%= render :partial => 'layouts/cms/footer' %>
     </div>
-  </div>
-</body>
+  </body>
 </html>

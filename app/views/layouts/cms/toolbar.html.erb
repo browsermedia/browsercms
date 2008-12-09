@@ -1,7 +1,22 @@
-<%= render :partial => 'layouts/cms/head' %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title><%= @page_title %></title>
+  <%= stylesheet_link_tag 'cms/application' %>
+  <%= stylesheet_link_tag 'cms/page_toolbar' %>
+  <style type="text/css">
+
+    body {
+background: #FFF url(/images/cms/toolbar_bg.png) repeat-x 0 0;
+}
+</style>
+</head>
   <body>
-		<div id="wrapper">
+    <div id="wrapper">
       <%= yield %>
-		</div>
+    <%= render :partial => 'layouts/page_toolbar' %>
+    </div>
+
   </body>
 </html>

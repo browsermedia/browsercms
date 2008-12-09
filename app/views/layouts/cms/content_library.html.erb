@@ -1,9 +1,9 @@
-<%= render :partial => 'layouts/cms/head' %>
+  <%= render :partial => 'layouts/cms/head' %>
   <body>
     <div id="wrapper">
       <div id="page">
         <%= cms_toolbar(:content_library) %>
-      
+	
         <div id="main">
           <div id="functions">
             <%= link_to span_tag("VIEW"), "#", :id => "view_button", :class => "button disabled" %>
@@ -18,16 +18,16 @@
                 
                 <h3>Search</h3>
                 <div class="searchbox">
-                <% form_tag '', :method => :get do -%>
+                  <% form_tag '', :method => :get do -%>
                   <%= text_field_tag :search, params[:search] %>
                   <% if @content_type.name == "HtmlBlock" -%>
-                    <p><%= check_box_tag :include_body, true, params[:include_body] %> Include body?</p>
+                  <p><%= check_box_tag :include_body, true, params[:include_body] %> Include body?</p>
                   <% end -%>
                   <% if %w[FileBlock ImageBlock].include?(@content_type.name) %>
-                    <p><%= select_tag 'section_id', searchable_sections(params[:section_id]) %></p>
+                  <p><%= select_tag 'section_id', searchable_sections(params[:section_id]) %></p>
                   <% end -%>
                   <%= submit_tag "Search" %>
-                <% end -%>
+                  <% end -%>
                 </div>
                 
               </div>
@@ -36,21 +36,21 @@
                 <%= yield :sidebar %>
                 <h3 id="content_types">Content Types</h3>
                 <ul><% ContentTypeGroup.all(:order => "content_type_groups.id").each do |g| %>
-          				<li<%= ' class="open"' if g == @content_type.content_type_group %>>
-          				  <% if g.content_types.blank? %>
-          				  <%= link_to h(g.name), "#" %>          				  
-          				  <% else %>
-          				  <%= link_to h(g.name), cms_path("/blocks/#{g.content_types.first.content_block_type}") %>          				  
-          				  <ul>
-          				    <% g.content_types.each do |t| %>
-          				      <li<%= ' class="on"' if t == @content_type %>><%= link_to h(t.display_name), cms_path("/blocks/#{t.content_block_type}") %></li>
-          				    <% end -%>
-          				  </ul><% end -%>
-          				</li>
-          			<% end %></ul>
+          	  <li<%= ' class="open"' if g == @content_type.content_type_group %>>
+          	    <% if g.content_types.blank? %>
+          	    <%= link_to h(g.name), "#" %>          				  
+          	    <% else %>
+          	    <%= link_to h(g.name), cms_path("/blocks/#{g.content_types.first.content_block_type}") %>          				  
+          	    <ul>
+          	      <% g.content_types.each do |t| %>
+          	      <li<%= ' class="on"' if t == @content_type %>><%= link_to h(t.display_name), cms_path("/blocks/#{t.content_block_type}") %></li>
+          	      <% end -%>
+          	    </ul><% end -%>
+          	  </li>
+          	  <% end %></ul>
               </div>
             </div>
-              
+            
             <div id="contentwrap">
               <div id="content">
                 <div class="pad">

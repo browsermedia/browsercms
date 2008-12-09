@@ -1,18 +1,22 @@
-<%= render :partial => 'layouts/cms/head' %>
+<% @toolbar_tab ||= :dashboard %>
+  <%= render :partial => 'layouts/cms/head' %>
   <body>
-		<div id="wrapper">
-      <%= cms_toolbar(:dashboard) %>
+    <div id="wrapper">
+      <%= cms_toolbar(@toolbar_tab) %>
       <div id="main">
-        <div id="contentwrapbig">
-        	<div id="content">
-        		<div class="pad">        
+	<div id="functions">
+	<%= yield :functions %>
+	</div>
+	<div id="contentwrapbig">
+          <div id="content">
+            <div class="pad">        
               <%= yield %>
             </div>
           </div>
-        </div>
+	</div>
       </div>
       <br clear="all" />
       <%= render :partial => 'layouts/cms/footer' %>     
-		</div>
+    </div>
   </body>
 </html>

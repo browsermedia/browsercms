@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title><%= @page_title %></title>
+    <%= stylesheet_link_tag 'cms/application' %>
+    <%= stylesheet_link_tag 'cms/login' %>
+  <%= javascript_include_tag 'jquery', 'jquery-ui', 'jquery.cookie.js' %>
+  <%= javascript_include_tag 'cms/application' %>
+  <% if protect_against_forgery? %><script type="text/javascript">
+    jQuery(function($){
+      $.cms.authenticity_token = '<%= form_authenticity_token %>'
+    })
+  </script><% end %>
+  <%= yield :html_head %>
+  </head>
+  <body>
+
+    <div id="login_panel">
+      <%= image_tag "cms/login_top.gif" %><br />
+      <div id="form_panel">
+	<% flash_class, flash_message = flash.to_a.first %>
+        <% if flash_message %><p><%= flash_message %></p><% end %>
+	<%= yield %>
+      </div>
+      <%= image_tag "cms/login_bottom.jpg", :style => "padding: 0; margin: 0;" %>
+      <%= render :partial => "layouts/cms/footer" %>
+    </div>
+  </body>
+</html>

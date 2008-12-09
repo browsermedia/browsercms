@@ -2,7 +2,7 @@
 class Cms::SessionsController < Cms::BaseController
   
   skip_before_filter :login_required
-
+  layout "cms/login"
   def login
     if request.post?
       logout_keeping_session!
@@ -22,6 +22,9 @@ class Cms::SessionsController < Cms::BaseController
         @login       = params[:login]
         @remember_me = params[:remember_me]
       end
+    else
+      @login = "Username"
+      @password = "Password"
     end
   end
 

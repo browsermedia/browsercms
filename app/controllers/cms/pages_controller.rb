@@ -1,5 +1,6 @@
 class Cms::PagesController < Cms::BaseController
   
+  before_filter :set_toolbar_tab
   before_filter :load_section, :only => [:new, :create, :move_to]
   before_filter :load_page, :only => [:edit, :revisions, :show_version, :move_to, :revert_to, :destroy]
   before_filter :hide_toolbar, :only => [:new, :create, :move_to]
@@ -114,5 +115,8 @@ class Cms::PagesController < Cms::BaseController
     def hide_toolbar
       @hide_page_toolbar = true
     end
-  
+
+    def set_toolbar_tab
+      @toolbar_tab = :sitemap
+    end
 end

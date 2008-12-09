@@ -1,22 +1,16 @@
-<% @page_title = "Log In" %>
-<h1><%= @page_title %></h1>
-
-<div id="error"><%= flash[:error] %></div>
-
-<% form_tag cms_login_path do %>
+<% form_tag cms_login_path, :id => 'login_form' do %>
   <div class="field">
-    <%= label_tag 'login' %>
-    <%= text_field_tag 'login', @login %>
+    <%= text_field_tag 'login', @login, :onfocus => "this.select();" %>
   </div>
   <div class="field">
-    <%= label_tag 'password' %>
-    <%= password_field_tag 'password', nil %>
-  </div>
-  <div class="field">
-    <%= label_tag 'remember_me', 'Remember me', :class => "inline" %>
-    <%= check_box_tag 'remember_me', '1', @remember_me %>
+    <%= password_field_tag 'password', @password, :onfocus => "this.select();" %>
   </div>
   <div class="buttons">
-    <%= submit_tag 'Log in' %>
+    <%= submit_tag "", :style => "display: none;" %>
+    <%= link_to_function("<span>LOGIN</span>", "$('#login_form').submit()", :class => "button") %>
+  <div id="remember_me_div">
+    <%= label_tag 'remember_me', 'Remember me', :class => "inline" %>  
+   <%= check_box_tag 'remember_me', '1', @remember_me %>              
+  </div>                                                               
   </div>
 <% end %>

@@ -42,7 +42,7 @@ float: left;
 }
 
 	#nav ul#section li {
-	
+	  text-transform: uppercase;
 	}
 	
 	#nav ul#section li a {
@@ -252,6 +252,20 @@ a.button span {
 
 a.button.right span {
 	background: url(/images/cms/buttons/sprite.png) no-repeat 0 -54px;
+}
+a.button:hover {
+	background: url(/images/cms/buttons/sprite_h.png) no-repeat top right;
+}
+a.button.left:hover {
+	background: url(/images/cms/buttons/sprite_h.png) no-repeat -175px -27px;
+}
+
+a.button:hover span {
+	background: url(/images/cms/buttons/sprite_h.png) no-repeat 0 0;
+}
+
+a.button.right:hover span {
+	background: url(/images/cms/buttons/sprite_h.png) no-repeat 0 -54px;
 }
 
 tr.hover {

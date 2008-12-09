@@ -1,0 +1,6 @@
+#page_toolbar {
+background: #FFF url(/images/cms/page_toolbar_bg.gif) repeat-x 0 0;
+height: 24px;
+border-left: 1px solid #888;
+border-right: 1px solid #888;
+}
