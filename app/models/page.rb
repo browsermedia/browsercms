@@ -8,8 +8,14 @@ class Page < ActiveRecord::Base
   is_versioned
   
   has_many :connectors, :order => "connectors.container, connectors.position"
-  named_scope :connected_to, lambda { |b| {:include => :connectors, 
-    :conditions => ['connectors.connectable_id = ? and connectors.connectable_type = ? and connectors.connectable_version = ?', b.id, b.class.base_class.name, b.version]} 
+  named_scope :connected_to, lambda { |b| 
+    if b.class.versioned?
+      { :include => :connectors, 
+        :conditions => ['connectors.connectable_id = ? and connectors.connectable_type = ? and connectors.connectable_version = ?', b.id, b.class.base_class.name, b.version] }
+    else
+      { :include => :connectors, 
+        :conditions => ['connectors.connectable_id = ? and connectors.connectable_type = ?', b.id, b.class.base_class.name] }    
+    end 
   }  
   
   has_one :section_node, :as => :node

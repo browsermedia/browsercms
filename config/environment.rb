@@ -25,8 +25,7 @@ Rails::Initializer.run do |config|
   #config.gem "pjb3-version_fu", :version => "~> 1.0", :lib => 'version_fu', :source => 'http://gems.giuthub.com'
   #config.gem 'ryanb-acts-as-list', :lib => 'acts_as_list', :source => 'http://gems.github.com'
   #config.gem 'pjb3-flex-attributes', :version => '~> 0.1', :lib => 'flex-attributes', :source => 'http://gems.github.com'
-  #config.gem 'fiveruns_tuneup'     
-  config.gem "will_paginate", :version => "2.2.2"
+  #config.gem 'fiveruns_tuneup'
     
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.
