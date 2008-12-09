@@ -19,9 +19,9 @@ class Cms::BlocksController < Cms::BaseController
     if params[:section_id] and params[:section_id] != 'all'
       conditions[0] = conditions.empty? ? "sections.id = ?" : conditions[0] + " and sections.id = ?"
       conditions << params[:section_id]
-      @blocks = model_class.find(:all, :order => "#{model_class.table_name}.name", :include => { :attachment => { :section_node => :section }}, :conditions => conditions)
+      @blocks = model_class.paginate(:page => params[:page], :order => "#{model_class.table_name}.name", :include => { :attachment => { :section_node => :section }}, :conditions => conditions)
     else
-      @blocks = model_class.find(:all, :order => "#{model_class.table_name}.name", :conditions => conditions)
+      @blocks = model_class.paginate(:page => params[:page], :order => "#{model_class.table_name}.name", :conditions => conditions)
     end
   end
 

@@ -4,6 +4,9 @@ module Cms
     module Pagination
       def self.included(model_class)
         model_class.extend(ClassMethods)
+        class << model_class
+          define_method(:default_per_page) { 25 }
+        end
       end
       class InvalidPage < ArgumentError
         def initialize(page, page_num)
@@ -128,8 +131,8 @@ module Cms
         def paginate(*args, &block)
           options = args.pop
           page, per_page, total_entries = parse_pagination_options(options)
-          finder = (options[:finder] || 'find').to_s
 
+          finder = (options[:finder] || 'find').to_s
           if finder == 'find'
             # an array of IDs may have been given:
             total_entries ||= (Array === args.first and args.first.size)
@@ -196,7 +199,7 @@ module Cms
             end
 
             page     = options[:page] || 1
-            per_page = options[:per_page] || self.per_page
+            per_page = options[:per_page] || self.default_per_page
             total    = options[:total_entries]
             [page, per_page, total]
           end        

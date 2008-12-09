@@ -1,4 +1,3 @@
-require 'will_paginate'
 require 'cms/extensions'
 require 'cms/routes'
 

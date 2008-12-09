@@ -20,6 +20,8 @@
 <% end %>
 <% @page_title = "Content Library / List #{@content_type.display_name_plural}" %>
 
+<%= pagination @blocks, [:blocks, @content_type.content_block_type], @content_type.display_name %>
+
 <table id="blocks">
   <thead>
     <tr>
