@@ -74,15 +74,15 @@ describe Cms::BlocksController do
       @block = create_html_block(:name => "Test", :content => "I worked.")
     end
     it "should list the search results" do
-      lambda { get :index, :search => 'test' }.call
+      get :index, :search => {:term => 'test'}
       response.should have_tag("td.block_name", "Test")
     end
     it "should include the content in the search" do
-      lambda { get :index, :search => 'worked', :include_body => true }.call
+      get :index, :search => {:term => 'worked', :include_body => true }
       response.should have_tag("td.block_name", "Test")
     end
     it "should not list any results with a bad search term" do
-      lambda { get :index, :search => 'invalid' }.call
+      get :index, :search => {:term => 'invalid'}
       response.should_not have_tag("td.block_name", "Test")
     end
     describe "which are file blocks" do
@@ -93,15 +93,15 @@ describe Cms::BlocksController do
         @foo_section = create_section(:name => "Foo", :parent => root_section)
       end
       it "should find a file in the section specified" do
-        lambda { get :index, :block_type => 'file_block', :section_id => root_section.id }.call
+        get :index, :block_type => 'file_block', :section_id => root_section.id
         response.should have_tag("td.block_name", "Test File")
       end
       it "should not find a file if it's in another section" do
-        lambda { get :index, :block_type => 'file_block', :section_id => @foo_section.id }.call
+        get :index, :block_type => 'file_block', :section_id => @foo_section.id
         response.should_not have_tag("td.block_name", "Test File")
       end
       it "should find a file when searching all sections" do
-        lambda { get :index, :block_type => 'file_block', :section_id => 'all' }.call
+        get :index, :block_type => 'file_block', :section_id => 'all'
         response.should have_tag("td.block_name", "Test File")
       end
     end

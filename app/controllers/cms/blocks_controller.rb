@@ -7,21 +7,10 @@ class Cms::BlocksController < Cms::BaseController
   helper_method :content_type_name
 
   def index
-    conditions = []
-    unless params[:search].blank?
-      conditions = ["#{model_class.table_name}.name like ?", "%#{params[:search]}%"]
-      if params[:include_body]
-        conditions[0] += " or #{model_class.table_name}.content like ?"
-        conditions << "%#{params[:search]}%"
-      end
-    end
-
-    if params[:section_id] and params[:section_id] != 'all'
-      conditions[0] = conditions.empty? ? "sections.id = ?" : conditions[0] + " and sections.id = ?"
-      conditions << params[:section_id]
-      @blocks = model_class.paginate(:page => params[:page], :order => "#{model_class.table_name}.name", :include => { :attachment => { :section_node => :section }}, :conditions => conditions)
+    if params[:section_id] && params[:section_id] != 'all'
+      @blocks = model_class.search(params[:search]).paginate(:page => params[:page], :include => { :attachment => { :section_node => :section }}, :conditions => ["sections.id = ?", params[:section_id]])
     else
-      @blocks = model_class.paginate(:page => params[:page], :order => "#{model_class.table_name}.name", :conditions => conditions)
+      @blocks = model_class.search(params[:search]).paginate(:page => params[:page])
     end
   end
 

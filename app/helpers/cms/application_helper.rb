@@ -140,9 +140,9 @@ module Cms
           end
 	      }
 	      content = ""
-	      content << link_to("Previous", cms_path(build_link.call(collection.previous_page))) if collection.previous_page
-	      content << " #{record_type.to_s.pluralize} #{collection.offset + 1} - #{collection.offset + collection.size} of #{collection.size} "
-	      content << link_to("Next", cms_path(build_link.call(collection.next_page))) if collection.next_page
+	      content << link_to("Previous", cms_path(*build_link.call(collection.previous_page))) if collection.previous_page
+	      content << " #{record_type.to_s.pluralize} #{collection.offset + 1} - #{collection.offset + collection.size} of #{collection.total_entries} "
+	      content << link_to("Next", cms_path(*build_link.call(collection.next_page))) if collection.next_page
       end
       content_tag(:div, content, :class => "pagination")
 	  end	  
