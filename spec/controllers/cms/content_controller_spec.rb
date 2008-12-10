@@ -32,10 +32,10 @@ describe Cms::ContentController do
         @page = create_page(:section => @protected_section, :path => "/secret", :name => "Shhh... It's a Secret", :template => @page_template, :publish_on_save => true)
       end
       it "should raise an error if the user is a guest" do
-        get :show, :path => ["secret"]
-        log response.body
-        response.should have_tag("title", "Access Denied")
-        response.code.should == "403"
+        # In the combo of Rails 2.2 and RSpec, you can't check that
+        lambda { get :show, :path => ["secret"] }.should raise_error("Access Denied")
+        # response.should have_tag("title", "Access Denied")
+        # response.code.should == "403"
       end
       it "should show the page if the user has access" do
         @secret_group = create_group(:name => "Secret")
@@ -56,8 +56,8 @@ describe Cms::ContentController do
         @getting_an_archived_page = lambda { get :show, :path => ["archived"] }        
       end
       it "should raise an error" do
-        @getting_an_archived_page.call
-        response.should have_tag("title", "Not Found")        
+        @getting_an_archived_page.should raise_error("No page at '/archived'")
+        #response.should have_tag("title", "Not Found")        
       end
       describe "as a logged in user" do
         before { login_as_user } 
@@ -107,9 +107,9 @@ describe Cms::ContentController do
           @file_block.update_attributes(:archived => true)
           reset(:file_block)
           @file_block.attachment.should be_archived
-          @action.call
-          response.should have_tag("title", "Not Found") 
-          response.code.should == "404"
+          @action.should raise_error("No page at '/test.txt'")
+          # response.should have_tag("title", "Not Found") 
+          # response.code.should == "404"
         end
       end
     end
@@ -130,8 +130,8 @@ describe Cms::ContentController do
       end
       describe "when viewed by a guest user" do
         it "should raise an error" do 
-          @action.call
-          response.should have_tag("title", "Access Denied" )
+          @action.should raise_error("Access Denied")
+          #response.should have_tag("title", "Access Denied" )
         end
       end
       describe "when viewed by a privileged user" do
@@ -166,8 +166,8 @@ describe Cms::ContentController do
         response.should have_tag("title", "Test Homepage")
       end
       it "should not have access to a non-public page" do
-        get :show, :path => ["secret"]
-        response.should have_tag("title", "Access Denied")
+        lambda { get :show, :path => ["secret"] }.should raise_error("Access Denied")
+        #response.should have_tag("title", "Access Denied")
       end
     end    
   end

@@ -54,7 +54,7 @@ class Page < ActiveRecord::Base
       connectors.build(
         :page_version => version, 
         :connectable => connectable, 
-        :connectable_version => connectable.version,         
+        :connectable_version => connectable.class.versioned? ? connectable.version : nil,         
         :container => c.container, 
         :position => c.position
       )

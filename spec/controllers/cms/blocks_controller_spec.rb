@@ -27,7 +27,7 @@ describe Cms::BlocksController do
   describe "showing a block" do
     before do
       @block = create_html_block(:name => "Test", :content => "I worked.")
-      @action = lambda { put :show, :id => @block.id }
+      @action = lambda { get :show, :id => @block.id }
     end
     it "should be success" do
       @action.call

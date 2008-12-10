@@ -1,6 +1,6 @@
 class Portlet < ActiveRecord::Base
 
-  has_flex_attributes
+  has_dynamic_attributes
   acts_as_content_block :versioned => false, :publishable => false
   validates_presence_of :name
 
