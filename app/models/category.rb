@@ -2,7 +2,7 @@ class Category < ActiveRecord::Base
   belongs_to :category_type
   belongs_to :parent, :class_name => "Category"
   has_many :children, :class_name => "Category", :foreign_key => "parent_id"
-  
+  is_searchable
   validates_presence_of :category_type_id
   
   named_scope :of_type, lambda{|type_name| {:include => :category_type, :conditions => ['category_types.name = ?', type_name], :order => 'categories.name'}}
@@ -28,6 +28,7 @@ class Category < ActiveRecord::Base
     category_type ? category_type.name : nil
   end
   def self.columns_for_index
-    [{:label => "Type", :method => :category_type_name }]
+    [ {:label => "Name", :method => :name },
+      {:label => "Type", :method => :category_type_name } ]
   end
 end

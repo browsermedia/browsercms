@@ -41,7 +41,7 @@ class ContentType < ActiveRecord::Base
 
   # Allows models to show additional columns when being shown in a list.
   def columns_for_index
-    return [] unless model_class.respond_to?(:columns_for_index)
+    return [{:label => "Name", :method => :name}] unless model_class.respond_to?(:columns_for_index)
     model_class.columns_for_index.map do |column|
       column.respond_to?(:humanize) ? {:label => column.humanize, :method => column} : column
     end

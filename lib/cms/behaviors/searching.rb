@@ -40,7 +40,7 @@ module Cms
             @searchable_columns
           end
           def default_order_for_search
-            "#{table_name}.#{@searchable_columns.first}"
+            "#{table_name}.#{searchable_columns.first}"
           end
         end
       end

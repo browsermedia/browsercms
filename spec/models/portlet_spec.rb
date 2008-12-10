@@ -23,14 +23,5 @@ describe Portlet do
       @p.portlet_type_name.should == "Dynamic Portlet"
     end
   end
-  describe "when specifying custom CRUD actions for Portlets" do
-    before(:each) do
-      @content_type = ContentType.new(:name => "Portlet")
-    end
-
-    it "should have portlet_type_name" do
-      @content_type.columns_for_index.should == [{:label => "Type", :method => "portlet_type_name"}]
-    end
-  end
 
 end

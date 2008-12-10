@@ -25,25 +25,23 @@
 <table id="blocks">
   <thead>
     <tr>
-      <% if @blocks.first.respond_to?(:name) %><th>Name</th><% end %>
       <% @content_type.columns_for_index.each do |column| %>
         <th><%= column[:label] %></th>
       <% end %>
       <th>Updated</th>
-      <% if @blocks.first.respond_to?(:connected_pages) %><th>Used</th><% end %>
-      <% if @blocks.first.respond_to?(:status) %><th>Status</th><% end %>
+      <% if @content_type.model_class.connectable? %><th>Used</th><% end %>
+      <% if @content_type.model_class.publishable? %><th>Status</th><% end %>
     </tr>
   </thead>
   <tbody>
     <% @blocks.each do |block| %>
       <tr id="<%= block.class.name.underscore %>_<%= block.id %>">
-        <% if @blocks.first.respond_to?(:name) %><td class="block_name"><%= block.name %></td><% end %>
         <% @content_type.columns_for_index.each do |column| %>
           <td><%= block.send(column[:method]) %></td>      
         <% end %>
         <td><%= block.updated_at.to_s(:date) %></td>
-        <% if @blocks.first.respond_to?(:connected_pages) %><td class="used"><%= link_to_usages(block) %></td><% end %>
-        <% if @blocks.first.respond_to?(:status) %><td class="block_status"><%= status_icon(block.status) %></td><% end %>
+        <% if @content_type.model_class.connectable? %><td class="used"><%= link_to_usages(block) %></td><% end %>
+        <% if @content_type.model_class.publishable? %><td class="block_status"><%= status_icon(block.status) %></td><% end %>
       </tr>
     <% end %>
   </tbody>

@@ -57,7 +57,8 @@ describe Cms::BlocksController do
 
     it "should list the blocks's name" do
       @action.call
-      response.should have_tag("td.block_name", "Test")
+      log response.body
+      response.should have_tag("td", "Test")
     end
 
     it "should show the status of each block" do
@@ -75,15 +76,15 @@ describe Cms::BlocksController do
     end
     it "should list the search results" do
       get :index, :search => {:term => 'test'}
-      response.should have_tag("td.block_name", "Test")
+      response.should have_tag("td", "Test")
     end
     it "should include the content in the search" do
       get :index, :search => {:term => 'worked', :include_body => true }
-      response.should have_tag("td.block_name", "Test")
+      response.should have_tag("td", "Test")
     end
     it "should not list any results with a bad search term" do
       get :index, :search => {:term => 'invalid'}
-      response.should_not have_tag("td.block_name", "Test")
+      response.should_not have_tag("td", "Test")
     end
     describe "which are file blocks" do
       before do
@@ -94,15 +95,15 @@ describe Cms::BlocksController do
       end
       it "should find a file in the section specified" do
         get :index, :block_type => 'file_block', :section_id => root_section.id
-        response.should have_tag("td.block_name", "Test File")
+        response.should have_tag("td", "Test File")
       end
       it "should not find a file if it's in another section" do
         get :index, :block_type => 'file_block', :section_id => @foo_section.id
-        response.should_not have_tag("td.block_name", "Test File")
+        response.should_not have_tag("td", "Test File")
       end
       it "should find a file when searching all sections" do
         get :index, :block_type => 'file_block', :section_id => 'all'
-        response.should have_tag("td.block_name", "Test File")
+        response.should have_tag("td", "Test File")
       end
     end
   end

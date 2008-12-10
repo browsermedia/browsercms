@@ -51,6 +51,7 @@ class Portlet < ActiveRecord::Base
   end
 
   def self.columns_for_index
-    [{:label => "Type", :method => "portlet_type_name"}]
+    [ {:label => "Name", :method => :name },
+      {:label => "Type", :method => :type } ]
   end
 end
