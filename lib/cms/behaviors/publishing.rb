@@ -27,12 +27,12 @@ module Cms
           def publish
             self.publish_on_save = true
             self.version_comment = "Published" if self.class.versioned?
-            self.save
+            save
           end
           def publish!
             self.publish_on_save = true
             self.version_comment = "Published" if self.class.versioned?
-            self.save!
+            save!
           end
           def publish_by_page(page)
             self.published_by_page = page
