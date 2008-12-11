@@ -11,6 +11,8 @@ module Cms
       #Laod all the CMS Routes
       ActionController::Routing::RouteSet::Mapper.send :include, Cms::Routes
       
+      ActiveSupport::Dependencies.load_paths += %W( #{RAILS_ROOT}/app/portlets )
+      
       #Write out the page templates to the file system
       if ActiveRecord::Base.connection.tables.include?("page_templates")
         tmp_view_path = "#{Rails.root}/tmp/views"

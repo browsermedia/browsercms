@@ -16,6 +16,7 @@ class Section < ActiveRecord::Base
   named_scope :root, :conditions => ['root = ?', true]
   named_scope :system, :conditions => {:name => 'system'}
   
+  validates_presence_of :name
   #validates_presence_of :parent_id, :if => Proc.new {root.count > 0}, :message => "section is required"
   
   # Disabling '/' in section name for interoperability with FCKEditor file browser

@@ -1,5 +1,5 @@
 <div class="cms_edit_connectable">
-  <div class="cms cms_connectable_header <%= (connector.connectable.published? ? 'published' : 'draft') if connector.publishable? %>">
+  <div class="cms cms_connectable_header <%= connector.published? ? 'published' : 'draft' %>">
     <%= connector.connectable.name %>
     <div class="actions">
       <%= link_to status_icon(connector.status), cms_path(connector.connectable)  %>
