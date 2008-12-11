@@ -21,12 +21,12 @@ div.cms_edit_connectable {
 
 div.cms_edit_container .published,
 div.cms_edit_connectable .published {
-  background-color: #33cc33;
+  background-color: #959595;
 }
 
 div.cms_edit_container .draft,
 div.cms_edit_connectable .draft {
-  background-color: #cc3333;
+  background-color: #F81202;
 }
 
 
