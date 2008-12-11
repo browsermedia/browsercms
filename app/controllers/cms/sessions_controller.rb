@@ -22,9 +22,6 @@ class Cms::SessionsController < Cms::BaseController
         @login       = params[:login]
         @remember_me = params[:remember_me]
       end
-    else
-      @login = "Username"
-      @password = "Password"
     end
   end
 
