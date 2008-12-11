@@ -7,7 +7,7 @@
     <%= render :partial => 'cms/shared/version_conflict_error', :locals => {:other_version => @other_version, :your_version => @block} %>
   <% end %>  
   <%= render :partial => 'hidden_fields', :locals => { :f => f } %>
-  <%= render :partial => "cms/#{@content_type.name.underscore.pluralize}/form", :locals => {:f => f} %>
+  <%= render :partial => @content_type.form, :locals => {:f => f} %>
   <% if @other_version %>
     <%= render :partial => "cms/shared/version_conflict_diff", :locals => {:other_version => @other_version, :your_version => @block} %>
   <% end %>

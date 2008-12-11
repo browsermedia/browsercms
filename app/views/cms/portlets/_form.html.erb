@@ -1,7 +1,0 @@
-<%= 
-  if @block.type.blank? || @block.type == "Portlet"
-    render :partial => 'cms/portlets/select_portlet_type'
-  else
-    render :partial => @block.form, :locals => {:f => f}
-  end 
-%>

@@ -3,7 +3,7 @@
 <% form_for(@block, :url => cms_path(:blocks, @content_type.name.underscore, :create), :html => {:multipart => true}) do |f| %>
   <%= f.error_messages %>
   <%= render :partial => 'cms/blocks/hidden_fields', :locals => {:f => f} %>
-  <%= render :partial => "cms/#{@content_type.name.underscore.pluralize}/form", :locals => {:f => f} %>
+  <%= render :partial => @content_type.form, :locals => {:f => f} %>
   <% unless @hide_buttons %>
     <div class="fields">
       <%= f.submit "Save" %>

@@ -42,12 +42,12 @@ class Portlet < ActiveRecord::Base
     type.titleize
   end
 
-  def form
-    "cms/#{self.class.name.tableize}/form"
+  def self.form
+    "portlets/#{name.tableize.sub('_portlets','')}/form"
   end
   
-  def partial
-    "cms/#{self.class.name.tableize}/render"
+  def self.partial
+    "portlets/#{name.tableize.sub('_portlets','')}/render"
   end
 
   def self.columns_for_index

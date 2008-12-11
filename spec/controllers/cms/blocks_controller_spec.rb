@@ -372,7 +372,7 @@ describe Cms::BlocksController do
 
     describe "adding new content" do
       before(:each) do
-        @action = lambda { get :new,  :block_type => "portlet"}
+        @action = lambda { get :new,  :block_type => "portlets"}
       end
 
       it "should have the correct test setup (i.e. have HtmlBlocks in the db as a ContentType)" do
@@ -392,7 +392,7 @@ describe Cms::BlocksController do
 
     describe "edit a block" do
       before do
-        @action = lambda { get :edit, :id => @block.id, :block_type => "portlets" }
+        @action = lambda { get :edit, :id => @block.id, :block_type => "DynamicPortlet" }
       end
 
       it "should be successful" do
@@ -408,7 +408,7 @@ describe Cms::BlocksController do
 
     describe "destroying" do
       it "should remove the row" do
-        delete :destroy, :id => @block.id, :block_type => "portlet"
+        delete :destroy, :id => @block.id, :block_type => "DynamicPortlet"
         lambda { Portlet.find(@block.id) }.should raise_error(ActiveRecord::RecordNotFound)
       end
     end

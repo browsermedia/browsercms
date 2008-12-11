@@ -27,6 +27,10 @@ class ContentType < ActiveRecord::Base
     raise "Couldn't find ContentType of class '#{class_name}'"    
   end
   
+  def form
+    model_class.respond_to?(:form) ? model_class.form : "cms/#{name.underscore.pluralize}/form"
+  end
+  
   def display_name
     model_class.respond_to?(:display_name) ? model_class.display_name : model_class.to_s.titleize
   end
