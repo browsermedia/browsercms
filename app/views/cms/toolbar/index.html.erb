@@ -1,30 +1,7 @@
 <% content_for :html_head do %>
   <script type="text/javascript">
   jQuery(function($){
-    //This is kind of crazy
-    //We are reaching up into the parent document
-    //and Attaching jQuery hndlers onto stuff
-    $('a[http_method]', parent.window.document).click(function() {
-      var f = document.createElement('form')
-      f.style.display = 'none'
-      this.parentNode.appendChild(f)
-      f.method = "POST"
-      f.action = this.href
-      $(f).attr('target', $(this).attr('target'))
-      
-      var m = document.createElement('input')
-      $(m).attr('type', 'hidden').attr('name', '_method').attr('value', $(this).attr('http_method'))
-      f.appendChild(m)
-      
-      m = document.createElement('input')
-      if($.cms.authenticity_token && $.cms.authenticity_token != '') {
-        $(m).attr('type', 'hidden').attr('name', 'authenticity_token').attr('value', $.cms.authenticity_token)  
-      }
-      f.appendChild(m)
-      
-      f.submit()
-      return false
-    })    
+    $.cms.attachEventHandlers(parent.window.document)    
   })
   </script>
 <% end %>

@@ -6,10 +6,10 @@
 <%= link_to 'View', cms_path(:blocks, @content_type.content_block_type.pluralize, :show, @block) %>
 <%= link_to 'Edit', cms_path(:blocks, @content_type.content_block_type.pluralize, :edit, @block) %>
 <%= @block.class.versioned? ? (link_to 'Revisions', cms_path(@block, :revisions)) : 'Revisions' %>
-<%= link_to "Delete", cms_path(:blocks, @content_type.name.underscore.pluralize, :destroy, @block), :http_method => :delete, :confirm => "Are you sure you want to delete '#{@block.name}'?" %>
-<%= false ? (link_to 'Assign', cms_path(@block, :assign), :http_method => :post) : "Assign" %>
+<%= link_to "Delete", cms_path(:blocks, @content_type.name.underscore.pluralize, :destroy, @block), :class => "http_delete confirm_with_title", :title => "Are you sure you want to delete '#{@block.name}'?" %>
+<%= false ? (link_to 'Assign', cms_path(@block, :assign), :class => "http_put") : "Assign" %>
 <% able_to? :publish_content do -%>
   <% if @block.respond_to?(:published?) %>
-    <%= !@block.published? ? link_to('Publish', cms_path(@block, :publish), :http_method => :post) : "Publish" %>
+    <%= !@block.published? ? link_to('Publish', cms_path(@block, :publish), :class => "http_put") : "Publish" %>
   <% end -%>
 <% end -%>

@@ -34,29 +34,35 @@ jQuery(function($) {
     },
     showError: function(msg) {
       $('#message').removeClass('notice').addClass('error').html(msg).parent().show().animate({opacity: 1.0}, 3000).fadeOut("normal")
+    },
+    attachEventHandlers: function(context) {
+      $('a.http_post, a.http_put, a.http_delete', context).click(function() {
+        if($(this).hasClass('confirm_with_title') && confirm(this.title)) {
+          var f = document.createElement('form')
+          f.style.display = 'none'
+          this.parentNode.appendChild(f)
+          f.method = "POST"
+          f.action = this.href
+          $(f).attr('target', $(this).attr('target'))
+          var m = document.createElement('input')
+          var http_method = $(this).attr('class').match(/http_([^ ]*)/)[1]
+          $(m).attr('type', 'hidden').attr('name', '_method').attr('value', http_method)
+          if($.cms.authenticity_token && $.cms.authenticity_token != '') {
+            $(m).attr('type', 'hidden').attr('name', 'authenticity_token').attr('value', $.cms.authenticity_token)  
+          }
+          f.appendChild(m)
+          f.submit()          
+        }
+        return false
+      })      
     }
   }
+  
+  $.cms.attachEventHandlers(document);
   
   $('#message.notice').parent().show().animate({opacity: 1.0}, 3000).fadeOut("normal")
   $('#message.error').parent().show().animate({opacity: 1.0}, 3000).fadeOut("normal")
   
-  $('a[http_method]').click(function() {
-    var f = document.createElement('form')
-    f.style.display = 'none'
-    this.parentNode.appendChild(f)
-    f.method = "POST"
-    f.action = this.href
-    $(f).attr('target', $(this).attr('target'))
-    var m = document.createElement('input')
-    $(m).attr('type', 'hidden').attr('name', '_method').attr('value', $(this).attr('http_method'))
-    if($.cms.authenticity_token && $.cms.authenticity_token != '') {
-      $(m).attr('type', 'hidden').attr('name', 'authenticity_token').attr('value', $.cms.authenticity_token)  
-    }
-    
-    f.appendChild(m)
-    f.submit()
-    return false
-  })
 })
 
 //CookieSet allows us to treat one cookie value as a set of values
