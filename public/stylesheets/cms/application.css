@@ -106,7 +106,7 @@ margin-top: 30px;
 }
 
 #functions {
-padding: 10px 0 10px 188px;
+padding: 10px;
 background: #747D87;
 }
 
@@ -120,6 +120,7 @@ width: 174px;
 	background: url(/images/cms/menu_header.png) no-repeat 0 0;
 	padding: 6px 6px 6px 15px;
 	font-weight: bold;
+	text-transform: uppercase;
 	}
 	
 	#menu ul {
@@ -207,8 +208,16 @@ padding: 15px 15px 0 0;
 /* Utility
 */
 
-#menu .pad, #content .pad { padding: 5px }
-#menu .pad { padding-top: 5px; padding-right: 0; background: #747D87; margin-bottom: 5px; }
+#menu .pad, #content .pad { 
+  padding: 5px 
+}
+
+#menu .pad { 
+  padding-top: 5px; 
+  padding-right: 0; 
+  background: #747D87; 
+  margin-bottom: 10px; 
+}
 
 
 /* TRASH THESE

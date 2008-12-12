@@ -1,41 +1,12 @@
 <% @page_title = "Administration / User Browser" %>
-<h2><%= @page_title %></h2>
-<p>The User Browser allows you to browse all the users in the system. <br />
-<%= link_to "Add a User", :controller=>"users", :action=> "new" %>
-</p>
-
-<% form_tag(cms_path(:users), :method => :get ) do %>
-
-<table>
-  <tr>
-    <td>Search by Username, Email or Name:
-      <%= text_field_tag "key_word", params[:key_word] %>
-    </td>
-    <td>
-      Display:
-      <%= select_per_page %>
-    </td>
-  </tr>
-  <tr>
-    <td>Filter by:
-      <%= group_filter %>
-      <br/>
-      <%= check_box_tag "show_expired", "yes", params[:show_expired] %>Show disabled users?
-    </td>
-    <td align="right">
-      <input type="submit" alt="Search"/>
-    </td>
-  </tr>
-</table>
-<% end %>
-<br />
-
 <table class="data" width="100%">
+  <thead>
     <tr>
         <th>General Information</th>
         <th>Groups</th>
         <th>Actions</th>
     </tr>
+  </thead>
     <% @users.each do |user|%>
     <tr>
         <td>
