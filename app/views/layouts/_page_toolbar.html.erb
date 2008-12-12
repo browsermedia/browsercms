@@ -43,7 +43,7 @@
   <%= link_to "<span>Assign</span>", "#", :target => "_top", :class => "button" %>
   <% able_to? :publish_content do %>
   <%= link_to("<span>Publish</span>", cms_path(@page, :publish), :target => "_top", :class => "http_put button#{' disabled' if @page.published?}") %>
-  <%= link_to "<span>X &nbsp; Delete</span>", cms_path(@page, :destroy), :title => "Are you sure you want to delete '#{@page.name}'?", :target => "_top", :class => "confirm_with_title http_delete button" %>
+  <%= link_to "<span>Delete</span>", cms_path(@page, :destroy), :title => "Are you sure you want to delete '#{@page.name}'?", :target => "_top", :class => "confirm_with_title http_delete button" %>
   <% end %>
 <div id="visual_editor_toggle">
     <div class="visual_editor_label">Visual Editor:</div>
