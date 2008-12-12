@@ -54,4 +54,12 @@ class Portlet < ActiveRecord::Base
     [ {:label => "Name", :method => :name },
       {:label => "Type", :method => :type } ]
   end
+  
+  # Subclasses should override this method if you want different behavior
+  def renderer(portlet)
+    lambda do
+      render :partial => portlet.class.partial, :locals => {:portlet => portlet}
+    end
+  end  
+  
 end
