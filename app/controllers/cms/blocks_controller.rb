@@ -3,6 +3,8 @@ class Cms::BlocksController < Cms::BaseController
   layout 'cms/content_library'
 
   before_filter :load_block, :only => [:show, :show_version, :edit, :destroy, :publish, :archive, :revert_to, :update]
+  before_filter :set_toolbar_tab
+
 
   helper_method :content_type_name
 
@@ -129,6 +131,9 @@ class Cms::BlocksController < Cms::BaseController
       end
     end
 
+    def set_toolbar_tab
+      @toolbar_tab = :content_library
+    end
 
 
 end

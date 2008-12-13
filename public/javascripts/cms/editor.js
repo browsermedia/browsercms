@@ -10,6 +10,19 @@ function editorEnabled() {
   return $.cookie('editorDisabled') != "true"
 }
 
+function setEditor(id, status) {
+    if (status.value == 'disabled'){
+	$('#'+id+'___Frame').hide();
+	$('#'+id).show();
+       $.cookie('editorDisabled', true, { expires: 90, path: '/' })    
+    } else {
+	loadEditor(id);
+	$('#'+id+'___Frame').show();
+	$('#'+id).hide();
+        $.cookie('editorDisabled', false, { expires: 90, path: '/' })    
+    }
+}
+
 function toggleEditor(id) {
   if(loadEditor(id)) {
     $.cookie('editorDisabled', false, { expires: 90, path: '/' })    

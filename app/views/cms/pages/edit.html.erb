@@ -11,7 +11,7 @@
   <% if @other_version %>
     <%= render :partial => "cms/shared/version_conflict_diff", :locals => {:other_version => @other_version, :your_version => @page} %>
   <% end %>  
-  <div class="fields">  
-    <%= f.submit "Save" %>
-  </div>  
+  <div class="buttons">
+    <%= lt_button_wrapper(f.submit("Save", :class => "submit")) %>
+  </div>
 <% end %>

@@ -1,6 +1,5 @@
 <div class="cms_edit_container">
   <div class="cms cms_container_header <%= @page.container_published?(name) ? 'published' : 'draft' %>">
-    <%= name %>
     <div class="actions">
       <%= link_to action_icon(:add), cms_path(:content_types, :select, :connect_to_page_id => @page, :connect_to_container => name) %>
       <%= link_to action_icon(:connect), cms_path(:connectors, :new, :page_id => @page, :container => name) %>

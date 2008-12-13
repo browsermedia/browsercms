@@ -41,22 +41,33 @@ font-size: large;
 
 #remember_me_div {
 
+
 }
 
 .buttons {
 margin-top: 8px;
 * margin-bottom: -20px;
+ margin-left: 12px;
+}
+#login_button {
+float: left;
+background: url(/images/cms/buttons/sprite.png) no-repeat 0 0;
+}
+#login_button input {
+background: url(/images/cms/buttons/sprite.png) no-repeat top right;
+border-width: 0;
+height: 27px;
+width: 76px;
+margin-left: -10px;
 font-size: 12px;
 font-weight: bold;
-}
-a.button {
-width: 76px;
-letter-spacing: 1.2px;
-margin-left: 12px;
-* margin-left: 6px;
+color: white;
 }
 
-
+#login_button > input {
+padding-bottom: 4px;
+margin-left: 0;
+}
 
 
 

@@ -1,5 +1,7 @@
 <% @page_title = "Page Cache Info" %>
-
+<%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
 <p>The CMS System caches pages which are frequently accessed by guest users to increase throughput. If data appears stale, you may manually clear this page cache.</p>
 
-<%= button_to "Clear Page Cache", cms_path(:cache, :expire) %>
+<% form_tag cms_path(:cache, :expire) do %>
+<%= lt_button_wrapper(submit_tag("Clear Page Cache", :class => "submit")) %>
+<% end %>

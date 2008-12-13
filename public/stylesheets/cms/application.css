@@ -31,6 +31,7 @@ float: left;
 
 #nav ul#section {
 margin-top: 49px;
+* margin-top: 47px;
 margin-left: 25px;
 list-style-type: none;
 float: left;
@@ -107,7 +108,8 @@ margin-top: 30px;
 
 #functions {
 padding: 10px;
-background: #747D87;
+* padding-bottom: 28px;
+text-transform: uppercase;
 }
 
 #menu { 
@@ -163,7 +165,7 @@ width: 174px;
 	#menu ul li.open ul li:last-child a { border-bottom: none }
 
 #contentwrap {
-background: #747D87;
+background: #8D8E90 url(/images/cms/gray_long_bg.gif) repeat-x 0 0;
 float: left;
 width: 826px;
 padding-bottom: 5px;
@@ -172,7 +174,7 @@ min-height: 600px;
 
   #contentwrapbig {
   width: 1000px;
-  background: #747D87;
+  background: #8D8E90 url(/images/cms/gray_long_bg.gif) repeat-x 0 0;
   float: left;
   padding-bottom: 5px;
   min-height: 600px;

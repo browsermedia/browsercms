@@ -7,9 +7,11 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
       opts[:class] = "editor"
     end 
     id = opts[:id] || "#{@object_name}_#{method}"
-    html = "<div class='editor'>\n"
-    html << @template.link_to_function("Toggle DHTML Editor", "toggleEditor('#{id}')", :class => "toggleEditor")
+    disabled = opts[:editor_disabled]    
+    html = "<select name=\"dhtml_selector\" onchange=\"setEditor('#{id}', this);\"><option value=\"\"#{' selected="selected"' unless disabled}>DHTML Editor</option><option value=\"disabled\"#{' selected="selected"' if disabled}>Simple Text</option></select>\n"
+    html << "<div class='editor'>\n"
     html << "\n"
+    opts[:editor_disabled] = nil;
     html << text_area(method, opts)
     html << "\n</div>"
     html
@@ -19,3 +21,4 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
     text_field(method, {:size => 10, :class => "date_picker"}.merge(options))
   end
 end
+

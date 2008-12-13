@@ -1,20 +1,22 @@
-<div class="fields">
+<div class="fields text_fields">
     <%= f.label :login, "Username" %>
     <%= f.text_field :login %>
 </div>
-<div class="fields">
+<div class="fields text_fields">
     <%= f.label :email %>
     <%= f.text_field :email %>
 </div>
-<div class="fields">
+<div class="fields text_fields">
     <%= f.label :first_name, "First Name" %>
     <%= f.text_field :first_name %>
 </div>
-<div class="fields">
+<div class="fields text_fields">
     <%= f.label :last_name, "Last Name" %>
     <%= f.text_field :last_name %>
 </div>
-<div class="fields">
-    <%= f.label :expires_at, "Expiration Date (mm/dd/yyyy). Leave blank for users that never expire." %>
+<div class="fields text_fields">
+    <%= f.label :expires_at, "Expiration Date" %>
     <%= f.text_field :expires_at, :value => @user.expires_at_formatted %>
+    <div class="instructions">(Format: mm/dd/yyyy. Leave blank for users that never expire.)</div>
+
 </div>

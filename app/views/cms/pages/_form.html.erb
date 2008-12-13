@@ -1,47 +1,55 @@
+<%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
 <%= f.error_messages %>
-<div class="fields">
+<div class="fields text_fields">
   <%= f.label :name %>
   <%= f.text_field :name %>
 </div>
-<div class="fields">
-  <%= f.label :title, "Title", :class => "inline" %> (Leave blank if same as name)<br/>
+<div class="fields text_fields">
+  <%= f.label :title, "Title", :class => "inline" %> 
   <%= f.text_field :title %>
+  <div class="instructions">(Leave blank if same as name)</div>
 </div>
-<div class="fields">
+<div class="fields text_fields">
   <%= f.label :path %>
   <%= f.text_field :path %>
 </div>
-<div class="fields">
+<div class="fields select_fields">
   <%= f.label :template_id %>
   <%= f.collection_select :template_id, PageTemplate.all(:order => 'name'), :id, :name %>
 </div>
-<div class="fields">
-  <label>
-    <%= f.check_box :cacheable %>
-    Cache enabled?
-  </label>
+<div class="checkbox_group fields">
+  <div class="checkbox_fields">
+    <label>
+      <%= f.check_box :cacheable %>
+      Cache enabled?
+    </label>
+  </div>
 </div>
-<div class="fields">
-  <label>
-    <%= f.check_box :hidden, :disabled => (!current_user.able_to?(:publish_content)) %>
-    Hide From Menus?
-  </label>
+<div class="checkbox_group fields">
+  <div class="checkbox_fields">
+    <label>
+      <%= f.check_box :hidden, :disabled => (!current_user.able_to?(:publish_content)) %>
+      Hide From Menus?
+    </label>
+  </div>
 </div>
-<div class="fields">
-  <label>
-    <%= f.check_box :archived, :disabled => (!current_user.able_to?(:publish_content)) %>
-    Archived?
-  </label>
+<div class="checkbox_group fields">
+  <div class="checkbox_fields">
+    <label>
+      <%= f.check_box :archived, :disabled => (!current_user.able_to?(:publish_content)) %>
+      Archived?
+    </label>
+  </div>
 </div>
-<div class="fields">
+<div class="fields textarea_fields">
   <%= f.label :description %>
   <%= f.text_area :description, :size => "80x5" %>
 </div>
-<div class="fields">
+<div class="fields textarea_fields">
   <%= f.label :keywords %>
   <%= f.text_area :keywords, :size => "80x3" %>
 </div>
-<div class="fields">
+<div class="fields text_fields">
   <%= f.label :language %>
   <%= f.text_field :language %>
 </div>

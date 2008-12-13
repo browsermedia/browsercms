@@ -1,0 +1,142 @@
+form {
+font-size: 10pt;
+font-family: "Trebuchet MS", Helvetica, Verdana, Arial, sans-serif;
+color:#485561;
+padding: 20px;
+}
+#functions form {
+padding: 0;
+color: #FFF;
+font-size: 100%;
+}
+
+
+.fields {
+padding: 10px 0;
+border-bottom: 1px dotted #CCC;
+}
+
+/* LABELS */
+.text_fields label,
+.textarea_fields label,
+.select_fields label
+{
+padding: 12px 0;
+float:left;
+width:140px;
+}
+
+.checkbox_group .label,
+.text_fields label,
+.textarea_fields label,
+.select_fields label,
+.text_editor_fields label {
+font-weight: bold;
+}
+
+.checkbox_group .label {
+padding: 5px 0;
+}
+
+/* SELECT */
+.select_fields select {
+margin: 7px 0 5px 0;
+width:245px;
+padding: 8px 0;
+border: 1px solid #CCC;
+}
+
+/* TEXT AND TEXT AREA */
+.text_fields,
+.checkbox_group {
+padding: 10px 0;
+}
+ 
+.text_fields input,
+.textarea_fields textarea{
+width:245px;
+padding: 8px 0 0 5px;
+border: 1px solid #CCC;
+}
+
+.text_fields input {
+height: 25px;
+}
+
+.textarea_fields textarea {
+height: 100px;
+margin-bottom: 10px;
+}
+
+.text_editor_fields select{
+margin-left: 380px;
+* margin-left: 386px;
+}
+.text_editor_fields textarea {
+height: 338px;
+width: 536px;
+margin-top: 10px;
+}
+.text_editor_fields .select_label {
+margin-left: 380px;
+margin-right: -374px;
+}
+
+/* CHECKBOX */
+.checkbox_fields,
+.check_uncheck {
+margin-left: 136px;
+* margin-left: 140px;
+clear: both;
+}
+.checkbox_fields label,
+.check_uncheck {
+display: block;
+padding: 4px 0;
+}
+.no_check_all {
+padding-bottom: 26px;
+}
+.checkbox_fields label span {
+display: block;
+float: left;
+width: 600px;
+padding: 1px 5px;
+* padding-top: 4px;
+line-height: 15px;
+}
+.checkbox_fields input {
+float: left;
+}
+/* BUTTONS */
+.buttons {
+padding: 10px 0;
+}
+
+div.lt_button input.submit,
+button {
+border-width: 0;
+background: #4C82C0 url(/images/cms/lt_button_bg.gif) repeat 0 0;
+height: 25px;
+color: white;
+font-weight: bold;
+font-size: 10px;
+padding: 0 0 3px 0;
+* padding: 0 0 0 0;
+margin: 0 5px;
+}
+
+div.lt_button div{
+background: #4C82C0 url(/images/cms/lt_button_bg.gif) repeat 0 0;
+float: left;
+}
+
+div.lt_button {
+padding: 0px;
+}
+
+div.lt_button img {
+float: left;
+padding: 0;
+margin: 0;
+}

@@ -13,27 +13,20 @@ jQuery(function($){
 </script>
 <% end %>
 
-<table id="permissions"<%= ' style="display: none"' unless @group.cms_access?%>>
-  <tr>
-    <th colspan="3">
-      What kind of tasks should group members be allowed to do?
+<div class="checkbox_group">
+<div class="label">What kind of tasks should group members be allowed to do?</div>
       <%= hidden_field_tag "group[permission_ids][]", "" %>  
-    </th>
-	</tr>	
-	<tr>
-	  <td>&nbsp;</td>
-		<td>Permission</td>
-		<td>Description</td>
-	</tr>
-	<% Permission.all(:order => "name").each do |p|%><tr>
-		<td><%= check_box_tag "group[permission_ids][]", p.id, @group.permissions.include?(p), :id => "permission_ids_#{p.id}", :class => "permission_ids" %></td>
-		<td><%=h p.full_name %></td>
-		<td><%=h p.description %></td>
-	</tr><% end %>
-	<tr>
-		<td colspan="3">
+	<% Permission.all(:order => "name").each do |p|%>
+  <div class="checkbox_fields">
+    <label>
+<%= check_box_tag "group[permission_ids][]", p.id, @group.permissions.include?(p), :id => "permission_ids_#{p.id}", :class => "permission_ids" %>
+      <span><%=h p.full_name %> (<%=h p.description %>)</span>
+    </label>
+  </div>
+  <% end %>
+  <div class="check_uncheck">
 		  <%= link_to_check_all 'input.permission_ids' %>
 		  <%= link_to_uncheck_all 'input.permission_ids' %>
-		</td>
-	</tr>
-</table>
+  </div>
+</div>
+

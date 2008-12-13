@@ -1,47 +1,54 @@
+<%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
 <%= f.error_messages %>
-<div class="fields">
+<div class="text_fields fields">
   <%= f.label :name %>
   <%= f.text_field :name %>
 </div>
-<div class="fields">
+<div class="text_fields fields">
   <%= f.label :path %>
   <%= f.text_field :path %>
 </div>
-<div class="fields">
-  <label>
-    <%= f.check_box :hidden %>
-    Hide from menus?
-  </label>
+<div class="checkbox_group fields no_check_all">
+  <div class="checkbox_fields">
+    <label>
+      <%= f.check_box :hidden %>
+      <span>Hide from menus?</span>
+    </label>
+  </div>
 </div>
 
-<fieldset>
-  <legend>Which 'Public' groups can view pages in this section?</legend>
-  <%= hidden_field_tag "section[group_ids][]", "" %>
-  <% for group in public_groups %><div class="fields">
+<div class="checkbox_group fields">
+  <div class="label">Which 'Public' groups can view pages in this section?</div>
+  <%= hidden_field_tag "section[group_ids][]", "", :id => nil %>
+  <% for group in public_groups %><div class="checkbox_fields">
     <label>
       <%= check_box_tag "section[group_ids][]", group.id,
-        @section.groups.include?(group), :class => "public_group_ids", :id => "public_group_ids_#{group.id}" %>
-      <%= group.name %>
+          @section.groups.include?(group), :class => "public_group_ids", :id => "public_group_ids_#{group.id}" %>
+      <span><%= group.name %></span>
     </label>
   </div><% end %>
-  <%= link_to_check_all 'input.public_group_ids' %>
-  <%= link_to_uncheck_all 'input.public_group_ids' %>
-</fieldset>
+  <div class="check_uncheck">
+    <%= link_to_check_all 'input.public_group_ids' %>
+    <%= link_to_uncheck_all 'input.public_group_ids' %>
+  </div>
+</div>
 
-<fieldset>
-  <legend>Which 'CMS' groups can edit pages and content in this section?</legend>
-  <%= hidden_field_tag "section[group_ids][]", "" %>
-  <% for group in cms_groups %><div class="fields">
+<div class="checkbox_group fields">
+  <div class="label">Which 'CMS' groups can edit pages and content in this section?</div>
+  <%= hidden_field_tag "section[group_ids][]", "", :id => nil %>
+  <% for group in cms_groups %><div class="checkbox_fields">
     <label>
       <%= check_box_tag "section[group_ids][]", group.id,
-        @section.groups.include?(group), :class => "cms_group_ids", :id => "cms_group_ids_#{group.id}" %>
-      <%= group.name %>
+          @section.groups.include?(group), :class => "cms_group_ids", :id => "cms_group_ids_#{group.id}" %>
+      <span><%= group.name %></span>
     </label>
   </div><% end %>
-  <%= link_to_check_all 'input.cms_group_ids' %>
-  <%= link_to_uncheck_all 'input.cms_group_ids' %>
-</fieldset>
+  <div class="check_uncheck">
+    <%= link_to_check_all 'input.cms_group_ids' %>
+    <%= link_to_uncheck_all 'input.cms_group_ids' %>
+  </div>
+</div>
 
 <div class="buttons">
-  <%= f.submit "Save" %>
+  <%= lt_button_wrapper(f.submit("Save", :class => "submit")) %>
 </div>

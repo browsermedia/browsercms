@@ -110,6 +110,17 @@ module Cms
 	  def span_tag(content)
 	    content_tag :span, content
     end
+    def lt_button_wrapper(content)
+<<LBW
+  <div class="lt_button">
+    <img src="/images/cms/lt_button_l.gif" alt="" />
+    <div>
+      #{ content }
+    </div>
+    <img src="/images/cms/lt_button_r.gif" alt="" style="margin-right: 25px;" />
+  </div>
+LBW
+    end
 	  	  
     def group_ids
      (params[:group_ids] || @user.group_ids).collect { |g| g.to_i }

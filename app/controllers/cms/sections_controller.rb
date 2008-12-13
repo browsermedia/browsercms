@@ -1,6 +1,7 @@
 class Cms::SectionsController < Cms::BaseController
 
   before_filter :load_parent, :only => [:new, :create]
+  before_filter :set_toolbar_tab
   
   helper_method :public_groups
   helper_method :cms_groups
@@ -120,4 +121,7 @@ class Cms::SectionsController < Cms::BaseController
       @cms_groups ||= Group.cms_access.all(:order => "groups.name")
     end
 
+    def set_toolbar_tab
+      @toolbar_tab = :sitemap
+    end
 end

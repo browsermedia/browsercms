@@ -1,20 +1,20 @@
+<%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
 <%= f.error_messages %>
-
-<div class="fields">
+<div class="fields text_fields">
   <%= f.label :name, "Group Name" %>
   <%= f.text_field :name %>
 </div>
 
 <% unless @group.guest? %>
-  <div class='fields'>
+  <div class="fields select_fields">
   	<%= f.label :group_type_id, "What kind of user does this group represent?" %>
   	<%= f.select :group_type_id, GroupType.non_guest.map { |g| [g.name, g.id] } %>
   </div>
 <% end %>
 
-<%= render :partial => 'permissions' unless (params[:action] == "index" or params[:action] == "create") %>
+<%= render :partial => 'permissions' unless (params[:action] == "index" or params[:action] == "create" or !@group.cms_access?) %>
 <%= render :partial => 'sections' unless (params[:action] == "index" or params[:action] == "create") %>
 
 <div class="buttons">
-  <%= f.submit "Save" %>
+  <%= lt_button_wrapper(f.submit("Save", :class => "submit")) %>
 </div>

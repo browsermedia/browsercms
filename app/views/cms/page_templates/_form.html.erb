@@ -1,21 +1,21 @@
+<%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
 <% form_for(@page_template, :url => cms_path(@page_template, :create_or_update)) do |f| %>
   <%= f.error_messages %>
-  <div class="fields">
+  <div class="fields text_fields">
     <%= f.label :name %>
     <%= f.text_field :name %>
   </div>
-  <div class="fields">
+  <div class="fields text_fields">
     <%= f.label :file_name %>
     <%= f.text_field :file_name %>
   </div>
-  <div class="fields">
-    <%= f.label :language %>
-    <%= f.select :language, [["ERB", "erb"], ["Haml", "haml"]] %>
-  </div>
-  <div class="fields">
+  <div class="fields text_editor_fields">
     <%= f.label :body %>
+    <%= f.label :language, "Language", :class => "select_label" %>
+    <%= f.select :language, [["ERB", "erb"], ["Haml", "haml"]] %><br />
     <%= f.text_area :body, :rows => 25, :cols => 80 %>
+  </div>
   <div class="buttons">
-    <%= f.submit "Save" %>
+    <%= lt_button_wrapper(f.submit("Save", :class => "submit")) %>
   </div>
 <% end %>

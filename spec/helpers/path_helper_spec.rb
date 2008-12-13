@@ -4,6 +4,7 @@ describe Cms::PathHelper do
 
   describe "path generation" do
     before do
+      ContentType.stub!(:count).and_return(1)
       @new_block = mock("html_block", :new_record? => true, :class => HtmlBlock, :content_block_type => 'html')
       @existing_block = mock("html_block", :new_record? => false, :to_param => 7, :class => HtmlBlock, :content_block_type => 'html') 
       @page_template = mock("page_template", :to_param => 7, :class => PageTemplate)     

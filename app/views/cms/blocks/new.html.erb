@@ -1,3 +1,4 @@
+<%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
 <% @page_title = "Content Library / Add New #{@content_type.display_name}" %>
 <h2>New <%= @content_type.display_name %></h2>
 <% form_for(@block, :url => cms_path(:blocks, @content_type.name.underscore, :create), :html => {:multipart => true}) do |f| %>
@@ -5,10 +6,10 @@
   <%= render :partial => 'cms/blocks/hidden_fields', :locals => {:f => f} %>
   <%= render :partial => @content_type.form, :locals => {:f => f} %>
   <% unless @hide_buttons %>
-    <div class="fields">
-      <%= f.submit "Save" %>
+    <div class="buttons">
+      <%= lt_button_wrapper(f.submit("Save", :class => "submit")) %>
       <% if current_user.able_to?(:publish_content) && @block.respond_to?(:publishable?) && @block.publishable? %>
-        <button type="submit" name="<%= @block.content_block_type%>[publish_on_save]" value="true">Save And Publish</button>    
+        <%= lt_button_wrapper("<button type=\"submit\" name=\"#{@block.content_block_type}[publish_on_save]\" value=\"true\" class=\"submit\"><span>Save And Publish</span></button>") %>
       <% end %>
     </div>
   <% end %>

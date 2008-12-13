@@ -176,7 +176,6 @@ describe Cms::UsersController do
       end
       it "should list all groups as checkboxes" do
         @action.call
-        response.should have_tag("label[for=?]", "groups")
         response.should have_tag("input[type=?][value=?]", "checkbox", @group.id)
       end
     end

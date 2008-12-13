@@ -1,3 +1,4 @@
+<%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
 <% form_for(@user, :url => cms_path(@user, :create_or_update)) do |f| %>
   <%= f.error_messages %>
   <%= hidden_field_tag "on_fail_action", "change_password" if @change_password  %>
@@ -5,6 +6,6 @@
   <%= render :partial => 'password', :locals => {:f => f}  if ( @user.new_record? || @change_password) %>
   <%= render :partial => 'groups' if ( @user.new_record? || !@change_password) %>
   <div class="buttons">
-    <%= f.submit "Save" %>
+    <%= lt_button_wrapper(f.submit("Save", :class => "submit")) %>
   </div>
 <% end %>

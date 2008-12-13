@@ -11,7 +11,7 @@ jQuery(function($){
 <% end %>
 <% @page_title = "New Section" %>
 <h1><%= @page_title %></h1>
-<% form_for(@section, :url => cms_path(:sections, :create)) do |f| %>
+<% form_for(@section, :url => cms_path(:sections, :create), :id => 'section_form') do |f| %>
   <%= hidden_field_tag :section_id, @parent.id %>
   <%= render :partial => 'form', :locals => {:f => f} %>
 <% end %>

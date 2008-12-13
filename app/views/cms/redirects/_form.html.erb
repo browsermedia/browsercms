@@ -1,14 +1,15 @@
+<%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
 <% form_for(@redirect, :url => cms_path(@redirect, :create_or_update)) do |f| %>
   <%= f.error_messages %>
-  <div class="fields">
+  <div class="fields text_fields">
     <%= f.label :from_path, "From" %>
     <%= f.text_field :from_path, :size => 50 %>
   </div>
-  <div class="fields">
+  <div class="fields text_fields">
     <%= f.label :to_path, "To" %>
     <%= f.text_field :to_path, :size => 50 %>
   </div>
   <div class="buttons">
-    <%= f.submit "Save" %>
+    <%= lt_button_wrapper(f.submit("Save", :class => "submit")) %>
   </div>
 <% end %>

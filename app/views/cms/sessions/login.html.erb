@@ -8,8 +8,7 @@
     <%= password_field_tag 'password', @password, :onfocus => "if(this.value == 'Password') this.value = '';", :onblur => "if(this.value == '') this.value = 'Password';", :tabindex => 2 %>
   </div>
   <div class="buttons">
-    <%= submit_tag "", :style => "display: none;" %>
-    <%= link_to_function("<span>LOGIN</span>", "$('#login_form').submit()", :class => "button", :tabindex => 4) %>
+    <div id="login_button"><%= submit_tag("LOGIN") %></div>
   <div id="remember_me_div">
     <%= label_tag 'remember_me', 'Remember me', :class => "inline" %>  
    <%= check_box_tag 'remember_me', '1', @remember_me, :tabindex => 3 %>              

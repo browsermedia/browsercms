@@ -1,24 +1,17 @@
-<table>
-  <tr>
-    <th colspan="3">
-      What sections should group members be allowed to edit?
-      <%= hidden_field_tag "group[section_ids][]", "" %>
-    </th>
-	</tr>	
-	<tr>
-	  <th>&nbsp;</td>
-		<th>Name</th>
-		<th>Path</th>
-	</tr>
-	<% Section.all(:order => "path").each do |s|%><tr>
-		<td><%= check_box_tag "group[section_ids][]", s.id, @group.sections.include?(s), :id => "section_ids_#{s.id}", :class => "section_ids" %></td>
-		<td><%=h s.name %></td>
-		<td><%=h s.path %></td>
-	</tr><% end %>
-	<tr>
-		<td colspan="3">
-		  <%= link_to_check_all 'input.section_ids' %>
-		  <%= link_to_uncheck_all 'input.section_ids' %>
-		</td>
-	</tr>
-</table>
+<div class="checkbox_group">
+  <div class="label">What sections should group members be allowed to <%= @group.cms_access? ? 'edit' : 'view' %>?</div>
+  <%= hidden_field_tag "group[section_ids][]", "" %>
+  <% Section.all(:order => "path").each do |s|%>
+  <div class="checkbox_fields">
+    <label>
+      <%= check_box_tag "group[section_ids][]", s.id, @group.sections.include?(s), :id => "section_ids_#{s.id}", :class => "section_ids" %>
+      <span><%=h s.name %> (Path: <%=h s.path %>)</span>
+    </label>
+  </div>
+  <% end %>
+
+  <div class="check_uncheck">
+    <%= link_to_check_all 'input.section_ids' %>
+    <%= link_to_uncheck_all 'input.section_ids' %>
+  </div>
+</div>

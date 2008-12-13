@@ -1,15 +1,19 @@
+<%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
 <%= f.error_messages %>
-<div class="fields">
+<div class="fields text_fields">
   <%= f.label :name %>
   <%= f.text_field :name %>
 </div>
-<div class="fields">
+<div class="fields text_fields">
   <%= f.label :url %>
   <%= f.text_field :url %>
 </div>
-<div class="fields">
-  <label>
+<div class="checkbox_group fields">
+  <div class="checkbox_fields">
+    <label>
   <%= f.check_box :new_window %>
-  Open in new window?
-  </label>
+  <span>Open in new window?</span>
+    </label>
+  </div>
 </div>
+

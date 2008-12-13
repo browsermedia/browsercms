@@ -14,19 +14,19 @@
     </script>
   <% end %>
 <% end %>
-<div class="fields">
+<div class="fields text_fields">
   <%= f.label :name %>
   <%= f.text_field :name %>
 </div>
-<div class="fields">
+<div class="fields text_fields">
   <%= f.label :attachment_file %>
   <%= f.file_field :attachment_file %>
 </div>
-<div class="fields">
+<div class="fields text_fields">
   <%= f.label :section_id, "Section" %>
   <%= f.collection_select :section_id, @sections, :id, :name %>
 </div>
-<div class="fields">
+<div class="fields text_fields">
   <%= f.label :attachment_file_name %>
   <%= f.text_field :attachment_file_name %>
 </div>
