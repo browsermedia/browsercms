@@ -1,6 +1,5 @@
 <% content_for :html_head do %>
-<%= stylesheet_link_tag('cms/form_layout') %>
-
+  <%= stylesheet_link_tag('cms/form_layout') %>
 <% end %>
 <% @page_title = "Content Library / Edit #{@content_type.display_name}" %>
 <%= content_for :functions,  render(:partial => 'toolbar') %>
@@ -17,7 +16,7 @@
   <% end %>
     <div class="buttons">
       <%= lt_button_wrapper(f.submit("Save", :class => "submit")) %>
-      <% if current_user.able_to?(:publish_content) && @block.respond_to?(:publishable?) && @block.publishable? %>
+      <% if current_user.able_to?(:publish_content) && @block.class.publishable? %>
         <%= lt_button_wrapper("<button type=\"submit\" name=\"#{@block.content_block_type}[publish_on_save]\" value=\"true\" class=\"submit\"><span>Save And Publish</span></button>") %>
       <% end %>
     </div>
