@@ -409,7 +409,7 @@ describe Cms::BlocksController do
     describe "destroying" do
       it "should remove the row" do
         delete :destroy, :id => @block.id, :block_type => "DynamicPortlet"
-        lambda { Portlet.find(@block.id) }.should raise_error(ActiveRecord::RecordNotFound)
+        lambda { DynamicPortlet.find(@block.id) }.should raise_error(ActiveRecord::RecordNotFound)
       end
     end
   end
