@@ -1,7 +1,5 @@
 class Portlet < ActiveRecord::Base
 
-  has_dynamic_attributes
-  acts_as_content_block :versioned => false, :publishable => false
   validates_presence_of :name
 
   attr_accessor :request, :response, :params, :session
@@ -10,6 +8,8 @@ class Portlet < ActiveRecord::Base
     super if defined? super
   ensure
     ( @subclasses ||= [] ).push(subclass).uniq!
+    subclass.has_dynamic_attributes
+    subclass.acts_as_content_block(:versioned => false, :publishable => false)    
   end
 
   # In Rails, Classeses aren't loaded until you ask for them

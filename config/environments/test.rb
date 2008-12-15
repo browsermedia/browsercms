@@ -21,8 +21,3 @@ config.action_controller.allow_forgery_protection    = false
 # ActionMailer::Base.deliveries array.
 config.action_mailer.delivery_method = :test
 
-begin
-  require 'ruby-debug'
-rescue Exception
-  puts "WARNING: gem install ruby-debug for debugging support"
-end

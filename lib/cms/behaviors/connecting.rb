@@ -34,9 +34,6 @@ module Cms
           end                
         end
         module InstanceMethods
-          def renderer(block)
-            lambda { "<b>ERROR</b>: #{block.class} does not have a renderer" }
-          end
 
           def connected_pages
             Page.connected_to(self)

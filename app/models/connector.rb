@@ -26,7 +26,15 @@ class Connector < ActiveRecord::Base
   validates_presence_of :page_id, :page_version, :connectable_id, :connectable_type, :container
   
   def current_connectable
-    versioned? ? connectable.as_of_version(connectable_version) : connectable
+    versioned? ? connectable.as_of_version(connectable_version) : get_connectable
+  end
+  
+  def get_connectable
+    #NOTE: This method only exists to work around a bug
+    #If you call connector.connectable and try to use that, 
+    #if that connectable has dynamic attributes (a portlet, for example),
+    #then you will get a NoMethodError when you try to access a dynamic attribute
+    connectable_type.constantize.find(connectable_id)
   end
   
   def status

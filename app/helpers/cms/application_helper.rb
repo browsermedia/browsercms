@@ -33,9 +33,10 @@ module Cms
     end
   
     def render_connectable(content_block)
-      instance_eval &content_block.renderer(content_block)
+      render_proc = content_block.renderer(content_block)
+      instance_eval &render_proc
     rescue Exception => e
-      logger.error "Error occurred while rendering #{content_block.class}:#{content_block.id}: #{e.message}\n#{e.backtrace.join("\n")}"
+      logger.error "Error occurred while rendering #{content_block.class}##{content_block.id}: #{e.message}\n#{e.backtrace.join("\n")}"
       "ERROR: #{e.message}"
     end
   

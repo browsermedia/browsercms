@@ -6,9 +6,9 @@ class TagCloudPortlet < Portlet
   
   def self.default_template
     template = <<-HTML
-<div class="tag_cloud">
-  <% for tag in @cloud %>
-    <%= link_to h(tag.name), "/tags/\#{tag.name.to_slug}", :class => @sizes[tag.size] %>
+<div class="tag-cloud">
+  <% for tag in cloud %>
+    <%= link_to h(tag.name), "/tags/\#{tag.name.to_slug}", :class => sizes[tag.size] %>
   <% end %>
 </div> 
     HTML
@@ -17,11 +17,11 @@ class TagCloudPortlet < Portlet
   
   def renderer(portlet)
     lambda do
-      @portlet = portlet
-      @sizes = @portlet.sizes.blank? ? @portlet.class.default_sizes : @portlet.sizes
-      @limit = @portlet.limit.blank? ? 50 : @portlet.limit
-      @cloud = Tag.cloud(:sizes => @sizes.size, :limit => @limit)
-      render :inline => @portlet.template
+      locals = {:portlet => portlet}
+      locals[:sizes] = portlet.sizes.blank? ? portlet.class.default_sizes : portlet.sizes
+      locals[:limit] = portlet.limit.blank? ? 50 : portlet.limit
+      locals[:cloud] = Tag.cloud(:sizes => locals[:sizes].size, :limit => locals[:limit])
+      render :inline => portlet.template, :locals => locals
     end
   end
     
