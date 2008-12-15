@@ -37,7 +37,7 @@ jQuery(function($) {
     },
     attachEventHandlers: function(context) {
       $('a.http_post, a.http_put, a.http_delete', context).click(function() {
-        if($(this).hasClass('confirm_with_title') && confirm(this.title)) {
+        if($(this).hasClass('confirm_with_title') ? confirm(this.title) : true) {
           var f = document.createElement('form')
           f.style.display = 'none'
           this.parentNode.appendChild(f)
