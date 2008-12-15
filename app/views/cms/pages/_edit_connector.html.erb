@@ -3,7 +3,14 @@
     <div class="actions">
       <%= link_to status_icon(connector.status), cms_path(connector.connectable)  %>
       <%= link_to action_icon(:view), cms_path(connector.connectable) %>
-      <%= link_to action_icon(:edit), cms_path(connector.connectable, :edit, :_redirect_to => @page.path) %>
+      <% if connector.connectable_type.constantize.respond_to?(:has_edit_link?) %>
+        <%= link_to action_icon(:config), cms_path(connector.get_connectable, :edit, :_redirect_to => @page.path) %>
+        <% if connector.get_connectable.class.has_edit_link? %>
+          <%= link_to action_icon(:edit), "#", :class => "cms_connectable_edit" %>
+        <% end %>
+      <% else %>
+        <%= link_to action_icon(:edit), cms_path(connector.connectable, :edit, :_redirect_to => @page.path) %>      
+      <% end %>
       <% if @page.connectors.for_page_version(@page.version).in_container(connector.container).count > 1 %>
         <%= link_to action_icon(:up), cms_path(connector, :move_up), :class => "http_put" %>
         <%= link_to action_icon(:down), cms_path(connector, :move_down), :class => "http_put" %>

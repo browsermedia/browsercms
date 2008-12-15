@@ -22,6 +22,10 @@ class Portlet < ActiveRecord::Base
       end
     end
   end
+
+  def self.has_edit_link?
+    false
+  end
   
   def self.types
     load_portlets
