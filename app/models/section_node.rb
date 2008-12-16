@@ -15,6 +15,7 @@ class SectionNode < ActiveRecord::Base
   end
   
   def move_to(sec, pos)
+    logger.info "Moving Section Node ##{id} to Section ##{sec.id} Position #{pos}"
     transaction do
       if section != sec
         remove_from_list

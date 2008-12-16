@@ -21,7 +21,7 @@ module Cms
       if [String, Symbol, Hash, Array, Numeric, Date, Time].detect{|e| e === first}
         paths << first.to_s.sub(/^\//,'')
       else
-        if first.class.connectable? && ContentType.count(:conditions => ["name = ?", first.class.base_class.name]) > 0
+        if first.class.connectable? && ContentType.count(:conditions => ["name in (?)", [first.class.name, first.class.base_class.name]]) > 0
           paths << 'blocks'
           paths << first.content_block_type
         else

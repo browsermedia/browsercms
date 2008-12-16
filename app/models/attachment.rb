@@ -59,7 +59,7 @@ class Attachment < ActiveRecord::Base
 
   def process_section
     if section_id
-      if section_node && section_node.section_id != section_id
+      if section_node && !section_node.new_record? && section_node.section_id != section_id
         section_node.move_to_end(Section.find(section_id))
       else
         build_section_node(:node => self, :section_id => section_id)
