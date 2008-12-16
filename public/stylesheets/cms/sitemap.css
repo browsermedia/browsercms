@@ -78,3 +78,20 @@
   margin: 0;
   padding: 0;
 }
+#sitemap .sitemap_status {
+width: 4%;
+}
+#sitemap .sitemap_published_status {
+width: 7%;
+}
+#sitemap .sitemap_published_status img{
+float: left;
+}
+#sitemap .sitemap_published_status div{
+float: left;
+padding: 3px 0 0 4px;
+}
+ td.node, td.sitemap_status, td.sitemap_published_status { 
+border-bottom: 1px dotted #CCC; 
+vertical-align: middle;
+}

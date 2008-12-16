@@ -11,6 +11,7 @@
       <tr><td class="drop_after"><div></div></td></tr>
     </table>    
   </td>
-  <td class="attributes"></td>
-  <td class="status"><%= status_icon(link.status) %> <%= link.published? ? "Published" : "Draft" %></td>
+  <td class="sitemap_status">&nbsp;</td>
+  <td class="sitemap_status">&nbsp;</td>
+  <td class="sitemap_published_status"><%= status_icon(link.status) %> <div><%= link.published? ? "Published" : "Draft" %></div></td>
 </tr>

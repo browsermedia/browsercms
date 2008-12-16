@@ -11,11 +11,11 @@
       <tr><td class="drop_after"><div></div></td></tr>
     </table>
   </td>
-  <td class="attributes">
+  <td class="sitemap_status">
     <%= status_icon(:hidden) if section.hidden? %>
   </td>
-
-  <td class="status"><%= status_icon(section.status) %> <%= section.public? ? "Public" : "Protected" %></td>
+  <td class="sitemap_status"><%= status_icon(section.status) %> </td>
+  <td class="sitemap_published_status">&nbsp;</td>
 </tr>
 <%= render :partial => 'section_node', :collection => section.child_nodes.all(:order => 'position'), :locals => {:depth => depth+1, :ancestors => ancestors.push(node)} %>
 <% ancestors.pop %>

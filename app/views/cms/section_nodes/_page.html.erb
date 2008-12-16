@@ -11,9 +11,15 @@
       <tr><td class="drop_after"><div></div></td></tr>
     </table>    
   </td>
-  <td class="attributes">
+  <td class="sitemap_status">
     <%= status_icon(:hidden) if page.hidden? %>
-    <%= status_icon(:archived) if page.archived? %>
   </td>
-  <td class="status"><%= status_icon(page.status) %> <%= page.published? ? "Published" : "Draft" %></td>
+  <td class="sitemap_status">&nbsp;</td>
+  <td class="sitemap_published_status">
+<% if page.archived? %>
+    <%= status_icon(:archived) %> <div>Archived</div>
+<% else %>
+<%= status_icon(page.status) %> <div><%= page.published? ? "Published" : "Draft" %></div>
+<% end %>
+</td>
 </tr>

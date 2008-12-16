@@ -1,5 +1,6 @@
 class Cms::LinksController < Cms::BaseController
 
+  before_filter :set_toolbar_tab
   before_filter :load_section, :only => [:new, :create, :move_to]
   
   def new
@@ -50,6 +51,9 @@ class Cms::LinksController < Cms::BaseController
 
     def load_section
       @section = Section.find(params[:section_id])
+    end
+    def set_toolbar_tab
+      @toolbar_tab = :sitemap
     end
 
 end

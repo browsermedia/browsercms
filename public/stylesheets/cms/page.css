@@ -3,10 +3,6 @@ div.cms {
   font: 12pt "Trebuchet MS", Helvetica, Verdana, Arial, sans-serif;
 }
 
-div.cms img {
-  border: 0;
-}
-
 img.published_status {
   float: right;
   margin-right: 3px;
@@ -17,7 +13,6 @@ img.published_status {
 .actions {
 margin-top: 1px;
 margin-left: 3px;
-z-index: 1;
 }
 
 .actions img {
@@ -26,29 +21,21 @@ border: none;
 
 
 /* CONTAINER */
-div.cms_edit_container{
-  margin: 0 0 0 -1px;
+div.cms_edit_container, div.cms_edit_container_2, div.cms_edit_connectable {
+  margin: 0;
   padding: 0;
   border-top: 1px solid black;
   border-bottom: 1px solid black;
-  width: 100%;
-  background: #FFF url(/images/cms/pages/container_border_l.gif) repeat-y 0 0;
+}
+div.cms_edit_container{
+  background: url(/images/cms/pages/container_border_l.gif) repeat-y 0 0;
 }
 div.cms_edit_container_2{
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
-  margin: 0 0 0 1px;
-  padding: 0;
-  width: 100%;
-  background: #FFF url(/images/cms/pages/container_border_r.gif) repeat-y 100% 0;
+  background: url(/images/cms/pages/container_border_r.gif) repeat-y 100% 0;
 }
 
-/* ELEMENT */
 div.cms_edit_connectable {
-  margin: 1px 0;
-  padding: 1px 0;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+margin: 1px 0;
 }
 
 

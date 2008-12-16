@@ -2,8 +2,8 @@
 <div class="cms_edit_container_2">
   <%= image_tag "cms/#{@page.container_published?(name) ? 'published' : 'draft'}_status.gif", :class => "published_status" %>
     <div class="actions">
-      <%= link_to image_tag("cms/pages/add_connectable.gif"), cms_path(:content_types, :select, :connect_to_page_id => @page, :connect_to_container => name) %>
-      <%= link_to image_tag("cms/pages/connect_connectable.gif"), cms_path(:connectors, :new, :page_id => @page, :container => name) %>
+      <%= link_to image_tag("cms/pages/add_connectable.gif"), cms_path(:content_types, :select, :connect_to_page_id => @page, :connect_to_container => name), :title => "add new content to container" %>
+      <%= link_to image_tag("cms/pages/connect_connectable.gif"), cms_path(:connectors, :new, :page_id => @page, :container => name), :title => "add existing content to container" %>
     </div>
   <div class="cms_container_content">
     <%= content %>
