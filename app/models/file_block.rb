@@ -1,6 +1,6 @@
 class FileBlock < AbstractFileBlock
-  include Attachable
-  acts_as_content_block
+
+  acts_as_content_block :belongs_to_attachment => true
   
   def self.display_name
     "File"

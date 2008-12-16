@@ -6,6 +6,7 @@ module Cms
       end
       module MacroMethods
         def acts_as_content_block(options={})
+          belongs_to_attachment(options[:belongs_to_attachment].is_a?(Hash) ? options[:belongs_to_attachment] : {}) if options[:belongs_to_attachment]
           is_archivable(options[:archiveable].is_a?(Hash) ? options[:archiveable] : {}) unless options[:archiveable] == false
           is_connectable(options[:connectable].is_a?(Hash) ? options[:connectable] : {}) unless options[:connectable] == false
           is_publishable(options[:publishable].is_a?(Hash) ? options[:publishable] : {}) unless options[:publishable] == false

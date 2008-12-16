@@ -7,8 +7,8 @@
     <script type="text/javascript">
     jQuery(function($){
       var sectionIdPathMap = <%= @sections.inject({}){|map, sec| map[sec.id.to_s] = sec.path.sub(/\/$/,''); map}.to_json %>
-      $('#file_block_attachment_file, #file_block_section_id').change(function(){ 
-        $('#file_block_attachment_file_name').val(sectionIdPathMap[$('#file_block_section_id').val()]+'/'+$('#file_block_attachment_file').val()) 
+      $('#file_block_attachment_file, #file_block_attachment_section_id').change(function(){ 
+        $('#file_block_attachment_file_name').val(sectionIdPathMap[$('#file_block_attachment_section_id').val()]+'/'+$('#file_block_attachment_file').val()) 
       }) 
     })
     </script>
@@ -23,8 +23,8 @@
   <%= f.file_field :attachment_file %>
 </div>
 <div class="fields text_fields">
-  <%= f.label :section_id, "Section" %>
-  <%= f.collection_select :section_id, @sections, :id, :name %>
+  <%= f.label :attachment_section_id, "Section" %>
+  <%= f.collection_select :attachment_section_id, @sections, :id, :name %>
 </div>
 <div class="fields text_fields">
   <%= f.label :attachment_file_name %>

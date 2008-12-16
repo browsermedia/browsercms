@@ -1,6 +1,7 @@
 class ImageBlock < AbstractFileBlock
-  include Attachable
-  acts_as_content_block :versioned => { :version_foreign_key => :file_block_id }
+
+  acts_as_content_block :versioned => { :version_foreign_key => :file_block_id },
+    :belongs_to_attachment => true
 
   def self.display_name
     "Image"
