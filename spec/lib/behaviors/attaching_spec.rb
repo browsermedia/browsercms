@@ -231,6 +231,9 @@ describe Attachable do
     it "should create a new version of the attachment" do
       @updating_the_attachable.should change(Attachment::Version, :count).by(1)
     end
+    it "should not create a new attachment file" do
+      @updating_the_attachable.should_not change(AttachmentFile, :count)      
+    end
     it "should update the attachment file name" do
       @updating_the_attachable.call
       @attachable.attachment_file_name.should == "/test2.jpg"
@@ -241,5 +244,187 @@ describe Attachable do
       @updating_the_attachable.should change(@attachable, :attachment_version).by(1)
     end
   end
+  describe "updating the attachment file" do
+    before do
+      #file is a mock of the object that Rails wraps file uploads in
+      @file = mock("file", :original_filename => "foo.txt",
+        :content_type => "image/jpeg", :rewind => true,
+        :size => "99", :read => "Foo v1")
+      
+      @file2 = mock("file", :original_filename => "foo.txt",
+        :content_type => "image/jpeg", :rewind => true,
+        :size => "99", :read => "Foo v2")        
+
+      @section = create_section(:name => "attachables", :parent => root_section)      
+    
+      @attachable = Attachable.create!(:name => "Foo", 
+        :attachment_section_id => @section.id, 
+        :attachment_file => @file, 
+        :attachment_file_name => "test.jpg")
+      reset(:attachable)
+      @updating_the_attachable = lambda { @attachable.update_attributes(:attachment_file => @file2) }
+    end
+    it "should not create a new attachment" do
+      @updating_the_attachable.should_not change(Attachment, :count)
+    end
+    it "should create a new version of the attachment" do
+      @updating_the_attachable.should change(Attachment::Version, :count).by(1)
+    end
+    it "should create a new attachment file" do
+      @updating_the_attachable.should change(AttachmentFile, :count).by(1)
+    end
+    it "should update the attachment version" do
+      @updating_the_attachable.should change(@attachable, :attachment_version).by(1)
+    end
+    it "should update the contents of the attachment file" do
+      @updating_the_attachable.call
+      @attachable.attachment.data.should == @file2.read
+    end
+    it "should preserve the contents of the each version of the file" do
+      @updating_the_attachable.call
+      @attachable.attachment.as_of_version(1).data.should == @file.read
+      @attachable.attachment.as_of_version(2).data.should == @file2.read
+    end
+    it "should publish the attachment" do
+      @updating_the_attachable.call      
+      @attachable.attachment.should be_published
+    end
+  end
 end
 
+describe VersionedAttachable do
+  describe "updating the versioned attachable" do
+    before do
+      #file is a mock of the object that Rails wraps file uploads in
+      @file = mock("file", :original_filename => "foo.txt",
+        :content_type => "image/jpeg", :rewind => true,
+        :size => "99", :read => "Foo")
+
+      @section = create_section(:name => "attachables", :parent => root_section)      
+    
+      @attachable = VersionedAttachable.create!(:name => "Foo v1", 
+        :attachment_section_id => @section.id, 
+        :attachment_file => @file, 
+        :attachment_file_name => "test.jpg")
+      reset(:attachable)
+      @updating_the_attachable = lambda { @attachable.update_attributes(:name => "Foo v2") }
+    end
+    it "should not create a new attachment" do
+      @updating_the_attachable.should_not change(Attachment, :count)
+    end
+    it "should not create a new version of the attachment" do
+      @updating_the_attachable.should_not change(Attachment::Version, :count)
+    end
+    it "should not create a new attachment file" do
+      @updating_the_attachable.should_not change(AttachmentFile, :count)
+    end
+    it "should not change attachment version" do
+      @updating_the_attachable.should_not change(@attachable, :attachment_version)
+    end
+    it "should update the attachable" do
+      @updating_the_attachable.call
+      @attachable.name.should == "Foo v2"
+    end
+    it "should link both version to the same attachment" do
+      @updating_the_attachable.call
+      @attachable.as_of_version(2).attachment.should == @attachable.as_of_version(1).attachment
+    end    
+  end
+  describe "updating the versioned attachable's attachment file name" do
+    before do
+      #file is a mock of the object that Rails wraps file uploads in
+      @file = mock("file", :original_filename => "foo.txt",
+        :content_type => "image/jpeg", :rewind => true,
+        :size => "99", :read => "Foo")
+
+      @section = create_section(:name => "attachables", :parent => root_section)      
+    
+      @attachable = VersionedAttachable.create!(:name => "Foo v1", 
+        :attachment_section_id => @section.id, 
+        :attachment_file => @file, 
+        :attachment_file_name => "test.jpg")
+      reset(:attachable)
+      @updating_the_attachable = lambda { @attachable.update_attributes(:attachment_file_name => "test2.jpg") }
+    end
+    it "should not create a new attachable" do
+      @updating_the_attachable.should_not change(VersionedAttachable, :count)
+    end
+    it "should create a new attachable version" do
+      @updating_the_attachable.should change(VersionedAttachable::Version, :count).by(1)
+    end
+    it "should not create a new attachment" do
+      @updating_the_attachable.should_not change(Attachment, :count)
+    end
+    it "should create a new version of the attachment" do
+      @updating_the_attachable.should change(Attachment::Version, :count).by(1)
+    end
+    it "should not create a new attachment file" do
+      @updating_the_attachable.should_not change(AttachmentFile, :count)
+    end
+    it "should change attachment version" do
+      @updating_the_attachable.should change(@attachable, :attachment_version).by(1)
+    end
+    it "should update the attachable" do
+      @updating_the_attachable.call
+      @attachable.attachment_file_name.should == "/test2.jpg"
+    end
+    it "should preserve both version of the attachment" do
+      @updating_the_attachable.call
+      @attachable.as_of_version(2).attachment.should != @attachable.as_of_version(1).attachment
+      @attachable.as_of_version(1).attachment_file_name.should == "/test.jpg"
+      @attachable.as_of_version(2).attachment_file_name.should == "/test2.jpg"
+    end      
+  end
+  describe "updating the versioned attachable's attachment file" do
+    before do
+      #file is a mock of the object that Rails wraps file uploads in
+      @file = mock("file", :original_filename => "foo.txt",
+        :content_type => "image/jpeg", :rewind => true,
+        :size => "99", :read => "Foo v1")
+
+      @file2 = mock("file", :original_filename => "foo.txt",
+        :content_type => "image/jpeg", :rewind => true,
+        :size => "99", :read => "Foo v2")
+
+      @section = create_section(:name => "attachables", :parent => root_section)      
+    
+      @attachable = VersionedAttachable.create!(:name => "Foo", 
+        :attachment_section_id => @section.id, 
+        :attachment_file => @file, 
+        :attachment_file_name => "test.jpg")
+      reset(:attachable)
+      @updating_the_attachable = lambda { @attachable.update_attributes(:attachment_file => @file2) }
+    end
+    it "should not create a new attachment" do
+      @updating_the_attachable.should_not change(Attachment, :count)
+    end
+    it "should create a new version of the attachment" do
+      @updating_the_attachable.should change(Attachment::Version, :count).by(1)
+    end
+    it "should create a new attachment file" do
+      @updating_the_attachable.should change(AttachmentFile, :count).by(1)
+    end
+    it "should change attachment version" do
+      @updating_the_attachable.should change(@attachable, :attachment_version).by(1)
+    end
+    it "should update the contents of the attachment file" do
+      @updating_the_attachable.call
+      @attachable.attachment.data.should == @file2.read
+    end
+    it "should preserve the contents of the each version of the file" do
+      @updating_the_attachable.call
+      @attachable.attachment.as_of_version(1).data.should == @file.read
+      @attachable.attachment.as_of_version(2).data.should == @file2.read
+    end
+    it "should not publish the attachment" do
+      @updating_the_attachable.call      
+      @attachable.attachment.should_not be_published
+    end   
+    describe "with publish_on_save = true" do
+      it "should not publish the attachment" do
+        @attachable.update_attributes(:attachment_file => @file2, :publish_on_save => true)
+        @attachable.attachment.should be_published
+      end         
+    end
+  end
+end

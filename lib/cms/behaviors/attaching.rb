@@ -113,7 +113,7 @@ module Cms
           def update_attachment_if_changed
             if attachment
               attachment.archived = archived if self.class.archivable?
-              attachment.published = !!(publish_on_save) if self.class.publishable?
+              attachment.published = self.class.publishable? ? !!(publish_on_save) : true
               attachment.save if new_record? || attachment.changed? || attachment.file
               self.attachment_version = attachment.version
             end
