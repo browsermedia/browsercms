@@ -51,9 +51,9 @@
       <%= image_tag "cms/page_toolbar/visual_editor_end.gif", :style => "float: left;" %>
 
   <% if @mode == "edit" %>
-<div class="sm_button"><%= link_to "<span>ON</span>", "#{@page.path}?mode=view", :target => "_top" %></div><div>off</div>
+<div class="sm_button"><%= link_to "<span>ON</span>", "#{@page.path}?mode=view", :target => "_top" %></div><div><%= link_to 'off',"#{@page.path}?mode=view", :target => "_top" %></div>
   <% else %>
-<div>on</div><div class="sm_button"><%= link_to "<span>OFF</span>", "#{@page.path}?mode=edit", :target => "_top" %></div>
+<div><%= link_to "on", "#{@page.path}?mode=edit", :target => "_top" %></div><div class="sm_button"><%= link_to "<span>OFF</span>", "#{@page.path}?mode=edit", :target => "_top" %></div>
   <% end %>
       <%= image_tag "cms/page_toolbar/visual_editor_end.gif", :style => "float: left;" %>
     </div>

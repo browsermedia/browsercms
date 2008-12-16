@@ -98,6 +98,10 @@ height: 15px;
 margin: 1px 0 0 0;
 padding-top: 3px;
 }
+.visual_editor_value_container a{
+text-decoration: none;
+}
+
 .sm_button a {
 text-decoration: none;
 }
