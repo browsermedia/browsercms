@@ -1,17 +1,22 @@
+<%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
 <% content_for(:sidebar) do %>
 <%= render :partial => "cms/blocks/block_info" %>
 <% end -%>
+<div class="toolbar">
 <%= link_to span_tag("List All"), cms_path(:blocks, @content_type.content_block_type), :id=>"list_all", :class => "button" %>
 <%= link_to span_tag("Add New #{@content_type.display_name}"), cms_path(:blocks, @content_type.content_block_type.pluralize, :new) , :class => "button" %>
 <%= link_to span_tag('View'), cms_path(:blocks, @content_type.content_block_type.pluralize, :show, @block) , :class => "button" %>
 <%= link_to span_tag('Edit'), cms_path(:blocks, @content_type.content_block_type.pluralize, :edit, @block) , :class => "button" %>
 <%= link_to span_tag('Revisions'), cms_path(@block, :revisions) , :class => "button #{'disabled' unless @block.class.versioned?}" %>
 <%= link_to span_tag("X&nbsp; Delete"), cms_path(:blocks, @content_type.name.underscore.pluralize, :destroy, @block), :class => "http_delete confirm_with_title button", :title => "Are you sure you want to delete '#{@block.name}'?" %>
-<%= link_to span_tag('Assign'), cms_path(@block, :assign), :class => "button http_put #{'disabled' unless false}" %>
 <% able_to? :publish_content do -%>
   <% if @block.respond_to?(:published?) %>
-    <%= link_to span_tag('Publish'), cms_path(@block, :publish), :class => "http_put button #{'disabled' if @block.published?}" %>
+   <% if @block.published? %>
+    <%= link_to span_tag('Publish'), "#", :class => "http_put button disabled" %>
+   <% else %>
+    <%= link_to span_tag('Publish'), cms_path(@block, :publish), :class => "http_put button" %>
+   <% end %>
   <% end -%>
 <% end -%>
 <br clear="all" />
-<%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
+</div>

@@ -318,7 +318,7 @@ describe Cms::UsersController do
       end
       it "should display change_password" do
         @action.call
-        response.should have_tag("h2", "Set New Password")
+        response.should have_tag("h1", "Set New Password")
       end
       it "should update the flash appropriately" do
         @action.call 

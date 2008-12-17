@@ -252,6 +252,7 @@ a.button.left {
 
 a.button.disabled {
 	color: #88A8D2;
+	cursor: cross;
 }
 
 a.button span {
@@ -312,3 +313,9 @@ table thead {
 table#blocks {
   width: 100%;
 }
+
+h1.page_title {
+font-size: large;
+color: #485561;
+}
+

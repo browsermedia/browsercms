@@ -1,5 +1,5 @@
 <% @link_title = "New Link" %>
-<h1><%= @link_title %></h1>
+<h1 class="page_title"><%= @link_title %></h1>
 <% form_for(@link, :url => cms_path(:links, :create)) do |f| %>
 <%= hidden_field_tag :section_id, @link.section_id %>
 <%= render :partial => 'form', :locals => {:f => f} %>

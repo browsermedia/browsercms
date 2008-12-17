@@ -3,7 +3,7 @@
 <% end %>
 <% @page_title = "Content Library / Edit #{@content_type.display_name}" %>
 <%= content_for :functions,  render(:partial => 'toolbar') %>
-<h2>Edit <%= @block.name %></h2>
+<h1 class="page_title">Edit <%= @block.name %></h1>
 <% form_for(@block, :url => cms_path(:blocks, @content_type.name.underscore.pluralize, :update, @block), :html => {:multipart => true}) do |f| %>
   <%= f.error_messages %>
   <% if @other_version %>
@@ -16,7 +16,7 @@
   <% end %>
     <div class="buttons">
       <%= lt_button_wrapper(f.submit("Save", :class => "submit")) %>
-      <% if current_user.able_to?(:publish_content) && @block.class.publishable? %>
+      <% if current_user.able_to?(:publish_content) && @block.publishable? %>
         <%= lt_button_wrapper("<button type=\"submit\" name=\"#{@block.content_block_type}[publish_on_save]\" value=\"true\" class=\"submit\"><span>Save And Publish</span></button>") %>
       <% end %>
     </div>

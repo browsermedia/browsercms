@@ -1,5 +1,5 @@
 <% @page_title = "Edit '#{h(@link.name)}' Link" %>
-<h1><%= @page_title %></h1> 
+<h1 class="page_title"><%= @page_title %></h1> 
 <% form_for(@link, :url => cms_path(@link, :update)) do |f| %>
   <%= render :partial => 'form', :locals => {:f => f} %>
 <div class="buttons">

@@ -50,7 +50,7 @@ describe Cms::ConnectorsController do
 
     it "should list the usages of the block" do
       @action.call
-      response.should have_tag("h2", "View Usages")
+      response.should have_tag("h1", "View Usages")
     end
 
     it "should contain the correct pages" do

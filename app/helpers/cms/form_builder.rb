@@ -8,7 +8,7 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
     end 
     id = opts[:id] || "#{@object_name}_#{method}"
     disabled = opts[:editor_disabled]    
-    html = "<select name=\"dhtml_selector\" onchange=\"setEditor('#{id}', this);\"><option value=\"\"#{' selected="selected"' unless disabled}>DHTML Editor</option><option value=\"disabled\"#{' selected="selected"' if disabled}>Simple Text</option></select>\n"
+    html = "<select name=\"dhtml_selector\" onchange=\"setEditor('#{id}', this);\" tabindex=\"32767\"><option value=\"\"#{' selected="selected"' unless disabled}>DHTML Editor</option><option value=\"disabled\"#{' selected="selected"' if disabled}>Simple Text</option></select>\n"
     html << "<div class='editor'>\n"
     html << "\n"
     opts[:editor_disabled] = nil;
