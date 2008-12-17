@@ -39,6 +39,10 @@ module Cms
             Page.connected_to(self)
           end
 
+          def connected_page_count
+            Page.connected_to(self).count
+          end
+
           def content_block_type
             self.class.content_block_type
           end

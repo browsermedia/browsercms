@@ -30,7 +30,7 @@ module Cms
         end
         module InstanceMethods
           def publishable?
-            !!new_record?
+            !!new_record? || (self.class.connectable? ? (connected_page_count < 1) : true)
           end
           def publish
             self.publish_on_save = true
