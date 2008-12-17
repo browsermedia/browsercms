@@ -3,6 +3,11 @@ module Cms
     module Publishing
       def self.included(model_class)
         model_class.extend(MacroMethods)
+        model_class.class_eval do
+          def publishable?
+            false
+          end
+        end
       end
       module MacroMethods      
         def publishable?
@@ -24,6 +29,9 @@ module Cms
         module ClassMethods
         end
         module InstanceMethods
+          def publishable?
+            !!new_record?
+          end
           def publish
             self.publish_on_save = true
             self.version_comment = "Published" if self.class.versioned?
