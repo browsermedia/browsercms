@@ -79,7 +79,6 @@ describe "a publishable object being added to a page" do
     @object = new_html_block(:connect_to_page_id => @page.id, :connect_to_container => "test")
   end
   it "should not be publishable" do
-    pending "Case 1830"
     @object.should_not be_publishable
   end
 end
