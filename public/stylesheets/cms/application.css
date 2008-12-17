@@ -319,3 +319,11 @@ font-size: large;
 color: #485561;
 }
 
+#functions h1 {
+color: #FFF;
+font-size: large;
+text-transform: capitalize;
+margin: 5px 0 10px 0;
+padding-bottom: 10px;
+border-bottom: 3px solid #505358;
+}

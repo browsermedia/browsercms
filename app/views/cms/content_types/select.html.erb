@@ -1,7 +1,18 @@
-<h1 class="page_title">Select Content Type</h1>
+<% @page_title = "Select Content Type" %>
+<%= content_for :functions, "<h1>#{ @page_title }</h1>" %>
+<%= content_for :html_head, stylesheet_link_tag('cms/content_types') %>
+<ul id="content_types">
+  <li><%= link_to 'Text', cms_path(:blocks, 'html_blocks', :new,
+        "html_block[connect_to_page_id]" => params[:connect_to_page_id], 
+        "html_block[connect_to_container]" => params[:connect_to_container]
+      ) %></li>
+  <li><%= link_to 'Portlet', cms_path(:blocks, 'portlets', :new,
+        "portlet[connect_to_page_id]" => params[:connect_to_page_id], 
+        "portlet[connect_to_container]" => params[:connect_to_container]
+      ) %></li>
 
-<ul>
   <% @content_types.each do |type| %>
+  <% next if %w(html_block portlet).include?(type.name.underscore) %>
     <li><%= link_to h(type.display_name), cms_path(:blocks, type.content_block_type, :new, 
         "#{type.name.underscore}[connect_to_page_id]" => params[:connect_to_page_id], 
         "#{type.name.underscore}[connect_to_container]" => params[:connect_to_container]

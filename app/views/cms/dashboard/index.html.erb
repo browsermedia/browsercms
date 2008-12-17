@@ -1,33 +1,33 @@
 <% @page_title = "Dashboard" %>
-
-<h2>Draft Pages</h2>
+<% content_for :html_head do %>
+<%= stylesheet_link_tag('cms/dashboard') %>
+<%= stylesheet_link_tag('cms/form_layout') %>
+<% end %>
+<div class="dashboard_unit">
+<h2>Page Drafts</h2>
 
 <% if @unpublished_pages.empty? %>
   <p>All pages are published</p>
 <% else %>  
   <% form_tag cms_path(:pages, :publish) do %>
-    <div style="text-align: right; padding: 10px 0">
-      <%= submit_tag "Published Selected" %>
-    </div>
     <table id="draft">
       <tr>
+        <th>&nbsp;</th>
         <th>Name</th>
-        <th>Path</th>
-        <th>Last Comment</th>
-        <th>Updated By</th>    
-        <th>Updated At</th>
-        <th></th>
+        <th>User</th>
+	<th class="last">Date</th>
       </tr>
       <% @unpublished_pages.each do |page| %>
         <tr>
-          <td class="name"><%=h page.name %></td>
-          <td class="path"><%= link_to page.path, page.path %></td>
-          <td class="comment"><%=h page.version_comment %></td>
+          <td class="select"><%= check_box_tag "page_ids[]", page.id, false, :id => "publish_page_#{page.id}" %></td>
+          <td class="name"><%= link_to h(page.name), page.path %></td>
           <td class="updated_by"><%=h page.updated_by.login %></td>
           <td class="updated_at"><%= page.updated_at.strftime("%m/%d/%y %l:%M %p") %></td>
-          <td class="select"><%= check_box_tag "page_ids[]", page.id, false, :id => "publish_page_#{page.id}" %></td>
         </tr>
       <% end %>
     </table>
+    <%= lt_button_wrapper(submit_tag("Publish Selected", :class => "submit")) %>
   <% end %>
 <% end %>
+</div>
+

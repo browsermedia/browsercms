@@ -5,6 +5,7 @@
 <% @page_title = "Sitemap" %>
 
 <% content_for :functions do %>
+<h1>Sitemap</h1>
 <%= link_to span_tag("Edit"), '#', :id => 'edit-button', :class => "button disabled" %>
 <%= link_to span_tag("Properties"), '#', :id => 'properties-button', :class => "button disabled" %>
 <%= link_to span_tag("Delete"), '#', :id => 'delete-button', :class => "button disabled" %>
@@ -15,11 +16,6 @@
 <% end %>
 <table id="sitemap">
   <thead>
-    <tr>
-      <th class="node">Site Structure</th>
-      <th>&nbsp;</th>
-      <th class="status">Status</th>
-    </tr>
     <tr class="section_node">
       <td class="node">
 	<table cellspacing="0" cellpadding="0">

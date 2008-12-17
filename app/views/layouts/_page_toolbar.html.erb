@@ -40,7 +40,6 @@
 <div class="buttons">
   <%= link_to "<span>Page Properties</span>", cms_path(@page, :edit), :class => "button", :target => "_top" %>
   <%= link_to "<span>Revisions</span>", cms_path(@page, :revisions), :target => "_top", :class => "button" %>
-  <%= link_to "<span>Assign</span>", "#", :target => "_top", :class => "button" %>
   <% able_to? :publish_content do %>
   <%= link_to("<span>Publish</span>", cms_path(@page, :publish), :target => "_top", :class => "http_put button#{' disabled' if @page.published?}") %>
   <%= link_to "<span>Delete</span>", cms_path(@page, :destroy), :title => "Are you sure you want to delete '#{@page.name}'?", :target => "_top", :class => "confirm_with_title http_delete button" %>
