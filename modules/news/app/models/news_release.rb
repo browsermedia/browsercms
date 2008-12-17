@@ -1,10 +1,8 @@
 class NewsRelease < ActiveRecord::Base
 
-  include Attachable
-  acts_as_content_block
+  acts_as_content_block :belongs_to_attachment => true
   
   belongs_to :category
-  belongs_to :attachment
   
   before_validation :set_slug
   
@@ -31,9 +29,9 @@ class NewsRelease < ActiveRecord::Base
     release_date ? release_date.month : nil
   end
 
-  def set_section
+  def set_attachment_section
     if new_record? && !attachment_file.blank?    
-      self.section = Section.first(:conditions => {:name => 'News Release'})
+      self.attachment_section = Section.first(:conditions => {:name => 'News Release'})
     end
   end
   

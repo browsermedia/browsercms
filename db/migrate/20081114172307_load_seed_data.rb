@@ -1,7 +1,7 @@
 class LoadSeedData < ActiveRecord::Migration
   extend Cms::DataLoader
   def self.up
-    if Rails.env == "development"
+    if %w[development test].include?(Rails.env)
       pwd = "cmsadmin"
     else
       pwd = (0..8).inject(""){|s,i| s << (('a'..'z').to_a + ('A'..'Z').to_a + ('0'..'9').to_a).rand}

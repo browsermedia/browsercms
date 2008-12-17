@@ -73,6 +73,17 @@ describe "an existing connectable, publishable object" do
   end
 end
 
+describe "a publishable object being added to a page" do
+  before do
+    @page = create_page(:section => root_section)
+    @object = new_html_block(:connect_to_page_id => @page.id, :connect_to_container => "test")
+  end
+  it "should not be publishable" do
+    pending "Case 1830"
+    @object.should_not be_publishable
+  end
+end
+
 describe "an existing connectable, publishable object that is connected to a page" do
   before do
     @page = create_page(:section => root_section)
