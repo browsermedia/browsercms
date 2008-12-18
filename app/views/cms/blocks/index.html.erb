@@ -17,32 +17,46 @@
       })
     })
   <% end %>
+<%= stylesheet_link_tag "cms/content_library" %>
 <% end %>
 <% @page_title = "Content Library / List #{@content_type.display_name_plural}" %>
+<% content_for :functions do %>
+		<%= link_to span_tag("List All"), "#", :id=>"list_all", :class => "button disabled" %>
+                <%= link_to span_tag("view"), "#", :id => "view_button", :class => "button disabled" %>
+                <%= link_to span_tag("edit"), "#", :id => "edit_button", :class => "button disabled" %>
+                <%= link_to span_tag("add new"), cms_path("/blocks/#{@content_type.content_block_type.pluralize}", :new), :id => "add_button", :class => "button" %>
+		<%= link_to span_tag("Revisions"), "#", :id=>"revisions", :class => "button disabled" %>
+                <%= link_to span_tag("x&nbsp; delete"), "#", :id => "delete_button", :class => "button disabled", :onclick => "return confirm('Are you sure you want to delete this record?')" %>
+<% able_to?(:publish_content) do %>
+		<%= link_to span_tag("Publish"), "#", :id=>"publish", :class => "button disabled"  %>
+<% end %>
 
-<%= pagination @blocks, [:blocks, @content_type.content_block_type], @content_type.display_name %>
+                <br clear="all" />
+<% end %>
+
 
 <table id="blocks">
   <thead>
     <tr>
       <% @content_type.columns_for_index.each do |column| %>
-        <th><%= column[:label] %></th>
+        <th class="name"><%= column[:label] %></th>
       <% end %>
-      <th>Updated</th>
-      <% if @content_type.model_class.connectable? %><th>Used</th><% end %>
-      <% if @content_type.model_class.publishable? %><th>Status</th><% end %>
+      <th<%= ' class="last"' unless @content_type.model_class.publishable? || @content_type.model_class.connectable? %>>Updated</th>
+      <% if @content_type.model_class.connectable? %><th<%= ' class="last"' unless @content_type.model_class.publishable? %>>Used</th><% end %>
+      <% if @content_type.model_class.publishable? %><th class="last">Status</th><% end %>
     </tr>
   </thead>
   <tbody>
     <% @blocks.each do |block| %>
       <tr id="<%= block.class.name.underscore %>_<%= block.id %>">
         <% @content_type.columns_for_index.each do |column| %>
-          <td><%= block.send(column[:method]) %></td>      
+          <td class="name"><%= block.send(column[:method]) %></td>      
         <% end %>
         <td><%= block.updated_at.to_s(:date) %></td>
-        <% if @content_type.model_class.connectable? %><td class="used"><%= link_to_usages(block) %></td><% end %>
-        <% if @content_type.model_class.publishable? %><td class="block_status"><%= status_icon(block.status) %></td><% end %>
+        <% if @content_type.model_class.connectable? %><td class="used"><%= block.connected_pages.count %></td><% end %>
+        <% if @content_type.model_class.publishable? %><td class="block_status"><%= status_icon(block.status) %> <div><%= block.status %></div> </td><% end %>
       </tr>
     <% end %>
   </tbody>
 </table>
+<%= pagination @blocks, [:blocks, @content_type.content_block_type], @content_type.display_name %>

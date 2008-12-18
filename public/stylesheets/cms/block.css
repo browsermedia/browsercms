@@ -1,0 +1,26 @@
+.toolbar {
+margin-bottom: 10px;
+}
+.page_title {
+margin: 10px 0;
+}
+.header {
+clear: both;
+font-size: larger;
+margin: 10px 0;
+}
+
+.status div {
+float: left;
+margin: 10px 0;
+text-transform: capitalize;
+}
+
+.status img {
+float:left;
+margin: 8px 5px 0 5px;
+}
+
+.content {
+margin: 10px;
+}

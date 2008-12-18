@@ -252,7 +252,7 @@ a.button.left {
 
 a.button.disabled {
 	color: #88A8D2;
-	cursor: cross;
+	cursor: default;
 }
 
 a.button span {
@@ -277,6 +277,13 @@ a.button:hover span {
 
 a.button.right:hover span {
 	background: url(/images/cms/buttons/sprite_h.png) no-repeat 0 -54px;
+}
+a.disabled:hover {
+	background: url(/images/cms/buttons/sprite.png) no-repeat top right;
+}
+
+a.disabled:hover span {
+	background: url(/images/cms/buttons/sprite.png) no-repeat 0 0;
 }
 
 tr.hover {

@@ -1,0 +1,40 @@
+.dashboard_unit {
+width: 45%;
+float: left;
+margin: 20px;
+background-color: #FFFFFF;
+}
+.dashboard_unit h2 {
+background: #4679B8 url(/images/cms/dashboard/header_bg.gif) repeat-x 0 0;
+height: 12px;
+color: #FFF;
+padding: 12px;
+font-weight: bold;
+font-size: larger;
+}
+.dashboard_unit table {
+margin: 10px;
+width: 90%;
+}
+.dashboard_unit table th {
+background: #B6B6B6;
+border-right: 1px solid #8E8E8E;
+}
+.dashboard_unit table th.last {
+border-right: none;
+}
+.lt_button {
+margin-bottom: 20px;
+}
+td.select {
+width: 2%;
+}
+td.name {
+width: 33%;
+}
+td.updated_by {
+width: 30%;
+}
+td.updated_at {
+width: 35%;
+}

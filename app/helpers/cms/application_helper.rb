@@ -17,8 +17,8 @@ module Cms
     def page_versions(page)
       text = select_tag(:version, 
                         options_for_select(page.versions.all(:order => "version desc").map { |r| 
-                          ["v#{r.version}: #{r.version_comment} by #{r.updated_by.login} at #{time_on_date(r.updated_at)}", r.version] 
-                        }, page.version), 
+                                             ["v#{r.version}: #{r.version_comment} by #{r.updated_by.login} at #{time_on_date(r.updated_at)}", r.version] 
+                                           }, page.version), 
                         :onchange => 'this.form.submit(); return false')
       text << javascript_tag("$('version').selectedIndex = 0") if page.current_version?
       text
@@ -31,7 +31,7 @@ module Cms
         render_connectable(connector.current_connectable)
       end
     end
-  
+    
     def render_connectable(content_block)
       render_proc = content_block.renderer(content_block)
       instance_eval &render_proc
@@ -39,7 +39,7 @@ module Cms
       logger.error "Error occurred while rendering #{content_block.class}##{content_block.id}: #{e.message}\n#{e.backtrace.join("\n")}"
       "ERROR: #{e.message}"
     end
-  
+    
     def container(name)
       content = instance_variable_get("@content_for_#{name}")
       if logged_in? && @mode == "edit"
@@ -48,11 +48,11 @@ module Cms
         content
       end
     end
-  
+    
     def action_icon_src(name)
       "cms/icons/actions/#{name}.png"
     end
-  
+    
     def action_icon(name, options={})
       image_tag action_icon_src(name), {:alt => name.to_s.titleize}.merge(options)
     end
@@ -60,7 +60,7 @@ module Cms
     def status_icon(status, options={})
       image_tag "cms/icons/status/#{status.to_s.underscore}.gif", {:alt => status.to_s.titleize}.merge(options)
     end
-  
+    
     def cms_toolbar(tab=:dashboard)
       render :partial => 'layouts/cms_toolbar', :locals => {:tab => tab}    
     end
@@ -80,21 +80,21 @@ module Cms
     
     def link_to_check_all(selector, name="Check All")
       link_to_function name, "$('#{selector}').attr('checked', true)"
-	  end
+    end
 
     def link_to_uncheck_all(selector, name="Uncheck All")
-	    link_to_function name, "$('#{selector}').attr('checked', false)"
-	  end
-	  
-	  def able_to?(*perms, &block)
-	    yield if current_user.able_to?(*perms)
-	  end
-	  
-	  def span_tag(content)
-	    content_tag :span, content
+      link_to_function name, "$('#{selector}').attr('checked', false)"
+    end
+    
+    def able_to?(*perms, &block)
+      yield if current_user.able_to?(*perms)
+    end
+    
+    def span_tag(content)
+      content_tag :span, content
     end
     def lt_button_wrapper(content)
-<<LBW
+      <<LBW
   <div class="lt_button">
     <img src="/images/cms/lt_button_l.gif" alt="" />
     <div>
@@ -104,42 +104,38 @@ module Cms
   </div>
 LBW
     end
-	  	  
+    
     def group_ids
-     (params[:group_ids] || @user.group_ids).collect { |g| g.to_i }
+      (params[:group_ids] || @user.group_ids).collect { |g| g.to_i }
     end
 
     def group_filter
       select_tag("group_id", options_from_collection_for_select(Group.all.insert(0, Group.new(:id => nil, :name => "All")), "id", "name", params[:group_id].to_i))
     end	  	  
-	  	  
-	  def categories_for(category_type_name)
-	    CategoryType.named(category_type_name).first.category_list
-	  end	  
-	  	  
-	  def pagination(collection, path_args, record_type="Record")
-	    if !collection || collection.size == 0
-	      content = "No #{record_type.to_s.pluralize}"
-	    elsif collection.size == 1
-	      content = "1 #{record_type}"
-	    elsif collection.total_entries <= collection.per_page
-	      content = pluralize(collection.size, record_type)
-	    else
-	      build_link = lambda {|p|
-	        args = path_args.dup
-  	      if Hash === args.last
-  	        args.last.merge(:page => p)
+    
+    def categories_for(category_type_name)
+      CategoryType.named(category_type_name).first.category_list
+    end	  
+    
+    def pagination(collection, path_args, record_type="Record")
+        build_link = lambda {|p|
+          args = path_args.dup
+          if Hash === args.last
+            args.last.merge(:page => p)
           else
             args << {:page => p}
           end
-	      }
-	      content = ""
-	      content << link_to("Previous", cms_path(*build_link.call(collection.previous_page))) if collection.previous_page
-	      content << " #{record_type.to_s.pluralize} #{collection.offset + 1} - #{collection.offset + collection.size} of #{collection.total_entries} "
-	      content << link_to("Next", cms_path(*build_link.call(collection.next_page))) if collection.next_page
-      end
-      content_tag(:div, content, :class => "pagination")
-	  end	  
-	  	  
+        }
+      content_info = content_tag(:div,"Displaying #{collection.offset + 1} - #{collection.offset + collection.size} of #{collection.total_entries} ", :class => "info")
+
+      content_links = link_to(image_tag("cms/pagination/first.gif"), cms_path(*build_link.call(1))) 
+      content_links << link_to(image_tag("cms/pagination/previous.gif"), cms_path(*build_link.call(collection.previous_page ? collection.previous_page : 1)))
+      content_links << content_tag(:span, "Page #{collection.current_page} of #{collection.total_pages}")
+      content_links << link_to(image_tag("cms/pagination/next.gif"), cms_path(*build_link.call(collection.next_page ? collection.next_page : collection.current_page)))
+      content_links << link_to(image_tag("cms/pagination/last.gif"), cms_path(*build_link.call(collection.total_pages)))
+      content_links_div = content_tag(:div, content_links, :class => "links")
+      content_tag(:div, content_info + content_links_div, :class => "pagination")
+    end	  
+    
   end
 end

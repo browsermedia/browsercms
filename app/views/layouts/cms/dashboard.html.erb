@@ -1,0 +1,18 @@
+<% @toolbar_tab ||= :dashboard %>
+<%= render :partial => 'layouts/cms/head' %>
+<body>
+  <div id="wrapper">
+    <%= cms_toolbar(@toolbar_tab) %>
+    <div id="main">
+      <div id="contentwrapbig">
+	<div id="functions">
+	  <%= yield :functions %>
+	</div>
+        <%= yield %>
+      </div>
+    </div>
+    <br clear="all" />
+    <%= render :partial => 'layouts/cms/footer' %>     
+  </div>
+</body>
+</html>
