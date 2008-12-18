@@ -4,8 +4,6 @@ class SectionNode < ActiveRecord::Base
 
   acts_as_list :scope => :section
 
-  named_scope :with_node, :conditions => ["node_id is not null"]
-
   #Is this node a section
   def section?
     node_type == 'Section'

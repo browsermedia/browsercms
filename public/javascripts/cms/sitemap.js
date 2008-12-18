@@ -181,7 +181,7 @@ jQuery(function($){
 
       $('#delete-button')
         .removeClass('disabled')
-        .attr('href','/cms/pages/destroy/'+id)
+        .attr('href','/cms/pages/destroy/'+id+'.js')
         .unbind('click')
         .click(function(){
           $.post(this.href, { _method: "DELETE" },
