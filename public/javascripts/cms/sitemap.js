@@ -181,17 +181,19 @@ jQuery(function($){
 
       $('#delete-button')
         .removeClass('disabled')
-        .attr('href','/cms/pages/destroy/'+id+'.js')
+        .attr('href','/cms/pages/destroy/'+id)
         .unbind('click')
         .click(function(){
-          $.post(this.href, { _method: "DELETE" },
+          $.post($(this).attr('href'), { _method: "DELETE" },
             function(data){
               if(data.success) {
                 $.cms.showNotice(data.message)
               } else {
                 $.cms.showError(data.message)
               }
-            }, "json");          
+            }, "json");
+          $('#page_'+id).parents('.section_node').remove()          
+          return false;
         })
 
       
