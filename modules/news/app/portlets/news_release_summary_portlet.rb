@@ -9,7 +9,7 @@ class NewsReleaseSummaryPortlet < Portlet
       else
         locals[:releases] = NewsRelease.all
       end
-      render :partial => portlet.partial, :locals => locals
+      render :partial => portlet.class.partial, :locals => locals
     end
   end
     
