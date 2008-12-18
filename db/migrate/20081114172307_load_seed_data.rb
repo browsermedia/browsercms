@@ -52,11 +52,31 @@ class LoadSeedData < ActiveRecord::Migration
   </body>
 </html>
     TEMPLATE
+    create_page_template(:system_error, :name => "System Error", :file_name => "system_error", :language => "erb", :body => <<-TEMPLATE)
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title><%= @page_title %></title>
+    <%= yield :html_head %>
+  </head>
+  <body style="margin: 0; padding: 0">
+    <%= yield unless @exception %>
+    <%= container :main %>
+    <% @exception && able_to?(:edit_content, :publish_content) do %>
+      <pre>
+        <%=h @exception.message %>
+        <%=h @exception.backtrace.join("\n") %>
+      </pre>
+    <% end %>
+  </body>
+</html>
+    TEMPLATE
         
     create_page(:home, :name => "Home", :path => "/", :section => sections(:root), :template => page_templates(:main))
     create_page(:not_found, :name => "Not Found", :path => "/system/not_found", :section => sections(:system), :template => page_templates(:main), :publish_on_save => true, :hidden => true)
     create_page(:access_denied, :name => "Access Denied", :path => "/system/access_denied", :section => sections(:system), :template => page_templates(:main), :publish_on_save => true, :hidden => true)
-    create_page(:server_error, :name => "Server Error", :path => "/system/server_error", :section => sections(:system), :template => page_templates(:main), :publish_on_save => true, :hidden => true)
+    create_page(:server_error, :name => "Server Error", :path => "/system/server_error", :section => sections(:system), :template => page_templates(:system_error), :publish_on_save => true, :hidden => true)
 
     create_html_block(:page_not_found, :name => "Page Not Found", :content => "<h1>Page Not Found</h1>\n<p>The page you tried to access does not exist on this server.", :publish_on_save => true)
     pages(:not_found).create_connector(html_blocks(:page_not_found), "main")

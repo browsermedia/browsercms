@@ -24,10 +24,11 @@ module Cms
     def handler_error_with_cms_page(error_page_path, exception, status)
       Rails.logger.warn "Exception: #{exception.message}\n"
       Rails.logger.warn "#{exception.backtrace.join("\n")}\n"
-      if @page = Page.find_live_by_path(error_page_path)
-        logger.info "ERROR PAGE => #{@page.inspect}"
-        @exception = exception
-        render :layout => @page.layout, :template => 'cms/content/show', :status => status
+      if page = Page.find_live_by_path(error_page_path)
+        render :layout => page.layout, 
+          :template => 'cms/content/show', 
+          :status => status,
+          :locals => {:page => page, :exception => exception}
       else
         Rails.logger.warn "There is no page at #{error_page_path}"
         render :text => "<h1>Missing Error Page</h1><p>There should be an error page at #{error_page_path}.  The original error is '#{exception.message}'</p>", 

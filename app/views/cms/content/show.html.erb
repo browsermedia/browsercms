@@ -1,3 +1,7 @@
+<% #These are need if this template is render by a rescue_from 
+  @page = page if (!@page && defined?(page))
+  @exception = exception if (!@exception && defined?(exception))
+%>
 <% @page_title = @page.page_title %>
 <% able_to?(:edit_content, :publish_content) do %>
   <% content_for :html_head do %>
