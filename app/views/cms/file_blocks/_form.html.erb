@@ -20,7 +20,8 @@
 </div>
 <div class="fields text_fields">
   <%= f.label :attachment_file %>
-  <%= f.file_field :attachment_file %>
+  <%# f.file_field :attachment_file %>
+  <input id="file_block_attachment_file" name="file_block[attachment_file]" value="/Users/pbarry/blog.txt" size="30" type="file" />
 </div>
 <div class="fields text_fields">
   <%= f.label :attachment_section_id, "Section" %>

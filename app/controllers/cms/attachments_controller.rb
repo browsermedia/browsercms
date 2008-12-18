@@ -5,7 +5,7 @@ class Cms::AttachmentsController < Cms::BaseController
     send_data(@attachment.data, 
       :filename => @attachment.name,
       :type => @attachment.file_type,
-      :disposition => false
+      :disposition => "inline"
     )     
   end
 end

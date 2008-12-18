@@ -48,7 +48,7 @@ class Cms::ContentController < Cms::ApplicationController
         if @path != "/" && File.exists?(@file)
           send_file(@file, 
             :type => Mime::Type.lookup_by_extension(ext).to_s,
-            :disposition => false #see monkey patch in lib/action_controller/streaming.rb
+            :disposition => "inline"
           ) 
         end    
       end
