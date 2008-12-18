@@ -1,4 +1,6 @@
-<p><b>News Releases</b></p>
-<% for release in releases %><div class="news-item">
+<b>Latest News</b><br/><br/>
+
+<% for release in releases %><div class="news-item-browser">
+  <% if release.release_date %><b><%= release.release_date.to_date.to_s(:long) %></b><br/><% end %>
   <%= link_to h(release.name), news_release_details_path(release.details_params) %>
 </div><% end %>

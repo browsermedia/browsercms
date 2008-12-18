@@ -6,6 +6,10 @@ class NewsRelease < ActiveRecord::Base
   
   before_validation :set_slug
   
+  def category_name
+    category ? category.name : nil
+  end
+  
   def set_slug
     self.slug = name.to_slug unless name.blank?
   end
@@ -46,7 +50,7 @@ class NewsRelease < ActiveRecord::Base
       buf = ""
       buf += "<p><b>Name:</b> #{news_release.name}</p>"
       buf += "<p><b>Release Date:</b> #{news_release.release_date}</p>"
-      buf += "<p><b>Category:</b> #{news_release.category.name}</p>"
+      buf += "<p><b>Category:</b> #{news_release.category_name}</p>"
       buf += "<p><b>Attachment:</b> <a href=\"#{news_release.attachment_link}\">#{news_release.attachment_path}</a></p>"
       buf += "<p><b>Summary:</b> #{news_release.summary}</p>"
       buf += "<p><b>Body:</b> #{news_release.body}</p>"

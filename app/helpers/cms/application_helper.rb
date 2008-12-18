@@ -33,8 +33,13 @@ module Cms
     end
     
     def render_connectable(content_block)
-      render_proc = content_block.renderer(content_block)
-      instance_eval &render_proc
+      if content_block
+        logger.info "Rendering connectable #{content_block.class} ##{content_block.id}"
+        render_proc = content_block.renderer(content_block)
+        instance_eval &render_proc
+      else
+        logger.warn "Connectable is null"
+      end    
     rescue Exception => e
       logger.error "Error occurred while rendering #{content_block.class}##{content_block.id}: #{e.message}\n#{e.backtrace.join("\n")}"
       "ERROR: #{e.message}"
