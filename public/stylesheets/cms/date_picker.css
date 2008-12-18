@@ -1,0 +1,19 @@
+#ui-datepicker-div {
+  background-color: white;
+  border: 1px solid #ccc;
+}
+
+.ui-datepicker-clear, .ui-datepicker-prev {
+  float: left;
+  width: 34%;
+}
+
+.ui-datepicker-close, .ui-datepicker-next {
+  float: right;
+  text-align: right;
+  width: 34%;
+}
+
+.ui-datepicker-days-cell-over {
+  cursor: pointer;
+}
