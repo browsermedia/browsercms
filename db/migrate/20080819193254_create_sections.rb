@@ -3,8 +3,8 @@ class CreateSections < ActiveRecord::Migration
     create_table :sections do |t|
       t.string :name
       t.string :path
-      t.boolean :root
-      t.boolean :hidden
+      t.boolean :root, :default => false
+      t.boolean :hidden, :default => false
       t.timestamps
     end
   end

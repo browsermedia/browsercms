@@ -16,6 +16,9 @@ class Section < ActiveRecord::Base
   named_scope :root, :conditions => ['root = ?', true]
   named_scope :system, :conditions => {:name => 'system'}
   
+  named_scope :hidden, :conditions => {:hidden => true}
+  named_scope :not_hidden, :conditions => {:hidden => false}
+  
   validates_presence_of :name
   #validates_presence_of :parent_id, :if => Proc.new {root.count > 0}, :message => "section is required"
   
