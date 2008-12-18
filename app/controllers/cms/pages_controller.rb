@@ -47,10 +47,16 @@ class Cms::PagesController < Cms::BaseController
   end
 
   def destroy
-    if @page.destroy
-      render :json => {:success => true, :message => "Page '#{@page.name}' was deleted."}
-    else
-      render :json => {:success => false, :message => "Page '#{@page.name}' could not be deleted"}
+    respond_to do |format|
+      if @page.destroy
+        message = "Page '#{@page.name}' was deleted."
+        format.html { flash[:notice] = message; redirect_to(cms_sitemap_url) }
+        format.json { render :json => {:success => true, :message => message } }
+      else
+        message = "Page '#{@page.name}' could not be deleted"
+        format.html { flash[:error] = message; redirect_to(cms_sitemap_url) }
+        format.json { render :json => {:success => false, :message => message } }
+      end
     end
   end
   
