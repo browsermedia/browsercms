@@ -178,6 +178,22 @@ jQuery(function($){
         .attr('href','/cms/pages/edit/'+id)
         .unbind('click')
         .click(function(){return true})
+
+      $('#delete-button')
+        .removeClass('disabled')
+        .attr('href','/cms/pages/destroy/'+id)
+        .unbind('click')
+        .click(function(){
+          $.post(this.href, { _method: "DELETE" },
+            function(data){
+              if(data.success) {
+                $.cms.showNotice(data.message)
+              } else {
+                $.cms.showError(data.message)
+              }
+            }, "json");          
+        })
+
       
     } else if($(this).hasClass('link')) {
       $('#properties-button')

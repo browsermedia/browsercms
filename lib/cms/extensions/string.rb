@@ -5,4 +5,7 @@ class String
   def to_slug
     gsub(/\W+/, ' ').strip.downcase.gsub(/\ +/, '-')
   end  
+  def pluralize(count=nil)
+    count == 1 ? self : ActiveSupport::Inflector.pluralize(self)
+  end
 end

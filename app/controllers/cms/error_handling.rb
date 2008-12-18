@@ -25,6 +25,7 @@ module Cms
       Rails.logger.warn "Exception: #{exception.message}\n"
       Rails.logger.warn "#{exception.backtrace.join("\n")}\n"
       if @page = Page.find_live_by_path(error_page_path)
+        logger.info "ERROR PAGE => #{@page.inspect}"
         @exception = exception
         render :layout => @page.layout, :template => 'cms/content/show', :status => status
       else
