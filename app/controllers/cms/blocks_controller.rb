@@ -9,11 +9,13 @@ class Cms::BlocksController < Cms::BaseController
   helper_method :content_type_name
 
   def index
+    options = {}
     if params[:section_id] && params[:section_id] != 'all'
-      @blocks = model_class.search(params[:search]).paginate(:page => params[:page], :include => { :attachment => { :section_node => :section }}, :conditions => ["sections.id = ?", params[:section_id]])
-    else
-      @blocks = model_class.search(params[:search]).paginate(:page => params[:page])
+      options[:include] = { :attachment => { :section_node => :section }} 
+      options[:conditions] = ["sections.id = ?", params[:section_id]]
     end
+    options[:page] = params[:page]    
+    @blocks = model_class.searchable? ? model_class.search(params[:search]).paginate(options) : model_class.paginate(options)
   end
 
   def new

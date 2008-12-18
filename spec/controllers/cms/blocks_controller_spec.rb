@@ -48,7 +48,7 @@ describe Cms::BlocksController do
     before(:each) do
       root_section
       @block = create_html_block(:name => "Test", :content => "I worked.")
-      @action = lambda { put :index }
+      @action = lambda { get :index }
     end
     it "should be successful" do
       @action.call
@@ -66,6 +66,18 @@ describe Cms::BlocksController do
       response.should have_tag("td.block_status")  do
         with_tag("img[alt=?]", "Draft")
       end
+    end
+  end
+
+  describe "list nonsearchable blocks" do
+    before(:each) do
+      root_section
+      @block = create_html_block(:name => "Test", :content => "I worked.")
+      @action = lambda { get :index, :block_type => "portlet" }
+    end
+    it "should be successful" do
+      @action.call
+      response.should be_success
     end
   end
 
