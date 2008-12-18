@@ -2,10 +2,6 @@
   <%= f.label :name %>
   <%= f.text_field :name %>
 </div>
-<div class="fields text_fields">
-  <%= f.label :created_at %>
-  <%= f.date_picker :created_at %>
-</div>
 <div class="fields text_editor_fields">
   <%= f.label :content, "Content" %>
   <%= f.text_editor :content, {:editor_disabled => (cookies[:editorDisabled] == 'true')} %>
