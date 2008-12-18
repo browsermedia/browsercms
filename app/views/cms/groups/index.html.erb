@@ -7,6 +7,7 @@
 		<th>Permissions</th>
     <th>Actions</th>
   </tr>
+  <% section_count = Section.count %>
   <% Group.all(:order => "name").each do |g| %>
   <tr>
     <td><%=h g.name %></td>
@@ -14,6 +15,8 @@
 			<% g.permissions.each do |p| %>
 			- <%= p.full_name %> <br />
 			<% end %>
+			- <%= g.cms_access? ? "Edit" : "View" %>
+			<%= g.sections.count == section_count ? "All Sections" : "#{g.sections.count} of #{section_count} Sections" %>
 		</td>
 		<td>[<%= link_to "Edit", cms_path(g, :edit) %>]</td>
   </tr>
