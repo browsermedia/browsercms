@@ -17,18 +17,16 @@ module Cms
     end
 
     def cms_server_error(exception)
-      handler_error_with_cms_page('/system/server_error', exception, :internal_server_error)
+      handler_error_with_cms_page('/system/server_error', exception, :internal_server_error, :stacktrace => true)
     end        
     
     private
-    def handler_error_with_cms_page(error_page_path, exception, status)
+    def handler_error_with_cms_page(error_page_path, exception, status, options={})
       Rails.logger.warn "Exception: #{exception.message}\n"
       Rails.logger.warn "#{exception.backtrace.join("\n")}\n"
       if page = Page.find_live_by_path(error_page_path)
-        render :layout => page.layout, 
-          :template => 'cms/content/show', 
-          :status => status,
-          :locals => {:page => page, :exception => exception}
+        locals = {:page => page, :exception => exception, :stacktrace => options[:stacktrace]}
+        render :layout => page.layout, :template => 'cms/content/show', :status => status, :locals => locals
       else
         Rails.logger.warn "There is no page at #{error_page_path}"
         render :text => "<h1>Missing Error Page</h1><p>There should be an error page at #{error_page_path}.  The original error is '#{exception.message}'</p>", 
