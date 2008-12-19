@@ -1,6 +1,6 @@
 namespace :cms do
   
-  desc "Builds and installs the cms gems"
+  desc "Installs the cms gems"
   task :install do
     reinstall_gem = lambda do |gem_file|
       if gem_file =~ /(.*)-(\d\.\d\.\d)\.gem/
@@ -20,6 +20,17 @@ namespace :cms do
         reinstall_gem[Dir["browser_cms_*-*.gem"].first]
       end
     end
+  end
+  
+  desc "Bumps the CMS build number"
+  task :build do
+    file_name = File.expand_path(File.join(File.dirname(__FILE__), "..", "browser_cms.rb"))
+    file_contents = open(file_name) {|f| f.read }
+    match = file_contents.match(/BUILD = "(\d+)"/)
+    build_number = match[1].to_i + 1
+    file_contents.sub!(/BUILD = "(\d+)"/, "BUILD = \"#{build_number}\"")
+    open(file_name,'w') {|f| f << file_contents }
+    puts "BUILD NUMBER = #{build_number}"
   end
     
 end
