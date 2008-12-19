@@ -11,11 +11,15 @@
         var id = match[2]
         $('#blocks tbody tr').removeClass('selected')
         $(this).addClass('selected')
+        $('#functions .button').addClass('disabled').attr('href','#')
+        $('#add_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/new')
         $('#view_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/show/'+id)
         $('#edit_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/edit/'+id)
         $('#revisions_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/revisions/'+id)
         $('#delete_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/delete/'+id)
-        $('#publish_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/publish/'+id+'?_redirect_to='+location.href)        
+        if($(this).hasClass('draft')) {
+          $('#publish_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/publish/'+id+'?_redirect_to='+location.href)          
+        }
       })
     })
   <% end %>
@@ -50,7 +54,7 @@
   </thead>
   <tbody>
     <% @blocks.each do |block| %>
-      <tr id="<%= block.class.name.underscore %>_<%= block.id %>">
+      <tr id="<%= block.class.name.underscore %>_<%= block.id %>" class="<%= block.class.publishable? && !block.published? ? 'draft' : 'published' %>">
         <% @content_type.columns_for_index.each do |column| %>
           <td class="name"><%= block.send(column[:method]) %></td>      
         <% end %>

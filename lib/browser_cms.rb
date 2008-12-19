@@ -3,7 +3,7 @@ require 'cms/routes'
 
 module Cms
   VERSION = "3.0.0"
-  BUILD = "5"
+  BUILD = "6"
 end
 
 #Load libraries that are included with CMS
