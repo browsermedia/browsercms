@@ -28,9 +28,9 @@ class Cms::BlocksController < Cms::BaseController
 
   def create
     @block = model_class.new(params[model_name])
-    if @block.save!
+    if @block.save
       flash[:notice] = "#{content_type.display_name} '#{@block.name}' was created"
-      if @block.connected_page
+      if model_class.connectable? && @block.connected_page
         redirect_to @block.connected_page.path
       else
         redirect_to_first params[:_redirect_to], cms_url(:blocks, content_type.name.underscore.pluralize)
