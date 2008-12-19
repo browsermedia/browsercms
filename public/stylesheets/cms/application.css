@@ -31,7 +31,7 @@ float: left;
 
 #nav ul#section {
 margin-top: 49px;
-* margin-top: 47px;
+* margin-top: 50px;
 margin-left: 25px;
 list-style-type: none;
 float: left;
@@ -118,51 +118,51 @@ float: left;
 width: 174px;
 }
 
-	#menu h3 {
-	background: url(/images/cms/menu_header.png) no-repeat 0 0;
-	padding: 6px 6px 6px 15px;
-	font-weight: bold;
-	text-transform: uppercase;
-	}
-	
-	#menu ul {
-	margin-top: 1px;
-	}
-	
-	#menu ul li {
-	background: url(/images/cms/menu.png) no-repeat 0 0;
-	margin-bottom: 2px;
-	}
-	
-	#menu ul li:last-child { margin-bottom: 0 }
-	
-		#menu ul li ul li {
-		background: none;
-		margin-left: 10px;
-		}
-	
-	#menu ul li.open {
-	background: #BCD3F0;
-	margin-bottom: 2px;
-	}
-	
-	#menu ul li a {
-	color: #36659D;
-	font-weight: bold;
-	text-decoration: none;
-	display: block;
-	padding: 8px;
-	}
-	
-	#menu ul li.open a {
-	border-bottom: 1px solid #666
-	}
-	
-	#menu ul li.open ul li a {
-	border-bottom: 1px dotted #999
-	}
-	
-	#menu ul li.open ul li:last-child a { border-bottom: none }
+#menu h3 {
+background: url(/images/cms/menu_header.png) no-repeat 0 0;
+padding: 6px 6px 6px 15px;
+font-weight: bold;
+text-transform: uppercase;
+}
+
+#menu ul {
+margin-top: 1px;
+}
+
+#menu ul li {
+background: url(/images/cms/menu.png) no-repeat 0 0;
+margin-bottom: 2px;
+}
+#menu ul li.open {
+background: url(/images/cms/menu_open.png) no-repeat 0 0;
+}
+#menu ul li a {
+color: #36659D;
+font-weight: bold;
+text-decoration: none;
+display: block;
+padding: 8px;
+}
+
+#menu ul li ul li {
+display: none;
+}
+#menu ul li.open ul li {
+display: block;
+background: #FFF;
+margin: -1px 0 0 0;
+padding: 0px 0 0px 25px;
+}
+#menu ul li.open ul li.on {
+padding: 3px 0 3px 25px;
+}
+#menu ul li.open ul li a{
+padding: 3px 8px 6px 8px;
+}
+#menu ul li.open ul li.on a {
+background-color: #BCD3F0;
+padding: 3px 8px 4px 8px;
+}
 
 #contentwrap {
 background: #8D8E90 url(/images/cms/gray_long_bg.gif) repeat-x 0 0;
@@ -296,8 +296,18 @@ tr.selected {
 
 .searchbox {
   background: #FFF; 
-  padding: 8px
+  padding: 6px;
+  font-size: 100%;
 }
+.searchbox select {
+width: 160px;
+}
+
+#search_term {
+  width: 134px;
+* width: 130px;
+}
+
 
 #flash { 
   position: absolute; 

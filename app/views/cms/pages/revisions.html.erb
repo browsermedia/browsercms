@@ -1,13 +1,16 @@
 <% @page_title = "Page Revision History" %>
+<% @toolbar_title = "List Revisions" %>
+<%= content_for :html_head, stylesheet_link_tag("cms/content_library") %>
+<%= content_for :functions,  "<h1>#{ @toolbar_title }</h1>" %>
 
-<table width="100%">
+<table id="blocks">
   <tr>
-    <th align="left">Version</th>
-    <th align="left">Status</th>
-    <th align="left">Comment</th>
-    <th align="left">Date Created</th>
-    <th align="left">Created By</th>
-    <th align="left">Actions</th>    
+    <th>Version</th>
+    <th>Status</th>
+    <th>Comment</th>
+    <th>Date</th>
+    <th>Editor</th>
+    <th class="last">Actions</th>
   </tr>
   <% @page.versions.all(:order => "version desc").each_with_index do |r, i| %><tr>
     <td><%= link_to "v.#{r.version}", cms_path(@page, :show_version, :version => r.version)%></td>

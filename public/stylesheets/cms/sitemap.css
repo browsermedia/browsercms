@@ -95,6 +95,6 @@ padding: 3px 0 0 4px;
 border-bottom: 1px dotted #CCC; 
 vertical-align: middle;
 }
-.hover table tr td {
-border-color: #CCF;
+.node table tr td {
+border: none;
 }

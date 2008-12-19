@@ -16,7 +16,10 @@ class ContentType < ActiveRecord::Base
     content_type = find_by_name(class_name)
     if content_type.nil?
       if class_name.constantize.ancestors.include?(Portlet)
-        ContentType.new(:name => class_name).freeze
+        content_type = ContentType.new(:name => class_name)
+        content_type.content_type_group = ContentTypeGroup.find_by_name('Portlets')
+        content_type.freeze
+        content_type
       else
         raise "Not a Portlet"
       end

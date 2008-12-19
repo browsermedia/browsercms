@@ -12,14 +12,13 @@
                 <h3>Search</h3>
                 <div class="searchbox">
                   <% form_tag '', :method => :get do -%>
-                  <%= text_field_tag "search[term]", (params[:search] ? params[:search][:term] : nil) %>
+                  <%= text_field_tag "search[term]", (params[:search] ? params[:search][:term] : nil) %> <input type="image" src="/images/cms/gray_search.gif" alt="submit" />
                   <% if @content_type.name == "HtmlBlock" -%>
-                  <p><%= check_box_tag "search[include_body]", true, (params[:search] ? params[:search][:include_body] : false) %> Include body?</p>
+                  <p><label><%= check_box_tag "search[include_body]", true, (params[:search] ? params[:search][:include_body] : false) %> Include body?</label></p>
                   <% end -%>
-                  <% if %w[FileBlock ImageBlock].include?(@content_type.name) %>
+                  <% if %w[FileBlock ImageBlock].include?(@content_type.name) &&  request.user_agent !~ /MSIE 6/ %>
                   <p><%= select_tag 'section_id', searchable_sections(params[:section_id]) %></p>
                   <% end -%>
-                  <%= submit_tag "Search" %>
                   <% end -%>
                 </div>
                 
@@ -28,8 +27,9 @@
                 
                 <%= yield :sidebar %>
                 <h3 id="content_types">Content Types</h3>
+		<h3><%= h @content_type.content_type_group %></h3>
                 <ul><% ContentTypeGroup.all(:order => "content_type_groups.id").each do |g| %>
-          	  <li<%= ' class="open"' if g == @content_type.content_type_group %>>
+          	  <li<%= ' class="open"' if (g == @content_type.content_type_group) %>>
           	    <% if g.content_types.blank? %>
           	    <%= link_to h(g.name), "#" %>          				  
           	    <% else %>
@@ -46,7 +46,7 @@
             
             <div id="contentwrap">
               <div id="functions">
-		<h1><%= @content_type.display_name_plural if @content_type %></h1>
+		<h1><%= @toolbar_title %></h1>
 	      <%= yield :functions %>
               </div>
               <div id="content">

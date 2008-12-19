@@ -11,7 +11,7 @@
         "portlet[connect_to_container]" => params[:connect_to_container]
       ) %></li>
 
-  <% @content_types.each do |type| %>
+  <% connectable_content_types.each do |type| %>
   <% next if %w(html_block portlet).include?(type.name.underscore) %>
     <li><%= link_to h(type.display_name), cms_path(:blocks, type.content_block_type, :new, 
         "#{type.name.underscore}[connect_to_page_id]" => params[:connect_to_page_id], 

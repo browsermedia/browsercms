@@ -2,6 +2,7 @@
 module Cms
   module ApplicationHelper
 
+
     def searchable_sections(selected = nil)
       root = Section.root.first
       options = [['All sections', 'all'], [root.name, root.id]]
@@ -142,5 +143,15 @@ LBW
       content_tag(:div, content_info + content_links_div, :class => "pagination")
     end	  
     
+    def connectable_content_types
+      cts = ContentType.all(:order => "name")
+      useful_cts = []
+      cts.each do |type|
+        next unless type.model_class.instance_methods.include?('connect_to_container') 
+        useful_cts << type
+      end
+      useful_cts.each {|t| logger.debug "#{t.display_name} == Text: #{t.display_name == 'Text'}" }
+      useful_cts
+    end
   end
 end

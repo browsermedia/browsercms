@@ -1,5 +1,5 @@
 <% @page_title = "Content Library / Select Portlet Type" %>
 <% Portlet.types.sort_by{|t| t.name }.each do |portlet_type| %>
-  <p><%= link_to h(portlet_type.name.titleize), cms_path(:blocks, portlet_type.name.underscore, :new, "#{portlet_type.name.underscore}[connect_to_page_id]" => @block.connect_to_page_id, "#{portlet_type.name.underscore}[connect_to_container]" => @block.connect_to_container) %></p>
+  <div style="margin-bottom: 20px;"><%= link_to h(portlet_type.name.titleize), cms_path(:blocks, portlet_type.name.underscore, :new, "#{portlet_type.name.underscore}[connect_to_page_id]" => @block.connect_to_page_id, "#{portlet_type.name.underscore}[connect_to_container]" => @block.connect_to_container) %></div>
 <% end %>
 <% @hide_buttons = true %>

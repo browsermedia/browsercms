@@ -1,17 +1,18 @@
 <% @page_title = "Content Library / List of Revisions" %>
-<%= render :partial => 'toolbar' %>
-<h1 class="page_title">List Revisions</h1>
-<table width="100%">
+<% @toolbar_title = "List Revisions" %>
+<%= content_for :html_head, stylesheet_link_tag("cms/content_library") %>
+<%= content_for :functions,  render(:partial => 'toolbar') %>
+<table id="blocks">
   <tr>
-    <th align="left">Version</th>
-    <th align="left">Date</th>
-    <th align="left">Editor</th>
-    <th align="left">Actions</th>
+    <th>Version</th>
+    <th>Date</th>
+    <th>Editor</th>
+    <th class="last">Actions</th>
   </tr>
   <% @block.versions.all(:order => "version desc").each_with_index do |r, i| %><tr>
     <td><%= link_to "v. #{r.version}", cms_path(@block, :show_version, :version => r.version)%><%= " CURRENT" if i == 0 %></td>
-    <td><%= r.created_at.strftime("%b %e, %Y %l:%M %p") %></td>
-    <td><%= r.updated_by.login %></td>
+    <td><%= r.created_at.strftime("%b %e, %Y %l:%M %p") if r.created_at %></td>
+    <td><%= r.updated_by.login if r.updated_by %></td>
     <td><% if i > 0 %><%= link_to "Revert To This", cms_path(@block, :revert_to, :version => r.version) %><% end %></td>
   </tr><% end %>
 </table>

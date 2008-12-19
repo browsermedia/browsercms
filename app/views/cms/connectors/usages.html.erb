@@ -1,7 +1,8 @@
 <% @page_title = "Content Library / View Usages" %>
+<% @toolbar_title = "Pages Using '#{ @block.name }'" %>
+<%= content_for :html_head, stylesheet_link_tag("cms/content_library") %>
+
 <%= render :partial => 'cms/blocks/toolbar' %>
-<h1 class="page_title">View Usages</h1>
-<p>The following pages use the <%=  @block.display_name %> Block named '<%= @block.name %>'.</p>
 
 <table id="blocks">
   <tr>

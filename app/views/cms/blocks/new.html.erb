@@ -1,6 +1,7 @@
 <%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
 <% @page_title = "Content Library / Add New #{@content_type.display_name}" %>
-<h1 class="page_title">New <%= @content_type.display_name %></h1>
+<% @toolbar_title = "Add New #{@content_type.display_name}" %>
+<%= content_for :functions,  render(:partial => 'toolbar') %>
 <% form_for(@block, :url => cms_path(:blocks, @content_type.name.underscore, :create), :html => {:multipart => true}) do |f| %>
   <%= f.error_messages %>
   <%= render :partial => 'cms/blocks/hidden_fields', :locals => {:f => f} %>

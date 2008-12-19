@@ -1,27 +1,30 @@
+<% @toolbar_title = @page_title = "Select Block to Connect to '#{@page.name}' Page" %>
+<%= content_for :html_head, stylesheet_link_tag("cms/content_library") %>
+<%= content_for :functions, "<h1>#{@toolbar_title}</h1>" %>
 <% form_tag cms_path(:connectors, :new), :method => :get do %>
   <%= hidden_field_tag :page_id, @page.to_param %>
   <%= hidden_field_tag :container, @container %>
-  <label>
+  <div style="margin: 20px 2px;"><label>
     Block Type
-    <%= select_tag "block_type", options_for_select(ContentType.all(:order => "name").map{|ct| [ct.display_name, ct.content_block_type]}, @block_type.content_block_type), :onchange => 'this.form.submit()' %>
-  </label>
+    <%= select_tag "block_type", options_for_select(connectable_content_types.map{|ct| [ct.display_name, ct.content_block_type]}, @block_type.content_block_type), :onchange => 'this.form.submit()' %>
+  </label></div>
 <% end %>
     
 <%= error_messages_for :connector %>
     
 <table id="blocks">
   <tr>
-    <th>Name</th>
-    <th>Updated</th>
-    <th>Uses</th>
+    <th class="name">Name</th>
+    <th class="updated">Updated</th>
+    <th class="used">Uses</th>
     <th>View</th>
-    <th>Select</th>
+    <th class="last">Select</th>
   </tr>
   <% @blocks.each do |block| %>
     <tr>
-      <td><%= block.name %></td>
-      <td><%= block.updated_at.to_s(:date) %></td>
-      <td class="uses"><%= link_to_usages(block) %></td>
+      <td class="name"><%= block.name %></td>
+      <td class="updated"><%= block.updated_at.to_s(:date) %></td>
+      <td class="used"><%= link_to_usages(block) %></td>
       <td class="view"><%= link_to action_icon(:view), cms_path(block) %></td>
       <td class="select">
         <% form_for :connector, :url => cms_path(:connectors, :create) do |f| %>

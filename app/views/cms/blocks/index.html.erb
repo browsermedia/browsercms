@@ -17,28 +17,19 @@
         $('#edit_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/edit/'+id)
         $('#revisions_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/revisions/'+id)
         $('#delete_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/delete/'+id)
+  <% able_to? :publish_content do -%>
         if($(this).hasClass('draft')) {
-          $('#publish_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/publish/'+id+'?_redirect_to='+location.href)          
+          $('#publish_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/publish/'+id+'?_redirect_to='+location.href)        
         }
+  <% end %>
       })
     })
   <% end %>
 <%= stylesheet_link_tag "cms/content_library" %>
 <% end %>
 <% @page_title = "Content Library / List #{@content_type.display_name_plural}" %>
-<% content_for :functions do %>
-		<%= link_to span_tag("List All"), "#", :id=>"list_all", :class => "button disabled" %>
-                <%= link_to span_tag("view"), "#", :id => "view_button", :class => "button disabled" %>
-                <%= link_to span_tag("edit"), "#", :id => "edit_button", :class => "button disabled" %>
-                <%= link_to span_tag("add new"), cms_path("/blocks/#{@content_type.content_block_type.pluralize}", :new), :id => "add_button", :class => "button" %>
-		<%= link_to span_tag("Revisions"), "#", :id=>"revisions_button", :class => "button disabled" %>
-                <%= link_to span_tag("x&nbsp; delete"), "#", :id => "delete_button", :class => "button disabled", :onclick => "return confirm('Are you sure you want to delete this record?')" %>
-<% able_to?(:publish_content) do %>
-		<%= link_to span_tag("Publish"), "#", :id=>"publish_button", :class => "button disabled"  %>
-<% end %>
-
-                <br clear="all" />
-<% end %>
+<% @toolbar_title = "List #{@content_type.display_name_plural}" %>
+<%= render :partial => 'toolbar' %>
 
 
 <table id="blocks">
@@ -47,9 +38,9 @@
       <% @content_type.columns_for_index.each do |column| %>
         <th class="name"><%= column[:label] %></th>
       <% end %>
-      <th<%= ' class="last"' unless @content_type.model_class.publishable? || @content_type.model_class.connectable? %>>Updated</th>
-      <% if @content_type.model_class.connectable? %><th<%= ' class="last"' unless @content_type.model_class.publishable? %>>Used</th><% end %>
-      <% if @content_type.model_class.publishable? %><th class="last">Status</th><% end %>
+      <th class="updated <%= 'last' unless @content_type.model_class.publishable? || @content_type.model_class.connectable? %>">Updated</th>
+      <% if @content_type.model_class.connectable? %><th class="used <%= ' last' unless @content_type.model_class.publishable? %>">Used</th><% end %>
+      <% if @content_type.model_class.publishable? %><th class="block_status last">Status</th><% end %>
     </tr>
   </thead>
   <tbody>
@@ -58,7 +49,7 @@
         <% @content_type.columns_for_index.each do |column| %>
           <td class="name"><%= block.send(column[:method]) %></td>      
         <% end %>
-        <td><%= block.updated_at.to_s(:date) %></td>
+        <td class="updated"><%= block.updated_at.to_s(:date) %></td>
         <% if @content_type.model_class.connectable? %><td class="used"><%= block.connected_pages.count %></td><% end %>
         <% if @content_type.model_class.publishable? %><td class="block_status"><%= status_icon(block.status) %> <div><%= block.status %></div> </td><% end %>
       </tr>

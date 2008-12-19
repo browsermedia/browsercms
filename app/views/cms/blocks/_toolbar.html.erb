@@ -1,8 +1,7 @@
 <%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
-<% content_for(:sidebar) do %>
-<%= render :partial => "cms/blocks/block_info" %>
-<% end -%>
+
 <% content_for :functions do %>
+<% if @block && !@block.new_record? %>
 <%= link_to span_tag("List All"), cms_path(:blocks, @content_type.content_block_type), :id=>"list_all", :class => "button" %>
 <%= link_to span_tag('View'), cms_path(:blocks, @content_type.content_block_type.pluralize, :show, @block) , :class => "button" %>
 <%= link_to span_tag('Edit'), cms_path(:blocks, @content_type.content_block_type.pluralize, :edit, @block) , :class => "button" %>
@@ -16,5 +15,19 @@
     <%= link_to span_tag('Publish'), "#", :class => "http_put button disabled" %>
    <% end %>
 <% end -%>
-<br clear="all" />
+
+<% else %>
+<%= link_to span_tag("List All"), cms_path(:blocks, @content_type.content_block_type), :id=>"list_all", :class => "button" %>
+                <%= link_to span_tag("view"), "#", :id => "view_button", :class => "button disabled" %>
+                <%= link_to span_tag("edit"), "#", :id => "edit_button", :class => "button disabled" %>
+                <%= link_to span_tag("add new"), cms_path("/blocks/#{@content_type.content_block_type.pluralize}", :new), :id => "add_button", :class => "button" %>
+		<%= link_to span_tag("Revisions"), "#", :id=>"revisions_button", :class => "button disabled" %>
+                <%= link_to span_tag("x&nbsp; delete"), "#", :id => "delete_button", :class => "button disabled", :onclick => "return confirm('Are you sure you want to delete this record?')" %>
+<% able_to?(:publish_content) do %>
+		<%= link_to span_tag("Publish"), "#", :id=>"publish_button", :class => "button disabled"  %>
+<% end %>
+<% end %>
+                <br clear="all" />
+
+
 <% end %>

@@ -23,7 +23,6 @@ class Cms::BlocksController < Cms::BaseController
     if @last_block = model_class.last
       @block.category = @last_block.category if @block.respond_to?(:category=)
     end
-    render :layout => 'cms/application'
   end
 
   def create
@@ -36,7 +35,7 @@ class Cms::BlocksController < Cms::BaseController
         redirect_to_first params[:_redirect_to], cms_url(:blocks, content_type.name.underscore.pluralize)
       end
     else
-      render :action => 'new', :layout => 'cms/application'
+      render :action => 'new'
     end
   end
 
@@ -56,7 +55,7 @@ class Cms::BlocksController < Cms::BaseController
   end
 
   def edit
-    render :layout => 'cms/application'
+
   end
   
   def update
@@ -65,7 +64,7 @@ class Cms::BlocksController < Cms::BaseController
       flash[:notice] = "#{content_type_name.titleize} '#{@block.name}' was updated"
       redirect_to_first params[:_redirect_to], cms_url(:blocks, @block.class.name.underscore, :show, @block)
     else
-      render :action => "edit", :layout => 'cms/application'
+      render :action => "edit"
     end
   rescue ActiveRecord::StaleObjectError => e
     @other_version = @block.class.find(@block.id) 
@@ -100,7 +99,7 @@ class Cms::BlocksController < Cms::BaseController
   protected
 
     def content_type_name
-      @conten_type_name ||= begin
+      @content_type_name ||= begin
         if params[:block_type].blank?
           session[:last_block_type] ||= 'html_block'
         else

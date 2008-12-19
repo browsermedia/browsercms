@@ -50,7 +50,7 @@ describe Cms::ConnectorsController do
 
     it "should list the usages of the block" do
       @action.call
-      response.should have_tag("h1", "View Usages")
+      response.should have_tag("h1", "Pages Using '#{@block.name}'")
     end
 
     it "should contain the correct pages" do
@@ -67,11 +67,6 @@ describe Cms::ConnectorsController do
     it "should have block side menu" do
       @action.call
       response.should have_tag("h3#content_types", "Content Types")
-    end
-
-    it "should have file info panel" do
-      @action.call
-      response.should have_tag("h2#file_information", "File Information")
     end
   end
 end

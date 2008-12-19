@@ -15,7 +15,10 @@ float: left;
 margin: 10px 0;
 text-transform: capitalize;
 }
-
+.nv_pair div {
+float: left;
+margin: 10px 5px 20px 0;
+}
 .status img {
 float:left;
 margin: 8px 5px 0 5px;

@@ -295,13 +295,14 @@ describe Cms::BlocksController do
 
       it "should call standard /new for normal blocks" do
         @action.call
-        response.should have_tag("h1", "New Text")
+        response.should have_tag("h1", "Add New Text")
       end
     end
   end
 
   describe "CRUD for image files" do
     before(:each) do
+      root_section
       create_content_type(:name => "ImageBlock")
     end
     describe "adding new content" do
@@ -316,7 +317,7 @@ describe Cms::BlocksController do
 
       it "should call standard /new for normal blocks" do
         @action.call
-        response.should have_tag("h1", "New Image")
+        response.should have_tag("h1", "Add New Image")
       end
     end
     describe "editing content" do
@@ -333,7 +334,7 @@ describe Cms::BlocksController do
       it "should call standard /edit for normal blocks" do
         @action.call
         assigns[:block].attachment_section_id.should == root_section.id
-        response.should have_tag("h1", "Edit #{@image.name}")
+        response.should have_tag("h1", "Edit Image '#{@image.name}'")
         response.should have_tag("select[name=?]", "image_block[attachment_section_id]") do
           with_tag("option[value=?][selected=?]", root_section.id, "selected")
         end
@@ -414,7 +415,7 @@ describe Cms::BlocksController do
 
       it "should render the correct template for editing a portlet" do
         @action.call
-        response.should have_tag("h1", "Edit V1")
+        response.should have_tag("h1", "Edit Dynamic Portlet 'V1'")
       end
     end
 

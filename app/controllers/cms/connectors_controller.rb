@@ -1,5 +1,6 @@
 class Cms::ConnectorsController < Cms::BaseController
   
+  before_filter :set_toolbar_tab
   before_filter :load_page, :only => [:new, :create]
   
   def new    
@@ -63,5 +64,8 @@ class Cms::ConnectorsController < Cms::BaseController
   private
     def load_page
       @page = Page.find(params[:page_id])
+    end
+    def set_toolbar_tab
+      @toolbar_tab = :content_library
     end
 end
