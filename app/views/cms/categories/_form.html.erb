@@ -1,28 +1,40 @@
-<% content_for :html_head do %>
-  <script type="text/javascript">
-    jQuery(function($){
-      var categoriesByType = <%= CategoryType.category_map.to_json %>
-      $("#category_category_type_id").change(function(){
-        $("#category_parent_id option").remove()
-        $.each(categoriesByType[$(this).val()], function(){        
-          $("#category_parent_id").append($.createElement("option", this[0], {value: this[1]}))
+<% if CategoryType.count > 0 %>
+  <% content_for :html_head do %>
+    <script type="text/javascript">
+      jQuery(function($){
+        var categoriesByType = <%= CategoryType.category_map.to_json %>
+        $("#category_category_type_id").change(function(){
+          $("#category_parent_id option").remove()
+          $.each(categoriesByType[$(this).val()], function(){        
+            $("#category_parent_id").append($.createElement("option", this[0], {value: this[1]}))
+          })
         })
       })
-    })
-  </script>
-<% end %>
-<div class="fields select_fields">
-  <%= f.label :category_type_id, "Type" %>
-  <% @block.category_type ||= (Category.last(:include => :category_type) && Category.last.category_type) %>  
-  <%= f.collection_select :category_type_id, CategoryType.all(:order => "name"), :id, :name, :include_blank => true %>
-</div>
-<div class="fields select_fields">
-  <%= f.label :parent_id %>
-  <% categories = @block.category_type ? @block.category_type.category_list.map{|c| [c.path, c.id]} : [] %>
-  <%= f.select :parent_id, categories, :include_blank => true %>
-</div>
+    </script>
+  <% end %>
+  <div class="fields select_fields">
+    <%= f.label :category_type_id, "Type" %>
+    <% @block.category_type ||= (Category.last(:include => :category_type) && Category.last.category_type) %>  
+    <%= f.collection_select :category_type_id, CategoryType.all(:order => "name"), :id, :name, :include_blank => true %>
+  </div>
+  <div class="fields select_fields">
+    <%= f.label :parent_id %>
+    <% categories = @block.category_type ? @block.category_type.category_list.map{|c| [c.path, c.id]} : [] %>
+    <%= f.select :parent_id, categories, :include_blank => true %>
+  </div>
 
-<div class="fields text_fields">
-  <%= f.label :name %>
-  <%= f.text_field :name %>
-</div>
+  <div class="fields text_fields">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+<% else %>
+  <% content_for :html_head do %>
+    <script type="text/javascript">
+      jQuery(function($){
+        $('.buttons').remove()
+        $('title, .page_title').html('Please Create A Category Type')
+      })
+    </script>
+  <% end %>
+  <p>Before you can create a category, you must <%= link_to "create a category type", cms_path(:blocks, :category_types, :new) %>.  Each category must have a category type.  For example, if you plan to categorize your news releases, you might create a "News Release" category type.</p>
+<% end %>
