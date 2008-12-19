@@ -13,8 +13,8 @@
     <td><%= link_to "v.#{r.version}", cms_path(@page, :show_version, :version => r.version)%></td>
     <td><%= status_icon(r.published?) %></td>
     <td><%=h r.version_comment %></td>
-    <td><%= r.created_at.strftime("%b %e, %Y %l:%M %p") %></td>
-    <td><%= r.updated_by.login %></td>
+    <td><%= r.created_at.strftime("%b %e, %Y %l:%M %p") if r.created_at %></td>
+    <td><%= r.updated_by.login if r.updated_by %></td>
     <td><% if i > 0 %><%= link_to "Revert", cms_path(@page, :revert_to, :version => r.version) %><% end %></td>
   </tr><% end %>
 </table>
