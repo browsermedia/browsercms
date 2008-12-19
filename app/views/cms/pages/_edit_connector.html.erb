@@ -2,20 +2,16 @@
   <%= image_tag "cms/#{connector.published? ? 'published' : 'draft'}_status.gif", :class => "published_status" %>
   <div class="actions">
     <%= link_to image_tag("cms/pages/show_connectable.gif"), cms_path(connector.connectable), :title => "view/publish" %>
-    <% if connector.connectable_type.constantize.respond_to?(:has_edit_link?) %>
-    <%= link_to action_icon(:config), cms_path(connector.get_connectable, :edit, :_redirect_to => @page.path), :title => "edit" %>
-    <% if connector.get_connectable.class.has_edit_link? %>
-    <%= link_to action_icon(:edit), "#", :class => "cms_connectable_edit", :title => "edit" %>
-    <% end %>
-    <% else %>
     <%= link_to image_tag("cms/pages/edit_connectable.gif"), cms_path(connector.connectable, :edit, :_redirect_to => @page.path), :title => "edit" %>      
+    <% if connector.connectable_type.constantize.respond_to?(:has_edit_link?) && connector.get_connectable.class.has_edit_link? %>
+      <%= link_to action_icon(:edit), "#", :class => "cms_connectable_edit", :title => "edit" %>
     <% end %>
     <% if @page.connectors.for_page_version(@page.version).in_container(connector.container).count > 1 %>
-    <%= link_to image_tag("cms/pages/up_connectable.gif"), cms_path(connector, :move_up), :class => "http_put", :title => "move up" %>
-    <%= link_to image_tag("cms/pages/down_connectable.gif"), cms_path(connector, :move_down), :class => "http_put", :title => "move down" %>
+      <%= link_to image_tag("cms/pages/up_connectable.gif"), cms_path(connector, :move_up), :class => "http_put", :title => "move up" %>
+      <%= link_to image_tag("cms/pages/down_connectable.gif"), cms_path(connector, :move_down), :class => "http_put", :title => "move down" %>
     <% else %>
-    <%= image_tag("cms/pages/up_connectable_disabled.gif") %>
-    <%= image_tag("cms/pages/down_connectable_disabled.gif") %>
+      <%= image_tag("cms/pages/up_connectable_disabled.gif") %>
+      <%= image_tag("cms/pages/down_connectable_disabled.gif") %>
     <% end %>
     <%= link_to image_tag("cms/pages/delete_connectable.gif"), cms_path(connector, :destroy, :_redirect_to => @page.path), :class => "confirm_with_title http_delete", :title => "Are you sure you want to remove this block from this page?" %>
   </div>
