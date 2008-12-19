@@ -184,15 +184,17 @@ jQuery(function($){
         .attr('href','/cms/pages/destroy/'+id+'.json')
         .unbind('click')
         .click(function(){
-          $.post($(this).attr('href'), { _method: "DELETE" },
-            function(data){
-              if(data.success) {
-                $.cms.showNotice(data.message)
-              } else {
-                $.cms.showError(data.message)
-              }
-            }, "json");
-          $('#page_'+id).parents('.section_node').remove()          
+          if(confirm('Are you sure you want to delete this page?')) {
+            $.post($(this).attr('href'), { _method: "DELETE" },
+              function(data){
+                if(data.success) {
+                  $.cms.showNotice(data.message)
+                } else {
+                  $.cms.showError(data.message)
+                }
+              }, "json");
+            $('#page_'+id).parents('.section_node').remove()            
+          }
           return false;
         })
 
