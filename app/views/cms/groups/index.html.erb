@@ -16,7 +16,7 @@
 			- <%= p.full_name %> <br />
 			<% end %>
 			- <%= g.cms_access? ? "Edit" : "View" %>
-			<%= g.sections.count == section_count ? "All Sections" : "#{g.sections.count} of #{section_count} Sections" %>
+			<%= g.sections.count >= section_count ? "All Sections" : "#{g.sections.count} of #{section_count} Sections" %>
 		</td>
 		<td>[<%= link_to "Edit", cms_path(g, :edit) %>]</td>
   </tr>

@@ -11,7 +11,7 @@ create_section(:about, :name => "About", :parent => root_section, :path => "/abo
 create_section(:people, :name => "People", :parent => sections(:about), :path => "/people")
 create_section(:careers, :name => "Careers", :parent => sections(:about), :path => "/careers")
 
-User.current.groups.each{|g| g.sections << Section.all }
+Group.all.each{|g| g.sections = Section.all }
 
 create_page_template(:two_column, :name => "Two Column", :file_name => "two_column", :language => "erb", :body=> <<-TEMPLATE)
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

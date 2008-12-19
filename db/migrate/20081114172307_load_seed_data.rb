@@ -34,9 +34,7 @@ class LoadSeedData < ActiveRecord::Migration
     create_section(:root, :name => "My Site", :path => "/", :root => true)
     create_section(:system, :name => "system", :parent => sections(:root), :path => "/system", :hidden => true)
         
-    groups(:content_editor).sections << Section.all
-    groups(:guest).sections << sections(:root)
-    groups(:search_bot).sections << sections(:root)
+    Group.all.each{|g| g.sections = Section.all }    
     
     create_page_template(:main, :name => "Main", :file_name => "main", :language => "erb", :body => <<-TEMPLATE)
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
