@@ -1,31 +1,31 @@
-  <%= render :partial => 'layouts/cms/head' %>
-  <body>
-    <div id="wrapper">
-      <%= cms_toolbar(:administration) %>
-      <div id="main">
-	      
+<% content_for :html_head do %>
+<%= stylesheet_link_tag("cms/administration.css") %>
+<%= stylesheet_link_tag("cms/content_library.css") %>
+<% end %>
+<%= render :partial => 'layouts/cms/head' %>
+<body>
+  <div id="wrapper">
+    <%= cms_toolbar(:administration) %>
+    <div id="main">
+      <div id="menu">
+        <%= render :partial => 'cms/shared/admin_sidebar' %>                      
+      </div>
+      <div id="contentwrap">
+	<div id="functions">
+	  <h1><%= @toolbar_title %></h1>
+	  <%= yield :functions %>
 
-	      <div id="menu">
-            <%= render :partial => 'cms/shared/admin_sidebar' %>                      
-	      </div>
-	      <div id="contentwrap">
-	        <div id="functions">
-            <%= link_to span_tag("ADD USER"), url_for(:controller => "users", :action => "new"), :id => "add_user_button", :class => "button" %>
-            <div class="box" style="border: 1px solid #333; padding: 5px; float: right; color: #FFF">
-            <% form_tag(cms_path(:users), :method => :get ) do %> <%= text_field_tag "key_word", params[:key_word] %> <%= select_per_page %> <%= group_filter %> <%= check_box_tag "show_expired", "yes", params[:show_expired] %>Show inactive users?
-            <% end %>
-            </div>
-            <br clear="all" />
-  	      </div>
-          <div id="content">
-            <div class="pad">
-              <%= yield %>
-            </div>
-          </div>
-	      </div>
-	      <br clear="all" />
-	      <%= render :partial => 'layouts/cms/footer' %>
+	</div>
+	<br clear="all" />
+      <div id="content">
+	<div class="pad">
+          <%= yield %>
+	</div>
       </div>
     </div>
-  </body>
+    <br clear="all" />
+    <%= render :partial => 'layouts/cms/footer' %>
+  </div>
+</div>
+</body>
 </html>

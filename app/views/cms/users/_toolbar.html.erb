@@ -1,0 +1,9 @@
+<%= yield :toolbar_links %>
+            <div class="box" style="border: 1px solid #333; padding: 5px; float: right; color: #FFF">
+            <% form_tag(cms_path(:users), :method => :get ) do %> 
+<%= text_field_tag "key_word", params[:key_word] %> 
+<%= select_per_page %> 
+<%= group_filter %> 
+<%= check_box_tag "show_expired", "yes", params[:show_expired] %>Show inactive?
+            <% end %>
+</div>

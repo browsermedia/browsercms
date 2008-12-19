@@ -16,7 +16,7 @@ describe Cms::UsersController do
     end
     it "should list all users" do
       @action.call
-      response.should have_tag("span[class=?]", "username", "#{@user.login}")
+      response.should have_tag("a", "#{@user.email}")
     end
 
     describe "by keyword" do
@@ -28,34 +28,34 @@ describe Cms::UsersController do
       it "should find users by email" do
         action = lambda { get :index, :key_word => "somekid" }
         action.call
-        response.should     have_tag("span[class=?]", "username", "#{@user_with_email.login}")
-        response.should_not have_tag("span[class=?]", "username", "#{@user_with_name.login}")
-        response.should_not have_tag("span[class=?]", "username", "#{@user_with_login.login}")
-        response.should_not have_tag("span[class=?]", "username", "#{@user.login}")
+        response.should     have_tag("a", "#{@user_with_email.email}")
+        response.should_not have_tag("a", "#{@user_with_name.email}")
+        response.should_not have_tag("a", "#{@user_with_login.email}")
+        response.should_not have_tag("a", "#{@user.email}")
       end
       it "should find users by login" do
         action = lambda { get :index, :key_word => "mylogin" }
         action.call
-        response.should_not have_tag("span[class=?]", "username", "#{@user_with_email.login}")
-        response.should_not have_tag("span[class=?]", "username", "#{@user_with_name.login}")
-        response.should     have_tag("span[class=?]", "username", "#{@user_with_login.login}")
-        response.should_not have_tag("span[class=?]", "username", "#{@user.login}")
+        response.should_not have_tag("a", "#{@user_with_email.email}")
+        response.should_not have_tag("a", "#{@user_with_name.email}")
+        response.should     have_tag("a", "#{@user_with_login.email}")
+        response.should_not have_tag("a", "#{@user.email}")
       end
       it "should find users by first name" do
         action = lambda { get :index, :key_word => "stan" }
         action.call
-        response.should_not have_tag("span[class=?]", "username", "#{@user_with_email.login}")
-        response.should     have_tag("span[class=?]", "username", "#{@user_with_name.login}")
-        response.should_not have_tag("span[class=?]", "username", "#{@user_with_login.login}")
-        response.should_not have_tag("span[class=?]", "username", "#{@user.login}")
+        response.should_not have_tag("a", "#{@user_with_email.email}")
+        response.should     have_tag("a", "#{@user_with_name.email}")
+        response.should_not have_tag("a", "#{@user_with_login.email}")
+        response.should_not have_tag("a", "#{@user.email}")
       end
       it "should find users by last name" do
         action = lambda { get :index, :key_word => "marsh" }
         action.call
-        response.should_not have_tag("span[class=?]", "username", "#{@user_with_email.login}")
-        response.should     have_tag("span[class=?]", "username", "#{@user_with_name.login}")
-        response.should_not have_tag("span[class=?]", "username", "#{@user_with_login.login}")
-        response.should_not have_tag("span[class=?]", "username", "#{@user.login}")
+        response.should_not have_tag("a", "#{@user_with_email.email}")
+        response.should     have_tag("a", "#{@user_with_name.email}")
+        response.should_not have_tag("a", "#{@user_with_login.email}")
+        response.should_not have_tag("a", "#{@user.email}")
       end
     end
     describe "with disabled users" do
@@ -66,13 +66,13 @@ describe Cms::UsersController do
 
       it "should not list disabled users by default" do
         @action.call
-        response.should_not have_tag("span[class=?]", "username", "#{@disabled_user.login}")
+        response.should_not have_tag("a", "#{@disabled_user.email}")
       end
 
       it "should list disabled users if asked for" do
         action = lambda { get :index, :show_expired => "true" }
         action.call
-        response.should have_tag("span[class=?]", "username", "#{@disabled_user.login}")
+        response.should have_tag("a", "#{@disabled_user.email}")
       end
     end
 
@@ -87,8 +87,8 @@ describe Cms::UsersController do
       it "should find users in groups" do
         action = lambda { get :index, :group_id => @in_group.id }
         action.call
-        response.should     have_tag("span[class=?]", "username", "#{@user.login}")
-        response.should_not have_tag("span[class=?]", "username", "#{@not_found.login}")
+        response.should     have_tag("a", "#{@user.email}")
+        response.should_not have_tag("a", "#{@not_found.email}")
       end
     end
     describe "with all conditions" do
@@ -105,24 +105,24 @@ describe Cms::UsersController do
       it "should find disabled users with a keyword and show_expired" do
         action = lambda { get :index, :show_expired => "true", :key_word => "stan" }
         action.call
-        response.should_not have_tag("span[class=?]", "username", "#{@disabled_user.login}")
-        response.should     have_tag("span[class=?]", "username", "#{@found_user.login}")
-        response.should     have_tag("span[class=?]", "username", "#{@live_user.login}")
+        response.should_not have_tag("a", "#{@disabled_user.email}")
+        response.should     have_tag("a", "#{@found_user.email}")
+        response.should     have_tag("a", "#{@live_user.email}")
       end
       it "should find not disabled users with a keyword" do
         action = lambda { get :index, :key_word => "stan" }
         action.call
-        response.should_not have_tag("span[class=?]", "username", "#{@disabled_user.login}")
-        response.should_not have_tag("span[class=?]", "username", "#{@found_user.login}")
-        response.should     have_tag("span[class=?]", "username", "#{@live_user.login}")
+        response.should_not have_tag("a", "#{@disabled_user.email}")
+        response.should_not have_tag("a", "#{@found_user.email}")
+        response.should     have_tag("a", "#{@live_user.email}")
       end
       it "should find users only in a group, who are are disabled, by name" do
         action = lambda { get :index, :show_expired => "true", :key_word => "stan", :group_id => @new_group.id }
         action.call
-        response.should_not have_tag("span[class=?]", "username", "#{@disabled_user.login}")
-        response.should     have_tag("span[class=?]", "username", "#{@found_user.login}")
+        response.should_not have_tag("a", "#{@disabled_user.email}")
+        response.should     have_tag("a", "#{@found_user.email}")
         response.should     have_tag("option[value=?][selected=?]", "#{@new_group.id}", "selected")
-        response.should_not have_tag("span[class=?]", "username", "#{@live_user.login}")        
+        response.should_not have_tag("a", "#{@live_user.email}")        
       end
     end
     describe "pagination" do
@@ -133,20 +133,20 @@ describe Cms::UsersController do
       it "should show all results" do
         action = lambda { get :index, :key_word => "Adama" }
         action.call
-        response.should     have_tag("span[class=?]", "username", "#{@user1.login}")
-        response.should     have_tag("span[class=?]", "username", "#{@user2.login}")
+        response.should     have_tag("a", "#{@user1.email}")
+        response.should     have_tag("a", "#{@user2.email}")
       end
       it "should show only first result" do
         action = lambda { get :index, :key_word => "Adama", :per_page => 1 }
         action.call
-        response.should     have_tag("span[class=?]", "username", "#{@user1.login}")
-        response.should_not have_tag("span[class=?]", "username", "#{@user2.login}")
+        response.should     have_tag("a", "#{@user1.email}")
+        response.should_not have_tag("a", "#{@user2.email}")
       end
       it "should show only second result" do
         action = lambda { get :index, :key_word => "Adama", :per_page => 1, :page => 2 }
         action.call
-        response.should_not have_tag("span[class=?]", "username", "#{@user1.login}")
-        response.should     have_tag("span[class=?]", "username", "#{@user2.login}")
+        response.should_not have_tag("a", "#{@user1.email}")
+        response.should     have_tag("a", "#{@user2.email}")
       end
     end
   end

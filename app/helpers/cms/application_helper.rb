@@ -100,7 +100,7 @@ module Cms
       content_tag :span, content
     end
     def lt_button_wrapper(content)
-      <<LBW
+<<LBW
   <div class="lt_button">
     <img src="/images/cms/lt_button_l.gif" alt="" />
     <div>
@@ -110,13 +110,16 @@ module Cms
   </div>
 LBW
     end
-    
+
+    def dk_button_wrapper(content)
+      lt_button_wrapper(content).gsub("lt_button_","dk_button_")
+    end
     def group_ids
       (params[:group_ids] || @user.group_ids).collect { |g| g.to_i }
     end
 
     def group_filter
-      select_tag("group_id", options_from_collection_for_select(Group.all.insert(0, Group.new(:id => nil, :name => "All")), "id", "name", params[:group_id].to_i))
+      select_tag("group_id", options_from_collection_for_select(Group.all.insert(0, Group.new(:id => nil, :name => "Show All Groups")), "id", "name", params[:group_id].to_i))
     end	  	  
     
     def categories_for(category_type_name)

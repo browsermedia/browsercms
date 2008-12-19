@@ -1,7 +1,11 @@
-<% @page_title = "Page Cache Info" %>
-<%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
-<p>The CMS System caches pages which are frequently accessed by guest users to increase throughput. If data appears stale, you may manually clear this page cache.</p>
+<% @page_title = @toolbar_title = "Page Cache Info" %>
 
-<% form_tag cms_path(:cache, :expire) do %>
-<%= lt_button_wrapper(submit_tag("Clear Page Cache", :class => "submit")) %>
+<%= content_for :html_head, stylesheet_link_tag("cms/form_layout") %>
+
+<% content_for :functions do %>
+  <% form_tag cms_path(:cache, :expire) do %>
+    <%= dk_button_wrapper(submit_tag("Clear Page Cache", :class => "submit")) %>
+  <% end %>
 <% end %>
+
+<p style="font-size: larger; margin: 10px; line-height: 20px;">The CMS System caches pages which are frequently accessed by guest users to increase throughput. If data appears stale, you may manually clear this page cache.</p>

@@ -1,5 +1,6 @@
-<% @page_title = "View Page Templates" %>
-<p><%= link_to "#{action_icon(:add)} New Page Template", cms_path(:page_templates, :new) %></p>
+<% @page_title = @toolbar_title = "List Page Templates" %>
+
+<%= content_for :functions, link_to(span_tag("Add Page Template"), cms_path(:page_templates, :new), :class => "button") %>
 
 <table id="blocks">
   <tr>

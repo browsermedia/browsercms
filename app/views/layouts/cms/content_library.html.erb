@@ -27,7 +27,6 @@
                 
                 <%= yield :sidebar %>
                 <h3 id="content_types">Content Types</h3>
-		<h3><%= h @content_type.content_type_group %></h3>
                 <ul><% ContentTypeGroup.all(:order => "content_type_groups.id").each do |g| %>
           	  <li<%= ' class="open"' if (g == @content_type.content_type_group) %>>
           	    <% if g.content_types.blank? %>

@@ -1,0 +1,19 @@
+#functions .box {
+background: url(/images/cms/administration/user_browser_bg.gif) repeat-x 0 0;
+text-transform: capitalize;
+margin-top: -5px;
+}
+#functions {
+padding-bottom: 25px;
+}
+#blocks td a {
+color: #36659D;
+font-weight: bold;
+text-decoration: none;
+}
+fieldset.form legend {
+font-weight: bold;
+font-size: large;
+padding: 40px 0 10px 20px;
+
+}

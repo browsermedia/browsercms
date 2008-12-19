@@ -1,5 +1,5 @@
-<% @page_title = "View Redirects" %>
-<p><%= link_to "#{action_icon(:add)} New Redirect", cms_path(:redirects, :new) %></p>
+<% @page_title = @toolbar_title = "List Redirects" %>
+<%= content_for :functions, link_to(span_tag("Add New Redirect"), cms_path(:redirects, :new), :class => "button") %>
 
 <table id="blocks">
   <tr>
