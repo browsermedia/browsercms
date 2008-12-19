@@ -15,7 +15,7 @@
   <div class="fields select_fields">
     <%= f.label :category_type_id, "Type" %>
     <% @block.category_type ||= (Category.last(:include => :category_type) && Category.last.category_type) %>  
-    <%= f.collection_select :category_type_id, CategoryType.all(:order => "name"), :id, :name, :include_blank => true %>
+    <%= f.collection_select :category_type_id, CategoryType.all(:order => "name"), :id, :name, :prompt => "Select a Type of Category" %>
   </div>
   <div class="fields select_fields">
     <%= f.label :parent_id %>
