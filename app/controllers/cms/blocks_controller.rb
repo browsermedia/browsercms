@@ -79,7 +79,7 @@ class Cms::BlocksController < Cms::BaseController
 
   def publish
     do_command("published") { @block.publish! }
-    redirect_to cms_url(@block)
+    redirect_to_first params[:_redirect_to], cms_url(@block)
   end
 
   def archive

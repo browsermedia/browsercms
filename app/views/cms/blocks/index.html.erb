@@ -13,7 +13,9 @@
         $(this).addClass('selected')
         $('#view_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/show/'+id)
         $('#edit_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/edit/'+id)
-        $('#delete_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/delete/'+id)        
+        $('#revisions_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/revisions/'+id)
+        $('#delete_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/delete/'+id)
+        $('#publish_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/publish/'+id+'?_redirect_to='+location.href)        
       })
     })
   <% end %>
@@ -25,10 +27,10 @@
                 <%= link_to span_tag("view"), "#", :id => "view_button", :class => "button disabled" %>
                 <%= link_to span_tag("edit"), "#", :id => "edit_button", :class => "button disabled" %>
                 <%= link_to span_tag("add new"), cms_path("/blocks/#{@content_type.content_block_type.pluralize}", :new), :id => "add_button", :class => "button" %>
-		<%= link_to span_tag("Revisions"), "#", :id=>"revisions", :class => "button disabled" %>
+		<%= link_to span_tag("Revisions"), "#", :id=>"revisions_button", :class => "button disabled" %>
                 <%= link_to span_tag("x&nbsp; delete"), "#", :id => "delete_button", :class => "button disabled", :onclick => "return confirm('Are you sure you want to delete this record?')" %>
 <% able_to?(:publish_content) do %>
-		<%= link_to span_tag("Publish"), "#", :id=>"publish", :class => "button disabled"  %>
+		<%= link_to span_tag("Publish"), "#", :id=>"publish_button", :class => "button disabled"  %>
 <% end %>
 
                 <br clear="all" />
