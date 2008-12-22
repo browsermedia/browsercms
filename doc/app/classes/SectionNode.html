@@ -128,18 +128,18 @@
             onclick="toggleCode('M000007-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000007-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/section_node.rb, line 62</span>
-62:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ancestors</span>()
-63:     <span class="ruby-identifier">ancestors</span> = []
-64:     <span class="ruby-identifier">fn</span> = <span class="ruby-identifier">lambda</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">sn</span><span class="ruby-operator">|</span>
-65:       <span class="ruby-identifier">ancestors</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">sn</span>.<span class="ruby-identifier">section</span>
-66:       <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">sn</span>.<span class="ruby-identifier">section</span>.<span class="ruby-identifier">root?</span>
-67:         <span class="ruby-identifier">fn</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">sn</span>.<span class="ruby-identifier">section</span>.<span class="ruby-identifier">node</span>)
-68:       <span class="ruby-keyword kw">end</span>
-69:     <span class="ruby-keyword kw">end</span>
-70:     <span class="ruby-identifier">fn</span>.<span class="ruby-identifier">call</span>(<span class="ruby-keyword kw">self</span>)
-71:     <span class="ruby-identifier">ancestors</span>.<span class="ruby-identifier">reverse</span>
-72:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/section_node.rb, line 63</span>
+63:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ancestors</span>()
+64:     <span class="ruby-identifier">ancestors</span> = []
+65:     <span class="ruby-identifier">fn</span> = <span class="ruby-identifier">lambda</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">sn</span><span class="ruby-operator">|</span>
+66:       <span class="ruby-identifier">ancestors</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">sn</span>.<span class="ruby-identifier">section</span>
+67:       <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">sn</span>.<span class="ruby-identifier">section</span>.<span class="ruby-identifier">root?</span>
+68:         <span class="ruby-identifier">fn</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">sn</span>.<span class="ruby-identifier">section</span>.<span class="ruby-identifier">node</span>)
+69:       <span class="ruby-keyword kw">end</span>
+70:     <span class="ruby-keyword kw">end</span>
+71:     <span class="ruby-identifier">fn</span>.<span class="ruby-identifier">call</span>(<span class="ruby-keyword kw">self</span>)
+72:     <span class="ruby-identifier">ancestors</span>.<span class="ruby-identifier">reverse</span>
+73:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -159,15 +159,15 @@
             onclick="toggleCode('M000005-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000005-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/section_node.rb, line 48</span>
-48:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">move_after</span>(<span class="ruby-identifier">section_node</span>)
-49:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">section</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">section</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">position</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">position</span>
-50:       <span class="ruby-identifier">pos</span> = <span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">position</span>
-51:     <span class="ruby-keyword kw">else</span>
-52:       <span class="ruby-identifier">pos</span> = <span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">position</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
-53:     <span class="ruby-keyword kw">end</span>
-54:     <span class="ruby-identifier">move_to</span>(<span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">section</span>, <span class="ruby-identifier">pos</span>)
-55:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/section_node.rb, line 49</span>
+49:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">move_after</span>(<span class="ruby-identifier">section_node</span>)
+50:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">section</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">section</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">position</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">position</span>
+51:       <span class="ruby-identifier">pos</span> = <span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">position</span>
+52:     <span class="ruby-keyword kw">else</span>
+53:       <span class="ruby-identifier">pos</span> = <span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">position</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
+54:     <span class="ruby-keyword kw">end</span>
+55:     <span class="ruby-identifier">move_to</span>(<span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">section</span>, <span class="ruby-identifier">pos</span>)
+56:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -187,15 +187,15 @@
             onclick="toggleCode('M000004-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000004-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/section_node.rb, line 39</span>
-39:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">move_before</span>(<span class="ruby-identifier">section_node</span>)
-40:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">section</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">section</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">position</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">position</span>
-41:       <span class="ruby-identifier">pos</span> = <span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">position</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
-42:     <span class="ruby-keyword kw">else</span>
-43:       <span class="ruby-identifier">pos</span> = <span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">position</span>
-44:     <span class="ruby-keyword kw">end</span>
-45:     <span class="ruby-identifier">move_to</span>(<span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">section</span>, <span class="ruby-identifier">pos</span>)
-46:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/section_node.rb, line 40</span>
+40:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">move_before</span>(<span class="ruby-identifier">section_node</span>)
+41:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">section</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">section</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">position</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">position</span>
+42:       <span class="ruby-identifier">pos</span> = <span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">position</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
+43:     <span class="ruby-keyword kw">else</span>
+44:       <span class="ruby-identifier">pos</span> = <span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">position</span>
+45:     <span class="ruby-keyword kw">end</span>
+46:     <span class="ruby-identifier">move_to</span>(<span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">section</span>, <span class="ruby-identifier">pos</span>)
+47:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -217,26 +217,27 @@
 <pre>
     <span class="ruby-comment cmt"># File app/models/section_node.rb, line 17</span>
 17:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">move_to</span>(<span class="ruby-identifier">sec</span>, <span class="ruby-identifier">pos</span>)
-18:     <span class="ruby-identifier">transaction</span> <span class="ruby-keyword kw">do</span>
-19:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">section</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">sec</span>
-20:         <span class="ruby-identifier">remove_from_list</span>
-21:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">section</span> = <span class="ruby-identifier">sec</span>
-22:         <span class="ruby-identifier">save</span>
-23:       <span class="ruby-keyword kw">end</span>
-24:       
-25:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">pos</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
-26:         <span class="ruby-identifier">pos</span> = <span class="ruby-value">0</span>
-27:       <span class="ruby-keyword kw">else</span>
-28:         <span class="ruby-comment cmt">#This helps prevent the position from getting out of whack</span>
-29:         <span class="ruby-comment cmt">#If you pass in a really high number for position, </span>
-30:         <span class="ruby-comment cmt">#this just corrects it to the right number</span>
-31:         <span class="ruby-identifier">node_count</span> = <span class="ruby-constant">SectionNode</span>.<span class="ruby-identifier">count</span>(<span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:section_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">section_id</span>})
-32:         <span class="ruby-identifier">pos</span> = <span class="ruby-identifier">node_count</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">pos</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">node_count</span>
-33:       <span class="ruby-keyword kw">end</span>
-34:       
-35:       <span class="ruby-identifier">insert_at_position</span>(<span class="ruby-identifier">pos</span>)
-36:     <span class="ruby-keyword kw">end</span>
-37:   <span class="ruby-keyword kw">end</span>
+18:     <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">info</span> <span class="ruby-node">&quot;Moving Section Node ##{id} to Section ##{sec.id} Position #{pos}&quot;</span>
+19:     <span class="ruby-identifier">transaction</span> <span class="ruby-keyword kw">do</span>
+20:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">section</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">sec</span>
+21:         <span class="ruby-identifier">remove_from_list</span>
+22:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">section</span> = <span class="ruby-identifier">sec</span>
+23:         <span class="ruby-identifier">save</span>
+24:       <span class="ruby-keyword kw">end</span>
+25:       
+26:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">pos</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">0</span>
+27:         <span class="ruby-identifier">pos</span> = <span class="ruby-value">0</span>
+28:       <span class="ruby-keyword kw">else</span>
+29:         <span class="ruby-comment cmt">#This helps prevent the position from getting out of whack</span>
+30:         <span class="ruby-comment cmt">#If you pass in a really high number for position, </span>
+31:         <span class="ruby-comment cmt">#this just corrects it to the right number</span>
+32:         <span class="ruby-identifier">node_count</span> = <span class="ruby-constant">SectionNode</span>.<span class="ruby-identifier">count</span>(<span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:section_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">section_id</span>})
+33:         <span class="ruby-identifier">pos</span> = <span class="ruby-identifier">node_count</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">pos</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">node_count</span>
+34:       <span class="ruby-keyword kw">end</span>
+35:       
+36:       <span class="ruby-identifier">insert_at_position</span>(<span class="ruby-identifier">pos</span>)
+37:     <span class="ruby-keyword kw">end</span>
+38:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -256,11 +257,11 @@
             onclick="toggleCode('M000006-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000006-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/section_node.rb, line 57</span>
-57:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">move_to_end</span>(<span class="ruby-identifier">sec</span>)
-58:     <span class="ruby-comment cmt">#1.0/0 == Infinity</span>
-59:     <span class="ruby-identifier">move_to</span>(<span class="ruby-identifier">sec</span>, <span class="ruby-value">1.0</span><span class="ruby-operator">/</span><span class="ruby-value">0</span>)
-60:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/section_node.rb, line 58</span>
+58:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">move_to_end</span>(<span class="ruby-identifier">sec</span>)
+59:     <span class="ruby-comment cmt">#1.0/0 == Infinity</span>
+60:     <span class="ruby-identifier">move_to</span>(<span class="ruby-identifier">sec</span>, <span class="ruby-value">1.0</span><span class="ruby-operator">/</span><span class="ruby-value">0</span>)
+61:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

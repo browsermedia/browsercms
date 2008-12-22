@@ -86,8 +86,9 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000138">indent</a>&nbsp;&nbsp;
-      <a href="#M000139">to_slug</a>&nbsp;&nbsp;
+      <a href="#M000157">indent</a>&nbsp;&nbsp;
+      <a href="#M000159">pluralize</a>&nbsp;&nbsp;
+      <a href="#M000158">to_slug</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -109,19 +110,19 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000138" class="method-detail">
-        <a name="M000138"></a>
+      <div id="method-M000157" class="method-detail">
+        <a name="M000157"></a>
 
         <div class="method-heading">
-          <a href="#M000138" class="method-signature">
+          <a href="#M000157" class="method-signature">
           <span class="method-name">indent</span><span class="method-args">(n=0)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000138-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000138-source">
+            onclick="toggleCode('M000157-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000157-source">
 <pre>
    <span class="ruby-comment cmt"># File lib/cms/extensions/string.rb, line 2</span>
 2:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">indent</span>(<span class="ruby-identifier">n</span>=<span class="ruby-value">0</span>)
@@ -132,23 +133,46 @@
         </div>
       </div>
 
-      <div id="method-M000139" class="method-detail">
-        <a name="M000139"></a>
+      <div id="method-M000159" class="method-detail">
+        <a name="M000159"></a>
 
         <div class="method-heading">
-          <a href="#M000139" class="method-signature">
+          <a href="#M000159" class="method-signature">
+          <span class="method-name">pluralize</span><span class="method-args">(count=nil)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000159-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000159-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/extensions/string.rb, line 8</span>
+ 8:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">pluralize</span>(<span class="ruby-identifier">count</span>=<span class="ruby-keyword kw">nil</span>)
+ 9:     <span class="ruby-identifier">count</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span> <span class="ruby-operator">?</span> <span class="ruby-keyword kw">self</span> <span class="ruby-operator">:</span> <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Inflector</span>.<span class="ruby-identifier">pluralize</span>(<span class="ruby-keyword kw">self</span>)
+10:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000158" class="method-detail">
+        <a name="M000158"></a>
+
+        <div class="method-heading">
+          <a href="#M000158" class="method-signature">
           <span class="method-name">to_slug</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000139-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000139-source">
+            onclick="toggleCode('M000158-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000158-source">
 <pre>
    <span class="ruby-comment cmt"># File lib/cms/extensions/string.rb, line 5</span>
 5:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">to_slug</span>
-6:     <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\W+/</span>, <span class="ruby-value str">' '</span>).<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">downcase</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\ +/</span>, <span class="ruby-value str">'_'</span>)
+6:     <span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\W+/</span>, <span class="ruby-value str">' '</span>).<span class="ruby-identifier">strip</span>.<span class="ruby-identifier">downcase</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-regexp re">/\ +/</span>, <span class="ruby-value str">'-'</span>)
 7:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>

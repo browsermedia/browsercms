@@ -95,25 +95,25 @@ CRUD
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000413">after_create_url</a>&nbsp;&nbsp;
-      <a href="#M000414">after_update_url</a>&nbsp;&nbsp;
-      <a href="#M000410">build_object</a>&nbsp;&nbsp;
-      <a href="#M000402">create</a>&nbsp;&nbsp;
-      <a href="#M000406">destroy</a>&nbsp;&nbsp;
-      <a href="#M000404">edit</a>&nbsp;&nbsp;
-      <a href="#M000418">edit_template</a>&nbsp;&nbsp;
-      <a href="#M000400">index</a>&nbsp;&nbsp;
-      <a href="#M000412">index_url</a>&nbsp;&nbsp;
-      <a href="#M000401">new</a>&nbsp;&nbsp;
-      <a href="#M000417">new_template</a>&nbsp;&nbsp;
-      <a href="#M000411">object_name</a>&nbsp;&nbsp;
-      <a href="#M000416">order_by_column</a>&nbsp;&nbsp;
-      <a href="#M000409">resource</a>&nbsp;&nbsp;
-      <a href="#M000407">resource_name</a>&nbsp;&nbsp;
-      <a href="#M000403">show</a>&nbsp;&nbsp;
-      <a href="#M000415">show_url</a>&nbsp;&nbsp;
-      <a href="#M000405">update</a>&nbsp;&nbsp;
-      <a href="#M000408">variable_name</a>&nbsp;&nbsp;
+      <a href="#M000510">after_create_url</a>&nbsp;&nbsp;
+      <a href="#M000511">after_update_url</a>&nbsp;&nbsp;
+      <a href="#M000507">build_object</a>&nbsp;&nbsp;
+      <a href="#M000499">create</a>&nbsp;&nbsp;
+      <a href="#M000503">destroy</a>&nbsp;&nbsp;
+      <a href="#M000501">edit</a>&nbsp;&nbsp;
+      <a href="#M000515">edit_template</a>&nbsp;&nbsp;
+      <a href="#M000497">index</a>&nbsp;&nbsp;
+      <a href="#M000509">index_url</a>&nbsp;&nbsp;
+      <a href="#M000498">new</a>&nbsp;&nbsp;
+      <a href="#M000514">new_template</a>&nbsp;&nbsp;
+      <a href="#M000508">object_name</a>&nbsp;&nbsp;
+      <a href="#M000513">order_by_column</a>&nbsp;&nbsp;
+      <a href="#M000506">resource</a>&nbsp;&nbsp;
+      <a href="#M000504">resource_name</a>&nbsp;&nbsp;
+      <a href="#M000500">show</a>&nbsp;&nbsp;
+      <a href="#M000512">show_url</a>&nbsp;&nbsp;
+      <a href="#M000502">update</a>&nbsp;&nbsp;
+      <a href="#M000505">variable_name</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -135,19 +135,19 @@ CRUD
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000402" class="method-detail">
-        <a name="M000402"></a>
+      <div id="method-M000499" class="method-detail">
+        <a name="M000499"></a>
 
         <div class="method-heading">
-          <a href="#M000402" class="method-signature">
+          <a href="#M000499" class="method-signature">
           <span class="method-name">create</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000402-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000402-source">
+            onclick="toggleCode('M000499-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000499-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 13</span>
 13:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create</span>
@@ -169,46 +169,46 @@ CRUD
         </div>
       </div>
 
-      <div id="method-M000406" class="method-detail">
-        <a name="M000406"></a>
+      <div id="method-M000503" class="method-detail">
+        <a name="M000503"></a>
 
         <div class="method-heading">
-          <a href="#M000406" class="method-signature">
+          <a href="#M000503" class="method-signature">
           <span class="method-name">destroy</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000406-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000406-source">
+            onclick="toggleCode('M000503-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000503-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 52</span>
-52:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroy</span>
-53:     <span class="ruby-ivar">@object</span> = <span class="ruby-identifier">resource</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])
-54:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@object</span>.<span class="ruby-identifier">destroy</span>
-55:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-node">&quot;#{resource_name.singularize.titleize} '#{object_name}' was deleted&quot;</span>
-56:     <span class="ruby-keyword kw">end</span>
-57:     <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">index_url</span>
-58:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 51</span>
+51:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroy</span>
+52:     <span class="ruby-ivar">@object</span> = <span class="ruby-identifier">resource</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])
+53:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@object</span>.<span class="ruby-identifier">destroy</span>
+54:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-node">&quot;#{resource_name.singularize.titleize} '#{object_name}' was deleted&quot;</span>
+55:     <span class="ruby-keyword kw">end</span>
+56:     <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">index_url</span>
+57:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000404" class="method-detail">
-        <a name="M000404"></a>
+      <div id="method-M000501" class="method-detail">
+        <a name="M000501"></a>
 
         <div class="method-heading">
-          <a href="#M000404" class="method-signature">
+          <a href="#M000501" class="method-signature">
           <span class="method-name">edit</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000404-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000404-source">
+            onclick="toggleCode('M000501-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000501-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 32</span>
 32:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">edit</span>
@@ -219,19 +219,19 @@ CRUD
         </div>
       </div>
 
-      <div id="method-M000400" class="method-detail">
-        <a name="M000400"></a>
+      <div id="method-M000497" class="method-detail">
+        <a name="M000497"></a>
 
         <div class="method-heading">
-          <a href="#M000400" class="method-signature">
+          <a href="#M000497" class="method-signature">
           <span class="method-name">index</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000400-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000400-source">
+            onclick="toggleCode('M000497-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000497-source">
 <pre>
    <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 5</span>
 5:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index</span>
@@ -242,19 +242,19 @@ CRUD
         </div>
       </div>
 
-      <div id="method-M000401" class="method-detail">
-        <a name="M000401"></a>
+      <div id="method-M000498" class="method-detail">
+        <a name="M000498"></a>
 
         <div class="method-heading">
-          <a href="#M000401" class="method-signature">
+          <a href="#M000498" class="method-signature">
           <span class="method-name">new</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000401-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000401-source">
+            onclick="toggleCode('M000498-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000498-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 9</span>
  9:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new</span>
@@ -265,19 +265,19 @@ CRUD
         </div>
       </div>
 
-      <div id="method-M000403" class="method-detail">
-        <a name="M000403"></a>
+      <div id="method-M000500" class="method-detail">
+        <a name="M000500"></a>
 
         <div class="method-heading">
-          <a href="#M000403" class="method-signature">
+          <a href="#M000500" class="method-signature">
           <span class="method-name">show</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000403-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000403-source">
+            onclick="toggleCode('M000500-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000500-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 28</span>
 28:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">show</span>
@@ -288,36 +288,35 @@ CRUD
         </div>
       </div>
 
-      <div id="method-M000405" class="method-detail">
-        <a name="M000405"></a>
+      <div id="method-M000502" class="method-detail">
+        <a name="M000502"></a>
 
         <div class="method-heading">
-          <a href="#M000405" class="method-signature">
+          <a href="#M000502" class="method-signature">
           <span class="method-name">update</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000405-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000405-source">
+            onclick="toggleCode('M000502-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000502-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 36</span>
 36:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update</span>
 37:     <span class="ruby-ivar">@object</span> = <span class="ruby-identifier">resource</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])
 38:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@object</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">variable_name</span>])
 39:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-node">&quot;#{resource_name.singularize.titleize} '#{object_name}' was updated&quot;</span>
-40:       <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">debug</span> <span class="ruby-node">&quot;Redirecting to #{after_update_url}&quot;</span>
-41:       <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">after_update_url</span>
-42:     <span class="ruby-keyword kw">else</span>
-43:       <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-node">&quot;@#{variable_name}&quot;</span>, <span class="ruby-ivar">@object</span>)
-44:       <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:on_fail_action</span>])
-45:         <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:on_fail_action</span>]
-46:       <span class="ruby-keyword kw">else</span>
-47:         <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'edit'</span>
-48:       <span class="ruby-keyword kw">end</span>
-49:     <span class="ruby-keyword kw">end</span>
-50:   <span class="ruby-keyword kw">end</span>
+40:       <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">after_update_url</span>
+41:     <span class="ruby-keyword kw">else</span>
+42:       <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-node">&quot;@#{variable_name}&quot;</span>, <span class="ruby-ivar">@object</span>)
+43:       <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:on_fail_action</span>])
+44:         <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:on_fail_action</span>]
+45:       <span class="ruby-keyword kw">else</span>
+46:         <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'edit'</span>
+47:       <span class="ruby-keyword kw">end</span>
+48:     <span class="ruby-keyword kw">end</span>
+49:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -325,278 +324,278 @@ CRUD
 
       <h3 class="section-bar">Protected Instance methods</h3>
 
-      <div id="method-M000413" class="method-detail">
-        <a name="M000413"></a>
+      <div id="method-M000510" class="method-detail">
+        <a name="M000510"></a>
 
         <div class="method-heading">
-          <a href="#M000413" class="method-signature">
+          <a href="#M000510" class="method-signature">
           <span class="method-name">after_create_url</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000413-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000413-source">
+            onclick="toggleCode('M000510-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000510-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 86</span>
-86:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">after_create_url</span>
-87:     <span class="ruby-identifier">show_url</span>
-88:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 85</span>
+85:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">after_create_url</span>
+86:     <span class="ruby-identifier">show_url</span>
+87:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000414" class="method-detail">
-        <a name="M000414"></a>
+      <div id="method-M000511" class="method-detail">
+        <a name="M000511"></a>
 
         <div class="method-heading">
-          <a href="#M000414" class="method-signature">
+          <a href="#M000511" class="method-signature">
           <span class="method-name">after_update_url</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000414-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000414-source">
+            onclick="toggleCode('M000511-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000511-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 90</span>
-90:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">after_update_url</span>
-91:     <span class="ruby-identifier">show_url</span>
-92:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 89</span>
+89:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">after_update_url</span>
+90:     <span class="ruby-identifier">show_url</span>
+91:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000410" class="method-detail">
-        <a name="M000410"></a>
+      <div id="method-M000507" class="method-detail">
+        <a name="M000507"></a>
 
         <div class="method-heading">
-          <a href="#M000410" class="method-signature">
+          <a href="#M000507" class="method-signature">
           <span class="method-name">build_object</span><span class="method-args">(params={})</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000410-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000410-source">
+            onclick="toggleCode('M000507-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000507-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 73</span>
-73:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">build_object</span>(<span class="ruby-identifier">params</span>={})
-74:     <span class="ruby-identifier">resource</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">params</span>)
-75:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 72</span>
+72:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">build_object</span>(<span class="ruby-identifier">params</span>={})
+73:     <span class="ruby-identifier">resource</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">params</span>)
+74:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000418" class="method-detail">
-        <a name="M000418"></a>
+      <div id="method-M000515" class="method-detail">
+        <a name="M000515"></a>
 
         <div class="method-heading">
-          <a href="#M000418" class="method-signature">
+          <a href="#M000515" class="method-signature">
           <span class="method-name">edit_template</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000418-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000418-source">
+            onclick="toggleCode('M000515-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000515-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 105</span>
-105:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">edit_template</span>;
-106:     <span class="ruby-value str">'cms/blocks/edit'</span>
-107:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 104</span>
+104:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">edit_template</span>;
+105:     <span class="ruby-value str">'cms/blocks/edit'</span>
+106:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000412" class="method-detail">
-        <a name="M000412"></a>
+      <div id="method-M000509" class="method-detail">
+        <a name="M000509"></a>
 
         <div class="method-heading">
-          <a href="#M000412" class="method-signature">
+          <a href="#M000509" class="method-signature">
           <span class="method-name">index_url</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000412-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000412-source">
+            onclick="toggleCode('M000509-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000509-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 82</span>
-82:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index_url</span>
-83:     <span class="ruby-identifier">cms_url</span> <span class="ruby-identifier">resource_name</span>
-84:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 81</span>
+81:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index_url</span>
+82:     <span class="ruby-identifier">cms_url</span> <span class="ruby-identifier">resource_name</span>
+83:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000417" class="method-detail">
-        <a name="M000417"></a>
+      <div id="method-M000514" class="method-detail">
+        <a name="M000514"></a>
 
         <div class="method-heading">
-          <a href="#M000417" class="method-signature">
+          <a href="#M000514" class="method-signature">
           <span class="method-name">new_template</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000417-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000417-source">
+            onclick="toggleCode('M000514-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000514-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 102</span>
-102:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new_template</span>;
-103:     <span class="ruby-value str">'cms/blocks/new'</span>
-104:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 101</span>
+101:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new_template</span>;
+102:     <span class="ruby-value str">'cms/blocks/new'</span>
+103:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000411" class="method-detail">
-        <a name="M000411"></a>
+      <div id="method-M000508" class="method-detail">
+        <a name="M000508"></a>
 
         <div class="method-heading">
-          <a href="#M000411" class="method-signature">
+          <a href="#M000508" class="method-signature">
           <span class="method-name">object_name</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000411-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000411-source">
+            onclick="toggleCode('M000508-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000508-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 77</span>
-77:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">object_name</span>
-78:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@object</span>
-79:     <span class="ruby-ivar">@object</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:name</span>) <span class="ruby-operator">?</span> <span class="ruby-ivar">@object</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">:</span> <span class="ruby-ivar">@object</span>.<span class="ruby-identifier">to_s</span>
-80:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 76</span>
+76:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">object_name</span>
+77:     <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@object</span>
+78:     <span class="ruby-ivar">@object</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:name</span>) <span class="ruby-operator">?</span> <span class="ruby-ivar">@object</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">:</span> <span class="ruby-ivar">@object</span>.<span class="ruby-identifier">to_s</span>
+79:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000416" class="method-detail">
-        <a name="M000416"></a>
+      <div id="method-M000513" class="method-detail">
+        <a name="M000513"></a>
 
         <div class="method-heading">
-          <a href="#M000416" class="method-signature">
+          <a href="#M000513" class="method-signature">
           <span class="method-name">order_by_column</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000416-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000416-source">
+            onclick="toggleCode('M000513-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000513-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 98</span>
- 98:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">order_by_column</span>
- 99:     <span class="ruby-value str">&quot;name&quot;</span>
-100:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 97</span>
+97:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">order_by_column</span>
+98:     <span class="ruby-value str">&quot;name&quot;</span>
+99:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000409" class="method-detail">
-        <a name="M000409"></a>
+      <div id="method-M000506" class="method-detail">
+        <a name="M000506"></a>
 
         <div class="method-heading">
-          <a href="#M000409" class="method-signature">
+          <a href="#M000506" class="method-signature">
           <span class="method-name">resource</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000409-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000409-source">
+            onclick="toggleCode('M000506-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000506-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 69</span>
-69:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">resource</span>
-70:     <span class="ruby-identifier">resource_name</span>.<span class="ruby-identifier">classify</span>.<span class="ruby-identifier">constantize</span>
-71:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 68</span>
+68:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">resource</span>
+69:     <span class="ruby-identifier">resource_name</span>.<span class="ruby-identifier">classify</span>.<span class="ruby-identifier">constantize</span>
+70:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000407" class="method-detail">
-        <a name="M000407"></a>
+      <div id="method-M000504" class="method-detail">
+        <a name="M000504"></a>
 
         <div class="method-heading">
-          <a href="#M000407" class="method-signature">
+          <a href="#M000504" class="method-signature">
           <span class="method-name">resource_name</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000407-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000407-source">
+            onclick="toggleCode('M000504-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000504-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 61</span>
-61:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">resource_name</span>
-62:     <span class="ruby-identifier">controller_name</span>
-63:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 60</span>
+60:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">resource_name</span>
+61:     <span class="ruby-identifier">controller_name</span>
+62:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000415" class="method-detail">
-        <a name="M000415"></a>
+      <div id="method-M000512" class="method-detail">
+        <a name="M000512"></a>
 
         <div class="method-heading">
-          <a href="#M000415" class="method-signature">
+          <a href="#M000512" class="method-signature">
           <span class="method-name">show_url</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000415-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000415-source">
+            onclick="toggleCode('M000512-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000512-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 94</span>
-94:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">show_url</span>
-95:     <span class="ruby-identifier">cms_url</span> <span class="ruby-ivar">@object</span>
-96:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 93</span>
+93:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">show_url</span>
+94:     <span class="ruby-identifier">cms_url</span> <span class="ruby-ivar">@object</span>
+95:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000408" class="method-detail">
-        <a name="M000408"></a>
+      <div id="method-M000505" class="method-detail">
+        <a name="M000505"></a>
 
         <div class="method-heading">
-          <a href="#M000408" class="method-signature">
+          <a href="#M000505" class="method-signature">
           <span class="method-name">variable_name</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000408-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000408-source">
+            onclick="toggleCode('M000505-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000505-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 65</span>
-65:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">variable_name</span>
-66:     <span class="ruby-identifier">resource_name</span>.<span class="ruby-identifier">singularize</span>
-67:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/resource_controller.rb, line 64</span>
+64:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">variable_name</span>
+65:     <span class="ruby-identifier">resource_name</span>.<span class="ruby-identifier">singularize</span>
+66:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

@@ -56,7 +56,7 @@
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>Fri Nov 21 10:36:07 -0500 2008</td>
+      <td>Fri Nov 21 10:44:07 -0500 2008</td>
     </tr>
     </table>
   </div>
@@ -143,7 +143,11 @@ with the following:
   rake db:migrate
 </pre>
 <p>
-Be careful to &#8230;
+Be careful to view the output of the rake command, as it will contain the
+username/password you should use to log into your CMS. In development
+environment (which is the default, and the one you are using in this
+example), the username/password is always cmsadmin/cmsadmin. In any other
+environment, such as production, a random password is generated for you.
 </p>
 </li>
 <li>Start the Rails web server with the following command:
@@ -162,6 +166,11 @@ now logged into the CMS.
 
 </li>
 </ol>
+<h2>Usage</h2>
+<p>
+Once you are logged into the CMS, you will see 4 tabs at the top of the
+page, Dashboard, Sitemap, Content Library and Administration
+</p>
 
     </div>
 

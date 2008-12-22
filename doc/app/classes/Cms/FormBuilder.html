@@ -86,8 +86,8 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000321">date_picker</a>&nbsp;&nbsp;
-      <a href="#M000320">text_editor</a>&nbsp;&nbsp;
+      <a href="#M000415">date_picker</a>&nbsp;&nbsp;
+      <a href="#M000414">text_editor</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -109,42 +109,42 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000321" class="method-detail">
-        <a name="M000321"></a>
+      <div id="method-M000415" class="method-detail">
+        <a name="M000415"></a>
 
         <div class="method-heading">
-          <a href="#M000321" class="method-signature">
+          <a href="#M000415" class="method-signature">
           <span class="method-name">date_picker</span><span class="method-args">(method, options={})</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000321-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000321-source">
+            onclick="toggleCode('M000415-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000415-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/helpers/cms/form_builder.rb, line 18</span>
-18:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">date_picker</span>(<span class="ruby-identifier">method</span>, <span class="ruby-identifier">options</span>={})
-19:     <span class="ruby-identifier">text_field</span>(<span class="ruby-identifier">method</span>, {<span class="ruby-identifier">:size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">10</span>, <span class="ruby-identifier">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;date_picker&quot;</span>}.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>))
-20:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/helpers/cms/form_builder.rb, line 20</span>
+20:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">date_picker</span>(<span class="ruby-identifier">method</span>, <span class="ruby-identifier">options</span>={})
+21:     <span class="ruby-identifier">text_field</span>(<span class="ruby-identifier">method</span>, {<span class="ruby-identifier">:size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">10</span>, <span class="ruby-identifier">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;date_picker&quot;</span>}.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>))
+22:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000320" class="method-detail">
-        <a name="M000320"></a>
+      <div id="method-M000414" class="method-detail">
+        <a name="M000414"></a>
 
         <div class="method-heading">
-          <a href="#M000320" class="method-signature">
+          <a href="#M000414" class="method-signature">
           <span class="method-name">text_editor</span><span class="method-args">(method, options = {})</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000320-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000320-source">
+            onclick="toggleCode('M000414-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000414-source">
 <pre>
     <span class="ruby-comment cmt"># File app/helpers/cms/form_builder.rb, line 2</span>
  2:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">text_editor</span>(<span class="ruby-identifier">method</span>, <span class="ruby-identifier">options</span> = {})
@@ -155,13 +155,15 @@
  7:       <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:class</span>] = <span class="ruby-value str">&quot;editor&quot;</span>
  8:     <span class="ruby-keyword kw">end</span> 
  9:     <span class="ruby-identifier">id</span> = <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:id</span>] <span class="ruby-operator">||</span> <span class="ruby-node">&quot;#{@object_name}_#{method}&quot;</span>
-10:     <span class="ruby-identifier">html</span> = <span class="ruby-value str">&quot;&lt;div class='editor'&gt;\n&quot;</span>
-11:     <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-ivar">@template</span>.<span class="ruby-identifier">link_to_function</span>(<span class="ruby-value str">&quot;Toggle DHTML Editor&quot;</span>, <span class="ruby-node">&quot;toggleEditor('#{id}')&quot;</span>, <span class="ruby-identifier">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;toggleEditor&quot;</span>)
-12:     <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;\n&quot;</span>
-13:     <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">text_area</span>(<span class="ruby-identifier">method</span>, <span class="ruby-identifier">opts</span>)
-14:     <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;\n&lt;/div&gt;&quot;</span>
-15:     <span class="ruby-identifier">html</span>
-16:   <span class="ruby-keyword kw">end</span>
+10:     <span class="ruby-identifier">disabled</span> = <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:editor_disabled</span>]    
+11:     <span class="ruby-identifier">html</span> = <span class="ruby-node">&quot;&lt;select name=\&quot;dhtml_selector\&quot; onchange=\&quot;setEditor('#{id}', this);\&quot; tabindex=\&quot;32767\&quot;&gt;&lt;option value=\&quot;\&quot;#{' selected=&quot;selected&quot;' unless disabled}&gt;DHTML Editor&lt;/option&gt;&lt;option value=\&quot;disabled\&quot;#{' selected=&quot;selected&quot;' if disabled}&gt;Simple Text&lt;/option&gt;&lt;/select&gt;\n&quot;</span>
+12:     <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&lt;div class='editor'&gt;\n&quot;</span>
+13:     <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;\n&quot;</span>
+14:     <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:editor_disabled</span>] = <span class="ruby-keyword kw">nil</span>;
+15:     <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">text_area</span>(<span class="ruby-identifier">method</span>, <span class="ruby-identifier">opts</span>)
+16:     <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;\n&lt;/div&gt;&quot;</span>
+17:     <span class="ruby-identifier">html</span>
+18:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

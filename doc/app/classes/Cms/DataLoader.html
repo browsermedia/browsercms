@@ -80,8 +80,8 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000239">create</a>&nbsp;&nbsp;
-      <a href="#M000238">method_missing</a>&nbsp;&nbsp;
+      <a href="#M000222">create</a>&nbsp;&nbsp;
+      <a href="#M000221">method_missing</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -103,59 +103,65 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000239" class="method-detail">
-        <a name="M000239"></a>
+      <div id="method-M000222" class="method-detail">
+        <a name="M000222"></a>
 
         <div class="method-heading">
-          <a href="#M000239" class="method-signature">
+          <a href="#M000222" class="method-signature">
           <span class="method-name">create</span><span class="method-args">(model_name, record_name, data={})</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000239-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000239-source">
+            onclick="toggleCode('M000222-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000222-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/data_loader.rb, line 13</span>
-13:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create</span>(<span class="ruby-identifier">model_name</span>, <span class="ruby-identifier">record_name</span>, <span class="ruby-identifier">data</span>={})
-14:       <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;-- create_#{model_name}(:#{record_name})&quot;</span>
-15:       <span class="ruby-ivar">@data</span> <span class="ruby-operator">||=</span> {}
-16:       <span class="ruby-ivar">@data</span>[<span class="ruby-identifier">model_name</span>.<span class="ruby-identifier">pluralize</span>.<span class="ruby-identifier">to_sym</span>] <span class="ruby-operator">||=</span> {}
-17:       <span class="ruby-identifier">model</span> = <span class="ruby-identifier">model_name</span>.<span class="ruby-identifier">classify</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">data</span>)
-18:       <span class="ruby-identifier">model</span>.<span class="ruby-identifier">save!</span>
-19:       <span class="ruby-ivar">@data</span>[<span class="ruby-identifier">model_name</span>.<span class="ruby-identifier">pluralize</span>.<span class="ruby-identifier">to_sym</span>][<span class="ruby-identifier">record_name</span>] = <span class="ruby-identifier">model</span>
-20:     <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/data_loader.rb, line 19</span>
+19:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create</span>(<span class="ruby-identifier">model_name</span>, <span class="ruby-identifier">record_name</span>, <span class="ruby-identifier">data</span>={})
+20:       <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;-- create_#{model_name}(:#{record_name})&quot;</span>
+21:       <span class="ruby-ivar">@data</span> <span class="ruby-operator">||=</span> {}
+22:       <span class="ruby-ivar">@data</span>[<span class="ruby-identifier">model_name</span>.<span class="ruby-identifier">pluralize</span>.<span class="ruby-identifier">to_sym</span>] <span class="ruby-operator">||=</span> {}
+23:       <span class="ruby-identifier">model</span> = <span class="ruby-identifier">model_name</span>.<span class="ruby-identifier">classify</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">data</span>)
+24:       <span class="ruby-identifier">model</span>.<span class="ruby-identifier">save!</span>
+25:       <span class="ruby-ivar">@data</span>[<span class="ruby-identifier">model_name</span>.<span class="ruby-identifier">pluralize</span>.<span class="ruby-identifier">to_sym</span>][<span class="ruby-identifier">record_name</span>] = <span class="ruby-identifier">model</span>
+26:     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000238" class="method-detail">
-        <a name="M000238"></a>
+      <div id="method-M000221" class="method-detail">
+        <a name="M000221"></a>
 
         <div class="method-heading">
-          <a href="#M000238" class="method-signature">
+          <a href="#M000221" class="method-signature">
           <span class="method-name">method_missing</span><span class="method-args">(method_name, *args)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000238-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000238-source">
+            onclick="toggleCode('M000221-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000221-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/data_loader.rb, line 3</span>
  3:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">method_name</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
- 4:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">method_name</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp re">/\Acreate_(.+)\Z/</span>)
- 5:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">$1</span>, <span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>], <span class="ruby-identifier">args</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">||</span> {})
- 6:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-ivar">@data</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@data</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">method_name</span>)
- 7:         <span class="ruby-identifier">record</span> = <span class="ruby-ivar">@data</span>[<span class="ruby-identifier">method_name</span>][<span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span>]
- 8:         <span class="ruby-identifier">record</span> <span class="ruby-value">? </span><span class="ruby-identifier">record</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">record</span>.<span class="ruby-identifier">id</span>) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
- 9:       <span class="ruby-keyword kw">else</span>
-10:         <span class="ruby-keyword kw">super</span>
-11:       <span class="ruby-keyword kw">end</span>
-12:     <span class="ruby-keyword kw">end</span>
+ 4:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">md</span> = <span class="ruby-identifier">method_name</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">match</span>(<span class="ruby-regexp re">/^create_(.+)$/</span>)
+ 5:         <span class="ruby-keyword kw">begin</span>
+ 6:           <span class="ruby-comment cmt">#Make sure this is an active record class</span>
+ 7:           <span class="ruby-keyword kw">super</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">md</span>[<span class="ruby-value">1</span>].<span class="ruby-identifier">classify</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">ancestors</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>)
+ 8:         <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">NameError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+ 9:           <span class="ruby-keyword kw">super</span>
+10:         <span class="ruby-keyword kw">end</span>
+11:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">md</span>[<span class="ruby-value">1</span>], <span class="ruby-identifier">args</span>[<span class="ruby-value">0</span>], <span class="ruby-identifier">args</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">||</span> {})
+12:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-ivar">@data</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-ivar">@data</span>.<span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">method_name</span>)
+13:         <span class="ruby-identifier">record</span> = <span class="ruby-ivar">@data</span>[<span class="ruby-identifier">method_name</span>][<span class="ruby-identifier">args</span>.<span class="ruby-identifier">first</span>]
+14:         <span class="ruby-identifier">record</span> <span class="ruby-value">? </span><span class="ruby-identifier">record</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">record</span>.<span class="ruby-identifier">id</span>) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+15:       <span class="ruby-keyword kw">else</span>
+16:         <span class="ruby-keyword kw">super</span>
+17:       <span class="ruby-keyword kw">end</span>
+18:     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

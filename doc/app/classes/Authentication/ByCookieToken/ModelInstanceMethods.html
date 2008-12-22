@@ -136,7 +136,7 @@ deleted together.
 55:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">forget_me</span>
 56:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">remember_token_expires_at</span> = <span class="ruby-keyword kw">nil</span>
 57:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">remember_token</span>            = <span class="ruby-keyword kw">nil</span>
-58:         <span class="ruby-identifier">save</span>(<span class="ruby-keyword kw">false</span>)
+58:         <span class="ruby-identifier">save</span>
 59:       <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
@@ -164,7 +164,7 @@ refresh token (keeping same expires_at) if it exists
 43:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">refresh_token</span>
 44:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">remember_token?</span>
 45:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">remember_token</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">make_token</span> 
-46:           <span class="ruby-identifier">save</span>(<span class="ruby-keyword kw">false</span>)      
+46:           <span class="ruby-identifier">save</span>      
 47:         <span class="ruby-keyword kw">end</span>
 48:       <span class="ruby-keyword kw">end</span>
 </pre>
@@ -240,7 +240,7 @@ browser closes
 36:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remember_me_until</span>(<span class="ruby-identifier">time</span>)
 37:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">remember_token_expires_at</span> = <span class="ruby-identifier">time</span>
 38:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">remember_token</span>            = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">make_token</span>
-39:         <span class="ruby-identifier">save</span>(<span class="ruby-keyword kw">false</span>)
+39:         <span class="ruby-identifier">save</span>
 40:       <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
