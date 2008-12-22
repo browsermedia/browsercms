@@ -1,6 +1,8 @@
 jQuery(function($){
   
   //----- Helper Functions -----------------------------------------------------
+  //In all of this code, we are defining functions that we use later
+  //None of this actually manipulates the DOM in any way
   
   //This is used to get the id part of an elementId
   //For example, if you have section_node_5, 
@@ -10,8 +12,128 @@ jQuery(function($){
     return elementId.replace(s,'')
   }
   
-  var clearSelectedSectionNode = function() {
+  var addHoverToSectionNodes = function() {
+    $('#sitemap tr.section_node').hover(
+      function() { $(this).addClass('hover')},
+      function() { $(this).removeClass('hover')}
+    )    
+  }
+  
+  var disableButtons = function() {
     $('a.button').addClass('disabled').click(function(){return false})
+  }
+  
+  var makeMovableRowsDraggable = function() {
+    $('#sitemap tr.movable').draggable({
+      revert: 'invalid',
+      revertDuration: 200,
+      helper: 'clone',
+      delay: 200,
+      start: function(event, ui) {
+        ui.helper.removeClass('hover').removeClass('selected')
+      }
+    })    
+  }
+  
+  var moveSectionNode = function(sectionNodeId, beforeOrAfter, otherSectionNodeId) {
+    var url = '/cms/section_nodes/move_'+beforeOrAfter+'/'+sectionNodeId
+    $.post(url, { _method: "PUT", section_node_id: otherSectionNodeId },
+      function(data){
+        if(data.success) {
+          $.cms.showNotice(data.message)
+        } else {
+          $.cms.showError(data.message)
+        }
+      }, "json"
+    );
+  }
+  
+  var nodeOnDrop = function(e, ui) {
+    //Remove any drop zone highlights still hanging out
+    $('#sitemap td.drop-before, #sitemap td.drop-after').removeClass('drop-over')
+
+    //Get the object and the id for the src (what we are droping) 
+    //and the dest (where we are dropping)
+    var src = ui.draggable
+    var sid = getId(src[0].id, 'section_node_')
+    var dest = $(this).parents('tr.section_node')
+    var did = getId(dest[0].id, 'section_node_')
+
+    //insert before or after, based on the class of the drop zone
+    if($(this).hasClass('drop-before') || $(this).hasClass('drop-after')) {
+      if($(this).hasClass('drop-before')) {
+        var move = 'before'
+        src.insertBefore(dest)
+      } else {
+        var move = 'after'          
+        src.insertAfter(dest)
+      }
+
+      //Update the parent/ancestors as well as the depth
+      var old_class = src.attr('class')
+      var old_depth = parseInt($('td.node img', src).css('padding-left').replace('px','')) || 0
+      var new_class = dest.attr('class')
+      var new_depth = parseInt($('td.node img', dest).css('padding-left').replace('px','')) || 0
+
+      src.attr('class', new_class).addClass('section_node')
+      $('td.node img', src).css('padding-left', new_depth+'px')
+
+      //Modify the depth of all children
+      $('.p'+sid+' td.node img, .a'+sid+' td.node img').each(function(){
+        var cur_depth = parseInt(($(this).css('padding-left').replace('px','')) || 0);
+        $(this).css('padding-left', (new_depth - old_depth + cur_depth)+'px')
+      })
+
+      //Now remove all the old ancestors and add back the new ones on the children
+      $(old_class.replace('p','a').split(' ')).each(function(){ 
+        $('.p'+sid+', .a'+sid).removeClass(this) 
+      })
+      $(new_class.replace('p','a').split(' ')).each(function(){ 
+        $('.p'+sid+', .a'+sid).addClass(this) 
+      })
+
+      //Now we move over all the decendents of the src
+      var prev_node = src;
+      $('#sitemap tr.section_node').each(function(){
+        if($(this).hasClass('p'+sid) || $(this).hasClass('a'+sid)) {
+          $(this).insertAfter(prev_node)
+          prev_node = $(this)
+        }
+      })
+
+      //Now we move over all the decendents of the dest
+      prev_node = dest;
+      $('#sitemap tr.section_node').each(function(){
+        if($(this).hasClass('p'+did) || $(this).hasClass('a'+did)) {
+          $(this).insertAfter(prev_node)
+          prev_node = $(this)
+        }
+      })
+
+      //Make the thing we are dropping be selected
+      selectSectionNode(ui.draggable)
+
+      //Finally do the ajax request
+      moveSectionNode(sid, move, did)
+    }    
+  }
+  
+  var enableDropZones = function() {
+    $('#sitemap td.drop-before, #sitemap td.drop-after').droppable({
+      accept: 'tr',
+      tolerance: 'pointer',
+      over: function(e, ui) {
+        $(this).addClass('drop-over')
+      },
+      out: function(e, ui) {
+        $(this).removeClass('drop-over')
+      },
+      drop: nodeOnDrop
+    });    
+  }  
+    
+  var clearSelectedSectionNode = function() {
+    disableButtons()
     $('#sitemap tr.section_node').removeClass('selected')    
   }
   
@@ -136,121 +258,7 @@ jQuery(function($){
     $(sectionNode).find('img.folder').attr('src','/images/cms/icons/actions/folder.png').removeClass("folder-open")    
   }
   
-  //Add hover to tr
-  $('#sitemap tr.section_node').hover(
-    function() { $(this).addClass('hover')},
-    function() { $(this).removeClass('hover')}
-  )    
-  
-  //Disable all "buttons"
-  $('#buttons a.disabled').click(function(){ return false })
-
-  var dragNode = false;
-  var origNode = false;
-  
-  //drag/drop functionality
-  $('#sitemap tr.movable').draggable({
-    revert: 'invalid',
-    revertDuration: 200,
-    helper: 'clone',
-    delay: 200,
-    start: function(event, ui) {
-      ui.helper.removeClass('hover').removeClass('selected')
-    }
-  })
-  
-  $('#sitemap td.drop-before, #sitemap td.drop-after').droppable({
-    accept: 'tr',
-    tolerance: 'pointer',
-    over: function(e, ui) {
-      $(this).addClass('drop-over')
-    },
-    out: function(e, ui) {
-      $(this).removeClass('drop-over')
-    },
-    drop: function(e, ui) {
-      //Remove any drop zone highlights still hanging out
-      $('#sitemap td.drop-before, #sitemap td.drop-after').removeClass('drop-over')
-      
-      //Get the object and the id for the src (what we are droping) 
-      //and the dest (where we are dropping)
-      var src = ui.draggable
-      var sid = getId(src[0].id, 'section_node_')
-      var dest = $(this).parents('tr.section_node')
-      var did = getId(dest[0].id, 'section_node_')
-            
-      //insert before or after, bsed on the class of the drop zone
-      if($(this).hasClass('drop-before') || $(this).hasClass('drop-after')) {
-        if($(this).hasClass('drop-before')) {
-          var move = 'before'
-          src.insertBefore(dest)
-        } else {
-          var move = 'after'          
-          src.insertAfter(dest)
-        }
-        
-        var url = '/cms/section_nodes/move_'+move+'/'+sid
-        
-        //Update the parent/ancestors as well as the depth
-        var old_class = src.attr('class')
-        var old_depth = parseInt($('td.node img', src).css('padding-left').replace('px','')) || 0
-        var new_class = dest.attr('class')
-        var new_depth = parseInt($('td.node img', dest).css('padding-left').replace('px','')) || 0
-
-        src.attr('class', new_class).addClass('section_node')
-        $('td.node img', src).css('padding-left', new_depth+'px')
-
-        //Modify the depth of all children
-        $('.p'+sid+' td.node img, .a'+sid+' td.node img').each(function(){
-          var cur_depth = parseInt(($(this).css('padding-left').replace('px','')) || 0);
-          $(this).css('padding-left', (new_depth - old_depth + cur_depth)+'px')
-        })
-
-        //Now remove all the old ancestors and add back the new ones on the children
-        $(old_class.replace('p','a').split(' ')).each(function(){ 
-          $('.p'+sid+', .a'+sid).removeClass(this) 
-        })
-        $(new_class.replace('p','a').split(' ')).each(function(){ 
-          $('.p'+sid+', .a'+sid).addClass(this) 
-        })
-
-        //Now we move over all the decendents of the src
-        var prev_node = src;
-        $('#sitemap tr.section_node').each(function(){
-          if($(this).hasClass('p'+sid) || $(this).hasClass('a'+sid)) {
-            $(this).insertAfter(prev_node)
-            prev_node = $(this)
-          }
-        })
-
-        //Now we move over all the decendents of the dest
-        prev_node = dest;
-        $('#sitemap tr.section_node').each(function(){
-          if($(this).hasClass('p'+did) || $(this).hasClass('a'+did)) {
-            $(this).insertAfter(prev_node)
-            prev_node = $(this)
-          }
-        })
-
-        //Make the thing we are dropping be selected
-        selectSectionNode(ui.draggable)
-
-        //Finally do the ajax request
-        $.post(url, { _method: "PUT", section_node_id: did },
-          function(data){
-            if(data.success) {
-              $.cms.showNotice(data.message)
-            } else {
-              $.cms.showError(data.message)
-            }
-          }, "json");
-      }
-      
-    }
-  });
-  
-  //onClick for a row
-  $('#sitemap tr.section_node').click(function(){
+  var nodeOnClick = function() {
     clearSelectedSectionNode()
     $(this).addClass('selected')
     
@@ -261,16 +269,33 @@ jQuery(function($){
     if($(node).hasClass('root') || $(node).hasClass('section')) {
       toggleSection(this)
     }
-
-  })
-
-  //Fire the click even for each section that should be open
-  var openSectionNodeIds = $.cookieSet.get('openSectionNodes')
-  if(openSectionNodeIds) {
-    var openSectionNodeSelector = $.map(openSectionNodeIds, function(e,i){ return "#section_node_"+e }).join(', ')
-    $(openSectionNodeSelector).click()
-    clearSelectedSectionNode() 
+  }  
+  
+  var addNodeOnClick = function() {
+    $('#sitemap tr.section_node').click(nodeOnClick)    
   }
   
-})
+  //Whenever you open a section, a cookie is updated so that next time you view the sitemap
+  //that section will start in open state
+  var fireOnClickForOpenSectionNodes = function() {
+    var openSectionNodeIds = $.cookieSet.get('openSectionNodes')
+    if(openSectionNodeIds) {
+      var openSectionNodeSelector = $.map(openSectionNodeIds, function(e,i){ return "#section_node_"+e }).join(', ')
+      $(openSectionNodeSelector).click()
+      clearSelectedSectionNode() 
+    }    
+  }
+  
+  
+  //----- Init -----------------------------------------------------------------
+  //In other words, stuff that happens when the page loads
+  //This is where we actually manipulate the DOM, fire events, etc.
+  
+  addHoverToSectionNodes()  
+  disableButtons()
+  makeMovableRowsDraggable()
+  enableDropZones()  
+  addNodeOnClick()
+  fireOnClickForOpenSectionNodes()
 
+})
