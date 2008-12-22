@@ -15,8 +15,11 @@ margin-top: 1px;
 margin-left: 3px;
 }
 
-.actions img {
+.actions img, .tooltip img {
 border: none;
+}
+.tooltip {
+cursor: default;
 }
 
 

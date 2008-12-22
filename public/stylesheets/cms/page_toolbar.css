@@ -84,31 +84,40 @@ margin-right: 5px;
 margin-top: 4px;
 }
 .visual_editor_value_container {
-background: blue url(/images/cms/page_toolbar/visual_editor_bg.gif) repeat 0 0;
+background: #616161 url(/images/cms/page_toolbar/visual_editor_bg.gif) repeat 0 0;
 width: 66px;
 height: 20px;
 padding: 0;
 color: #EEE;
 }
-.visual_editor_value_container div{
+.visual_editor_value_container a{
+display: block;
 text-align: center;
 float: left;
 width: 32px;
 height: 15px;
 margin: 1px 0 0 0;
 padding-top: 3px;
-}
-.visual_editor_value_container a{
 text-decoration: none;
 }
 
-.sm_button a {
-text-decoration: none;
+a.sm_button { 
+	padding: 3px 0 4px 0;
+	background: url(/images/cms/buttons/sm_button.gif) no-repeat top right;
+	color: #FFF;
+	text-decoration: none;
+	margin-right: 0px;
 }
-.sm_button {
-float: left;
-background: blue url(/images/cms/page_toolbar/sm_button_bg.gif) no-repeat 0 0;
+
+
+
+a.sm_button:hover {
+	background: url(/images/cms/buttons/sm_button_h.gif) no-repeat top right;
 }
-.sm_button:hover {
-background: blue url(/images/cms/page_toolbar/sm_button_bg_h.gif) no-repeat 0 0;
-}
+
+
+
+
+
+
+

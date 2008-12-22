@@ -38,3 +38,6 @@ width: 30%;
 td.updated_at {
 width: 35%;
 }
+td {
+line-height: 1.5em;
+}
