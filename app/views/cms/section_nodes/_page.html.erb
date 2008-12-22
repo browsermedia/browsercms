@@ -1,25 +1,25 @@
-<tr id="section_node_<%= node.id %>"<% if ancestors.empty? %> class="section_node"<% else %>
-    class="section_node <%= a = []; ancestors.each_with_index{|sn, i| a << "#{i == ancestors.size-1 ? 'p' : 'a'}#{sn.id}"}; a.join(" ") %>" 
-    style="display: none"<% end %>>
-  <td class="node" style="padding-left: <%= (depth+1)*15 %>px">
-    <table cellpadding="0" cellspacing="0">
-      <tr><td class="drop_before"><div></div></td></tr>
-      <tr><td class="icon_node"><div<% able_to? :publish_content do -%> class="movable"<% end -%>>
-        <%= action_icon(:page) %>
-        <span id="page_<%= page.id %>" class="page node"><%= h(page.name) %></span>
-      </div></td></tr>
-      <tr><td class="drop_after"><div></div></td></tr>
+<tr id="section_node_<%= node.id %>" class="<%= css_classes.join(" ") %>" style="display: <%= display %>">
+  <td width="980">
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr><td colspan="4" class="drop-before"></td></tr>
+      <tr>
+        <td id="page_<%= page.id %>" class="page node">
+          <%= action_icon(:page, :style => "padding-left: #{depth*15}px") %>
+          <%= h(page.name) %>
+        </td>
+        <td class="sitemap_status">
+          <%= status_icon(:hidden) if page.hidden? %>
+        </td>
+        <td class="sitemap_status">&nbsp;</td>
+        <td class="sitemap_published_status">
+          <% if page.archived? %>
+            <%= status_icon(:archived) %> <div>Archived</div>
+          <% else %>
+            <%= status_icon(page.status) %> <div><%= page.published? ? "Published" : "Draft" %></div>
+          <% end %>
+        </td>
+      </tr>
+      <tr><td colspan="4" class="drop-after"></td></tr>
     </table>    
   </td>
-  <td class="sitemap_status">
-    <%= status_icon(:hidden) if page.hidden? %>
-  </td>
-  <td class="sitemap_status">&nbsp;</td>
-  <td class="sitemap_published_status">
-<% if page.archived? %>
-    <%= status_icon(:archived) %> <div>Archived</div>
-<% else %>
-<%= status_icon(page.status) %> <div><%= page.published? ? "Published" : "Draft" %></div>
-<% end %>
-</td>
 </tr>

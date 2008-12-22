@@ -1,5 +1,141 @@
 jQuery(function($){
   
+  //----- Helper Functions -----------------------------------------------------
+  
+  //This is used to get the id part of an elementId
+  //For example, if you have section_node_5, 
+  //you pass this 'section_node_5', 'section_node' 
+  //and this returns 5
+  var getId = function(elementId, s) {
+    return elementId.replace(s,'')
+  }
+  
+  var clearSelectedSectionNode = function() {
+    $('a.button').addClass('disabled').click(function(){return false})
+    $('#sitemap tr.section_node').removeClass('selected')    
+  }
+  
+  var selectSectionNode = function(sectionNode) {
+    clearSelectedSectionNode(sectionNode)
+    enableButtonsForSectionNode(sectionNode)
+    $(sectionNode).addClass('selected')    
+  }
+  
+  var enableButtonsForSectionNode = function(sectionNode) {
+    enableButtonsForNode($(sectionNode).find('td.node')[0])
+  }
+  
+  var enableButtonsForNode = function(node) {
+    var id = getId(node.id, /(section|page|link)_/)
+    if($(node).hasClass('section')) {
+      enableButtonsForSection(id)
+    } else if($(node).hasClass('page')) {
+      enableButtonsForPage(id)
+    } else if($(node).hasClass('link')) {
+      enableButtonsForLink(id)
+    }  
+  }
+  
+  var enableButtonsForSection = function(id) {
+    $('#properties-button')
+      .removeClass('disabled')
+      .attr('href','/cms/sections/edit/'+id)
+      .unbind('click')
+      .click(function(){return true})
+    
+    $('#add-page-button')
+      .removeClass('disabled')
+      .attr('href','/cms/pages/new?section_id='+id)
+      .unbind('click')
+      .click(function(){return true})
+
+    $('#add-section-button')
+      .removeClass('disabled')
+      .attr('href','/cms/sections/new?section_id='+id)
+      .unbind('click')
+      .click(function(){return true})
+      
+    $('#add-link-button')
+      .removeClass('disabled')
+      .attr('href','/cms/links/new?section_id='+id)
+      .unbind('click')
+      .click(function(){return true})    
+  }
+  
+  var enableButtonsForPage = function(id) {
+    $('#edit-button')
+      .removeClass('disabled')
+      .attr('href','/cms/pages/show/'+id)
+      .unbind('click')
+      .click(function(){return true})
+
+    $('#properties-button')
+      .removeClass('disabled')
+      .attr('href','/cms/pages/edit/'+id)
+      .unbind('click')
+      .click(function(){return true})
+
+    $('#delete-button')
+      .removeClass('disabled')
+      .attr('href','/cms/pages/destroy/'+id+'.json')
+      .unbind('click')
+      .click(function(){
+        if(confirm('Are you sure you want to delete this page?')) {
+          $.post($(this).attr('href'), { _method: "DELETE" },
+            function(data){
+              if(data.success) {
+                $.cms.showNotice(data.message)
+              } else {
+                $.cms.showError(data.message)
+              }
+            }, "json");
+          $('#page_'+id).parents('.section_node').remove()            
+        }
+        return false;
+      })    
+  }
+  
+  var enableButtonsForLink = function(id) {
+    $('#properties-button')
+      .removeClass('disabled')
+      .attr('href','/cms/links/edit/'+id)
+      .unbind('click')
+      .click(function(){return true})    
+  }
+  
+  var toggleSection = function(sectionNode) {
+    if($(sectionNode).find('img.folder-open').length) {
+      closeSection(sectionNode)
+    } else if($(sectionNode).find('img.folder').length) {
+      openSection(sectionNode)
+    } else {
+      //WTF?
+    }    
+  }
+
+  var openSection = function(sectionNode) {
+    var id = getId(sectionNode.id, 'section_node_')
+    
+    //Remember to re-open this section
+    $.cookieSet.add('openSectionNodes', id, {path: '/', expires: 90})
+    
+    $('.p'+id).show()
+    $(sectionNode).find('img.folder').attr('src','/images/cms/icons/actions/folder_open.png').addClass("folder-open")    
+  }
+  
+  var closeSection = function(sectionNode) {
+    var id = getId(sectionNode.id, 'section_node_')
+    
+    //Remove this section from the set of open nodes
+    $.cookieSet.remove('openSectionNodes', id, {path: '/', expires: 90})
+
+    //close children
+    $('.p'+id+', .a'+id).hide().find('img.folder').attr('src','/images/cms/icons/actions/folder.png').removeClass("folder-open")
+
+    //close this
+    $(sectionNode).find('img.folder').attr('src','/images/cms/icons/actions/folder.png').removeClass("folder-open")    
+  }
+  
   //Add hover to tr
   $('#sitemap tr.section_node').hover(
     function() { $(this).addClass('hover')},
@@ -13,14 +149,18 @@ jQuery(function($){
   var origNode = false;
   
   //drag/drop functionality
-  $('#sitemap .icon_node div.movable').draggable({
+  $('#sitemap tr.movable').draggable({
     revert: 'invalid',
     revertDuration: 200,
     helper: 'clone',
-    delay: 200
+    delay: 200,
+    start: function(event, ui) {
+      ui.helper.removeClass('hover').removeClass('selected')
+    }
   })
-  $('#sitemap .node .drop_before, #sitemap .node .drop_after').droppable({
-    accept: 'div',
+  
+  $('#sitemap td.drop-before, #sitemap td.drop-after').droppable({
+    accept: 'tr',
     tolerance: 'pointer',
     over: function(e, ui) {
       $(this).addClass('drop-over')
@@ -30,18 +170,18 @@ jQuery(function($){
     },
     drop: function(e, ui) {
       //Remove any drop zone highlights still hanging out
-      $('#sitemap .node .drop_before, #sitemap .node .drop_after').removeClass('drop-over')
+      $('#sitemap td.drop-before, #sitemap td.drop-after').removeClass('drop-over')
       
       //Get the object and the id for the src (what we are droping) 
       //and the dest (where we are dropping)
-      var src = ui.draggable.parent('td').parent('tr').parents('tr')
-      var sid = src[0].id.replace(/section_node_/,'')
-      var dest = $(this).parent('tr').parents('tr')
-      var did = dest[0].id.replace(/section_node_/,'')
+      var src = ui.draggable
+      var sid = getId(src[0].id, 'section_node_')
+      var dest = $(this).parents('tr.section_node')
+      var did = getId(dest[0].id, 'section_node_')
             
       //insert before or after, bsed on the class of the drop zone
-      if($(this).hasClass('drop_before') || $(this).hasClass('drop_after')) {
-        if($(this).hasClass('drop_before')) {
+      if($(this).hasClass('drop-before') || $(this).hasClass('drop-after')) {
+        if($(this).hasClass('drop-before')) {
           var move = 'before'
           src.insertBefore(dest)
         } else {
@@ -53,15 +193,15 @@ jQuery(function($){
         
         //Update the parent/ancestors as well as the depth
         var old_class = src.attr('class')
-        var old_depth = parseInt($('td.node', src).css('padding-left').replace('px','')) || 0
+        var old_depth = parseInt($('td.node img', src).css('padding-left').replace('px','')) || 0
         var new_class = dest.attr('class')
-        var new_depth = parseInt($('td.node', dest).css('padding-left').replace('px','')) || 0
+        var new_depth = parseInt($('td.node img', dest).css('padding-left').replace('px','')) || 0
 
         src.attr('class', new_class).addClass('section_node')
-        $('td.node', src).css('padding-left', new_depth+'px')
+        $('td.node img', src).css('padding-left', new_depth+'px')
 
         //Modify the depth of all children
-        $('.p'+sid+' td.node, .a'+sid+' td.node').each(function(){
+        $('.p'+sid+' td.node img, .a'+sid+' td.node img').each(function(){
           var cur_depth = parseInt(($(this).css('padding-left').replace('px','')) || 0);
           $(this).css('padding-left', (new_depth - old_depth + cur_depth)+'px')
         })
@@ -92,6 +232,9 @@ jQuery(function($){
           }
         })
 
+        //Make the thing we are dropping be selected
+        selectSectionNode(ui.draggable)
+
         //Finally do the ajax request
         $.post(url, { _method: "PUT", section_node_id: did },
           function(data){
@@ -105,117 +248,29 @@ jQuery(function($){
       
     }
   });
-
-  //onClick for the folder icon for each section, show/hide section
-  $('#sitemap a.folder').click(function(){ 
-    var id = this.id.replace(/folder_/,'')
-    
-    if($(this).hasClass("folder-open")) {
-      //Remove this section from the set of open nodes
-      $.cookieSet.remove('openSectionNodes', id, {path: '/', expires: 90})
-
-      //close children
-      $('.p'+id+', .a'+id).hide()
-        .find('a').removeClass("folder-open")
-          .find('img').attr('src','/images/cms/icons/actions/folder.png')
-
-      //close this
-      $(this).find('img').attr('src','/images/cms/icons/actions/folder.png')
-      $(this).removeClass("folder-open")
-    } else {
-      //Remember to re-open this section
-      $.cookieSet.add('openSectionNodes', id, {path: '/', expires: 90})
-      
-      $('.p'+id).show()
-      $(this).find('img').attr('src','/images/cms/icons/actions/folder_open.png')
-      $(this).addClass("folder-open")
-    }
-    return false 
-  })
   
-  //onClick for the name of a section/page
-  $('#sitemap span.node').click(function(){
-    $('a.button').addClass('disabled').click(function(){return false})
-    $('#sitemap span.node').removeClass('selected')
+  //onClick for a row
+  $('#sitemap tr.section_node').click(function(){
+    clearSelectedSectionNode()
     $(this).addClass('selected')
-        
-    var id = this.id.replace(/(section|page|link)_/,'');
     
-    if($(this).hasClass('root') || $(this).hasClass('section')) {
-      $('#properties-button')
-        .removeClass('disabled')
-        .attr('href','/cms/sections/edit/'+id)
-        .unbind('click')
-        .click(function(){return true})
-      
-      $('#add-page-button')
-        .removeClass('disabled')
-        .attr('href','/cms/pages/new?section_id='+id)
-        .unbind('click')
-        .click(function(){return true})
-
-      $('#add-section-button')
-        .removeClass('disabled')
-        .attr('href','/cms/sections/new?section_id='+id)
-        .unbind('click')
-        .click(function(){return true})
-        
-      $('#add-link-button')
-        .removeClass('disabled')
-        .attr('href','/cms/links/new?section_id='+id)
-        .unbind('click')
-        .click(function(){return true})
-        
-    } else if($(this).hasClass('page')) {
-      $('#edit-button')
-        .removeClass('disabled')
-        .attr('href','/cms/pages/show/'+id)
-        .unbind('click')
-        .click(function(){return true})
-
-      $('#properties-button')
-        .removeClass('disabled')
-        .attr('href','/cms/pages/edit/'+id)
-        .unbind('click')
-        .click(function(){return true})
-
-      $('#delete-button')
-        .removeClass('disabled')
-        .attr('href','/cms/pages/destroy/'+id+'.json')
-        .unbind('click')
-        .click(function(){
-          if(confirm('Are you sure you want to delete this page?')) {
-            $.post($(this).attr('href'), { _method: "DELETE" },
-              function(data){
-                if(data.success) {
-                  $.cms.showNotice(data.message)
-                } else {
-                  $.cms.showError(data.message)
-                }
-              }, "json");
-            $('#page_'+id).parents('.section_node').remove()            
-          }
-          return false;
-        })
-
-      
-    } else if($(this).hasClass('link')) {
-      $('#properties-button')
-        .removeClass('disabled')
-        .attr('href','/cms/links/edit/'+id)
-        .unbind('click')
-        .click(function(){return true})
-
+    var node = $(this).find('td.node')[0]
+    var id = getId(node.id, /(section|page|link)_/)
+    
+    selectSectionNode(this)
+    if($(node).hasClass('root') || $(node).hasClass('section')) {
+      toggleSection(this)
     }
-  })
-  
-})
 
-//Fire the click even for each section that should be open
-jQuery(function($){
+  })
+
+  //Fire the click even for each section that should be open
   var openSectionNodeIds = $.cookieSet.get('openSectionNodes')
   if(openSectionNodeIds) {
-    var openSectionNodeSelector = $.map(openSectionNodeIds, function(e,i){ return "#folder_"+e }).join(', ')
+    var openSectionNodeSelector = $.map(openSectionNodeIds, function(e,i){ return "#section_node_"+e }).join(', ')
     $(openSectionNodeSelector).click()
+    clearSelectedSectionNode() 
   }
+  
 })
+
