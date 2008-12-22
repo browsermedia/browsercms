@@ -288,13 +288,12 @@ jQuery(function($){
   //that section will start in open state
   var fireOnClickForOpenSectionNodes = function() {
     var openSectionNodeIds = $.cookieSet.get('openSectionNodes')
+    $('#sitemap tr.section_node:first').click()
     if(openSectionNodeIds) {
       var openSectionNodeSelector = $.map(openSectionNodeIds, function(e,i){ return "#section_node_"+e }).join(', ')
       $(openSectionNodeSelector).click()
-      clearSelectedSectionNode() 
     }    
-  }
-  
+  }  
   
   //----- Init -----------------------------------------------------------------
   //In other words, stuff that happens when the page loads

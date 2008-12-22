@@ -73,11 +73,10 @@ jQuery(function($) {
   $.cookieSet = {
     //Treats the cookie as an array 
     add: function(name, value, options) {
+      this.remove(name, value, options)
       var set = this.get(name)
       if(set) {
-        if(!this.contains(name, value)) {
-          set.push(value)  
-        }
+        set.push(value)  
       } else {
         var set = [value]
       }
