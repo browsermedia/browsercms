@@ -271,7 +271,7 @@ jQuery(function($){
     var id = getId(node.id, /(section|page|link)_/)
     
     selectSectionNode(this)
-    if($(node).hasClass('root') || $(node).hasClass('section')) {
+    if(!$(node).hasClass('root') && $(node).hasClass('section')) {
       if(sectionNodeIsOpen(this) && selected) {
         closeSection(this)  
       } else {
