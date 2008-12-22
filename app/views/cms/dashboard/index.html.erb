@@ -6,9 +6,6 @@
 <div class="dashboard_unit">
 <h2>Page Drafts</h2>
 
-<% if @unpublished_pages.empty? %>
-  <p>All pages are published</p>
-<% else %>  
   <% form_tag cms_path(:pages, :publish) do %>
     <table id="draft">
       <tr>
@@ -17,6 +14,10 @@
         <th>User</th>
 	<th class="last">Date</th>
       </tr>
+
+    <% if @unpublished_pages.empty? %>
+      <tr><td colspan="3">All pages are published</td></tr>
+    <% else %>  
       <% @unpublished_pages.each do |page| %>
         <tr>
           <td class="select"><%= check_box_tag "page_ids[]", page.id, false, :id => "publish_page_#{page.id}" %></td>
@@ -25,9 +26,9 @@
           <td class="updated_at"><%= page.updated_at.strftime("%m/%d/%y %l:%M %p") %></td>
         </tr>
       <% end %>
+    <% end %>
     </table>
     <%= lt_button_wrapper(submit_tag("Publish Selected", :class => "submit")) %>
-  <% end %>
 <% end %>
 </div>
 
