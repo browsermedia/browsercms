@@ -258,7 +258,12 @@ jQuery(function($){
     $(sectionNode).find('img.folder').attr('src','/images/cms/icons/actions/folder.png').removeClass("folder-open")    
   }
   
+  var sectionNodeIsOpen = function(sectionNode) {
+    return $(sectionNode).find('img.folder-open').length
+  }
+  
   var nodeOnClick = function() {
+    var selected = $(this).hasClass('selected')
     clearSelectedSectionNode()
     $(this).addClass('selected')
     
@@ -267,7 +272,11 @@ jQuery(function($){
     
     selectSectionNode(this)
     if($(node).hasClass('root') || $(node).hasClass('section')) {
-      toggleSection(this)
+      if(sectionNodeIsOpen(this) && selected) {
+        closeSection(this)  
+      } else {
+        openSection(this)
+      }
     }
   }  
   
