@@ -33,11 +33,10 @@ text-align: left;
 padding-left: 20px;
 }
 
-#blocks td.updated, #blocks td.used {
-padding-left: 10px;
-text-align: center
-}
+#blocks td.updated {
+padding-left: 20px;
 
+}
 .block_status {
 padding: 2px 0 0 10px;
 vertical-align: middle;
@@ -46,10 +45,12 @@ vertical-align: middle;
 float: left;
 }
 .block_status div {
-margin: 2px 0 0 3px;
+margin: 3px 0 0 3px;
 text-transform: capitalize;
 }
-
+.block_status img {
+border: 1px solid white;
+}
 .pagination {
 margin: 10px;
 font-size: 8pt;
@@ -71,3 +72,4 @@ margin-right: 3px;
 text-align: left;
 
 }
+
