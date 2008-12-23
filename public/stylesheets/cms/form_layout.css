@@ -143,3 +143,19 @@ float: left;
 padding: 0;
 margin: 0;
 }
+
+
+/* ERRORS */
+.fieldWithErrors input, .fieldWithErrors select, .fieldWithErrors textarea {
+border: 1px solid red;
+}
+
+#errorExplanation h2 {
+font-weight: bold;
+margin-bottom: 10px;
+}
+#errorExplanation li {
+font-weight: bold;
+color: red;
+margin: 8px 0;
+}
