@@ -1,7 +1,49 @@
-<% @page_title = "Page Revision History" %>
-<% @toolbar_title = "List Revisions" %>
-<%= content_for :html_head, stylesheet_link_tag("cms/content_library") %>
-<%= content_for :functions,  "<h1>#{ @toolbar_title }</h1>" %>
+<% @page_title = @toolbar_title = "View Revisions / #{@page.name}" %>
+<% content_for(:html_head) do %>
+  <% javascript_tag do %>
+    jQuery(function($){
+      $('#blocks tbody tr').hover(function(){
+        $(this).addClass('hover')
+      }, function(){
+        $(this).removeClass('hover')
+      }).click(function(){
+        var match = this.id.match(/(.*)_(\d+)/) 
+        var type = match[1];
+        var id = match[2];
+        $('#blocks tbody tr').removeClass('selected');
+        $(this).addClass('selected');
+        $('#view_button').removeClass('disabled').attr('href', '/cms/pages/show_version/<%= @page.id %>?mode=view&version='+id);
+        if ($(this).hasClass('current')){
+        $('#revert_button').addClass('disabled').attr('href', '');
+        $('#revert_form').attr('action', '');
+        $('#revert_form_version').attr('value', '');
+        $('#edit_content_button').removeClass('disabled').attr('href', '/cms/pages/show/<%= @page.id %>?mode=edit');
+        $('#edit_properties_button').removeClass('disabled').attr('href', '/cms/pages/edit/<%= @page.id %>');
+        } else {
+        $('#revert_button').removeClass('disabled');
+        $('#revert_form').attr('action', '/cms/pages/revert_to/<%= @page.id %>');
+        $('#revert_form_version').attr('value', id);
+        $('#edit_content_button').addClass('disabled').attr('href', '');
+        $('#edit_properties_button').addClass('disabled').attr('href', '');
+        }
+      })
+    })
+  <% end %>
+<%= stylesheet_link_tag("cms/content_library") %>
+<%= stylesheet_link_tag("cms/form_layout") %>
+<% end %>
+<% content_for :functions do %>
+<%=  "<h1>#{ @toolbar_title }</h1>" %>
+                <%= link_to span_tag("view"), "#", :id => "view_button", :class => "button disabled" %>
+                <%= link_to span_tag("edit content"), "#", :id => "edit_content_button", :class => "button disabled" %>
+                <%= link_to span_tag("edit properties"), "#", :id => "edit_properties_button", :class => "button disabled" %>
+                <%= link_to span_tag("revert"), "#", :id => "revert_button", :class => "button disabled", :onclick => "$('#revert_form').submit(); return false;" %>
+  <% form_tag '', :method => 'put', :id => "revert_form" do %>
+<%= hidden_field_tag :version, '', :id => 'revert_form_version'  %>
+  <% end %>
+
+<br clear="all" />
+<% end %>
 
 <table id="blocks">
   <tr>
@@ -9,15 +51,16 @@
     <th>Status</th>
     <th>Comment</th>
     <th>Date</th>
-    <th>Editor</th>
-    <th class="last">Actions</th>
+    <th class="last">Editor</th>
   </tr>
-  <% @page.versions.all(:order => "version desc").each_with_index do |r, i| %><tr>
-    <td><%= link_to "v.#{r.version}", cms_path(@page, :show_version, :version => r.version)%></td>
-    <td><%= status_icon(r.published?) %></td>
+  <% @page.versions.all(:order => "version desc").each_with_index do |r, i| %>
+   <% publish_status = r.published? ? 'published' : 'draft' %>
+   <% current = @page.current_version.version == r.version %>
+  <tr id="revision_<%= r.version %>" <%= 'class="current"' if current %>>
+    <td><%= "v.#{r.version}" %><%= ' (LIVE)' if @page.live_version && r.version == @page.live_version.version %><%= ' (CURRENT)' if current %></td>
+    <td class="block_status"><%= status_icon(publish_status) %> <div><%= publish_status %></div> </td>
     <td><%=h r.version_comment %></td>
-    <td><%= r.created_at.strftime("%b %e, %Y %l:%M %p") if r.created_at %></td>
+    <td><%= r.created_at.strftime("%b %d, %Y %I:%M %p") if r.created_at %></td>
     <td><%= r.updated_by.login if r.updated_by %></td>
-    <td><% if i > 0 %><%= link_to "Revert", cms_path(@page, :revert_to, :version => r.version) %><% end %></td>
   </tr><% end %>
 </table>

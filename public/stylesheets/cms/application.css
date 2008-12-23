@@ -343,3 +343,36 @@ margin: 5px 0 10px 0;
 padding-bottom: 10px;
 border-bottom: 3px solid #505358;
 }
+#blocks .block_status {
+padding-left: 10px;
+}
+#blocks .block_status {
+padding: 2px 0 0 10px;
+vertical-align: middle;
+}
+#blocks .block_status div, .block_status img {
+float: left;
+}
+#blocks .block_status div {
+margin: 3px 0 0 3px;
+text-transform: capitalize;
+}
+.block_status img {
+border: 1px solid white;
+}
+#blocks th {
+background: #B6B6B6 url(/images/cms/dashboard/table_header_bg.gif) repeat-x 0 0;
+border-right: 1px solid #8E8E8E;
+border-bottom: 1px solid #8E8E8E;
+color: #686868;
+font-weight: bold;
+font-size: 8pt;
+padding-left: 25px;
+}
+#blocks th.last {
+border-right: none;
+}
+#blocks td {
+border-bottom: 1px solid #E9E9E9;
+padding-left: 30px;
+}

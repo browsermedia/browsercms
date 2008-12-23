@@ -26,8 +26,9 @@ border-right: none;
 .lt_button {
 margin-bottom: 20px;
 }
-td.select {
+#blocks th.select, #blocks td.select {
 width: 2%;
+padding: 0;
 }
 td.name {
 width: 33%;

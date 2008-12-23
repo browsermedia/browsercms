@@ -51,10 +51,10 @@ describe Cms::PagesController do
       @page.update_attribute(:name, "V3")
       @action = lambda { get :revisions, :id => @page.to_param }
     end
-    it "should have links to view each version" do
+    it "should have a row for each version" do
       @action.call
       (1..3).each do |n|
-        response.should have_tag("a[href=?]", cms_path(@page, :show_version, :version => n), "v.#{n}")
+        response.should have_tag("tr[id=?]", "revision_#{n}")
       end
     end
   end

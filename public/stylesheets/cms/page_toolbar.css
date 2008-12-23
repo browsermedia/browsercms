@@ -78,7 +78,9 @@ color: #000;
 #visual_editor_toggle div {
 float: left;
 }
-
+#visual_editor_toggle a.button {
+margin-top: -5px;
+}
 .visual_editor_label {
 margin-right: 5px;
 margin-top: 4px;
@@ -115,9 +117,6 @@ a.sm_button:hover {
 	background: url(/images/cms/buttons/sm_button_h.gif) no-repeat top right;
 }
 
-
-
-
-
-
-
+.buttons .publish_button {
+margin-right: 15px;
+}

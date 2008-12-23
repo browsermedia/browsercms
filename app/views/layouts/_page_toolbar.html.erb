@@ -32,19 +32,28 @@
     <div class="page_attribute_label">Template:</div>
     <div class="page_attribute_value_container">
       <%= image_tag "cms/page_toolbar/page_toolbar_inset_l.gif", :style => "float: left;" %>
-      <div class="page_attribute_value"><%= link_to h(@page.template_name), cms_path(:page_templates), :target => "_top" %></div>
+      <div class="page_attribute_value"><%= link_to h(@page.template_name), cms_path(:page_templates, :edit, @page.template), :target => "_top" %></div>
+      <%= image_tag "cms/page_toolbar/page_toolbar_inset_r.gif", :style => "float: left;" %>
+    </div>
+  </div>
+  <div class="page_attribute_div">
+    <div class="page_attribute_label">Version:</div>
+    <div class="page_attribute_value_container">
+      <%= image_tag "cms/page_toolbar/page_toolbar_inset_l.gif", :style => "float: left;" %>
+      <div class="page_attribute_value"><%= h(@page.version) %><%= ' (LIVE)' if @page.live_version && @page.version == @page.live_version.version %></div>
       <%= image_tag "cms/page_toolbar/page_toolbar_inset_r.gif", :style => "float: left;" %>
     </div>
   </div>
 </div>  
 <div class="buttons">
-  <%= link_to "<span>Page Properties</span>", cms_path(@page, :edit), :class => "button", :target => "_top" %>
-  <%= link_to "<span>Revisions</span>", cms_path(@page, :revisions), :target => "_top", :class => "button" %>
+  <%= link_to("<span>Publish</span>", @page.published? ? @page.path : cms_path(@page, :publish), :target => "_top", :class => "http_put button publish_button#{' disabled' if @page.published? || !@page.current_version?}") %>
+  <%= link_to "<span>Edit Properties</span>", cms_path(@page, :edit), :class => "button#{' disabled' if !@page.current_version?}", :target => "_top" %>
+  <%= link_to "<span>List Versions</span>", cms_path(@page, :revisions), :target => "_top", :class => "button" %>
   <% able_to? :publish_content do %>
-  <%= link_to("<span>Publish</span>", @page.published? ? '' : cms_path(@page, :publish), :target => "_top", :class => "http_put button#{' disabled' if @page.published?}") %>
-  <%= link_to "<span>Delete</span>", cms_path(@page, :destroy), :title => "Are you sure you want to delete '#{@page.name}'?", :target => "_top", :class => "confirm_with_title http_delete button" %>
+  <%= link_to "<span>Delete</span>", cms_path(@page, :destroy), :title => "Are you sure you want to delete '#{@page.name}'?", :target => "_top", :class => "confirm_with_title http_delete button#{' disabled' if !@page.current_version?}" %>
   <% end %>
 <div id="visual_editor_toggle">
+<% if @page.current_version? %>
     <div class="visual_editor_label">Visual Editor:</div>
     <div class="visual_editor_value_container">
       <%= image_tag "cms/page_toolbar/visual_editor_end.gif", :style => "float: left;" %>
@@ -56,6 +65,10 @@
   <% end %>
       <%= image_tag "cms/page_toolbar/visual_editor_end.gif", :style => "float: left;" %>
     </div>
+<% else %>
+  <%= link_to("<span>Current Version</span>", @page.path, :class => "button current_version", :target => "_top") %>
+<% end %>
+
 
 </div>
 </div>
