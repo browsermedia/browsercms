@@ -22,7 +22,7 @@
 <% content_for :functions do %>
 <%= link_to(span_tag("Add"), cms_path(:page_templates, :new), :class => "button") %>
 <%= link_to(span_tag("Edit"), '#', :id => 'edit_button', :class => "button disabled") %>
-<%= link_to span_tag("x&nbsp; delete"), "#", :id => "delete_button", :class => "button disabled http_delete", :onclick => "return confirm('Are you sure you want to delete this page template?')" %>
+<%= link_to span_tag("Delete"), "#", :id => "delete_button", :class => "button disabled http_delete", :onclick => "return confirm('Are you sure you want to delete this page template?')" %>
 <% end %>
 
 <table id="blocks">

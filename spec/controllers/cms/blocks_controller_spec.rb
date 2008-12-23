@@ -40,7 +40,7 @@ describe Cms::BlocksController do
     end
     it "should have link to revisions" do
       @action.call
-      response.should have_tag("a", "Revisions")
+      response.should have_tag("a", "List Revisions")
     end
   end
 

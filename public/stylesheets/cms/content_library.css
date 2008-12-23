@@ -41,3 +41,9 @@ text-align: left;
 
 }
 
+#list_all {
+margin-left: 15px;
+}
+#add_button {
+margin-right: 15px;
+}

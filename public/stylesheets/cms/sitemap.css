@@ -104,3 +104,7 @@ vertical-align: middle;
 .node table tr td {
 border: none;
 }
+
+#functions a.delete_button {
+margin-left: 15px;
+}

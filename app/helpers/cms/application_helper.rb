@@ -127,6 +127,7 @@ LBW
     end	  
     
     def pagination(collection, path_args, record_type="Record")
+      return content_tag(:div, "No Content", :class => "pagination") unless collection.size > 0
         build_link = lambda {|p|
           args = path_args.dup
           if Hash === args.last
