@@ -12,8 +12,8 @@
   </div>
 <% end %>
 
-<%= render :partial => 'permissions' unless (params[:action] == "index" or params[:action] == "create" or !@group.cms_access?) %>
-<%= render :partial => 'sections' unless (params[:action] == "index" or params[:action] == "create") %>
+<%= render :partial => 'permissions' unless (params[:action] == "new" or params[:action] == "create" or !@group.cms_access?) %>
+<%= render :partial => 'sections' unless (params[:action] == "new" or params[:action] == "create") %>
 
 <div class="buttons">
   <%= lt_button_wrapper(f.submit("Save", :class => "submit")) %>

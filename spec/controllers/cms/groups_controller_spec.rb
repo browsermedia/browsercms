@@ -30,7 +30,7 @@ describe Cms::GroupsController do
       group.permission_ids.should_not include(@publish_content.id)
     end
     it "should fail" do
-      post :create, :on_fail_action => :index, :group => new_group(:name => "").attributes
+      post :create, :group => new_group(:name => "").attributes
       response.should be_success
       response.should have_tag("div#errorExplanation")
     end

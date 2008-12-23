@@ -26,10 +26,13 @@ float:left;
 display: block;
 float:left;
 margin-top: 4px;
+* margin-top: 1px;
 }
+
 .box .cb span {
 display: block;
 float:left;
 margin-top: 6px;
+* margin-top: 8px;
 font-size: 8pt;
 }

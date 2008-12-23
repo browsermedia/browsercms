@@ -1,6 +1,28 @@
 <% @page_title = @toolbar_title = "List Redirects" %>
-<%= content_for :functions, link_to(span_tag("Add New Redirect"), cms_path(:redirects, :new), :class => "button") %>
-
+<% content_for(:html_head) do %>
+  <% javascript_tag do %>
+    jQuery(function($){
+      $('#blocks tbody tr').hover(function(){
+        $(this).addClass('hover')
+      }, function(){
+        $(this).removeClass('hover')
+      }).click(function(){
+        var match = this.id.match(/(.*)_(\d+)/) 
+        var type = match[1];
+        var id = match[2];
+        $('#blocks tbody tr').removeClass('selected');
+        $(this).addClass('selected');
+        $('#edit_button').removeClass('disabled').attr('href', '/cms/redirects/edit/'+id);
+        $('#delete_button').removeClass('disabled').attr('href', '/cms/redirects/destroy/'+id)
+      })
+    })
+  <% end %>
+<% end %>
+<% content_for :functions do %>
+<%= link_to(span_tag("Add"), cms_path(:redirects , :new), :class => "button") %>
+<%= link_to(span_tag("Edit"), '#', :id => 'edit_button', :class => "button disabled") %>
+<%= link_to span_tag("x&nbsp; delete"), "#", :id => "delete_button", :class => "button disabled http_delete", :onclick => "return confirm('Are you sure you want to delete this redirect?')" %>
+<% end %>
 <table id="blocks">
   <tr>
     <th>From</th>
@@ -9,7 +31,7 @@
     <th>Delete</th>
   </tr>
   <% @redirects.each do |redirect| %>
-    <tr>
+    <tr id="redirect_<%= redirect.id %>">
       <td><%=h redirect.from_path %></td>
       <td><%=h redirect.to_path %></td>
       <td class="edit"><%= link_to action_icon(:edit), cms_path(redirect, :edit) %></td>     
