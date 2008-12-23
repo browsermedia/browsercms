@@ -1,0 +1,7 @@
+<% @page_title = "Administration / Add New Group" %>
+<% @toolbar_title = "Add New Group" %>
+<%= content_for :functions, link_to(span_tag("List All"), url_for(:controller => "groups", :action => "index"), :id => "list_all_button", :class => "button") %>
+  <% @group ||= Group.new %>
+  <% form_for @group, :url => cms_path(:groups, :create) do |f| %>
+	<%= render :partial => 'form', :locals => {:f => f} %>
+  <% end %>
