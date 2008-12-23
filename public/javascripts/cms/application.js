@@ -36,7 +36,9 @@ jQuery(function($) {
       $('#message').removeClass('notice').addClass('error').html(msg).parent().show().animate({opacity: 1.0}, 3000).fadeOut("normal")
     },
     attachEventHandlers: function(context) {
+	$('a.button', context).click(function(){if($(this).hasClass('disabled')) return false;});
       $('a.http_post, a.http_put, a.http_delete', context).click(function() {
+        if($(this).hasClass('disabled')) return false;
         if($(this).hasClass('confirm_with_title') ? confirm(this.title) : true) {
           var f = document.createElement('form')
           f.style.display = 'none'
