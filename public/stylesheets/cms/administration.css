@@ -15,5 +15,21 @@ fieldset.form legend {
 font-weight: bold;
 font-size: large;
 padding: 40px 0 10px 20px;
-
+}
+.box input, .box select {
+margin: 0 5px;
+}
+.box div {
+float:left;
+}
+.box .cb input {
+display: block;
+float:left;
+margin-top: 4px;
+}
+.box .cb span {
+display: block;
+float:left;
+margin-top: 6px;
+font-size: 8pt;
 }
