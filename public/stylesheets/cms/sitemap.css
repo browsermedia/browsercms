@@ -4,6 +4,26 @@
   padding: 10px;
 }
 
+#sitemap ul {
+  list-style: none;
+  padding-left: 15px;
+}
+
+#sitemap table.hover {
+  background-color: #ccf;
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+
+
+
 #sitemap td.drop-over {
   background-color: #99c;
 }
@@ -11,7 +31,6 @@
 #sitemap th, #sitemap td {
   margin: 0;
 } 
-
 
 #sitemap th {
   margin: 0;
@@ -65,7 +84,7 @@
   margin: 0;
   padding: 0;
 }
-#sitemap .sitemap_status {
+#sitemap .sitemap_hidden, #sitemap .sitemap_access {
 width: 40px;
 }
 #sitemap .sitemap_published_status {

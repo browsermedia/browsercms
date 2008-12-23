@@ -1,25 +1,13 @@
-<tr id="section_node_<%= node.id %>" class="<%= css_classes.join(" ") %>" style="display: <%= display %>">
-  <td width="980">
-    <table width="100%" cellpadding="0" cellspacing="0">
-      <tr><td colspan="4" class="drop-before"></td></tr>
-      <tr>
-        <td id="page_<%= page.id %>" class="page node">
-          <%= action_icon(:page, :style => "padding-left: #{depth*15}px") %>
-          <%= h(page.name) %>
-        </td>
-        <td class="sitemap_status">
-          <%= status_icon(:hidden) if page.hidden? %>
-        </td>
-        <td class="sitemap_status">&nbsp;</td>
-        <td class="sitemap_published_status">
-          <% if page.archived? %>
-            <%= status_icon(:archived) %> <div>Archived</div>
-          <% else %>
-            <%= status_icon(page.status) %> <div><%= page.published? ? "Published" : "Draft" %></div>
-          <% end %>
-        </td>
-      </tr>
-      <tr><td colspan="4" class="drop-after"></td></tr>
-    </table>    
-  </td>
-</tr>
+<% status = node.archived? ? :archived : node.status %>
+<ul id="section_node_<%= section_node.id %>" class="section_node" style="display: <%= display ? "''" : "none" %>">
+  <li>
+    <%= render :partial => "node", :locals => {
+        :node => node, 
+        :node_type => "page", 
+        :icon => action_icon(:page),
+        :hidden => node.hidden?,
+        :published_status_icon => status_icon(status),
+        :published_status_label => status.to_s.titleize
+      } %>
+  </li>
+</ul>

@@ -13,7 +13,7 @@ jQuery(function($){
   }
   
   var addHoverToSectionNodes = function() {
-    $('#sitemap tr.section_node').hover(
+    $('#sitemap table.section_node').hover(
       function() { $(this).addClass('hover')},
       function() { $(this).removeClass('hover')}
     )    
@@ -24,7 +24,7 @@ jQuery(function($){
   }
   
   var makeMovableRowsDraggable = function() {
-    $('#sitemap tr.movable').draggable({
+    $('#sitemap table.movable').draggable({
       revert: 'invalid',
       revertDuration: 200,
       helper: 'clone',
@@ -48,15 +48,15 @@ jQuery(function($){
     );
   }
   
-  var nodeOnDrop = function(e, ui) {
+  var nodeOnDrop = function(e, ui) {    
     //Remove any drop zone highlights still hanging out
     $('#sitemap td.drop-before, #sitemap td.drop-after').removeClass('drop-over')
 
     //Get the object and the id for the src (what we are droping) 
     //and the dest (where we are dropping)
-    var src = ui.draggable
+    var src = ui.draggable.parent().parent() //The UL the TABLE is in
     var sid = getId(src[0].id, 'section_node_')
-    var dest = $(this).parents('tr.section_node')
+    var dest = $(this).parent().parent().parent().parent().parent() //The UL the drop zone is in
     var did = getId(dest[0].id, 'section_node_')
 
     //insert before or after, based on the class of the drop zone
@@ -69,58 +69,17 @@ jQuery(function($){
         src.insertAfter(dest)
       }
 
-      //Update the parent/ancestors as well as the depth
-      var old_class = src.attr('class')
-      var old_depth = parseInt($('td.node img', src).css('padding-left').replace('px','')) || 0
-      var new_class = dest.attr('class')
-      var new_depth = parseInt($('td.node img', dest).css('padding-left').replace('px','')) || 0
-
-      src.attr('class', new_class).addClass('section_node')
-      $('td.node img', src).css('padding-left', new_depth+'px')
-
-      //Modify the depth of all children
-      $('.p'+sid+' td.node img, .a'+sid+' td.node img').each(function(){
-        var cur_depth = parseInt(($(this).css('padding-left').replace('px','')) || 0);
-        $(this).css('padding-left', (new_depth - old_depth + cur_depth)+'px')
-      })
-
-      //Now remove all the old ancestors and add back the new ones on the children
-      $(old_class.replace('p','a').split(' ')).each(function(){ 
-        $('.p'+sid+', .a'+sid).removeClass(this) 
-      })
-      $(new_class.replace('p','a').split(' ')).each(function(){ 
-        $('.p'+sid+', .a'+sid).addClass(this) 
-      })
-
-      //Now we move over all the decendents of the src
-      var prev_node = src;
-      $('#sitemap tr.section_node').each(function(){
-        if($(this).hasClass('p'+sid) || $(this).hasClass('a'+sid)) {
-          $(this).insertAfter(prev_node)
-          prev_node = $(this)
-        }
-      })
-
-      //Now we move over all the decendents of the dest
-      prev_node = dest;
-      $('#sitemap tr.section_node').each(function(){
-        if($(this).hasClass('p'+did) || $(this).hasClass('a'+did)) {
-          $(this).insertAfter(prev_node)
-          prev_node = $(this)
-        }
-      })
-
       //Make the thing we are dropping be selected
-      selectSectionNode(ui.draggable)
+      //selectSectionNode(ui.draggable)
 
       //Finally do the ajax request
-      moveSectionNode(sid, move, did)
+      //moveSectionNode(sid, move, did)
     }    
   }
   
   var enableDropZones = function() {
     $('#sitemap td.drop-before, #sitemap td.drop-after').droppable({
-      accept: 'tr',
+      accept: 'table',
       tolerance: 'pointer',
       over: function(e, ui) {
         $(this).addClass('drop-over')
@@ -303,7 +262,7 @@ jQuery(function($){
   disableButtons()
   makeMovableRowsDraggable()
   enableDropZones()  
-  addNodeOnClick()
-  fireOnClickForOpenSectionNodes()
+  // addNodeOnClick()
+  // fireOnClickForOpenSectionNodes()
 
 })

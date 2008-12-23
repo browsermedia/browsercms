@@ -14,27 +14,17 @@
 <%= link_to span_tag("Add Link"), '#', :id => 'add-link-button', :class => "button disabled" %>
 <br clear="all" />
 <% end %>
-<table id="sitemap">
-  <thead>
-    <tr class="section_node">
-      <td width="100%">
-        <table width="100%" cellspacing="0" cellpadding="0">
-          <tr><td colspan="4" class="drop-before"></td></tr>
-          <tr>
-            <td id="section_<%= @section.id %>" class="root section node">
-      		    <%= action_icon(:home) %>
-      		    <%= h(@section.name) %>
-      	    </td>
-            <td class="sitemap_status">&nbsp;</td>
-            <td class="sitemap_status">&nbsp;</td>
-            <td class="sitemap_published_status">&nbsp;</td>
-          </tr>
-          <tr><td colspan="4" class="drop-after"></td></tr>
-        </table>
-      </td>
-    </tr>  
-  </thead>
-  <tbody>
-    <%= render :partial => 'section_node', :collection => @section.child_nodes.all(:order => 'position'), :locals => {:depth => 1, :ancestors => []} %>
-  </tbody>
-</table>
+
+<div id="sitemap">
+  <ul>
+    <li>
+      <%= render :partial => "node", :locals => {
+          :node => @section, 
+          :node_type => "section", 
+          :icon => action_icon(:home),
+          :display => true
+        } %>
+      <%= render :partial => "section_node", :collection => @section.child_nodes.all(:order => 'position'), :locals => {:display => true} %>    
+    </li>
+  </ul>
+</div>

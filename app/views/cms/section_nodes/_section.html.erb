@@ -1,21 +1,12 @@
-<tr id="section_node_<%= node.id %>" class="<%= css_classes.join(" ") %>" style="display: <%= display %>">
-  <td width="980"><%# Explicit width is needed so when tr is dragged it still has the same width %>
-    <table width="100%" cellspacing="0" cellpadding="0">
-      <tr><td colspan="4" class="drop-before"></td></tr>
-      <tr>
-        <td id="section_<%= section.id %>" class="section node">
-          <%= action_icon(:folder, :class => "folder", :style => "padding-left: #{depth*15}px") %>
-          <%= h(section.name) %>
-        </td>
-        <td class="sitemap_status">
-          <%= status_icon(:hidden) if section.hidden? %>
-        </td>
-        <td class="sitemap_status"><%= status_icon(section.status) %> </td>
-        <td class="sitemap_published_status">&nbsp;</td>        
-      </tr>  
-      <tr><td colspan="4" class="drop-after"></td></tr>
-    </table>
-  </td>
-</tr>
-<%= render :partial => 'section_node', :collection => section.child_nodes.all(:order => 'position'), :locals => {:depth => depth+1, :ancestors => ancestors.push(node)} %>
-<% ancestors.pop %>
+<ul id="section_node_<%= section_node.id %>" class="section_node" style="display: <%= display ? "''" : "none" %>">
+  <li>
+    <%= render :partial => "node", :locals => {
+        :node => node, 
+        :node_type => "section", 
+        :icon => action_icon(:folder, :class => "folder"),
+        :hidden => node.hidden?,
+        :access_icon => status_icon(section.status),
+      } %>
+    <%= render :partial => "section_node", :collection => node.child_nodes.all(:order => 'position'), :locals => {:display => false} %>    
+  </li>
+</ul>

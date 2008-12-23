@@ -1,20 +1,8 @@
 <% if section_node.node && %w[Link Page Section].include?(section_node.node_type) %>
-  <%
-    css_classes = ["section_node"]
-    display = "''"
-    ancestors.each_with_index do |sn, i| 
-      display = "none"
-      css_classes << "#{i == ancestors.size-1 ? 'p' : 'a'}#{sn.id}"
-    end
-    css_classes << "movable" if current_user.able_to?(:publish_content)
-  %>
-  <%= render :partial => section_node.node_type.underscore, :locals => {
-      :depth => depth, 
-      :node => section_node, 
-      section_node.node_type.underscore.to_sym => section_node.node, 
-      :ancestors => ancestors,
-      :css_classes => css_classes,
-      :display => display
+  <%= render :partial => section_node.node_type.underscore, :locals => { 
+      :section_node => section_node,
+      :node => section_node.node, 
+      :display => display 
     } 
   %>
 <% end %>
