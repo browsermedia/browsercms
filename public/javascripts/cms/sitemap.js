@@ -50,7 +50,7 @@ jQuery(function($){
   
   var nodeOnDrop = function(e, ui) {    
     //Remove any drop zone highlights still hanging out
-    $('#sitemap td.drop-before, #sitemap td.drop-after').removeClass('drop-over')
+    $('#sitemap td.drop-before, #sitemap td.node, #sitemap td.drop-after').removeClass('drop-over')
 
     //Get the object and the id for the src (what we are droping) 
     //and the dest (where we are dropping)
@@ -60,25 +60,26 @@ jQuery(function($){
     var did = getId(dest[0].id, 'section_node_')
 
     //insert before or after, based on the class of the drop zone
-    if($(this).hasClass('drop-before') || $(this).hasClass('drop-after')) {
-      if($(this).hasClass('drop-before')) {
-        var move = 'before'
-        src.insertBefore(dest)
-      } else {
-        var move = 'after'          
-        src.insertAfter(dest)
-      }
+    if($(this).hasClass('drop-before')) {
+      var move = 'before'
+      src.insertBefore(dest)
+    } else if($(this).hasClass('drop-after')) {
+      var move = 'after'          
+      src.insertAfter(dest)      
+    } else {
+      var move = 'after'          
+      src.insertAfter(dest)
+    }
 
-      //Make the thing we are dropping be selected
-      selectSectionNode(src)
+    //Make the thing we are dropping be selected
+    selectSectionNode(src)
 
-      //Finally do the ajax request
-      moveSectionNode(sid, move, did)
-    }    
+    //Finally do the ajax request
+    moveSectionNode(sid, move, did)
   }
   
   var enableDropZones = function() {
-    $('#sitemap td.drop-before, #sitemap td.drop-after').droppable({
+    $('#sitemap td.drop-before, #sitemap td.node, #sitemap td.drop-after').droppable({
       accept: 'table',
       tolerance: 'pointer',
       over: function(e, ui) {
