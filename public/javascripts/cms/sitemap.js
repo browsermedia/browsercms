@@ -70,10 +70,10 @@ jQuery(function($){
       }
 
       //Make the thing we are dropping be selected
-      //selectSectionNode(ui.draggable)
+      selectSectionNode(src)
 
       //Finally do the ajax request
-      //moveSectionNode(sid, move, did)
+      moveSectionNode(sid, move, did)
     }    
   }
   
