@@ -6,7 +6,11 @@
 
 #sitemap ul {
   list-style: none;
-  padding-left: 15px;
+  padding-left: 10px;
+}
+
+#sitemap td.node img {
+  padding-left: 5px;
 }
 
 #sitemap table.hover {
@@ -14,6 +18,9 @@
   cursor: pointer;
 }
 
+#sitemap table.selected {
+  background-color: #9bf;
+}
 
 
 
@@ -64,9 +71,6 @@
   display: inline;
 }
 
-#sitemap tr.selected {
-  background-color: #9bf;
-}
 
 #sitemap td.drop-before, #sitemap td.drop-after {
   height: 5px;

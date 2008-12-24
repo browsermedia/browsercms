@@ -93,13 +93,13 @@ jQuery(function($){
     
   var clearSelectedSectionNode = function() {
     disableButtons()
-    $('#sitemap tr.section_node').removeClass('selected')    
+    $('#sitemap table.section_node').removeClass('selected')    
   }
   
   var selectSectionNode = function(sectionNode) {
     clearSelectedSectionNode(sectionNode)
     enableButtonsForSectionNode(sectionNode)
-    $(sectionNode).addClass('selected')    
+    $(sectionNode).find('table:first').addClass('selected')    
   }
   
   var enableButtonsForSectionNode = function(sectionNode) {
@@ -183,16 +183,6 @@ jQuery(function($){
       .unbind('click')
       .click(function(){return true})    
   }
-  
-  var toggleSection = function(sectionNode) {
-    if($(sectionNode).find('img.folder-open').length) {
-      closeSection(sectionNode)
-    } else if($(sectionNode).find('img.folder').length) {
-      openSection(sectionNode)
-    } else {
-      //WTF?
-    }    
-  }
 
   var openSection = function(sectionNode) {
     var id = getId(sectionNode.id, 'section_node_')
@@ -200,8 +190,8 @@ jQuery(function($){
     //Remember to re-open this section
     $.cookieSet.add('openSectionNodes', id, {path: '/', expires: 90})
     
-    $('.p'+id).show()
-    $(sectionNode).find('img.folder').attr('src','/images/cms/icons/actions/folder_open.png').addClass("folder-open")    
+    $(sectionNode).find('li:first > ul').show()
+    $(sectionNode).find('li:first table:first img.folder').attr('src','/images/cms/icons/actions/folder_open.png').addClass("folder-open")    
   }
   
   var closeSection = function(sectionNode) {
@@ -210,15 +200,13 @@ jQuery(function($){
     //Remove this section from the set of open nodes
     $.cookieSet.remove('openSectionNodes', id, {path: '/', expires: 90})
 
-    //close children
-    $('.p'+id+', .a'+id).hide().find('img.folder').attr('src','/images/cms/icons/actions/folder.png').removeClass("folder-open")
-
     //close this
-    $(sectionNode).find('img.folder').attr('src','/images/cms/icons/actions/folder.png').removeClass("folder-open")    
+    $(sectionNode).find('li:first > ul').hide()
+    $(sectionNode).find('li:first table:first img.folder').attr('src','/images/cms/icons/actions/folder.png').removeClass("folder-open")    
   }
   
   var sectionNodeIsOpen = function(sectionNode) {
-    return $(sectionNode).find('img.folder-open').length
+    return $(sectionNode).find('li:first table:first img.folder-open').length
   }
   
   var nodeOnClick = function() {
@@ -228,29 +216,31 @@ jQuery(function($){
     
     var node = $(this).find('td.node')[0]
     var id = getId(node.id, /(section|page|link)_/)
+    var sectionNode = $(this).parents('ul:first')[0]
     
-    selectSectionNode(this)
+    selectSectionNode(sectionNode)
     if(!$(node).hasClass('root') && $(node).hasClass('section')) {
-      if(sectionNodeIsOpen(this) && selected) {
-        closeSection(this)  
+      if(sectionNodeIsOpen(sectionNode) && selected) {
+        closeSection(sectionNode)  
       } else {
-        openSection(this)
+        openSection(sectionNode)
       }
     }
   }  
   
   var addNodeOnClick = function() {
-    $('#sitemap tr.section_node').click(nodeOnClick)    
+    $('#sitemap table.section_node').click(nodeOnClick)    
   }
   
   //Whenever you open a section, a cookie is updated so that next time you view the sitemap
   //that section will start in open state
   var fireOnClickForOpenSectionNodes = function() {
     var openSectionNodeIds = $.cookieSet.get('openSectionNodes')
-    $('#sitemap tr.section_node:first').click()
+    $('#sitemap table.section_node:first').click()
     if(openSectionNodeIds) {
-      var openSectionNodeSelector = $.map(openSectionNodeIds, function(e,i){ return "#section_node_"+e }).join(', ')
-      $(openSectionNodeSelector).click()
+      $.each(openSectionNodeIds, function(i, e) { 
+        $('#section_node_'+e+' table:first').click()
+      })      
     }    
   }  
   
@@ -262,7 +252,7 @@ jQuery(function($){
   disableButtons()
   makeMovableRowsDraggable()
   enableDropZones()  
-  // addNodeOnClick()
-  // fireOnClickForOpenSectionNodes()
+  addNodeOnClick()
+  fireOnClickForOpenSectionNodes()
 
 })
