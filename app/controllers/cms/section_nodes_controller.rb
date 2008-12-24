@@ -11,6 +11,12 @@ class Cms::SectionNodesController < Cms::BaseController
   def move_after
     move(:after)
   end
+  def move_to
+    @section_node = SectionNode.find(params[:id])
+    @other_node = SectionNode.find(params[:section_node_id])
+    @section_node.move_to_end(@other_node.node)
+    render :json => {:success => true, :message => "'#{@section_node.node.name}' was moved to '#{@other_node.node.name}'"}        
+  end
   
   private
   def move(to)

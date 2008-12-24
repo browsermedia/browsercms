@@ -35,8 +35,8 @@ jQuery(function($){
     })    
   }
   
-  var moveSectionNode = function(sectionNodeId, beforeOrAfter, otherSectionNodeId) {
-    var url = '/cms/section_nodes/move_'+beforeOrAfter+'/'+sectionNodeId
+  var moveSectionNode = function(sectionNodeId, move, otherSectionNodeId) {
+    var url = '/cms/section_nodes/move_'+move+'/'+sectionNodeId
     $.post(url, { _method: "PUT", section_node_id: otherSectionNodeId },
       function(data){
         if(data.success) {
@@ -60,22 +60,26 @@ jQuery(function($){
     var did = getId(dest[0].id, 'section_node_')
 
     //insert before or after, based on the class of the drop zone
-    if($(this).hasClass('drop-before')) {
-      var move = 'before'
-      src.insertBefore(dest)
-    } else if($(this).hasClass('drop-after')) {
-      var move = 'after'          
-      src.insertAfter(dest)      
+    if($(this).hasClass('node') && $(this).hasClass('section')) {      
+      var move = 'to'
+      dest.find('li:first').append(src)
+      openSection(dest[0])
     } else {
-      var move = 'after'          
-      src.insertAfter(dest)
+      if($(this).hasClass('drop-before')) {
+        var move = 'before'
+        src.insertBefore(dest)
+      } else  {
+        var move = 'after'          
+        src.insertAfter(dest)      
+      }     
     }
 
     //Make the thing we are dropping be selected
     selectSectionNode(src)
 
-    //Finally do the ajax request
-    moveSectionNode(sid, move, did)
+    //Make the ajax call
+    moveSectionNode(sid, move, did)      
+
   }
   
   var enableDropZones = function() {
