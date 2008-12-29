@@ -10,9 +10,9 @@
       <ul id="userlinks">
       	<li><%= link_to "Logout", cms_logout_path, :class => "http_delete", :target => "_top" %></li>
       </ul>
-			<div class="cmssearch">
-
-			</div>
+			<%#div class="cmssearch">
+				<a href="#"><img src="/images/cms/search.png" alt="Search" /></a>
+			</div%>
   </div>
   <% flash_class, flash_message = flash.to_a.first %>
   <div id="flash" style="display: none">
