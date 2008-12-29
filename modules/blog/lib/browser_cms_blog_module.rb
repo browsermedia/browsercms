@@ -1,0 +1,1 @@
+require 'browser_cms_blog_module/routes'

@@ -15,6 +15,7 @@ class Cms::BlocksController < Cms::BaseController
       options[:conditions] = ["sections.id = ?", params[:section_id]]
     end
     options[:page] = params[:page]    
+    options[:order] = model_class.default_order if model_class.respond_to?(:default_order)
     @blocks = model_class.searchable? ? model_class.search(params[:search]).paginate(options) : model_class.paginate(options)
   end
 
