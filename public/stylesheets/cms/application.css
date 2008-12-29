@@ -305,7 +305,16 @@ width: 160px;
 
 #search_term {
   width: 134px;
+  height: 18px;
 * width: 130px;
+  border: 1px solid #B9B9B9;
+}
+#search_term_container, #search_submit_container {
+float: left;
+}
+#search_submit_container {
+margin-left: -1px;
+* margin-top: 1px;
 }
 
 
@@ -319,11 +328,6 @@ width: 160px;
   width: 500px; 
   text-align: center; 
   font-weight: bold
-}
-
-table tr th { background: transparent; }
-table thead { 
-  background: url(/images/cms/column_header.png) repeat-x 0 0; 
 }
 
 table#blocks {
@@ -375,4 +379,7 @@ border-right: none;
 #blocks td {
 border-bottom: 1px solid #E9E9E9;
 padding-left: 30px;
+}
+input.with_button {
+background: #FFF url(/images/cms/gray_search_2.gif) no-repeat 100% 0;
 }

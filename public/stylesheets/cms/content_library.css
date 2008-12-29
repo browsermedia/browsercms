@@ -47,3 +47,11 @@ margin-left: 15px;
 #add_button {
 margin-right: 15px;
 }
+#section_id_input {
+margin-top: 5px;
+border: 1px solid #B9B9B9;
+width: 151px;
+}
+#section_id_container ul li {
+background-image: none;
+}

@@ -5,6 +5,9 @@
 <% content_for :html_head do %>
   <% if @block.new_record? %>
     <script type="text/javascript">
+$(document).ready(function() {
+  $('#image_block_attachment_section_id').selectbox({debug:true});
+});
     jQuery(function($){
       var sectionIdPathMap = <%= @sections.inject({}){|map, sec| map[sec.id.to_s] = sec.path.sub(/\/$/,''); map}.to_json %>
       $('#image_block_attachment_file, #image_block_attachment_section_id').change(function(){ 
@@ -24,7 +27,8 @@
 </div>
 <div class="fields select_fields">
   <%= f.label :attachment_section_id, "Section" %>
-  <%= f.collection_select :attachment_section_id, @sections, :id, :name %>
+  <div><%= f.collection_select :attachment_section_id, @sections, :id, :name %></div>
+  <br clear="all" />
 </div>
 <div class="fields text_fields">
   <%= f.label :attachment_file_name %>

@@ -2,6 +2,10 @@
 background: url(/images/cms/administration/user_browser_bg.gif) repeat-x 0 0;
 text-transform: capitalize;
 margin-top: -5px;
+border: 1px solid #333;
+ padding: 5px;
+ float: right;
+ color: #FFF;
 }
 #functions {
 padding-bottom: 25px;

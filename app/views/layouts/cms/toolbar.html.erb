@@ -5,7 +5,7 @@
     <title><%= @page_title %></title>
     <%= stylesheet_link_tag 'cms/application' %>
     <%= stylesheet_link_tag 'cms/page_toolbar' %>
-    <%= javascript_include_tag 'jquery' %>
+    <%= javascript_include_tag 'jquery', 'jquery.selectbox-0.5' %>
     <%= javascript_include_tag 'cms/application' %>
     <% if protect_against_forgery? %><script type="text/javascript">
       jQuery(function($){

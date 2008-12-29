@@ -1,10 +1,18 @@
+<% content_for :html_head do %>
+<%= stylesheet_link_tag('cms/selectbox') %>
+<% javascript_tag do %>
+$(document).ready(function() {
+  $('#per_page').selectbox({debug:true});
+  $('#group_id').selectbox({debug:true});
+});
+<% end %>
+<% end %>
 <%= yield :toolbar_links %>
-            <div class="box" style="border: 1px solid #333; padding: 5px; float: right; color: #FFF">
-            <% form_tag(cms_path(:users), :method => :get ) do %> 
-<div><%= text_field_tag "key_word", params[:key_word] %> 
-<%= select_per_page %> 
-<%= group_filter %> 
-</div>
-<div class="cb"><label><%= check_box_tag "show_expired", "yes", params[:show_expired] %><span>Show inactive?</span></label></div>
-            <% end %>
+<div class="box">
+  <% form_tag(cms_path(:users), :method => :get ) do %> 
+  <div><%= text_field_tag "key_word", params[:key_word], :class => "with_button" %></div>
+  <div><%= select_per_page %></div>
+  <div><%= group_filter %></div>
+  <div class="cb"><label><%= check_box_tag "show_expired", "yes", params[:show_expired] %><span>Show inactive?</span></label></div>
+  <% end %>
 </div>
