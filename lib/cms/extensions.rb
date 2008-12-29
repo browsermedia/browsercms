@@ -45,6 +45,10 @@ module Cms
       Rails.configuration.controller_paths << File.join(path, "app", "controllers")
       ActionController::Base.append_view_path File.join(path, "app", "views")      
     end
+    
+    def markdown?
+      Object.const_defined?("Markdown")
+    end
      
   end
   module Errors
