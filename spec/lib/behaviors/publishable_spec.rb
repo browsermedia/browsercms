@@ -4,6 +4,7 @@ ActiveRecord::Base.connection.instance_eval do
   drop_table(:publishables) if table_exists?(:publishables)
   create_table(:publishables) do |t| 
     t.string :name
+    t.datetime :published_at
     t.boolean :published, :default => 0
   end
   drop_table(:unpublishables) if table_exists?(:unpublishables)
@@ -26,6 +27,27 @@ describe "a new publishable object", :type => :model do
   it "should be publishable" do
     @object.should be_publishable
   end
+  describe "when saved" do
+    it "should not be published" do
+      @object.save
+      @object.should_not be_published
+    end
+    it "should not have the published at date set" do
+      @object.save
+      @object.published_at.should be_nil
+    end
+    describe "with save and publish" do
+      before { @object.publish_on_save = true }
+      it "should be published if saved with publish on save" do
+        @object.save
+        @object.should be_published
+      end
+      it "should have the published_at date set if published" do
+        @object.save
+        @object.published_at.should <= Time.now
+      end      
+    end
+  end
 end
 
 describe "an existing publishable object" do
@@ -34,6 +56,24 @@ describe "an existing publishable object" do
   end
   it "should be publishable" do
     @object.should be_publishable
+  end
+  describe "that is published" do
+    before do      
+      @published_at = 5.minutes.ago
+      @object.update_attributes(:published_at => @published_at, :publish_on_save => true)
+    end
+    it "should not change the published at when saved" do
+      @object.published_at.should == @published_at
+      @object.update_attributes(:name => "Changed", :publish_on_save => true)
+      @object.published_at.should == @published_at
+    end
+  end
+  describe "that is unpublished" do
+    it "should set the published_at when published" do
+      @object.published_at.should be_nil
+      @object.publish!
+      @object.published_at.should <= Time.now
+    end
   end
 end  
 

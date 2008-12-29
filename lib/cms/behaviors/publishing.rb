@@ -62,6 +62,9 @@ module Cms
           end
           def set_published
             self.published = !!@publish_on_save
+            if self.published && self.respond_to?(:published_at) && !self.published_at
+              self.published_at = Time.now
+            end
             @publish_on_save = nil
             true
           end
