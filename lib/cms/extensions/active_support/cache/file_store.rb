@@ -1,7 +1,7 @@
 module ActiveSupport
   module Cache
     class FileStore
-      def delete_all
+      def flush
         FileUtils.rm_rf cache_path if File.exist?(cache_path)
       end
     end

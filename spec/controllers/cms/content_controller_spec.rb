@@ -74,7 +74,7 @@ describe Cms::ContentController do
         @file = mock_file(:read => "This is a test")
         @file_block = create_file_block(:attachment_section => root_section, :attachment_file => @file, :attachment_file_name => "/test.txt", :publish_on_save => true)
         @action = lambda { get :show, :path => ["test.txt"] }
-        @path_to_file = "#{ActionController::Base.cache_store.cache_path}/test.txt"
+        @path_to_file = "#{Cms.public_cache.cache_path}/test.txt"
       end
       describe "that has not been written to the cache dir" do
         before do

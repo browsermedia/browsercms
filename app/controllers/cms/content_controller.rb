@@ -1,9 +1,10 @@
 class Cms::ContentController < Cms::ApplicationController
-  
+
   before_filter :construct_path
   before_filter :try_to_redirect
   before_filter :try_to_stream_file
   before_filter :check_access_to_page
+  
   caches_action :show
   
   def show        
@@ -12,7 +13,6 @@ class Cms::ContentController < Cms::ApplicationController
 
   private
 
-  #-- Filters --
   def construct_path
     @paths = params[:page_path] || params[:path]
     @path = "/#{@paths.join("/")}"
@@ -37,7 +37,7 @@ class Cms::ContentController < Cms::ApplicationController
         raise Cms::Errors::AccessDenied unless current_user.able_to_view?(@attachment)
 
         #Construct a path to where this file would be if it were cached
-        @file = File.join(ActionController::Base.cache_store.cache_path, @path)
+        @file = File.join(@attachment.public? ? Cms.public_cache.cache_path : Cms.protected_cache.cache_path, @path)
 
         #Write the file out if it doesn't exist
         unless File.exists?(@file)
@@ -84,6 +84,11 @@ class Cms::ContentController < Cms::ApplicationController
 
   end
   
+  def render_page
+    prepare_params
+    render :layout => @page.layout, :action => 'show'
+  end
+  
   #-- Other Methods --
   
   # This method gives the content type a chance to set some params
@@ -102,12 +107,7 @@ class Cms::ContentController < Cms::ApplicationController
       logger.debug "No Prepare Method"
     end    
   end
-  
-  def render_page
-    prepare_params
-    render :layout => @page.layout, :action => 'show'
-  end
-  
+    
   def page_not_found
     raise ActiveRecord::RecordNotFound.new("No page at '#{@path}'")
   end

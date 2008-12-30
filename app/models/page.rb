@@ -147,6 +147,10 @@ class Page < ActiveRecord::Base
     end      
   end
   
+  def public?
+    section ? section.public? : false
+  end
+  
   def page_title
     title.blank? ? name : title
   end

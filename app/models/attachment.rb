@@ -149,8 +149,12 @@ class Attachment < ActiveRecord::Base
     :file
   end
 
+  def public?
+    section ? section.public? : false
+  end
+
   def absolute_path
-    File.join(ActionController::Base.cache_store.cache_path, file_name)
+    File.join(public? ? Cms.public_cache.cache_path : Cms.protected_cache.cache_path, file_name)
   end
 
 end
