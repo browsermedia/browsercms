@@ -38,6 +38,8 @@ class Cms::BlocksController < Cms::BaseController
     else
       render :action => 'new'
     end
+  rescue Exception => @exception    
+    render :action => 'new'    
   end
 
   def show_version
@@ -67,8 +69,12 @@ class Cms::BlocksController < Cms::BaseController
     else
       render :action => "edit"
     end
-  rescue ActiveRecord::StaleObjectError => e
-    @other_version = @block.class.find(@block.id) 
+  rescue Exception => e
+    if e.is_a?(ActiveRecord::StaleObjectError)
+      @other_version = @block.class.find(@block.id) 
+    else
+      @exception = e
+    end
     render :action => "edit"
   end
 

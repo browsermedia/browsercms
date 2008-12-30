@@ -2,6 +2,8 @@ class HtmlBlock < ActiveRecord::Base
 
   acts_as_content_block
   
+  validates_presence_of :name
+  
   # Override of search scope from searching behavior to deal with include_body 
   named_scope :search, lambda{|search_params|
     term = search_params.is_a?(Hash) ? search_params[:term] : search_params  

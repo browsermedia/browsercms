@@ -3,7 +3,8 @@ class Category < ActiveRecord::Base
   belongs_to :parent, :class_name => "Category"
   has_many :children, :class_name => "Category", :foreign_key => "parent_id"
   is_searchable
-  validates_presence_of :category_type_id
+  validates_presence_of :category_type_id, :name
+  validates_uniqueness_of :name, :scope => :category_type
   
   named_scope :of_type, lambda{|type_name| {:include => :category_type, :conditions => ['category_types.name = ?', type_name], :order => 'categories.name'}}
   named_scope :top_level, :conditions => ['categories.parent_id is null']
