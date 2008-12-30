@@ -16,7 +16,7 @@
         $('#view_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/show/'+id)
         $('#edit_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/edit/'+id)
         $('#revisions_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/revisions/'+id)
-        $('#delete_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/delete/'+id)
+        $('#delete_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/destroy/'+id)
   <% able_to? :publish_content do -%>
         if($(this).hasClass('draft')) {
           $('#publish_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/publish/'+id+'?_redirect_to='+location.href)        

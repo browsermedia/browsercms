@@ -20,10 +20,10 @@
 <% able_to?(:publish_content) do %>
 <%= link_to span_tag("Publish"), "#", :id=>"publish_button", :class => "button disabled"  %>
 <% end %>
-<%= link_to span_tag("view content"), "#", :id => "view_button", :class => "button disabled" %>
-<%= link_to span_tag("edit content"), "#", :id => "edit_button", :class => "button disabled" %>
+<%= link_to span_tag("View Content"), "#", :id => "view_button", :class => "button disabled" %>
+<%= link_to span_tag("Edit Content"), "#", :id => "edit_button", :class => "button disabled" %>
 <%= link_to span_tag("List Revisions"), "#", :id=>"revisions_button", :class => "button disabled" %>
-<%= link_to span_tag("delete"), "#", :id => "delete_button", :class => "button disabled", :onclick => "return confirm('Are you sure you want to delete this record?')" %>
+<%= link_to span_tag("Delete"), "#", :id => "delete_button", :class => "button disabled http_delete confirm_with_title", :title => "Are you sure you want to delete this record?" %>
 <%= link_to span_tag("List All"), cms_path(:blocks, @content_type.content_block_type), :id=>"list_all", :class => "button" %>
 <% end %>
 <br clear="all" />
