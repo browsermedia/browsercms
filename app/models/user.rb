@@ -1,19 +1,17 @@
 require 'digest/sha1'
 
 class User < ActiveRecord::Base
-  include Authentication
-  include Authentication::ByPassword
-  include Authentication::ByCookieToken
+  include Cms::Authentication::Model
 
   validates_presence_of     :login
   #validates_length_of       :login,    :within => 3..40
   validates_uniqueness_of   :login,    :case_sensitive => false
-  validates_format_of       :login,    :with => RE_LOGIN_OK, :message => MSG_LOGIN_BAD
+  validates_format_of       :login,    :with => /\A\w[\w\.\-_@]+\z/, :message => "use only letters, numbers, and .-_@ please."
 
   validates_presence_of     :email
   #validates_length_of       :email,    :within => 6..100 #r@a.wk
   #validates_uniqueness_of   :email,    :case_sensitive => false
-  validates_format_of       :email,    :with => RE_EMAIL_OK, :message => MSG_EMAIL_BAD
+  validates_format_of       :email,    :with => /[^@]{2,}@[^.]{2,}\..{2,}/, :message => "should be an email address, ex. xx@xx.com"
 
   attr_accessible :login, :email, :name, :first_name, :last_name, :password, :password_confirmation, :expires_at
 
@@ -22,26 +20,11 @@ class User < ActiveRecord::Base
     
   named_scope :active, :conditions => {:expires_at => nil }
 
-  #Methods to easily change password from the console
-  #Not used in the app
-  def self.change_password(login, new_password)
-    User.find_by_login(login).change_password(new_password)
-  end
-
   def self.current
     Thread.current[:cms_user]
   end
   def self.current=(user)
     Thread.current[:cms_user] = user
-  end
-
-  def change_password(new_password)
-    update_attributes(:password => new_password, :password_confirmation => new_password)
-  end
-
-  def self.authenticate(login, password)
-    u = find_by_login(login) # need to get the salt
-    u && u.authenticated?(password) && !u.expired? ? u : nil
   end
     
   def self.guest(options = {})

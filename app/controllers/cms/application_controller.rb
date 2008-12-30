@@ -1,5 +1,5 @@
 class Cms::ApplicationController < ApplicationController
-  include AuthenticatedSystem
+  include Cms::Authentication::Controller
   include Cms::ErrorHandling
 
   helper :all # include all helpers, all the time

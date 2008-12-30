@@ -5,8 +5,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require File.expand_path(File.dirname(__FILE__) + "/spec_extensions")
 require 'spec'
 require 'spec/rails'
-include AuthenticatedTestHelper
-include AuthenticatedSystem
+include Cms::Authentication::Controller
 
 Spec::Runner.configure do |config|
   # If you're not using ActiveRecord you should remove these
@@ -49,6 +48,29 @@ Spec::Runner.configure do |config|
   # == Notes
   # 
   # For more information take a look at Spec::Example::Configuration and Spec::Runner
+end
+
+# Sets the current user in the session from the user fixtures.
+def login_as(user)
+  User.current = user
+end
+
+def login_as_user(attrs={})
+  login_as admin_user
+end
+
+def authorize_as(user)
+  @request.env["HTTP_AUTHORIZATION"] = user ? ActionController::HttpAuthentication::Basic.encode_credentials(users(user).login, 'monkey') : nil
+end
+
+# rspec
+def mock_user
+  user = mock_model(User, :id => 1,
+    :login  => 'user_name',
+    :name   => 'U. Surname',
+    :to_xml => "User-in-XML", :to_json => "User-in-JSON", 
+    :errors => [])
+  user
 end
 
 def log(msg)
