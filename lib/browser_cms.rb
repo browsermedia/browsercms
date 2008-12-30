@@ -1,4 +1,5 @@
 require 'cms/extensions'
+require 'cms/init'
 require 'cms/routes'
 
 module Cms
