@@ -59,6 +59,11 @@ jQuery(function($){
     var dest = $(this).parent().parent().parent().parent().parent() //The UL the drop zone is in
     var did = getId(dest[0].id, 'section_node_')
 
+    //If the src is a descendant of the dest, then forget it
+    if(src == dest || $.inArray(src[0], dest.parents()) > -1) {
+      return true;
+    }   
+
     //insert before or after, based on the class of the drop zone
     if($(this).hasClass('node') && $(this).hasClass('section')) {      
       var move = 'to'
