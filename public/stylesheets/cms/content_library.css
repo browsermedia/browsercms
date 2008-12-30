@@ -55,3 +55,8 @@ width: 151px;
 #section_id_container ul li {
 background-image: none;
 }
+.searchbox div.selectbox-wrapper {
+margin-left: 0;
+* margin:  30px 0px 0px -162px;
+}
+

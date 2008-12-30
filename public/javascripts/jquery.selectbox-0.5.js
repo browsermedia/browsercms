@@ -109,7 +109,7 @@ jQuery.SelectBox = function(selectobj, options) {
 	
 	function init() {
 		$container.append(getSelectOptions($input.attr('id'))).hide();
-		var width = $input.css('width');
+	    var width = opt.width || $input.css('width');
 		$container.width(width);
     }
 	

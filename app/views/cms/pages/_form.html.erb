@@ -1,4 +1,11 @@
-<%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
+<% content_for :html_head do %>
+<%= stylesheet_link_tag('cms/form_layout') %>
+<% javascript_tag do %>
+$(document).ready(function() {
+  $('#page_template_id').selectbox({debug:true, width: '210px'});
+});
+<% end %>
+<% end %>
 <%= f.error_messages %>
 <div class="fields text_fields">
   <%= f.label :name %>
@@ -15,7 +22,7 @@
 </div>
 <div class="fields select_fields">
   <%= f.label :template_id %>
-  <%= f.collection_select :template_id, PageTemplate.all(:order => 'name'), :id, :name %>
+  <div><%= f.collection_select :template_id, PageTemplate.all(:order => 'name'), :id, :name %></div>
 </div>
 <div class="checkbox_group fields no_check_all">
   <div class="checkbox_fields">

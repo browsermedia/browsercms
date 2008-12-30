@@ -1,9 +1,9 @@
                   <% if %w[FileBlock ImageBlock].include?(@content_type.name) &&  request.user_agent !~ /MSIE 6/ %>
   <% content_for :html_head do %>
-<%= stylesheet_link_tag('cms/selectbox.css') %>
+
 <% javascript_tag do %>
 $(document).ready(function() {
-  $('#section_id').selectbox({debug:true});
+  $('#section_id').selectbox({debug:true, width: '129px'});
 });
 <% end %>
 <% end %>
@@ -26,11 +26,11 @@ $(document).ready(function() {
                     <div id="search_term_container"><%= text_field_tag "search[term]", (params[:search] ? params[:search][:term] : nil) %></div> <div id="search_submit_container"><input id="search_submit" type="image" src="/images/cms/search_submit.gif" alt="submit" /></div>
                   <% if @content_type.name == "HtmlBlock" -%>
                   <p><label><%= check_box_tag "search[include_body]", true, (params[:search] ? params[:search][:include_body] : false) %> Include body?</label></p>
-                  <% end -%>
-                  <% if %w[FileBlock ImageBlock].include?(@content_type.name) &&  request.user_agent !~ /MSIE 6/ %>
+                  <% elsif %w[FileBlock ImageBlock].include?(@content_type.name) &&  request.user_agent !~ /MSIE 6/ %>
                   <p><%= select_tag 'section_id', searchable_sections(params[:section_id]) %></p>
+		  <% else %>
+		  <br clear="all" />
                   <% end -%>
-		  <%= submit_tag "search", :style => "display: none;" %>
                   <% end -%>
                 </div>
                 

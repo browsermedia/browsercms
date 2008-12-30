@@ -3,9 +3,10 @@ background: url(/images/cms/administration/user_browser_bg.gif) repeat-x 0 0;
 text-transform: capitalize;
 margin-top: -5px;
 border: 1px solid #333;
- padding: 5px;
+ padding: 4px 0 7px 0;
  float: right;
  color: #FFF;
+height: 22px;
 }
 #functions {
 padding-bottom: 25px;
@@ -22,6 +23,7 @@ padding: 40px 0 10px 20px;
 }
 .box input, .box select {
 margin: 0 5px;
+color: #717171;
 }
 .box div {
 float:left;
@@ -39,4 +41,27 @@ float:left;
 margin-top: 6px;
 * margin-top: 8px;
 font-size: 8pt;
+}
+.box .cb {
+margin-right: 8px;
+}
+
+#per_page_input, #group_id_input, #key_word {
+border: 1px solid #51585E;
+}
+#key_word {
+margin-left: 6px;
+padding: 4px 0 1px 3px;
+height: 18px;
+}
+#user_search_submit_container {
+margin-left: -11px;
+* margin-top: 1px;
+}
+.box div.selectbox-wrapper {
+  margin: -1px 0 0 5px;
+* margin:  25px 0px 0px -160px;
+  border: 1px solid #51585E;
+  border-top: 1px solid #C6C6C6;  
+  color: #717171;
 }

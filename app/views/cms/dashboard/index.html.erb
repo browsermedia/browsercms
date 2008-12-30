@@ -3,7 +3,7 @@
 <%= stylesheet_link_tag('cms/dashboard') %>
 <%= stylesheet_link_tag('cms/form_layout') %>
 <% end %>
-<div class="dashboard_unit">
+<div class="dashboard_unit" id="page_drafts">
 <h2>Page Drafts</h2>
 
   <% form_tag cms_path(:pages, :publish) do %>
@@ -23,7 +23,7 @@
           <td class="select"><%= check_box_tag "page_ids[]", page.id, false, :id => "publish_page_#{page.id}" %></td>
           <td class="name"><%= link_to h(page.name), page.path %></td>
           <td class="updated_by"><%=h page.updated_by.login %></td>
-          <td class="updated_at"><%= page.updated_at.strftime("%m/%d/%y %l:%M %p") %></td>
+          <td class="updated_at"><%= page.updated_at.strftime("%m/%d/%y %H:%M %p") %></td>
         </tr>
       <% end %>
     <% end %>

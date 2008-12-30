@@ -1,3 +1,4 @@
+@import url(/stylesheets/cms/selectbox.css);
 
 form {
 font-size: 10pt;
@@ -161,44 +162,3 @@ color: red;
 margin: 8px 0;
 }
 
-div.selectbox-wrapper {
-  position:absolute;
-  background-color:white;
-  margin: 0 0 0 145px;
-* margin: 36px 0 0 -257px;
-  padding:0px;
-  font-family: inherit;
-  line-height: 1.2;
-  font-size: 10pt;
-  text-align:left;
-  overflow:auto;
-  color: #000;
-}
-div.selectbox-wrapper ul {
-  list-style-type:none;
-  margin:0px;
-  padding:0px;
-}
-div.selectbox-wrapper ul li.selected { 
-  background-color: #EAF2FB;
-}
-div.selectbox-wrapper ul li.current { 
-  background-color: #CDD8E4;
-}
-div.selectbox-wrapper ul li {
-  list-style-type:none;
-  margin:0;
-  padding:2px;
-  cursor:pointer;
-  border-bottom: 1px dotted #8D8E90;
-  background: #FFF;
-}
-
-.selectbox /* look&fell of  select box*/
-{
-  margin: 0px 5px 10px 0px;
-  padding: 4px 0 3px 4px;
-  background: #FFF url(/images/cms/select_bg_2.gif) no-repeat 100% 0;
-  cursor: pointer;
-  border: none;
-}

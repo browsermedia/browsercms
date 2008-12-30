@@ -332,6 +332,7 @@ margin-left: -1px;
 
 table#blocks {
   width: 100%;
+  border-collapse: collapse;
 }
 
 h1.page_title {
@@ -379,7 +380,4 @@ border-right: none;
 #blocks td {
 border-bottom: 1px solid #E9E9E9;
 padding-left: 30px;
-}
-input.with_button {
-background: #FFF url(/images/cms/gray_search_2.gif) no-repeat 100% 0;
 }

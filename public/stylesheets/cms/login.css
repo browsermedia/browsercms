@@ -58,16 +58,14 @@ background: url(/images/cms/buttons/sprite.png) no-repeat top right;
 border-width: 0;
 height: 27px;
 width: 76px;
-margin-left: -10px;
+margin-left: 0;
+* margin-left: -10px;
 font-size: 12px;
 font-weight: bold;
 color: white;
+padding-bottom: 2px;
 }
 
-#login_button > input {
-padding-bottom: 4px;
-margin-left: 0;
-}
 
 
 

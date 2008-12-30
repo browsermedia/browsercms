@@ -6,7 +6,7 @@
   <% if @block.new_record? %>
     <script type="text/javascript">
 $(document).ready(function() {
-  $('#image_block_attachment_section_id').selectbox({debug:true});
+  $('#image_block_attachment_section_id').selectbox({debug:true, width: '210px'});
 });
     jQuery(function($){
       var sectionIdPathMap = <%= @sections.inject({}){|map, sec| map[sec.id.to_s] = sec.path.sub(/\/$/,''); map}.to_json %>
