@@ -1,17 +1,11 @@
-<tr id="section_node_<%= node.id %>" class="<%= css_classes.join(" ") %>" style="display: <%= display %>">
-  <td width="980">
-    <table width="100%" cellpadding="0" cellspacing="0">
-      <tr><td colspan="4" class="drop-before"></td></tr>
-      <tr>
-        <td id="link_<%= link.id %>" class="link node">
-          <%= action_icon(:link, :style => "padding-left: #{depth*15}px") %>
-          <%= h(link.name) %>
-        </td>
-        <td class="sitemap_status">&nbsp;</td>
-        <td class="sitemap_status">&nbsp;</td>
-        <td class="sitemap_published_status"><%= status_icon(link.status) %> <div><%= link.published? ? "Published" : "Draft" %></div></td>
-      </tr>
-      <tr><td colspan="4" class="drop-after"></td></tr>
-    </table>    
-  </td>
-</tr>
+<ul id="section_node_<%= section_node.id %>" class="section_node" style="display: <%= display ? "''" : "none" %>">
+  <li>
+    <%= render :partial => "node", :locals => {
+        :node => node, 
+        :node_type => "link", 
+        :icon => action_icon(:link),
+        :published_status_icon => status_icon(node.status),
+        :published_status_label => node.published? ? "Published" : "Draft"
+      } %>
+  </li>
+</ul>
