@@ -10,7 +10,11 @@ jQuery(function($){
 </script>
 <% end %>
 <% @page_title = "New Section" %>
-<%= content_for :functions, "<h1>#{ @page_title }</h1>" %>
+<% content_for :functions  do %>
+<%= "<h1>#{ @page_title }</h1>" %> 
+<%= link_to(span_tag("list all"), cms_sitemap_path, :class => "button") %>
+<br clear="all"/>
+<% end %>
 <% form_for(@section, :url => cms_path(:sections, :create), :id => 'section_form') do |f| %>
   <%= hidden_field_tag :section_id, @parent.id %>
   <%= render :partial => 'form', :locals => {:f => f} %>

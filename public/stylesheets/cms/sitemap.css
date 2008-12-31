@@ -10,7 +10,7 @@
 }
 
 #sitemap td.node img {
-  padding-left: 5px;
+  margin-left: 5px;
 }
 
 #sitemap table.hover {
@@ -65,6 +65,16 @@
   padding: 0;
 }
 
+#sitemap .sitemap_published_status div, #sitemap .sitemap_hidden img, #sitemap .sitemap_access img{
+display: block;
+margin: -22px 0 0 -5px;
+position: absolute;
+* margin-top: -3px;
+}
+#sitemap tr.doubled .sitemap_hidden img, #sitemap tr.doubled .sitemap_access img {
+* margin-top: 5px;
+}
+
 #sitemap .sitemap_hidden {
   width: 40px;
 }
@@ -75,12 +85,17 @@ width: 40px;
 #sitemap .sitemap_published_status {
 width: 75px;
 }
-#sitemap .sitemap_published_status img{
+
+#sitemap .sitemap_published_status div img{
 float: left;
 }
-#sitemap .sitemap_published_status div{
+#sitemap .sitemap_published_status div div{
 float: left;
-padding: 3px 0 0 4px;
+position: relative;
+margin: 3px 0 0 4px;
+}
+#sitemap img {
+border: 1px solid #FFF;
 }
 #sitemap tr.section_node { 
 border-bottom: 1px dotted #CCC; 
@@ -92,4 +107,11 @@ border: none;
 
 #functions a.delete_button {
 margin-left: 15px;
+}
+.node div, .node img {
+float: left;
+}
+
+.node div {
+padding: 8px 0 0 10px;
 }

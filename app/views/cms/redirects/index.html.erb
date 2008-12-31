@@ -17,6 +17,11 @@
       })
     })
   <% end %>
+  <style type="text/css">
+    #blocks th {
+    width: 50%;
+    }
+  </style>
 <% end %>
 <% content_for :functions do %>
 <%= link_to(span_tag("Add"), cms_path(:redirects , :new), :class => "button") %>
@@ -26,16 +31,12 @@
 <table id="blocks">
   <tr>
     <th>From</th>
-    <th>To</th>
-    <th>Edit</th>
-    <th>Delete</th>
+    <th class="last">To</th>
   </tr>
   <% @redirects.each do |redirect| %>
     <tr id="redirect_<%= redirect.id %>">
       <td><%=h redirect.from_path %></td>
       <td><%=h redirect.to_path %></td>
-      <td class="edit"><%= link_to action_icon(:edit), cms_path(redirect, :edit) %></td>     
-      <td class="delete"><%= link_to action_icon(:delete), cms_path(redirect, :destroy), :class => "confirm_with_title http_delete", :title => "Are you sure you want to delete the #{redirect.from_path} -> #{redirect.to_path} redirect?" %></td>
     </tr>
   <% end %>
 </table>

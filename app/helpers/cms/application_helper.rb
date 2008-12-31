@@ -106,7 +106,7 @@ module Cms
     <div>
       #{ content }
     </div>
-    <img src="/images/cms/lt_button_r.gif" alt="" style="margin-right: 25px;" />
+    <img src="/images/cms/lt_button_r.gif" alt="" style="margin-right: 10px;" />
   </div>
 LBW
     end
@@ -144,7 +144,7 @@ LBW
       content_links << link_to(image_tag("cms/pagination/next.gif"), cms_path(*build_link.call(collection.next_page ? collection.next_page : collection.current_page)))
       content_links << link_to(image_tag("cms/pagination/last.gif"), cms_path(*build_link.call(collection.total_pages)))
       content_links_div = content_tag(:div, content_links, :class => "links")
-      content_tag(:div, content_info + content_links_div, :class => "pagination")
+      content_tag(:div, content_info + content_links_div + '<br clear="all" />', :class => "pagination")
     end	  
     
     def connectable_content_types

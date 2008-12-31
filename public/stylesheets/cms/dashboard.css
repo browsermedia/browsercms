@@ -1,7 +1,7 @@
 .dashboard_unit {
 width: 45%;
 float: left;
-margin: 0 20px;
+margin: 0 20px 20px 20px;
 background-color: #FFFFFF;
 }
 .dashboard_unit h2 {
@@ -12,6 +12,10 @@ padding: 12px;
 font-weight: bold;
 font-size: 10pt;
 }
+.dashboard_unit form {
+padding: 5px;
+}
+
 .dashboard_unit table {
 width: 90%;
 }
@@ -45,8 +49,9 @@ border-bottom: 1px solid #E9E9E9;
 #blocks td a {
 text-decoration: none;
 }
-td.select {
+#blocks td.select {
 width: 2%;
+padding-left: 4px;
 }
 td.name {
 width: 46%;
@@ -58,5 +63,10 @@ td.updated_at {
 width: 32%;
 }
 #page_drafts .lt_button {
-margin: 10px 0 60px 0;
+margin: 10px 0 60px 6px;
+}
+
+
+#contentwrapbig {
+* padding-bottom: 20px;
 }

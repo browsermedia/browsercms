@@ -1,9 +1,13 @@
 <% @page_title = "Edit '#{h(@link.name)}' Link" %>
-<%= content_for :functions, "<h1>#{ @page_title }</h1>" %>
+<% content_for :functions do %>
+<%= "<h1>#{ @page_title }</h1>" %> 
+<%= link_to(span_tag("list all"), cms_sitemap_path, :class => "button") %>
+<br clear="all"/>
+<% end %>
 <% form_for(@link, :url => cms_path(@link, :update)) do |f| %>
   <%= render :partial => 'form', :locals => {:f => f} %>
 <div class="buttons">
-  <%= lt_button_wrapper(f.submit("Save", :class => "submit")) %>
   <%= lt_button_wrapper('<button type="submit" name="link[publish_on_save]" value="true" class="submit"><span>Save And Publish</span></button>') %>
+  <%= lt_button_wrapper(f.submit("Save", :class => "submit")) %>
 </div>
 <% end %>

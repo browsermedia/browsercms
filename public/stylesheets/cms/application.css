@@ -78,6 +78,9 @@ display: inline;
 float: left;
 background: url(/images/cms/usercontrols_bg.png) no-repeat 0 0;
 margin-left: 10px;
+	color: #666;
+	font-weight: bold;
+
 }
 
 	#nav ul#userlinks li a {
@@ -87,7 +90,6 @@ margin-left: 10px;
 	display: block;
 	float: left;
 	text-decoration: none;
-	font-weight: bold;
 	}
 	
 	#nav ul#userlinks li span {
@@ -95,6 +97,18 @@ margin-left: 10px;
 	float: left; 
 	padding-left: 15px
 	}
+
+#nav ul#userlinks li#user_info {
+background: none;
+}
+#nav ul#userlinks li#user_info div{
+float: left;
+padding: 9px 10px;
+}
+#nav ul#userlinks li#user_info img {
+float:left;
+margin-top: 5px;
+}
 
 #nav .cmssearch {
 position: absolute;
@@ -108,8 +122,10 @@ margin-top: 30px;
 
 #functions {
 padding: 10px;
-* padding-bottom: 28px;
 text-transform: uppercase;
+}
+#functions .button {
+* margin-bottom: 10px;
 }
 
 #menu { 
@@ -169,7 +185,6 @@ background: #8D8E90 url(/images/cms/gray_long_bg.gif) repeat-x 0 0;
 float: left;
 width: 826px;
 padding-bottom: 5px;
-min-height: 600px;
 }
 
   #contentwrapbig {
@@ -177,19 +192,18 @@ min-height: 600px;
   background: #8D8E90 url(/images/cms/gray_long_bg.gif) repeat-x 0 0;
   float: left;
   padding-bottom: 5px;
-  min-height: 600px;
+
   }
   
 #content {
 background: #FFF;
 width: 816px;
 margin-left: 5px;
-min-height: 600px;
 }
 
   #contentwrapbig #content {
     width: 990px;
-    min-height: 600px;
+
   }
 
 #footer {

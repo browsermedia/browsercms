@@ -1,3 +1,7 @@
+#content {
+min-height: 200px;
+}
+
 #blocks {
 font-weight: bold;
 }
@@ -21,6 +25,7 @@ padding-left: 20px;
 
 .pagination {
 margin: 10px;
+* margin-bottom: 30px;
 font-size: 8pt;
 font-weight: bold;
 }
@@ -29,6 +34,8 @@ float: left;
 }
 .pagination .info {
 margin-right: 220px;
+* line-height: 10pt;
+* margin-top: 2px;
 }
 .pagination .links span{
 margin: 10px;
@@ -60,3 +67,18 @@ margin-left: 0;
 * margin:  30px 0px 0px -162px;
 }
 
+#search_include_body_container#search_include_body_container {
+margin: 4px 0;
+padding-top: 4px;
+}
+
+
+#search_include_body_container input, #search_term_container label {
+display: block;
+float: left;
+}
+
+#search_include_body_container input {
+margin: -1px 6px 0 0;
+* margin: -6px 2px 0 -4px;
+}

@@ -4,7 +4,7 @@ form {
 font-size: 10pt;
 font-family: "Trebuchet MS", Helvetica, Verdana, Arial, sans-serif;
 color:#485561;
-padding: 20px;
+padding: 0 20px 20px 20px;
 }
 #functions form {
 padding: 0;
@@ -18,7 +18,7 @@ font-size: 100%;
 
 .fields {
 padding: 10px 0;
-border-bottom: 1px dotted #CCC;
+border-bottom: 1px dashed #CCC;
 }
 
 /* LABELS */
@@ -115,7 +115,7 @@ float: left;
 }
 /* BUTTONS */
 .buttons {
-padding: 10px 0;
+padding: 10px 0 20px 0;
 }
 
 div.lt_button input.submit,
