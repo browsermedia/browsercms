@@ -18,7 +18,7 @@ describe HtmlBlock do
     @block.connect_to_page_id.should == "516519628"
     @block.connect_to_container.should == "main"
   end
-  
+    
   describe "versioning for blocks" do
     it "should support versioning" do
       h = HtmlBlock.new

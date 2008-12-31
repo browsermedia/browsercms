@@ -55,6 +55,10 @@ class SectionNode < ActiveRecord::Base
     move_to(section_node.section, pos)
   end
   
+  def move_to_beginning(sec)
+    move_to(sec, 0)
+  end
+  
   def move_to_end(sec)
     #1.0/0 == Infinity
     move_to(sec, 1.0/0)

@@ -64,16 +64,22 @@ jQuery(function($){
       return true;
     }   
 
-    //insert before or after, based on the class of the drop zone
+    //Move to a section if the drop zone is the section
     if($(this).hasClass('node') && $(this).hasClass('section')) {      
-      var move = 'to'
+      var move = 'to_end'
       dest.find('li:first').append(src)
       openSection(dest[0])
+    //If the drop zone is directly after an open section,
+    //move this to the beginning of the section  
+    } else if($(this).hasClass('drop-after') && dest.find('table:first img.folder-open').length > 0) {
+      var move = 'to_beginning'
+      src.insertAfter(dest.find('table:first'))
     } else {
+      //insert before or after, based on the class of the drop zone
       if($(this).hasClass('drop-before')) {
         var move = 'before'
         src.insertBefore(dest)
-      } else  {
+      } else {
         var move = 'after'          
         src.insertAfter(dest)      
       }     
