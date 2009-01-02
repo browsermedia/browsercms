@@ -11,3 +11,4 @@ public/stylesheets/tuneup
 vendor/plugins/selenium-on-rails/log/*.yml
 *.gem
 .dotest
+tmp/restart.txt
