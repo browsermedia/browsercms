@@ -1,5 +1,5 @@
 class ContentObserver < ActiveRecord::Observer
-  observe *ContentType.list + [:page, :section, :section_node]
+  #observe *ContentType.list + [:page, :section, :section_node]
 
   def after_create(record)
     Cms.flush_cache
