@@ -1,5 +1,5 @@
 class CategoryType < ActiveRecord::Base
-  has_many :categories, :dependent => :delete_all
+  has_many :categories
   validates_presence_of :name
   validates_uniqueness_of :name
   is_searchable
@@ -25,6 +25,10 @@ class CategoryType < ActiveRecord::Base
     end
     categories.top_level.all(:order => "name").each{|cat| fn.call(cat)}
     list
+  end
+  
+  def safe_to_delete?
+    categories.count == 0
   end
   
 end
