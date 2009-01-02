@@ -42,7 +42,7 @@ div.selectbox-wrapper ul li.current, #menu div.selectbox-wrapper ul li.current {
   border: none;
 }
 
-.searchbox .selectbox, .box .selectbox /* look&fell of  select box*/
+.searchbox .selectbox, .box .selectbox, .text_editor_fields .selectbox /* look&fell of  select box*/
 {
   background: #FFF url(/images/cms/select_bg.gif) no-repeat 100% 0;
 }

@@ -1,3 +1,10 @@
+<% content_for :html_head do %>
+<% javascript_tag do %>
+$(document).ready(function() {
+  $('select.dhtml_selector').selectbox({debug:true, width: '96px', dhtml_selector: 'html_block_content'});
+});
+<% end %>
+<% end %>
 <div class="fields text_fields">
   <%= f.label :name %>
   <%= f.text_field :name %>

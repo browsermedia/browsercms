@@ -34,15 +34,50 @@ float: left;
 }
 .pagination .info {
 margin-right: 220px;
+
+}
+.pagination div {
 * line-height: 10pt;
-* margin-top: 2px;
+
 }
 .pagination .links span{
-margin: 10px;
+margin: 0 10px;
+display: block;
+float:left;
 }
-.pagination .links img {
+.pagination .links a{
+text-decoration: none;
+* margin-top: 2px;
 margin-right: 3px;
+width: 8px;
+display:block;
+float: left;
 }
+#first_page_link {
+background: url(/images/cms/pagination/first.gif) no-repeat 0 0;
+}
+#first_page_link:hover {
+background: url(/images/cms/pagination/first_h.gif) no-repeat 0 0;
+}
+#previous_page_link {
+background: url(/images/cms/pagination/previous.gif) no-repeat 0 0;
+}
+#previous_page_link:hover {
+background: url(/images/cms/pagination/previous_h.gif) no-repeat 0 0;
+}
+#next_page_link {
+background: url(/images/cms/pagination/next.gif) no-repeat 0 0;
+}
+#next_page_link:hover {
+background: url(/images/cms/pagination/next_h.gif) no-repeat 0 0;
+}
+#last_page_link {
+background: url(/images/cms/pagination/last.gif) no-repeat 0 0;
+}
+#last_page_link:hover {
+background: url(/images/cms/pagination/last_h.gif) no-repeat 0 0;
+}
+
 #blocks td.page_name, #blocks td.path {
 text-align: left;
 

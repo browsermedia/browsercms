@@ -11,7 +11,7 @@ function editorEnabled() {
 }
 
 function setEditor(id, status) {
-    if (status.value == 'disabled'){
+    if (status == 'Simple Text' || status.value == 'disabled'){
 	$('#'+id+'___Frame').hide();
 	$('#'+id).show();
        $.cookie('editorDisabled', true, { expires: 90, path: '/' })    

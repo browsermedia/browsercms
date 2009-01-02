@@ -1,11 +1,20 @@
-                  <% if %w[FileBlock ImageBlock].include?(@content_type.name) &&  request.user_agent !~ /MSIE 6/ %>
+
   <% content_for :html_head do %>
 
 <% javascript_tag do %>
+<% if %w[FileBlock ImageBlock].include?(@content_type.name) &&  request.user_agent !~ /MSIE 6/ %>
 $(document).ready(function() {
   $('#section_id').selectbox({debug:true, width: '129px'});
 });
 <% end %>
+
+    jQuery(function($){
+      $('#search_submit').hover(function(){
+        $('#search_submit').attr('src', '/images/cms/search_submit_h.gif');
+      }, function(){
+        $('#search_submit').attr('src', '/images/cms/search_submit.gif');
+})});
+
 <% end %>
 
   <% end %>

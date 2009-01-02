@@ -73,9 +73,30 @@ height: 100px;
 margin-bottom: 10px;
 }
 
-.text_editor_fields select{
+.text_editor_fields select {
 margin-left: 380px;
 * margin-left: 386px;
+}
+.text_editor_fields .selectbox{
+font-size: 8pt;
+color:#485561; 
+border: 1px solid #CCCCCC;
+height: 16px;
+margin-left: 363px;
+* margin-left: 361px;
+}
+.text_editor_fields label {
+* display: block;
+* float: left;
+* margin-top: 6px;
+* line-height: 10pt;
+}
+.text_editor_fields .selectbox-wrapper {
+margin-left: 415px;
+color: #485561;
+font-size: 8pt;
+* margin:  25px 0px 0px -135px;
+* padding-right: 6px;
 }
 .text_editor_fields textarea {
 height: 338px;

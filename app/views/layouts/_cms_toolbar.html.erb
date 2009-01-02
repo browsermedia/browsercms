@@ -2,10 +2,10 @@
   <div id="nav">
   	<h1><%= link_to image_tag("cms/browsercms_logo.png"), "/", :target => "_top" %></h1>
     	<ul id="section">
-      	<li<%= ' class="on"' if tab == :dashboard %>><%= link_to "My Dashboard", cms_dashboard_path, :target => "_top" %></li>
-        <% able_to?(:edit_content, :publish_content) do %><li<%= ' class="on"' if tab == :sitemap %>><%= link_to "Sitemap", cms_sitemap_path, :target => "_top" %></li><% end %>
-        <% able_to?(:edit_content, :publish_content) do %><li<%= ' class="on"' if tab == :content_library %>><%= link_to "Content Library", cms_content_library_path, :target => "_top" %></li><% end %>
-        <% able_to?(:administrate) do %><li<%= ' class="on"' if tab == :administration %>><%= link_to "Administration", cms_administration_path, :target => "_top" %></li><% end %>
+      	<li<%= ' class="on"' if tab == :dashboard %>><%= link_to span_tag("My Dashboard"), cms_dashboard_path, :target => "_top" %></li>
+        <% able_to?(:edit_content, :publish_content) do %><li<%= ' class="on"' if tab == :sitemap %>><%= link_to span_tag("Sitemap"), cms_sitemap_path, :target => "_top" %></li><% end %>
+        <% able_to?(:edit_content, :publish_content) do %><li<%= ' class="on"' if tab == :content_library %>><%= link_to span_tag("Content Library"), cms_content_library_path, :target => "_top" %></li><% end %>
+        <% able_to?(:administrate) do %><li<%= ' class="on"' if tab == :administration %>><%= link_to span_tag("Administration"), cms_administration_path, :target => "_top" %></li><% end %>
       </ul>
       <ul id="userlinks">
 	<li id="user_info"><%= image_tag "cms/icons/user.png" %><div><%= current_user.full_name %></div></li>

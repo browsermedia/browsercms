@@ -42,6 +42,7 @@ display: block;
 float: left;
 }
 
+
 	#nav ul#section li {
 	  text-transform: uppercase;
 	}
@@ -49,14 +50,28 @@ float: left;
 	#nav ul#section li a {
 	float: left;
 	display: block;
-	padding: 15px;
+	padding: 0;
+        padding-right: 6px;
 	color: #5F5F5F;
 	font-weight: bold;
 	text-decoration: none;
 	font-size: 12px;
 	}
+	
+	#nav ul#section li a span{
+            display: block;
+            padding: 15px;
+            padding-right: 9px;
 
-	#nav ul#section li.on {
+        }
+	#nav ul#section li a:hover span{
+	background: url(/images/cms/nav_h.gif) no-repeat 0 0;
+	}
+	#nav ul#section li a:hover{
+	background: url(/images/cms/nav_cap_h.gif) no-repeat 100% 0;
+	}
+
+	#nav ul#section li.on a span {
 	background: url(/images/cms/nav.png) no-repeat 0 0;
 	}
 	
@@ -146,26 +161,36 @@ margin-top: 1px;
 }
 
 #menu ul li {
-background: url(/images/cms/menu.png) no-repeat 0 0;
+
 margin-bottom: 2px;
 }
-#menu ul li.open {
-background: url(/images/cms/menu_open.png) no-repeat 0 0;
-}
+
 #menu ul li a {
+background: url(/images/cms/menu.png) no-repeat 0 0;
 color: #36659D;
 font-weight: bold;
 text-decoration: none;
 display: block;
 padding: 8px;
+* padding-bottom: 9px;
+}
+#menu ul li a:hover {
+background: url(/images/cms/menu_h.gif) no-repeat 0 0;
+color: #0549B8;
+}
+#menu ul li.open a{
+background: url(/images/cms/menu_open.png) no-repeat 0 0;
+color: #36659D;
 }
 
 #menu ul li ul li {
 display: none;
 }
+#menu ul li.open ul {
+background: #FFF url(/images/cms/menu_open_bg.gif) no-repeat 0 100%;
+}
 #menu ul li.open ul li {
 display: block;
-background: #FFF;
 margin: -1px 0 0 0;
 padding: 0px 0 0px 25px;
 }
@@ -173,8 +198,14 @@ padding: 0px 0 0px 25px;
 padding: 3px 0 3px 25px;
 }
 #menu ul li.open ul li a{
+background-image: none;
 padding: 3px 8px 6px 8px;
 }
+#menu ul li.open ul li a:hover {
+background-color: #d0d0d0;
+color: #36659D;
+}
+
 #menu ul li.open ul li.on a {
 background-color: #BCD3F0;
 padding: 3px 8px 4px 8px;
@@ -219,6 +250,9 @@ padding: 15px 15px 0 0;
 	color: #5489C7;
 	text-decoration: none;
 	}
+	#footer a:hover { 
+	text-decoration: underline;
+	}
 
 
 /* Utility
@@ -236,14 +270,6 @@ padding: 15px 15px 0 0;
 }
 
 
-/* TRASH THESE
-*/
-
-table tr th { background: #AAA; color: #333; }
-table tr td, table tr th { padding: 8px; }
-
-
-
 /* FUNCTION BUTTONS
 */
 
@@ -251,52 +277,40 @@ a.button {
 	display: block;
 	line-height: 27px;
 	padding-right: 18px;
-	background: url(/images/cms/buttons/sprite.png) no-repeat top right;
+	background: url(/images/cms/buttons/button_cap.png) no-repeat top right;
 	float: left;
 	color: #FFF;
 	text-decoration: none;
 	margin-right: 5px;
 }
 
-a.button.left {
-	background: url(/images/cms/buttons/sprite.png) no-repeat -175px -27px;
-	margin-right: 0;
+a.button span {
+	display: block;
+	background: url(/images/cms/buttons/button.png) no-repeat 0 0;
+	padding: 0 0 0 18px;
+}
+
+a.button:hover {
+	background: url(/images/cms/buttons/button_cap_h.png) no-repeat 100% 0;
+}
+
+a.button:hover span {
+	background: url(/images/cms/buttons/button_h.png) no-repeat 0 0;
 }
 
 a.button.disabled {
 	color: #88A8D2;
 	cursor: default;
 }
-
-a.button span {
-	display: block;
-	background: url(/images/cms/buttons/sprite.png) no-repeat 0 0;
-	padding: 0 0 0 18px;
-}
-
-a.button.right span {
-	background: url(/images/cms/buttons/sprite.png) no-repeat 0 -54px;
-}
-a.button:hover {
-	background: url(/images/cms/buttons/sprite_h.png) no-repeat top right;
-}
-a.button.left:hover {
-	background: url(/images/cms/buttons/sprite_h.png) no-repeat -175px -27px;
-}
-
-a.button:hover span {
-	background: url(/images/cms/buttons/sprite_h.png) no-repeat 0 0;
-}
-
-a.button.right:hover span {
-	background: url(/images/cms/buttons/sprite_h.png) no-repeat 0 -54px;
-}
 a.disabled:hover {
-	background: url(/images/cms/buttons/sprite.png) no-repeat top right;
+	background: url(/images/cms/buttons/button_cap.png) no-repeat top right;
+}
+a.disabled:hover span {
+	background: url(/images/cms/buttons/button.png) no-repeat 0 0;
 }
 
-a.disabled:hover span {
-	background: url(/images/cms/buttons/sprite.png) no-repeat 0 0;
+th, td {
+padding: 8px;
 }
 
 tr.hover {
@@ -322,12 +336,13 @@ width: 160px;
   height: 18px;
 * width: 130px;
   border: 1px solid #B9B9B9;
+  border-right: none;
 }
 #search_term_container, #search_submit_container {
 float: left;
 }
-#search_submit_container {
-margin-left: -1px;
+
+#search_submit_container{
 * margin-top: 1px;
 }
 
