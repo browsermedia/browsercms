@@ -27,8 +27,8 @@ class CategoryType < ActiveRecord::Base
     list
   end
   
-  def safe_to_delete?
-    categories.count == 0
+  def cannot_be_deleted_message
+    categories.count.zero? ? nil : "This cannot be deleted because it is in use in #{categories.count} #{"category".pluralize(categories.count)}"
   end
   
 end

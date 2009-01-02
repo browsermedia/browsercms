@@ -16,7 +16,15 @@
         $('#view_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/show/'+id)
         $('#edit_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/edit/'+id)
         $('#revisions_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/revisions/'+id)
-        $('#delete_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/destroy/'+id)
+        var cannot_be_deleted_message = $(this).find('.cannot_be_deleted_message')
+        if(cannot_be_deleted_message.length > 0) {
+          $('#delete_button').addClass('disabled')
+            .attr('title', $.trim(cannot_be_deleted_message.text()))
+        } else {
+          $('#delete_button').removeClass('disabled')
+            .attr('href', '/cms/blocks/'+type+'/destroy/'+id)  
+            .attr('title', 'Are You Sure You Want To Delete This Record?')
+        }        
   <% able_to? :publish_content do -%>
         if($(this).hasClass('draft')) {
           $('#publish_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/publish/'+id+'?_redirect_to='+location.href)        
@@ -48,8 +56,15 @@
   <tbody>
     <% @blocks.each do |block| %>
       <tr id="<%= block.class.name.underscore %>_<%= block.id %>" class="<%= block.class.publishable? && !block.published? ? 'draft' : 'published' %>">
-        <% @content_type.columns_for_index.each do |column| %>
-          <td class="name"><%= block.send(column[:method]) %></td>      
+        <% @content_type.columns_for_index.each_with_index do |column, i| %>
+          <td class="name">
+            <%= block.send(column[:method]) %>
+            <% if i.zero? && block.respond_to?(:cannot_be_deleted_message) && block.cannot_be_deleted_message %>
+              <div class="cannot_be_deleted_message" style="display: none">
+                <%=h block.cannot_be_deleted_message %>
+              </div>
+            <% end %>
+          </td>      
         <% end %>
         <% if @content_type.model_class.respond_to?(:updated_at) %><td class="updated"><%= block.updated_at.to_s(:date) %></td><% end %>
         <% if @content_type.model_class.connectable? %><td class="used"><%= block.connected_pages.count %></td><% end %>
