@@ -3,6 +3,13 @@
   @block.attachment_file_name = @block.attachment.file_name if @block.attachment_file_name.blank? && !@block.new_record?
 %>
 <% content_for :html_head do %>
+  <%= stylesheet_link_tag "cms/taglist" %>
+  <%= javascript_include_tag "jquery.dimensions", "jquery.taglist", "/cms/tags" %>
+  <% javascript_tag do %>
+  $(document).ready(function() {
+    $('.tag-list').tagList(tags)
+  });
+  <% end %>
   <% if @block.new_record? %>
     <script type="text/javascript">
     jQuery(function($){
@@ -30,4 +37,8 @@
 <div class="fields text_fields">
   <%= f.label :attachment_file_name %>
   <%= f.text_field :attachment_file_name %>
+</div>
+<div class="fields text_fields">
+  <%= f.label :tag_list, "Tags" %>
+  <%= f.tag_list %>
 </div>

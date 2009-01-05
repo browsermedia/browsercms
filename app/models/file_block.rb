@@ -1,6 +1,6 @@
 class FileBlock < AbstractFileBlock
 
-  acts_as_content_block :belongs_to_attachment => true
+  acts_as_content_block :belongs_to_attachment => true, :taggable => true
   
   def self.display_name
     "File"

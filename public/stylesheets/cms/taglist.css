@@ -8,7 +8,7 @@ ul.tag-list {
 }
 ul.tag-list li {
   margin: 0;
-  padding: 2px 5px;
+  padding: 5px;
   cursor: pointer;
   border-bottom: 1px dotted #8D8E90;
   background: #FFF;

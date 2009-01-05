@@ -4,7 +4,7 @@
     var tagSeparator = " ";
     
     var getTagList = function() {
-      return $('#'+tagListInput.id+'-tag-list');
+      return $('#'+$(tagListInput).attr('id')+'-tag-list');
     }
     
     var getCurrentTag = function() {
@@ -25,19 +25,20 @@
       return getTagList().find('li:first')
     }
     
-    var positionTagList = function() {
+    var positionAndSizeTagList = function() {
       getTagList().css('top', $(tagListInput).offset().top+$(tagListInput).outerHeight())
         .css('left', $(tagListInput).offset().left)
+        .css('width', $(tagListInput).outerWidth())
     }
     
     var createEmptyTagList = function() {
-      var id = tagListInput.id + '-tag-list';
+      var id = $(tagListInput).attr('id') + '-tag-list';
       $(tagListInput).after('<ul id="'+id+'" class="tag-list" style="display: none"></ul>')
-      positionTagList()
+      positionAndSizeTagList()
     }          
 
     var matchesInputValue = function(tag, value) {
-      return tag && (tag.indexOf(value) == 0);
+      return tag && value && (tag.toLowerCase().indexOf(value.toLowerCase()) == 0);
     }
 
     var showTagList = function(value) {
@@ -47,7 +48,12 @@
           html.push('<li>'+tag+'</li>');  
         }
       })
-      getTagList().html(html.join("\n")).show().find('li').click(function(){selectTag(this); acceptTag()});
+      getTagList().html(html.join("\n")).show()
+      getTagList().find('li').click(function(){
+        selectTag(this); 
+        acceptTag();
+        return false;
+      });
     }
     
     var updateTagList = function() {
@@ -121,5 +127,6 @@
     createEmptyTagList()
     $(this).keydown(handleNavKeys).keyup(handleInput)
     $(this).attr('autocomplete', 'off') //Disable autofill on FF
+    $(this).blur(function(){getTagList().hide()})
   }
 })(jQuery);

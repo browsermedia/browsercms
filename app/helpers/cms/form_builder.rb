@@ -22,7 +22,7 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
   end
   
   def tag_list(options={})
-    text_field(:tag_list, {:size => 50, :class => "tags_field"}.merge(options))
+    text_field(:tag_list, {:size => 50, :class => "tag-list"}.merge(options))
   end
   
 end
