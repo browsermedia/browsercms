@@ -1,7 +1,7 @@
 <%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
 
 <% content_for :functions do %>
-<% if @block && !@block.new_record? %>
+<% if @block && !@block.new_record? && !defined?(dynamic_buttons) %>
 <%= link_to span_tag("Add New Content"), cms_path(:blocks, @content_type.content_block_type.pluralize, :new) , :class => "button", :id => "add_button" %>
 <% able_to? :publish_content do -%>
   <% if @block.respond_to?(:published?) && !@block.published %>
@@ -12,7 +12,7 @@
 <% end -%>
 <%= link_to span_tag('View Content'), cms_path(:blocks, @content_type.content_block_type.pluralize, :show, @block) , :class => "button" %>
 <%= link_to span_tag('Edit Content'), cms_path(:blocks, @content_type.content_block_type.pluralize, :edit, @block) , :class => "button" %>
-<%= link_to span_tag('List Revisions'), cms_path(@block, :revisions) , :class => "button #{'disabled' unless @block.class.versioned?}" %>
+<%= link_to span_tag('List Versions'), cms_path(@block, :revisions) , :class => "button #{'disabled' unless @block.class.versioned?}" %>
 <%= link_to span_tag("Delete"), cms_path(:blocks, @content_type.name.underscore.pluralize, :destroy, @block), :class => "http_delete confirm_with_title button", :title => "Are you sure you want to delete '#{@block.name}'?" %>
 <%= link_to span_tag("List All"), cms_path(:blocks, @content_type.content_block_type), :id=>"list_all", :class => "button" %>
 <% else %>
@@ -22,9 +22,8 @@
 <% end %>
 <%= link_to span_tag("View Content"), "#", :id => "view_button", :class => "button disabled" %>
 <%= link_to span_tag("Edit Content"), "#", :id => "edit_button", :class => "button disabled" %>
-<%= link_to span_tag("List Revisions"), "#", :id=>"revisions_button", :class => "button disabled" %>
+<%= link_to span_tag("List Versions"), "#", :id=>"revisions_button", :class => "button disabled" %>
 <%= link_to span_tag("Delete"), "#", :id => "delete_button", :class => "button disabled http_delete confirm_with_title", :title => "Are you sure you want to delete this record?" %>
 <%= link_to span_tag("List All"), cms_path(:blocks, @content_type.content_block_type), :id=>"list_all", :class => "button" %>
 <% end %>
-<br clear="all" />
 <% end %>

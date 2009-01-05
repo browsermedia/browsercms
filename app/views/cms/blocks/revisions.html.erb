@@ -1,18 +1,54 @@
-<% @page_title = "Content Library / List of Revisions" %>
-<% @toolbar_title = "List Revisions" %>
-<%= content_for :html_head, stylesheet_link_tag("cms/content_library") %>
-<%= content_for :functions,  render(:partial => 'toolbar') %>
+<% @page_title = "Content Library / List of Versions" %>
+<% @toolbar_title = "List Versions / '#{@block.name}' #{@content_type.display_name}" %>
+<% content_for :html_head do %>
+<%= stylesheet_link_tag("cms/content_library") %>
+  <% javascript_tag do %>
+    jQuery(function($){
+      $('#blocks tbody tr').hover(function(){
+        $(this).addClass('hover')
+      }, function(){
+        $(this).removeClass('hover')
+      }).click(function(){
+        var match = this.id.match(/(.*)_(\d+)/) 
+        var type = match[1]
+        var id = match[2]
+        $('#blocks tbody tr').removeClass('selected')
+        $(this).addClass('selected')
+        $('#functions .button').addClass('disabled').attr('href','#')
+        $('#add_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/new')
+        $('#view_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/show_version/<%= @block.id %>?version='+id)  
+        var current = $(this).find('.current')
+        if(current.length == 0) {
+          $('#revert_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/revert_to/<%= @block.id %>?version='+id)  
+        } else {
+          $('#view_button').attr('href', '/cms/blocks/'+type+'/show/<%= @block.id %>');
+          $('#edit_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/edit/<%= @block.id %>');
+        }
+      })
+    })
+  <% end %>
+
+<% end %>
+<% content_for :functions do %>
+<%= render(:partial => 'toolbar', :locals => {:dynamic_buttons => true}) %>
+<%= link_to span_tag("Revert"), "#", :id=>"revert_button", :class => "button disabled"  %>
+<% end %>
 <table id="blocks">
   <tr>
     <th>Version</th>
     <th>Date</th>
-    <th>Editor</th>
-    <th class="last">Actions</th>
+    <th<%= ' class="last"' unless @content_type.model_class.publishable? %>>Editor</th>
+      <% if @content_type.model_class.publishable? %><th class="block_status last">Status</th><% end %>
   </tr>
-  <% @block.versions.all(:order => "version desc").each_with_index do |r, i| %><tr>
-    <td><%= link_to "v. #{r.version}", cms_path(@block, :show_version, :version => r.version)%><%= " CURRENT" if i == 0 %></td>
+  <% @block.versions.all(:order => "version desc").each_with_index do |r, i| %>
+  <% published_status = (r.published? ? 'published' : 'draft') %>
+      <tr id="<%= @block.class.name.underscore %>_<%= r.version %>">
+    <td><%= "v. #{r.version}" %><%= ' (LIVE)' if @block.live_version && r.version == @block.live_version.version %><%= '<span class="current"> (CURRENT)</span>' if i == 0 %></td>
     <td><%= r.created_at.strftime("%b %e, %Y %l:%M %p") if r.created_at %></td>
     <td><%= r.updated_by.login if r.updated_by %></td>
-    <td><% if i > 0 %><%= link_to "Revert To This", cms_path(@block, :revert_to, :version => r.version) %><% end %></td>
-  </tr><% end %>
+        <% if @content_type.model_class.publishable? %><td class="block_status"><%= status_icon(published_status) %> <div><%= published_status %></div> </td><% end %>
+
+  </tr>
+  <% end %>
+
 </table>
