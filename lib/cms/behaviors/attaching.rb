@@ -125,7 +125,9 @@ module Cms
           end
 
           def after_as_of_version
-            self.attachment = Attachment.find(attachment_id).as_of_version(attachment_version)
+            if attachment_id && attachment_version
+              self.attachment = Attachment.find(attachment_id).as_of_version(attachment_version)
+            end
           end
 
           def attachment_path
