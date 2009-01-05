@@ -1,4 +1,13 @@
-<%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
+<% content_for :html_head do %>
+  <%= stylesheet_link_tag('cms/form_layout') %>
+  <% if @user.new_record? %>
+    <% javascript_tag do %>
+    jQuery(function($){
+      $('#user_login, #user_password').attr('autocomplete', 'off')
+    })
+    <% end %>
+  <% end %>
+<% end %>
 <% form_for(@user, :url => cms_path(@user, :create_or_update)) do |f| %>
   <%= f.error_messages %>
   <%= hidden_field_tag "on_fail_action", "change_password" if @change_password  %>
