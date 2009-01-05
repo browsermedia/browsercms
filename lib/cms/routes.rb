@@ -14,6 +14,7 @@ module Cms::Routes
     connect '/:controller/:action/:id.:format'
     connect '/:controller/:action.:format'
     connect '/:controller/:action/:id'
+    connect '/:controller.:format'
 
     connect '*path', :controller => 'cms/content', :action => 'show'    
   end

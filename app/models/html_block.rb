@@ -1,6 +1,6 @@
 class HtmlBlock < ActiveRecord::Base
 
-  acts_as_content_block
+  acts_as_content_block :taggable => true
   
   validates_presence_of :name
   
