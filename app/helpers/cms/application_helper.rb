@@ -157,5 +157,17 @@ LBW
       useful_cts.each {|t| logger.debug "#{t.display_name} == Text: #{t.display_name == 'Text'}" }
       useful_cts
     end
+    
+    def url_with_mode(url, mode)
+      uri = URI.parse(url)
+      if uri.query =~ /mode=[^&]*/
+        "#{uri.path}?#{uri.query.gsub(/((^|&)mode=)[^&]*/) {|s| "#{$1}#{mode}" }}"
+      elsif uri.query
+        "#{uri.path}?#{uri.query}&mode=#{mode}"
+      else
+        "#{uri.path}?mode=#{mode}"
+      end
+    end
+    
   end
 end

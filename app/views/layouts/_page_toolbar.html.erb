@@ -57,12 +57,13 @@
     <div class="visual_editor_label">Visual Editor:</div>
     <div class="visual_editor_value_container">
       <%= image_tag "cms/page_toolbar/visual_editor_end.gif", :style => "float: left;" %>
-
-  <% if @mode == "edit" %>
-<div class="sm_button"><%= link_to "ON", "#{@page.path}?mode=view", :class => "sm_button", :target => "_top" %></div><div><%= link_to 'off',"#{@page.path}?mode=view", :target => "_top" %></div>
-  <% else %>
-<div><%= link_to "on", "#{@page.path}?mode=edit", :target => "_top" %></div><div class="sm_button"><%= link_to "<span>OFF</span>", "#{@page.path}?mode=edit", :target => "_top", :class => "sm_button" %></div>
-  <% end %>
+      <% if @mode == "edit" %>
+        <div class="sm_button"><%= link_to "ON", url_with_mode(request.referrer, "edit"), :class => "sm_button", :target => "_top" %></div>
+        <div><%= link_to 'off', url_with_mode(request.referrer, "view"), :target => "_top" %></div>
+      <% else %>
+        <div><%= link_to "on", url_with_mode(request.referrer, "edit"), :target => "_top" %></div>
+        <div class="sm_button"><%= link_to "<span>OFF</span>", url_with_mode(request.referrer, "view"), :target => "_top", :class => "sm_button" %></div>
+      <% end %>
       <%= image_tag "cms/page_toolbar/visual_editor_end.gif", :style => "float: left;" %>
     </div>
 <% else %>
