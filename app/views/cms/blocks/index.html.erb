@@ -12,6 +12,7 @@
         $('#blocks tbody tr').removeClass('selected')
         $(this).addClass('selected')
         $('#functions .button').addClass('disabled').attr('href','#')
+        $('#list_all').removeClass('disabled').attr('href', '<%= cms_path(:blocks, @content_type.content_block_type) %>');
         $('#add_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/new')
         $('#view_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/show/'+id)
         $('#edit_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/edit/'+id)
