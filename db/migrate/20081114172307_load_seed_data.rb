@@ -59,7 +59,7 @@ class LoadSeedData < ActiveRecord::Migration
     <%= yield :html_head %>
   </head>
   <body style="margin: 0; padding: 0">
-    <%= yield unless @exception %>
+    <%= yield %>
     <%= container :main %>
     <% @exception && @stacktrace && able_to?(:edit_content, :publish_content) do %>
       <pre>

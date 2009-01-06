@@ -1,8 +1,11 @@
 class Cms::ToolbarController < Cms::BaseController
 
   def index
-    @mode = params[:mode]
-    @page_version = params[:page_version]
+    if params[:page_toolbar] != "false"
+      @mode = params[:mode]
+      @page_toolbar_enabled = true
+    end
+    @page_version = params[:page_version]    
     @page = Page.find(params[:page_id]).as_of_version(params[:page_version])
   end  
   

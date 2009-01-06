@@ -17,7 +17,7 @@
   <body>
     <div id="wrapper">
       <%= yield %>
-      <%= render :partial => 'layouts/page_toolbar' %>
+      <%= render :partial => 'layouts/page_toolbar' if @page_toolbar_enabled %>
     </div>
   </body>
 </html>

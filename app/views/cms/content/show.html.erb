@@ -1,18 +1,20 @@
 <% #These are need if this template is render by a rescue_from 
-  @page = page if (!@page && defined?(page))
-  @exception = exception if (!@exception && defined?(exception))
-  @stacktrace = stacktrace if (!@stacktrace && defined?(stacktrace))
+  if !@page && defined?(page)
+    @page = page 
+    @mode = "view"
+    @exception = exception if (!@exception && defined?(exception))
+    @stacktrace = stacktrace if (!@stacktrace && defined?(stacktrace))
+  end
+  
 %>
 <% @page_title = @page.page_title %>
 
-<%# Show the toolbar if you are logged in as a cms user and this isn't an error %>
-<% unless defined?(exception)%>
-  <% able_to?(:edit_content, :publish_content) do %>
-    <% content_for :html_head do %>
-      <%= stylesheet_link_tag 'cms/page' %>
-    <% end %>
-    <iframe src="<%= cms_path(:toolbar, :page_id => @page.id, :page_version => @page.version, :mode => @mode) %>" width="100%" height="159px" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" name="cms_toolbar"></iframe>
+<%# Show the toolbar if you are logged in as a cms user %>
+<% able_to?(:edit_content, :publish_content) do %>
+  <% content_for :html_head do %>
+    <%= stylesheet_link_tag 'cms/page' %>
   <% end %>
+  <iframe src="<%= cms_path(:toolbar, :page_id => @page.id, :page_version => @page.version, :mode => @mode, :page_toolbar => !@exception) %>" width="100%" height="159px" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" name="cms_toolbar"></iframe>
 <% end %>
 
 <% @page.connectors.for_page_version(@page.version).each do |c| %>
