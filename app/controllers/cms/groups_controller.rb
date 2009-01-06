@@ -3,6 +3,7 @@ class Cms::GroupsController < Cms::ResourceController
   
   check_permissions :administrate  
   
+  before_filter :set_menu_section
   after_filter :add_default_permissions, :only => [:create]
   after_filter :add_default_sections, :only => [:create]
   
@@ -32,5 +33,8 @@ class Cms::GroupsController < Cms::ResourceController
       @object.sections = Section.all
     end
 
+    def set_menu_section
+      @menu_section = 'groups'
+    end
     
 end

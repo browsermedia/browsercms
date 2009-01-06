@@ -2,9 +2,10 @@ class Cms::UsersController < Cms::ResourceController
   layout 'cms/administration'
 
   check_permissions :administrate
-  
+  before_filter :set_menu_section
   after_filter :update_group_membership, :only => [:update, :create]
   after_filter :update_flash, :only => [ :update, :create ]
+
   
   def index
     query, conditions = [], []
@@ -71,5 +72,8 @@ class Cms::UsersController < Cms::ResourceController
   private
     def user
       @user ||= User.find(params[:id])
+    end
+    def set_menu_section
+      @menu_section = 'users'
     end
 end
