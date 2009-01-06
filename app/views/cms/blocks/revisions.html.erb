@@ -36,17 +36,20 @@
 <table id="blocks">
   <tr>
     <th>Version</th>
+      <% if @content_type.model_class.publishable? %><th class="block_status">Status</th><% end %>
+      <th>Comment</th>
     <th>Date</th>
-    <th<%= ' class="last"' unless @content_type.model_class.publishable? %>>Editor</th>
-      <% if @content_type.model_class.publishable? %><th class="block_status last">Status</th><% end %>
+    <th class="last">Editor</th>
   </tr>
   <% @block.versions.all(:order => "version desc").each_with_index do |r, i| %>
   <% published_status = (r.published? ? 'published' : 'draft') %>
       <tr id="<%= @block.class.name.underscore %>_<%= r.version %>">
     <td><%= "v. #{r.version}" %><%= ' (LIVE)' if @block.live_version && r.version == @block.live_version.version %><%= '<span class="current"> (CURRENT)</span>' if i == 0 %></td>
-    <td><%= r.created_at.strftime("%b %e, %Y %l:%M %p") if r.created_at %></td>
-    <td><%= r.updated_by.login if r.updated_by %></td>
         <% if @content_type.model_class.publishable? %><td class="block_status"><%= status_icon(published_status) %> <div><%= published_status %></div> </td><% end %>
+    <td><%=  r.version_comment %></td>
+    <td><%= r.created_at.strftime("%b %d, %Y %I:%M %p") if r.created_at %></td>
+    <td><%= r.updated_by.login if r.updated_by %></td>
+
 
   </tr>
   <% end %>
