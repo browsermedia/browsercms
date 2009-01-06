@@ -15,7 +15,12 @@
         $('#add_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/new')
         $('#view_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/show/'+id)
         $('#edit_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/edit/'+id)
-        $('#revisions_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/revisions/'+id)
+        <% if @content_type.model_class.versioned? %>
+          $('#revisions_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/revisions/'+id)
+        <% else %>
+          $('#revisions_button').addClass('disabled')
+            .attr('title', '<%= @content_type.display_name.pluralize.titleize %> are not versioned')          
+        <% end %>
         var cannot_be_deleted_message = $(this).find('.cannot_be_deleted_message')
         if(cannot_be_deleted_message.length > 0) {
           $('#delete_button').addClass('disabled')
