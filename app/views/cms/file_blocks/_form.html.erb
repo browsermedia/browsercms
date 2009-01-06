@@ -4,6 +4,7 @@
    @sections = []
    @sections << root
    @sections += root.all_children_with_name
+   @sections.each {|s| s.full_path = "/" + s.full_path unless s == root }
   @block.attachment_file_name = @block.attachment.file_name if @block.attachment_file_name.blank? && !@block.new_record?
 %>
 <% content_for :html_head do %>
@@ -42,7 +43,7 @@
 </div>
 <div class="fields text_fields">
   <%= f.label :attachment_section_id, "Section" %>
-  <%= f.collection_select :attachment_section_id, @sections, :id, :name %>
+  <%= f.collection_select :attachment_section_id, @sections, :id, :full_path %>
 </div>
 <div class="fields text_fields">
   <%= f.label :attachment_file_name %>

@@ -31,7 +31,7 @@ $(document).ready(function() {
                 
                 <h3>Search</h3>
                 <div class="searchbox">
-                  <% form_tag '', :method => :get do -%>
+                  <% form_tag cms_path(:blocks, @content_type.content_block_type), :method => :get do -%>
                     <div id="search_term_container"><%= text_field_tag "search[term]", (params[:search] ? params[:search][:term] : nil) %></div> <div id="search_submit_container"><input id="search_submit" type="image" src="/images/cms/search_submit.gif" alt="submit" /></div>
 <div style="clear: both;"></div>
 
