@@ -1,5 +1,5 @@
 <div class="checkbox_group">
-  <div class="label">What sections should group members be allowed to <%= @group.cms_access? ? 'edit' : 'view' %>?</div>
+  <div class="label">What sections should group members be allowed to <span id="section-action"><%= @group.cms_access? ? 'edit' : 'view' %></span>?</div>
   <%= hidden_field_tag "group[section_ids][]", "" %>
   <% Section.all(:order => "path").each do |s|%>
   <div class="checkbox_fields">

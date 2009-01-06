@@ -1,32 +1,34 @@
 <% content_for :html_head do %>
-<script type="text/javascript">
-jQuery(function($){
-  var cms_access_group_ids = <%= GroupType.cms_access.all.map{|e| e.id.to_s}.to_json %>
-  $('#group_group_type_id').change(function() {
-    if ($.inArray($('#group_group_type_id')[0].value, cms_access_group_ids)) {
-      $('#permissions').hide()
-    } else {
-      $('#permissions').show()
-    }
-  })
-});
-</script>
-<% end %>
-
-<div class="checkbox_group">
-<div class="label">What kind of tasks should group members be allowed to do?</div>
-      <%= hidden_field_tag "group[permission_ids][]", "" %>  
-	<% Permission.all(:order => "name").each do |p|%>
-  <div class="checkbox_fields">
-    <label>
-<%= check_box_tag "group[permission_ids][]", p.id, @group.permissions.include?(p), :id => "permission_ids_#{p.id}", :class => "permission_ids" %>
-      <span><%=h p.full_name %> (<%=h p.description %>)</span>
-    </label>
-  </div>
+  <% javascript_tag do %>
+    jQuery(function($){
+      var cms_access_group_ids = <%= GroupType.cms_access.all.map{|e| e.id.to_s}.to_json %>
+      $('#group_group_type_id').change(function() {
+        if ($.inArray($('#group_group_type_id')[0].value, cms_access_group_ids)) {
+          $('#permissions').hide()
+          $('#section-action').text('view')
+        } else {
+          $('#permissions').show()
+          $('#section-action').text('edit')          
+        }
+      }).change()      
+    });
   <% end %>
-  <div class="check_uncheck">
-		  <%= link_to_check_all 'input.permission_ids' %>
-		  <%= link_to_uncheck_all 'input.permission_ids' %>
+<% end %>
+<div id="permissions">
+  <div class="checkbox_group">
+    <div class="label">What kind of tasks should group members be allowed to do?</div>
+    <%= hidden_field_tag "group[permission_ids][]", "" %>  
+    <% Permission.all(:order => "name").each do |p| %>
+      <div class="checkbox_fields">
+        <label>
+          <%= check_box_tag "group[permission_ids][]", p.id, @group.permissions.include?(p), :id => "permission_ids_#{p.id}", :class => "permission_ids" %>
+          <span><%=h p.full_name %> (<%=h p.description %>)</span>
+        </label>
+      </div>
+    <% end %>
+    <div class="check_uncheck">
+  	  <%= link_to_check_all 'input.permission_ids' %>
+  	  <%= link_to_uncheck_all 'input.permission_ids' %>
+    </div>
   </div>
 </div>
-

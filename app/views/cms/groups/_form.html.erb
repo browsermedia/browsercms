@@ -1,10 +1,10 @@
 <% content_for :html_head do %>
-<%= stylesheet_link_tag('cms/form_layout') %>
-<% javascript_tag do %>
-$(document).ready(function() {
-  $('#group_group_type_id').selectbox({debug:true});
-});
-<% end %>
+  <%= stylesheet_link_tag('cms/form_layout') %>
+  <% javascript_tag do %>
+    jQuery(function($) {
+      $('#group_group_type_id').selectbox();
+    });
+  <% end %>
 <% end %>
 <%= f.error_messages %>
 <div class="fields text_fields">
@@ -20,8 +20,10 @@ $(document).ready(function() {
   </div>
 <% end %>
 
-<%= render :partial => 'permissions' unless (params[:action] == "new" or params[:action] == "create" or !@group.cms_access?) %>
-<%= render :partial => 'sections' unless (params[:action] == "new" or params[:action] == "create") %>
+<% unless @group.new_record? %>
+  <%= render :partial => 'permissions' %>
+  <%= render :partial => 'sections' %>
+<% end %>
 
 <div class="buttons">
   <%= lt_button_wrapper(f.submit("Save", :class => "submit")) %>
