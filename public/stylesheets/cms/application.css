@@ -158,6 +158,10 @@ text-transform: uppercase;
 
 #menu ul {
 margin-top: 1px;
+* padding-bottom: 1px;
+}
+#menu ul li ul {
+padding-bottom: 0;
 }
 
 #menu ul li {

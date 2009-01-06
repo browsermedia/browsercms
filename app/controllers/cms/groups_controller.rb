@@ -7,8 +7,7 @@ class Cms::GroupsController < Cms::ResourceController
   after_filter :add_default_sections, :only => [:create]
   
   def index
-    #Groups get loaded in the view
-    #We're doing this because the new form is on the index page
+    @groups = Group.all(:order => "name")
   end
   
   protected

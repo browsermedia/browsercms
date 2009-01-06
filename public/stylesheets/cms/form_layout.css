@@ -110,7 +110,12 @@ margin-top: 10px;
 margin-left: 380px;
 margin-right: -374px;
 }
-
+.text_editor_fields label {
+* line-height: 14pt;
+}
+.text_editor_fields br {
+* line-height: 20pt;
+}
 /* CHECKBOX */
 .checkbox_fields,
 .check_uncheck {

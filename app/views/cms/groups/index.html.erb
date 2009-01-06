@@ -7,7 +7,7 @@
 		<th>Permissions</th>
   </tr>
   <% section_count = Section.count %>
-  <% Group.all(:order => "name").each do |g| %>
+  <% @groups.each do |g| %>
   <tr>
     <td><%= link_to h(g.name), cms_path(g, :edit) %></td>
     <td>
