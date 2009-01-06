@@ -1,5 +1,9 @@
 <% 
-  @sections = Section.all(:order => "name") 
+   root = Section.root.first
+   root.full_path = root.name
+   @sections = []
+   @sections << root
+   @sections += root.all_children_with_name
   @block.attachment_file_name = @block.attachment.file_name if @block.attachment_file_name.blank? && !@block.new_record?
 %>
 <% content_for :html_head do %>
@@ -8,7 +12,12 @@
   <% javascript_tag do %>
   $(document).ready(function() {
     $('.tag-list').tagList(tags)
+    $('#file_block_attachment_section_id').selectbox({debug:true, width: '210px'});
   });
+  jQuery(function($){
+     $('#file_block_attachment_file').change(function(){$('#mock_file_block_attachment_file').attr('value', $(this).attr('value'))});
+  });
+
   <% end %>
   <% if @block.new_record? %>
     <script type="text/javascript">
@@ -25,9 +34,10 @@
   <%= f.label :name %>
   <%= f.text_field :name %>
 </div>
-<div class="fields text_fields">
+<div class="fields file_fields">
   <%= f.label :attachment_file %>
-  <%# f.file_field :attachment_file %>
+  <input type="text" name="temp" class="mock" id="mock_file_block_attachment_file" />
+  <%= image_tag("cms/browse.gif") %>
   <input id="file_block_attachment_file" name="file_block[attachment_file]" value="/Users/pbarry/blog.txt" size="30" type="file" />
 </div>
 <div class="fields text_fields">

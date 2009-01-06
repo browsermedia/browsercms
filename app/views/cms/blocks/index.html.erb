@@ -78,4 +78,8 @@
     <% end %>
   </tbody>
 </table>
+<% if params[:search] && @blocks.size == 0 %>
+<div class="pagination">No results found for '<%= params[:search][:term] %>'</div>
+<% else %>
 <%= pagination @blocks, [:blocks, @content_type.content_block_type], @content_type.display_name %>
+<% end %>
