@@ -11,21 +11,28 @@
   <%= stylesheet_link_tag "cms/taglist" %>
   <%= javascript_include_tag "jquery.dimensions", "jquery.taglist", "/cms/tags" %>
   <% javascript_tag do %>
-  $(document).ready(function() {
-    $('.tag-list').tagList(tags)
-    $('#file_block_attachment_section_id').selectbox({debug:true, width: '210px'});
-  });
-  jQuery(function($){
-     $('#file_block_attachment_file').change(function(){$('#mock_file_block_attachment_file').attr('value', $(this).attr('value'))});
-  });
-
+    sanitizationRegexes = <%= Cms::Behaviors::Attaching::SANITIZATION_REGEXES.to_json %>
+    function sanitizeFileName(s) {
+      $.each(sanitizationRegexes, function(i,e){
+        var r = new RegExp(e[0].source, 'g')
+        s = s.replace(r, e[1])
+      })
+      return s;
+    }
+    jQuery(function($) {
+      $('.tag-list').tagList(tags)
+      $('#file_block_attachment_section_id').selectbox({width: '210px'});
+      $('#file_block_attachment_file').change(function(){
+        $('#mock_file_block_attachment_file').attr('value', $(this).attr('value'))
+      });
+    });    
   <% end %>
   <% if @block.new_record? %>
     <script type="text/javascript">
     jQuery(function($){
       var sectionIdPathMap = <%= @sections.inject({}){|map, sec| map[sec.id.to_s] = sec.path.sub(/\/$/,''); map}.to_json %>
       $('#file_block_attachment_file, #file_block_attachment_section_id').change(function(){ 
-        $('#file_block_attachment_file_name').val(sectionIdPathMap[$('#file_block_attachment_section_id').val()]+'/'+$('#file_block_attachment_file').val()) 
+        $('#file_block_attachment_file_name').val(sectionIdPathMap[$('#file_block_attachment_section_id').val()]+'/'+sanitizeFileName($('#file_block_attachment_file').val())) 
       }) 
     })
     </script>

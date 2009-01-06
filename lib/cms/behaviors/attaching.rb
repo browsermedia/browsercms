@@ -1,6 +1,8 @@
 module Cms
   module Behaviors
     module Attaching
+      SANITIZATION_REGEXES = [ [/\s/, '_'], [/[&+()]/, '-'], [/[=?!'"{}\[\]#<>%]/, ''] ]
+      
       def self.included(model_class)
         model_class.extend(MacroMethods)
       end
@@ -107,7 +109,9 @@ module Cms
           end
 
           def sanitize_file_name(file_name)
-            file_name.to_s.gsub(/\s/,'_').gsub(/[&+()]/,'-').gsub(/[=?!'"{}\[\]#<>%]/, '')
+            SANITIZATION_REGEXES.inject(file_name.to_s) do |s, (regex, replace)|
+              s.gsub(regex, replace)
+            end
           end
 
           def update_attachment_if_changed
