@@ -75,8 +75,7 @@
           break;
         case 9: //Tab
         case 13: //Return
-          acceptTag()
-          return false;
+          return !getTagList().is(':visible') || acceptTag();
       }            
     }
     
@@ -115,13 +114,18 @@
     
     var acceptTag = function() {
       if(getSelectedTag().length == 0) {
-        selectTag(getFirstTag())
+        if(getTagList().find('li').length > 0) {
+          selectTag(getFirstTag())  
+        } else {
+          return true;
+        }        
       }
       var tags = $(tagListInput).val().split(tagSeparator)
       tags.pop()
       tags.push(getSelectedTag().text())
       $(tagListInput).val(tags.join(tagSeparator))
-      getTagList().hide()            
+      getTagList().hide()
+      return false;            
     }
     
     createEmptyTagList()
