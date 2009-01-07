@@ -50,27 +50,30 @@
   <%= link_to "<span>Edit Properties</span>", cms_path(@page, :edit), :class => "button#{' disabled' if !@page.current_version?}", :target => "_top" %>
   <%= link_to "<span>List Versions</span>", cms_path(@page, :revisions), :target => "_top", :class => "button" %>
   <% able_to? :publish_content do %>
-  <%= link_to "<span>Delete</span>", cms_path(@page, :destroy), :title => "Are you sure you want to delete '#{@page.name}'?", :target => "_top", :class => "confirm_with_title http_delete button#{' disabled' if !@page.current_version?}" %>
+    <% if @page.current_version? %>  
+      <%= link_to "<span>Delete</span>", cms_path(@page, :destroy), :title => "Are you sure you want to delete '#{@page.name}'?", :target => "_top", :class => "confirm_with_title http_delete button#{' disabled' if !@page.current_version?}" %>
+    <% else %>
+      <%= link_to "<span>Revert to this Version</span>", cms_path(@page, :revert_to, :version => @page.version), :class => "button http_put", :target => "_top" %>
+    <% end %>
   <% end %>
-<div id="visual_editor_toggle">
-<% if @page.current_version? %>
-    <div class="visual_editor_label">Visual Editor:</div>
-    <div class="visual_editor_value_container">
-      <%= image_tag "cms/page_toolbar/visual_editor_end.gif", :style => "float: left;" %>
-      <% if @mode == "edit" %>
-        <div class="sm_button"><%= link_to "ON", url_with_mode(request.referrer, "edit"), :class => "sm_button", :target => "_top" %></div>
-        <div><%= link_to 'off', url_with_mode(request.referrer, "view"), :target => "_top" %></div>
-      <% else %>
-        <div><%= link_to "on", url_with_mode(request.referrer, "edit"), :target => "_top" %></div>
-        <div class="sm_button"><%= link_to "<span>OFF</span>", url_with_mode(request.referrer, "view"), :target => "_top", :class => "sm_button" %></div>
-      <% end %>
-      <%= image_tag "cms/page_toolbar/visual_editor_end.gif", :style => "float: left;" %>
-    </div>
-<% else %>
-  <%= link_to("<span>Current Version</span>", @page.path, :class => "button current_version", :target => "_top") %>
-<% end %>
 
-
-</div>
+  <div id="visual_editor_toggle">
+    <% if @page.current_version? %>
+        <div class="visual_editor_label">Visual Editor:</div>
+        <div class="visual_editor_value_container">
+          <%= image_tag "cms/page_toolbar/visual_editor_end.gif", :style => "float: left;" %>
+          <% if @mode == "edit" %>
+            <div class="sm_button"><%= link_to "ON", url_with_mode(request.referrer, "edit"), :class => "sm_button", :target => "_top" %></div>
+            <div><%= link_to 'off', url_with_mode(request.referrer, "view"), :target => "_top" %></div>
+          <% else %>
+            <div><%= link_to "on", url_with_mode(request.referrer, "edit"), :target => "_top" %></div>
+            <div class="sm_button"><%= link_to "<span>OFF</span>", url_with_mode(request.referrer, "view"), :target => "_top", :class => "sm_button" %></div>
+          <% end %>
+          <%= image_tag "cms/page_toolbar/visual_editor_end.gif", :style => "float: left;" %>
+        </div>
+    <% else %>
+      <%= link_to("<span>Current Version</span>", @page.path, :class => "button current_version", :target => "_top") %>
+    <% end %>
+  </div>
 </div>
 <% end %>
