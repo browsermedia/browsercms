@@ -8,13 +8,14 @@
 
   <% form_tag cms_path(:pages, :publish) do %>
     <table id="blocks">
+      <thead>
       <tr>
         <th class="select">&nbsp;</th>
         <th>Name</th>
         <th>User</th>
 	<th class="last">Date</th>
       </tr>
-
+      </thead>
     <% if @unpublished_pages.empty? %>
       <tr><td colspan="3">All pages are published</td></tr>
     <% else %>  

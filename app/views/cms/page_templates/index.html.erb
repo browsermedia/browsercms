@@ -26,10 +26,12 @@
 <% end %>
 
 <table id="blocks">
+  <thead>
   <tr>
     <th>Name</th>
     <th class="last">File Name</th>
   </tr>
+  </thead>
   <% @page_templates.each do |page_template| %>
     <tr id="page_template_<%= page_template.id %>">
       <td><%=h page_template.name %></td>

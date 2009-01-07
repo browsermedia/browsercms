@@ -50,11 +50,13 @@
 <%= error_messages_for :connector %>
     
 <table id="blocks">
+  <thead>
   <tr>
     <th class="name">Name</th>
     <th class="updated">Updated</th>
     <th class="used last">Uses</th>
   </tr>
+  </thead>
   <% @blocks.each do |block| %>
     <tr id="<%= block.class.name.underscore %>_<%= block.id %>">
       <td class="name"><%= block.name %></td>

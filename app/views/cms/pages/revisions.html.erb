@@ -46,6 +46,7 @@
 <% end %>
 
 <table id="blocks">
+  <thead>
   <tr>
     <th>Version</th>
     <th>Status</th>
@@ -53,6 +54,7 @@
     <th>Date</th>
     <th class="last">Editor</th>
   </tr>
+  </thead>
   <% @page.versions.all(:order => "version desc").each_with_index do |r, i| %>
    <% publish_status = r.published? ? 'published' : 'draft' %>
    <% current = @page.current_version.version == r.version %>

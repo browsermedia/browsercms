@@ -398,8 +398,10 @@ text-transform: capitalize;
 .block_status img {
 border: 1px solid white;
 }
+#blocks thead tr {
+background: #B6B6B6 url(/images/cms/table/tr_bg.gif) no-repeat 0 0;
+}
 #blocks th {
-background: #B6B6B6 url(/images/cms/dashboard/table_header_bg.gif) repeat-x 0 0;
 border-right: 1px solid #8E8E8E;
 border-bottom: 1px solid #8E8E8E;
 color: #686868;
@@ -408,6 +410,7 @@ font-size: 8pt;
 padding-left: 25px;
 }
 #blocks th.last {
+background: #B6B6B6 url(/images/cms/table/th_last_bg.gif) no-repeat 100% 0;
 border-right: none;
 }
 #blocks td {

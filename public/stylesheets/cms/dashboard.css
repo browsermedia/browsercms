@@ -19,10 +19,6 @@ padding: 5px;
 .dashboard_unit table {
 width: 90%;
 }
-.dashboard_unit table th {
-background: #B6B6B6;
-border-right: 1px solid #8E8E8E;
-}
 .dashboard_unit table th.last {
 border-right: none;
 }

@@ -29,10 +29,12 @@
 <%= link_to span_tag("delete"), "#", :id => "delete_button", :class => "button disabled http_delete", :onclick => "return confirm('Are you sure you want to delete this redirect?')" %>
 <% end %>
 <table id="blocks">
+  <thead>
   <tr>
     <th>From</th>
     <th class="last">To</th>
   </tr>
+  </thead>
   <% @redirects.each do |redirect| %>
     <tr id="redirect_<%= redirect.id %>">
       <td><%=h redirect.from_path %></td>

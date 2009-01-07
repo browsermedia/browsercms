@@ -14,11 +14,13 @@ $(document).ready(function() {
 <%= render :partial => 'cms/blocks/toolbar' %>
 
 <table id="blocks">
+  <thead>
   <tr>
     <th>Page Name</th>
     <th>Path</th>
     <th class="last">Page Status</th>
   </tr>
+  </thead>
   <% @pages.each do |page| %>
 <% status = page.archived? ? :archived : page.status %>    
   <tr>

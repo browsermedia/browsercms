@@ -35,6 +35,7 @@
 <%= link_to span_tag("Revert"), "#", :id=>"revert_button", :class => "button disabled"  %>
 <% end %>
 <table id="blocks">
+  <thead>
   <tr>
     <th>Version</th>
       <% if @content_type.model_class.publishable? %><th class="block_status">Status</th><% end %>
@@ -42,6 +43,7 @@
     <th>Date</th>
     <th class="last">Editor</th>
   </tr>
+  </thead>
   <% @block.versions.all(:order => "version desc").each_with_index do |r, i| %>
   <% published_status = (r.published? ? 'published' : 'draft') %>
       <tr id="<%= @block.class.name.underscore %>_<%= r.version %>">

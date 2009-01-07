@@ -2,10 +2,12 @@
 <% @toolbar_title = "List Groups" %>
 <%= content_for :functions, link_to(span_tag("Add Group"), url_for(:controller => "groups", :action => "new"), :id => "new_group_button", :class => "button") %>
 <table id="blocks">
+  <thead>
   <tr>
     <th>Group</th>
-		<th>Permissions</th>
+		<th class="last">Permissions</th>
   </tr>
+  </thead>
   <% section_count = Section.count %>
   <% @groups.each do |g| %>
   <tr>
