@@ -1,4 +1,11 @@
-<%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
+<% content_for :html_head do %>
+<%= stylesheet_link_tag('cms/form_layout') %>
+  <% javascript_tag do %>
+    jQuery(function($) {
+      $('#page_template_language').selectbox();
+    });
+  <% end %>
+<% end %>
 <% form_for(@page_template, :url => cms_path(@page_template, :create_or_update)) do |f| %>
   <%= f.error_messages %>
   <div class="fields text_fields">
@@ -11,7 +18,7 @@
   </div>
   <div class="fields text_editor_fields">
     <%= f.label :body %>
-    <%= f.label :language, "Language", :class => "select_label" %>
+    <%= f.label :language, "Language", :class => "select_label", :id => "label_for_page_template_language" %>
     <%= f.select :language, [["ERB", "erb"], ["Haml", "haml"]] %><br />
     <%= f.text_area :body, :rows => 25, :cols => 80 %>
   </div>

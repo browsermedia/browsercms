@@ -86,6 +86,7 @@ color:#485561;
 border: 1px solid #CCCCCC;
 height: 16px;
 margin-left: 363px;
+* margin-top: 3px;
 * margin-left: 361px;
 }
 .text_editor_fields label {
@@ -98,7 +99,7 @@ margin-left: 363px;
 margin-left: 415px;
 color: #485561;
 font-size: 8pt;
-* margin:  25px 0px 0px -135px;
+* margin:  28px 0px 0px -135px;
 * padding-right: 6px;
 }
 .text_editor_fields textarea {

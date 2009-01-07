@@ -65,3 +65,10 @@ margin-left: -11px;
   border-top: 1px solid #C6C6C6;  
   color: #717171;
 }
+
+.text_editor_fields #label_for_page_template_language {
+position: absolute; margin: 6px 0 0 310px;
+}
+.text_editor_fields #page_template_language_input {
+margin-left: 381px;
+}

@@ -29,3 +29,7 @@
     </tr>
     <% end %>
 </table>
+<% if @users.size == 0 && params[:key_word]%>
+   <div class="pagination">No results found for '<%= params[:key_word] %>'</div>
+<% end %>
+
