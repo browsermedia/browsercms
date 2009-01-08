@@ -128,7 +128,7 @@ module Cms
         nodes.each_with_index do |sn, i|
 
           #If the node is a hidden page, then we aren't going to display it
-          unless sn.node_type == "Page" && (sn.node.hidden? || sn.node.archived?)
+          unless (sn.node.respond_to?(:hidden?) && sn.node.hidden?) || (sn.node.respond_to?(:archived?) && sn.node.archived?)
             
             #Construct the CSS classes that the LI should have
             classes = []          

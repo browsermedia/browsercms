@@ -1,5 +1,5 @@
 <% for attribute in attributes -%>
-<div class="fields">
+<div class="fields <%= attribute.type == :html ? "text_editor_fields" : "text_fields" %>">
   <%%= f.label :<%= attribute.name %> %>
   <%%= f.<%= 
     case attribute.type
