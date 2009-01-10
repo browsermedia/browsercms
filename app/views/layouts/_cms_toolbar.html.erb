@@ -8,7 +8,7 @@
         <% able_to?(:administrate) do %><li<%= ' class="on"' if tab == :administration %>><%= link_to span_tag("Administration"), cms_administration_path, :target => "_top" %></li><% end %>
       </ul>
       <ul id="userlinks">
-	<li id="user_info"><%= image_tag "cms/icons/user.png" %><div><%= current_user.full_name %></div></li>
+	<li id="user_info"><%= image_tag "cms/icons/user.png" %><span><%= current_user.full_name %></span></li>
       	<li><%= link_to "Logout", cms_logout_path, :class => "http_delete", :target => "_top" %></li>
       </ul>
 			<%#div class="cmssearch">

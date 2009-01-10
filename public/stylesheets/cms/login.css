@@ -39,11 +39,6 @@ padding: 8px;
 font-size: large;
 }
 
-#remember_me_div {
-
-
-}
-
 .buttons {
 margin-top: 8px;
 * margin-bottom: -20px;
@@ -70,8 +65,14 @@ padding-left: 8px;
 
 }
 
-
-
-
-
-
+#remember_me_div label {
+display: block;
+float: left;
+margin: 8px 4px 0 180px;
+}
+#remember_me {
+display: block;
+float: left;
+margin-top: 6px;
+* margin-top: 1px;
+}

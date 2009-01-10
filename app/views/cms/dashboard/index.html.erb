@@ -4,13 +4,13 @@
 <%= stylesheet_link_tag('cms/form_layout') %>
 <% end %>
 <div class="dashboard_unit" id="page_drafts">
-<h2>Page Drafts</h2>
+<h2 class="left">Page Drafts</h2>
 
   <% form_tag cms_path(:pages, :publish) do %>
     <table id="blocks">
       <thead>
       <tr>
-        <th class="select">&nbsp;</th>
+        <th class="select first unbordered">&nbsp;</th>
         <th>Name</th>
         <th>User</th>
 	<th class="last">Date</th>
@@ -32,4 +32,5 @@
     <%= lt_button_wrapper(submit_tag("Publish Selected", :class => "submit")) %>
 <% end %>
 </div>
+<div class="bottom_left"></div>
 

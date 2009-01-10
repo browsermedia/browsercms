@@ -179,10 +179,12 @@ background: #4C82C0 url(/images/cms/lt_button_bg.gif) repeat 0 0;
 height: 25px;
 color: white;
 font-weight: bold;
-font-size: 10px;
+font-size: 9px;
 padding: 0 0 3px 0;
 * padding: 0 0 0 0;
 margin: 0 5px;
+* margin-left: 1px;
+text-transform: uppercase;
 }
 
 div.lt_button div{

@@ -1,0 +1,50 @@
+
+a.button { 
+	display: block;
+	line-height: 27px;
+	padding-right: 18px;
+	background: url(/images/cms/buttons/button_cap.png) no-repeat top right;
+	float: left;
+	color: #FFF;
+	text-decoration: none;
+	margin-right: 5px;
+}
+
+a.button span {
+	display: block;
+	background: url(/images/cms/buttons/button.png) no-repeat 0 0;
+	padding: 0 0 0 18px;
+}
+
+a.button:hover {
+	background: url(/images/cms/buttons/button_cap_h.png) no-repeat 100% 0;
+}
+
+a.button:hover span {
+	background: url(/images/cms/buttons/button_h.png) no-repeat 0 0;
+}
+
+a.button.disabled {
+	color: #88A8D2;
+	cursor: default;
+}
+a.button span span.delete_img{
+		  float:left;
+		  padding: 0 0 0 14px;
+	background: url(/images/cms/buttons/delete_x.png) no-repeat 0 0;		  
+}
+a.button:hover span span.delete_img{
+	background: url(/images/cms/buttons/delete_x_h.png) no-repeat 0 0;
+}
+a.button.disabled span span.delete_img{
+	background: url(/images/cms/buttons/delete_x_disabled.png) no-repeat 0 0;
+}
+a.disabled:hover {
+	background: url(/images/cms/buttons/button_cap.png) no-repeat top right;
+}
+a.disabled:hover span {
+	background: url(/images/cms/buttons/button.png) no-repeat 0 0;
+}
+a.disabled:hover span span.delete_img {
+	background: url(/images/cms/buttons/delete_x_disabled.png) no-repeat 0 0;
+}

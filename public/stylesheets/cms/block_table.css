@@ -1,0 +1,65 @@
+table#blocks td {
+padding: 8px;
+}
+
+table#blocks {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table#blocks th {
+padding: 8px;
+}
+#blocks .block_status {
+padding-left: 10px;
+}
+#blocks .block_status {
+padding: 2px 0 0 10px;
+vertical-align: middle;
+}
+#blocks .block_status div, .block_status img {
+float: left;
+}
+#blocks .block_status div {
+margin: 3px 0 0 3px;
+text-transform: capitalize;
+}
+.block_status img {
+border: 1px solid white;
+}
+#blocks th.first {
+background: #B6B6B6 url(/images/cms/table/tr_bg.gif) no-repeat 0 0;
+}
+#blocks th {
+background: #B6B6B6 url(/images/cms/table/th_bg.gif) repeat-x 0 0;
+border-right: 1px solid #8E8E8E;
+border-bottom: 1px solid #8E8E8E;
+color: #686868;
+font-weight: bold;
+font-size: 8pt;
+padding-left: 25px;
+letter-spacing: 1px;
+}
+#blocks th.last {
+background: #B6B6B6 url(/images/cms/table/th_last_bg.gif) no-repeat 100% 0;
+border-right: none;
+}
+#blocks td {
+padding-left: 30px;
+}
+#blocks td.unbordered, #blocks th.unbordered {
+border-right: none;
+}
+#blocks td.buffer_top {
+height: 8px;
+margin: 0;
+padding: 0;
+border-right: none;
+}
+#blocks td.buffer_bottom {
+height: 8px;
+margin: 0;
+padding: 0;
+border-bottom: 1px solid #E9E9E9;
+border-right: none;
+}

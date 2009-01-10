@@ -51,7 +51,7 @@
   <%= link_to "<span>List Versions</span>", cms_path(@page, :revisions), :target => "_top", :class => "button" %>
   <% able_to? :publish_content do %>
     <% if @page.current_version? %>  
-      <%= link_to "<span>Delete</span>", cms_path(@page, :destroy), :title => "Are you sure you want to delete '#{@page.name}'?", :target => "_top", :class => "confirm_with_title http_delete button#{' disabled' if !@page.current_version?}" %>
+      <%= link_to "<span><span class=\"delete_img\">&nbsp;</span>Delete</span>", cms_path(@page, :destroy), :title => "Are you sure you want to delete '#{@page.name}'?", :target => "_top", :class => "confirm_with_title http_delete button#{' disabled' if !@page.current_version?}" %>
     <% else %>
       <%= link_to "<span>Revert to this Version</span>", cms_path(@page, :revert_to, :version => @page.version), :class => "button http_put", :target => "_top" %>
     <% end %>
@@ -72,7 +72,7 @@
           <%= image_tag "cms/page_toolbar/visual_editor_end.gif", :style => "float: left;" %>
         </div>
     <% else %>
-      <%= link_to("<span>Current Version</span>", @page.path, :class => "button current_version", :target => "_top") %>
+      <%= link_to("<span>View Current Version</span>", @page.path, :class => "button current_version", :target => "_top") %>
     <% end %>
   </div>
 </div>
