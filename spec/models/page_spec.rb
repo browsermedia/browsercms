@@ -886,3 +886,33 @@ describe "Selecting a block" do
     @page.should_not be_published
   end
 end
+
+describe "A page with a versioned content block and an non-versioned content block" do
+  before do
+    @page = create_page(:section => root_section, :publish_on_save => true)
+    @versioned_block = create_html_block(:publish_on_save => true)
+    reset(:page, :versioned_block)
+    @page.should be_published
+    @versioned_block.should be_published
+    @page.create_connector(@versioned_block, "main")
+    reset(:page, :versioned_block)
+    @non_versioned_block = create_dynamic_portlet
+    @page.create_connector(@non_versioned_block, "main")
+    reset(:page, :non_versioned_block)
+  end
+  describe "when the versioned_block is edited" do
+    before do 
+      @editing_the_versioned_block = lambda do 
+        @versioned_block.update_attributes(:name => "Something Else")
+      end
+    end
+    it "should increase the version number by 1 " do
+      pending "Ticket #32"
+      @page.version.should == 3
+      @editing_the_versioned_block.call
+      reset(:page)
+      @page.version.should == 4
+    end
+  end
+end
+
