@@ -8,13 +8,32 @@ class Page < ActiveRecord::Base
   is_versioned
   
   has_many :connectors, :order => "connectors.container, connectors.position"
+  
+  # This scope will accept a connectable object or a Hash.  The pass is expect to have
+  # a value for the key :connectable, which is the connectable object, and possibly
+  # a value for the key :version.  The Hash contains a versioned connectable object,
+  # it will use the value in :version if present, otherwise it will use the version 
+  # of the object.  In either case of a connectable object or a Hash, if the object
+  # is not versioned, no version will be used
   named_scope :connected_to, lambda { |b| 
-    if b.class.versioned?
+    if b.is_a?(Hash)
+      obj = b[:connectable]
+      if obj.class.versioned?
+        ver = b[:version] ? b[:version] : obj.version
+      else
+        ver = nil
+      end
+    else
+      obj = b
+      ver = obj.class.versioned? ? obj.version : nil
+    end
+    
+    if ver
       { :include => :connectors, 
-        :conditions => ['connectors.connectable_id = ? and connectors.connectable_type = ? and connectors.connectable_version = ?', b.id, b.class.base_class.name, b.version] }
+        :conditions => ['connectors.connectable_id = ? and connectors.connectable_type = ? and connectors.connectable_version = ?', obj.id, obj.class.base_class.name, ver] }
     else
       { :include => :connectors, 
-        :conditions => ['connectors.connectable_id = ? and connectors.connectable_type = ?', b.id, b.class.base_class.name] }    
+        :conditions => ['connectors.connectable_id = ? and connectors.connectable_type = ?', obj.id, obj.class.base_class.name] }    
     end 
   }  
   

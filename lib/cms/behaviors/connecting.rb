@@ -67,17 +67,20 @@ module Cms
         
           def update_connected_pages
             # If this is versioned, then we need make new versions of all the pages this is connected to
+            logger.info "updating connected pages -> #{self.inspect}"
             if self.class.versioned?
-              connectors.for_connectable_version(version-1).each do |c|                
-                unless c.page == published_by_page            
+
+              #Get all the pages the previous version of this connectable was connected to
+              Page.connected_to(:connectable => self, :version => (version - 1)).all.each do |p|
+                unless p == published_by_page
                   #This just creates a new version of the page
-                  c.page.update_attributes(:publish_on_save => (published? && c.page.published?), :version_comment => "Edited #{self.class.name}##{id}")
+                  p.update_attributes(:publish_on_save => (published? && p.published?), :version_comment => "Edited #{self.class.name}##{id}")
 
                   #The previous step will copy over a connector pointing to the previous version of this connectable
                   #We need to change that to point at the new version of this connectable
-                  c.page.connectors.for_page_version(c.page.version).for_connectable(self).each do |con|
+                  p.connectors.for_page_version(p.version).for_connectable(self).each do |con|
                     con.update_attribute(:connectable_version, version)
-                  end
+                  end                  
                 end
               end
             end
