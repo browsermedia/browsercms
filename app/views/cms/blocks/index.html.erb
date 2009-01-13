@@ -1,4 +1,6 @@
 <% content_for(:html_head) do %>
+  <%= javascript_include_tag 'jquery.contextMenu' %>
+  <%= stylesheet_link_tag 'cms/jquery.contextMenu' %>
   <% javascript_tag do %>
     jQuery(function($){
       $('#blocks tbody tr').hover(function(){
@@ -31,12 +33,19 @@
             .attr('href', '/cms/blocks/'+type+'/destroy/'+id)  
             .attr('title', 'Are You Sure You Want To Delete This Record?')
         }        
-  <% able_to? :publish_content do -%>
-        if($(this).hasClass('draft')) {
-          $('#publish_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/publish/'+id+'?_redirect_to='+location.href)        
-        }
-  <% end %>
-      })
+        <% able_to? :publish_content do -%>
+          if($(this).hasClass('draft')) {
+            $('#publish_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/publish/'+id+'?_redirect_to='+location.href)        
+          }
+        <% end %>  
+      }).contextMenu({ menu: 'myMenu' },
+      	function(action, el, pos) {
+          var match = el.attr('id').match(/(.*)_(\d+)/) 
+          var type = match[1]
+          var id = match[2]
+      	  location.href = '/cms/blocks/'+type+'/show/'+id;
+      	}
+      );      
     })
   <% end %>
 <%= stylesheet_link_tag "cms/content_library" %>
@@ -79,6 +88,13 @@
     <% end %>
   </tbody>
 </table>
+<ul id="myMenu" class="contextMenu">
+	<li class="view"><a href="#show">View</a></li>
+	<li class="publish separator"><a href="#publish">Publish</a></li>	  
+	<li class="edit"><a href="#edit">Edit</a></li>
+	<li class="delete"><a href="#delete">Delete</a></li>
+</ul>
+
 <% if params[:search] && @blocks.size == 0 %>
 <div class="pagination">No results found for '<%= params[:search][:term] %>'</div>
 <% else %>
