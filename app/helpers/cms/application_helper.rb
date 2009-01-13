@@ -169,5 +169,14 @@ LBW
       end
     end
     
+    def tb_iframe(path, options={})
+      # The order of the parameters matters.  All parameters that should be sent to the server,
+      # have to appear before TB_iframe.  All parameters that shouldn't be sent to the server and
+      # that are just there for Thickbox should be after TB_iframe
+      {:height => 600, :width => 600, :modal => true}.merge(options).inject("#{path}&TB_iframe=true") do |s, (k,v)|
+        s << "&#{k}=#{CGI::escape(v.to_s)}"
+      end
+    end
+    
   end
 end

@@ -13,11 +13,7 @@ describe Cms::ContentTypesController do
     end
     it "should contain links to create a new block" do
       get :select, :connect_to_page_id => @page.to_param, :connect_to_container => @container
-      log response.body
-      
-      response.should have_tag("a[href=?]", cms_path(:blocks, :html_blocks, :new, 
-        "html_block[connect_to_container]" => @container,
-        "html_block[connect_to_page_id]" => @page).gsub(/&/,'&amp;'), @html_block.display_name)
+      response.should have_tag("a[href=?]", /.*html_block\[connect_to_page_id\]=#{@page.id}.*/, @html_block.display_name)
     end
   end
   

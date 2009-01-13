@@ -7,6 +7,7 @@
 <% content_for :functions,  render(:partial => 'toolbar') %>
 <% form_for(@block, :url => cms_path(:blocks, @content_type.name.underscore, :create), :html => {:multipart => true}) do |f| %>
   <%= f.error_messages %>
+  <%= hidden_field_tag "thickbox", params[:thickbox] %>
   <%= render :partial => 'cms/shared/exception', :object => @exception if @exception %>
   <%= render :partial => 'cms/blocks/hidden_fields', :locals => {:f => f} %>
   <%= render :partial => @content_type.form, :locals => {:f => f} %>

@@ -1,6 +1,6 @@
 class Cms::BlocksController < Cms::BaseController
 
-  layout 'cms/content_library'
+  layout :determine_layout
 
   before_filter :load_block, :only => [:show, :show_version, :edit, :destroy, :publish, :archive, :revert_to, :update]
   before_filter :set_toolbar_tab
@@ -30,7 +30,9 @@ class Cms::BlocksController < Cms::BaseController
     @block = model_class.new(params[model_name])
     if @block.save
       flash[:notice] = "#{content_type.display_name} '#{@block.name}' was created"
-      if model_class.connectable? && @block.connected_page
+      if params[:thickbox]
+        render :text => "<html><head><script type='text/javascript'>self.parent.location.reload()</script></head><body></body></html>"
+      elsif model_class.connectable? && @block.connected_page
         redirect_to @block.connected_page.path
       else
         redirect_to_first params[:_redirect_to], cms_url(:blocks, content_type.name.underscore.pluralize)
@@ -143,5 +145,8 @@ class Cms::BlocksController < Cms::BaseController
       @toolbar_tab = :content_library
     end
 
+    def determine_layout
+      params[:thickbox] ? "cms/thickbox" : 'cms/content_library' 
+    end
 
 end

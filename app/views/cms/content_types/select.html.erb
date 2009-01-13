@@ -4,11 +4,13 @@
 <ul id="content_types">
   <li><%= link_to 'Text', cms_path(:blocks, 'html_blocks', :new,
         "html_block[connect_to_page_id]" => params[:connect_to_page_id], 
-        "html_block[connect_to_container]" => params[:connect_to_container]
+        "html_block[connect_to_container]" => params[:connect_to_container],
+        :thickbox => true
       ) %></li>
   <li style="padding-bottom: 10px;"><%= link_to 'Portlet', cms_path(:blocks, 'portlets', :new,
         "portlet[connect_to_page_id]" => params[:connect_to_page_id], 
-        "portlet[connect_to_container]" => params[:connect_to_container]
+        "portlet[connect_to_container]" => params[:connect_to_container],
+        :thickbox => true
       ) %></li>
 
   <% connectable_content_types.each do |type| %>
