@@ -50,7 +50,7 @@
   <thead>
     <tr>
       <% @content_type.columns_for_index.each do |column| %>
-        <th class="name"><%= column[:label] %></th>
+        <th class="name first"><%= column[:label] %></th>
       <% end %>
       <% if @content_type.model_class.respond_to?(:updated_at) %>
         <th class="updated <%= 'last' unless @content_type.model_class.publishable? || @content_type.model_class.connectable? %>">Updated</th>

@@ -31,18 +31,17 @@ margin-top: 30px;
 
 
 #contentwrap {
-background: #8D8E90 url(/images/cms/gray_long_bg.gif) repeat-x 0 0;
+background: transparent url(/images/cms/dot.png) repeat 0 0;
 float: left;
 width: 826px;
-padding-bottom: 5px;
 }
-#top_cap {
-height: 9px;
-background: transparent url(/images/cms/top_cap.png) no-repeat 0 0;
+div.bottom_cap_content {
+height: 10px;
+background: transparent url(/images/cms/bottom_cap_content.png) no-repeat 100% 0;
 }
-#bottom_cap {
-height: 9px;
-background: transparent url(/images/cms/bottom_cap.png) no-repeat 0 0;
+div.top_cap_content {
+height: 5px;
+background: transparent url(/images/cms/top_cap_content.png) no-repeat 100% 0;
 }
 
   #contentwrapbig {
@@ -138,18 +137,28 @@ float: left;
 color: #FFF;
 font-size: large;
 text-transform: capitalize;
-margin: 5px 0 10px 0;
+margin: 0 0 10px 0;
 padding-bottom: 10px;
 border-bottom: 3px solid #505358;
 line-height: 1;
 }
 #functions {
-padding: 10px;
+padding: 10px 20px 10px 20px;
 text-transform: uppercase;
 }
 #functions .button {
 * margin-bottom: 10px;
 }
 #content .pad { 
+  padding: 1px 5px 5px 5px;
+}
+#content .top_pad { 
+  padding: 5px; 
+}
+#content .bottom_pad { 
   padding: 5px 
+}
+div.top_cap {
+height: 9px;
+background: transparent url(/images/cms/top_cap.png) no-repeat 0 0;
 }

@@ -21,8 +21,9 @@
 	
         <div id="main">
           <div id="cms_content_library">
+	    <div class="top_cap_menu"></div>
             <div id="menu">
-              <div class="pad">
+              <div class="first">
                 
                 <h3>Search</h3>
                 <div class="searchbox">
@@ -39,7 +40,9 @@
                 </div>
                 
               </div>
-              <div class="pad" id="content_types">
+	      <div class="bottom_cap_search bottom_pad"></div>
+	      <div class="top_cap"></div>
+              <div id="content_types">
                 
                 <%= yield :sidebar %>
                 <h3>Content Types</h3>
@@ -57,6 +60,7 @@
           	  </li>
           	  <% end %></ul>
               </div>
+	      <div class="bottom_cap"></div>
             </div>
             
             <div id="contentwrap">
@@ -65,6 +69,8 @@
 	      <%= yield :functions %>
 	      <br clear="all" />
               </div>
+	      <div class="top_cap_content"></div>
+
               <div id="content">
                 <div class="pad">
                   <%= yield %>
@@ -72,6 +78,7 @@
               </div>
             </div>
             <br clear="all" />
+	      <div class="bottom_cap_content"></div>
           </div>
           <%= render :partial => 'layouts/cms/footer' %>
         </div>

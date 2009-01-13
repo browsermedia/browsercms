@@ -115,3 +115,11 @@ float: left;
 .node div {
 padding: 8px 0 0 10px;
 }
+div.bottom_cap {
+height: 9px;
+background: transparent url(/images/cms/sitemap/bottom_cap.png) no-repeat 0 0;
+}
+div.top_cap_sitemap_content {
+height: 5px;
+background: transparent url(/images/cms/sitemap/top_cap_content.png) no-repeat 0 0;
+}

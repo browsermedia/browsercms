@@ -65,5 +65,10 @@ div.bottom_left {
 margin-left: 5px;
 margin-bottom: -4px;
 height: 5px;
-background: transparent url(/images/cms/bl_curve.png) no-repeat 0 0;
+
+}
+
+div.bottom_cap {
+height: 9px;
+background: transparent url(/images/cms/dashboard/bottom_cap_content.png) no-repeat 0 0;
 }
