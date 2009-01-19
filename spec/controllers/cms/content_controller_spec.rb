@@ -72,17 +72,13 @@ describe Cms::ContentController do
         login_as nil
         create_system_pages
         @file = mock_file(:read => "This is a test")
-        @file_block = create_file_block(:attachment_section => root_section, :attachment_file => @file, :attachment_file_name => "/test.txt", :publish_on_save => true)
+        @file_block = create_file_block(:attachment_section => root_section, :attachment_file => @file, :attachment_file_path => "/test.txt", :publish_on_save => true)
         @action = lambda { get :show, :path => ["test.txt"] }
         @path_to_file = "#{Cms.public_cache.cache_path}/test.txt"
       end
       describe "that has not been written to the cache dir" do
         before do
           File.delete(@path_to_file) if File.exists?(@path_to_file)
-        end
-        it "should write out the file" do 
-          @action.call
-          File.exists?(@path_to_file).should be_true
         end
         it "return the contents of the file" do 
           @action.call
@@ -94,12 +90,9 @@ describe Cms::ContentController do
         end
       end
       describe "that has been written to the cache dir" do
-        before do
-          open(@path_to_file, "w") {|f| f << "Don't Overwrite Me!"}
-        end
         it "return the contents of the file" do 
           @action.call
-          streaming_file_contents(response).should == "Don't Overwrite Me!"
+          streaming_file_contents(response).should == "This is a test"
         end      
       end
       describe "that has been archived" do
@@ -124,7 +117,7 @@ describe Cms::ContentController do
         @privileged_user.groups << @secret_group
                 
         @file = mock_file(:read => "This is a test")
-        @file_block = create_file_block(:attachment_section => @protected_section, :attachment_file => @file, :attachment_file_name => "/test.txt", :publish_on_save => true)
+        @file_block = create_file_block(:attachment_section => @protected_section, :attachment_file => @file, :attachment_file_path => "/test.txt", :publish_on_save => true)
         @action = lambda { get :show, :path => ["test.txt"] }
         @path_to_file = "#{ActionController::Base.cache_store.cache_path}/test.txt"
       end

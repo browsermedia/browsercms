@@ -5,7 +5,7 @@
    @sections << root
    @sections += root.all_children_with_name
    @sections.each {|s| s.full_path = "/" + s.full_path unless s == root }
-  @block.attachment_file_name = @block.attachment.file_name if @block.attachment_file_name.blank? && !@block.new_record?
+  @block.attachment_file_path = @block.attachment.file_path if @block.attachment_file_path.blank? && !@block.new_record?
 %>
 <% content_for :html_head do %>
   <%= stylesheet_link_tag "cms/taglist" %>
@@ -30,7 +30,7 @@
     jQuery(function($){
       var sectionIdPathMap = <%= @sections.inject({}){|map, sec| map[sec.id.to_s] = sec.path.sub(/\/$/,''); map}.to_json %>
       $('#image_block_attachment_file, #image_block_attachment_section_id').change(function(){ 
-        $('#image_block_attachment_file_name').val(sectionIdPathMap[$('#image_block_attachment_section_id').val()]+'/'+sanitizeFileName($('#image_block_attachment_file').val()))
+        $('#image_block_attachment_file_path').val(sectionIdPathMap[$('#image_block_attachment_section_id').val()]+'/'+sanitizeFileName($('#image_block_attachment_file').val()))
       }) 
     });
   <% end %>
@@ -41,7 +41,7 @@
   <%= f.text_field :name %>
 </div>
 <div class="fields file_fields">
-  <%= f.label :attachment_file %>
+  <%= f.label :attachment_file, "File" %>
   <input type="text" name="temp" class="mock" id="mock_image_block_attachment_file" />
   <%= image_tag("cms/browse.gif") %>
   <%= f.file_field :attachment_file %>
@@ -52,8 +52,8 @@
   <br clear="all" />
 </div>
 <div class="fields text_fields">
-  <%= f.label :attachment_file_name %>
-  <%= f.text_field :attachment_file_name %>
+  <%= f.label :attachment_file_path, "Path" %>
+  <%= f.text_field :attachment_file_path %>
 </div>
 <div class="fields text_fields">
   <%= f.label :tag_list, "Tags" %>

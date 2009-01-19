@@ -39,7 +39,7 @@ class NewsRelease < ActiveRecord::Base
     end
   end
   
-  def set_attachment_file_name
+  def set_attachment_file_path
     if new_record? && !attachment_file.blank?
       attachment.file_name = "/news_releases/#{Time.now.to_s(:year_month_day)}/#{name.to_slug}.#{attachment_file.original_filename.split('.').last.to_s.downcase}" 
     end
@@ -51,7 +51,7 @@ class NewsRelease < ActiveRecord::Base
       buf += "<p><b>Name:</b> #{news_release.name}</p>"
       buf += "<p><b>Release Date:</b> #{news_release.release_date}</p>"
       buf += "<p><b>Category:</b> #{news_release.category_name}</p>"
-      buf += "<p><b>Attachment:</b> <a href=\"#{news_release.attachment_link}\">#{news_release.attachment_path}</a></p>"
+      buf += "<p><b>Attachment:</b> <a href=\"#{news_release.attachment_link}\">#{news_release.attachment_file_path}</a></p>"
       buf += "<p><b>Summary:</b> #{news_release.summary}</p>"
       buf += "<p><b>Body:</b> #{news_release.body}</p>"
     end

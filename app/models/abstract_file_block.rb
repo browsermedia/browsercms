@@ -7,7 +7,7 @@ class AbstractFileBlock < ActiveRecord::Base
   named_scope :by_section, lambda { |section| { :include => {:attachment => :section_node }, :conditions => ["section_nodes.section_id = ?", section.id] } }
   
   def path
-    attachment_path
+    attachment_file_path
   end
 
 end

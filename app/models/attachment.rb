@@ -1,30 +1,38 @@
+require 'digest/sha1'
+require 'ftools'
+
 class Attachment < ActiveRecord::Base
 
-  #----- Callbacks -------------------------------------------------------------
-
-  before_validation :process_file
-  before_validation :process_section
-  before_validation :prepend_slash
-  before_save :update_file
-  after_save :write_file
-  after_save :clear_ivars  
-  
   #----- Macros ----------------------------------------------------------------
 
   uses_soft_delete
   is_userstamped
   is_versioned
-  attr_accessor :file
+  attr_accessor :temp_file
 
+  #----- Callbacks -------------------------------------------------------------
+
+  before_validation :prepend_file_path_with_slash
+  before_validation :extract_file_extension_from_file_name
+  before_validation :extract_file_type_from_temp_file
+  before_validation :extract_file_size_from_temp_file
+  before_validation :set_file_location
+  before_save :process_section
+
+  after_save :write_temp_file_to_storage_location
+  after_save :clear_ivars  
+  
   #----- Associations ----------------------------------------------------------
 
   has_one :section_node, :as => :node
-  belongs_to :attachment_file
 
   #----- Validations -----------------------------------------------------------
 
-  validates_presence_of :file_name
-  validates_presence_of :file_size, :message => "You must upload a file"
+  validates_presence_of :temp_file, 
+    :message => "You must upload a file", :on => :create
+  validates_presence_of :file_path
+  validates_uniqueness_of :file_path
+  validates_presence_of :section_id
     
   #----- Virtual Attributes ----------------------------------------------------
   
@@ -47,69 +55,90 @@ class Attachment < ActiveRecord::Base
   
   #----- Callbacks Methods -----------------------------------------------------
   
-  def process_file
-    unless file.blank? || file.size.to_i < 1
-      unless file_name.blank? || !file_name['.']
-        self.file_extension = file_name.split('.').last.to_s.downcase
-      end
-      self.file_type = file.content_type
-      self.file_size = file.size
+  def prepend_file_path_with_slash    
+    unless file_path.blank?
+      self.file_path = "/#{file_path}" unless file_path =~ /^\//
+    end
+  end
+  
+  def extract_file_extension_from_file_name
+    if file_name && file_name['.']
+      self.file_extension = file_name.split('.').last.to_s.downcase
+    end    
+  end
+  
+  def extract_file_type_from_temp_file
+    unless temp_file.blank?
+      self.file_type = temp_file.content_type
+    end    
+  end
+  
+  def extract_file_size_from_temp_file  
+    unless temp_file.blank?
+      self.file_size = temp_file.size
+    end    
+  end
+
+  # The file will be stored on disk at 
+  # Attachment.storage_location/year/month/day/sha1
+  # The sha1 is a 40 character hash based on the original_filename
+  # of the file uploaded and the current time
+  def set_file_location
+    unless temp_file.blank?
+      sha1 = Digest::SHA1.hexdigest("#{temp_file.original_filename}#{Time.now.to_f}")
+      self.file_location = "#{Time.now.strftime("%Y/%m/%d")}/#{sha1}"
     end
   end
 
   def process_section
-    if section_id
-      if section_node && !section_node.new_record? && section_node.section_id != section_id
-        section_node.move_to_end(Section.find(section_id))
+    logger.info "processing section, section_id => #{section_id}, section_node => #{section_node.inspect}"
+    if section_node && !section_node.new_record? && section_node.section_id != section_id
+      section_node.move_to_end(Section.find(section_id))
+    else
+      build_section_node(:node => self, :section_id => section_id)
+    end    
+  end
+    
+  def write_temp_file_to_storage_location
+    unless temp_file.blank?
+      FileUtils.mkdir_p File.dirname(full_file_location)
+      if temp_file.local_path
+        File.copy temp_file.local_path, full_file_location
       else
-        build_section_node(:node => self, :section_id => section_id)
-      end    
-    end
-  end
-  
-  def prepend_slash    
-    self.file_name = "/#{file_name}" unless file_name =~ /^\//
-    self.file_name = nil if file_name.strip == "/"
-  end  
-
-  def update_file
-    unless file.blank? || file.size.to_i < 1
-      file.rewind      
-      create_attachment_file(:data => file.read)
-      self.file = nil    
-    end
-  end
-  
-  def write_file
-    if archived? || deleted?
-      logger.info "Deleting #{absolute_path}"
-      FileUtils.rm_f File.dirname(absolute_path)
-    elsif published?
-      FileUtils.mkdir_p File.dirname(absolute_path)
-      logger.info "Writing out #{absolute_path}"
-      open(absolute_path, "wb") {|f| f << data }
+        open(full_file_location, 'w') {|f| f << temp_file.read }
+      end
     end
   end  
   
   def clear_ivars
+    @temp_file = nil
     @section = nil
     @section_id = nil
   end
   
   #----- Class Methods ---------------------------------------------------------
   
-  def self.find_live_by_file_name(file_name)
-    page = find(:first, :conditions => {:file_name => file_name})
+  def self.storage_location
+    @storage_location ||= File.join(Rails.root, "/tmp/uploads")
+  end
+  
+  def self.storage_location=(storage_location)
+    @storage_location = storage_location
+  end  
+  
+  def self.find_live_by_file_path(file_path)
+    page = find(:first, :conditions => {:file_path => file_path})
     page ? page.live_version : nil
   end  
   
   #----- Instance Methods ------------------------------------------------------
 
-  #This is just the name part of the file_name.
-  #Example, file_name (the column in the database), will be /foo/bar.pdf,
-  #this will return bar.pdf
+  def file_name
+    file_path ? file_path.split('/').last : nil
+  end
+
   def name
-    file_name.blank? ? nil : file_name.split("/").last
+    file_name
   end
   
   def live?
@@ -127,10 +156,6 @@ class Attachment < ActiveRecord::Base
     end                
   end  
   
-  def data
-    attachment_file.data
-  end
-
   def icon
     {
         :doc => %w[doc],
@@ -152,9 +177,9 @@ class Attachment < ActiveRecord::Base
   def public?
     section ? section.public? : false
   end
-
-  def absolute_path
-    File.join(public? ? Cms.public_cache.cache_path : Cms.protected_cache.cache_path, file_name)
+  
+  def full_file_location
+    File.join(Attachment.storage_location, file_location)
   end
 
 end

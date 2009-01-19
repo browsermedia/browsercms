@@ -20,7 +20,7 @@
   <%= f.collection_select :category_id, categories_for('News Release'), :id, :path %>
 </div>
 <div class="fields text_fields">
-  <%= f.label :attachment %>
+  <%= f.label :attachment_file, "File" %>
   <%= f.file_field :attachment_file %>
 </div>
 <div class="fields text_fields">

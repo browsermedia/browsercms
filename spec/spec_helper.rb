@@ -120,7 +120,7 @@ def controller_setup
 end
 
 def mock_file(options = {})
-  mock("file", {:original_filename => "test.jpg", 
+  file_upload_object({:original_filename => "test.jpg", 
     :content_type => "image/jpeg", :rewind => true,
     :size => "99", :read => "01010010101010101"}.merge(options))
 end
@@ -151,3 +151,10 @@ def reset(*args)
   end
 end
 
+def file_upload_object(options)
+  file = ActionController::UploadedTempfile.new(options[:original_filename])
+  open(file.path, 'w') {|f| f << options[:read]}
+  file.original_path = options[:original_filename]
+  file.content_type = options[:content_type]
+  file
+end

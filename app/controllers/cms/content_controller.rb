@@ -32,18 +32,13 @@ class Cms::ContentController < Cms::ApplicationController
     unless ext.blank?
       
       #Check access to file
-      @attachment = Attachment.find_live_by_file_name(@path)
+      @attachment = Attachment.find_live_by_file_path(@path)
       if @attachment
         raise Cms::Errors::AccessDenied unless current_user.able_to_view?(@attachment)
 
         #Construct a path to where this file would be if it were cached
-        @file = File.join(@attachment.public? ? Cms.public_cache.cache_path : Cms.protected_cache.cache_path, @path)
+        @file = @attachment.full_file_location
 
-        #Write the file out if it doesn't exist
-        unless File.exists?(@file)
-          @attachment.write_file
-        end
-    
         #Stream the file if it exists
         if @path != "/" && File.exists?(@file)
           send_file(@file, 

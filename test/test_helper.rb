@@ -36,4 +36,51 @@ class Test::Unit::TestCase
 
   # Add more helper methods to be used by all tests here...
   include FixtureReplacement
+  
+  #----- Custom Assertions -----------------------------------------------------
+  
+  def assert_file_exists(file_name, message=nil)
+    assert File.exists?(file_name), 
+      (message || "Expected File '#{file_name}' to exist, but it does not")
+  end  
+  
+  def assert_not_valid(object, message=nil)
+    assert !object.valid?, 
+      (message || 
+        "#{object.class.name.titleize} is valid, but it should not be")
+  end
+  
+  def assert_has_error_on_base(object, error_message=nil, message=nil)
+    assert_has_error_on(object, :base, error_message, message)
+  end
+  
+  def assert_has_error_on(object, field, error_message=nil, message=nil)
+    e = object.errors.on(field.to_sym)
+    if e.is_a?(String)
+      e = [e]
+    elsif e.nil?
+      e = []
+    end
+    if error_message
+      assert e.include?(error_message), 
+        "Expected errors on #{field} #{e} to include '#{error_message}', but it does not"
+    else
+      assert !e.empty?, "Expected errors on #{field}, but there are none"
+    end
+  end
+  
+  #----- Fixture/Data related helpers ------------------------------------------
+
+  def guest_group
+    Group.find_by_code("guest") || create_group(:code => "guest")
+  end  
+
+  def root_section
+    root = Section.root.first
+    return root unless root.nil?
+    root = create_section(:name => "My Site", :root => true)
+    root.groups << guest_group
+    root
+  end
+  
 end

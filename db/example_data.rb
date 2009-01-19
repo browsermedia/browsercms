@@ -39,7 +39,6 @@ module FixtureReplacement
 
   attributes_for :file_block do |a|
     a.name = "TestFileBlock#{Sequence.next}"
-    #a.attachment_file_name = "#{a.name.to_slug}.pdf"  
   end
 
   attributes_for :group do |a|
@@ -57,7 +56,6 @@ module FixtureReplacement
 
   attributes_for :image_block do |a|
     a.name = "TestImageBlock#{Sequence.next}"
-    a.attachment_file_name = "#{a.name.to_slug}.jpg"
   end
 
   attributes_for :link do |a|

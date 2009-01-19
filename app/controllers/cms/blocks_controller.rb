@@ -30,7 +30,7 @@ class Cms::BlocksController < Cms::BaseController
     @block = model_class.new(params[model_name])
     if @block.save
       flash[:notice] = "#{content_type.display_name} '#{@block.name}' was created"
-      if params[:thickbox]
+      if !params[:thickbox].blank?
         render :text => "<html><head><script type='text/javascript'>self.parent.location.reload()</script></head><body></body></html>"
       elsif model_class.connectable? && @block.connected_page
         redirect_to @block.connected_page.path
@@ -146,7 +146,7 @@ class Cms::BlocksController < Cms::BaseController
     end
 
     def determine_layout
-      params[:thickbox] ? "cms/thickbox" : 'cms/content_library' 
+      !params[:thickbox].blank? ? "cms/thickbox" : 'cms/content_library' 
     end
 
 end

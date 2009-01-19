@@ -21,8 +21,8 @@ module Cms
           validates_each :attachment_file do |record, attr, value|
             if record.attachment && !record.attachment.valid?
               record.attachment.errors.each do |err_field, err_value|
-                if err_field.to_sym == :file_name
-                  record.errors.add(:attachment_file_name, err_value)
+                if err_field.to_sym == :file_path
+                  record.errors.add(:attachment_file_path, err_value)
                 else  
                   record.errors.add(:attachment_file, err_value)
                 end
@@ -33,7 +33,7 @@ module Cms
         module InstanceMethods
 
           def attachment_file
-            @attachment_file ||= attachment ? attachment.file : nil
+            @attachment_file ||= attachment ? attachment.temp_file : nil
           end
 
           def attachment_file=(file)
@@ -44,8 +44,12 @@ module Cms
             @attachment_file_name ||= attachment ? attachment.file_name : nil
           end
 
-          def attachment_file_name=(file_name)
-            @attachment_file_name = sanitize_file_name(file_name)
+          def attachment_file_path
+            @attachment_file_path ||= attachment ? attachment.file_path : nil
+          end
+
+          def attachment_file_path=(file_path)
+            @attachment_file_path = sanitize_file_path(file_path)
           end
 
           def attachment_section_id
@@ -67,7 +71,7 @@ module Cms
 
           def process_attachment
             if attachment.nil? && attachment_file.blank?
-              unless attachment_file_name.blank?
+              unless attachment_file_path.blank?
                 errors.add(:attachment_file, "You must upload a file")
                 return false
               end
@@ -77,10 +81,10 @@ module Cms
               end              
             else
               build_attachment if attachment.nil?  
-              attachment.file = attachment_file 
-              set_attachment_file_name
-              if attachment_file_name.blank?
-                errors.add(:attachment_file_name, "File Name is required for attachment")
+              attachment.temp_file = attachment_file 
+              set_attachment_file_path
+              if attachment_file_path.blank?
+                errors.add(:attachment_file_path, "File Name is required for attachment")
                 return false
               end
               set_attachment_section
@@ -93,23 +97,24 @@ module Cms
 
           def clear_attachment_ivars
             @attachment_file = nil
-            @attachment_file_name = nil
+            @attachment_file_path = nil
             @attachment_section_id = nil
             @attachment_section = nil            
           end
 
-          # Override this method if you would like to override the way file_name is set
-          def set_attachment_file_name
-            attachment.file_name = @attachment_file_name if @attachment_file_name
+          # Override this method if you would like to override the way file_path is set
+          def set_attachment_file_path
+            attachment.file_path = @attachment_file_path if @attachment_file_path
           end
 
           # Override this method if you would like to override the way the section is set
           def set_attachment_section
+            logger.info "Setting attachment.section_id to #{@attachment_section_id}"
             attachment.section_id = @attachment_section_id if @attachment_section_id
           end
 
-          def sanitize_file_name(file_name)
-            SANITIZATION_REGEXES.inject(file_name.to_s) do |s, (regex, replace)|
+          def sanitize_file_path(file_path)
+            SANITIZATION_REGEXES.inject(file_path.to_s) do |s, (regex, replace)|
               s.gsub(regex, replace)
             end
           end
@@ -118,7 +123,7 @@ module Cms
             if attachment
               attachment.archived = archived if self.class.archivable?
               attachment.published = self.class.publishable? ? !!(publish_on_save) : true
-              attachment.save if new_record? || attachment.changed? || attachment.file
+              attachment.save if new_record? || attachment.changed? || attachment.temp_file
               self.attachment_version = attachment.version
             end
           end
@@ -134,13 +139,9 @@ module Cms
             end
           end
 
-          def attachment_path
-            attachment ? attachment.file_name : nil   
-          end
-
           def attachment_link
             if attachment
-              live? ? attachment_path : "/cms/attachments/show/#{attachment_id}?version=#{attachment_version}"    
+              live? ? attachment_file_path : "/cms/attachments/show/#{attachment_id}?version=#{attachment_version}"    
             else
               nil
             end  

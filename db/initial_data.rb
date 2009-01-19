@@ -56,15 +56,6 @@ pages(:about).create_connector(html_blocks(:about_us), "main")
 pages(:about).create_connector(html_blocks(:sidebar), "sidebar")
 pages(:about).publish!
 
-create_attachment_file(:xml, :data => "<root>\n  <data>Test</data>\n</root>\n")
-create_attachment_file(:logo, :data => open(File.join(Rails.root, "public/images/cms/browser_media_logo.png")){|f| f.read})
-
-create_attachment(:xml, :file_type => "text/xml", :section => root_section, :file_extension => "xml", :file_size => 36, :file_name => "test.xml", :attachment_file => attachment_files(:xml))
-create_attachment(:logo, :file_type => "image/png", :section => root_section, :file_extension => "png", :file_size => 2305, :file_name => "logo.png", :attachment_file => attachment_files(:logo))
-
-create_file_block(:xml, :name => "XML", :attachment => attachments(:xml), :publish_on_save => true)
-create_image_block(:logo, :name => "Logo", :attachment => attachments(:logo), :publish_on_save => true)
-
 create_dynamic_portlet(:recently_updated_pages,
   :name => 'Recently Updated Pages',  
   :code => "@pages = Page.all(:order => 'updated_at desc', :limit => 3)",

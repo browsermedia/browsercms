@@ -67,7 +67,7 @@ module Cms
         
           def update_connected_pages
             # If this is versioned, then we need make new versions of all the pages this is connected to
-            logger.info "updating connected pages -> #{self.inspect}"
+            #logger.info "updating connected pages -> #{self.inspect}"
             if self.class.versioned?
 
               #Get all the pages the previous version of this connectable was connected to
