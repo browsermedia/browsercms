@@ -13,7 +13,7 @@
 <% able_to?(:edit_content, :publish_content) do %>
   <% content_for :html_head do %>
     <%= stylesheet_link_tag 'cms/page', 'cms/thickbox' %>
-    <%= javascript_include_tag 'jquery', 'thickbox' %>    
+    <%= javascript_include_tag 'jquery', 'jquery.thickbox.js' %>    
   <% end %>
   <% flash.keep %>
   <iframe src="<%= cms_path(:toolbar, :page_id => @page.id, :page_version => @page.version, :mode => @mode, :page_toolbar => !@exception) %>" width="100%" height="159px" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" name="cms_toolbar"></iframe>
