@@ -38,14 +38,15 @@
             $('#publish_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/publish/'+id+'?_redirect_to='+location.href)        
           }
         <% end %>  
-      }).contextMenu({ menu: 'myMenu' },
+      })
+      /*.contextMenu({ menu: 'myMenu' },
       	function(action, el, pos) {
           var match = el.attr('id').match(/(.*)_(\d+)/) 
           var type = match[1]
           var id = match[2]
       	  location.href = '/cms/blocks/'+type+'/show/'+id;
       	}
-      );      
+      ); */      
     })
   <% end %>
 <%= stylesheet_link_tag "cms/content_library" %>
