@@ -66,6 +66,7 @@ font-weight: bold;
 text-decoration: none;
 display: block;
 padding: 8px 0 8px 15px;
+text-shadow: #FFF 0px 1px 1px;
 * padding-bottom: 9px;
 }
 #menu ul li a:hover {

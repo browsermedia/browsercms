@@ -4,7 +4,8 @@ padding: 8px;
 
 table#blocks {
   width: 100%;
-  border-collapse: collapse;
+  border: 1px solid #E4E4E4;
+  /* border-collapse: collapse; */
 }
 
 table#blocks th {

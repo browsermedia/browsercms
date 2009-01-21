@@ -14,6 +14,8 @@ a.button span {
 	display: block;
 	background: url(/images/cms/buttons/button.png) no-repeat 0 0;
 	padding: 0 0 0 18px;
+	font-weight: bold;
+	text-transform: uppercase
 }
 
 a.button:hover {

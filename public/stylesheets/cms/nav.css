@@ -33,10 +33,16 @@ display: block;
 padding: 0;
 padding-right: 5px;
 color: #5F5F5F;
+text-shadow: #FFF 2px -1px 1px;
 font-weight: bold;
 text-decoration: none;
 font-size: 12px;
 }
+
+#nav ul#section li.on a {
+text-shadow: #2C599A 2px -1px 1px;
+}
+
 
 #nav ul#section li a span{
 display: block;
@@ -77,18 +83,16 @@ font-weight: bold;
 }
 
 #nav ul#userlinks li a,	#nav ul#userlinks li span {
-padding: 7px 19px 11px 19px;
+padding: 8px 19px 11px 19px;
 background: url(/images/cms/usercontrols_bg_cap.png) no-repeat 100% 0;
 color: #666;
 display: block;
 float: left;
 text-decoration: none;
-* padding-top: 8px;
 }
 
 #nav ul#userlinks li span {
-padding: 7px 25px 11px 9px;
-* padding-top: 8px;
+padding: 8px 25px 11px 9px;
 }
 #nav ul#userlinks li#user_info div{
 float: left;
@@ -96,7 +100,7 @@ padding: 9px 10px;
 }
 #nav ul#userlinks li#user_info img {
 float:left;
-margin: 3px 0 0 5px;
+margin: 4px 0 0 5px;
 }
 
 #nav .cmssearch {

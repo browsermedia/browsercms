@@ -25,8 +25,7 @@ div.selectbox-wrapper ul li {
   margin:0;
   padding:2px 5px;
   cursor:pointer;
-  border-bottom: 1px dotted #8D8E90;
-  background: #FFF;
+  background: #FFF url(/images/cms/dashed.gif) repeat-x 100% 100%;
 }
 
 div.selectbox-wrapper ul li.current, #menu div.selectbox-wrapper ul li.current { 
