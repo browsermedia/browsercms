@@ -210,6 +210,14 @@ class Page < ActiveRecord::Base
   def ancestors
     section_node.ancestors
   end
+  
+  def in_section?(section_or_section_name)
+    sec = section_or_section_name.is_a?(String) ? 
+      Section.first(:conditions => {:name => section_or_section_name}) : 
+      section_or_section_name
+    fn = lambda{|s| s ? (s == sec || fn.call(s.parent)) : false}
+    fn.call(section)
+  end
     
   #Returns true if the block attached to each connector in the given container are published
   def container_published?(container)

@@ -262,6 +262,43 @@ describe Page do
   end
 end
 
+describe "in_section?" do
+  before do
+    @sports = create_section(:parent => root_section, :name => "Sports")
+    @nfl = create_section(:parent => @sports, :name => "NFL")
+    @mlb = create_section(:parent => @sports, :name => "MLB")
+    @afc = create_section(:parent => @nfl, :name => "AFC")
+    @al = create_section(:parent => @mlb, :name => "AL")
+    @afc_east = create_section(:parent => @afc, :name => "AFC East")
+    @al_east = create_section(:parent => @al, :name => "AL East")
+    @ravens = create_section(:parent => @afc_east, :name => "Baltimore Ravens")
+    @yanks = create_section(:parent => @al_east, :name => "New York Yankees")
+    @flacco = create_page(:section => @ravens, :name => "Joe Flacco")
+    @jeter = create_page(:section => @yanks, :name => "Derek Jeter")
+  end
+  it "should return true if the page is in the section" do
+    [root_section, @sports].each do |s|
+      @flacco.should be_in_section(s)
+      @flacco.should be_in_section(s.name)
+      @jeter.should be_in_section(s)
+      @jeter.should be_in_section(s.name)
+    end
+    [@nfl, @afc, @afc_east, @ravens].each do |s|
+      @flacco.should be_in_section(s)
+      @flacco.should be_in_section(s.name)
+      @jeter.should_not be_in_section(s)
+      @jeter.should_not be_in_section(s.name)
+    end
+    [@mlb, @al, @al_east, @yanks].each do |s|
+      @flacco.should_not be_in_section(s)
+      @flacco.should_not be_in_section(s.name)
+      @jeter.should be_in_section(s)
+      @jeter.should be_in_section(s.name)
+    end
+    
+  end
+end
+
 describe "A page with associated blocks" do
   before do
     @page = create_page(:section => root_section, :name => "Bar")

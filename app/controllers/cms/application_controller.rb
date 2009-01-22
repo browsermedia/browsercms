@@ -7,6 +7,8 @@ class Cms::ApplicationController < ApplicationController
   helper Cms::ApplicationHelper
   include Cms::PathHelper
   helper Cms::PathHelper
+  include Cms::PageHelper
+  helper Cms::PageHelper
   helper Cms::MenuHelper
   
 end
