@@ -60,19 +60,20 @@
   <thead>
     <tr>
       <% @content_type.columns_for_index.each do |column| %>
-        <th class="name first"><%= column[:label] %></th>
+        <th colspan="2" class="name first"><%= column[:label] %></th>
       <% end %>
       <% if @content_type.model_class.respond_to?(:updated_at) %>
-        <th class="updated <%= 'last' unless @content_type.model_class.publishable? || @content_type.model_class.connectable? %>">Updated</th>
+        <th class="updated <%= 'last" colspan="2' unless @content_type.model_class.publishable? || @content_type.model_class.connectable? %>">Updated</th>
       <% end %>
-      <% if @content_type.model_class.connectable? %><th class="used <%= ' last' unless @content_type.model_class.publishable? %>">Used</th><% end %>
-      <% if @content_type.model_class.publishable? %><th class="block_status last">Status</th><% end %>
+      <% if @content_type.model_class.connectable? %><th class="used <%= ' last" colspan="2' unless @content_type.model_class.publishable? %>">Used</th><% end %>
+      <% if @content_type.model_class.publishable? %><th colspan="2" class="block_status last">Status</th><% end %>
     </tr>
   </thead>
   <tbody>
     <% @blocks.each do |block| %>
       <tr id="<%= block.class.name.underscore %>_<%= block.id %>" class="<%= block.class.publishable? && !block.published? ? 'draft' : 'published' %>">
         <% @content_type.columns_for_index.each_with_index do |column, i| %>
+	<td class="first"></td>
           <td class="name">
             <%= block.send(column[:method]) %>
             <% if i.zero? && block.respond_to?(:cannot_be_deleted_message) && block.cannot_be_deleted_message %>
@@ -85,6 +86,7 @@
         <% if @content_type.model_class.respond_to?(:updated_at) %><td class="updated"><%= block.updated_at.to_s(:date) %></td><% end %>
         <% if @content_type.model_class.connectable? %><td class="used"><%= block.connected_pages.count %></td><% end %>
         <% if @content_type.model_class.publishable? %><td class="block_status"><%= status_icon(block.status) %> <div><%= block.status %></div> </td><% end %>
+	<td class="last"></td>
       </tr>
     <% end %>
   </tbody>

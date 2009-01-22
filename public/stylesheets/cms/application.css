@@ -58,7 +58,6 @@ margin-left: 5px;
 
   #contentwrapbig #content {
     width: 990px;
-
   }
 
 #footer {
@@ -86,14 +85,6 @@ margin-bottom: 7px;
 /* FUNCTION BUTTONS
 */
 
-tr.hover, tbody.hover {
-  background-color: #ccf;
-  cursor: pointer;
-}
-
-tr.selected, tbody.selected {
-  background-color: #9bf;
-}
 
 .searchbox {
   background: #FFF; 

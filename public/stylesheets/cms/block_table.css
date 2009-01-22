@@ -1,5 +1,5 @@
 table#blocks td {
-padding: 8px;
+padding: 10px;
 }
 
 table#blocks {
@@ -51,16 +51,40 @@ padding-left: 30px;
 #blocks td.unbordered, #blocks th.unbordered {
 border-right: none;
 }
-#blocks td.buffer_top {
-height: 8px;
-margin: 0;
-padding: 0;
-border-right: none;
-}
-#blocks td.buffer_bottom {
+
+#blocks td {
 height: 8px;
 margin: 0;
 padding: 0;
 border-bottom: 1px solid #E9E9E9;
 border-right: none;
+}
+#blocks tr.hover {
+  background-color: #D0D0D0;
+  cursor: pointer;
+}
+
+#blocks tr.selected {
+  background-color: #CADCF4;
+}
+
+table#blocks td.first, table#blocks td.last {
+width: 1%;
+padding: 5px;
+border-bottom: none;
+}
+
+table#blocks tr.hover td.first {
+background: #FFFFFF url(/images/cms/table/td_cap_first_h.gif) no-repeat 100% 0;
+}
+
+table#blocks tr.hover td.last {
+background: #FFFFFF url(/images/cms/table/td_cap_last_h.gif) no-repeat 0 0;
+}
+
+table#blocks tr.selected td.first {
+background: #FFFFFF url(/images/cms/table/td_cap_first_s.gif) no-repeat 100% 0;
+}
+table#blocks tr.selected td.last {
+background: #FFFFFF url(/images/cms/table/td_cap_last_s.gif) no-repeat 0 0;
 }
