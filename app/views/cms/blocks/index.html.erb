@@ -59,8 +59,10 @@
 <table id="blocks">
   <thead>
     <tr>
-      <% @content_type.columns_for_index.each do |column| %>
-        <th colspan="2" class="name first"><%= column[:label] %></th>
+      <% @content_type.columns_for_index.each_with_index do |column, i| %>
+        <th <%
+	       if !@content_type.model_class.respond_to?(:updated_at) && !@content_type.model_class.connectable? && !@content_type.model_class.publishable? && @content_type.columns_for_index.size == i + 1 %>colspan="2" class="last"<%
+               elsif i == 0 %>colspan="2" class="name first"<% end %>><%= column[:label] %></th>
       <% end %>
       <% if @content_type.model_class.respond_to?(:updated_at) %>
         <th class="updated <%= 'last" colspan="2' unless @content_type.model_class.publishable? || @content_type.model_class.connectable? %>">Updated</th>
@@ -72,8 +74,8 @@
   <tbody>
     <% @blocks.each do |block| %>
       <tr id="<%= block.class.name.underscore %>_<%= block.id %>" class="<%= block.class.publishable? && !block.published? ? 'draft' : 'published' %>">
-        <% @content_type.columns_for_index.each_with_index do |column, i| %>
 	<td class="first"></td>
+        <% @content_type.columns_for_index.each_with_index do |column, i| %>
           <td class="name">
             <%= block.send(column[:method]) %>
             <% if i.zero? && block.respond_to?(:cannot_be_deleted_message) && block.cannot_be_deleted_message %>
