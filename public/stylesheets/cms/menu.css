@@ -12,6 +12,7 @@ width: 174px;
 #menu h3 {
 background: url(/images/cms/menu/top_cap_menu_header.png) no-repeat 0 0;
 padding: 1px 6px 6px 15px;
+text-shadow: #FFF 1px 1px 1px;
 font-weight: bold;
 text-transform: uppercase;
 }
@@ -21,11 +22,11 @@ background: url(/images/cms/dot.png) repeat 0 0;
 }
 #menu .searchbox {
 padding-left: 0px;
-background: white;
+background: transparent url(/images/cms/searchbox_gradient.gif) repeat-x 100% 100%;
 }
 #menu .searchbox form {
 padding-left: 6px;
-background: white;
+background: transparent;
 }
 #menu .searchbox form div {
 padding-left: 0px;

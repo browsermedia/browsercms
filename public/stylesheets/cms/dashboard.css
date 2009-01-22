@@ -59,6 +59,10 @@ width: 233px;
 td.updated_by {
 width: 70px;
 }
+
+#page_drafts {
+background: #FFF url(/images/cms/content_bg.gif) repeat-x 100% 100%;
+}
 #page_drafts .lt_button {
 margin: 10px 0 60px 6px;
 }

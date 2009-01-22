@@ -46,7 +46,7 @@ text-shadow: #2C599A 2px -1px 1px;
 
 #nav ul#section li a span{
 display: block;
-padding: 20px 19px 14px 27px;
+padding: 18px 19px 16px 27px;
 }
 #nav ul#section li a:hover span{
 background: url(/images/cms/nav_h.gif) no-repeat 0 0;
