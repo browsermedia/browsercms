@@ -16,7 +16,7 @@ table#blocks th div.dividers {
 table#blocks {
   width: 100%;
   border: 1px solid #E4E4E4;
-  /* border-collapse: collapse; */
+  border-collapse: collapse;
 }
 
 table#blocks th {
@@ -98,4 +98,8 @@ background: #FFFFFF url(/images/cms/table/td_cap_first_s.gif) no-repeat 100% 0;
 }
 table#blocks tr.selected td.last {
 background: #FFFFFF url(/images/cms/table/td_cap_last_s.gif) no-repeat 0 0;
+}
+table#blocks tr.hover td.buffer {
+background: #FFFFFF;
+cursor: default;
 }
