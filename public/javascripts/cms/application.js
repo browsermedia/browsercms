@@ -40,19 +40,28 @@ jQuery(function($) {
       $('a.http_post, a.http_put, a.http_delete', context).click(function() {
         if($(this).hasClass('disabled')) return false;
         if($(this).hasClass('confirm_with_title') ? confirm(this.title) : true) {
+
+          // Create the form
           var f = document.createElement('form')
           f.style.display = 'none'
           this.parentNode.appendChild(f)
           f.method = "POST"
           f.action = this.href
           $(f).attr('target', $(this).attr('target'))
+
+          //Create the _method hidden input
           var m = document.createElement('input')
           var http_method = $(this).attr('class').match(/http_([^ ]*)/)[1]
           $(m).attr('type', 'hidden').attr('name', '_method').attr('value', http_method)
-          if($.cms.authenticity_token && $.cms.authenticity_token != '') {
-            $(m).attr('type', 'hidden').attr('name', 'authenticity_token').attr('value', $.cms.authenticity_token)  
-          }
           f.appendChild(m)
+          
+          //Create the authenticity_token hidden input
+          if($.cms.authenticity_token && $.cms.authenticity_token != '') {
+            var m = document.createElement('input')
+            $(m).attr('type', 'hidden').attr('name', 'authenticity_token').attr('value', $.cms.authenticity_token)  
+            f.appendChild(m)
+          }
+          
           f.submit()          
         }
         return false

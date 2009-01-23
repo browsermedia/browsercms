@@ -2,8 +2,8 @@
 <div class="cms_edit_container_2">
   <%= link_to (image_tag "cms/#{@page.container_published?(name) ? 'published' : 'draft'}_status.gif", :class => "published_status"), '', :class => "tooltip", :title => @page.container_published?(name) ? "This content is published and can be seen by site visitors." : "This content is a draft and won't be seen by site visitors until this page is published." %>
     <div class="actions">
-      <%= link_to image_tag("cms/pages/add_connectable.gif"), tb_iframe(cms_path(:content_types, :select, :connect_to_page_id => @page, :connect_to_container => name)), :title => "Add new content to this container (#{name})", :class => "thickbox" %>
-      <%= link_to image_tag("cms/pages/connect_connectable.gif"), tb_iframe(cms_path(:connectors, :new, :page_id => @page, :container => name)), :title => "Insert existing content into this container (#{name})", :class => "thickbox" %>
+      <%= link_to image_tag("cms/pages/add_connectable.gif"), cms_path(:content_types, :select, :connect_to_page_id => @page, :connect_to_container => name), :title => "Add new content to this container (#{name})" %>
+      <%= link_to image_tag("cms/pages/connect_connectable.gif"), cms_path(:connectors, :new, :page_id => @page, :container => name), :title => "Insert existing content into this container (#{name})" %>
     </div>
   <div class="cms_container_content">
     <%= content %>
