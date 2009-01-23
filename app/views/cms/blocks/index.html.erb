@@ -71,6 +71,11 @@
     </tr>
   </thead>
   <tbody>
+    <% col_ct = 2
+       col_ct += @content_type.columns_for_index.size
+       col_ct += 1 if @content_type.model_class.respond_to?(:updated_at)
+       col_ct += 1 if @content_type.model_class.connectable?
+       col_ct += 1 if @content_type.model_class.publishable? %>
     <% @blocks.each do |block| %>
       <tr id="<%= block.class.name.underscore %>_<%= block.id %>" class="<%= block.class.publishable? && !block.published? ? 'draft' : 'published' %>">
 	<td class="first"></td>
@@ -92,8 +97,8 @@
 	<td class="last"></td>
       </tr>
     <% end %>
-    <tr colspan="3">
-      <td>&nbsp;</td>
+    <tr>
+      <td colspan="<%= col_ct %>" class="buffer">&nbsp;</td>
     </tr>
   </tbody>
 </table>
