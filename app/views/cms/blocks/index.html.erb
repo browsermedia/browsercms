@@ -55,19 +55,18 @@
 <% @toolbar_title = "List #{@content_type.display_name_plural}" %>
 <%= render :partial => 'toolbar' %>
 
-
 <table id="blocks">
   <thead>
     <tr>
       <% @content_type.columns_for_index.each_with_index do |column, i| %>
         <th <%
 	       if !@content_type.model_class.respond_to?(:updated_at) && !@content_type.model_class.connectable? && !@content_type.model_class.publishable? && @content_type.columns_for_index.size == i + 1 %>colspan="2" class="last"<%
-               elsif i == 0 %>colspan="2" class="name first"<% end %>><%= column[:label] %></th>
+               elsif i == 0 %>colspan="2" class="name first"<% end %>><div class="dividers"><%= column[:label] %></div></th>
       <% end %>
       <% if @content_type.model_class.respond_to?(:updated_at) %>
-        <th class="updated <%= 'last" colspan="2' unless @content_type.model_class.publishable? || @content_type.model_class.connectable? %>">Updated</th>
+        <th class="updated <%= 'last" colspan="2' unless @content_type.model_class.publishable? || @content_type.model_class.connectable? %>"><div class="dividers">Updated</div></th>
       <% end %>
-      <% if @content_type.model_class.connectable? %><th class="used <%= ' last" colspan="2' unless @content_type.model_class.publishable? %>">Used</th><% end %>
+      <% if @content_type.model_class.connectable? %><th class="used <%= ' last" colspan="2' unless @content_type.model_class.publishable? %>"><div class="dividers">Used</div></th><% end %>
       <% if @content_type.model_class.publishable? %><th colspan="2" class="block_status last">Status</th><% end %>
     </tr>
   </thead>
@@ -77,20 +76,25 @@
 	<td class="first"></td>
         <% @content_type.columns_for_index.each_with_index do |column, i| %>
           <td class="name">
+            <div class="dividers">
             <%= block.send(column[:method]) %>
             <% if i.zero? && block.respond_to?(:cannot_be_deleted_message) && block.cannot_be_deleted_message %>
               <div class="cannot_be_deleted_message" style="display: none">
                 <%=h block.cannot_be_deleted_message %>
               </div>
             <% end %>
+            </div>
           </td>      
         <% end %>
-        <% if @content_type.model_class.respond_to?(:updated_at) %><td class="updated"><%= block.updated_at.to_s(:date) %></td><% end %>
-        <% if @content_type.model_class.connectable? %><td class="used"><%= block.connected_pages.count %></td><% end %>
-        <% if @content_type.model_class.publishable? %><td class="block_status"><%= status_icon(block.status) %> <div><%= block.status %></div> </td><% end %>
+        <% if @content_type.model_class.respond_to?(:updated_at) %><td class="updated"><div class="dividers"><%= block.updated_at.to_s(:date) %></div></td><% end %>
+        <% if @content_type.model_class.connectable? %><td class="used"><div class="dividers"><%= block.connected_pages.count %></div></td><% end %>
+        <% if @content_type.model_class.publishable? %><td class="block_status"><%= status_icon(block.status) %> <div><%= block.status %></div></td><% end %>
 	<td class="last"></td>
       </tr>
     <% end %>
+    <tr colspan="3">
+      <td>&nbsp;</td>
+    </tr>
   </tbody>
 </table>
 <ul id="myMenu" class="contextMenu">

@@ -1,5 +1,16 @@
 table#blocks td {
-padding: 10px;
+padding: 6px 0;
+}
+
+table#blocks td div.dividers {
+  background: url(/images/cms/table/divider.gif) repeat-y 100% 100%;
+  padding: 4px 0;
+}
+
+table#blocks th div.dividers {
+  background: url(/images/cms/table/th_divider.gif) repeat-y 100% 100%;
+  padding: 8px;
+  position: relative;
 }
 
 table#blocks {
@@ -9,7 +20,7 @@ table#blocks {
 }
 
 table#blocks th {
-padding: 8px;
+
 }
 #blocks .block_status {
 padding-left: 10px;
@@ -33,7 +44,7 @@ background: #B6B6B6 url(/images/cms/table/tr_bg.gif) no-repeat 0 0;
 }
 #blocks th {
 background: #B6B6B6 url(/images/cms/table/th_bg.gif) repeat-x 0 0;
-border-right: 1px solid #8E8E8E;
+/* border-right: 1px solid #8E8E8E; */
 border-bottom: 1px solid #8E8E8E;
 color: #686868;
 font-weight: bold;

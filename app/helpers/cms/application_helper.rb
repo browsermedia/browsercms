@@ -131,7 +131,7 @@ LBW
 
       content_links = link_to("&nbsp;", cms_path(*build_link.call(1)), :id => "first_page_link") 
       content_links << link_to("&nbsp;", cms_path(*build_link.call(collection.previous_page ? collection.previous_page : 1)), :id => "previous_page_link")
-      content_links << content_tag(:span, "Page #{collection.current_page} of #{collection.total_pages}")
+      content_links << content_tag(:span, "Page <strong>#{collection.current_page}</strong> of <strong>#{collection.total_pages}</strong>")
       content_links << link_to("&nbsp;", cms_path(*build_link.call(collection.next_page ? collection.next_page : collection.current_page)), :id => "next_page_link")
       content_links << link_to("&nbsp;", cms_path(*build_link.call(collection.total_pages)), :id => "last_page_link")
       content_links_div = content_tag(:div, content_links, :class => "links")
