@@ -12,6 +12,9 @@ table#blocks th div.dividers {
   padding: 8px;
   position: relative;
 }
+table#blocks th.last div.dividers {
+background: none;
+}
 
 table#blocks {
   width: 100%;
