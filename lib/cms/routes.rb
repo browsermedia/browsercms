@@ -2,9 +2,10 @@ module Cms::Routes
   def routes_for_browser_cms
 
     namespace(:cms) do |cms|
+      cms.home '/', :controller => 'home'
       cms.logout '/logout', :controller => 'sessions', :action => 'logout'
       cms.login '/login', :controller => 'sessions', :action => 'login'
-      cms.dashboard '/', :controller => 'dashboard'
+      cms.dashboard '/dashboard', :controller => 'dashboard'
       cms.sitemap '/sitemap', :controller => 'section_nodes'
       cms.content_library '/content_library', :controller => 'blocks'
       cms.administration '/administration', :controller => 'users'
