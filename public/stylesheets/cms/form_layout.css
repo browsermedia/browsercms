@@ -18,7 +18,7 @@ font-size: 100%;
 
 .fields {
 padding: 10px 0;
-border-bottom: 1px dashed #CCC;
+background: url(/images/cms/dashed.gif) repeat-x 100% 100%;
 }
 
 /* LABELS */
@@ -30,6 +30,7 @@ border-bottom: 1px dashed #CCC;
 padding: 12px 0;
 float:left;
 width:140px;
+font-size: 12px;
 }
 
 .checkbox_group .label,
@@ -40,6 +41,7 @@ width:140px;
 .file_fields label
  {
 font-weight: bold;
+font-size: 12px;
 }
 
 .checkbox_group .label {
@@ -57,18 +59,18 @@ border: 1px solid #CCC;
 /* TEXT AND TEXT AREA */
 .text_fields,
 .checkbox_group {
-padding: 10px 0;
+padding: 8px 0;
 }
  
 .text_fields input, .select_fields input,
 .textarea_fields textarea, .file_fields input.mock {
 width:245px;
-padding: 8px 0 0 5px;
+padding: 4px 5px;
 border: 1px solid #CCC;
 }
 
 .text_fields input, .select_fields input {
-height: 25px;
+height: 15px;
 }
 
 .textarea_fields textarea {

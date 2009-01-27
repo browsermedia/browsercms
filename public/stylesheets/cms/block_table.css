@@ -23,7 +23,7 @@ table#blocks {
 }
 
 table#blocks th {
-
+font-size: 120%;
 }
 #blocks .block_status {
 padding-left: 10px;
@@ -105,4 +105,26 @@ background: #FFFFFF url(/images/cms/table/td_cap_last_s.gif) no-repeat 0 0;
 table#blocks tr.hover td.buffer {
 background: #FFFFFF;
 cursor: default;
+}
+
+.roundedcorners {
+  position: relative;
+}
+
+.bl { 
+  position: absolute; 
+  bottom: 0; 
+  left: -1px; 
+  height: 5px; 
+  width: 5px; 
+  background: url(/images/cms/table/bl.gif) no-repeat 0 0
+}
+
+.br { 
+  position: absolute; 
+  bottom: 0; 
+  right: 0; 
+  height: 5px; 
+  width: 5px; 
+  background: url(/images/cms/table/br.gif) no-repeat 0 0
 }

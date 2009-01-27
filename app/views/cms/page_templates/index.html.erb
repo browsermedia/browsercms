@@ -25,17 +25,25 @@
 <%= link_to span_tag("Delete"), "#", :id => "delete_button", :class => "button disabled http_delete", :onclick => "return confirm('Are you sure you want to delete this page template?')" %>
 <% end %>
 
+<div class="roundedcorners">
 <table id="blocks">
   <thead>
   <tr>
-    <th>Name</th>
-    <th class="last">File Name</th>
+    <th class="first"></th>
+    <th><div class="dividers">Name</div></th>
+    <th>File Name</th>
+    <th class="last"></th>
   </tr>
   </thead>
   <% @page_templates.each do |page_template| %>
     <tr id="page_template_<%= page_template.id %>">
-      <td><%=h page_template.name %></td>
+      <td class="first"></td>
+      <td><div class="dividers"><%=h page_template.name %></div></td>
       <td><%=h page_template.file_name %></td>
+      <td class="last"></td>
     </tr>
   <% end %>
 </table>
+<div class="bl"></div>
+<div class="br"></div>
+</div>

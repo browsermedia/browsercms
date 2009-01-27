@@ -11,8 +11,10 @@ div.selectbox-wrapper {
   margin: -11px 0 0 140px;
 * margin: 35px 0 0 -257px;
   border: 1px solid #C6C6C6;
+  font-family: Verdana;
 }
 div.selectbox-wrapper ul {
+  background: url(/images/cms/searchbox_gradient.gif) repeat-x 100% 100%;
   list-style-type:none;
   margin:0px;
   padding:0px;
@@ -21,9 +23,10 @@ div.selectbox-wrapper ul li.selected, #menu div.selectbox-wrapper ul li.selected
   background-color: #EAF2FB;
 }
 div.selectbox-wrapper ul li {
+  font-size: 11px;
   list-style-type:none;
   margin:0;
-  padding:2px 5px;
+  padding: 8px 11px;
   cursor:pointer;
   background: #FFF url(/images/cms/dashed.gif) repeat-x 100% 100%;
 }

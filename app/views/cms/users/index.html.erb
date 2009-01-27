@@ -2,33 +2,42 @@
 <% @toolbar_title = "List Users" %>
 <%= content_for :toolbar_links, link_to(span_tag("ADD USER"), url_for(:controller => "users", :action => "new"), :id => "add_user_button", :class => "button") %>
 <%= content_for :functions, render(:partial => "toolbar") %>
+<div class="roundedcorners">
 <table id="blocks" class="data" width="100%">
   <thead>
     <tr>
-      <th class="first">Name</th>
-      <th>Email</th>
-      <th>Groups</th>
-      <th>Expiration</th>
-      <th class="last">Activation</th>
+      <th class="first"></th>
+      <th><div class="dividers">Name</div></th>
+      <th><div class="dividers">Email</div></th>
+      <th><div class="dividers">Groups</div></th>
+      <th><div class="dividers">Expiration</div></th>
+      <th class="last" colspan="2">Activation</th>
     </tr>
   </thead>
     <% @users.each do |user|%>
     <tr>
-        <td><%= link_to "#{user.first_name} #{user.last_name}", :controller=>"users", :action=> "edit", :id => user.id %></td>
-	<td><%= link_to user.email, "mailto:#{user.email}" %></td>
+        <td class="first"></td>
+        <td><div class="dividers"><%= link_to "#{user.first_name} #{user.last_name}", :controller=>"users", :action=> "edit", :id => user.id %></td>
+	      <td><div class="dividers"><%= link_to user.email, "mailto:#{user.email}" %></td>
         <td>
+            <div class="dividers">
             <% user.groups.all(:order => "groups.name").each do |g| %>
-	    <%= g.name %><br/>
-	    <% end %>
+	            <%= g.name %><br/>
+	          <% end %>
+	          </div>
         </td>
-	<td><%= user.expires_at ? format_date(user.expires_at) : "Never" %></td>
+	      <td><div class="dividers"><%= user.expires_at ? format_date(user.expires_at) : "Never" %></div></td>
         <td>
             <%= link_to "Disable User", :controller=>"users", :action=> "disable", :id => user.id unless user.expires_at %>
             <%= link_to "Enable User", :controller=>"users", :action=> "enable", :id => user.id if user.expires_at %> <br/>
         </td>
+        <td class="last"></td>
     </tr>
     <% end %>
 </table>
+<div class="bl"></div>
+<div class="br"></div>
+</div>
 <% if @users.size == 0 && params[:key_word]%>
    <div class="pagination">No results found for '<%= params[:key_word] %>'</div>
 <% end %>

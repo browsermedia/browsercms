@@ -1,17 +1,21 @@
 <% @page_title = "Administration / Group Browser" %>
 <% @toolbar_title = "List Groups" %>
 <%= content_for :functions, link_to(span_tag("Add Group"), url_for(:controller => "groups", :action => "new"), :id => "new_group_button", :class => "button") %>
+<div class="roundedcorners">
 <table id="blocks">
   <thead>
   <tr>
-    <th>Group</th>
+    <th class="first"></th>
+    <th><div class="dividers">Group</div></th>
 		<th class="last">Permissions</th>
+		<th class="last"></th>
   </tr>
   </thead>
   <% section_count = Section.count %>
   <% @groups.each do |g| %>
   <tr>
-    <td><%= link_to h(g.name), cms_path(g, :edit) %></td>
+    <td class="first"></td>
+    <td><div class="dividers"><%= link_to h(g.name), cms_path(g, :edit) %></div></td>
     <td>
 			<% g.permissions.each do |p| %>
 			- <%= p.full_name %> <br />
@@ -19,6 +23,10 @@
 			- <%= g.cms_access? ? "Edit" : "View" %>
 			<%= g.sections.count >= section_count ? "All Sections" : "#{g.sections.count} of #{section_count} Sections" %>
 		</td>
+		<td class="last"></td>
   </tr>
   <% end %>
 </table>
+<div class="bl"></div>
+<div class="br"></div>
+</div>

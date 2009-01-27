@@ -55,6 +55,7 @@
 <% @toolbar_title = "List #{@content_type.display_name_plural}" %>
 <%= render :partial => 'toolbar' %>
 
+<div class="roundedcorners">
 <table id="blocks">
   <thead>
     <tr>
@@ -98,10 +99,13 @@
       </tr>
     <% end %>
     <tr>
-      <td colspan="<%= col_ct %>" class="buffer">&nbsp;</td>
+      <td colspan="<%= col_ct %>" class="buffer"></td>
     </tr>
   </tbody>
 </table>
+<div class="bl"></div>
+<div class="br"></div>
+</div>
 <ul id="myMenu" class="contextMenu">
 	<li class="view"><a href="#show">View</a></li>
 	<li class="publish separator"><a href="#publish">Publish</a></li>	  
