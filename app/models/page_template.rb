@@ -8,9 +8,13 @@ class PageTemplate < ActiveRecord::Base
   end
   self.layout_path = File.join(Rails.root, "tmp", "views", "layouts")
 
+  def file_path
+    "#{self.class.layout_path}/#{file_name}.html.#{language}"
+  end
+
   def create_layout_file
     FileUtils.mkdir_p(self.class.layout_path)    
-    open("#{self.class.layout_path}/#{file_name}.html.#{language}", "w") {|f| f << body }
+    open(file_path, "w") {|f| f << body }
   end
   
 end
