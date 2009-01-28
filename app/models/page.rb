@@ -9,7 +9,7 @@ class Page < ActiveRecord::Base
   
   has_many :connectors, :order => "connectors.container, connectors.position"
   
-  # This scope will accept a connectable object or a Hash.  The pass is expect to have
+  # This scope will accept a connectable object or a Hash.  The Hash is expect to have
   # a value for the key :connectable, which is the connectable object, and possibly
   # a value for the key :version.  The Hash contains a versioned connectable object,
   # it will use the value in :version if present, otherwise it will use the version 
@@ -224,6 +224,11 @@ class Page < ActiveRecord::Base
     connectors.for_page_version(version).in_container(container.to_s).all? do |c| 
       c.connectable_type.constantize.publishable? ? c.connectable.published? : true
     end
+  end
+  
+  # Returns the number of connectables in the given container for this version of this page
+  def connectable_count_for_container(container)
+    connectors.for_page_version(version).in_container(container.to_s).count
   end
     
   def self.find_live_by_path(path)
