@@ -45,7 +45,7 @@ class LoadSeedData < ActiveRecord::Migration
     <%= yield :html_head %>
   </head>
   <body style="margin: 0; padding: 0">
-    <%= yield %>
+    <%= cms_toolbar %>
     <%= container :main %>
   </body>
 </html>
@@ -59,7 +59,7 @@ class LoadSeedData < ActiveRecord::Migration
     <%= yield :html_head %>
   </head>
   <body style="margin: 0; padding: 0">
-    <%= yield %>
+    <%= cms_toolbar %>
     <%= container :main %>
     <% @exception && @stacktrace && able_to?(:edit_content, :publish_content) do %>
       <pre>

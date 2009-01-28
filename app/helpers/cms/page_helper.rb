@@ -11,7 +11,11 @@ module Cms
       else
         content
       end
-    end    
+    end
+    
+    def cms_toolbar
+      instance_variable_get("@content_for_layout")
+    end
     
   end
 end
