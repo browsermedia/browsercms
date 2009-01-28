@@ -29,7 +29,7 @@ module ActiveRecord
         yield vt    
         vt.boolean :published, :default => false
         vt.boolean :deleted, :default => false
-        t.boolean :archived, :default => false        
+        vt.boolean :archived, :default => false        
         vt.string :version_comment
         vt.integer :created_by_id
         vt.integer :updated_by_id
