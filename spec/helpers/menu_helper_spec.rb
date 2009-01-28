@@ -288,8 +288,6 @@ HTML
   end
   it "should produce the desired output" do
     actual = helper.render_menu
-    log "Expected:\n#{@desired_output}"
-    log "Actual:\n#{actual}"
     @desired_output.should == actual
   end
 end

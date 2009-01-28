@@ -107,5 +107,14 @@ class Section < ActiveRecord::Base
     end
     nil
   end
-  
+    
+  def actual_path
+    if root?
+      "/"
+    else
+      p = first_page
+      p ? p.path : "#"
+    end
+  end  
+      
 end
