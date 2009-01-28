@@ -4,6 +4,10 @@ class SectionNode < ActiveRecord::Base
 
   acts_as_list :scope => :section
 
+  def orphaned?
+    !node || (node.class.uses_soft_delete? && node.deleted?)
+  end
+
   #Is this node a section
   def section?
     node_type == 'Section'

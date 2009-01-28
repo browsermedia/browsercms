@@ -122,6 +122,10 @@ jQuery(function($){
     $(sectionNode).find('table:first').addClass('selected')    
   }
   
+  var isSectionEmpty = function(id) {
+    return $('#section_'+id).parents('li:first').find('ul').length == 0    
+  }
+  
   var enableButtonsForSectionNode = function(sectionNode) {
     enableButtonsForNode($(sectionNode).find('td.node')[0])
   }
@@ -160,7 +164,35 @@ jQuery(function($){
       .removeClass('disabled')
       .attr('href','/cms/links/new?section_id='+id)
       .unbind('click')
-      .click(function(){return true})    
+      .click(function(){return true}) 
+    
+    if(isSectionEmpty(id)) {
+      $('#delete-button')
+        .removeClass('disabled')
+        .attr('href','/cms/sections/destroy/'+id+'.json')
+        .unbind('click')
+        .click(function(){
+          if(confirm('Are you sure you want to delete this section?')) {
+            var params = { _method: "DELETE" }
+            if($.cms.authenticity_token && $.cms.authenticity_token != '') {
+              params['authenticity_token'] = $.cms.authenticity_token
+            }
+            $.post($(this).attr('href'), params,
+              function(data){
+                if(data.success) {
+                  $.cms.showNotice(data.message)
+                } else {
+                  $.cms.showError(data.message)
+                }
+              }, "json");
+            $('#section_'+id).parents('.section_node:first').remove()            
+          }
+          return false;
+        })            
+    } else {
+      $('#delete-button').addClass('disabled').unbind('click').click(function(){ return false})      
+    }
+         
   }
   
   var enableButtonsForPage = function(id) {
@@ -194,7 +226,7 @@ jQuery(function($){
                 $.cms.showError(data.message)
               }
             }, "json");
-          $('#page_'+id).parents('.section_node').remove()            
+          $('#page_'+id).parents('.section_node:first').remove()            
         }
         return false;
       })    

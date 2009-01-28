@@ -73,7 +73,7 @@ class Section < ActiveRecord::Base
   end
   
   def empty?
-    child_nodes.count == 0
+    child_nodes.reject{|n| n.orphaned?}.empty?
   end
   
   def deletable?
