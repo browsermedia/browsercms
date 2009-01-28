@@ -128,8 +128,9 @@ module Cms
         nodes.each_with_index do |sn, i|
 
           #If the node is a hidden page, then we aren't going to display it
-          unless (sn.node.respond_to?(:hidden?) && sn.node.hidden?) || (sn.node.respond_to?(:archived?) && sn.node.archived?)
-            
+          logger.debug "node => #{sn.inspect}"
+          unless !sn.node || (sn.node.respond_to?(:hidden?) && sn.node.hidden?) || (sn.node.respond_to?(:archived?) && sn.node.archived?)
+            logger.debug "displaying node => #{sn.id}"
             #Construct the CSS classes that the LI should have
             classes = []          
             if i == 0
@@ -147,7 +148,7 @@ module Cms
             #If it is a page, then the page will simply be used
             #But if is a page, we call the first_page method
             p = sn.node_type == "Section" ? sn.node.first_page : sn.node
-            html << %Q{<a href="#{p ? p.path : '#'}">#{sn.node.name}</a>\n}.indent(indent+6)
+            html << %Q{<a href="#{p ? p.path : '#'}"#{(p.respond_to?(:new_window) && p.new_window?) ? ' target="_blank"' : ''}>#{sn.node.name}</a>\n}.indent(indent+6)
             
             #Now if this is a section, we do the child nodes, 
             #but only if the show_all_siblings parameter is true, 

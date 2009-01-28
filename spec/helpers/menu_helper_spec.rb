@@ -253,7 +253,43 @@ HTML
       helper.render_menu(:from_top => 1, :depth => 1).should == @desired_output
     end
 
-  end  
+  end
+
+end
 
 
+describe Cms::MenuHelper do
+  before do
+    @news = create_section(:parent => root_section, :name => "News", :path => "/whatever")
+    @press_releases = create_page(:section => @news, :name => "Press Releases", :path => "/press_releases")
+    @corporate_news = create_link(:section => @news, :name => "Corporate News", :url => "/news", :new_window => false)
+    @cnn = create_link(:section => @news, :name => "CNN", :url => "http://www.cnn.com", :new_window => true)
+    @desired_output = <<HTML 
+<div class="menu">
+  <ul>
+    <li id="section_#{@news.id}" class="first open">
+      <a href="/press_releases">News</a>
+      <ul>
+        <li id="page_#{@press_releases.id}" class="first on">
+          <a href="/press_releases">Press Releases</a>
+        </li>
+        <li id="link_#{@corporate_news.id}">
+          <a href="/news">Corporate News</a>
+        </li>
+        <li id="link_#{@cnn.id}" class="last">
+          <a href="http://www.cnn.com" target="_blank">CNN</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+HTML
+    assigns[:page] = @press_releases
+  end
+  it "should produce the desired output" do
+    actual = helper.render_menu
+    log "Expected:\n#{@desired_output}"
+    log "Actual:\n#{actual}"
+    @desired_output.should == actual
+  end
 end
