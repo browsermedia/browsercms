@@ -236,4 +236,9 @@ class Page < ActiveRecord::Base
     page ? page.live_version : nil
   end
   
+  def name_with_section_path
+    a = ancestors
+    (a[1..a.size].map{|a| a.name} + [name]).join(" / ")
+  end
+  
 end

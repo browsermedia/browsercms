@@ -24,7 +24,7 @@
         <tr>
           <td class="first"></td>
           <td class="select"><%= check_box_tag "page_ids[]", page.id, false, :id => "publish_page_#{page.id}" %></td>
-          <td class="name"><div class="dividers"><%= link_to h(page.name), page.path %></div></td>
+          <td class="name"><div class="dividers"><%= link_to h(page.name_with_section_path), page.path %></div></td>
           <td class="updated_by"><div class="dividers"><%=h page.updated_by.login %></div></td>
           <td class="updated_at"><%= page.updated_at.strftime("%m/%d/%y %H:%M %p") %></td>
           <td class="last"></td>
