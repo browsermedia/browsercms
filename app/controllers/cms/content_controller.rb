@@ -5,7 +5,7 @@ class Cms::ContentController < Cms::ApplicationController
   before_filter :try_to_stream_file
   before_filter :check_access_to_page
   
-  caches_action :show
+  #caches_action :show
   
   def show        
     render_page

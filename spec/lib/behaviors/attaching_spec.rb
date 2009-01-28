@@ -6,6 +6,7 @@ ActiveRecord::Base.connection.instance_eval do
     t.string :name
     t.integer :attachment_id
     t.integer :attachment_version
+    t.timestamps
   end
 
   drop_table(:versioned_attachables) if table_exists?(:versioned_attachables)
@@ -14,6 +15,7 @@ ActiveRecord::Base.connection.instance_eval do
     t.string :name
     t.integer :attachment_id
     t.integer :attachment_version
+    t.timestamps
   end
 end
 

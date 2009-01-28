@@ -37,7 +37,10 @@ module Cms
           end
 
           def attachment_file=(file)
-            @attachment_file = file
+            if @attachment_file != file
+              dirty!
+              @attachment_file = file
+            end
           end
 
           def attachment_file_name
@@ -49,7 +52,11 @@ module Cms
           end
 
           def attachment_file_path=(file_path)
-            @attachment_file_path = sanitize_file_path(file_path)
+            fp = sanitize_file_path(file_path)
+            if @attachment_file_path != fp
+              dirty!
+              @attachment_file_path = fp
+            end
           end
 
           def attachment_section_id
@@ -57,7 +64,10 @@ module Cms
           end
 
           def attachment_section_id=(section_id)
-            @attachment_section_id = section_id
+            if @attachment_section_id != section_id
+              dirty!
+              @attachment_section_id = section_id
+            end
           end
 
           def attachment_section
@@ -65,8 +75,11 @@ module Cms
           end
 
           def attachment_section=(section)
-            @attachment_section_id = section ? section.id : nil
-            @attachment_section = section
+            if @attachment_section != section
+              dirty!
+              @attachment_section_id = section ? section.id : nil
+              @attachment_section = section
+            end
           end
 
           def process_attachment
@@ -104,13 +117,16 @@ module Cms
 
           # Override this method if you would like to override the way file_path is set
           def set_attachment_file_path
-            attachment.file_path = @attachment_file_path if @attachment_file_path
+            if @attachment_file_path && @attachment_file_path != attachment.file_path
+              attachment.file_path = @attachment_file_path
+            end
           end
 
           # Override this method if you would like to override the way the section is set
           def set_attachment_section
-            logger.info "Setting attachment.section_id to #{@attachment_section_id}"
-            attachment.section_id = @attachment_section_id if @attachment_section_id
+            if @attachment_section_id && @attachment_section_id != attachment.section_id
+              attachment.section_id = @attachment_section_id 
+            end
           end
 
           def sanitize_file_path(file_path)
@@ -146,6 +162,14 @@ module Cms
               nil
             end  
           end
+          
+          # Forces this record to be changed, even if nothing has changed
+          # This is necessary if just the section.id has changed, for example
+          def dirty!
+            # Seems like a hack, is there a better way?
+            self.updated_at = Time.now
+          end          
+          
         end
       end
     end

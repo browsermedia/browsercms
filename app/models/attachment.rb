@@ -41,7 +41,10 @@ class Attachment < ActiveRecord::Base
   end
 
   def section_id=(section_id)
-    @section_id = section_id
+    if @section_id != section_id 
+      dirty!
+      @section_id = section_id
+    end
   end
 
   def section
@@ -49,8 +52,11 @@ class Attachment < ActiveRecord::Base
   end
 
   def section=(section)
-    @section_id = section ? section.id : nil
-    @section = section
+    if @section != section
+      dirty!
+      @section_id = section ? section.id : nil
+      @section = section
+    end
   end
   
   #----- Callbacks Methods -----------------------------------------------------
@@ -180,6 +186,13 @@ class Attachment < ActiveRecord::Base
   
   def full_file_location
     File.join(Attachment.storage_location, file_location)
+  end
+
+  # Forces this record to be changed, even if nothing has changed
+  # This is necessary if just the section.id has changed, for example
+  def dirty!
+    # Seems like a hack, is there a better way?
+    self.updated_at = Time.now
   end
 
 end

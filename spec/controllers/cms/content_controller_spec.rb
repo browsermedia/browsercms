@@ -71,15 +71,11 @@ describe Cms::ContentController do
       before do
         login_as nil
         create_system_pages
-        @file = mock_file(:read => "This is a test")
+        @file = mock_file(:read => "This is a test", :content_type => "text/plain")
         @file_block = create_file_block(:attachment_section => root_section, :attachment_file => @file, :attachment_file_path => "/test.txt", :publish_on_save => true)
         @action = lambda { get :show, :path => ["test.txt"] }
-        @path_to_file = "#{Cms.public_cache.cache_path}/test.txt"
       end
       describe "that has not been written to the cache dir" do
-        before do
-          File.delete(@path_to_file) if File.exists?(@path_to_file)
-        end
         it "return the contents of the file" do 
           @action.call
           streaming_file_contents(response).should == "This is a test"
@@ -119,7 +115,6 @@ describe Cms::ContentController do
         @file = mock_file(:read => "This is a test")
         @file_block = create_file_block(:attachment_section => @protected_section, :attachment_file => @file, :attachment_file_path => "/test.txt", :publish_on_save => true)
         @action = lambda { get :show, :path => ["test.txt"] }
-        @path_to_file = "#{ActionController::Base.cache_store.cache_path}/test.txt"
       end
       describe "when viewed by a guest user" do
         it "should raise an error" do 

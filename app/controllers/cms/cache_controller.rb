@@ -5,7 +5,8 @@ class Cms::CacheController < Cms::BaseController
   verify :method => :post, :only => :expire
   
   def expire
-    Cms.flush_cache
+    #TODO: Re-enable this once Caching is implemented
+    #Cms.flush_cache
     flash[:notice] = "Page Cache Flushed"
     redirect_to :action => "index"
   end

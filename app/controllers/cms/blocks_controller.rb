@@ -65,10 +65,13 @@ class Cms::BlocksController < Cms::BaseController
   
   def update
     attrs = params[model_class.name.underscore]
+    logger.debug "Updating Block: #{@block.inspect}"
     if @block.update_attributes(attrs)
+      logger.debug "Block updated\n\n\n"
       flash[:notice] = "#{content_type_name.titleize} '#{@block.name}' was updated"
       redirect_to_first params[:_redirect_to], cms_url(:blocks, @block.class.name.underscore, :show, @block)
     else
+      logger.warn "Errors: #{@block.errors.full_messages.join("\n")}"
       render :action => "edit"
     end
   rescue Exception => e
