@@ -42,7 +42,8 @@ class Cms::ContentController < Cms::ApplicationController
         #Stream the file if it exists
         if @path != "/" && File.exists?(@file)
           send_file(@file, 
-            :type => Mime::Type.lookup_by_extension(ext).to_s,
+            :filename => @attachment.file_name,
+            :type => @attachment.file_type,
             :disposition => "inline"
           ) 
         end    
