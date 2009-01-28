@@ -37,7 +37,11 @@ jQuery(function($){
   
   var moveSectionNode = function(sectionNodeId, move, otherSectionNodeId) {
     var url = '/cms/section_nodes/move_'+move+'/'+sectionNodeId
-    $.post(url, { _method: "PUT", section_node_id: otherSectionNodeId },
+    var params = { _method: "PUT", section_node_id: otherSectionNodeId }
+    if($.cms.authenticity_token && $.cms.authenticity_token != '') {
+      params['authenticity_token'] = $.cms.authenticity_token
+    }
+    $.post(url, params,
       function(data){
         if(data.success) {
           $.cms.showNotice(data.message)
@@ -178,7 +182,11 @@ jQuery(function($){
       .unbind('click')
       .click(function(){
         if(confirm('Are you sure you want to delete this page?')) {
-          $.post($(this).attr('href'), { _method: "DELETE" },
+          var params = { _method: "DELETE" }
+          if($.cms.authenticity_token && $.cms.authenticity_token != '') {
+            params['authenticity_token'] = $.cms.authenticity_token
+          }
+          $.post($(this).attr('href'), params,
             function(data){
               if(data.success) {
                 $.cms.showNotice(data.message)
