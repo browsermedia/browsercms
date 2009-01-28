@@ -1,5 +1,5 @@
 <% #These are need if this template is render by a rescue_from 
-  if !@page && defined?(page)
+  if defined?(page)
     @page = page 
     @mode = "view"
     @exception = exception if (!@exception && defined?(exception))
