@@ -22,7 +22,7 @@ create_page_template(:two_column, :name => "Two Column", :file_name => "two_colu
     <%= yield :html_head %>
   </head>
   <body style="margin: 0; padding: 0">
-    <%= yield %>
+    <%= cms_toolbar %>
     <table width="960">
       <tr>
         <td width="720">
