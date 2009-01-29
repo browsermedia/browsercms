@@ -12,7 +12,7 @@ class CreatePortlets < ActiveRecord::Migration
     create_table :portlet_attributes do |t|
       t.integer :portlet_id
       t.string :name
-      t.string :value
+      t.text :value
     end
     ContentType.create!(:name => "Portlet", :group_name => "Core")
     

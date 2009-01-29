@@ -15,12 +15,22 @@ class Cms::SessionsController < Cms::BaseController
         self.current_user = user
         new_cookie_flag = (params[:remember_me] == "1")
         handle_remember_cookie! new_cookie_flag
-        redirect_back_or_default(cms_home_url)
         flash[:notice] = "Logged in successfully"
+        unless params[:success_url].blank?
+          redirect_to params[:success_url]
+        else
+          redirect_back_or_default(cms_home_url)
+        end
       else
         note_failed_signin
         @login       = params[:login]
         @remember_me = params[:remember_me]
+        unless params[:failure_url].blank?
+          flash[:login_error] = "Log in failed"          
+          redirect_to append_to_query_string(params[:failure_url], 
+            [:login, params[:login]], 
+            [:remember_me, params[:remmember_me]])
+        end
       end
     end
   end
