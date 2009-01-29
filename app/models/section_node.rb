@@ -4,6 +4,8 @@ class SectionNode < ActiveRecord::Base
 
   acts_as_list :scope => :section
 
+  named_scope :of_type, lambda{|types| {:conditions => ["section_nodes.node_type IN (?)", types]}}
+
   def orphaned?
     !node || (node.class.uses_soft_delete? && node.deleted?)
   end

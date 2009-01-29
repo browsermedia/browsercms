@@ -155,7 +155,7 @@ module Cms
             #or if this section is one of the current page's ancestors
             #and also if the current depth is less than the target depth
             if sn.node_type == "Section" && (show_all_siblings || ancestors.include?(sn.node)) && d < depth
-              fn.call(sn.node.child_nodes.all(:order => 'section_nodes.position'), d+1)
+              fn.call(sn.node.child_nodes.of_type(["Section", "Page", "Link"]).all(:order => 'section_nodes.position'), d+1)
             end
             
             html << %Q{</li>\n}.indent(indent+4)
@@ -164,7 +164,7 @@ module Cms
         end
         html << "</ul>\n".indent(indent+2)
       end
-      fn.call(ancestors.first.child_nodes.all(:order => 'section_nodes.position'), 1)
+      fn.call(ancestors.first.child_nodes.of_type(["Section", "Page", "Link"]).all(:order => 'section_nodes.position'), 1)
       html << "</div>\n"
     end
   end
