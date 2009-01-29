@@ -12,7 +12,6 @@
   <ul>  
     <li<%= ' class="open"' if @menu_section == 'page_templates' %>><%= link_to "Page Templates", cms_path(:page_templates) %></li> 
     <li<%= ' class="open"' if @menu_section == 'redirects' %>><%= link_to "Redirects", cms_path(:redirects) %></li>
-    <li<%= ' class="open"' if @menu_section == 'caching' %>><%= link_to "Page Caching", cms_path(:cache) %></li>
   </ul>
 </div>
 <div class="bottom_cap"></div>
