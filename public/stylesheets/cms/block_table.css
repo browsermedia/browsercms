@@ -23,8 +23,13 @@ table#blocks {
 }
 
 table#blocks th {
-font-size: 120%;
+  font-size: 120%;
 }
+
+.dashboard_unit table#blocks th {
+  font-size: 90%;
+}
+
 #blocks .block_status {
 padding-left: 10px;
 }

@@ -246,6 +246,7 @@ jQuery(function($){
     //Remember to re-open this section
     $.cookieSet.add('openSectionNodes', id, {path: '/', expires: 90})
     
+    $(sectionNode).addClass('open')
     $(sectionNode).find('li:first > ul').show()
     $(sectionNode).find('li:first table:first img.folder').attr('src','/images/cms/icons/actions/folder_open.png').addClass("folder-open")    
   }
@@ -257,6 +258,7 @@ jQuery(function($){
     $.cookieSet.remove('openSectionNodes', id, {path: '/', expires: 90})
 
     //close this
+    $(sectionNode).removeClass('open')
     $(sectionNode).find('li:first > ul').hide()
     $(sectionNode).find('li:first table:first img.folder').attr('src','/images/cms/icons/actions/folder.png').removeClass("folder-open")    
   }

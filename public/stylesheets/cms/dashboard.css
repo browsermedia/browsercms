@@ -49,6 +49,7 @@ text-decoration: none;
 }
 #blocks td.select {
 padding-left: 8px;
+vertical-align: middle;
 }
 td.select {
 width: 4px;

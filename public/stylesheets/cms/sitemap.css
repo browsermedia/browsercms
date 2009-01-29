@@ -13,6 +13,33 @@ min-height: 500px;
   padding-left: 10px;
 }
 
+#sitemap ul ul {
+  border: 1px solid #E4E4E4;
+}
+
+#sitemap ul ul ul {
+  border: none;
+}
+
+#sitemap ul.open {
+  padding: 10px 10px 0 10px;
+  border: 1px solid #E4E4E4; 
+}
+
+#sitemap ul.open ul li {
+  border-bottom: 1px dotted #E4E4E4;
+}
+
+/*
+#sitemap ul.open ul li:last-child {
+  border: none;
+}
+*/
+
+#sitemap ul ul li table ul li {
+  border: 1px solid #666;
+}
+
 #sitemap td.node img {
   margin-left: 5px;
 }

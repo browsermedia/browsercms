@@ -51,7 +51,7 @@ padding: 5px 0;
 /* SELECT */
 .select_fields select {
 margin: 7px 0 5px 0;
-width:245px;
+width:445px;
 padding: 8px 0;
 border: 1px solid #CCC;
 }
@@ -64,7 +64,7 @@ padding: 8px 0;
  
 .text_fields input, .select_fields input,
 .textarea_fields textarea, .file_fields input.mock {
-width:245px;
+width:445px;
 padding: 4px 5px;
 border: 1px solid #CCC;
 }
@@ -160,18 +160,19 @@ z-index: 2;
 opacity: 1;
 filter: alpha(opacity=100);
 position: absolute;
-width: 178px;
+width: 378px;
 padding: 5px;
 margin-top: 2px;
 }
 .file_fields img {
 position: absolute;
-margin: 3px 0 0 194px;
+margin: 3px 0 0 397px;
 }
 
 /* BUTTONS */
 .buttons {
 padding: 10px 0 20px 0;
+margin-left: 140px;
 }
 
 div.lt_button input.submit,
@@ -218,5 +219,13 @@ margin-bottom: 10px;
 font-weight: bold;
 color: red;
 margin: 8px 0;
+}
+
+.instructions { 
+  color: #666; 
+  font-style: italic; 
+  font-size: 80%; 
+  font-weight: normal; 
+  padding-top: 5px
 }
 
