@@ -241,4 +241,9 @@ class Page < ActiveRecord::Base
     (a[1..a.size].map{|a| a.name} + [name]).join(" / ")
   end
   
+  def top_level_section
+    a = ancestors
+    (a.size > 0 && ancestors[1]) ? ancestors[1] : Section.root.first
+  end
+  
 end
