@@ -5,7 +5,7 @@
         :node_type => "section", 
         :icon => action_icon(:folder, :class => "folder"),
         :hidden => node.hidden?,
-        :access_icon => status_icon(section.status),
+        :access_icon => status_icon(node.status),
       } %>
     <%= render :partial => "section_node", :collection => node.child_nodes.all(:order => 'position'), :locals => {:display => false} %>    
   </li>
