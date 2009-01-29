@@ -35,9 +35,7 @@ jQuery(function($){
     })    
   }
   
-  var moveSectionNode = function(sectionNodeId, move, otherSectionNodeId) {
-    var url = '/cms/section_nodes/move_'+move+'/'+sectionNodeId
-    var params = { _method: "PUT", section_node_id: otherSectionNodeId }
+  var jsonPost = function(url, params) {
     if($.cms.authenticity_token && $.cms.authenticity_token != '') {
       params['authenticity_token'] = $.cms.authenticity_token
     }
@@ -49,8 +47,20 @@ jQuery(function($){
           $.cms.showError(data.message)
         }
       }, "json"
-    );
+    );    
   }
+  
+  var moveSectionNode = function(sectionNodeId, move, otherSectionNodeId) {
+    var url = '/cms/section_nodes/move_'+move+'/'+sectionNodeId
+    var params = { _method: "PUT", section_node_id: otherSectionNodeId }
+    jsonPost(url, params)
+  }
+  
+  var moveSectionNodeToRoot = function(sectionNodeId, rootSectionId) {
+    var url = '/cms/section_nodes/move_to_root/'+sectionNodeId
+    var params = { _method: "PUT", section_id: rootSectionId }
+    jsonPost(url, params)
+  }  
   
   var nodeOnDrop = function(e, ui) {    
     //Remove any drop zone highlights still hanging out
@@ -68,32 +78,38 @@ jQuery(function($){
       return true;
     }   
 
-    //Move to a section if the drop zone is the section
-    if($(this).hasClass('node') && $(this).hasClass('section')) {      
-      var move = 'to_end'
-      dest.find('li:first').append(src)
-      openSection(dest[0])
-    //If the drop zone is directly after an open section,
-    //move this to the beginning of the section  
-    } else if($(this).hasClass('drop-after') && dest.find('table:first img.folder-open').length > 0) {
-      var move = 'to_beginning'
+    if(dest.hasClass('root')) {
       src.insertAfter(dest.find('table:first'))
+      var rid = getId(dest[0].id, 'root_')
+      moveSectionNodeToRoot(sid, rid)
+    //Move to a section if the drop zone is the section
     } else {
-      //insert before or after, based on the class of the drop zone
-      if($(this).hasClass('drop-before')) {
-        var move = 'before'
-        src.insertBefore(dest)
+      if($(this).hasClass('node') && $(this).hasClass('section')) {      
+        var move = 'to_end'
+        dest.find('li:first').append(src)
+        openSection(dest[0])
+      //If the drop zone is directly after an open section,
+      //move this to the beginning of the section  
+      } else if($(this).hasClass('drop-after') && dest.find('table:first img.folder-open').length > 0) {
+        var move = 'to_beginning'
+        src.insertAfter(dest.find('table:first'))
       } else {
-        var move = 'after'          
-        src.insertAfter(dest)      
-      }     
+        //insert before or after, based on the class of the drop zone
+        if($(this).hasClass('drop-before')) {
+          var move = 'before'
+          src.insertBefore(dest)
+        } else {
+          var move = 'after'          
+          src.insertAfter(dest)      
+        }     
+      }
+      //Make the ajax call
+      moveSectionNode(sid, move, did)      
+
     }
 
     //Make the thing we are dropping be selected
     selectSectionNode(src)
-
-    //Make the ajax call
-    moveSectionNode(sid, move, did)      
 
   }
   

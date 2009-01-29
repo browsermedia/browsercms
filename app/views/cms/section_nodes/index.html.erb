@@ -16,7 +16,7 @@
 <% end %>
 
 <div id="sitemap">
-  <ul class="root" style="padding-left: 0">
+  <ul id="root_<%= @section.id %>" class="root" style="padding-left: 0">
     <li>
       <%= render :partial => "node", :locals => {
           :node => @section, 

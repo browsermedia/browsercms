@@ -17,6 +17,12 @@ class Cms::SectionNodesController < Cms::BaseController
   def move_to_end
     move_to(:end)
   end
+  def move_to_root
+    @section_node = SectionNode.find(params[:id])
+    @root = Section.root.find(params[:section_id])
+    @section_node.move_to(@root, 0)
+    render :json => {:success => true, :message => "'#{@section_node.node.name}' was moved to '#{@root.name}'"}    
+  end
   
   private
   def move(to)
