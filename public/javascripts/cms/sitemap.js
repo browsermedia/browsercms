@@ -284,6 +284,7 @@ jQuery(function($){
   }
   
   var nodeOnClick = function() {
+    
     var selected = $(this).hasClass('selected')
     clearSelectedSectionNode()
     $(this).addClass('selected')
@@ -302,8 +303,18 @@ jQuery(function($){
     }
   }  
   
+  var nodeOnDoubleClick = function() {
+    if($('#edit-button').hasClass('disabled')) {
+      //$('#properties-button').click()
+      location.href = $('#properties-button')[0].href
+    } else {
+      //$('#edit-button').click()      
+      location.href = $('#edit-button')[0].href
+    }
+  }
+  
   var addNodeOnClick = function() {
-    $('#sitemap table.section_node').click(nodeOnClick)    
+    $('#sitemap table.section_node').click(nodeOnClick).dblclick(nodeOnDoubleClick)
   }
   
   //Whenever you open a section, a cookie is updated so that next time you view the sitemap
