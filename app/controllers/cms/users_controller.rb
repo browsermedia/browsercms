@@ -5,7 +5,8 @@ class Cms::UsersController < Cms::ResourceController
   before_filter :set_menu_section
   after_filter :update_group_membership, :only => [:update, :create]
   after_filter :update_flash, :only => [ :update, :create ]
-
+  
+  verify :method => :put, :only => [ :enable, :disable ]
   
   def index
     query, conditions = [], []
@@ -37,7 +38,12 @@ class Cms::UsersController < Cms::ResourceController
   end
 
   def disable
-    user.disable!
+    begin
+      user.disable!
+      flash[:notice] = "User #{user.login} disabled"
+    rescue Exception => e
+      flash[:error] = e.message
+    end
     redirect_to :action => "index"
   end
   

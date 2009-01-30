@@ -36,11 +36,17 @@ class User < ActiveRecord::Base
   end
 
   def disable
-    self.expires_at = Time.now - 1.minutes
+    if self.class.count(:conditions => ["expires_at is null and id != ?", id]) > 0
+      self.expires_at = Time.now - 1.minutes
+    else
+      false
+    end
   end
 
   def disable!
-    disable
+    unless disable
+      raise "You must have at least 1 enabled user"
+    end
     save!
   end
 

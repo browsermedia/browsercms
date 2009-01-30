@@ -28,8 +28,8 @@
         </td>
 	      <td><div class="dividers"><%= user.expires_at ? format_date(user.expires_at) : "Never" %></div></td>
         <td>
-            <%= link_to "Disable User", :controller=>"users", :action=> "disable", :id => user.id unless user.expires_at %>
-            <%= link_to "Enable User", :controller=>"users", :action=> "enable", :id => user.id if user.expires_at %> <br/>
+            <%= link_to("Disable User", {:controller=>"users", :action=> "disable", :id => user.id}, :class => "http_put") unless user.expires_at %>
+            <%= link_to("Enable User", {:controller=>"users", :action=> "enable", :id => user.id}, :class => "http_put") if user.expires_at %> <br/>
         </td>
         <td class="last"></td>
     </tr>
