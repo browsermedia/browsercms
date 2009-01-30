@@ -39,6 +39,17 @@ module Cms
       items << content_tag(:li, current_page.page_title)
       content_tag(:ul, "\n  #{items.join("\n  ")}\n", :class => "breadcrumbs")
     end
-        
+    
+    def render_portlet(name)
+      portlets = Portlet.all(:conditions => ["name = ?", name.to_s])
+      if portlets.size > 1
+        @mode == "edit" ? "ERROR: Multiple Portlets with name '#{name}'" : nil
+      elsif portlets.empty?
+        @mode == "edit" ? "ERROR: No Portlet with name '#{name}'" : nil
+      else
+        render_connectable(portlets.first)
+      end
+    end
+            
   end
 end
