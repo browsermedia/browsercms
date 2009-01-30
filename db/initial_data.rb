@@ -13,10 +13,10 @@ create_section(:careers, :name => "Careers", :parent => sections(:about), :path 
 
 Group.all.each{|g| g.sections = Section.all }
 
-create_page(:about, :name => "About Us", :path => "/about", :section => sections(:about), :template => "Two Column")
-create_page(:kerry, :name => "Kerry Gunther", :path => "/people/kerry", :section => sections(:people), :template => "Two Column")
-create_page(:pat, :name => "Patrick Peak", :path => "/people/pat", :section => sections(:people), :template => "Two Column")
-create_page(:paul, :name => "Paul Barry", :path => "/people/paul", :section => sections(:people), :template => "Two Column")
+create_page(:about, :name => "About Us", :path => "/about", :section => sections(:about), :template => "Main")
+create_page(:kerry, :name => "Kerry Gunther", :path => "/people/kerry", :section => sections(:people), :template => "Main")
+create_page(:pat, :name => "Patrick Peak", :path => "/people/pat", :section => sections(:people), :template => "Main")
+create_page(:paul, :name => "Paul Barry", :path => "/people/paul", :section => sections(:people), :template => "Main")
 
 create_page(:test, :name => "Test", :path => "/test", :section => sections(:root), :template => "Main")
 create_html_block(:test, :name => "Test", :connect_to_page_id => pages(:test).id, :connect_to_container => "main")
@@ -25,11 +25,9 @@ pages(:test).publish!
 create_html_block(:sidebar, :name => "Sidebar", :content => "<ul><li><a href=\"/\">Home</a></li><li><a href=\"/about\">About Us</a></li></ul>", :publish_on_save => true)
 create_html_block(:about_us, :name => "About Us", :content => "We are super fantastic", :publish_on_save => true)
 
-home_page.create_connector(html_blocks(:sidebar), "sidebar")
 home_page.publish!
 
 pages(:about).create_connector(html_blocks(:about_us), "main")
-pages(:about).create_connector(html_blocks(:sidebar), "sidebar")
 pages(:about).publish!
 
 create_dynamic_portlet(:recently_updated_pages,
