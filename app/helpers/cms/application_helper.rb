@@ -68,11 +68,11 @@ module Cms
     end
     
     def time_on_date(time)
-      "#{time.strftime("%l:%M %p")} on #{time.strftime("%b %e, %Y")}"
+      time && "#{time.strftime("%l:%M %p")} on #{time.strftime("%b %e, %Y")}"
     end
 
     def format_date(time)
-      "#{time.strftime("%b %d, %Y")}"
+      time && "#{time.strftime("%b %d, %Y")}"
     end
     
     def link_to_check_all(selector, name="Check All")

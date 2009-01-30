@@ -11,6 +11,7 @@
   <h3>Tools</h3>
   <ul>  
     <li<%= ' class="open"' if @menu_section == 'redirects' %>><%= link_to "Redirects", cms_path(:redirects) %></li>
+    <li<%= ' class="open"' if @menu_section == 'email_messages' %>><%= link_to "Email Messages", cms_path(:email_messages) %></li>    
   </ul>
 </div>
 <div class="bottom_cap"></div>
