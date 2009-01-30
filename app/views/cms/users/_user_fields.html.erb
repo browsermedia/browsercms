@@ -16,7 +16,5 @@
 </div>
 <div class="fields text_fields">
     <%= f.label :expires_at, "Expiration Date" %>
-    <%= f.text_field :expires_at, :value => @user.expires_at_formatted, :autocomplete => "off" %>
-    <div class="instructions">(Format: mm/dd/yyyy. Leave blank for users that never expire.)</div>
-
+    <%= f.date_picker :expires_at, :authocomplete => "off" %>
 </div>
