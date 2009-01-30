@@ -73,7 +73,6 @@ module FixtureReplacement
   attributes_for :page_template do |a|
     a.name = "Foo"
     a.file_name = "foo"
-    a.language = "erb"
   end
 
   attributes_for :permission do |a|

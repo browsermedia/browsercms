@@ -13,29 +13,7 @@ create_section(:careers, :name => "Careers", :parent => sections(:about), :path 
 
 Group.all.each{|g| g.sections = Section.all }
 
-create_page_template(:two_column, :name => "Two Column", :file_name => "two_column", :language => "erb", :body=> <<-TEMPLATE)
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <title><%= @page_title %></title>
-    <%= yield :html_head %>
-  </head>
-  <body style="margin: 0; padding: 0">
-    <%= cms_toolbar %>
-    <table width="960">
-      <tr>
-        <td width="720">
-          <%= container :main %>
-        </td>
-        <td width="240">
-          <%= container :sidebar %>
-        </td>
-      </tr>
-    </table>
-  </body>
-</html>
-TEMPLATE
+create_page_template(:two_column, :name => "Two Column", :file_name => "templates/two_column")
 
 create_page(:about, :name => "About Us", :path => "/about", :section => sections(:about), :template => page_templates(:two_column))
 create_page(:kerry, :name => "Kerry Gunther", :path => "/people/kerry", :section => sections(:people), :template => page_templates(:two_column))

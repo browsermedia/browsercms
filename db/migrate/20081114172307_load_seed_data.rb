@@ -36,40 +36,8 @@ class LoadSeedData < ActiveRecord::Migration
         
     Group.all.each{|g| g.sections = Section.all }    
     
-    create_page_template(:main, :name => "Main", :file_name => "main", :language => "erb", :body => <<-TEMPLATE)
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <title><%= @page_title %></title>
-    <%= yield :html_head %>
-  </head>
-  <body style="margin: 0; padding: 0">
-    <%= cms_toolbar %>
-    <%= container :main %>
-  </body>
-</html>
-    TEMPLATE
-    create_page_template(:error, :name => "Error", :file_name => "error", :language => "erb", :body => <<-TEMPLATE)
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <title><%= @page_title %></title>
-    <%= yield :html_head %>
-  </head>
-  <body style="margin: 0; padding: 0">
-    <%= cms_toolbar %>
-    <%= container :main %>
-    <% @exception && @stacktrace && able_to?(:edit_content, :publish_content) do %>
-      <pre>
-        <%=h @exception.message %>
-        <%=h @exception.backtrace.join("\n") %>
-      </pre>
-    <% end %>
-  </body>
-</html>
-    TEMPLATE
+    create_page_template(:main, :name => "Main", :file_name => "templates/main")
+    create_page_template(:error, :name => "Error", :file_name => "templates/error")
         
     create_page(:home, :name => "Home", :path => "/", :section => sections(:root), :template => page_templates(:main), :cacheable => true)
     create_page(:not_found, :name => "Not Found", :path => "/system/not_found", :section => sections(:system), :template => page_templates(:error), :publish_on_save => true, :hidden => true, :cacheable => true)

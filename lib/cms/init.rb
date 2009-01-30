@@ -5,21 +5,11 @@ module Cms
     def load_rake_tasks
       load "#{Cms.root}/lib/tasks/cms.rake"
     end
+
     # This is called after the environment is ready
     def init
-      
-      #Laod all the CMS Routes
       ActionController::Routing::RouteSet::Mapper.send :include, Cms::Routes
-      
       ActiveSupport::Dependencies.load_paths += %W( #{RAILS_ROOT}/app/portlets )
-      
-      #Write out the page templates to the file system
-      if ActiveRecord::Base.connection.tables.include?("page_templates")
-        tmp_view_path = "#{Rails.root}/tmp/views"
-        Rails.logger.info("~~ Writing page templates to #{tmp_view_path}")
-        ActionController::Base.append_view_path tmp_view_path
-        PageTemplate.all.each{|pt| pt.create_layout_file }
-      end      
       ActionView::Base.default_form_builder = Cms::FormBuilder
     end
     
