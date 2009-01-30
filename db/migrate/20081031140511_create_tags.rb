@@ -5,6 +5,7 @@ class CreateTags < ActiveRecord::Migration
 
       t.timestamps
     end
+    ContentType.create!(:name => "Tag", :group_name => "Categorization")
   end
 
   def self.down

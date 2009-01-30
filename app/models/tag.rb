@@ -40,4 +40,13 @@ class Tag < ActiveRecord::Base
     tags
   end
   
+  def tagging_count
+    taggings.count
+  end
+  
+  def self.columns_for_index
+    [ {:label => "Name", :method => :name },
+      {:label => "Usages", :method => :tagging_count } ]
+  end  
+  
 end
