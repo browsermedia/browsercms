@@ -39,8 +39,6 @@ class Page < ActiveRecord::Base
   
   has_one :section_node, :as => :node
   
-  belongs_to :template, :class_name => "PageTemplate"
-  
   before_validation :append_leading_slash_to_path
   before_destroy :delete_connectors
   
@@ -200,13 +198,13 @@ class Page < ActiveRecord::Base
   end
       
   def layout
-    template ? template.path : nil
-  end
-
-  def template_name
-    template ? template.name : nil
+    "templates/#{template_name.to_s.downcase.gsub(/\s/,'_')}"
   end
   
+  def template_name
+    template
+  end
+
   def ancestors
     section_node.ancestors
   end

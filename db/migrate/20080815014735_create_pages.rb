@@ -1,10 +1,10 @@
 class CreatePages < ActiveRecord::Migration
   def self.up    
     create_versioned_table :pages do |t|
-      t.integer :template_id
       t.string :name
       t.string :title
       t.string :path
+      t.string :template
       t.text :description
       t.text :keywords
       t.string :language

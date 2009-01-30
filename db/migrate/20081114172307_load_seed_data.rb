@@ -36,13 +36,10 @@ class LoadSeedData < ActiveRecord::Migration
         
     Group.all.each{|g| g.sections = Section.all }    
     
-    create_page_template(:main, :name => "Main", :file_name => "main")
-    create_page_template(:error, :name => "Error", :file_name => "error")
-        
-    create_page(:home, :name => "Home", :path => "/", :section => sections(:root), :template => page_templates(:main), :cacheable => true)
-    create_page(:not_found, :name => "Not Found", :path => "/system/not_found", :section => sections(:system), :template => page_templates(:error), :publish_on_save => true, :hidden => true, :cacheable => true)
-    create_page(:access_denied, :name => "Access Denied", :path => "/system/access_denied", :section => sections(:system), :template => page_templates(:error), :publish_on_save => true, :hidden => true, :cacheable => true)
-    create_page(:server_error, :name => "Server Error", :path => "/system/server_error", :section => sections(:system), :template => page_templates(:error), :publish_on_save => true, :hidden => true, :cacheable => true)
+    create_page(:home, :name => "Home", :path => "/", :section => sections(:root), :template => "Main", :cacheable => true)
+    create_page(:not_found, :name => "Not Found", :path => "/system/not_found", :section => sections(:system), :template => "Error", :publish_on_save => true, :hidden => true, :cacheable => true)
+    create_page(:access_denied, :name => "Access Denied", :path => "/system/access_denied", :section => sections(:system), :template => "Error", :publish_on_save => true, :hidden => true, :cacheable => true)
+    create_page(:server_error, :name => "Server Error", :path => "/system/server_error", :section => sections(:system), :template => "Error", :publish_on_save => true, :hidden => true, :cacheable => true)
 
     create_html_block(:page_not_found, :name => "Page Not Found", :content => "<h1>Page Not Found</h1>\n<p>The page you tried to access does not exist on this server.", :publish_on_save => true)
     pages(:not_found).create_connector(html_blocks(:page_not_found), "main")

@@ -66,14 +66,9 @@ module FixtureReplacement
   attributes_for :page do |a|
     a.name = "Page #{Sequence.next}"
     a.path = "/#{a.name.gsub(/\s/,'_').downcase}"
-    a.template = default_page_template
+    a.template = "Main"
     a.section = default_section
 	end
-
-  attributes_for :page_template do |a|
-    a.name = "Foo"
-    a.file_name = "foo"
-  end
 
   attributes_for :permission do |a|
     a.name = "TestPermission#{Sequence.next}"

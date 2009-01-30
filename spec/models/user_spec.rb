@@ -16,6 +16,7 @@ describe User do
 
     describe "with expired users" do
       before(:each) do
+        create_user
         @user.disable!
       end
       it "should not authenticate expired users" do
@@ -51,14 +52,15 @@ describe User do
     end
 
     describe ".disable" do
+      before { create_user; @user.save! }
       it "should mark as user as expired right now" do
         @user.expires_at.should be_nil
-        @user.disable
+        @user.disable!
         @user.expires_at.should <= Time.now
       end
       it "should be expired" do
-        @user.disable
-        @user.expired?.should be_true
+        @user.disable!
+        @user.should be_expired
       end
     end
 

@@ -867,8 +867,8 @@ describe "Viewing a previous version of a page" do
   # end  
 
   it "should show the page template" do
-    @foo = create_page_template(:name => "Foo")
-    @bar = create_page_template(:name => "Bar")
+    @foo = "Foo"
+    @bar = "Bar"
     @page = create_page(:section => root_section, :template => @foo)
     reset(:page)
     @page.update_attributes!(:template => @bar)

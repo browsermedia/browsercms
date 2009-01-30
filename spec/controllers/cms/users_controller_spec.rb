@@ -60,7 +60,8 @@ describe Cms::UsersController do
     end
     describe "with disabled users" do
       before(:each) do
-        @disabled_user = new_user
+        create_user
+        @disabled_user = create_user
         @disabled_user.disable!
       end
 
@@ -93,7 +94,8 @@ describe Cms::UsersController do
     end
     describe "with all conditions" do
       before(:each) do
-        @disabled_user = new_user(:first_name => "SomethingElse")
+        create_user(:first_name => "Test")
+        @disabled_user = create_user(:first_name => "SomethingElse")
         @disabled_user.disable!
         @found_user = create_user(:first_name => "Stan")
         @found_user.disable!

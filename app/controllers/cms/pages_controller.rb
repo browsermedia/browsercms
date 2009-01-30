@@ -3,6 +3,7 @@ class Cms::PagesController < Cms::BaseController
   before_filter :set_toolbar_tab
   before_filter :load_section, :only => [:new, :create, :move_to]
   before_filter :load_page, :only => [:edit, :revisions, :show_version, :move_to, :revert_to, :destroy]
+  before_filter :load_templates, :only => [:new, :create, :edit, :update]
   before_filter :hide_toolbar, :only => [:new, :create, :move_to]
   before_filter :strip_publish_params, :only => [:create, :update]
 
@@ -10,6 +11,8 @@ class Cms::PagesController < Cms::BaseController
 
   def new
     @page = Page.new(:section => @section)
+    # You're not going to make new pages with the error template
+    @templates.delete_if{|t| t == "Error"} 
     if @section.pages.count < 1
       @page.name = "Overview"
       @page.path = @section.path
@@ -118,4 +121,9 @@ class Cms::PagesController < Cms::BaseController
     def set_toolbar_tab
       @toolbar_tab = :sitemap
     end
+    
+    def load_templates
+      @templates = self.class.view_paths.map{|p| Dir["#{p}/templates/*.html.erb"]}.flatten.map{|f| File.basename(f, ".html.erb").titleize}
+    end
+    
 end

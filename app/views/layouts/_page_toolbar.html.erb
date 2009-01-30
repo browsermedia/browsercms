@@ -32,7 +32,7 @@
     <div class="page_attribute_label">Template:</div>
     <div class="page_attribute_value_container">
       <%= image_tag "cms/page_toolbar/page_toolbar_inset_l.gif", :style => "float: left;" %>
-      <div class="page_attribute_value"><%= link_to h(@page.template_name), cms_path(:page_templates, :edit, @page.template), :target => "_top" %></div>
+      <div class="page_attribute_value"><%= h(@page.template_name) %></div>
       <%= image_tag "cms/page_toolbar/page_toolbar_inset_r.gif", :style => "float: left;" %>
     </div>
   </div>

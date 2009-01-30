@@ -8,7 +8,7 @@ describe Cms::ContentController do
     describe "the home page" do
       it "should display the page with a title" do
         login_as nil        
-        @page_template = create_page_template(:file_name => "main")
+        @page_template = "Main"
         @page = create_page(:section => root_section, :path => "/", :name => "Test Homepage", :template => @page_template, :publish_on_save => true)
         get :show, :path => []
         response.should have_tag("title", "Test Homepage")
@@ -17,7 +17,7 @@ describe Cms::ContentController do
     describe "the about page" do
       it "should display the page with a title" do
         login_as nil
-        @page_template = create_page_template(:file_name => "main")
+        @page_template = "Main"
         @page = create_page(:section => root_section, :path => "/about", :name => "Test About", :template => @page_template, :publish_on_save => true)
         get :show, :path => ["about"]
         response.should have_tag("title", "Test About")
@@ -27,7 +27,7 @@ describe Cms::ContentController do
       before do
         login_as nil        
         create_system_pages
-        @page_template = create_page_template(:file_name => "main")
+        @page_template = "Main"
         @protected_section = create_section(:parent => root_section)
         @page = create_page(:section => @protected_section, :path => "/secret", :name => "Shhh... It's a Secret", :template => @page_template, :publish_on_save => true)
       end
@@ -51,7 +51,7 @@ describe Cms::ContentController do
       before do
         login_as nil        
         create_system_pages
-        @page_template = create_page_template(:file_name => "main")
+        @page_template = "Main"
         @page = create_page(:section => root_section, :path => "/archived", :name => "Archived", :archived => true, :template => @page_template, :publish_on_save => true)
         @getting_an_archived_page = lambda { get :show, :path => ["archived"] }        
       end
@@ -136,7 +136,7 @@ describe Cms::ContentController do
       before do
         login_as nil
         create_system_pages
-        @page_template = create_page_template(:file_name => "main")
+        @page_template = "Main"
         @public_page = create_page(:section => root_section, :path => "/", :name => "Test Homepage", :template => @page_template, :publish_on_save => true)
         root_section.groups << create_group(:code => "search_bot")
         @secret_section = create_section(:parent => root_section)
