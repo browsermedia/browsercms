@@ -22,9 +22,10 @@ jQuery(function($){
 <% end %>
 <% form_for(@page, :url => cms_path(:pages, :create)) do |f| %>
   <%= hidden_field_tag :section_id, @page.section_id %>
+  <% @tabindex = 0 %>
   <%= render :partial => 'form', :locals => {:f => f} %>
   <div class="buttons">
-  <%= lt_button_wrapper(f.submit("Save", :class => "submit")) %>
+  <%= lt_button_wrapper(f.submit("Save", :class => "submit", :tabindex => (@tabindex += 1))) %>
   </div>
 <% end %>
 
