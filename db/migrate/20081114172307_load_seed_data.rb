@@ -36,8 +36,8 @@ class LoadSeedData < ActiveRecord::Migration
         
     Group.all.each{|g| g.sections = Section.all }    
     
-    create_page_template(:main, :name => "Main", :file_name => "templates/main")
-    create_page_template(:error, :name => "Error", :file_name => "templates/error")
+    create_page_template(:main, :name => "Main", :file_name => "main")
+    create_page_template(:error, :name => "Error", :file_name => "error")
         
     create_page(:home, :name => "Home", :path => "/", :section => sections(:root), :template => page_templates(:main), :cacheable => true)
     create_page(:not_found, :name => "Not Found", :path => "/system/not_found", :section => sections(:system), :template => page_templates(:error), :publish_on_save => true, :hidden => true, :cacheable => true)

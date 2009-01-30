@@ -13,7 +13,7 @@ create_section(:careers, :name => "Careers", :parent => sections(:about), :path 
 
 Group.all.each{|g| g.sections = Section.all }
 
-create_page_template(:two_column, :name => "Two Column", :file_name => "templates/two_column")
+create_page_template(:two_column, :name => "Two Column", :file_name => "two_column")
 
 create_page(:about, :name => "About Us", :path => "/about", :section => sections(:about), :template => page_templates(:two_column))
 create_page(:kerry, :name => "Kerry Gunther", :path => "/people/kerry", :section => sections(:people), :template => page_templates(:two_column))

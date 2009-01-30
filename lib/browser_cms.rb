@@ -5,7 +5,7 @@ require 'cms/caching'
 
 module Cms
   VERSION = "3.0.0"
-  BUILD = "68"
+  BUILD = "69"
 end
 
 #Load libraries that are included with CMS
