@@ -65,6 +65,10 @@ class Portlet < ActiveRecord::Base
       {:label => "Type", :method => :type_name } ]
   end
   
+  def instance_name
+    "#{self.class.name.demodulize.underscore}_#{id}"
+  end
+  
   # Subclasses should override this method if you want different behavior
   def renderer(portlet)
     lambda do
