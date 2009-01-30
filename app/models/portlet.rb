@@ -56,9 +56,13 @@ class Portlet < ActiveRecord::Base
     "portlets/#{name.tableize.sub('_portlets','')}/render"
   end
 
+  def type_name
+    type.to_s.titleize
+  end
+
   def self.columns_for_index
     [ {:label => "Name", :method => :name },
-      {:label => "Type", :method => :type } ]
+      {:label => "Type", :method => :type_name } ]
   end
   
   # Subclasses should override this method if you want different behavior
