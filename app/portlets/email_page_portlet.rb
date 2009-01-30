@@ -4,8 +4,6 @@ class EmailPagePortlet < Portlet
     template = <<-HTML
 <div class="email-page-portlet">
   <% form_for email_message, {:url => "/cms/email_page_portlet/deliver/#{portlet.id}"} do |f| %>
-    <%= hidden_field_tag :success_url, portlet.success_url %>
-    <%= hidden_field_tag :failure_url, portlet.failure_url %> 
     <%= hidden_field_tag :url, url %> 
     <%= f.error_messages %>
     <p>
