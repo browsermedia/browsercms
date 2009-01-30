@@ -6,9 +6,10 @@ class TagCloudPortlet < Portlet
   
   def self.default_template
     template = <<-HTML
+<% size_array = sizes.split(" ") %>
 <div class="tag-cloud">
   <% for tag in cloud %>
-    <%= link_to h(tag.name), "/tags/\#{tag.name.to_slug}", :class => sizes[tag.size] %>
+    <%= link_to h(tag.name), "/tags/\#{tag.name.to_slug}", :class => size_array[tag.size] %>
   <% end %>
 </div> 
     HTML
