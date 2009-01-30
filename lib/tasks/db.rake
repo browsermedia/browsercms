@@ -9,7 +9,7 @@ namespace :db do
         unless File.directory?(path) then models << path.match(/(\w+).rb/)[1] end
       end
   
-      models -= %w[content_observer guest_user file_block image_block]
+      models -= %w[content_observer guest_user file_block image_block email_message_mailer]
   
       puts "Models: " + models.join(', ')
       
