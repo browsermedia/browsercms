@@ -1,5 +1,5 @@
 .dashboard_unit {
-width: 490px;
+width: 990px;
 min-height: 600px;
 margin: -4px 0 0 5px;
 background-color: #FFFFFF;
@@ -30,6 +30,7 @@ margin-bottom: 20px;
 }
 .dashboard_unit #blocks td.name {
 padding: 6px 0 6px 15px;
+width: 700px;
 }
 .dashboard_unit #blocks td {
 padding: 0 0 0 18px;
