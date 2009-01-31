@@ -1,5 +1,5 @@
 <% status = node.archived? ? :archived : node.status %>
-<ul id="section_node_<%= section_node.id %>" class="section_node<%= " root" if root %>" style="display: <%= display ? "''" : "none" %>">
+<ul id="section_node_<%= section_node.id %>" class="section_node<%= " rootlet" if root %>" style="display: <%= display ? "''" : "none" %>">
   <li>
     <%= render :partial => "node", :locals => {
         :node => node, 
