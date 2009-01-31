@@ -1,10 +1,10 @@
 <% status = node.archived? ? :archived : node.status %>
-<ul id="section_node_<%= section_node.id %>" class="section_node" style="display: <%= display ? "''" : "none" %>">
+<ul id="section_node_<%= section_node.id %>" class="section_node<%= " root" if root %>" style="display: <%= display ? "''" : "none" %>">
   <li>
     <%= render :partial => "node", :locals => {
         :node => node, 
         :node_type => "page", 
-        :icon => action_icon(:page),
+        :icon => action_icon(root ? :root_page : :page),
         :hidden => node.hidden?,
         :published_status_icon => status_icon(status),
         :published_status_label => status.to_s.titleize

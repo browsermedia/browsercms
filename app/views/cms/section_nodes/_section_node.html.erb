@@ -1,8 +1,10 @@
+<% r = defined?(root) %>
 <% if section_node.node && %w[Link Page Section].include?(section_node.node_type) %>
   <%= render :partial => section_node.node_type.underscore, :locals => { 
       :section_node => section_node,
       :node => section_node.node, 
-      :display => display 
+      :display => display,
+      :root => r
     } 
   %>
 <% end %>

@@ -16,7 +16,7 @@
 <% end %>
 
 <div id="sitemap">
-  <ul id="root_<%= @section.id %>" class="root" style="padding-left: 0">
+  <ul id="root_<%= @section.id %>" class="site_root" style="padding-left: 0">
     <li>
       <%= render :partial => "node", :locals => {
           :node => @section, 
@@ -24,7 +24,7 @@
           :icon => action_icon(:home),
           :display => true
         } %>
-      <%= render :partial => "section_node", :collection => @section.child_nodes.all(:order => 'position'), :locals => {:display => true} %>    
     </li>
   </ul>
+  <%= render :partial => "section_node", :collection => @section.child_nodes.all(:order => 'position'), :locals => {:display => true, :root => true} %>    
 </div>

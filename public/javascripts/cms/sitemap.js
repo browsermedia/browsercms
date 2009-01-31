@@ -264,7 +264,7 @@ jQuery(function($){
     
     $(sectionNode).addClass('open')
     $(sectionNode).find('li:first > ul').show()
-    $(sectionNode).find('li:first table:first img.folder').attr('src','/images/cms/icons/actions/folder_open.png').addClass("folder-open")    
+      $(sectionNode).find('li:first table:first img.folder_toggle').attr('src','/images/cms/sitemap/contract.png').addClass("folder-open")    
   }
   
   var closeSection = function(sectionNode) {
@@ -276,7 +276,7 @@ jQuery(function($){
     //close this
     $(sectionNode).removeClass('open')
     $(sectionNode).find('li:first > ul').hide()
-    $(sectionNode).find('li:first table:first img.folder').attr('src','/images/cms/icons/actions/folder.png').removeClass("folder-open")    
+      $(sectionNode).find('li:first table:first img.folder_toggle').attr('src','/images/cms/sitemap/expand.png').removeClass("folder-open")    
   }
   
   var sectionNodeIsOpen = function(sectionNode) {
@@ -294,17 +294,19 @@ jQuery(function($){
     var sectionNode = $(this).parents('ul:first')[0]
     
     selectSectionNode(sectionNode)
-    if(!$(node).hasClass('root') && $(node).hasClass('section')) {
-      if(sectionNodeIsOpen(sectionNode) && selected) {
-        closeSection(sectionNode)  
-      } else {
-        openSection(sectionNode)
-      }
-    }
   }  
-  
-  var nodeOnDoubleClick = function() {
-    if($('#edit-button').hasClass('disabled')) {
+
+    var toggleSectionOnClick = function() {
+	var sectionNode = $(this).parents('ul:first')[0]
+	if(sectionNodeIsOpen(sectionNode)) {
+            closeSection(sectionNode)  
+	} else {
+            openSection(sectionNode)
+	}
+    }
+    
+    var nodeOnDoubleClick = function() {
+	if($('#edit-button').hasClass('disabled')) {
       //$('#properties-button').click()
       location.href = $('#properties-button')[0].href
     } else {
@@ -316,15 +318,17 @@ jQuery(function($){
   var addNodeOnClick = function() {
     $('#sitemap table.section_node').click(nodeOnClick).dblclick(nodeOnDoubleClick)
   }
+    var addToggleSectionOnClick = function(){
+	$('#sitemap img.folder_toggle').click(toggleSectionOnClick);
+    }
   
   //Whenever you open a section, a cookie is updated so that next time you view the sitemap
   //that section will start in open state
   var fireOnClickForOpenSectionNodes = function() {
     var openSectionNodeIds = $.cookieSet.get('openSectionNodes')
-    $('#sitemap table.section_node:first').click()
     if(openSectionNodeIds) {
       $.each(openSectionNodeIds, function(i, e) { 
-        $('#section_node_'+e+' table:first').click()
+        $('#section_node_'+e+' table:first img.folder_toggle').click()
       })      
     }    
   }  
@@ -338,6 +342,7 @@ jQuery(function($){
   makeMovableRowsDraggable()
   enableDropZones()  
   addNodeOnClick()
+  addToggleSectionOnClick()
   fireOnClickForOpenSectionNodes()
 
 })

@@ -1,9 +1,9 @@
-<ul id="section_node_<%= section_node.id %>" class="section_node" style="display: <%= display ? "''" : "none" %>">
+<ul id="section_node_<%= section_node.id %>" class="section_node<%= " root" if root %>" style="display: <%= display ? "''" : "none" %>">
   <li>
     <%= render :partial => "node", :locals => {
         :node => node, 
         :node_type => "section", 
-        :icon => action_icon(:folder, :class => "folder"),
+        :icon => "#{node.child_nodes.empty? ? image_tag("cms/sitemap/no_contents.png", :class => "no_folder_toggle") : image_tag("cms/sitemap/expand.png", :class => "folder_toggle")} #{action_icon(root ? :root_folder : :folder, :class => "folder")}",
         :hidden => node.hidden?,
         :access_icon => status_icon(node.status),
       } %>

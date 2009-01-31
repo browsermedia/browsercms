@@ -1,56 +1,45 @@
-#content {
-min-height: 500px;
-}
 
 #sitemap {
   width: 100%;
   border-collapse: collapse;
-  padding: 10px 0;
 }
 
 #sitemap ul {
   list-style: none;
-  padding-left: 10px;
 }
 
-#sitemap ul ul {
-  border: 1px solid #E4E4E4;
+#sitemap ul.root, #sitemap ul.site_root {
+  margin: 0 5px;
+
+}
+#sitemap ul.root {
+background: url(/images/cms/sitemap/buffer_caps.png) no-repeat 0 0;
+  padding-top: 13px;
+}
+#sitemap ul.site_root {
+background: url(/images/cms/sitemap/site_root_cap.png) no-repeat 0 0;
+  padding-top: 4px;
+
+}
+#sitemap ul.root ul li {
+padding: 0 0 0 48px;
+}
+#sitemap ul.root ul ul li {
+padding: 0 0 0 23px;
 }
 
-#sitemap ul ul ul {
-  border: none;
-}
-
-#sitemap ul.open {
-  padding: 10px 10px 0 10px;
-  border: 1px solid #E4E4E4; 
-}
-
-#sitemap ul.open ul li {
-  border-bottom: 1px dotted #E4E4E4;
-}
-
-/*
-#sitemap ul.open ul li:last-child {
-  border: none;
-}
-*/
-
-#sitemap ul ul li table ul li {
-  border: 1px solid #666;
-}
-
-#sitemap td.node img {
-  margin-left: 5px;
+#sitemap ul.root li, #sitemap ul.site_root li{
+padding: 0 4px;
+background: #FFFFFF;
 }
 
 #sitemap table.hover {
-  background-color: #ccf;
+  background-color: #D0D0D0;
   cursor: pointer;
 }
 
 #sitemap table.selected {
-  background-color: #9bf;
+  background-color: #CADCF4;
 }
 
 #sitemap td.drop-over {
@@ -95,8 +84,10 @@ min-height: 500px;
   margin: 0;
   padding: 0;
 }
-
-#sitemap .sitemap_published_status div, #sitemap .sitemap_hidden img, #sitemap .sitemap_access img{
+#sitemap ul.root ul .sitemap_published_status div, #sitemap ul.root ul .sitemap_hidden img, #sitemap ul.root ul .sitemap_access img{
+margin-top: -14px;
+}
+#sitemap ul.root .sitemap_published_status div, #sitemap ul.root .sitemap_hidden img, #sitemap ul.root .sitemap_access img{
 display: block;
 margin: -22px 0 0 -5px;
 position: absolute;
@@ -117,10 +108,10 @@ width: 40px;
 width: 75px;
 }
 
-#sitemap .sitemap_published_status div img{
+#sitemap ul.root .sitemap_published_status div img{
 float: left;
 }
-#sitemap .sitemap_published_status div div{
+#sitemap ul.root .sitemap_published_status div div{
 float: left;
 position: relative;
 margin: 3px 0 0 4px;
@@ -128,8 +119,10 @@ margin: 3px 0 0 4px;
 #sitemap img {
 border: 1px solid #FFF;
 }
+#sitemap .node img {
+border: none;
+}
 #sitemap tr.section_node { 
-border-bottom: 1px dotted #CCC; 
 vertical-align: middle;
 }
 .node table tr td {
@@ -143,9 +136,13 @@ margin-left: 15px;
 float: left;
 }
 
-.node div {
+#sitemap ul.root .node div, #sitemap ul.site_root .node div {
 padding: 8px 0 0 10px;
 }
+#sitemap ul.root ul .node div {
+padding: 1px 0 0 10px;
+}
+
 div.bottom_cap {
 height: 9px;
 background: transparent url(/images/cms/sitemap/bottom_cap.png) no-repeat 0 0;
@@ -153,4 +150,26 @@ background: transparent url(/images/cms/sitemap/bottom_cap.png) no-repeat 0 0;
 div.top_cap_sitemap_content {
 height: 5px;
 background: transparent url(/images/cms/sitemap/top_cap_content.png) no-repeat 0 0;
+}
+#sitemap ul.root ul td.page img, #sitemap ul.root ul td.link img {
+
+}
+#sitemap ul.root img {
+display: block;
+float: left;
+}
+#sitemap ul.root img.folder_toggle, #sitemap ul.root img.no_folder_toggle {
+margin: 6px 9px 0 4px;
+}
+#sitemap ul.root ul img.folder_toggle, #sitemap ul.root ul img.no_folder_toggle {
+margin: 2px 14px 0 0px;
+}
+#sitemap ul.root ul td.node {
+padding-left: 7px;
+}
+#sitemap ul.root td.page img, #sitemap ul.root td.link img, #sitemap ul.site_root td.node img{
+margin-left: 21px;
+}
+#sitemap ul.root ul td.page img, #sitemap ul.root ul td.link img {
+margin-left: 24px;
 }

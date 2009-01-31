@@ -1,9 +1,9 @@
-<ul id="section_node_<%= section_node.id %>" class="section_node" style="display: <%= display ? "''" : "none" %>">
+<ul id="section_node_<%= section_node.id %>" class="section_node<%= " root" if root %>" style="display: <%= display ? "''" : "none" %>">
   <li>
     <%= render :partial => "node", :locals => {
         :node => node, 
         :node_type => "link", 
-        :icon => action_icon(:link),
+        :icon => action_icon(root ? :root_link : :link),
         :published_status_icon => status_icon(node.status),
         :published_status_label => node.published? ? "Published" : "Draft"
       } %>
