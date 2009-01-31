@@ -173,3 +173,9 @@ margin-left: 21px;
 #sitemap ul.rootlet ul td.page img, #sitemap ul.rootlet ul td.link img {
 margin-left: 24px;
 }
+#sitemap ul td.section {
+font-weight: bold;
+}
+#sitemap ul.rootlet ul td.drop-after {
+border-bottom: 1px dashed #CFCFCF;
+}
