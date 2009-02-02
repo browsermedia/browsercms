@@ -38,7 +38,7 @@ class Cms::SessionsController < Cms::BaseController
   def logout
     logout_killing_session!
     flash[:notice] = "You have been logged out."
-    redirect_back_or_default(cms_login_url)
+    redirect_back_or_default("/")
   end
 
 protected
