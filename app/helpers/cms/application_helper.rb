@@ -117,25 +117,24 @@ LBW
       CategoryType.named(category_type_name).first.category_list
     end	  
     
-    def pagination(collection, path_args, record_type="Record")
+    def render_pagination(collection, path_args, record_type="Record")
       return content_tag(:div, "No Content", :class => "pagination") unless collection.size > 0
-        build_link = lambda {|p|
-          args = path_args.dup
-          if Hash === args.last
-            args.last.merge(:page => p)
-          else
-            args << {:page => p}
-          end
-        }
-      content_info = content_tag(:div,"Displaying #{collection.offset + 1} - #{collection.offset + collection.size} of #{collection.total_entries} ", :class => "info")
-
-      content_links = link_to("&nbsp;", cms_path(*build_link.call(1)), :id => "first_page_link") 
-      content_links << link_to("&nbsp;", cms_path(*build_link.call(collection.previous_page ? collection.previous_page : 1)), :id => "previous_page_link")
-      content_links << content_tag(:span, "Page <strong>#{collection.current_page}</strong> of <strong>#{collection.total_pages}</strong>")
-      content_links << link_to("&nbsp;", cms_path(*build_link.call(collection.next_page ? collection.next_page : collection.current_page)), :id => "next_page_link")
-      content_links << link_to("&nbsp;", cms_path(*build_link.call(collection.total_pages)), :id => "last_page_link")
-      content_links_div = content_tag(:div, content_links, :class => "links")
-      content_tag(:div, content_info + content_links_div + '<br clear="all" />', :class => "pagination")
+      build_link = lambda {|p|
+        args = path_args.dup
+        if Hash === args.last
+          args.last.merge(:page => p)
+        else
+          args << {:page => p}
+        end
+      }
+      render :partial => "cms/shared/pagination", :locals => {
+        :collection => collection,
+        :first_page_path => cms_path(*build_link.call(1)),
+        :previous_page_path => cms_path(*build_link.call(collection.previous_page ? collection.previous_page : 1)),
+        :current_page_path => cms_path(*path_args),
+        :next_page_path => cms_path(*build_link.call(collection.next_page ? collection.next_page : collection.current_page)),
+        :last_page_path => cms_path(*build_link.call(collection.total_pages))
+      }      
     end	  
     
     def connectable_content_types

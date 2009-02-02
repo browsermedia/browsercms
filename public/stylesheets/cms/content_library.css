@@ -53,6 +53,19 @@ width: 8px;
 display:block;
 float: left;
 }
+
+.pagination form.current_page {
+  display: inline;
+  font-size: 8pt;
+}
+
+.pagination form.current_page input {
+  width: 25px;
+  height: 12px;
+  margin: 0;
+  padding: 0;
+}
+
 #first_page_link {
 background: url(/images/cms/pagination/first.gif) no-repeat 0 0;
 }

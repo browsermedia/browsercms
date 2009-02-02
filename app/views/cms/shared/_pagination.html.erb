@@ -1,0 +1,27 @@
+<div class="pagination">
+  <div class="info">
+    Displaying 
+    <%= collection.offset + 1 %>
+    -
+    <%= collection.offset + collection.size %>
+    of
+    <%= collection.total_entries %>
+  </div>
+  <div class="links">
+    <%= link_to "&nbsp;", first_page_path, :id => "first_page_link" %>
+    <%= link_to "&nbsp;", previous_page_path, :id => "previous_page_link" %>
+    <span>
+      <% form_tag current_page_path, :method => :get, :class => "current_page" do %>
+        <%= label_tag "current_page_number", "Page" %>
+        <%= text_field_tag "page", collection.current_page, :id => "current_page_number", :size => 3 %>
+        of 
+        <strong>
+          <%= collection.total_pages %>
+        </strong>
+      <% end %> 
+    </span>
+    <%= link_to "&nbsp;", next_page_path, :id => "next_page_link" %>
+    <%= link_to "&nbsp;", last_page_path, :id => "last_page_link" %>
+  </div>
+  <br clear="all"/>
+</div>
