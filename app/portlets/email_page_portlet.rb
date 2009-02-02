@@ -3,7 +3,7 @@ class EmailPagePortlet < Portlet
   def self.default_template
     template = <<-HTML
 <div class="email-page-portlet">
-  <% form_for email_message, {:url => "/cms/email_page_portlet/deliver/#{portlet.id}"} do |f| %>
+  <% form_for email_message, {:url => "/cms/email_page_portlet/deliver/\#{portlet.id}"} do |f| %>
     <%= hidden_field_tag :url, url %> 
     <%= f.error_messages %>
     <p>
@@ -29,6 +29,7 @@ class EmailPagePortlet < Portlet
       locals = {}
       locals[:portlet] = portlet
       locals[:email_message] = EmailMessage.new pmap[:email_message]
+      locals[:email_message].errors.add_from_hash flash["#{portlet.instance_name}_errors"]
       locals[:url] = pmap[:url] || request.referer
       render :inline => portlet.template, :locals => locals
     end

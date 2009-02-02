@@ -74,6 +74,6 @@ class Portlet < ActiveRecord::Base
     lambda do
       render :partial => portlet.class.partial, :locals => {:portlet => portlet}
     end
-  end  
+  end
   
 end

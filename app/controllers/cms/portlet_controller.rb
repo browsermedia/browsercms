@@ -2,19 +2,6 @@ class Cms::PortletController < Cms::BaseController
   
   before_filter :load_portlet
   
-  def self.redirect_action(name, &block)
-    define_method(name) do
-      begin
-        instance_eval &block
-        redirect_to_success_url
-      rescue Exception => e
-        logger.warn "#{e.class}: #{e.message}\n#{e.backtrace.join("\n")}"
-        store_params_in_flash
-        redirect_to_failure_url
-      end
-    end
-  end
-  
   protected
     def load_portlet
       @portlet = Portlet.find(params[:id])
@@ -25,12 +12,23 @@ class Cms::PortletController < Cms::BaseController
     # the value will be the hash of all the params, except the params
     # that have values that are a StringIO or a Tempfile will be left out.
     def store_params_in_flash
-      flash[@portlet.instance_name] = params.inject(HashWithIndifferentAccess.new) do |p,(k,v)|
+      store_hash_in_flash @portlet.instance_name, params
+    end
+
+    # This will convert the errors object into a hash and then store it 
+    # in the flash under the key #{portlet.instance_name}_errors
+    def store_errors_in_flash(errors)
+      store_hash_in_flash("#{@portlet.instance_name}_errors", 
+        errors.inject({}){|h, (k, v)| h[k] = v; h})
+    end
+  
+    def store_hash_in_flash(key, hash)
+      flash[key] = hash.inject(HashWithIndifferentAccess.new) do |p,(k,v)|
         unless StringIO === v || Tempfile === v
           p[k.to_sym] = v
         end
         p
-      end
+      end      
     end
   
     # This will redirect to the first non-blank url
@@ -50,6 +48,12 @@ class Cms::PortletController < Cms::BaseController
     
     def redirect_to_failure_url
       redirect_to_url_or_referer params[:failure_url], @portlet.failure_url
+    end
+    
+    def redirect_to_failure_url_with_errors(errors)
+      store_errors_in_flash(errors)
+      store_params_in_flash
+      redirect_to_failure_url      
     end
     
 end
