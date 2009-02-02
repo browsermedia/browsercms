@@ -86,6 +86,7 @@ background: #FFFFFF;
 }
 #sitemap ul.rootlet ul .sitemap_published_status div, #sitemap ul.rootlet ul .sitemap_hidden img, #sitemap ul.rootlet ul .sitemap_access img{
 margin-top: -14px;
+* margin-top: -10px;
 }
 #sitemap ul.rootlet .sitemap_published_status div, #sitemap ul.rootlet .sitemap_hidden img, #sitemap ul.rootlet .sitemap_access img{
 display: block;
@@ -93,8 +94,11 @@ margin: -22px 0 0 -5px;
 position: absolute;
 * margin-top: -3px;
 }
-#sitemap tr.doubled .sitemap_hidden img, #sitemap tr.doubled .sitemap_access img {
+#sitemap ul.rootlet tr.doubled .sitemap_hidden img, #sitemap ul.rootlet tr.doubled .sitemap_access img {
 * margin-top: 5px;
+}
+#sitemap ul.rootlet ul tr.doubled .sitemap_hidden img, #sitemap ul.rootlet ul tr.doubled .sitemap_access img {
+* margin-top: -2px;
 }
 
 #sitemap .sitemap_hidden {
@@ -178,4 +182,12 @@ font-weight: bold;
 }
 #sitemap ul.rootlet ul td.drop-after {
 border-bottom: 1px dashed #CFCFCF;
+}
+
+#sitemap ul.rootlet td.divided {
+background: url(/images/cms/sitemap/divider.gif) no-repeat 23px 4px;
+* background: url(/images/cms/sitemap/divider.gif) no-repeat 23px 6px;
+}
+#sitemap ul.rootlet ul td.divided {
+background: url(/images/cms/sitemap/divider.gif) no-repeat 23px 0;
 }

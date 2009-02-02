@@ -11,7 +11,7 @@
 	    <%= icon %>
 	    <div><%= h(node.name) %></div>
     </td>
-    <td class="sitemap_hidden">
+    <td class="sitemap_hidden<%= " divided" if hidden && access_icon %>">
       <%= status_icon(:hidden) if hidden %>
     </td>
     <td class="sitemap_access">

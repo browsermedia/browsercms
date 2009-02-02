@@ -87,6 +87,7 @@ jQuery(function($){
     } else {
       unMakeRootlet(src);
       if($(this).hasClass('node') && $(this).hasClass('section')) {      
+	  makeExpandable(dest);
         var move = 'to_end'
         dest.find('li:first').append(src)
         openSection(dest[0])
@@ -117,6 +118,14 @@ jQuery(function($){
     selectSectionNode(src)
 
   }
+
+    function makeExpandable(dest){
+	var dest_toggle = dest.find('td.node:first img:first');
+	dest_toggle.removeClass('no_folder_toggle');
+	dest_toggle.addClass('folder_toggle');
+	dest_toggle.click(toggleSectionOnClick);
+	dest_toggle.attr('src','/images/cms/sitemap/contract.png');
+    }
 
     function makeRootlet(src){
 	src.addClass('rootlet')
