@@ -45,7 +45,7 @@ class Tag < ActiveRecord::Base
   end
   
   def self.columns_for_index
-    [ {:label => "Name", :method => :name },
+    [ {:label => "Name", :method => :name, :order => "name" },
       {:label => "Usages", :method => :tagging_count } ]
   end  
   

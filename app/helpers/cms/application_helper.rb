@@ -121,8 +121,9 @@ LBW
       return content_tag(:div, "No Content", :class => "pagination") unless collection.size > 0
       build_link = lambda {|p|
         args = path_args.dup
-        if Hash === args.last
-          args.last.merge(:page => p)
+        if args.last.is_a?(Hash)
+          args.last.merge!(:page => p)    
+          args
         else
           args << {:page => p}
         end
@@ -166,6 +167,18 @@ LBW
       {:height => 600, :width => 600, :modal => true}.merge(options).inject("#{path}&TB_iframe=true") do |s, (k,v)|
         s << "&#{k}=#{CGI::escape(v.to_s)}"
       end
+    end
+    
+    def determine_order(current_order, order)
+      if current_order == order
+        if order =~ / desc$/i
+          order.sub(/ desc$/i, '')
+        else
+          order << ' desc'
+        end
+      else
+        order
+      end 
     end
     
   end

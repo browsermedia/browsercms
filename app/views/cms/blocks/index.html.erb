@@ -60,9 +60,26 @@
   <thead>
     <tr>
       <% @content_type.columns_for_index.each_with_index do |column, i| %>
-        <th <%
-	       if !@content_type.model_class.respond_to?(:updated_at) && !@content_type.model_class.connectable? && !@content_type.model_class.publishable? && @content_type.columns_for_index.size == i + 1 %>colspan="2" class="last"<%
-               elsif i == 0 %>colspan="2" class="name first"<% end %>><div class="dividers"><%= column[:label] %></div></th>
+        <% attrs = if !@content_type.model_class.respond_to?(:updated_at) && 
+                      !@content_type.model_class.connectable? && 
+                      !@content_type.model_class.publishable? && 
+                      @content_type.columns_for_index.size == i + 1
+             %Q{ colspan="2" class="last"}
+           elsif i == 0
+             %Q{ colspan="2" class="name first"}
+          end %>
+        <th<%= attrs %>>
+          <div class="dividers">
+            <% if column[:order] %>
+              <%= link_to column[:label],
+                    cms_path(:blocks, 
+                      @content_type.content_block_type, 
+                      {:order => determine_order(params[:order], column[:order])}) %>
+            <% else %>
+              <%= column[:label] %>
+            <% end %>
+          </div>
+        </th>
       <% end %>
       <% if @content_type.model_class.respond_to?(:updated_at) %>
         <th class="updated <%= 'last" colspan="2' unless @content_type.model_class.publishable? || @content_type.model_class.connectable? %>"><div class="dividers">Updated</div></th>
@@ -116,5 +133,5 @@
 <% if params[:search] && @blocks.size == 0 %>
 <div class="pagination">No results found for '<%= params[:search][:term] %>'</div>
 <% else %>
-<%= render_pagination @blocks, [:blocks, @content_type.content_block_type], @content_type.display_name %>
+<%= render_pagination @blocks, [:blocks, @content_type.content_block_type, {:order => params[:order]}], @content_type.display_name %>
 <% end %>
