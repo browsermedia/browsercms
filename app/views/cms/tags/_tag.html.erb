@@ -1,0 +1,52 @@
+<% taggings = tag.taggings.paginate(:page => params[:page]) %>
+<% content_for :html_head do %>
+    <%= stylesheet_link_tag "cms/content_library" %>
+    <% javascript_tag do %>
+      jQuery(function($){
+        $('#block_content .header').html("Content tagged with '<%= escape_javascript(h(tag.name)) %>'")
+      })
+    <% end %>
+<% end %>
+<div class="pad">
+  <div class="roundedcorners">
+    <table id="blocks">
+      <thead>
+        <tr>
+          <th class="name first" colspan="2">
+            <div class="dividers">
+              Name
+            </div>
+          </th>
+          <th class="last" colspan="2">
+            <div class="dividers">
+              Type
+            </div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for tg in taggings %>
+          <tr>
+            <td class="first"></td>
+            <td class="name">
+              <div class="dividers">
+                <%= link_to h(tg.taggable.name), cms_path(:blocks, tg.taggable.type.to_s.underscore.pluralize, :show, tg.taggable) %>
+              </div>
+            </td>              
+            <td class="name">
+              <div class="dividers">
+                <%=h tg.taggable.type %>
+              </div>
+            </td>
+            <td class="last"></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="bl"></div>
+    <div class="br"></div>
+  </div>
+</div>
+<% if taggings.total_pages > 1 %>
+  <%= render_pagination taggings, [:blocks, :tag, :show, tag] %>
+<% end %>

@@ -49,4 +49,11 @@ class Tag < ActiveRecord::Base
       {:label => "Usages", :method => :tagging_count } ]
   end  
   
+  def renderer(tag)
+    lambda do
+      render :partial => 'cms/tags/tag', :locals => {:tag => tag}
+    end
+
+  end  
+  
 end
