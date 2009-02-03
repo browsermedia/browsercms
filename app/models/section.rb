@@ -35,7 +35,7 @@ class Section < ActiveRecord::Base
         s.node.full_path = root? ? s.node.name : "#{name} / #{s.node.name}"
         [s.node] << s.node.all_children_with_name
       end
-    end.flatten
+    end.flatten.compact
   end
   
   def parent_id
