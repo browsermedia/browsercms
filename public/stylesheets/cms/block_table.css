@@ -4,7 +4,7 @@ padding: 6px 0;
 
 table#blocks td div.dividers {
   background: url(/images/cms/table/divider.gif) repeat-y 100% 100%;
-  padding: 4px 0;
+  padding: 4px 22px 4px 0;
 }
 
 table#blocks th div.dividers {
