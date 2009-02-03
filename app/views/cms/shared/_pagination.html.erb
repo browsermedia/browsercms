@@ -14,7 +14,7 @@
       <% url = URI.parse(current_page_path) %>
       <% form_tag url.path, :method => :get, :class => "current_page" do %>
         <% url.query.to_s.split('&').each do |p|; k, v = p.split('=') %>
-          <%= hidden_field_tag(k, v, :id => "pagination_hidden_#{k}") unless k == "page" %>
+          <%= hidden_field_tag(k, CGI::unescape(v), :id => "pagination_hidden_#{k}") unless k == "page" %>
         <% end %>
         <%= label_tag "current_page_number", "Page" %>
         <%= text_field_tag "page", collection.current_page, :id => "current_page_number", :size => 3 %>
