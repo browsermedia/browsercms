@@ -31,8 +31,10 @@ class Section < ActiveRecord::Base
   
   def all_children_with_name
     child_sections.map do |s|
-      s.node.full_path = root? ? s.node.name : "#{name} / #{s.node.name}"
-      [s.node] << s.node.all_children_with_name
+      if s.node
+        s.node.full_path = root? ? s.node.name : "#{name} / #{s.node.name}"
+        [s.node] << s.node.all_children_with_name
+      end
     end.flatten
   end
   
