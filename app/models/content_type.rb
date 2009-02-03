@@ -62,6 +62,17 @@ class ContentType < ActiveRecord::Base
     name.pluralize.underscore
   end
   
+  # This is used for situations where you want different to use a type for the list page
+  # This is true for portlets, where you don't want to list all portlets of a given type,
+  # You want to list all portlets
+  def content_block_type_for_list
+    if model_class.respond_to?(:content_block_type_for_list)
+      model_class.content_block_type_for_list
+    else
+      content_block_type
+    end
+  end
+  
   def set_content_type_group
     if group_name
       group = ContentTypeGroup.first(:conditions => {:name => group_name})

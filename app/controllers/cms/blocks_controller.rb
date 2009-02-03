@@ -37,7 +37,7 @@ class Cms::BlocksController < Cms::BaseController
       elsif model_class.connectable? && @block.connected_page
         redirect_to @block.connected_page.path
       else
-        redirect_to_first params[:_redirect_to], cms_url(:blocks, content_type.name.underscore.pluralize)
+        redirect_to_first params[:_redirect_to], cms_url(:blocks, @block.class.name.underscore, :show, @block)
       end
     else
       render :action => 'new'

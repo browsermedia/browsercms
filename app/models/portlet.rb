@@ -43,6 +43,10 @@ class Portlet < ActiveRecord::Base
     "portlet"
   end 
   
+  def self.content_block_type_for_list
+    "portlet"
+  end
+  
   # For column in list
   def portlet_type_name
     type.titleize
