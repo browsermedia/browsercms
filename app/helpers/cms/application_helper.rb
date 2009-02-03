@@ -117,7 +117,7 @@ LBW
       CategoryType.named(category_type_name).first.category_list
     end	  
     
-    def render_pagination(collection, path_args, record_type="Record")
+    def render_pagination(collection, path_args)
       return content_tag(:div, "No Content", :class => "pagination") unless collection.size > 0
       build_link = lambda {|p|
         args = path_args.dup

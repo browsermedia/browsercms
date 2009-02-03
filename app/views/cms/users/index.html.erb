@@ -39,6 +39,8 @@
 <div class="br"></div>
 </div>
 <% if @users.size == 0 && params[:key_word]%>
-   <div class="pagination">No results found for '<%= params[:key_word] %>'</div>
+  <div class="pagination">No results found for '<%= params[:key_word] %>'</div>
+<% elsif @users.total_pages > 1 %>
+  <%= render_pagination @users, [:users] %>
 <% end %>
 
