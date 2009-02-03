@@ -11,15 +11,11 @@
 	<li id="user_info"><%= image_tag "cms/icons/user.png" %><span><%= current_user.full_name %></span></li>
       	<li><%= link_to "Logout", cms_logout_path, :class => "http_delete", :target => "_top" %></li>
       </ul>
-			<%#div class="cmssearch">
-				<a href="#"><img src="/images/cms/search.png" alt="Search" /></a>
-			</div%>
+      <% flash_class, flash_message = flash.to_a.first %>
+      <div id="flash" style="display: none">
+        <div id="message" class="<%= flash_class %>">
+          <% if flash_message %><p><%= flash_message %></p><% end %>
+        </div>
+      </div>
   </div>
-  <% flash_class, flash_message = flash.to_a.first %>
-  <div id="flash" style="display: none">
-    <div id="message" class="<%= flash_class %>">
-      <% if flash_message %><p><%= flash_message %></p><% end %>
-    </div>
-  </div>
-
 <% end -%>
