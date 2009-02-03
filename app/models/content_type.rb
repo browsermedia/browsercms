@@ -17,7 +17,7 @@ class ContentType < ActiveRecord::Base
     if content_type.nil?
       if class_name.constantize.ancestors.include?(Portlet)
         content_type = ContentType.new(:name => class_name)
-        content_type.content_type_group = ContentTypeGroup.find_by_name('Portlets')
+        content_type.content_type_group = ContentTypeGroup.find_by_name('Core')
         content_type.freeze
         content_type
       else
@@ -28,6 +28,10 @@ class ContentType < ActiveRecord::Base
     end
   rescue Exception
     raise "Couldn't find ContentType of class '#{class_name}'"    
+  end
+  
+  def is_child_of?(content_type)
+    name.constantize.ancestors.map{|c| c.name}.include?(content_type.name)  
   end
   
   def form

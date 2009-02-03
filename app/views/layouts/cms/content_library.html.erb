@@ -44,7 +44,7 @@
 	      <div class="top_cap"></div>
               <div id="content_types">
                 
-                <%= yield :sidebar %>
+                <%= yield :sidebar %>                
                 <h3>Content Types</h3>
                 <ul><% ContentTypeGroup.all(:order => "content_type_groups.id").each do |g| %>
           	  <li<%= ' class="open"' if (g == @content_type.content_type_group) %>>
@@ -54,7 +54,7 @@
           	    <%= link_to h(g.name), cms_path("/blocks/#{g.content_types.first.content_block_type}") %>          				  
           	    <ul>
           	      <% g.content_types.each do |t| %>
-          	      <li<%= ' class="on"' if t == @content_type %>><%= link_to h(t.display_name), cms_path("/blocks/#{t.content_block_type}") %></li>
+          	      <li<%= ' class="on"' if @content_type.is_child_of?(t) %>><%= link_to h(t.display_name), cms_path("/blocks/#{t.content_block_type}") %></li>
           	      <% end -%>
           	    </ul><% end -%>
           	  </li>
