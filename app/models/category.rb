@@ -32,6 +32,7 @@ class Category < ActiveRecord::Base
   end
   def self.columns_for_index
     [ {:label => "Name", :method => :name, :order => "categories.name" },
-      {:label => "Type", :method => :category_type_name, :order => "category_types.name" } ]
+      {:label => "Type", :method => :category_type_name, :order => "category_types.name" },
+      {:label => "Updated On", :method => :updated_on_string, :order => "categories.updated_at"}  ]
   end
 end

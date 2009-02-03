@@ -66,7 +66,8 @@ class Portlet < ActiveRecord::Base
 
   def self.columns_for_index
     [ {:label => "Name", :method => :name, :order => "name" },
-      {:label => "Type", :method => :type_name, :order => "type" } ]
+      {:label => "Type", :method => :type_name, :order => "type" },
+      {:label => "Updated On", :method => :updated_on_string, :order => "updated_at"} ]
   end
   
   def instance_name

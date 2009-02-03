@@ -72,7 +72,7 @@ module Cms
     end
 
     def format_date(time)
-      time && "#{time.strftime("%b %d, %Y")}"
+      time && "#{time.strftime("%b %e, %Y")}"
     end
     
     def link_to_check_all(selector, name="Check All")
