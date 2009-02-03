@@ -284,7 +284,31 @@ jQuery(function($){
       .removeClass('disabled')
       .attr('href','/cms/links/edit/'+id)
       .unbind('click')
-      .click(function(){return true})    
+      .click(function(){return true})   
+      
+    $('#delete-button')
+      .removeClass('disabled')
+      .attr('href','/cms/links/destroy/'+id+'.json')
+      .unbind('click')
+      .click(function(){
+        if(confirm('Are you sure you want to delete this link?')) {
+          var params = { _method: "DELETE" }
+          if($.cms.authenticity_token && $.cms.authenticity_token != '') {
+            params['authenticity_token'] = $.cms.authenticity_token
+          }
+          $.post($(this).attr('href'), params,
+            function(data){
+              if(data.success) {
+                $.cms.showNotice(data.message)
+              } else {
+                $.cms.showError(data.message)
+              }
+            }, "json");
+          $('#link_'+id).parents('.section_node:first').remove()            
+        }
+        return false;
+      })      
+       
   }
 
   var openSection = function(sectionNode) {

@@ -2,6 +2,7 @@ class Cms::LinksController < Cms::BaseController
 
   before_filter :set_toolbar_tab
   before_filter :load_section, :only => [:new, :create, :move_to]
+  before_filter :load_link, :only => [:edit, :update, :destroy]
   
   def new
     @link = Link.new(:section => @section)
@@ -17,13 +18,8 @@ class Cms::LinksController < Cms::BaseController
       render :action => "new"
     end
   end
-
-  def edit
-    @link = Link.find(params[:id])
-  end
   
   def update
-    @link = Link.find(params[:id])
     if @link.update_attributes(params[:link])
       flash[:notice] = "Link '#{@link.name}' was updated"
       redirect_to cms_url(@link.section || :sitemap)
@@ -35,16 +31,15 @@ class Cms::LinksController < Cms::BaseController
   def destroy
     respond_to do |format|
       if @link.destroy
-        flash[:notice] = "Link '#{@link.name}' was deleted."
-        format.html { redirect_to cms_url(:sitemap) }
-        format.js { }
+        message = "Link '#{@link.name}' was deleted."
+        format.html { flash[:notice] = message; redirect_to(cms_sitemap_url) }
+        format.json { render :json => {:success => true, :message => message } }
       else
-        flash[:error] = "Link '#{@link.name}' could not be deleted"
-        format.html { redirect_to cms_url(:sitemap) }
-        format.js { render :template => 'cms/shared/show_error' }
+        message = "Link '#{@link.name}' could not be deleted"
+        format.html { flash[:error] = message; redirect_to(cms_sitemap_url) }
+        format.json { render :json => {:success => false, :message => message } }
       end
-    end
-    
+    end    
   end
 
   protected
@@ -52,6 +47,11 @@ class Cms::LinksController < Cms::BaseController
     def load_section
       @section = Section.find(params[:section_id])
     end
+
+    def load_link
+      @link = Link.find(params[:id])
+    end
+
     def set_toolbar_tab
       @toolbar_tab = :sitemap
     end
