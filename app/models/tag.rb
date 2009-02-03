@@ -1,6 +1,8 @@
 class Tag < ActiveRecord::Base
   has_many :taggings
   
+  validates_uniqueness_of :name
+  
   attr_accessor :size
   
   # Returns an array of tags with a count attribute
