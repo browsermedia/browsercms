@@ -30,12 +30,12 @@
             <td class="first"></td>
             <td class="name">
               <div class="dividers">
-                <%= link_to h(tg.taggable.name), cms_path(:blocks, tg.content_type.content_block_type, :show, tg.taggable) %>
+                <%= link_to h(tg.taggable.name), cms_path(:blocks, tg.taggable.content_block_type, :show, tg.taggable) %>
               </div>
             </td>              
             <td class="name">
               <div class="dividers">
-                <%=h tg.content_type.display_name %>
+                <%=h tg.taggable.display_name %>
               </div>
             </td>
             <td class="last"></td>
