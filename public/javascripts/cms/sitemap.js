@@ -291,7 +291,7 @@ jQuery(function($){
     var id = getId(sectionNode.id, 'section_node_')
     
     //Remember to re-open this section
-    $.cookieSet.add('openSectionNodes', id, {path: '/', expires: 90})
+    $.cookieSet.add('openSectionNodes', id, {path: '/'})
     
     $(sectionNode).addClass('open')
     $(sectionNode).find('li:first > ul').show()
@@ -302,7 +302,7 @@ jQuery(function($){
     var id = getId(sectionNode.id, 'section_node_')
     
     //Remove this section from the set of open nodes
-    $.cookieSet.remove('openSectionNodes', id, {path: '/', expires: 90})
+    $.cookieSet.remove('openSectionNodes', id, {path: '/'})
 
     //close this
     $(sectionNode).removeClass('open')
