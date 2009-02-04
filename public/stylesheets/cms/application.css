@@ -15,6 +15,17 @@ color: #727171;
 
 a img { border: 0 }
 
+a { 
+  color: #36659D;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.check_uncheck { font-size: 80%; }
+
 /* Layout
 */
 

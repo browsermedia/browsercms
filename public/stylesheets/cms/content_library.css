@@ -60,10 +60,13 @@ float: left;
 }
 
 .pagination form.current_page input {
-  width: 25px;
-  height: 12px;
+  width: 20px;
+  height: 20px;
   margin: 0;
-  padding: 0;
+  padding: 3px 0 0 0;
+  text-align: center;
+  border: none;
+  background: url(/images/cms/pagination/input.gif) no-repeat 0 0;
 }
 
 #first_page_link {

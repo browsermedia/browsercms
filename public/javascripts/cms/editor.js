@@ -38,7 +38,7 @@ function loadEditor(id) {
     var editor = new FCKeditor(id)
     editor.BasePath = "/fckeditor/"
     editor.ToolbarSet = 'CMS'
-    editor.Width = 540
+    editor.Width = 598
     editor.Height = 400
     editor.ReplaceTextarea()   
     return true

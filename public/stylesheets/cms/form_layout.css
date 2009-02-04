@@ -45,7 +45,18 @@ font-size: 12px;
 }
 
 .checkbox_group .label {
-padding: 5px 0;
+  width: 140px; 
+  float: left; 
+  padding: 12px 0;
+}
+
+.checkbox_group .checkboxes {
+  float: left; 
+  width: 445px
+}
+
+.checkbox_group .checkboxes .checkbox_fields label {
+  padding-left: 20px;
 }
 
 /* SELECT */
@@ -87,7 +98,7 @@ font-size: 8pt;
 color:#485561; 
 border: 1px solid #CCCCCC;
 height: 16px;
-margin-left: 363px;
+margin-left: 397px;
 * margin-top: 3px;
 * margin-left: 361px;
 }
@@ -106,8 +117,9 @@ font-size: 8pt;
 }
 .text_editor_fields textarea {
 height: 338px;
-width: 536px;
+width: 595px;
 margin-top: 10px;
+border: 1px solid #CCC;
 }
 .text_editor_fields .select_label {
 margin-left: 380px;
@@ -122,8 +134,10 @@ margin-right: -374px;
 /* CHECKBOX */
 .checkbox_fields,
 .check_uncheck {
+/*
 margin-left: 136px;
 * margin-left: 140px;
+*/
 clear: both;
 }
 .checkbox_fields label,

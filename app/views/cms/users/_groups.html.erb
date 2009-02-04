@@ -1,8 +1,11 @@
 <div class="fields checkbox_group no_check_all">
   <div class="label">Groups</div>
-  <% Group.find(:all).each do |g| %>
-  <div class="checkbox_fields">
-    <label><%= check_box_tag("group_ids[]", g.id, group_ids.include?(g.id), :id => "group_id_#{g.id}") %><span><%= g.name %></span></label>
+  <div class="checkboxes">
+    <% Group.find(:all).each do |g| %>
+      <div class="checkbox_fields">
+        <%= check_box_tag("group_ids[]", g.id, group_ids.include?(g.id), :id => "group_id_#{g.id}") %> <label for="group_id_<%= g.id -%>"><%= g.name %></label>
+      </div>
+    <% end %>
   </div>
-  <% end %>
+  <br clear="all" />
 </div>
