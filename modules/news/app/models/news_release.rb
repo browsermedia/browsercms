@@ -32,16 +32,16 @@ class NewsRelease < ActiveRecord::Base
   def month
     release_date ? release_date.month : nil
   end
-
+  
   def set_attachment_section
-    if new_record? && !attachment_file.blank?    
-      self.attachment_section = Section.first(:conditions => {:name => 'News Release'})
+    if new_record? && !attachment_file.blank?
+      attachment.section = Section.first(:conditions => {:name => 'News Release'})
     end
   end
   
   def set_attachment_file_path
     if new_record? && !attachment_file.blank?
-      attachment.file_name = "/news_releases/#{Time.now.to_s(:year_month_day)}/#{name.to_slug}.#{attachment_file.original_filename.split('.').last.to_s.downcase}" 
+      attachment.file_path = "/news_releases/#{Time.now.to_s(:year_month_day)}/#{name.to_slug}.#{attachment_file.original_filename.split('.').last.to_s.downcase}" 
     end
   end
 
