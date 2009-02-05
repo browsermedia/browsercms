@@ -14,8 +14,10 @@
 }
 #sitemap ul.rootlet {
 background: url(/images/cms/sitemap/buffer_caps.png) no-repeat 0 0;
-  padding-top: 13px;
+padding-top: 13px;
 }
+
+
 #sitemap ul.root {
 background: url(/images/cms/sitemap/site_root_cap.png) no-repeat 0 0;
   padding-top: 4px;
@@ -181,7 +183,7 @@ margin-left: 24px;
 font-weight: bold;
 }
 #sitemap ul.rootlet ul td.drop-after {
-border-bottom: 1px dashed #CFCFCF;
+background: url(/images/cms/dashed.gif) repeat-x 100% 100%;
 }
 
 #sitemap ul.rootlet td.divided {
@@ -190,4 +192,12 @@ background: url(/images/cms/sitemap/divider.gif) no-repeat 23px 4px;
 }
 #sitemap ul.rootlet ul td.divided {
 background: url(/images/cms/sitemap/divider.gif) no-repeat 23px 0;
+}
+
+#sitemap ul.rootlet li {
+  background: #FFF url(/images/cms/sitemap/gradient.gif) repeat-x 100% 100%;
+}
+
+#sitemap ul.section_node.open li {
+  border: 1px solid #CC;
 }

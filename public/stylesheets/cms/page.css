@@ -3,13 +3,56 @@ div.cms {
   font: 12pt "Trebuchet MS", Helvetica, Verdana, Arial, sans-serif;
 }
 
+div.actions a img, a.tooltip img {
+  border: 0;
+}
+
+
+div.cms_edit_container {
+  height: auto;
+  width: inherit;
+  background: url(/images/cms/containers/alpha.png) repeat-x 0 0;
+  border: 1px solid #333;
+  margin: -8px 0 0 -8px;
+  padding: 24px 7px 1px 7px;
+  position: relative;
+}
+
+div.cms_edit_connectable {
+  display: block;
+  height: auto;
+  width: inherit;
+  position: relative;
+  border: 1px solid #666;
+  margin: 1px 0 0 -6px;
+  padding: 15px 5px 0 5px; 
+  background: url(/images/cms/containers/beta.png) repeat-x 0 0;
+}
+
+div.actions {
+  display: block;
+  width: 100%;
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  height: 30px;
+}
+
+.tooltip { 
+  position: absolute;
+  top: -1px;
+  right: 10px;
+}
+
+/*
+
 img.published_status {
   float: right;
   margin-right: 3px;
   margin-top: 2px;
 }
 
-/* ACTIONS */
+/* ACTIONS 
 .actions {
 margin-top: 1px;
 margin-left: 3px;
@@ -23,7 +66,7 @@ cursor: default;
 }
 
 
-/* CONTAINER */
+/* CONTAINER 
 div.cms_edit_container, div.cms_edit_container_2, div.cms_edit_connectable {
   margin: 0;
   padding: 0;
@@ -41,7 +84,4 @@ div.cms_edit_connectable {
 margin: 1px 0;
 }
 
-
-
-
-
+end */
