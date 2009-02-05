@@ -1,5 +1,4 @@
 <div class="cms_edit_connectable">
-  <%= link_to (image_tag "cms/#{connector.published? ? 'published' : 'draft'}_status.gif", :class => "published_status"), '', :class => "tooltip", :title => connector.published? ? "This content is published and can be seen by site visitors." : "This content is a draft and won't be seen by site visitors until this page is published." %>
   <div class="actions">
     <%= link_to image_tag("cms/pages/show_connectable.gif"), cms_path(connector.connectable), :title => "View this content (#{connector.get_connectable.name})" %>
     <%= link_to image_tag("cms/pages/edit_connectable.gif"), cms_path(connector.connectable, :edit, :_redirect_to => @page.path), :title => "Edit this content (#{connector.get_connectable.name})" %>
@@ -14,8 +13,7 @@
       <%= image_tag("cms/pages/down_connectable_disabled.gif") %>
     <% end %>
     <%= link_to image_tag("cms/pages/delete_connectable.gif"), cms_path(connector, :destroy, :_redirect_to => @page.path), :class => "confirm_with_title http_delete", :title => "Remove this content from page (#{connector.get_connectable.name}).  It will remain available in the Content Library." %>
+    <%= link_to (image_tag "cms/#{connector.published? ? 'published' : 'draft'}_status.gif", :class => "published_status"), '', :class => "tooltip", :title => connector.published? ? "This content is published and can be seen by site visitors." : "This content is a draft and won't be seen by site visitors until this page is published." %>
   </div>
-  <div class="cms_connectable_content">
     <%= render_connectable(connector.get_connectable) %>
-  </div>
 </div>
