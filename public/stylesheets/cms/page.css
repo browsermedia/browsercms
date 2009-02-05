@@ -24,7 +24,7 @@ div.cms_edit_connectable {
   width: inherit;
   position: relative;
   border: 1px solid #666;
-  margin: 1px 0 0 -6px;
+  margin: 1px -6px 0 -6px;
   padding: 15px 5px 0 5px; 
   background: url(/images/cms/containers/beta.png) repeat-x 0 0;
 }
@@ -36,6 +36,13 @@ div.actions {
   top: 5px;
   left: 5px;
   height: 30px;
+}
+
+div.actions a {
+  text-decoration: none;
+  padding: 0 2px 0 0;
+  background: none;
+  margin: 0;
 }
 
 .tooltip { 
