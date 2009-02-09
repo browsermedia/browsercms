@@ -113,8 +113,8 @@ LBW
       select_tag("group_id", options_from_collection_for_select(Group.all.insert(0, Group.new(:id => nil, :name => "Show All Groups")), "id", "name", params[:group_id].to_i))
     end	  	  
     
-    def categories_for(category_type_name)
-      CategoryType.named(category_type_name).first.category_list
+    def categories_for(category_type_name, order="name")
+      CategoryType.named(category_type_name).first.category_list(order)
     end	  
     
     def render_pagination(collection, path_args)

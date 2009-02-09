@@ -77,8 +77,12 @@ class Portlet < ActiveRecord::Base
   # Subclasses should override this method if you want different behavior
   def renderer(portlet)
     lambda do
-      render :partial => portlet.class.partial, :locals => {:portlet => portlet}
+      render :partial => portlet.class.partial, :locals => portlet.class.context(portlet)
     end
+  end
+  
+  def self.context(portlet)
+    {:portlet => portlet}
   end
   
 end

@@ -17,13 +17,13 @@ class CategoryType < ActiveRecord::Base
   end
   
   # This is used to get the full list of categories for this category type in the correct order.
-  def category_list
+  def category_list(order="name")
     list = []
     fn = lambda do |cat|
       list << cat
-      cat.children.all(:order => "name").each{|c| fn.call(c)}
+      cat.children.all(:order => order).each{|c| fn.call(c)}
     end
-    categories.top_level.all(:order => "name").each{|cat| fn.call(cat)}
+    categories.top_level.all(:order => order).each{|cat| fn.call(cat)}
     list
   end
   
