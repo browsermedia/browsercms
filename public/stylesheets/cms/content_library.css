@@ -10,8 +10,8 @@ font-weight: bold;
 padding-left: 15px;
 width: 66%;
 }
-#blocks th.updated, #blocks th.used {
-
+#blocks th.updated, #blocks th.used div.dividers {
+padding-left: 0;
 }
 #blocks td.name {
 color: #36659D;
@@ -33,7 +33,8 @@ font-size: 8pt;
 float: left;
 }
 .pagination .info {
-margin-right: 220px;
+margin-right: 120px;
+width: 200px;
 
 }
 .pagination div {
