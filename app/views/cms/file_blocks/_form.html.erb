@@ -46,7 +46,8 @@
   <%= f.label :attachment_file, "File" %>
   <input type="text" name="temp" class="mock" id="mock_file_block_attachment_file" />
   <%= image_tag("cms/browse.gif") %>
-  <%= f.file_field :attachment_file, :tabindex => (@tabindex += 1) %>
+  <%= f.file_field :attachment_file, :tabindex => (@tabindex += 1), :size => '57' %>
+
 </div>
 <div class="fields text_fields">
   <%= f.label :attachment_section_id, "Section" %>

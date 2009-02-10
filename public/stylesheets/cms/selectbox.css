@@ -12,6 +12,12 @@ div.selectbox-wrapper {
 * margin: 35px 0 0 -257px;
   border: 1px solid #C6C6C6;
   font-family: Verdana;
+  z-index: 100;
+}
+
+#per_page_input {
+  font-family: Verdana;
+  text-transform: capitalize;
 }
 div.selectbox-wrapper ul {
   background: url(/images/cms/searchbox_gradient.gif) repeat-x 100% 100%;

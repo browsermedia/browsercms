@@ -5,8 +5,9 @@
     <title><%= @page_title %></title>
     <%= yield :html_head %>
   </head>
-  <body style="margin: 0; padding: 0">
+  <body style="margin: 0; padding: 0; text-align: center; background: #171717">
     <%= cms_toolbar %>
+    <div id="wrapper" style="width: 700px; margin: 0 auto; text-align: left; background: #CCC; padding: 30px">
     <%= container :main %>
     <% @exception && @stacktrace && able_to?(:edit_content, :publish_content) do %>
       <pre>
@@ -14,5 +15,6 @@
         <%=h @exception.backtrace.join("\n") %>
       </pre>
     <% end %>
+    </div>
   </body>
 </html>

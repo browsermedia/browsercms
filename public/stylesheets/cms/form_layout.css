@@ -33,18 +33,19 @@ width:140px;
 font-size: 12px;
 }
 
-.checkbox_group .label,
+.checkbox_group label,
 .text_fields label,
 .textarea_fields label,
 .select_fields label,
 .text_editor_fields label,
-.file_fields label
+.file_fields label,
+.checkboxes label
  {
 font-weight: bold;
 font-size: 12px;
 }
 
-.checkbox_group .label {
+.checkbox_group label {
   width: 140px; 
   float: left; 
   padding: 12px 0;
@@ -52,7 +53,8 @@ font-size: 12px;
 
 .checkbox_group .checkboxes {
   float: left; 
-  width: 445px
+  width: 445px;
+  padding-top: 12px;
 }
 
 .checkbox_group .checkboxes .checkbox_fields label {
@@ -159,9 +161,6 @@ line-height: 15px;
 .checkbox_fields input {
 float: left;
 }
-.file_fields {
-padding-bottom: 18px;
-}
 
 .file_fields input {
 opacity: 0;
@@ -240,8 +239,10 @@ margin: 8px 0;
   font-style: italic; 
   font-size: 80%; 
   font-weight: normal; 
-  padding-top: 5px
+  padding-top: 5px;
+  float: left;
+  clear: left;
 }
 
 
-input#file_block_attachment_file { width: 460px; }
+input#file_block_attachment_file { width: 460px; height: 30px; }

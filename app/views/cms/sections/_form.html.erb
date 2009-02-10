@@ -10,44 +10,51 @@
 </div>
 <div class="checkbox_group fields no_check_all">
   <div class="checkbox_fields">
-    <label>
-      <%= f.check_box :hidden, :tabindex => (@tabindex += 1) %>
-      <span>Hide from menus?</span>
-    </label>
+      <%= f.check_box :hidden, :tabindex => (@tabindex += 1) %> <label>Hide from menus?</label>
   </div>
 </div>
 
-<div class="checkbox_group fields">
-  <div class="label">Which 'Public' groups can view pages in this section?</div>
+<div class="checkbox_group fields" style="float: left; width: 100%">
+  <label>Public Permissions</label>
   <%= hidden_field_tag "section[group_ids][]", "", :id => nil %>
-  <% for group in public_groups %><div class="checkbox_fields">
-    <label>
+  <div class="checkboxes">
+    <% for group in public_groups %>
+    <div class="checkbox_fields">
       <%= check_box_tag "section[group_ids][]", group.id,
-          @section.groups.include?(group), :class => "public_group_ids", :id => "public_group_ids_#{group.id}", :tabindex => (@tabindex += 1) %>
-      <span><%= group.name %></span>
-    </label>
-  </div><% end %>
-  <div class="check_uncheck">
-    <%= link_to_check_all 'input.public_group_ids' %>, 
-    <%= link_to_uncheck_all 'input.public_group_ids' %>
+            @section.groups.include?(group), :class => "public_group_ids", :id => "public_group_ids_#{group.id}", :tabindex => (@tabindex += 1) %>
+        <label><%= group.name %></label>
+    </div>
+    <% end %>
+    <div class="instructions">Which &ldquo;Public&rdquo; groups can view pages in this section?</div>
+    <div class="check_uncheck">
+      <%= link_to_check_all 'input.public_group_ids' %>, 
+      <%= link_to_uncheck_all 'input.public_group_ids' %>
+    </div>
   </div>
 </div>
 
-<div class="checkbox_group fields">
-  <div class="label">Which 'CMS' groups can edit pages and content in this section?</div>
+<br clear="all" />
+
+<div class="checkbox_group fields" style="">
+  <label>CMS Permissions</label>
   <%= hidden_field_tag "section[group_ids][]", "", :id => nil %>
-  <% for group in cms_groups %><div class="checkbox_fields">
-    <label>
-      <%= check_box_tag "section[group_ids][]", group.id,
-          @section.groups.include?(group), :class => "cms_group_ids", :id => "cms_group_ids_#{group.id}", :tabindex => (@tabindex += 1) %>
-      <span><%= group.name %></span>
-    </label>
-  </div><% end %>
-  <div class="check_uncheck">
-    <%= link_to_check_all 'input.cms_group_ids' %>, 
-    <%= link_to_uncheck_all 'input.cms_group_ids' %>
+  <div class="checkboxes">
+    <% for group in cms_groups %>
+    <div class="checkbox_fields">
+        <%= check_box_tag "section[group_ids][]", group.id,
+            @section.groups.include?(group), :class => "cms_group_ids", :id => "cms_group_ids_#{group.id}", :tabindex => (@tabindex += 1) %>
+        <label><%= group.name %></label>
+    </div>
+    <% end %>
+    <div class="instructions">Which &ldquo;CMS&rdquo; groups can edit pages and content in this section?</div>
+    <div class="check_uncheck">
+      <%= link_to_check_all 'input.cms_group_ids' %>, 
+      <%= link_to_uncheck_all 'input.cms_group_ids' %>
+    </div>
   </div>
 </div>
+
+<br clear="all" />
 
 <div class="buttons">
   <%= lt_button_wrapper(f.submit("Save", :class => "submit", :tabindex => (@tabindex += 1))) %>
