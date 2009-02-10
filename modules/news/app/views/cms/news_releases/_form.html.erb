@@ -2,36 +2,42 @@
   <%= stylesheet_link_tag "cms/taglist" %>
   <%= javascript_include_tag "jquery.dimensions", "jquery.taglist", "/cms/tags" %>
   <% javascript_tag do %>
-  $(document).ready(function() {
-    $('.tag-list').tagList(tags)
+  jQuery(function($) {
+    $('select.dhtml_selector').selectbox({width: '96px', dhtml_selector: 'news_release_body'});    
+    $('#news_release_category_id').selectbox({width: '210px'});
+    $('#news_release_attachment_file').change(function(){
+      $('#mock_news_release_attachment_file').attr('value', $(this).attr('value'))
+    });
   });
   <% end %>
 <% end %>
 <div class="fields text_fields">
   <%= f.label :name %>
-  <%= f.text_field :name %>
+  <%= f.text_field :name, :tabindex => (@tabindex += 1) %>
 </div>
 <div class="fields text_fields">
   <%= f.label :release_date %>
-  <%= f.date_picker :release_date %>
+  <%= f.date_picker :release_date, :tabindex => (@tabindex += 1) %>
 </div>
 <div class="fields text_fields">
   <%= f.label :category %>
-  <%= f.collection_select :category_id, categories_for('News Release'), :id, :path %>
+  <%= f.collection_select :category_id, categories_for('News Release'), :id, :path, :tabindex => (@tabindex += 1) %>
 </div>
-<div class="fields text_fields">
+<div class="fields file_fields">
   <%= f.label :attachment_file, "File" %>
-  <%= f.file_field :attachment_file %>
+  <input type="text" name="temp" class="mock" id="mock_news_release_attachment_file" />
+  <%= image_tag("cms/browse.gif") %>  
+  <%= f.file_field :attachment_file, :tabindex => (@tabindex += 1) %>
 </div>
 <div class="fields text_fields">
   <%= f.label :summary %>
-  <%= f.text_area :summary %>
+  <%= f.text_area :summary, :tabindex => (@tabindex += 1) %>
 </div>
 <div class="fields text_editor_fields">
   <%= f.label :body %>
-  <%= f.text_editor :body %>
+  <%= f.text_editor :body, :tabindex => (@tabindex += 1) %>
 </div>
 <div class="fields text_fields">
   <%= f.label :tag_list, "Tags" %>
-  <%= f.tag_list %>
+  <%= f.tag_list :tabindex => (@tabindex += 1) %>
 </div>
