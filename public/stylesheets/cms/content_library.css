@@ -42,7 +42,7 @@ width: 200px;
 
 }
 .pagination .links span{
-margin: 0 10px;
+margin: -6px 10px 0 0;
 display: block;
 float:left;
 }
