@@ -17,6 +17,10 @@ module Cms::Routes
     connect '/:controller/:action/:id'
     connect '/:controller.:format'
 
+    image_missing '/images/*path', :controller => 'cms/missing_asset'
+    stylesheet_missing '/stylesheets/*path', :controller => 'cms/missing_asset'
+    javascript_missing '/javascripts/*path', :controller => 'cms/missing_asset'
+
     connect '*path', :controller => 'cms/content', :action => 'show'    
   end
 end
