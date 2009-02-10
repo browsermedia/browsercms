@@ -2,8 +2,8 @@
   <% content_for :html_head do %>
     <script type="text/javascript">
 $(document).ready(function() {
-  $('#category_parent_id').selectbox({debug:true, width: '210px'});
-  $('#category_category_type_id').selectbox({debug:true, width: '210px'});
+  $('#category_parent_id').selectbox({width: '210px'});
+  $('#category_category_type_id').selectbox({width: '210px'});
 });
       jQuery(function($){
         var categoriesByType = <%= CategoryType.category_map.to_json %>

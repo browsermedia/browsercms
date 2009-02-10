@@ -2,7 +2,7 @@
   <% javascript_tag do %>
   <% if %w[FileBlock ImageBlock].include?(@content_type.name) &&  request.user_agent !~ /MSIE 6/ %>
     $(document).ready(function() {
-      $('#section_id').selectbox({debug:true, width: '129px'});
+      $('#section_id').selectbox({width: '129px'});
     });
   <% end %>
     jQuery(function($){

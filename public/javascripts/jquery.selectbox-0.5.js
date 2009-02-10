@@ -200,9 +200,6 @@ jQuery.SelectBox = function(selectobj, options) {
 				if (opt.debug) console.log('click on :'+this.id);
 				$('li.'+opt.currentClass).removeClass(opt.currentClass); 
 				$(this).addClass(opt.currentClass);
-			    if (opt.dhtml_selector) {
-				setEditor(opt.dhtml_selector, this.innerHTML);
-			    }
 				setCurrent();
 				hideMe();
 			});

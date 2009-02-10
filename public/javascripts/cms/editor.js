@@ -7,29 +7,34 @@ jQuery(function($){
 })
 
 function editorEnabled() {
-  return $.cookie('editorDisabled') != "true"
+  return $.cookie('editorEnabled') ? $.cookie('editorEnabled') == "true" : true
 }
 
-function setEditor(id, status) {
-    if (status == 'Simple Text' || status.value == 'disabled'){
-	$('#'+id+'___Frame').hide();
-	$('#'+id).show();
-       $.cookie('editorDisabled', true, { expires: 90, path: '/' })    
-    } else {
-	loadEditor(id);
-	$('#'+id+'___Frame').show();
-	$('#'+id).hide();
-        $.cookie('editorDisabled', false, { expires: 90, path: '/' })    
-    }
+function disableEditor(id) {
+  if(typeof(FCKeditorAPI) != "undefined" && FCKeditorAPI.GetInstance(id) != null) {
+    $('#'+id).val(FCKeditorAPI.GetInstance(id).GetHTML()).show()
+    console.log('Copied data from WYSIWYG to textarea')
+    $('#'+id+'___Frame').hide()
+    $.cookie('editorEnabled', false, { expires: 90, path: '/' })    
+  }
 }
 
-function toggleEditor(id) {
-  if(loadEditor(id)) {
-    $.cookie('editorDisabled', false, { expires: 90, path: '/' })    
+function enableEditor(id) {
+  if(typeof(FCKeditorAPI) != "undefined" && FCKeditorAPI.GetInstance(id) != null) {
+    FCKeditorAPI.GetInstance(id).SetHTML($('#'+id).val())
+    console.log('Copied data from textarea to WYSIWYG')
+    $('#'+id).hide()
+    $('#'+id+'___Frame').show()  
+    $.cookie('editorEnabled', true, { expires: 90, path: '/' })    
+  }
+}
+
+function toggleEditor(id, status) {
+  loadEditor(id)
+  if(status == 'Simple Text' || status.value == 'disabled'){
+    disableEditor(id) 
   } else {
-    $('#'+id+'___Frame').toggle()
-    $('#'+id).toggle()
-    $.cookie('editorDisabled', true, { expires: 90, path: '/' })    
+    enableEditor(id) 
   }
 }
 
@@ -40,10 +45,9 @@ function loadEditor(id) {
     editor.ToolbarSet = 'CMS'
     editor.Width = 598
     editor.Height = 400
-    editor.ReplaceTextarea()   
+    editor.ReplaceTextarea()
     return true
   } else {
     return false
   }
 }
-

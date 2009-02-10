@@ -1,20 +1,22 @@
 class Cms::FormBuilder < ActionView::Helpers::FormBuilder
   def text_editor(method, options = {})
     opts = options.dup
-    if opts[:class] && !(/editor/ === opts[:class])
+    if opts[:class] && !(/ editor / === opts[:class])
       opts[:class] << " editor"
     else
       opts[:class] = "editor"
     end 
     id = opts[:id] || "#{@object_name}_#{method}"
-    disabled = opts[:editor_disabled]    
-    html = "<select class=\"dhtml_selector\" name=\"dhtml_selector\" onchange=\"setEditor('#{id}', this);\" tabindex=\"32767\"><option value=\"\"#{' selected="selected"' unless disabled}>DHTML Editor</option><option value=\"disabled\"#{' selected="selected"' if disabled}>Simple Text</option></select>\n"
-    html << "<div class='editor'>\n"
-    html << "\n"
-    opts[:editor_disabled] = nil;
-    html << text_area(method, opts)
-    html << "\n</div>"
-    html
+    enabled = cookies["editorEnabled"].blank? ? true : cookies["editorEnabled"] == 'true'
+    html = <<-HTML
+      <select class="dhtml_selector" name="dhtml_selector" onchange="toggleEditor('#{id}', this)" tabindex="32767">
+        <option value=""#{ ' selected="selected"' if enabled }>DHTML Editor</option>
+        <option value="disabled"#{ ' selected="selected"' unless enabled }>Simple Text</option>
+      </select>
+      <div class="editor">
+        #{text_area(method, opts)}
+      </div>      
+    HTML
   end  
   
   def date_picker(method, options={})
@@ -24,6 +26,12 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
   def tag_list(options={})
     text_field(:tag_list, {:size => 50, :class => "tag-list"}.merge(options))
   end
+
+  private
+    def cookies
+      #Ugly, is there an easier way to get to the cookies?
+      @template.instance_variable_get("@_request").cookies || {}
+    end
   
 end
 
