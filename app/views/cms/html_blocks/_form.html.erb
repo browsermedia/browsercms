@@ -10,13 +10,13 @@
 <% end %>
 <div class="fields text_fields">
   <%= f.label :name %>
-  <%= f.text_field :name %>
+  <%= f.text_field :name, :tabindex => (@tabindex += 1) %>
 </div>
 <div class="fields text_editor_fields">
   <%= f.label :content, "Content" %>
-  <%= f.text_editor :content %>
+  <%= f.text_editor :content, :tabindex => (@tabindex += 1) %>
 </div>
 <div class="fields text_fields">
   <%= f.label :tag_list, "Tags" %>
-  <%= f.tag_list %>
+  <%= f.tag_list :tabindex => (@tabindex += 1) %>
 </div>

@@ -38,24 +38,24 @@
 <% end %>
 <div class="fields text_fields">
   <%= f.label :name %>
-  <%= f.text_field :name %>
+  <%= f.text_field :name, :tabindex => (@tabindex += 1) %>
 </div>
 <div class="fields file_fields">
   <%= f.label :attachment_file, "File" %>
   <input type="text" name="temp" class="mock" id="mock_image_block_attachment_file" />
   <%= image_tag("cms/browse.gif") %>
-  <%= f.file_field :attachment_file %>
+  <%= f.file_field :attachment_file, :tabindex => (@tabindex += 1) %>
 </div>
 <div class="fields select_fields">
   <%= f.label :attachment_section_id, "Section" %>
-  <div><%= f.collection_select :attachment_section_id, @sections, :id, :full_path %></div>
+  <div><%= f.collection_select :attachment_section_id, @sections, :id, :full_path, :tabindex => (@tabindex += 1) %></div>
   <br clear="all" />
 </div>
 <div class="fields text_fields">
   <%= f.label :attachment_file_path, "Path" %>
-  <%= f.text_field :attachment_file_path %>
+  <%= f.text_field :attachment_file_path, :tabindex => (@tabindex += 1) %>
 </div>
 <div class="fields text_fields">
   <%= f.label :tag_list, "Tags" %>
-  <%= f.tag_list %>
+  <%= f.tag_list :tabindex => (@tabindex += 1) %>
 </div>

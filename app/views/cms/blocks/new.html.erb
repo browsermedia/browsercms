@@ -7,16 +7,16 @@
 <% content_for :functions,  render(:partial => 'toolbar') %>
 <% form_for(@block, :url => cms_path(:blocks, @content_type.name.underscore, :create), :html => {:multipart => true}) do |f| %>
   <%= f.error_messages %>
-  <%= hidden_field_tag "thickbox", params[:thickbox] %>
   <%= render :partial => 'cms/shared/exception', :object => @exception if @exception %>
   <%= render :partial => 'cms/blocks/hidden_fields', :locals => {:f => f} %>
+  <% @tabindex = 1 %>
   <%= render :partial => @content_type.form, :locals => {:f => f} %>
   <% unless @hide_buttons %>
     <div class="buttons">
       <% if current_user.able_to?(:publish_content) && @block.publishable? %>
-        <%= lt_button_wrapper("<button type=\"submit\" name=\"#{@block.content_block_type}[publish_on_save]\" value=\"true\" class=\"submit\"><span>Save And Publish</span></button>") %>
+        <%= lt_button_wrapper(%Q{<button type="submit" name="#{@block.content_block_type}[publish_on_save]" value="true" class="submit" tabindex="#{@tabindex += 1}"><span>Save And Publish</span></button>}) %>
       <% end %>
-      <%= lt_button_wrapper(f.submit("Save", :class => "submit")) %>
+      <%= lt_button_wrapper(f.submit("Save", :class => "submit", :tabindex => (@tabindex += 1))) %>
     </div>
   <% end %>
 <% end %>

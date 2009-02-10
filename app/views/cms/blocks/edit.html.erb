@@ -12,14 +12,15 @@
     <%= render :partial => 'cms/shared/version_conflict_error', :locals => {:other_version => @other_version, :your_version => @block} %>
   <% end %>  
   <%= render :partial => 'hidden_fields', :locals => { :f => f } %>
+  <% @tabindex = 1 %>
   <%= render :partial => @content_type.form, :locals => {:f => f} %>
   <% if @other_version %>
     <%= render :partial => "cms/shared/version_conflict_diff", :locals => {:other_version => @other_version, :your_version => @block} %>
   <% end %>
     <div class="buttons">
       <% if current_user.able_to?(:publish_content) && @block.publishable? %>
-        <%= lt_button_wrapper("<button type=\"submit\" name=\"#{@block.content_block_type}[publish_on_save]\" value=\"true\" class=\"submit\"><span>Save And Publish</span></button>") %>
+        <%= lt_button_wrapper(%Q{<button type="submit" name="#{@block.content_block_type}[publish_on_save]" value="true" class="submit" tabindex="#{@tabindex += 1}"><span>Save And Publish</span></button>}) %>
       <% end %>
-      <%= lt_button_wrapper(f.submit("Save", :class => "submit")) %>
+      <%= lt_button_wrapper(f.submit("Save", :class => "submit", :tabindex => (@tabindex += 1))) %>
     </div>
 <% end %>
