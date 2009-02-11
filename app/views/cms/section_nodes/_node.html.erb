@@ -12,7 +12,7 @@
 	    <div><%= h(node.name) %></div>
     </td>
     <td class="sitemap_hidden divided">
-      <%= status_icon(:hidden) if hidden %>
+      <a href="#" class="hidden"><%= status_icon(:hidden) if hidden %><span>HIDDEN</span></a>
     </td>
     <td class="sitemap_access divided">
       <%= access_icon ? access_icon : "&nbsp;" %>

@@ -2,7 +2,7 @@
 a.button { 
 	display: block;
 	line-height: 27px;
-	padding-right: 18px;
+	padding-right: 10px;
 	background: url(/images/cms/buttons/button_cap.png) no-repeat top right;
 	float: left;
 	color: #FFF;
@@ -13,13 +13,22 @@ a.button {
 a.button span {
 	display: block;
 	background: url(/images/cms/buttons/button.png) no-repeat 0 0;
-	padding: 0 0 0 18px;
+	padding: 0 0 0 10px;
 	font-weight: bold;
 	text-transform: uppercase
 }
 
+a.button.off, a.button.off:hover {
+  background: url(/images/cms/buttons/button_cap_off.gif) no-repeat top right;
+}
+
+a.button.off span, a.button.off:hover span {
+  background: url(/images/cms/buttons/button_off.png) no-repeat 0 0;
+}
+
 a.button:hover {
 	background: url(/images/cms/buttons/button_cap_h.png) no-repeat 100% 0;
+	text-decoration: none;
 }
 
 a.button:hover span {

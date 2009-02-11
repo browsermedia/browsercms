@@ -51,8 +51,9 @@ padding: 18px 19px 16px 27px;
 #nav ul#section li a:hover span{
 background: url(/images/cms/nav_h.gif) no-repeat 0 0;
 }
-#nav ul#section li a:hover{
+#nav ul#section li a:hover {
 background: url(/images/cms/nav_cap_h.gif) no-repeat 100% 0;
+text-shadow: #FFF 2px -1px 1px;
 }
 
 #nav ul#section li.on a span {

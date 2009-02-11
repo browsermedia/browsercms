@@ -16,6 +16,10 @@ table#blocks th.last div.dividers {
 background: none;
 }
 
+table#blocks td.used {
+  text-align: center;
+}
+
 table#blocks {
   width: 100%;
   border: 1px solid #E4E4E4;
@@ -145,7 +149,7 @@ cursor: default;
 .tr { 
   position: absolute; 
   top: -1px; 
-  right: 0; 
+  right: 0px; 
   height: 5px; 
   width: 5px; 
   background: url(/images/cms/table/tr.gif) no-repeat 0 0

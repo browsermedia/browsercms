@@ -98,7 +98,7 @@
       <tr id="<%= block.class.name.underscore %>_<%= block.id %>" class="<%= block.class.publishable? && !block.published? ? 'draft' : 'published' %>">
 	<td class="first"></td>
         <% @content_type.columns_for_index.each_with_index do |column, i| %>
-          <td class="name">
+          <td class="<%= column[:label].gsub(' ', '').underscore %>">
             <div class="dividers">
             <%= block.send(column[:method]) %>
             <% if i.zero? && block.respond_to?(:cannot_be_deleted_message) && block.cannot_be_deleted_message %>

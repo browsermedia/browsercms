@@ -19,9 +19,8 @@ text-align: left;
 padding-left: 20px;
 }
 
-#blocks td.updated {
-padding-left: 20px;
-
+#blocks td.updated_on {
+padding-left: 6px;
 }
 
 .pagination {
