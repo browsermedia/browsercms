@@ -1,7 +1,6 @@
 class Cms::BaseController < Cms::ApplicationController
   
   before_filter :login_required
-  after_filter :clear_current_user
   layout 'cms/application'
     
   verify :method => :post, :only => [:create]
@@ -30,10 +29,6 @@ class Cms::BaseController < Cms::ApplicationController
       before_filter(opts) do |controller|
         raise Cms::Errors::AccessDenied unless controller.send(:current_user).able_to?(*perms)
       end      
-    end
-    
-    def clear_current_user
-      User.current = nil
     end
 
   public

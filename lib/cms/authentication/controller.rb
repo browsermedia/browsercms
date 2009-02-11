@@ -11,13 +11,16 @@ module Cms
         # Accesses the current user from the session.
         # If the user is not logged in, this will be set to the guest user
         def current_user
-          User.current ||= (login_from_session || login_from_cookie || search_bot || User.guest)
+          @current_user ||= begin
+            User.current = (login_from_session || login_from_cookie || search_bot || User.guest)  
+          end
         end
 
         # Store the given user id in the session.
         def current_user=(new_user)
           session[:user_id] = new_user ? new_user.id : nil
-          User.current = new_user || false
+          @current_user = new_user || false
+          @current_user = User.current
         end
 
         def search_bot
