@@ -52,7 +52,7 @@ end
 
 # Sets the current user in the session from the user fixtures.
 def login_as(user)
-  User.current = user
+  @request.session[:user_id] = user ? user.id : nil
 end
 
 def login_as_user(attrs={})
