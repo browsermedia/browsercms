@@ -46,6 +46,7 @@ function loadEditor(id) {
     editor.Width = 598
     editor.Height = 400
     editor.ReplaceTextarea()
+    $.cookie('editorEnabled', true, { expires: 90, path: '/' })  
     return true
   } else {
     return false
