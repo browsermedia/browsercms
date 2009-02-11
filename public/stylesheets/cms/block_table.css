@@ -132,3 +132,21 @@ cursor: default;
   width: 5px; 
   background: url(/images/cms/table/br.gif) no-repeat 0 0
 }
+
+.tl { 
+  position: absolute; 
+  top: -1px; 
+  left: -1px; 
+  height: 5px; 
+  width: 5px; 
+  background: url(/images/cms/table/tl.gif) no-repeat 0 0
+}
+
+.tr { 
+  position: absolute; 
+  top: -1px; 
+  right: 0; 
+  height: 5px; 
+  width: 5px; 
+  background: url(/images/cms/table/tr.gif) no-repeat 0 0
+}
