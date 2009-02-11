@@ -29,6 +29,7 @@ module Cms
     
     def render_breadcrumbs(options={})
       start = options[:from_top] || 0
+      show_parent = options[:show_parent].nil? ? false : options[:show_parent]
       ancestors = current_page.ancestors
       items = []
       ancestors[start..ancestors.size].each_with_index do |sec,i|
@@ -36,7 +37,11 @@ module Cms
           link_to(h(sec.name), sec.actual_path), 
           (i == 0 ? {:class => "first"} : {}))
       end
-      items << content_tag(:li, current_page.page_title)
+      if !show_parent && current_page.section.path == current_page.path
+        items[items.size-1] = content_tag(:li, h(current_page.section.name))
+      else
+        items << content_tag(:li, h(current_page.page_title))
+      end
       content_tag(:ul, "\n  #{items.join("\n  ")}\n", :class => "breadcrumbs")
     end
     
