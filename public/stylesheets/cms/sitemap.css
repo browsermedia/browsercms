@@ -237,16 +237,16 @@ a.hidden:hover span {
   text-align: center;
 }
 
-.sbl { 
+div.on .sbl { 
   position: absolute; 
-  bottom: -2px; 
-  left: -1px; 
+  bottom: 1px; 
+  left: 2px; 
   height: 2px; 
   width: 2px; 
   background: url(/images/cms/sitemap/corners.gif) no-repeat 0 0
 }
 
-.sbr { 
+div.on .sbr { 
   position: absolute; 
   bottom: 1px; 
   right: 0; 
@@ -255,7 +255,7 @@ a.hidden:hover span {
   background: url(/images/cms/sitemap/corners.gif) no-repeat 0 0
 }
 
-.stl { 
+div.on .stl { 
   position: absolute; 
   top: 0; 
   left: 0; 
@@ -264,11 +264,11 @@ a.hidden:hover span {
   background: url(/images/cms/sitemap/corners.gif) no-repeat 0 0
 }
 
-.str { 
+div.on .str { 
   position: absolute; 
-  top: -2px; 
+  top: 0px; 
   right: 0px; 
   height: 2px; 
   width: 2px; 
-  background: url(/images/cms/sitemap/corners.gif) no-repeat -2px 0
+  background: url(/images/cms/sitemap/corners.gif) no-repeat 0 0
 }

@@ -160,13 +160,15 @@ jQuery(function($){
     
   var clearSelectedSectionNode = function() {
     disableButtons()
-    $('#sitemap table.section_node').removeClass('selected')    
+    $('#sitemap table.section_node').removeClass('selected');
+    $('.roundedcorners').removeClass('on')
   }
   
   var selectSectionNode = function(sectionNode) {
     clearSelectedSectionNode(sectionNode)
     enableButtonsForSectionNode(sectionNode)
-    $(sectionNode).find('table:first').addClass('selected')    
+    $(sectionNode).find('table:first').addClass('selected');
+    $(sectionNode).find('div.roundedcorners:first').addClass('on')
   }
   
   var isSectionEmpty = function(id) {
