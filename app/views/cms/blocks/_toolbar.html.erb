@@ -22,7 +22,7 @@
     <% end %>
     <%= link_to span_tag("View Content"), "#", :id => "view_button", :class => "button disabled#{ ' off' if action_name == 'show'}" %>
     <%= link_to span_tag("Edit Content"), "#", :id => "edit_button", :class => "button disabled#{ ' off' if action_name == 'edit'}" %>
-    <%= link_to span_tag("List Versions"), "#", :id=>"revisions_button", :class => "button disabled#{ ' off' if action_name == 'revisions'}" %>
+    <%= link_to span_tag("List Versions"), "#", :id=>"revisions_button", :class => "button #{ action_name == 'revisions' ? ' off' : ' disabled'}" %>
     <%= link_to span_tag("<span class=\"delete_img\">&nbsp;</span>Delete"), "#", :id => "delete_button", :class => "button disabled http_delete confirm_with_title", :title => "Are you sure you want to delete this record?" %>
     <%= link_to span_tag("List All"), cms_path(:blocks, @content_type.content_block_type_for_list), :id=>"list_all", :class => "button#{ ' off' if action_name == 'index'}" %>
   <% end %>
