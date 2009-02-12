@@ -15,13 +15,19 @@
   <% @tabindex = 0 %>
 
   <%= f.error_messages %>
-  <div class="fields select_fields">
-    <%= f.label :assigned_to_id %>
+  <div class="fields text_fields">
+    <%= f.label :assigned_to_id, "Assign To" %>
     <%= f.collection_select :assigned_to_id, User.active.able_to_edit_or_publish_content.all(:order => "first_name, last_name, login"), :id, :full_name_with_login, :include_blank => true, :tabindex => (@tabindex += 1) %>
   </div>
   
   <div class="fields text_fields">
+      <%= f.label :due_date %>
+      <%= f.date_picker :due_date %>
+  </div>  
+  
+  <div class="fields text_editor_fields">
     <%= f.label :comment %>
+    <br/>
     <%= f.text_area :comment, :tabindex => (@tabindex += 1) %>
   </div>
 

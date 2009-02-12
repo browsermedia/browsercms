@@ -48,8 +48,8 @@
 <div class="buttons">
   <%= link_to("<span>Publish</span>", @page.published? ? @page.path : cms_path(@page, :publish), :target => "_top", :class => "http_put button publish_button#{' disabled' if @page.published? || !@page.current_version?}") %>
   <%= link_to "<span>Edit Properties</span>", cms_path(@page, :edit), :class => "button#{' disabled' if !@page.current_version?}", :target => "_top" %>
-  <%= link_to "<span>Assign Task</span>", cms_path(:tasks, :new, :page_id => @page.id), :class => "button", :target => "_top" %>
-  <%= link_to "<span>Complete Task</span>", cms_path(@page, :edit), :class => "button disabled", :target => "_top" %>
+  <%= link_to "<span>Assign Task</span>", cms_path(:tasks, :new, :page_id => @page.id), :class => "button#{ ' disabled' if @page.assigned_to == current_user}", :target => "_top" %>
+  <%= link_to "<span>Complete Task</span>", cms_path(:tasks, :complete, @page.current_task), :class => "http_put button#{ ' disabled' unless @page.assigned_to == current_user}", :target => "_top" %>
 
   <%= link_to "<span>List Versions</span>", cms_path(@page, :revisions), :target => "_top", :class => "button" %>
   <% able_to? :publish_content do %>

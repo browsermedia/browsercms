@@ -249,12 +249,12 @@ class Page < ActiveRecord::Base
     (a.size > 0 && ancestors[1]) ? ancestors[1] : Section.root.first
   end
   
+  def current_task
+    tasks.incomplete.first
+  end
+  
   def assigned_to
-    if task = tasks.incomplete.first
-      task.assigned_to
-    else
-      nil
-    end
+    current_task ? current_task.assigned_to : nil
   end
   
   def assigned_to?(user)
