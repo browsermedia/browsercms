@@ -2,7 +2,7 @@
 <%= stylesheet_link_tag('cms/form_layout') %>
 <% javascript_tag do %>
 $(document).ready(function() {
-  $('#page_template_id').selectbox({width: '210px'});
+  $('#page_template_id').selectbox({width: '440px'});
 });
 <% end %>
 <% end %>
@@ -26,26 +26,20 @@ $(document).ready(function() {
 </div>
 <div class="checkbox_group fields no_check_all">
   <div class="checkbox_fields">
-    <label>
-      <%= f.check_box :cacheable, :tabindex => (@tabindex += 1) %>
-      <span>Cache enabled?</span>
-    </label>
+    <label for="page_cacheable">Cache enabled?</label>  
+    <%= f.check_box :cacheable, :tabindex => (@tabindex += 1) %>
   </div>
 </div>
 <div class="checkbox_group fields no_check_all">
   <div class="checkbox_fields">
-    <label>
-      <%= f.check_box :hidden, :disabled => (!current_user.able_to?(:publish_content)), :tabindex => (@tabindex += 1) %>
-      <span>Hide From Menus?</span>
-    </label>
+    <label for="page_hidden">Hide From Menus?</label>
+    <%= f.check_box :hidden, :disabled => (!current_user.able_to?(:publish_content)), :tabindex => (@tabindex += 1) %>
   </div>
 </div>
 <div class="checkbox_group fields no_check_all">
   <div class="checkbox_fields">
-    <label>
-      <%= f.check_box :archived, :disabled => (!current_user.able_to?(:publish_content)), :tabindex => (@tabindex += 1) %>
-      <span>Archived?</span>
-    </label>
+    <label for="page_archived">Archived?</label>
+    <%= f.check_box :archived, :disabled => (!current_user.able_to?(:publish_content)), :tabindex => (@tabindex += 1) %>
   </div>
 </div>
 <div class="fields textarea_fields">

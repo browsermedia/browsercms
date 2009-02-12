@@ -245,5 +245,9 @@ margin: 8px 0;
   margin-left: 140px;
 }
 
+.checkboxes .instructions {
+  margin-left: 0;
+}
+
 
 input#file_block_attachment_file { width: 460px; height: 30px; }
