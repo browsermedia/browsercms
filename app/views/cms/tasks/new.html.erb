@@ -1,0 +1,32 @@
+<% content_for :html_head do %>
+  <%= stylesheet_link_tag 'cms/form_layout' %>
+<% end %>
+
+<% @page_title = "Assign Page '#{@page.name}'" %>
+<% content_for :functions do %>
+  <h1><%=h @page_title %></h1>
+  <%= link_to(span_tag("Back To Page"), @page.path, :class => "button") %>
+  <br clear="all"/>
+<% end %>
+
+<% form_for(@task, :url => cms_path(:tasks, :create)) do |f| %>
+  <%= hidden_field_tag :page_id, @page.id %>
+
+  <% @tabindex = 0 %>
+
+  <%= f.error_messages %>
+  <div class="fields select_fields">
+    <%= f.label :assigned_to_id %>
+    <%= f.collection_select :assigned_to_id, User.active.able_to_edit_or_publish_content.all(:order => "first_name, last_name, login"), :id, :full_name_with_login, :include_blank => true, :tabindex => (@tabindex += 1) %>
+  </div>
+  
+  <div class="fields text_fields">
+    <%= f.label :comment %>
+    <%= f.text_area :comment, :tabindex => (@tabindex += 1) %>
+  </div>
+
+  <div class="buttons">
+    <%= lt_button_wrapper(f.submit("Save", :class => "submit", :tabindex => (@tabindex += 1))) %>
+  </div>
+<% end %>
+

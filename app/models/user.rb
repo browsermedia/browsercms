@@ -20,6 +20,9 @@ class User < ActiveRecord::Base
   has_many :tasks, :foreign_key => "assigned_to_id"
     
   named_scope :active, :conditions => {:expires_at => nil }
+  named_scope :able_to_edit_or_publish_content, 
+    :include => {:groups => :permissions}, 
+    :conditions => ["permissions.name = ? OR permissions.name = ?", "edit_content", "publish_content"]
 
   def self.current
     Thread.current[:cms_user]
@@ -66,6 +69,10 @@ class User < ActiveRecord::Base
 
   def full_name
     [first_name, last_name].reject{|e| e.nil?}.join(" ")
+  end
+
+  def full_name_with_login
+    "#{full_name} (#{login})"
   end
 
   # This is to show a formated date on the input form. I'm unsure that
