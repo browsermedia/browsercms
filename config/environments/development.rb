@@ -17,3 +17,5 @@ config.action_controller.perform_caching             = false
 config.action_mailer.raise_delivery_errors = false
 
 config.action_controller.perform_caching = true
+
+SITE_DOMAIN="localhost:3000"

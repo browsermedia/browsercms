@@ -4,6 +4,8 @@ class EmailMessage < ActiveRecord::Base
   
   validates_presence_of :recipients
   
+  after_create :deliver_now
+  
   def delivered?
     !!delivered_at
   end
@@ -13,6 +15,11 @@ class EmailMessage < ActiveRecord::Base
     undelivered.all(:limit => 100).each do |m|
       m.deliever!
     end
+  end
+  
+  #TODO: Take this out when we have an email queue processor
+  def deliver_now
+    deliver!
   end
   
   def deliver!

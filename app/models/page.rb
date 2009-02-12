@@ -39,6 +39,8 @@ class Page < ActiveRecord::Base
   
   has_one :section_node, :as => :node
   
+  has_many :tasks
+  
   before_validation :append_leading_slash_to_path
   before_destroy :delete_connectors
   
@@ -247,12 +249,16 @@ class Page < ActiveRecord::Base
     (a.size > 0 && ancestors[1]) ? ancestors[1] : Section.root.first
   end
   
-  def assigned_to?(user)
-    if user
-      user.tasks.incomplete.for_page(self).count > 0
+  def assigned_to
+    if task = tasks.incomplete.first
+      task.assigned_to
     else
-      false
+      nil
     end
+  end
+  
+  def assigned_to?(user)
+    assigned_to == user
   end
   
 end
