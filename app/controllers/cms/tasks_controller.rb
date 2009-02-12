@@ -3,7 +3,7 @@ class Cms::TasksController < Cms::BaseController
   before_filter :set_toolbar_tab
   before_filter :load_page, :only => [:new, :create]
   
-  verify :method => :put, :action => :complete
+  verify :method => :put, :only => :complete
   
   def new
     @task = @page.tasks.build(:assigned_by => current_user)
@@ -21,15 +21,25 @@ class Cms::TasksController < Cms::BaseController
   end
   
   def complete
-    @task = Task.find(params[:id])
-    if @task.assigned_to == current_user
-      if @task.mark_as_complete!
-        flash[:notice] = "Task was marked as complete"
+    if params[:task_ids]
+      Task.all(:conditions => ["id in (?)", params[:task_ids]]).each do |t|
+        if t.assigned_to == current_user
+          t.mark_as_complete!
+        end
       end
+      flash[:notice] = "Tasks marked as complete"
+      redirect_to cms_dashboard_path
     else
-      flash[:error] = "You cannot complete tasks that are not assigned to you"
+      @task = Task.find(params[:id])
+      if @task.assigned_to == current_user
+        if @task.mark_as_complete!
+          flash[:notice] = "Task was marked as complete"
+        end
+      else
+        flash[:error] = "You cannot complete tasks that are not assigned to you"
+      end
+      redirect_to @task.page.path
     end
-    redirect_to @task.page.path
   end
   
   private

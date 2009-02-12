@@ -1,0 +1,49 @@
+<div class="dashboard_unit" id="tasks">
+  <h2 class="left">Tasks</h2>
+
+  <% form_tag cms_path(:tasks, :complete), :method => :put do %>
+    <div class="roundedcorners" style="position: relative">
+      <table class="data">
+        <thead>
+          <tr>
+            <th class="select first unbordered">&nbsp;</th>
+            <th colspan="2"><div class="dividers">Name</div></th>
+            <th class="assigned_by"><div class="dividers">Assigned By</div></th>
+	          <th class="due_date last" colspan="2">Due Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if @incomplete_tasks.empty? %>
+            <tr><td colspan="5">No Incomplete Tasks</td></tr>
+          <% else %>  
+            <% @incomplete_tasks.each do |task| %>
+              <tr>
+                <td class="first"></td>
+                <td class="select">
+                  <%= check_box_tag "task_ids[]", task.id, false, :id => "complete_task_#{task.id}" %>
+                </td>
+                <td class="name">
+                  <div class="dividers">
+                    <%= link_to h(task.page.name_with_section_path), task.page.path %>
+                  </div>
+                </td>
+                <td class="assigned_by">
+                  <div class="dividers"><%=h task.assigned_by.login %></div>
+                </td>
+                <td class="due_date"><%= task.due_date ? task.due_date.strftime("%b %d") : nil %></td>
+                <td class="last"></td>
+              </tr>
+            <% end %>
+            <tr>
+              <td colspan="5"><%= lt_button_wrapper(submit_tag("Complete Selected", :class => "submit")) %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <div class="tl"></div>
+      <div class="tr"></div>
+      <div class="bl"></div>
+      <div class="br"></div>
+    </div>
+  <% end %>
+</div>

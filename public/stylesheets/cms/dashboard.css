@@ -22,33 +22,32 @@ padding: 5px;
 }
 
 .dashboard_unit {
-width: 440px;
+  width: 480px;
 }
 
 .lt_button {
-margin-bottom: 20px;
+  margin-bottom: 20px;
 }
-#page_drafts table td.name {
-padding: 6px 0 6px 15px;
-width: 420px;
+table.data td.name {
+  padding: 6px 0 6px 15px;
 }
-#page_drafts table td {
+table.data td {
 padding: 0 0 0 18px;
 }
 
-#page_drafts table th {
+table.data th {
 padding-left: 15px;
 }
 
-#page_drafts table td {
+table.data td {
 color: #717171;
 font-size: 7pt;
 }
 
-#page_drafts table td a {
+table.data td a {
 text-decoration: none;
 }
-#page_drafts table td.select {
+table.data td.select {
 padding-left: 8px;
 vertical-align: middle;
 }
@@ -62,10 +61,10 @@ td.updated_by {
 width: 70px;
 }
 
-#page_drafts {
+table.data {
 background: #FFF url(/images/cms/content_bg.gif) repeat-x 100% 100%;
 }
-#page_drafts .lt_button {
+table.data .lt_button {
 margin: 10px 0 60px 6px;
 }
 div.bottom_left {
@@ -79,3 +78,18 @@ div.bottom_cap {
 height: 9px;
 background: transparent url(/images/cms/dashboard/bottom_cap_content.png) no-repeat 0 0;
 }
+
+#page_drafts {
+  float: left;
+}
+
+#tasks {
+  margin-left: 10px;
+  float: left;
+}
+
+#tasks th.assigned_by,
+#tasks th.due_date {
+  white-space: nowrap;
+}
+
