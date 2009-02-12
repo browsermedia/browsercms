@@ -247,4 +247,12 @@ class Page < ActiveRecord::Base
     (a.size > 0 && ancestors[1]) ? ancestors[1] : Section.root.first
   end
   
+  def assigned_to?(user)
+    if user
+      user.tasks.incomplete.for_page(self).count > 0
+    else
+      false
+    end
+  end
+  
 end

@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
 
   has_many :user_group_memberships
   has_many :groups, :through => :user_group_memberships
+  has_many :tasks, :foreign_key => "assigned_to_id"
     
   named_scope :active, :conditions => {:expires_at => nil }
 
@@ -108,6 +109,10 @@ class User < ActiveRecord::Base
   #that the user is in match the section.
   def able_to_edit?(section)    
     !!(editable_sections.include?(section) && able_to?(:edit_content))
+  end
+  
+  def able_to_edit_or_publish_content?
+    able_to?(:edit_content, :publish_content)
   end
   
 end

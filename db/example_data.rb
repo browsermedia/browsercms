@@ -94,6 +94,12 @@ module FixtureReplacement
     a.domain = "#{a.name.gsub(/\s/,"_").downcase}.com"
   end
 
+  attributes_for :task do |a|
+    a.assigned_by = default_user
+    a.assigned_to = default_user
+    a.page = default_page
+  end
+
   attributes_for :user do |a|
     a.first_name = "Test"
     a.last_name = "User"

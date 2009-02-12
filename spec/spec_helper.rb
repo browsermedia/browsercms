@@ -86,15 +86,25 @@ def root_section
 end
 
 def admin_user(attrs={})
-  user = User.find_by_login("cmsadmin")
-  return user if user
+  User.find_by_login("cmsadmin") || create_admin_user(attrs)
+end
+
+def create_or_find_permission_named(name)
+  if perm = Permission.named(name).first
+    perm
+  else
+    create_permission(:name => name)
+  end
+end
+
+def create_admin_user(attrs={})
   user = create_user({:login => "cmsadmin"}.merge(attrs))
   group = create_group(:group_type => create_group_type(:cms_access => true))
-  group.permissions << create_permission(:name => "administrate")
-  group.permissions << create_permission(:name => "edit_content")
-  group.permissions << create_permission(:name => "publish_content")
+  group.permissions << create_or_find_permission_named("administrate")
+  group.permissions << create_or_find_permission_named("edit_content")
+  group.permissions << create_or_find_permission_named("publish_content")
   user.groups << group
-  user
+  user  
 end
 
 def create_system_pages

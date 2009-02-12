@@ -3,4 +3,7 @@ class Permission < ActiveRecord::Base
   has_many :groups, :through => :group_permissions
   
   validates_uniqueness_of :name
+  
+  named_scope :named, lambda{|name| {:conditions => {:name => name}}}
+  
 end
