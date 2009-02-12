@@ -13,6 +13,8 @@
   <% javascript_tag do %>
     sanitizationRegexes = <%= Cms::Behaviors::Attaching::SANITIZATION_REGEXES.to_json %>
     function sanitizeFileName(s) {
+      var split = s.split(/\/|\\/)
+      s = split[split.length-1]
       $.each(sanitizationRegexes, function(i,e){
         var r = new RegExp(e[0].source, 'g')
         s = s.replace(r, e[1])
