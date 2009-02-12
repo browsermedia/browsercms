@@ -11,7 +11,7 @@ height: 22px;
 #functions {
 padding-bottom: 25px;
 }
-#blocks td a {
+table.data td a {
 color: #36659D;
 font-weight: bold;
 text-decoration: none;

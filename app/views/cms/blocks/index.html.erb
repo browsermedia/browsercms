@@ -3,7 +3,7 @@
   <%= stylesheet_link_tag 'cms/jquery.contextMenu' %>
   <% javascript_tag do %>
     jQuery(function($){
-      $('#blocks tbody tr').hover(function(){
+      $('table.data tbody tr').hover(function(){
         $(this).addClass('hover')
       }, function(){
         $(this).removeClass('hover')
@@ -11,7 +11,7 @@
         var match = this.id.match(/(.*)_(\d+)/) 
         var type = match[1]
         var id = match[2]
-        $('#blocks tbody tr').removeClass('selected')
+        $('table.data tbody tr').removeClass('selected')
         $(this).addClass('selected')
         $('#functions .button').addClass('disabled').attr('href','#')
         $('#list_all').removeClass('disabled').attr('href', '<%= cms_path(:blocks, @content_type.content_block_type) %>');
@@ -56,7 +56,7 @@
 <%= render :partial => 'toolbar' %>
 
 <div class="roundedcorners">
-<table id="blocks">
+<table class="data">
   <thead>
     <tr>
       <% @content_type.columns_for_index.each_with_index do |column, i| %>

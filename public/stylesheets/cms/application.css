@@ -2,7 +2,7 @@
 @import url(/stylesheets/cms/nav.css);
 @import url(/stylesheets/cms/menu.css);
 @import url(/stylesheets/cms/buttons.css);
-@import url(/stylesheets/cms/block_table.css);
+@import url(/stylesheets/cms/data_table.css);
 
 body {
 background: #FFF url(/images/cms/bg.png) repeat-x 0 0;

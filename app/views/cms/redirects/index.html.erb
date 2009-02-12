@@ -2,7 +2,7 @@
 <% content_for(:html_head) do %>
   <% javascript_tag do %>
     jQuery(function($){
-      $('#blocks tbody tr').hover(function(){
+      $('table.data tbody tr').hover(function(){
         $(this).addClass('hover')
       }, function(){
         $(this).removeClass('hover')
@@ -10,7 +10,7 @@
         var match = this.id.match(/(.*)_(\d+)/) 
         var type = match[1];
         var id = match[2];
-        $('#blocks tbody tr').removeClass('selected');
+        $('table.data tbody tr').removeClass('selected');
         $(this).addClass('selected');
         $('#edit_button').removeClass('disabled').attr('href', '/cms/redirects/edit/'+id);
         $('#delete_button').removeClass('disabled').attr('href', '/cms/redirects/destroy/'+id)
@@ -18,7 +18,7 @@
     })
   <% end %>
   <style type="text/css">
-    #blocks th {
+    table.data th {
     width: 50%;
     }
   </style>
@@ -29,7 +29,7 @@
 <%= link_to span_tag("delete"), "#", :id => "delete_button", :class => "button disabled http_delete", :onclick => "return confirm('Are you sure you want to delete this redirect?')" %>
 <% end %>
 <div class="roundedcorners">
-<table id="blocks">
+<table class="data">
   <thead>
   <tr>
     <th class="first"></th>

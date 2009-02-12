@@ -3,23 +3,23 @@ min-height: 500px;
 background: #FFF url(/images/cms/content_bg.gif) repeat-x 100% 100%;
 }
 
-#blocks {
+table.data {
 font-weight: bold;
 }
-#blocks th.name {
+table.data th.name {
 padding-left: 15px;
 width: 66%;
 }
-#blocks th.updated, #blocks th.used div.dividers {
+table.data th.updated, table.data th.used div.dividers {
 padding-left: 0;
 }
-#blocks td.name {
+table.data td.name {
 color: #36659D;
 text-align: left;
 padding-left: 20px;
 }
 
-#blocks td.updated_on {
+table.data td.updated_on {
 padding-left: 6px;
 }
 
@@ -94,7 +94,7 @@ background: url(/images/cms/pagination/last.gif) no-repeat 0 0;
 background: url(/images/cms/pagination/last_h.gif) no-repeat 0 0;
 }
 
-#blocks td.page_name, #blocks td.path {
+table.data td.page_name, table.data td.path {
 text-align: left;
 
 }

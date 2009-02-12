@@ -21,34 +21,34 @@ background: #4679B8 url(/images/cms/dashboard/header_left_bg.gif) no-repeat 0 0;
 padding: 5px;
 }
 
-.dashboard_unit table {
+.dashboard_unit {
 width: 440px;
 }
 
 .lt_button {
 margin-bottom: 20px;
 }
-.dashboard_unit #blocks td.name {
+#page_drafts table td.name {
 padding: 6px 0 6px 15px;
-width: 700px;
+width: 420px;
 }
-.dashboard_unit #blocks td {
+#page_drafts table td {
 padding: 0 0 0 18px;
 }
 
-.dashboard_unit #blocks th {
+#page_drafts table th {
 padding-left: 15px;
 }
 
-#blocks td {
+#page_drafts table td {
 color: #717171;
 font-size: 7pt;
 }
 
-#blocks td a {
+#page_drafts table td a {
 text-decoration: none;
 }
-#blocks td.select {
+#page_drafts table td.select {
 padding-left: 8px;
 vertical-align: middle;
 }

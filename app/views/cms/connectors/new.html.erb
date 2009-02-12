@@ -3,7 +3,7 @@
 <%= stylesheet_link_tag("cms/content_library") %>
   <% javascript_tag do %>
     jQuery(function($){
-      $('#blocks tbody tr').hover(function(){
+      $('table.data tbody tr').hover(function(){
         $(this).addClass('hover');
       }, function(){
         $(this).removeClass('hover');
@@ -11,7 +11,7 @@
         var match = this.id.match(/(.*)_(\d+)/);
         var type = match[1];
         var id = match[2];
-        $('#blocks tbody tr').removeClass('selected');
+        $('table.data tbody tr').removeClass('selected');
         $(this).addClass('selected');
         $('#connectable_type').attr('value', type);
         $('#connectable_id').attr('value', id);
@@ -49,7 +49,7 @@
     
 <%= error_messages_for :connector %>
     
-<table id="blocks">
+<table class="data">
   <thead>
   <tr>
     <th class="name first">Name</th>
