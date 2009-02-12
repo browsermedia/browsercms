@@ -12,8 +12,11 @@ function editorEnabled() {
 
 function disableEditor(id) {
   if(typeof(FCKeditorAPI) != "undefined" && FCKeditorAPI.GetInstance(id) != null) {
+    
+    //Prevent FCK from copying the value from the WYSIWYG to the textarea
+    FCKeditorAPI.GetInstance(id).LinkedField = null
+    
     $('#'+id).val(FCKeditorAPI.GetInstance(id).GetHTML()).show()
-    console.log('Copied data from WYSIWYG to textarea')
     $('#'+id+'___Frame').hide()
     $.cookie('editorEnabled', false, { expires: 90, path: '/' })    
   }
@@ -22,7 +25,6 @@ function disableEditor(id) {
 function enableEditor(id) {
   if(typeof(FCKeditorAPI) != "undefined" && FCKeditorAPI.GetInstance(id) != null) {
     FCKeditorAPI.GetInstance(id).SetHTML($('#'+id).val())
-    console.log('Copied data from textarea to WYSIWYG')
     $('#'+id).hide()
     $('#'+id+'___Frame').show()  
     $.cookie('editorEnabled', true, { expires: 90, path: '/' })    
@@ -45,7 +47,7 @@ function loadEditor(id) {
     editor.ToolbarSet = 'CMS'
     editor.Width = 598
     editor.Height = 400
-    editor.ReplaceTextarea()
+    editor.ReplaceTextarea()    
     $.cookie('editorEnabled', true, { expires: 90, path: '/' })  
     return true
   } else {
