@@ -39,10 +39,12 @@ div.actions {
 }
 
 div.actions a {
-  text-decoration: none;
-  padding: 0 2px 0 0;
-  background: none;
-  margin: 0;
+  text-decoration: none !important;
+  padding: 0 2px 0 0 !important;
+  background: none !important;
+  margin: 0 !important;
+  float: none !important;
+  border: none !important;
 }
 
 .tooltip { 
