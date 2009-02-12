@@ -28,7 +28,18 @@ jQuery(function($) {
       return element
     }
   
+  var sanitizationRegexes = [[/\s/, "_"], [/[&+()]/, "-"], [/[=?!'"{}\[\]#<>%]/, ""]]
+  
   $.cms = {
+    sanitizeFileName: function(s) {
+      var split = s.split(/\/|\\/)
+      s = split[split.length-1]
+      $.each(sanitizationRegexes, function(i,e){
+        var r = new RegExp(e[0].source, 'g')
+        s = s.replace(r, e[1])
+      })
+      return s;
+    },
     showNotice: function(msg) {
       $('#message').removeClass('error').addClass('notice').html(msg).parent().show().animate({opacity: 1.0}, 3000).fadeOut("normal")
     },

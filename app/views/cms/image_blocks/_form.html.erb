@@ -11,29 +11,20 @@
   <%= stylesheet_link_tag "cms/taglist" %>
   <%= javascript_include_tag "jquery.dimensions", "jquery.taglist", "/cms/tags" %>
   <% javascript_tag do %>
-    sanitizationRegexes = <%= Cms::Behaviors::Attaching::SANITIZATION_REGEXES.to_json %>
-    function sanitizeFileName(s) {
-      $.each(sanitizationRegexes, function(i,e){
-        var r = new RegExp(e[0].source, 'g')
-        s = s.replace(r, e[1])
-      })
-      return s;
-    }  
+    var regex = <%= Cms::Behaviors::Attaching::SANITIZATION_REGEXES.to_json %>
     jQuery(function($) {
       $('.tag-list').tagList(tags)
       $('#image_block_attachment_section_id').selectbox({width: '210px'});
+      $('#image_block_attachment_file').change(function(){
+        $('#mock_image_block_attachment_file').attr('value', $(this).attr('value'))
+      });
+      <% if @block.new_record? %>
+        var sectionIdPathMap = <%= @sections.inject({}){|map, sec| map[sec.id.to_s] = sec.path.sub(/\/$/,''); map}.to_json %>
+        $('#image_block_attachment_file, #image_block_attachment_section_id').change(function(){
+          $('#image_block_attachment_file_path').val(sectionIdPathMap[$('#image_block_attachment_section_id').val()]+'/'+$.cms.sanitizeFileName($('#image_block_attachment_file').val()))
+        });
+      <% end %>
     });
-    jQuery(function($){
-      $('#image_block_attachment_file').change(function(){$('#mock_image_block_attachment_file').attr('value', $(this).attr('value'))});
-    });
-  <% if @block.new_record? %>
-    jQuery(function($){
-      var sectionIdPathMap = <%= @sections.inject({}){|map, sec| map[sec.id.to_s] = sec.path.sub(/\/$/,''); map}.to_json %>
-      $('#image_block_attachment_file, #image_block_attachment_section_id').change(function(){ 
-        $('#image_block_attachment_file_path').val(sectionIdPathMap[$('#image_block_attachment_section_id').val()]+'/'+sanitizeFileName($('#image_block_attachment_file').val()))
-      }) 
-    });
-  <% end %>
   <% end %>
 <% end %>
 <div class="fields text_fields">
