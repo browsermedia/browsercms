@@ -74,6 +74,8 @@ text-transform: uppercase;
 margin-top: 12px;
 margin-right: 0px;
 color: #000;
+font-weight: bold;
+
 }
 #visual_editor_toggle div {
 float: left;
@@ -88,14 +90,12 @@ width: 35px;
 height: 23px;
 padding: 0;
 color: #EEE;
-font-weight: bold;
 }
 .visual_editor_toggle_container {
 height: 20px;
 padding: 0;
 margin-left: 4px;
 margin-top: 1px;
-font-weight: bold;
 }
 .visual_editor_value_container span, .visual_editor_toggle_container a{
 display: block;
