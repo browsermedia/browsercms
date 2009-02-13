@@ -3,6 +3,7 @@
   border: 5px solid #888;
   width: 200px;
   padding: 10px;
+  z-index: 100;
 }
 
 #ui-datepicker-div table {
