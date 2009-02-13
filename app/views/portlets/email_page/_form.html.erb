@@ -9,15 +9,10 @@
   <%= f.text_field :subject %>
 </div>
 
-<% @block.success_url = "/" if @block.success_url.blank? %>
 <div class="fields text_fields">
   <%= f.label :success_url %>
   <%= f.text_field :success_url %>
-</div>
-
-<div class="fields text_fields">
-  <%= f.label :failure_url %>
-  <%= f.text_field :failure_url %>
+  <div class="instructions">Leave blank to return the same page</div>
 </div>
 
 <% @block.template = EmailPagePortlet.default_template if @block.template.blank? %>
