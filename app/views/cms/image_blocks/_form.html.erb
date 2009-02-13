@@ -13,17 +13,8 @@
   <% javascript_tag do %>
     var regex = <%= Cms::Behaviors::Attaching::SANITIZATION_REGEXES.to_json %>
     jQuery(function($) {
-      $('#image_block_attachment_file_div').mousemove(function(e) {
-        if (e.pageX < 1100 && e.pageX > 600){
-          $('#image_block_attachment_file').css('margin-left', (e.pageX - 700) + 'px');
-        }
-      });
-      $('#image_block_attachment_file').mousemove(function(e) {
-        if (e.pageX < 1050 && e.pageX > 650){
-
-          $('#image_block_attachment_file').css('margin-left', (e.pageX - 700) + 'px');
-	}
-      });
+      $('#mock_image_block_attachment_file').focus(function() {this.blur();});
+      $('#mock_image_block_attachment_file').mousedown(function() {this.blur();});
       $('.tag-list').tagList(tags)
       $('#image_block_attachment_section_id').selectbox({width: '210px'});
       $('#image_block_attachment_file').change(function(){
