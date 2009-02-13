@@ -248,4 +248,8 @@ margin: 8px 0;
 .checkboxes .instructions {
   margin-left: 0;
 }
-#file_block_attachment_file, #image_block_attachment_file { height: 30px; margin-left: 352px;}
+#file_block_attachment_file, #image_block_attachment_file { 
+height: 30px; 
+margin-left: 364px;
+* margin-left: 352px;
+}
