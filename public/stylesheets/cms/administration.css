@@ -72,3 +72,20 @@ position: absolute; margin: 6px 0 0 310px;
 .text_editor_fields #page_template_language_input {
 margin-left: 381px;
 }
+table.data td a.sm_button {
+	   margin-top: -12px;
+	   margin-left: 40px;
+	   position: absolute;
+	   height: 15px;
+	   width: 38px;
+	display: block;
+	background: url(/images/cms/buttons/sm_button_2.gif) no-repeat top right;
+	color: #FFFFFF;
+}
+table.data td a.sm_button span{
+	   padding: 2px 0 0 3px;
+	   display: block;
+}
+table.data td a.sm_button:hover {
+	background: url(/images/cms/buttons/sm_button_2_h.gif) no-repeat top right;
+}
