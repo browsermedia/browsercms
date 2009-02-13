@@ -13,6 +13,17 @@
   <% javascript_tag do %>
     var regex = <%= Cms::Behaviors::Attaching::SANITIZATION_REGEXES.to_json %>
     jQuery(function($) {
+      $('#image_block_attachment_file_div').mousemove(function(e) {
+        if (e.pageX < 1100 && e.pageX > 600){
+          $('#image_block_attachment_file').css('margin-left', (e.pageX - 700) + 'px');
+        }
+      });
+      $('#image_block_attachment_file').mousemove(function(e) {
+        if (e.pageX < 1050 && e.pageX > 650){
+
+          $('#image_block_attachment_file').css('margin-left', (e.pageX - 700) + 'px');
+	}
+      });
       $('.tag-list').tagList(tags)
       $('#image_block_attachment_section_id').selectbox({width: '210px'});
       $('#image_block_attachment_file').change(function(){
@@ -33,9 +44,11 @@
 </div>
 <div class="fields file_fields">
   <%= f.label :attachment_file, "File" %>
+  <div id="image_block_attachment_file_div">
   <input type="text" name="temp" class="mock" id="mock_image_block_attachment_file" />
   <%= image_tag("cms/browse.gif") %>
-  <%= f.file_field :attachment_file, :tabindex => (@tabindex += 1) %>
+  <%= f.file_field :attachment_file, :tabindex => (@tabindex += 1), :size => 1 %>
+  </div>
 </div>
 <div class="fields select_fields">
   <%= f.label :attachment_section_id, "Section" %>

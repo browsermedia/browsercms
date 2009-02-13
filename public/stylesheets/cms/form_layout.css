@@ -249,4 +249,5 @@ margin: 8px 0;
   margin-left: 0;
 }
 input#file_block_attachment_file { height: 30px;}
+input#image_block_attachment_file { height: 30px; margin-left: -50px}
 
