@@ -13,9 +13,9 @@ jQuery(function($){
   }
   
   var addHoverToSectionNodes = function() {
-    $('#sitemap table.section_node').hover(
-      function() { $(this).addClass('hover')},
-      function() { $(this).removeClass('hover')}
+    $('#sitemap div.roundedcorners').hover(
+      function() { $(this).find('table.section_node').addClass('hover'); $(this).addClass('over')},
+      function() { $(this).find('table.section_node').removeClass('hover'); $(this).removeClass('over')}
     )    
   }
   
@@ -156,7 +156,7 @@ jQuery(function($){
       },
       drop: nodeOnDrop
     });    
-  }  
+  }
     
   var clearSelectedSectionNode = function() {
     disableButtons()

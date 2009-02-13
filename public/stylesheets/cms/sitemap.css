@@ -198,6 +198,10 @@ background: url(/images/cms/sitemap/divider.gif) no-repeat 23px 0;
   background: #FFF url(/images/cms/sitemap/gradient.gif) no-repeat 0 100%;
 }
 
+#sitemap ul.rootlet li li{
+  background: none
+}
+
 #sitemap ul.section_node.open li {
   border: 1px solid #CC;
 }
@@ -240,10 +244,10 @@ a.hidden:hover span {
 div.on .sbl { 
   position: absolute; 
   bottom: 1px; 
-  left: 2px; 
+  left: 0; 
   height: 2px; 
   width: 2px; 
-  background: url(/images/cms/sitemap/corners.gif) no-repeat 0 0
+  background: url(/images/cms/sitemap/corners.gif) no-repeat 0 -1px
 }
 
 div.on .sbr { 
@@ -252,7 +256,7 @@ div.on .sbr {
   right: 0; 
   height: 2px; 
   width: 2px; 
-  background: url(/images/cms/sitemap/corners.gif) no-repeat 0 0
+  background: url(/images/cms/sitemap/corners.gif) no-repeat -1px -1px
 }
 
 div.on .stl { 
@@ -270,5 +274,41 @@ div.on .str {
   right: 0px; 
   height: 2px; 
   width: 2px; 
-  background: url(/images/cms/sitemap/corners.gif) no-repeat 0 0
+  background: url(/images/cms/sitemap/corners.gif) no-repeat -1px 0px
+}
+
+div.over .sbl { 
+  position: absolute; 
+  bottom: 1px; 
+  left: 0; 
+  height: 2px; 
+  width: 2px; 
+  background: url(/images/cms/sitemap/corners_hover.gif) no-repeat 0 -1px
+}
+
+div.over .sbr { 
+  position: absolute; 
+  bottom: 1px; 
+  right: 0; 
+  height: 2px; 
+  width: 2px; 
+  background: url(/images/cms/sitemap/corners_hover.gif) no-repeat -1px -1px
+}
+
+div.over .stl { 
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  height: 2px; 
+  width: 2px; 
+  background: url(/images/cms/sitemap/corners_hover.gif) no-repeat 0 0
+}
+
+div.over .str { 
+  position: absolute; 
+  top: 0px; 
+  right: 0px; 
+  height: 2px; 
+  width: 2px; 
+  background: url(/images/cms/sitemap/corners_hover.gif) no-repeat -1px 0px
 }
