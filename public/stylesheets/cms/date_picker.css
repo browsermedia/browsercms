@@ -18,16 +18,11 @@
 .ui-datepicker-header select {
 
 }
-.ui-datepicker-clear, .ui-datepicker-prev {
-  float: left;
-  width: 34%;
+
+.ui-datepicker-clear a{
+color: #FFFFFF;
 }
 
-.ui-datepicker-close, .ui-datepicker-next {
-  float: right;
-  text-align: right;
-  width: 34%;
-}
 
 .ui-datepicker-days-cell-over {
   cursor: pointer;
@@ -49,16 +44,16 @@ table tr.ui-datepicker-title-row td {
   font-weight: bold;
   color: #333;
 }
-
-.ui-datepicker-clear, .ui-datepicker-close {
-  background: url(/images/cms/datepicker/clear.gif) no-repeat 0 0;
+.ui-datepicker-close {
+margin-left: 145px;
+margin-bottom: 5px;
+}
+.ui-datepicker-close a{
+  cursor: pointer;
   width: 16px;
   overflow: hidden;
   padding: 16px 0 0 0;
-  text-indent: -1000px;
-}
-.ui-datepicker-close {
-  background: url(/images/cms/datepicker/close.gif) no-repeat 0 0;
+  background: url(/images/cms/datepicker/close.gif) no-repeat 4px 2px;
 }
 
 .ui-datepicker-prev, .ui-datepicker-next, .ui-datepicker-current { 
@@ -68,3 +63,10 @@ table tr.ui-datepicker-title-row td {
 .ui-datepicker-header { 
   clear: left;
   }
+.ui-datepicker-new-month {
+margin-right: 15px;
+width: 90px;
+}
+.ui-datepicker-new-year {
+width: 55px;
+}

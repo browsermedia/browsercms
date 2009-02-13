@@ -30,7 +30,7 @@
         <td>
 	  <% unless user.expired? %>
 	  <span class="user_state">Active</span>
-            <%= link_to("<span>Disable</span>", {:controller=>"users", :action=> "disable", :id => user.id}, :class => "http_put sm_button") %>	  
+            <%= link_to("<span>Disable</span>", {:controller=>"users", :action=> "disable", :id => user.id}, :class => "http_put sm_button") if @users.size > 1%>	  
 	    <% else %>
 	  <span class="user_state">Inactive</span>
             <%= link_to("<span>Enable</span>", {:controller=>"users", :action=> "enable", :id => user.id}, :class => "http_put sm_button") %>
