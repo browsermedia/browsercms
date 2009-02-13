@@ -47,6 +47,15 @@ div.actions a {
   border: none !important;
 }
 
+div.actions img, div.actions a img {
+  text-decoration: none !important;
+  padding: 0 !important;
+  background: none !important;
+  margin: 0 !important;
+  float: none !important;
+  border: none !important;
+}
+
 .tooltip { 
   position: absolute;
   top: -1px;

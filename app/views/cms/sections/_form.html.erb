@@ -10,7 +10,8 @@
 </div>
 <div class="checkbox_group fields no_check_all">
   <div class="checkbox_fields">
-      <%= f.check_box :hidden, :tabindex => (@tabindex += 1) %> <label>Hide from menus?</label>
+    <%= f.label :hidden, "Hide from menus?" %>
+    <%= f.check_box :hidden, :tabindex => (@tabindex += 1) %>
   </div>
 </div>
 
@@ -52,9 +53,9 @@
       <%= link_to_uncheck_all 'input.cms_group_ids' %>
     </div>
   </div>
+  <br clear="all" />
 </div>
 
-<br clear="all" />
 
 <div class="buttons">
   <%= lt_button_wrapper(f.submit("Save", :class => "submit", :tabindex => (@tabindex += 1))) %>

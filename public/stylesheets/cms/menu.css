@@ -22,7 +22,7 @@ background: url(/images/cms/dot.png) repeat 0 0;
 }
 #menu .searchbox {
 padding-left: 0px;
-background: transparent url(/images/cms/searchbox_gradient.gif) repeat-x 100% 100%;
+background: #FFF url(/images/cms/searchbox_gradient.gif) repeat-x 100% 100%;
 }
 #menu .searchbox form {
 padding-left: 6px;
