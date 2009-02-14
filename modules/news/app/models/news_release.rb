@@ -3,6 +3,8 @@ class NewsRelease < ActiveRecord::Base
   acts_as_content_block :belongs_to_attachment => true, :taggable => true
   
   belongs_to :category
+
+  validates_presence_of :name, :release_date
   
   before_validation :set_slug
   
