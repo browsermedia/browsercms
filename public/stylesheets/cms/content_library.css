@@ -6,6 +6,9 @@ background: #FFF url(/images/cms/content_bg.gif) repeat-x 100% 100%;
 table.data {
 font-weight: bold;
 }
+table.data th {
+  white-space: nowrap;
+}
 table.data th.name {
 padding-left: 15px;
 width: 66%;

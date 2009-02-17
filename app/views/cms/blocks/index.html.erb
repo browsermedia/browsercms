@@ -1,6 +1,4 @@
 <% content_for(:html_head) do %>
-  <%= javascript_include_tag 'jquery.contextMenu' %>
-  <%= stylesheet_link_tag 'cms/jquery.contextMenu' %>
   <% javascript_tag do %>
     jQuery(function($){
       $('table.data tbody tr').hover(function(){
@@ -38,15 +36,7 @@
             $('#publish_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/publish/'+id+'?_redirect_to='+location.href)        
           }
         <% end %>  
-      })
-      /*.contextMenu({ menu: 'myMenu' },
-      	function(action, el, pos) {
-          var match = el.attr('id').match(/(.*)_(\d+)/) 
-          var type = match[1]
-          var id = match[2]
-      	  location.href = '/cms/blocks/'+type+'/show/'+id;
-      	}
-      ); */      
+      })   
     })
   <% end %>
 <%= stylesheet_link_tag "cms/content_library" %>
@@ -56,7 +46,7 @@
 <%= render :partial => 'toolbar' %>
 
 <div class="roundedcorners">
-<table class="data">
+<table id="blocks" class="data">
   <thead>
     <tr>
       <% @content_type.columns_for_index.each_with_index do |column, i| %>
@@ -95,7 +85,7 @@
        col_ct += 1 if @content_type.model_class.connectable?
        col_ct += 1 if @content_type.model_class.publishable? %>
     <% @blocks.each do |block| %>
-      <tr id="<%= block.class.name.underscore %>_<%= block.id %>" class="<%= block.class.publishable? && !block.published? ? 'draft' : 'published' %>">
+      <tr id="<%= block.class.name.underscore %>_<%= block.id %>" class="<%= block.class.name.underscore %> <%= block.class.publishable? && !block.published? ? 'draft' : 'published' %>">
 	<td class="first"></td>
         <% @content_type.columns_for_index.each_with_index do |column, i| %>
           <td class="<%= column[:label].gsub(' ', '').underscore %>">
@@ -125,12 +115,6 @@
 <div class="bl"></div>
 <div class="br"></div>
 </div>
-<ul id="myMenu" class="contextMenu">
-	<li class="view"><a href="#show">View</a></li>
-	<li class="publish separator"><a href="#publish">Publish</a></li>	  
-	<li class="edit"><a href="#edit">Edit</a></li>
-	<li class="delete"><a href="#delete">Delete</a></li>
-</ul>
 
 <% if params[:search] && @blocks.size == 0 %>
   <div class="pagination">No results found for '<%= params[:search][:term] %>'</div>
