@@ -1,5 +1,10 @@
 class RecentNewsPortlet < Portlet
   
+  def self.default_template
+    open(File.join(File.dirname(__FILE__), 
+      "..", "views", "portlets", "recent_news", "_render.html.erb")) {|f| f.read}
+  end  
+  
   def renderer(portlet)
     lambda do
       locals = {}
@@ -10,7 +15,7 @@ class RecentNewsPortlet < Portlet
         locals[:articles] = NewsArticle.all(:order => "release_date desc", :limit => portlet.limit)
       end
       locals[:portlet] = portlet
-      render :partial => portlet.class.partial, :locals => locals
+      render :inline => portlet.template, :locals => locals
     end
   end
     

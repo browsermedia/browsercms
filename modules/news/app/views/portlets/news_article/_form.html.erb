@@ -2,3 +2,8 @@
   <%= f.label :name %>
   <%= f.text_field :name %>
 </div>
+<% @block.template = @block.class.default_template if @block.template.blank? %>
+<div class="fields text_editor_fields">
+  <%= f.label :template %><br />
+  <%= f.text_area :template %>
+</div>

@@ -1,13 +1,20 @@
 <div>
   <% articles.group_by(&:year).sort_by(&:first).reverse.each do |year, year_articles| %>
-  <!-- <%= year %> -->
+    <!-- <%= year %> -->
     <% year_articles.group_by(&:month).sort_by(&:first).reverse.each do |month, month_articles| %>
-    <b class="month"><%= Date::MONTHNAMES[month] %></b>
-    <% for article in month_articles.sort_by(&:release_date).reverse %><div class="news-item">
-      <% unless article.release_date.blank? %><span class="release-date"><b><%= article.release_date.to_s(:long) %></b></span><br/><% end %>
-      <%= link_to "<b>#{h(article.name)}</b>", news_articles_path(article.details_params) %><br/>
-      <% unless article.summary.blank? %><p><%=h article.summary %></p><% end %>
-    </div><% end %>
-	  <% end %>
-	<% end %>
+      <b class="month"><%= Date::MONTHNAMES[month] %></b>
+      <% for article in month_articles.sort_by(&:release_date).reverse %>
+        <div class="news-item">
+          <% unless article.release_date.blank? -%>
+            <span class="release-date"><b><%= article.release_date.to_s(:long) %></b></span><br/>
+          <% end %>
+
+          <%= link_to "<b>#{h(article.name)}</b>", news_articles_path(article.details_params) %><br/>
+          <% unless article.summary.blank? -%>
+            <p><%=h article.summary %></p>
+          <% end %>
+        </div>
+      <% end %>
+    <% end %>
+  <% end %>
 </div>

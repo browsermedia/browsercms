@@ -28,6 +28,7 @@ class CreateNewsArticles < ActiveRecord::Migration
     RecentNewsPortlet.create!(:name => "Recent News Portlet", 
       :limit => 5, 
       :more_link => "/news/archive", 
+      :template => RecentNewsPortlet.default_template,
       :connect_to_page_id => overview.id,
       :connect_to_container => "main",
       :publish_on_save => true)
@@ -40,6 +41,7 @@ class CreateNewsArticles < ActiveRecord::Migration
       :template => "Main",
       :publish_on_save => true)
     NewsArchivePortlet.create!(:name => "News Archive Portlet", 
+      :template => NewsArchivePortlet.default_template,
       :connect_to_page_id => archives.id,
       :connect_to_container => "main",
       :publish_on_save => true)
@@ -51,6 +53,7 @@ class CreateNewsArticles < ActiveRecord::Migration
       :template => "Main",       
       :publish_on_save => true)
     NewsArticlePortlet.create!(:name => "News Article Portlet", 
+      :template => NewsArticlePortlet.default_template,
       :connect_to_page_id => article.id,
       :connect_to_container => "main",
       :publish_on_save => true)
