@@ -1,0 +1,12 @@
+<b>Latest News</b><br/><br/>
+
+<% for article in articles %><div class="news-item-browser">
+  <% if article.release_date %><b><%= article.release_date.to_date.to_s(:long) %></b><br/><% end %>
+  <%= link_to h(article.name), news_articles_path(article.details_params) %>
+</div><% end %>
+
+<% unless portlet.more_link.blank? %>
+  <div class="news-item-browser">
+    <%= link_to "MORE", portlet.more_link %>
+  </div>
+<% end %>

@@ -1,11 +1,11 @@
 module Cms::Routes
   def routes_for_browser_cms_news_module
-    news_release_details '/news_releases/:year/:month/:day/:slug',
+    news_articles '/news/articles/:year/:month/:day/:slug',
       :controller => 'cms/content',
       :action => 'show',
-      :page_path => ['news_releases','details'],
+      :page_path => ['news','article'],
       :prepare_with => {
-        :content_type => 'NewsRelease',
+        :content_type => 'NewsArticle',
         :method => 'prepare_params_for_details!'
       },
       :year => /\d{4,}/,

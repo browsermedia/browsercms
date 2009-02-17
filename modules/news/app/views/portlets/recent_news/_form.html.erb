@@ -8,7 +8,7 @@
 </div>
 <div class="fields text_fields">
   <%= f.label :category_id, "Category" %>
-  <%= f.collection_select :category_id, categories_for('News Release'), :id, :path, :include_blank => true %>
+  <%= f.collection_select :category_id, categories_for('News Article'), :id, :path, :include_blank => true %>
 </div>
 <div class="fields text_fields">
   <%= f.label :more_link %>

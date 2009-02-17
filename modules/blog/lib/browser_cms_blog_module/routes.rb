@@ -5,7 +5,7 @@ module Cms::Routes
       :action => 'show',
       :page_path => ['blogs','details'],
       :prepare_with => {
-        :content_type => 'NewsRelease',
+        :content_type => 'NewsArticle',
         :method => 'prepare_params_for_details!'
       },
       :year => /\d{4,}/,

@@ -114,7 +114,8 @@ LBW
     end	  	  
     
     def categories_for(category_type_name, order="name")
-      CategoryType.named(category_type_name).first.category_list(order)
+      cat_type = CategoryType.named(category_type_name).first
+      cat_type ? cat_type.category_list(order) : []
     end	  
     
     def render_pagination(collection, path_args)
