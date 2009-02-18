@@ -80,14 +80,14 @@ jQuery(function($){
 
     if(dest.hasClass('root')) {
       src.insertAfter(dest)
-	makeRootlet(src);
+      makeRootlet(src);
       var rid = getId(dest[0].id, 'root_')
       moveSectionNodeToRoot(sid, rid)
     //Move to a section if the drop zone is the section
     } else {
       unMakeRootlet(src);
       if($(this).hasClass('node') && $(this).hasClass('section')) {      
-	  makeExpandable(dest);
+        makeExpandable(dest);
         var move = 'to_end'
         dest.find('li:first').append(src)
         openSection(dest[0])
@@ -98,16 +98,18 @@ jQuery(function($){
         src.insertAfter(dest.find('table:first'))
       } else {
         //insert before or after, based on the class of the drop zone
-	  if (dest.hasClass('rootlet')) {
-	      makeRootlet(src);
-	  }
+        if (dest.hasClass('rootlet')) {
+          makeRootlet(src);
+        }
+        
         if($(this).hasClass('drop-before')) {
           var move = 'before'
           src.insertBefore(dest)
         } else {
           var move = 'after'          
           src.insertAfter(dest)      
-        }     
+        }
+             
       }
       //Make the ajax call
       moveSectionNode(sid, move, did)      
@@ -119,30 +121,31 @@ jQuery(function($){
 
   }
 
-    function makeExpandable(dest){
-	var dest_toggle = dest.find('td.node:first img:first');
-	dest_toggle.removeClass('no_folder_toggle');
-	dest_toggle.addClass('folder_toggle');
-	dest_toggle.click(toggleSectionOnClick);
-	dest_toggle.attr('src','/images/cms/sitemap/contract.png');
-    }
+  var makeExpandable = function(dest) {
+    var dest_toggle = dest.find('td.node:first img:first');
+    dest_toggle.removeClass('no_folder_toggle');
+    dest_toggle.addClass('folder_toggle');
+    dest_toggle.click(toggleSectionOnClick);
+    dest_toggle.attr('src','/images/cms/sitemap/contract.png');
+  }
 
-    function makeRootlet(src){
-	src.addClass('rootlet')
-	var src_icon = src.find('td.node:first img:last')
-	var src_icon_src = src_icon.attr('src')
-	if (src_icon_src.indexOf('/root_') == -1){
-	    src_icon.attr('src',src_icon_src.replace(/\/([^/]+\.png).*/, '/root_$1'))
-	}
+  var makeRootlet = function(src) {
+    src.addClass('rootlet')
+    var src_icon = src.find('td.node:first img:last')
+    var src_icon_src = src_icon.attr('src')
+    if(src_icon_src.indexOf('/root_') == -1) {
+      src_icon.attr('src',src_icon_src.replace(/\/([^/]+\.png).*/, '/root_$1'))
     }
-    function unMakeRootlet(src){
-	src.removeClass('rootlet')
-	var src_icon = src.find('td.node:first img:last')
-	var src_icon_src = src_icon.attr('src')
-	if (src_icon_src.indexOf('/root_') > -1){
-	    src_icon.attr('src',src_icon_src.replace(/\/root_([^/]+\.png).*/, '/$1'))
-	}
+  }
+  
+  var unMakeRootlet = function (src) {
+    src.removeClass('rootlet')
+    var src_icon = src.find('td.node:first img:last') 
+    var src_icon_src = src_icon.attr('src')
+    if (src_icon_src.indexOf('/root_') > -1) {
+      src_icon.attr('src',src_icon_src.replace(/\/root_([^/]+\.png).*/, '/$1'))
     }
+  }
   
   var enableDropZones = function() {
     $('#sitemap td.drop-before, #sitemap td.node, #sitemap td.drop-after').droppable({
@@ -353,17 +356,17 @@ jQuery(function($){
     selectSectionNode(sectionNode)
   }  
 
-    var toggleSectionOnClick = function() {
-	var sectionNode = $(this).parents('ul:first')[0]
-	if(sectionNodeIsOpen(sectionNode)) {
-            closeSection(sectionNode)  
-	} else {
-            openSection(sectionNode)
-	}
+  var toggleSectionOnClick = function() {
+    var sectionNode = $(this).parents('ul:first')[0]
+    if(sectionNodeIsOpen(sectionNode)) {
+      closeSection(sectionNode)  
+    } else {
+      openSection(sectionNode)
     }
+  }
     
-    var nodeOnDoubleClick = function() {
-	if($('#edit-button').hasClass('disabled')) {
+  var nodeOnDoubleClick = function() {
+    if($('#edit-button').hasClass('disabled')) {
       //$('#properties-button').click()
       location.href = $('#properties-button')[0].href
     } else {
@@ -375,9 +378,10 @@ jQuery(function($){
   var addNodeOnClick = function() {
     $('#sitemap table.section_node').click(nodeOnClick).dblclick(nodeOnDoubleClick)
   }
-    var addToggleSectionOnClick = function(){
-	$('#sitemap img.folder_toggle').click(toggleSectionOnClick);
-    }
+  
+  var addToggleSectionOnClick = function(){
+    $('#sitemap img.folder_toggle').click(toggleSectionOnClick);
+  }
   
   //Whenever you open a section, a cookie is updated so that next time you view the sitemap
   //that section will start in open state
