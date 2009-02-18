@@ -68,9 +68,9 @@ jQuery(function($){
 
     //Get the object and the id for the src (what we are droping) 
     //and the dest (where we are dropping)
-    var src = ui.draggable.parent().parent() //The UL the TABLE is in
+    var src = ui.draggable.parents('ul:first') //The UL the TD is in
     var sid = getId(src[0].id, 'section_node_')
-    var dest = $(this).parent().parent().parent().parent().parent() //The UL the drop zone is in
+    var dest = $(this).parents('ul:first') //The UL the drop zone is in
     var did = getId(dest[0].id, 'section_node_')
 
     //If the src is a descendant of the dest, then forget it
