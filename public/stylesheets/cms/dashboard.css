@@ -1,9 +1,9 @@
 .dashboard_unit {
 width: 990px;
-min-height: 600px;
-margin: -4px 0 0 5px;
+margin: -4px 5px 0 5px;
 background-color: #FFFFFF;
 }
+
 .dashboard_unit h2 {
 height: 12px;
 color: #FFF;
@@ -22,7 +22,23 @@ padding: 5px;
 }
 
 .dashboard_unit {
-  width: 480px;
+  width: 485px;
+  background: #FFF url(/images/cms/content_bg.gif) repeat-x 100% 100%;
+  padding-bottom: 20px;
+}
+
+.dashboard_wrap {
+  background: transparent url(/images/cms/dot.png) repeat scroll 0 0;
+  float: left;
+  position: relative;
+}
+
+.tasks_margin {
+  margin-left: 10px;
+}
+
+.tasks_margin .dashboard_unit {
+  margin-left: 5px !important;
 }
 
 .lt_button {
@@ -62,8 +78,9 @@ width: 70px;
 }
 
 table.data {
-background: #FFF url(/images/cms/content_bg.gif) repeat-x 100% 100%;
+background: #FFF;
 }
+
 table.data .lt_button {
 margin: 10px 0 60px 6px;
 }
@@ -84,7 +101,7 @@ background: transparent url(/images/cms/dashboard/bottom_cap_content.png) no-rep
 }
 
 #tasks {
-  margin-left: 10px;
+  margin-left: 0;
   float: left;
 }
 
@@ -93,3 +110,9 @@ background: transparent url(/images/cms/dashboard/bottom_cap_content.png) no-rep
   white-space: nowrap;
 }
 
+div.top_cap {
+  background: url(/images/cms/dashboard/top_cap.png) no-repeat 0 0;
+}
+#contentwrapbig {
+  background: none;
+}

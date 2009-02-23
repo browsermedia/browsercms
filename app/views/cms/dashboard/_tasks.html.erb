@@ -14,7 +14,11 @@
         </thead>
         <tbody>
           <% if @incomplete_tasks.empty? %>
-            <tr><td colspan="5">No Incomplete Tasks</td></tr>
+            <tr>
+              <td class="first"></td>
+              <td colspan="5">No Incomplete Tasks</td>
+              <td class="last"></td>
+            </tr>
           <% else %>  
             <% @incomplete_tasks.each do |task| %>
               <tr>
