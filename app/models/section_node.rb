@@ -6,6 +6,20 @@ class SectionNode < ActiveRecord::Base
 
   named_scope :of_type, lambda{|types| {:conditions => ["section_nodes.node_type IN (?)", types]}}
 
+  def visible?
+    if node
+      if node.respond_to?(:hidden) && node.hidden?
+        false
+      elsif node.respond_to?(:archived?) && node.archived?
+        false
+      else
+        true
+      end
+    else
+      false
+    end
+  end
+
   def orphaned?
     !node || (node.class.uses_soft_delete? && node.deleted?)
   end

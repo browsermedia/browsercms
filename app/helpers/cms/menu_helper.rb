@@ -127,44 +127,39 @@ module Cms
         html << "<ul>\n".indent(indent+2)
         nodes.each_with_index do |sn, i|
 
-          #If the node is a hidden page, then we aren't going to display it
-          logger.debug "node => #{sn.inspect}"
-          unless !sn.node || (sn.node.respond_to?(:hidden?) && sn.node.hidden?) || (sn.node.respond_to?(:archived?) && sn.node.archived?)
-            logger.debug "displaying node => #{sn.id}"
-            #Construct the CSS classes that the LI should have
-            classes = []          
-            if i == 0
-              classes << "first"
-            elsif i == nodes.size-1
-              classes << "last"
-            end
-            classes << "open" if ancestors.include?(sn.node)
-            classes << "on" if page == sn.node
-            cls = classes.empty? ? nil : classes.join(" ")
-            
-            html << %Q{<li id="#{sn.node_type.underscore}_#{sn.node.id}"#{cls ? " class=\"#{cls}\"" : ''}>\n}.indent(indent+4)
-            
-            #Figure out what this link for this node should be
-            #If it is a page, then the page will simply be used
-            #But if is a page, we call the first_page method
-            p = sn.node_type == "Section" ? sn.node.first_page : sn.node
-            html << %Q{<a href="#{p ? p.path : '#'}"#{(p.respond_to?(:new_window) && p.new_window?) ? ' target="_blank"' : ''}>#{sn.node.name}</a>\n}.indent(indent+6)
-            
-            #Now if this is a section, we do the child nodes, 
-            #but only if the show_all_siblings parameter is true, 
-            #or if this section is one of the current page's ancestors
-            #and also if the current depth is less than the target depth
-            if sn.node_type == "Section" && (show_all_siblings || ancestors.include?(sn.node)) && d < depth
-              fn.call(sn.node.child_nodes.of_type(["Section", "Page", "Link"]).all(:order => 'section_nodes.position'), d+1)
-            end
-            
-            html << %Q{</li>\n}.indent(indent+4)
+          #Construct the CSS classes that the LI should have
+          classes = []          
+          if i == 0
+            classes << "first"
+          elsif i == nodes.size-1
+            classes << "last"
           end
+          classes << "open" if ancestors.include?(sn.node)
+          classes << "on" if page == sn.node
+          cls = classes.empty? ? nil : classes.join(" ")
+          
+          html << %Q{<li id="#{sn.node_type.underscore}_#{sn.node.id}"#{cls ? " class=\"#{cls}\"" : ''}>\n}.indent(indent+4)
+          
+          #Figure out what this link for this node should be
+          #If it is a page, then the page will simply be used
+          #But if is a page, we call the first_page method
+          p = sn.node_type == "Section" ? sn.node.first_page : sn.node
+          html << %Q{<a href="#{p ? p.path : '#'}"#{(p.respond_to?(:new_window) && p.new_window?) ? ' target="_blank"' : ''}>#{sn.node.name}</a>\n}.indent(indent+6)
+          
+          #Now if this is a section, we do the child nodes, 
+          #but only if the show_all_siblings parameter is true, 
+          #or if this section is one of the current page's ancestors
+          #and also if the current depth is less than the target depth
+          if sn.node_type == "Section" && (show_all_siblings || ancestors.include?(sn.node)) && d < depth
+            fn.call(sn.node.visible_child_nodes, d+1)
+          end
+          
+          html << %Q{</li>\n}.indent(indent+4)
           
         end
         html << "</ul>\n".indent(indent+2)
       end
-      fn.call(ancestors.first.child_nodes.of_type(["Section", "Page", "Link"]).all(:order => 'section_nodes.position'), 1)
+      fn.call(ancestors.first.visible_child_nodes, 1)
       html << "</div>\n"
     end
   end

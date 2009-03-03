@@ -29,6 +29,11 @@ class Section < ActiveRecord::Base
   
   attr_accessor :full_path
   
+  def visible_child_nodes
+    children = child_nodes.of_type(["Section", "Page", "Link"]).all(:order => 'section_nodes.position')
+    children.select{|sn| sn.visible?}
+  end
+  
   def all_children_with_name
     child_sections.map do |s|
       if s.node
