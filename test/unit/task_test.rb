@@ -1,7 +1,8 @@
 require File.join(File.dirname(__FILE__), '/../test_helper')
 
 class TaskTest < ActiveSupport::TestCase
-  def prepare!
+  def setup
+    super
     @editor_a = create_admin_user(:login => "editor_a", :email => "editor_a@example.com")    
     @editor_b = create_admin_user(:login => "editor_b", :email => "editor_b@example.com")
     @non_editor = Factory(:user, :login => "non_editor", :email => "non_editor@example.com")
@@ -11,9 +12,7 @@ end
   
 class CreateTaskTest < TaskTest
 
-  def test_it
-    prepare!
-  
+  def test_create_task
     assert_that_you_can_assign_a_task_to_yourself
     assert_that_an_assigned_by_user_that_is_an_editor_is_required
     assert_that_an_assigned_to_user_that_is_an_editor_is_required
@@ -94,17 +93,12 @@ class CreateTaskTest < TaskTest
 end
 
 class ExistingIncompleteTaskTest < TaskTest
-  def prepare!
+  def setup
     super
     @existing_task = Factory(:task, :assigned_by => @editor_a, :assigned_to => @editor_b, :page => @page)
   end
-end
 
-class CreateTaskForAPageWithAnExistingIncompleteTaskTest < ExistingIncompleteTaskTest
-
-  def test_it
-    prepare!
-    
+  def test_create_task_for_a_page_with_existing_incomplete_tasks
     assert !@existing_task.completed?
     
     @new_task = Factory(:task, :assigned_by => @editor_b, :assigned_to => @editor_a, :page => @page)
@@ -117,13 +111,8 @@ class CreateTaskForAPageWithAnExistingIncompleteTaskTest < ExistingIncompleteTas
     assert @editor_a.tasks.incomplete.all.include?(@new_task)
     assert !@editor_b.tasks.incomplete.all.include?(@existing_task)
   end
-  
-end
 
-class CompletingATaskTest < ExistingIncompleteTaskTest
-  def test_it
-    prepare!
-    
+  def test_completing_a_task
     assert !@existing_task.completed?
     assert_equal @editor_b, @page.assigned_to
     assert @editor_b.tasks.incomplete.all.include?(@existing_task)    

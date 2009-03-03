@@ -1,5 +1,13 @@
 # m is for model, I felt the need to document that for some reason
 
+Factory.define :connector do |m|
+  m.association :page
+  m.page_version 1
+  m.container "main"
+  m.association :connectable, :factory => :html_block
+  m.connectable_version 1
+end
+
 Factory.define :group do |m|
   m.sequence(:name) {|n| "TestGroup#{n}" }
 end

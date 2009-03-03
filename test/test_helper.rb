@@ -71,6 +71,12 @@ class Test::Unit::TestCase
     end
   end
   
+  def assert_properties(object, properties)
+    properties.each do |property, expected_value|
+      assert_equal expected_value, object.send(property), "Expected '#{property}' to be '#{expected_value}'"
+    end
+  end
+  
   #----- Fixture/Data related helpers ------------------------------------------
 
   def admin_user
