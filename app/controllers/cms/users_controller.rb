@@ -6,7 +6,7 @@ class Cms::UsersController < Cms::ResourceController
   after_filter :update_group_membership, :only => [:update, :create]
   after_filter :update_flash, :only => [ :update, :create ]
   
-  verify :method => :put, :only => [ :enable, :disable ]
+  verify :method => :put, :only => [ :enable, :disable, :update_password ]
   
   def index
     query, conditions = [], []
@@ -35,6 +35,16 @@ class Cms::UsersController < Cms::ResourceController
 
   def change_password
     user
+  end
+
+  def update_password
+    user.password = params[:password]
+    user.password_confirmation = params[:password_confirmation]
+    if user.save
+      redirect_to cms_url(:users)
+    else
+      render :action => 'change_password'
+    end
   end
 
   def disable

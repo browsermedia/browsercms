@@ -13,11 +13,11 @@ html_block_version_1:
   deleted: false
   content: |
     <h1>Page Not Found</h1>
-    <p>The page you tried to access does not exist on this server.
+    <p>The page you tried to access does not exist on this server.</p>
   created_at: Fri Jan 30 23:54:34 UTC 2009
 
 html_block_version_2:
-  name: Page Not Found
+  name: Access Denied
   updated_at: Fri Jan 30 23:54:34 UTC 2009
   html_block_id: 2
   updated_by_id: 1

@@ -194,7 +194,26 @@ module Cms::ControllerTestHelper
   def self.included(test_case)
     test_case.send(:include, Cms::PathHelper)
   end
+  
   def request
     @request
-  end  
+  end
+  
+  def streaming_file_contents
+    #The body of a streaming response is a proc
+    streamer = @response.body
+    assert_equal Proc, streamer.class
+
+    #Create a dummy object for the proc to write to
+    output = Object.new
+    def output.write(contents)
+      (@contents ||= "") << contents 
+    end
+
+    #run the proc
+    streamer.call(@response, output)  
+
+    #return what it wrote to the dummy object
+    output.instance_variable_get("@contents")
+  end
 end

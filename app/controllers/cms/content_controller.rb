@@ -14,7 +14,7 @@ class Cms::ContentController < Cms::ApplicationController
   private
 
   def construct_path
-    @paths = params[:page_path] || params[:path]
+    @paths = params[:page_path] || params[:path] || []
     @path = "/#{@paths.join("/")}"
   end
   

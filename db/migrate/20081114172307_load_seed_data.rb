@@ -41,11 +41,11 @@ class LoadSeedData < ActiveRecord::Migration
     create_page(:access_denied, :name => "Access Denied", :path => "/system/access_denied", :section => sections(:system), :template => "Error", :publish_on_save => true, :hidden => true, :cacheable => true)
     create_page(:server_error, :name => "Server Error", :path => "/system/server_error", :section => sections(:system), :template => "Error", :publish_on_save => true, :hidden => true, :cacheable => true)
 
-    create_html_block(:page_not_found, :name => "Page Not Found", :content => "<h1>Page Not Found</h1>\n<p>The page you tried to access does not exist on this server.", :publish_on_save => true)
+    create_html_block(:page_not_found, :name => "Page Not Found", :content => "<h1>Page Not Found</h1>\n<p>The page you tried to access does not exist on this server.</p>", :publish_on_save => true)
     pages(:not_found).create_connector(html_blocks(:page_not_found), "main")
     pages(:not_found).publish!
 
-    create_html_block(:access_denied, :name => "Page Not Found", :content => "<h1>Access Denied</h1>\n<p>You have tried to reach a resource or page which you do not have permission to view.</p>", :publish_on_save => true)
+    create_html_block(:access_denied, :name => "Access Denied", :content => "<h1>Access Denied</h1>\n<p>You have tried to reach a resource or page which you do not have permission to view.</p>", :publish_on_save => true)
     pages(:access_denied).create_connector(html_blocks(:access_denied), "main")
     pages(:access_denied).publish!
 
