@@ -1,3 +1,12 @@
+namespace :test do
+  Rake::TestTask.new(:all => "db:test:prepare") do |t|
+    t.libs << "test"
+    t.pattern = 'test/**/*_test.rb'
+    t.verbose = true
+  end
+  Rake::Task['test:all'].comment = "Run all tests at once"
+end
+
 namespace :cms do
   
   desc "Installs the cms gems"
