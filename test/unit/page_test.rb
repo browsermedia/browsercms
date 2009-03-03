@@ -407,3 +407,80 @@ class PageWithTwoBlocksTest < ActiveSupport::TestCase
 
 end
 
+class PageWithBlockTest < ActiveSupport::TestCase
+  def setup
+    @page = Factory(:page, :section => root_section)
+    @block = Factory(:html_block)
+    @conn = @page.create_connector(@block, "bar") 
+    @page.publish!
+    @conn = @page.connectors.for_page_version(@page.version).for_connectable(@block).first
+  end
+  
+  def test_removing_connector
+    page_version = @page.version
+    page_version_count = Page::Version.count
+    assert @page.published?
+    
+    @page.remove_connector(@conn)    
+    
+    assert_equal page_version_count + 1, Page::Version.count
+    assert_equal page_version + 1, @page.version
+    
+    conns = @page.connectors.for_page_version(@page.version-1).all
+    assert_equal 1, conns.size
+    
+    assert_properties conns.first, {
+      :page => @page,
+      :page_version => 3,
+      :connectable => @block,
+      :connectable_version => 2     
+    }
+
+    assert @page.reload.connectors.for_page_version(@page.version).empty?
+    assert !@page.published?
+  end
+  
+  def test_removing_multiple_connectors
+    @block2 = Factory(:html_block)
+    @conn2 = @page.create_connector(@block2, "bar")
+    @conn3 = @page.create_connector(@block2, "foo")
+    #Need to get the new connector that matches @conn2, otherwise you will delete an older version, not the latest connector
+    @conn2 = Connector.first(:conditions => {:page_id => @page.reload.id, :page_version => @page.version, :connectable_id => @block2.id, :connectable_version => @block2.version, :container => "bar"})
+    @page.remove_connector(@conn2)
+    
+    page_version_count = Page::Version.count
+    page_version = @page.version
+    page_connector_count = @page.connectors.for_page_version(@page.version).count
+    
+    @conn = Connector.first(:conditions => {:page_id => @page.reload.id, :page_version => @page.version, :connectable_id => @block2.id, :connectable_version => @block2.version, :container => "foo"})
+    @page.remove_connector(@conn) 
+    @page.reload
+    
+    log_table_with Page, :id, :name, :version
+    log_table_with Page::Version, :id, :page_id, :name, :version, :version_comment
+    assert_equal page_version_count + 1, Page::Version.count
+    assert_equal 7, @page.versions.count
+    assert_equal page_version + 1, @page.version
+    assert_equal page_connector_count - 1, 
+      @page.connectors.for_page_version(@page.version).count
+      
+    conns = @page.connectors.all(:order => "page_version, connectable_id, container")
+
+    assert_equal 10, conns.size
+
+    log_array conns, :page_id, :page_version, :connectable_id, :connectable_version, :container 
+
+    assert_properties conns[0], {:page => @page, :page_version => 2, :connectable => @block,  :connectable_version => 1, :container => "bar"}
+    assert_properties conns[1], {:page => @page, :page_version => 3, :connectable => @block,  :connectable_version => 2, :container => "bar"}
+    assert_properties conns[2], {:page => @page, :page_version => 4, :connectable => @block,  :connectable_version => 2, :container => "bar"}
+    assert_properties conns[3], {:page => @page, :page_version => 4, :connectable => @block2, :connectable_version => 1, :container => "bar"}
+    assert_properties conns[4], {:page => @page, :page_version => 5, :connectable => @block,  :connectable_version => 2, :container => "bar"}
+    assert_properties conns[5], {:page => @page, :page_version => 5, :connectable => @block2, :connectable_version => 1, :container => "bar"}
+    assert_properties conns[6], {:page => @page, :page_version => 5, :connectable => @block2, :connectable_version => 1, :container => "foo"}
+    assert_properties conns[7], {:page => @page, :page_version => 6, :connectable => @block,  :connectable_version => 2, :container => "bar"}
+    assert_properties conns[8], {:page => @page, :page_version => 6, :connectable => @block2, :connectable_version => 1, :container => "foo"}
+    assert_properties conns[9], {:page => @page, :page_version => 7, :connectable => @block,  :connectable_version => 2, :container => "bar"}      
+  end
+  
+end
+
