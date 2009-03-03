@@ -34,6 +34,10 @@ Factory.define :html_block do |m|
   m.content "<h1>About Us</h1>\n<p>Lorem ipsum dolor sit amet...</p>"
 end
 
+Factory.define :image_block do |m|
+  m.sequence(:name) {|n| "TestImageBlock#{n}"}
+end
+
 Factory.define :link do |m|
   m.sequence(:name) {|n| "Link #{n}"}
 end

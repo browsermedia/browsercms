@@ -160,6 +160,14 @@ class Test::Unit::TestCase
     Group.find_by_code("guest") || Factory(:group, :code => "guest")
   end  
 
+  def login_as(user)
+    @request.session[:user_id] = user ? user.id : nil
+  end
+
+  def login_as_cms_admin
+    login_as(User.first)
+  end
+
   def mock_file(options = {})
     file_upload_object({:original_filename => "test.jpg", 
       :content_type => "image/jpeg", :rewind => true,
@@ -180,4 +188,13 @@ class Test::Unit::TestCase
     sections(:section_1)
   end
   
+end
+
+module Cms::ControllerTestHelper
+  def self.included(test_case)
+    test_case.send(:include, Cms::PathHelper)
+  end
+  def request
+    @request
+  end  
 end
