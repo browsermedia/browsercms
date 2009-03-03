@@ -1,5 +1,14 @@
 # m is for model, I felt the need to document that for some reason
 
+Factory.define :category do |m|
+  m.association :category_type
+  m.sequence(:name) {|n| "TestCategory#{n}"}
+end
+
+Factory.define :category_type do |m|
+  m.sequence(:name) {|n| "TestCategoryType#{n}"}
+end
+
 Factory.define :connector do |m|
   m.association :page
   m.page_version 1
