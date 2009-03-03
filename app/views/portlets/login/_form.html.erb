@@ -3,16 +3,18 @@
   <%= f.text_field :name %>
 </div>
 
-<% @block.success_url = "/" if @block.success_url.blank? %>
 <div class="fields text_fields">
   <%= f.label :success_url %>
   <%= f.text_field :success_url %>
+  <div class="instructions">Leave blank to send the user to the page they were trying to access</div>
+  <br clear="all"/ >
 </div>
 
-<% @block.failure_url = "/" if @block.failure_url.blank? %>
 <div class="fields text_fields">
   <%= f.label :failure_url %>
   <%= f.text_field :failure_url %>
+  <div class="instructions">Leave blank to send the user to the page they tried to login from</div>
+  <br clear="all"/ >
 </div>
 
 <% @block.template = LoginPortlet.default_template if @block.template.blank? %>

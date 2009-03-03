@@ -63,6 +63,7 @@ class Cms::ContentController < Cms::ApplicationController
     end
 
     unless current_user.able_to_view?(@page)
+      store_location
       raise Cms::Errors::AccessDenied
     end
 

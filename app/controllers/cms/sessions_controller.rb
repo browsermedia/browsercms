@@ -4,6 +4,8 @@ class Cms::SessionsController < Cms::BaseController
   skip_before_filter :login_required
   layout "cms/login"
   def login
+    logger.info "session[:return_to] => #{session[:return_to]}"
+    logger.info "params[:success_url] => #{params[:success_url]}"
     if request.post?
       logout_keeping_session!
       user = User.authenticate(params[:login], params[:password])
@@ -16,8 +18,9 @@ class Cms::SessionsController < Cms::BaseController
         new_cookie_flag = (params[:remember_me] == "1")
         handle_remember_cookie! new_cookie_flag
         flash[:notice] = "Logged in successfully"
-        unless params[:success_url].blank?
-          redirect_to params[:success_url]
+        if params[:success_url] # Coming from login portlet
+          redirect_to(session[:return_to] || params[:success_url] || "/")          
+          session[:return_to] = nil
         else
           redirect_back_or_default(cms_home_url)
         end
@@ -25,12 +28,18 @@ class Cms::SessionsController < Cms::BaseController
         note_failed_signin
         @login       = params[:login]
         @remember_me = params[:remember_me]
-        unless params[:failure_url].blank?
-          flash[:login_error] = "Log in failed"          
-          redirect_to append_to_query_string(params[:failure_url], 
-            [:login, params[:login]], 
-            [:remember_me, params[:remmember_me]])
-        end
+        flash[:login_error] = "Log in failed"  
+        if params[:success_url] # Coming from login portlet
+          if params[:success_url].blank?
+            success_url = session[:return_to] || "/"
+          else
+            success_url = params[:success_url]
+          end
+          flash[:login] = params[:login]
+          flash[:remember_me] = params[:remember_me]
+          flash[:success_url] = success_url
+          redirect_to request.referrer
+        end  
       end
     end
   end
@@ -48,4 +57,5 @@ protected
     flash[:error] = "Couldn't log you in as '#{params[:login]}'"
     logger.warn "Failed login for '#{params[:login]}' from #{request.remote_ip} at #{Time.now.utc}"
   end
+  
 end

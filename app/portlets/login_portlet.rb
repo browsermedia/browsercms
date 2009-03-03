@@ -5,8 +5,8 @@ class LoginPortlet < Portlet
 <div class="login-portlet">
   <div class="error"><%= flash[:login_error] %></div>
   <% form_tag "/cms/login" do %>
-    <%= hidden_field_tag :success_url, portlet.success_url %>
-    <%= hidden_field_tag :failure_url, portlet.failure_url %>    
+    <%= hidden_field_tag :success_url, success_url %>
+    <%= hidden_field_tag :failure_url, failure_url %>    
     <p>
       <%= label_tag :login %>
       <%= text_field_tag :login, login %>
@@ -30,7 +30,14 @@ class LoginPortlet < Portlet
   
   def renderer(portlet)
     lambda do
-      render :inline => portlet.template, :locals => {:portlet => portlet, :login => params[:login], :remember_me => params[:remember_me]}
+      locals = {
+        :portlet => portlet,
+        :success_url => (flash[:success_url] || portlet.success_url),        
+        :failure_url => portlet.failure_url,
+        :login => (flash[:login] || params[:login]),
+        :remember_me => (flash[:remember_me] || params[:remember_me])
+      }
+      render :inline => portlet.template, :locals => locals
     end
   end
     
