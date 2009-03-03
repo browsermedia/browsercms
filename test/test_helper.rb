@@ -85,6 +85,23 @@ class Test::Unit::TestCase
     assert_equal original_value - 1, new_value, "Expected value to be decremented"
   end
   
+  # We are overriding the regular assert_raise because we want
+  # a string to check the error message, and a class to check the type
+  def assert_raise(exception_class_or_message, &block)
+    begin
+      yield
+    rescue Exception => e
+      if exception_class_or_message.is_a?(String)
+        assert_equal exception_class_or_message, e.message
+      else
+        assert exception_class_or_message === e, 
+          "Expected exception to be #{exception_class_or_message}, but is is #{e.class}"
+      end
+      return
+    end
+    flunk "Expected exception #{exception_class_or_message.is_a?(String) ? "'#{exception_class_or_message}'" : exception_class_or_message} to be raised, but nothing was raised"
+  end
+  
   #----- Fixture/Data related helpers ------------------------------------------
 
   def admin_user
