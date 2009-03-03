@@ -246,7 +246,7 @@ describe "Destroying a block", :type => :model do
 
   it "should raise an error when a dynamic finder is called" do
     @destroying_the_block.call    
-    lambda { HtmlBlock.find_by_name("foo") }.should raise_error
+    HtmlBlock.find_by_name(@block.name).should be_nil
   end
 
   it "should make delete_all mark as deleted" do

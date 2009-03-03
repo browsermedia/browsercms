@@ -39,15 +39,7 @@ module Cms
               conditions = {:conditions => {:id => id_or_conditions}}
             end
             count(conditions) > 0
-          end
-          alias_method :original_method_missing, :method_missing
-          def method_missing(method_id, *arguments)
-            if matches_dynamic_finder?(method_id) || matches_dynamic_finder_with_initialize_or_create?(method_id)
-              raise "Dynamic Finders are not currently supported by content types that use soft delete"
-            else
-              original_method_missing(method_id, *arguments)
-            end
-          end        
+          end      
         end
         module InstanceMethods
           #Overrides original destroy method
