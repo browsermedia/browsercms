@@ -27,6 +27,7 @@ Rails::Initializer.run do |config|
   #config.gem 'pjb3-flex-attributes', :version => '~> 0.1', :lib => 'flex-attributes', :source => 'http://gems.github.com'
   #config.gem 'fiveruns_tuneup'
   #config.gem 'rdiscount'
+  config.gem "thoughtbot-factory_girl", :lib => "factory_girl", :source => "http://gems.github.com"
     
   # Only load the plugins named here, in the order given. By default, all plugins 
   # in vendor/plugins are loaded in alphabetical order.

@@ -32,10 +32,9 @@ class Test::Unit::TestCase
   #
   # Note: You'll currently still have to declare fixtures explicitly in integration tests
   # -- they do not yet inherit this setting
-  #fixtures :all
+  fixtures :all
 
   # Add more helper methods to be used by all tests here...
-  include FixtureReplacement
   
   #----- Custom Assertions -----------------------------------------------------
   
@@ -71,16 +70,30 @@ class Test::Unit::TestCase
   
   #----- Fixture/Data related helpers ------------------------------------------
 
+  def admin_user
+    users(:user_1)
+  end
+
+  def create_or_find_permission_named(name)
+    Permission.named(name).first || Factory(:permission, :name => name)
+  end
+
+  def create_admin_user(attrs={})
+    user = Factory(:user, {:login => "cmsadmin"}.merge(attrs))
+    group = Factory(:group, :group_type => Factory(:group_type, :cms_access => true))
+    group.permissions << create_or_find_permission_named("administrate")
+    group.permissions << create_or_find_permission_named("edit_content")
+    group.permissions << create_or_find_permission_named("publish_content")
+    user.groups << group
+    user  
+  end
+
   def guest_group
-    Group.find_by_code("guest") || create_group(:code => "guest")
+    Group.find_by_code("guest") || Factory(:group, :code => "guest")
   end  
 
   def root_section
-    root = Section.root.first
-    return root unless root.nil?
-    root = create_section(:name => "My Site", :root => true)
-    root.groups << guest_group
-    root
+    sections(:section_1)
   end
   
 end

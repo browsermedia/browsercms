@@ -1,12 +1,14 @@
 require File.join(File.dirname(__FILE__), '/../test_helper')
 
 class AttachmentTest < ActiveSupport::TestCase
-  test "creating an attachment witn no file" do
+  
+  def test_creating_an_attachment_witn_no_file
     attachment = Attachment.new
     assert_not_valid attachment
     assert_has_error_on attachment, :temp_file, "You must upload a file"
   end
-  test "creating an attachment with a StringIO file" do
+  
+  def test_creating_an_attachment_with_a_StringIO_file
     file = ActionController::UploadedStringIO.new("This is a file")
     file.original_path = "bar.txt"
     file.content_type = "text/plain"
@@ -18,7 +20,8 @@ class AttachmentTest < ActiveSupport::TestCase
     assert_file_exists attachment.full_file_location
     assert_equal "This is a file", open(attachment.full_file_location){|f| f.read}
   end
-  test "creating an attachment with a Tempfile file" do
+  
+  def test_creating_an_attachment_with_a_Tempfile_file
     file = ActionController::UploadedTempfile.new("foo.txt")
     open(file.path, 'w') {|f| f << "This is a file"}
     file.original_path = "bar.txt"
@@ -53,7 +56,8 @@ class AttachmentTest < ActiveSupport::TestCase
     assert_not_equal original_file_location, attachment.file_location
     assert_equal "This is a new file", open(attachment.full_file_location){|f| f.read}  
   end
-  test "find_live_by_file_path" do
+  
+  def test_find_live_by_file_path
     file = ActionController::UploadedTempfile.new("foo.txt")
     open(file.path, 'w') {|f| f << "This is a file"}
     file.original_path = "bar.txt"
@@ -71,7 +75,8 @@ class AttachmentTest < ActiveSupport::TestCase
     assert !attachment.published?, "Attachment should not be published"
     assert_equal attachment.as_of_version(2), Attachment.find_live_by_file_path("/foo.txt")    
   end
-  test "update attachment section" do
+  
+  def test_update_attachment_section
     file = ActionController::UploadedTempfile.new("foo.txt")
     open(file.path, 'w') {|f| f << "This is a file"}
     file.original_path = "bar.txt"
@@ -79,11 +84,11 @@ class AttachmentTest < ActiveSupport::TestCase
     attachment = Attachment.new(:temp_file => file, :file_path => "/foo.txt", :section => root_section)
     attachment.save!
 
-    new_section = create_section(:parent => root_section, :name => "New")
+    new_section = Factory(:section, :name => "New")
     assert_equal root_section, attachment.section
     
     attachment.update_attributes!(:section => new_section)
     assert_equal new_section, attachment.section
-    
   end
+  
 end
