@@ -105,9 +105,23 @@ class Test::Unit::TestCase
     user  
   end
 
+  def file_upload_object(options)
+    file = ActionController::UploadedTempfile.new(options[:original_filename])
+    open(file.path, 'w') {|f| f << options[:read]}
+    file.original_path = options[:original_filename]
+    file.content_type = options[:content_type]
+    file
+  end
+
   def guest_group
     Group.find_by_code("guest") || Factory(:group, :code => "guest")
   end  
+
+  def mock_file(options = {})
+    file_upload_object({:original_filename => "test.jpg", 
+      :content_type => "image/jpeg", :rewind => true,
+      :size => "99", :read => "01010010101010101"}.merge(options))
+  end
 
   # Takes a list of the names of instance variables to "reset"
   # Each instance variable will be set to a new instance

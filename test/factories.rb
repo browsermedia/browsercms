@@ -17,6 +17,10 @@ Factory.define :connector do |m|
   m.connectable_version 1
 end
 
+Factory.define :file_block do |m|
+  m.sequence(:name) {|n| "TestFileBlock#{n}"}
+end
+
 Factory.define :group do |m|
   m.sequence(:name) {|n| "TestGroup#{n}" }
 end
