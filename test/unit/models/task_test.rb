@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), '/../test_helper')
+require File.join(File.dirname(__FILE__), '/../../test_helper')
 
 class TaskTest < ActiveSupport::TestCase
   def setup
