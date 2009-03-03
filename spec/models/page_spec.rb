@@ -245,20 +245,6 @@ describe Page do
 
     end
     
-    describe "reverting" do
-      before do
-        @page = create_page(:section => root_section, :name => "V1")
-        @page.update_attribute(:name, "V2")
-        @revert_the_page = lambda { @page.revert_to(1)}
-      end
-      it "should change the version by 1" do
-        @revert_the_page.should change(@page, :version).by(1)
-      end
-      it "should update the attributes" do
-        @revert_the_page.call
-        @page.name.should == "V1"
-      end
-    end
   end
 end
 

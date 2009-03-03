@@ -15,8 +15,8 @@ class CreateTaskTest < TaskTest
     prepare!
   
     assert_that_you_can_assign_a_task_to_yourself
-    assert_that_an_assigned_by_user_that_has_edit_content_or_publish_content_permission_is_required
-    assert_that_an_assigned_to_user_that_has_edit_content_or_publish_content_permission_is_required
+    assert_that_an_assigned_by_user_that_is_an_editor_is_required
+    assert_that_an_assigned_to_user_that_is_an_editor_is_required
     assert_that_a_page_is_required
   
     create_the_task!
@@ -36,7 +36,7 @@ class CreateTaskTest < TaskTest
       assert_valid Factory.build(:task, :assigned_by => @editor_a, :assigned_to => @editor_a)
     end
 
-    def assert_that_an_assigned_by_user_that_has_edit_content_or_publish_content_permission_is_required
+    def assert_that_an_assigned_by_user_that_is_an_editor_is_required
       task = Factory.build(:task, :assigned_by => nil, :assigned_to => @editor_a)
       assert_not_valid task
       assert_has_error_on task, :assigned_by_id, "is required"
@@ -46,7 +46,7 @@ class CreateTaskTest < TaskTest
       assert_has_error_on task, :assigned_by_id, "cannot assign tasks"
     end
   
-    def assert_that_an_assigned_to_user_that_has_edit_content_or_publish_content_permission_is_required
+    def assert_that_an_assigned_to_user_that_is_an_editor_is_required
       task = Factory.build(:task, :assigned_by => @editor_a, :assigned_to => nil)
       assert_not_valid task
       assert_has_error_on task, :assigned_to_id, "is required"    

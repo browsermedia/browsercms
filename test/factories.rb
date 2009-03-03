@@ -8,6 +8,11 @@ Factory.define :group_type do |m|
   m.sequence(:name) {|n| "TestGroupType#{n}" }
 end
 
+Factory.define :html_block do |m|
+  m.name "About Us"
+  m.content "<h1>About Us</h1>\n<p>Lorem ipsum dolor sit amet...</p>"
+end
+
 Factory.define :page do |m|
   m.sequence(:name) {|n| "Page #{n}" }
   m.path {|a| "/#{a.name.gsub(/\s/,'_').downcase}" }
