@@ -65,7 +65,7 @@ class Test::Unit::TestCase
     end
     if error_message
       assert e.include?(error_message), 
-        "Expected errors on #{field} #{e} to include '#{error_message}', but it does not"
+        "Expected errors on #{field} to include '#{error_message}', but it is [#{e.map{|err| "'#{err}'"}.join(", ")}]"
     else
       assert !e.empty?, "Expected errors on #{field}, but there are none"
     end
@@ -100,6 +100,32 @@ class Test::Unit::TestCase
       return
     end
     flunk "Expected exception #{exception_class_or_message.is_a?(String) ? "'#{exception_class_or_message}'" : exception_class_or_message} to be raised, but nothing was raised"
+  end
+  
+  #----- Test Macros -----------------------------------------------------------
+  class << self
+    def should_validate_presence_of(*fields)
+      fields.each do |f|
+        class_name = name.sub(/Test$/,'')
+        define_method("test_validates_presence_of_#{f}") do
+          model = Factory.build(class_name.underscore.to_sym, f => nil)
+          assert !model.valid?
+          assert_has_error_on model, f, "can't be blank"
+        end
+      end
+    end
+    def should_validate_uniqueness_of(*fields)
+      fields.each do |f|
+        class_name = name.sub(/Test$/,'')
+        define_method("test_validates_uniqueness_of_#{f}") do
+          existing_model = Factory(class_name.underscore.to_sym)
+          model = Factory.build(class_name.underscore.to_sym, f => existing_model.send(f))
+          assert !model.valid?
+          assert_has_error_on model, f, "has already been taken"
+        end
+      end
+    end
+
   end
   
   #----- Fixture/Data related helpers ------------------------------------------

@@ -34,6 +34,10 @@ Factory.define :html_block do |m|
   m.content "<h1>About Us</h1>\n<p>Lorem ipsum dolor sit amet...</p>"
 end
 
+Factory.define :link do |m|
+  m.sequence(:name) {|n| "Link #{n}"}
+end
+
 Factory.define :page do |m|
   m.sequence(:name) {|n| "Page #{n}" }
   m.path {|a| "/#{a.name.gsub(/\s/,'_').downcase}" }
@@ -49,6 +53,11 @@ Factory.define :section do |m|
   m.name "Test"
   m.path "/"
   m.parent { Section.root.first }
+end
+
+Factory.define :site do |m|
+  m.sequence(:name) {|n| "Test #{n}"}
+  m.domain {|a| "#{a.name.gsub(/\s/,"_").downcase}.com" }
 end
 
 Factory.define :task do |m|
