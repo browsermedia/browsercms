@@ -125,11 +125,22 @@ class PageTest < ActiveSupport::TestCase
     page.destroy
     
     assert_equal page_count, Page.count_with_deleted
-    assert_equal page_version_count + 1, page.versions.count
+    assert_incremented page_version_count, page.versions.count
     assert page.deleted?
     assert_raise ActiveRecord::RecordNotFound do
       Page.find(page.id)
     end    
+  end
+
+  def test_adding_a_block_to_a_page_puts_page_in_draft_mode
+    @page = Factory(:page, :section => root_section, :publish_on_save => true)
+    @block = Factory(:html_block, :publish_on_save => true)
+    reset(:page, :block)
+    assert @page.published?
+    assert @block.published?
+    @page.create_connector(@block, "main")
+    reset(:page, :block)
+    assert !@page.published?
   end
 
 end
@@ -222,8 +233,8 @@ class PageWithAssociatedBlocksTest < ActiveSupport::TestCase
     
     @page.update_attributes(:name => "Foo") 
     
-    assert_equal connector_count + 1, Connector.count
-    assert_equal page_version + 1, @page.version
+    assert_incremented connector_count, Connector.count
+    assert_incremented page_version, @page.version
   end
   
   # It should not create a new page version or a new connector
@@ -244,7 +255,7 @@ class PageWithAssociatedBlocksTest < ActiveSupport::TestCase
     
     @page.destroy
     
-    assert_equal connector_count - 1, Connector.count
+    assert_decremented connector_count, Connector.count
     assert !Connector.exists?(@page_connector.id)
     assert Connector.exists?(@other_connector.id)
     assert HtmlBlock.exists?(@block.id)
@@ -268,7 +279,7 @@ class AddingBlocksToPageTest < ActiveSupport::TestCase
     assert_equal 4, @page.reload.version
     assert_equal 4, @conn.page_version
     assert_equal 1, @conn.connectable_version
-    assert_equal page_version + 1, @page.version 
+    assert_incremented page_version, @page.version 
     assert_equal 3, @page.connectors.for_page_version(@page.version).count
     assert_equal connector_count + 3, Connector.count
     
@@ -337,6 +348,12 @@ class PageWithTwoBlocksTest < ActiveSupport::TestCase
     @page.reload    
   end
   
+  def test_editing_one_of_the_blocks_creates_a_new_version_of_the_page
+    page_version = @page.version
+    @foo_block.update_attributes(:name => "Something Else")
+    assert_incremented page_version, @page.reload.version
+  end
+  
   # A page that had 2 blocks added to it and then had them removed, 
   # when reverting to the previous version,
   # should restore the connectors from the version being reverted to
@@ -347,7 +364,7 @@ class PageWithTwoBlocksTest < ActiveSupport::TestCase
     
     @page.revert 
     
-    assert_equal connector_count + 1, Connector.count
+    assert_incremented connector_count, Connector.count
         
     assert_properties @page.reload.connectors.for_page_version(@page.version).first, {
       :page => @page, 
@@ -394,8 +411,8 @@ class PageWithTwoBlocksTest < ActiveSupport::TestCase
     
     @page.revert_to(3)
     
-    assert_equal page_version + 1, @page.version
-    assert_equal foo_block_version + 1, @foo_block.reload.version
+    assert_incremented page_version, @page.version
+    assert_incremented foo_block_version, @foo_block.reload.version
     assert_equal "Foo Block", @page.connectors.for_page_version(@page.version).reload.first.connectable.name
   end
 
@@ -423,8 +440,8 @@ class PageWithBlockTest < ActiveSupport::TestCase
     
     @page.remove_connector(@conn)    
     
-    assert_equal page_version_count + 1, Page::Version.count
-    assert_equal page_version + 1, @page.version
+    assert_incremented page_version_count, Page::Version.count
+    assert_incremented page_version, @page.version
     
     conns = @page.connectors.for_page_version(@page.version-1).all
     assert_equal 1, conns.size
@@ -458,10 +475,10 @@ class PageWithBlockTest < ActiveSupport::TestCase
     
     log_table_with Page, :id, :name, :version
     log_table_with Page::Version, :id, :page_id, :name, :version, :version_comment
-    assert_equal page_version_count + 1, Page::Version.count
+    assert_incremented page_version_count, Page::Version.count
     assert_equal 7, @page.versions.count
-    assert_equal page_version + 1, @page.version
-    assert_equal page_connector_count - 1, 
+    assert_incremented page_version, @page.version
+    assert_decremented page_connector_count, 
       @page.connectors.for_page_version(@page.version).count
       
     conns = @page.connectors.all(:order => "page_version, connectable_id, container")
@@ -482,5 +499,117 @@ class PageWithBlockTest < ActiveSupport::TestCase
     assert_properties conns[9], {:page => @page, :page_version => 7, :connectable => @block,  :connectable_version => 2, :container => "bar"}      
   end
   
+end
+
+class UnpublishedPageWithOnePublishedAndOneUnpublishedBlockTest < ActiveSupport::TestCase
+  def setup
+    @page = Factory(:page, :section => root_section)
+    @published_block = Factory(:html_block, :name => "Published")
+    @unpublished_block = Factory(:html_block, :name => "Unpublished")
+    @page.create_connector(@published_block, "main")
+    @page.create_connector(@unpublished_block, "main")
+    @published_block.publish!
+    @page.reload    
+  end
+  
+  def test_publishing_the_block
+    @unpublished_block.publish!
+    @page.reload
+    assert @unpublished_block.published?
+    assert !@page.published?
+  end
+  
+  def test_publishing_the_page
+    page_version_count = Page::Version.count
+    unpublished_block_version_count = @unpublished_block.versions.count
+    published_block_version_count = @published_block.versions.count
+    
+    @page.publish!
+    
+    assert_incremented page_version_count, Page::Version.count
+    assert_incremented unpublished_block_version_count, @unpublished_block.versions.count
+    assert_equal published_block_version_count, @published_block.versions.count
+    assert @page.published?
+    assert @unpublished_block.reload.published?
+    assert @published_block.reload.published?
+    assert_equal 2, @page.reload.connectors.for_page_version(@page.version).last.connectable_version
+  end
+  
+end
+
+class RevertingABlockThatIsOnMultiplePagesTest < ActiveSupport::TestCase
+  def test_that_it_reverts_both_pages
+    
+    # 1. Create a new page (Page 1, v1)    
+    @page1 = Factory(:page, :name => "Page 1")
+    assert_equal 1, @page1.version
+
+    # 2. Create a new page (Page 2, v1)
+    @page2 = Factory(:page, :name => "Page 2")
+
+    # 3. Add a new html block to Page 1. Save, don't publish. (Page 1, v2)    
+    @block = Factory(:html_block, :name => "Block v1", :connect_to_page_id => @page1.id, :connect_to_container => "main")
+    reset(:page1, :page2, :block)
+    assert_equal 2, @page1.version
+    assert_equal 1, @page2.version
+
+    # 4. Goto page 2, and select that block. (Page 2, v2)    
+    @page2.create_connector(@block, "main")
+    reset(:page1, :page2, :block)
+    assert_equal 2, @page1.version
+    assert_equal 2, @page2.version
+
+    # 5. Edit the block (Page 1, v3, Page 2, v3, Block v2)
+    @block.update_attributes!(:name => "Block v2")
+    reset(:page1, :page2, :block)
+    assert_equal 3, @page1.version
+    assert_equal 3, @page2.version
+    assert_equal 2, @block.version
+
+    # 6. Revert page 1 to version 2. (Page 1, v4, Page 2, v4, Block v3)
+    @page1.revert_to(2)
+    reset(:page1, :page2, :block)
+    assert_equal 4, @page1.version
+    assert_equal 4, @page2.version
+    assert_equal 3, @block.version
+
+    # Expected: Both page 1 and 2 will display the same version of the block (v1).
+    assert_equal "Block v1", @page1.connectors.first.connectable.name
+    assert_equal "Block v1", @page2.connectors.first.connectable.name
+    
+  end
+    
+end
+
+class ViewingAPreviousVersionOfAPageTest < ActiveSupport::TestCase
+
+  def test_that_it_shows_the_correct_version_of_the_blocks_it_is_connected_to
+    # 1. Create Page A (v1)
+    @page = Factory(:page, :section => root_section)
+    
+    # 2. Add new Html Block A to Page A (Page A v2, Block A v1)
+    @block = Factory(:html_block, :name => "Block 1", :connect_to_page_id => @page.id, :connect_to_container => "main")
+    reset(:page, :block)
+    assert_equal 2, @page.version
+    assert_equal 1, @block.version 
+    
+    # 3. Publish Page A (Page A v3, Block A v2)
+    @page.publish!
+    reset(:page, :block)
+    assert_equal 3, @page.version
+    assert_equal 2, @block.version 
+    
+    # 4. Edit Block A (Page A v4, Block A v3)
+    @block.update_attributes!(:name => "Block 2")
+    reset(:page, :block)
+    assert_equal 4, @page.version
+    assert_equal 3, @block.version 
+     
+    # Open Page A in a different browser (as guest)
+    @live_page = Page.find_live_by_path(@page.path)
+    assert_equal 3, @live_page.version
+    assert_equal "Block 1", @live_page.connectors.for_page_version(@live_page.version).first.connectable.live_version.name
+     
+  end
 end
 

@@ -76,6 +76,14 @@ class Test::Unit::TestCase
       assert_equal expected_value, object.send(property), "Expected '#{property}' to be '#{expected_value}'"
     end
   end
+
+  def assert_incremented(original_value, new_value)
+    assert_equal original_value + 1, new_value, "Expected value to be incremented"
+  end
+
+  def assert_decremented(original_value, new_value)
+    assert_equal original_value - 1, new_value, "Expected value to be decremented"
+  end
   
   #----- Fixture/Data related helpers ------------------------------------------
 
@@ -100,6 +108,16 @@ class Test::Unit::TestCase
   def guest_group
     Group.find_by_code("guest") || Factory(:group, :code => "guest")
   end  
+
+  # Takes a list of the names of instance variables to "reset"
+  # Each instance variable will be set to a new instance
+  # That is found by looking that object by id
+  def reset(*args)
+    args.each do |v|
+      val = instance_variable_get("@#{v}")
+      instance_variable_set("@#{v}", val.class.find(val.id))
+    end
+  end
 
   def root_section
     sections(:section_1)
