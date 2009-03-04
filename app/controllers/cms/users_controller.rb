@@ -30,7 +30,7 @@ class Cms::UsersController < Cms::ResourceController
     conditions = conditions.unshift(query.join(" AND "))
     per_page = params[:per_page] || 10
     
-    @users = User.paginate(:page => params[:page], :per_page => per_page, :include => :user_group_memberships, :conditions => conditions)
+    @users = User.paginate(:page => params[:page], :per_page => per_page, :include => :user_group_memberships, :conditions => conditions, :order => "first_name, last_name, email")
   end
 
   def change_password
