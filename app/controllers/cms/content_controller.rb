@@ -1,14 +1,14 @@
 class Cms::ContentController < Cms::ApplicationController
 
   before_filter :construct_path
+  before_filter :redirect_non_cms_users_to_public_site
   before_filter :try_to_redirect
   before_filter :try_to_stream_file
   before_filter :check_access_to_page
   
-  #caches_action :show
-  
   def show        
     render_page
+    cache_page
   end
 
   private
@@ -16,6 +16,23 @@ class Cms::ContentController < Cms::ApplicationController
   def construct_path
     @paths = params[:page_path] || params[:path] || []
     @path = "/#{@paths.join("/")}"
+  end
+  
+  def redirect_non_cms_users_to_public_site
+    @show_toolbar = false
+    if Cms.caching_enabled?
+      if cms_site?
+        if current_user.able_to?(:edit_content, :publish_content)
+          @show_toolbar = true
+        else
+          redirect_to url_without_cms_domain_prefix
+        end
+      end
+    else
+      if current_user.able_to?(:edit_content, :publish_content)
+        @show_toolbar = true
+      end
+    end
   end
   
   def try_to_redirect
@@ -67,7 +84,9 @@ class Cms::ContentController < Cms::ApplicationController
       raise Cms::Errors::AccessDenied
     end
 
-    #Doing this so if you are logged in, you never see the cached page
+    # Doing this so if you are logged in, you never see the cached page
+    # We are calling render_page just like the show action does
+    # But since we do it from a before filter, the page doesn't get cached
     if logged_in?
       logger.info "Not Caching, user is logged in"
       render_page
@@ -110,7 +129,7 @@ class Cms::ContentController < Cms::ApplicationController
   end
 
   def set_page_mode
-    @mode = current_user.able_to?(:edit_content) ? (params[:mode] || session[:page_mode] || "edit") : "view"
+    @mode = @show_toolbar && current_user.able_to?(:edit_content) ? (params[:mode] || session[:page_mode] || "edit") : "view"
     session[:page_mode] = @mode      
   end
 

@@ -1,0 +1,42 @@
+BrowserCMS Deployment Guide
+===========================
+
+This guide covers how to setup the Apache Passenger (mod_rails) production environment for your BrowserCMS application.
+
+== Setting Up Virtual Hosts for Page Caching ==
+
+In order to setup BrowserCMS to due page caching, you need to create two virtual hosts for your site.  The main purpose for this is to allow page caching to work when you access a page on the main site, but then have the pages not be served from the cache when you are working in the BrowserCMS interface.
+
+..................
+<VirtualHost *:80>
+  ServerName browsercms.local
+  DocumentRoot "/Users/pbarry/projects/browsercms/public"
+  RailsEnv production
+  RewriteEngine On
+  
+  # Uncomment for rewrite debugging
+  #RewriteLog /Users/pbarry/projects/browsercms/log/rewrite.log
+  #RewriteLogLevel 9
+
+  #apache should serve cached pages
+  RewriteRule ^/$ /cache/index.html [QSA]
+  RewriteRule ^([^.]+)$ /cache/$1.html [QSA]
+  
+  <directory "/Users/pbarry/projects/browsercms/public">
+    Order allow,deny
+    Allow from all
+  </directory>
+</VirtualHost>
+
+<VirtualHost *:80>
+  ServerName cms.browsercms.local
+  DocumentRoot "/Users/pbarry/projects/browsercms/public"
+  RailsEnv production
+  <directory "/Users/pbarry/projects/browsercms/public">
+    Order allow,deny
+    Allow from all
+  </directory>
+</VirtualHost>
+..................
+
+

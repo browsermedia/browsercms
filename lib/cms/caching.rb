@@ -3,6 +3,14 @@ module Cms
   # the default Rails cache.  The second is the protected cache, which contains files that can only be shown
   # to users with the proper authorization.
   module Caching
+    def caching_enabled?
+      @caching_enabled ||= (Rails.env == "production")
+    end
+
+    def caching_enabled=(caching_enabled)
+      @caching_enabled = caching_enabled
+    end
+
     # This is the cache of files that can be served directly to any user, guest or registered
     def public_cache
       ActionController::Base.cache_store

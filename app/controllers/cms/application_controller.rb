@@ -16,4 +16,25 @@ class Cms::ApplicationController < ApplicationController
     new_url << params.map{|k,v| "#{k.to_s}=#{CGI::escape(v.to_s)}"}.join("&")
   end
   
+  def self.check_permissions(*perms)
+    opts = Hash === perms.last ? perms.pop : {}
+    before_filter(opts) do |controller|
+      raise Cms::Errors::AccessDenied unless controller.send(:current_user).able_to?(*perms)
+    end      
+  end  
+  
+  def cms_domain_prefix
+    "cms"
+  end
+  
+  def cms_site?
+    subdomains = request.subdomains
+    subdomains.shift if subdomains.first == "www"
+    subdomains.first == cms_domain_prefix
+  end
+  
+  def url_without_cms_domain_prefix
+    request.url.sub(/#{cms_domain_prefix}\./,'')
+  end
+  
 end

@@ -138,43 +138,170 @@ class Cms::ContentControllerTest < ActionController::TestCase
   
 end
 
-# Logged in as guest or member
-#      mysite.com/cms          -> cms.mysite.com/cms
-#      mysite.com/cms/whatever -> cms.mysite.com/cms
-#      mysite.com/page         -> serves cached page
-#  cms.mysite.com/cms          -> renders cms login
-#  cms.mysite.com/cms/whatever -> cms.mysite.com/cms
-#  cms.mysite.com/page         -> mysite.com/page
+# CMS Page Caching Enabled (Production Mode)
+#   Logged in as guest
+#         mysite.com/page         -> serves cached page
+#     cms.mysite.com/page         -> redirect to mysite.com/page
 #
-# Logged in as cms user
-#      mysite.com/cms          -> cms.mysite.com/cms
-#      mysite.com/cms/whatever -> cms.mysite.com/cms
-#      mysite.com/page         -> serves cached page
-#  cms.mysite.com/cms          -> renders cms dashboard
-#  cms.mysite.com/cms/whatever -> renders cms whatever
-#  cms.mysite.com/page         -> renders cms page editor
-class Cms::ContentCachingControllerTest < ActionController::TestCase
-  tests Cms::ContentControllerTest
+#   Logged in as a registered user
+#         mysite.com/page         -> serves cached page
+#     cms.mysite.com/page         -> redirect to mysite.com/page
+#
+#   Logged in as cms user
+#         mysite.com/page         -> serves cached page
+#     cms.mysite.com/page         -> renders cms page editor
+class Cms::ContentCachingEnabledControllerTest < ActionController::TestCase
+  tests Cms::ContentController
   include Cms::ControllerTestHelper
   
-  def test_guest_user_public_page_public_site_caching_enabled
-    
+  def setup
+    Cms.caching_enabled = true
+    @page = Factory(:page, :section => root_section, :name => "Test Page", :path => "/page", :publish_on_save => true)
+    @registered_user = Factory(:user)
+    @registered_user.groups << Group.with_code("guest").first
   end
   
-  def test_guest_user_public_page_cms_site_caching_enabled
-    
+  def teardown
+    Cms.caching_enabled = false
   end
   
-  def test_public_user_public_page_public_site_caching_enabled
+  def test_guest_user_views_page_on_public_site
+    @request.host = "mysite.com"
+    get :show, :path => ["page"]
+    assert_response :success
+    assert_select "title", "Test Page"
+  end
+
+  def test_guest_user_views_page_on_cms_site
+    @request.host = "cms.mysite.com"
+    get :show, :path => ["page"]
+    assert_redirected_to "http://mysite.com/page"
+  end
+
+  def test_registered_user_views_page_on_public_site
+    login_as @registered_user
+    @request.host = "mysite.com"
     
+    get :show, :path => ["page"]
+    
+    assert_response :success
+    assert_select "title", "Test Page"
+  end
+
+  def test_registered_user_views_page_on_cms_site
+    login_as @registered_user
+    @request.host = "cms.mysite.com"
+    
+    get :show, :path => ["page"]
+    
+    assert_redirected_to "http://mysite.com/page"
   end
   
-  def test_public_user_public_page_cms_site_caching_enabled
+  def test_cms_user_views_page_on_public_site
+    login_as_cms_admin
+    @request.session[:page_mode] = "edit"
+    @request.host = "mysite.com"
+    
+    get :show, :path => ["page"]
+    
+    assert_response :success
+    assert_select "title", "Test Page"
+    assert_select "iframe", {:count => 0}
+  end
+
+  def test_cms_user_views_page_on_cms_site
+    login_as_cms_admin
+    @request.session[:page_mode] = "edit"
+    @request.host = "cms.mysite.com"
+    
+    get :show, :path => ["page"]
+    
+    assert_response :success
+    assert_select "title", "Test Page"
+    assert_select "iframe"
+  end  
   
+end
+
+# CMS Page Caching Disabled (Development Mode)
+#   Logged in as guest
+#         mysite.com/page         -> renders page
+#     cms.mysite.com/page         -> renders page
+#
+#   Logged in as a registered user
+#         mysite.com/page         -> renders page
+#     cms.mysite.com/page         -> renders page
+#
+#   Logged in as cms user
+#         mysite.com/page         -> renders cms page editor
+#     cms.mysite.com/page         -> renders cms page editor
+class Cms::ContentCachingDisabledControllerTest < ActionController::TestCase
+  tests Cms::ContentController
+  include Cms::ControllerTestHelper
+  
+  def setup
+    Cms.caching_enabled = false
+    @page = Factory(:page, :section => root_section, :name => "Test Page", :path => "/page", :publish_on_save => true)
+    @registered_user = Factory(:user)
+    @registered_user.groups << Group.with_code("guest").first
   end
   
-  def test_cms_user_public_page_public_site_caching_enabled
+  def test_guest_user_views_page_on_public_site
+    @request.host = "mysite.com"
+    get :show, :path => ["page"]
+    assert_response :success
+    assert_select "title", "Test Page"
+  end
+
+  def test_guest_user_views_page_on_cms_site
+    @request.host = "mysite.com"
+    get :show, :path => ["page"]
+    assert_response :success
+    assert_select "title", "Test Page"
+  end
+
+  def test_registered_user_views_page_on_public_site
+    login_as @registered_user
+    @request.host = "mysite.com"
     
+    get :show, :path => ["page"]
+    
+    assert_response :success
+    assert_select "title", "Test Page"
+  end
+
+  def test_registered_user_views_page_on_cms_site
+    login_as @registered_user
+    @request.host = "mysite.com"
+    
+    get :show, :path => ["page"]
+    
+    assert_response :success
+    assert_select "title", "Test Page"
+  end
+  
+  def test_cms_user_views_page_on_public_site
+    login_as_cms_admin
+    @request.session[:page_mode] = "edit"
+    @request.host = "mysite.com"
+    
+    get :show, :path => ["page"]
+    
+    assert_response :success
+    assert_select "title", "Test Page"
+    assert_select "iframe"
+  end
+
+  def test_cms_user_views_page_on_cms_site
+    login_as_cms_admin
+    @request.session[:page_mode] = "edit"
+    @request.host = "cms.mysite.com"
+    
+    get :show, :path => ["page"]
+    
+    assert_response :success
+    assert_select "title", "Test Page"
+    assert_select "iframe"
   end
   
 end

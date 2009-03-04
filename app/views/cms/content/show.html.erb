@@ -9,8 +9,7 @@
 %>
 <% @page_title = @page.page_title %>
 
-<%# Show the toolbar if you are logged in as a cms user %>
-<% able_to?(:edit_content, :publish_content) do %>
+<% if @show_toolbar %>
   <% content_for :html_head do %>
     <%= stylesheet_link_tag 'cms/page' %>
   <% end %>

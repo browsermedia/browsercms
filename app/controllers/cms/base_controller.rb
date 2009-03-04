@@ -1,6 +1,8 @@
 class Cms::BaseController < Cms::ApplicationController
   
   before_filter :login_required
+  check_permissions :administrate, :publish_content, :edit_content, :except => [:login, :logout]
+
   layout 'cms/application'
     
   verify :method => :post, :only => [:create]
@@ -23,16 +25,5 @@ class Cms::BaseController < Cms::ApplicationController
     def current_site
       @current_site ||= Site.find_by_domain(request.host)
     end
-   
-    def self.check_permissions(*perms)
-      opts = Hash === perms.last ? perms.pop : {}
-      before_filter(opts) do |controller|
-        raise Cms::Errors::AccessDenied unless controller.send(:current_user).able_to?(*perms)
-      end      
-    end
-
-  public
-  
-  check_permissions :administrate, :publish_content, :edit_content, :except => [:login, :logout]
-    
+     
 end

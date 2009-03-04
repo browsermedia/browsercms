@@ -4,8 +4,6 @@ class Cms::SessionsController < Cms::BaseController
   skip_before_filter :login_required
   layout "cms/login"
   def login
-    logger.info "session[:return_to] => #{session[:return_to]}"
-    logger.info "params[:success_url] => #{params[:success_url]}"
     if request.post?
       logout_keeping_session!
       user = User.authenticate(params[:login], params[:password])

@@ -1,0 +1,11 @@
+BrowserCMS User Guide
+=====================
+
+This guide covers how to use the administrative interface of BrowserCMS.  This guide will cover:
+
+* The basic navigational structure
+* Creating pages and section
+* Editing page content
+* Managing data in the Content Library
+* Managing users, groups and permissions
+

@@ -13,3 +13,4 @@ vendor/plugins/selenium-on-rails/log/*.yml
 .dotest
 tmp/restart.txt
 doc/guides/html
+public/cache

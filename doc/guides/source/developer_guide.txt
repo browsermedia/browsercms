@@ -1,0 +1,10 @@
+BrowserCMS Developer Guide
+==========================
+
+This guide covers how to use the tools that come with BrowserCMS to extend the functionality of your BrowserCMS site.  This guide will cover:
+
+* How to install and user BrowserCMS modules
+* How to create custom page templates
+* How to create custom content blocks
+* How to create custom portlets
+
