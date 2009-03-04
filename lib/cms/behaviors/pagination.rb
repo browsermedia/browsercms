@@ -5,7 +5,7 @@ module Cms
       def self.included(model_class)
         model_class.extend(ClassMethods)
         class << model_class
-          define_method(:default_per_page) { 10 }
+          define_method(:default_per_page) { 15 }
         end
       end
       class InvalidPage < ArgumentError
