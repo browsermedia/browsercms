@@ -27,3 +27,6 @@
 <div class="bl"></div>
 <div class="br"></div>
 </div>
+<% if @messages.total_pages > 1 %>
+  <%= render_pagination @messages, [:email_messages] %>
+<% end %>
