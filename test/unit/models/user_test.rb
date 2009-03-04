@@ -127,18 +127,4 @@ class GuestUserTest < ActiveSupport::TestCase
     assert !@user.able_to_view?(@protected_page)
   end
   
-  def test_search_bot
-    @search_bot_group = Group.with_code("search_bot").first
-    @search_bot_root = Factory(:section, :parent => root_section)
-    @search_bot_root.groups << @search_bot_group
-    @search_bot_page = Factory(:page, :section => @search_bot_root)
-    @search_bot = User.guest({ :login => "search_bot", :first_name => "browsermedia webcrawler" })
-    
-    assert @search_bot.guest?
-    assert @search_bot.search_bot?
-    assert !@search_bot.able_to?("do anything global")
-    assert @search_bot.able_to_view?(@search_bot_page)
-    assert @search_bot.able_to_view?(@public_page)
-    assert !@search_bot.able_to_view?(@protected_page)
-  end
 end

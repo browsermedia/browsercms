@@ -12,7 +12,7 @@ module Cms
         # If the user is not logged in, this will be set to the guest user
         def current_user
           @current_user ||= begin
-            User.current = (login_from_session || login_from_cookie || search_bot || User.guest)  
+            User.current = (login_from_session || login_from_cookie || User.guest)  
           end
         end
 
@@ -21,12 +21,6 @@ module Cms
           session[:user_id] = new_user ? new_user.id : nil
           @current_user = new_user || false
           @current_user = User.current
-        end
-
-        def search_bot
-          user_agent = request.user_agent.downcase
-          bot = [ 'msnbot', 'slurp', 'googlebot' ].detect { |b| user_agent.include? b }
-          return User.guest({ :login => "search_bot", :first_name => bot }) if bot
         end
 
         # Check if the user is authorized

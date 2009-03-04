@@ -14,13 +14,11 @@ class LoadSeedData < ActiveRecord::Migration
 
     create_group_type(:guest_group_type, :name => "Guest", :guest => true)
     create_group_type(:registered_public_user, :name => "Registered Public User")
-    create_group_type(:search_bot, :name => "Search Bot")
     create_group_type(:cms_user, :name => "CMS User", :cms_access => true)
     group_types(:cms_user).permissions<<permissions(:edit_content)
     group_types(:cms_user).permissions<<permissions(:publish_content)
 
     create_group(:guest, :name => 'Guest', :code => 'guest', :group_type => group_types(:guest_group_type))
-    create_group(:search_bot, :name => 'Search Bot', :code => 'search_bot', :group_type => group_types(:search_bot))
     create_group(:content_admin, :name => 'Cms Administrators', :code => 'cms-admin', :group_type => group_types(:cms_user))
     create_group(:content_editor, :name => 'Content Editors', :code => 'content-editor', :group_type => group_types(:cms_user))
     users(:cmsadmin).groups << groups(:content_admin)

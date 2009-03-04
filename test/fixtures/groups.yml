@@ -2,32 +2,24 @@
 group_1:
   name: Guest
   group_type_id: 1
-  updated_at: Fri Jan 30 23:54:33 UTC 2009
+  updated_at: Wed Mar 04 22:55:28 UTC 2009
   code: guest
   id: 1
-  created_at: Fri Jan 30 23:54:33 UTC 2009
+  created_at: Wed Mar 04 22:55:28 UTC 2009
 
 group_2:
-  name: Search Bot
+  name: Cms Administrators
   group_type_id: 3
-  updated_at: Fri Jan 30 23:54:33 UTC 2009
-  code: search_bot
+  updated_at: Wed Mar 04 22:55:28 UTC 2009
+  code: cms-admin
   id: 2
-  created_at: Fri Jan 30 23:54:33 UTC 2009
+  created_at: Wed Mar 04 22:55:28 UTC 2009
 
 group_3:
-  name: Cms Administrators
-  group_type_id: 4
-  updated_at: Fri Jan 30 23:54:33 UTC 2009
-  code: cms-admin
-  id: 3
-  created_at: Fri Jan 30 23:54:33 UTC 2009
-
-group_4:
   name: Content Editors
-  group_type_id: 4
-  updated_at: Fri Jan 30 23:54:33 UTC 2009
+  group_type_id: 3
+  updated_at: Wed Mar 04 22:55:28 UTC 2009
   code: content-editor
-  id: 4
-  created_at: Fri Jan 30 23:54:33 UTC 2009
+  id: 3
+  created_at: Wed Mar 04 22:55:28 UTC 2009
 
