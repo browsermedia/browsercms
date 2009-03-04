@@ -1,4 +1,4 @@
-class Cms::PortletController < Cms::BaseController
+class Cms::PortletController < Cms::ApplicationController
   
   before_filter :load_portlet
   
