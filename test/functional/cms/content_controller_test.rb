@@ -137,3 +137,44 @@ class Cms::ContentControllerTest < ActionController::TestCase
     end
   
 end
+
+# Logged in as guest or member
+#      mysite.com/cms          -> cms.mysite.com/cms
+#      mysite.com/cms/whatever -> cms.mysite.com/cms
+#      mysite.com/page         -> serves cached page
+#  cms.mysite.com/cms          -> renders cms login
+#  cms.mysite.com/cms/whatever -> cms.mysite.com/cms
+#  cms.mysite.com/page         -> mysite.com/page
+#
+# Logged in as cms user
+#      mysite.com/cms          -> cms.mysite.com/cms
+#      mysite.com/cms/whatever -> cms.mysite.com/cms
+#      mysite.com/page         -> serves cached page
+#  cms.mysite.com/cms          -> renders cms dashboard
+#  cms.mysite.com/cms/whatever -> renders cms whatever
+#  cms.mysite.com/page         -> renders cms page editor
+class Cms::ContentCachingControllerTest < ActionController::TestCase
+  tests Cms::ContentControllerTest
+  include Cms::ControllerTestHelper
+  
+  def test_guest_user_public_page_public_site_caching_enabled
+    
+  end
+  
+  def test_guest_user_public_page_cms_site_caching_enabled
+    
+  end
+  
+  def test_public_user_public_page_public_site_caching_enabled
+    
+  end
+  
+  def test_public_user_public_page_cms_site_caching_enabled
+  
+  end
+  
+  def test_cms_user_public_page_public_site_caching_enabled
+    
+  end
+  
+end
