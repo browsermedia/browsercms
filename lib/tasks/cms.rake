@@ -53,7 +53,7 @@ namespace :cms do
 
     template = File.expand_path("doc/guides/source/templates/guides.html.erb")
 
-    ignore = ['..', 'icons', 'images', 'templates', 'stylesheets']
+    ignore = ['..', 'icons', 'images', 'templates', 'stylesheets', '.svn']
     ignore << 'active_record_basics.txt'
 
     indexless = ['index.txt', 'authors.txt']
