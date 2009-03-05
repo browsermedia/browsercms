@@ -4,7 +4,9 @@ module Cms
   # to users with the proper authorization.
   module Caching
     def caching_enabled?
-      @caching_enabled ||= (Rails.env == "production")
+      #TODO: fix Ticket #199
+      #@caching_enabled ||= (Rails.env == "production")
+      false
     end
 
     def caching_enabled=(caching_enabled)
