@@ -1,11 +1,114 @@
-BrowserCMS User Guide
-=====================
+Building a Site with BrowserCMS
+===============================
 
-This guide covers how to use the administrative interface of BrowserCMS.  This guide will cover:
+== What to Expect
 
-* The basic navigational structure
-* Creating pages and section
-* Editing page content
-* Managing data in the Content Library
-* Managing users, groups and permissions
+This guide covers how to use BrowserCMS to build and manage websites. After reading it, you should understand how to:
+
+* Create new pages
+* Organize your site navigation via the sitemap.
+* Place content on pages.
+* Dynamically display content on pages using portlets.
+* Create and assign permissions to users.
+
+This guide is aimed at people who are managing sites using BrowserCMS, as opposed to programmers who want to customize it, or designers who want to create new designs for a site.
+
+=== What not to expect
+This document assumes that users have a working copy of BrowserCMS to play with, either on their local machine, or on a demo site. We don't cover how to install CMS here, so see the Installation Guide in order to get a copy up and running. 
+
+In addition, an installation of BrowserCMS will have several templates already installed. The 'theme' might be the default BrowserCMS theme, or a custom theme designed for a specific client. This document does not cover how to design and create new themes/templates, but focuses on the day to day work that content managers will need to do.
+
+== Basic Concepts
+
+There are several concepts which underly how BrowserCMS works. To be productive, users of BrowserCMS should ideally understand these ideas:
+
+* *Pages* - Visitors experience your site primarily via pages. Pages are really compound documents, consisting of more than one editable area of content. The allows for intricate design, without needing to be edited via single giant HTML area. 
+* *Content Blocks* - Blocks are the most granular bits of content in a system. Pages usually have one or more blocks of content associated with them. Content blocks can be anything from a simple fragment of HTML, to a News Article (which might have multiple data fields like name, body and summary), to portlets, which dynamically display other types of content.
+* *Portlets* - Sometimes you don't want to manually place all the content on your site. You want to set up some rules, so that when new content is entered, it appears in multiple places. Portlets are generally how that gets done. Portlets are really just a slightly special version of blocks, which generally query for other blocks, and then format them for display.
+* *Sections* - Each page lives in a section. Sections the primary way pages are organized. Menus are usually dynamically constructed based off the hierarchy of sections and pages. Sections also handle security, where individual groups are allowed to see pages within a given section. Sections and pages can be reordered by using the Site Map tab.
+* *Templates* - Each page has a template, which handles governs the styles and layout for that page. A template will determine what areas of the page are editable, how many columns it has and how the navigation will work. A website will usually have multiple templates (i.e. Home Page and Subpage) which provide different layout choices for users when they create new pages.
+* *Users and Groups* - Security is handled via users and groups. A user might represent a 'public' user, who can access some sections of your website (like a 'Members only section'). Or they might be a 'CMS' user who has the ability to make changes to the content via the CMS editing tools. Each user can be part of multiple groups, which define what they can do, including editing pages, viewing content or publishing new pages.
+
+== Common Tasks
+This section will cover some of the more frequent tasks that site managers will need to undertake in order to manage their website. For the purposes of this section, all examples assume a locally running copy of BrowserCMS, accessed as http://localhost:3000. A site hosted elsewhere might be running at http://yourcms.yourcompany.com.
+
+=== Logging into the CMS
+To access that administrative portions of a CMS, you have to go to the admin login page. To do this, add /cms to your website's URL. Working locally, this would be http://localhost:3000. From this page, you can log in with your username and password. For a local site, this will be username = cmsadmin and password = cmsadmin. For a live site, this will have been randomly set during install.
+
+After you log in, you will be sent to the dashboard (/cms/dashboard). The details of this page will be covered later, but the dashboard serves a summary of content in various workflow stages. From here, you can jump to other sections of CMS.
+
+=== Editing the home page
+To understand how editing pages in the CMS works, let's jump over to the homepage. The quickest way to do that is to click on the BrowserCMS logo in the top left. This will always take you to the home page for your site. When you visit a page in BrowserCMS, and are logged in as editor, you will see the page exactly as a visiter would, with the addition of a toolbar at the top of the page. This toolbar gives you the tools/buttons necessary to make changes to pages, or jump to other CMS admin tabs.
+
+==== In Context Editing
+One of the key concepts to make page editing easier in BrowserCMS is called 'In Context Editing'. It allows you to browse the site as a visitor would, and then edit content directly on the page. By default, you can't see the editable areas of a page (called 'Containers'), because the Visual Editor is turned off. To show the containers, click the 'Turn On' button on the right side of the toolbar, which turns on the visual editor. You should now see the containers highlighted on the page. The templates for each page determine what areas of the page are editable. Clicking the 'Turn Off' button will hide the containers again, giving you a more accurate view of what the finished page will look like.
+
+==== Containers
+A container is marked by a box with a grey header, with several buttons on it. Each container has two controls, one to Add new content to that container (The + icon) and another to place existing content into the container. It also has a status indicator which shows if any content blocks in that container are in draft mode. Each container can hold zero or more content blocks. 
+
+==== Blocks
+Each block within a container is marked with a grey border, and several buttons. Blocks can be edited, reordered using the up or down arrows, or removed from the page (which does not delete it).
+
+==== Making changes
+To edit some existing content, pick the block you want to edit, and click the 'wrench' icon. This will take you to the edit screen for that block. Most content blocks placed on pages are usually 'Text' blocks, which are just pure html content, with a name for organization purposes. On the 'Edit Text' page, you can change the name, or use the WYSIWYG editor to make changes to the content. If you want to edit the source html directly, you can change your editor preference with the toggle to the top right of the editor.
+
+Once your edits are complete, you can save your changes using the Save button at the bottom of the page. This will return you to the page, where you can see how your changes look in context to the rest of your page. Your changes won't be visible on the public site yet, so you can choose to make more changes. See the next section on how to publish changes.
+
+=== Publishing pages
+The basic rule of publishing is that all changes need to be published before they go live. This allows editors to always see how their page is going to look, before they decide to commit their changes. Any time you alter how a page looks, the CMS stores a new version of that page and all its content. This happens when you add a new block to a page, make an edit or remove a block from that page. Each time a change is made to content on a page, that page will go into 'Draft' status. As an editor, you will see the 'latest' version of that page, but the public will continue to see the last 'published' version of that page. 
+
+Each page has a status of either 'Published' or 'Draft'. When you like how your changes look, and want to publish the page, push the 'Publish' button in the upper left hand corner of a page. This will makes your changes 'live' and visible to the world. When a page is published, each block on that page will also be published.
+
+=== Adding a new page
+To add new pages to a site, click on the Site Map tab from any where within the CMS admin. The Site Map page shows a tree with all the sections and pages in your site. From here, you can add new pages or sections, choose a page to edit, or reorganize the site using drag and drop to move sections around.
+
+To add a new page, click on the 'My Site' section at the top of the site map. Then click the 'Add Page' button in the toolbar. This will add a new page to the root of the site. There are several fields to fill out the important ones are the name and templates. When you name a page, the CMS will generate a default relative URL (a path) for it. You can also choose a template via a dropdown, which will show all available templates for the current site.
+
+After filling out those two fields, you can click save to create the new page. After saving, you will be taken to that page, which will be blank, not having content blocks selected for it.
+
+=== Adding new text content to a page
+When viewing a page, you can add new content to it. First, make sure the Visual Editor is turned on, so you can see the containers.
+
+
+=== Finding a page to edit
+
+==== Using site navigating to find pages
+
+==== Using the Sitemap to find pages
+
+
+
+=== Adding images and files to pages
+
+=== Reverting a page
+
+=== Reorganize a site's navigation
+
+==== Understanding how dynamic navigation works
+
+==== Moving pages/sections in the sitemap
+
+=== Adding dynamic content via portlets
+
+==== Placing and configuring portlet on a page
+
+==== Adding content via the Content Library
+
+=== Setting up up restricted sections
+
+==== Creating the groups
+
+==== Adding users
+
+==== Restricting the sections
+
+=== Setting up Workflow
+
+==== Basic Contributor and Editor workflow
+
+=== Using the Dashboard
+
+==== Bulk publishing
+
+==== Tasks
 
