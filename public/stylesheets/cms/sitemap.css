@@ -105,7 +105,7 @@ margin-top: -14px;
 }
 #sitemap ul.rootlet .sitemap_published_status div, #sitemap ul.rootlet .sitemap_hidden img, #sitemap ul.rootlet .sitemap_access img{
 display: block;
-margin: -22px 0 0 -5px;
+margin: -22px 0 0 -2px;
 position: absolute;
 * margin-top: -3px;
 }
@@ -117,14 +117,14 @@ position: absolute;
 }
 
 #sitemap .sitemap_hidden {
-  width: 40px;
+  width: 35px;
 }
 
 #sitemap .sitemap_access {
-width: 40px;
+width: 35px;
 }
 #sitemap .sitemap_published_status {
-width: 75px;
+width: 70px;
 }
 
 #sitemap ul.rootlet .sitemap_published_status div img{
