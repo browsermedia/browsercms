@@ -128,5 +128,8 @@ padding-left: 2px;
 }
 
 .buttons .publish_button {
-margin-right: 15px;
+}
+
+.spacer {
+margin-left: 15px;
 }

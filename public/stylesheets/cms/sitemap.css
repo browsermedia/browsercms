@@ -2,6 +2,19 @@
 #sitemap {
   width: 100%;
   border-collapse: collapse;
+  color: #5B5B5B;
+}
+
+#sitemap ul li {
+  font-size: 12px;
+}
+
+#sitemap ul li ul li, .sitemap_published_status {
+  font-size: 10px;
+}
+
+#sitemap .page {
+  color: #727171;
 }
 
 #sitemap ul {
@@ -41,7 +54,7 @@ background: #FFFFFF;
 }
 
 #sitemap table.selected {
-  background-color: #CADCF4;
+  background-color: #DDE7F4;
 }
 
 #sitemap td.drop-over {
@@ -135,7 +148,7 @@ vertical-align: middle;
 border: none;
 }
 
-#functions a.delete_button {
+#functions a.delete_button, #functions .spacer {
 margin-left: 15px;
 }
 .node div, .node img {
@@ -143,7 +156,7 @@ float: left;
 }
 
 #sitemap ul.rootlet .node div, #sitemap ul.root .node div {
-padding: 8px 0 0 10px;
+padding: 8px 0 0 14px;
 }
 #sitemap ul.rootlet ul .node div {
 padding: 1px 0 0 10px;
@@ -194,7 +207,7 @@ background: url(/images/cms/sitemap/divider.gif) no-repeat 23px 4px;
 background: url(/images/cms/sitemap/divider.gif) no-repeat 23px 0;
 }
 
-#sitemap ul.rootlet li {
+#sitemap ul.rootlet li, #sitemap ul.root li {
   background: #FFF url(/images/cms/sitemap/gradient.gif) no-repeat 0 100%;
 }
 

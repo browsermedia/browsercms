@@ -8,7 +8,7 @@ class Cms::ContentController < Cms::ApplicationController
   
   def show        
     render_page
-    cache_page
+    # cache_page
   end
 
   private
