@@ -6,20 +6,20 @@
       <% if @block.respond_to?(:published?) && !@block.published %>
         <%= link_to span_tag('Publish'), cms_path(@block, :publish), :class => "http_put button", :id => "publish_button" %>
       <% else %>
-        <%= link_to span_tag('Publish'), "#", :class => "http_put button disabled", :id => "publish_button" %>
+        <%= link_to span_tag('Publish'), "#", :class => "http_put button disabled left", :id => "publish_button" %>
       <% end %>
     <% end -%>
-    <%= link_to span_tag('View Content'), cms_path(:blocks, @content_type.content_block_type.pluralize, :show, @block) , :class => "button#{ ' off' if action_name == 'show'}", :id => "view_button" %>
+    <%= link_to span_tag('View Content'), cms_path(:blocks, @content_type.content_block_type.pluralize, :show, @block) , :class => "button#{ ' off' if action_name == 'show'} middle", :id => "view_button" %>
     <%= link_to span_tag('Edit Content'), cms_path(:blocks, @content_type.content_block_type.pluralize, :edit, @block) , :class => "button#{ ' off' if action_name == 'edit'}", :id => "edit_button" %>
-    <%= link_to span_tag("Add New Content"), cms_path(:blocks, @content_type.content_block_type.pluralize, :new) , :class => "button#{ ' off' if action_name == 'new'}", :id => "add_button" %>
+    <%= link_to span_tag("Add New Content"), cms_path(:blocks, @content_type.content_block_type.pluralize, :new) , :class => "button#{ ' off' if action_name == 'new'} right", :id => "add_button" %>
     <%= link_to span_tag('List Versions'), cms_path(@block, :revisions) , :class => "button#{ ' off' if action_name == 'revisions'} #{'disabled' unless @block.class.versioned?}", :id => "list_versions" %>
     <%= link_to span_tag("<span class=\"delete_img\">&nbsp;</span>Delete"), cms_path(:blocks, @content_type.name.underscore.pluralize, :destroy, @block), :class => "http_delete confirm_with_title button", :title => "Are you sure you want to delete '#{@block.name}'?", :id => "delete_button" %>
   <% else %>
     <% able_to?(:publish_content) do %>
-      <%= link_to span_tag("Publish"), "#", :id=>"publish_button", :class => "button disabled"  %>
+      <%= link_to span_tag("Publish"), "#", :id=>"publish_button", :class => "button disabled left"  %>
     <% end %>
-    <%= link_to span_tag("View Content"), "#", :id => "view_button", :class => "button disabled#{ ' off' if action_name == 'show'}" %>
-    <%= link_to span_tag("Edit Content"), "#", :id => "edit_button", :class => "button disabled#{ ' off' if action_name == 'edit'}" %>
+    <%= link_to span_tag("View Content"), "#", :id => "view_button", :class => "button disabled#{ ' off' if action_name == 'show'} middle" %>
+    <%= link_to span_tag("Edit Content"), "#", :id => "edit_button", :class => "button disabled#{ ' off' if action_name == 'edit'} right" %>
     
     <%= link_to span_tag("add new content"), cms_path("/blocks/#{@content_type.content_block_type.pluralize}", :new), :id => "add_button", :class => "spacer button#{ ' off' if action_name == 'new'}" %>
     <%= link_to span_tag("List Versions"), "#", :id=>"revisions_button", :class => "button #{ action_name == 'revisions' ? ' off' : ' disabled'}" %>
