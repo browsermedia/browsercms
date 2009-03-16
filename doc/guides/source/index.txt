@@ -6,9 +6,9 @@ BrowserCMS Guides
 A tutorial on how to quickly install and build a site using BrowserCMS.
 ***********************************************************
 
-.link:user_guide.html[BrowserCMS User Guide]
+.link:user_guide.html[Building a Site with BrowserCMS]
 ***********************************************************
-Everything you need to know to manage a BrowserCMS site.
+A user guide that covers how to use BrowserCMS to build and manage websites. Aimed at helping site managers, webmasters, maintainers to understand how to perform the common tasks associated with creating and managing content.
 ***********************************************************
 
 .link:developer_guide.html[Developing with BrowserCMS]
