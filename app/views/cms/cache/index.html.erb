@@ -1,5 +1,4 @@
 <% @page_title = @toolbar_title = "Page Cache Info" %>
-<% @page_caching = true %>
 <%= content_for :html_head, stylesheet_link_tag("cms/form_layout") %>
 
 <%= content_for :functions, link_to(span_tag("Clear Page Cache"), cms_path(:cache, :expire), :class => "button http_post") %>
