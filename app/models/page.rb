@@ -233,8 +233,14 @@ class Page < ActiveRecord::Base
   end
     
   def self.find_live_by_path(path)
-    page = find(:first, :conditions => {:path => path})
-    page ? page.live_version : nil
+    if page_version = Page::Version.first(:conditions => {
+        :path => path, 
+        :archived => false, 
+        :published => true}, 
+        :order => "version desc")
+      page = page_version.page.as_of_version(page_version.version)
+      page.live_version? ? page : nil
+    end
   end
   
   def name_with_section_path

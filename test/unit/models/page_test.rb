@@ -31,6 +31,25 @@ class CreatingPageTest < ActiveSupport::TestCase
 end
 
 class PageTest < ActiveSupport::TestCase
+
+  def test_find_live_by_path
+    @page = Factory.build(:page, :path => '/foo')
+    assert_nil Page.find_live_by_path('/foo')
+    
+    @page.publish!
+    reset(:page)
+    assert_equal @page, Page.find_live_by_path('/foo')
+    
+    @page.update_attributes(:path => '/bar')
+    assert_equal @page, Page.find_live_by_path('/foo')
+    assert_nil Page.find_live_by_path('/bar')
+    
+    @page.publish!
+    reset(:page)
+    assert_nil Page.find_live_by_path('/foo')
+    assert_equal @page, Page.find_live_by_path('/bar')
+  end
+  
   def test_path_normalization
     page = Factory.build(:page, :path => 'foo/bar')
     assert_valid page

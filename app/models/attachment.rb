@@ -133,8 +133,13 @@ class Attachment < ActiveRecord::Base
   end  
   
   def self.find_live_by_file_path(file_path)
-    page = find(:first, :conditions => {:file_path => file_path})
-    page ? page.live_version : nil
+    if attachment_version = Attachment::Version.first(:conditions => {
+         :file_path => file_path, 
+         :published => true}, 
+         :order => "version desc")
+       attachment = attachment_version.attachment.as_of_version(attachment_version.version)
+       (attachment.live_version? && !attachment.archived?) ? attachment : nil
+     end
   end  
   
   #----- Instance Methods ------------------------------------------------------

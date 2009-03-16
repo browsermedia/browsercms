@@ -115,17 +115,17 @@ module Cms
 
           def live_version
             if self.class.publishable?    
-              if published?         
-                self             
-              else
-                live_version = versions.first(:conditions => {:published => true}, :order => "version desc, id desc")
-                live_version ? as_of_version(live_version.version) : nil
-              end                
+              live_version = versions.first(:conditions => {:published => true}, :order => "version desc, id desc")
+              live_version ? as_of_version(live_version.version) : nil
             else
               self
             end
           end        
 
+          def live_version?
+            Rails.logger.info "live_version?\nversion:#{inspect}\nlive version:\n#{live_version.inspect}"
+            live_version && version == live_version.version
+          end
 
           def as_of_version(version)
             v = find_version(version)
