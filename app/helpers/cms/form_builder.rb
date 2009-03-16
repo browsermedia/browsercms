@@ -7,7 +7,6 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
       opts[:class] = "editor"
     end 
     id = opts[:id] || "#{@object_name}_#{method}"
-    Rails.logger.info "cookies[\"editorEnabled\"] => #{cookies["editorEnabled"].inspect}"
     enabled = cookies["editorEnabled"].blank? ? true : (cookies["editorEnabled"] == 'true' || cookies["editorEnabled"] == ['true'])
     html = <<-HTML
       <select class="dhtml_selector" name="dhtml_selector" onchange="toggleEditor('#{id}', this)" tabindex="32767">

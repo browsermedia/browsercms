@@ -97,7 +97,7 @@ class Attachment < ActiveRecord::Base
   end
 
   def process_section
-    logger.info "processing section, section_id => #{section_id}, section_node => #{section_node.inspect}"
+    #logger.info "processing section, section_id => #{section_id}, section_node => #{section_node.inspect}"
     if section_node && !section_node.new_record? && section_node.section_id != section_id
       section_node.move_to_end(Section.find(section_id))
     else

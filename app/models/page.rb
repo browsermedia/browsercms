@@ -1,6 +1,7 @@
 class Page < ActiveRecord::Base
   
   is_archivable
+  flush_cache_on_change
   is_hideable
   is_publishable
   uses_soft_delete

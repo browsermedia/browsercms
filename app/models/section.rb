@@ -1,4 +1,6 @@
 class Section < ActiveRecord::Base
+
+  flush_cache_on_change
   
   #The node that links this section to its parent
   has_one :node, :class_name => "SectionNode", :as => :node
