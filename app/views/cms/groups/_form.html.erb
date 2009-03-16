@@ -21,10 +21,8 @@
   </div>
 <% end %>
 
-<% unless @group.new_record? %>
-  <%= render :partial => 'permissions' %>
-  <%= render :partial => 'sections' %>
-<% end %>
+<%= render :partial => 'permissions' %>
+<%= render :partial => 'sections' %>
 
 <div class="buttons">
   <%= lt_button_wrapper(f.submit("Save", :class => "submit")) %>
