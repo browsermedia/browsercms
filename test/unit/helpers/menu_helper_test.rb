@@ -204,9 +204,9 @@ HTML
     page.save
     
     @news = Factory(:section, :parent => root_section, :name => "News", :path => "/whatever")
-    @press_releases = Factory(:page, :section => @news, :name => "Press Releases", :path => "/press_releases")
-    @corporate_news = Factory(:link, :section => @news, :name => "Corporate News", :url => "/news", :new_window => false)
-    @cnn = Factory(:link, :section => @news, :name => "CNN", :url => "http://www.cnn.com", :new_window => true)
+    @press_releases = Factory(:page, :section => @news, :name => "Press Releases", :path => "/press_releases", :publish_on_save => true)
+    @corporate_news = Factory(:link, :section => @news, :name => "Corporate News", :url => "/news", :new_window => false, :publish_on_save => true)
+    @cnn = Factory(:link, :section => @news, :name => "CNN", :url => "http://www.cnn.com", :new_window => true, :publish_on_save => true)
     expected = <<HTML 
 <div class="menu">
   <ul>
@@ -234,59 +234,64 @@ HTML
     
   end
   
+  def test_render_menu_does_not_show_unpublished_pages
+    @page = Factory(:page, :section => root_section, :name => "Never Published", :path => "/never_published")
+    assert render_menu !~ /\/never_published/, "Never published should not show up"
+  end
+  
   protected
     def create_nfl_data
       @afc = Factory(:section, :parent => root_section, :name => "AFC")
 
       @afc_east = Factory(:section, :parent => @afc, :name => "East")
-      @buf = Factory(:page, :section => @afc_east, :name => "Buffalo Bills", :path => "/buf")
-      @mia = Factory(:page, :section => @afc_east, :name => "Miami Dolphins", :path => "/mia")
-      @ne = Factory(:page, :section => @afc_east, :name => "New England Patriots", :path => "/ne")
-      @nyj = Factory(:page, :section => @afc_east, :name => "New York Jets", :path => "/nyj")
+      @buf = Factory(:page, :section => @afc_east, :name => "Buffalo Bills", :path => "/buf", :publish_on_save => true)
+      @mia = Factory(:page, :section => @afc_east, :name => "Miami Dolphins", :path => "/mia", :publish_on_save => true)
+      @ne = Factory(:page, :section => @afc_east, :name => "New England Patriots", :path => "/ne", :publish_on_save => true)
+      @nyj = Factory(:page, :section => @afc_east, :name => "New York Jets", :path => "/nyj", :publish_on_save => true)
 
       @afc_north = Factory(:section, :parent => @afc, :name => "North")
-      @bal = Factory(:page, :section => @afc_north, :name => "Baltimore Ravens", :path => "/bal")
-      @cin = Factory(:page, :section => @afc_north, :name => "Cincinnati Bengals", :path => "/cin")
-      @cle = Factory(:page, :section => @afc_north, :name => "Cleveland Browns", :path => "/cle")
-      @pit = Factory(:page, :section => @afc_north, :name => "Pittsburgh Steelers", :path => "/pit")
+      @bal = Factory(:page, :section => @afc_north, :name => "Baltimore Ravens", :path => "/bal", :publish_on_save => true)
+      @cin = Factory(:page, :section => @afc_north, :name => "Cincinnati Bengals", :path => "/cin", :publish_on_save => true)
+      @cle = Factory(:page, :section => @afc_north, :name => "Cleveland Browns", :path => "/cle", :publish_on_save => true)
+      @pit = Factory(:page, :section => @afc_north, :name => "Pittsburgh Steelers", :path => "/pit", :publish_on_save => true)
 
       @afc_south = Factory(:section, :parent => @afc, :name => "South")
-      @hou = Factory(:page, :section => @afc_south, :name => "Houston Texans", :path => "/hou")
-      @ind = Factory(:page, :section => @afc_south, :name => "Indianapolis Colts", :path => "/ind")
-      @jac = Factory(:page, :section => @afc_south, :name => "Jacksonville Jaguars", :path => "/jac")
-      @ten = Factory(:page, :section => @afc_south, :name => "Tennessee Titans", :path => "/ten")
+      @hou = Factory(:page, :section => @afc_south, :name => "Houston Texans", :path => "/hou", :publish_on_save => true)
+      @ind = Factory(:page, :section => @afc_south, :name => "Indianapolis Colts", :path => "/ind", :publish_on_save => true)
+      @jac = Factory(:page, :section => @afc_south, :name => "Jacksonville Jaguars", :path => "/jac", :publish_on_save => true)
+      @ten = Factory(:page, :section => @afc_south, :name => "Tennessee Titans", :path => "/ten", :publish_on_save => true)
 
       @afc_west = Factory(:section, :parent => @afc, :name => "West")
-      @den = Factory(:page, :section => @afc_west, :name => "Denver Broncos", :path => "/den")
-      @kc = Factory(:page, :section => @afc_west, :name => "Kansas City Chiefs", :path => "/kc")
-      @oak = Factory(:page, :section => @afc_west, :name => "Oakland Raiders", :path => "/oak")
-      @sd = Factory(:page, :section => @afc_west, :name => "San Diego Chargers", :path => "/sd")
+      @den = Factory(:page, :section => @afc_west, :name => "Denver Broncos", :path => "/den", :publish_on_save => true)
+      @kc = Factory(:page, :section => @afc_west, :name => "Kansas City Chiefs", :path => "/kc", :publish_on_save => true)
+      @oak = Factory(:page, :section => @afc_west, :name => "Oakland Raiders", :path => "/oak", :publish_on_save => true)
+      @sd = Factory(:page, :section => @afc_west, :name => "San Diego Chargers", :path => "/sd", :publish_on_save => true)
 
       @nfc = Factory(:section, :parent => root_section, :name => "NFC")
 
       @nfc_east = Factory(:section, :parent => @nfc, :name => "East")
-      @dal = Factory(:page, :section => @nfc_east, :name => "Dallas Cowboys", :path => "/dal")
-      @nyg = Factory(:page, :section => @nfc_east, :name => "New York Giants", :path => "/nyg")
-      @phi = Factory(:page, :section => @nfc_east, :name => "Philadelphia Eagles", :path => "/phi")
-      @was = Factory(:page, :section => @nfc_east, :name => "Washington Redskins", :path => "/was")
+      @dal = Factory(:page, :section => @nfc_east, :name => "Dallas Cowboys", :path => "/dal", :publish_on_save => true)
+      @nyg = Factory(:page, :section => @nfc_east, :name => "New York Giants", :path => "/nyg", :publish_on_save => true)
+      @phi = Factory(:page, :section => @nfc_east, :name => "Philadelphia Eagles", :path => "/phi", :publish_on_save => true)
+      @was = Factory(:page, :section => @nfc_east, :name => "Washington Redskins", :path => "/was", :publish_on_save => true)
 
       @nfc_north = Factory(:section, :parent => @nfc, :name => "North")
-      @chi = Factory(:page, :section => @nfc_north, :name => "Chicago Bears", :path => "/chi")
-      @det = Factory(:page, :section => @nfc_north, :name => "Detroit Lions", :path => "/det")
-      @gb = Factory(:page, :section => @nfc_north, :name => "Green Bay Packers", :path => "/gb")
-      @min = Factory(:page, :section => @nfc_north, :name => "Minnesota Vikings", :path => "/min")
+      @chi = Factory(:page, :section => @nfc_north, :name => "Chicago Bears", :path => "/chi", :publish_on_save => true)
+      @det = Factory(:page, :section => @nfc_north, :name => "Detroit Lions", :path => "/det", :publish_on_save => true)
+      @gb = Factory(:page, :section => @nfc_north, :name => "Green Bay Packers", :path => "/gb", :publish_on_save => true)
+      @min = Factory(:page, :section => @nfc_north, :name => "Minnesota Vikings", :path => "/min", :publish_on_save => true)
 
       @nfc_south = Factory(:section, :parent => @nfc, :name => "South")
-      @atl = Factory(:page, :section => @nfc_south, :name => "Atlanta Falcons", :path => "/atl")
-      @car = Factory(:page, :section => @nfc_south, :name => "Carolina Pathers", :path => "/car")
-      @no = Factory(:page, :section => @nfc_south, :name => "New Orleans Saints", :path => "/no")
-      @tb = Factory(:page, :section => @nfc_south, :name => "Tampa Bay Buccaneers", :path => "/tb")
+      @atl = Factory(:page, :section => @nfc_south, :name => "Atlanta Falcons", :path => "/atl", :publish_on_save => true)
+      @car = Factory(:page, :section => @nfc_south, :name => "Carolina Pathers", :path => "/car", :publish_on_save => true)
+      @no = Factory(:page, :section => @nfc_south, :name => "New Orleans Saints", :path => "/no", :publish_on_save => true)
+      @tb = Factory(:page, :section => @nfc_south, :name => "Tampa Bay Buccaneers", :path => "/tb", :publish_on_save => true)
 
       @nfc_west = Factory(:section, :parent => @nfc, :name => "West")
-      @ari = Factory(:page, :section => @nfc_west, :name => "Arizona Cardinals", :path => "/ari")
-      @sf = Factory(:page, :section => @nfc_west, :name => "San Francisco 49ers", :path => "/sf")
-      @sea = Factory(:page, :section => @nfc_west, :name => "Seattle Seahawks", :path => "/sea")
-      @stl = Factory(:page, :section => @nfc_west, :name => "St. Louis Rams", :path => "/stl")
+      @ari = Factory(:page, :section => @nfc_west, :name => "Arizona Cardinals", :path => "/ari", :publish_on_save => true)
+      @sf = Factory(:page, :section => @nfc_west, :name => "San Francisco 49ers", :path => "/sf", :publish_on_save => true)
+      @sea = Factory(:page, :section => @nfc_west, :name => "Seattle Seahawks", :path => "/sea", :publish_on_save => true)
+      @stl = Factory(:page, :section => @nfc_west, :name => "St. Louis Rams", :path => "/stl", :publish_on_save => true)
 
     end
   

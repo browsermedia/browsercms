@@ -12,6 +12,8 @@ class SectionNode < ActiveRecord::Base
         false
       elsif node.respond_to?(:archived?) && node.archived?
         false
+      elsif node.respond_to?(:published?) && !node.published?
+        false
       else
         true
       end
