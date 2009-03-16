@@ -84,6 +84,7 @@ class Cms::PagesController < Cms::BaseController
   
   def show_version
     @page = @page.as_of_version(params[:version])
+    @show_toolbar = true
     render :layout => @page.layout, :template => 'cms/content/show'
   end  
   
