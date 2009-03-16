@@ -1,5 +1,8 @@
 class Cms::PortletController < Cms::ApplicationController
   
+  skip_before_filter :redirect_to_cms_site
+  skip_before_filter :login_required
+  
   before_filter :load_portlet
   
   protected

@@ -3,8 +3,9 @@ module Cms::Routes
 
     namespace(:cms) do |cms|
       cms.home '/', :controller => 'home'
-      cms.logout '/logout', :controller => 'sessions', :action => 'logout'
-      cms.login '/login', :controller => 'sessions', :action => 'login'
+      cms.logout '/logout', :controller => 'sessions', :action => 'destroy'
+      cms.login '/login', :controller => 'sessions', :action => 'new', :conditions => { :method => :get }
+      cms.connect '/login', :controller => 'sessions', :action => 'create', :conditions => { :method => :post }      
       cms.dashboard '/dashboard', :controller => 'dashboard'
       cms.sitemap '/sitemap', :controller => 'section_nodes'
       cms.content_library '/content_library', :controller => 'blocks'

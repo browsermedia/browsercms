@@ -1,5 +1,4 @@
 class Cms::EmailPagePortletController < Cms::PortletController
-  skip_before_filter :login_required
   
   verify :method => :post, :only => :deliver
 

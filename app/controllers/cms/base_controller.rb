@@ -1,7 +1,8 @@
 class Cms::BaseController < Cms::ApplicationController
   
+  before_filter :redirect_to_cms_site
   before_filter :login_required
-  check_permissions :administrate, :publish_content, :edit_content, :except => [:login, :logout]
+  before_filter :cms_access_required
 
   layout 'cms/application'
     
@@ -9,21 +10,4 @@ class Cms::BaseController < Cms::ApplicationController
   verify :method => :put, :only => [:update]
   verify :method => :delete, :only => [:destroy]
     
-  protected
-    def escape_javascript(javascript)
-      (javascript || '').gsub('\\','\0\0').gsub('</','<\/').gsub(/\r\n|\n|\r/, "\\n").gsub(/["']/) { |m| "\\#{m}" }
-    end
-  
-    def redirect_to_first(*urls)
-      urls.each do |url|
-        unless url.blank?
-          return redirect_to(url)
-        end
-      end
-    end
-    
-    def current_site
-      @current_site ||= Site.find_by_domain(request.host)
-    end
-     
 end

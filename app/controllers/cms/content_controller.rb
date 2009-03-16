@@ -1,5 +1,6 @@
 class Cms::ContentController < Cms::ApplicationController
 
+  skip_before_filter :redirect_to_cms_site
   before_filter :construct_path
   before_filter :redirect_non_cms_users_to_public_site
   before_filter :try_to_redirect
@@ -21,14 +22,21 @@ class Cms::ContentController < Cms::ApplicationController
   def redirect_non_cms_users_to_public_site
     @show_toolbar = false
     if perform_caching
+      logger.info "Caching is enabled"
       if cms_site?
+        logger.info "This is the cms site"
         if current_user.able_to?(:edit_content, :publish_content)
+          logger.info "User has access to cms"
           @show_toolbar = true
         else
+          logger.info "User does not have access to cms"
           redirect_to url_without_cms_domain_prefix
         end
+      else
+        logger.info "Not the cms site"
       end
     else
+      logger.info "Caching is disabled"
       if current_user.able_to?(:edit_content, :publish_content)
         @show_toolbar = true
       end
