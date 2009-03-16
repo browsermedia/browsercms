@@ -387,11 +387,14 @@ jQuery(function($){
   //that section will start in open state
   var fireOnClickForOpenSectionNodes = function() {
     var openSectionNodeIds = $.cookieSet.get('openSectionNodes')
+    var selectedSectionSelector = '.root table:first'
     if(openSectionNodeIds) {
       $.each(openSectionNodeIds, function(i, e) { 
         $('#section_node_'+e+' table:first img.folder_toggle').click()
-      })      
-    }    
+      })            
+      selectedSectionSelector = '#section_node_'+openSectionNodeIds[openSectionNodeIds.length-1]+' table:first'
+    }
+    $(selectedSectionSelector).click()
   }  
   
   //----- Init -----------------------------------------------------------------
