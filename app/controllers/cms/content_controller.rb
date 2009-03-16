@@ -8,7 +8,7 @@ class Cms::ContentController < Cms::ApplicationController
   
   def show        
     render_page
-    # cache_page
+    cache_page if perform_caching
   end
 
   private
@@ -20,7 +20,7 @@ class Cms::ContentController < Cms::ApplicationController
   
   def redirect_non_cms_users_to_public_site
     @show_toolbar = false
-    if Cms.caching_enabled?
+    if perform_caching
       if cms_site?
         if current_user.able_to?(:edit_content, :publish_content)
           @show_toolbar = true

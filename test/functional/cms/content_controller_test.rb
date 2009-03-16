@@ -155,14 +155,14 @@ class Cms::ContentCachingEnabledControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
   
   def setup
-    Cms.caching_enabled = true
+    ActionController::Base.perform_caching = true
     @page = Factory(:page, :section => root_section, :name => "Test Page", :path => "/page", :publish_on_save => true)
     @registered_user = Factory(:user)
     @registered_user.groups << Group.with_code("guest").first
   end
   
   def teardown
-    Cms.caching_enabled = false
+    ActionController::Base.perform_caching = false
   end
   
   def test_guest_user_views_page_on_public_site
@@ -240,7 +240,7 @@ class Cms::ContentCachingDisabledControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
   
   def setup
-    Cms.caching_enabled = false
+    ActionController::Base.perform_caching = false
     @page = Factory(:page, :section => root_section, :name => "Test Page", :path => "/page", :publish_on_save => true)
     @registered_user = Factory(:user)
     @registered_user.groups << Group.with_code("guest").first

@@ -1,17 +1,6 @@
 module Cms
-  # There are two caches used in the CMS.  First is called the public cache and is really just an alias for 
-  # the default Rails cache.  The second is the protected cache, which contains files that can only be shown
-  # to users with the proper authorization.
-  module Caching
-    def caching_enabled?
-      #TODO: fix Ticket #199
-      #@caching_enabled ||= (Rails.env == "production")
-      false
-    end
 
-    def caching_enabled=(caching_enabled)
-      @caching_enabled = caching_enabled
-    end
+  module Caching
 
     # This is the cache of files that can be served directly to any user, guest or registered
     def public_cache
