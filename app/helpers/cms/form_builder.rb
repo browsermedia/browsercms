@@ -10,7 +10,7 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
     enabled = cookies["editorEnabled"].blank? ? true : (cookies["editorEnabled"] == 'true' || cookies["editorEnabled"] == ['true'])
     html = <<-HTML
       <select class="dhtml_selector" name="dhtml_selector" onchange="toggleEditor('#{id}', this)" tabindex="32767">
-        <option value=""#{ ' selected="selected"' if enabled }>DHTML Editor</option>
+        <option value=""#{ ' selected="selected"' if enabled }>Rich Text</option>
         <option value="disabled"#{ ' selected="selected"' unless enabled }>Simple Text</option>
       </select>
       <div class="editor">
