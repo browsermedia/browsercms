@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta http-equiv="Content-Style-Type" content="text/css" />
+    <meta http-equiv="Content-Script-Type" content="text/javascript" />
+    <title>Sub Page</title>
+    <%= stylesheet_link_tag "/themes/blue_steel/stylesheets/style" %>
+  </head>
+  <body>
+	<%= cms_toolbar %>
+    <%= render :partial => "shared/header"%>
+      <div id="main">
+	<div id="sub_nav" class="nav wrapper">
+	  <div>
+	  <a href="">sub nav link 01</a><span> </span><a href="">sub nav link 02</a><span> </span><a href="">sub nav link 03</a><span> </span><a href="">sub nav link 04</a><span> </span><a href="">sub nav link 05</a><span> </span><a href="">sub nav link 06</a>	    
+	  </div>
+	</div>
+	<div id="broad" class="wrapper">
+	  <div>
+	    <h2>Welcome to BrowserCMS 3.0</h2>
+	    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.</p>
+	  </div>
+	</div>
+      </div>
+      <div style="clear: both;"></div>      
+      <%= render :partial => "shared/footer" %>
+    </div>	
+  </body>
+</html>
