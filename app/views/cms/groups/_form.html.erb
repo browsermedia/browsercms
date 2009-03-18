@@ -1,5 +1,11 @@
 <% content_for :html_head do %>
   <%= stylesheet_link_tag('cms/form_layout') %>
+  <style type="text/css">
+    .checkbox_group .checkboxes .instructions{
+    padding-bottom: 10px;
+    #padding-bottom: 2px;
+    }
+  </style>
   <% javascript_tag do %>
     jQuery(function($) {
       $('#group_group_type_id').selectbox();
@@ -17,7 +23,7 @@
   	<%= f.label :group_type_id, "Type of User" %>
   	<div><%= f.select :group_type_id, GroupType.non_guest.map { |g| [g.name, g.id] } %></div>
   	<div class="instructions">What kind of user does this group represent?</div>
-	<br clear="both" />
+	<br clear="all" />
   </div>
 <% end %>
 

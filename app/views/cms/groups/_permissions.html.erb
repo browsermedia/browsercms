@@ -16,19 +16,21 @@
 <% end %>
 <div id="permissions">
   <div class="checkbox_group">
-    <div class="label">What kind of tasks should group members be allowed to do?</div>
+    <label>Global Permissions</label>
     <%= hidden_field_tag "group[permission_ids][]", "" %>  
+    <div class="checkboxes">
     <% Permission.all(:order => "name").each do |p| %>
       <div class="checkbox_fields">
-        <label>
           <%= check_box_tag "group[permission_ids][]", p.id, @group.permissions.include?(p), :id => "permission_ids_#{p.id}", :class => "permission_ids" %>
-          <span><%=h p.full_name %> (<%=h p.description %>)</span>
-        </label>
+          <label for="permission_ids_<%= p.id %>" style="width: 400px;#padding-top: 6px;"><%=h p.full_name %></label>
       </div>
+      <div class="instructions"><%=h p.description %></div>
     <% end %>
     <div class="check_uncheck">
   	  <%= link_to_check_all 'input.permission_ids' %>, 
   	  <%= link_to_uncheck_all 'input.permission_ids' %>
     </div>
   </div>
+    <br clear="all" />
+    </div>
 </div>
