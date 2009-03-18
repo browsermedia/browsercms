@@ -131,6 +131,14 @@ html, body, div, span, applet, object, iframe,
   margin: 10px;
   border: 1px solid #CCCCCC;
   padding: 5px 6px;
+  width: 926px;
+  }
+  #mid_nav li {
+  float: left;
+  border-right: 1px solid #CCCCCC;
+  }
+  #mid_nav li.last {
+  border-right: none;
   }
   #mid_nav a {
   padding: 4px 14px;
@@ -209,6 +217,14 @@ html, body, div, span, applet, object, iframe,
   float: none;
   width: 125px;
   border-bottom: 1px solid #CCCCCC;
+  }
+  #sub_nav li {
+  width: 126px;
+  margin-right: 15px;
+  border-bottom: 1px solid #CCCCCC;  
+  }
+  #sub_nav li.last {
+  border-bottom: none;
   }
   #footer {
   margin-top: 10px;

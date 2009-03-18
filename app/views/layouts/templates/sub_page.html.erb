@@ -11,15 +11,9 @@
 	<%= cms_toolbar %>
     <%= render :partial => "shared/header"%>
       <div id="main">
-	<!-- Here is the 'generated' menu I would like to use -->
-		<%= render_menu :from_top=>0, :depth => 1, :class => "nav wrapper", :id => "sub_nav"%>
-		<!-- Here is the hand coded menu which matchs the design look.
-
-			 <div id="sub_nav" class="nav wrapper">
-			  <div>
-			  <a href="">sub nav link 01</a><span> </span><a href="">sub nav link 02</a><span> </span><a href="">sub nav link 03</a><span> </span><a href="">sub nav link 04</a><span> </span><a href="">sub nav link 05</a><span> </span><a href="">sub nav link 06</a>	    
-			  </div>
-			</div> -->
+	<div id="sub_nav" class="nav wrapper">
+	  <%= render_menu :from_top=>0, :depth => 1 %>
+	</div>
 	<div id="broad" class="wrapper">
 	  <div>
 	    <h2>Welcome to BrowserCMS 3.0</h2>
