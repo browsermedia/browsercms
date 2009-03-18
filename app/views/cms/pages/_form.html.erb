@@ -9,48 +9,48 @@ $(document).ready(function() {
 <%= f.error_messages %>
 <div class="fields text_fields">
   <%= f.label :name %>
-  <%= f.text_field :name, :tabindex => (@tabindex += 1) %>
+  <%= f.text_field :name, :tabindex => next_tabindex %>
 </div>
 <div class="fields text_fields">
   <%= f.label :title, "Title", :class => "inline" %> 
-  <%= f.text_field :title, :tabindex => (@tabindex += 1) %>
+  <%= f.text_field :title, :tabindex => next_tabindex %>
   <div class="instructions">(Leave blank if same as name)</div><br clear="all" />
 </div>
 <div class="fields text_fields">
   <%= f.label :path %>
-  <%= f.text_field :path, :tabindex => (@tabindex += 1) %>
+  <%= f.text_field :path, :tabindex => next_tabindex %>
 </div>
 <div class="fields select_fields">
   <%= f.label :template %>
-  <div><%= f.select :template, @templates, {}, :tabindex => (@tabindex += 1) %></div>
+  <div><%= f.select :template, @templates, {}, :tabindex => next_tabindex %></div>
 </div>
 <div class="checkbox_group fields no_check_all">
   <div class="checkbox_fields">
     <label for="page_cacheable">Cache enabled?</label>  
-    <%= f.check_box :cacheable, :tabindex => (@tabindex += 1) %>
+    <%= f.check_box :cacheable, :tabindex => next_tabindex %>
   </div>
 </div>
 <div class="checkbox_group fields no_check_all">
   <div class="checkbox_fields">
     <label for="page_hidden">Hide From Menus?</label>
-    <%= f.check_box :hidden, :disabled => (!current_user.able_to?(:publish_content)), :tabindex => (@tabindex += 1) %>
+    <%= f.check_box :hidden, :disabled => (!current_user.able_to?(:publish_content)), :tabindex => next_tabindex %>
   </div>
 </div>
 <div class="checkbox_group fields no_check_all">
   <div class="checkbox_fields">
     <label for="page_archived">Archived?</label>
-    <%= f.check_box :archived, :disabled => (!current_user.able_to?(:publish_content)), :tabindex => (@tabindex += 1) %>
+    <%= f.check_box :archived, :disabled => (!current_user.able_to?(:publish_content)), :tabindex => next_tabindex %>
   </div>
 </div>
 <div class="fields textarea_fields">
   <%= f.label :description %>
-  <%= f.text_area :description, :size => "80x5", :tabindex => (@tabindex += 1) %>
+  <%= f.text_area :description, :size => "80x5", :tabindex => next_tabindex %>
 </div>
 <div class="fields textarea_fields">
   <%= f.label :keywords %>
-  <%= f.text_area :keywords, :size => "80x3", :tabindex => (@tabindex += 1) %>
+  <%= f.text_area :keywords, :size => "80x3", :tabindex => next_tabindex %>
 </div>
 <div class="fields text_fields">
   <%= f.label :language %>
-  <%= f.text_field :language, :tabindex => (@tabindex += 1) %>
+  <%= f.text_field :language, :tabindex => next_tabindex %>
 </div>

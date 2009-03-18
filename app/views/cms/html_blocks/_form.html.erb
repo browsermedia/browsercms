@@ -1,6 +1,4 @@
 <% content_for :html_head do %>
-  <%= stylesheet_link_tag "cms/taglist" %>
-  <%= javascript_include_tag "jquery.dimensions", "jquery.taglist", "/cms/tags" %>
   <% javascript_tag do %>
   $(document).ready(function() {
     $('select.dhtml_selector').selectbox({width: '96px', dhtml_selector: 'html_block_content'});
@@ -8,15 +6,12 @@
   });
   <% end %>
 <% end %>
-<div class="fields text_fields">
-  <%= f.label :name %>
-  <%= f.text_field :name, :tabindex => (@tabindex += 1) %>
-</div>
+<%= f.cms_text_field :name %>
 <div class="fields text_editor_fields">
   <%= f.label :content, "Content" %>
-  <%= f.text_editor :content, :tabindex => (@tabindex += 1) %>
+  <%= f.text_editor :content, :tabindex => next_tabindex %>
 </div>
 <div class="fields text_fields">
   <%= f.label :tag_list, "Tags" %>
-  <%= f.tag_list :tabindex => (@tabindex += 1) %>
+  <%= f.tag_list :tabindex => next_tabindex %>
 </div>

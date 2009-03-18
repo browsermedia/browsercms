@@ -123,7 +123,6 @@ module Cms
           end        
 
           def live_version?
-            Rails.logger.info "live_version?\nversion:#{inspect}\nlive version:\n#{live_version.inspect}"
             live_version && version == live_version.version
           end
 

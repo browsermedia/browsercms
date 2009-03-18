@@ -17,6 +17,6 @@ jQuery(function($){
 <% end %>
 <% form_for(@section, :url => cms_path(:sections, :create), :id => 'section_form') do |f| %>
   <%= hidden_field_tag :section_id, @parent.id %>
-  <% @tabindex = 0 %>
+  
   <%= render :partial => 'form', :locals => {:f => f} %>
 <% end %>

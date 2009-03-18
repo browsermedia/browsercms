@@ -2,16 +2,16 @@
 <%= f.error_messages %>
 <div class="text_fields fields">
   <%= f.label :name %>
-  <%= f.text_field :name, :tabindex => (@tabindex += 1) %>
+  <%= f.text_field :name, :tabindex => next_tabindex %>
 </div>
 <div class="text_fields fields">
   <%= f.label :path %>
-  <%= f.text_field :path, :tabindex => (@tabindex += 1) %>
+  <%= f.text_field :path, :tabindex => next_tabindex %>
 </div>
 <div class="checkbox_group fields no_check_all">
   <div class="checkbox_fields">
     <%= f.label :hidden, "Hide from menus?" %>
-    <%= f.check_box :hidden, :tabindex => (@tabindex += 1) %>
+    <%= f.check_box :hidden, :tabindex => next_tabindex %>
   </div>
 </div>
 
@@ -22,7 +22,7 @@
     <% for group in public_groups %>
     <div class="checkbox_fields">
       <%= check_box_tag "section[group_ids][]", group.id,
-            @section.groups.include?(group), :class => "public_group_ids", :id => "public_group_ids_#{group.id}", :tabindex => (@tabindex += 1) %>
+            @section.groups.include?(group), :class => "public_group_ids", :id => "public_group_ids_#{group.id}", :tabindex => next_tabindex %>
         <label><%= group.name %></label>
     </div>
     <% end %>
@@ -43,7 +43,7 @@
     <% for group in cms_groups %>
     <div class="checkbox_fields">
         <%= check_box_tag "section[group_ids][]", group.id,
-            @section.groups.include?(group), :class => "cms_group_ids", :id => "cms_group_ids_#{group.id}", :tabindex => (@tabindex += 1) %>
+            @section.groups.include?(group), :class => "cms_group_ids", :id => "cms_group_ids_#{group.id}", :tabindex => next_tabindex %>
         <label><%= group.name %></label>
     </div>
     <% end %>
@@ -58,5 +58,5 @@
 
 
 <div class="buttons">
-  <%= lt_button_wrapper(f.submit("Save", :class => "submit", :tabindex => (@tabindex += 1))) %>
+  <%= lt_button_wrapper(f.submit("Save", :class => "submit", :tabindex => next_tabindex)) %>
 </div>

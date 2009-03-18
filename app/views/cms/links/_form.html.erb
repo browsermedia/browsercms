@@ -2,16 +2,16 @@
 <%= f.error_messages %>
 <div class="fields text_fields">
   <%= f.label :name %>
-  <%= f.text_field :name, :tabindex => (@tabindex += 1)  %>
+  <%= f.text_field :name, :tabindex => next_tabindex  %>
 </div>
 <div class="fields text_fields">
   <%= f.label :url %>
-  <%= f.text_field :url, :tabindex => (@tabindex += 1)  %>
+  <%= f.text_field :url, :tabindex => next_tabindex  %>
 </div>
 <div class="checkbox_group fields no_check_all">
   <div class="checkbox_fields">
   <label>Open in new window?</label>
-  <%= f.check_box :new_window, :tabindex => (@tabindex += 1)  %>
+  <%= f.check_box :new_window, :tabindex => next_tabindex  %>
   </div>
 </div>
 

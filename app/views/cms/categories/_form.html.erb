@@ -19,19 +19,19 @@ $(document).ready(function() {
   <div class="fields select_fields">
     <%= f.label :category_type_id, "Type" %>
     <% @block.category_type ||= (Category.last(:include => :category_type) && Category.last.category_type) %>  
-    <div><%= f.collection_select :category_type_id, CategoryType.all(:order => "name"), :id, :name, :prompt => "Select a Type of Category", :tabindex => (@tabindex += 1) %></div>
+    <div><%= f.collection_select :category_type_id, CategoryType.all(:order => "name"), :id, :name, :prompt => "Select a Type of Category", :tabindex => next_tabindex %></div>
   </div>
 
     <% categories = @block.category_type ? @block.category_type.category_list.map{|c| [c.path, c.id]} : [] %>
   <% unless categories.empty? %>
   <div class="fields select_fields">
     <%= f.label :parent_id %>
-    <div><%= f.select :parent_id, categories, :include_blank => true, :tabindex => (@tabindex += 1) %></div>
+    <div><%= f.select :parent_id, categories, :include_blank => true, :tabindex => next_tabindex %></div>
   </div>
   <% end %>
   <div class="fields text_fields">
     <%= f.label :name %>
-    <%= f.text_field :name, :tabindex => (@tabindex += 1) %>
+    <%= f.text_field :name, :tabindex => next_tabindex %>
   </div>
 <% else %>
   <% content_for :html_head do %>

@@ -5,6 +5,6 @@
 <br clear="all"/>
 <% end %>
 <% form_for(@section, :url => cms_path(@section, :update)) do |f| %>
-  <% @tabindex = 0 %>
+  
   <%= render :partial => 'form', :locals => {:f => f} %>
 <% end %>
