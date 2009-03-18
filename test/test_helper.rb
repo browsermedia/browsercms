@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'test_help'
 require 'action_view/test_case'
 
-class Test::Unit::TestCase
+class ActiveSupport::TestCase
   # Transactional fixtures accelerate your tests by wrapping each test method
   # in a transaction that's rolled back on completion.  This ensures that the
   # test database remains unchanged so your fixtures don't have to be reloaded
@@ -46,6 +46,12 @@ class Test::Unit::TestCase
     assert File.exists?(file_name), 
       (message || "Expected File '#{file_name}' to exist, but it does not")
   end  
+
+  def assert_valid(object, message=nil)
+    assert object.valid?, 
+      (message || 
+        "#{object.class.name.titleize} is not valid, but it should be")
+  end
   
   def assert_not_valid(object, message=nil)
     assert !object.valid?, 

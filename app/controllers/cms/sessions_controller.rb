@@ -4,6 +4,10 @@ class Cms::SessionsController < Cms::ApplicationController
   before_filter :redirect_to_cms_site, :only => [:new]
   layout "cms/login"
   
+  def new
+    
+  end
+  
   def create
     logout_keeping_session!
     user = User.authenticate(params[:login], params[:password])
@@ -37,7 +41,9 @@ class Cms::SessionsController < Cms::ApplicationController
         flash[:remember_me] = params[:remember_me]
         flash[:success_url] = success_url
         redirect_to request.referrer
-      end  
+      else
+        render :action => "new" 
+      end 
     end
   end
 

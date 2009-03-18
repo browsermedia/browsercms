@@ -1,6 +1,6 @@
 require File.join(File.dirname(__FILE__), '/../../test_helper')
 
-class CreatingPageTest < ActiveSupport::TestCase
+class CreatingPageTest < ActiveRecord::TestCase
   
   def test_it
     
@@ -30,7 +30,7 @@ class CreatingPageTest < ActiveSupport::TestCase
   
 end
 
-class PageTest < ActiveSupport::TestCase
+class PageTest < ActiveRecord::TestCase
 
   def test_find_live_by_path
     @page = Factory.build(:page, :path => '/foo')
@@ -164,7 +164,7 @@ class PageTest < ActiveSupport::TestCase
 
 end
 
-class PageVersioningTest < ActiveSupport::TestCase
+class PageVersioningTest < ActiveRecord::TestCase
   
   def setup
     @first_guy = Factory(:user, :login => "first_guy")
@@ -199,7 +199,7 @@ class PageVersioningTest < ActiveSupport::TestCase
         
 end
 
-class PageInSectionTest < ActiveSupport::TestCase
+class PageInSectionTest < ActiveRecord::TestCase
   def test_that_it_returns_true_if_the_page_is_in_a_child_section_of_the_section
     @sports = Factory(:section, :parent => root_section, :name => "Sports")
     @nfl = Factory(:section, :parent => @sports, :name => "NFL")
@@ -236,7 +236,7 @@ class PageInSectionTest < ActiveSupport::TestCase
   end
 end
 
-class PageWithAssociatedBlocksTest < ActiveSupport::TestCase
+class PageWithAssociatedBlocksTest < ActiveRecord::TestCase
   def setup   
     super 
     @page = Factory(:page, :section => root_section, :name => "Bar")
@@ -282,7 +282,7 @@ class PageWithAssociatedBlocksTest < ActiveSupport::TestCase
   end
 end
 
-class AddingBlocksToPageTest < ActiveSupport::TestCase
+class AddingBlocksToPageTest < ActiveRecord::TestCase
   def test_that_it_works
     @page = Factory(:page, :section => root_section)
     @block = Factory(:html_block)
@@ -355,7 +355,7 @@ class AddingBlocksToPageTest < ActiveSupport::TestCase
   end
 end
 
-class PageWithTwoBlocksTest < ActiveSupport::TestCase
+class PageWithTwoBlocksTest < ActiveRecord::TestCase
   def setup
     super
     @page = Factory(:page, :section => root_section)
@@ -443,7 +443,7 @@ class PageWithTwoBlocksTest < ActiveSupport::TestCase
 
 end
 
-class PageWithBlockTest < ActiveSupport::TestCase
+class PageWithBlockTest < ActiveRecord::TestCase
   def setup
     @page = Factory(:page, :section => root_section)
     @block = Factory(:html_block)
@@ -520,7 +520,7 @@ class PageWithBlockTest < ActiveSupport::TestCase
   
 end
 
-class UnpublishedPageWithOnePublishedAndOneUnpublishedBlockTest < ActiveSupport::TestCase
+class UnpublishedPageWithOnePublishedAndOneUnpublishedBlockTest < ActiveRecord::TestCase
   def setup
     @page = Factory(:page, :section => root_section)
     @published_block = Factory(:html_block, :name => "Published")
@@ -556,7 +556,7 @@ class UnpublishedPageWithOnePublishedAndOneUnpublishedBlockTest < ActiveSupport:
   
 end
 
-class RevertingABlockThatIsOnMultiplePagesTest < ActiveSupport::TestCase
+class RevertingABlockThatIsOnMultiplePagesTest < ActiveRecord::TestCase
   def test_that_it_reverts_both_pages
     
     # 1. Create a new page (Page 1, v1)    
@@ -600,7 +600,7 @@ class RevertingABlockThatIsOnMultiplePagesTest < ActiveSupport::TestCase
     
 end
 
-class ViewingAPreviousVersionOfAPageTest < ActiveSupport::TestCase
+class ViewingAPreviousVersionOfAPageTest < ActiveRecord::TestCase
 
   def test_that_it_shows_the_correct_version_of_the_blocks_it_is_connected_to
     # 1. Create Page A (v1)
