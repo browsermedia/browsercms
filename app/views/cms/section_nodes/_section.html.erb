@@ -3,7 +3,7 @@
     <%= render :partial => "node", :locals => {
         :node => node, 
         :node_type => "section", 
-        :icon => "#{node.child_nodes.empty? ? image_tag("cms/sitemap/no_contents.png", :class => "no_folder_toggle") : image_tag("cms/sitemap/expand.png", :class => "folder_toggle")} #{action_icon(root ? :root_folder : :folder, :class => "folder")}",
+        :icon => "#{section_icons(node)} #{action_icon(root ? :root_folder : :folder, :class => "folder")}",
         :hidden => node.hidden?,
         :access_icon => status_icon(node.status),
       } %>

@@ -181,16 +181,16 @@ float: left;
 margin: 6px 9px 0 4px;
 }
 #sitemap ul.rootlet ul img.folder_toggle, #sitemap ul.rootlet ul img.no_folder_toggle {
-margin: 2px 14px 0 0px;
+margin: 0 14px 0 0px;
 }
 #sitemap ul.rootlet ul td.node {
 padding-left: 7px;
 }
 #sitemap ul.rootlet td.page img, #sitemap ul.rootlet td.link img, #sitemap ul.root td.node img{
-margin-left: 21px;
+margin-left: 27px;
 }
 #sitemap ul.rootlet ul td.page img, #sitemap ul.rootlet ul td.link img {
-margin-left: 24px;
+margin-left: 28px;
 }
 #sitemap ul td.section {
 font-weight: bold;
