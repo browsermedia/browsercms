@@ -53,19 +53,19 @@ hello.content = "<p>Thank you for trying out this demo site. BrowserCMS is a ope
                 </p>"
 hello.save!
 
-login = "<p>In order to create or edit content, you will need to log into BrowserCMS.</p><a href='/cms'>Login here</a>. 
-        <p>Enter the following:<ul>
+login = "<p>In order to create or edit content, you will need to log into BrowserCMS.</p>
+         <p><a href='/cms'>Login here</a>.</p>
+        <p>Enter the following:</p><ul>
         <li>Username: cmsadmin</li><li>Password: cmsadmin</li></ul>"
 create_html_block(:login, :name => "Login", :content=>login, :connect_to_page_id => home_page.id, :connect_to_container => "side_bar_1")
 
-features =  "<p>Here is a list of some of the features that BrowserCMS sports.
+features =  "<p>Here is a list of some of the features that BrowserCMS sports.</p>
             <ul>
               <li>100% Web Based Interface</li>
               <li>Group Based Permissions</li>
               <li>Rich Text Editing</li>
               <li>Flexible Design Templates</li>
             </ul>            
-            </p> 
             "
 create_html_block(:features, :name => "Features", :content=>features, :connect_to_page_id => home_page.id, :connect_to_container => "side_bar_2")
 

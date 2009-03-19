@@ -12,7 +12,7 @@
 	  width: 635px;
 	  # height: 520px;
 	  }
-	  #broad div {
+	  #broad div.main_wrapper {
 	  margin: 10px;
 	  border: 1px solid #CCCCCC;
 	  height: 237px;
@@ -25,17 +25,17 @@
       <div id="main">
 	<div id="broad" class="wrapper">
 	  <%= image_tag "/themes/blue_steel/images/splash.jpg", :alt=>"Splash!", :id=>"splash"%>
-	  <div>
+	  <div class="main_wrapper">
 	    <h2>Welcome to BrowserCMS 3.0</h2>
 	    <%= container :main %>
 	  </div>
 	</div>
 	<div id="narrow" class="wrapper">
-	  <div class="page_highlight">
+	  <div class="page_highlight main_wrapper">
 	    <h3>Login</h3>
 	    <%= container :side_bar_1 %>
 	  </div>
-	  <div class="page_highlight">
+	  <div class="page_highlight main_wrapper">
 	    <h3>Features</h3>
 	    <%= container :side_bar_2 %>
 	  </div>

@@ -151,10 +151,8 @@ html, body, div, span, applet, object, iframe,
   #main {
   margin-top: 10px;
   }
-  #main div {
-  float: left;
-  }
   #broad {
+  float: left;
   width: 772px;
   # height: 515px;
   }
@@ -168,7 +166,7 @@ html, body, div, span, applet, object, iframe,
   padding-top: 0;
   line-height: 1.5;
   }
-  #broad div {
+  #broad div.main_wrapper {
   margin: 10px;
   border: 1px solid #CCCCCC;
   height: 493px;
@@ -178,6 +176,7 @@ html, body, div, span, applet, object, iframe,
   margin: 6px 4px 0 7px;
   }
   #narrow {
+  float: left;
   width: 316px;
   height: 515px;
   # height: 520px;
@@ -193,7 +192,7 @@ html, body, div, span, applet, object, iframe,
   line-height: 1.5;
   # width: 264px;
   }
-  #narrow div {
+  #narrow div.main_wrapper {
   margin: 10px;
   margin-bottom: 0;
   border: 1px solid #CCCCCC;
@@ -201,6 +200,7 @@ html, body, div, span, applet, object, iframe,
   #height: 243px;
   }
   #sub_nav {
+  float: left;
   height: 515px;
   margin-right: 10px;
   }
@@ -247,7 +247,11 @@ html, body, div, span, applet, object, iframe,
   #footer p {
   float: left;
   padding: 4px 0 0 15px;
-  margin-right: 211px;
+  margin-right: 280px;
   }
-
-
+#narrow ul {
+  padding-left: 25px;
+}
+#narrow li {
+  font-size: 10px;
+}
