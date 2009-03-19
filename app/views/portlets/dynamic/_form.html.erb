@@ -1,12 +1,3 @@
-<div class="fields text_fields">
-  <%= f.label :name %>
-  <%= f.text_field :name %>
-</div>
-<div class="fields textarea_fields">
-  <%= f.label :code %>
-  <%= f.text_area :code %>
-</div>
-<div class="fields text_editor_fields">
-  <%= f.label :template %><br />
-  <%= f.text_area :template %>
-</div>
+<%= f.cms_text_field :name %>
+<%= f.cms_text_area :code %>
+<%= f.cms_text_area :template %>
