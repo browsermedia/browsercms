@@ -27,23 +27,33 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
   # These are the higher-level fields, 
   # that get wrapped in divs with labels, instructions, etc.
   
-  %w[text_area text_field].each do |f|
+  %w[text_area text_field file_field].each do |f|
     src = <<-end_src
       def cms_#{f}(method, options={})
         add_tabindex!(options)
         set_default_value!(method, options)
         cms_options = options.extract!(:label, :instructions)
         render_cms_form_partial :#{f},
-          :method => method, :options => options, :cms_options => cms_options
+          :object_name => @object_name, :method => method,
+          :options => options, :cms_options => cms_options
       end
     end_src
     class_eval src, __FILE__, __LINE__
   end
+  
+  def cms_drop_down(method, choices, options={}, html_options={})
+    add_tabindex!(html_options)
+    cms_options = options.extract!(:label, :instructions)
+    render_cms_form_partial :drop_down,
+      :object_name => @object_name, :method => method,
+      :choices => choices, :options => options, 
+      :cms_options => cms_options, :html_options => html_options
+  end  
     
   def cms_tag_list(options={})
     add_tabindex!(options)
     cms_options = options.extract!(:label, :instructions)
-    render_cms_form_partial :text_field, 
+    render_cms_form_partial :tag_list, 
       :options => options, :cms_options => cms_options
   end
 

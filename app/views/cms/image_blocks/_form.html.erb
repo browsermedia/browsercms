@@ -44,7 +44,6 @@
 <div class="fields select_fields">
   <%= f.label :attachment_section_id, "Section" %>
   <div><%= f.collection_select :attachment_section_id, @sections, :id, :full_path, :tabindex => next_tabindex %></div>
-  <br clear="all" />
 </div>
 <div class="fields text_fields">
   <%= f.label :attachment_file_path, "Path" %>

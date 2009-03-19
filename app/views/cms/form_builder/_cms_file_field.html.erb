@@ -1,0 +1,30 @@
+<% content_for :html_head do %>
+  <% javascript_tag do %>
+    jQuery(function($) {
+      $('#mock_<%= object_name %>_<%= method %>')
+        .focus(function() {this.blur()})
+        .mousedown(function() {this.blur()})
+      $('#<%= object_name %>_<%= method %>').change(function() {
+          $('#mock_<%= object_name %>_<%= method %>')
+            .attr('value', $(this).attr('value'))
+      })
+    })
+  <% end %>
+<% end %>
+
+<div class="fields file_fields">
+  <% if cms_options[:label] %>
+    <%= f.label method, cms_options[:label] %>
+  <% else %>
+    <%= f.label method %>
+  <% end %>
+  <div id="<%= object_name %>_<%= method %>_div">
+    <input type="text" name="temp" class="mock" id="mock_<%= object_name %>_<%= method %>" />
+    <%= image_tag("cms/browse.gif") %>
+    <%= f.file_field method, {:size => 1}.merge(options) %>
+  </div>
+  <% if cms_options[:instructions] %>
+    <div class="instructions">Leave blank to return the same page</div>
+    <br clear="all"/>  
+  <% end %>
+</div>

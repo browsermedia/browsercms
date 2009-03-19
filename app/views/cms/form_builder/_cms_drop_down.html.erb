@@ -1,0 +1,19 @@
+<% content_for :html_head do %>
+  <% javascript_tag do %>
+    jQuery(function($) {
+      $('#<%= object_name %>_<%= method %>').selectbox({width: '455px'});
+    })
+  <% end %>
+<% end %>
+<div class="fields select_fields">
+  <% if cms_options[:label] %>
+    <%= f.label method, cms_options[:label] %>
+  <% else %>
+    <%= f.label method %>
+  <% end %>
+  <%= f.drop_down method, choices, options, html_options %>
+  <% if cms_options[:instructions] %>
+    <div class="instructions">Leave blank to return the same page</div>
+    <br clear="all"/>  
+  <% end %>  
+</div>
