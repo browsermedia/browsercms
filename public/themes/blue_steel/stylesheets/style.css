@@ -25,7 +25,7 @@ html, body, div, span, applet, object, iframe,
   color: black;
   background: white;
   }
-  ol, ul {
+  .menu ol, .menu ul, ul.breadcrumbs {
   list-style: none;
   }
   /* tables still need 'cellspacing="0"' in the markup */
@@ -142,6 +142,11 @@ html, body, div, span, applet, object, iframe,
   }
   #mid_nav a {
   padding: 4px 14px;
+  }
+
+  .breadcrumbs li {
+	float: left;
+	border-right: 1px solid #CCCCCC;
   }
   #main {
   margin-top: 10px;

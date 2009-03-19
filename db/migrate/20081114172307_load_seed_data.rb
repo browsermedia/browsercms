@@ -35,23 +35,23 @@ class LoadSeedData < ActiveRecord::Migration
     Group.all.each{|g| g.sections = Section.all }    
     
     create_page(:home, :name => "Home", :path => "/", :section => sections(:root), :template => "Main", :cacheable => true)
-    create_page(:not_found, :name => "Not Found", :path => "/system/not_found", :section => sections(:system), :template => "Error", :publish_on_save => true, :hidden => true, :cacheable => true)
+    create_page(:not_found, :name => "Page Not Found", :path => "/system/not_found", :section => sections(:system), :template => "Error", :publish_on_save => true, :hidden => true, :cacheable => true)
     create_page(:access_denied, :name => "Access Denied", :path => "/system/access_denied", :section => sections(:system), :template => "Error", :publish_on_save => true, :hidden => true, :cacheable => true)
     create_page(:server_error, :name => "Server Error", :path => "/system/server_error", :section => sections(:system), :template => "Error", :publish_on_save => true, :hidden => true, :cacheable => true)
 
-    create_html_block(:page_not_found, :name => "Page Not Found", :content => "<h1>Page Not Found</h1>\n<p>The page you tried to access does not exist on this server.</p>", :publish_on_save => true)
+    create_html_block(:page_not_found, :name => "Page Not Found", :content => "<p>The page you tried to access does not exist on this server.</p>", :publish_on_save => true)
     pages(:not_found).create_connector(html_blocks(:page_not_found), "main")
     pages(:not_found).publish!
 
-    create_html_block(:access_denied, :name => "Access Denied", :content => "<h1>Access Denied</h1>\n<p>You have tried to reach a resource or page which you do not have permission to view.</p>", :publish_on_save => true)
+    create_html_block(:access_denied, :name => "Access Denied", :content => "<p>You have tried to reach a resource or page which you do not have permission to view.</p>", :publish_on_save => true)
     pages(:access_denied).create_connector(html_blocks(:access_denied), "main")
     pages(:access_denied).publish!
 
-    create_html_block(:server_error, :name => "Server Error", :content => "<h1>Server Error</h1>\n<p>The server encountered an unexpected condition that prevented it from fulfilling the request.</p>", :publish_on_save => true)
+    create_html_block(:server_error, :name => "Server Error", :content => "<p>The server encountered an unexpected condition that prevented it from fulfilling the request.</p>", :publish_on_save => true)
     pages(:server_error).create_connector(html_blocks(:server_error), "main")
     pages(:server_error).publish!
 
-    create_html_block(:hello_world, :name => "Hello World", :content => "<h1>Hello, World!</h1>", :publish_on_save => true)
+    create_html_block(:hello_world, :name => "Hello World", :content => "<h2>Hello, World!</h2>", :publish_on_save => true)
 
     pages(:home).create_connector(html_blocks(:hello_world), "main")         
     
