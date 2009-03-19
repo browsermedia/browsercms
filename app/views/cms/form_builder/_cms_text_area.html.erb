@@ -6,4 +6,8 @@
   <% end %>
   <br />
   <%= f.text_area method, options %>
+  <% if cms_options[:instructions] %>
+    <div class="instructions">Leave blank to return the same page</div>
+    <br clear="all"/>  
+  <% end %>  
 </div>

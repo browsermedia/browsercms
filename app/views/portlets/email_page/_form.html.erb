@@ -1,22 +1,7 @@
-<div class="fields text_fields">
-  <%= f.label :name %>
-  <%= f.text_field :name %>
-</div>
-
-<% @block.subject = "A link you might be interested" if @block.subject.blank? %>
-<div class="fields text_fields">
-  <%= f.label :subject %>
-  <%= f.text_field :subject %>
-</div>
-
-<div class="fields text_fields">
-  <%= f.label :success_url %>
-  <%= f.text_field :success_url %>
-  <div class="instructions">Leave blank to return the same page</div>
-</div>
-
-<% @block.template = EmailPagePortlet.default_template if @block.template.blank? %>
-<div class="fields text_editor_fields">
-  <%= f.label :template %><br />
-  <%= f.text_area :template %>
-</div>
+<%= f.cms_text_field :name %>
+<%= f.cms_text_field :subject, 
+  :default_value => "A link you might be interested in" %>
+<%= f.cms_text_field :success_url, 
+  :instructions => "Leave blank to return the same page" %>
+<%= f.cms_text_area :template, 
+  :default_value => EmailPagePortlet.default_template %>

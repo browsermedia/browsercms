@@ -31,6 +31,7 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
     src = <<-end_src
       def cms_#{f}(method, options={})
         add_tabindex!(options)
+        set_default_value!(method, options)
         cms_options = options.extract!(:label, :instructions)
         render_cms_form_partial :#{f},
           :method => method, :options => options, :cms_options => cms_options
@@ -56,6 +57,12 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
   end
 
   private
+
+    def set_default_value!(method, options={})
+      if options.has_key?(:default_value) && @object.send(method).blank?
+        @object.send("#{method}=", options[:default_value])
+      end
+    end
   
     def add_tabindex!(options)
       if options.has_key?(:tabindex)
