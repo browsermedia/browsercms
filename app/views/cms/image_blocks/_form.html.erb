@@ -8,18 +8,9 @@
   @block.attachment_file_path = @block.attachment.file_path if @block.attachment_file_path.blank? && !@block.new_record?
 %>
 <% content_for :html_head do %>
-  <%= stylesheet_link_tag "cms/taglist" %>
-  <%= javascript_include_tag "jquery.dimensions", "jquery.taglist", "/cms/tags" %>
   <% javascript_tag do %>
     var regex = <%= Cms::Behaviors::Attaching::SANITIZATION_REGEXES.to_json %>
     jQuery(function($) {
-      $('#mock_image_block_attachment_file').focus(function() {this.blur();});
-      $('#mock_image_block_attachment_file').mousedown(function() {this.blur();});
-      $('.tag-list').tagList(tags)
-      $('#image_block_attachment_section_id').selectbox({width: '210px'});
-      $('#image_block_attachment_file').change(function(){
-        $('#mock_image_block_attachment_file').attr('value', $(this).attr('value'))
-      });
       <% if @block.new_record? %>
         var sectionIdPathMap = <%= @sections.inject({}){|map, sec| map[sec.id.to_s] = sec.path.sub(/\/$/,''); map}.to_json %>
         $('#image_block_attachment_file, #image_block_attachment_section_id').change(function(){
@@ -29,27 +20,11 @@
     });
   <% end %>
 <% end %>
-<div class="fields text_fields">
-  <%= f.label :name %>
-  <%= f.text_field :name, :tabindex => next_tabindex %>
-</div>
-<div class="fields file_fields">
-  <%= f.label :attachment_file, "File" %>
-  <div id="image_block_attachment_file_div">
-  <input type="text" name="temp" class="mock" id="mock_image_block_attachment_file" />
-  <%= image_tag("cms/browse.gif") %>
-  <%= f.file_field :attachment_file, :tabindex => next_tabindex, :size => 1 %>
-  </div>
-</div>
-<div class="fields select_fields">
-  <%= f.label :attachment_section_id, "Section" %>
-  <div><%= f.collection_select :attachment_section_id, @sections, :id, :full_path, :tabindex => next_tabindex %></div>
-</div>
-<div class="fields text_fields">
-  <%= f.label :attachment_file_path, "Path" %>
-  <%= f.text_field :attachment_file_path, :tabindex => next_tabindex %>
-</div>
-<div class="fields text_fields">
-  <%= f.label :tag_list, "Tags" %>
-  <%= f.tag_list :tabindex => next_tabindex %>
-</div>
+
+<%= f.cms_text_field :name %>
+<%= f.cms_file_field :attachment_file, :label => "File" %>
+<%= f.cms_drop_down :attachment_section_id, 
+  @sections.map{|s| [s.full_path, s.id]}, 
+  :label => "Section" %>
+<%= f.cms_text_field :attachment_file_path, :label => "Path" %>
+<%= f.cms_tag_list %>
