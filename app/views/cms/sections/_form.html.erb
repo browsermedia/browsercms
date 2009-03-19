@@ -1,13 +1,9 @@
 <%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
 <%= f.error_messages %>
-<div class="text_fields fields">
-  <%= f.label :name %>
-  <%= f.text_field :name, :tabindex => next_tabindex %>
-</div>
-<div class="text_fields fields">
-  <%= f.label :path %>
-  <%= f.text_field :path, :tabindex => next_tabindex %>
-</div>
+
+<%= f.cms_text_field :name %>
+<%= f.cms_text_field :path %>
+
 <div class="checkbox_group fields no_check_all">
   <div class="checkbox_fields">
     <%= f.label :hidden, "Hide from menus?" %>

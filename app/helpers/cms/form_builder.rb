@@ -27,7 +27,7 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
   # These are the higher-level fields, 
   # that get wrapped in divs with labels, instructions, etc.
   
-  %w[text_area text_field file_field].each do |f|
+  %w[date_picker text_area text_field file_field].each do |f|
     src = <<-end_src
       def cms_#{f}(method, options={})
         add_tabindex!(options)
@@ -63,7 +63,8 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
     render_cms_form_partial :text_editor, 
       :id => (options[:id] || "#{@object_name}_#{method}"), 
       :editor_enabled => (cookies["editorEnabled"].blank? ? true : (cookies["editorEnabled"] == 'true' || cookies["editorEnabled"] == ['true'])),
-      :method => method, :options => options, :cms_options => cms_options
+      :object_name => @object_name, :method => method, 
+      :options => options, :cms_options => cms_options
   end
 
   private

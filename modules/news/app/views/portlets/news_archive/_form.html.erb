@@ -1,13 +1,3 @@
-<div class="fields text_fields">
-  <%= f.label :name %>
-  <%= f.text_field :name %>
-</div>
-<div class="fields select_fields">
-  <%= f.label :category_id, "Category" %>
-  <%= f.collection_select :category_id, categories_for('News Article'), :id, :path, :include_blank => true %>
-</div>
-<% @block.template = @block.class.default_template if @block.template.blank? %>
-<div class="fields text_editor_fields">
-  <%= f.label :template %><br />
-  <%= f.text_area :template %>
-</div>
+<%= f.cms_text_field :name %>
+<%= f.cms_drop_down :category_id, categories_for('News Article').map{|c| [c.path, c.id]}, :include_blank => true %>
+<%= f.cms_text_area :template, :default_value => @block.class.default_template %>

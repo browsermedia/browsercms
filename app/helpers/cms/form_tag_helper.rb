@@ -3,18 +3,12 @@ module Cms
     
     # A drop-down is just a specialized HTML select
     
-    def drop_down_options(options={})
-      opts = options.dup
-      (opts[:class] ||= "") << " dhtml_selector"
-      opts
-    end
-    
     def drop_down_tag(name, option_tags = nil, options = {}) 
-      select_tag(name, option_tags, drop_down_options(options))
+      select_tag(name, option_tags, options)
     end
     
     def drop_down(object, method, choices, options = {}, html_options = {})
-      select(object, method, choices, options, drop_down_options(html_options))
+      select(object, method, choices, options, html_options)
     end
     
     # A text editor is an HTML WYSIWYG editor.  The result of this

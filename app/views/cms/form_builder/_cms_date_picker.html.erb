@@ -1,0 +1,12 @@
+<div class="fields text_fields">
+  <% if cms_options[:label] %>
+    <%= f.label method, cms_options[:label] %>
+  <% else %>
+    <%= f.label method %>
+  <% end %>
+  <%= f.date_picker method, options %>
+  <% if cms_options[:instructions] %>
+    <div class="instructions">Leave blank to return the same page</div>
+    <br clear="all"/>  
+  <% end %>  
+</div>

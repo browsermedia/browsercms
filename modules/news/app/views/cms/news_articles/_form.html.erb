@@ -1,43 +1,7 @@
-<% content_for :html_head do %>
-  <%= stylesheet_link_tag "cms/taglist" %>
-  <%= javascript_include_tag "jquery.dimensions", "jquery.taglist", "/cms/tags" %>
-  <% javascript_tag do %>
-  jQuery(function($) {
-    $('select.dhtml_selector').selectbox({width: '96px', dhtml_selector: 'news_release_body'});    
-    $('#news_release_category_id').selectbox({width: '210px'});
-    $('#news_release_attachment_file').change(function(){
-      $('#mock_news_release_attachment_file').attr('value', $(this).attr('value'))
-    });
-  });
-  <% end %>
-<% end %>
-<div class="fields text_fields">
-  <%= f.label :name %>
-  <%= f.text_field :name, :tabindex => next_tabindex %>
-</div>
-<div class="fields text_fields">
-  <%= f.label :release_date %>
-  <%= f.date_picker :release_date, :tabindex => next_tabindex %>
-</div>
-<div class="fields text_fields">
-  <%= f.label :category %>
-  <%= f.collection_select :category_id, categories_for('News Article'), :id, :path, :tabindex => next_tabindex %>
-</div>
-<div class="fields text_editor_fields">
-  <%= f.label :summary %><br/>
-  <%= f.text_area :summary, :tabindex => next_tabindex, :style => "height: 100px" %>
-</div>
-<div class="fields text_editor_fields">
-  <%= f.label :body %>
-  <%= f.text_editor :body, :tabindex => next_tabindex %>
-</div>
-<div class="fields file_fields">
-  <%= f.label :attachment_file, "File" %>
-  <input type="text" name="temp" class="mock" id="mock_news_release_attachment_file" />
-  <%= image_tag("cms/browse.gif") %>  
-  <%= f.file_field :attachment_file, :tabindex => next_tabindex %>
-</div>
-<div class="fields text_fields">
-  <%= f.label :tag_list, "Tags" %>
-  <%= f.tag_list :tabindex => next_tabindex %>
-</div>
+<%= f.cms_text_field :name %>
+<%= f.cms_date_picker :release_date %>
+<%= f.cms_drop_down :category_id, categories_for('News Article').map{|c| [c.path, c.id]} %>
+<%= f.cms_text_area :summary, :style => "height: 100px" %>
+<%= f.cms_text_editor :body %>
+<%= f.cms_file_field :attachment_file, :label => "File" %>
+<%= f.cms_tag_list %>
