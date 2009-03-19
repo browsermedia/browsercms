@@ -20,11 +20,19 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
   end
   
   def tag_list(options={})
-    text_field(:tag_list, {:size => 50, :class => "tag-list"}.merge(options))
+    field_name = options.delete(:name) || :tag_list
+    text_field(field_name, {:size => 50, :class => "tag-list"}.merge(options))
   end
 
   # These are the higher-level fields, 
   # that get wrapped in divs with labels, instructions, etc.
+  
+  def cms_tag_list(options={})
+    add_tabindex!(options)
+    cms_options = options.extract!(:label, :instructions)
+    render_cms_form_partial :tag_list, 
+      :options => options, :cms_options => cms_options
+  end
   
   def cms_text_field(method, options={})
     add_tabindex!(options)
