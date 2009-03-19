@@ -5,6 +5,7 @@ class Cms::ApplicationController < ApplicationController
   helper :all # include all helpers, all the time
 
   helper Cms::ApplicationHelper
+  helper Cms::FormTagHelper
   include Cms::PathHelper
   helper Cms::PathHelper
   include Cms::PageHelper

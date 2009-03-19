@@ -1,32 +1,20 @@
 class Cms::FormBuilder < ActionView::Helpers::FormBuilder
   
-  def cms_text_field(method, options={})
-    add_tab_index!(options)
-    cms_options = options.extract!(:label, :instructions)
-    render_cms_form_partial :text_field, 
-      :method => method, :options => options, :cms_options => cms_options
+  # These are the new fields we are adding
+  
+  # A JavaScript/CSS styled select
+  def drop_down(method, choices, options = {}, html_options = {})
+    @template.drop_down(@object_name, method, choices, objectify_options(options), add_tabindex!(@default_options.merge(html_options)))
   end
-  
+
   def text_editor(method, options = {})
-    opts = options.dup
-    if opts[:class] && !(/ editor / === opts[:class])
-      opts[:class] << " editor"
-    else
-      opts[:class] = "editor"
-    end 
-    id = opts[:id] || "#{@object_name}_#{method}"
-    enabled = cookies["editorEnabled"].blank? ? true : (cookies["editorEnabled"] == 'true' || cookies["editorEnabled"] == ['true'])
-    html = <<-HTML
-      <select class="dhtml_selector" name="dhtml_selector" onchange="toggleEditor('#{id}', this)">
-        <option value=""#{ ' selected="selected"' if enabled }>Rich Text</option>
-        <option value="disabled"#{ ' selected="selected"' unless enabled }>Simple Text</option>
-      </select>
-      <div class="editor">
-        #{text_area(method, opts)}
-      </div>      
-    HTML
-  end  
-  
+    @template.send(
+      "text_editor",
+      @object_name,
+      method,
+      objectify_options(options))
+  end
+
   def date_picker(method, options={})
     text_field(method, {:size => 10, :class => "date_picker"}.merge(options))
   end
@@ -35,14 +23,34 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
     text_field(:tag_list, {:size => 50, :class => "tag-list"}.merge(options))
   end
 
+  # These are the higher-level fields, 
+  # that get wrapped in divs with labels, instructions, etc.
+  
+  def cms_text_field(method, options={})
+    add_tabindex!(options)
+    cms_options = options.extract!(:label, :instructions)
+    render_cms_form_partial :text_field, 
+      :method => method, :options => options, :cms_options => cms_options
+  end
+
+  def cms_text_editor(method, options = {})
+    add_tabindex!(options)
+    cms_options = options.extract!(:label, :instructions)
+    render_cms_form_partial :text_editor, 
+      :id => (options[:id] || "#{@object_name}_#{method}"), 
+      :editor_enabled => (cookies["editorEnabled"].blank? ? true : (cookies["editorEnabled"] == 'true' || cookies["editorEnabled"] == ['true'])),
+      :method => method, :options => options, :cms_options => cms_options
+  end
+
   private
   
-    def add_tab_index!(options)
+    def add_tabindex!(options)
       if options.has_key?(:tabindex)
         options.delete(:tabindex) if options[:tabindex].blank?
       else 
         options[:tabindex] = @template.next_tabindex
       end
+      options
     end
   
     def cookies
