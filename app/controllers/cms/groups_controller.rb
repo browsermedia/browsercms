@@ -8,7 +8,10 @@ class Cms::GroupsController < Cms::ResourceController
   after_filter :add_default_sections, :only => [:create]
   
   def index
-    @groups = Group.paginate(:page => params[:page], :order => "name")
+    @groups = Group.paginate(
+      :include => :group_type,
+      :page => params[:page], 
+      :order => params[:order] || "groups.name")
   end
   
   protected
