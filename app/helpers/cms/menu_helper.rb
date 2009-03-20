@@ -113,12 +113,18 @@ module Cms
       page = options[:page] || @page
       from_top = options.has_key?(:from_top) ? options[:from_top].to_i : 0
       depth = options.has_key?(:depth) ? options[:depth].to_i : 1.0/0
+      id = options[:id] || "menu"
       css_class = options[:class] || "menu"
       show_all_siblings = !!(options[:show_all_siblings])
+
+      html = "<div id=\"#{id}\" class=\"#{css_class}\">\n"
       
-      ancestors = page.ancestors[from_top..-1]
-      
-      html = "<div class=\"#{css_class}\">\n"
+      ancestors = page.ancestors
+      if from_top > ancestors.size
+        return html << "</div>\n"
+      else
+        ancestors = page.ancestors[from_top..-1]
+      end
       
       #We are defining a recursive lambda that takes the top-level sections
       #d is the current depth

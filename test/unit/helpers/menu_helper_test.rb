@@ -7,7 +7,7 @@ class Cms::MenuHelperTest < ActionView::TestCase
     create_nfl_data
 
     expected = <<HTML 
-<div class="menu">
+<div id="menu" class="menu">
   <ul>
     <li id="section_#{@afc.id}" class="first open">
       <a href="/buf">AFC</a>
@@ -49,10 +49,10 @@ HTML
 
     @page = @bal
     assert_equal expected, render_menu
-    assert_match /<div class=\"leftnav\">/, render_menu(:class => "leftnav")
+    assert_match /<div id=\"menu\" class=\"leftnav\">/, render_menu(:class => "leftnav")
     
     expected =  <<HTML 
-<div class="menu">
+<div id="menu" class="menu">
   <ul>
     <li id="section_#{@afc.id}" class="first open">
       <a href="/buf">AFC</a>
@@ -81,7 +81,7 @@ HTML
     assert_equal expected, render_menu(:depth => 2)
     
     expected = <<HTML 
-<div class="menu">
+<div id="menu" class="menu">
   <ul>
     <li id="section_#{@afc_east.id}" class="first">
       <a href="/buf">East</a>
@@ -116,7 +116,7 @@ HTML
     assert_equal expected, render_menu(:from_top => 1, :depth => 2)
     
     expected = <<HTML 
-<div class="menu">
+<div id="menu" class="menu">
   <ul>
     <li id="section_#{@afc.id}" class="first open">
       <a href="/buf">AFC</a>
@@ -159,7 +159,7 @@ HTML
     assert_equal expected, render_menu(:depth => 2, :show_all_siblings => true)
     
     expected = <<HTML 
-<div class="menu">
+<div id="menu" class="menu">
   <ul>
     <li id="section_#{@afc.id}" class="first open">
       <a href="/buf">AFC</a>
@@ -174,7 +174,7 @@ HTML
     assert_equal expected, render_menu(:depth => 1)
     
     expected = <<HTML 
-<div class="menu">
+<div id="menu" class="menu">
   <ul>
     <li id="section_#{@afc_east.id}" class="first">
       <a href="/buf">East</a>
@@ -204,7 +204,7 @@ HTML
     @corporate_news = Factory(:link, :section => @news, :name => "Corporate News", :url => "/news", :new_window => false, :publish_on_save => true)
     @cnn = Factory(:link, :section => @news, :name => "CNN", :url => "http://www.cnn.com", :new_window => true, :publish_on_save => true)
     expected = <<HTML 
-<div class="menu">
+<div id="menu" class="menu">
   <ul>
     <li id="section_#{@news.id}" class="first open">
       <a href="/press_releases">News</a>
@@ -228,6 +228,8 @@ HTML
     output = render_menu
     assert_equal expected, output
     
+    assert_equal %Q{<div id="menu" class="menu">\n</div>\n}, 
+      render_menu(:from_top => 42)
   end
   
   def test_render_menu_does_not_show_unpublished_pages
