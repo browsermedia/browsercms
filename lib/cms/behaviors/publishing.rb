@@ -31,7 +31,7 @@ module Cms
         module InstanceMethods
           def publishable?
             if self.class.connectable?
-              new_record? ? !connect_to_page_id : connected_page_count < 1
+              new_record? ? connect_to_page_id.blank? : connected_page_count < 1
             else
               true
             end
