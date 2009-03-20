@@ -21,7 +21,7 @@ class Section < ActiveRecord::Base
   named_scope :hidden, :conditions => {:hidden => true}
   named_scope :not_hidden, :conditions => {:hidden => false}
   
-  validates_presence_of :name
+  validates_presence_of :name, :path
   #validates_presence_of :parent_id, :if => Proc.new {root.count > 0}, :message => "section is required"
   
   # Disabling '/' in section name for interoperability with FCKEditor file browser

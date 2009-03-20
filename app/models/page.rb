@@ -45,7 +45,7 @@ class Page < ActiveRecord::Base
   before_validation :append_leading_slash_to_path
   before_destroy :delete_connectors
   
-  validates_presence_of :name
+  validates_presence_of :name, :path
   validate :path_unique?
           
   def after_build_new_version(new_version)

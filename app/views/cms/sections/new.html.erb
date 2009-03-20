@@ -1,7 +1,7 @@
 <% content_for :html_head do %>
 <script type="text/javascript">
 jQuery(function($){
-  $("#section_name").blur(function(){
+  $("#section_name").keyup(function(){
     var section = { name: null, path: "<%= @parent.path %>".replace(/\/$/, '') }
     section.name = $.trim($(this).val()).toLowerCase().replace(/-|_/g, '').replace(/ /g, '_').replace(/\W/g, '')
     $("#section_path").val(section.path + "/" + section.name)
