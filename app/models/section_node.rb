@@ -7,18 +7,18 @@ class SectionNode < ActiveRecord::Base
   named_scope :of_type, lambda{|types| {:conditions => ["section_nodes.node_type IN (?)", types]}}
 
   def visible?
-    if node
-      if node.respond_to?(:hidden) && node.hidden?
-        false
-      elsif node.respond_to?(:archived?) && node.archived?
-        false
-      elsif node.respond_to?(:published?) && !node.published?
-        false
-      else
-        true
-      end
+    return false unless live_node
+    return false if(live_node.respond_to?(:hidden?) && live_node.hidden?)
+    return false if(live_node.respond_to?(:archived?) && live_node.archived?)
+    return false if(live_node.respond_to?(:published?) && !live_node.published?)
+    true
+  end
+
+  def live_node
+    @live_node ||= if node
+      node.class.versioned? ? node.live_version : node
     else
-      false
+      nil
     end
   end
 

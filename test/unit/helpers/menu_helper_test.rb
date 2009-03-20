@@ -3,9 +3,7 @@ require File.join(File.dirname(__FILE__), '/../../test_helper')
 class Cms::MenuHelperTest < ActionView::TestCase
   
   def test_render_menu
-    page = Page.first
-    page.hide
-    page.save
+    Page.first.update_attributes(:hidden => true, :publish_on_save => true)
     create_nfl_data
 
     expected = <<HTML 
@@ -199,9 +197,7 @@ HTML
   end
   
   def test_menu_with_links
-    page = Page.first
-    page.hide
-    page.save
+    Page.first.update_attributes(:hidden => true, :publish_on_save => true)
     
     @news = Factory(:section, :parent => root_section, :name => "News", :path => "/whatever")
     @press_releases = Factory(:page, :section => @news, :name => "Press Releases", :path => "/press_releases", :publish_on_save => true)
@@ -229,14 +225,23 @@ HTML
 HTML
     
     @page = @press_releases
-    
-    assert_equal expected, render_menu
+    output = render_menu
+    assert_equal expected, output
     
   end
   
   def test_render_menu_does_not_show_unpublished_pages
-    @page = Factory(:page, :section => root_section, :name => "Never Published", :path => "/never_published")
-    assert render_menu !~ /\/never_published/, "Never published should not show up"
+    @section = Factory(:section, :name => "Test", :path => "/test")
+    @page = Factory(:page, :section => @section, :name => "Overview", :path => "/test", :publish_on_save => true)
+
+    @draft_page = Factory(:page, :section => @section, :name => "Draft v1", :path => "/draft", :publish_on_save => true)
+    @draft_page.update_attributes(:name => "Draft v2")    
+    @never_published = Factory(:page, :section => @section, :name => "Never Published", :path => "/never_published")
+    output = render_menu(:from_top => 1)
+
+    assert output =~ /\/test/, "Overview page should show up"
+    assert output =~ /Draft v1/, "Original version of draft page should show up"
+    assert output !~ /\/never_published/, "Never published should not show up"
   end
   
   protected
