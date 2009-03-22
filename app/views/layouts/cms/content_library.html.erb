@@ -18,69 +18,75 @@
     <div id="wrapper">
       <div id="page">
         <%= render_cms_toolbar(:content_library) %>
-	
         <div id="main">
           <div id="cms_content_library">
-	    <div class="top_cap_menu"></div>
+            <div class="top_cap_menu"></div>
             <div id="menu">
               <div class="first">
-                
                 <h3>Search</h3>
                 <div class="searchbox">
-                  <% form_tag cms_path(:blocks, @content_type.content_block_type), :method => :get do -%>
-                    <div id="search_term_container"><%= text_field_tag "search[term]", (params[:search] ? params[:search][:term] : nil) %></div> <div id="search_submit_container"><input id="search_submit" type="image" src="/images/cms/search_submit.gif" alt="submit" /></div>
-<div style="clear: both;"></div>
+                  <% form_tag cms_index_path_for(@content_type), :method => :get do -%>
+                    <div id="search_term_container">
+                      <%= text_field_tag "search[term]", (params[:search] ? params[:search][:term] : nil) %></div>
+                      <div id="search_submit_container">
+                        <input id="search_submit" type="image" src="/images/cms/search_submit.gif" alt="submit" />
+                      </div>
+                      <div style="clear: both;"></div>
 
-                  <% if @content_type.name == "HtmlBlock" -%>
-                  <div id="search_include_body_container"><%= check_box_tag "search[include_body]", true, (params[:search] ? params[:search][:include_body] : false) %><label for="search_include_body">Include body?</label></div>
-                  <% elsif %w[FileBlock ImageBlock].include?(@content_type.name) &&  request.user_agent !~ /MSIE 6/ %>
-                  <p><%= select_tag 'section_id', searchable_sections(params[:section_id]) %></p>
-                  <% end -%>
+                      <% if @content_type.name == "HtmlBlock" -%>
+                        <div id="search_include_body_container">
+                          <%= check_box_tag "search[include_body]", true, (params[:search] ? params[:search][:include_body] : false) %>
+                          <label for="search_include_body">Include body?</label>
+                        </div>
+                      <%# TODO: Remove IE 6 Hack %>
+                      <% elsif %w[FileBlock ImageBlock].include?(@content_type.name) && request.user_agent !~ /MSIE 6/ %>
+                        <p><%= select_tag 'section_id', searchable_sections(params[:section_id]) %></p>
+                      <% end -%>
+                    </div>
                   <% end -%>
                 </div>
-                
+                <div class="bottom_cap_search bottom_pad"></div>
+                <div class="top_cap"></div>
+                <div id="content_types">
+                  <%= yield :sidebar %>
+                  <h3>Content Types</h3>
+                  <ul>
+                    <% ContentTypeGroup.all(:order => "content_type_groups.id").each do |g| %>
+                      <li<%= ' class="open"' if (g == @content_type.content_type_group) %>>
+                        <% if g.content_types.blank? %>
+                          <%= link_to h(g.name), "#" %>
+                        <% else %>
+                          <%= link_to h(g.name), cms_index_path_for(g.content_types.first) %>
+                          <ul>
+                            <% g.content_types.each do |t| %>
+                              <li<%= ' class="on"' if @content_type.is_child_of?(t) %>><%= link_to h(t.display_name), cms_index_path_for(t) %></li>
+                            <% end -%>
+                          </ul>
+                        <% end -%>
+                      </li>
+                    <% end %>
+                  </ul>
+                </div>
+                <div class="bottom_cap"></div>
               </div>
-	      <div class="bottom_cap_search bottom_pad"></div>
-	      <div class="top_cap"></div>
-              <div id="content_types">
-                
-                <%= yield :sidebar %>                
-                <h3>Content Types</h3>
-                <ul><% ContentTypeGroup.all(:order => "content_type_groups.id").each do |g| %>
-          	  <li<%= ' class="open"' if (g == @content_type.content_type_group) %>>
-          	    <% if g.content_types.blank? %>
-          	    <%= link_to h(g.name), "#" %>          				  
-          	    <% else %>
-          	    <%= link_to h(g.name), cms_path("/blocks/#{g.content_types.first.content_block_type}") %>          				  
-          	    <ul>
-          	      <% g.content_types.each do |t| %>
-          	      <li<%= ' class="on"' if @content_type.is_child_of?(t) %>><%= link_to h(t.display_name), cms_path("/blocks/#{t.content_block_type}") %></li>
-          	      <% end -%>
-          	    </ul><% end -%>
-          	  </li>
-          	  <% end %></ul>
-              </div>
-	      <div class="bottom_cap"></div>
-            </div>
-            
-            <div id="contentwrap">
-              <div id="functions">
-		<h1><%= @toolbar_title %></h1>
-	      <%= yield :functions %>
-	      <br clear="all" />
-              </div>
-	      <div class="top_cap_content"></div>
-
-              <div id="content">
-                <div class="pad">
-                  <%= yield %>
+              <div id="contentwrap">
+                <div id="functions">
+                  <h1><%= @toolbar_title %></h1>
+                  <%= yield :functions %>
+                  <br clear="all" />
+                </div>
+                <div class="top_cap_content"></div>
+                <div id="content">
+                  <div class="pad">
+                    <%= yield %>
+                  </div>
                 </div>
               </div>
+              <br clear="all" />
+              <div class="bottom_cap_content"></div>
             </div>
-            <br clear="all" />
-	      <div class="bottom_cap_content"></div>
+            <%= render :partial => 'layouts/cms/footer' %>
           </div>
-          <%= render :partial => 'layouts/cms/footer' %>
         </div>
       </div>
     </div>

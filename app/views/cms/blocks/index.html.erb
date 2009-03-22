@@ -1,6 +1,8 @@
 <% content_for(:html_head) do %>
   <% javascript_tag do %>
     jQuery(function($){
+      var collectionName = '<%= @content_type.model_class.name.underscore.pluralize %>'
+      
       $('table.data tbody tr').hover(function(){
         $(this).addClass('hover')
       }, function(){
@@ -12,12 +14,11 @@
         $('table.data tbody tr').removeClass('selected')
         $(this).addClass('selected')
         $('#functions .button').addClass('disabled').attr('href','#')
-        $('#list_all').removeClass('disabled').attr('href', '<%= cms_path(:blocks, @content_type.content_block_type) %>');
-        $('#add_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/new')
-        $('#view_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/show/'+id)
-        $('#edit_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/edit/'+id)
+        $('#add_button').removeClass('disabled').attr('href', '/cms/'+collectionName+'/new')
+        $('#view_button').removeClass('disabled').attr('href', '/cms/'+collectionName+'/'+id)
+        $('#edit_button').removeClass('disabled').attr('href', '/cms/'+collectionName+'/'+id+'/edit')
         <% if @content_type.model_class.versioned? %>
-          $('#revisions_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/revisions/'+id)
+          $('#revisions_button').removeClass('disabled').attr('href', '/cms/'+collectionName+'/'+id+'/versions')
         <% else %>
           $('#revisions_button').addClass('disabled')
             .attr('title', '<%= @content_type.display_name.pluralize.titleize %> are not versioned')          
@@ -28,12 +29,12 @@
             .attr('title', $.trim(cannot_be_deleted_message.text()))
         } else {
           $('#delete_button').removeClass('disabled')
-            .attr('href', '/cms/blocks/'+type+'/destroy/'+id)  
+            .attr('href', '/cms/'+collectionName+'/'+id)  
             .attr('title', 'Are You Sure You Want To Delete This Record?')
         }        
         <% able_to? :publish_content do -%>
           if($(this).hasClass('draft')) {
-            $('#publish_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/publish/'+id+'?_redirect_to='+location.href)        
+            $('#publish_button').removeClass('disabled').attr('href', '/cms/'+collectionName+'/'+id+'/publish?_redirect_to='+location.href)        
           }
         <% end %>  
       })   
@@ -43,7 +44,7 @@
 <% end %>
 <% @page_title = "Content Library / List #{@content_type.display_name_plural}" %>
 <% @toolbar_title = "List #{@content_type.display_name_plural}" %>
-<%= render :partial => 'toolbar' %>
+<%= render :partial => 'cms/blocks/toolbar' %>
 
 <div class="roundedcorners">
 <table id="blocks" class="data">

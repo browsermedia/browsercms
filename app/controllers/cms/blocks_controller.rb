@@ -131,7 +131,7 @@ class Cms::BlocksController < Cms::BaseController
     end
 
     def model_name
-      model_class.name.underscore      
+      model_class.name.underscore
     end
 
     def load_block

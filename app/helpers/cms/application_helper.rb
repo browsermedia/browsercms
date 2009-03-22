@@ -64,7 +64,7 @@ module Cms
     
     def link_to_usages(block)
       count = block.connected_pages.count
-      count > 0 ? (link_to count,  :controller => "connectors", :action => "usages", :id => block.id, :block_type => block.content_block_type) : count
+      count > 0 ? (link_to count, [:usages, :cms, block], :id => block.id, :block_type => block.content_block_type) : count
     end
     
     def time_on_date(time)

@@ -1,0 +1,34 @@
+<% @page_title = "Content Library / View Usages" %>
+<% @toolbar_title = "Pages Using #{@content_type.display_name} '#{ @block.name }'" %>
+<% content_for :html_head do %>
+  <%= stylesheet_link_tag("cms/content_library") %>
+  <% javascript_tag do %>
+    jQuery(function($) {
+      $('#functions .button').addClass('disabled').attr('href','#');
+      $('#view_button').removeClass('disabled')
+        .attr('href', '<%= url_for([:cms, @block])%>')
+      $('#edit_button').removeClass('disabled')
+        .attr('href', '<%= url_for([:edit, :cms, @block])%>')
+    })
+  <% end %>
+<% end %>
+
+<%= render :partial => 'cms/blocks/toolbar' %>
+
+<table class="data">
+  <thead>
+    <tr>
+      <th>Page Name</th>
+      <th>Path</th>
+      <th class="last">Page Status</th>
+    </tr>
+  </thead>
+  <% @pages.each do |page| %>
+    <% status = page.archived? ? :archived : page.status %>    
+    <tr>
+      <td class="page_name"><%=  page.name %></td>
+      <td class="path"><%=  link_to page.path, page.path %></td>
+      <td class="block_status"><%= status_icon(status) %> <div><%= status %></div></td>
+    </tr>
+  <% end %>
+</table>

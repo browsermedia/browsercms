@@ -4,14 +4,14 @@
 <% end %>
 <% @page_title = "Content Library / Edit #{@content_type.display_name}" %>
 <% @toolbar_title = "Edit #{@content_type.display_name} '#{@block.name}'" %>
-<% content_for :functions,  render(:partial => 'toolbar') %>
-<% form_for(@block, :url => cms_path(:blocks, @content_type.name.underscore.pluralize, :update, @block), :html => {:multipart => true}) do |f| %>
+<% content_for :functions,  render(:partial => 'cms/blocks/toolbar') %>
+<% form_for([:cms, @block], :html => {:multipart => true}) do |f| %>
   <%= f.error_messages %>
   <%= render :partial => 'cms/shared/exception', :object => @exception if @exception %>  
   <% if @other_version %>
     <%= render :partial => 'cms/shared/version_conflict_error', :locals => {:other_version => @other_version, :your_version => @block} %>
   <% end %>  
-  <%= render :partial => 'hidden_fields', :locals => { :f => f } %>
+  <%= render :partial => 'cms/blocks/hidden_fields', :locals => { :f => f } %>
   <%= render :partial => @content_type.form, :locals => {:f => f} %>
   <% if @other_version %>
     <%= render :partial => "cms/shared/version_conflict_diff", :locals => {:other_version => @other_version, :your_version => @block} %>

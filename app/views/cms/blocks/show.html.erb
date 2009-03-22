@@ -10,7 +10,7 @@ max-width: 785px;
 }
 </style>
 <% end %>
-<%= content_for :functions,  render(:partial => 'toolbar') %>
+<%= content_for :functions,  render(:partial => 'cms/blocks/toolbar') %>
 
 <div id="block_content">
 <% if @block.class.publishable? %>
