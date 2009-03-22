@@ -1,7 +1,7 @@
 <div class="dashboard_unit" id="page_drafts">
   <h2 class="left">Page Drafts</h2>
 
-  <% form_tag cms_path(:pages, :publish) do %>
+  <% form_tag publish_cms_pages_path, :method => :put do %>
     <div class="roundedcorners" style="position: relative">
       <table class="data">
         <thead>
@@ -20,8 +20,16 @@
               <tr>
                 <td class="first"></td>
                 <td class="select"><%= check_box_tag "page_ids[]", page.id, false, :id => "publish_page_#{page.id}" %></td>
-                <td class="name"><div class="dividers"><%= link_to h(page.name_with_section_path), page.path %></div></td>
-                <td class="updated_by"><div class="dividers"><%=h page.updated_by.login %></div></td>
+                <td class="name">
+                  <div class="dividers">
+                    <%= link_to h(page.name_with_section_path), page.path %>
+                  </div>
+                </td>
+                <td class="updated_by">
+                  <div class="dividers">
+                    <%= h(page.updated_by ? page.updated_by.login : nil) %>
+                  </div>
+                </td>
                 <td class="updated_at"><%= page.updated_at.strftime("%b %d") %></td>
                 <td class="last"></td>
               </tr>

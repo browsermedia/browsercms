@@ -49,6 +49,8 @@ module Cms::Routes
         :hide => :put,
         :publish => :put,
         :versions => :get
+      }, :collection => {
+        :publish => :put
       }
       version_cms_page '/cms/pages/:id/version/:version', :controller => 'cms/pages', :action => 'version', :conditions => {:method => :get}
       revert_to_cms_page '/cms/pages/:id/revert_to/:version', :controller => 'cms/pages', :action => 'revert_to', :conditions => {:method => :put}
@@ -56,6 +58,7 @@ module Cms::Routes
       cms.resources :sections
       cms.file_browser '/sections/file_browser', :controller => 'sections', :action => 'file_browser'
 
+      cms.resources :tasks, :member => {:complete => :put}, :collection => {:complete => :put}
       cms.toolbar '/toolbar', :controller => 'toolbar'
       
       # TODO: Make an actual content library controller 

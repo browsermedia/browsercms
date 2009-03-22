@@ -3,8 +3,6 @@ class Cms::TasksController < Cms::BaseController
   before_filter :set_toolbar_tab
   before_filter :load_page, :only => [:new, :create]
   
-  verify :method => :put, :only => :complete
-  
   def new
     @task = @page.tasks.build(:assigned_by => current_user)
   end

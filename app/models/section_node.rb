@@ -90,7 +90,7 @@ class SectionNode < ActiveRecord::Base
     ancestors = []
     fn = lambda do |sn|
       ancestors << sn.section
-      unless sn.section.root?
+      if sn.section && !sn.section.root?
         fn.call(sn.section.node)
       end
     end
