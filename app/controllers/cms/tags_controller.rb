@@ -1,7 +1,8 @@
-class Cms::TagsController < Cms::ApplicationController
+class Cms::TagsController < Cms::ContentBlockController
   def index
-    @tags = Tag.all(:order => "name")
+    load_blocks
     respond_to do |format| 
+      format.html { render "#{template_directory}/index" }
       format.js { render :inline => "var tags = #{@tags.map{|e| e.name}.to_json}" }
     end
   end

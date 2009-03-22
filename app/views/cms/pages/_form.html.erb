@@ -1,7 +1,7 @@
 <% content_for :html_head do %>
 <%= stylesheet_link_tag('cms/form_layout') %>
 <% javascript_tag do %>
-$(document).ready(function() {
+jQuery(function($) {
   $('#page_template').selectbox({width: '440px'});
 });
 <% end %>

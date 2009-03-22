@@ -1,54 +1,59 @@
 <% @page_title = "Administration / Group Browser" %>
 <% @toolbar_title = "List Groups" %>
-<%= content_for :functions, link_to(span_tag("Add Group"), url_for(:controller => "groups", :action => "new"), :id => "new_group_button", :class => "button") %>
+
+<% content_for :functions do %> 
+  <%= link_to(span_tag("Add Group"), new_cms_group_path, 
+    :id => "new_group_button", :class => "button") %>
+<% end %>
+
 <div class="roundedcorners">
-<table class="data">
-  <thead>
-  <tr>
-    <th class="first"></th>
-    <th>
-      <div class="dividers">
-        <%= link_to "Name", cms_path(:groups, :order => determine_order(params[:order], "groups.name")) %>
-      </div>
-    </th>
-    <th>
-      <div class="dividers">
-        <%= link_to "Type", cms_path(:groups, :order => determine_order(params[:order], "group_types.name")) %>
-      </div>
-    </th>    
-    <th class="last">Permissions</th>
-    <th class="last"></th>
-  </tr>
-  </thead>
-  <% section_count = Section.count %>
-  <% @groups.each do |g| %>
-  <tr>
-    <td class="first"></td>
-    <td>
-      <div class="dividers">
-        <%= link_to h(g.name), cms_path(g, :edit) %>
-      </div>
-    </td>
-    <td>
-      <div class="dividers">
-        <%= h(g.group_type.name) %>
-      </div>
-    </td>
-    <td>
-      <% g.permissions.each do |p| %>
-        - <%= p.full_name %> <br />
-      <% end %>
-      - <%= g.cms_access? ? "Edit" : "View" %>
-      <%= g.sections.count >= section_count ? "All Sections" : "#{g.sections.count} of #{section_count} Sections" %>
-    </td>
-    <td class="last"></td>
-  </tr>
-  <% end %>
-</table>
-<div class="tl"></div>
-<div class="tr"></div>
-<div class="bl"></div>
-<div class="br"></div>
+  <table class="data">
+    <thead>
+      <tr>
+        <th class="first"></th>
+        <th>
+          <div class="dividers">
+            <%= link_to "Name", cms_groups_path(:order => determine_order(params[:order], "groups.name")) %>
+          </div>
+        </th>
+        <th>
+          <div class="dividers">
+            <%= link_to "Type", cms_groups_path(:order => determine_order(params[:order], "group_types.name")) %>
+          </div>
+        </th>
+        <th class="last">Permissions</th>
+        <th class="last"></th>
+      </tr>
+    </thead>
+    <% section_count = Section.count %>
+    <% @groups.each do |g| %>
+      <tr>
+        <td class="first"></td>
+        <td>
+          <div class="dividers">
+            <%= link_to h(g.name), [:edit, :cms, g] %>
+          </div>
+        </td>
+        <td>
+          <div class="dividers">
+            <%= h(g.group_type.name) %>
+          </div>
+        </td>
+        <td>
+          <% g.permissions.each do |p| %>
+            - <%= p.full_name %> <br />
+          <% end %>
+          - <%= g.cms_access? ? "Edit" : "View" %>
+          <%= g.sections.count >= section_count ? "All Sections" : "#{g.sections.count} of #{section_count} Sections" %>
+        </td>
+        <td class="last"></td>
+      </tr>
+    <% end %>
+  </table>
+  <div class="tl"></div>
+  <div class="tr"></div>
+  <div class="bl"></div>
+  <div class="br"></div>
 </div>
 <% if @groups.total_pages > 1 %>
   <%= render_pagination @groups, [:groups] %>

@@ -12,8 +12,8 @@
         var id = match[2];
         $('table.data tbody tr').removeClass('selected');
         $(this).addClass('selected');
-        $('#edit_button').removeClass('disabled').attr('href', '/cms/redirects/edit/'+id);
-        $('#delete_button').removeClass('disabled').attr('href', '/cms/redirects/destroy/'+id)
+        $('#edit_button').removeClass('disabled').attr('href', '/cms/redirects/'+id+'/edit');
+        $('#delete_button').removeClass('disabled').attr('href', '/cms/redirects/'+id)
       })
     })
   <% end %>
@@ -24,9 +24,9 @@
   </style>
 <% end %>
 <% content_for :functions do %>
-<%= link_to(span_tag("Add"), cms_path(:redirects , :new), :class => "button") %>
+<%= link_to(span_tag("Add"), new_cms_redirect_path, :class => "button") %>
 <%= link_to(span_tag("Edit"), '#', :id => 'edit_button', :class => "button disabled") %>
-<%= link_to span_tag("delete"), "#", :id => "delete_button", :class => "button disabled http_delete", :onclick => "return confirm('Are you sure you want to delete this redirect?')" %>
+<%= link_to span_tag("Delete"), "#", :id => "delete_button", :class => "button disabled http_delete", :onclick => "return confirm('Are you sure you want to delete this redirect?')" %>
 <% end %>
 <div class="roundedcorners">
 <table class="data">

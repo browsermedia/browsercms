@@ -1,17 +1,17 @@
 class Cms::CacheController < Cms::BaseController
   layout 'cms/administration'
+  
   check_permissions :administrate  
   before_filter :set_menu_section
-  verify :method => :post, :only => :expire
 
-  def index
+  def show
     
   end
   
-  def expire
+  def destroy
     Cms.flush_cache
     flash[:notice] = "Page Cache Flushed"
-    redirect_to :action => "index"
+    redirect_to :action => "show"
   end
   
   private

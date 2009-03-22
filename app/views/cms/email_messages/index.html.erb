@@ -15,8 +15,8 @@
     <% @messages.each do |message|%>
       <tr>
         <td class="first"></td>
-        <td><div class="dividers"><%= link_to h(truncate(message.recipients)), cms_path(message) %></div></td>
-	      <td><div class="dividers"><%= link_to h(truncate(message.subject)), cms_path(message) %></div></td>
+        <td><div class="dividers"><%= link_to h(truncate(message.recipients)), [:cms, message] %></div></td>
+        <td><div class="dividers"><%= link_to h(truncate(message.subject)), [:cms, message] %></div></td>
         <td class="last" style="white-space: nowrap"><%=h time_on_date(message.delivered_at) %></td>
       </tr>
     <% end %>

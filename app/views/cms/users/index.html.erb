@@ -1,9 +1,18 @@
 <% @page_title = "Administration / User Browser" %>
 <% @toolbar_title = "List Users" %>
-<%= content_for :toolbar_links, link_to(span_tag("ADD USER"), url_for(:controller => "users", :action => "new"), :id => "add_user_button", :class => "button") %>
-<%= content_for :functions, render(:partial => "toolbar") %>
+
+<% content_for :toolbar_links do %>
+  <%= link_to(span_tag("ADD USER"), new_cms_user_path, 
+    :id => "add_user_button", 
+    :class => "button") %>
+<% end %>
+
+<% content_for :functions do %>
+  <%= render(:partial => "toolbar") %>
+<% end %>
+
 <div class="roundedcorners">
-<table  class="data" width="100%">
+<table class="data" width="100%">
   <thead>
     <tr>
       <th class="first"></th>
@@ -17,7 +26,7 @@
     <% @users.each do |user|%>
     <tr>
         <td class="first"></td>
-        <td><div class="dividers"><%= link_to "#{user.first_name} #{user.last_name}", :controller=>"users", :action=> "edit", :id => user.id %></div></td>
+        <td><div class="dividers"><%= link_to "#{user.first_name} #{user.last_name}", [:cms, user] %></div></td>
 	      <td><div class="dividers"><%= link_to user.email, "mailto:#{user.email}" %></div></td>
         <td>
             <div class="dividers">
@@ -30,10 +39,10 @@
         <td>
 	  <% unless user.expired? %>
 	  <span class="user_state">Active</span>
-            <%= link_to("<span>Disable</span>", {:controller=>"users", :action=> "disable", :id => user.id}, :class => "http_put sm_button") if @users.size > 1%>	  
+            <%= link_to("<span>Disable</span>", [:disable, :cms, user], :class => "http_put sm_button") if @users.size > 1 %>	  
 	    <% else %>
 	  <span class="user_state">Inactive</span>
-            <%= link_to("<span>Enable</span>", {:controller=>"users", :action=> "enable", :id => user.id}, :class => "http_put sm_button") %>
+            <%= link_to("<span>Enable</span>", [:enable, :cms, user], :class => "http_put sm_button") %>
 	  <% end %>
         </td>
         <td class="last"></td>

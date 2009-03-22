@@ -1,7 +1,4 @@
-<% @page_title = "Administration / Edit #{@group.name}" %>
-<% @toolbar_title = "Edit #{@group.name}" %>
-<%= content_for :functions, link_to(span_tag("List All"), url_for(:controller => "groups", :action => "index"), :id => "list_all_button", :class => "button") %>
+<% @page_title = "Administration / Add New Group" %>
+<% @toolbar_title = "Add New Group" %>
 
-<% form_for @group, :url => cms_path(@group, :update) do |f| %>
-  <%= render :partial => 'form', :locals => {:f => f} %>
-<% end %>
+<%= render :partial => 'form' %>

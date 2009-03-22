@@ -79,7 +79,7 @@ class Cms::ResourceController < Cms::BaseController
   end
 
   def index_url
-    cms_url resource_name
+    cms_index_url_for(resource_name)
   end
 
   def after_create_url
@@ -91,7 +91,7 @@ class Cms::ResourceController < Cms::BaseController
   end
 
   def show_url
-    cms_url @object
+    [:cms, @object]
   end
 
   def order_by_column

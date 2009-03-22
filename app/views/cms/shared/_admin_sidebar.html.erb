@@ -1,8 +1,8 @@
 <div class="first">
   <h3>Users</h3>
   <ul>
-    <li<%= ' class="open"' if @menu_section == 'users' %>><%= link_to "Users", cms_path(:users) %></li>
-    <li<%= ' class="open"' if @menu_section == 'groups' %>><%= link_to "Groups", cms_path(:groups) %></li>
+    <li<%= ' class="open"' if @menu_section == 'users' %>><%= link_to "Users", cms_users_path %></li>
+    <li<%= ' class="open"' if @menu_section == 'groups' %>><%= link_to "Groups", cms_groups_path %></li>
   </ul>
 </div>
 <div class="bottom_cap bottom_pad"></div>
@@ -10,9 +10,9 @@
 <div>
   <h3>Tools</h3>
   <ul>  
-    <li<%= ' class="open"' if @menu_section == 'caching' %>><%= link_to "Page Caching", cms_path(:cache) %></li>    
-    <li<%= ' class="open"' if @menu_section == 'redirects' %>><%= link_to "Redirects", cms_path(:redirects) %></li>
-    <li<%= ' class="open"' if @menu_section == 'email_messages' %>><%= link_to "Email Messages", cms_path(:email_messages) %></li>    
+    <li<%= ' class="open"' if @menu_section == 'caching' %>><%= link_to "Page Caching", cms_cache_path %></li>
+    <li<%= ' class="open"' if @menu_section == 'redirects' %>><%= link_to "Redirects", cms_redirects_path %></li>
+    <li<%= ' class="open"' if @menu_section == 'email_messages' %>><%= link_to "Email Messages", cms_email_messages_path %></li>
   </ul>
 </div>
 <div class="bottom_cap"></div>

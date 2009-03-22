@@ -1,6 +1,13 @@
 <% @page_title = @toolbar_title = "New User" %>
+
 <% content_for :toolbar_links do %>
-<%= link_to(span_tag("List All"), url_for(:controller => "users", :action => "index"), :id => "list_all_button", :class => "button") %>
+  <%= link_to(span_tag("List All"), cms_users_path, 
+    :id => "list_all_button", 
+    :class => "button") %>
 <% end %>
-<%= content_for :functions, render(:partial => "toolbar") %>
+
+<% content_for :functions do %>
+  <%= render(:partial => "toolbar") %>
+<% end %>
+
 <%= render :partial => 'form' %>

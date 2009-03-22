@@ -53,6 +53,21 @@ module Cms::Routes
       cms.content_blocks :tags
       
       cms.administration '/administration', :controller => 'users'
+      
+      cms.with_options :controller => "cache" do |cache|
+          cache.cache "/cache", :action => "show", :conditions => {:method => :get}
+        cache.connect "/cache", :action => "destroy", :conditions => {:method => :delete}
+      end
+      
+      cms.resources :email_messages
+      cms.resources :groups
+      cms.resources :redirects
+      cms.resources :users, :member => {
+        :change_password => :get, 
+        :disable => :put, 
+        :enable => :put
+      }
+      
       #cms.connect '/blocks/:block_type/:action/:id', :controller => 'blocks'
     end
 

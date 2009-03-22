@@ -33,6 +33,10 @@ class Cms::UsersController < Cms::ResourceController
     @users = User.paginate(:page => params[:page], :per_page => per_page, :include => :user_group_memberships, :conditions => conditions, :order => "first_name, last_name, email")
   end
 
+  def show
+    redirect_to [:edit, :cms, user]
+  end
+
   def change_password
     user
   end

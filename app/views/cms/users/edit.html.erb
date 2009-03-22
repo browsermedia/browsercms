@@ -1,7 +1,16 @@
 <% @page_title = @toolbar_title = "Edit User '#{h(@user.login)}'" %>
+
 <% content_for :toolbar_links do %>
-<%= link_to(span_tag("List All"), url_for(:controller => "users", :action => "index"), :id => "list_all_button", :class => "button") %>
-<%= link_to(span_tag("Change Password"), url_for(:controller => "users", :action => "change_password", :id => @user.id), :id => "change_password_button", :class => "button") %>
+  <%= link_to(span_tag("List All"), cms_users_path, 
+    :id => "list_all_button", 
+    :class => "button") %>
+  <%= link_to(span_tag("Change Password"), [:change_password, :cms, @user], 
+    :id => "change_password_button", 
+    :class => "button") %>
 <% end %>
-<%= content_for :functions, render(:partial => "toolbar") %>
+
+<% content_for :functions do %> 
+  <%= render(:partial => "toolbar") %>
+<% end %>
+
 <%= render :partial => 'form' %>

@@ -1,7 +1,7 @@
 <% content_for :html_head do %>
   <% javascript_tag do %>
   <% if %w[FileBlock ImageBlock].include?(@content_type.name) &&  request.user_agent !~ /MSIE 6/ %>
-    $(document).ready(function() {
+    jQuery(function($) {
       $('#section_id').selectbox({width: '129px'});
     });
   <% end %>
