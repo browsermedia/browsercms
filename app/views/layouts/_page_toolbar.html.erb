@@ -16,7 +16,7 @@
     <div class="page_attribute_label">Section:</div>
     <div class="page_attribute_value_container">
       <%= image_tag "cms/page_toolbar/page_toolbar_inset_l.gif", :style => "float: left;" %>
-      <div class="page_attribute_value"><%= link_to h(@page.section.name), cms_path(:sections, :page_id => @page), :target => "_top" %></div>
+      <div class="page_attribute_value"><%= link_to h(@page.section.name), cms_sections_path(:page_id => @page), :target => "_top" %></div>
       <%= image_tag "cms/page_toolbar/page_toolbar_inset_r.gif", :style => "float: left;" %>
     </div>
   </div>
@@ -46,18 +46,18 @@
   </div>
 </div>  
 <div class="buttons">
-  <%= link_to("<span>Publish</span>", @page.published? ? @page.path : cms_path(@page, :publish), :target => "_top", :class => "http_put button publish_button#{' disabled' if @page.published? || !@page.current_version?} left") %>
-  <%= link_to "<span>Assign</span>", cms_path(:tasks, :new, :page_id => @page.id), :class => "button#{ ' disabled' if @page.assigned_to == current_user} middle", :target => "_top" %>
-  <%= link_to "<span>Complete Task</span>", cms_path(:tasks, :complete, @page.current_task), :class => "http_put button#{ ' disabled' unless @page.assigned_to == current_user} right", :target => "_top" %>
+  <%= link_to("<span>Publish</span>", @page.published? ? @page.path : publish_cms_page_path(@page), :target => "_top", :class => "http_put button publish_button#{' disabled' if @page.published? || !@page.current_version?} left") %>
+  <%= link_to "<span>Assign</span>", new_cms_page_task_path(@page), :class => "button#{ ' disabled' if @page.assigned_to == current_user} middle", :target => "_top" %>
+  <%= link_to "<span>Complete Task</span>", @page.current_task ? complete_cms_task_path(@page.current_task) : '#', :class => "http_put button#{ ' disabled' unless @page.assigned_to == current_user} right", :target => "_top" %>
 
-  <%= link_to "<span>Edit Properties</span>", cms_path(@page, :edit), :class => "spacer button#{' disabled' if !@page.current_version?}", :target => "_top" %>
+  <%= link_to "<span>Edit Properties</span>", [:edit, :cms, @page], :class => "spacer button#{' disabled' if !@page.current_version?}", :target => "_top" %>
   
-  <%= link_to "<span>List Versions</span>", cms_path(@page, :revisions), :target => "_top", :class => "spacer button left" %>
+  <%= link_to "<span>List Versions</span>", versions_cms_page_path(@page), :target => "_top", :class => "spacer button left" %>
   <% able_to? :publish_content do %>
     <% if @page.current_version? %>  
-      <%= link_to "<span><span class=\"delete_img\">&nbsp;</span>Delete</span>", cms_path(@page, :destroy), :title => "Are you sure you want to delete '#{@page.name}'?", :target => "_top", :class => "confirm_with_title http_delete button#{' disabled' if !@page.current_version?} right" %>
+      <%= link_to "<span><span class=\"delete_img\">&nbsp;</span>Delete</span>", [:cms, @page], :title => "Are you sure you want to delete '#{@page.name}'?", :target => "_top", :class => "confirm_with_title http_delete button#{' disabled' if !@page.current_version?} right" %>
     <% else %>
-      <%= link_to "<span>Revert to this Version</span>", cms_path(@page, :revert_to, :version => @page.version), :class => "button http_put", :target => "_top" %>
+      <%= link_to "<span>Revert to this Version</span>", revert_to_cms_page_path(@page, :version => @page.version), :class => "button http_put", :target => "_top" %>
     <% end %>
   <% end %>
 

@@ -7,11 +7,11 @@ class Cms::SectionsController < Cms::BaseController
   helper_method :cms_groups
 
   def index
-    redirect_to [:cms, :sitemap]
+    redirect_to cms_sitemap_path
   end
 
   def show
-    redirect_to [:cms, :sitemap]
+    redirect_to cms_sitemap_path
   end
   
   def new

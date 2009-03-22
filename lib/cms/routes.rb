@@ -51,12 +51,20 @@ module Cms::Routes
         :versions => :get
       }, :collection => {
         :publish => :put
-      }
+      }, :has_many => [:tasks]
       version_cms_page '/cms/pages/:id/version/:version', :controller => 'cms/pages', :action => 'version', :conditions => {:method => :get}
       revert_to_cms_page '/cms/pages/:id/revert_to/:version', :controller => 'cms/pages', :action => 'revert_to', :conditions => {:method => :put}
 
-      cms.resources :sections
+      cms.resources :sections, :has_many => [:links, :pages]
       cms.file_browser '/sections/file_browser', :controller => 'sections', :action => 'file_browser'
+
+      cms.resources :section_nodes, :member => {
+        :move_before => :put,
+        :move_after => :put,
+        :move_to_beginning => :put,
+        :move_to_end => :put,
+        :move_to_root => :put
+      }
 
       cms.resources :tasks, :member => {:complete => :put}, :collection => {:complete => :put}
       cms.toolbar '/toolbar', :controller => 'toolbar'

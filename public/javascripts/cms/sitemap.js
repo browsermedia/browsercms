@@ -51,13 +51,13 @@ jQuery(function($){
     }
     
     var moveSectionNode = function(sectionNodeId, move, otherSectionNodeId) {
-	var url = '/cms/section_nodes/move_'+move+'/'+sectionNodeId
+	var url = '/cms/section_nodes/'+sectionNodeId+'/move_'+move
 	var params = { _method: "PUT", section_node_id: otherSectionNodeId }
 	jsonPost(url, params)
     }
     
     var moveSectionNodeToRoot = function(sectionNodeId, rootSectionId) {
-	var url = '/cms/section_nodes/move_to_root/'+sectionNodeId
+	var url = '/cms/section_nodes/'+sectionNodeId+'/move_to_root'
 	var params = { _method: "PUT", section_id: rootSectionId }
 	jsonPost(url, params)
     }  
@@ -200,13 +200,13 @@ jQuery(function($){
     var enableButtonsForSection = function(id) {
 	$('#properties-button')
 	.removeClass('disabled')
-	.attr('href','/cms/sections/edit/'+id)
+	.attr('href','/cms/sections/'+id+'/edit')
 	.unbind('click')
 	.click(function(){return true})
 	
 	$('#add-page-button')
 	.removeClass('disabled')
-	.attr('href','/cms/pages/new?section_id='+id)
+	.attr('href','/cms/sections/'+id+'/pages/new')
 	.unbind('click')
 	.click(function(){return true})
 
@@ -218,14 +218,14 @@ jQuery(function($){
 	
 	$('#add-link-button')
 	.removeClass('disabled')
-	.attr('href','/cms/links/new?section_id='+id)
+	.attr('href','/cms/sections/'+id+'/links/new')
 	.unbind('click')
 	.click(function(){return true}) 
 	
 	if(isSectionEmpty(id)) {
 	    $('#delete-button')
             .removeClass('disabled')
-            .attr('href','/cms/sections/destroy/'+id+'.json')
+            .attr('href','/cms/sections/'+id+'.json')
             .unbind('click')
             .click(function(){
 		if(confirm('Are you sure you want to delete this section?')) {
@@ -254,19 +254,19 @@ jQuery(function($){
     var enableButtonsForPage = function(id) {
 	$('#edit-button')
 	.removeClass('disabled')
-	.attr('href','/cms/pages/show/'+id)
+	.attr('href','/cms/pages/'+id)
 	.unbind('click')
 	.click(function(){return true})
 
 	$('#properties-button')
 	.removeClass('disabled')
-	.attr('href','/cms/pages/edit/'+id)
+	.attr('href','/cms/pages/'+id+'/edit')
 	.unbind('click')
 	.click(function(){return true})
 
 	$('#delete-button')
 	.removeClass('disabled')
-	.attr('href','/cms/pages/destroy/'+id+'.json')
+	.attr('href','/cms/pages/'+id+'.json')
 	.unbind('click')
 	.click(function(){
             if(confirm('Are you sure you want to delete this page?')) {
@@ -291,13 +291,13 @@ jQuery(function($){
     var enableButtonsForLink = function(id) {
 	$('#properties-button')
 	.removeClass('disabled')
-	.attr('href','/cms/links/edit/'+id)
+	.attr('href','/cms/links/'+id+'/edit')
 	.unbind('click')
 	.click(function(){return true})   
 	
 	$('#delete-button')
 	.removeClass('disabled')
-	.attr('href','/cms/links/destroy/'+id+'.json')
+	.attr('href','/cms/links/'+id+'.json')
 	.unbind('click')
 	.click(function(){
             if(confirm('Are you sure you want to delete this link?')) {
