@@ -1,61 +1,66 @@
 <% @toolbar_title = @page_title = "Add Existing Content to '#{@page.name}' Page" %>
+
 <% content_for :html_head do %>
-<%= stylesheet_link_tag("cms/content_library") %>
-  <% javascript_tag do %>
-    jQuery(function($){
-      $('table.data tbody tr').hover(function(){
-        $(this).addClass('hover');
-      }, function(){
-        $(this).removeClass('hover');
-      }).click(function(){
-        var match = this.id.match(/(.*)_(\d+)/);
-        var type = match[1];
-        var id = match[2];
-        $('table.data tbody tr').removeClass('selected');
-        $(this).addClass('selected');
-        $('#connectable_type').attr('value', type);
-        $('#connectable_id').attr('value', id);
-        $('#add_button').removeClass('disabled').click(function(){
-          $('#connect_form').submit();
-          return false;
-        });
-        $('#view_button').removeClass('disabled').attr('href', '/cms/blocks/'+type+'/show/'+id).attr('target', '_blank');
+  <%= stylesheet_link_tag("cms/content_library") %>
+    <% javascript_tag do %>
+      jQuery(function($){
+        var collectionName = '<%= @block_type.content_block_type %>'
+        $('table.data tbody tr').hover(function(){
+          $(this).addClass('hover');
+        }, function(){
+          $(this).removeClass('hover');
+        }).click(function(){
+          var match = this.id.match(/(.*)_(\d+)/);
+          var type = match[1];
+          var id = match[2];
+          $('table.data tbody tr').removeClass('selected');
+          $(this).addClass('selected');
+          $('#connectable_type').attr('value', type);
+          $('#connectable_id').attr('value', id);
+          $('#add_button').removeClass('disabled').click(function(){
+            $('#connect_form').submit();
+            return false;
+          });
+          $('#view_button').removeClass('disabled').attr('href', '/cms/'+collectionName+'/'+id).attr('target', '_blank');
+        })
       })
-    })
+    <% end %>
   <% end %>
-
 <% end %>
+
 <% content_for :functions do %>
-<%= "<h1>#{@toolbar_title}</h1>" %>
-<%= link_to span_tag("Add to Page"), "#", :id => "add_button", :class => "button disabled" %>
-<%= link_to span_tag("View Content"), "#", :id => "view_button", :class => "button disabled" %>
-        <% form_for :connector, {:url => cms_path(:connectors, :create), :html => { :id => 'connect_form'}} do |f| %>
-          <%= hidden_field_tag :page_id, @page.to_param %>
-          <%= hidden_field_tag :container,  @container %>
-          <%= hidden_field_tag :connectable_type, '' %>
-          <%= hidden_field_tag :connectable_id, '' %>
-
-        <% end %>
-<br clear="all" />
+  <h1><%=h @toolbar_title %></h1>
+  <%= link_to span_tag("Add to Page"), "#", :id => "add_button", :class => "button disabled" %>
+  <%= link_to span_tag("View Content"), "#", :id => "view_button", :class => "button disabled" %>
+  <% form_for cms_connectors_path, :html => { :id => 'connect_form'}} do |f| %>
+    <%= hidden_field_tag :page_id, @page.to_param %>
+    <%= hidden_field_tag :container,  @container %>
+    <%= hidden_field_tag :connectable_type, '' %>
+    <%= hidden_field_tag :connectable_id, '' %>
+  <% end %>
+  <br clear="all" />
 <% end %>
-<% form_tag cms_path(:connectors, :new), :method => :get do %>
+
+<% form_tag new_cms_connectors_path, :method => :get do %>
   <%= hidden_field_tag :page_id, @page.to_param %>
   <%= hidden_field_tag :container, @container %>
-  <div style="margin: 20px 2px;"><label>
-    Choose Type of Content
-    <%= select_tag "block_type", options_for_select(connectable_content_types.map{|ct| [ct.display_name, ct.content_block_type]}, @block_type.content_block_type), :onchange => 'this.form.submit()' %>
-  </label></div>
+  <div style="margin: 20px 2px;">
+    <label>
+      Choose Type of Content
+      <%= select_tag "block_type", options_for_select(connectable_content_types.map{|ct| [ct.display_name, ct.content_block_type]}, @block_type.content_block_type), :onchange => 'this.form.submit()' %>
+    </label>
+  </div>
 <% end %>
     
 <%= error_messages_for :connector %>
     
 <table class="data">
   <thead>
-  <tr>
-    <th class="name first">Name</th>
-    <th class="updated">Updated</th>
-    <th class="used last">Uses</th>
-  </tr>
+    <tr>
+      <th class="name first">Name</th>
+      <th class="updated">Updated</th>
+      <th class="used last">Uses</th>
+    </tr>
   </thead>
   <% @blocks.each do |block| %>
     <tr id="<%= block.class.name.underscore %>_<%= block.id %>">

@@ -3,7 +3,7 @@ class Cms::TagsController < Cms::ContentBlockController
     load_blocks
     respond_to do |format| 
       format.html { render "#{template_directory}/index" }
-      format.js { render :inline => "var tags = #{@tags.map{|e| e.name}.to_json}" }
+      format.js { render :inline => "var tags = #{@blocks.map{|e| e.name}.to_json}" }
     end
   end
 end

@@ -4,7 +4,7 @@
 <%= link_to(span_tag("list all"), cms_sitemap_path, :class => "button") %>
 <br clear="all"/>
 <% end %>
-<% form_for(@link, :url => cms_path(@link, :update)) do |f| %>
+<% form_for([:cms, @link]) do |f| %>
   
   <%= render :partial => 'form', :locals => {:f => f} %>
   <div class="buttons">

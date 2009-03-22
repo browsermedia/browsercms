@@ -6,6 +6,8 @@ class Cms::ContentBlockController < Cms::BaseController
   
   before_filter :set_toolbar_tab
   
+  helper_method :block_form, :new_block_path, :block_path, :blocks_path, :content_type
+  
   # Basic REST Crud Action
   
   def index
@@ -36,7 +38,7 @@ class Cms::ContentBlockController < Cms::BaseController
   
   def edit
     load_block
-    render "#{template_directory}/new"
+    render "#{template_directory}/edit"
   end
   
   def update
@@ -53,21 +55,21 @@ class Cms::ContentBlockController < Cms::BaseController
   
   def destroy
     do_command("deleted") { @block.destroy }
-    redirect_to_first params[:_redirect_to], cms_index_url_for(@block)
+    redirect_to_first params[:_redirect_to], blocks_path
   end
   
   # Additional CMS Action
   
   def publish
     do_command("published") { @block.publish! }
-    redirect_to_first params[:_redirect_to], [:cms, @block]
+    redirect_to_first params[:_redirect_to], block_path
   end
   
   def revert_to
     do_command("reverted to version #{params[:version]}") do
       revert_block(params[:version])
     end
-    redirect_to_first params[:_redirect_to], [:cms, @block]
+    redirect_to_first params[:_redirect_to], block_path
   end
   
   def version
@@ -131,6 +133,26 @@ class Cms::ContentBlockController < Cms::BaseController
       @block = model_class.find(params[:id])
     end
   
+    # path related methods - available in the view as helpers
+  
+    def new_block_path(options={})
+      cms_new_url_for(@block, options)
+    end
+  
+    def block_path(action=nil)
+      path = [:cms, @block]
+      action ? path.unshift(action) : path
+    end
+  
+    def blocks_path(options={})
+      cms_index_url_for(@block, options)
+    end
+
+    # This is the partial that will be used in the form
+    def block_form
+      @content_type.form
+    end
+  
     # new related methods
   
     def build_block
@@ -155,12 +177,12 @@ class Cms::ContentBlockController < Cms::BaseController
       if model_class.connectable? && @block.connected_page
         redirect_to @block.connected_page.path
       else
-        redirect_to_first params[:_redirect_to], [:cms, @block]
+        redirect_to_first params[:_redirect_to], block_path
       end
     end
 
     def after_create_on_failure
-      render :action => 'new'
+      render "#{template_directory}/new"
     end
 
     def after_create_on_error
@@ -175,7 +197,7 @@ class Cms::ContentBlockController < Cms::BaseController
 
     def after_update_on_success
       flash[:notice] = "#{content_type_name.titleize} '#{@block.name}' was updated"
-      redirect_to_first params[:_redirect_to], [:cms, @block]
+      redirect_to_first params[:_redirect_to], block_path
     end
 
     def after_update_on_failure

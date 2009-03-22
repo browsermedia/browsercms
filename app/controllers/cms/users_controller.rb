@@ -45,7 +45,7 @@ class Cms::UsersController < Cms::ResourceController
     user.password = params[:password]
     user.password_confirmation = params[:password_confirmation]
     if user.save
-      redirect_to cms_url(:users)
+      redirect_to cms_users_path
     else
       render :action => 'change_password'
     end
@@ -58,12 +58,12 @@ class Cms::UsersController < Cms::ResourceController
     rescue Exception => e
       flash[:error] = e.message
     end
-    redirect_to :action => "index"
+    redirect_to cms_users_path
   end
   
   def enable
     user.enable!
-    redirect_to :action => "index"
+    redirect_to cms_users_path
   end
 
   protected

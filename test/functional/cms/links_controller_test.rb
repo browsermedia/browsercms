@@ -18,7 +18,7 @@ class Cms::LinksControllerTest < ActionController::TestCase
     link_count = Link.count
     post :create, :link => { :name => "Test", :url => "http://www.example.com" }, :section_id => root_section.id
     
-    assert_redirected_to cms_path(root_section)
+    assert_redirected_to [:cms, root_section]
     assert_incremented link_count, Link.count
   end
 
@@ -36,7 +36,7 @@ class Cms::LinksControllerTest < ActionController::TestCase
     put :update, :link => { :name => "Test Updated", :url => "http://www.updated-example.com" }, :id => @link.id
     reset(:link)
 
-    assert_redirected_to cms_path(@link.section)
+    assert_redirected_to [:cms, @link.section]
     assert_equal "Test Updated", @link.name
     assert_equal "http://www.updated-example.com", @link.url
   end

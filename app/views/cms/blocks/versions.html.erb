@@ -1,5 +1,5 @@
 <% @page_title = "Content Library / List of Versions" %>
-<% @toolbar_title = "List Versions / '#{@block.name}' #{@content_type.display_name}" %>
+<% @toolbar_title = "List Versions / '#{@block.name}' #{content_type.display_name}" %>
 <% content_for :html_head do %>
 <%= stylesheet_link_tag("cms/content_library") %>
   <% javascript_tag do %>
@@ -41,7 +41,7 @@
     <thead>
       <tr>
         <th colspan="2" class="first"><div class="dividers">Version</div></th>
-        <% if @content_type.model_class.publishable? %>
+        <% if content_type.model_class.publishable? %>
           <th colspan="2">
             <div class="dividers">Status</div>
           </th>
@@ -69,7 +69,7 @@
               <%= '<span class="current">(CURRENT)</span>' if i == 0 %>
             </div>
           </td>
-          <% if @content_type.model_class.publishable? %>
+          <% if content_type.model_class.publishable? %>
             <td class="block_status"><%= status_icon(published_status) %></td>
             <td>
               <div class="dividers"><%= published_status %></div> 

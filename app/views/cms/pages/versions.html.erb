@@ -12,19 +12,19 @@
         var id = match[2];
         $('table.data tbody tr').removeClass('selected');
         $(this).addClass('selected');
-        $('#view_button').removeClass('disabled').attr('href', '/cms/pages/show_version/<%= @page.id %>?mode=view&version='+id);
+        $('#view_button').removeClass('disabled').attr('href', '/cms/pages/<%= @page.id %>/versions/'+id+'?mode=view);
         if ($(this).hasClass('current')){
-        $('#revert_button').addClass('disabled').attr('href', '');
-        $('#revert_form').attr('action', '');
-        $('#revert_form_version').attr('value', '');
-        $('#edit_content_button').removeClass('disabled').attr('href', '/cms/pages/show/<%= @page.id %>?mode=edit');
-        $('#edit_properties_button').removeClass('disabled').attr('href', '/cms/pages/edit/<%= @page.id %>');
+          $('#revert_button').addClass('disabled').attr('href', '');
+          $('#revert_form').attr('action', '');
+          $('#revert_form_version').attr('value', '');
+          $('#edit_content_button').removeClass('disabled').attr('href', '/cms/pages/<%= @page.id %>?mode=edit');
+          $('#edit_properties_button').removeClass('disabled').attr('href', '/cms/pages/<%= @page.id %>/edit');
         } else {
-        $('#revert_button').removeClass('disabled');
-        $('#revert_form').attr('action', '/cms/pages/revert_to/<%= @page.id %>');
-        $('#revert_form_version').attr('value', id);
-        $('#edit_content_button').addClass('disabled').attr('href', '');
-        $('#edit_properties_button').addClass('disabled').attr('href', '');
+          $('#revert_button').removeClass('disabled');
+          $('#revert_form').attr('action', '/cms/pages/<%= @page.id %>/revert_to');
+          $('#revert_form_version').attr('value', id);
+          $('#edit_content_button').addClass('disabled').attr('href', '');
+          $('#edit_properties_button').addClass('disabled').attr('href', '');
         }
       })
     })

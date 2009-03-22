@@ -27,18 +27,18 @@ class Cms::PagesControllerTest < ActionController::TestCase
     assert_redirected_to @page.path
   end
 
-  def test_revisions
+  def test_versions
     create_page
     @page.update_attributes(:name => "V2")
     @page.update_attributes(:name => "V3")
     
-    get :revisions, :id => @page.to_param
+    get :versions, :id => @page.to_param
     (1..3).each do |n|
       assert_select "tr[id=?]", "revision_#{n}"
     end
   end
 
-  def test_reverting
+  def test_revert_to
     create_page
     @page.update_attributes(:name => "V2")
     @page.update_attributes(:name => "V3")      

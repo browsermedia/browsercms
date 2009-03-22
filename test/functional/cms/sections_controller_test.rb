@@ -19,7 +19,7 @@ class Cms::SectionsControllerTest < ActionController::TestCase
     put :update, :id => @section.to_param, :section => {:name => "V2"}
     reset(:section)
     
-    assert_redirected_to cms_url(@section)
+    assert_redirected_to [:cms, @section]
     assert_equal "V2", @section.name
     assert_equal "Section 'V2' was updated", flash[:notice]
   end  

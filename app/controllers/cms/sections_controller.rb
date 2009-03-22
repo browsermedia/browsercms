@@ -7,11 +7,11 @@ class Cms::SectionsController < Cms::BaseController
   helper_method :cms_groups
 
   def index
-    redirect_to cms_url(:sitemap)
+    redirect_to [:cms, :sitemap]
   end
 
   def show
-    redirect_to cms_url(:sitemap)
+    redirect_to [:cms, :sitemap]
   end
   
   def new
@@ -24,7 +24,7 @@ class Cms::SectionsController < Cms::BaseController
     @section.parent = @parent
     if @section.save
       flash[:notice] = "Section '#{@section.name}' was created"
-      redirect_to cms_url(@section)
+      redirect_to [:cms, @section]
     else
       render :action => 'new'
     end    
@@ -39,7 +39,7 @@ class Cms::SectionsController < Cms::BaseController
     @section = Section.find(params[:id])
     if @section.update_attributes(params[:section])
       flash[:notice] = "Section '#{@section.name}' was updated"
-      redirect_to cms_url(@section)
+      redirect_to [:cms, @section]
     else
       render :action => 'edit'
     end      
@@ -70,7 +70,7 @@ class Cms::SectionsController < Cms::BaseController
   end
   
   def file_browser              
-    @section = Section.find_by_name_path(params[:CurrentFolder])      
+    @section = Section.find_by_name_path(params[:CurrentFolder])
     if request.post? && params[:NewFile]
       handle_file_browser_upload
     else

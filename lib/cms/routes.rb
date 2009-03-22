@@ -39,6 +39,24 @@ module Cms::Routes
       cms.connect '/login', :controller => 'sessions', :action => 'create', :conditions => { :method => :post }      
       cms.dashboard '/dashboard', :controller => 'dashboard'
       cms.sitemap '/sitemap', :controller => 'section_nodes'
+
+      cms.content_types '/content_types', :controller => 'content_types'
+      cms.resources :connectors
+      cms.resources :links
+
+      cms.resources :pages, :member => {
+        :archive => :put,
+        :hide => :put,
+        :publish => :put,
+        :versions => :get
+      }
+      version_cms_page '/cms/pages/:id/version/:version', :controller => 'cms/pages', :action => 'version', :conditions => {:method => :get}
+      revert_to_cms_page '/cms/pages/:id/revert_to/:version', :controller => 'cms/pages', :action => 'revert_to', :conditions => {:method => :put}
+
+      cms.resources :sections
+      cms.file_browser '/sections/file_browser', :controller => 'sections', :action => 'file_browser'
+
+      cms.toolbar '/toolbar', :controller => 'toolbar'
       
       # TODO: Make an actual content library controller 
       # that redirects to the last content type you were working on
@@ -64,6 +82,7 @@ module Cms::Routes
       cms.resources :redirects
       cms.resources :users, :member => {
         :change_password => :get, 
+        :update_password => :put,
         :disable => :put, 
         :enable => :put
       }

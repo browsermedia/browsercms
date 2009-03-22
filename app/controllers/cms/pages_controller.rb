@@ -1,13 +1,11 @@
 class Cms::PagesController < Cms::BaseController
   
   before_filter :set_toolbar_tab
-  before_filter :load_section, :only => [:new, :create, :move_to]
-  before_filter :load_page, :only => [:edit, :revisions, :show_version, :move_to, :revert_to, :destroy]
+  before_filter :load_section, :only => [:new, :create]
+  before_filter :load_page, :only => [:edit, :versions, :version, :revert_to, :destroy]
   before_filter :load_templates, :only => [:new, :create, :edit, :update]
-  before_filter :hide_toolbar, :only => [:new, :create, :move_to]
+  before_filter :hide_toolbar, :only => [:new, :create]
   before_filter :strip_publish_params, :only => [:create, :update]
-
-  verify :method => :put, :only => [:move_to]
 
   def new
     @page = Page.new(:section => @section)
@@ -30,7 +28,7 @@ class Cms::PagesController < Cms::BaseController
     @page.section = @section
     if @page.save
       flash[:notice] = "Page was '#{@page.name}' created."
-      redirect_to cms_url(@page)
+      redirect_to [:cms, @page]
     else
       render :action => "new"
     end
@@ -40,7 +38,7 @@ class Cms::PagesController < Cms::BaseController
     @page = Page.find(params[:id])
     if @page.update_attributes(params[:page])
       flash[:notice] = "Page was '#{@page.name}' updated."
-      redirect_to cms_url(@page)
+      redirect_to [:cms, @page]
     else
       render :action => "edit"
     end
@@ -82,7 +80,7 @@ class Cms::PagesController < Cms::BaseController
     end
   end
   
-  def show_version
+  def version
     @page = @page.as_of_version(params[:version])
     @show_toolbar = true
     render :layout => @page.layout, :template => 'cms/content/show'

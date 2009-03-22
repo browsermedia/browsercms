@@ -28,5 +28,5 @@
 <div class="br"></div>
 </div>
 <% if @messages.total_pages > 1 %>
-  <%= render_pagination @messages, [:email_messages] %>
+  <%= render_pagination @messages, :email_messages %>
 <% end %>

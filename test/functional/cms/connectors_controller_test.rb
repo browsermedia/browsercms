@@ -24,19 +24,5 @@ class Cms::ConnectorsControllerTest < ActionController::TestCase
     assert_equal 3, @page.version
     assert @page.connectors.for_page_version(@page.version).empty?
   end
-  
-  def test_usages
-    @page = Factory(:page, :section => root_section, :name => "Included")
-    @page2 = Factory(:page, :section => root_section, :path => "/other_path", :name => "Excluded")
-    @block = Factory(:html_block, :connect_to_page_id => @page.id, :connect_to_container => "main")
     
-    get :usages, :id => @block.id, :block_type => "html_block"
-
-    assert_response :success
-    assert_select "h1", "Pages Using Text '#{@block.name}'"
-    assert_select "td.page_name", "Included"
-    assert_select "td.page_name", {:count => 0, :text => "Excluded"}
-    assert_select "h3", "Content Types"
-  end
-  
 end

@@ -1,5 +1,15 @@
-<% @page_title = "Content Library / Select Portlet Type" %>
-<% Portlet.types.sort_by{|t| t.name }.each do |portlet_type| %>
-  <div style="margin-bottom: 20px;"><%= link_to h(portlet_type.name.titleize), cms_path(:blocks, portlet_type.name.underscore, :new, "#{portlet_type.name.underscore}[connect_to_page_id]" => @block.connect_to_page_id, "#{portlet_type.name.underscore}[connect_to_container]" => @block.connect_to_container) %></div>
+<% if @block.class == Portlet %>
+  <% @page_title = "Content Library / Select Portlet Type" %>
+  <% Portlet.types.sort_by{|t| t.name }.each do |portlet_type| %>
+    <div style="margin-bottom: 20px;">
+      <%= link_to h(portlet_type.name.titleize), new_cms_portlet_path(
+        :type => portlet_type.name.underscore, 
+        "#{portlet_type.name.underscore}[connect_to_page_id]" => @block.connect_to_page_id,
+        "#{portlet_type.name.underscore}[connect_to_container]" => @block.connect_to_container) %>
+    </div>
+  <% end %>
+  <% @hide_buttons = true %>
+<% else %>
+  <%= hidden_field_tag :type, @block.class.name.underscore, :id => "portlet_type_field" %>
+  <%= render :partial => @block.class.form, :locals => {:f => f} %>
 <% end %>
-<% @hide_buttons = true %>

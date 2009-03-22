@@ -115,7 +115,7 @@ class Cms::UsersControllerTest < ActionController::TestCase
     post :create, :user => user_params, :group_ids => [@group.id]
     user = User.find_by_login(user_params[:login])
     
-    assert_redirected_to cms_url(:users)
+    assert_redirected_to cms_users_path
     assert_incremented user_count, User.count
     assert_equal "User '#{user.login}' was created", flash[:notice]
     assert_equal [@group], user.groups
@@ -136,7 +136,7 @@ class Cms::UsersControllerTest < ActionController::TestCase
     put :update, :id => @user.id, :user => { :first_name => "First"}
     reset(:user)
     
-    assert_redirected_to cms_url(:users)
+    assert_redirected_to cms_users_path
     assert_equal "First", @user.first_name
     assert_equal "User '#{@user.login}' was updated", flash[:notice]
   end
@@ -158,11 +158,11 @@ class Cms::UsersControllerTest < ActionController::TestCase
     assert_select "div#errorExplanation"
   end
   
-  def test_update_password_
+  def test_update_password_success
     put :update_password, :id => @user.id,
       :password => "something_else", :password_confirmation => "something_else"
       
-    assert_redirected_to cms_url(:users)
+    assert_redirected_to cms_users_path
   end
   
   def test_add_to_groups
@@ -170,7 +170,7 @@ class Cms::UsersControllerTest < ActionController::TestCase
     put :update, :id => @user.id, :group_ids => @group_ids
     reset(:user)
     
-    assert_redirected_to cms_url(:users)
+    assert_redirected_to cms_users_path
     assert_equal 2, @user.groups.count
   end
   

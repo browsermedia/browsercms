@@ -118,25 +118,19 @@ LBW
       cat_type ? cat_type.category_list(order) : []
     end	  
     
-    def render_pagination(collection, path_args)
-      return content_tag(:div, "No Content", :class => "pagination") unless collection.size > 0
-      build_link = lambda {|p|
-        args = path_args.dup
-        if args.last.is_a?(Hash)
-          args.last.merge!(:page => p)    
-          args
-        else
-          args << {:page => p}
-        end
-      }
-      render :partial => "cms/shared/pagination", :locals => {
-        :collection => collection,
-        :first_page_path => cms_path(*build_link.call(1)),
-        :previous_page_path => cms_path(*build_link.call(collection.previous_page ? collection.previous_page : 1)),
-        :current_page_path => cms_path(*path_args),
-        :next_page_path => cms_path(*build_link.call(collection.next_page ? collection.next_page : collection.current_page)),
-        :last_page_path => cms_path(*build_link.call(collection.total_pages))
-      }      
+    def render_pagination(collection, collection_name, options={})
+      if collection.blank?
+        content_tag(:div, "No Content", :class => "pagination")
+      else
+        render :partial => "cms/shared/pagination", :locals => {
+          :collection => collection,
+          :first_page_path => send("cms_#{collection_name}_path", {:page => 1}.merge(options)),
+          :previous_page_path => send("cms_#{collection_name}_path", {:page => collection.previous_page ? collection.previous_page : 1}.merge(options)),
+          :current_page_path => send("cms_#{collection_name}_path", options),
+          :next_page_path => send("cms_#{collection_name}_path", {:page => collection.next_page ? collection.next_page : collection.current_page}.merge(options)),
+          :last_page_path => send("cms_#{collection_name}_path", {:page => collection.total_pages}.merge(options))
+        }
+      end
     end	  
     
     def connectable_content_types

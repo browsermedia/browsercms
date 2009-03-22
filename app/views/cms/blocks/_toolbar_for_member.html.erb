@@ -1,6 +1,6 @@
 <% able_to? :publish_content do -%>
   <% if @block.respond_to?(:published?) && !@block.published %>
-    <%= link_to span_tag('Publish'), [:publish, :cms, @block], 
+    <%= link_to span_tag('Publish'), block_path(:publish), 
       :class => "http_put button", 
       :id => "publish_button" %>
   <% else %>
@@ -10,20 +10,20 @@
   <% end %>
 <% end -%>
 
-<%= link_to span_tag('View Content'), [:cms, @block], 
+<%= link_to span_tag('View Content'), block_path, 
   :class => "button#{ ' off' if action_name == 'show'} middle", 
   :id => "view_button" %>
   
-<%= link_to span_tag('Edit Content'), [:edit, :cms, @block], 
+<%= link_to span_tag('Edit Content'), block_path(:edit), 
   :class => "button#{ ' off' if action_name == 'edit'}", 
   :id => "edit_button" %>
   
-<%= link_to span_tag("Add New Content"), cms_new_path_for(@content_type), 
+<%= link_to span_tag("Add New Content"), new_block_path, 
   :class => "button#{ ' off' if action_name == 'new'} right", 
   :id => "add_button" %>
 
 <% if @block.class.versioned? %>
-  <%= link_to span_tag('List Versions'), [:versions, :cms, @block], 
+  <%= link_to span_tag('List Versions'), block_path(:versions),
     :class => "button#{ ' off' if action_name == 'revisions'}", 
     :id => "list_versions" %>
 <% else %>
@@ -32,7 +32,7 @@
     :id => "list_versions" %>
 <% end %>
 
-<%= link_to span_tag("<span class=\"delete_img\">&nbsp;</span>Delete"), [:cms, @block], 
+<%= link_to span_tag("<span class=\"delete_img\">&nbsp;</span>Delete"), block_path, 
   :class => "http_delete confirm_with_title button", 
   :title => "Are you sure you want to delete '#{@block.name}'?", 
   :id => "delete_button" %>

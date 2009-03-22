@@ -30,7 +30,7 @@
             <td class="first"></td>
             <td class="name">
               <div class="dividers">
-                <%= link_to h(tg.taggable.name), cms_path(:blocks, tg.taggable.content_block_type, :show, tg.taggable) %>
+                <%= link_to h(tg.taggable.name), [:cms, tg.taggable] %>
               </div>
             </td>              
             <td class="name">
@@ -50,5 +50,5 @@
   </div>
 </div>
 <% if taggings.total_pages > 1 %>
-  <%= render_pagination taggings, [:blocks, :tag, :show, tag] %>
+  <%= render_pagination taggings, :tag, {:id => tag} %>
 <% end %>
