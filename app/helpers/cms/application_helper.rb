@@ -140,7 +140,6 @@ LBW
         next unless type.model_class.instance_methods.include?('connect_to_container') 
         useful_cts << type
       end
-      useful_cts.each {|t| logger.debug "#{t.display_name} == Text: #{t.display_name == 'Text'}" }
       useful_cts
     end
     

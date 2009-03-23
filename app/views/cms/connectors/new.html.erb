@@ -2,29 +2,28 @@
 
 <% content_for :html_head do %>
   <%= stylesheet_link_tag("cms/content_library") %>
-    <% javascript_tag do %>
-      jQuery(function($){
-        var collectionName = '<%= @block_type.content_block_type %>'
-        $('table.data tbody tr').hover(function(){
-          $(this).addClass('hover');
-        }, function(){
-          $(this).removeClass('hover');
-        }).click(function(){
-          var match = this.id.match(/(.*)_(\d+)/);
-          var type = match[1];
-          var id = match[2];
-          $('table.data tbody tr').removeClass('selected');
-          $(this).addClass('selected');
-          $('#connectable_type').attr('value', type);
-          $('#connectable_id').attr('value', id);
-          $('#add_button').removeClass('disabled').click(function(){
-            $('#connect_form').submit();
-            return false;
-          });
-          $('#view_button').removeClass('disabled').attr('href', '/cms/'+collectionName+'/'+id).attr('target', '_blank');
-        })
+  <% javascript_tag do %>
+    jQuery(function($){
+      var collectionName = '<%= @block_type.content_block_type %>'
+      $('table.data tbody tr').hover(function(){
+        $(this).addClass('hover');
+      }, function(){
+        $(this).removeClass('hover');
+      }).click(function(){
+        var match = this.id.match(/(.*)_(\d+)/);
+        var type = match[1];
+        var id = match[2];
+        $('table.data tbody tr').removeClass('selected');
+        $(this).addClass('selected');
+        $('#connectable_type').attr('value', type);
+        $('#connectable_id').attr('value', id);
+        $('#add_button').removeClass('disabled').click(function(){
+          $('#connect_form').submit();
+          return false;
+        });
+        $('#view_button').removeClass('disabled').attr('href', '/cms/'+collectionName+'/'+id).attr('target', '_blank');
       })
-    <% end %>
+    })
   <% end %>
 <% end %>
 
@@ -32,7 +31,7 @@
   <h1><%=h @toolbar_title %></h1>
   <%= link_to span_tag("Add to Page"), "#", :id => "add_button", :class => "button disabled" %>
   <%= link_to span_tag("View Content"), "#", :id => "view_button", :class => "button disabled" %>
-  <% form_for cms_connectors_path, :html => { :id => 'connect_form'}} do |f| %>
+  <% form_tag cms_connectors_path, :id => 'connect_form' do %>
     <%= hidden_field_tag :page_id, @page.to_param %>
     <%= hidden_field_tag :container,  @container %>
     <%= hidden_field_tag :connectable_type, '' %>
@@ -41,7 +40,7 @@
   <br clear="all" />
 <% end %>
 
-<% form_tag new_cms_connectors_path, :method => :get do %>
+<% form_tag new_cms_connector_path, :method => :get do %>
   <%= hidden_field_tag :page_id, @page.to_param %>
   <%= hidden_field_tag :container, @container %>
   <div style="margin: 20px 2px;">
@@ -65,7 +64,7 @@
   <% @blocks.each do |block| %>
     <tr id="<%= block.class.name.underscore %>_<%= block.id %>">
       <td class="name"><%= block.name %></td>
-      <td class="updated"><%= block.updated_at.to_s(:date) %></td>
+      <td class="updated"><%= block.updated_at.to_formatted_s(:date) %></td>
       <td class="used"><%= link_to_usages(block) %></td>
     </tr>
   <% end %>

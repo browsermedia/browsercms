@@ -7,6 +7,17 @@ class Cms::ConnectorsControllerTest < ActionController::TestCase
     login_as_cms_admin
   end
   
+  def test_new
+    @page = Factory(:page, :section => root_section)
+    @block = Factory(:html_block)
+    reset(:page)
+    
+    get :new, :page_id => @page, :container => "main"
+    
+    assert_response :success
+    
+  end
+  
   def test_destroy
     @page = Factory(:page, :section => root_section)
     @block = Factory(:html_block, :connect_to_page_id => @page.id, :connect_to_container => "main")

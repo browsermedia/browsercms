@@ -10,6 +10,9 @@ module Cms
       def to_slug
         to_s
       end
+      def to_formatted_s(format=nil)
+        nil
+      end
     end
   end
 end
