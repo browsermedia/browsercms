@@ -41,7 +41,12 @@ module Cms::Routes
       cms.sitemap '/sitemap', :controller => 'section_nodes'
 
       cms.content_types '/content_types', :controller => 'content_types'
-      cms.resources :connectors
+      cms.resources :connectors, :member => {
+        :move_up => :put,
+        :move_down => :put,
+        :move_to_bottom => :put,
+        :move_to_top => :put
+      }
       cms.resources :links
 
       cms.resources :pages, :member => {

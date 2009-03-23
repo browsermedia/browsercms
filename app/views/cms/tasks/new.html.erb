@@ -9,10 +9,7 @@
   <br clear="all"/>
 <% end %>
 
-<% form_for(@task, :url => cms_path(:tasks, :create)) do |f| %>
-  <%= hidden_field_tag :page_id, @page.id %>
-
-  
+<% form_for([:cms, @page, @task]) do |f| %>
 
   <%= f.error_messages %>
   <div class="fields text_fields">
