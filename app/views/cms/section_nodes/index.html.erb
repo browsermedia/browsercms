@@ -1,18 +1,19 @@
 <% content_for :html_head do %>
-<%= stylesheet_link_tag 'cms/sitemap' %>
-<%= javascript_include_tag 'cms/sitemap' %>  
+  <%= stylesheet_link_tag 'cms/sitemap' %>
+  <%= javascript_include_tag 'cms/sitemap' %>  
 <% end %>
+
 <% @page_title = "Sitemap" %>
 
 <% content_for :functions do %>
-<h1>Sitemap</h1>
-<%= link_to span_tag("Edit Page"), '#', :id => 'edit-button', :class => "button disabled left" %>
-<%= link_to span_tag("Edit Properties"), '#', :id => 'properties-button', :class => "button disabled right" %>
-<%= link_to span_tag("Add Page"), '#', :id => 'add-page-button', :class => "button disabled spacer left" %>
-<%= link_to span_tag("Add Section"), '#', :id => 'add-section-button', :class => "button disabled middle" %>
-<%= link_to span_tag("Add Link"), '#', :id => 'add-link-button', :class => "button disabled right" %>
-<%= link_to span_tag("<span class=\"delete_img\">&nbsp;</span>Delete"), '#', :id => 'delete-button', :class => "button disabled delete_button" %>
-<br clear="all" />
+  <h1>Sitemap</h1>
+  <%= link_to span_tag("Edit Page"), '#', :id => 'edit-button', :class => "button disabled left" %>
+  <%= link_to span_tag("Edit Properties"), '#', :id => 'properties-button', :class => "button disabled right" %>
+  <%= link_to span_tag("Add Page"), '#', :id => 'add-page-button', :class => "button disabled spacer left" %>
+  <%= link_to span_tag("Add Section"), '#', :id => 'add-section-button', :class => "button disabled middle" %>
+  <%= link_to span_tag("Add Link"), '#', :id => 'add-link-button', :class => "button disabled right" %>
+  <%= link_to span_tag("<span class=\"delete_img\">&nbsp;</span>Delete"), '#', :id => 'delete-button', :class => "button disabled delete_button" %>
+  <br clear="all" />
 <% end %>
 
 <div id="sitemap">

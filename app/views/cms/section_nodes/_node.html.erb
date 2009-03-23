@@ -5,30 +5,30 @@
   published_status_label = defined?(published_status_label) ? published_status_label : nil
 %>
 <div class="roundedcorners">
-<table class="section_node <%= "movable" if current_user.able_to?(:publish_content) %>" width="100%" cellspacing="0" cellpadding="0">
-  <tr><td colspan="4" class="drop-before"></td></tr>
-  <tr<%= ' class="doubled"' if access_icon && hidden %>>
-    <td id="<%= node_type %>_<%= node.id %>" class="<%= node_type == "section" && node.root? ? 'root' : '' %> <%= node_type %> node">
-	    <%= icon %>
-	    <div><%= h(node.name) %></div>
-    </td>
-    <td class="sitemap_hidden divided">
-      <a href="#" class="hidden"><%= status_icon(:hidden) if hidden %><span>HIDDEN</span></a>
-    </td>
-    <td class="sitemap_access divided">
-      <%= access_icon ? access_icon : "&nbsp;" %>
-    </td>
-    <td class="sitemap_published_status">
-      <div>
-      <%= published_status_icon ? published_status_icon : "&nbsp;" %>
-      <div><%= published_status_label if published_status_label %></div>
-      </div>
-    </td>
-  </tr>
-  <tr><td colspan="4" class="drop-after"></td></tr>
-</table>
-<div class="stl"></div>
-<div class="str"></div>
-<div class="sbl"></div>
-<div class="sbr"></div>
+  <table class="section_node <%= "movable" if current_user.able_to?(:publish_content) %>" width="100%" cellspacing="0" cellpadding="0">
+    <tr><td colspan="4" class="drop-before"></td></tr>
+    <tr<%= ' class="doubled"' if access_icon && hidden %>>
+      <td id="<%= node_type %>_<%= node.id %>" class="<%= node_type == "section" && node.root? ? 'root' : '' %> <%= node_type %> node">
+	      <%= icon %>
+	      <div><%= h(node.name) %></div>
+      </td>
+      <td class="sitemap_hidden divided">
+        <a href="#" class="hidden"><%= status_icon(:hidden) if hidden %><span>HIDDEN</span></a>
+      </td>
+      <td class="sitemap_access divided">
+        <%= access_icon ? access_icon : "&nbsp;" %>
+      </td>
+      <td class="sitemap_published_status">
+        <div>
+          <%= published_status_icon ? published_status_icon : "&nbsp;" %>
+          <div><%= published_status_label if published_status_label %></div>
+        </div>
+      </td>
+    </tr>
+    <tr><td colspan="4" class="drop-after"></td></tr>
+  </table>
+  <div class="stl"></div>
+  <div class="str"></div>
+  <div class="sbl"></div>
+  <div class="sbr"></div>
 </div>

@@ -4,16 +4,17 @@
     <div id="wrapper">
       <%= render_cms_toolbar(@toolbar_tab) %>
       <div id="main">
-	<div class="top_cap"></div>
-	<div id="contentwrapbig">
-	<div id="functions">
-	<%= yield :functions %>
-	</div>
-        <%= yield %>
+        <div class="top_cap"></div>
+        <div id="contentwrapbig">
+          <div id="functions">
+            <%= yield :functions %>
+          </div>
+          <%= yield %>
+        </div>
+        <br clear="all" />
+        <div class="bottom_cap"></div>
+        <%= render :partial => 'layouts/cms/footer' %>     
       </div>
-      <br clear="all" />
-      <div class="bottom_cap"></div>
-      <%= render :partial => 'layouts/cms/footer' %>     
     </div>
   </body>
 </html>
