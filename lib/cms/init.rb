@@ -39,6 +39,10 @@ module Cms
     def markdown?
       Object.const_defined?("Markdown")
     end
+    
+    def reserved_paths
+      @reserved_paths ||= ["/cms", "/cache"]
+    end
      
   end
   module Errors

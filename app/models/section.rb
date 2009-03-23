@@ -27,6 +27,8 @@ class Section < ActiveRecord::Base
   # Disabling '/' in section name for interoperability with FCKEditor file browser
   validates_format_of :name, :with => /\A[^\/]*\Z/, :message => "cannot contain '/'"
   
+  validate :path_not_reserved
+  
   before_destroy :deletable?
   
   attr_accessor :full_path
@@ -125,5 +127,11 @@ class Section < ActiveRecord::Base
       p ? p.path : "#"
     end
   end  
+  
+  def path_not_reserved
+    if Cms.reserved_paths.include?(path)
+      errors.add(:path, "is invalid, '#{path}' a reserved path")
+    end
+  end
       
 end

@@ -95,6 +95,19 @@ class SectionTest < ActiveSupport::TestCase
     section_count = Section.count
     assert @section.destroy
     assert_decremented section_count, Section.count
+  end
+  
+  def test_creating_page_with_reserved_path
+    @section = Section.new(:name => "FAIL", :path => "/cms")
+    assert_not_valid @section
+    assert_has_error_on(@section, :path, "is invalid, '/cms' a reserved path")
+    
+    @section = Section.new(:name => "FAIL", :path => "/cache")
+    assert_not_valid @section
+    assert_has_error_on(@section, :path, "is invalid, '/cache' a reserved path")
+    
+    @section = Section.new(:name => "FTW", :path => "/whatever")
+    assert_valid @section
   end  
   
 end

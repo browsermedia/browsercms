@@ -32,6 +32,19 @@ end
 
 class PageTest < ActiveRecord::TestCase
 
+  def test_creating_page_with_reserved_path
+    @page = Page.new(:name => "FAIL", :path => "/cms")
+    assert_not_valid @page
+    assert_has_error_on(@page, :path, "is invalid, '/cms' a reserved path")
+    
+    @page = Page.new(:name => "FAIL", :path => "/cache")
+    assert_not_valid @page
+    assert_has_error_on(@page, :path, "is invalid, '/cache' a reserved path")
+    
+    @page = Page.new(:name => "FTW", :path => "/whatever")
+    assert_valid @page
+  end
+
   def test_find_live_by_path
     @page = Factory.build(:page, :path => '/foo')
     assert_nil Page.find_live_by_path('/foo')

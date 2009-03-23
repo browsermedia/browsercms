@@ -47,6 +47,7 @@ class Page < ActiveRecord::Base
   
   validates_presence_of :name, :path
   validate :path_unique?
+  validate :path_not_reserved
           
   def after_build_new_version(new_version)
     copy_connectors
@@ -197,6 +198,12 @@ class Page < ActiveRecord::Base
     end
     if self.class.count(:conditions => conditions) > 0
       errors.add(:path, "must be unique")
+    end
+  end   
+  
+  def path_not_reserved
+    if Cms.reserved_paths.include?(path)
+      errors.add(:path, "is invalid, '#{path}' a reserved path")
     end
   end
       
