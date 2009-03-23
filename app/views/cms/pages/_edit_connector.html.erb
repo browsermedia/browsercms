@@ -1,7 +1,7 @@
 <div class="cms_edit_connectable">
   <div class="actions">
-    <%= link_to image_tag("cms/pages/show_connectable.gif"), [:cms, connector.connectable], :title => "View this content (#{connector.get_connectable.name})" %>
-    <%= link_to image_tag("cms/pages/edit_connectable.gif"), edit_polymorphic_path([:cms, connector.connectable], :_redirect_to => @page.path), :title => "Edit this content (#{connector.get_connectable.name})" %>
+    <%= link_to image_tag("cms/pages/show_connectable.gif"), cms_connectable_path(connector.connectable), :title => "View this content (#{connector.get_connectable.name})" %>
+    <%= link_to image_tag("cms/pages/edit_connectable.gif"), edit_cms_connectable_path(connector.connectable, :_redirect_to => @page.path), :title => "Edit this content (#{connector.get_connectable.name})" %>
     <% if @page.connectors.for_page_version(@page.version).in_container(connector.container).count > 1 %>
       <%= link_to image_tag("cms/pages/up_connectable.gif"), move_up_cms_connector_path(connector), :class => "http_put", :title => "Move this content up (#{connector.get_connectable.name})" %>
       <%= link_to image_tag("cms/pages/down_connectable.gif"), move_down_cms_connector_path(connector), :class => "http_put", :title => "Move this content down (#{connector.get_connectable.name})" %>

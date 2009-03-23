@@ -16,6 +16,22 @@ module Cms
       send("new_cms_#{resource_collection_name(resource)}_url", options)
     end
     
+    def cms_connectable_path(connectable, options={})
+      if Portlet === connectable
+        cms_portlet_path(connectable)
+      else
+        [:cms, connectable]
+      end
+    end
+    
+    def edit_cms_connectable_path(connectable, options={})
+      if Portlet === connectable
+        edit_cms_portlet_path(connectable)
+      else
+        [:edit, :cms, connectable]
+      end
+    end
+    
     private
       # Returns the name of the collection that this resouce belongs to
       # the resource can be a ContentType, ActiveRecord::Base instance
