@@ -8,9 +8,6 @@ namespace :test do
 end
 
 namespace :cms do
-  desc "Wipes database, installs a demo site, including several templates and sample pages."
-  task :install_demo_site => ["db:migrate:reset", "db:load_demo_data"]
-  
   
   desc "Installs the cms gems"
   task :install do

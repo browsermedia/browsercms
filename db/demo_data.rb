@@ -1,3 +1,6 @@
+# This is a set of sample data, designed be loaded as part a demo install. If you are not using the 
+# demo.rb template to create your CMS project, you may delete this from your project.
+
 # Load up data that was created in load seed data migration
 User.current = User.first(:conditions => {:login => 'cmsadmin'})
 root_section = Section.root.first
@@ -43,15 +46,18 @@ create_page(:our_office, :name => "Our Office", :path => "/footer_nav/our_office
 Group.all.each{|g| g.sections = Section.all }
 
 # Populate the pages with some content.
-hello = HtmlBlock.first(:conditions => {:name => "Hello World"})
-hello.content = "<p>Thank you for trying out this demo site. BrowserCMS is a open source content management system, written in Ruby on Rails. 
+
+welcome_content = "<p>Thank you for trying out this demo site. BrowserCMS is a open source content management system, written in Ruby on Rails. 
                 It's designed to be approachable for non-technical users, while allowing designers and developers to productively create
                 great looking sites which feature dynamic functionality</p>
                 <p>This demo site uses a theme (Blue Steel) with two templates (Home and Sub),
                 along with a sample sitemap containing several pages and sections. The template shows how to use the core Template API, which allows
                 designers to create maintainable pages with no limits on layout.
                 </p>"
-hello.save!
+
+create_html_block(:welcome, :name => "Welcome to BrowserCMS", :content => welcome_content, :publish_on_save => true)
+home_page.create_connector(html_blocks(:welcome), "main")
+
 
 login = "<p>In order to create or edit content, you will need to log into BrowserCMS.</p>
          <p><a href='/cms'>Login here</a>.</p>

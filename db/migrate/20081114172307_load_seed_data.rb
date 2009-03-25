@@ -51,9 +51,7 @@ class LoadSeedData < ActiveRecord::Migration
     pages(:server_error).create_connector(html_blocks(:server_error), "main")
     pages(:server_error).publish!
 
-    create_html_block(:hello_world, :name => "Hello World", :content => "<h2>Hello, World!</h2>", :publish_on_save => true)
-
-    pages(:home).create_connector(html_blocks(:hello_world), "main")         
+          
     
     pages(:home).publish! 
         

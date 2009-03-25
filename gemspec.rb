@@ -9,6 +9,7 @@ SPEC = Gem::Specification.new do |spec|
   spec.files = Dir["rails/*.rb"]
   spec.files += Dir["app/**/*"]
   spec.files += Dir["db/migrate/[0-9]*_*.rb"]
+  spec.files += Dir["db/demo_data.rb"]
   spec.files += Dir["lib/**/*"]
   spec.files += Dir["rails_generators/**/*"]
   spec.files += Dir["public/stylesheets/cms/**/*"]
@@ -17,6 +18,7 @@ SPEC = Gem::Specification.new do |spec|
   spec.files += Dir["public/fckeditor/**/*"]
   spec.files += Dir["public/site/**/*"]  
   spec.files += Dir["public/images/cms/**/*"]
+  spec.files += Dir["public/themes/**/*"]
   spec.has_rdoc = true
   spec.extra_rdoc_files = ["README"]
   spec.require_path "lib"

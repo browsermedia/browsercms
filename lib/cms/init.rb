@@ -59,6 +59,8 @@ ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(
 	:date => '%m/%d/%Y'	
 )
 
+# 1. demo_data should probably be added directly via demo.rb template, ideally rather than for all CMS installations.
+# 2. Not sure if themes should be installed by default either.
 Cms.add_generator_paths(Cms.root, 
   "public/javascripts/jquery*", 
   "public/javascripts/cms/**/*", 
@@ -66,4 +68,6 @@ Cms.add_generator_paths(Cms.root,
   "public/site/**/*",   
   "public/stylesheets/cms/**/*", 
   "public/images/cms/**/*", 
-  "db/migrate/[0-9]*_*.rb")
+  "public/themes/**/*", 
+  "db/migrate/[0-9]*_*.rb",
+  "db/demo_data.rb") 

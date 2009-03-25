@@ -8,8 +8,15 @@
   <body style="margin: 0; padding: 0; text-align: center;">
     <%= cms_toolbar %>
     <div id="wrapper" style="width: 700px; margin: 0 auto; text-align: left; padding: 30px">
-    <%= render_breadcrumbs %>
-	<%= render_menu %>
+    Breadcrumbs: <%= render_breadcrumbs %>
+	Main Menu: <%= render_menu %>
+	<h1><%= @page_title %></h1>
+	<p>BrowserCMS has been installed successfully. </p> 
+	
+	<h2>Getting Started</h2>
+	<p>If you aren't logged in, the next step is to login at the <%= link_to "admin", "/cms"%> with the login credentials provided during the install process.</p>
+	<p>To start building your site, you can either alter this template (app/views/layouts/template/main.erb.html) or create a new one. To change which template the pages use, you can click the 'Edit Properties' button above, and choose a different template. After all pages in the site, use the new template, you can safely delete this one.</p>
+	
     <%= container :main %>
     </div>
   </body>

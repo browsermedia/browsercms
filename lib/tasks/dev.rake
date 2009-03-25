@@ -4,8 +4,9 @@ desc "Reset the DB, run the migrations, load the fixtures, run the specs"
 task :reset => ["db:migrate:reset", "test:all"]
 
 namespace :db do
+  # This task needs to somehow be packaged as part of the CMS gem, so that users can use the demo.rb template to install the data.
   
-  desc "Loads data for demo site."
+  desc "Installs sample data for a demo site, including several templates and sample pages."
   task :load_demo_data => :environment do
     t0 = Time.now
     puts "== Demo Data: creating ====================================================="    
@@ -13,4 +14,7 @@ namespace :db do
     puts "== Demo Data: created (%0.4fs) ============================================\n" % (Time.now - t0)    
   end
   
+  
+  desc "Wipes database, and reinstalls the demo data."
+  task :reload_demo_data => ["db:migrate:reset", "db:load_demo_data"]
 end
