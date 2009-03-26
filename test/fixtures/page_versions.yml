@@ -6,7 +6,7 @@ page_version_1:
   title: 
   language: 
   published: false
-  template: Main
+  template_file_name: main.html.erb
   page_id: 1
   id: 1
   created_by_id: 1
@@ -28,7 +28,7 @@ page_version_2:
   title: 
   language: 
   published: true
-  template: Error
+  template_file_name: error.html.erb
   page_id: 2
   id: 2
   created_by_id: 1
@@ -50,7 +50,7 @@ page_version_3:
   title: 
   language: 
   published: true
-  template: Error
+  template_file_name: error.html.erb
   page_id: 3
   id: 3
   created_by_id: 1
@@ -72,7 +72,7 @@ page_version_4:
   title: 
   language: 
   published: true
-  template: Error
+  template_file_name: error.html.erb
   page_id: 4
   id: 4
   created_by_id: 1
@@ -94,7 +94,7 @@ page_version_5:
   title: 
   language: 
   published: false
-  template: Error
+  template_file_name: error.html.erb
   page_id: 2
   id: 5
   created_by_id: 1
@@ -116,7 +116,7 @@ page_version_6:
   title: 
   language: 
   published: true
-  template: Error
+  template_file_name: error.html.erb
   page_id: 2
   id: 6
   created_by_id: 1
@@ -138,7 +138,7 @@ page_version_7:
   title: 
   language: 
   published: false
-  template: Error
+  template_file_name: error.html.erb
   page_id: 3
   id: 7
   created_by_id: 1
@@ -160,7 +160,7 @@ page_version_8:
   title: 
   language: 
   published: true
-  template: Error
+  template_file_name: error.html.erb
   page_id: 3
   id: 8
   created_by_id: 1
@@ -182,7 +182,7 @@ page_version_9:
   title: 
   language: 
   published: false
-  template: Error
+  template_file_name: error.html.erb
   page_id: 4
   id: 9
   created_by_id: 1
@@ -204,7 +204,7 @@ page_version_10:
   title: 
   language: 
   published: true
-  template: Error
+  template_file_name: error.html.erb
   page_id: 4
   id: 10
   created_by_id: 1
@@ -226,7 +226,7 @@ page_version_11:
   title: 
   language: 
   published: false
-  template: Main
+  template_file_name: default.html.erb
   page_id: 1
   id: 11
   created_by_id: 1
@@ -248,7 +248,7 @@ page_version_12:
   title: 
   language: 
   published: true
-  template: Main
+  template_file_name: default.html.erb
   page_id: 1
   id: 12
   created_by_id: 1

@@ -1,0 +1,14 @@
+dynamic_view_1:
+  id: 1
+  lock_version: 2
+  version: 1
+  type: PageTemplate
+  name: default
+  format: html
+  handler: erb
+  body: <%%= container :main %>
+  created_at: Wed Mar 04 22:55:28 UTC 2009
+  updated_at: Wed Mar 04 22:55:28 UTC 2009
+  created_by_id: 1
+  updated_by_id: 1
+  deleted: false

@@ -10,7 +10,7 @@ class Cms::ContentControllerTest < ActionController::TestCase
   end
   
   def test_show_another_page
-    @page = Factory(:page, :section => root_section, :path => "/about", :name => "Test About", :template => "Main", :publish_on_save => true)
+    @page = Factory(:page, :section => root_section, :path => "/about", :name => "Test About", :template_file_name => "default.html.erb", :publish_on_save => true)
     get :show, :path => ["about"]
     assert_select "title", "Test About"
   end
@@ -111,7 +111,7 @@ class Cms::ContentControllerTest < ActionController::TestCase
         :section => @protected_section, 
         :path => "/secret", 
         :name => "Shhh... It's a Secret", 
-        :template => "Main", 
+        :template_file_name => "default.html.erb", 
         :publish_on_save => true)
     end
   
@@ -134,7 +134,7 @@ class Cms::ContentControllerTest < ActionController::TestCase
         :path => "/archived", 
         :name => "Archived", 
         :archived => true, 
-        :template => "Main", 
+        :template_file_name => "default.html.erb", 
         :publish_on_save => true)
     end
   

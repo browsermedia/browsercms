@@ -208,11 +208,16 @@ class Page < ActiveRecord::Base
   end
       
   def layout
-    "templates/#{template_name.to_s.downcase.gsub(/\s/,'_')}"
+    template_file_name && "templates/#{template_file_name.split('.').first}"
+  end
+  
+  # This will be nil if it is a file system based template
+  def template
+    PageTemplate.find_by_file_name(template_file_name)
   end
   
   def template_name
-    template
+    template_file_name && PageTemplate.display_name(template_file_name)
   end
 
   def ancestors

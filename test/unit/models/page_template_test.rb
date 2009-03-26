@@ -23,4 +23,13 @@ class PageTemplateTest < ActiveSupport::TestCase
     assert_valid Factory.build(:page_template, :name => "subpage_1_column")
   end
   
+  def test_find_by_file_name
+    assert @page_template.save, "Could not save page template"
+    assert_equal @page_template, PageTemplate.find_by_file_name("test.html.erb")
+    assert_nil PageTemplate.find_by_file_name("fail.html.erb")
+    assert_nil PageTemplate.find_by_file_name("fail.erb")
+    assert_nil PageTemplate.find_by_file_name("fail")
+    assert_nil PageTemplate.find_by_file_name(nil)  
+  end
+  
 end

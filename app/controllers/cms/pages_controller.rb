@@ -122,7 +122,7 @@ class Cms::PagesController < Cms::BaseController
     end
     
     def load_templates
-      @templates = self.class.view_paths.map{|p| Dir["#{p}/layouts/templates/*.html.erb"]}.flatten.map{|f| File.basename(f, ".html.erb").titleize}.sort.uniq
+      @templates = PageTemplate.options
     end
     
 end

@@ -72,6 +72,21 @@ class PageTest < ActiveRecord::TestCase
     assert_valid page
     assert_equal "/foo/bar", page.path  
   end
+  
+  def test_template
+    page_template = Factory(:page_template, :name => 'test')
+    page = Factory.build(:page, :template_file_name => 'test.html.erb')
+    assert_equal 'test.html.erb', page.template_file_name
+    assert_equal 'Test (html/erb)', page.template_name
+    assert_equal page_template, page.template
+    assert_equal 'templates/test', page.layout
+    
+    page = Factory.build(:page, :template_file_name => 'foo.html.erb')
+    assert_equal 'foo.html.erb', page.template_file_name
+    assert_equal 'Foo (html/erb)', page.template_name
+    assert_nil page.template
+    assert_equal 'templates/foo', page.layout
+  end
     
   def test_revision_comments
     page = Factory(:page, :section => root_section, :name => "V1")

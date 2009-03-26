@@ -1,5 +1,15 @@
 class DynamicView < ActiveRecord::Base
 
+  named_scope :with_file_name, lambda{|file_name|
+    conditions = {:name => nil, :format => nil, :handler => nil}
+    if file_name && (parts = file_name.split(".")).size == 3
+      conditions[:name] = parts[0]
+      conditions[:format] = parts[1]
+      conditions[:handler] = parts[2]
+    end
+    {:conditions => conditions}
+  }
+
   def self.inherited(subclass)
     super if defined? super
   ensure
@@ -10,32 +20,39 @@ class DynamicView < ActiveRecord::Base
       is_versioned :version_foreign_key => "dynamic_view_id"
 
       validates_presence_of :name, :format, :handler
-      
+      validates_uniqueness_of :name, :scope => [:format, :handler],
+        :message => "Must have a unique combination of name, format and handler"
+            
       after_save :write_file_to_disk
       
-    end
-    
+    end 
   end
   
   def self.new_with_defaults(options={})
     new({:format => "html", :handler => "erb", :body => default_body}.merge(options))    
   end
   
+  def self.find_by_file_name(file_name)
+    with_file_name(file_name).first
+  end
+  
   def self.base_path
-    File.join(Rails.root, "tmp", "views")    
+    File.join(Rails.root, "tmp", "views")
   end
   
   def file_name
     "#{name}.#{format}.#{handler}"
   end
   
-  def file_path
-    raise "Subclasses must define where the file should be saved"
-  end
+  def display_name
+    self.class.display_name(file_name)
+  end  
   
   def write_file_to_disk
-    FileUtils.mkpath(File.dirname(file_path))
-    open(file_path, 'w'){|f| f << body}
+    if respond_to?(:file_path) && !file_path.blank?
+      FileUtils.mkpath(File.dirname(file_path))
+      open(file_path, 'w'){|f| f << body}
+    end
   end
   
   def self.write_all_to_disk!

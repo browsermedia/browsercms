@@ -34,10 +34,10 @@ class LoadSeedData < ActiveRecord::Migration
         
     Group.all.each{|g| g.sections = Section.all }    
     
-    create_page(:home, :name => "Home", :path => "/", :section => sections(:root), :template => "Main", :cacheable => true)
-    create_page(:not_found, :name => "Page Not Found", :path => "/system/not_found", :section => sections(:system), :template => "Error", :publish_on_save => true, :hidden => true, :cacheable => true)
-    create_page(:access_denied, :name => "Access Denied", :path => "/system/access_denied", :section => sections(:system), :template => "Error", :publish_on_save => true, :hidden => true, :cacheable => true)
-    create_page(:server_error, :name => "Server Error", :path => "/system/server_error", :section => sections(:system), :template => "Error", :publish_on_save => true, :hidden => true, :cacheable => true)
+    create_page(:home, :name => "Home", :path => "/", :section => sections(:root), :template_file_name => "default.html.erb", :cacheable => true)
+    create_page(:not_found, :name => "Page Not Found", :path => "/system/not_found", :section => sections(:system), :template_file_name => "error.html.erb", :publish_on_save => true, :hidden => true, :cacheable => true)
+    create_page(:access_denied, :name => "Access Denied", :path => "/system/access_denied", :section => sections(:system), :template_file_name => "error.html.erb", :publish_on_save => true, :hidden => true, :cacheable => true)
+    create_page(:server_error, :name => "Server Error", :path => "/system/server_error", :section => sections(:system), :template_file_name => "error.html.erb", :publish_on_save => true, :hidden => true, :cacheable => true)
 
     create_html_block(:page_not_found, :name => "Page Not Found", :content => "<p>The page you tried to access does not exist on this server.</p>", :publish_on_save => true)
     pages(:not_found).create_connector(html_blocks(:page_not_found), "main")
@@ -51,7 +51,33 @@ class LoadSeedData < ActiveRecord::Migration
     pages(:server_error).create_connector(html_blocks(:server_error), "main")
     pages(:server_error).publish!
 
-          
+    create_page_template(:default, 
+      :name => "default", :format => "html", :handler => "erb", 
+      :body => <<-HTML
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title><%= @page_title %></title>
+    <%= yield :html_head %>
+  </head>
+  <body style="margin: 0; padding: 0; text-align: center;">
+    <%= cms_toolbar %>
+    <div id="wrapper" style="width: 700px; margin: 0 auto; text-align: left; padding: 30px">
+      Breadcrumbs: <%= render_breadcrumbs %>
+      Main Menu: <%= render_menu %>
+      <h1><%= @page_title %></h1>
+      <p>BrowserCMS has been installed successfully.</p> 
+
+      <h2>Getting Started</h2>
+      <p>To start building your site, you can either <%= link_to "alter this template", edit_cms_page_template_path(PageTemplate.find_by_file_name("default.html.erb")) %> or <%= link_to "create a new one", new_cms_page_template_path %>.  You will be prompted to login with the credentials provided during the install process.  To change which template the pages use, you can click the 'Edit Properties' button above, and choose a different template. After all pages in the site, use the new template, you can safely delete this one.</p>
+
+      <%= container :main %>
+    </div>
+  </body>
+</html>
+HTML
+    )
     
     pages(:home).publish! 
         

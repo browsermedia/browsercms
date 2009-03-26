@@ -45,7 +45,7 @@ end
 Factory.define :page do |m|
   m.sequence(:name) {|n| "Page #{n}" }
   m.path {|a| "/#{a.name.gsub(/\s/,'_').downcase}" }
-  m.template "Main"
+  m.template_file_name "default.html.erb"
   m.association :section
 end
 

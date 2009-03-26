@@ -4,7 +4,7 @@ class CreatePages < ActiveRecord::Migration
       t.string :name
       t.string :title
       t.string :path
-      t.string :template
+      t.string :template_file_name
       t.text :description
       t.text :keywords
       t.string :language
