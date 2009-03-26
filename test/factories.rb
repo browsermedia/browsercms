@@ -49,6 +49,18 @@ Factory.define :page do |m|
   m.association :section
 end
 
+Factory.define :page_partial do |m|
+  m.sequence(:name) {|n| "_page_partial_#{n}" }
+  m.format "html"
+  m.handler "erb"
+end
+
+Factory.define :page_template do |m|
+  m.sequence(:name) {|n| "page_template_#{n}" }
+  m.format "html"
+  m.handler "erb"
+end
+
 Factory.define :permission do |m|
   m.sequence(:name) {|n| "TestPermission#{n}" }
 end

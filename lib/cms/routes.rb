@@ -96,6 +96,8 @@ module Cms::Routes
       cms.resources :email_messages
       cms.resources :groups
       cms.resources :redirects
+      cms.resources :page_partials, :controller => 'dynamic_views'
+      cms.resources :page_templates, :controller => 'dynamic_views'
       cms.resources :users, :member => {
         :change_password => :get, 
         :update_password => :put,

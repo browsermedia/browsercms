@@ -1,0 +1,3 @@
+<% @page_title = @toolbar_title = "New #{dynamic_view_type.name.titleize}" %>
+<%= content_for :functions, link_to(span_tag("List All"), cms_index_path_for(dynamic_view_type.name.underscore.pluralize), :class => "button") %>
+<%= render :partial => 'form' %>

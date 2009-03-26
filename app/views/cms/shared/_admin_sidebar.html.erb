@@ -6,6 +6,17 @@
   </ul>
 </div>
 <div class="bottom_cap bottom_pad"></div>
+
+<div class="top_cap"></div>
+<div>
+  <h3>Templates</h3>
+  <ul>  
+    <li<%= ' class="open"' if @menu_section == 'page_partials' %>><%= link_to "Page Partials", cms_page_partials_path %></li>
+    <li<%= ' class="open"' if @menu_section == 'page_templates' %>><%= link_to "Page Templates", cms_page_templates_path %></li>
+  </ul>
+</div>
+<div class="bottom_cap bottom_pad"></div>
+
 <div class="top_cap"></div>
 <div>
   <h3>Tools</h3>
