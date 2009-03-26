@@ -24,6 +24,7 @@ class DynamicView < ActiveRecord::Base
         :message => "Must have a unique combination of name, format and handler"
             
       after_save :write_file_to_disk
+      before_destroy :remove_file_from_disk
       
     end 
   end
@@ -57,6 +58,12 @@ class DynamicView < ActiveRecord::Base
   
   def self.write_all_to_disk!
     all.each{|v| v.write_file_to_disk }
+  end
+  
+  def remove_file_from_disk
+    if respond_to?(:file_path) && File.exists?(file_path)
+      File.delete(file_path)
+    end
   end
   
   def self.default_body

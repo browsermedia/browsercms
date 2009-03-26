@@ -17,7 +17,7 @@ module Cms
             alias_method :count_with_deleted, :count
             alias_method :delete_all!, :delete_all
           end
-          alias_method :destroy_without_callbacks!, :destroy_without_callbacks        
+          alias_method :destroy_without_callbacks!, :destroy_without_callbacks
         
           extend ClassMethods
           include InstanceMethods
@@ -57,6 +57,10 @@ module Cms
             @destroyed = true
             callback(:after_destroy)
             result
+          end
+
+          def destroy
+            destroy_with_callbacks!
           end
 
           def destroy!

@@ -13,4 +13,10 @@ class PagePartial < DynamicView
     "#{name.sub(/^_/,'').titleize} (#{format}/#{handler})"
   end  
   
+  def prepend_underscore
+    if !name.blank? && name[0,1] != '_'
+      self.name = "_#{name}"
+    end
+  end
+  
 end
