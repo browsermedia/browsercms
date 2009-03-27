@@ -20,7 +20,9 @@ class PagePartialTest < ActiveSupport::TestCase
   def test_for_valid_name
     assert_not_valid Factory.build(:page_partial, :name => "Fancy")
     assert_not_valid Factory.build(:page_partial, :name => "foo bar")
-    assert_not_valid Factory.build(:page_partial, :name => "subpage_1_column")
+    partial = Factory.build(:page_partial, :name => "subpage_1_column")
+    assert_valid partial
+    assert_equal "_subpage_1_column", partial.name
     assert_valid Factory.build(:page_partial, :name => "_sidebar")
   end
   

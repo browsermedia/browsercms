@@ -53,14 +53,13 @@ class ContentBlockTest < ActiveSupport::TestCase
     
     @block.destroy
 
-    assert @block.deleted?
     assert !HtmlBlock.exists?(@block.id)
     assert !HtmlBlock.exists?(["name = ?", @block.name])
     assert_decremented html_block_count, HtmlBlock.count
     assert_raise(ActiveRecord::RecordNotFound) { HtmlBlock.find(@b) }
     assert_nil HtmlBlock.find_by_name(@block.name)
 
-    deleted_block = HtmlBlock.find_with_deleted(@block)
+    deleted_block = HtmlBlock.find_with_deleted(@block.id)
     assert_equal 2, deleted_block.versions.size
     assert_equal 2, deleted_block.version
     assert_equal 1, deleted_block.versions.first.version

@@ -59,10 +59,6 @@ module Cms
             result
           end
 
-          def destroy
-            destroy_with_callbacks!
-          end
-
           def destroy!
             transaction { destroy_with_callbacks! }
           end
