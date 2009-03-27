@@ -1,16 +1,16 @@
 class Cms::ContentController < Cms::ApplicationController
 
+  rescue_from Exception, :with => :handle_server_error
+  rescue_from Cms::Errors::AccessDenied, :with => :handle_access_denied
+  rescue_from ActiveRecord::RecordNotFound, :with => :handle_not_found
+
   skip_before_filter :redirect_to_cms_site
   before_filter :construct_path
   before_filter :redirect_non_cms_users_to_public_site
   before_filter :try_to_redirect
   before_filter :try_to_stream_file
   before_filter :check_access_to_page
-  
-  rescue_from Exception, :with => :handle_server_error
-  rescue_from Cms::Errors::AccessDenied, :with => :handle_access_denied
-  rescue_from ActiveRecord::RecordNotFound, :with => :handle_not_found  
-  
+    
   def show        
     render_page
     cache_page if perform_caching
