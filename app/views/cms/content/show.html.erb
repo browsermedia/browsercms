@@ -1,12 +1,3 @@
-<% #These are need if this template is render by a rescue_from 
-  if defined?(page)
-    @page = page 
-    @mode = "view"
-    @exception = exception if (!@exception && defined?(exception))
-    @stacktrace = stacktrace if (!@stacktrace && defined?(stacktrace))
-  end
-  
-%>
 <% @page_title = @page.page_title %>
 
 <% if @show_toolbar %>
@@ -14,7 +5,7 @@
     <%= stylesheet_link_tag 'cms/page' %>
   <% end %>
   <% flash.keep %>
-  <iframe src="<%=h cms_toolbar_path(:page_id => @page.id, :page_version => @page.version, :mode => @mode, :page_toolbar => !@exception) %>" width="100%" height="159px" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" name="cms_toolbar"></iframe>
+  <iframe src="<%=h cms_toolbar_path(:page_id => @page.id, :page_version => @page.version, :mode => @mode, :page_toolbar => @show_page_toolbar ? 1 : 0) %>" width="100%" height="<%= @show_page_toolbar ? 159 : 100 %>px" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" name="cms_toolbar"></iframe>
 <% end %>
 
 <% @page.connectors.for_page_version(@page.version).each do |c| %>

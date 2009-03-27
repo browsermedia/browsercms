@@ -7,10 +7,41 @@ class Cms::ContentController < Cms::ApplicationController
   before_filter :try_to_stream_file
   before_filter :check_access_to_page
   
+  rescue_from Exception, :with => :handle_server_error
+  rescue_from Cms::Errors::AccessDenied, :with => :handle_access_denied
+  rescue_from ActiveRecord::RecordNotFound, :with => :handle_not_found  
+  
   def show        
     render_page
     cache_page if perform_caching
   end
+
+  def handle_not_found(exception)
+    logger.warn "Page Not Found"
+    handle_error_with_cms_page('/system/not_found', exception, :not_found)
+  end
+
+  def handle_access_denied(exception)
+    logger.warn "Access Denied"
+    handle_error_with_cms_page('/system/access_denied', exception, :forbidden)
+  end
+
+  def handle_server_error(exception)
+    logger.warn "Exception: #{exception.message}\n"
+    logger.warn "#{exception.backtrace.join("\n")}\n"
+    handle_error_with_cms_page('/system/server_error', exception, :internal_server_error)
+  end        
+  
+  private
+  def handle_error_with_cms_page(error_page_path, exception, status, options={})
+    if @page = Page.find_live_by_path(error_page_path)
+      @mode = "view"
+      @show_page_toolbar = false
+      render :layout => @page.layout, :template => 'cms/content/show', :status => status
+    else
+      raise exception
+    end      
+  end    
 
   private
 
@@ -41,6 +72,8 @@ class Cms::ContentController < Cms::ApplicationController
         @show_toolbar = true
       end
     end
+    @show_page_toolbar = @show_toolbar
+    true
   end
   
   def try_to_redirect
@@ -73,7 +106,7 @@ class Cms::ContentController < Cms::ApplicationController
           ) 
         end    
       end
-    end    
+    end
     
   end
 
