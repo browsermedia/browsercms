@@ -20,10 +20,7 @@ jQuery(function($) {
   <%= f.label :path %>
   <%= f.text_field :path, :tabindex => next_tabindex %>
 </div>
-<div class="fields select_fields">
-  <%= f.label :template %>
-  <div><%= f.select :template_file_name, PageTemplate.options, {}, :tabindex => next_tabindex %></div>
-</div>
+<%= f.cms_drop_down :template_file_name, PageTemplate.options, {}, :tabindex => next_tabindex %>
 <div class="checkbox_group fields no_check_all">
   <div class="checkbox_fields">
     <label for="page_cacheable">Cache enabled?</label>  
