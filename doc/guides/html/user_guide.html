@@ -150,7 +150,7 @@
                                 
                                   <li><a href="#_reorganize_a_site_8217_s_navigation">Reorganize a site&#8217;s navigation</a></li>
                                 
-                                  <li><a href="#_setting_up_up_restricted_sections">Setting up up restricted sections</a></li>
+                                  <li><a href="#_setting_up_restricted_sections">Setting up restricted sections</a></li>
                                 
                                   <li><a href="#_setting_up_workflow">Setting up Workflow</a></li>
                                 
@@ -294,7 +294,7 @@ Create and assign permissions to users.
 <h4 id="_moving_pages_sections_in_the_sitemap">3.9.2. Moving pages/sections in the sitemap</h4>
 <div class="paragraph"><p>When pages and sections are created, they are added last in their parent section. They can be reordered though from the Sitemap, by dragging and dropping. To move a page or section, click-hold and drag the page/section where you want it to be. This allows editors to both reorder pages within a specific menu, or move it to another area of the site entirely.</p></div>
 <div class="paragraph"><p>Dropping an item onto a page will place it <em>after</em> that page. Dropping an item onto a section will put it in that section, as the last item. Be aware that moving pages will immediately make changes in how the dynamic site menus appear (there is no <em>publish</em> step needed).</p></div>
-<h3 id="_setting_up_up_restricted_sections">3.10. Setting up up restricted sections</h3>
+<h3 id="_setting_up_restricted_sections">3.10. Setting up restricted sections</h3>
 <div class="paragraph"><p>It&#8217;s a common task to want to restrict specific users from being able to see certain pages. This might include creating a <em>members</em> section, where only registered and approved users can see the content. BrowserCMS allows editors/admins to restrict user access based on sections. Individual pages get their security from their immediate parent. For example, if there is a section called <em>Member Only</em>, which a <em>Guest</em> cannot see, all pages in that section will be block, and guests (unregistered users) that try to access those URLs will be sent to the <em>Access Denied</em> page.</p></div>
 <h4 id="_creating_the_groups">3.10.1. Creating the groups</h4>
 <div class="paragraph"><p>The first step to secure a section is to set up the groups who are allowed to see it. An administrator can create a new group by clicking the <em>Administration</em> tab, then selecting the <em>Groups</em> item from the left menu. Click the <em>Add Group</em> button, give the group a name (<em>Members</em>), and choose <em>Registered Public User</em> as the group type. By default, this group will able to view all sections within the site. After saving the group, you can alter which sections a user can see, by clicking the name of the group. In this case, the new <em>Member</em> group&#8217;s permissions are fine.</p></div>

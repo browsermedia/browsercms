@@ -122,7 +122,7 @@ When pages and sections are created, they are added last in their parent section
 
 Dropping an item onto a page will place it 'after' that page. Dropping an item onto a section will put it in that section, as the last item. Be aware that moving pages will immediately make changes in how the dynamic site menus appear (there is no 'publish' step needed).
 
-=== Setting up up restricted sections
+=== Setting up restricted sections
 It's a common task to want to restrict specific users from being able to see certain pages. This might include creating a 'members' section, where only registered and approved users can see the content. BrowserCMS allows editors/admins to restrict user access based on sections. Individual pages get their security from their immediate parent. For example, if there is a section called 'Member Only', which a 'Guest' cannot see, all pages in that section will be block, and guests (unregistered users) that try to access those URLs will be sent to the 'Access Denied' page.
 
 ==== Creating the groups

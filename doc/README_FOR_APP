@@ -4,7 +4,7 @@ BrowserCMS is Content Management System for the Rails web-application framework.
 
 == Getting Started
 
-1. Install Rails 2.1 or higher:
+1. Install Rails 2.3 or higher:
 
      sudo gem install rails
        
@@ -34,8 +34,8 @@ BrowserCMS is Content Management System for the Rails web-application framework.
 
 5. Edit config/environments.rb and add BrowserCms as a gem dependency:
 
-     config.gem "browser_cms"
      config.gem "browser_cms_news_module"
+     config.gem "browser_cms"
 
 6. Run the following command to install BrowserCMS:
 
