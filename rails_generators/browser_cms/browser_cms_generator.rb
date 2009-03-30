@@ -29,7 +29,7 @@ class BrowserCmsGenerator < Rails::Generator::Base
           end
           m.file f, f.gsub("#{src_root}/", "")
         end
-      end        
-    end            
+      end
+    end
   end
 end

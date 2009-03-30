@@ -59,6 +59,18 @@ Factory.define :page_template do |m|
   m.sequence(:name) {|n| "page_template_#{n}" }
   m.format "html"
   m.handler "erb"
+  m.body %q{<html>
+  <head>
+    <title>
+      <%= @page_title %>
+    </title>
+    <%= yield :html_head %>
+  </head>
+  <body>
+    <%= cms_toolbar %>
+    <%= container :main %>
+  </body>
+</html>}
 end
 
 Factory.define :permission do |m|

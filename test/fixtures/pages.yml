@@ -27,7 +27,7 @@ page_2:
   title: 
   language: 
   published: true
-  template_file_name: error.html.erb
+  template_file_name: default.html.erb
   lock_version: 2
   id: 2
   created_by_id: 1
@@ -48,7 +48,7 @@ page_3:
   title: 
   language: 
   published: true
-  template_file_name: error.html.erb
+  template_file_name: default.html.erb
   lock_version: 2
   id: 3
   created_by_id: 1
@@ -69,7 +69,7 @@ page_4:
   title: 
   language: 
   published: true
-  template_file_name: error.html.erb
+  template_file_name: default.html.erb
   lock_version: 2
   id: 4
   created_by_id: 1

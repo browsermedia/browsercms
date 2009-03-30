@@ -6,7 +6,19 @@ dynamic_view_version_1:
   name: default
   format: html
   handler: erb
-  body: <%%= container :main %>
+  body: |
+    <html>
+      <head>
+        <title>
+          <%%= @page_title %>
+        </title>
+        <%%= yield :html_head %>
+      </head>
+      <body>
+        <%%= cms_toolbar %>
+        <%%= container :main %>
+      </body>
+    </html>
   created_at: Wed Mar 04 22:55:28 UTC 2009
   updated_at: Wed Mar 04 22:55:28 UTC 2009
   created_by_id: 1
