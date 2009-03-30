@@ -2,10 +2,13 @@
 <%= content_for :functions, "<h1>#{ @page_title }</h1>" %>
 <%= content_for :html_head, stylesheet_link_tag('cms/content_types') %>
 <ul id="content_types">
-  <% connectable_content_types.each do |type| %>
-    <li><%= link_to h(type.display_name), cms_new_path_for(type, 
+  <% ContentType.connectable.all.each_with_index do |type, i| %>
+    <li>
+      <%= link_to h(type.display_name), cms_new_path_for(type, 
         "#{type.name.underscore}[connect_to_page_id]" => params[:connect_to_page_id], 
         "#{type.name.underscore}[connect_to_container]" => params[:connect_to_container]
-      ) %></li>
+      ) %>
+      <% if i == 1 %><div style="margin: 10px 0">&nbsp;</div><% end %>
+    </li>
   <% end %>
 </ul>

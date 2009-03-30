@@ -7,10 +7,15 @@ class ContentType < ActiveRecord::Base
   
   named_scope :named, lambda{|name| {:conditions => ['content_types.name = ?', name]}}
   
+  named_scope :connectable, 
+    :include => :content_type_group,
+    :conditions => ['content_type_groups.name != ?', 'Categorization'],
+    :order => 'content_types.priority, content_types.name'
+  
   def self.list
     all.map { |f| f.name.underscore.to_sym }
   end
-  
+   
   # Given a 'key' like 'html_blocks' or 'portlet'
   # Raises exception if nothing was found.
   def self.find_by_key(key)

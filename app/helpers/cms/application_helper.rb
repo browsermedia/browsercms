@@ -132,17 +132,7 @@ LBW
         }
       end
     end	  
-    
-    def connectable_content_types
-      cts = ContentType.all(:order => "name")
-      useful_cts = []
-      cts.each do |type|
-        next unless type.model_class.instance_methods.include?('connect_to_container') 
-        useful_cts << type
-      end
-      useful_cts
-    end
-    
+
     def url_with_mode(url, mode)
       uri = URI.parse(url)
       if uri.query =~ /mode=[^&]*/

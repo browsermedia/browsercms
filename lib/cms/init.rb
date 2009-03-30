@@ -33,6 +33,8 @@ module Cms
     end   
     
     def add_to_rails_paths(path)
+      # TODO: Look into Rails 2.3 Engines, 
+      # I don't think we have to do this any more
       ActiveSupport::Dependencies.load_paths += [
         File.join(path, "app", "controllers"),
         File.join(path, "app", "helpers"),

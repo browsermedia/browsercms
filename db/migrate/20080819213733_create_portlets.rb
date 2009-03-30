@@ -14,7 +14,7 @@ class CreatePortlets < ActiveRecord::Migration
       t.string :name
       t.text :value
     end
-    ContentType.create!(:name => "Portlet", :group_name => "Core")
+    ContentType.create!(:name => "Portlet", :group_name => "Core", :priority => 1)
     
   end
 
