@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>BrowserCMS Deployment Guide</title>
+    <style type="text/css">
+      body {
+        background: #FFFFFF url(images/bg.png) repeat-x scroll 0 0;
+        font-family: "Trebuchet MS", Helvetica, Verdana, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+  
+      #page {
+        margin: 0 auto;
+        text-align: left;
+        width: 1000px;
+      }
+  
+      #header {
+        height: 110px;
+      }
+  
+      div.top_cap {
+        background: transparent url(images/top_cap.png) no-repeat scroll 0 0;
+        height: 10px;
+      }    
+  
+      #contentwrap {
+        background: transparent url(images/dot.png) repeat scroll 0 0;
+        float: left;
+        width: 1000px;
+      }
+      
+      div.bottom_cap {
+        background: transparent url(images/bottom_cap.png) no-repeat scroll 0 0;
+        height: 9px;
+      }
+
+      div.top_cap_content {
+        background: transparent url(images/top_cap_content.png) no-repeat scroll 0 0;
+        height: 5px;
+      }
+  
+      #content {
+        background-color: #FFFFFF;
+        margin: 0 5px;
+      }
+  
+      div.title {
+        padding: 20px;
+      }
+  
+      div.title h1 {
+        border-bottom: 3px solid #505358;
+        color: #FFFFFF;
+        font-size: 24pt;
+        font-weight: normal;
+        line-height: 1;
+        margin: 0 0 10px;
+        padding-bottom: 10px;
+      }
+      
+      td.sidebar {
+        font-size: 8pt;
+        width: 165px;
+        padding: 5px;
+      }
+      
+      td.sidebar ol {
+        margin-left: 20px;
+        padding: 0;
+        line-height: 1.5;
+      }
+      
+      td.sidebar ol li {
+        margin: 0;
+        padding: 0;
+      }
+      
+      td.sidebar ol li ul {
+        list-style-type: none;
+        padding-left: 10px;
+      }
+      
+      td.guides {
+        font-size: 10pt;
+        width: 800px;
+        padding: 10px;
+      }
+      
+      pre {
+        padding: 10px;
+        background: #eee;
+        border: 1px solid #ccc;
+        overflow: auto;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <div id="page">
+      <div id="header">
+        <img src="images/browsercms_logo.png" alt="BrowserCMS"/>
+      </div>
+      <div id="main">
+        <div class="top_cap"></div>
+        <div id="contentwrap">
+          <div class="title">
+            <h1>BrowserCMS Deployment Guide</h1>
+          </div>
+          <div class="top_cap_content"></div>
+          <div id="content">
+            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr>                
+                
+                  <td class="sidebar" valign="top">
+                    <h2>Chapters</h2>
+                    <ol>
+                          <li>
+                            <a href="#_setting_up_virtual_hosts_for_page_caching">Setting Up Virtual Hosts for Page Caching</a>
+                          </li>
+                    </ol>
+                  </td>
+                
+                <td class="guides">
+                  <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>This guide covers how to setup the Apache Passenger (mod_rails) production environment for your BrowserCMS application.</p></div>
+</div>
+</div>
+<h2 id="_setting_up_virtual_hosts_for_page_caching">1. Setting Up Virtual Hosts for Page Caching</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>In order to setup BrowserCMS to due page caching, you need to create two virtual hosts for your site.  The main purpose for this is to allow page caching to work when you access a page on the main site, but then have the pages not be served from the cache when you are working in the BrowserCMS interface.</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>&lt;VirtualHost *:80&gt;
+  ServerName cms.mysite.com
+  DocumentRoot "/var/sites/mysite/public"
+  RailsEnv production
+  &lt;directory "/var/sites/mysite/public"&gt;
+    Order allow,deny
+    Allow from all
+  &lt;/directory&gt;
+&lt;/VirtualHost&gt;
+
+&lt;VirtualHost *:80&gt;
+  ServerName mysite.com
+  DocumentRoot "/var/sites/mysite/public"
+  RailsEnv production
+  RewriteEngine On
+
+  # Uncomment for rewrite debugging
+  #RewriteLog /var/sites/mysite/log/rewrite.log
+  #RewriteLogLevel 9
+
+  #apache should serve cached pages
+  RewriteRule ^/$ /cache/index.html [QSA]
+  RewriteRule ^([^.]+)$ /cache/$1.html [QSA]
+
+  &lt;directory "/var/sites/mysite/public"&gt;
+    Order allow,deny
+    Allow from all
+  &lt;/directory&gt;
+&lt;/VirtualHost&gt;</tt></pre>
+</div></div>
+</div>
+
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <br clear="all"/>
+        <div class="bottom_cap"></div>
+      </div>
+    </div>
+  </body>
+</html>
