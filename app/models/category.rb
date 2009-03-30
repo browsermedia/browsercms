@@ -6,6 +6,8 @@ class Category < ActiveRecord::Base
   validates_presence_of :category_type_id, :name
   validates_uniqueness_of :name, :scope => :category_type_id
   
+  named_scope :named, lambda{|name| {:conditions => ['categories.name = ?', name]}}
+  
   named_scope :of_type, lambda{|type_name| {:include => :category_type, :conditions => ['category_types.name = ?', type_name], :order => 'categories.name'}}
   named_scope :top_level, :conditions => ['categories.parent_id is null']
   

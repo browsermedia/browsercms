@@ -1,6 +1,8 @@
 class Link < ActiveRecord::Base
   acts_as_content_block
   
+  named_scope :named, lambda{|name| {:conditions => ['links.name = ?', name]}}
+  
   has_one :section_node, :as => :node, :dependent => :destroy
   
   validates_presence_of :name

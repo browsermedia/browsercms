@@ -12,10 +12,15 @@ module Cms
           @belongs_to_category = true
           extend ClassMethods
           include InstanceMethods
+          
+          belongs_to :category
         end
         module ClassMethods
         end
         module InstanceMethods
+          def category_name
+            category && category.name
+          end
         end
       end
     end

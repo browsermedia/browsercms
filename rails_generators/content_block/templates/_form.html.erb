@@ -1,19 +1,16 @@
 <% for attribute in attributes -%>
-<div class="fields <%= attribute.type == :html ? "text_editor_fields" : "text_fields" %>">
-  <%%= f.label :<%= attribute.name %> %>
-  <%%= f.<%= 
-    case attribute.type
-    when :attachment
-      "file_field :#{attribute.name}_file"
-    when :category
-      "collection_select :#{attribute.name}_id, Category.of_type('#{class_name.titleize}'), :id, :name"
-    when :date
-      "date_picker :#{attribute.name}"
-    when :html
-      "text_editor :#{attribute.name}"
-    else
-      "#{attribute.field_type} :#{attribute.name}"
-    end 
-  -%> %>
-</div>
+<%%= f.cms_<%= 
+case attribute.type
+when :attachment
+  "file_field :#{attribute.name}_file, :label => \"File\""
+when :category
+  "drop_down :category_id, categories_for('#{class_name.titleize}').map{|c| [c.path, c.id]}"
+when :date, :datetime
+  "date_picker :#{attribute.name}"
+when :html
+  "text_editor :#{attribute.name}"
+else
+  "#{attribute.field_type} :#{attribute.name}"
+end 
+-%> %>
 <% end -%>

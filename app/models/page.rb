@@ -10,6 +10,9 @@ class Page < ActiveRecord::Base
   
   has_many :connectors, :order => "connectors.container, connectors.position"
   
+  named_scope :named, lambda{|name| {:conditions => ['pages.name = ?', name]}}
+  named_scope :with_path, lambda{|path| {:conditions => ['pages.path = ?', path]}}
+  
   # This scope will accept a connectable object or a Hash.  The Hash is expect to have
   # a value for the key :connectable, which is the connectable object, and possibly
   # a value for the key :version.  The Hash contains a versioned connectable object,

@@ -201,16 +201,16 @@ class Cms::ContentBlockController < Cms::BaseController
     end
 
     def after_update_on_failure
-      render :action => "edit"
+      render "#{template_directory}/edit"
     end
 
     def after_update_on_edit_conflict
       @other_version = @block.class.find(@block.id)
-      after_update_on_error
+      after_update_on_failure
     end
 
     def after_update_on_error
-      render :action => "edit"
+      after_update_on_failure
     end
 
     # methods for other actions

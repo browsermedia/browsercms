@@ -4,7 +4,9 @@ class ContentType < ActiveRecord::Base
   belongs_to :content_type_group
   validates_presence_of :content_type_group
   before_validation :set_content_type_group
-
+  
+  named_scope :named, lambda{|name| {:conditions => ['content_types.name = ?', name]}}
+  
   def self.list
     all.map { |f| f.name.underscore.to_sym }
   end
