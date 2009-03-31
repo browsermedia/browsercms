@@ -40,7 +40,7 @@
           </div>
         </td>
         <td>
-          <% g.permissions.each do |p| %>
+          <% g.permissions.uniq.each do |p| %>
             - <%= p.full_name %> <br />
           <% end %>
           - <%= g.cms_access? ? "Edit" : "View" %>
