@@ -37,7 +37,7 @@ BrowserCMS is packaged as a gem, which can be included in any Rails project. The
 ## Building the gem
 To build the gem from source, and install it on your system, type the following:
 
-    git clone http://github.com/browsermedia/browsercms.git
+    git clone git@github.com:browsermedia/browsercms.git
     cd browsercms
     rake cms:install
 
