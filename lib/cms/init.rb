@@ -2,6 +2,17 @@ module Cms
   class << self
     __root__ = File.expand_path(File.join(File.dirname(__FILE__), "..", ".."))
     define_method(:root) { __root__ }
+    
+    load File.join(__root__, "browsercms.gemspec")
+
+    def version
+      @version = SPEC.version.ints[0,3].join('.')
+    end
+    
+    def build_number
+      @build_number = SPEC.version.ints.last
+    end
+    
     def load_rake_tasks
       load "#{Cms.root}/lib/tasks/cms.rake"
     end
