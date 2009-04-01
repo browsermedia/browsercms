@@ -21,7 +21,7 @@ namespace :cms do
       end      
     end
     
-    system("gem", "build", "gemspec.rb")
+    system("gem", "build", "browsercms.gemspec")
     reinstall_gem[Dir["browser_cms-*.gem"].first]
     Dir["#{Dir.pwd}/modules/*"].each do |m|
       FileUtils.cd(m) do
