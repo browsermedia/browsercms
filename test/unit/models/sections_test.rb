@@ -27,17 +27,25 @@ class SectionTest < ActiveSupport::TestCase
     assert !root_section.move_to(foo)
   end
   
-  def test_find_first_page_in_section
+  def test_find_first_page_or_link_in_section_page
     @a = Factory(:section, :parent => root_section, :name => "A")
     @a1 = Factory(:section, :parent => @a, :name => "A1")
     @a1a = Factory(:section, :parent => @a1, :name => "A1a")
     @foo = Factory(:page, :section => @a1a, :name => "Foo")
     @b = Factory(:section, :parent => root_section, :name => "B")
     
-    assert_equal @foo, @a.first_page
-    assert_equal @foo, @a1.first_page
-    assert_equal @foo, @a1a.first_page
-    assert_nil @b.first_page
+    assert_equal @foo, @a.first_page_or_link
+    assert_equal @foo, @a1.first_page_or_link
+    assert_equal @foo, @a1a.first_page_or_link
+    assert_nil @b.first_page_or_link
+  end
+  
+  def test_find_first_page_or_link_in_section_link
+    @a = Factory(:section, :parent => root_section, :name => "A")
+    @a1 = Factory(:link, :section => @a, :name => "A1")
+    @a2 = Factory(:page, :section => @a, :name => "A2")
+
+    assert_equal @a1, @a.first_page_or_link
   end
   
   def test_find_by_name_path
