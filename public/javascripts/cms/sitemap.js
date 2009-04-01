@@ -241,7 +241,7 @@ jQuery(function($){
 				   $.cms.showError(data.message)
 			       }
 			   }, "json");
-		    $('#section_'+id).parents('.section_node:first').remove()            
+		    $('#section_'+id).parents('ul.section_node:first').remove()            
 		}
 		return false;
             })            
@@ -282,7 +282,7 @@ jQuery(function($){
 			       $.cms.showError(data.message)
 			   }
 		       }, "json");
-		$('#page_'+id).parents('.section_node:first').remove()            
+		$('#page_'+id).parents('ul.section_node:first').remove()            
             }
             return false;
 	})    
@@ -313,7 +313,7 @@ jQuery(function($){
 			       $.cms.showError(data.message)
 			   }
 		       }, "json");
-		$('#link_'+id).parents('.section_node:first').remove()            
+		$('#link_'+id).parents('ul.section_node:first').remove()            
             }
             return false;
 	})      
