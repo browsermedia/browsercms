@@ -17,11 +17,6 @@
       })
     })
   <% end %>
-  <style type="text/css">
-    table.data th {
-    width: 50%;
-    }
-  </style>
 <% end %>
 <% content_for :functions do %>
 <%= link_to(span_tag("Add"), new_cms_redirect_path, :class => "button") %>
@@ -33,7 +28,7 @@
   <thead>
   <tr>
     <th class="first"></th>
-    <th><div class="dividers">From</div></th>
+    <th style="width: 48%;"><div class="dividers">From</div></th>
     <th>To</th>
     <th class="last"></th>
   </tr>
