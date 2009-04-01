@@ -9,6 +9,11 @@ class Cms::PortletsController < Cms::ContentBlockController
       end
     end
     
+    def update_block
+      load_block
+      @block.update_attributes(params[@block.class.name.underscore])
+    end    
+    
     def block_form
       "portlets/portlets/form"
     end
