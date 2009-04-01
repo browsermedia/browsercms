@@ -154,8 +154,7 @@ jQuery.SelectBox = function(selectobj, options) {
 	
 	function setCurrent() {	
 		var li = $("li."+opt.currentClass, $container).get(0);
-		var ar = (''+li.id).split('_');
-		var el = ar[ar.length-1];
+		var el = li.id.replace($select[0].id+'_input_','');
 		$select.val(el);
 		$select.change(); //trigger the change event for the select
 		$input.val($(li).html());
