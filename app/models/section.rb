@@ -112,12 +112,12 @@ class Section < ActiveRecord::Base
   end
   
   #The first page that is a decendent of this section
-  def first_page
-    page = pages.not_archived.first 
-    return page if page
+  def first_page_or_link
+    section_node = child_nodes.of_type(['Link','Page']).first 
+    return section_node.node if section_node
     sections.each do |s| 
-      page = s.first_page
-      return page if page
+      node = s.first_page_or_link
+      return node if node
     end
     nil
   end
@@ -126,7 +126,7 @@ class Section < ActiveRecord::Base
     if root?
       "/"
     else
-      p = first_page
+      p = first_page_or_link
       p ? p.path : "#"
     end
   end  

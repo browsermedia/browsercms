@@ -148,8 +148,8 @@ module Cms
           
           #Figure out what this link for this node should be
           #If it is a page, then the page will simply be used
-          #But if is a page, we call the first_page method
-          p = sn.node_type == "Section" ? sn.live_node.first_page : sn.live_node
+          #But if is a page, we call the first_page_or_link method
+          p = sn.node_type == "Section" ? sn.live_node.first_page_or_link : sn.live_node
           html << %Q{<a href="#{p ? p.path : '#'}"#{(p.respond_to?(:new_window) && p.new_window?) ? ' target="_blank"' : ''}>#{sn.live_node.name}</a>\n}.indent(indent+6)
           
           #Now if this is a section, we do the child nodes, 

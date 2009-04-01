@@ -1,12 +1,13 @@
 SPEC = Gem::Specification.new do |spec| 
   spec.name = "browser_cms" 
   spec.rubyforge_project = spec.name
-  spec.version = "3.0.0" 
+  spec.version = "3.0.0.176"
   spec.summary = "A Content Management System for Rails" 
   spec.author = "Browsermedia" 
   spec.email = "admin@browsercms.com" 
   spec.homepage = "http://www.browsercms.com" 
   spec.files = Dir["rails/*.rb"]
+  spec.files += Dir["browsercms.gemspec"]
   spec.files += Dir["app/**/*"]
   spec.files += Dir["db/migrate/[0-9]*_*.rb"]
   spec.files += Dir["db/demo/**/*"]
@@ -20,6 +21,6 @@ SPEC = Gem::Specification.new do |spec|
   spec.files += Dir["public/images/cms/**/*"]
   spec.files += Dir["public/themes/**/*"]
   spec.has_rdoc = true
-  spec.extra_rdoc_files = ["README"]
+  spec.extra_rdoc_files = ["README.markdown"]
   spec.require_path "lib"
 end

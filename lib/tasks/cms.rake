@@ -12,7 +12,7 @@ namespace :cms do
   desc "Installs the cms gems"
   task :install do
     reinstall_gem = lambda do |gem_file|
-      if gem_file =~ /(.*)-(\d\.\d\.\d)\.gem/
+      if gem_file =~ /(.*)-(\d+\.\d+\.\d+\.?\d*)\.gem/
         gem = $1
         version = $2
         args = RUBY_PLATFORM.match(/mswin/) ? [] : ["sudo"]
@@ -21,8 +21,8 @@ namespace :cms do
       end      
     end
     
-    system("gem", "build", "gemspec.rb")
-    reinstall_gem[Dir["browser_cms-*.gem"].first]
+    system("gem", "build", "browsercms.gemspec")
+    reinstall_gem[Dir["browser_cms-*.*.*.*.gem"].last]
     Dir["#{Dir.pwd}/modules/*"].each do |m|
       FileUtils.cd(m) do
         system("gem", "build", "gemspec.rb")
@@ -33,13 +33,14 @@ namespace :cms do
   
   desc "Bumps the CMS build number"
   task :build do
-    file_name = File.expand_path(File.join(File.dirname(__FILE__), "..", "browser_cms.rb"))
+    file_name = File.expand_path(File.join(File.dirname(__FILE__), "..", "..", "browsercms.gemspec"))
     file_contents = open(file_name) {|f| f.read }
-    match = file_contents.match(/BUILD = "(\d+)"/)
-    build_number = match[1].to_i + 1
-    file_contents.sub!(/BUILD = "(\d+)"/, "BUILD = \"#{build_number}\"")
+    match = file_contents.match(/spec.version = "(\d+\.\d+\.\d+\.)(\d+)"/)
+    version = match[1]
+    build_number = match[2].to_i + 1
+    file_contents.sub!(/spec.version = "([\d.]+)"/, "spec.version = \"#{version}#{build_number}\"")
     open(file_name,'w') {|f| f << file_contents }
-    puts "BUILD NUMBER = #{build_number}"
+    puts "#{version} b#{build_number}"
   end
     
   desc "Generate guides for the CMS"

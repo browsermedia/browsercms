@@ -64,7 +64,13 @@ module Cms
     
     def link_to_usages(block)
       count = block.connected_pages.count
-      count > 0 ? (link_to count, [:usages, :cms, block], :id => block.id, :block_type => block.content_block_type) : count
+      if count > 0
+        # Would love a cleaner solution to this problem, see http://stackoverflow.com/questions/702728
+        path = Portlet === block ? usages_cms_portlet_path(block) : [:usages, :cms, block]
+        link_to count, path, :id => block.id, :block_type => block.content_block_type
+      else
+        count
+      end
     end
     
     def time_on_date(time)
