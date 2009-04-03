@@ -1,8 +1,8 @@
 class Cms::ContentController < Cms::ApplicationController
 
-  rescue_from Exception, :with => :handle_server_error
-  rescue_from Cms::Errors::AccessDenied, :with => :handle_access_denied
-  rescue_from ActiveRecord::RecordNotFound, :with => :handle_not_found
+  rescue_from Exception, :with => :handle_server_error_on_page
+  rescue_from Cms::Errors::AccessDenied, :with => :handle_access_denied_on_page
+  rescue_from ActiveRecord::RecordNotFound, :with => :handle_not_found_on_page
 
   skip_before_filter :redirect_to_cms_site
   before_filter :construct_path
@@ -10,40 +10,61 @@ class Cms::ContentController < Cms::ApplicationController
   before_filter :try_to_redirect
   before_filter :try_to_stream_file
   before_filter :check_access_to_page
-    
-  def show        
+
+  def show
     render_page
     cache_page if perform_caching
   end
 
-  def handle_not_found(exception)
+  def handle_not_found_on_page(exception)
     logger.warn "Page Not Found"
     handle_error_with_cms_page('/system/not_found', exception, :not_found)
   end
 
-  def handle_access_denied(exception)
+  def handle_access_denied_on_page(exception)
     logger.warn "Access Denied"
     handle_error_with_cms_page('/system/access_denied', exception, :forbidden)
   end
 
-  def handle_server_error(exception)
+  def handle_server_error_on_page(exception)
     logger.warn "Exception: #{exception.message}\n"
     logger.warn "#{exception.backtrace.join("\n")}\n"
     handle_error_with_cms_page('/system/server_error', exception, :internal_server_error)
-  end        
-  
-  private
-  def handle_error_with_cms_page(error_page_path, exception, status, options={})
-    if @page = Page.find_live_by_path(error_page_path)
-      @mode = "view"
-      @show_page_toolbar = false
-      render :layout => @page.layout, :template => 'cms/content/show', :status => status
-    else
-      raise exception
-    end      
-  end    
+  end
 
   private
+  def handle_error_with_cms_page(error_page_path, exception, status, options={})
+
+    # If we are in the CMS, we just want to show the exception
+    if perform_caching
+      return handle_server_error(exception) if cms_site?
+    else
+      return handle_server_error(exception) if current_user.able_to?(:edit_content, :publish_content)
+    end
+    
+    # We must be showing the page outside of the CMS
+    # So we will show the error page
+    if @page = Page.find_live_by_path(error_page_path)
+      logger.info "Rendering Error Page: #{@page.inspect}"
+      @mode = "view"
+      @show_page_toolbar = false
+      
+      # copy new instance variables to the template
+      %w[page mode show_page_toolbar].each do |v|
+        @template.instance_variable_set("@#{v}", instance_variable_get("@#{v}"))
+      end
+      
+      # clear out any content already captured 
+      # by previous attempts to render the page within this request
+      @template.instance_variables.select{|v| v =~ /@content_for_/ }.each do |v|
+        @template.instance_variable_set("#{v}", nil)
+      end
+      
+      render :layout => @page.layout, :template => 'cms/content/show', :status => status
+    else
+      handle_server_error(exception)
+    end      
+  end    
 
   def construct_path
     @paths = params[:page_path] || params[:path] || []
