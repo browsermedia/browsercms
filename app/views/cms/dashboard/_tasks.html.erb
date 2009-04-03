@@ -9,14 +9,16 @@
             <th class="select first unbordered">&nbsp;</th>
             <th colspan="2"><div class="dividers">Name</div></th>
             <th class="assigned_by"><div class="dividers">Assigned By</div></th>
-	          <th class="due_date last" colspan="2">Due Date</th>
+	          <th class="due_date">Due Date</th>
+		  <th class="last">&nbsp;</th>
           </tr>
         </thead>
         <tbody>
           <% if @incomplete_tasks.empty? %>
             <tr>
               <td class="first"></td>
-              <td colspan="3"><br />No Incomplete Tasks<br /><br /></td>
+              <td colspan="3" style="letter-spacing: 2px; height: 30px; padding-top: 10px;">There are currently no tasks assigned to me.</td>
+	      <td class="last"></td>
             </tr>
           <% else %>  
             <% @incomplete_tasks.each do |task| %>
