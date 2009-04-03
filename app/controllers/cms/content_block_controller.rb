@@ -174,7 +174,10 @@ class Cms::ContentBlockController < Cms::BaseController
 
     def after_create_on_success
       flash[:notice] = "#{content_type.display_name} '#{@block.name}' was created"
-      if model_class.connectable? && @block.connected_page
+      logger.info "model_class.connectable? => #{model_class.connectable?}"
+      logger.info "model_class => #{model_class.name}"
+      logger.info "@block.connected_page => #{@block.connected_page.inspect}"
+      if @block.class.connectable? && @block.connected_page
         redirect_to @block.connected_page.path
       else
         redirect_to_first params[:_redirect_to], block_path

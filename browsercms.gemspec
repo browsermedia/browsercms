@@ -1,7 +1,7 @@
 SPEC = Gem::Specification.new do |spec| 
   spec.name = "browser_cms" 
   spec.rubyforge_project = spec.name
-  spec.version = "3.0.0.176"
+  spec.version = "3.0.0.182"
   spec.summary = "A Content Management System for Rails" 
   spec.author = "Browsermedia" 
   spec.email = "admin@browsercms.com" 
@@ -22,5 +22,5 @@ SPEC = Gem::Specification.new do |spec|
   spec.files += Dir["public/themes/**/*"]
   spec.has_rdoc = true
   spec.extra_rdoc_files = ["README.markdown"]
-  spec.require_path "lib"
+  #spec.require_path "lib"
 end

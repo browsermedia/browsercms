@@ -13,6 +13,6 @@ module Cms
         :status => :internal_server_error,
         :locals => {:exception => exception}
     end
-    
+
   end
 end
