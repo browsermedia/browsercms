@@ -174,9 +174,6 @@ class Cms::ContentBlockController < Cms::BaseController
 
     def after_create_on_success
       flash[:notice] = "#{content_type.display_name} '#{@block.name}' was created"
-      logger.info "model_class.connectable? => #{model_class.connectable?}"
-      logger.info "model_class => #{model_class.name}"
-      logger.info "@block.connected_page => #{@block.connected_page.inspect}"
       if @block.class.connectable? && @block.connected_page
         redirect_to @block.connected_page.path
       else
@@ -189,6 +186,7 @@ class Cms::ContentBlockController < Cms::BaseController
     end
 
     def after_create_on_error
+      logger.error "#{@exception.message}\n#{@exception.backtrace.join('\n')}"      
       after_create_on_failure
     end
 
@@ -213,6 +211,7 @@ class Cms::ContentBlockController < Cms::BaseController
     end
 
     def after_update_on_error
+      logger.error "#{@exception.message}\n#{@exception.backtrace.join('\n')}"
       after_update_on_failure
     end
 
