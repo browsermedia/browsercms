@@ -8,6 +8,10 @@ class Cms::PagesController < Cms::BaseController
 
   def new
     @page = Page.new(:section => @section, :cacheable => true)
+    if @section.child_nodes.count < 1
+      @page.name = "Overview"
+      @page.path = @section.path
+    end
   end
 
   def show
