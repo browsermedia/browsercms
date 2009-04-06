@@ -70,6 +70,7 @@ module Cms::Routes
         :move_to_end => :put,
         :move_to_root => :put
       }
+      cms.attachment '/attachments/:id', :controller => 'attachments', :action => 'show'
 
       cms.resources :tasks, :member => {:complete => :put}, :collection => {:complete => :put}
       cms.toolbar '/toolbar', :controller => 'toolbar'
