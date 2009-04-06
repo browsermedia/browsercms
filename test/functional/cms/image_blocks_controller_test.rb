@@ -44,4 +44,19 @@ class Cms::ImageBlocksControllerTest < ActionController::TestCase
     assert_equal @other_section, @image.attachment_section
   end  
   
+  def test_revert_to
+    @image = Factory(:image_block, 
+      :attachment_section => root_section,
+      :attachment_file => mock_file, 
+      :attachment_file_path => "test.jpg")
+    @image.update_attributes(:attachment_file => mock_file)
+    reset(:image)
+    
+    put :revert_to, :id => @image.id, :version => "1"
+    reset(:image)
+    
+    assert_redirected_to [:cms, @image]
+    assert_equal 3, @image.version
+  end
+  
 end

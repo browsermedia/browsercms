@@ -64,7 +64,7 @@ module Cms
 
           def versioned_columns
             @versioned_columns ||= (version_class.new.attributes.keys - 
-              (%w[id lock_version position version_comment created_at updated_at created_by_id updated_by_id] + [version_foreign_key]))
+              (%w[id lock_version position version_comment created_at updated_at created_by_id updated_by_id type] + [version_foreign_key]))
           end                   
         end
         module InstanceMethods
