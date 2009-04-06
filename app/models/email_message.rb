@@ -13,7 +13,7 @@ class EmailMessage < ActiveRecord::Base
   def self.deliver!
     # Send all messages, 100 at a time
     undelivered.all(:limit => 100).each do |m|
-      m.deliever!
+      m.deliver!
     end
   end
   
