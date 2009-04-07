@@ -1,5 +1,9 @@
 <% @page_title = @page.page_title %>
 
+<% content_for :html_head do %>
+  <meta name="generator" content="BrowserCMS <%= Cms.version %>"/>
+<% end %>
+
 <% if @show_toolbar %>
   <% content_for :html_head do %>
     <%= stylesheet_link_tag 'cms/page' %>

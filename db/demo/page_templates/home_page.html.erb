@@ -5,44 +5,45 @@
     <meta http-equiv="Content-Style-Type" content="text/css" />
     <meta http-equiv="Content-Script-Type" content="text/javascript" />
     <title>Home</title>
-	<%= stylesheet_link_tag "/themes/blue_steel/stylesheets/style" %>
+    <%= yield :html_head %>
+  <%= stylesheet_link_tag "/themes/blue_steel/stylesheets/style" %>
     <style type="text/css">
-	  #broad {
-	  margin-right: 10px;
-	  width: 635px;
-	  # height: 520px;
-	  }
-	  #broad div.main_wrapper {
-	  margin: 10px;
-	  border: 1px solid #CCCCCC;
-	  height: 237px;
-	  }
-	</style>
+    #broad {
+    margin-right: 10px;
+    width: 635px;
+    # height: 520px;
+    }
+    #broad div.main_wrapper {
+    margin: 10px;
+    border: 1px solid #CCCCCC;
+    height: 237px;
+    }
+  </style>
   </head>
   <body>
-	<%= cms_toolbar %>
+  <%= cms_toolbar %>
     <%= render :partial => "partials/header"%>  
       <div id="main">
-	<div id="broad" class="wrapper">
-	  <%= image_tag "/themes/blue_steel/images/splash.jpg", :alt=>"Splash!", :id=>"splash"%>
-	  <div class="main_wrapper">
-	    <h2>Welcome to BrowserCMS 3.0</h2>
-	    <%= container :main %>
-	  </div>
-	</div>
-	<div id="narrow" class="wrapper">
-	  <div class="page_highlight main_wrapper">
-	    <h3>Login</h3>
-	    <%= container :side_bar_1 %>
-	  </div>
-	  <div class="page_highlight main_wrapper">
-	    <h3>Features</h3>
-	    <%= container :side_bar_2 %>
-	  </div>
-	</div>
+  <div id="broad" class="wrapper">
+    <%= image_tag "/themes/blue_steel/images/splash.jpg", :alt=>"Splash!", :id=>"splash"%>
+    <div class="main_wrapper">
+      <h2>Welcome to BrowserCMS 3.0</h2>
+      <%= container :main %>
+    </div>
+  </div>
+  <div id="narrow" class="wrapper">
+    <div class="page_highlight main_wrapper">
+      <h3>Login</h3>
+      <%= container :side_bar_1 %>
+    </div>
+    <div class="page_highlight main_wrapper">
+      <h3>Features</h3>
+      <%= container :side_bar_2 %>
+    </div>
+  </div>
       </div>
       <div style="clear: both;"></div>      
       <%= render :partial => "partials/footer" %>
-    </div>	
+    </div>  
   </body>
 </html>  
