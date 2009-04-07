@@ -29,7 +29,7 @@ class Site < ActiveRecord::Base
   end
 
   def unset_default    
-    self.class.update_all("the_default = 0") if the_default
+    self.class.update_all("the_default = false") if the_default
   end
   
   def set_default

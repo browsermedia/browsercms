@@ -11,7 +11,7 @@ class Tag < ActiveRecord::Base
         :select => "tags.id, tags.name, count(*) as count", 
         :joins => :taggings, 
         :group => "tags.id, tags.name", 
-        :order => "count desc" }) do
+        :order => "count desc, tags.name" }) do
       all(options)
     end
   end

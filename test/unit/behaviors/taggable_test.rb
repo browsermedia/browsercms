@@ -66,24 +66,24 @@ class TaggableBlockTest < ActiveSupport::TestCase
     assert_equal 4, tag_counts.size
     assert_equal Tag.find_by_name("article"), tag_counts[0]
     assert_equal "25", tag_counts[0].count
-    assert_equal Tag.find_by_name("Even"), tag_counts[1]
+    assert_equal Tag.find_by_name("even"), tag_counts[1]
     assert_equal "13", tag_counts[1].count
-    assert_equal Tag.find_by_name("Five"), tag_counts[2]
+    assert_equal Tag.find_by_name("five"), tag_counts[2]
     assert_equal "5", tag_counts[2].count
-    assert_equal Tag.find_by_name("First"), tag_counts[3]
+    assert_equal Tag.find_by_name("first"), tag_counts[3]
     assert_equal "1", tag_counts[3].count
     
     tag_cloud = Tag.cloud(:sizes => 9)
     assert_equal 5, tag_cloud.size
     assert_equal Tag.find_by_name("article"), tag_cloud[0]
     assert_equal 6, tag_cloud[0].size
-    assert_equal Tag.find_by_name("Even"), tag_cloud[1]
+    assert_equal Tag.find_by_name("even"), tag_cloud[1]
     assert_equal 3, tag_cloud[1].size
-    assert_equal Tag.find_by_name("Five"), tag_cloud[2]
+    assert_equal Tag.find_by_name("five"), tag_cloud[2]
     assert_equal 1, tag_cloud[2].size
-    assert_equal Tag.find_by_name("First"), tag_cloud[3]
+    assert_equal Tag.find_by_name("first"), tag_cloud[3]
     assert_equal 0, tag_cloud[3].size
-    assert_equal Tag.find_by_name("Last"), tag_cloud[4]
+    assert_equal Tag.find_by_name("last"), tag_cloud[4]
     assert_equal 0, tag_cloud[4].size
   end
   

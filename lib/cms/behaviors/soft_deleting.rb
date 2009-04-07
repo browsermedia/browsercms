@@ -30,7 +30,7 @@ module Cms
             not_deleted.count_with_deleted(*args)
           end
           def delete_all(conditions)
-            update_all("deleted = 1", conditions)
+            update_all("deleted = true", conditions)
           end
           def exists?(id_or_conditions)
             if id_or_conditions.is_a?(Hash) || id_or_conditions.is_a?(Array)

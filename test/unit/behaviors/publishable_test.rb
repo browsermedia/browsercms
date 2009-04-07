@@ -5,7 +5,7 @@ ActiveRecord::Base.connection.instance_eval do
   create_table(:publishables) do |t| 
     t.string :name
     t.datetime :published_at
-    t.boolean :published, :default => 0
+    t.boolean :published, :default => false
   end
   drop_table(:unpublishables) if table_exists?(:unpublishables)
   create_table(:unpublishables) do |t| 

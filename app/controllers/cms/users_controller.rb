@@ -17,7 +17,7 @@ class Cms::UsersController < Cms::ResourceController
     end
 
     unless params[:key_word].blank?
-      query << %w(login email first_name last_name).collect { |f| "#{f} LIKE ?" }.join(" OR ")
+      query << %w(login email first_name last_name).collect { |f| "lower(#{f}) LIKE lower(?)" }.join(" OR ")
       4.times { conditions << "%#{params[:key_word]}%" }
     end
     

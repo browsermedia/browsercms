@@ -15,9 +15,9 @@ class HtmlBlock < ActiveRecord::Base
     unless term.blank?
       columns.each do |c|
         if conditions.empty?
-          conditions = ["#{table_name}.#{c} like ?"]
+          conditions = ["lower(#{table_name}.#{c}) like lower(?)"]
         else
-          conditions.first << "or #{table_name}.#{c} like ?"
+          conditions.first << "or lower(#{table_name}.#{c}) like (?)"
         end
         conditions << "%#{term}%"
       end
