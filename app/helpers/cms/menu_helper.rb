@@ -134,7 +134,7 @@ module Cms
         nodes.each_with_index do |sn, i|
 
           #Construct the CSS classes that the LI should have
-          classes = []          
+          classes = ["depth-#{d}"]
           if i == 0
             classes << "first"
           elsif i == nodes.size-1

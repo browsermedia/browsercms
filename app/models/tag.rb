@@ -10,7 +10,7 @@ class Tag < ActiveRecord::Base
     with_scope(:find => { 
         :select => "tags.id, tags.name, count(*) as count", 
         :joins => :taggings, 
-        :group => "id, name", 
+        :group => "tags.id, tags.name", 
         :order => "count desc" }) do
       all(options)
     end

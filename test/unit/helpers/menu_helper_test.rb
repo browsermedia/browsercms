@@ -9,38 +9,38 @@ class Cms::MenuHelperTest < ActionView::TestCase
     expected = <<HTML 
 <div id="menu" class="menu">
   <ul>
-    <li id="section_#{@afc.id}" class="first open">
+    <li id="section_#{@afc.id}" class="depth-1 first open">
       <a href="/buf">AFC</a>
       <ul>
-        <li id="section_#{@afc_east.id}" class="first">
+        <li id="section_#{@afc_east.id}" class="depth-2 first">
           <a href="/buf">East</a>
         </li>
-        <li id="section_#{@afc_north.id}" class="open">
+        <li id="section_#{@afc_north.id}" class="depth-2 open">
           <a href="/bal">North</a>
           <ul>
-            <li id="page_#{@bal.id}" class="first on">
+            <li id="page_#{@bal.id}" class="depth-3 first on">
               <a href="/bal">Baltimore Ravens</a>
             </li>
-            <li id="page_#{@cin.id}">
+            <li id="page_#{@cin.id}" class="depth-3">
               <a href="/cin">Cincinnati Bengals</a>
             </li>
-            <li id="page_#{@cle.id}">
+            <li id="page_#{@cle.id}" class="depth-3">
               <a href="/cle">Cleveland Browns</a>
             </li>
-            <li id="page_#{@pit.id}" class="last">
+            <li id="page_#{@pit.id}" class="depth-3 last">
               <a href="/pit">Pittsburgh Steelers</a>
             </li>
           </ul>
         </li>
-        <li id="section_#{@afc_south.id}">
+        <li id="section_#{@afc_south.id}" class="depth-2">
           <a href="/hou">South</a>
         </li>
-        <li id="section_#{@afc_west.id}" class="last">
+        <li id="section_#{@afc_west.id}" class="depth-2 last">
           <a href="/den">West</a>
         </li>
       </ul>
     </li>
-    <li id="section_#{@nfc.id}" class="last">
+    <li id="section_#{@nfc.id}" class="depth-1 last">
       <a href="/dal">NFC</a>
     </li>
   </ul>
@@ -54,24 +54,24 @@ HTML
     expected =  <<HTML 
 <div id="menu" class="menu">
   <ul>
-    <li id="section_#{@afc.id}" class="first open">
+    <li id="section_#{@afc.id}" class="depth-1 first open">
       <a href="/buf">AFC</a>
       <ul>
-        <li id="section_#{@afc_east.id}" class="first">
+        <li id="section_#{@afc_east.id}" class="depth-2 first">
           <a href="/buf">East</a>
         </li>
-        <li id="section_#{@afc_north.id}" class="open">
+        <li id="section_#{@afc_north.id}" class="depth-2 open">
           <a href="/bal">North</a>
         </li>
-        <li id="section_#{@afc_south.id}">
+        <li id="section_#{@afc_south.id}" class="depth-2">
           <a href="/hou">South</a>
         </li>
-        <li id="section_#{@afc_west.id}" class="last">
+        <li id="section_#{@afc_west.id}" class="depth-2 last">
           <a href="/den">West</a>
         </li>
       </ul>
     </li>
-    <li id="section_#{@nfc.id}" class="last">
+    <li id="section_#{@nfc.id}" class="depth-1 last">
       <a href="/dal">NFC</a>
     </li>
   </ul>
@@ -83,30 +83,30 @@ HTML
     expected = <<HTML 
 <div id="menu" class="menu">
   <ul>
-    <li id="section_#{@afc_east.id}" class="first">
+    <li id="section_#{@afc_east.id}" class="depth-1 first">
       <a href="/buf">East</a>
     </li>
-    <li id="section_#{@afc_north.id}" class="open">
+    <li id="section_#{@afc_north.id}" class="depth-1 open">
       <a href="/bal">North</a>
       <ul>
-        <li id="page_#{@bal.id}" class="first on">
+        <li id="page_#{@bal.id}" class="depth-2 first on">
           <a href="/bal">Baltimore Ravens</a>
         </li>
-        <li id="page_#{@cin.id}">
+        <li id="page_#{@cin.id}" class="depth-2">
           <a href="/cin">Cincinnati Bengals</a>
         </li>
-        <li id="page_#{@cle.id}">
+        <li id="page_#{@cle.id}" class="depth-2">
           <a href="/cle">Cleveland Browns</a>
         </li>
-        <li id="page_#{@pit.id}" class="last">
+        <li id="page_#{@pit.id}" class="depth-2 last">
           <a href="/pit">Pittsburgh Steelers</a>
         </li>
       </ul>
     </li>
-    <li id="section_#{@afc_south.id}">
+    <li id="section_#{@afc_south.id}" class="depth-1">
       <a href="/hou">South</a>
     </li>
-    <li id="section_#{@afc_west.id}" class="last">
+    <li id="section_#{@afc_west.id}" class="depth-1 last">
       <a href="/den">West</a>
     </li>
   </ul>
@@ -118,36 +118,36 @@ HTML
     expected = <<HTML 
 <div id="menu" class="menu">
   <ul>
-    <li id="section_#{@afc.id}" class="first open">
+    <li id="section_#{@afc.id}" class="depth-1 first open">
       <a href="/buf">AFC</a>
       <ul>
-        <li id="section_#{@afc_east.id}" class="first">
+        <li id="section_#{@afc_east.id}" class="depth-2 first">
           <a href="/buf">East</a>
         </li>
-        <li id="section_#{@afc_north.id}" class="open">
+        <li id="section_#{@afc_north.id}" class="depth-2 open">
           <a href="/bal">North</a>
         </li>
-        <li id="section_#{@afc_south.id}">
+        <li id="section_#{@afc_south.id}" class="depth-2">
           <a href="/hou">South</a>
         </li>
-        <li id="section_#{@afc_west.id}" class="last">
+        <li id="section_#{@afc_west.id}" class="depth-2 last">
           <a href="/den">West</a>
         </li>
       </ul>
     </li>
-    <li id="section_#{@nfc.id}" class="last">
+    <li id="section_#{@nfc.id}" class="depth-1 last">
       <a href="/dal">NFC</a>
       <ul>
-        <li id="section_#{@nfc_east.id}" class="first">
+        <li id="section_#{@nfc_east.id}" class="depth-2 first">
           <a href="/dal">East</a>
         </li>
-        <li id="section_#{@nfc_north.id}">
+        <li id="section_#{@nfc_north.id}" class="depth-2">
           <a href="/chi">North</a>
         </li>
-        <li id="section_#{@nfc_south.id}">
+        <li id="section_#{@nfc_south.id}" class="depth-2">
           <a href="/atl">South</a>
         </li>
-        <li id="section_#{@nfc_west.id}" class="last">
+        <li id="section_#{@nfc_west.id}" class="depth-2 last">
           <a href="/ari">West</a>
         </li>
       </ul>
@@ -161,10 +161,10 @@ HTML
     expected = <<HTML 
 <div id="menu" class="menu">
   <ul>
-    <li id="section_#{@afc.id}" class="first open">
+    <li id="section_#{@afc.id}" class="depth-1 first open">
       <a href="/buf">AFC</a>
     </li>
-    <li id="section_#{@nfc.id}" class="last">
+    <li id="section_#{@nfc.id}" class="depth-1 last">
       <a href="/dal">NFC</a>
     </li>
   </ul>
@@ -176,16 +176,16 @@ HTML
     expected = <<HTML 
 <div id="menu" class="menu">
   <ul>
-    <li id="section_#{@afc_east.id}" class="first">
+    <li id="section_#{@afc_east.id}" class="depth-1 first">
       <a href="/buf">East</a>
     </li>
-    <li id="section_#{@afc_north.id}" class="open">
+    <li id="section_#{@afc_north.id}" class="depth-1 open">
       <a href="/bal">North</a>
     </li>
-    <li id="section_#{@afc_south.id}">
+    <li id="section_#{@afc_south.id}" class="depth-1">
       <a href="/hou">South</a>
     </li>
-    <li id="section_#{@afc_west.id}" class="last">
+    <li id="section_#{@afc_west.id}" class="depth-1 last">
       <a href="/den">West</a>
     </li>
   </ul>
@@ -206,16 +206,16 @@ HTML
     expected = <<HTML 
 <div id="menu" class="menu">
   <ul>
-    <li id="section_#{@news.id}" class="first open">
+    <li id="section_#{@news.id}" class="depth-1 first open">
       <a href="/press_releases">News</a>
       <ul>
-        <li id="page_#{@press_releases.id}" class="first on">
+        <li id="page_#{@press_releases.id}" class="depth-2 first on">
           <a href="/press_releases">Press Releases</a>
         </li>
-        <li id="link_#{@corporate_news.id}">
+        <li id="link_#{@corporate_news.id}" class="depth-2">
           <a href="/news">Corporate News</a>
         </li>
-        <li id="link_#{@cnn.id}" class="last">
+        <li id="link_#{@cnn.id}" class="depth-2 last">
           <a href="http://www.cnn.com" target="_blank">CNN</a>
         </li>
       </ul>
