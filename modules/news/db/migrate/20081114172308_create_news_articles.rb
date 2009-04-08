@@ -23,7 +23,7 @@ class CreateNewsArticles < ActiveRecord::Migration
     overview = Page.create!(:name => "Overview", 
       :path => "/news/articles", 
       :section => news, 
-      :template => "Main", 
+      :template_file_name => "default.html.erb", 
       :publish_on_save => true)
     RecentNewsPortlet.create!(:name => "Recent News Portlet", 
       :limit => 5, 
@@ -38,7 +38,7 @@ class CreateNewsArticles < ActiveRecord::Migration
     archives = Page.create!(:name => "Archive", 
       :path => "/news/archive", 
       :section => news, 
-      :template => "Main",
+      :template_file_name => "default.html.erb",
       :publish_on_save => true)
     NewsArchivePortlet.create!(:name => "News Archive Portlet", 
       :template => NewsArchivePortlet.default_template,
@@ -50,7 +50,7 @@ class CreateNewsArticles < ActiveRecord::Migration
     article = Page.create!(:name => "Article", 
       :path => "/news/article", 
       :section => news, 
-      :template => "Main",       
+      :template_file_name => "default.html.erb",
       :publish_on_save => true)
     NewsArticlePortlet.create!(:name => "News Article Portlet", 
       :template => NewsArticlePortlet.default_template,
