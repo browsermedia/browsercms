@@ -4,7 +4,6 @@ class HtmlBlockTest < ActiveSupport::TestCase
   def test_create    
     @page = Factory(:page)
     @html_block = Factory(:html_block, :connect_to_page_id => @page.id, :connect_to_container => "test")
-    assert_equal @html_block.content, @html_block.renderer(@html_block).call
     assert_equal 1, @page.reload.connectors.count
     assert_equal @page, @html_block.connected_page
     assert_equal @page.id, @html_block.connect_to_page_id

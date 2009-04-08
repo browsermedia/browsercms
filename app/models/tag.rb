@@ -52,11 +52,8 @@ class Tag < ActiveRecord::Base
       {:label => "Updated On", :method => :updated_on_string, :order => "updated_at"}  ]
   end  
   
-  def renderer(tag)
-    lambda do
-      render :partial => 'cms/tags/tag', :locals => {:tag => tag}
-    end
-
+  def render
+    @taggings = @content_block.taggings.paginate(:page => params[:page])
   end  
   
 end

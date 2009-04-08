@@ -35,9 +35,12 @@ module Cms
     
     def render_connectable(content_block)
       if content_block
-        logger.info "Rendering connectable #{content_block.class} ##{content_block.id}"
-        render_proc = content_block.renderer(content_block)
-        instance_eval &render_proc
+        if content_block.class.renderable?
+          logger.info "Rendering connectable #{content_block.class} ##{content_block.id}"
+          content_block.perform_render(@controller)
+        else
+          logger.warn "Connectable #{content_block.class} ##{content_block.id} is not renderable"
+        end
       else
         logger.warn "Connectable is null"
       end    

@@ -1,9 +1,8 @@
-<% taggings = tag.taggings.paginate(:page => params[:page]) %>
 <% content_for :html_head do %>
     <%= stylesheet_link_tag "cms/content_library" %>
     <% javascript_tag do %>
       jQuery(function($){
-        $('#block_content .header').html("Content tagged with '<%= escape_javascript(h(tag.name)) %>'")
+        $('#block_content .header').html("Content tagged with '<%= escape_javascript(h(@content_block.name)) %>'")
       })
     <% end %>
 <% end %>
@@ -25,7 +24,7 @@
         </tr>
       </thead>
       <tbody>
-        <% for tg in taggings %>
+        <% for tg in @taggings %>
           <tr>
             <td class="first"></td>
             <td class="name">
@@ -49,6 +48,6 @@
     <div class="br"></div>
   </div>
 </div>
-<% if taggings.total_pages > 1 %>
-  <%= render_pagination taggings, :tag, {:id => tag} %>
+<% if @taggings.total_pages > 1 %>
+  <%= render_pagination @taggings, :tag, {:id => @content_block} %>
 <% end %>

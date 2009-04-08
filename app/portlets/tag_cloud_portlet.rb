@@ -16,14 +16,12 @@ class TagCloudPortlet < Portlet
     template.chomp
   end
   
-  def renderer(portlet)
-    lambda do
-      locals = {:portlet => portlet}
-      locals[:sizes] = portlet.sizes.blank? ? portlet.class.default_sizes : portlet.sizes
-      locals[:limit] = portlet.limit.blank? ? 50 : portlet.limit
-      locals[:cloud] = Tag.cloud(:sizes => locals[:sizes].size, :limit => locals[:limit])
-      render :inline => portlet.template, :locals => locals
-    end
+  def inline_options
+    locals = {:portlet => portlet}
+    locals[:sizes] = portlet.sizes.blank? ? portlet.class.default_sizes : portlet.sizes
+    locals[:limit] = portlet.limit.blank? ? 50 : portlet.limit
+    locals[:cloud] = Tag.cloud(:sizes => locals[:sizes].size, :limit => locals[:limit])
+    { :inline => template, :locals => locals }
   end
     
 end

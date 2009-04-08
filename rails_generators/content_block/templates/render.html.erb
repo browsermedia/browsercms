@@ -1,0 +1,10 @@
+<% for attribute in attributes -%>
+  <%= case attribute.type 
+      when :attachment
+        "<p><b>Attachment:</b> <%= link_to @content_block.attachment_file_path, @content_block.attachment_link %></p>"
+      when :category
+        "<p><b>Category:</b> <%= @content_block.category_name %></p>"
+      else
+        "<p><b>#{attribute.name.titleize}:</b> <%= @content_block.#{attribute.name} %></p>"
+      end %>
+<% end %>

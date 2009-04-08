@@ -18,7 +18,8 @@ class ContentBlockGenerator < Rails::Generator::NamedBase
       # Create the edit form for the content type
       m.directory File.join('app/views/cms/', file_name.pluralize)
       m.template '_form.html.erb', File.join('app/views/cms/', file_name.pluralize, "_form.html.erb")
-
+      m.template 'render.html.erb', File.join('app/views/cms/', file_name.pluralize, "render.html.erb")
+      
       # Create the routes for the content block
       logger.route "map.content_blocks :#{file_name.pluralize}"
       sentinel = 'ActionController::Routing::Routes.draw do |map|'

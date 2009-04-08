@@ -29,10 +29,6 @@ class HtmlBlock < ActiveRecord::Base
     scope
   }
   
-  def renderer(block)
-    lambda { block.content }
-  end
-
   def self.display_name
     "Text"
   end

@@ -7,7 +7,4 @@ class ImageBlock < AbstractFileBlock
     "Image"
   end  
 
-  def renderer(image_block)
-    lambda { %Q{<img src="#{image_block.attachment_link}" alt="#{h(image_block.name)}"/>} }    
-  end
 end

@@ -28,17 +28,15 @@ class LoginPortlet < Portlet
     template.chomp
   end  
   
-  def renderer(portlet)
-    lambda do
-      locals = {
-        :portlet => portlet,
+  def inline_options
+    { :inline => template,
+      :locals => {
+        :portlet => self,
         :success_url => (flash[:success_url] || portlet.success_url),        
         :failure_url => portlet.failure_url,
         :login => (flash[:login] || params[:login]),
         :remember_me => (flash[:remember_me] || params[:remember_me])
-      }
-      render :inline => portlet.template, :locals => locals
-    end
+    }}
   end
     
 end

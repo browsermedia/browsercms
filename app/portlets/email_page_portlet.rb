@@ -23,16 +23,14 @@ class EmailPagePortlet < Portlet
     template.chomp
   end  
 
-  def renderer(portlet)
-    lambda do
-      pmap = flash[portlet.instance_name] || params
-      locals = {}
-      locals[:portlet] = portlet
-      locals[:email_message] = EmailMessage.new pmap[:email_message]
-      locals[:email_message].errors.add_from_hash flash["#{portlet.instance_name}_errors"]
-      locals[:url] = pmap[:url] || request.referer
-      render :inline => portlet.template, :locals => locals
-    end
-  end  
+  def inline_options
+    pmap = flash[portlet.instance_name] || params
+    locals = {}
+    locals[:portlet] = portlet
+    locals[:email_message] = EmailMessage.new pmap[:email_message]
+    locals[:email_message].errors.add_from_hash flash["#{portlet.instance_name}_errors"]
+    locals[:url] = pmap[:url] || request.referer
+    {:inline => template, :locals => locals}
+  end
   
 end

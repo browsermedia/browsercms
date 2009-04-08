@@ -11,10 +11,13 @@ class Portlet < ActiveRecord::Base
   ensure
     ( @subclasses ||= [] ).push(subclass).uniq!
     subclass.has_dynamic_attributes
-    subclass.acts_as_content_block(:versioned => false, :publishable => false)    
+    subclass.acts_as_content_block(
+      :versioned => false, 
+      :publishable => false,
+      :renderable => {:instance_variable_name_for_view => "@portlet"})
   end
 
-  # In Rails, Classeses aren't loaded until you ask for them
+  # In Rails, Classes aren't loaded until you ask for them
   # This method will load all portlets that are defined
   # in a app/portlets directory on the load path
   def self.load_portlets
@@ -56,7 +59,7 @@ class Portlet < ActiveRecord::Base
     "portlets/#{name.tableize.sub('_portlets','')}/form"
   end
   
-  def self.partial
+  def self.template_path
     "portlets/#{name.tableize.sub('_portlets','')}/render"
   end
 
@@ -72,17 +75,6 @@ class Portlet < ActiveRecord::Base
   
   def instance_name
     "#{self.class.name.demodulize.underscore}_#{id}"
-  end
-  
-  # Subclasses should override this method if you want different behavior
-  def renderer(portlet)
-    lambda do
-      render :partial => portlet.class.partial, :locals => portlet.class.context(portlet)
-    end
-  end
-  
-  def self.context(portlet)
-    {:portlet => portlet}
   end
   
 end

@@ -15,7 +15,7 @@ class PortletGenerator < Rails::Generator::NamedBase
       portlet_name = file_name.sub(/_portlet/,'')
       m.directory File.join('app/views/portlets', portlet_name)
       m.template '_form.html.erb', File.join('app/views/portlets/', portlet_name, "_form.html.erb")
-      m.template '_render.html.erb', File.join('app/views/portlets/', portlet_name, "_render.html.erb")
+      m.template 'render.html.erb', File.join('app/views/portlets/', portlet_name, "render.html.erb")
     end
   end
 

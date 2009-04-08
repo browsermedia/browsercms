@@ -1,0 +1,5 @@
+<div id="file_block_<%= @content_block.id %>" class="file_block">
+  <img src="/images/cms/icons/file_types/<%= @content_block.attachment.icon %>.png" alt="<%=h file_block.attachment.icon %>"/>
+  <%= link_to @content_block.name, @content_block.attachment_link %>
+  <%= @content_block.attachment.file_size.round_bytes %>
+</div>

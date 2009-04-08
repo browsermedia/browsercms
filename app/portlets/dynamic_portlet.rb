@@ -1,10 +1,11 @@
 class DynamicPortlet < Portlet
-  
-  def renderer(portlet)
-    lambda do
-      eval(portlet.code) unless portlet.code.blank?
-      render :inline => portlet.template
-    end
+
+  def render
+    eval @portlet.code
   end
-    
+
+  def inline_options
+    {:inline => @portlet.template}
+  end
+
 end

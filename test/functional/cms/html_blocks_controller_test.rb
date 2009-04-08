@@ -23,7 +23,7 @@ class Cms::HtmlBlocksControllerTest < ActionController::TestCase
   end
   
   def test_show
-    get :show, :id => @block.id
+    get :show, :id => @block.id, :format => "html"
 
     assert_response :success
     assert_select "div.content", "I worked."

@@ -23,8 +23,8 @@ max-width: 785px;
   <% if @block.respond_to?(:version) && !@block.current_version? %>
   <div class="nv_pair"><div class="header">Version:</div><div> v. <%= @block.version %> ( <%= link_to "Current", [:cms, @block] %> )</div>
   <% end -%>
-  <% if @block.respond_to?('renderer') %>
-  <div class="header">Block Contents:</div>
-  <div class="content"><%= render_connectable(@block)  %></div>
+  <% if @block.class.renderable? %>
+    <div class="header">Block Contents:</div>
+    <div class="content"><%= render_connectable(@block) %></div>
   <% end %>
 </div>
