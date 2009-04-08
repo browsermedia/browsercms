@@ -64,7 +64,7 @@ From here, you can go to http://localhost:3000 to see the running CMS applicatio
 The user documentation and guides for this version of the application can be found at:
 
 1. doc/guides/html/index.html - User guides and manuals that cover the features and general functionality of the project.
-2. doc/app/index.html - The RDoc API documenation
+2. doc/app/index.html - The RDoc API documenation.
 
 ## Modifying the source
 If you want to experiment with the source code, the BrowserCMS project can bootstrap itself as a web application. This allows developers who want to contribute to the project to easily alter and test changes. To run the application itself, do the following:
