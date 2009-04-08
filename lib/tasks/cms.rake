@@ -15,7 +15,7 @@ namespace :cms do
       if gem_file =~ /(.*)-(\d+\.\d+\.\d+\.?\d*)\.gem/
         gem = $1
         version = $2
-        args = RUBY_PLATFORM.match(/mswin/) ? [] : ["sudo"]
+        args = (RUBY_PLATFORM.match(/mswin/) or File.writable? Gem::default_dir) ? [] : ["sudo"]
         system(*(args + ["gem", "uninstall", gem, "-v", version]))
         system(*(args + ["gem", "install", gem_file]))
       end      
