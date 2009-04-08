@@ -1,0 +1,5 @@
+<%= f.cms_text_field :name %>
+<%= f.cms_text_field :limit, :label => "Number to show", :size => 2 %>
+<%= f.cms_drop_down :category_id, categories_for('News Article').map{|c| [c.path, c.id]}, :include_blank => true %>
+<%= f.cms_text_field :more_link %>
+<%= f.cms_text_area :template, :default_value => @block.class.default_template %>
