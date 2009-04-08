@@ -2,8 +2,9 @@ require File.join(File.dirname(__FILE__), '/../../test_helper')
 
 class ContentBlockTest < ActiveSupport::TestCase
   def setup
-    @block = Factory(:html_block, :name => "Test")    
+    @block = Factory(:html_block, :name => "Test")   
   end
+  
   def test_publishing
     assert_equal "Draft", @block.status_name
     assert !@block.published?

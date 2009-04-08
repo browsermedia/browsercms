@@ -10,7 +10,7 @@ class SectionTest < ActiveSupport::TestCase
   
   def test_create_sub_section
     sub = Factory(:section, :name => "Sub Section", :parent => root_section)
-    assert_equal sub, root_section.sections.first(:order => "created_at desc")
+    assert_equal sub, root_section.sections.last
     assert_equal root_section, sub.parent
   end
   
