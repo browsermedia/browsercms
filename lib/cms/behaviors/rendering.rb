@@ -67,7 +67,7 @@ module Cms
           action_view = view_class.new(@controller.view_paths, {}, @controller)
       
           # Make helpers and instance vars available
-          view_class.send(:include, self.class.master_helper_module)      
+          view_class.send(:include, @controller.class.master_helper_module)
           action_view.assigns = assigns_for_view
             
           if respond_to?(:inline_options)

@@ -4,8 +4,4 @@ class DynamicPortlet < Portlet
     eval @portlet.code
   end
 
-  def inline_options
-    {:inline => @portlet.template}
-  end
-
 end
