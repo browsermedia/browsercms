@@ -44,16 +44,7 @@ module Cms
     end   
     
     def add_to_rails_paths(path)
-      # TODO: Look into Rails 2.3 Engines, 
-      # I don't think we have to do this any more
-      ActiveSupport::Dependencies.load_paths += [
-        File.join(path, "app", "controllers"),
-        File.join(path, "app", "helpers"),
-        File.join(path, "app", "models"),
-        File.join(path, "app", "portlets")
-      ]
-      Rails.configuration.controller_paths << File.join(path, "app", "controllers")
-      ActionController::Base.append_view_path File.join(path, "app", "views")
+      ActiveSupport::Dependencies.load_paths << File.join(path, "app", "portlets")
     end
     
     def markdown?

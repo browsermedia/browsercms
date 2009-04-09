@@ -1,11 +1,11 @@
 SPEC = Gem::Specification.new do |spec| 
   spec.name = "browser_cms" 
   spec.rubyforge_project = spec.name
-  spec.version = "3.0.0.193"
+  spec.version = "3.0.0.194"
   spec.summary = "A Content Management System for Rails" 
-  spec.author = "Browsermedia" 
-  spec.email = "admin@browsercms.com" 
-  spec.homepage = "http://www.browsercms.com" 
+  spec.author = "BrowserMedia" 
+  spec.email = "github@browsermedia.com" 
+  spec.homepage = "http://www.browsercms.org" 
   spec.files = Dir["rails/*.rb"]
   spec.files += Dir["browsercms.gemspec"]
   spec.files += Dir["app/**/*"]
