@@ -94,6 +94,9 @@ module Cms::Routes
         cache.connect "/cache", :action => "destroy", :conditions => {:method => :delete}
       end
       
+      cms.email_page_portlet "/email_page_portlet/:id/deliver", 
+        :controller => "email_page_portlet", :action => "deliver", :conditions => {:method => :post}
+      
       cms.resources :email_messages
       cms.resources :groups
       cms.resources :redirects

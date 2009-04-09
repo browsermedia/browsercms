@@ -59,8 +59,24 @@ class Portlet < ActiveRecord::Base
     "portlets/#{name.tableize.sub('_portlets','')}/form"
   end
   
-  def self.template_path
-    "portlets/#{name.tableize.sub('_portlets','')}/render"
+  def self.default_template
+    template_file = ActionController::Base.view_paths.map do |vp| 
+      path = vp.to_s.first == "/" ? vp.to_s : File.join(Rails.root, vp.to_s)
+      File.join(path, default_template_path)
+    end.detect{|f| File.exists? f }
+    template_file ? open(template_file){|f| f.read } : ""
+  end
+  
+  def self.set_default_template_path(s)
+    @default_template_path = s
+  end
+  
+  def self.default_template_path
+    @default_template_path ||= "portlets/#{name.tableize.sub('_portlets','')}/render.html.erb"
+  end
+
+  def inline_options
+    {:inline => self.template}
   end
 
   def type_name

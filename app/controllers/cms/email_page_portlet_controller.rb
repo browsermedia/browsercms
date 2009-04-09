@@ -1,7 +1,5 @@
 class Cms::EmailPagePortletController < Cms::PortletController
   
-  verify :method => :post, :only => :deliver
-
   def deliver
     message = EmailMessage.new(params[:email_message])
     message.subject = @portlet.subject

@@ -7,6 +7,7 @@ class Cms::ContentController < Cms::ApplicationController
   skip_before_filter :redirect_to_cms_site
   before_filter :construct_path
   before_filter :redirect_non_cms_users_to_public_site
+  before_filter :set_format
   before_filter :try_to_redirect
   before_filter :try_to_stream_file
   before_filter :check_access_to_page
@@ -95,6 +96,11 @@ class Cms::ContentController < Cms::ApplicationController
     end
     @show_page_toolbar = @show_toolbar
     true
+  end
+  
+  def set_format
+    logger.info "request.format => #{request.format}"
+    #params[:format] = "html"
   end
   
   def try_to_redirect

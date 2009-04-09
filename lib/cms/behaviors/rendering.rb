@@ -21,7 +21,7 @@ module Cms
           helper ApplicationHelper      
       
           attr_accessor :controller
-          delegate :params, :session, :request, :to => :controller
+          delegate :params, :session, :request, :flash, :to => :controller
       
         end
       end
@@ -63,15 +63,15 @@ module Cms
           render if respond_to?(:render)
       
           # Create, Instantiate and Initialize the view
-          view_class  = Class.new(View)      
-          action_view = view_class.new(@controller)
+          view_class  = Class.new(ActionView::Base)      
+          action_view = view_class.new(@controller.view_paths, {}, @controller)
       
           # Make helpers and instance vars available
           view_class.send(:include, self.class.master_helper_module)      
           action_view.assigns = assigns_for_view
             
           if respond_to?(:inline_options)
-            options = {:locals => {}}.merge(inline_options)
+            options = {:locals => {}}.merge(self.inline_options)
             ActionView::InlineTemplate.new(options[:inline], options[:type]).render(action_view, options[:locals])
           else
             action_view.render(:file => self.class.template_path)
@@ -87,15 +87,6 @@ module Cms
           end
         
       end
-      class View < ::ActionView::Base
-        attr_accessor :renderable
-    
-        def initialize(controller)
-          super(controller.view_paths, {}, controller)
-          self.template_format = controller.request.format.to_sym
-        end
-  
-      end  
     end
   end
 end
