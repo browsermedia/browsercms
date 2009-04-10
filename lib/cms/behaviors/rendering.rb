@@ -68,6 +68,13 @@ module Cms
       
           # Make helpers and instance vars available
           view_class.send(:include, @controller.class.master_helper_module)
+          
+          # We want content_for to be called on the controller's view, not this inner view
+          def action_view.content_for(name, content=nil, &block)
+            controller.instance_variable_get("@template").content_for(name, content, &block)
+          end
+          
+          # Copy instance variables from this renderable object to it's view
           action_view.assigns = assigns_for_view
             
           if respond_to?(:inline_options)
