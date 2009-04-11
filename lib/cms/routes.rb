@@ -109,17 +109,17 @@ module Cms::Routes
         :enable => :put
       }
       
-      #cms.connect '/blocks/:block_type/:action/:id', :controller => 'blocks'
     end
-
-    # connect '/:controller/:action/:id.:format'
-    # connect '/:controller/:action.:format'
-    # connect '/:controller/:action/:id'
-    # connect '/:controller.:format'
 
     image_missing '/images/*path', :controller => 'cms/missing_asset'
     stylesheet_missing '/stylesheets/*path', :controller => 'cms/missing_asset'
     javascript_missing '/javascripts/*path', :controller => 'cms/missing_asset'
+
+    if PageRoute.table_exists?
+      PageRoute.all.each do |r|
+        send((r.route_name || 'connect').to_sym, r.pattern, r.options_map)
+      end
+    end
 
     connect '*path', :controller => 'cms/content', :action => 'show'    
   end

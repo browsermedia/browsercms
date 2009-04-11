@@ -1,0 +1,2 @@
+class PageRouteRequirement < PageRouteOption
+end

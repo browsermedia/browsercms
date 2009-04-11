@@ -1,17 +1,17 @@
 class PageRoute < ActiveRecord::Base
   belongs_to :page
-  has_many :conditions, :class_name => "PageRouteOption"
-  has_many :requirements, :class_name => "PageRouteOption"
+  has_many :conditions, :class_name => "PageRouteCondition"
+  has_many :requirements, :class_name => "PageRouteRequirement"
   
   validates_presence_of :pattern, :page_id
   validates_uniqueness_of :pattern
   
   def add_condition(name, value)
-    conditions << PageRouteOption.new(:name => name.to_s, :value => value.to_s)
+    conditions.build(:name => name.to_s, :value => value.to_s)
   end  
   
   def add_requirement(name, value)
-    requirements << PageRouteOption.new(:name => name.to_s, :value => value.to_s)
+    requirements.build(:name => name.to_s, :value => value.to_s)
   end
   
   def conditions_map
@@ -22,9 +22,13 @@ class PageRoute < ActiveRecord::Base
     requirements.inject({}){|acc, e| acc[e.name.to_sym] = Regexp.new(e.value); acc}
   end
   
+  def route_name
+    name ? name.to_slug.gsub('-','_') : nil
+  end
+  
   # This is used in defining the route in the ActionController::Routing
   def options_map
-    m = {:controller => "cms/content", :action => "show"}
+    m = {:controller => "cms/content", :action => "show_page_route"}
     
     m[:_page_route_id] = self.id.to_s
     

@@ -14,7 +14,7 @@ class PageRouteTest < ActiveSupport::TestCase
     assert_equal "/things/:year/:month/:day", route.pattern
     assert_equal({ 
       :controller => "cms/content", 
-      :action => "show",
+      :action => "show_page_route",
       :_page_route_id => route.id.to_s,
       :requirements => {
         :year => /\d{4,}/,
