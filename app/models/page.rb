@@ -9,6 +9,7 @@ class Page < ActiveRecord::Base
   is_versioned
   
   has_many :connectors, :order => "connectors.container, connectors.position"
+  has_many :page_routes
   
   named_scope :named, lambda{|name| {:conditions => ['pages.name = ?', name]}}
   named_scope :with_path, lambda{|path| {:conditions => ['pages.path = ?', path]}}

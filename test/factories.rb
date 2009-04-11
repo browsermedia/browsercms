@@ -55,6 +55,11 @@ Factory.define :page_partial do |m|
   m.handler "erb"
 end
 
+Factory.define :page_routes do |m|
+  m.sequence(:pattern) {|n| "/page_route_#{n}"}
+  m.association :page
+end
+
 Factory.define :page_template do |m|
   m.sequence(:name) {|n| "page_template_#{n}" }
   m.format "html"

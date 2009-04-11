@@ -96,6 +96,24 @@ class Cms::ContentControllerTest < ActionController::TestCase
     assert_equal "This is a test", streaming_file_contents
   end
   
+  def test_show_page_route
+    @page_template = Factory(:page_template, :name => "test_show_page_route")
+    @page = Factory(:page, 
+      :section => root_section, 
+      :template_file_name => "test_show_page_route.html.erb")
+    @portlet = DynamicPortlet.create!(:name => "Test", 
+      :template => "<h1><%= @foo %></h1>",
+      :connect_to_page_id => @page.id, :connect_to_container => "main")
+    @page_route = @page.page_routes.create(:pattern => "/foo", :code => "@foo = params[:foo]")
+
+    reset(:page)
+    @page.publish!
+    
+    get :show_page_route, :foo => "42", :_page_route_id => @page_route.id
+    assert_response :success
+    assert_select "h1", "42"
+  end
+  
   protected
     def create_protected_user_section_group
       @protected_section = Factory(:section, :parent => root_section)

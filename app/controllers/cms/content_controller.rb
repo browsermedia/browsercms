@@ -5,18 +5,24 @@ class Cms::ContentController < Cms::ApplicationController
   rescue_from ActiveRecord::RecordNotFound, :with => :handle_not_found_on_page
 
   skip_before_filter :redirect_to_cms_site
-  before_filter :construct_path
-  before_filter :redirect_non_cms_users_to_public_site
-  before_filter :set_format
-  before_filter :try_to_redirect
-  before_filter :try_to_stream_file
-  before_filter :check_access_to_page
+  before_filter :redirect_non_cms_users_to_public_site, :only => [:show, :show_page_route]
+  before_filter :construct_path,                        :only => [:show]
+  before_filter :construct_path_from_route,             :only => [:show_page_route]
+  before_filter :try_to_redirect,                       :only => [:show]
+  before_filter :try_to_stream_file,                    :only => [:show]
+  before_filter :check_access_to_page,                  :only => [:show, :show_page_route]
 
+  # ----- Actions --------------------------------------------------------------
   def show
-    render_page
-    cache_page if perform_caching
+    render_page_with_caching
   end
 
+  def show_page_route
+    render_page_with_caching
+  end
+
+  # ----- Error Handlers -------------------------------------------------------
+  
   def handle_not_found_on_page(exception)
     logger.warn "Page Not Found"
     handle_error_with_cms_page('/system/not_found', exception, :not_found)
@@ -33,7 +39,29 @@ class Cms::ContentController < Cms::ApplicationController
     handle_error_with_cms_page('/system/server_error', exception, :internal_server_error)
   end
 
+  protected
+
+  # This will assign the value to an instance variable
+  def assign(key, value)
+    instance_variable_set("@#{key}", value)
+  end
+
   private
+  
+  # This is the method all actions delegate to
+  # check_access_to_page will also call this directly
+  # if caching is not enabled
+  def render_page
+    @_page_route.execute(self) if @_page_route
+    render :layout => @page.layout, :action => 'show'
+  end
+  
+  def render_page_with_caching
+    render_page
+    cache_page if perform_caching
+  end
+  
+  # This is the method all error handlers delegate to
   def handle_error_with_cms_page(error_page_path, exception, status, options={})
 
     # If we are in the CMS, we just want to show the exception
@@ -67,9 +95,15 @@ class Cms::ContentController < Cms::ApplicationController
     end      
   end    
 
+  # ----- Before Filters -------------------------------------------------------
   def construct_path
     @paths = params[:page_path] || params[:path] || []
     @path = "/#{@paths.join("/")}"
+  end
+  
+  def construct_path_from_route
+    @_page_route = PageRoute.find(params[:_page_route_id])
+    @path = @_page_route.page.path
   end
   
   def redirect_non_cms_users_to_public_site
@@ -96,11 +130,6 @@ class Cms::ContentController < Cms::ApplicationController
     end
     @show_page_toolbar = @show_toolbar
     true
-  end
-  
-  def set_format
-    logger.info "request.format => #{request.format}"
-    #params[:format] = "html"
   end
   
   def try_to_redirect
@@ -167,31 +196,9 @@ class Cms::ContentController < Cms::ApplicationController
     end
 
   end
-  
-  def render_page
-    prepare_params
-    render :layout => @page.layout, :action => 'show'
-  end
-  
-  #-- Other Methods --
-  
-  # This method gives the content type a chance to set some params
-  # This is used to make SEO-friendly URLs possible
-  def prepare_params
-    if params[:prepare_with] && params[:prepare_with][:content_type] && params[:prepare_with][:method]
-      content_type = params[:prepare_with][:content_type].constantize
-      if content_type.respond_to?(params[:prepare_with][:method])
-        # This call is expected to modify params
-        logger.debug "Calling #{content_type.name}.#{params[:prepare_with][:method]} prepare method"
-        content_type.send(params[:prepare_with][:method], params)
-      else
-        logger.debug "#{content_type.name} does not respond to #{params[:prepare_with][:method]}"
-      end
-    else
-      logger.debug "No Prepare Method"
-    end    
-  end
     
+  # ----- Other Methods --------------------------------------------------------
+  
   def page_not_found
     raise ActiveRecord::RecordNotFound.new("No page at '#{@path}'")
   end
@@ -200,6 +207,5 @@ class Cms::ContentController < Cms::ApplicationController
     @mode = @show_toolbar && current_user.able_to?(:edit_content) ? (params[:mode] || session[:page_mode] || "edit") : "view"
     session[:page_mode] = @mode      
   end
-
   
 end
