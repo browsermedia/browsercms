@@ -34,10 +34,12 @@ class Connector < ActiveRecord::Base
   end
   
   def connectable_with_deleted
-    c = connectable_type.constantize.find_with_deleted(connectable_id)
-    if c && c.class.versioned?
-      c.as_of_version(connectable_version)
+    c = if connectable_type.constantize.respond_to?(:find_with_deleted)
+      connectable_type.constantize.find_with_deleted(connectable_id)
+    else
+      connectable_type.constantize.find(connectable_id)
     end
+    (c && c.class.versioned?) ? c.as_of_version(connectable_version) : c
   end
   
   def get_connectable
