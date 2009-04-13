@@ -74,7 +74,8 @@ module Cms
               Page.connected_to(:connectable => self, :version => (version - 1)).all.each do |p|
                 unless p == published_by_page
                   #This just creates a new version of the page
-                  p.update_attributes(:publish_on_save => (published? && p.published?), :version_comment => "Edited #{self.class.name}##{id}")
+                  action = deleted? ? "Deleted" : "Edited"
+                  p.update_attributes(:publish_on_save => (published? && p.published?), :version_comment => "#{self.class.name} ##{id} was #{action}")
 
                   #The previous step will copy over a connector pointing to the previous version of this connectable
                   #We need to change that to point at the new version of this connectable

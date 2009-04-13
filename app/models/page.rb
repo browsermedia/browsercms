@@ -62,28 +62,30 @@ class Page < ActiveRecord::Base
     copy_from_version = @copy_connectors_from_version ? @copy_connectors_from_version : version - 1
     
     connectors.for_page_version(copy_from_version).all(:order => "connectors.container, connectors.position").each do |c|
-      connectable = c.connectable_type.constantize.versioned? ? c.connectable.as_of_version(c.connectable_version) : c.connectable
+      if c.connectable #The connector won't have a connectable if it has been deleted
+        connectable = c.connectable_type.constantize.versioned? ? c.connectable.as_of_version(c.connectable_version) : c.connectable
       
-      #If are publishing this page, We need to publish the other page if it is not already published
-      if published? && c.connectable_type.constantize.publishable? && !c.connectable.published?
-        connectable.publish_by_page!(self)
-      end      
+        #If are publishing this page, We need to publish the other page if it is not already published
+        if published? && c.connectable_type.constantize.publishable? && !c.connectable.published?
+          connectable.publish_by_page!(self)
+        end      
       
-      #If we are copying connectors from a previous version, that means we are reverting this page,
-      #in which case we should create a new version of the block, and connect this page to that block
-      if @copy_connectors_from_version && connectable.class.versioned? && !connectable.current_version?
-        connectable = connectable.class.find(connectable.id)
-        connectable.published_by_page = self if connectable.class.publishable?
-        connectable.revert_to(c.connectable_version)
+        #If we are copying connectors from a previous version, that means we are reverting this page,
+        #in which case we should create a new version of the block, and connect this page to that block
+        if @copy_connectors_from_version && connectable.class.versioned? && !connectable.current_version?
+          connectable = connectable.class.find(connectable.id)
+          connectable.published_by_page = self if connectable.class.publishable?
+          connectable.revert_to(c.connectable_version)
+        end
+      
+        connectors.build(
+          :page_version => version, 
+          :connectable => connectable, 
+          :connectable_version => connectable.class.versioned? ? connectable.version : nil,         
+          :container => c.container, 
+          :position => c.position
+        )
       end
-      
-      connectors.build(
-        :page_version => version, 
-        :connectable => connectable, 
-        :connectable_version => connectable.class.versioned? ? connectable.version : nil,         
-        :container => c.container, 
-        :position => c.position
-      )
     end
     
     @copy_connectors_from_version = nil    

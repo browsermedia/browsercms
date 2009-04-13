@@ -93,7 +93,7 @@ class VersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
     assert !@page.published?
     assert_equal 3, @page.version
     assert_incremented page_version_count, Page::Version.count
-    assert_match /^Edited HtmlBlock#\d+/, @page.current_version.version_comment
+    assert_match /^HtmlBlock #\d+ was Edited/, @page.current_version.version_comment
 
     conns = @block.connectors.all(:order => 'id')
     assert_equal 2, conns.size
@@ -110,6 +110,22 @@ class VersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
     reset(:page)
     
     assert @page.published?
+  end  
+  
+  def test_deleting_when_connected_to_page
+    @page.publish!
+    reset(:page, :block)
+
+    page_connector_count = @page.connectors.for_page_version(@page.version).count
+    page_version = @page.version
+
+    @block.destroy
+
+    reset(:page)
+
+    assert_decremented page_connector_count, @page.connectors.for_page_version(@page.version).count
+    assert_incremented page_version, @page.version
+    assert_match /^HtmlBlock #\d+ was Deleted/, @page.current_version.version_comment
   end  
   
 end
