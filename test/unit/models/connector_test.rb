@@ -66,4 +66,27 @@ class ConnectorTest < ActiveSupport::TestCase
       page.reload.connectors.for_page_version(page.version).in_container("foo").all
   end
   
+  def test_connectable_with_deleted
+    @page = Factory(:page)
+    @block = Factory(:html_block, :name => "Deleted", 
+      :connect_to_page_id => @page.id,
+      :connect_to_container => "main",
+      :publish_on_save => "true")
+    
+    reset(:page, :block)
+    @block.destroy
+    
+    reset(:page)
+
+    log_table_without_stamps Connector
+    
+    assert_nil @page.connectors.for_page_version(2).first.connectable
+    
+    c = @page.connectors.for_page_version(2).first.connectable_with_deleted
+    assert !c.nil?
+    assert_equal @block.id, c.id
+    assert_equal @block.name, c.name
+    assert_equal 1, c.version
+  end
+  
 end

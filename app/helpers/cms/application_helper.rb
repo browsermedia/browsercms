@@ -26,10 +26,12 @@ module Cms
     end
 
     def render_connector(connector)
+      connectable = connector.connectable_with_deleted
       if logged_in? && @mode == "edit"
-        render :partial => 'cms/pages/edit_connector', :locals => {:connector => connector}
+        render :partial => 'cms/pages/edit_connector', 
+          :locals => {:connector => connector, :connectable => connectable}
       else
-        render_connectable(connector.current_connectable)
+        render_connectable(connectable)
       end
     end
     

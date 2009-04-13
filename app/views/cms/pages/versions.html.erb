@@ -12,7 +12,7 @@
         var id = match[2];
         $('table.data tbody tr').removeClass('selected');
         $(this).addClass('selected');
-        $('#view_button').removeClass('disabled').attr('href', '/cms/pages/<%= @page.id %>/versions/'+id+'?mode=view');
+        $('#view_button').removeClass('disabled').attr('href', '/cms/pages/<%= @page.id %>/version/'+id+'?mode=view');
         if ($(this).hasClass('current')){
           $('#revert_button').addClass('disabled').attr('href', '');
           $('#revert_form').attr('action', '');

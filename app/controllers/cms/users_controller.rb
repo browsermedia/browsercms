@@ -42,9 +42,8 @@ class Cms::UsersController < Cms::ResourceController
   end
 
   def update_password
-    user.password = params[:password]
-    user.password_confirmation = params[:password_confirmation]
-    if user.save
+    if user.update_attributes(params[:user])
+      flash[:notice] = "Password for '#{user.login}' was changed"
       redirect_to cms_users_path
     else
       render :action => 'change_password'

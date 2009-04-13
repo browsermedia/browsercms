@@ -151,7 +151,7 @@ class Cms::UsersControllerTest < ActionController::TestCase
   
   def test_update_password_failure
     put :update_password, :id => @user.id,
-      :password => "will_fail_validation", :password_confirmation => "something_else"
+      :user => {:password => "will_fail_validation", :password_confirmation => "something_else"}
       
     assert_response :success
     assert_select "h1", "Set New Password"
@@ -160,7 +160,7 @@ class Cms::UsersControllerTest < ActionController::TestCase
   
   def test_update_password_success
     put :update_password, :id => @user.id,
-      :password => "something_else", :password_confirmation => "something_else"
+      :user => {:password => "something_else", :password_confirmation => "something_else"}
       
     assert_redirected_to cms_users_path
   end

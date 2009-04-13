@@ -26,7 +26,18 @@ class Connector < ActiveRecord::Base
   validates_presence_of :page_id, :page_version, :connectable_id, :connectable_type, :container
   
   def current_connectable
-    versioned? ? connectable.as_of_version(connectable_version) : get_connectable
+    if versioned?
+      connectable.as_of_version(connectable_version) if connectable
+    else
+      get_connectable
+    end
+  end
+  
+  def connectable_with_deleted
+    c = connectable_type.constantize.find_with_deleted(connectable_id)
+    if c && c.class.versioned?
+      c.as_of_version(connectable_version)
+    end
   end
   
   def get_connectable
