@@ -27,7 +27,7 @@
 
     # Utility Nav
     create_section(:util, :name => "Utility Nav", :parent => root_section, :path => "/util_nav", :hidden => true)
-    create_link(:home, :name => "Home", :url => "/home", :section => sections(:util))
+    create_link(:home, :name => "Home", :url => "/", :section => sections(:util))
     create_page(:demo, :name => "Demo", :path => "/util_nav/demo", :section => sections(:util), :template_file_name => "sub_page.html.erb")
     create_page(:contact_us, :name => "Contact Us", :path => "/util_nav/contact_us", :section => sections(:util), :template_file_name => "sub_page.html.erb")
     create_page(:about, :name => "About Us", :path => "/util_nav/about_us", :section => sections(:util), :template_file_name => "sub_page.html.erb")
