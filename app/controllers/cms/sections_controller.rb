@@ -108,7 +108,7 @@ class Cms::SectionsController < Cms::BaseController
                else
                  @section.pages
                end
-      render :layout => false      
+       render 'cms/sections/file_browser.xml.builder', :layout => false
     end
 
     def public_groups

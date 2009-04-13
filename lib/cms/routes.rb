@@ -60,8 +60,8 @@ module Cms::Routes
       version_cms_page '/cms/pages/:id/version/:version', :controller => 'cms/pages', :action => 'version', :conditions => {:method => :get}
       revert_to_cms_page '/cms/pages/:id/revert_to/:version', :controller => 'cms/pages', :action => 'revert_to', :conditions => {:method => :put}
 
+      cms.file_browser '/sections/file_browser.xml', :controller => 'sections', :action => 'file_browser', :format => "xml"
       cms.resources :sections, :has_many => [:links, :pages]
-      cms.file_browser '/sections/file_browser', :controller => 'sections', :action => 'file_browser'
 
       cms.resources :section_nodes, :member => {
         :move_before => :put,
