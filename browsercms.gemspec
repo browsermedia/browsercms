@@ -1,7 +1,7 @@
 SPEC = Gem::Specification.new do |spec| 
   spec.name = "browser_cms" 
   spec.rubyforge_project = spec.name
-  spec.version = "3.0.0.202"
+  spec.version = "3.0.0.203"
   spec.summary = "A Content Management System for Rails" 
   spec.author = "BrowserMedia" 
   spec.email = "github@browsermedia.com" 
