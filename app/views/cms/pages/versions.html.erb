@@ -21,7 +21,7 @@
           $('#edit_properties_button').removeClass('disabled').attr('href', '/cms/pages/<%= @page.id %>/edit');
         } else {
           $('#revert_button').removeClass('disabled');
-          $('#revert_form').attr('action', '/cms/pages/<%= @page.id %>/revert_to');
+          $('#revert_form').attr('action', '/cms/pages/<%= @page.id %>/revert_to/'+id);
           $('#revert_form_version').attr('value', id);
           $('#edit_content_button').addClass('disabled').attr('href', '');
           $('#edit_properties_button').addClass('disabled').attr('href', '');
