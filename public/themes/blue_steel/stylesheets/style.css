@@ -57,7 +57,7 @@ html, body, div, span, applet, object, iframe,
   font-weight: bold;
   }
   p {
-  font-size: 10px;
+  font-size: 13px;
   }
   #content {
   width: 961px;
@@ -71,7 +71,7 @@ html, body, div, span, applet, object, iframe,
   text-transform: uppercase;
   text-decoration: none;
   font-weight: bold;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: bold;
   }
   .nav span{
@@ -247,11 +247,11 @@ html, body, div, span, applet, object, iframe,
   #footer p {
   float: left;
   padding: 4px 0 0 15px;
-  margin-right: 280px;
+  margin-right: 165px;
   }
 #narrow ul {
   padding-left: 25px;
 }
 #narrow li {
-  font-size: 10px;
+  font-size: 12px;
 }
