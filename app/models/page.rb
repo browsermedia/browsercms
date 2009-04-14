@@ -251,14 +251,17 @@ class Page < ActiveRecord::Base
   end
     
   def self.find_live_by_path(path)
-    if page_version = Page::Version.first(:conditions => {
+    page_versions = Page::Version.all(:conditions => {
         :path => path, 
         :archived => false, 
         :published => true}, 
         :order => "version desc")
+    for page_version in page_versions
+      next if page_version.page.nil? #skip versions that belong to deleted pages
       page = page_version.page.as_of_version(page_version.version)
-      page.live_version? ? page : nil
+      return page.live_version? ? page : nil
     end
+    nil
   end
   
   def name_with_section_path
@@ -287,3 +290,4 @@ class Page < ActiveRecord::Base
   end
   
 end
+

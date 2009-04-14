@@ -62,6 +62,23 @@ class PageTest < ActiveRecord::TestCase
     assert_nil Page.find_live_by_path('/foo')
     assert_equal @page, Page.find_live_by_path('/bar')
   end
+
+  def test_find_live_by_path_after_delete
+    @page = Factory.build(:page, :path => '/foo')
+    @page.publish!
+    reset(:page)
+
+    @page.mark_as_deleted!
+    assert_nil Page.find_live_by_path('/foo')
+
+    @new_page = Factory.build(:page, :path => '/foo')
+    assert_nil Page.find_live_by_path('/foo')
+
+    @new_page.publish!
+    reset(:new_page)
+    assert_equal @new_page, Page.find_live_by_path('/foo')
+    assert_not_equal @page, @new_page
+  end
   
   def test_path_normalization
     page = Factory.build(:page, :path => 'foo/bar')
