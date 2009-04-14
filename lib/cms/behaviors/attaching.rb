@@ -96,12 +96,12 @@ module Cms
               build_attachment if attachment.nil?  
               attachment.temp_file = attachment_file 
               set_attachment_file_path
-              if attachment_file_path.blank?
+              if attachment.file_path.blank?
                 errors.add(:attachment_file_path, "File Name is required for attachment")
                 return false
               end
               set_attachment_section
-              if attachment_section_id.blank?
+              if attachment.section_id.blank?
                 errors.add(:attachment_file, "Section is required for attachment")
                 return false
               end
@@ -115,17 +115,17 @@ module Cms
             @attachment_section = nil            
           end
 
-          # Override this method if you would like to override the way file_path is set
-          def set_attachment_file_path
-            if @attachment_file_path && @attachment_file_path != attachment.file_path
-              attachment.file_path = @attachment_file_path
+          # Override this method if you would like to override the way the section is set
+          def set_attachment_section
+            if new_record? && !attachment_file.blank?
+              attachment.section = Section.root.first
             end
           end
 
-          # Override this method if you would like to override the way the section is set
-          def set_attachment_section
-            if @attachment_section_id && @attachment_section_id != attachment.section_id
-              attachment.section_id = @attachment_section_id 
+          # Override this method if you would like to override the way file_path is set
+          def set_attachment_file_path
+            if new_record? && !attachment_file.blank?
+              attachment.file_path = "/attachments/#{File.basename(attachment_file.original_filename).to_s.downcase}"
             end
           end
 

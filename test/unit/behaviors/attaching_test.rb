@@ -1,6 +1,15 @@
 require File.join(File.dirname(__FILE__), '/../../test_helper')
 
 ActiveRecord::Base.connection.instance_eval do
+  drop_table(:default_attachables) if table_exists?(:default_attachables)
+  drop_table(:default_attachable_versions) if table_exists?(:default_attachable_versions)
+  create_versioned_table(:default_attachables) do |t| 
+    t.string :name
+    t.integer :attachment_id
+    t.integer :attachment_version
+    t.timestamps
+  end
+  
   drop_table(:attachables) if table_exists?(:attachables)
   create_table(:attachables) do |t| 
     t.string :name
@@ -17,14 +26,87 @@ ActiveRecord::Base.connection.instance_eval do
     t.integer :attachment_version
     t.timestamps
   end
+  
+  drop_table(:versioned_attachables) if table_exists?(:versioned_attachables)
+  drop_table(:versioned_attachable_versions) if table_exists?(:versioned_attachable_versions)
+  create_versioned_table(:versioned_attachables) do |t| 
+    t.string :name
+    t.integer :attachment_id
+    t.integer :attachment_version
+    t.timestamps
+  end
+  
+end
+
+class DefaultAttachable < ActiveRecord::Base
+  acts_as_content_block :belongs_to_attachment => true
 end
 
 class Attachable < ActiveRecord::Base
   belongs_to_attachment
+  
+  def set_attachment_file_path
+    if @attachment_file_path && @attachment_file_path != attachment.file_path
+      attachment.file_path = @attachment_file_path
+    end
+  end
+
+  def set_attachment_section
+    if @attachment_section_id && @attachment_section_id != attachment.section_id
+      attachment.section_id = @attachment_section_id 
+    end
+  end  
 end
 
 class VersionedAttachable < ActiveRecord::Base
   acts_as_content_block :belongs_to_attachment => true
+  
+  def set_attachment_file_path
+    if @attachment_file_path && @attachment_file_path != attachment.file_path
+      attachment.file_path = @attachment_file_path
+    end
+  end
+
+  def set_attachment_section
+    if @attachment_section_id && @attachment_section_id != attachment.section_id
+      attachment.section_id = @attachment_section_id 
+    end
+  end
+end
+
+class DefaultAttachableTest < ActiveSupport::TestCase
+  def setup
+    #file is a mock of the object that Rails wraps file uploads in
+    @file = file_upload_object(:original_filename => "foo.jpg",
+      :content_type => "image/jpeg", :rewind => true,
+      :size => "99", :read => "01010010101010101")
+
+    @section = root_section
+  end
+  
+  def test_create_with_attachment_file
+    @attachable = DefaultAttachable.new(:name => "File Name", 
+      :attachment_file => @file, :publish_on_save => true)
+
+    attachable_count = DefaultAttachable.count
+
+    assert_valid @attachable
+    @attachable.save!
+
+    assert_incremented attachable_count, DefaultAttachable.count
+    assert_equal @section, @attachable.attachment_section
+    assert_equal @section.id, @attachable.attachment_section_id
+    assert_equal "/attachments/foo.jpg", @attachable.attachment_file_path
+
+    reset(:attachable)
+
+    assert_equal @section, @attachable.attachment_section
+    assert_equal @section.id, @attachable.attachment_section_id
+    assert_equal "/attachments/foo.jpg", @attachable.attachment_file_path
+    assert @attachable.attachment.published?
+  end  
+  
+  
 end
 
 class AttachingTest < ActiveSupport::TestCase
