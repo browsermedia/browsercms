@@ -39,7 +39,7 @@ class Cms::SectionFileBrowserControllerTest < ActionController::TestCase
     @bar = Factory(:section, :parent => root_section, :name => "Bar", :path => '/bar')
     @home = Factory(:page, :section => root_section, :name => "Home", :path => '/home')
 
-    get :file_browser, :format => :xml, "CurrentFolder" => "/", "Command" => "GetFilesAndFolders", "Type" => "Page"
+    get :file_browser, :format => "xml", "CurrentFolder" => "/", "Command" => "GetFilesAndFolders", "Type" => "Page"
 
     assert_response :success
     assert_equal "text/xml", @response.content_type
@@ -60,7 +60,7 @@ class Cms::SectionFileBrowserControllerTest < ActionController::TestCase
     @bar = Factory(:section, :parent => @foo, :name => "Bar", :path => '/foo/bar')
     @foo_page = Factory(:page, :section => @foo, :name => "Foo Page", :path => '/foo/page')
     @home = Factory(:page, :section => root_section, :name => "Home", :path => '/home')
-    get :file_browser, :format => :xml, "CurrentFolder" => "/Foo/", "Command" => "GetFilesAndFolders", "Type" => "Page"
+    get :file_browser, :format => "xml", "CurrentFolder" => "/Foo/", "Command" => "GetFilesAndFolders", "Type" => "Page"
 
     assert_response :success
     assert_equal "text/xml", @response.content_type
