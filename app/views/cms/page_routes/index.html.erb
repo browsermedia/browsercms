@@ -1,0 +1,50 @@
+<% @toolbar_title = page_title "List Page Routes" %>
+<% content_for(:html_head) do %>
+  <% javascript_tag do %>
+    jQuery(function($){
+      $('table.data tbody tr').hover(function(){
+        $(this).addClass('hover')
+      }, function(){
+        $(this).removeClass('hover')
+      }).click(function(){
+        var match = this.id.match(/(.*)_(\d+)/) 
+        var type = match[1];
+        var id = match[2];
+        $('table.data tbody tr').removeClass('selected');
+        $(this).addClass('selected');
+        $('#edit_button').removeClass('disabled').attr('href', '/cms/page_routes/'+id+'/edit');
+        $('#delete_button, #view_button').removeClass('disabled').attr('href', '/cms/page_routes/'+id)
+      })
+    })
+  <% end %>
+<% end %>
+
+<% content_for :functions do %>
+  <%= link_to(span_tag("Add"), new_cms_page_route_path, :class => "button") %>
+  <%= link_to(span_tag("Edit"), '#', :id => 'edit_button', :class => "button disabled") %>
+  <%= link_to span_tag("Delete"), "#", 
+    :id => "delete_button", 
+    :class => "button disabled http_delete", 
+    :onclick => "return confirm('Are you sure you want to delete this Page Route?')" %>
+  <%= link_to(span_tag("View"), "#", :id => 'view_button', :class => "button") %>
+  <%= link_to(span_tag("View Rails Routes"), cms_routes_path, :class => "button") %>
+<% end %>
+
+<div class="roundedcorners">
+  <table class="data">
+    <tr>
+      <th class="first"></th>
+      <th><div class="dividers">Name</div></th>
+      <th><div>Pattern</div></th>
+      <th class="last"></th>
+    </tr>
+    <% @page_routes.each do |page_route| %>
+      <tr id="page_route_<%= page_route.id %>">
+        <td class="first"></td>
+        <td><%=h page_route.name %></td>
+        <td><%=h page_route.pattern %></td>
+        <td class="last"></td>
+      </tr>
+    <% end %>
+  </table>
+</div>

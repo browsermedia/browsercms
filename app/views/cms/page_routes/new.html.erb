@@ -1,0 +1,3 @@
+<% @toolbar_title = page_title "New Page Route" %>
+<%= content_for :functions, link_to(span_tag("List All"), cms_page_routes_path, :class => "button") %>
+<%= render :partial => 'form' %>

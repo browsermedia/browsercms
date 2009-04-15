@@ -5,7 +5,13 @@ class PageRoute < ActiveRecord::Base
   
   validates_presence_of :pattern, :page_id
   validates_uniqueness_of :pattern
-  
+
+  after_save :reload_routes
+
+  def reload_routes
+    ActionController::Routing::Routes.load!
+  end
+
   def add_condition(name, value)
     conditions.build(:name => name.to_s, :value => value.to_s)
   end  
