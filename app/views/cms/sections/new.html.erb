@@ -9,7 +9,7 @@ jQuery(function($){
 })
 </script>
 <% end %>
-<% @page_title = "New Section" %>
+<% page_title "New Section" %>
 <% content_for :functions  do %>
 <%= "<h1>#{ @page_title }</h1>" %> 
 <%= link_to(span_tag("list all"), cms_sitemap_path, :class => "button") %>

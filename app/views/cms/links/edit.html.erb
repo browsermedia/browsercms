@@ -1,4 +1,4 @@
-<% @page_title = "Edit '#{h(@link.name)}' Link" %>
+<% page_title "Edit '#{h(@link.name)}' Link" %>
 <% content_for :functions do %>
 <%= "<h1>#{ @page_title }</h1>" %> 
 <%= link_to(span_tag("list all"), cms_sitemap_path, :class => "button") %>

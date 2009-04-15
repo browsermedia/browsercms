@@ -1,9 +1,12 @@
 class Tag < ActiveRecord::Base
+  
   has_many :taggings
   
   validates_uniqueness_of :name
   
   attr_accessor :size
+  
+  named_scope :named, lambda{|tag| {:conditions => ["tags.name = ? ", tag]} }
   
   # Returns an array of tags with a count attribute
   def self.counts(options={})

@@ -38,8 +38,8 @@ module Cms
       # or just a string or symbol
       def resource_collection_name(resource)
         collection_name = case resource
-          when ContentType: resource.name.underscore
-          when ActiveRecord::Base: resource.class.name.underscore
+          when ContentType then resource.name.underscore
+          when ActiveRecord::Base then resource.class.name.underscore
           else resource.to_s
         end
       end

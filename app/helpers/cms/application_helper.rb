@@ -2,7 +2,14 @@
 module Cms
   module ApplicationHelper
 
-
+    def page_title(*args)
+      if args.first
+        @controller.instance_variable_get("@template").instance_variable_set("@page_title", args.first)
+      else
+        @controller.instance_variable_get("@template").instance_variable_get("@page_title")
+      end
+    end
+    
     def searchable_sections(selected = nil)
       root = Section.root.first
       options = [['All sections', 'all'], [root.name, root.id]]

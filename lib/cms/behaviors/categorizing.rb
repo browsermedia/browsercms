@@ -14,6 +14,9 @@ module Cms
           include InstanceMethods
           
           belongs_to :category
+          
+          named_scope :in_category, lambda{|cat| {:conditions => ["category_id = ?", cat.id]}}
+          
         end
         module ClassMethods
         end

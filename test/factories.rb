@@ -67,7 +67,7 @@ Factory.define :page_template do |m|
   m.body %q{<html>
   <head>
     <title>
-      <%= @page_title %>
+      <%= page_title %>
     </title>
     <%= yield :html_head %>
   </head>
