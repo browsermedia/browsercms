@@ -1,0 +1,22 @@
+<% page_title "Rails Routes" %>
+<% content_for :functions do %>
+  <h1><%=h page_title %></h1>
+<% end %>
+<table class="data">
+  <tr>
+    <th class="first"></th>
+    <th><div class="dividers">Name</div></th>
+    <th><div class="dividers">Verb</div></th>
+    <th><div class="dividers">Pattern</div></th>
+    <th><div class="dividers">Result</div></th>
+    <th class="last"></th>
+  </tr>
+  <% for route in @routes %><tr>
+    <td class="first"></td>
+    <td><%=h route[:name] %></td>
+    <td><%=h route[:verb] %></td>
+    <td><%=h route[:segs] %></td>
+    <td><%=h route[:reqs] %></td>
+    <td class="last"></td>
+  </tr><% end %>
+</table>
