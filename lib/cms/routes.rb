@@ -118,7 +118,7 @@ module Cms::Routes
     javascript_missing '/javascripts/*path', :controller => 'cms/missing_asset'
 
     if PageRoute.table_exists?
-      PageRoute.all.each do |r|
+      PageRoute.all(:order => "page_routes.name").each do |r|
         send((r.route_name || 'connect').to_sym, r.pattern, r.options_map)
       end
     end
