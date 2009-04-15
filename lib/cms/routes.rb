@@ -102,6 +102,7 @@ module Cms::Routes
       cms.resources :redirects
       cms.resources :page_partials, :controller => 'dynamic_views'
       cms.resources :page_templates, :controller => 'dynamic_views'
+      cms.resources :page_routes
       cms.routes "/routes", :controller => "routes"
       cms.resources :users, :member => {
         :change_password => :get, 
