@@ -86,11 +86,11 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000068">path</a>&nbsp;&nbsp;
-      <a href="#M000065">section</a>&nbsp;&nbsp;
-      <a href="#M000067">section=</a>&nbsp;&nbsp;
-      <a href="#M000064">section_id</a>&nbsp;&nbsp;
-      <a href="#M000066">section_id=</a>&nbsp;&nbsp;
+      <a href="#M000086">path</a>&nbsp;&nbsp;
+      <a href="#M000083">section</a>&nbsp;&nbsp;
+      <a href="#M000085">section=</a>&nbsp;&nbsp;
+      <a href="#M000082">section_id</a>&nbsp;&nbsp;
+      <a href="#M000084">section_id=</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -112,11 +112,11 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000068" class="method-detail">
-        <a name="M000068"></a>
+      <div id="method-M000086" class="method-detail">
+        <a name="M000086"></a>
 
         <div class="method-heading">
-          <a href="#M000068" class="method-signature">
+          <a href="#M000086" class="method-signature">
           <span class="method-name">path</span><span class="method-args">()</span>
           </a>
         </div>
@@ -126,109 +126,109 @@
 needed by menu_helper
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000068-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000068-source">
+            onclick="toggleCode('M000086-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000086-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/link.rb, line 29</span>
-29:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">path</span>
-30:     <span class="ruby-identifier">url</span>
-31:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/link.rb, line 31</span>
+31:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">path</span>
+32:     <span class="ruby-identifier">url</span>
+33:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000065" class="method-detail">
-        <a name="M000065"></a>
+      <div id="method-M000083" class="method-detail">
+        <a name="M000083"></a>
 
         <div class="method-heading">
-          <a href="#M000065" class="method-signature">
+          <a href="#M000083" class="method-signature">
           <span class="method-name">section</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000065-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000065-source">
+            onclick="toggleCode('M000083-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000083-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/link.rb, line 12</span>
-12:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">section</span>
-13:     <span class="ruby-identifier">section_node</span> <span class="ruby-value">? </span><span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">section</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
-14:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/link.rb, line 14</span>
+14:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">section</span>
+15:     <span class="ruby-identifier">section_node</span> <span class="ruby-value">? </span><span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">section</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+16:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000067" class="method-detail">
-        <a name="M000067"></a>
+      <div id="method-M000085" class="method-detail">
+        <a name="M000085"></a>
 
         <div class="method-heading">
-          <a href="#M000067" class="method-signature">
+          <a href="#M000085" class="method-signature">
           <span class="method-name">section=</span><span class="method-args">(sec)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000067-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000067-source">
+            onclick="toggleCode('M000085-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000085-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/link.rb, line 20</span>
-20:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">section=</span>(<span class="ruby-identifier">sec</span>)
-21:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">section_node</span>
-22:       <span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">move_to_end</span>(<span class="ruby-identifier">sec</span>)
-23:     <span class="ruby-keyword kw">else</span>
-24:       <span class="ruby-identifier">build_section_node</span>(<span class="ruby-identifier">:node</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">:section</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">sec</span>)
-25:     <span class="ruby-keyword kw">end</span>      
-26:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/link.rb, line 22</span>
+22:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">section=</span>(<span class="ruby-identifier">sec</span>)
+23:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">section_node</span>
+24:       <span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">move_to_end</span>(<span class="ruby-identifier">sec</span>)
+25:     <span class="ruby-keyword kw">else</span>
+26:       <span class="ruby-identifier">build_section_node</span>(<span class="ruby-identifier">:node</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">:section</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">sec</span>)
+27:     <span class="ruby-keyword kw">end</span>      
+28:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000064" class="method-detail">
-        <a name="M000064"></a>
+      <div id="method-M000082" class="method-detail">
+        <a name="M000082"></a>
 
         <div class="method-heading">
-          <a href="#M000064" class="method-signature">
+          <a href="#M000082" class="method-signature">
           <span class="method-name">section_id</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000064-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000064-source">
+            onclick="toggleCode('M000082-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000082-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/link.rb, line 8</span>
- 8:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">section_id</span>
- 9:     <span class="ruby-identifier">section</span> <span class="ruby-value">? </span><span class="ruby-identifier">section</span>.<span class="ruby-identifier">id</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
-10:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/link.rb, line 10</span>
+10:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">section_id</span>
+11:     <span class="ruby-identifier">section</span> <span class="ruby-value">? </span><span class="ruby-identifier">section</span>.<span class="ruby-identifier">id</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+12:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000066" class="method-detail">
-        <a name="M000066"></a>
+      <div id="method-M000084" class="method-detail">
+        <a name="M000084"></a>
 
         <div class="method-heading">
-          <a href="#M000066" class="method-signature">
+          <a href="#M000084" class="method-signature">
           <span class="method-name">section_id=</span><span class="method-args">(sec_id)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000066-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000066-source">
+            onclick="toggleCode('M000084-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000084-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/link.rb, line 16</span>
-16:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">section_id=</span>(<span class="ruby-identifier">sec_id</span>)
-17:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">section</span> = <span class="ruby-constant">Section</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">sec_id</span>)
-18:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/link.rb, line 18</span>
+18:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">section_id=</span>(<span class="ruby-identifier">sec_id</span>)
+19:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">section</span> = <span class="ruby-constant">Section</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">sec_id</span>)
+20:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

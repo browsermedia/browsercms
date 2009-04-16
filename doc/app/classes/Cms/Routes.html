@@ -80,7 +80,9 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000406">routes_for_browser_cms</a>&nbsp;&nbsp;
+      <a href="#M000492">content_blocks</a>&nbsp;&nbsp;
+      <a href="#M000493">default_routes_for_content_block</a>&nbsp;&nbsp;
+      <a href="#M000494">routes_for_browser_cms</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -102,39 +104,187 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000406" class="method-detail">
-        <a name="M000406"></a>
+      <div id="method-M000492" class="method-detail">
+        <a name="M000492"></a>
 
         <div class="method-heading">
-          <a href="#M000406" class="method-signature">
+          <a href="#M000492" class="method-signature">
+          <span class="method-name">content_blocks</span><span class="method-args">(content_block_name, options={}, &amp;block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000492-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000492-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/routes.rb, line 3</span>
+ 3:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">content_blocks</span>(<span class="ruby-identifier">content_block_name</span>, <span class="ruby-identifier">options</span>={}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+ 4:     <span class="ruby-identifier">content_block</span> = <span class="ruby-identifier">content_block_name</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">classify</span>.<span class="ruby-identifier">constantize</span>
+ 5:     <span class="ruby-identifier">resources</span>(<span class="ruby-operator">*</span>[<span class="ruby-identifier">content_block_name</span>, <span class="ruby-identifier">default_routes_for_content_block</span>(<span class="ruby-identifier">content_block</span>).<span class="ruby-identifier">deep_merge</span>(<span class="ruby-identifier">options</span>)], <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+ 6:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">content_block</span>.<span class="ruby-identifier">versioned?</span>
+ 7:       <span class="ruby-comment cmt"># I'm not sure why, but these named routes </span>
+ 8:       <span class="ruby-comment cmt"># don't end up getting nested in the CMS namepace.</span>
+ 9:       <span class="ruby-comment cmt"># So for now I'm just hard-coding the stuff related to the CMS namespace</span>
+10:       <span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;version_cms_#{content_block_name}&quot;</span>.<span class="ruby-identifier">to_sym</span>, 
+11:         <span class="ruby-node">&quot;/cms/#{content_block_name}/:id/version/:version&quot;</span>,
+12:         <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;cms/#{content_block_name}&quot;</span>,
+13:         <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;version&quot;</span>,
+14:         <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:get</span>})
+15:       <span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;revert_to_cms_#{content_block_name}&quot;</span>.<span class="ruby-identifier">to_sym</span>, 
+16:         <span class="ruby-node">&quot;/cms/#{content_block_name}/:id/revert_to/:version&quot;</span>,
+17:         <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;cms/#{content_block_name}&quot;</span>,
+18:         <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;revert_to&quot;</span>,
+19:         <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:put</span>})
+20:     <span class="ruby-keyword kw">end</span>
+21:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000493" class="method-detail">
+        <a name="M000493"></a>
+
+        <div class="method-heading">
+          <a href="#M000493" class="method-signature">
+          <span class="method-name">default_routes_for_content_block</span><span class="method-args">(content_block)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000493-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000493-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/routes.rb, line 23</span>
+23:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">default_routes_for_content_block</span>(<span class="ruby-identifier">content_block</span>)
+24:     <span class="ruby-identifier">member_routes</span> = {}
+25:     <span class="ruby-identifier">member_routes</span>[<span class="ruby-identifier">:publish</span>] = <span class="ruby-identifier">:put</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">content_block</span>.<span class="ruby-identifier">publishable?</span>
+26:     <span class="ruby-identifier">member_routes</span>[<span class="ruby-identifier">:versions</span>] = <span class="ruby-identifier">:get</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">content_block</span>.<span class="ruby-identifier">versioned?</span>
+27:     <span class="ruby-identifier">member_routes</span>[<span class="ruby-identifier">:usages</span>] = <span class="ruby-identifier">:get</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">content_block</span>.<span class="ruby-identifier">connectable?</span>    
+28:     {<span class="ruby-identifier">:member</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">member_routes</span>}
+29:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000494" class="method-detail">
+        <a name="M000494"></a>
+
+        <div class="method-heading">
+          <a href="#M000494" class="method-signature">
           <span class="method-name">routes_for_browser_cms</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000406-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000406-source">
+            onclick="toggleCode('M000494-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000494-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/routes.rb, line 2</span>
- 2:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">routes_for_browser_cms</span>
- 3: 
- 4:     <span class="ruby-identifier">namespace</span>(<span class="ruby-identifier">:cms</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cms</span><span class="ruby-operator">|</span>
- 5:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">logout</span> <span class="ruby-value str">'/logout'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'sessions'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'logout'</span>
- 6:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">login</span> <span class="ruby-value str">'/login'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'sessions'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'login'</span>
- 7:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">dashboard</span> <span class="ruby-value str">'/'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'dashboard'</span>
- 8:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">sitemap</span> <span class="ruby-value str">'/sitemap'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'section_nodes'</span>
- 9:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">content_library</span> <span class="ruby-value str">'/content_library'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'blocks'</span>
-10:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">administration</span> <span class="ruby-value str">'/administration'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'users'</span>
-11:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">connect</span> <span class="ruby-value str">'/blocks/:block_type/:action/:id'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'blocks'</span>
-12:     <span class="ruby-keyword kw">end</span>
-13: 
-14:     <span class="ruby-identifier">connect</span> <span class="ruby-value str">'/:controller/:action/:id.:format'</span>
-15:     <span class="ruby-identifier">connect</span> <span class="ruby-value str">'/:controller/:action.:format'</span>
-16:     <span class="ruby-identifier">connect</span> <span class="ruby-value str">'/:controller/:action/:id'</span>
-17: 
-18:     <span class="ruby-identifier">connect</span> <span class="ruby-value str">'*path'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'cms/content'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'show'</span>    
-19:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File lib/cms/routes.rb, line 31</span>
+ 31:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">routes_for_browser_cms</span>
+ 32: 
+ 33:     <span class="ruby-identifier">namespace</span>(<span class="ruby-identifier">:cms</span>) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cms</span><span class="ruby-operator">|</span>
+ 34:       
+ 35:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">home</span> <span class="ruby-value str">'/'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'home'</span>
+ 36:       
+ 37:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">logout</span> <span class="ruby-value str">'/logout'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'sessions'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'destroy'</span>
+ 38:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">login</span> <span class="ruby-value str">'/login'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'sessions'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'new'</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-identifier">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:get</span> }
+ 39:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">connect</span> <span class="ruby-value str">'/login'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'sessions'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'create'</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-identifier">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:post</span> }      
+ 40:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">dashboard</span> <span class="ruby-value str">'/dashboard'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'dashboard'</span>
+ 41:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">sitemap</span> <span class="ruby-value str">'/sitemap'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'section_nodes'</span>
+ 42: 
+ 43:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">content_types</span> <span class="ruby-value str">'/content_types'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'content_types'</span>
+ 44:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">resources</span> <span class="ruby-identifier">:connectors</span>, <span class="ruby-identifier">:member</span> =<span class="ruby-operator">&gt;</span> {
+ 45:         <span class="ruby-identifier">:move_up</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:put</span>,
+ 46:         <span class="ruby-identifier">:move_down</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:put</span>,
+ 47:         <span class="ruby-identifier">:move_to_bottom</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:put</span>,
+ 48:         <span class="ruby-identifier">:move_to_top</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:put</span>
+ 49:       }
+ 50:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">resources</span> <span class="ruby-identifier">:links</span>
+ 51: 
+ 52:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">resources</span> <span class="ruby-identifier">:pages</span>, <span class="ruby-identifier">:member</span> =<span class="ruby-operator">&gt;</span> {
+ 53:         <span class="ruby-identifier">:archive</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:put</span>,
+ 54:         <span class="ruby-identifier">:hide</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:put</span>,
+ 55:         <span class="ruby-identifier">:publish</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:put</span>,
+ 56:         <span class="ruby-identifier">:versions</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:get</span>
+ 57:       }, <span class="ruby-identifier">:collection</span> =<span class="ruby-operator">&gt;</span> {
+ 58:         <span class="ruby-identifier">:publish</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:put</span>
+ 59:       }, <span class="ruby-identifier">:has_many</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-identifier">:tasks</span>]
+ 60:       <span class="ruby-identifier">version_cms_page</span> <span class="ruby-value str">'/cms/pages/:id/version/:version'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'cms/pages'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'version'</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:get</span>}
+ 61:       <span class="ruby-identifier">revert_to_cms_page</span> <span class="ruby-value str">'/cms/pages/:id/revert_to/:version'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'cms/pages'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'revert_to'</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:put</span>}
+ 62: 
+ 63:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">file_browser</span> <span class="ruby-value str">'/sections/file_browser.xml'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'sections'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'file_browser'</span>, <span class="ruby-identifier">:format</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;xml&quot;</span>
+ 64:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">resources</span> <span class="ruby-identifier">:sections</span>, <span class="ruby-identifier">:has_many</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-identifier">:links</span>, <span class="ruby-identifier">:pages</span>]
+ 65: 
+ 66:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">resources</span> <span class="ruby-identifier">:section_nodes</span>, <span class="ruby-identifier">:member</span> =<span class="ruby-operator">&gt;</span> {
+ 67:         <span class="ruby-identifier">:move_before</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:put</span>,
+ 68:         <span class="ruby-identifier">:move_after</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:put</span>,
+ 69:         <span class="ruby-identifier">:move_to_beginning</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:put</span>,
+ 70:         <span class="ruby-identifier">:move_to_end</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:put</span>,
+ 71:         <span class="ruby-identifier">:move_to_root</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:put</span>
+ 72:       }
+ 73:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">attachment</span> <span class="ruby-value str">'/attachments/:id'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'attachments'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'show'</span>
+ 74: 
+ 75:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">resources</span> <span class="ruby-identifier">:tasks</span>, <span class="ruby-identifier">:member</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:complete</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:put</span>}, <span class="ruby-identifier">:collection</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:complete</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:put</span>}
+ 76:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">toolbar</span> <span class="ruby-value str">'/toolbar'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'toolbar'</span>
+ 77:       
+ 78:       <span class="ruby-comment cmt"># TODO: Make an actual content library controller </span>
+ 79:       <span class="ruby-comment cmt"># that redirects to the last content type you were working on</span>
+ 80:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">content_library</span> <span class="ruby-value str">'/content_library'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'html_blocks'</span> 
+ 81:       
+ 82:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">content_blocks</span> <span class="ruby-identifier">:html_blocks</span>
+ 83:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">content_blocks</span> <span class="ruby-identifier">:portlets</span>, <span class="ruby-identifier">:member</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:usages</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:get</span>}
+ 84:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">content_blocks</span> <span class="ruby-identifier">:file_blocks</span>
+ 85:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">content_blocks</span> <span class="ruby-identifier">:image_blocks</span>
+ 86:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">content_blocks</span> <span class="ruby-identifier">:category_types</span>
+ 87:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">content_blocks</span> <span class="ruby-identifier">:categories</span>
+ 88:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">content_blocks</span> <span class="ruby-identifier">:tags</span>
+ 89:       
+ 90:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">administration</span> <span class="ruby-value str">'/administration'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'users'</span>
+ 91:       
+ 92:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">with_options</span> <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;cache&quot;</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cache</span><span class="ruby-operator">|</span>
+ 93:           <span class="ruby-identifier">cache</span>.<span class="ruby-identifier">cache</span> <span class="ruby-value str">&quot;/cache&quot;</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;show&quot;</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:get</span>}
+ 94:         <span class="ruby-identifier">cache</span>.<span class="ruby-identifier">connect</span> <span class="ruby-value str">&quot;/cache&quot;</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;destroy&quot;</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:delete</span>}
+ 95:       <span class="ruby-keyword kw">end</span>
+ 96:       
+ 97:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">email_page_portlet</span> <span class="ruby-value str">&quot;/email_page_portlet/:id/deliver&quot;</span>, 
+ 98:         <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;email_page_portlet&quot;</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;deliver&quot;</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:post</span>}
+ 99:       
+100:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">resources</span> <span class="ruby-identifier">:email_messages</span>
+101:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">resources</span> <span class="ruby-identifier">:groups</span>
+102:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">resources</span> <span class="ruby-identifier">:redirects</span>
+103:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">resources</span> <span class="ruby-identifier">:page_partials</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'dynamic_views'</span>
+104:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">resources</span> <span class="ruby-identifier">:page_templates</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'dynamic_views'</span>
+105:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">resources</span> <span class="ruby-identifier">:page_routes</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">pr</span><span class="ruby-operator">|</span>
+106:         <span class="ruby-identifier">pr</span>.<span class="ruby-identifier">resources</span> <span class="ruby-identifier">:conditions</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;page_route_conditions&quot;</span>
+107:         <span class="ruby-identifier">pr</span>.<span class="ruby-identifier">resources</span> <span class="ruby-identifier">:requirements</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;page_route_requirements&quot;</span>
+108:       <span class="ruby-keyword kw">end</span>
+109:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">routes</span> <span class="ruby-value str">&quot;/routes&quot;</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;routes&quot;</span>
+110:       <span class="ruby-identifier">cms</span>.<span class="ruby-identifier">resources</span> <span class="ruby-identifier">:users</span>, <span class="ruby-identifier">:member</span> =<span class="ruby-operator">&gt;</span> {
+111:         <span class="ruby-identifier">:change_password</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:get</span>, 
+112:         <span class="ruby-identifier">:update_password</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:put</span>,
+113:         <span class="ruby-identifier">:disable</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:put</span>, 
+114:         <span class="ruby-identifier">:enable</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:put</span>
+115:       }
+116:       
+117:     <span class="ruby-keyword kw">end</span>
+118: 
+119:     <span class="ruby-identifier">image_missing</span> <span class="ruby-value str">'/images/*path'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'cms/missing_asset'</span>
+120:     <span class="ruby-identifier">stylesheet_missing</span> <span class="ruby-value str">'/stylesheets/*path'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'cms/missing_asset'</span>
+121:     <span class="ruby-identifier">javascript_missing</span> <span class="ruby-value str">'/javascripts/*path'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'cms/missing_asset'</span>
+122: 
+123:     <span class="ruby-keyword kw">if</span> <span class="ruby-constant">PageRoute</span>.<span class="ruby-identifier">table_exists?</span>
+124:       <span class="ruby-constant">PageRoute</span>.<span class="ruby-identifier">all</span>(<span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;page_routes.name&quot;</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span>
+125:         <span class="ruby-identifier">send</span>((<span class="ruby-identifier">r</span>.<span class="ruby-identifier">route_name</span> <span class="ruby-operator">||</span> <span class="ruby-value str">'connect'</span>).<span class="ruby-identifier">to_sym</span>, <span class="ruby-identifier">r</span>.<span class="ruby-identifier">pattern</span>, <span class="ruby-identifier">r</span>.<span class="ruby-identifier">options_map</span>)
+126:       <span class="ruby-keyword kw">end</span>
+127:     <span class="ruby-keyword kw">end</span>
+128: 
+129:     <span class="ruby-identifier">connect</span> <span class="ruby-value str">'*path'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'cms/content'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'show'</span>    
+130:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

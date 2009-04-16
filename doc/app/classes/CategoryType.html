@@ -86,8 +86,9 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000080">category_list</a>&nbsp;&nbsp;
-      <a href="#M000079">category_map</a>&nbsp;&nbsp;
+      <a href="#M000112">cannot_be_deleted_message</a>&nbsp;&nbsp;
+      <a href="#M000111">category_list</a>&nbsp;&nbsp;
+      <a href="#M000110">category_map</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -109,11 +110,11 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000079" class="method-detail">
-        <a name="M000079"></a>
+      <div id="method-M000110" class="method-detail">
+        <a name="M000110"></a>
 
         <div class="method-heading">
-          <a href="#M000079" class="method-signature">
+          <a href="#M000110" class="method-signature">
           <span class="method-name">category_map</span><span class="method-args">()</span>
           </a>
         </div>
@@ -125,8 +126,8 @@ an array of arrays, each entry having the first value as the category path
 and the second value being the category id as a string
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000079-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000079-source">
+            onclick="toggleCode('M000110-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000110-source">
 <pre>
     <span class="ruby-comment cmt"># File app/models/category_type.rb, line 12</span>
 12:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">category_map</span>
@@ -142,12 +143,35 @@ and the second value being the category id as a string
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000080" class="method-detail">
-        <a name="M000080"></a>
+      <div id="method-M000112" class="method-detail">
+        <a name="M000112"></a>
 
         <div class="method-heading">
-          <a href="#M000080" class="method-signature">
-          <span class="method-name">category_list</span><span class="method-args">()</span>
+          <a href="#M000112" class="method-signature">
+          <span class="method-name">cannot_be_deleted_message</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000112-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000112-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/category_type.rb, line 30</span>
+30:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cannot_be_deleted_message</span>
+31:     <span class="ruby-identifier">categories</span>.<span class="ruby-identifier">count</span>.<span class="ruby-identifier">zero?</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">nil</span> <span class="ruby-operator">:</span> <span class="ruby-node">&quot;This cannot be deleted because it is in use in #{categories.count} #{&quot;category&quot;.pluralize(categories.count)}&quot;</span>
+32:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000111" class="method-detail">
+        <a name="M000111"></a>
+
+        <div class="method-heading">
+          <a href="#M000111" class="method-signature">
+          <span class="method-name">category_list</span><span class="method-args">(order=&quot;name&quot;)</span>
           </a>
         </div>
       
@@ -157,17 +181,17 @@ This is used to get the full list of categories for this category type in
 the correct order.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000080-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000080-source">
+            onclick="toggleCode('M000111-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000111-source">
 <pre>
     <span class="ruby-comment cmt"># File app/models/category_type.rb, line 20</span>
-20:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">category_list</span>
+20:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">category_list</span>(<span class="ruby-identifier">order</span>=<span class="ruby-value str">&quot;name&quot;</span>)
 21:     <span class="ruby-identifier">list</span> = []
 22:     <span class="ruby-identifier">fn</span> = <span class="ruby-identifier">lambda</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cat</span><span class="ruby-operator">|</span>
 23:       <span class="ruby-identifier">list</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">cat</span>
-24:       <span class="ruby-identifier">cat</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">all</span>(<span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;name&quot;</span>).<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">fn</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">c</span>)}
+24:       <span class="ruby-identifier">cat</span>.<span class="ruby-identifier">children</span>.<span class="ruby-identifier">all</span>(<span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">order</span>).<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">fn</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">c</span>)}
 25:     <span class="ruby-keyword kw">end</span>
-26:     <span class="ruby-identifier">categories</span>.<span class="ruby-identifier">top_level</span>.<span class="ruby-identifier">all</span>(<span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;name&quot;</span>).<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">cat</span><span class="ruby-operator">|</span> <span class="ruby-identifier">fn</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">cat</span>)}
+26:     <span class="ruby-identifier">categories</span>.<span class="ruby-identifier">top_level</span>.<span class="ruby-identifier">all</span>(<span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">order</span>).<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">cat</span><span class="ruby-operator">|</span> <span class="ruby-identifier">fn</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">cat</span>)}
 27:     <span class="ruby-identifier">list</span>
 28:   <span class="ruby-keyword kw">end</span>
 </pre>

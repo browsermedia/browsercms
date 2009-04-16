@@ -88,13 +88,13 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000445">create</a>&nbsp;&nbsp;
-      <a href="#M000448">destroy</a>&nbsp;&nbsp;
-      <a href="#M000446">edit</a>&nbsp;&nbsp;
-      <a href="#M000449">load_section</a>&nbsp;&nbsp;
-      <a href="#M000444">new</a>&nbsp;&nbsp;
-      <a href="#M000450">set_toolbar_tab</a>&nbsp;&nbsp;
-      <a href="#M000447">update</a>&nbsp;&nbsp;
+      <a href="#M000540">create</a>&nbsp;&nbsp;
+      <a href="#M000542">destroy</a>&nbsp;&nbsp;
+      <a href="#M000544">load_link</a>&nbsp;&nbsp;
+      <a href="#M000543">load_section</a>&nbsp;&nbsp;
+      <a href="#M000539">new</a>&nbsp;&nbsp;
+      <a href="#M000545">set_toolbar_tab</a>&nbsp;&nbsp;
+      <a href="#M000541">update</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -116,140 +116,115 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000445" class="method-detail">
-        <a name="M000445"></a>
+      <div id="method-M000540" class="method-detail">
+        <a name="M000540"></a>
 
         <div class="method-heading">
-          <a href="#M000445" class="method-signature">
+          <a href="#M000540" class="method-signature">
           <span class="method-name">create</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000445-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000445-source">
+            onclick="toggleCode('M000540-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000540-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/links_controller.rb, line 10</span>
-10:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create</span>
-11:     <span class="ruby-ivar">@link</span> = <span class="ruby-constant">Link</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:link</span>])
-12:     <span class="ruby-ivar">@link</span>.<span class="ruby-identifier">section</span> = <span class="ruby-ivar">@section</span>
-13:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@link</span>.<span class="ruby-identifier">save</span>
-14:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-node">&quot;Link was '#{@link.name}' created.&quot;</span>
-15:       <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">cms_url</span>(<span class="ruby-ivar">@section</span>)
-16:     <span class="ruby-keyword kw">else</span>
-17:       <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;new&quot;</span>
-18:     <span class="ruby-keyword kw">end</span>
-19:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/links_controller.rb, line 11</span>
+11:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create</span>
+12:     <span class="ruby-ivar">@link</span> = <span class="ruby-constant">Link</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:link</span>])
+13:     <span class="ruby-ivar">@link</span>.<span class="ruby-identifier">section</span> = <span class="ruby-ivar">@section</span>
+14:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@link</span>.<span class="ruby-identifier">save</span>
+15:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-node">&quot;Link was '#{@link.name}' created.&quot;</span>
+16:       <span class="ruby-identifier">redirect_to</span> [<span class="ruby-identifier">:cms</span>, <span class="ruby-ivar">@section</span>]
+17:     <span class="ruby-keyword kw">else</span>
+18:       <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;new&quot;</span>
+19:     <span class="ruby-keyword kw">end</span>
+20:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000448" class="method-detail">
-        <a name="M000448"></a>
+      <div id="method-M000542" class="method-detail">
+        <a name="M000542"></a>
 
         <div class="method-heading">
-          <a href="#M000448" class="method-signature">
+          <a href="#M000542" class="method-signature">
           <span class="method-name">destroy</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000448-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000448-source">
+            onclick="toggleCode('M000542-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000542-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/links_controller.rb, line 35</span>
-35:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroy</span>
-36:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
-37:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@link</span>.<span class="ruby-identifier">destroy</span>
-38:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-node">&quot;Link '#{@link.name}' was deleted.&quot;</span>
-39:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">cms_url</span>(<span class="ruby-identifier">:sitemap</span>) }
-40:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">js</span> { }
-41:       <span class="ruby-keyword kw">else</span>
-42:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:error</span>] = <span class="ruby-node">&quot;Link '#{@link.name}' could not be deleted&quot;</span>
-43:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">cms_url</span>(<span class="ruby-identifier">:sitemap</span>) }
-44:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">js</span> { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:template</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'cms/shared/show_error'</span> }
-45:       <span class="ruby-keyword kw">end</span>
-46:     <span class="ruby-keyword kw">end</span>
-47:     
-48:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/links_controller.rb, line 31</span>
+31:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroy</span>
+32:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+33:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@link</span>.<span class="ruby-identifier">destroy</span>
+34:         <span class="ruby-identifier">message</span> = <span class="ruby-node">&quot;Link '#{@link.name}' was deleted.&quot;</span>
+35:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-identifier">message</span>; <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">cms_sitemap_url</span>) }
+36:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">json</span> { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:json</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:success</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">:message</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">message</span> } }
+37:       <span class="ruby-keyword kw">else</span>
+38:         <span class="ruby-identifier">message</span> = <span class="ruby-node">&quot;Link '#{@link.name}' could not be deleted&quot;</span>
+39:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:error</span>] = <span class="ruby-identifier">message</span>; <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">cms_sitemap_url</span>) }
+40:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">json</span> { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:json</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:success</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>, <span class="ruby-identifier">:message</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">message</span> } }
+41:       <span class="ruby-keyword kw">end</span>
+42:     <span class="ruby-keyword kw">end</span>    
+43:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000446" class="method-detail">
-        <a name="M000446"></a>
+      <div id="method-M000539" class="method-detail">
+        <a name="M000539"></a>
 
         <div class="method-heading">
-          <a href="#M000446" class="method-signature">
-          <span class="method-name">edit</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000446-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000446-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/links_controller.rb, line 21</span>
-21:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">edit</span>
-22:     <span class="ruby-ivar">@link</span> = <span class="ruby-constant">Link</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])
-23:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000444" class="method-detail">
-        <a name="M000444"></a>
-
-        <div class="method-heading">
-          <a href="#M000444" class="method-signature">
+          <a href="#M000539" class="method-signature">
           <span class="method-name">new</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000444-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000444-source">
+            onclick="toggleCode('M000539-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000539-source">
 <pre>
-   <span class="ruby-comment cmt"># File app/controllers/cms/links_controller.rb, line 6</span>
-6:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new</span>
-7:     <span class="ruby-ivar">@link</span> = <span class="ruby-constant">Link</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:section</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@section</span>)
-8:   <span class="ruby-keyword kw">end</span>
+   <span class="ruby-comment cmt"># File app/controllers/cms/links_controller.rb, line 7</span>
+7:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new</span>
+8:     <span class="ruby-ivar">@link</span> = <span class="ruby-constant">Link</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:section</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@section</span>)
+9:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000447" class="method-detail">
-        <a name="M000447"></a>
+      <div id="method-M000541" class="method-detail">
+        <a name="M000541"></a>
 
         <div class="method-heading">
-          <a href="#M000447" class="method-signature">
+          <a href="#M000541" class="method-signature">
           <span class="method-name">update</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000447-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000447-source">
+            onclick="toggleCode('M000541-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000541-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/links_controller.rb, line 25</span>
-25:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update</span>
-26:     <span class="ruby-ivar">@link</span> = <span class="ruby-constant">Link</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])
-27:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@link</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:link</span>])
-28:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-node">&quot;Link '#{@link.name}' was updated&quot;</span>
-29:       <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">cms_url</span>(<span class="ruby-ivar">@link</span>.<span class="ruby-identifier">section</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">:sitemap</span>)
-30:     <span class="ruby-keyword kw">else</span>
-31:       <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'edit'</span>
-32:     <span class="ruby-keyword kw">end</span>      
-33:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/links_controller.rb, line 22</span>
+22:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update</span>
+23:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@link</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:link</span>])
+24:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-node">&quot;Link '#{@link.name}' was updated&quot;</span>
+25:       <span class="ruby-identifier">redirect_to</span> [<span class="ruby-identifier">:cms</span>, <span class="ruby-ivar">@link</span>.<span class="ruby-identifier">section</span>]
+26:     <span class="ruby-keyword kw">else</span>
+27:       <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'edit'</span>
+28:     <span class="ruby-keyword kw">end</span>      
+29:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -257,42 +232,65 @@
 
       <h3 class="section-bar">Protected Instance methods</h3>
 
-      <div id="method-M000449" class="method-detail">
-        <a name="M000449"></a>
+      <div id="method-M000544" class="method-detail">
+        <a name="M000544"></a>
 
         <div class="method-heading">
-          <a href="#M000449" class="method-signature">
+          <a href="#M000544" class="method-signature">
+          <span class="method-name">load_link</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000544-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000544-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/cms/links_controller.rb, line 51</span>
+51:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">load_link</span>
+52:       <span class="ruby-ivar">@link</span> = <span class="ruby-constant">Link</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])
+53:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000543" class="method-detail">
+        <a name="M000543"></a>
+
+        <div class="method-heading">
+          <a href="#M000543" class="method-signature">
           <span class="method-name">load_section</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000449-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000449-source">
+            onclick="toggleCode('M000543-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000543-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/links_controller.rb, line 52</span>
-52:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">load_section</span>
-53:       <span class="ruby-ivar">@section</span> = <span class="ruby-constant">Section</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:section_id</span>])
-54:     <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/links_controller.rb, line 47</span>
+47:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">load_section</span>
+48:       <span class="ruby-ivar">@section</span> = <span class="ruby-constant">Section</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:section_id</span>])
+49:     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000450" class="method-detail">
-        <a name="M000450"></a>
+      <div id="method-M000545" class="method-detail">
+        <a name="M000545"></a>
 
         <div class="method-heading">
-          <a href="#M000450" class="method-signature">
+          <a href="#M000545" class="method-signature">
           <span class="method-name">set_toolbar_tab</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000450-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000450-source">
+            onclick="toggleCode('M000545-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000545-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/cms/links_controller.rb, line 55</span>
 55:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_toolbar_tab</span>

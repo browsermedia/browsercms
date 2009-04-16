@@ -16,29 +16,29 @@ module Cms
           named_scope :hidden, :conditions => {:hidden => true}
           named_scope :not_hidden, :conditions => {:hidden => false}        
         end
-        module ClassMethods
+      end
+      module ClassMethods
+      end
+      module InstanceMethods
+        def hide
+          self.hidden = true
+          self.version_comment = "Hidden"         
+          self.save
         end
-        module InstanceMethods
-          def hide
-            self.hidden = true
-            self.version_comment = "Hidden"         
-            self.save
-          end
-          def hide!
-            self.hidden = true
-            self.version_comment = "Hidden"
-            self.save!
-          end
-          def unhide
-            self.hidden = false
-            self.version_comment = "Unhidden"          
-            self.save
-          end
-          def unhide!
-            self.hidden = false
-            self.version_comment = "Unhidden"          
-            self.save!
-          end
+        def hide!
+          self.hidden = true
+          self.version_comment = "Hidden"
+          self.save!
+        end
+        def unhide
+          self.hidden = false
+          self.version_comment = "Unhidden"          
+          self.save
+        end
+        def unhide!
+          self.hidden = false
+          self.version_comment = "Unhidden"          
+          self.save!
         end
       end
     end

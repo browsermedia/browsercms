@@ -80,10 +80,8 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000242">cms_access_denied</a>&nbsp;&nbsp;
-      <a href="#M000241">cms_not_found</a>&nbsp;&nbsp;
-      <a href="#M000243">cms_server_error</a>&nbsp;&nbsp;
-      <a href="#M000240">included</a>&nbsp;&nbsp;
+      <a href="#M000282">handle_server_error</a>&nbsp;&nbsp;
+      <a href="#M000281">included</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -105,28 +103,26 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000240" class="method-detail">
-        <a name="M000240"></a>
+      <div id="method-M000281" class="method-detail">
+        <a name="M000281"></a>
 
         <div class="method-heading">
-          <a href="#M000240" class="method-signature">
+          <a href="#M000281" class="method-signature">
           <span class="method-name">included</span><span class="method-args">(controller)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000240-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000240-source">
+            onclick="toggleCode('M000281-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000281-source">
 <pre>
    <span class="ruby-comment cmt"># File app/controllers/cms/error_handling.rb, line 3</span>
 3:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">included</span>(<span class="ruby-identifier">controller</span>)
 4:       <span class="ruby-identifier">controller</span>.<span class="ruby-identifier">class_eval</span> <span class="ruby-keyword kw">do</span>
-5:         <span class="ruby-identifier">rescue_from</span> <span class="ruby-constant">Exception</span>, <span class="ruby-identifier">:with</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:cms_server_error</span>
-6:         <span class="ruby-identifier">rescue_from</span> <span class="ruby-constant">Cms</span><span class="ruby-operator">::</span><span class="ruby-constant">Errors</span><span class="ruby-operator">::</span><span class="ruby-constant">AccessDenied</span>, <span class="ruby-identifier">:with</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:cms_access_denied</span>
-7:         <span class="ruby-identifier">rescue_from</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordNotFound</span>, <span class="ruby-identifier">:with</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:cms_not_found</span>
-8:       <span class="ruby-keyword kw">end</span>
-9:     <span class="ruby-keyword kw">end</span>
+5:           <span class="ruby-identifier">rescue_from</span> <span class="ruby-constant">Exception</span>, <span class="ruby-identifier">:with</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:handle_server_error</span>
+6:       <span class="ruby-keyword kw">end</span>
+7:     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -134,70 +130,28 @@
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000242" class="method-detail">
-        <a name="M000242"></a>
+      <div id="method-M000282" class="method-detail">
+        <a name="M000282"></a>
 
         <div class="method-heading">
-          <a href="#M000242" class="method-signature">
-          <span class="method-name">cms_access_denied</span><span class="method-args">(exception)</span>
+          <a href="#M000282" class="method-signature">
+          <span class="method-name">handle_server_error</span><span class="method-args">(exception)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000242-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000242-source">
+            onclick="toggleCode('M000282-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000282-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/error_handling.rb, line 15</span>
-15:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cms_access_denied</span>(<span class="ruby-identifier">exception</span>)
-16:       <span class="ruby-identifier">handler_error_with_cms_page</span>(<span class="ruby-value str">'/system/access_denied'</span>, <span class="ruby-identifier">exception</span>, <span class="ruby-identifier">:forbidden</span>)
-17:     <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000241" class="method-detail">
-        <a name="M000241"></a>
-
-        <div class="method-heading">
-          <a href="#M000241" class="method-signature">
-          <span class="method-name">cms_not_found</span><span class="method-args">(exception)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000241-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000241-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/error_handling.rb, line 11</span>
-11:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cms_not_found</span>(<span class="ruby-identifier">exception</span>)
-12:       <span class="ruby-identifier">handler_error_with_cms_page</span>(<span class="ruby-value str">'/system/not_found'</span>, <span class="ruby-identifier">exception</span>, <span class="ruby-identifier">:not_found</span>)
-13:     <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000243" class="method-detail">
-        <a name="M000243"></a>
-
-        <div class="method-heading">
-          <a href="#M000243" class="method-signature">
-          <span class="method-name">cms_server_error</span><span class="method-args">(exception)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000243-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000243-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/error_handling.rb, line 19</span>
-19:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cms_server_error</span>(<span class="ruby-identifier">exception</span>)
-20:       <span class="ruby-identifier">handler_error_with_cms_page</span>(<span class="ruby-value str">'/system/server_error'</span>, <span class="ruby-identifier">exception</span>, <span class="ruby-identifier">:internal_server_error</span>, <span class="ruby-identifier">:stacktrace</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>)
-21:     <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/error_handling.rb, line 9</span>
+ 9:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle_server_error</span>(<span class="ruby-identifier">exception</span>)
+10:       <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">error</span> <span class="ruby-node">&quot;Handling Exception: #{exception}&quot;</span>
+11:       <span class="ruby-identifier">render</span> <span class="ruby-identifier">:layout</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'cms/application'</span>, 
+12:         <span class="ruby-identifier">:template</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'cms/shared/error'</span>, 
+13:         <span class="ruby-identifier">:status</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:internal_server_error</span>,
+14:         <span class="ruby-identifier">:locals</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">exception</span>}
+15:     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

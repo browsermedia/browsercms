@@ -86,26 +86,36 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000115">after_build_new_version</a>&nbsp;&nbsp;
-      <a href="#M000132">ancestors</a>&nbsp;&nbsp;
-      <a href="#M000128">append_leading_slash_to_path</a>&nbsp;&nbsp;
-      <a href="#M000133">container_published?</a>&nbsp;&nbsp;
-      <a href="#M000116">copy_connectors</a>&nbsp;&nbsp;
-      <a href="#M000117">create_connector</a>&nbsp;&nbsp;
-      <a href="#M000120">delete_connectors</a>&nbsp;&nbsp;
-      <a href="#M000122">file_size</a>&nbsp;&nbsp;
-      <a href="#M000134">find_live_by_path</a>&nbsp;&nbsp;
-      <a href="#M000130">layout</a>&nbsp;&nbsp;
-      <a href="#M000118">move_connector</a>&nbsp;&nbsp;
-      <a href="#M000127">page_title</a>&nbsp;&nbsp;
-      <a href="#M000129">path_unique?</a>&nbsp;&nbsp;
-      <a href="#M000119">remove_connector</a>&nbsp;&nbsp;
-      <a href="#M000121">revert_to</a>&nbsp;&nbsp;
-      <a href="#M000124">section</a>&nbsp;&nbsp;
-      <a href="#M000126">section=</a>&nbsp;&nbsp;
-      <a href="#M000123">section_id</a>&nbsp;&nbsp;
-      <a href="#M000125">section_id=</a>&nbsp;&nbsp;
-      <a href="#M000131">template_name</a>&nbsp;&nbsp;
+      <a href="#M000162">after_build_new_version</a>&nbsp;&nbsp;
+      <a href="#M000182">ancestors</a>&nbsp;&nbsp;
+      <a href="#M000176">append_leading_slash_to_path</a>&nbsp;&nbsp;
+      <a href="#M000190">assigned_to</a>&nbsp;&nbsp;
+      <a href="#M000191">assigned_to?</a>&nbsp;&nbsp;
+      <a href="#M000185">connectable_count_for_container</a>&nbsp;&nbsp;
+      <a href="#M000184">container_published?</a>&nbsp;&nbsp;
+      <a href="#M000163">copy_connectors</a>&nbsp;&nbsp;
+      <a href="#M000164">create_connector</a>&nbsp;&nbsp;
+      <a href="#M000189">current_task</a>&nbsp;&nbsp;
+      <a href="#M000167">delete_connectors</a>&nbsp;&nbsp;
+      <a href="#M000169">file_size</a>&nbsp;&nbsp;
+      <a href="#M000186">find_live_by_path</a>&nbsp;&nbsp;
+      <a href="#M000183">in_section?</a>&nbsp;&nbsp;
+      <a href="#M000179">layout</a>&nbsp;&nbsp;
+      <a href="#M000165">move_connector</a>&nbsp;&nbsp;
+      <a href="#M000187">name_with_section_path</a>&nbsp;&nbsp;
+      <a href="#M000175">page_title</a>&nbsp;&nbsp;
+      <a href="#M000178">path_not_reserved</a>&nbsp;&nbsp;
+      <a href="#M000177">path_unique?</a>&nbsp;&nbsp;
+      <a href="#M000174">public?</a>&nbsp;&nbsp;
+      <a href="#M000166">remove_connector</a>&nbsp;&nbsp;
+      <a href="#M000168">revert_to</a>&nbsp;&nbsp;
+      <a href="#M000171">section</a>&nbsp;&nbsp;
+      <a href="#M000173">section=</a>&nbsp;&nbsp;
+      <a href="#M000170">section_id</a>&nbsp;&nbsp;
+      <a href="#M000172">section_id=</a>&nbsp;&nbsp;
+      <a href="#M000180">template</a>&nbsp;&nbsp;
+      <a href="#M000181">template_name</a>&nbsp;&nbsp;
+      <a href="#M000188">top_level_section</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -131,8 +141,8 @@
       <tr class="top-aligned-row context-row">
         <td>&nbsp;</td>
         <td colspan="2" class="context-item-desc">
-This is done to let <a href="Page.html#M000116">copy_connectors</a> know
-which version to pull from <a href="Page.html#M000116">copy_connectors</a>
+This is done to let <a href="Page.html#M000163">copy_connectors</a> know
+which version to pull from <a href="Page.html#M000163">copy_connectors</a>
 will get called later as an after_update callback
 
 </td>
@@ -149,25 +159,34 @@ will get called later as an after_update callback
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000134" class="method-detail">
-        <a name="M000134"></a>
+      <div id="method-M000186" class="method-detail">
+        <a name="M000186"></a>
 
         <div class="method-heading">
-          <a href="#M000134" class="method-signature">
+          <a href="#M000186" class="method-signature">
           <span class="method-name">find_live_by_path</span><span class="method-args">(path)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000134-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000134-source">
+            onclick="toggleCode('M000186-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000186-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/page.rb, line 198</span>
-198:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_live_by_path</span>(<span class="ruby-identifier">path</span>)
-199:     <span class="ruby-identifier">page</span> = <span class="ruby-identifier">find</span>(<span class="ruby-identifier">:first</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:path</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">path</span>})
-200:     <span class="ruby-identifier">page</span> <span class="ruby-value">? </span><span class="ruby-identifier">page</span>.<span class="ruby-identifier">live_version</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
-201:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/page.rb, line 253</span>
+253:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_live_by_path</span>(<span class="ruby-identifier">path</span>)
+254:     <span class="ruby-identifier">page_versions</span> = <span class="ruby-constant">Page</span><span class="ruby-operator">::</span><span class="ruby-constant">Version</span>.<span class="ruby-identifier">all</span>(<span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> {
+255:         <span class="ruby-identifier">:path</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">path</span>, 
+256:         <span class="ruby-identifier">:archived</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>, 
+257:         <span class="ruby-identifier">:published</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>}, 
+258:         <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;version desc&quot;</span>)
+259:     <span class="ruby-keyword kw">for</span> <span class="ruby-identifier">page_version</span> <span class="ruby-keyword kw">in</span> <span class="ruby-identifier">page_versions</span>
+260:       <span class="ruby-keyword kw">next</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">page_version</span>.<span class="ruby-identifier">page</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-comment cmt">#skip versions that belong to deleted pages</span>
+261:       <span class="ruby-identifier">page</span> = <span class="ruby-identifier">page_version</span>.<span class="ruby-identifier">page</span>.<span class="ruby-identifier">as_of_version</span>(<span class="ruby-identifier">page_version</span>.<span class="ruby-identifier">version</span>)
+262:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">page</span>.<span class="ruby-identifier">live_version?</span> <span class="ruby-value">? </span><span class="ruby-identifier">page</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+263:     <span class="ruby-keyword kw">end</span>
+264:     <span class="ruby-keyword kw">nil</span>
+265:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -175,85 +194,158 @@ will get called later as an after_update callback
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000115" class="method-detail">
-        <a name="M000115"></a>
+      <div id="method-M000162" class="method-detail">
+        <a name="M000162"></a>
 
         <div class="method-heading">
-          <a href="#M000115" class="method-signature">
+          <a href="#M000162" class="method-signature">
           <span class="method-name">after_build_new_version</span><span class="method-args">(new_version)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000115-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000115-source">
+            onclick="toggleCode('M000162-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000162-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/page.rb, line 31</span>
-31:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">after_build_new_version</span>(<span class="ruby-identifier">new_version</span>)
-32:     <span class="ruby-identifier">copy_connectors</span>
-33:     <span class="ruby-keyword kw">true</span>
-34:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/page.rb, line 56</span>
+56:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">after_build_new_version</span>(<span class="ruby-identifier">new_version</span>)
+57:     <span class="ruby-identifier">copy_connectors</span>
+58:     <span class="ruby-keyword kw">true</span>
+59:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000132" class="method-detail">
-        <a name="M000132"></a>
+      <div id="method-M000182" class="method-detail">
+        <a name="M000182"></a>
 
         <div class="method-heading">
-          <a href="#M000132" class="method-signature">
+          <a href="#M000182" class="method-signature">
           <span class="method-name">ancestors</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000132-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000132-source">
+            onclick="toggleCode('M000182-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000182-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/page.rb, line 187</span>
-187:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ancestors</span>
-188:     <span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">ancestors</span>
-189:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/page.rb, line 229</span>
+229:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ancestors</span>
+230:     <span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">ancestors</span>
+231:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000128" class="method-detail">
-        <a name="M000128"></a>
+      <div id="method-M000176" class="method-detail">
+        <a name="M000176"></a>
 
         <div class="method-heading">
-          <a href="#M000128" class="method-signature">
+          <a href="#M000176" class="method-signature">
           <span class="method-name">append_leading_slash_to_path</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000128-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000128-source">
+            onclick="toggleCode('M000176-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000176-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/page.rb, line 160</span>
-160:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">append_leading_slash_to_path</span>
-161:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">blank?</span>
-162:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">path</span> = <span class="ruby-value str">&quot;/&quot;</span>
-163:     <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">path</span>[<span class="ruby-value">0</span>,<span class="ruby-value">1</span>] <span class="ruby-operator">!=</span> <span class="ruby-value str">&quot;/&quot;</span>
-164:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">path</span> = <span class="ruby-node">&quot;/#{path}&quot;</span>
-165:     <span class="ruby-keyword kw">end</span>
-166:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/page.rb, line 191</span>
+191:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">append_leading_slash_to_path</span>
+192:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">path</span>.<span class="ruby-identifier">blank?</span>
+193:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">path</span> = <span class="ruby-value str">&quot;/&quot;</span>
+194:     <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">path</span>[<span class="ruby-value">0</span>,<span class="ruby-value">1</span>] <span class="ruby-operator">!=</span> <span class="ruby-value str">&quot;/&quot;</span>
+195:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">path</span> = <span class="ruby-node">&quot;/#{path}&quot;</span>
+196:     <span class="ruby-keyword kw">end</span>
+197:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000133" class="method-detail">
-        <a name="M000133"></a>
+      <div id="method-M000190" class="method-detail">
+        <a name="M000190"></a>
 
         <div class="method-heading">
-          <a href="#M000133" class="method-signature">
+          <a href="#M000190" class="method-signature">
+          <span class="method-name">assigned_to</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000190-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000190-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/models/page.rb, line 284</span>
+284:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">assigned_to</span>
+285:     <span class="ruby-identifier">current_task</span> <span class="ruby-value">? </span><span class="ruby-identifier">current_task</span>.<span class="ruby-identifier">assigned_to</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+286:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000191" class="method-detail">
+        <a name="M000191"></a>
+
+        <div class="method-heading">
+          <a href="#M000191" class="method-signature">
+          <span class="method-name">assigned_to?</span><span class="method-args">(user)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000191-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000191-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/models/page.rb, line 288</span>
+288:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">assigned_to?</span>(<span class="ruby-identifier">user</span>)
+289:     <span class="ruby-identifier">assigned_to</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">user</span>
+290:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000185" class="method-detail">
+        <a name="M000185"></a>
+
+        <div class="method-heading">
+          <a href="#M000185" class="method-signature">
+          <span class="method-name">connectable_count_for_container</span><span class="method-args">(container)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Returns the number of connectables in the given container for this version
+of this page
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000185-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000185-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/models/page.rb, line 249</span>
+249:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">connectable_count_for_container</span>(<span class="ruby-identifier">container</span>)
+250:     <span class="ruby-identifier">connectors</span>.<span class="ruby-identifier">for_page_version</span>(<span class="ruby-identifier">version</span>).<span class="ruby-identifier">in_container</span>(<span class="ruby-identifier">container</span>.<span class="ruby-identifier">to_s</span>).<span class="ruby-identifier">count</span>
+251:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000184" class="method-detail">
+        <a name="M000184"></a>
+
+        <div class="method-heading">
+          <a href="#M000184" class="method-signature">
           <span class="method-name">container_published?</span><span class="method-args">(container)</span>
           </a>
         </div>
@@ -264,428 +356,610 @@ Returns true if the block attached to each connector in the given container
 are published
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000133-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000133-source">
+            onclick="toggleCode('M000184-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000184-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/page.rb, line 192</span>
-192:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">container_published?</span>(<span class="ruby-identifier">container</span>)
-193:     <span class="ruby-identifier">connectors</span>.<span class="ruby-identifier">for_page_version</span>(<span class="ruby-identifier">version</span>).<span class="ruby-identifier">in_container</span>(<span class="ruby-identifier">container</span>.<span class="ruby-identifier">to_s</span>).<span class="ruby-identifier">all?</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> 
-194:       <span class="ruby-identifier">c</span>.<span class="ruby-identifier">connectable_type</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">publishable?</span> <span class="ruby-value">? </span><span class="ruby-identifier">c</span>.<span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">published?</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">true</span>
-195:     <span class="ruby-keyword kw">end</span>
-196:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/page.rb, line 242</span>
+242:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">container_published?</span>(<span class="ruby-identifier">container</span>)
+243:     <span class="ruby-identifier">connectors</span>.<span class="ruby-identifier">for_page_version</span>(<span class="ruby-identifier">version</span>).<span class="ruby-identifier">in_container</span>(<span class="ruby-identifier">container</span>.<span class="ruby-identifier">to_s</span>).<span class="ruby-identifier">all?</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> 
+244:       <span class="ruby-identifier">c</span>.<span class="ruby-identifier">connectable_type</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">publishable?</span> <span class="ruby-value">? </span><span class="ruby-identifier">c</span>.<span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">published?</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">true</span>
+245:     <span class="ruby-keyword kw">end</span>
+246:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000116" class="method-detail">
-        <a name="M000116"></a>
+      <div id="method-M000163" class="method-detail">
+        <a name="M000163"></a>
 
         <div class="method-heading">
-          <a href="#M000116" class="method-signature">
+          <a href="#M000163" class="method-signature">
           <span class="method-name">copy_connectors</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000116-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000116-source">
+            onclick="toggleCode('M000163-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000163-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/page.rb, line 36</span>
-36:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">copy_connectors</span>
-37:     <span class="ruby-identifier">copy_from_version</span> = <span class="ruby-ivar">@copy_connectors_from_version</span> <span class="ruby-operator">?</span> <span class="ruby-ivar">@copy_connectors_from_version</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">version</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
-38:     
-39:     <span class="ruby-identifier">connectors</span>.<span class="ruby-identifier">for_page_version</span>(<span class="ruby-identifier">copy_from_version</span>).<span class="ruby-identifier">all</span>(<span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;connectors.container, connectors.position&quot;</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
-40:       <span class="ruby-identifier">connectable</span> = <span class="ruby-identifier">c</span>.<span class="ruby-identifier">connectable_type</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">versioned?</span> <span class="ruby-value">? </span><span class="ruby-identifier">c</span>.<span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">as_of_version</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">connectable_version</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">connectable</span>
-41:       
-42:       <span class="ruby-comment cmt">#If are publishing this page, We need to publish the other page if it is not already published</span>
-43:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">published?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">connectable_type</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">publishable?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">c</span>.<span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">published?</span>
-44:         <span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">publish_by_page!</span>(<span class="ruby-keyword kw">self</span>)
-45:       <span class="ruby-keyword kw">end</span>      
-46:       
-47:       <span class="ruby-comment cmt">#If we are copying connectors from a previous version, that means we are reverting this page,</span>
-48:       <span class="ruby-comment cmt">#in which case we should create a new version of the block, and connect this page to that block</span>
-49:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@copy_connectors_from_version</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">current_version?</span>
-50:         <span class="ruby-identifier">connectable</span> = <span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">id</span>)
-51:         <span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">published_by_page</span> = <span class="ruby-keyword kw">self</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">publishable?</span>
-52:         <span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">revert_to</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">connectable_version</span>)
-53:       <span class="ruby-keyword kw">end</span>
-54:       
-55:       <span class="ruby-identifier">connectors</span>.<span class="ruby-identifier">build</span>(
-56:         <span class="ruby-identifier">:page_version</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">version</span>, 
-57:         <span class="ruby-identifier">:connectable</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">connectable</span>, 
-58:         <span class="ruby-identifier">:connectable_version</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned?</span> <span class="ruby-value">? </span><span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">version</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>,         
-59:         <span class="ruby-identifier">:container</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">container</span>, 
-60:         <span class="ruby-identifier">:position</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">position</span>
-61:       )
-62:     <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/page.rb, line 61</span>
+61:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">copy_connectors</span>
+62:     <span class="ruby-identifier">copy_from_version</span> = <span class="ruby-ivar">@copy_connectors_from_version</span> <span class="ruby-operator">?</span> <span class="ruby-ivar">@copy_connectors_from_version</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">version</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
 63:     
-64:     <span class="ruby-ivar">@copy_connectors_from_version</span> = <span class="ruby-keyword kw">nil</span>    
-65:     <span class="ruby-keyword kw">true</span>
-66:   <span class="ruby-keyword kw">end</span>
+64:     <span class="ruby-identifier">connectors</span>.<span class="ruby-identifier">for_page_version</span>(<span class="ruby-identifier">copy_from_version</span>).<span class="ruby-identifier">all</span>(<span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;connectors.container, connectors.position&quot;</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span>
+65:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">connectable</span> <span class="ruby-comment cmt">#The connector won't have a connectable if it has been deleted</span>
+66:         <span class="ruby-identifier">connectable</span> = <span class="ruby-identifier">c</span>.<span class="ruby-identifier">connectable_type</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">versioned?</span> <span class="ruby-value">? </span><span class="ruby-identifier">c</span>.<span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">as_of_version</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">connectable_version</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">connectable</span>
+67:       
+68:         <span class="ruby-comment cmt">#If are publishing this page, We need to publish the other page if it is not already published</span>
+69:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">published?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">connectable_type</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">publishable?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">c</span>.<span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">published?</span>
+70:           <span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">publish_by_page!</span>(<span class="ruby-keyword kw">self</span>)
+71:         <span class="ruby-keyword kw">end</span>      
+72:       
+73:         <span class="ruby-comment cmt">#If we are copying connectors from a previous version, that means we are reverting this page,</span>
+74:         <span class="ruby-comment cmt">#in which case we should create a new version of the block, and connect this page to that block</span>
+75:         <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@copy_connectors_from_version</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">current_version?</span>
+76:           <span class="ruby-identifier">connectable</span> = <span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">id</span>)
+77:           <span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">published_by_page</span> = <span class="ruby-keyword kw">self</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">publishable?</span>
+78:           <span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">revert_to</span>(<span class="ruby-identifier">c</span>.<span class="ruby-identifier">connectable_version</span>)
+79:         <span class="ruby-keyword kw">end</span>
+80:       
+81:         <span class="ruby-identifier">connectors</span>.<span class="ruby-identifier">build</span>(
+82:           <span class="ruby-identifier">:page_version</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">version</span>, 
+83:           <span class="ruby-identifier">:connectable</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">connectable</span>, 
+84:           <span class="ruby-identifier">:connectable_version</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned?</span> <span class="ruby-value">? </span><span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">version</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>,         
+85:           <span class="ruby-identifier">:container</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">container</span>, 
+86:           <span class="ruby-identifier">:position</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">position</span>
+87:         )
+88:       <span class="ruby-keyword kw">end</span>
+89:     <span class="ruby-keyword kw">end</span>
+90:     
+91:     <span class="ruby-ivar">@copy_connectors_from_version</span> = <span class="ruby-keyword kw">nil</span>    
+92:     <span class="ruby-keyword kw">true</span>
+93:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000117" class="method-detail">
-        <a name="M000117"></a>
+      <div id="method-M000164" class="method-detail">
+        <a name="M000164"></a>
 
         <div class="method-heading">
-          <a href="#M000117" class="method-signature">
+          <a href="#M000164" class="method-signature">
           <span class="method-name">create_connector</span><span class="method-args">(connectable, container)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000117-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000117-source">
+            onclick="toggleCode('M000164-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000164-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/page.rb, line 68</span>
-68:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_connector</span>(<span class="ruby-identifier">connectable</span>, <span class="ruby-identifier">container</span>)
-69:     <span class="ruby-identifier">transaction</span> <span class="ruby-keyword kw">do</span>
-70:       <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Connectable is nil&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">connectable</span>
-71:       <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Container is required&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">container</span>.<span class="ruby-identifier">blank?</span>
-72:       <span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">:version_comment</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{connectable} was added to the '#{container}' container&quot;</span>,
-73:         <span class="ruby-identifier">:publish_on_save</span> =<span class="ruby-operator">&gt;</span> (<span class="ruby-identifier">published?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">connected_page</span> <span class="ruby-operator">&amp;&amp;</span> 
-74:           (<span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">publishable?</span> <span class="ruby-value">? </span><span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">published?</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">true</span>)))
-75:       <span class="ruby-constant">Connector</span>.<span class="ruby-identifier">create</span>(
-76:         <span class="ruby-identifier">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>,
-77:         <span class="ruby-identifier">:page_version</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">version</span>,
-78:         <span class="ruby-identifier">:connectable</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">connectable</span>,
-79:         <span class="ruby-identifier">:connectable_version</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned?</span> <span class="ruby-value">? </span><span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">version</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>, 
-80:         <span class="ruby-identifier">:container</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">container</span>)      
-81:     <span class="ruby-keyword kw">end</span>
-82:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/page.rb, line 95</span>
+ 95:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_connector</span>(<span class="ruby-identifier">connectable</span>, <span class="ruby-identifier">container</span>)
+ 96:     <span class="ruby-identifier">transaction</span> <span class="ruby-keyword kw">do</span>
+ 97:       <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Connectable is nil&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">connectable</span>
+ 98:       <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Container is required&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">container</span>.<span class="ruby-identifier">blank?</span>
+ 99:       <span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">:version_comment</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{connectable} was added to the '#{container}' container&quot;</span>,
+100:         <span class="ruby-identifier">:publish_on_save</span> =<span class="ruby-operator">&gt;</span> (<span class="ruby-identifier">published?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">connected_page</span> <span class="ruby-operator">&amp;&amp;</span> 
+101:           (<span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">publishable?</span> <span class="ruby-value">? </span><span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">published?</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">true</span>)))
+102:       <span class="ruby-constant">Connector</span>.<span class="ruby-identifier">create</span>(
+103:         <span class="ruby-identifier">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>,
+104:         <span class="ruby-identifier">:page_version</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">version</span>,
+105:         <span class="ruby-identifier">:connectable</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">connectable</span>,
+106:         <span class="ruby-identifier">:connectable_version</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned?</span> <span class="ruby-value">? </span><span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">version</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>, 
+107:         <span class="ruby-identifier">:container</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">container</span>)      
+108:     <span class="ruby-keyword kw">end</span>
+109:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000120" class="method-detail">
-        <a name="M000120"></a>
+      <div id="method-M000189" class="method-detail">
+        <a name="M000189"></a>
 
         <div class="method-heading">
-          <a href="#M000120" class="method-signature">
+          <a href="#M000189" class="method-signature">
+          <span class="method-name">current_task</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000189-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000189-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/models/page.rb, line 280</span>
+280:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">current_task</span>
+281:     <span class="ruby-identifier">tasks</span>.<span class="ruby-identifier">incomplete</span>.<span class="ruby-identifier">first</span>
+282:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000167" class="method-detail">
+        <a name="M000167"></a>
+
+        <div class="method-heading">
+          <a href="#M000167" class="method-signature">
           <span class="method-name">delete_connectors</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000120-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000120-source">
+            onclick="toggleCode('M000167-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000167-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/page.rb, line 114</span>
-114:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete_connectors</span>
-115:     <span class="ruby-identifier">connectors</span>.<span class="ruby-identifier">for_page_version</span>(<span class="ruby-identifier">version</span>).<span class="ruby-identifier">all</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">destroy</span> }
-116:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/page.rb, line 141</span>
+141:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete_connectors</span>
+142:     <span class="ruby-identifier">connectors</span>.<span class="ruby-identifier">for_page_version</span>(<span class="ruby-identifier">version</span>).<span class="ruby-identifier">all</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">destroy</span> }
+143:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000122" class="method-detail">
-        <a name="M000122"></a>
+      <div id="method-M000169" class="method-detail">
+        <a name="M000169"></a>
 
         <div class="method-heading">
-          <a href="#M000122" class="method-signature">
+          <a href="#M000169" class="method-signature">
           <span class="method-name">file_size</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000122-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000122-source">
+            onclick="toggleCode('M000169-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000169-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/page.rb, line 126</span>
-126:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_size</span>
-127:     <span class="ruby-value str">&quot;?&quot;</span>
-128:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/page.rb, line 153</span>
+153:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_size</span>
+154:     <span class="ruby-value str">&quot;?&quot;</span>
+155:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000130" class="method-detail">
-        <a name="M000130"></a>
+      <div id="method-M000183" class="method-detail">
+        <a name="M000183"></a>
 
         <div class="method-heading">
-          <a href="#M000130" class="method-signature">
+          <a href="#M000183" class="method-signature">
+          <span class="method-name">in_section?</span><span class="method-args">(section_or_section_name)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000183-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000183-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/models/page.rb, line 233</span>
+233:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">in_section?</span>(<span class="ruby-identifier">section_or_section_name</span>)
+234:     <span class="ruby-identifier">sec</span> = <span class="ruby-identifier">section_or_section_name</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">String</span>) <span class="ruby-operator">?</span> 
+235:       <span class="ruby-constant">Section</span>.<span class="ruby-identifier">first</span>(<span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">section_or_section_name</span>}) <span class="ruby-operator">:</span> 
+236:       <span class="ruby-identifier">section_or_section_name</span>
+237:     <span class="ruby-identifier">fn</span> = <span class="ruby-identifier">lambda</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">s</span><span class="ruby-operator">|</span> <span class="ruby-identifier">s</span> <span class="ruby-value">? </span>(<span class="ruby-identifier">s</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">sec</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">fn</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">s</span>.<span class="ruby-identifier">parent</span>)) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">false</span>}
+238:     <span class="ruby-identifier">fn</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">section</span>)
+239:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000179" class="method-detail">
+        <a name="M000179"></a>
+
+        <div class="method-heading">
+          <a href="#M000179" class="method-signature">
           <span class="method-name">layout</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000130-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000130-source">
+            onclick="toggleCode('M000179-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000179-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/page.rb, line 179</span>
-179:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">layout</span>
-180:     <span class="ruby-identifier">template</span> <span class="ruby-value">? </span><span class="ruby-identifier">template</span>.<span class="ruby-identifier">file_name</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
-181:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/page.rb, line 216</span>
+216:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">layout</span>
+217:     <span class="ruby-identifier">template_file_name</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-node">&quot;templates/#{template_file_name.split('.').first}&quot;</span>
+218:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000118" class="method-detail">
-        <a name="M000118"></a>
+      <div id="method-M000165" class="method-detail">
+        <a name="M000165"></a>
 
         <div class="method-heading">
-          <a href="#M000118" class="method-signature">
+          <a href="#M000165" class="method-signature">
           <span class="method-name">move_connector</span><span class="method-args">(connector, direction)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000118-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000118-source">
+            onclick="toggleCode('M000165-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000165-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/page.rb, line 90</span>
-90:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">move_connector</span>(<span class="ruby-identifier">connector</span>, <span class="ruby-identifier">direction</span>)
-91:     <span class="ruby-identifier">transaction</span> <span class="ruby-keyword kw">do</span>
-92:       <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Connector is nil&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">connector</span>
-93:       <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Direction is nil&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">direction</span>
-94:       <span class="ruby-identifier">orientation</span> = <span class="ruby-identifier">direction</span>[<span class="ruby-regexp re">/_/</span>] <span class="ruby-operator">?</span> <span class="ruby-node">&quot;#{direction.sub('_', ' the ')} of&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-node">&quot;#{direction} within&quot;</span>
-95:       <span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">:version_comment</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{connector.connectable} was moved #{orientation} the '#{connector.container}' container&quot;</span>)
-96:       <span class="ruby-identifier">connectors</span>.<span class="ruby-identifier">for_page_version</span>(<span class="ruby-identifier">version</span>).<span class="ruby-identifier">like</span>(<span class="ruby-identifier">connector</span>).<span class="ruby-identifier">first</span>.<span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;move_#{direction}&quot;</span>)
-97:     <span class="ruby-keyword kw">end</span>    
-98:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/page.rb, line 117</span>
+117:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">move_connector</span>(<span class="ruby-identifier">connector</span>, <span class="ruby-identifier">direction</span>)
+118:     <span class="ruby-identifier">transaction</span> <span class="ruby-keyword kw">do</span>
+119:       <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Connector is nil&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">connector</span>
+120:       <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Direction is nil&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">direction</span>
+121:       <span class="ruby-identifier">orientation</span> = <span class="ruby-identifier">direction</span>[<span class="ruby-regexp re">/_/</span>] <span class="ruby-operator">?</span> <span class="ruby-node">&quot;#{direction.sub('_', ' the ')} of&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-node">&quot;#{direction} within&quot;</span>
+122:       <span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">:version_comment</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{connector.connectable} was moved #{orientation} the '#{connector.container}' container&quot;</span>)
+123:       <span class="ruby-identifier">connectors</span>.<span class="ruby-identifier">for_page_version</span>(<span class="ruby-identifier">version</span>).<span class="ruby-identifier">like</span>(<span class="ruby-identifier">connector</span>).<span class="ruby-identifier">first</span>.<span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;move_#{direction}&quot;</span>)
+124:     <span class="ruby-keyword kw">end</span>    
+125:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000127" class="method-detail">
-        <a name="M000127"></a>
+      <div id="method-M000187" class="method-detail">
+        <a name="M000187"></a>
 
         <div class="method-heading">
-          <a href="#M000127" class="method-signature">
+          <a href="#M000187" class="method-signature">
+          <span class="method-name">name_with_section_path</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000187-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000187-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/models/page.rb, line 267</span>
+267:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">name_with_section_path</span>
+268:     <span class="ruby-identifier">a</span> = <span class="ruby-identifier">ancestors</span>
+269:     (<span class="ruby-identifier">a</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-identifier">a</span>.<span class="ruby-identifier">size</span>].<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span> <span class="ruby-identifier">a</span>.<span class="ruby-identifier">name</span>} <span class="ruby-operator">+</span> [<span class="ruby-identifier">name</span>]).<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot; / &quot;</span>)
+270:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000175" class="method-detail">
+        <a name="M000175"></a>
+
+        <div class="method-heading">
+          <a href="#M000175" class="method-signature">
           <span class="method-name">page_title</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000127-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000127-source">
+            onclick="toggleCode('M000175-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000175-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/page.rb, line 150</span>
-150:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">page_title</span>
-151:     <span class="ruby-identifier">title</span>.<span class="ruby-identifier">blank?</span> <span class="ruby-value">? </span><span class="ruby-identifier">name</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">title</span>
-152:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/page.rb, line 181</span>
+181:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">page_title</span>
+182:     <span class="ruby-identifier">title</span>.<span class="ruby-identifier">blank?</span> <span class="ruby-value">? </span><span class="ruby-identifier">name</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">title</span>
+183:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000129" class="method-detail">
-        <a name="M000129"></a>
+      <div id="method-M000178" class="method-detail">
+        <a name="M000178"></a>
 
         <div class="method-heading">
-          <a href="#M000129" class="method-signature">
+          <a href="#M000178" class="method-signature">
+          <span class="method-name">path_not_reserved</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000178-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000178-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/models/page.rb, line 210</span>
+210:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">path_not_reserved</span>
+211:     <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Cms</span>.<span class="ruby-identifier">reserved_paths</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">path</span>)
+212:       <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">:path</span>, <span class="ruby-node">&quot;is invalid, '#{path}' a reserved path&quot;</span>)
+213:     <span class="ruby-keyword kw">end</span>
+214:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000177" class="method-detail">
+        <a name="M000177"></a>
+
+        <div class="method-heading">
+          <a href="#M000177" class="method-signature">
           <span class="method-name">path_unique?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000129-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000129-source">
+            onclick="toggleCode('M000177-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000177-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/page.rb, line 168</span>
-168:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">path_unique?</span>
-169:     <span class="ruby-identifier">conditions</span> = [<span class="ruby-value str">&quot;path = ?&quot;</span>, <span class="ruby-identifier">path</span>]
-170:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">new_record?</span>
-171:       <span class="ruby-identifier">conditions</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot; and id != ?&quot;</span>
-172:       <span class="ruby-identifier">conditions</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">id</span>
-173:     <span class="ruby-keyword kw">end</span>
-174:     <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">count</span>(<span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">conditions</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
-175:       <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">:path</span>, <span class="ruby-value str">&quot;must be unique&quot;</span>)
-176:     <span class="ruby-keyword kw">end</span>
-177:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/page.rb, line 199</span>
+199:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">path_unique?</span>
+200:     <span class="ruby-identifier">conditions</span> = [<span class="ruby-value str">&quot;path = ?&quot;</span>, <span class="ruby-identifier">path</span>]
+201:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">new_record?</span>
+202:       <span class="ruby-identifier">conditions</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot; and id != ?&quot;</span>
+203:       <span class="ruby-identifier">conditions</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">id</span>
+204:     <span class="ruby-keyword kw">end</span>
+205:     <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">count</span>(<span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">conditions</span>) <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
+206:       <span class="ruby-identifier">errors</span>.<span class="ruby-identifier">add</span>(<span class="ruby-identifier">:path</span>, <span class="ruby-value str">&quot;must be unique&quot;</span>)
+207:     <span class="ruby-keyword kw">end</span>
+208:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000119" class="method-detail">
-        <a name="M000119"></a>
+      <div id="method-M000174" class="method-detail">
+        <a name="M000174"></a>
 
         <div class="method-heading">
-          <a href="#M000119" class="method-signature">
+          <a href="#M000174" class="method-signature">
+          <span class="method-name">public?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000174-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000174-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/models/page.rb, line 177</span>
+177:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">public?</span>
+178:     <span class="ruby-identifier">section</span> <span class="ruby-value">? </span><span class="ruby-identifier">section</span>.<span class="ruby-identifier">public?</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">false</span>
+179:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000166" class="method-detail">
+        <a name="M000166"></a>
+
+        <div class="method-heading">
+          <a href="#M000166" class="method-signature">
           <span class="method-name">remove_connector</span><span class="method-args">(connector)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000119-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000119-source">
+            onclick="toggleCode('M000166-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000166-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/page.rb, line 100</span>
-100:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remove_connector</span>(<span class="ruby-identifier">connector</span>)
-101:     <span class="ruby-identifier">transaction</span> <span class="ruby-keyword kw">do</span>
-102:       <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Connector is nil&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">connector</span>
-103:       <span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">:version_comment</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{connector.connectable} was removed from the '#{connector.container}' container&quot;</span>)
-104:       
-105:       <span class="ruby-comment cmt">#The logic of this is to go ahead and let the container get copied forward, then delete the new connector</span>
-106:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">new_connector</span> = <span class="ruby-identifier">connectors</span>.<span class="ruby-identifier">for_page_version</span>(<span class="ruby-identifier">version</span>).<span class="ruby-identifier">like</span>(<span class="ruby-identifier">connector</span>).<span class="ruby-identifier">first</span>
-107:         <span class="ruby-identifier">new_connector</span>.<span class="ruby-identifier">destroy</span>
-108:       <span class="ruby-keyword kw">else</span>
-109:         <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Error occurred while trying to remove connector #{connector.id}&quot;</span>
-110:       <span class="ruby-keyword kw">end</span>
-111:     <span class="ruby-keyword kw">end</span>
-112:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/page.rb, line 127</span>
+127:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">remove_connector</span>(<span class="ruby-identifier">connector</span>)
+128:     <span class="ruby-identifier">transaction</span> <span class="ruby-keyword kw">do</span>
+129:       <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Connector is nil&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">connector</span>
+130:       <span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">:version_comment</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{connector.connectable} was removed from the '#{connector.container}' container&quot;</span>)
+131:       
+132:       <span class="ruby-comment cmt">#The logic of this is to go ahead and let the container get copied forward, then delete the new connector</span>
+133:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">new_connector</span> = <span class="ruby-identifier">connectors</span>.<span class="ruby-identifier">for_page_version</span>(<span class="ruby-identifier">version</span>).<span class="ruby-identifier">like</span>(<span class="ruby-identifier">connector</span>).<span class="ruby-identifier">first</span>
+134:         <span class="ruby-identifier">new_connector</span>.<span class="ruby-identifier">destroy</span>
+135:       <span class="ruby-keyword kw">else</span>
+136:         <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Error occurred while trying to remove connector #{connector.id}&quot;</span>
+137:       <span class="ruby-keyword kw">end</span>
+138:     <span class="ruby-keyword kw">end</span>
+139:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000121" class="method-detail">
-        <a name="M000121"></a>
+      <div id="method-M000168" class="method-detail">
+        <a name="M000168"></a>
 
         <div class="method-heading">
-          <a href="#M000121" class="method-signature">
+          <a href="#M000168" class="method-signature">
           <span class="method-name">revert_to</span><span class="method-args">(version)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000121-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000121-source">
+            onclick="toggleCode('M000168-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000168-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/page.rb, line 121</span>
-121:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">revert_to</span>(<span class="ruby-identifier">version</span>)
-122:     <span class="ruby-ivar">@copy_connectors_from_version</span> = <span class="ruby-identifier">version</span>
-123:     <span class="ruby-identifier">original_revert_to</span>(<span class="ruby-identifier">version</span>)
-124:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/page.rb, line 148</span>
+148:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">revert_to</span>(<span class="ruby-identifier">version</span>)
+149:     <span class="ruby-ivar">@copy_connectors_from_version</span> = <span class="ruby-identifier">version</span>
+150:     <span class="ruby-identifier">original_revert_to</span>(<span class="ruby-identifier">version</span>)
+151:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000124" class="method-detail">
-        <a name="M000124"></a>
+      <div id="method-M000171" class="method-detail">
+        <a name="M000171"></a>
 
         <div class="method-heading">
-          <a href="#M000124" class="method-signature">
+          <a href="#M000171" class="method-signature">
           <span class="method-name">section</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000124-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000124-source">
+            onclick="toggleCode('M000171-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000171-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/page.rb, line 134</span>
-134:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">section</span>
-135:     <span class="ruby-identifier">section_node</span> <span class="ruby-value">? </span><span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">section</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
-136:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/page.rb, line 161</span>
+161:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">section</span>
+162:     <span class="ruby-identifier">section_node</span> <span class="ruby-value">? </span><span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">section</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+163:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000126" class="method-detail">
-        <a name="M000126"></a>
+      <div id="method-M000173" class="method-detail">
+        <a name="M000173"></a>
 
         <div class="method-heading">
-          <a href="#M000126" class="method-signature">
+          <a href="#M000173" class="method-signature">
           <span class="method-name">section=</span><span class="method-args">(sec)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000126-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000126-source">
+            onclick="toggleCode('M000173-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000173-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/page.rb, line 142</span>
-142:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">section=</span>(<span class="ruby-identifier">sec</span>)
-143:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">section_node</span>
-144:       <span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">move_to_end</span>(<span class="ruby-identifier">sec</span>)
-145:     <span class="ruby-keyword kw">else</span>
-146:       <span class="ruby-identifier">build_section_node</span>(<span class="ruby-identifier">:node</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">:section</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">sec</span>)
-147:     <span class="ruby-keyword kw">end</span>      
-148:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/page.rb, line 169</span>
+169:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">section=</span>(<span class="ruby-identifier">sec</span>)
+170:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">section_node</span>
+171:       <span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">move_to_end</span>(<span class="ruby-identifier">sec</span>)
+172:     <span class="ruby-keyword kw">else</span>
+173:       <span class="ruby-identifier">build_section_node</span>(<span class="ruby-identifier">:node</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">:section</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">sec</span>)
+174:     <span class="ruby-keyword kw">end</span>      
+175:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000123" class="method-detail">
-        <a name="M000123"></a>
+      <div id="method-M000170" class="method-detail">
+        <a name="M000170"></a>
 
         <div class="method-heading">
-          <a href="#M000123" class="method-signature">
+          <a href="#M000170" class="method-signature">
           <span class="method-name">section_id</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000123-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000123-source">
+            onclick="toggleCode('M000170-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000170-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/page.rb, line 130</span>
-130:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">section_id</span>
-131:     <span class="ruby-identifier">section</span> <span class="ruby-value">? </span><span class="ruby-identifier">section</span>.<span class="ruby-identifier">id</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
-132:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/page.rb, line 157</span>
+157:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">section_id</span>
+158:     <span class="ruby-identifier">section</span> <span class="ruby-value">? </span><span class="ruby-identifier">section</span>.<span class="ruby-identifier">id</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+159:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000125" class="method-detail">
-        <a name="M000125"></a>
+      <div id="method-M000172" class="method-detail">
+        <a name="M000172"></a>
 
         <div class="method-heading">
-          <a href="#M000125" class="method-signature">
+          <a href="#M000172" class="method-signature">
           <span class="method-name">section_id=</span><span class="method-args">(sec_id)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000125-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000125-source">
+            onclick="toggleCode('M000172-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000172-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/page.rb, line 138</span>
-138:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">section_id=</span>(<span class="ruby-identifier">sec_id</span>)
-139:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">section</span> = <span class="ruby-constant">Section</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">sec_id</span>)
-140:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/page.rb, line 165</span>
+165:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">section_id=</span>(<span class="ruby-identifier">sec_id</span>)
+166:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">section</span> = <span class="ruby-constant">Section</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">sec_id</span>)
+167:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000131" class="method-detail">
-        <a name="M000131"></a>
+      <div id="method-M000180" class="method-detail">
+        <a name="M000180"></a>
 
         <div class="method-heading">
-          <a href="#M000131" class="method-signature">
+          <a href="#M000180" class="method-signature">
+          <span class="method-name">template</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+This will be nil if it is a file system based <a
+href="Page.html#M000180">template</a>
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000180-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000180-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/models/page.rb, line 221</span>
+221:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">template</span>
+222:     <span class="ruby-constant">PageTemplate</span>.<span class="ruby-identifier">find_by_file_name</span>(<span class="ruby-identifier">template_file_name</span>)
+223:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000181" class="method-detail">
+        <a name="M000181"></a>
+
+        <div class="method-heading">
+          <a href="#M000181" class="method-signature">
           <span class="method-name">template_name</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000131-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000131-source">
+            onclick="toggleCode('M000181-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000181-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/page.rb, line 183</span>
-183:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">template_name</span>
-184:     <span class="ruby-identifier">template</span> <span class="ruby-value">? </span><span class="ruby-identifier">template</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
-185:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/page.rb, line 225</span>
+225:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">template_name</span>
+226:     <span class="ruby-identifier">template_file_name</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">PageTemplate</span>.<span class="ruby-identifier">display_name</span>(<span class="ruby-identifier">template_file_name</span>)
+227:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000188" class="method-detail">
+        <a name="M000188"></a>
+
+        <div class="method-heading">
+          <a href="#M000188" class="method-signature">
+          <span class="method-name">top_level_section</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+This will return the &quot;top level <a
+href="Page.html#M000171">section</a>&quot; for a page, which is the <a
+href="Page.html#M000171">section</a> directly below the root (a.k.a My <a
+href="Site.html">Site</a>) that this page is in. If this page is in root,
+then this will return root.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000188-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000188-source">
+<pre>
+     <span class="ruby-comment cmt"># File app/models/page.rb, line 275</span>
+275:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">top_level_section</span>
+276:     <span class="ruby-identifier">a</span> = <span class="ruby-identifier">ancestors</span>
+277:     (<span class="ruby-identifier">a</span>.<span class="ruby-identifier">size</span> <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">ancestors</span>[<span class="ruby-value">1</span>]) <span class="ruby-operator">?</span> <span class="ruby-identifier">ancestors</span>[<span class="ruby-value">1</span>] <span class="ruby-operator">:</span> <span class="ruby-constant">Section</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">first</span>
+278:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

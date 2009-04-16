@@ -21,15 +21,15 @@ module Cms
           named_scope :created_by, lambda{|user| {:conditions => {:created_by => user}}}        
           named_scope :updated_by, lambda{|user| {:conditions => {:updated_by => user}}}        
         end
-        module ClassMethods
-        end
-        module InstanceMethods
-          def set_userstamps
-            if new_record?
-              self.created_by = User.current 
-            end
-            self.updated_by = User.current
+      end
+      module ClassMethods
+      end
+      module InstanceMethods
+        def set_userstamps
+          if new_record?
+            self.created_by = User.current 
           end
+          self.updated_by = User.current
         end
       end
     end

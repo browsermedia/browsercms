@@ -26,58 +26,58 @@ module Cms
           named_scope :published, :conditions => {:published => true}
           named_scope :unpublished, :conditions => {:published => false}        
         end
-        module ClassMethods
-        end
-        module InstanceMethods
-          def publishable?
-            if self.class.connectable?
-              new_record? ? connect_to_page_id.blank? : connected_page_count < 1
-            else
-              true
-            end
-          end
-          def publish
-            self.publish_on_save = true
-            self.version_comment = "Published" if self.class.versioned?
-            save
-          end
-          def publish!
-            self.publish_on_save = true
-            self.version_comment = "Published" if self.class.versioned?
-            save!
-          end
-          def publish_by_page(page)
-            self.published_by_page = page
-            if publish
-              self.published_by_page = nil          
-              true
-            else
-              false
-            end
-          end
-          def publish_by_page!(page)
-            self.published_by_page = page
-            publish!
-            self.published_by_page = nil
-          end
-          def set_published
-            self.published = !!@publish_on_save
-            if self.published && self.respond_to?(:published_at) && !self.published_at
-              self.published_at = Time.now
-            end
-            @publish_on_save = nil
+      end
+      module ClassMethods
+      end
+      module InstanceMethods
+        def publishable?
+          if self.class.connectable?
+            new_record? ? connect_to_page_id.blank? : connected_page_count < 1
+          else
             true
           end
-          def status
-            published? ? :published : :draft
-          end        
-          def status_name
-            status.to_s.titleize
-          end
-          def live?
-            self.class.versioned? ? versions.count(:conditions => ['version > ? AND published = ?', version, true]) == 0 && published? : true
-          end        
         end
+        def publish
+          self.publish_on_save = true
+          self.version_comment = "Published" if self.class.versioned?
+          save
+        end
+        def publish!
+          self.publish_on_save = true
+          self.version_comment = "Published" if self.class.versioned?
+          save!
+        end
+        def publish_by_page(page)
+          self.published_by_page = page
+          if publish
+            self.published_by_page = nil          
+            true
+          else
+            false
+          end
+        end
+        def publish_by_page!(page)
+          self.published_by_page = page
+          publish!
+          self.published_by_page = nil
+        end
+        def set_published
+          self.published = !!@publish_on_save
+          if self.published && self.respond_to?(:published_at) && !self.published_at
+            self.published_at = Time.now
+          end
+          @publish_on_save = nil
+          true
+        end
+        def status
+          published? ? :published : :draft
+        end        
+        def status_name
+          status.to_s.titleize
+        end
+        def live?
+          self.class.versioned? ? versions.count(:conditions => ['version > ? AND published = ?', version, true]) == 0 && published? : true
+        end        
       end
     end
   end

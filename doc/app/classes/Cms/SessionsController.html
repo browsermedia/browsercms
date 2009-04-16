@@ -65,8 +65,8 @@
         <tr class="top-aligned-row">
             <td><strong>Parent:</strong></td>
             <td>
-                <a href="BaseController.html">
-                Cms::BaseController
+                <a href="ApplicationController.html">
+                Cms::ApplicationController
                </a>
             </td>
         </tr>
@@ -94,9 +94,10 @@ This controller handles the login/logout function of the site.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000441">login</a>&nbsp;&nbsp;
-      <a href="#M000442">logout</a>&nbsp;&nbsp;
-      <a href="#M000443">note_failed_signin</a>&nbsp;&nbsp;
+      <a href="#M000530">create</a>&nbsp;&nbsp;
+      <a href="#M000531">destroy</a>&nbsp;&nbsp;
+      <a href="#M000529">new</a>&nbsp;&nbsp;
+      <a href="#M000532">note_failed_signin</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -118,67 +119,108 @@ This controller handles the login/logout function of the site.
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000441" class="method-detail">
-        <a name="M000441"></a>
+      <div id="method-M000530" class="method-detail">
+        <a name="M000530"></a>
 
         <div class="method-heading">
-          <a href="#M000441" class="method-signature">
-          <span class="method-name">login</span><span class="method-args">()</span>
+          <a href="#M000530" class="method-signature">
+          <span class="method-name">create</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000441-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000441-source">
+            onclick="toggleCode('M000530-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000530-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/sessions_controller.rb, line 6</span>
- 6:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">login</span>
- 7:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">request</span>.<span class="ruby-identifier">post?</span>
- 8:       <span class="ruby-identifier">logout_keeping_session!</span>
- 9:       <span class="ruby-identifier">user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">authenticate</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:login</span>], <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:password</span>])
-10:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">user</span>
-11:         <span class="ruby-comment cmt"># Protects against session fixation attacks, causes request forgery</span>
-12:         <span class="ruby-comment cmt"># protection if user resubmits an earlier form using back</span>
-13:         <span class="ruby-comment cmt"># button. Uncomment if you understand the tradeoffs.</span>
-14:         <span class="ruby-comment cmt"># reset_session</span>
-15:         <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">current_user</span> = <span class="ruby-identifier">user</span>
-16:         <span class="ruby-identifier">new_cookie_flag</span> = (<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:remember_me</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;1&quot;</span>)
-17:         <span class="ruby-identifier">handle_remember_cookie!</span> <span class="ruby-identifier">new_cookie_flag</span>
-18:         <span class="ruby-identifier">redirect_back_or_default</span>(<span class="ruby-identifier">cms_dashboard_url</span>)
-19:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-value str">&quot;Logged in successfully&quot;</span>
-20:       <span class="ruby-keyword kw">else</span>
-21:         <span class="ruby-identifier">note_failed_signin</span>
-22:         <span class="ruby-ivar">@login</span>       = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:login</span>]
-23:         <span class="ruby-ivar">@remember_me</span> = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:remember_me</span>]
-24:       <span class="ruby-keyword kw">end</span>
-25:     <span class="ruby-keyword kw">end</span>
-26:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/sessions_controller.rb, line 11</span>
+11:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create</span>
+12:     <span class="ruby-identifier">logout_keeping_session!</span>
+13:     <span class="ruby-identifier">user</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">authenticate</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:login</span>], <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:password</span>])
+14:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">user</span>
+15:       <span class="ruby-comment cmt"># Protects against session fixation attacks, causes request forgery</span>
+16:       <span class="ruby-comment cmt"># protection if user resubmits an earlier form using back</span>
+17:       <span class="ruby-comment cmt"># button. Uncomment if you understand the tradeoffs.</span>
+18:       <span class="ruby-comment cmt"># reset_session</span>
+19:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">current_user</span> = <span class="ruby-identifier">user</span>
+20:       <span class="ruby-identifier">new_cookie_flag</span> = (<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:remember_me</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;1&quot;</span>)
+21:       <span class="ruby-identifier">handle_remember_cookie!</span> <span class="ruby-identifier">new_cookie_flag</span>
+22:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-value str">&quot;Logged in successfully&quot;</span>
+23:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:success_url</span>] <span class="ruby-comment cmt"># Coming from login portlet</span>
+24:         <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">session</span>[<span class="ruby-identifier">:return_to</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:success_url</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;/&quot;</span>)          
+25:         <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:return_to</span>] = <span class="ruby-keyword kw">nil</span>
+26:       <span class="ruby-keyword kw">else</span>
+27:         <span class="ruby-identifier">redirect_back_or_default</span>(<span class="ruby-identifier">cms_home_url</span>)
+28:       <span class="ruby-keyword kw">end</span>
+29:     <span class="ruby-keyword kw">else</span>
+30:       <span class="ruby-identifier">note_failed_signin</span>
+31:       <span class="ruby-ivar">@login</span>       = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:login</span>]
+32:       <span class="ruby-ivar">@remember_me</span> = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:remember_me</span>]
+33:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:login_error</span>] = <span class="ruby-value str">&quot;Log in failed&quot;</span>  
+34:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:success_url</span>] <span class="ruby-comment cmt"># Coming from login portlet</span>
+35:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:success_url</span>].<span class="ruby-identifier">blank?</span>
+36:           <span class="ruby-identifier">success_url</span> = <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:return_to</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;/&quot;</span>
+37:         <span class="ruby-keyword kw">else</span>
+38:           <span class="ruby-identifier">success_url</span> = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:success_url</span>]
+39:         <span class="ruby-keyword kw">end</span>
+40:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:login</span>] = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:login</span>]
+41:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:remember_me</span>] = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:remember_me</span>]
+42:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:success_url</span>] = <span class="ruby-identifier">success_url</span>
+43:         <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">request</span>.<span class="ruby-identifier">referrer</span>
+44:       <span class="ruby-keyword kw">else</span>
+45:         <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;new&quot;</span> 
+46:       <span class="ruby-keyword kw">end</span> 
+47:     <span class="ruby-keyword kw">end</span>
+48:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000442" class="method-detail">
-        <a name="M000442"></a>
+      <div id="method-M000531" class="method-detail">
+        <a name="M000531"></a>
 
         <div class="method-heading">
-          <a href="#M000442" class="method-signature">
-          <span class="method-name">logout</span><span class="method-args">()</span>
+          <a href="#M000531" class="method-signature">
+          <span class="method-name">destroy</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000442-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000442-source">
+            onclick="toggleCode('M000531-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000531-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/sessions_controller.rb, line 28</span>
-28:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">logout</span>
-29:     <span class="ruby-identifier">logout_killing_session!</span>
-30:     <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-value str">&quot;You have been logged out.&quot;</span>
-31:     <span class="ruby-identifier">redirect_back_or_default</span>(<span class="ruby-identifier">cms_login_url</span>)
-32:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/sessions_controller.rb, line 50</span>
+50:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroy</span>
+51:     <span class="ruby-identifier">logout_killing_session!</span>
+52:     <span class="ruby-identifier">cookies</span>.<span class="ruby-identifier">delete</span> <span class="ruby-identifier">:openSectionNodes</span>
+53:     <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-value str">&quot;You have been logged out.&quot;</span>
+54:     <span class="ruby-identifier">redirect_back_or_default</span>(<span class="ruby-value str">&quot;/&quot;</span>)
+55:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000529" class="method-detail">
+        <a name="M000529"></a>
+
+        <div class="method-heading">
+          <a href="#M000529" class="method-signature">
+          <span class="method-name">new</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000529-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000529-source">
+<pre>
+   <span class="ruby-comment cmt"># File app/controllers/cms/sessions_controller.rb, line 7</span>
+7:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new</span>
+8:     
+9:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -186,28 +228,28 @@ This controller handles the login/logout function of the site.
 
       <h3 class="section-bar">Protected Instance methods</h3>
 
-      <div id="method-M000443" class="method-detail">
-        <a name="M000443"></a>
+      <div id="method-M000532" class="method-detail">
+        <a name="M000532"></a>
 
         <div class="method-heading">
-          <a href="#M000443" class="method-signature">
+          <a href="#M000532" class="method-signature">
           <span class="method-name">note_failed_signin</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Track failed <a href="SessionsController.html#M000441">login</a> attempts
+Track failed login attempts
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000443-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000443-source">
+            onclick="toggleCode('M000532-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000532-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/sessions_controller.rb, line 36</span>
-36:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">note_failed_signin</span>
-37:     <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:error</span>] = <span class="ruby-node">&quot;Couldn't log you in as '#{params[:login]}'&quot;</span>
-38:     <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;Failed login for '#{params[:login]}' from #{request.remote_ip} at #{Time.now.utc}&quot;</span>
-39:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/sessions_controller.rb, line 59</span>
+59:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">note_failed_signin</span>
+60:     <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:error</span>] = <span class="ruby-node">&quot;Couldn't log you in as '#{params[:login]}'&quot;</span>
+61:     <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;Failed login for '#{params[:login]}' from #{request.remote_ip} at #{Time.now.utc}&quot;</span>
+62:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

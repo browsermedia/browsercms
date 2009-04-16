@@ -86,10 +86,10 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000020">ancestors</a>&nbsp;&nbsp;
-      <a href="#M000022">category_type_name</a>&nbsp;&nbsp;
-      <a href="#M000023">columns_for_index</a>&nbsp;&nbsp;
-      <a href="#M000021">path</a>&nbsp;&nbsp;
+      <a href="#M000026">ancestors</a>&nbsp;&nbsp;
+      <a href="#M000028">category_type_name</a>&nbsp;&nbsp;
+      <a href="#M000029">columns_for_index</a>&nbsp;&nbsp;
+      <a href="#M000027">path</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -111,25 +111,26 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000023" class="method-detail">
-        <a name="M000023"></a>
+      <div id="method-M000029" class="method-detail">
+        <a name="M000029"></a>
 
         <div class="method-heading">
-          <a href="#M000023" class="method-signature">
+          <a href="#M000029" class="method-signature">
           <span class="method-name">columns_for_index</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000023-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000023-source">
+            onclick="toggleCode('M000029-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000029-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/category.rb, line 30</span>
-30:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">columns_for_index</span>
-31:     [ {<span class="ruby-identifier">:label</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Name&quot;</span>, <span class="ruby-identifier">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:name</span> },
-32:       {<span class="ruby-identifier">:label</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Type&quot;</span>, <span class="ruby-identifier">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:category_type_name</span> } ]
-33:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/category.rb, line 35</span>
+35:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">columns_for_index</span>
+36:     [ {<span class="ruby-identifier">:label</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Name&quot;</span>, <span class="ruby-identifier">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:name</span>, <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;categories.name&quot;</span> },
+37:       {<span class="ruby-identifier">:label</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Type&quot;</span>, <span class="ruby-identifier">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:category_type_name</span>, <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;category_types.name&quot;</span> },
+38:       {<span class="ruby-identifier">:label</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Updated On&quot;</span>, <span class="ruby-identifier">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:updated_on_string</span>, <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;categories.updated_at&quot;</span>}  ]
+39:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -137,78 +138,78 @@
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000020" class="method-detail">
-        <a name="M000020"></a>
+      <div id="method-M000026" class="method-detail">
+        <a name="M000026"></a>
 
         <div class="method-heading">
-          <a href="#M000020" class="method-signature">
+          <a href="#M000026" class="method-signature">
           <span class="method-name">ancestors</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000020-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000020-source">
+            onclick="toggleCode('M000026-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000026-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/category.rb, line 11</span>
-11:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ancestors</span>
-12:     <span class="ruby-identifier">fn</span> = <span class="ruby-identifier">lambda</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cat</span>, <span class="ruby-identifier">parents</span><span class="ruby-operator">|</span>
-13:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">cat</span>.<span class="ruby-identifier">parent_id</span>
-14:         <span class="ruby-identifier">p</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">cat</span>.<span class="ruby-identifier">parent</span>)
-15:         <span class="ruby-identifier">fn</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">p</span>, (<span class="ruby-identifier">parents</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>))
-16:       <span class="ruby-keyword kw">else</span>
-17:         <span class="ruby-identifier">parents</span>.<span class="ruby-identifier">reverse</span>
-18:       <span class="ruby-keyword kw">end</span>
-19:     <span class="ruby-keyword kw">end</span>
-20:     <span class="ruby-identifier">fn</span>.<span class="ruby-identifier">call</span>(<span class="ruby-keyword kw">self</span>, [])
-21:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/category.rb, line 16</span>
+16:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ancestors</span>
+17:     <span class="ruby-identifier">fn</span> = <span class="ruby-identifier">lambda</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">cat</span>, <span class="ruby-identifier">parents</span><span class="ruby-operator">|</span>
+18:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">cat</span>.<span class="ruby-identifier">parent_id</span>
+19:         <span class="ruby-identifier">p</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">cat</span>.<span class="ruby-identifier">parent</span>)
+20:         <span class="ruby-identifier">fn</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">p</span>, (<span class="ruby-identifier">parents</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">p</span>))
+21:       <span class="ruby-keyword kw">else</span>
+22:         <span class="ruby-identifier">parents</span>.<span class="ruby-identifier">reverse</span>
+23:       <span class="ruby-keyword kw">end</span>
+24:     <span class="ruby-keyword kw">end</span>
+25:     <span class="ruby-identifier">fn</span>.<span class="ruby-identifier">call</span>(<span class="ruby-keyword kw">self</span>, [])
+26:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000022" class="method-detail">
-        <a name="M000022"></a>
+      <div id="method-M000028" class="method-detail">
+        <a name="M000028"></a>
 
         <div class="method-heading">
-          <a href="#M000022" class="method-signature">
+          <a href="#M000028" class="method-signature">
           <span class="method-name">category_type_name</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000022-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000022-source">
+            onclick="toggleCode('M000028-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000028-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/category.rb, line 27</span>
-27:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">category_type_name</span>
-28:     <span class="ruby-identifier">category_type</span> <span class="ruby-value">? </span><span class="ruby-identifier">category_type</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
-29:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/category.rb, line 32</span>
+32:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">category_type_name</span>
+33:     <span class="ruby-identifier">category_type</span> <span class="ruby-value">? </span><span class="ruby-identifier">category_type</span>.<span class="ruby-identifier">name</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+34:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000021" class="method-detail">
-        <a name="M000021"></a>
+      <div id="method-M000027" class="method-detail">
+        <a name="M000027"></a>
 
         <div class="method-heading">
-          <a href="#M000021" class="method-signature">
+          <a href="#M000027" class="method-signature">
           <span class="method-name">path</span><span class="method-args">(sep=&quot; &gt; &quot;)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000021-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000021-source">
+            onclick="toggleCode('M000027-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000027-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/category.rb, line 23</span>
-23:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">path</span>(<span class="ruby-identifier">sep</span>=<span class="ruby-value str">&quot; &gt; &quot;</span>)
-24:     (<span class="ruby-identifier">ancestors</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">:name</span>) <span class="ruby-operator">+</span> [<span class="ruby-identifier">name</span>]).<span class="ruby-identifier">join</span>(<span class="ruby-identifier">sep</span>)
-25:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/category.rb, line 28</span>
+28:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">path</span>(<span class="ruby-identifier">sep</span>=<span class="ruby-value str">&quot; &gt; &quot;</span>)
+29:     (<span class="ruby-identifier">ancestors</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">:name</span>) <span class="ruby-operator">+</span> [<span class="ruby-identifier">name</span>]).<span class="ruby-identifier">join</span>(<span class="ruby-identifier">sep</span>)
+30:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

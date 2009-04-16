@@ -88,7 +88,7 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000142">renderer</a>&nbsp;&nbsp;
+      <a href="#M000206">render</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -110,27 +110,24 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000142" class="method-detail">
-        <a name="M000142"></a>
+      <div id="method-M000206" class="method-detail">
+        <a name="M000206"></a>
 
         <div class="method-heading">
-          <a href="#M000142" class="method-signature">
-          <span class="method-name">renderer</span><span class="method-args">(portlet)</span>
+          <a href="#M000206" class="method-signature">
+          <span class="method-name">render</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000142-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000142-source">
+            onclick="toggleCode('M000206-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000206-source">
 <pre>
    <span class="ruby-comment cmt"># File app/portlets/dynamic_portlet.rb, line 3</span>
-3:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">renderer</span>(<span class="ruby-identifier">portlet</span>)
-4:     <span class="ruby-identifier">lambda</span> <span class="ruby-keyword kw">do</span>
-5:       <span class="ruby-identifier">eval</span>(<span class="ruby-identifier">portlet</span>.<span class="ruby-identifier">code</span>)
-6:       <span class="ruby-identifier">render</span> <span class="ruby-identifier">:inline</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">portlet</span>.<span class="ruby-identifier">template</span>
-7:     <span class="ruby-keyword kw">end</span>
-8:   <span class="ruby-keyword kw">end</span>
+3:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>
+4:     <span class="ruby-identifier">eval</span>(<span class="ruby-ivar">@portlet</span>.<span class="ruby-identifier">code</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-ivar">@portlet</span>.<span class="ruby-identifier">code</span>.<span class="ruby-identifier">blank?</span>
+5:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

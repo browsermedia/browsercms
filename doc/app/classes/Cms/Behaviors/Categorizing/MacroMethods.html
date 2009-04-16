@@ -80,8 +80,8 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000300">belongs_to_category</a>&nbsp;&nbsp;
-      <a href="#M000299">belongs_to_category?</a>&nbsp;&nbsp;
+      <a href="#M000349">belongs_to_category</a>&nbsp;&nbsp;
+      <a href="#M000348">belongs_to_category?</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -117,44 +117,49 @@ Module <a href="MacroMethods/InstanceMethods.html" class="link">Cms::Behaviors::
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000300" class="method-detail">
-        <a name="M000300"></a>
+      <div id="method-M000349" class="method-detail">
+        <a name="M000349"></a>
 
         <div class="method-heading">
-          <a href="#M000300" class="method-signature">
+          <a href="#M000349" class="method-signature">
           <span class="method-name">belongs_to_category</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000300-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000300-source">
+            onclick="toggleCode('M000349-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000349-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/behaviors/categorizing.rb, line 11</span>
 11:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">belongs_to_category</span>
 12:           <span class="ruby-ivar">@belongs_to_category</span> = <span class="ruby-keyword kw">true</span>
 13:           <span class="ruby-identifier">extend</span> <span class="ruby-constant">ClassMethods</span>
 14:           <span class="ruby-identifier">include</span> <span class="ruby-constant">InstanceMethods</span>
-15:         <span class="ruby-keyword kw">end</span>
+15:           
+16:           <span class="ruby-identifier">belongs_to</span> <span class="ruby-identifier">:category</span>
+17:           
+18:           <span class="ruby-identifier">named_scope</span> <span class="ruby-identifier">:in_category</span>, <span class="ruby-identifier">lambda</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">cat</span><span class="ruby-operator">|</span> {<span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value str">&quot;category_id = ?&quot;</span>, <span class="ruby-identifier">cat</span>.<span class="ruby-identifier">id</span>]}}
+19:           
+20:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000299" class="method-detail">
-        <a name="M000299"></a>
+      <div id="method-M000348" class="method-detail">
+        <a name="M000348"></a>
 
         <div class="method-heading">
-          <a href="#M000299" class="method-signature">
+          <a href="#M000348" class="method-signature">
           <span class="method-name">belongs_to_category?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000299-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000299-source">
+            onclick="toggleCode('M000348-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000348-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/behaviors/categorizing.rb, line 8</span>
  8:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">belongs_to_category?</span>

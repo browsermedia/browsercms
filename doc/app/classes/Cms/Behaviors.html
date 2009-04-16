@@ -75,6 +75,10 @@
                 lib/cms/behaviors/dynamic_attributes.rb
                 </a>
         <br />
+                <a href="../../files/lib/cms/behaviors/flush_cache_on_change_rb.html">
+                lib/cms/behaviors/flush_cache_on_change.rb
+                </a>
+        <br />
                 <a href="../../files/lib/cms/behaviors/hiding_rb.html">
                 lib/cms/behaviors/hiding.rb
                 </a>
@@ -85,6 +89,10 @@
         <br />
                 <a href="../../files/lib/cms/behaviors/publishing_rb.html">
                 lib/cms/behaviors/publishing.rb
+                </a>
+        <br />
+                <a href="../../files/lib/cms/behaviors/rendering_rb.html">
+                lib/cms/behaviors/rendering.rb
                 </a>
         <br />
                 <a href="../../files/lib/cms/behaviors/searching_rb.html">
@@ -124,6 +132,52 @@
 
   <div id="contextContent">
 
+    <div id="description">
+      <p>
+<a href="Behaviors.html">Behaviors</a> are used in CMS to add features to a
+model. They are very similar to the various &quot;acts_as_*&quot; or
+&quot;*_fu&quot; plugins/gems that have been created for Rails.
+</p>
+<p>
+Generally, each behavior has three modules in it. They are:
+</p>
+<ul>
+<li>MacroMethods
+
+</li>
+<li>ClassMethods
+
+</li>
+<li>InstanceMethods
+
+</li>
+</ul>
+<p>
+When the CMS starts up, all of the <a href="Behaviors.html">Behaviors</a>
+are included into ActiveRecord::Base. The MacroMethods module of each
+Behavior is also included into ActiveRecord::Base. The MacroMethods module
+contains Class methods that you can call within your model in order to
+enable that Behavior for that Class. For example, if you want to have an
+Article module that is taggable, you would do this:
+</p>
+<pre>
+    class Article &lt; ActiveRecord::Base
+      is_taggable
+    end
+</pre>
+<p>
+So in this case, you are calling the `is_taggable` macro method, which
+enables the taggable behavior for the Article model. It enables the
+behavior by extending the ClassMethods module and including the
+InstanceMethods module into the Article class. Each Behavior typically has
+one macro method which takes an options Hash, which of course varies from
+Behavior to Behavior. The macro method will also sometimes call other macro
+methods, like before_fitler, named_scope, etc. to modify the model. Consult
+the documentation for each module for specific details as to what the
+Behavior does.
+</p>
+
+    </div>
 
 
    </div>
@@ -144,9 +198,11 @@ Module <a href="Behaviors/Attaching.html" class="link">Cms::Behaviors::Attaching
 Module <a href="Behaviors/Categorizing.html" class="link">Cms::Behaviors::Categorizing</a><br />
 Module <a href="Behaviors/Connecting.html" class="link">Cms::Behaviors::Connecting</a><br />
 Module <a href="Behaviors/DynamicAttributes.html" class="link">Cms::Behaviors::DynamicAttributes</a><br />
+Module <a href="Behaviors/FlushCacheOnChange.html" class="link">Cms::Behaviors::FlushCacheOnChange</a><br />
 Module <a href="Behaviors/Hiding.html" class="link">Cms::Behaviors::Hiding</a><br />
 Module <a href="Behaviors/Pagination.html" class="link">Cms::Behaviors::Pagination</a><br />
 Module <a href="Behaviors/Publishing.html" class="link">Cms::Behaviors::Publishing</a><br />
+Module <a href="Behaviors/Rendering.html" class="link">Cms::Behaviors::Rendering</a><br />
 Module <a href="Behaviors/Searching.html" class="link">Cms::Behaviors::Searching</a><br />
 Module <a href="Behaviors/SoftDeleting.html" class="link">Cms::Behaviors::SoftDeleting</a><br />
 Module <a href="Behaviors/Taggable.html" class="link">Cms::Behaviors::Taggable</a><br />

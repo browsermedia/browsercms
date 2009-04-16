@@ -86,13 +86,14 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000072">current_connectable</a>&nbsp;&nbsp;
-      <a href="#M000073">get_connectable</a>&nbsp;&nbsp;
-      <a href="#M000077">publishable?</a>&nbsp;&nbsp;
-      <a href="#M000076">published?</a>&nbsp;&nbsp;
-      <a href="#M000074">status</a>&nbsp;&nbsp;
-      <a href="#M000075">status_name</a>&nbsp;&nbsp;
-      <a href="#M000078">versioned?</a>&nbsp;&nbsp;
+      <a href="#M000103">connectable_with_deleted</a>&nbsp;&nbsp;
+      <a href="#M000102">current_connectable</a>&nbsp;&nbsp;
+      <a href="#M000104">get_connectable</a>&nbsp;&nbsp;
+      <a href="#M000108">publishable?</a>&nbsp;&nbsp;
+      <a href="#M000107">published?</a>&nbsp;&nbsp;
+      <a href="#M000105">status</a>&nbsp;&nbsp;
+      <a href="#M000106">status_name</a>&nbsp;&nbsp;
+      <a href="#M000109">versioned?</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -132,166 +133,198 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000072" class="method-detail">
-        <a name="M000072"></a>
+      <div id="method-M000103" class="method-detail">
+        <a name="M000103"></a>
 
         <div class="method-heading">
-          <a href="#M000072" class="method-signature">
+          <a href="#M000103" class="method-signature">
+          <span class="method-name">connectable_with_deleted</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000103-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000103-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/connector.rb, line 36</span>
+36:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">connectable_with_deleted</span>
+37:     <span class="ruby-identifier">c</span> = <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">connectable_type</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:find_with_deleted</span>)
+38:       <span class="ruby-identifier">connectable_type</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">find_with_deleted</span>(<span class="ruby-identifier">connectable_id</span>)
+39:     <span class="ruby-keyword kw">else</span>
+40:       <span class="ruby-identifier">connectable_type</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">connectable_id</span>)
+41:     <span class="ruby-keyword kw">end</span>
+42:     (<span class="ruby-identifier">c</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned?</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">c</span>.<span class="ruby-identifier">as_of_version</span>(<span class="ruby-identifier">connectable_version</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">c</span>
+43:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000102" class="method-detail">
+        <a name="M000102"></a>
+
+        <div class="method-heading">
+          <a href="#M000102" class="method-signature">
           <span class="method-name">current_connectable</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000072-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000072-source">
+            onclick="toggleCode('M000102-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000102-source">
 <pre>
     <span class="ruby-comment cmt"># File app/models/connector.rb, line 28</span>
 28:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">current_connectable</span>
-29:     <span class="ruby-identifier">versioned?</span> <span class="ruby-value">? </span><span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">as_of_version</span>(<span class="ruby-identifier">connectable_version</span>) <span class="ruby-operator">:</span> <span class="ruby-identifier">get_connectable</span>
-30:   <span class="ruby-keyword kw">end</span>
+29:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">versioned?</span>
+30:       <span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">as_of_version</span>(<span class="ruby-identifier">connectable_version</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">connectable</span>
+31:     <span class="ruby-keyword kw">else</span>
+32:       <span class="ruby-identifier">get_connectable</span>
+33:     <span class="ruby-keyword kw">end</span>
+34:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000073" class="method-detail">
-        <a name="M000073"></a>
+      <div id="method-M000104" class="method-detail">
+        <a name="M000104"></a>
 
         <div class="method-heading">
-          <a href="#M000073" class="method-signature">
+          <a href="#M000104" class="method-signature">
           <span class="method-name">get_connectable</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000073-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000073-source">
+            onclick="toggleCode('M000104-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000104-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/connector.rb, line 32</span>
-32:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_connectable</span>
-33:     <span class="ruby-comment cmt">#NOTE: This method only exists to work around a bug</span>
-34:     <span class="ruby-comment cmt">#If you call connector.connectable and try to use that, </span>
-35:     <span class="ruby-comment cmt">#if that connectable has dynamic attributes (a portlet, for example),</span>
-36:     <span class="ruby-comment cmt">#then you will get a NoMethodError when you try to access a dynamic attribute</span>
-37:     <span class="ruby-identifier">connectable_type</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">connectable_id</span>)
-38:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/connector.rb, line 45</span>
+45:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">get_connectable</span>
+46:     <span class="ruby-comment cmt">#NOTE: This method only exists to work around a bug</span>
+47:     <span class="ruby-comment cmt">#If you call connector.connectable and try to use that, </span>
+48:     <span class="ruby-comment cmt">#if that connectable has dynamic attributes (a portlet, for example),</span>
+49:     <span class="ruby-comment cmt">#then you will get a NoMethodError when you try to access a dynamic attribute</span>
+50:     <span class="ruby-identifier">connectable_type</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">connectable_id</span>)
+51:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000077" class="method-detail">
-        <a name="M000077"></a>
+      <div id="method-M000108" class="method-detail">
+        <a name="M000108"></a>
 
         <div class="method-heading">
-          <a href="#M000077" class="method-signature">
+          <a href="#M000108" class="method-signature">
           <span class="method-name">publishable?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000077-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000077-source">
+            onclick="toggleCode('M000108-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000108-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/connector.rb, line 51</span>
-51:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">publishable?</span>
-52:     <span class="ruby-identifier">connectable_type</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">publishable?</span>
-53:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/connector.rb, line 64</span>
+64:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">publishable?</span>
+65:     <span class="ruby-identifier">connectable_type</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">publishable?</span>
+66:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000076" class="method-detail">
-        <a name="M000076"></a>
+      <div id="method-M000107" class="method-detail">
+        <a name="M000107"></a>
 
         <div class="method-heading">
-          <a href="#M000076" class="method-signature">
+          <a href="#M000107" class="method-signature">
           <span class="method-name">published?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000076-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000076-source">
+            onclick="toggleCode('M000107-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000107-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/connector.rb, line 47</span>
-47:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">published?</span>
-48:     <span class="ruby-identifier">publishable?</span> <span class="ruby-value">? </span><span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">published?</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">true</span>
-49:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/connector.rb, line 60</span>
+60:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">published?</span>
+61:     <span class="ruby-identifier">publishable?</span> <span class="ruby-value">? </span><span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">published?</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">true</span>
+62:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000074" class="method-detail">
-        <a name="M000074"></a>
+      <div id="method-M000105" class="method-detail">
+        <a name="M000105"></a>
 
         <div class="method-heading">
-          <a href="#M000074" class="method-signature">
+          <a href="#M000105" class="method-signature">
           <span class="method-name">status</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000074-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000074-source">
+            onclick="toggleCode('M000105-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000105-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/connector.rb, line 40</span>
-40:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">status</span>
-41:     <span class="ruby-identifier">published?</span> <span class="ruby-value">? </span><span class="ruby-operator">:</span><span class="ruby-identifier">published</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">:draft</span>
-42:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/connector.rb, line 53</span>
+53:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">status</span>
+54:     <span class="ruby-identifier">published?</span> <span class="ruby-value">? </span><span class="ruby-operator">:</span><span class="ruby-identifier">published</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">:draft</span>
+55:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000075" class="method-detail">
-        <a name="M000075"></a>
+      <div id="method-M000106" class="method-detail">
+        <a name="M000106"></a>
 
         <div class="method-heading">
-          <a href="#M000075" class="method-signature">
+          <a href="#M000106" class="method-signature">
           <span class="method-name">status_name</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000075-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000075-source">
+            onclick="toggleCode('M000106-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000106-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/connector.rb, line 43</span>
-43:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">status_name</span>
-44:     <span class="ruby-identifier">status</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">titleize</span>
-45:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/connector.rb, line 56</span>
+56:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">status_name</span>
+57:     <span class="ruby-identifier">status</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">titleize</span>
+58:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000078" class="method-detail">
-        <a name="M000078"></a>
+      <div id="method-M000109" class="method-detail">
+        <a name="M000109"></a>
 
         <div class="method-heading">
-          <a href="#M000078" class="method-signature">
+          <a href="#M000109" class="method-signature">
           <span class="method-name">versioned?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000078-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000078-source">
+            onclick="toggleCode('M000109-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000109-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/connector.rb, line 55</span>
-55:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">versioned?</span>
-56:     <span class="ruby-identifier">connectable_type</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">versioned?</span>
-57:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/connector.rb, line 68</span>
+68:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">versioned?</span>
+69:     <span class="ruby-identifier">connectable_type</span>.<span class="ruby-identifier">constantize</span>.<span class="ruby-identifier">versioned?</span>
+70:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

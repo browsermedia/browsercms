@@ -88,7 +88,7 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000460">index</a>&nbsp;&nbsp;
+      <a href="#M000582">index</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -110,25 +110,29 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000460" class="method-detail">
-        <a name="M000460"></a>
+      <div id="method-M000582" class="method-detail">
+        <a name="M000582"></a>
 
         <div class="method-heading">
-          <a href="#M000460" class="method-signature">
+          <a href="#M000582" class="method-signature">
           <span class="method-name">index</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000460-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000460-source">
+            onclick="toggleCode('M000582-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000582-source">
 <pre>
-   <span class="ruby-comment cmt"># File app/controllers/cms/toolbar_controller.rb, line 3</span>
-3:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index</span>
-4:     <span class="ruby-ivar">@mode</span> = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:mode</span>]
-5:     <span class="ruby-ivar">@page</span> = <span class="ruby-constant">Page</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:page_id</span>]).<span class="ruby-identifier">as_of_version</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:page_version</span>])
-6:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/toolbar_controller.rb, line 3</span>
+ 3:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index</span>
+ 4:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:page_toolbar</span>] <span class="ruby-operator">!=</span> <span class="ruby-value str">&quot;0&quot;</span>
+ 5:       <span class="ruby-ivar">@mode</span> = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:mode</span>]
+ 6:       <span class="ruby-ivar">@page_toolbar_enabled</span> = <span class="ruby-keyword kw">true</span>
+ 7:     <span class="ruby-keyword kw">end</span>
+ 8:     <span class="ruby-ivar">@page_version</span> = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:page_version</span>]    
+ 9:     <span class="ruby-ivar">@page</span> = <span class="ruby-constant">Page</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:page_id</span>]).<span class="ruby-identifier">as_of_version</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:page_version</span>])
+10:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

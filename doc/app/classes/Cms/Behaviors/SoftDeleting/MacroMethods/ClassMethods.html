@@ -80,11 +80,10 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000305">count</a>&nbsp;&nbsp;
-      <a href="#M000306">delete_all</a>&nbsp;&nbsp;
-      <a href="#M000307">exists?</a>&nbsp;&nbsp;
-      <a href="#M000304">find</a>&nbsp;&nbsp;
-      <a href="#M000308">method_missing</a>&nbsp;&nbsp;
+      <a href="#M000360">count</a>&nbsp;&nbsp;
+      <a href="#M000361">delete_all</a>&nbsp;&nbsp;
+      <a href="#M000362">exists?</a>&nbsp;&nbsp;
+      <a href="#M000359">find</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -97,19 +96,6 @@
 
 
 
-    <div id="aliases-list">
-      <h3 class="section-bar">External Aliases</h3>
-
-      <div class="name-list">
-                        <table summary="aliases">
-        <tr class="top-aligned-row context-row">
-          <td class="context-item-name">method_missing</td>
-          <td>-&gt;</td>
-          <td class="context-item-value">original_method_missing</td>
-        </tr>
-                        </table>
-      </div>
-    </div>
 
 
       
@@ -119,19 +105,19 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000305" class="method-detail">
-        <a name="M000305"></a>
+      <div id="method-M000360" class="method-detail">
+        <a name="M000360"></a>
 
         <div class="method-heading">
-          <a href="#M000305" class="method-signature">
+          <a href="#M000360" class="method-signature">
           <span class="method-name">count</span><span class="method-args">(*args)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000305-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000305-source">
+            onclick="toggleCode('M000360-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000360-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/behaviors/soft_deleting.rb, line 29</span>
 29:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">count</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
@@ -142,42 +128,42 @@
         </div>
       </div>
 
-      <div id="method-M000306" class="method-detail">
-        <a name="M000306"></a>
+      <div id="method-M000361" class="method-detail">
+        <a name="M000361"></a>
 
         <div class="method-heading">
-          <a href="#M000306" class="method-signature">
-          <span class="method-name">delete_all</span><span class="method-args">(conditions)</span>
+          <a href="#M000361" class="method-signature">
+          <span class="method-name">delete_all</span><span class="method-args">(conditions=nil)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000306-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000306-source">
+            onclick="toggleCode('M000361-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000361-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/behaviors/soft_deleting.rb, line 32</span>
-32:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete_all</span>(<span class="ruby-identifier">conditions</span>)
-33:             <span class="ruby-identifier">update_all</span>(<span class="ruby-value str">&quot;deleted = 1&quot;</span>, <span class="ruby-identifier">conditions</span>)
+32:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">delete_all</span>(<span class="ruby-identifier">conditions</span>=<span class="ruby-keyword kw">nil</span>)
+33:             <span class="ruby-identifier">update_all</span>([<span class="ruby-value str">&quot;deleted = ?&quot;</span>, <span class="ruby-keyword kw">true</span>], <span class="ruby-identifier">conditions</span>)
 34:           <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000307" class="method-detail">
-        <a name="M000307"></a>
+      <div id="method-M000362" class="method-detail">
+        <a name="M000362"></a>
 
         <div class="method-heading">
-          <a href="#M000307" class="method-signature">
+          <a href="#M000362" class="method-signature">
           <span class="method-name">exists?</span><span class="method-args">(id_or_conditions)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000307-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000307-source">
+            onclick="toggleCode('M000362-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000362-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/behaviors/soft_deleting.rb, line 35</span>
 35:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">exists?</span>(<span class="ruby-identifier">id_or_conditions</span>)
@@ -193,51 +179,24 @@
         </div>
       </div>
 
-      <div id="method-M000304" class="method-detail">
-        <a name="M000304"></a>
+      <div id="method-M000359" class="method-detail">
+        <a name="M000359"></a>
 
         <div class="method-heading">
-          <a href="#M000304" class="method-signature">
+          <a href="#M000359" class="method-signature">
           <span class="method-name">find</span><span class="method-args">(*args)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000304-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000304-source">
+            onclick="toggleCode('M000359-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000359-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/behaviors/soft_deleting.rb, line 26</span>
 26:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
 27:             <span class="ruby-identifier">not_deleted</span>.<span class="ruby-identifier">find_with_deleted</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
 28:           <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000308" class="method-detail">
-        <a name="M000308"></a>
-
-        <div class="method-heading">
-          <a href="#M000308" class="method-signature">
-          <span class="method-name">method_missing</span><span class="method-args">(method_id, *arguments)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000308-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000308-source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/soft_deleting.rb, line 44</span>
-44:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">method_missing</span>(<span class="ruby-identifier">method_id</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">arguments</span>)
-45:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">matches_dynamic_finder?</span>(<span class="ruby-identifier">method_id</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">matches_dynamic_finder_with_initialize_or_create?</span>(<span class="ruby-identifier">method_id</span>)
-46:               <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Dynamic Finders are not currently supported by content types that use soft delete&quot;</span>
-47:             <span class="ruby-keyword kw">else</span>
-48:               <span class="ruby-identifier">original_method_missing</span>(<span class="ruby-identifier">method_id</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">arguments</span>)
-49:             <span class="ruby-keyword kw">end</span>
-50:           <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

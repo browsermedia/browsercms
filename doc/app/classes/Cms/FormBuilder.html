@@ -86,8 +86,13 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000415">date_picker</a>&nbsp;&nbsp;
-      <a href="#M000414">text_editor</a>&nbsp;&nbsp;
+      <a href="#M000515">cms_drop_down</a>&nbsp;&nbsp;
+      <a href="#M000516">cms_tag_list</a>&nbsp;&nbsp;
+      <a href="#M000517">cms_text_editor</a>&nbsp;&nbsp;
+      <a href="#M000513">date_picker</a>&nbsp;&nbsp;
+      <a href="#M000511">drop_down</a>&nbsp;&nbsp;
+      <a href="#M000514">tag_list</a>&nbsp;&nbsp;
+      <a href="#M000512">text_editor</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -109,61 +114,184 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000415" class="method-detail">
-        <a name="M000415"></a>
+      <div id="method-M000515" class="method-detail">
+        <a name="M000515"></a>
 
         <div class="method-heading">
-          <a href="#M000415" class="method-signature">
+          <a href="#M000515" class="method-signature">
+          <span class="method-name">cms_drop_down</span><span class="method-args">(method, choices, options={}, html_options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000515-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000515-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/helpers/cms/form_builder.rb, line 45</span>
+45:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cms_drop_down</span>(<span class="ruby-identifier">method</span>, <span class="ruby-identifier">choices</span>, <span class="ruby-identifier">options</span>={}, <span class="ruby-identifier">html_options</span>={})
+46:     <span class="ruby-identifier">add_tabindex!</span>(<span class="ruby-identifier">html_options</span>)
+47:     <span class="ruby-identifier">cms_options</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">extract!</span>(<span class="ruby-identifier">:label</span>, <span class="ruby-identifier">:instructions</span>)
+48:     <span class="ruby-identifier">render_cms_form_partial</span> <span class="ruby-identifier">:drop_down</span>,
+49:       <span class="ruby-identifier">:object_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@object_name</span>, <span class="ruby-identifier">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">method</span>,
+50:       <span class="ruby-identifier">:choices</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">choices</span>, <span class="ruby-identifier">:options</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>, 
+51:       <span class="ruby-identifier">:cms_options</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">cms_options</span>, <span class="ruby-identifier">:html_options</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">html_options</span>
+52:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000516" class="method-detail">
+        <a name="M000516"></a>
+
+        <div class="method-heading">
+          <a href="#M000516" class="method-signature">
+          <span class="method-name">cms_tag_list</span><span class="method-args">(options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000516-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000516-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/helpers/cms/form_builder.rb, line 54</span>
+54:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cms_tag_list</span>(<span class="ruby-identifier">options</span>={})
+55:     <span class="ruby-identifier">add_tabindex!</span>(<span class="ruby-identifier">options</span>)
+56:     <span class="ruby-identifier">cms_options</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">extract!</span>(<span class="ruby-identifier">:label</span>, <span class="ruby-identifier">:instructions</span>)
+57:     <span class="ruby-identifier">render_cms_form_partial</span> <span class="ruby-identifier">:tag_list</span>, 
+58:       <span class="ruby-identifier">:options</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>, <span class="ruby-identifier">:cms_options</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">cms_options</span>
+59:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000517" class="method-detail">
+        <a name="M000517"></a>
+
+        <div class="method-heading">
+          <a href="#M000517" class="method-signature">
+          <span class="method-name">cms_text_editor</span><span class="method-args">(method, options = {})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000517-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000517-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/helpers/cms/form_builder.rb, line 61</span>
+61:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cms_text_editor</span>(<span class="ruby-identifier">method</span>, <span class="ruby-identifier">options</span> = {})
+62:     <span class="ruby-identifier">add_tabindex!</span>(<span class="ruby-identifier">options</span>)
+63:     <span class="ruby-identifier">cms_options</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">extract!</span>(<span class="ruby-identifier">:label</span>, <span class="ruby-identifier">:instructions</span>)
+64:     <span class="ruby-identifier">render_cms_form_partial</span> <span class="ruby-identifier">:text_editor</span>, 
+65:       <span class="ruby-identifier">:id</span> =<span class="ruby-operator">&gt;</span> (<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:id</span>] <span class="ruby-operator">||</span> <span class="ruby-node">&quot;#{@object_name}_#{method}&quot;</span>), 
+66:       <span class="ruby-identifier">:editor_enabled</span> =<span class="ruby-operator">&gt;</span> (<span class="ruby-identifier">cookies</span>[<span class="ruby-value str">&quot;editorEnabled&quot;</span>].<span class="ruby-identifier">blank?</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">true</span> <span class="ruby-operator">:</span> (<span class="ruby-identifier">cookies</span>[<span class="ruby-value str">&quot;editorEnabled&quot;</span>] <span class="ruby-operator">==</span> <span class="ruby-value str">'true'</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">cookies</span>[<span class="ruby-value str">&quot;editorEnabled&quot;</span>] <span class="ruby-operator">==</span> [<span class="ruby-value str">'true'</span>])),
+67:       <span class="ruby-identifier">:object_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@object_name</span>, <span class="ruby-identifier">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">method</span>, 
+68:       <span class="ruby-identifier">:options</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>, <span class="ruby-identifier">:cms_options</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">cms_options</span>
+69:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000513" class="method-detail">
+        <a name="M000513"></a>
+
+        <div class="method-heading">
+          <a href="#M000513" class="method-signature">
           <span class="method-name">date_picker</span><span class="method-args">(method, options={})</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000415-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000415-source">
+            onclick="toggleCode('M000513-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000513-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/helpers/cms/form_builder.rb, line 20</span>
-20:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">date_picker</span>(<span class="ruby-identifier">method</span>, <span class="ruby-identifier">options</span>={})
-21:     <span class="ruby-identifier">text_field</span>(<span class="ruby-identifier">method</span>, {<span class="ruby-identifier">:size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">10</span>, <span class="ruby-identifier">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;date_picker&quot;</span>}.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>))
-22:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/helpers/cms/form_builder.rb, line 18</span>
+18:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">date_picker</span>(<span class="ruby-identifier">method</span>, <span class="ruby-identifier">options</span>={})
+19:     <span class="ruby-identifier">text_field</span>(<span class="ruby-identifier">method</span>, {<span class="ruby-identifier">:size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">10</span>, <span class="ruby-identifier">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;date_picker&quot;</span>}.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>))
+20:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000414" class="method-detail">
-        <a name="M000414"></a>
+      <div id="method-M000511" class="method-detail">
+        <a name="M000511"></a>
 
         <div class="method-heading">
-          <a href="#M000414" class="method-signature">
+          <a href="#M000511" class="method-signature">
+          <span class="method-name">drop_down</span><span class="method-args">(method, choices, options = {}, html_options = {})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+A JavaScript/CSS styled select
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000511-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000511-source">
+<pre>
+   <span class="ruby-comment cmt"># File app/helpers/cms/form_builder.rb, line 6</span>
+6:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">drop_down</span>(<span class="ruby-identifier">method</span>, <span class="ruby-identifier">choices</span>, <span class="ruby-identifier">options</span> = {}, <span class="ruby-identifier">html_options</span> = {})
+7:     <span class="ruby-ivar">@template</span>.<span class="ruby-identifier">drop_down</span>(<span class="ruby-ivar">@object_name</span>, <span class="ruby-identifier">method</span>, <span class="ruby-identifier">choices</span>, <span class="ruby-identifier">objectify_options</span>(<span class="ruby-identifier">options</span>), <span class="ruby-identifier">add_tabindex!</span>(<span class="ruby-ivar">@default_options</span>.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">html_options</span>)))
+8:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000514" class="method-detail">
+        <a name="M000514"></a>
+
+        <div class="method-heading">
+          <a href="#M000514" class="method-signature">
+          <span class="method-name">tag_list</span><span class="method-args">(options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000514-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000514-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/helpers/cms/form_builder.rb, line 22</span>
+22:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tag_list</span>(<span class="ruby-identifier">options</span>={})
+23:     <span class="ruby-identifier">field_name</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:name</span>) <span class="ruby-operator">||</span> <span class="ruby-identifier">:tag_list</span>
+24:     <span class="ruby-identifier">text_field</span>(<span class="ruby-identifier">field_name</span>, {<span class="ruby-identifier">:size</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value">50</span>, <span class="ruby-identifier">:class</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;tag-list&quot;</span>}.<span class="ruby-identifier">merge</span>(<span class="ruby-identifier">options</span>))
+25:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000512" class="method-detail">
+        <a name="M000512"></a>
+
+        <div class="method-heading">
+          <a href="#M000512" class="method-signature">
           <span class="method-name">text_editor</span><span class="method-args">(method, options = {})</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000414-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000414-source">
+            onclick="toggleCode('M000512-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000512-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/helpers/cms/form_builder.rb, line 2</span>
- 2:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">text_editor</span>(<span class="ruby-identifier">method</span>, <span class="ruby-identifier">options</span> = {})
- 3:     <span class="ruby-identifier">opts</span> = <span class="ruby-identifier">options</span>.<span class="ruby-identifier">dup</span>
- 4:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:class</span>] <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span>(<span class="ruby-regexp re">/editor/</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:class</span>])
- 5:       <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:class</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot; editor&quot;</span>
- 6:     <span class="ruby-keyword kw">else</span>
- 7:       <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:class</span>] = <span class="ruby-value str">&quot;editor&quot;</span>
- 8:     <span class="ruby-keyword kw">end</span> 
- 9:     <span class="ruby-identifier">id</span> = <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:id</span>] <span class="ruby-operator">||</span> <span class="ruby-node">&quot;#{@object_name}_#{method}&quot;</span>
-10:     <span class="ruby-identifier">disabled</span> = <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:editor_disabled</span>]    
-11:     <span class="ruby-identifier">html</span> = <span class="ruby-node">&quot;&lt;select name=\&quot;dhtml_selector\&quot; onchange=\&quot;setEditor('#{id}', this);\&quot; tabindex=\&quot;32767\&quot;&gt;&lt;option value=\&quot;\&quot;#{' selected=&quot;selected&quot;' unless disabled}&gt;DHTML Editor&lt;/option&gt;&lt;option value=\&quot;disabled\&quot;#{' selected=&quot;selected&quot;' if disabled}&gt;Simple Text&lt;/option&gt;&lt;/select&gt;\n&quot;</span>
-12:     <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;&lt;div class='editor'&gt;\n&quot;</span>
-13:     <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;\n&quot;</span>
-14:     <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:editor_disabled</span>] = <span class="ruby-keyword kw">nil</span>;
-15:     <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">text_area</span>(<span class="ruby-identifier">method</span>, <span class="ruby-identifier">opts</span>)
-16:     <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;\n&lt;/div&gt;&quot;</span>
-17:     <span class="ruby-identifier">html</span>
-18:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/helpers/cms/form_builder.rb, line 10</span>
+10:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">text_editor</span>(<span class="ruby-identifier">method</span>, <span class="ruby-identifier">options</span> = {})
+11:     <span class="ruby-ivar">@template</span>.<span class="ruby-identifier">send</span>(
+12:       <span class="ruby-value str">&quot;text_editor&quot;</span>,
+13:       <span class="ruby-ivar">@object_name</span>,
+14:       <span class="ruby-identifier">method</span>,
+15:       <span class="ruby-identifier">objectify_options</span>(<span class="ruby-identifier">options</span>))
+16:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

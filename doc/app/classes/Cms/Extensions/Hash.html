@@ -80,7 +80,8 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000405">except</a>&nbsp;&nbsp;
+      <a href="#M000479">except</a>&nbsp;&nbsp;
+      <a href="#M000480">extract!</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -102,11 +103,11 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000405" class="method-detail">
-        <a name="M000405"></a>
+      <div id="method-M000479" class="method-detail">
+        <a name="M000479"></a>
 
         <div class="method-heading">
-          <a href="#M000405" class="method-signature">
+          <a href="#M000479" class="method-signature">
           <span class="method-name">except</span><span class="method-args">(*args)</span>
           </a>
         </div>
@@ -116,13 +117,44 @@
 Returns a copy of the hash without the keys passed as arguments
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000405-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000405-source">
+            onclick="toggleCode('M000479-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000479-source">
 <pre>
    <span class="ruby-comment cmt"># File lib/cms/extensions/hash.rb, line 5</span>
 5:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">except</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
 6:         <span class="ruby-identifier">reject</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">k</span>) }
 7:       <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000480" class="method-detail">
+        <a name="M000480"></a>
+
+        <div class="method-heading">
+          <a href="#M000480" class="method-signature">
+          <span class="method-name">extract!</span><span class="method-args">(*keys)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+This takes a list of keys and returns a new hash containing the key/values
+that match the keys passed in. This will also remove the keys from this
+hash
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000480-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000480-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/extensions/hash.rb, line 12</span>
+12:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">extract!</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">keys</span>)
+13:         <span class="ruby-identifier">keys</span>.<span class="ruby-identifier">inject</span>({}) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">hash</span>, <span class="ruby-identifier">key</span><span class="ruby-operator">|</span>
+14:           <span class="ruby-identifier">hash</span>[<span class="ruby-identifier">key</span>] = <span class="ruby-identifier">delete</span>(<span class="ruby-identifier">key</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">has_key?</span>(<span class="ruby-identifier">key</span>)
+15:           <span class="ruby-identifier">hash</span>
+16:         <span class="ruby-keyword kw">end</span>
+17:       <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

@@ -80,9 +80,9 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000188">create_table_from_definition</a>&nbsp;&nbsp;
-      <a href="#M000187">create_versioned_table</a>&nbsp;&nbsp;
-      <a href="#M000189">drop_versioned_table</a>&nbsp;&nbsp;
+      <a href="#M000226">create_table_from_definition</a>&nbsp;&nbsp;
+      <a href="#M000225">create_versioned_table</a>&nbsp;&nbsp;
+      <a href="#M000227">drop_versioned_table</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -104,19 +104,19 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000188" class="method-detail">
-        <a name="M000188"></a>
+      <div id="method-M000226" class="method-detail">
+        <a name="M000226"></a>
 
         <div class="method-heading">
-          <a href="#M000188" class="method-signature">
+          <a href="#M000226" class="method-signature">
           <span class="method-name">create_table_from_definition</span><span class="method-args">(table_name, options, table_definition)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000188-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000188-source">
+            onclick="toggleCode('M000226-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000226-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/extensions/active_record/connection_adapters/abstract/schema_statements.rb, line 44</span>
 44:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_table_from_definition</span>(<span class="ruby-identifier">table_name</span>, <span class="ruby-identifier">options</span>, <span class="ruby-identifier">table_definition</span>)
@@ -135,19 +135,19 @@
         </div>
       </div>
 
-      <div id="method-M000187" class="method-detail">
-        <a name="M000187"></a>
+      <div id="method-M000225" class="method-detail">
+        <a name="M000225"></a>
 
         <div class="method-heading">
-          <a href="#M000187" class="method-signature">
+          <a href="#M000225" class="method-signature">
           <span class="method-name">create_versioned_table</span><span class="method-args">(table_name, options={}) {|t| ...}</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000187-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000187-source">
+            onclick="toggleCode('M000225-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000225-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/extensions/active_record/connection_adapters/abstract/schema_statements.rb, line 4</span>
  4:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create_versioned_table</span>(<span class="ruby-identifier">table_name</span>, <span class="ruby-identifier">options</span>={}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
@@ -178,7 +178,7 @@
 29:         <span class="ruby-keyword kw">yield</span> <span class="ruby-identifier">vt</span>    
 30:         <span class="ruby-identifier">vt</span>.<span class="ruby-identifier">boolean</span> <span class="ruby-identifier">:published</span>, <span class="ruby-identifier">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>
 31:         <span class="ruby-identifier">vt</span>.<span class="ruby-identifier">boolean</span> <span class="ruby-identifier">:deleted</span>, <span class="ruby-identifier">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>
-32:         <span class="ruby-identifier">t</span>.<span class="ruby-identifier">boolean</span> <span class="ruby-identifier">:archived</span>, <span class="ruby-identifier">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>        
+32:         <span class="ruby-identifier">vt</span>.<span class="ruby-identifier">boolean</span> <span class="ruby-identifier">:archived</span>, <span class="ruby-identifier">:default</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>        
 33:         <span class="ruby-identifier">vt</span>.<span class="ruby-identifier">string</span> <span class="ruby-identifier">:version_comment</span>
 34:         <span class="ruby-identifier">vt</span>.<span class="ruby-identifier">integer</span> <span class="ruby-identifier">:created_by_id</span>
 35:         <span class="ruby-identifier">vt</span>.<span class="ruby-identifier">integer</span> <span class="ruby-identifier">:updated_by_id</span>
@@ -194,19 +194,19 @@
         </div>
       </div>
 
-      <div id="method-M000189" class="method-detail">
-        <a name="M000189"></a>
+      <div id="method-M000227" class="method-detail">
+        <a name="M000227"></a>
 
         <div class="method-heading">
-          <a href="#M000189" class="method-signature">
+          <a href="#M000227" class="method-signature">
           <span class="method-name">drop_versioned_table</span><span class="method-args">(table_name)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000189-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000189-source">
+            onclick="toggleCode('M000227-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000227-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/extensions/active_record/connection_adapters/abstract/schema_statements.rb, line 56</span>
 56:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">drop_versioned_table</span>(<span class="ruby-identifier">table_name</span>)

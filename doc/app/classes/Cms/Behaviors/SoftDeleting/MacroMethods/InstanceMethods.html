@@ -80,11 +80,11 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000312">destroy!</a>&nbsp;&nbsp;
-      <a href="#M000311">destroy_with_callbacks!</a>&nbsp;&nbsp;
-      <a href="#M000309">destroy_without_callbacks</a>&nbsp;&nbsp;
-      <a href="#M000313">destroyed?</a>&nbsp;&nbsp;
-      <a href="#M000310">mark_as_deleted!</a>&nbsp;&nbsp;
+      <a href="#M000366">destroy!</a>&nbsp;&nbsp;
+      <a href="#M000365">destroy_with_callbacks!</a>&nbsp;&nbsp;
+      <a href="#M000363">destroy_without_callbacks</a>&nbsp;&nbsp;
+      <a href="#M000367">destroyed?</a>&nbsp;&nbsp;
+      <a href="#M000364">mark_as_deleted!</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -106,61 +106,61 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000312" class="method-detail">
-        <a name="M000312"></a>
+      <div id="method-M000366" class="method-detail">
+        <a name="M000366"></a>
 
         <div class="method-heading">
-          <a href="#M000312" class="method-signature">
+          <a href="#M000366" class="method-signature">
           <span class="method-name">destroy!</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000312-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000312-source">
+            onclick="toggleCode('M000366-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000366-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/soft_deleting.rb, line 70</span>
-70:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroy!</span>
-71:             <span class="ruby-identifier">transaction</span> { <span class="ruby-identifier">destroy_with_callbacks!</span> }
-72:           <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/soft_deleting.rb, line 62</span>
+62:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroy!</span>
+63:             <span class="ruby-identifier">transaction</span> { <span class="ruby-identifier">destroy_with_callbacks!</span> }
+64:           <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000311" class="method-detail">
-        <a name="M000311"></a>
+      <div id="method-M000365" class="method-detail">
+        <a name="M000365"></a>
 
         <div class="method-heading">
-          <a href="#M000311" class="method-signature">
+          <a href="#M000365" class="method-signature">
           <span class="method-name">destroy_with_callbacks!</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000311-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000311-source">
+            onclick="toggleCode('M000365-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000365-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/soft_deleting.rb, line 62</span>
-62:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroy_with_callbacks!</span>
-63:             <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">callback</span>(<span class="ruby-identifier">:before_destroy</span>) <span class="ruby-operator">==</span> <span class="ruby-keyword kw">false</span>
-64:             <span class="ruby-identifier">result</span> = <span class="ruby-identifier">destroy_without_callbacks!</span>
-65:             <span class="ruby-ivar">@destroyed</span> = <span class="ruby-keyword kw">true</span>
-66:             <span class="ruby-identifier">callback</span>(<span class="ruby-identifier">:after_destroy</span>)
-67:             <span class="ruby-identifier">result</span>
-68:           <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/soft_deleting.rb, line 54</span>
+54:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroy_with_callbacks!</span>
+55:             <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">callback</span>(<span class="ruby-identifier">:before_destroy</span>) <span class="ruby-operator">==</span> <span class="ruby-keyword kw">false</span>
+56:             <span class="ruby-identifier">result</span> = <span class="ruby-identifier">destroy_without_callbacks!</span>
+57:             <span class="ruby-ivar">@destroyed</span> = <span class="ruby-keyword kw">true</span>
+58:             <span class="ruby-identifier">callback</span>(<span class="ruby-identifier">:after_destroy</span>)
+59:             <span class="ruby-identifier">result</span>
+60:           <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000309" class="method-detail">
-        <a name="M000309"></a>
+      <div id="method-M000363" class="method-detail">
+        <a name="M000363"></a>
 
         <div class="method-heading">
-          <a href="#M000309" class="method-signature">
+          <a href="#M000363" class="method-signature">
           <span class="method-name">destroy_without_callbacks</span><span class="method-args">()</span>
           </a>
         </div>
@@ -170,59 +170,59 @@
 Overrides original destroy method
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000309-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000309-source">
+            onclick="toggleCode('M000363-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000363-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/soft_deleting.rb, line 54</span>
-54:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroy_without_callbacks</span>
-55:             <span class="ruby-identifier">update_attribute</span>(<span class="ruby-identifier">:deleted</span>, <span class="ruby-keyword kw">true</span>)
-56:           <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/soft_deleting.rb, line 46</span>
+46:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroy_without_callbacks</span>
+47:             <span class="ruby-identifier">update_attribute</span>(<span class="ruby-identifier">:deleted</span>, <span class="ruby-keyword kw">true</span>)
+48:           <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000313" class="method-detail">
-        <a name="M000313"></a>
+      <div id="method-M000367" class="method-detail">
+        <a name="M000367"></a>
 
         <div class="method-heading">
-          <a href="#M000313" class="method-signature">
+          <a href="#M000367" class="method-signature">
           <span class="method-name">destroyed?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000313-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000313-source">
+            onclick="toggleCode('M000367-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000367-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/soft_deleting.rb, line 74</span>
-74:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroyed?</span>
-75:             <span class="ruby-ivar">@destroyed</span>
-76:           <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/soft_deleting.rb, line 66</span>
+66:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroyed?</span>
+67:             <span class="ruby-ivar">@destroyed</span>
+68:           <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000310" class="method-detail">
-        <a name="M000310"></a>
+      <div id="method-M000364" class="method-detail">
+        <a name="M000364"></a>
 
         <div class="method-heading">
-          <a href="#M000310" class="method-signature">
+          <a href="#M000364" class="method-signature">
           <span class="method-name">mark_as_deleted!</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000310-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000310-source">
+            onclick="toggleCode('M000364-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000364-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/soft_deleting.rb, line 58</span>
-58:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mark_as_deleted!</span>
-59:             <span class="ruby-identifier">destroy_without_callbacks</span>
-60:           <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/soft_deleting.rb, line 50</span>
+50:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">mark_as_deleted!</span>
+51:             <span class="ruby-identifier">destroy_without_callbacks</span>
+52:           <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

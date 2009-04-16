@@ -86,8 +86,11 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000052">cloud</a>&nbsp;&nbsp;
-      <a href="#M000051">counts</a>&nbsp;&nbsp;
+      <a href="#M000062">cloud</a>&nbsp;&nbsp;
+      <a href="#M000064">columns_for_index</a>&nbsp;&nbsp;
+      <a href="#M000061">counts</a>&nbsp;&nbsp;
+      <a href="#M000065">render</a>&nbsp;&nbsp;
+      <a href="#M000063">tagging_count</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -122,11 +125,11 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000052" class="method-detail">
-        <a name="M000052"></a>
+      <div id="method-M000062" class="method-detail">
+        <a name="M000062"></a>
 
         <div class="method-heading">
-          <a href="#M000052" class="method-signature">
+          <a href="#M000062" class="method-signature">
           <span class="method-name">cloud</span><span class="method-args">(options={})</span>
           </a>
         </div>
@@ -135,45 +138,70 @@
           <p>
 Returns an array of tags with a size attribute This takes the same
 arguments as find, plus the additional `:sizes` option, which contols the
-number of sizes the tag <a href="Tag.html#M000052">cloud</a> will have. The
+number of sizes the tag <a href="Tag.html#M000062">cloud</a> will have. The
 default number of sizes is 5.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000052-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000052-source">
+            onclick="toggleCode('M000062-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000062-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/tag.rb, line 21</span>
-21:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cloud</span>(<span class="ruby-identifier">options</span>={})
-22:     <span class="ruby-identifier">sizes</span> = (<span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:sizes</span>) <span class="ruby-operator">||</span> <span class="ruby-value">5</span>) <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
-23:     <span class="ruby-identifier">sizes</span> = <span class="ruby-value">1</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">sizes</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">1</span>
-24:     <span class="ruby-identifier">tags</span> = <span class="ruby-identifier">counts</span>(<span class="ruby-identifier">options</span>)
-25:     <span class="ruby-keyword kw">return</span> [] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">tags</span>.<span class="ruby-identifier">blank?</span>
-26:     
-27:     <span class="ruby-identifier">min</span> = <span class="ruby-keyword kw">nil</span>
-28:     <span class="ruby-identifier">max</span> = <span class="ruby-keyword kw">nil</span>
-29:     <span class="ruby-identifier">tags</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
-30:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">count</span> = <span class="ruby-identifier">t</span>.<span class="ruby-identifier">count</span>.<span class="ruby-identifier">to_i</span>
-31:       <span class="ruby-identifier">min</span> = <span class="ruby-identifier">t</span>.<span class="ruby-identifier">count</span> <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">min</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">t</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">min</span>)
-32:       <span class="ruby-identifier">max</span> = <span class="ruby-identifier">t</span>.<span class="ruby-identifier">count</span> <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">max</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">t</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">min</span>)
-33:     <span class="ruby-keyword kw">end</span>
-34: 
-35:     <span class="ruby-identifier">divisor</span> = ((<span class="ruby-identifier">max</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">min</span>) <span class="ruby-operator">/</span> <span class="ruby-identifier">sizes</span>) <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
-36:     <span class="ruby-identifier">tags</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
-37:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">size</span> = (<span class="ruby-value str">&quot;%1.0f&quot;</span> <span class="ruby-operator">%</span> (<span class="ruby-identifier">t</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">*</span> <span class="ruby-value">1.0</span> <span class="ruby-operator">/</span> <span class="ruby-identifier">divisor</span>)).<span class="ruby-identifier">to_i</span>
+    <span class="ruby-comment cmt"># File app/models/tag.rb, line 26</span>
+26:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">cloud</span>(<span class="ruby-identifier">options</span>={})
+27:     <span class="ruby-identifier">sizes</span> = (<span class="ruby-identifier">options</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">:sizes</span>) <span class="ruby-operator">||</span> <span class="ruby-value">5</span>) <span class="ruby-operator">-</span> <span class="ruby-value">1</span>
+28:     <span class="ruby-identifier">sizes</span> = <span class="ruby-value">1</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">sizes</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">1</span>
+29:     <span class="ruby-identifier">tags</span> = <span class="ruby-identifier">counts</span>(<span class="ruby-identifier">options</span>)
+30:     <span class="ruby-keyword kw">return</span> [] <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">tags</span>.<span class="ruby-identifier">blank?</span>
+31:     
+32:     <span class="ruby-identifier">min</span> = <span class="ruby-keyword kw">nil</span>
+33:     <span class="ruby-identifier">max</span> = <span class="ruby-keyword kw">nil</span>
+34:     <span class="ruby-identifier">tags</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+35:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">count</span> = <span class="ruby-identifier">t</span>.<span class="ruby-identifier">count</span>.<span class="ruby-identifier">to_i</span>
+36:       <span class="ruby-identifier">min</span> = <span class="ruby-identifier">t</span>.<span class="ruby-identifier">count</span> <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">min</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">t</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">min</span>)
+37:       <span class="ruby-identifier">max</span> = <span class="ruby-identifier">t</span>.<span class="ruby-identifier">count</span> <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">max</span>.<span class="ruby-identifier">nil?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">t</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">&gt;</span> <span class="ruby-identifier">min</span>)
 38:     <span class="ruby-keyword kw">end</span>
-39:     
-40:     <span class="ruby-identifier">tags</span>
-41:   <span class="ruby-keyword kw">end</span>
+39: 
+40:     <span class="ruby-identifier">divisor</span> = ((<span class="ruby-identifier">max</span> <span class="ruby-operator">-</span> <span class="ruby-identifier">min</span>) <span class="ruby-operator">/</span> <span class="ruby-identifier">sizes</span>) <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
+41:     <span class="ruby-identifier">tags</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span>
+42:       <span class="ruby-identifier">t</span>.<span class="ruby-identifier">size</span> = (<span class="ruby-value str">&quot;%1.0f&quot;</span> <span class="ruby-operator">%</span> (<span class="ruby-identifier">t</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">*</span> <span class="ruby-value">1.0</span> <span class="ruby-operator">/</span> <span class="ruby-identifier">divisor</span>)).<span class="ruby-identifier">to_i</span>
+43:     <span class="ruby-keyword kw">end</span>
+44:     
+45:     <span class="ruby-identifier">tags</span>
+46:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000051" class="method-detail">
-        <a name="M000051"></a>
+      <div id="method-M000064" class="method-detail">
+        <a name="M000064"></a>
 
         <div class="method-heading">
-          <a href="#M000051" class="method-signature">
+          <a href="#M000064" class="method-signature">
+          <span class="method-name">columns_for_index</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000064-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000064-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/tag.rb, line 52</span>
+52:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">columns_for_index</span>
+53:     [ {<span class="ruby-identifier">:label</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Name&quot;</span>, <span class="ruby-identifier">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:name</span>, <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;name&quot;</span> },
+54:       {<span class="ruby-identifier">:label</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Usages&quot;</span>, <span class="ruby-identifier">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:tagging_count</span> },
+55:       {<span class="ruby-identifier">:label</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;Updated On&quot;</span>, <span class="ruby-identifier">:method</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:updated_on_string</span>, <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;updated_at&quot;</span>}  ]
+56:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000061" class="method-detail">
+        <a name="M000061"></a>
+
+        <div class="method-heading">
+          <a href="#M000061" class="method-signature">
           <span class="method-name">counts</span><span class="method-args">(options={})</span>
           </a>
         </div>
@@ -183,19 +211,67 @@ default number of sizes is 5.
 Returns an array of tags with a count attribute
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000051-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000051-source">
+            onclick="toggleCode('M000061-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000061-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/tag.rb, line 7</span>
- 7:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">counts</span>(<span class="ruby-identifier">options</span>={})
- 8:     <span class="ruby-identifier">with_scope</span>(<span class="ruby-identifier">:find</span> =<span class="ruby-operator">&gt;</span> { 
- 9:         <span class="ruby-identifier">:select</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;tags.id, tags.name, count(*) as count&quot;</span>, 
-10:         <span class="ruby-identifier">:joins</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:taggings</span>, 
-11:         <span class="ruby-identifier">:group</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;id, name&quot;</span>, 
-12:         <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;count desc&quot;</span> }) <span class="ruby-keyword kw">do</span>
-13:       <span class="ruby-identifier">all</span>(<span class="ruby-identifier">options</span>)
-14:     <span class="ruby-keyword kw">end</span>
-15:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/tag.rb, line 12</span>
+12:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">counts</span>(<span class="ruby-identifier">options</span>={})
+13:     <span class="ruby-identifier">with_scope</span>(<span class="ruby-identifier">:find</span> =<span class="ruby-operator">&gt;</span> { 
+14:         <span class="ruby-identifier">:select</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;tags.id, tags.name, count(*) as count&quot;</span>, 
+15:         <span class="ruby-identifier">:joins</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:taggings</span>, 
+16:         <span class="ruby-identifier">:group</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;tags.id, tags.name&quot;</span>, 
+17:         <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;count desc, tags.name&quot;</span> }) <span class="ruby-keyword kw">do</span>
+18:       <span class="ruby-identifier">all</span>(<span class="ruby-identifier">options</span>)
+19:     <span class="ruby-keyword kw">end</span>
+20:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000065" class="method-detail">
+        <a name="M000065"></a>
+
+        <div class="method-heading">
+          <a href="#M000065" class="method-signature">
+          <span class="method-name">render</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000065-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000065-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/tag.rb, line 58</span>
+58:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render</span>
+59:     <span class="ruby-ivar">@taggings</span> = <span class="ruby-ivar">@content_block</span>.<span class="ruby-identifier">taggings</span>.<span class="ruby-identifier">paginate</span>(<span class="ruby-identifier">:page</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:page</span>])
+60:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000063" class="method-detail">
+        <a name="M000063"></a>
+
+        <div class="method-heading">
+          <a href="#M000063" class="method-signature">
+          <span class="method-name">tagging_count</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000063-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000063-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/tag.rb, line 48</span>
+48:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tagging_count</span>
+49:     <span class="ruby-identifier">taggings</span>.<span class="ruby-identifier">count</span>
+50:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

@@ -22,33 +22,33 @@ module Cms
           extend ClassMethods
           include InstanceMethods
         end
-        module ClassMethods
-          def tag_cloud
-            Tagging.cloud(base_class.name)
-          end
-          def tag_separator
-            @tag_separator
-          end
+      end
+      module ClassMethods
+        def tag_cloud
+          Tagging.cloud(base_class.name)
         end
-        module InstanceMethods
-          def tag_list
-            @tag_list ||= tags.reload.map(&:name).join(self.class.tag_separator)
-          end
-          def tag_list=(tag_names)
-            @tag_list = tag_names
-          end
-          def save_tags
-            tag_list_tags = tag_list.to_s.split(self.class.tag_separator).map{|t| Tag.find_or_create_by_name(t) }
-            taggings.each do |tg|
-              if tag_list_tags.include?(tg.tag)
-                tag_list_tags.delete(tg.tag)
-              else
-                tg.destroy
-              end
+        def tag_separator
+          @tag_separator
+        end
+      end
+      module InstanceMethods
+        def tag_list
+          @tag_list ||= tags.reload.map(&:name).join(self.class.tag_separator)
+        end
+        def tag_list=(tag_names)
+          @tag_list = tag_names
+        end
+        def save_tags
+          tag_list_tags = tag_list.to_s.split(self.class.tag_separator).map{|t| Tag.find_or_create_by_name(t) }
+          taggings.each do |tg|
+            if tag_list_tags.include?(tg.tag)
+              tag_list_tags.delete(tg.tag)
+            else
+              tg.destroy
             end
-            tag_list_tags.each{|t| taggings.create(:tag => t, :taggable => self) }
-            self.tag_list = nil
           end
+          tag_list_tags.each{|t| taggings.create(:tag => t, :taggable => self) }
+          self.tag_list = nil
         end
       end
     end

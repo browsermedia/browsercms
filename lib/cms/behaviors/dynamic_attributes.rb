@@ -189,174 +189,173 @@ module Cms
             end
           end
         end
-        module InstanceMethods
-          # Will determine if the given attribute is a dynamic attribute on the
-          # given model. Override this in your class to provide custom logic if
-          # the #dynamic_attributes method or the :fields option are not flexible
-          # enough. If you override this method :fields and #dynamic_attributes will
-          # not apply at all unless you implement them yourself.
-          def is_dynamic_attribute?(attr, model)
-            attr = attr.to_s
-            return dynamic_options[model.name][:fields].include?(attr) unless
-              dynamic_options[model.name][:fields].nil?
-            return dynamic_attributes(model).collect {|f| f.to_s}.include?(attr) unless
-              dynamic_attributes(model).nil?
-            true
-          end
-
-          # Return a list of valid dynamic attributes for the given model. Return
-          # nil if any field is allowed. If you want to say no field is allowed
-          # then return an empty array. If you just have a static list the :fields
-          # option is most likely easier.
-          def dynamic_attributes(model); nil end
-
-          private
-
-          # Called after validation on update so that dynamic attributes behave
-          # like normal attributes in the fact that the database is not touched
-          # until save is called.
-          def save_modified_dynamic_attributes
-            return if @save_dynamic_attr.nil?
-            @save_dynamic_attr.each do |s|
-              model, attr_name = s
-              related_attr = dynamic_related_attr model, attr_name
-              unless related_attr.nil?
-                if related_attr.value.nil?
-                  dynamic_related(model).delete related_attr
-                else
-                  related_attr.save
-                end
-              end
-            end
-            @save_dynamic_attr = []
-          end
-
-          # Overrides ActiveRecord::Base#read_attribute
-          def read_attribute_with_dynamic_attributes(attr_name)
-            attr_name = attr_name.to_s
-            exec_if_related attr_name do |model|
-              return nil if !@remove_dynamic_attr.nil? && @remove_dynamic_attr.any? do |r|
-                r[0] == model && r[1] == attr_name
-              end
-              value_field = dynamic_options[model.name][:value_field]
-              related_attr = dynamic_related_attr model, attr_name
-              return nil if related_attr.nil?
-              return related_attr.send(value_field)
-            end
-            read_attribute_without_dynamic_attributes(attr_name)
-          end
-
-          # Overrides ActiveRecord::Base#write_attribute
-          def write_attribute_with_dynamic_attributes(attr_name, value)
-            attr_name = attr_name.to_s
-            exec_if_related attr_name do |model|
-              value_field = dynamic_options[model.name][:value_field]
-              @save_dynamic_attr ||= []
-              @save_dynamic_attr << [model, attr_name]
-              related_attr = dynamic_related_attr(model, attr_name)
-              if related_attr.nil?
-                # Used to check for nil? but this caused validation
-                # problems that are harder to solve. blank? is probably
-                # not correct but it works well for now.
-                unless value.blank?
-                  name_field = dynamic_options[model.name][:name_field]
-                  foreign_key = dynamic_options[model.name][:foreign_key]
-                  dynamic_related(model).build name_field => attr_name,
-                    value_field => value, foreign_key => self.id
-                end
-                return value
-              else
-                value_field = (value_field.to_s + '=').to_sym
-                return related_attr.send(value_field, value)
-              end
-            end
-            write_attribute_without_dynamic_attributes(attr_name, value)
-          end
-
-          # Implements dynamic-attributes as if real getter/setter methods
-          # were defined.
-          def method_missing_with_dynamic_attributes(method_id, *args, &block)
-            begin
-              method_missing_without_dynamic_attributes method_id, *args, &block
-            rescue NoMethodError => e
-              attr_name = method_id.to_s.sub(/\=$/, '')
-              exec_if_related attr_name do |model|
-                if method_id.to_s =~ /\=$/
-                  return write_attribute_with_dynamic_attributes(attr_name, args[0])
-                else
-                  return read_attribute_with_dynamic_attributes(attr_name)
-                end
-              end
-              raise e
-            end
-          end
-
-          # Retrieve the related dynamic attribute object
-          def dynamic_related_attr(model, attr)
-              name_field = dynamic_options[model.name][:name_field]
-              dynamic_related(model).to_a.find {|r| r.send(name_field) == attr}
-          end
-
-          # Retrieve the collection of related dynamic attributes
-          def dynamic_related(model)
-            relationship = dynamic_options[model.name][:relationship_name]
-            send relationship
-          end
-
-          # Yield only if attr_name is a dynamic_attribute
-          def exec_if_related(attr_name)
-            return false if self.class.column_names.include? attr_name
-            each_dynamic_relation do |model|
-              if is_dynamic_attribute?(attr_name, model)
-                yield model
-              end
-            end
-          end
-
-          # Yields for each dynamic relation.
-          def each_dynamic_relation
-            dynamic_options.keys.each {|kls| yield kls.constantize}
-          end
-
-          # Returns the options for the dynamic attributes
-          def dynamic_options
-            nonversioned_class(self.class).dynamic_options
-          end
-
-          # Will return the parent model if kls is a versioned class
-          def nonversioned_class(kls)
-            if kls.name =~ /\:\:Version$/
-              base_class = kls.name
-              base_class.sub!(/\:\:Version$/, '')
-              return base_class.constantize
-            end
-            kls
-          end
-          
-          # This overrides the attributes= defined in ActiveRecord::Base
-          # The only difference is that this doesn't check to see if the
-          # model responds_to the method before sending it
-          # This is needed for Rails 2.2
-          def attributes=(new_attributes, guard_protected_attributes = true)
-            return if new_attributes.nil?
-            attributes = new_attributes.dup
-            attributes.stringify_keys!
-
-            multi_parameter_attributes = []
-            attributes = remove_attributes_protected_from_mass_assignment(attributes) if guard_protected_attributes
-
-            attributes.each do |k, v|
-              if k.include?("(")
-                multi_parameter_attributes << [ k, v ]
-              else
-                send(:"#{k}=", v)
-              end
-            end
-
-            assign_multiparameter_attributes(multi_parameter_attributes)
-          end          
-                              
+      end
+      module InstanceMethods
+        # Will determine if the given attribute is a dynamic attribute on the
+        # given model. Override this in your class to provide custom logic if
+        # the #dynamic_attributes method or the :fields option are not flexible
+        # enough. If you override this method :fields and #dynamic_attributes will
+        # not apply at all unless you implement them yourself.
+        def is_dynamic_attribute?(attr, model)
+          attr = attr.to_s
+          return dynamic_options[model.name][:fields].include?(attr) unless
+            dynamic_options[model.name][:fields].nil?
+          return dynamic_attributes(model).collect {|f| f.to_s}.include?(attr) unless
+            dynamic_attributes(model).nil?
+          true
         end
+
+        # Return a list of valid dynamic attributes for the given model. Return
+        # nil if any field is allowed. If you want to say no field is allowed
+        # then return an empty array. If you just have a static list the :fields
+        # option is most likely easier.
+        def dynamic_attributes(model); nil end
+
+        private
+
+        # Called after validation on update so that dynamic attributes behave
+        # like normal attributes in the fact that the database is not touched
+        # until save is called.
+        def save_modified_dynamic_attributes
+          return if @save_dynamic_attr.nil?
+          @save_dynamic_attr.each do |s|
+            model, attr_name = s
+            related_attr = dynamic_related_attr model, attr_name
+            unless related_attr.nil?
+              if related_attr.value.nil?
+                dynamic_related(model).delete related_attr
+              else
+                related_attr.save
+              end
+            end
+          end
+          @save_dynamic_attr = []
+        end
+
+        # Overrides ActiveRecord::Base#read_attribute
+        def read_attribute_with_dynamic_attributes(attr_name)
+          attr_name = attr_name.to_s
+          exec_if_related attr_name do |model|
+            return nil if !@remove_dynamic_attr.nil? && @remove_dynamic_attr.any? do |r|
+              r[0] == model && r[1] == attr_name
+            end
+            value_field = dynamic_options[model.name][:value_field]
+            related_attr = dynamic_related_attr model, attr_name
+            return nil if related_attr.nil?
+            return related_attr.send(value_field)
+          end
+          read_attribute_without_dynamic_attributes(attr_name)
+        end
+
+        # Overrides ActiveRecord::Base#write_attribute
+        def write_attribute_with_dynamic_attributes(attr_name, value)
+          attr_name = attr_name.to_s
+          exec_if_related attr_name do |model|
+            value_field = dynamic_options[model.name][:value_field]
+            @save_dynamic_attr ||= []
+            @save_dynamic_attr << [model, attr_name]
+            related_attr = dynamic_related_attr(model, attr_name)
+            if related_attr.nil?
+              # Used to check for nil? but this caused validation
+              # problems that are harder to solve. blank? is probably
+              # not correct but it works well for now.
+              unless value.blank?
+                name_field = dynamic_options[model.name][:name_field]
+                foreign_key = dynamic_options[model.name][:foreign_key]
+                dynamic_related(model).build name_field => attr_name,
+                  value_field => value, foreign_key => self.id
+              end
+              return value
+            else
+              value_field = (value_field.to_s + '=').to_sym
+              return related_attr.send(value_field, value)
+            end
+          end
+          write_attribute_without_dynamic_attributes(attr_name, value)
+        end
+
+        # Implements dynamic-attributes as if real getter/setter methods
+        # were defined.
+        def method_missing_with_dynamic_attributes(method_id, *args, &block)
+          begin
+            method_missing_without_dynamic_attributes method_id, *args, &block
+          rescue NoMethodError => e
+            attr_name = method_id.to_s.sub(/\=$/, '')
+            exec_if_related attr_name do |model|
+              if method_id.to_s =~ /\=$/
+                return write_attribute_with_dynamic_attributes(attr_name, args[0])
+              else
+                return read_attribute_with_dynamic_attributes(attr_name)
+              end
+            end
+            raise e
+          end
+        end
+
+        # Retrieve the related dynamic attribute object
+        def dynamic_related_attr(model, attr)
+            name_field = dynamic_options[model.name][:name_field]
+            dynamic_related(model).to_a.find {|r| r.send(name_field) == attr}
+        end
+
+        # Retrieve the collection of related dynamic attributes
+        def dynamic_related(model)
+          relationship = dynamic_options[model.name][:relationship_name]
+          send relationship
+        end
+
+        # Yield only if attr_name is a dynamic_attribute
+        def exec_if_related(attr_name)
+          return false if self.class.column_names.include? attr_name
+          each_dynamic_relation do |model|
+            if is_dynamic_attribute?(attr_name, model)
+              yield model
+            end
+          end
+        end
+
+        # Yields for each dynamic relation.
+        def each_dynamic_relation
+          dynamic_options.keys.each {|kls| yield kls.constantize}
+        end
+
+        # Returns the options for the dynamic attributes
+        def dynamic_options
+          nonversioned_class(self.class).dynamic_options
+        end
+
+        # Will return the parent model if kls is a versioned class
+        def nonversioned_class(kls)
+          if kls.name =~ /\:\:Version$/
+            base_class = kls.name
+            base_class.sub!(/\:\:Version$/, '')
+            return base_class.constantize
+          end
+          kls
+        end
+        
+        # This overrides the attributes= defined in ActiveRecord::Base
+        # The only difference is that this doesn't check to see if the
+        # model responds_to the method before sending it
+        # This is needed for Rails 2.2
+        def attributes=(new_attributes, guard_protected_attributes = true)
+          return if new_attributes.nil?
+          attributes = new_attributes.dup
+          attributes.stringify_keys!
+
+          multi_parameter_attributes = []
+          attributes = remove_attributes_protected_from_mass_assignment(attributes) if guard_protected_attributes
+
+          attributes.each do |k, v|
+            if k.include?("(")
+              multi_parameter_attributes << [ k, v ]
+            else
+              send(:"#{k}=", v)
+            end
+          end
+
+          assign_multiparameter_attributes(multi_parameter_attributes)
+        end                         
       end
     end
   end

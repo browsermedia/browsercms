@@ -88,9 +88,12 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000474">index</a>&nbsp;&nbsp;
-      <a href="#M000476">move_after</a>&nbsp;&nbsp;
-      <a href="#M000475">move_before</a>&nbsp;&nbsp;
+      <a href="#M000603">index</a>&nbsp;&nbsp;
+      <a href="#M000605">move_after</a>&nbsp;&nbsp;
+      <a href="#M000604">move_before</a>&nbsp;&nbsp;
+      <a href="#M000606">move_to_beginning</a>&nbsp;&nbsp;
+      <a href="#M000607">move_to_end</a>&nbsp;&nbsp;
+      <a href="#M000608">move_to_root</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -112,19 +115,19 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000474" class="method-detail">
-        <a name="M000474"></a>
+      <div id="method-M000603" class="method-detail">
+        <a name="M000603"></a>
 
         <div class="method-heading">
-          <a href="#M000474" class="method-signature">
+          <a href="#M000603" class="method-signature">
           <span class="method-name">index</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000474-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000474-source">
+            onclick="toggleCode('M000603-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000603-source">
 <pre>
    <span class="ruby-comment cmt"># File app/controllers/cms/section_nodes_controller.rb, line 4</span>
 4:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index</span>
@@ -136,19 +139,19 @@
         </div>
       </div>
 
-      <div id="method-M000476" class="method-detail">
-        <a name="M000476"></a>
+      <div id="method-M000605" class="method-detail">
+        <a name="M000605"></a>
 
         <div class="method-heading">
-          <a href="#M000476" class="method-signature">
+          <a href="#M000605" class="method-signature">
           <span class="method-name">move_after</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000476-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000476-source">
+            onclick="toggleCode('M000605-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000605-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/cms/section_nodes_controller.rb, line 11</span>
 11:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">move_after</span>
@@ -159,24 +162,96 @@
         </div>
       </div>
 
-      <div id="method-M000475" class="method-detail">
-        <a name="M000475"></a>
+      <div id="method-M000604" class="method-detail">
+        <a name="M000604"></a>
 
         <div class="method-heading">
-          <a href="#M000475" class="method-signature">
+          <a href="#M000604" class="method-signature">
           <span class="method-name">move_before</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000475-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000475-source">
+            onclick="toggleCode('M000604-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000604-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/cms/section_nodes_controller.rb, line 8</span>
  8:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">move_before</span>
  9:     <span class="ruby-identifier">move</span>(<span class="ruby-identifier">:before</span>)
 10:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000606" class="method-detail">
+        <a name="M000606"></a>
+
+        <div class="method-heading">
+          <a href="#M000606" class="method-signature">
+          <span class="method-name">move_to_beginning</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000606-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000606-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/cms/section_nodes_controller.rb, line 14</span>
+14:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">move_to_beginning</span>
+15:     <span class="ruby-identifier">move_to</span>(<span class="ruby-identifier">:beginning</span>)
+16:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000607" class="method-detail">
+        <a name="M000607"></a>
+
+        <div class="method-heading">
+          <a href="#M000607" class="method-signature">
+          <span class="method-name">move_to_end</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000607-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000607-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/cms/section_nodes_controller.rb, line 17</span>
+17:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">move_to_end</span>
+18:     <span class="ruby-identifier">move_to</span>(<span class="ruby-identifier">:end</span>)
+19:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000608" class="method-detail">
+        <a name="M000608"></a>
+
+        <div class="method-heading">
+          <a href="#M000608" class="method-signature">
+          <span class="method-name">move_to_root</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000608-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000608-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/cms/section_nodes_controller.rb, line 20</span>
+20:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">move_to_root</span>
+21:     <span class="ruby-ivar">@section_node</span> = <span class="ruby-constant">SectionNode</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>])
+22:     <span class="ruby-ivar">@root</span> = <span class="ruby-constant">Section</span>.<span class="ruby-identifier">root</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:section_id</span>])
+23:     <span class="ruby-ivar">@section_node</span>.<span class="ruby-identifier">move_to</span>(<span class="ruby-ivar">@root</span>, <span class="ruby-value">0</span>)
+24:     <span class="ruby-identifier">render</span> <span class="ruby-identifier">:json</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:success</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">:message</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;'#{@section_node.node.name}' was moved to '#{@root.name}'&quot;</span>}    
+25:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

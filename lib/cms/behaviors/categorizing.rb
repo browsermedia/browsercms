@@ -18,12 +18,12 @@ module Cms
           named_scope :in_category, lambda{|cat| {:conditions => ["category_id = ?", cat.id]}}
           
         end
-        module ClassMethods
-        end
-        module InstanceMethods
-          def category_name
-            category && category.name
-          end
+      end
+      module ClassMethods
+      end
+      module InstanceMethods
+        def category_name
+          category && category.name
         end
       end
     end

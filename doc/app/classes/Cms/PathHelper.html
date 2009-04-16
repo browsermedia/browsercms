@@ -80,8 +80,12 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000379">cms_path</a>&nbsp;&nbsp;
-      <a href="#M000380">cms_url</a>&nbsp;&nbsp;
+      <a href="#M000445">cms_connectable_path</a>&nbsp;&nbsp;
+      <a href="#M000441">cms_index_path_for</a>&nbsp;&nbsp;
+      <a href="#M000442">cms_index_url_for</a>&nbsp;&nbsp;
+      <a href="#M000443">cms_new_path_for</a>&nbsp;&nbsp;
+      <a href="#M000444">cms_new_url_for</a>&nbsp;&nbsp;
+      <a href="#M000446">edit_cms_connectable_path</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -103,98 +107,147 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000379" class="method-detail">
-        <a name="M000379"></a>
+      <div id="method-M000445" class="method-detail">
+        <a name="M000445"></a>
 
         <div class="method-heading">
-          <a href="#M000379" class="method-signature">
-          <span class="method-name">cms_path</span><span class="method-args">(*args)</span>
+          <a href="#M000445" class="method-signature">
+          <span class="method-name">cms_connectable_path</span><span class="method-args">(connectable, options={})</span>
           </a>
         </div>
       
         <div class="method-description">
-          <p>
-This method has several valid forms. The most simple is to pass a string,
-to which the cms namespace will be added. If you pass a symbol, this method
-will assume that is the controller. If you pass an object like an Active
-Record model, then it will construct the url for that model. If the last
-argument is a Hash, it will append those values as querystring parameters
-If the action is :create_or_update, this will generate the proper url based
-on the status of the model. For example, if you call <a
-href="PathHelper.html#M000379">cms_path</a>(@block, :create_or_update), if
-the block is a new record, it will return &#8217;/cms/blocks/create&#8217;,
-but if the record is not a new record, if will return
-&#8217;/cms/blocks/update/1&#8216;
-</p>
-<pre>
- Examples:
- cms_path(:user) -&gt; /cms/user
-</pre>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000379-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000379-source">
+            onclick="toggleCode('M000445-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000445-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/helpers/cms/path_helper.rb, line 16</span>
-16:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cms_path</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)    
-17:       <span class="ruby-identifier">paths</span> = [<span class="ruby-value str">&quot;&quot;</span>, <span class="ruby-value str">&quot;cms&quot;</span>]
-18:       <span class="ruby-identifier">params</span> = <span class="ruby-constant">Hash</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">last</span> <span class="ruby-value">? </span><span class="ruby-identifier">args</span>.<span class="ruby-identifier">pop</span> <span class="ruby-operator">:</span> {}
-19: 
-20:       <span class="ruby-identifier">first</span> = <span class="ruby-identifier">args</span>.<span class="ruby-identifier">delete_at</span>(<span class="ruby-value">0</span>)
-21:       <span class="ruby-keyword kw">if</span> [<span class="ruby-constant">String</span>, <span class="ruby-constant">Symbol</span>, <span class="ruby-constant">Hash</span>, <span class="ruby-constant">Array</span>, <span class="ruby-constant">Numeric</span>, <span class="ruby-constant">Date</span>, <span class="ruby-constant">Time</span>].<span class="ruby-identifier">detect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">first</span>}
-22:         <span class="ruby-identifier">paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">first</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp re">/^\//</span>,<span class="ruby-value str">''</span>)
-23:       <span class="ruby-keyword kw">else</span>
-24:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">first</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">connectable?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-constant">ContentType</span>.<span class="ruby-identifier">count</span>(<span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value str">&quot;name in (?)&quot;</span>, [<span class="ruby-identifier">first</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">name</span>, <span class="ruby-identifier">first</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">base_class</span>.<span class="ruby-identifier">name</span>]]) <span class="ruby-operator">&gt;</span> <span class="ruby-value">0</span>
-25:           <span class="ruby-identifier">paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">'blocks'</span>
-26:           <span class="ruby-identifier">paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">first</span>.<span class="ruby-identifier">content_block_type</span>
-27:         <span class="ruby-keyword kw">else</span>
-28:           <span class="ruby-identifier">paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">first</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">pluralize</span>.<span class="ruby-identifier">underscore</span>
-29:         <span class="ruby-keyword kw">end</span>
-30:         <span class="ruby-identifier">action</span> = (<span class="ruby-identifier">args</span>.<span class="ruby-identifier">delete_at</span>(<span class="ruby-value">0</span>) <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;show&quot;</span>)
-31:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">action</span>.<span class="ruby-identifier">to_sym</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">:create_or_update</span>
-32:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">first</span>.<span class="ruby-identifier">new_record?</span>
-33:             <span class="ruby-identifier">paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">:create</span>
-34:           <span class="ruby-keyword kw">else</span>
-35:             <span class="ruby-identifier">paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">:update</span>
-36:             <span class="ruby-identifier">paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">first</span>.<span class="ruby-identifier">to_param</span>
-37:           <span class="ruby-keyword kw">end</span>
-38:         <span class="ruby-keyword kw">else</span>
-39:           <span class="ruby-identifier">paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">action</span>
-40:           <span class="ruby-identifier">paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">first</span>.<span class="ruby-identifier">to_param</span>
-41:         <span class="ruby-keyword kw">end</span>
-42:       <span class="ruby-keyword kw">end</span>
-43: 
-44:       <span class="ruby-identifier">paths</span> <span class="ruby-operator">+=</span> <span class="ruby-identifier">args</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">:to_param</span>)
-45: 
-46:       <span class="ruby-identifier">path</span> = <span class="ruby-identifier">paths</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;/&quot;</span>)    
-47:       <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">empty?</span> 
-48:         <span class="ruby-identifier">path</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;?&quot;</span>
-49:         <span class="ruby-identifier">path</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">params</span>.<span class="ruby-identifier">to_a</span>.<span class="ruby-identifier">sort_by</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">e</span><span class="ruby-operator">|</span> <span class="ruby-identifier">e</span>.<span class="ruby-identifier">first</span>.<span class="ruby-identifier">to_s</span>}.<span class="ruby-identifier">map</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">k</span>,<span class="ruby-identifier">v</span><span class="ruby-operator">|</span> <span class="ruby-node">&quot;#{k}=#{CGI::escape(v.to_param.to_s)}&quot;</span>}.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;&amp;&quot;</span>)
-50:       <span class="ruby-keyword kw">end</span>
-51:       <span class="ruby-identifier">path</span>
-52:     <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/helpers/cms/path_helper.rb, line 19</span>
+19:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cms_connectable_path</span>(<span class="ruby-identifier">connectable</span>, <span class="ruby-identifier">options</span>={})
+20:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Portlet</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">connectable</span>
+21:         <span class="ruby-identifier">cms_portlet_path</span>(<span class="ruby-identifier">connectable</span>)
+22:       <span class="ruby-keyword kw">else</span>
+23:         [<span class="ruby-identifier">:cms</span>, <span class="ruby-identifier">connectable</span>]
+24:       <span class="ruby-keyword kw">end</span>
+25:     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000380" class="method-detail">
-        <a name="M000380"></a>
+      <div id="method-M000441" class="method-detail">
+        <a name="M000441"></a>
 
         <div class="method-heading">
-          <a href="#M000380" class="method-signature">
-          <span class="method-name">cms_url</span><span class="method-args">(*args)</span>
+          <a href="#M000441" class="method-signature">
+          <span class="method-name">cms_index_path_for</span><span class="method-args">(resource, options={})</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000380-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000380-source">
+            onclick="toggleCode('M000441-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000441-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/helpers/cms/path_helper.rb, line 54</span>
-54:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cms_url</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)
-55:       <span class="ruby-node">&quot;#{request.protocol}#{request.host_with_port}#{cms_path(*args)}&quot;</span>
-56:     <span class="ruby-keyword kw">end</span>
+   <span class="ruby-comment cmt"># File app/helpers/cms/path_helper.rb, line 3</span>
+3:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cms_index_path_for</span>(<span class="ruby-identifier">resource</span>, <span class="ruby-identifier">options</span>={})
+4:       <span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;cms_#{resource_collection_name(resource).pluralize}_path&quot;</span>, <span class="ruby-identifier">options</span>)
+5:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000442" class="method-detail">
+        <a name="M000442"></a>
+
+        <div class="method-heading">
+          <a href="#M000442" class="method-signature">
+          <span class="method-name">cms_index_url_for</span><span class="method-args">(resource, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000442-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000442-source">
+<pre>
+   <span class="ruby-comment cmt"># File app/helpers/cms/path_helper.rb, line 7</span>
+7:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cms_index_url_for</span>(<span class="ruby-identifier">resource</span>, <span class="ruby-identifier">options</span>={})
+8:       <span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;cms_#{resource_collection_name(resource).pluralize}_url&quot;</span>, <span class="ruby-identifier">options</span>)
+9:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000443" class="method-detail">
+        <a name="M000443"></a>
+
+        <div class="method-heading">
+          <a href="#M000443" class="method-signature">
+          <span class="method-name">cms_new_path_for</span><span class="method-args">(resource, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000443-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000443-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/helpers/cms/path_helper.rb, line 11</span>
+11:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cms_new_path_for</span>(<span class="ruby-identifier">resource</span>, <span class="ruby-identifier">options</span>={})
+12:       <span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;new_cms_#{resource_collection_name(resource)}_path&quot;</span>, <span class="ruby-identifier">options</span>)
+13:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000444" class="method-detail">
+        <a name="M000444"></a>
+
+        <div class="method-heading">
+          <a href="#M000444" class="method-signature">
+          <span class="method-name">cms_new_url_for</span><span class="method-args">(resource, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000444-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000444-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/helpers/cms/path_helper.rb, line 15</span>
+15:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cms_new_url_for</span>(<span class="ruby-identifier">resource</span>, <span class="ruby-identifier">options</span>={})
+16:       <span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;new_cms_#{resource_collection_name(resource)}_url&quot;</span>, <span class="ruby-identifier">options</span>)
+17:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000446" class="method-detail">
+        <a name="M000446"></a>
+
+        <div class="method-heading">
+          <a href="#M000446" class="method-signature">
+          <span class="method-name">edit_cms_connectable_path</span><span class="method-args">(connectable, options={})</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000446-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000446-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/helpers/cms/path_helper.rb, line 27</span>
+27:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">edit_cms_connectable_path</span>(<span class="ruby-identifier">connectable</span>, <span class="ruby-identifier">options</span>={})
+28:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Portlet</span> <span class="ruby-operator">===</span> <span class="ruby-identifier">connectable</span>
+29:         <span class="ruby-identifier">edit_cms_portlet_path</span>(<span class="ruby-identifier">connectable</span>)
+30:       <span class="ruby-keyword kw">else</span>
+31:         [<span class="ruby-identifier">:edit</span>, <span class="ruby-identifier">:cms</span>, <span class="ruby-identifier">connectable</span>]
+32:       <span class="ruby-keyword kw">end</span>
+33:     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
