@@ -1,6 +1,6 @@
 <% if @block.class == Portlet %>
   <% page_title "Content Library / Select Portlet Type" %>
-  <% Portlet.types.sort_by{|t| t.name }.each do |portlet_type| %>
+  <% Portlet.types.uniq.sort_by{|t| t.name }.each do |portlet_type| %>
     <div style="margin-bottom: 20px;">
       <%
         link_params = {:type => portlet_type.name.underscore}
