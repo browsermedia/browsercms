@@ -5,10 +5,10 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Module: Cms::Behaviors::Publishing::MacroMethods::InstanceMethods</title>
+  <title>Module: Cms::Behaviors::Publishing::InstanceMethods</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
-  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
   // <![CDATA[
 
@@ -50,12 +50,12 @@
         <table class="header-table">
         <tr class="top-aligned-row">
           <td><strong>Module</strong></td>
-          <td class="class-name-in-header">Cms::Behaviors::Publishing::MacroMethods::InstanceMethods</td>
+          <td class="class-name-in-header">Cms::Behaviors::Publishing::InstanceMethods</td>
         </tr>
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../../../../files/lib/cms/behaviors/publishing_rb.html">
+                <a href="../../../../files/lib/cms/behaviors/publishing_rb.html">
                 lib/cms/behaviors/publishing.rb
                 </a>
         <br />
@@ -124,10 +124,10 @@
             onclick="toggleCode('M000402-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000402-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/publishing.rb, line 77</span>
-77:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">live?</span>
-78:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned?</span> <span class="ruby-value">? </span><span class="ruby-identifier">versions</span>.<span class="ruby-identifier">count</span>(<span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value str">'version &gt; ? AND published = ?'</span>, <span class="ruby-identifier">version</span>, <span class="ruby-keyword kw">true</span>]) <span class="ruby-operator">==</span> <span class="ruby-value">0</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">published?</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">true</span>
-79:           <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/publishing.rb, line 78</span>
+78:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">live?</span>
+79:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned?</span> <span class="ruby-value">? </span><span class="ruby-identifier">versions</span>.<span class="ruby-identifier">count</span>(<span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value str">'version &gt; ? AND published = ?'</span>, <span class="ruby-identifier">version</span>, <span class="ruby-keyword kw">true</span>]) <span class="ruby-operator">==</span> <span class="ruby-value">0</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">published?</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">true</span>
+80:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -147,12 +147,12 @@
             onclick="toggleCode('M000395-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000395-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/publishing.rb, line 39</span>
-39:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">publish</span>
-40:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">publish_on_save</span> = <span class="ruby-keyword kw">true</span>
-41:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">version_comment</span> = <span class="ruby-value str">&quot;Published&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned?</span>
-42:             <span class="ruby-identifier">save</span>
-43:           <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/publishing.rb, line 40</span>
+40:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">publish</span>
+41:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">publish_on_save</span> = <span class="ruby-keyword kw">true</span>
+42:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">version_comment</span> = <span class="ruby-value str">&quot;Published&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned?</span>
+43:           <span class="ruby-identifier">save</span>
+44:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -172,12 +172,12 @@
             onclick="toggleCode('M000396-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000396-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/publishing.rb, line 44</span>
-44:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">publish!</span>
-45:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">publish_on_save</span> = <span class="ruby-keyword kw">true</span>
-46:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">version_comment</span> = <span class="ruby-value str">&quot;Published&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned?</span>
-47:             <span class="ruby-identifier">save!</span>
-48:           <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/publishing.rb, line 45</span>
+45:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">publish!</span>
+46:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">publish_on_save</span> = <span class="ruby-keyword kw">true</span>
+47:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">version_comment</span> = <span class="ruby-value str">&quot;Published&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned?</span>
+48:           <span class="ruby-identifier">save!</span>
+49:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -197,16 +197,16 @@
             onclick="toggleCode('M000397-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000397-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/publishing.rb, line 49</span>
-49:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">publish_by_page</span>(<span class="ruby-identifier">page</span>)
-50:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">published_by_page</span> = <span class="ruby-identifier">page</span>
-51:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">publish</span>
-52:               <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">published_by_page</span> = <span class="ruby-keyword kw">nil</span>          
-53:               <span class="ruby-keyword kw">true</span>
-54:             <span class="ruby-keyword kw">else</span>
-55:               <span class="ruby-keyword kw">false</span>
-56:             <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/publishing.rb, line 50</span>
+50:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">publish_by_page</span>(<span class="ruby-identifier">page</span>)
+51:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">published_by_page</span> = <span class="ruby-identifier">page</span>
+52:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">publish</span>
+53:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">published_by_page</span> = <span class="ruby-keyword kw">nil</span>          
+54:             <span class="ruby-keyword kw">true</span>
+55:           <span class="ruby-keyword kw">else</span>
+56:             <span class="ruby-keyword kw">false</span>
 57:           <span class="ruby-keyword kw">end</span>
+58:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -226,12 +226,12 @@
             onclick="toggleCode('M000398-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000398-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/publishing.rb, line 58</span>
-58:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">publish_by_page!</span>(<span class="ruby-identifier">page</span>)
-59:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">published_by_page</span> = <span class="ruby-identifier">page</span>
-60:             <span class="ruby-identifier">publish!</span>
-61:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">published_by_page</span> = <span class="ruby-keyword kw">nil</span>
-62:           <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/publishing.rb, line 59</span>
+59:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">publish_by_page!</span>(<span class="ruby-identifier">page</span>)
+60:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">published_by_page</span> = <span class="ruby-identifier">page</span>
+61:           <span class="ruby-identifier">publish!</span>
+62:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">published_by_page</span> = <span class="ruby-keyword kw">nil</span>
+63:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -251,14 +251,14 @@
             onclick="toggleCode('M000394-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000394-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/publishing.rb, line 32</span>
-32:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">publishable?</span>
-33:             <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">connectable?</span>
-34:               <span class="ruby-identifier">new_record?</span> <span class="ruby-value">? </span><span class="ruby-identifier">connect_to_page_id</span>.<span class="ruby-identifier">blank?</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">connected_page_count</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">1</span>
-35:             <span class="ruby-keyword kw">else</span>
-36:               <span class="ruby-keyword kw">true</span>
-37:             <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/publishing.rb, line 33</span>
+33:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">publishable?</span>
+34:           <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">connectable?</span>
+35:             <span class="ruby-identifier">new_record?</span> <span class="ruby-value">? </span><span class="ruby-identifier">connect_to_page_id</span>.<span class="ruby-identifier">blank?</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">connected_page_count</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">1</span>
+36:           <span class="ruby-keyword kw">else</span>
+37:             <span class="ruby-keyword kw">true</span>
 38:           <span class="ruby-keyword kw">end</span>
+39:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -278,15 +278,15 @@
             onclick="toggleCode('M000399-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000399-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/publishing.rb, line 63</span>
-63:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_published</span>
-64:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">published</span> = <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-ivar">@publish_on_save</span>
-65:             <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">published</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:published_at</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">published_at</span>
-66:               <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">published_at</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
-67:             <span class="ruby-keyword kw">end</span>
-68:             <span class="ruby-ivar">@publish_on_save</span> = <span class="ruby-keyword kw">nil</span>
-69:             <span class="ruby-keyword kw">true</span>
-70:           <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/publishing.rb, line 64</span>
+64:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_published</span>
+65:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">published</span> = <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-ivar">@publish_on_save</span>
+66:           <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">published</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:published_at</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">published_at</span>
+67:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">published_at</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+68:           <span class="ruby-keyword kw">end</span>
+69:           <span class="ruby-ivar">@publish_on_save</span> = <span class="ruby-keyword kw">nil</span>
+70:           <span class="ruby-keyword kw">true</span>
+71:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -306,10 +306,10 @@
             onclick="toggleCode('M000400-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000400-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/publishing.rb, line 71</span>
-71:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">status</span>
-72:             <span class="ruby-identifier">published?</span> <span class="ruby-value">? </span><span class="ruby-operator">:</span><span class="ruby-identifier">published</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">:draft</span>
-73:           <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/publishing.rb, line 72</span>
+72:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">status</span>
+73:           <span class="ruby-identifier">published?</span> <span class="ruby-value">? </span><span class="ruby-operator">:</span><span class="ruby-identifier">published</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">:draft</span>
+74:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -329,10 +329,10 @@
             onclick="toggleCode('M000401-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000401-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/publishing.rb, line 74</span>
-74:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">status_name</span>
-75:             <span class="ruby-identifier">status</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">titleize</span>
-76:           <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/publishing.rb, line 75</span>
+75:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">status_name</span>
+76:           <span class="ruby-identifier">status</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">titleize</span>
+77:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

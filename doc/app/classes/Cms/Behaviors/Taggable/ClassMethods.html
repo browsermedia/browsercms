@@ -5,7 +5,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Module: Cms::Behaviors::FlushCacheOnChange::InstanceMethods</title>
+  <title>Module: Cms::Behaviors::Taggable::ClassMethods</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
   <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
@@ -50,13 +50,13 @@
         <table class="header-table">
         <tr class="top-aligned-row">
           <td><strong>Module</strong></td>
-          <td class="class-name-in-header">Cms::Behaviors::FlushCacheOnChange::InstanceMethods</td>
+          <td class="class-name-in-header">Cms::Behaviors::Taggable::ClassMethods</td>
         </tr>
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../../../files/lib/cms/behaviors/flush_cache_on_change_rb.html">
-                lib/cms/behaviors/flush_cache_on_change.rb
+                <a href="../../../../files/lib/cms/behaviors/taggable_rb.html">
+                lib/cms/behaviors/taggable.rb
                 </a>
         <br />
             </td>
@@ -80,7 +80,8 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000353">flush_cache</a>&nbsp;&nbsp;
+      <a href="#M000285">tag_cloud</a>&nbsp;&nbsp;
+      <a href="#M000286">tag_separator</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -102,26 +103,47 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000353" class="method-detail">
-        <a name="M000353"></a>
+      <div id="method-M000285" class="method-detail">
+        <a name="M000285"></a>
 
         <div class="method-heading">
-          <a href="#M000353" class="method-signature">
-          <span class="method-name">flush_cache</span><span class="method-args">()</span>
+          <a href="#M000285" class="method-signature">
+          <span class="method-name">tag_cloud</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000353-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000353-source">
+            onclick="toggleCode('M000285-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000285-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/flush_cache_on_change.rb, line 25</span>
-25:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">flush_cache</span>
-26:           <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Cms</span>.<span class="ruby-identifier">caching_enabled?</span>
-27:             <span class="ruby-constant">Cms</span>.<span class="ruby-identifier">flush_cache</span>
-28:           <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/taggable.rb, line 27</span>
+27:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tag_cloud</span>
+28:           <span class="ruby-constant">Tagging</span>.<span class="ruby-identifier">cloud</span>(<span class="ruby-identifier">base_class</span>.<span class="ruby-identifier">name</span>)
 29:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000286" class="method-detail">
+        <a name="M000286"></a>
+
+        <div class="method-heading">
+          <a href="#M000286" class="method-signature">
+          <span class="method-name">tag_separator</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000286-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000286-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/taggable.rb, line 30</span>
+30:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tag_separator</span>
+31:           <span class="ruby-ivar">@tag_separator</span>
+32:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

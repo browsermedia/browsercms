@@ -5,10 +5,10 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Module: Cms::Behaviors::Rendering::ClassMethods</title>
+  <title>Module: Cms::Behaviors::ClassMethods</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
-  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="../../.././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
   // <![CDATA[
 
@@ -50,12 +50,12 @@
         <table class="header-table">
         <tr class="top-aligned-row">
           <td><strong>Module</strong></td>
-          <td class="class-name-in-header">Cms::Behaviors::Rendering::ClassMethods</td>
+          <td class="class-name-in-header">Cms::Behaviors::ClassMethods</td>
         </tr>
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../../../files/lib/cms/behaviors/rendering_rb.html">
+                <a href="../../../files/lib/cms/behaviors/rendering_rb.html">
                 lib/cms/behaviors/rendering.rb
                 </a>
         <br />
@@ -80,10 +80,10 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000294">instance_variable_name_for_view</a>&nbsp;&nbsp;
-      <a href="#M000296">ivars_to_ignore</a>&nbsp;&nbsp;
-      <a href="#M000293">renderable?</a>&nbsp;&nbsp;
-      <a href="#M000295">template_path</a>&nbsp;&nbsp;
+      <a href="#M000325">instance_variable_name_for_view</a>&nbsp;&nbsp;
+      <a href="#M000327">ivars_to_ignore</a>&nbsp;&nbsp;
+      <a href="#M000324">renderable?</a>&nbsp;&nbsp;
+      <a href="#M000326">template_path</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -105,11 +105,11 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000294" class="method-detail">
-        <a name="M000294"></a>
+      <div id="method-M000325" class="method-detail">
+        <a name="M000325"></a>
 
         <div class="method-heading">
-          <a href="#M000294" class="method-signature">
+          <a href="#M000325" class="method-signature">
           <span class="method-name">instance_variable_name_for_view</span><span class="method-args">()</span>
           </a>
         </div>
@@ -120,23 +120,23 @@ This will be the used as the name of instance variable that will be
 available in the view. The default value is &quot;@renderable&quot;
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000294-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000294-source">
+            onclick="toggleCode('M000325-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000325-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/rendering.rb, line 35</span>
-35:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">instance_variable_name_for_view</span>
-36:           <span class="ruby-ivar">@instance_variable_name_for_view</span> <span class="ruby-operator">||=</span> <span class="ruby-value str">&quot;@renderable&quot;</span>
-37:         <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/rendering.rb, line 57</span>
+57:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">instance_variable_name_for_view</span>
+58:         <span class="ruby-ivar">@instance_variable_name_for_view</span> <span class="ruby-operator">||=</span> <span class="ruby-value str">&quot;@renderable&quot;</span>
+59:       <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000296" class="method-detail">
-        <a name="M000296"></a>
+      <div id="method-M000327" class="method-detail">
+        <a name="M000327"></a>
 
         <div class="method-heading">
-          <a href="#M000296" class="method-signature">
+          <a href="#M000327" class="method-signature">
           <span class="method-name">ivars_to_ignore</span><span class="method-args">()</span>
           </a>
         </div>
@@ -146,46 +146,46 @@ available in the view. The default value is &quot;@renderable&quot;
 Instance variables that will not be copied from the renderable to the view
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000296-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000296-source">
+            onclick="toggleCode('M000327-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000327-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/rendering.rb, line 47</span>
-47:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ivars_to_ignore</span>
-48:           [<span class="ruby-value str">'@controller'</span>, <span class="ruby-value str">'@_already_rendered'</span>]
-49:         <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/rendering.rb, line 69</span>
+69:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">ivars_to_ignore</span>
+70:         [<span class="ruby-value str">'@controller'</span>, <span class="ruby-value str">'@_already_rendered'</span>]
+71:       <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000293" class="method-detail">
-        <a name="M000293"></a>
+      <div id="method-M000324" class="method-detail">
+        <a name="M000324"></a>
 
         <div class="method-heading">
-          <a href="#M000293" class="method-signature">
+          <a href="#M000324" class="method-signature">
           <span class="method-name">renderable?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000293-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000293-source">
+            onclick="toggleCode('M000324-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000324-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/rendering.rb, line 29</span>
-29:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">renderable?</span>
-30:           <span class="ruby-keyword kw">true</span>
-31:         <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/rendering.rb, line 51</span>
+51:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">renderable?</span>
+52:         <span class="ruby-keyword kw">true</span>
+53:       <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000295" class="method-detail">
-        <a name="M000295"></a>
+      <div id="method-M000326" class="method-detail">
+        <a name="M000326"></a>
 
         <div class="method-heading">
-          <a href="#M000295" class="method-signature">
+          <a href="#M000326" class="method-signature">
           <span class="method-name">template_path</span><span class="method-args">()</span>
           </a>
         </div>
@@ -197,13 +197,13 @@ of the renderable, so if you have an Article that is renderable, the
 template will be &quot;articles/render&quot;
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000295-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000295-source">
+            onclick="toggleCode('M000326-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000326-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/rendering.rb, line 42</span>
-42:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">template_path</span>
-43:           <span class="ruby-node">&quot;cms/#{name.underscore.pluralize}/render&quot;</span>
-44:         <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/rendering.rb, line 64</span>
+64:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">template_path</span>
+65:         <span class="ruby-node">&quot;cms/#{name.underscore.pluralize}/render&quot;</span>
+66:       <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

@@ -6,7 +6,6 @@ BrowserCMS Developer Guide
 This guide covers how to use the tools that come with BrowserCMS to extend the functionality of your BrowserCMS site.  This guide will cover:
 
 * What content blocks and portlets are and how they work
-* What behaviors are and how they are used
 * How to create custom content blocks
 * How to create custom portlets
 * How to create custom page templates
@@ -16,6 +15,6 @@ This guide covers how to use the tools that come with BrowserCMS to extend the f
 
 == Content Blocks
 
-Content Blocks are the basic unit for add content to pages in a BrowserCMS site.  There are several pre-built content types that are part of BrowserCMS core.  The most commonly used one is the HtmlBlock content type, so we will use that as a starting example.
+Content Blocks are the basic unit used to add content to pages in a BrowserCMS site.  There are several pre-built content types that are part of BrowserCMS core.  The most commonly used one is the HtmlBlock content type, so we will use that as a starting example.
 
-If you look at the HtmlBlock model in BrowserCMS core, you will see that it is an ActiveRecord model, just like any model you create in a Rails application.  It also
+If you look at the HtmlBlock model in BrowserCMS core, you will see that it is an ActiveRecord model, just like any model you create in a Rails application.  It also calls the acts_as_content_block method, which just sets up several link:/doc/app/classes/Cms/Behaviors.html[Behaviors] on the model.  One of the key Behaviors to understand is the link:/doc/app/classes/Cms/Behaviors/Rendering.html[Rendering] behavior.  Essentially what this behavior does is to allow your model to act as a mini-controller.  This is the same thing conceptually as link:http://yehudakatz.com/2007/09/06/merbs-parts-are-pretty-rocking-too/[Merb Parts] or link:http://cells.rubyforge.org[Rails Cells].  In the BrowserCMS implementation

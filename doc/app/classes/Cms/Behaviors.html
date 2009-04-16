@@ -145,10 +145,10 @@ Generally, each behavior has three modules in it. They are:
 <li>MacroMethods
 
 </li>
-<li>ClassMethods
+<li><a href="Behaviors/ClassMethods.html">ClassMethods</a>
 
 </li>
-<li>InstanceMethods
+<li><a href="Behaviors/InstanceMethods.html">InstanceMethods</a>
 
 </li>
 </ul>
@@ -168,13 +168,15 @@ Article module that is taggable, you would do this:
 <p>
 So in this case, you are calling the `is_taggable` macro method, which
 enables the taggable behavior for the Article model. It enables the
-behavior by extending the ClassMethods module and including the
-InstanceMethods module into the Article class. Each Behavior typically has
-one macro method which takes an options Hash, which of course varies from
-Behavior to Behavior. The macro method will also sometimes call other macro
-methods, like before_fitler, named_scope, etc. to modify the model. Consult
-the documentation for each module for specific details as to what the
-Behavior does.
+behavior by extending the <a
+href="Behaviors/ClassMethods.html">ClassMethods</a> module and including
+the <a href="Behaviors/InstanceMethods.html">InstanceMethods</a> module
+into the Article class. Each Behavior typically has one macro method which
+takes an options Hash, which of course varies from Behavior to Behavior.
+The macro method will also sometimes call other macro methods, like
+before_fitler, named_scope, etc. to modify the model. Consult the
+documentation for each module for specific details as to what the Behavior
+does.
 </p>
 
     </div>
@@ -196,10 +198,12 @@ Behavior does.
       Module <a href="Behaviors/Archiving.html" class="link">Cms::Behaviors::Archiving</a><br />
 Module <a href="Behaviors/Attaching.html" class="link">Cms::Behaviors::Attaching</a><br />
 Module <a href="Behaviors/Categorizing.html" class="link">Cms::Behaviors::Categorizing</a><br />
+Module <a href="Behaviors/ClassMethods.html" class="link">Cms::Behaviors::ClassMethods</a><br />
 Module <a href="Behaviors/Connecting.html" class="link">Cms::Behaviors::Connecting</a><br />
 Module <a href="Behaviors/DynamicAttributes.html" class="link">Cms::Behaviors::DynamicAttributes</a><br />
 Module <a href="Behaviors/FlushCacheOnChange.html" class="link">Cms::Behaviors::FlushCacheOnChange</a><br />
 Module <a href="Behaviors/Hiding.html" class="link">Cms::Behaviors::Hiding</a><br />
+Module <a href="Behaviors/InstanceMethods.html" class="link">Cms::Behaviors::InstanceMethods</a><br />
 Module <a href="Behaviors/Pagination.html" class="link">Cms::Behaviors::Pagination</a><br />
 Module <a href="Behaviors/Publishing.html" class="link">Cms::Behaviors::Publishing</a><br />
 Module <a href="Behaviors/Rendering.html" class="link">Cms::Behaviors::Rendering</a><br />

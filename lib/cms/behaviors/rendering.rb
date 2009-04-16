@@ -1,5 +1,28 @@
 module Cms
   module Behaviors
+    # The Rendering Behavior allows a model to be rendered within a view.
+    # The key methods are the instance methods perform_render, render and 
+    # inline_options.  From within a view or a helper, you can render a
+    # renderable object by calling the perform_render and passing the controller
+    # object to it.
+    #
+    # When perform_render is called, it will first call the render instance method
+    # of the renderable object.  This is very similar to a controller action.
+    # The purpose of this method is to setup instance varaibles to be used by the
+    # renderable's view.
+    #
+    # After the render method is called, it checks to see if there is a inline_options
+    # instance method on the renderable object.  If so, it calls this and it expects
+    # this to return a Hash that will be passed to render.  This expects there to be
+    # an inline option, so this is the way to do inline rendering.
+    #
+    # Assuming there is no inline_options method, it will look for a template in the 
+    # view path at cms/pluralized_class_name/render.  So if the Renderable class is
+    # Article, the template should be at cms/articles/render.  It uses the same
+    # format and template engine options as regular views, to the file name should
+    # be render.html.erb.
+    #
+    # One gotcha to be aware of with this behavior
     module Rendering
       def self.included(model)
         model.extend(MacroMethods)
@@ -37,6 +60,14 @@ module Cms
         @instance_variable_name_for_view ||= "@renderable"
       end
   
+      def helper_path
+        "app/helpers/cms/#{name.underscore}_helper.rb"
+      end
+  
+      def helper_class
+        "Cms::#{name}Helper".constantize
+      end
+  
       # This is where the path to the template. The default is based on the class
       # of the renderable, so if you have an Article that is renderable, 
       # the template will be "articles/render"
@@ -69,6 +100,9 @@ module Cms
     
         # Make helpers and instance vars available
         view_class.send(:include, @controller.class.master_helper_module)
+        if $:.detect{|d| File.exists?(File.join(d, self.class.helper_path))}
+          view_class.send(:include, self.class.helper_class)
+        end
         
         # We want content_for to be called on the controller's view, not this inner view
         def action_view.content_for(name, content=nil, &block)

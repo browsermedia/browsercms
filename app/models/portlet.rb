@@ -10,11 +10,23 @@ class Portlet < ActiveRecord::Base
     super if defined? super
   ensure
     ( @subclasses ||= [] ).push(subclass).uniq!
-    subclass.has_dynamic_attributes
-    subclass.acts_as_content_block(
-      :versioned => false, 
-      :publishable => false,
-      :renderable => {:instance_variable_name_for_view => "@portlet"})
+    subclass.class_eval do
+      
+      has_dynamic_attributes
+      
+      acts_as_content_block(
+        :versioned => false, 
+        :publishable => false,
+        :renderable => {:instance_variable_name_for_view => "@portlet"})
+      
+      def self.helper_path
+        "app/portlets/helpers/#{name.underscore}_helper.rb"
+      end
+
+      def self.helper_class
+        "#{name}Helper".constantize
+      end      
+    end      
   end
 
   # In Rails, Classes aren't loaded until you ask for them

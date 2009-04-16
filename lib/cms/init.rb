@@ -21,6 +21,7 @@ module Cms
     def init
       ActionController::Routing::RouteSet::Mapper.send :include, Cms::Routes
       ActiveSupport::Dependencies.load_paths += %W( #{RAILS_ROOT}/app/portlets )
+      ActiveSupport::Dependencies.load_paths += %W( #{RAILS_ROOT}/app/portlets/helpers )      
       ActionController::Base.append_view_path DynamicView.base_path
       ActionView::Base.default_form_builder = Cms::FormBuilder
       

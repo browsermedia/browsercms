@@ -72,6 +72,36 @@
 
   <div id="contextContent">
 
+    <div id="description">
+      <p>
+The <a href="Rendering.html">Rendering</a> Behavior allows a model to be
+rendered within a view. The key methods are the instance methods
+perform_render, render and inline_options. From within a view or a helper,
+you can render a renderable object by calling the perform_render and
+passing the controller object to it.
+</p>
+<p>
+When perform_render is called, it will first call the render instance
+method of the renderable object. This is very similar to a controller
+action. The purpose of this method is to setup instance varaibles to be
+used by the renderable&#8216;s view.
+</p>
+<p>
+After the render method is called, it checks to see if there is a
+inline_options instance method on the renderable object. If so, it calls
+this and it expects this to return a Hash that will be passed to render.
+This expects there to be an inline option, so this is the way to do inline
+rendering.
+</p>
+<p>
+Assuming there is no inline_options method, it will look for a template in
+the view path at cms/pluralized_class_name/render. So if the Renderable
+class is Article, the template should be at cms/articles/render. It uses
+the same format and template engine options as regular views, to the file
+name should be render.html.erb.
+</p>
+
+    </div>
 
 
    </div>
@@ -94,9 +124,7 @@
     <div id="class-list">
       <h3 class="section-bar">Classes and Modules</h3>
 
-      Module <a href="Rendering/ClassMethods.html" class="link">Cms::Behaviors::Rendering::ClassMethods</a><br />
-Module <a href="Rendering/InstanceMethods.html" class="link">Cms::Behaviors::Rendering::InstanceMethods</a><br />
-Module <a href="Rendering/MacroMethods.html" class="link">Cms::Behaviors::Rendering::MacroMethods</a><br />
+      Module <a href="Rendering/MacroMethods.html" class="link">Cms::Behaviors::Rendering::MacroMethods</a><br />
 
     </div>
 
@@ -124,10 +152,10 @@ Module <a href="Rendering/MacroMethods.html" class="link">Cms::Behaviors::Render
             onclick="toggleCode('M000292-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000292-source">
 <pre>
-   <span class="ruby-comment cmt"># File lib/cms/behaviors/rendering.rb, line 4</span>
-4:       <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">included</span>(<span class="ruby-identifier">model</span>)
-5:         <span class="ruby-identifier">model</span>.<span class="ruby-identifier">extend</span>(<span class="ruby-constant">MacroMethods</span>)
-6:       <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/rendering.rb, line 25</span>
+25:       <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">included</span>(<span class="ruby-identifier">model</span>)
+26:         <span class="ruby-identifier">model</span>.<span class="ruby-identifier">extend</span>(<span class="ruby-constant">MacroMethods</span>)
+27:       <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

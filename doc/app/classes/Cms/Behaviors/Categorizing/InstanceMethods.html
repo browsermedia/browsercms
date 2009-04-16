@@ -5,10 +5,10 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Module: Cms::Behaviors::Taggable::MacroMethods::ClassMethods</title>
+  <title>Module: Cms::Behaviors::Categorizing::InstanceMethods</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
-  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
   // <![CDATA[
 
@@ -50,13 +50,13 @@
         <table class="header-table">
         <tr class="top-aligned-row">
           <td><strong>Module</strong></td>
-          <td class="class-name-in-header">Cms::Behaviors::Taggable::MacroMethods::ClassMethods</td>
+          <td class="class-name-in-header">Cms::Behaviors::Categorizing::InstanceMethods</td>
         </tr>
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../../../../files/lib/cms/behaviors/taggable_rb.html">
-                lib/cms/behaviors/taggable.rb
+                <a href="../../../../files/lib/cms/behaviors/categorizing_rb.html">
+                lib/cms/behaviors/categorizing.rb
                 </a>
         <br />
             </td>
@@ -80,8 +80,7 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000287">tag_cloud</a>&nbsp;&nbsp;
-      <a href="#M000288">tag_separator</a>&nbsp;&nbsp;
+      <a href="#M000348">category_name</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -103,47 +102,24 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000287" class="method-detail">
-        <a name="M000287"></a>
+      <div id="method-M000348" class="method-detail">
+        <a name="M000348"></a>
 
         <div class="method-heading">
-          <a href="#M000287" class="method-signature">
-          <span class="method-name">tag_cloud</span><span class="method-args">()</span>
+          <a href="#M000348" class="method-signature">
+          <span class="method-name">category_name</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000287-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000287-source">
+            onclick="toggleCode('M000348-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000348-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/taggable.rb, line 26</span>
-26:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tag_cloud</span>
-27:             <span class="ruby-constant">Tagging</span>.<span class="ruby-identifier">cloud</span>(<span class="ruby-identifier">base_class</span>.<span class="ruby-identifier">name</span>)
-28:           <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000288" class="method-detail">
-        <a name="M000288"></a>
-
-        <div class="method-heading">
-          <a href="#M000288" class="method-signature">
-          <span class="method-name">tag_separator</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000288-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000288-source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/taggable.rb, line 29</span>
-29:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tag_separator</span>
-30:             <span class="ruby-ivar">@tag_separator</span>
-31:           <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/categorizing.rb, line 25</span>
+25:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">category_name</span>
+26:           <span class="ruby-identifier">category</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">category</span>.<span class="ruby-identifier">name</span>
+27:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

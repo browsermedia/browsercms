@@ -5,10 +5,10 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Module: Cms::Behaviors::Userstamping::MacroMethods::InstanceMethods</title>
+  <title>Module: Cms::Behaviors::Searching::ClassMethods</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
-  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
   // <![CDATA[
 
@@ -50,13 +50,13 @@
         <table class="header-table">
         <tr class="top-aligned-row">
           <td><strong>Module</strong></td>
-          <td class="class-name-in-header">Cms::Behaviors::Userstamping::MacroMethods::InstanceMethods</td>
+          <td class="class-name-in-header">Cms::Behaviors::Searching::ClassMethods</td>
         </tr>
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../../../../files/lib/cms/behaviors/userstamping_rb.html">
-                lib/cms/behaviors/userstamping.rb
+                <a href="../../../../files/lib/cms/behaviors/searching_rb.html">
+                lib/cms/behaviors/searching.rb
                 </a>
         <br />
             </td>
@@ -80,7 +80,8 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000324">set_userstamps</a>&nbsp;&nbsp;
+      <a href="#M000321">default_order_for_search</a>&nbsp;&nbsp;
+      <a href="#M000320">searchable_columns</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -102,27 +103,47 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000324" class="method-detail">
-        <a name="M000324"></a>
+      <div id="method-M000321" class="method-detail">
+        <a name="M000321"></a>
 
         <div class="method-heading">
-          <a href="#M000324" class="method-signature">
-          <span class="method-name">set_userstamps</span><span class="method-args">()</span>
+          <a href="#M000321" class="method-signature">
+          <span class="method-name">default_order_for_search</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000324-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000324-source">
+            onclick="toggleCode('M000321-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000321-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/userstamping.rb, line 27</span>
-27:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_userstamps</span>
-28:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">new_record?</span>
-29:               <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">created_by</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">current</span> 
-30:             <span class="ruby-keyword kw">end</span>
-31:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">updated_by</span> = <span class="ruby-constant">User</span>.<span class="ruby-identifier">current</span>
-32:           <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/searching.rb, line 43</span>
+43:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">default_order_for_search</span>
+44:           <span class="ruby-node">&quot;#{table_name}.#{searchable_columns.first}&quot;</span>
+45:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000320" class="method-detail">
+        <a name="M000320"></a>
+
+        <div class="method-heading">
+          <a href="#M000320" class="method-signature">
+          <span class="method-name">searchable_columns</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000320-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000320-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/searching.rb, line 40</span>
+40:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">searchable_columns</span>
+41:           <span class="ruby-ivar">@searchable_columns</span>
+42:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

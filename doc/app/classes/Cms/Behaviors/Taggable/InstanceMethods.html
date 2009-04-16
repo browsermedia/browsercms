@@ -5,10 +5,10 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>Module: Cms::Behaviors::Taggable::MacroMethods::InstanceMethods</title>
+  <title>Module: Cms::Behaviors::Taggable::InstanceMethods</title>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <meta http-equiv="Content-Script-Type" content="text/javascript" />
-  <link rel="stylesheet" href="../../../../.././rdoc-style.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="../../../.././rdoc-style.css" type="text/css" media="screen" />
   <script type="text/javascript">
   // <![CDATA[
 
@@ -50,12 +50,12 @@
         <table class="header-table">
         <tr class="top-aligned-row">
           <td><strong>Module</strong></td>
-          <td class="class-name-in-header">Cms::Behaviors::Taggable::MacroMethods::InstanceMethods</td>
+          <td class="class-name-in-header">Cms::Behaviors::Taggable::InstanceMethods</td>
         </tr>
         <tr class="top-aligned-row">
             <td><strong>In:</strong></td>
             <td>
-                <a href="../../../../../files/lib/cms/behaviors/taggable_rb.html">
+                <a href="../../../../files/lib/cms/behaviors/taggable_rb.html">
                 lib/cms/behaviors/taggable.rb
                 </a>
         <br />
@@ -118,19 +118,19 @@
             onclick="toggleCode('M000291-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000291-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/taggable.rb, line 40</span>
-40:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">save_tags</span>
-41:             <span class="ruby-identifier">tag_list_tags</span> = <span class="ruby-identifier">tag_list</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">split</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">tag_separator</span>).<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span> <span class="ruby-constant">Tag</span>.<span class="ruby-identifier">find_or_create_by_name</span>(<span class="ruby-identifier">t</span>) }
-42:             <span class="ruby-identifier">taggings</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">tg</span><span class="ruby-operator">|</span>
-43:               <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">tag_list_tags</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">tg</span>.<span class="ruby-identifier">tag</span>)
-44:                 <span class="ruby-identifier">tag_list_tags</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">tg</span>.<span class="ruby-identifier">tag</span>)
-45:               <span class="ruby-keyword kw">else</span>
-46:                 <span class="ruby-identifier">tg</span>.<span class="ruby-identifier">destroy</span>
-47:               <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/taggable.rb, line 41</span>
+41:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">save_tags</span>
+42:           <span class="ruby-identifier">tag_list_tags</span> = <span class="ruby-identifier">tag_list</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">split</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">tag_separator</span>).<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span> <span class="ruby-constant">Tag</span>.<span class="ruby-identifier">find_or_create_by_name</span>(<span class="ruby-identifier">t</span>) }
+43:           <span class="ruby-identifier">taggings</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">tg</span><span class="ruby-operator">|</span>
+44:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">tag_list_tags</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">tg</span>.<span class="ruby-identifier">tag</span>)
+45:               <span class="ruby-identifier">tag_list_tags</span>.<span class="ruby-identifier">delete</span>(<span class="ruby-identifier">tg</span>.<span class="ruby-identifier">tag</span>)
+46:             <span class="ruby-keyword kw">else</span>
+47:               <span class="ruby-identifier">tg</span>.<span class="ruby-identifier">destroy</span>
 48:             <span class="ruby-keyword kw">end</span>
-49:             <span class="ruby-identifier">tag_list_tags</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span> <span class="ruby-identifier">taggings</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">:tag</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">t</span>, <span class="ruby-identifier">:taggable</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>) }
-50:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tag_list</span> = <span class="ruby-keyword kw">nil</span>
-51:           <span class="ruby-keyword kw">end</span>
+49:           <span class="ruby-keyword kw">end</span>
+50:           <span class="ruby-identifier">tag_list_tags</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span> <span class="ruby-identifier">taggings</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">:tag</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">t</span>, <span class="ruby-identifier">:taggable</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>) }
+51:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">tag_list</span> = <span class="ruby-keyword kw">nil</span>
+52:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -150,10 +150,10 @@
             onclick="toggleCode('M000289-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000289-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/taggable.rb, line 34</span>
-34:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tag_list</span>
-35:             <span class="ruby-ivar">@tag_list</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">tags</span>.<span class="ruby-identifier">reload</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">:name</span>).<span class="ruby-identifier">join</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">tag_separator</span>)
-36:           <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/taggable.rb, line 35</span>
+35:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tag_list</span>
+36:           <span class="ruby-ivar">@tag_list</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">tags</span>.<span class="ruby-identifier">reload</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">:name</span>).<span class="ruby-identifier">join</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">tag_separator</span>)
+37:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -173,10 +173,10 @@
             onclick="toggleCode('M000290-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000290-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/taggable.rb, line 37</span>
-37:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tag_list=</span>(<span class="ruby-identifier">tag_names</span>)
-38:             <span class="ruby-ivar">@tag_list</span> = <span class="ruby-identifier">tag_names</span>
-39:           <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/taggable.rb, line 38</span>
+38:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">tag_list=</span>(<span class="ruby-identifier">tag_names</span>)
+39:           <span class="ruby-ivar">@tag_list</span> = <span class="ruby-identifier">tag_names</span>
+40:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
