@@ -12,7 +12,7 @@ require 'tasks/rails'
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "browser_cms"
+    gem.name = "browsercms"
     gem.summary = %Q{A Content Management System for Rails}
     gem.email = "github@browsermedia.com"
     gem.homepage = "http://www.browsercms.org"
