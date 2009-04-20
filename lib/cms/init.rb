@@ -5,12 +5,16 @@ module Cms
     
     load File.join(__root__, "browsercms.gemspec")
 
+    def spec_version
+      SPEC.version.respond_to?(:parts) ? SPEC.version.parts : SPEC.version.ints
+    end
+
     def version
-      @version = SPEC.version.ints[0,3].join('.')
+      @version = spec_version[0,3].join('.')
     end
     
     def build_number
-      @build_number = SPEC.version.ints.last
+      @build_number = spec_version.last
     end
     
     def load_rake_tasks
