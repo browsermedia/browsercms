@@ -222,6 +222,7 @@ Gem::Specification.new do |s|
     "app/views/portlets/portlets/_form.html.erb",
     "app/views/portlets/tag_cloud/_form.html.erb",
     "app/views/portlets/tag_cloud/render.html.erb",
+    "browsercms.gemspec",
     "db/demo/data.rb",
     "db/demo/page_partials/_footer.html.erb",
     "db/demo/page_partials/_header.html.erb",
