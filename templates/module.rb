@@ -45,7 +45,10 @@ SPEC = Gem::Specification.new do |spec|
 end
 CODE
 
-file "lib/browser_cms_#{module_name}_module.rb", "require 'browser_cms_news_module/routes'\n"
+file "config/initializers/init_module.rb",
+  %Q{require File.join(File.dirname(__FILE__), "..", "..", "lib", "browser_cms_#{module_name}_module")}
+
+file "lib/browser_cms_#{module_name}_module.rb", "require 'browser_cms_#{module_name}_module/routes'\n"
 
 file "lib/browser_cms_#{module_name}_module/routes.rb", <<-CODE
 module Cms::Routes
