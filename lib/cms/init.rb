@@ -1,9 +1,10 @@
 module Cms
   class << self
     __root__ = File.expand_path(File.join(File.dirname(__FILE__), "..", ".."))
+
     define_method(:root) { __root__ }
-    
-    load File.join(__root__, "browsercms.gemspec")
+
+    ::SPEC = eval(File.read(__root__ + '/browsercms.gemspec'))
 
     def spec_version
       SPEC.version.respond_to?(:parts) ? SPEC.version.parts : SPEC.version.ints
