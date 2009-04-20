@@ -41,7 +41,7 @@ To build the gem from source, and install it on your system, type the following:
     cd browsercms
     rake install
 
-On *unix, this will sudo install, so you will need to provide your password.  The gem management is now handled with [Jeweler][http://technicalpickles.github.com/jeweler/], so you must install Jeweler to install the gem.
+On *unix, this will sudo install, so you will need to provide your password.  The gem management is now handled with <a href="http://technicalpickles.github.com/jeweler">Jeweler</a>, so you must install Jeweler to install the gem.
 
 ## Starting a new project
 The next step is to create a rails project, which will include BrowserCMS, much like you would with any rails project. To make things easier, BrowserCMS comes with two application templates (a feature new to Rails 2.3), which create the initial rails application, configured for BrowserCMS. For now, you need to use the app templates from the source directory of cms. Here are the two options when starting a project.
