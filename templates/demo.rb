@@ -1,5 +1,5 @@
 run "rm public/index.html"
-gem "browser_cms"
+gem "browsercms"
 rake "db:create"
 route "map.routes_for_browser_cms"
 generate :browser_cms
