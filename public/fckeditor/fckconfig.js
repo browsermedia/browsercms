@@ -351,12 +351,12 @@ FCKConfig.ToolbarSets["CMSForms"] = [
 
 // @CMS Customization   (CMS-4)
 // Use BrowserCMS fileconnector instead.
-FCKConfig.LinkBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Connector=/cms/sections/file_browser' ;
+FCKConfig.LinkBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Connector=/cms/sections/file_browser.xml' ;
 // @ End CMS Customization
 
 // @CMS Customization  (CMS-5)
 // Use BrowserCMS fileconnector instead.
-FCKConfig.ImageBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Type=Image&Connector=/cms/sections/file_browser' ;
+FCKConfig.ImageBrowserURL = FCKConfig.BasePath + 'filemanager/browser/default/browser.html?Type=Image&Connector=/cms/sections/file_browser.xml' ;
 // @ End CMS Customization
 
 // @CMS Customization
