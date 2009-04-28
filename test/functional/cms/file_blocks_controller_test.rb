@@ -29,4 +29,23 @@ class Cms::FileBlocksControllerTest < ActionController::TestCase
     assert_select "td", "Test File"
   end
 
+  #
+  # Fix for #33
+  #
+  def test_view_file_block_doesnt_have_view_error
+    @file = mock_file(:read => "Testing 123")
+    @file_block = Factory(:file_block, :attachment_section => root_section,
+      :attachment_file => @file,
+      :attachment_file_path => "/test.txt",
+      :name => "Test File",
+      :publish_on_save => true)
+    @foo_section = Factory(:section, :name => "Foo", :parent => root_section)
+
+    get :show, :id => @file_block.id
+
+    assert_response :success
+    assert_select "div#file_block_#{@file_block.id}", true, "Should render the file_blocks/render.html.erb partial correctly."
+
+  end
+
 end
