@@ -32,7 +32,7 @@ class GuestUser < User
   def update_attributes(attrs={})
     false
   end
-  def save
+  def save(perform_validation=true)
     false
   end
   
