@@ -80,8 +80,8 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000342">has_dynamic_attributes</a>&nbsp;&nbsp;
-      <a href="#M000341">has_dynamic_attributes?</a>&nbsp;&nbsp;
+      <a href="#M000347">has_dynamic_attributes</a>&nbsp;&nbsp;
+      <a href="#M000346">has_dynamic_attributes?</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -110,11 +110,11 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000342" class="method-detail">
-        <a name="M000342"></a>
+      <div id="method-M000347" class="method-detail">
+        <a name="M000347"></a>
 
         <div class="method-heading">
-          <a href="#M000342" class="method-signature">
+          <a href="#M000347" class="method-signature">
           <span class="method-name">has_dynamic_attributes</span><span class="method-args">(options={})</span>
           </a>
         </div>
@@ -123,233 +123,106 @@
           <p>
 Will make the current class have dynamic attributes.
 </p>
-<pre>
-  class User &lt; ActiveRecord::Base
-    has_dynamic_attributes
-  end
-  eric = User.find_by_login 'eric'
-  puts &quot;My AOL instant message name is: #{eric.aim}&quot;
-  eric.phone = '555-123-4567'
-  eric.save
-</pre>
-<p>
-The above example should work even though &quot;aim&quot; and
-&quot;phone&quot; are not attributes on the <a
-href="../../../User.html">User</a> model.
-</p>
-<p>
-The following options are available on for <a
-href="MacroMethods.html#M000342">has_dynamic_attributes</a> to modify the
-behavior. Reasonable defaults are provided:
-</p>
-<table>
-<tr><td valign="top">class_name:</td><td>The class for the related model. This defaults to the model name prepended
-to &quot;Attribute&quot;. So for a &quot;<a
-href="../../../User.html">User</a>&quot; model the class name would be
-&quot;UserAttribute&quot;. The class can actually exist (in that case the
-model file will be loaded through Rails dependency system) or if it does
-not exist a basic model will be dynamically defined for you. This allows
-you to implement custom methods on the related class by simply defining the
-class manually.
-
-</td></tr>
-<tr><td valign="top">table_name:</td><td>The table for the related model. This defaults to the attribute
-model&#8216;s table name.
-
-</td></tr>
-<tr><td valign="top">relationship_name:</td><td>This is the name of the actual has_many relationship. Most of the type this
-relationship will only be used indirectly but it is there if the user wants
-more raw access. This defaults to the class name underscored then
-pluralized finally turned into a symbol.
-
-</td></tr>
-<tr><td valign="top">foreign_key:</td><td>The key in the attribute table to relate back to the model. This defaults
-to the model name underscored prepended to &quot;_id&quot;
-
-</td></tr>
-<tr><td valign="top">name_field:</td><td>The field which stores the name of the attribute in the related object
-
-</td></tr>
-<tr><td valign="top">value_field:</td><td>The field that stores the value in the related object
-
-</td></tr>
-<tr><td valign="top">fields:</td><td>A list of fields that are valid dynamic attributes. By default this is
-&quot;nil&quot; which means that all field are valid. Use this option if
-you want some fields to go to one dynamic attribute model while other
-fields will go to another. As an alternative you can override the
-dynamic_attributes method which will return a list of all valid dynamic
-attributes. This is useful if you want to read the list of attributes from
-another source to keep your code DRY. This method is given a single
-argument which is the class for the related model. The following provide an
-example:
-
-</td></tr>
-</table>
-<pre>
- class User &lt; ActiveRecord::Base
-   has_dynamic_attributes :class_name =&gt; 'UserContactInfo'
-   has_dynamic_attributes :class_name =&gt; 'Preferences'
-
-   def dynamic_attributes(model)
-     case model
-       when UserContactInfo
-         %w(email phone aim yahoo msn)
-       when Preference
-         %w(project_search project_order user_search user_order)
-       else Array.new
-     end
-   end
- end
-
- eric = User.find_by_login 'eric'
- eric.email = 'eric@example.com' # Will save to UserContactInfo model
- eric.project_order = 'name'     # Will save to Preference
- eric.save # Carries out save so now values are in database
-</pre>
-<p>
-Note the else clause in our case statement. Since an empty array is
-returned for all other models (perhaps added later) then we can be certain
-that only the above dynamic attributes are allowed.
-</p>
-<p>
-If both a :fields option and dynamic_attributes method is defined the
-:fields option take precidence. This allows you to easily define the field
-list inline for one model while implementing dynamic_attributes for another
-model and not having dynamic_attributes need to determine what model it is
-answering for. In both cases the list of dynamic attributes can be a list
-of string or symbols
-</p>
-<p>
-A final alternative to :fields and dynamic_attributes is the
-is_dynamic_attribute? method. This method is given two arguments. The first
-is the attribute being retrieved/saved the second is the Model we are
-testing for. If you override this method then the dynamic_attributes method
-or the :fields option will have no affect. Use of this method is ideal when
-you want to retrict the attributes but do so in a algorithmic way. The
-following is an example:
-</p>
-<pre>
-  class User &lt; ActiveRecord::Base
-    has_dynamic_attributes :class_name =&gt; 'UserContactInfo'
-    has_dynamic_attributes :class_name =&gt; 'Preferences'
-
-    def is_dynamic_attribute?(attr, model)
-      case attr.to_s
-        when /^contact_/ then true
-        when /^preference_/ then true
-        else
-          false
-      end
-    end
-  end
-
-  eric = User.find_by_login 'eric'
-  eric.contact_phone = '555-123-4567'
-  eric.contact_email = 'eric@example.com'
-  eric.preference_project_order = 'name'
-  eric.some_attribute = 'blah'  # If some_attribute is not defined on
-                                # the model then method not found is thrown
-</pre>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000342-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000342-source">
+            onclick="toggleCode('M000347-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000347-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/cms/behaviors/dynamic_attributes.rb, line 120</span>
-120:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">has_dynamic_attributes</span>(<span class="ruby-identifier">options</span>={})
-121:           <span class="ruby-ivar">@has_dynamic_attributes</span> = <span class="ruby-keyword kw">true</span>
-122:           <span class="ruby-identifier">include</span> <span class="ruby-constant">InstanceMethods</span>
-123: 
-124:           <span class="ruby-comment cmt"># Provide default options</span>
-125:           <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:class_name</span>] <span class="ruby-operator">||=</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class_name</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'Attribute'</span>
-126:           <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:table_name</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:class_name</span>].<span class="ruby-identifier">tableize</span>
-127:           <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:relationship_name</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:class_name</span>].<span class="ruby-identifier">tableize</span>.<span class="ruby-identifier">to_sym</span>
-128:           <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:foreign_key</span>] <span class="ruby-operator">||=</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class_name</span>.<span class="ruby-identifier">foreign_key</span>
-129:           <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:base_foreign_key</span>] <span class="ruby-operator">||=</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">underscore</span>.<span class="ruby-identifier">foreign_key</span>
-130:           <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:name_field</span>] <span class="ruby-operator">||=</span> <span class="ruby-value str">'name'</span>
-131:           <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value_field</span>] <span class="ruby-operator">||=</span> <span class="ruby-value str">'value'</span>
-132:           <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:fields</span>].<span class="ruby-identifier">collect!</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">to_s</span>} <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:fields</span>].<span class="ruby-identifier">nil?</span>
-133: 
-134:           <span class="ruby-comment cmt"># Init option storage if necessary</span>
-135:           <span class="ruby-identifier">cattr_accessor</span> <span class="ruby-identifier">:dynamic_options</span>
-136:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">dynamic_options</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
-137: 
-138:           <span class="ruby-comment cmt"># Return if already processed.</span>
-139:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">dynamic_options</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">include?</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:class_name</span>]
-140: 
-141:           <span class="ruby-comment cmt"># Attempt to load related class. If not create it</span>
-142:           <span class="ruby-keyword kw">begin</span>
-143:             <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:class_name</span>].<span class="ruby-identifier">constantize</span>
-144:           <span class="ruby-keyword kw">rescue</span>
-145:             <span class="ruby-constant">Object</span>.<span class="ruby-identifier">const_set</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:class_name</span>],
-146:               <span class="ruby-constant">Class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>)).<span class="ruby-identifier">class_eval</span> <span class="ruby-keyword kw">do</span>
-147:               <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">reloadable?</span> <span class="ruby-comment cmt">#:nodoc:</span>
-148:                 <span class="ruby-keyword kw">false</span>
-149:               <span class="ruby-keyword kw">end</span>
-150:             <span class="ruby-keyword kw">end</span>
-151:           <span class="ruby-keyword kw">end</span>
-152: 
-153:           <span class="ruby-comment cmt"># Store options</span>
-154:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">dynamic_options</span>[<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:class_name</span>]] = <span class="ruby-identifier">options</span>
-155: 
-156:           <span class="ruby-comment cmt"># Modify attribute class</span>
-157:           <span class="ruby-identifier">attribute_class</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:class_name</span>].<span class="ruby-identifier">constantize</span>
-158:           <span class="ruby-identifier">base_class</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">underscore</span>.<span class="ruby-identifier">to_sym</span>
-159:           <span class="ruby-identifier">attribute_class</span>.<span class="ruby-identifier">class_eval</span> <span class="ruby-keyword kw">do</span>
-160:             <span class="ruby-identifier">belongs_to</span> <span class="ruby-identifier">base_class</span>, <span class="ruby-identifier">:foreign_key</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:base_foreign_key</span>]
-161:             <span class="ruby-identifier">alias_method</span> <span class="ruby-identifier">:base</span>, <span class="ruby-identifier">base_class</span> <span class="ruby-comment cmt"># For generic access</span>
-162:           <span class="ruby-keyword kw">end</span>
-163: 
-164:           <span class="ruby-comment cmt"># Modify main class</span>
-165:           <span class="ruby-identifier">class_eval</span> <span class="ruby-keyword kw">do</span>
-166:             <span class="ruby-identifier">has_many</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:relationship_name</span>],
-167:               <span class="ruby-identifier">:class_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:class_name</span>],
-168:               <span class="ruby-identifier">:table_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:table_name</span>],
-169:               <span class="ruby-identifier">:foreign_key</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:foreign_key</span>],
-170:               <span class="ruby-identifier">:dependent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:destroy</span>
-171: 
-172:             <span class="ruby-comment cmt"># The following is only setup once</span>
-173:             <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">private_method_defined?</span> <span class="ruby-identifier">:method_missing_without_dynamic_attributes</span>
-174: 
-175:               <span class="ruby-comment cmt"># Carry out delayed actions before save</span>
-176:               <span class="ruby-identifier">after_validation_on_update</span> <span class="ruby-identifier">:save_modified_dynamic_attributes</span>
-177: 
-178:               <span class="ruby-comment cmt"># Make attributes seem real</span>
-179:               <span class="ruby-identifier">alias_method</span> <span class="ruby-identifier">:method_missing_without_dynamic_attributes</span>, <span class="ruby-identifier">:method_missing</span>
-180:               <span class="ruby-identifier">alias_method</span> <span class="ruby-identifier">:method_missing</span>, <span class="ruby-identifier">:method_missing_with_dynamic_attributes</span>
-181: 
-182:               <span class="ruby-identifier">private</span>
-183: 
-184:               <span class="ruby-identifier">alias_method</span> <span class="ruby-identifier">:read_attribute_without_dynamic_attributes</span>, <span class="ruby-identifier">:read_attribute</span>
-185:               <span class="ruby-identifier">alias_method</span> <span class="ruby-identifier">:read_attribute</span>, <span class="ruby-identifier">:read_attribute_with_dynamic_attributes</span>
-186:               <span class="ruby-identifier">alias_method</span> <span class="ruby-identifier">:write_attribute_without_dynamic_attributes</span>, <span class="ruby-identifier">:write_attribute</span>
-187:               <span class="ruby-identifier">alias_method</span> <span class="ruby-identifier">:write_attribute</span>, <span class="ruby-identifier">:write_attribute_with_dynamic_attributes</span>
+     <span class="ruby-comment cmt"># File lib/cms/behaviors/dynamic_attributes.rb, line 125</span>
+125:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">has_dynamic_attributes</span>(<span class="ruby-identifier">options</span>={})
+126:           <span class="ruby-ivar">@has_dynamic_attributes</span> = <span class="ruby-keyword kw">true</span>
+127:           <span class="ruby-identifier">include</span> <span class="ruby-constant">InstanceMethods</span>
+128: 
+129:           <span class="ruby-comment cmt"># Provide default options</span>
+130:           <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:class_name</span>] <span class="ruby-operator">||=</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class_name</span> <span class="ruby-operator">+</span> <span class="ruby-value str">'Attribute'</span>
+131:           <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:table_name</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:class_name</span>].<span class="ruby-identifier">tableize</span>
+132:           <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:relationship_name</span>] <span class="ruby-operator">||=</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:class_name</span>].<span class="ruby-identifier">tableize</span>.<span class="ruby-identifier">to_sym</span>
+133:           <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:foreign_key</span>] <span class="ruby-operator">||=</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class_name</span>.<span class="ruby-identifier">foreign_key</span>
+134:           <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:base_foreign_key</span>] <span class="ruby-operator">||=</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">underscore</span>.<span class="ruby-identifier">foreign_key</span>
+135:           <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:name_field</span>] <span class="ruby-operator">||=</span> <span class="ruby-value str">'name'</span>
+136:           <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:value_field</span>] <span class="ruby-operator">||=</span> <span class="ruby-value str">'value'</span>
+137:           <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:fields</span>].<span class="ruby-identifier">collect!</span> {<span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span>.<span class="ruby-identifier">to_s</span>} <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:fields</span>].<span class="ruby-identifier">nil?</span>
+138: 
+139:           <span class="ruby-comment cmt"># Init option storage if necessary</span>
+140:           <span class="ruby-identifier">cattr_accessor</span> <span class="ruby-identifier">:dynamic_options</span>
+141:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">dynamic_options</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Hash</span>.<span class="ruby-identifier">new</span>
+142: 
+143:           <span class="ruby-comment cmt"># Return if already processed.</span>
+144:           <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">dynamic_options</span>.<span class="ruby-identifier">keys</span>.<span class="ruby-identifier">include?</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:class_name</span>]
+145: 
+146:           <span class="ruby-comment cmt"># Attempt to load related class. If not create it</span>
+147:           <span class="ruby-keyword kw">begin</span>
+148:             <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:class_name</span>].<span class="ruby-identifier">constantize</span>
+149:           <span class="ruby-keyword kw">rescue</span>
+150:             <span class="ruby-constant">Object</span>.<span class="ruby-identifier">const_set</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:class_name</span>],
+151:               <span class="ruby-constant">Class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>)).<span class="ruby-identifier">class_eval</span> <span class="ruby-keyword kw">do</span>
+152:               <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">reloadable?</span> <span class="ruby-comment cmt">#:nodoc:</span>
+153:                 <span class="ruby-keyword kw">false</span>
+154:               <span class="ruby-keyword kw">end</span>
+155:             <span class="ruby-keyword kw">end</span>
+156:           <span class="ruby-keyword kw">end</span>
+157: 
+158:           <span class="ruby-comment cmt"># Store options</span>
+159:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">dynamic_options</span>[<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:class_name</span>]] = <span class="ruby-identifier">options</span>
+160: 
+161:           <span class="ruby-comment cmt"># Modify attribute class</span>
+162:           <span class="ruby-identifier">attribute_class</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:class_name</span>].<span class="ruby-identifier">constantize</span>
+163:           <span class="ruby-identifier">base_class</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">name</span>.<span class="ruby-identifier">underscore</span>.<span class="ruby-identifier">to_sym</span>
+164:           <span class="ruby-identifier">attribute_class</span>.<span class="ruby-identifier">class_eval</span> <span class="ruby-keyword kw">do</span>
+165:             <span class="ruby-identifier">belongs_to</span> <span class="ruby-identifier">base_class</span>, <span class="ruby-identifier">:foreign_key</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:base_foreign_key</span>]
+166:             <span class="ruby-identifier">alias_method</span> <span class="ruby-identifier">:base</span>, <span class="ruby-identifier">base_class</span> <span class="ruby-comment cmt"># For generic access</span>
+167:           <span class="ruby-keyword kw">end</span>
+168: 
+169:           <span class="ruby-comment cmt"># Modify main class</span>
+170:           <span class="ruby-identifier">class_eval</span> <span class="ruby-keyword kw">do</span>
+171:             <span class="ruby-identifier">has_many</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:relationship_name</span>],
+172:               <span class="ruby-identifier">:class_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:class_name</span>],
+173:               <span class="ruby-identifier">:table_name</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:table_name</span>],
+174:               <span class="ruby-identifier">:foreign_key</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:foreign_key</span>],
+175:               <span class="ruby-identifier">:dependent</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:destroy</span>
+176: 
+177:             <span class="ruby-comment cmt"># The following is only setup once</span>
+178:             <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">private_method_defined?</span> <span class="ruby-identifier">:method_missing_without_dynamic_attributes</span>
+179: 
+180:               <span class="ruby-comment cmt"># Carry out delayed actions before save</span>
+181:               <span class="ruby-identifier">after_validation_on_update</span> <span class="ruby-identifier">:save_modified_dynamic_attributes</span>
+182: 
+183:               <span class="ruby-comment cmt"># Make attributes seem real</span>
+184:               <span class="ruby-identifier">alias_method</span> <span class="ruby-identifier">:method_missing_without_dynamic_attributes</span>, <span class="ruby-identifier">:method_missing</span>
+185:               <span class="ruby-identifier">alias_method</span> <span class="ruby-identifier">:method_missing</span>, <span class="ruby-identifier">:method_missing_with_dynamic_attributes</span>
+186: 
+187:               <span class="ruby-identifier">private</span>
 188: 
-189:             <span class="ruby-keyword kw">end</span>
-190:           <span class="ruby-keyword kw">end</span>
-191:         <span class="ruby-keyword kw">end</span>
+189:               <span class="ruby-identifier">alias_method</span> <span class="ruby-identifier">:read_attribute_without_dynamic_attributes</span>, <span class="ruby-identifier">:read_attribute</span>
+190:               <span class="ruby-identifier">alias_method</span> <span class="ruby-identifier">:read_attribute</span>, <span class="ruby-identifier">:read_attribute_with_dynamic_attributes</span>
+191:               <span class="ruby-identifier">alias_method</span> <span class="ruby-identifier">:write_attribute_without_dynamic_attributes</span>, <span class="ruby-identifier">:write_attribute</span>
+192:               <span class="ruby-identifier">alias_method</span> <span class="ruby-identifier">:write_attribute</span>, <span class="ruby-identifier">:write_attribute_with_dynamic_attributes</span>
+193: 
+194:             <span class="ruby-keyword kw">end</span>
+195:           <span class="ruby-keyword kw">end</span>
+196:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000341" class="method-detail">
-        <a name="M000341"></a>
+      <div id="method-M000346" class="method-detail">
+        <a name="M000346"></a>
 
         <div class="method-heading">
-          <a href="#M000341" class="method-signature">
+          <a href="#M000346" class="method-signature">
           <span class="method-name">has_dynamic_attributes?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000341-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000341-source">
+            onclick="toggleCode('M000346-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000346-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/dynamic_attributes.rb, line 8</span>
- 8:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">has_dynamic_attributes?</span>
- 9:           <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-ivar">@has_dynamic_attributes</span>
-10:         <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File lib/cms/behaviors/dynamic_attributes.rb, line 120</span>
+120:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">has_dynamic_attributes?</span>
+121:           <span class="ruby-operator">!</span><span class="ruby-operator">!</span><span class="ruby-ivar">@has_dynamic_attributes</span>
+122:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

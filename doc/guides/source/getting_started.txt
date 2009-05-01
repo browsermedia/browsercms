@@ -6,4 +6,5 @@ This guide covers how to get started using BrowserCMS
 * Installing BrowserCMS
 * Creating a BrowserCMS instance
 * Accessing the BrowserCMS administrative interface
+* Adding modules
 

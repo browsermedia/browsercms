@@ -2,20 +2,22 @@ class PortletGenerator < Rails::Generator::NamedBase
 
   def manifest
     record do |m|
+      portlet_class_name = "#{class_name}Portlet"
+      portlet_file_name = "#{file_name}_portlet"
+      
       # Check for class naming collisions.
-      m.class_collisions class_path, class_name
+      m.class_collisions class_path, portlet_class_name
 
       # Create the directory for this portlet 
       m.directory File.join('app/portlets', class_path)
 
       # Create the content block
-      m.template 'portlet.rb', File.join('app/portlets', class_path, "#{file_name}.rb")
+      m.template 'portlet.rb', File.join('app/portlets', class_path, "#{portlet_file_name}.rb")
 
       # Create the edit form for the content type
-      portlet_name = file_name.sub(/_portlet/,'')
-      m.directory File.join('app/views/portlets', portlet_name)
-      m.template '_form.html.erb', File.join('app/views/portlets/', portlet_name, "_form.html.erb")
-      m.template 'render.html.erb', File.join('app/views/portlets/', portlet_name, "render.html.erb")
+      m.directory File.join('app/views/portlets', file_name)
+      m.template '_form.html.erb', File.join('app/views/portlets/', file_name, "_form.html.erb")
+      m.template 'render.html.erb', File.join('app/views/portlets/', file_name, "render.html.erb")
     end
   end
 
