@@ -113,7 +113,26 @@ class Cms::ContentControllerTest < ActionController::TestCase
     assert_response :success
     assert_select "h1", "42"
   end
-  
+
+
+  def test_show_page_with_content
+    @page_template = Factory(:page_template, :name => "testing_editting_content")
+    @page = Factory(:page,
+      :section => root_section,
+      :path => "/page_with_content",
+      :template_file_name => "testing_editting_content.html.erb")
+    block = HtmlBlock.create!(:name => "Test",
+            :content => "<h3>TEST</h3>",
+      :connect_to_page_id => @page.id, :connect_to_container => "main")
+
+    reset(:page)
+    @page.publish!
+
+    get :show, :path => ["page_with_content"]
+    assert_response :success
+    assert_select "h3", "TEST"
+  end
+
   protected
     def create_protected_user_section_group
       @protected_section = Factory(:section, :parent => root_section)
