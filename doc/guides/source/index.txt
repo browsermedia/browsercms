@@ -1,6 +1,11 @@
 BrowserCMS Guides
 =================
 
+.link:getting_started.html[Getting Started with BrowserCMS]
+***********************************************************
+How to get BrowserCMS up and running.
+***********************************************************
+
 .link:user_guide.html[Building a Site with BrowserCMS]
 ***********************************************************
 A user guide that covers how to use BrowserCMS to build and manage websites. Aimed at helping site managers, webmasters, maintainers to understand how to perform the common tasks associated with creating and managing content.
@@ -8,7 +13,12 @@ A user guide that covers how to use BrowserCMS to build and manage websites. Aim
 
 .link:developer_guide.html[Developing with BrowserCMS]
 **************************************************************
-Everything you need to know to extend a BrowserCMS site by installing BrowserCMS modules, creating page templates, creating custom content blocks and creating portlets.
+Everything you need to know to extend a BrowserCMS site by creating custom content blocks and creating portlets.
+**************************************************************
+
+.link:designer_guide.html[Designing with BrowserCMS]
+**************************************************************
+Everything you need to know to style pages with BrowserCMS by creating page templates and page partials.
 **************************************************************
 
 .link:deployment_guide.html[BrowserCMS Deployment Guide]

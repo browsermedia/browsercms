@@ -1,5 +1,117 @@
 module Cms
   module Behaviors
+    # The DynamicAttributes behavior allows a model to store values for any attributes.
+    # A model that uses DynamicAttributes should have corresponding "_attributes" table
+    # where it stores the values for the dynamic attributes.
+    # This is based on the {Flex Attributes Rails Plugin}[http://rubyforge.org/projects/flex-attributes].
+    #
+    #   class User < ActiveRecord::Base
+    #     has_dynamic_attributes
+    #   end
+    #   eric = User.find_by_login 'eric'
+    #   puts "My AOL instant message name is: #{eric.aim}"
+    #   eric.phone = '555-123-4567'
+    #   eric.save
+    #
+    # The above example should work even though "aim" and "phone" are not
+    # attributes on the User model.
+    #
+    # The following options are available on for has_dynamic_attributes to modify
+    # the behavior. Reasonable defaults are provided:
+    #
+    # class_name::
+    #   The class for the related model. This defaults to the
+    #   model name prepended to "Attribute". So for a "User" model the class
+    #   name would be "UserAttribute". The class can actually exist (in that
+    #   case the model file will be loaded through Rails dependency system) or
+    #   if it does not exist a basic model will be dynamically defined for you.
+    #   This allows you to implement custom methods on the related class by
+    #   simply defining the class manually.
+    # table_name::
+    #   The table for the related model. This defaults to the
+    #   attribute model's table name.
+    # relationship_name::
+    #   This is the name of the actual has_many
+    #   relationship. Most of the type this relationship will only be used
+    #   indirectly but it is there if the user wants more raw access. This
+    #   defaults to the class name underscored then pluralized finally turned
+    #   into a symbol.
+    # foreign_key::
+    #   The key in the attribute table to relate back to the
+    #   model. This defaults to the model name underscored prepended to "_id"
+    # name_field::
+    #   The field which stores the name of the attribute in the related object
+    # value_field::
+    #   The field that stores the value in the related object
+    # fields::
+    #   A list of fields that are valid dynamic attributes. By default
+    #   this is "nil" which means that all field are valid. Use this option if
+    #   you want some fields to go to one dynamic attribute model while other
+    #   fields will go to another. As an alternative you can override the
+    #   #dynamic_attributes method which will return a list of all valid dynamic
+    #   attributes. This is useful if you want to read the list of attributes
+    #   from another source to keep your code DRY. This method is given a
+    #   single argument which is the class for the related model. The following
+    #   provide an example:
+    #
+    #  class User < ActiveRecord::Base
+    #    has_dynamic_attributes :class_name => 'UserContactInfo'
+    #    has_dynamic_attributes :class_name => 'Preferences'
+    #
+    #    def dynamic_attributes(model)
+    #      case model
+    #        when UserContactInfo
+    #          %w(email phone aim yahoo msn)
+    #        when Preference
+    #          %w(project_search project_order user_search user_order)
+    #        else Array.new
+    #      end
+    #    end
+    #  end
+    #
+    #  eric = User.find_by_login 'eric'
+    #  eric.email = 'eric@example.com' # Will save to UserContactInfo model
+    #  eric.project_order = 'name'     # Will save to Preference
+    #  eric.save # Carries out save so now values are in database
+    #
+    # Note the else clause in our case statement. Since an empty array is
+    # returned for all other models (perhaps added later) then we can be
+    # certain that only the above dynamic attributes are allowed.
+    #
+    # If both a :fields option and #dynamic_attributes method is defined the
+    # :fields option take precidence. This allows you to easily define the
+    # field list inline for one model while implementing #dynamic_attributes
+    # for another model and not having #dynamic_attributes need to determine
+    # what model it is answering for. In both cases the list of dynamic
+    # attributes can be a list of string or symbols
+    #
+    # A final alternative to :fields and #dynamic_attributes is the
+    # #is_dynamic_attribute? method. This method is given two arguments. The
+    # first is the attribute being retrieved/saved the second is the Model we
+    # are testing for. If you override this method then the #dynamic_attributes
+    # method or the :fields option will have no affect. Use of this method
+    # is ideal when you want to retrict the attributes but do so in a
+    # algorithmic way. The following is an example:
+    #   class User < ActiveRecord::Base
+    #     has_dynamic_attributes :class_name => 'UserContactInfo'
+    #     has_dynamic_attributes :class_name => 'Preferences'
+    #
+    #     def is_dynamic_attribute?(attr, model)
+    #       case attr.to_s
+    #         when /^contact_/ then true
+    #         when /^preference_/ then true
+    #         else
+    #           false
+    #       end
+    #     end
+    #   end
+    #
+    #   eric = User.find_by_login 'eric'
+    #   eric.contact_phone = '555-123-4567'
+    #   eric.contact_email = 'eric@example.com'
+    #   eric.preference_project_order = 'name'
+    #   eric.some_attribute = 'blah'  # If some_attribute is not defined on
+    #                                 # the model then method not found is thrown
     module DynamicAttributes
       def self.included(model_class)
         model_class.extend(MacroMethods)
@@ -8,115 +120,8 @@ module Cms
         def has_dynamic_attributes?
           !!@has_dynamic_attributes
         end
+        
         # Will make the current class have dynamic attributes.
-        #
-        #   class User < ActiveRecord::Base
-        #     has_dynamic_attributes
-        #   end
-        #   eric = User.find_by_login 'eric'
-        #   puts "My AOL instant message name is: #{eric.aim}"
-        #   eric.phone = '555-123-4567'
-        #   eric.save
-        #
-        # The above example should work even though "aim" and "phone" are not
-        # attributes on the User model.
-        #
-        # The following options are available on for has_dynamic_attributes to modify
-        # the behavior. Reasonable defaults are provided:
-        #
-        # class_name::
-        #   The class for the related model. This defaults to the
-        #   model name prepended to "Attribute". So for a "User" model the class
-        #   name would be "UserAttribute". The class can actually exist (in that
-        #   case the model file will be loaded through Rails dependency system) or
-        #   if it does not exist a basic model will be dynamically defined for you.
-        #   This allows you to implement custom methods on the related class by
-        #   simply defining the class manually.
-        # table_name::
-        #   The table for the related model. This defaults to the
-        #   attribute model's table name.
-        # relationship_name::
-        #   This is the name of the actual has_many
-        #   relationship. Most of the type this relationship will only be used
-        #   indirectly but it is there if the user wants more raw access. This
-        #   defaults to the class name underscored then pluralized finally turned
-        #   into a symbol.
-        # foreign_key::
-        #   The key in the attribute table to relate back to the
-        #   model. This defaults to the model name underscored prepended to "_id"
-        # name_field::
-        #   The field which stores the name of the attribute in the related object
-        # value_field::
-        #   The field that stores the value in the related object
-        # fields::
-        #   A list of fields that are valid dynamic attributes. By default
-        #   this is "nil" which means that all field are valid. Use this option if
-        #   you want some fields to go to one dynamic attribute model while other
-        #   fields will go to another. As an alternative you can override the
-        #   #dynamic_attributes method which will return a list of all valid dynamic
-        #   attributes. This is useful if you want to read the list of attributes
-        #   from another source to keep your code DRY. This method is given a
-        #   single argument which is the class for the related model. The following
-        #   provide an example:
-        #
-        #  class User < ActiveRecord::Base
-        #    has_dynamic_attributes :class_name => 'UserContactInfo'
-        #    has_dynamic_attributes :class_name => 'Preferences'
-        #
-        #    def dynamic_attributes(model)
-        #      case model
-        #        when UserContactInfo
-        #          %w(email phone aim yahoo msn)
-        #        when Preference
-        #          %w(project_search project_order user_search user_order)
-        #        else Array.new
-        #      end
-        #    end
-        #  end
-        #
-        #  eric = User.find_by_login 'eric'
-        #  eric.email = 'eric@example.com' # Will save to UserContactInfo model
-        #  eric.project_order = 'name'     # Will save to Preference
-        #  eric.save # Carries out save so now values are in database
-        #
-        # Note the else clause in our case statement. Since an empty array is
-        # returned for all other models (perhaps added later) then we can be
-        # certain that only the above dynamic attributes are allowed.
-        #
-        # If both a :fields option and #dynamic_attributes method is defined the
-        # :fields option take precidence. This allows you to easily define the
-        # field list inline for one model while implementing #dynamic_attributes
-        # for another model and not having #dynamic_attributes need to determine
-        # what model it is answering for. In both cases the list of dynamic
-        # attributes can be a list of string or symbols
-        #
-        # A final alternative to :fields and #dynamic_attributes is the
-        # #is_dynamic_attribute? method. This method is given two arguments. The
-        # first is the attribute being retrieved/saved the second is the Model we
-        # are testing for. If you override this method then the #dynamic_attributes
-        # method or the :fields option will have no affect. Use of this method
-        # is ideal when you want to retrict the attributes but do so in a
-        # algorithmic way. The following is an example:
-        #   class User < ActiveRecord::Base
-        #     has_dynamic_attributes :class_name => 'UserContactInfo'
-        #     has_dynamic_attributes :class_name => 'Preferences'
-        #
-        #     def is_dynamic_attribute?(attr, model)
-        #       case attr.to_s
-        #         when /^contact_/ then true
-        #         when /^preference_/ then true
-        #         else
-        #           false
-        #       end
-        #     end
-        #   end
-        #
-        #   eric = User.find_by_login 'eric'
-        #   eric.contact_phone = '555-123-4567'
-        #   eric.contact_email = 'eric@example.com'
-        #   eric.preference_project_order = 'name'
-        #   eric.some_attribute = 'blah'  # If some_attribute is not defined on
-        #                                 # the model then method not found is thrown
         def has_dynamic_attributes(options={})
           @has_dynamic_attributes = true
           include InstanceMethods

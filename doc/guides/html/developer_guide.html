@@ -123,6 +123,15 @@
                           <li>
                             <a href="#_content_blocks">Content Blocks</a>
                           </li>
+                          <li>
+                            <a href="#_creating_a_custom_content_block">Creating A Custom Content Block</a>
+                          </li>
+                          <li>
+                            <a href="#_creating_a_custom_portlet">Creating A Custom Portlet</a>
+                          </li>
+                          <li>
+                            <a href="#_page_routes">Page Routes</a>
+                          </li>
                     </ol>
                   </td>
                 
@@ -130,7 +139,7 @@
                   
 <h2 id="_introduction">1. Introduction</h2>
 <div class="sectionbody">
-<div class="paragraph"><p>This guide covers how to use the tools that come with BrowserCMS to extend the functionality of your BrowserCMS site.  This guide will cover:</p></div>
+<div class="paragraph"><p>This guide covers how to use the tools that come with BrowserCMS to extend the functionality of your BrowserCMS site.  The target audience for this guide is intermediate to advanced Rails developers.  You should also read the <a href="user_guide.html">Building a Site with BrowserCMS</a> guide first as well, so you know how to create pages and put content on pages.  This guide will cover:</p></div>
 <div class="ulist"><ul>
 <li>
 <p>
@@ -149,21 +158,6 @@ How to create custom portlets
 </li>
 <li>
 <p>
-How to create custom page templates
-</p>
-</li>
-<li>
-<p>
-How to create custom page partials
-</p>
-</li>
-<li>
-<p>
-How to install and use BrowserCMS modules
-</p>
-</li>
-<li>
-<p>
 How to create friendly URLs for pages
 </p>
 </li>
@@ -172,9 +166,165 @@ How to create friendly URLs for pages
 <h2 id="_content_blocks">2. Content Blocks</h2>
 <div class="sectionbody">
 <div class="paragraph"><p>Content Blocks are the basic unit used to add content to pages in a BrowserCMS site.  There are several pre-built content types that are part of BrowserCMS core.  The most commonly used one is the HtmlBlock content type, so we will use that as a starting example.</p></div>
-<div class="paragraph"><p>If you look at the HtmlBlock model in BrowserCMS core, you will see that it is an ActiveRecord model, just like any model you create in a Rails application.  It also calls the acts_as_content_block method, which just sets up several <a href="/doc/app/classes/Cms/Behaviors.html">Behaviors</a> on the model.  One of the key Behaviors to understand is the <a href="/doc/app/classes/Cms/Behaviors/Rendering.html">Rendering</a> behavior.  Essentially what this behavior does is to allow your model to act as a mini-controller.  This is the same thing conceptually as <a href="http://yehudakatz.com/2007/09/06/merbs-parts-are-pretty-rocking-too/">Merb Parts</a> or <a href="http://cells.rubyforge.org">Rails Cells</a>.</p></div>
+<div class="paragraph"><p>If you look at the HtmlBlock model in BrowserCMS core, you will see that it is an ActiveRecord model, just like any model you create in a Rails application.  It also calls the <a href="/doc/app/classes/Cms/Acts/ContentBlock/MacroMethods.html">acts_as_content_block</a> method, which just sets up several <a href="/doc/app/classes/Cms/Behaviors.html">Behaviors</a> on the model.  One of the key Behaviors to understand is the <a href="/doc/app/classes/Cms/Behaviors/Rendering.html">Rendering</a> behavior.  Essentially what this behavior does is to allow a model (by model I mean a subclass of ActiveRecord::Base) to act as a mini-controller.  This is the same thing conceptually as <a href="http://yehudakatz.com/2007/09/06/merbs-parts-are-pretty-rocking-too/">Merb Parts</a> or <a href="http://cells.rubyforge.org">Rails Cells</a>, the only difference is that content blocks are models as well, so they have attributes that are stored in the database like any other model.</p></div>
 <div class="paragraph"><p>In the BrowserCMS implementation, first the render method of the object is called, which is like an action.  This is where instance variables are set.  In the case of an HtmlBlock, there are no other instance variables to set up, so this step is just skipped.  It is similar to a controller action that has no action method, it just goes straight to the view.</p></div>
-<div class="paragraph"><p>The view is the render template, which is inside the cms/html_blocks directory in the view path.  If you look in the render template, you will see all it does is print the value of @content_block.content.  Content is the name of the property that holds the HTML content.</p></div>
+<div class="paragraph"><p>The view is the render template, which is inside the <tt>cms/html_blocks</tt> directory in the view path.  If you look in the render template, you will see all it does is print the value of <tt>@content_block.content</tt>.  Content is the name of the property that holds the HTML content.</p></div>
+</div>
+<h2 id="_creating_a_custom_content_block">3. Creating A Custom Content Block</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Let&#8217;s say that you are using BrowserCMS to build a website that will display a list of products.  The first step would be to create a product content block.  This will give the users of the CMS a way to create products.  To create a product content block, in an existing BrowserCMS project, run the content block generator:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>script/generate content_block product name:string price:integer description:html</tt></pre>
+</div></div>
+<div class="paragraph"><p>You will notice that several things have been created:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+A model in <tt>app/models/product.rb</tt>
+</p>
+</li>
+<li>
+<p>
+A migration for the product model
+</p>
+</li>
+<li>
+<p>
+A controller for the product in <tt>app/controllers/cms/products_controller.rb</tt>
+</p>
+</li>
+<li>
+<p>
+A form partial in <tt>app/views/cms/products/_form.html.erb</tt>
+</p>
+</li>
+<li>
+<p>
+A render template in <tt>app/views/cms/products/render.html.erb</tt>
+</p>
+</li>
+<li>
+<p>
+A resource route for the controller
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>If you look at <tt>app/models/product.rb</tt>, you will see that it is nothing more than:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 2.9
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">class</span></span> Product <span style="color: #990000">&lt;</span> ActiveRecord<span style="color: #990000">::</span>Base
+  acts_as_content_block
+<span style="font-weight: bold"><span style="color: #0000FF">end</span></span></tt></pre></div></div>
+<div class="paragraph"><p>The controller created at <tt>app/controllers/cms/products_controller.rb</tt> is equally empty:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 2.9
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">class</span></span> Cms<span style="color: #990000">::</span>ProductsController <span style="color: #990000">&lt;</span> Cms<span style="color: #990000">::</span>ContentBlockController
+<span style="font-weight: bold"><span style="color: #0000FF">end</span></span></tt></pre></div></div>
+<div class="paragraph"><p>This controller is the controller used in the actual CMS interface.  If you want to create a controller to use in the front end of your application, create a products controller that is not in the CMS namespace, so as not to conflict the CMS functionality.  You will most likely not need to customize the CMS controller at all.</p></div>
+<div class="paragraph"><p>The form partial at <tt>app/views/cms/products/_form.html.erb</tt> is the form that will be used when creating/editing the product content block in the content library of the CMS.  The contents of this file will be:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>&lt;%= f.cms_text_field :name %&gt;
+&lt;%= f.cms_text_field :price %&gt;
+&lt;%= f.cms_text_editor :description %&gt;</tt></pre>
+</div></div>
+<div class="paragraph"><p>The form helper methods that are prefixed with <tt>cms_</tt> will wrap that form helper with the CMS styling and extra functionality.  The <tt>cms_text_editor</tt> will show the user a WYSIWYG editor for editing HTML.  Additional CMS form builder extensions are covered in the <a href="designer_guide.html">BrowserCMS Designer Guide</a>.</p></div>
+<div class="paragraph"><p>The render template at <tt>app/views/cms/products/render.html.erb</tt> is the template that will be used to render the HTML when this product is placed directly on a page.  It is also what is shown when you view a product within the content library of the CMS.</p></div>
+<div class="paragraph"><p>As you will see in the next section, custom content blocks are often not placed directly on a page, instead the data of a product is displayed through a portlet.  For this reason, a more informational display, similar to what is automatically generated by the generator, is what the render template often contains.  Depending on what your content block is, you may want to place the content block directly on a page, in which case you would most likely customize the render template.</p></div>
+</div>
+<h2 id="_creating_a_custom_portlet">4. Creating A Custom Portlet</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Once you have created the product content block and created a few products in the content library, you need a way to display them on a page.  To do that, you will want to create a portlet.</p></div>
+<div class="paragraph"><p>A portlet is used to display dynamic data on a page.  A portlet is a content block.  A portlet will typically perform some kind of database query in the render method and then render it&#8217;s view.  One difference between a portlet and typical content block is that each instance of a portlet can have a unique template because that template is stored as data along with the portlet.  Let&#8217;s generate a portlet to display the most recently created products:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>script/generate portlet recent_products limit:integer</tt></pre>
+</div></div>
+<div class="paragraph"><p>What you will see created is:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+A portlet at <tt>app/portlets/recent_products_portlet.rb</tt>
+</p>
+</li>
+<li>
+<p>
+A form partial at <tt>app/views/portlets/recent_products/_form.html.erb</tt>
+</p>
+</li>
+<li>
+<p>
+A render template at <tt>app/views/portlets/recent_products/render.html.erb</tt>
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>What you don&#8217;t see created is a migration.  Portlets use the <a href="/doc/app/classes/Cms/Behaviors/DynamicAttributes.html">DynamicAttributes</a> behavior in order to store associated values in the database without having to create custom database tables.  What this means is that you can set and then store a value for any attribute for a portlet.</p></div>
+<div class="paragraph"><p>So if you look at the form partial that was generate for this portlet, you will see this:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>&lt;%= f.cms_text_field :name %&gt;
+&lt;%= f.cms_text_field :limit %&gt;
+&lt;%= f.cms_text_area :template, :default_value =&gt; @block.class.default_template %&gt;</tt></pre>
+</div></div>
+<div class="paragraph"><p>Every portlet instance has to have a name and that is stored in the main <tt>portlets</tt> table, but <tt>limit</tt> is stored in the <tt>portlet_attributes</tt> table.  You could add anything to this form, such as <tt>&lt;%= f.cms_text_field :foobar %&gt;</tt>, and whatever the user enters for <tt>foobar</tt> would get saved with the portlet.</p></div>
+<div class="paragraph"><p>If you look at the code for the portlet, you will see:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 2.9
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">class</span></span> RecentProducts <span style="color: #990000">&lt;</span> Portlet
+
+  <span style="font-weight: bold"><span style="color: #0000FF">def</span></span> render
+    <span style="font-style: italic"><span style="color: #9A1900"># Your Code Goes Here</span></span>
+  <span style="font-weight: bold"><span style="color: #0000FF">end</span></span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">end</span></span></tt></pre></div></div>
+<div class="paragraph"><p>As the comment says, you will want to fill in your application logic here.  We&#8217;re going to get the most recent products and use the value the user entered for limit when they filled out the form.  So edit the code to look like:</p></div>
+<div class="listingblock">
+<div class="content"><!-- Generator: GNU source-highlight 2.9
+by Lorenzo Bettini
+http://www.lorenzobettini.it
+http://www.gnu.org/software/src-highlite -->
+<pre><tt><span style="font-weight: bold"><span style="color: #0000FF">class</span></span> RecentProducts <span style="color: #990000">&lt;</span> Portlet
+
+  <span style="font-weight: bold"><span style="color: #0000FF">def</span></span> render
+    <span style="color: #009900">@products</span> <span style="color: #990000">=</span> Product<span style="color: #990000">.</span>all<span style="color: #990000">(:</span>order <span style="color: #990000">=&gt;</span> <span style="color: #FF0000">"created_at desc"</span><span style="color: #990000">,</span> <span style="color: #990000">:</span>limit <span style="color: #990000">=&gt;</span> <span style="font-weight: bold"><span style="color: #0000FF">self</span></span><span style="color: #990000">.</span>limit<span style="color: #990000">)</span>
+  <span style="font-weight: bold"><span style="color: #0000FF">end</span></span>
+
+<span style="font-weight: bold"><span style="color: #0000FF">end</span></span></tt></pre></div></div>
+<div class="paragraph"><p><tt>self</tt> in this case is the portlet instance, which is also available in the instance variable <tt>@portlet</tt>.  We are setting the <tt>@products</tt> instance variable so that will be available in the view.  If you look at the render template, you will see this:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>&lt;%=h @portlet.name %&gt;</tt></pre>
+</div></div>
+<div class="paragraph"><p>This is simply a place holder, you should override this code with something similar to what you expect the user of your portlet to want to use.  In this case, let&#8217;s go with:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>&lt;ul&gt;
+  &lt;% @products.each do |product| %&gt;
+    &lt;li&gt;&lt;%=h product.name %&gt;&lt;/li&gt;
+  &lt;% end %&gt;
+&lt;/ul&gt;</tt></pre>
+</div></div>
+<div class="paragraph"><p>Notice that in the last paragraph I said "similar to what you expect the user of your portlet to want to use".  This value is simply the default starting point for the template of a portlet.  The actual value is entered into the form when the user creates an instance of this portlet.</p></div>
+<div class="paragraph"><p>If you look back at the form partial that was generated, you&#8217;ll see:</p></div>
+<div class="listingblock">
+<div class="content">
+<pre><tt>&lt;%= f.cms_text_area :template, :default_value =&gt; @block.class.default_template %&gt;</tt></pre>
+</div></div>
+<div class="paragraph"><p>What this does is preload the template with whatever you entered into the render template.  The user is free to change it as they see fit and even have different values from one portlet instance to the next.</p></div>
+</div>
+<h2 id="_page_routes">5. Page Routes</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>TODO</p></div>
 </div>
 
                 </td>

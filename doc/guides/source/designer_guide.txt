@@ -1,0 +1,11 @@
+BrowserCMS Designer Guide
+==========================
+
+== Introduction
+
+This guide covers how to set up styled templates for BrowserCMS.  This guide will cover:
+
+* How to create custom page templates
+* How to create custom page partials
+* How to use helpers to add dynamic content to templates and partials
+* How to use the CMS-specific form builder extensions

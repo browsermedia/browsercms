@@ -100,6 +100,9 @@ class is Article, the template should be at cms/articles/render. It uses
 the same format and template engine options as regular views, to the file
 name should be render.html.erb.
 </p>
+<p>
+One gotcha to be aware of with this behavior
+</p>
 
     </div>
 
@@ -110,7 +113,7 @@ name should be render.html.erb.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000292">included</a>&nbsp;&nbsp;
+      <a href="#M000295">included</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -138,24 +141,24 @@ name should be render.html.erb.
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000292" class="method-detail">
-        <a name="M000292"></a>
+      <div id="method-M000295" class="method-detail">
+        <a name="M000295"></a>
 
         <div class="method-heading">
-          <a href="#M000292" class="method-signature">
+          <a href="#M000295" class="method-signature">
           <span class="method-name">included</span><span class="method-args">(model)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000292-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000292-source">
+            onclick="toggleCode('M000295-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000295-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/rendering.rb, line 25</span>
-25:       <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">included</span>(<span class="ruby-identifier">model</span>)
-26:         <span class="ruby-identifier">model</span>.<span class="ruby-identifier">extend</span>(<span class="ruby-constant">MacroMethods</span>)
-27:       <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/rendering.rb, line 27</span>
+27:       <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">included</span>(<span class="ruby-identifier">model</span>)
+28:         <span class="ruby-identifier">model</span>.<span class="ruby-identifier">extend</span>(<span class="ruby-constant">MacroMethods</span>)
+29:       <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
