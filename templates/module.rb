@@ -42,7 +42,6 @@ SPEC = Gem::Specification.new do |spec|
   spec.files += Dir["rails/init.rb"]
   spec.has_rdoc = true
   spec.extra_rdoc_files = ["README"]
-  #spec.require_path "lib"
 end
 CODE
 
