@@ -119,7 +119,7 @@ class Cms::ContentController < Cms::ApplicationController
       logger.info "Caching is enabled"
       if cms_site?
         logger.info "This is the cms site"
-        if current_user.able_to?(:edit_content, :publish_content)
+        if current_user.able_to?(:edit_content, :publish_content, :administrate)
           logger.info "User has access to cms"
           @show_toolbar = true
         else
@@ -131,7 +131,7 @@ class Cms::ContentController < Cms::ApplicationController
       end
     else
       logger.info "Caching is disabled"
-      if current_user.able_to?(:edit_content, :publish_content)
+      if current_user.able_to?(:edit_content, :publish_content, :administrate)
         @show_toolbar = true
       end
     end
@@ -175,7 +175,7 @@ class Cms::ContentController < Cms::ApplicationController
 
   def check_access_to_page
     set_page_mode
-    if current_user.able_to?(:edit_content, :publish_content)
+    if current_user.able_to?(:edit_content, :publish_content, :administrate)
       @page = Page.first(:conditions => {:path => @path})
       page_not_found unless @page
     else
