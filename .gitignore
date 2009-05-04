@@ -11,5 +11,6 @@ public/stylesheets/tuneup
 vendor/plugins/selenium-on-rails/log/*.yml
 *.gem
 .dotest
+.idea
 tmp/restart.txt
 public/cache

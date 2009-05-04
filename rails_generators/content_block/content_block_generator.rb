@@ -9,6 +9,12 @@ class ContentBlockGenerator < Rails::Generator::NamedBase
       # Create the content block
       m.template 'content_block.rb', File.join('app/models', "#{file_name}.rb")
 
+      # Create unit test dir if needed
+      m.directory File.join('test/unit/models')
+
+      # Create the unit test for the model
+      m.template 'unit_test.erb', File.join('test/unit/models', "#{file_name}_test.rb")
+      
       # Create the cms directory if we need to
       m.directory File.join('app/controllers/cms')
 
@@ -19,7 +25,13 @@ class ContentBlockGenerator < Rails::Generator::NamedBase
       m.directory File.join('app/views/cms/', file_name.pluralize)
       m.template '_form.html.erb', File.join('app/views/cms/', file_name.pluralize, "_form.html.erb")
       m.template 'render.html.erb', File.join('app/views/cms/', file_name.pluralize, "render.html.erb")
-      
+
+      # Create unit test dir if needed
+      m.directory File.join('test/functional/cms/')
+
+      # Create functional test for the controller
+      m.template 'functional_test.erb', File.join('test/functional/cms/', "#{file_name.pluralize}_controller_test.rb")
+
       # Create the routes for the content block
       logger.route "map.content_blocks :#{file_name.pluralize}"
       sentinel = 'ActionController::Routing::Routes.draw do |map|'

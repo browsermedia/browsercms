@@ -32,5 +32,13 @@ class Cms::PortletsControllerTest < ActionController::TestCase
     assert_redirected_to cms_portlets_path
     assert_raise(ActiveRecord::RecordNotFound) { DynamicPortlet.find(@block.id) }
   end
-  
+
+
+  # Doesn't really belong here, but I'm not sure how else to test the behavior of the form_builders
+  def test_form_helpers_which_use_instructions
+    get :new, :type=>"login_portlet"
+    assert_response :success
+    assert_select "div.instructions", "Leave blank to send the user to the page they were trying to access"
+
+  end
 end

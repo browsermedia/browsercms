@@ -6,7 +6,7 @@
   <% end %>
   <%= f.text_field method, options %>
   <% if cms_options[:instructions] %>
-    <div class="instructions">Leave blank to return the same page</div>
+    <div class="instructions"><%= cms_options[:instructions] %></div>
     <br clear="all"/>  
   <% end %>  
 </div>
