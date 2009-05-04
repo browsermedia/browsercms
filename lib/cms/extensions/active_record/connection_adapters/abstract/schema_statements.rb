@@ -14,6 +14,7 @@ module ActiveRecord
         # Blocks currently must have a name column, otherwise the UI fails in several places.
         # Some migrations may have already specified a name attribute, so we don't want to overwrite it here.
         t.string :name unless t[:name]
+
         t.boolean :published, :default => false
         t.boolean :deleted, :default => false
         t.boolean :archived, :default => false
@@ -30,7 +31,11 @@ module ActiveRecord
 
         vt.integer "#{table_name.to_s.singularize}_id".to_sym
         vt.integer :version
-        yield vt    
+        yield vt
+
+        # Create implicit name column in version table as well.
+        vt.string :name unless vt[:name]
+
         vt.boolean :published, :default => false
         vt.boolean :deleted, :default => false
         vt.boolean :archived, :default => false        

@@ -81,11 +81,22 @@ class SearchableBlockWithoutNameTest < ActiveSupport::TestCase
     block = SearchableBlockWithoutName.create!(:name => "NAME")
 
     assert_equal block, SearchableBlockWithoutName.find_by_name("NAME")
+    assert_equal "NAME", block.name
   end
   
   test "Search method should not fail if block has no :name field" do
     block = SearchableBlockWithoutName.create!(:name => ":implicitly specfied")
 
     assert_equal SearchableBlockWithoutName.all.size, SearchableBlockWithoutName.search({}).size, "Should list all rows when no param is passed in."
+  end
+
+  test "Versions table for block should have 'name' attribute as well" do
+    name = ":implicitly specfied"
+    block = SearchableBlockWithoutName.create!(:name => name)
+    block.title = "Something New"
+    block.save!
+
+    v1 = block.find_version(1)
+    assert_equal name, v1.name
   end
 end
