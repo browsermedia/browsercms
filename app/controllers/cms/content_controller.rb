@@ -39,6 +39,11 @@ class Cms::ContentController < Cms::ApplicationController
     handle_error_with_cms_page('/system/server_error', exception, :internal_server_error)
   end
 
+  # Used by the rendering behavior
+  def instance_variables_for_rendering
+    instance_variables - (@initial_ivars || []) - ["@initial_ivars"]
+  end
+
   protected
 
   # This will assign the value to an instance variable
@@ -104,6 +109,8 @@ class Cms::ContentController < Cms::ApplicationController
   def construct_path_from_route
     @_page_route = PageRoute.find(params[:_page_route_id])
     @path = @_page_route.page.path
+    @initial_ivars = instance_variables
+    eval @_page_route.code
   end
   
   def redirect_non_cms_users_to_public_site
@@ -207,5 +214,7 @@ class Cms::ContentController < Cms::ApplicationController
     @mode = @show_toolbar && current_user.able_to?(:edit_content) ? (params[:mode] || session[:page_mode] || "edit") : "view"
     session[:page_mode] = @mode      
   end
+  
+  
   
 end
