@@ -870,7 +870,8 @@ Gem::Specification.new do |s|
     "rails_generators/portlet/portlet_generator.rb",
     "rails_generators/portlet/templates/_form.html.erb",
     "rails_generators/portlet/templates/portlet.rb",
-    "rails_generators/portlet/templates/render.html.erb"
+    "rails_generators/portlet/templates/render.html.erb",
+    "rails_generators/portlet/templates/unit_test.erb"
   ]
   s.has_rdoc = true
   s.homepage = %q{http://www.browsercms.org}

@@ -11,6 +11,12 @@ class PortletGenerator < Rails::Generator::NamedBase
       # Create the directory for this portlet 
       m.directory File.join('app/portlets', class_path)
 
+      # Create unit test dir if needed
+      m.directory File.join('test/unit/portlets')
+
+      # Create the unit test for the model
+      m.template 'unit_test.erb', File.join('test/unit/portlets', "#{portlet_file_name}_test.rb")
+
       # Create the content block
       m.template 'portlet.rb', File.join('app/portlets', class_path, "#{portlet_file_name}.rb")
 
