@@ -86,6 +86,8 @@ module Cms
         # Give this renderable a reference to the controller
         @controller = controller
 
+        copy_instance_variables_from_controller!
+
         # This gives the view a reference to this object
         instance_variable_set(self.class.instance_variable_name_for_view, self)
 
@@ -121,6 +123,15 @@ module Cms
       end
   
       protected
+        def copy_instance_variables_from_controller!
+          if @controller.respond_to?(:instance_variables_for_rendering)
+            @controller.instance_variables_for_rendering.each do |iv|
+              #logger.info "Copying #{iv} => #{@controller.instance_variable_get(iv).inspect}"
+              instance_variable_set(iv, @controller.instance_variable_get(iv))
+            end
+          end
+        end
+      
         def assigns_for_view
           (instance_variables - self.class.ivars_to_ignore).inject({}) do |h,k|
             h[k[1..-1]] = instance_variable_get(k)
