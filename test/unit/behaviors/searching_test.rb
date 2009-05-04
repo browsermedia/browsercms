@@ -13,6 +13,13 @@ ActiveRecord::Base.connection.instance_eval do
     t.integer :updated_by
     t.timestamps
   end
+
+  # Verifies that blocks are created with a :name column if one is not specified.
+  drop_table(:searchable_block_without_names) if table_exists?(:searchable_block_without_names)
+  drop_table(:searchable_block_without_name_versions) if table_exists?(:searchable_block_without_name_versions)
+  create_versioned_table(:searchable_block_without_names) do |t|
+    t.string :title
+  end
 end
 
 class SearchableContentBlockParent < ActiveRecord::Base
@@ -53,5 +60,32 @@ class SearchableHtmlBlockTest < ActiveSupport::TestCase
     assert HtmlBlock.search(:term => "one").all.empty?
     assert_equal [@a1, @b1], HtmlBlock.search(:term => "one", :include_body => true).all
     assert HtmlBlock.search(nil).include?(@b2)
+  end
+end
+
+
+class SearchableBlockWithoutName < ActiveRecord::Base
+  acts_as_content_block
+end
+
+class SearchableBlockWithoutNameTest < ActiveSupport::TestCase
+
+  test "Creating a test only ActiveRecord should work" do
+    block = SearchableBlockWithoutName.create!(:title => "TITLE")
+
+    assert_not_nil block
+    assert_equal block, SearchableBlockWithoutName.find(block.id)
+  end
+
+  test "Blocks should have a :name column by default" do
+    block = SearchableBlockWithoutName.create!(:name => "NAME")
+
+    assert_equal block, SearchableBlockWithoutName.find_by_name("NAME")
+  end
+  
+  test "Search method should not fail if block has no :name field" do
+    block = SearchableBlockWithoutName.create!(:name => ":implicitly specfied")
+
+    assert_equal SearchableBlockWithoutName.all.size, SearchableBlockWithoutName.search({}).size, "Should list all rows when no param is passed in."
   end
 end

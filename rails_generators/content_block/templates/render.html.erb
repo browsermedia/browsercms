@@ -1,3 +1,7 @@
+<% # This 'unless' can be removed if :name is no longer assumed to be a default attribute.
+   unless attributes.find {|attr| attr.name == 'name'}
+%><p><b>Name:</b> <%%= @content_block.name %></p>
+<% end %>
 <%- for attribute in attributes -%>
   <%- case attribute.type
     when :attachment -%>

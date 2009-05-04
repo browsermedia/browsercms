@@ -10,6 +10,10 @@ module ActiveRecord
         t.integer :version
         t.integer :lock_version, :default => 0
         yield t
+
+        # Blocks currently must have a name column, otherwise the UI fails in several places.
+        # Some migrations may have already specified a name attribute, so we don't want to overwrite it here.
+        t.string :name unless t[:name]
         t.boolean :published, :default => false
         t.boolean :deleted, :default => false
         t.boolean :archived, :default => false

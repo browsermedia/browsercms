@@ -4,16 +4,29 @@ Description:
 
     Attribute pairs are column_name:sql_type arguments specifying the
     model's attributes. Timestamps are added by default, so you don't have to
-    specify them by hand as 'created_at:datetime updated_at:datetime'.
+    specify them by hand as 'created_at:datetime updated_at:datetime'. The name:string
+    attribute is also implicitly generated as part of the migration and to the forms,
+    but you can override it by specifying a different type, like name:text.
 
-    This generates a model class in app/models and a migration in db/migrate.
+    This generates a model, controller, several partial views, a migration and tests
+    in the appropriate directories.
 
 Examples:
     `./script/generate content_block article`
 
-        creates an Article model and migration:
-            Migration:  db/migrate/XXX_create_article.rb
+        creates an Article model, controller, views, tests, and migration:
+            Model:              app/models/article.rb
+            Unit Test:          test/unit/models/article_test.rb
+            Migration:          db/migrate/XXX_create_article.rb
+            Controller:         app/controllers/cms/article_controller.rb
+            Functional Test:    test/functional/cms/article_controler_test.rb
+            Form Partials:      app/views/cms/articles/_form.html.erb
+                                app/views/cms/articles/render.html.erb
 
-    `./script/generate content_block article title:string body:text published:boolean`
+        This block will have a single attribute, name:string and a form with text_field
+        to edit the name.
 
-        creates an Article model with a string title, text body, and published flag.
+    `./script/generate content_block Article name:string body:text published:boolean`
+
+        creates an Article model with a string name, text body, and published flag.
+        It will create form fields for these attributes in _form.html.erb.
