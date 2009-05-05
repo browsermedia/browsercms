@@ -60,6 +60,13 @@ module Cms::Routes
 end
 CODE
 
+
+file "rails/init.rb", <<-CODE
+gem_root = File.expand_path(File.join(File.dirname(__FILE__), ".."))
+Cms.add_to_rails_paths gem_root
+Cms.add_generator_paths gem_root, "db/migrate/[0-9]*_*.rb"
+CODE
+
 file "LICENSE.txt", <<-CODE
 		   GNU LESSER GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
