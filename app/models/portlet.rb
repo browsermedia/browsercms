@@ -9,7 +9,6 @@ class Portlet < ActiveRecord::Base
   def self.inherited(subclass)
     super if defined? super
   ensure
-    ( @subclasses ||= [] ).push(subclass).uniq!
     subclass.class_eval do
       
       has_dynamic_attributes
@@ -29,24 +28,18 @@ class Portlet < ActiveRecord::Base
     end      
   end
 
-  # In Rails, Classes aren't loaded until you ask for them
-  # This method will load all portlets that are defined
-  # in a app/portlets directory on the load path
-  def self.load_portlets
-    ActiveSupport::Dependencies.load_paths.each do |d| 
-      if d =~ /app\/portlets/
-        Dir["#{d}/*_portlet.rb"].each{|p| require_dependency(p) }
-      end
-    end
-  end
-
   def self.has_edit_link?
     false
   end
   
   def self.types
-    load_portlets
-    @subclasses || []
+    @types ||= ActiveSupport::Dependencies.load_paths.map do |d| 
+      if d =~ /app\/portlets/
+        Dir["#{d}/*_portlet.rb"].map do |p| 
+          File.basename(p, ".rb").classify
+        end
+      end
+    end.flatten.compact.uniq.sort
   end
 
   def self.get_subclass(type)

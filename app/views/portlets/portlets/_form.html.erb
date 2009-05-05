@@ -1,15 +1,15 @@
 <% if @block.class == Portlet %>
   <% page_title "Content Library / Select Portlet Type" %>
-  <% Portlet.types.uniq.sort_by{|t| t.name }.each do |portlet_type| %>
+  <% Portlet.types.each do |portlet_type| %>
     <div style="margin-bottom: 20px;">
       <%
-        link_params = {:type => portlet_type.name.underscore}
+        link_params = {:type => portlet_type.underscore}
         unless params[:portlet].blank?
-          link_params["#{portlet_type.name.underscore}[connect_to_page_id]"] = params[:portlet][:connect_to_page_id]
-          link_params["#{portlet_type.name.underscore}[connect_to_container]"] = params[:portlet][:connect_to_container]
+          link_params["#{portlet_type.underscore}[connect_to_page_id]"] = params[:portlet][:connect_to_page_id]
+          link_params["#{portlet_type.underscore}[connect_to_container]"] = params[:portlet][:connect_to_container]
         end
       %>
-      <%= link_to h(portlet_type.name.titleize), new_cms_portlet_path(link_params) %>
+      <%= link_to h(portlet_type.titleize), new_cms_portlet_path(link_params) %>
     </div>
   <% end %>
   <% @hide_buttons = true %>

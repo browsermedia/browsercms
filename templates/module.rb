@@ -12,13 +12,13 @@ rake "db:migrate"
 
 git :init
 file '.gitignore', <<-CODE
-coverage/\\*\\*/\\*
+coverage/**/*
 .DS_Store
-log/\\*.log
-tmp/\\*\\*/\\*
-db/\\*.sqlite3
+log/*.log
+tmp/**/*
+db/*.sqlite3
 db/schema.rb
-\\*.gem
+*.gem
 .dotest
 tmp/restart.txt
 public/cache
