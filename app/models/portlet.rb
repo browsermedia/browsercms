@@ -5,7 +5,13 @@ class Portlet < ActiveRecord::Base
   #These are here simply to temporarily hold these values
   #Makes it easy to pass them through the process of selecting a portlet type
   attr_accessor :connect_to_page_id, :connect_to_container
-  
+
+  attr_accessor :controller
+  delegate :request, :response, :session, 
+    :flash, :params, :cookies, 
+    :current_user, :logged_in?,
+    :to => :controller
+
   def self.inherited(subclass)
     super if defined? super
   ensure
@@ -94,8 +100,45 @@ class Portlet < ActiveRecord::Base
       {:label => "Updated On", :method => :updated_on_string, :order => "updated_at"} ]
   end
   
+  #----- Portlet Action Related Methods ----------------------------------------
   def instance_name
     "#{self.class.name.demodulize.underscore}_#{id}"
   end
+  
+  def url_for_success
+    [params[:success_url], self.success_url, request.referer].detect do |e|
+      !e.blank?
+    end    
+  end
+
+  def url_for_failure
+    [params[:failure_url], self.failure_url, request.referer].detect do |e|
+      !e.blank?
+    end    
+  end
+  
+  # This will copy all the params from this request into the flash.
+  # The key in the flash with be the portlet instance_name and
+  # the value will be the hash of all the params, except the params
+  # that have values that are a StringIO or a Tempfile will be left out.
+  def store_params_in_flash
+    store_hash_in_flash instance_name, params
+  end
+
+  # This will convert the errors object into a hash and then store it 
+  # in the flash under the key #{portlet.instance_name}_errors
+  def store_errors_in_flash(errors)
+    store_hash_in_flash("#{instance_name}_errors", 
+      errors.inject({}){|h, (k, v)| h[k] = v; h})
+  end
+
+  def store_hash_in_flash(key, hash)
+    flash[key] = hash.inject(HashWithIndifferentAccess.new) do |p,(k,v)|
+      unless StringIO === v || Tempfile === v
+        p[k.to_sym] = v
+      end
+      p
+    end      
+  end  
   
 end

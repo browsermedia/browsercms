@@ -81,6 +81,11 @@ module Cms::Routes
       
       cms.content_blocks :html_blocks
       cms.content_blocks :portlets, :member => {:usages => :get}
+      cms.handler "/portlet/:id/:handler", 
+        :controller => "portlet", 
+        :action => "execute_handler", 
+        :conditions => {:method => :post}
+      
       cms.content_blocks :file_blocks
       cms.content_blocks :image_blocks
       cms.content_blocks :category_types
@@ -93,10 +98,7 @@ module Cms::Routes
           cache.cache "/cache", :action => "show", :conditions => {:method => :get}
         cache.connect "/cache", :action => "destroy", :conditions => {:method => :delete}
       end
-      
-      cms.email_page_portlet "/email_page_portlet/:id/deliver", 
-        :controller => "email_page_portlet", :action => "deliver", :conditions => {:method => :post}
-      
+            
       cms.resources :email_messages
       cms.resources :groups
       cms.resources :redirects
