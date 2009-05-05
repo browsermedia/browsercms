@@ -31,7 +31,7 @@ file "#{File.basename(root)}.gemspec", <<-CODE
 SPEC = Gem::Specification.new do |spec| 
   spec.name = "#{gem_name}"
   spec.rubyforge_project = spec.name
-  spec.version = "3.0.0" 
+  spec.version = "1.0.0"
   spec.summary = "A #{module_name.titleize} Module for BrowserCMS"
   spec.author = "BrowserMedia" 
   spec.email = "github@browsermedia.com" 
