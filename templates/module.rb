@@ -24,21 +24,22 @@ tmp/restart.txt
 public/cache
 CODE
 
-module_name = File.basename(root).match(/browsercms_(.+)_module/)[1]
+module_name = File.basename(root).match(/bcms_(.+)/)[1]
+gem_name = "bcms_#{module_name}"
 
 file "#{File.basename(root)}.gemspec", <<-CODE
 SPEC = Gem::Specification.new do |spec| 
-  spec.name = "browser_cms_#{module_name}_module"
+  spec.name = "#{gem_name}"
   spec.rubyforge_project = spec.name
   spec.version = "3.0.0" 
-  spec.summary = "The #{module_name.titleize} Module for BrowserCMS" 
+  spec.summary = "A #{module_name.titleize} Module for BrowserCMS"
   spec.author = "BrowserMedia" 
   spec.email = "github@browsermedia.com" 
   spec.homepage = "http://www.browsercms.org" 
   spec.files += Dir["app/**/*"]  
   #spec.files += Dir["db/migrate/[0-9]*_create_#{module_name.pluralize}.rb"]
-  spec.files += Dir["lib/browser_cms_#{module_name}_module.rb"]
-  spec.files += Dir["lib/browser_cms_#{module_name}_module/*"]  
+  spec.files += Dir["lib/#{gem_name}.rb"]
+  spec.files += Dir["lib/#{gem_name}/*"]
   spec.files += Dir["rails/init.rb"]
   spec.has_rdoc = true
   spec.extra_rdoc_files = ["README"]
@@ -46,13 +47,13 @@ end
 CODE
 
 file "config/initializers/init_module.rb",
-  %Q{require File.join(File.dirname(__FILE__), "..", "..", "lib", "browser_cms_#{module_name}_module")}
+  %Q{require File.join(File.dirname(__FILE__), "..", "..", "lib", "#{gem_name}")}
 
-file "lib/browser_cms_#{module_name}_module.rb", "require 'browser_cms_#{module_name}_module/routes'\n"
+file "lib/#{gem_name}.rb", "require '#{gem_name}/routes'\n"
 
-file "lib/browser_cms_#{module_name}_module/routes.rb", <<-CODE
+file "lib/#{gem_name}/routes.rb", <<-CODE
 module Cms::Routes
-  def routes_for_browser_cms_#{module_name}_module
+  def routes_for_#{gem_name}
     namespace(:cms) do |cms|
       #cms.content_blocks :#{module_name.pluralize}
     end  
