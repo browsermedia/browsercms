@@ -6,14 +6,13 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["BrowserMedia"]
-  s.date = %q{2009-04-22}
+  s.date = %q{2009-05-05}
   s.email = %q{github@browsermedia.com}
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.markdown"
   ]
   s.files = [
-    "browsercms.gemspec",
     "app/controllers/application_controller.rb",
     "app/controllers/cms/application_controller.rb",
     "app/controllers/cms/attachments_controller.rb",
@@ -28,7 +27,6 @@ Gem::Specification.new do |s|
     "app/controllers/cms/dashboard_controller.rb",
     "app/controllers/cms/dynamic_views_controller.rb",
     "app/controllers/cms/email_messages_controller.rb",
-    "app/controllers/cms/email_page_portlet_controller.rb",
     "app/controllers/cms/error_handling.rb",
     "app/controllers/cms/file_blocks_controller.rb",
     "app/controllers/cms/groups_controller.rb",
@@ -223,6 +221,7 @@ Gem::Specification.new do |s|
     "app/views/portlets/portlets/_form.html.erb",
     "app/views/portlets/tag_cloud/_form.html.erb",
     "app/views/portlets/tag_cloud/render.html.erb",
+    "browsercms.gemspec",
     "db/demo/data.rb",
     "db/demo/page_partials/_footer.html.erb",
     "db/demo/page_partials/_header.html.erb",
@@ -861,11 +860,11 @@ Gem::Specification.new do |s|
     "rails_generators/content_block/content_block_generator.rb",
     "rails_generators/content_block/templates/_form.html.erb",
     "rails_generators/content_block/templates/content_block.rb",
-    "rails_generators/content_block/templates/functional_test.erb",
     "rails_generators/content_block/templates/controller.rb",
+    "rails_generators/content_block/templates/functional_test.erb",
     "rails_generators/content_block/templates/migration.rb",
-    "rails_generators/content_block/templates/unit_test.erb",
     "rails_generators/content_block/templates/render.html.erb",
+    "rails_generators/content_block/templates/unit_test.erb",
     "rails_generators/portlet/USAGE",
     "rails_generators/portlet/portlet_generator.rb",
     "rails_generators/portlet/templates/_form.html.erb",
@@ -912,8 +911,10 @@ Gem::Specification.new do |s|
     "test/unit/extensions/hash_test.rb",
     "test/unit/extensions/integer_test.rb",
     "test/unit/helpers/application_helper_test.rb",
+    "test/unit/helpers/form_builder_test.rb",
     "test/unit/helpers/menu_helper_test.rb",
     "test/unit/helpers/page_helper_test.rb",
+    "test/unit/helpers/path_helper_test.rb",
     "test/unit/lib/content_block_test.rb",
     "test/unit/models/attachment_test.rb",
     "test/unit/models/category_test.rb",
