@@ -14,6 +14,19 @@ namespace :cms do
     puts "This task has been deprecated, please use 'rake install' instead"
   end
   
+  desc "Bumps the build number in lib/cms/init.rb"
+  task :bump_build_number do
+    init_file = Rails.root.join("lib/cms/init.rb")
+    s = File.read(init_file)
+    open(init_file, 'w') do |f| 
+      f << s.sub(/def build_number; (\d+) end/) do |s|
+        new_build_number = $1.to_i + 1
+        puts "Build number bumped to #{new_build_number}"
+        "def build_number; #{new_build_number} end"
+      end
+    end
+  end
+  
   desc "Generate guides for the CMS"
   task :guides do
     require 'mizuho/generator'

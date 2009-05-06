@@ -6,17 +6,11 @@ module Cms
 
     ::SPEC = eval(File.read(__root__ + '/browsercms.gemspec'))
 
-    def spec_version
-      SPEC.version.respond_to?(:parts) ? SPEC.version.parts : SPEC.version.ints
-    end
-
     def version
-      @version = spec_version[0,3].join('.')
+      @version = SPEC.version.version
     end
     
-    def build_number
-      @build_number = spec_version.last
-    end
+    def build_number; 217 end
     
     def load_rake_tasks
       load "#{Cms.root}/lib/tasks/cms.rake"
@@ -83,4 +77,4 @@ Cms.add_generator_paths(Cms.root,
   "public/site/**/*",   
   "public/stylesheets/cms/**/*", 
   "public/images/cms/**/*",
-  "db/migrate/[0-9]*_*.rb") 
+  "db/migrate/[0-9]*_*.rb")
