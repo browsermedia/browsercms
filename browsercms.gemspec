@@ -13,6 +13,7 @@ Gem::Specification.new do |s|
     "README.markdown"
   ]
   s.files = [
+    "browsercms.gemspec",
     "app/controllers/application_controller.rb",
     "app/controllers/cms/application_controller.rb",
     "app/controllers/cms/attachments_controller.rb",
