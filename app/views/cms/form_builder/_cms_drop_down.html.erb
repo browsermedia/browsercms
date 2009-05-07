@@ -13,7 +13,7 @@
   <% end %>
   <%= f.drop_down method, choices, options, html_options %>
   <% if cms_options[:instructions] %>
-    <div class="instructions">Leave blank to return the same page</div>
+    <div class="instructions"><%=h cms_options[:instructions] %></div>
     <br clear="all"/>  
   <% end %>  
 </div>
