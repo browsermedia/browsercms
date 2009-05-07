@@ -6,11 +6,13 @@ module Cms
 
     ::SPEC = eval(File.read(__root__ + '/browsercms.gemspec'))
 
+    attr_accessor :attachment_file_permission
+
     def version
       @version = SPEC.version.version
     end
     
-    def build_number; 218 end
+    def build_number; 219 end
     
     def load_rake_tasks
       load "#{Cms.root}/lib/tasks/cms.rake"

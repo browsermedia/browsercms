@@ -113,6 +113,10 @@ class Attachment < ActiveRecord::Base
       else
         open(full_file_location, 'w') {|f| f << temp_file.read }
       end
+      
+      if Cms.attachment_file_permission
+        FileUtils.chmod Cms.attachment_file_permission, full_file_location
+      end
     end
   end  
   
