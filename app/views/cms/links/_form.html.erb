@@ -6,10 +6,8 @@
 
 <div class="checkbox_group fields no_check_all">
   <div class="checkbox_fields">
-    <label>
-      Open in new window?
-      <%= f.check_box :new_window, :tabindex => next_tabindex %>
-    </label>
+    <%= f.label :new_window, "Open In New Window?" %>
+    <%= f.check_box :new_window, :tabindex => next_tabindex %>
   </div>
 </div>
 
