@@ -2,9 +2,8 @@
 <script type="text/javascript">
 jQuery(function($){
   $("#section_name").keyup(function(){
-    var section = { name: null, path: "<%= @parent.path %>".replace(/\/$/, '') }
-    section.name = $.trim($(this).val()).toLowerCase().replace(/-|_/g, '').replace(/ /g, '_').replace(/\W/g, '')
-    $("#section_path").val(section.path + "/" + section.name)
+    var section_path = "<%= @parent.path %>".replace(/\/$/, '')
+    $("#section_path").val(section_path + "/" + $.cms.slug($(this).val()))
   })
 })
 </script>

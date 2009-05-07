@@ -40,6 +40,9 @@ jQuery(function($) {
       })
       return s;
     },
+    slug: function(s) {
+      return $.trim(s.toLowerCase().replace(/\W+/g, ' ')).replace(/\ +/g, '-')
+    },
     showNotice: function(msg) {
       $('#message').removeClass('error').addClass('notice').html(msg).parent().show().animate({opacity: 1.0}, 3000).fadeOut("normal")
     },

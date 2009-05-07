@@ -8,10 +8,7 @@ jQuery(function($){
       $("#page_path").val(section.path)
     } else {
       $("#page_path").val(
-        section.path.replace(/\/$/, '') + 
-        "/" 
-        + 
-        $.trim(page_name.toLowerCase().replace(/\W+/g, ' ')).replace(/\ +/g, '-')
+        section.path.replace(/\/$/, '') + "/" + $.cms.slug(page_name)
       )
     }
   })
