@@ -28,7 +28,7 @@ module Cms
                                              ["v#{r.version}: #{r.version_comment} by #{r.updated_by.login} at #{time_on_date(r.updated_at)}", r.version] 
                                            }, page.version), 
                         :onchange => 'this.form.submit(); return false')
-      text << javascript_tag("$('version').selectedIndex = 0") if page.current_version?
+      text << javascript_tag("$('version').selectedIndex = 0") if page.live?
       text
     end
 

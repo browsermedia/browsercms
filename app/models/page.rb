@@ -50,36 +50,45 @@ class Page < ActiveRecord::Base
   before_destroy :delete_connectors
   
   validates_presence_of :name, :path
-  validate :path_unique?
+  validates_uniqueness_of :path
   validate :path_not_reserved
           
   def after_build_new_version(new_version)
-    copy_connectors
+    copy_connectors(
+      :from_version_number => @copy_connectors_from_version || (new_version.version - 1),
+      :to_version_number => new_version.version
+    )
+    @copy_connectors_from_version = nil
     true
-  end  
+  end
   
-  def copy_connectors
-    copy_from_version = @copy_connectors_from_version ? @copy_connectors_from_version : version - 1
-    
-    connectors.for_page_version(copy_from_version).all(:order => "connectors.container, connectors.position").each do |c|
-      if c.connectable #The connector won't have a connectable if it has been deleted
+  # Publish all
+  def after_publish
+    self.reload # Get's the correct version number loaded
+    self.connectors.for_page_version(self.version).all(:order => "position").each do |c| 
+      if c.connectable_type.constantize.publishable? && con = c.connectable
+        con.publish
+      end
+    end
+  end
+  
+  def copy_connectors(options={})
+    connectors.for_page_version(options[:from_version_number]).all(:order => "connectors.container, connectors.position").each do |c|
+      # The connector won't have a connectable if it has been deleted
+      # Also need to see if the draft has been deleted,
+      # in which case we are in the process of deleting it
+      if c.connectable && !c.connectable.draft.deleted?
         connectable = c.connectable_type.constantize.versioned? ? c.connectable.as_of_version(c.connectable_version) : c.connectable
-      
-        #If are publishing this page, We need to publish the other page if it is not already published
-        if published? && c.connectable_type.constantize.publishable? && !c.connectable.published?
-          connectable.publish_by_page!(self)
-        end      
       
         #If we are copying connectors from a previous version, that means we are reverting this page,
         #in which case we should create a new version of the block, and connect this page to that block
-        if @copy_connectors_from_version && connectable.class.versioned? && !connectable.current_version?
+        if @copy_connectors_from_version && connectable.class.versioned? && (connectable.version != connectable.draft.version)
           connectable = connectable.class.find(connectable.id)
-          connectable.published_by_page = self if connectable.class.publishable?
           connectable.revert_to(c.connectable_version)
-        end
+        end      
       
-        connectors.build(
-          :page_version => version, 
+        new_connector = connectors.build(
+          :page_version => options[:to_version_number], 
           :connectable => connectable, 
           :connectable_version => connectable.class.versioned? ? connectable.version : nil,         
           :container => c.container, 
@@ -87,30 +96,24 @@ class Page < ActiveRecord::Base
         )
       end
     end
-    
-    @copy_connectors_from_version = nil    
     true
   end  
-    
+  
   def create_connector(connectable, container)
     transaction do
       raise "Connectable is nil" unless connectable
       raise "Container is required" if container.blank?
-      update_attributes(:version_comment => "#{connectable} was added to the '#{container}' container",
-        :publish_on_save => (published? && connectable.connected_page && 
+      update_attributes(
+        :version_comment => "#{connectable} was added to the '#{container}' container",
+        :publish_on_save => (
+          published? && 
+          connectable.connected_page && 
           (connectable.class.publishable? ? connectable.published? : true)))
-      Connector.create(
-        :page => self,
-        :page_version => version,
+      connectors.create(
+        :page_version => draft.version,
         :connectable => connectable,
         :connectable_version => connectable.class.versioned? ? connectable.version : nil, 
         :container => container)      
-    end
-  end  
-  
-  %w(up down to_top to_bottom).each do |d|
-    define_method("move_connector_#{d}") do |connector|
-      move_connector(connector, d)
     end
   end
 
@@ -120,9 +123,15 @@ class Page < ActiveRecord::Base
       raise "Direction is nil" unless direction
       orientation = direction[/_/] ? "#{direction.sub('_', ' the ')} of" : "#{direction} within"
       update_attributes(:version_comment => "#{connector.connectable} was moved #{orientation} the '#{connector.container}' container")
-      connectors.for_page_version(version).like(connector).first.send("move_#{direction}")
+      connectors.for_page_version(draft.version).like(connector).first.send("move_#{direction}")
     end    
-  end  
+  end
+    
+  %w(up down to_top to_bottom).each do |d|
+    define_method("move_connector_#{d}") do |connector|
+      move_connector(connector, d)
+    end
+  end
   
   def remove_connector(connector)
     transaction do
@@ -130,7 +139,7 @@ class Page < ActiveRecord::Base
       update_attributes(:version_comment => "#{connector.connectable} was removed from the '#{connector.container}' container")
       
       #The logic of this is to go ahead and let the container get copied forward, then delete the new connector
-      if new_connector = connectors.for_page_version(version).like(connector).first
+      if new_connector = connectors.for_page_version(draft.version).like(connector).first
         new_connector.destroy
       else
         raise "Error occurred while trying to remove connector #{connector.id}"
@@ -144,10 +153,9 @@ class Page < ActiveRecord::Base
          
   #This is done to let copy_connectors know which version to pull from
   #copy_connectors will get called later as an after_update callback
-  alias_method :original_revert_to, :revert_to
   def revert_to(version)
     @copy_connectors_from_version = version
-    original_revert_to(version)
+    super(version)
   end         
           
   def file_size
@@ -181,13 +189,7 @@ class Page < ActiveRecord::Base
   def page_title
     title.blank? ? name : title
   end
-  
-  %w(up down to_top to_bottom).each do |d|
-    define_method("move_connector_#{d}") do |connector|
-      move_connector(connector, d)
-    end
-  end
-    
+      
   def append_leading_slash_to_path
     if path.blank?
       self.path = "/"
@@ -195,17 +197,6 @@ class Page < ActiveRecord::Base
       self.path = "/#{path}"
     end
   end
-  
-  def path_unique?
-    conditions = ["path = ?", path]
-    unless new_record?
-      conditions.first << " and id != ?"
-      conditions << id
-    end
-    if self.class.count(:conditions => conditions) > 0
-      errors.add(:path, "must be unique")
-    end
-  end   
   
   def path_not_reserved
     if Cms.reserved_paths.include?(path)
@@ -240,8 +231,8 @@ class Page < ActiveRecord::Base
     
   #Returns true if the block attached to each connector in the given container are published
   def container_published?(container)
-    connectors.for_page_version(version).in_container(container.to_s).all? do |c| 
-      c.connectable_type.constantize.publishable? ? c.connectable.published? : true
+    connectors.for_page_version(draft.version).in_container(container.to_s).all? do |c| 
+      c.connectable_type.constantize.publishable? ? c.connectable.live? : true
     end
   end
   
@@ -251,17 +242,7 @@ class Page < ActiveRecord::Base
   end
     
   def self.find_live_by_path(path)
-    page_versions = Page::Version.all(:conditions => {
-        :path => path, 
-        :archived => false, 
-        :published => true}, 
-        :order => "version desc")
-    for page_version in page_versions
-      next if page_version.page.nil? #skip versions that belong to deleted pages
-      page = page_version.page.as_of_version(page_version.version)
-      return page.live_version? ? page : nil
-    end
-    nil
+    published.not_archived.first(:conditions => {:path => path})
   end
   
   def name_with_section_path

@@ -2,7 +2,7 @@ require File.join(File.dirname(__FILE__), '/../../test_helper')
 
 class PagePartialTest < ActiveSupport::TestCase
   def setup
-    @page_partial = Factory(:page_partial, :name => "_test")
+    @page_partial = Factory.build(:page_partial, :name => "_test")
     File.delete(@page_partial.file_path) if File.exists?(@page_partial.file_path)
   end
   

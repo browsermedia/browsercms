@@ -41,11 +41,6 @@
     <thead>
       <tr>
         <th colspan="2" class="first"><div class="dividers">Version</div></th>
-        <% if content_type.model_class.publishable? %>
-          <th colspan="2">
-            <div class="dividers">Status</div>
-          </th>
-        <% end %>
         <th>
           <div class="dividers">Comment</div>
         </th>
@@ -59,22 +54,15 @@
     </thead>
     <tbody>
       <% @block.versions.all(:order => "version desc").each_with_index do |r, i| %>
-        <% published_status = (r.published? ? 'published' : 'draft') %>
         <tr id="<%= @block.class.name.underscore %>_<%= r.version %>">
           <td class="first"></td>
           <td>
             <div class="dividers">
               <%= "v. #{r.version}" %>
-              <%= '(LIVE)' if @block.live_version && r.version == @block.live_version.version %>
+              <%= '(LIVE)' if @block.version == r.version %>
               <%= '<span class="current">(CURRENT)</span>' if i == 0 %>
             </div>
           </td>
-          <% if content_type.model_class.publishable? %>
-            <td class="block_status"><%= status_icon(published_status) %></td>
-            <td>
-              <div class="dividers"><%= published_status %></div> 
-            </td>
-          <% end %>
           <td>
             <div class="dividers"><%=  r.version_comment %></div>
           </td>

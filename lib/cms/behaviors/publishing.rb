@@ -9,7 +9,7 @@ module Cms
           end
         end
       end
-      module MacroMethods      
+      module MacroMethods
         def publishable?
           !!@is_publishable
         end
@@ -19,9 +19,8 @@ module Cms
           include InstanceMethods
         
           attr_accessor :publish_on_save
-          attr_accessor :published_by_page
         
-          before_save :set_published
+          after_save :publish_for_non_versioned
         
           named_scope :published, :conditions => {:published => true}
           named_scope :unpublished, :conditions => {:published => false}        
@@ -37,47 +36,76 @@ module Cms
             true
           end
         end
+        
+        def publish_for_non_versioned
+          unless self.class.versioned?
+            if @publish_on_save
+              publish
+              @publish_on_save = nil
+            end
+          end
+        end
+        
         def publish
-          self.publish_on_save = true
-          self.version_comment = "Published" if self.class.versioned?
-          save
-        end
-        def publish!
-          self.publish_on_save = true
-          self.version_comment = "Published" if self.class.versioned?
-          save!
-        end
-        def publish_by_page(page)
-          self.published_by_page = page
-          if publish
-            self.published_by_page = nil          
-            true
-          else
-            false
-          end
-        end
-        def publish_by_page!(page)
-          self.published_by_page = page
           publish!
-          self.published_by_page = nil
-        end
-        def set_published
-          self.published = !!@publish_on_save
-          if self.published && self.respond_to?(:published_at) && !self.published_at
-            self.published_at = Time.now
-          end
-          @publish_on_save = nil
           true
+        rescue Exception => e
+          logger.warn("Could not publish, #{e.class}: #{e.message}\n#{e.backtrace.join("\n")}")
+          false
         end
+        
+        def publish!
+          if new_record?
+            self.publish_on_save = true
+            save!
+          else
+            transaction do
+              if self.class.versioned?
+                d = draft
+
+                # We only need to publish if this isn't already published
+                # or the draft version is greater than the live version
+                if !self.published? || d.version > self.version
+                  
+                  d.update_attributes(:published => true)
+
+                  # copy values from the draft to the main record
+                  quoted_attributes = d.send(:attributes_with_quotes, false, false, self.class.versioned_columns)
+
+                  # Doing the SQL ourselves to avoid callbacks
+                  connection.update(
+                    "UPDATE #{self.class.quoted_table_name} " +
+                    "SET #{quoted_comma_pair_list(connection, quoted_attributes)} " +
+                    "WHERE #{connection.quote_column_name(self.class.primary_key)} = #{quote_value(id)}",
+                    "#{self.class.name} Publish"
+                  )
+                end
+              else
+                connection.update(
+                  "UPDATE #{self.class.quoted_table_name} " +
+                  "SET published = #{connection.quote(true, self.class.columns_hash["published"])} " +
+                  "WHERE #{connection.quote_column_name(self.class.primary_key)} = #{quote_value(id)}",
+                  "#{self.class.name} Publish"
+                )
+              end
+              after_publish if respond_to?(:after_publish)
+            end
+            self.published = true
+          end
+        end    
+            
         def status
-          published? ? :published : :draft
+          live? ? :published : :draft
         end        
+
         def status_name
           status.to_s.titleize
         end
+
         def live?
-          self.class.versioned? ? versions.count(:conditions => ['version > ? AND published = ?', version, true]) == 0 && published? : true
-        end        
+          self.class.versioned? ? self.version == draft.version && published? : true
+        end
+        
       end
     end
   end

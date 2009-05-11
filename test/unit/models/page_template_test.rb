@@ -2,7 +2,7 @@ require File.join(File.dirname(__FILE__), '/../../test_helper')
 
 class PageTemplateTest < ActiveSupport::TestCase
   def setup
-    @page_template = Factory(:page_template, :name => "test")
+    @page_template = Factory.build(:page_template, :name => "test")
     File.delete(@page_template.file_path) if File.exists?(@page_template.file_path)
   end
   

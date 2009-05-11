@@ -33,6 +33,7 @@ class Cms::PagesControllerTest < ActionController::TestCase
     @page.update_attributes(:name => "V3")
     
     get :versions, :id => @page.to_param
+    #log @response.body
     (1..3).each do |n|
       assert_select "tr[id=?]", "revision_#{n}"
     end
@@ -50,7 +51,7 @@ class Cms::PagesControllerTest < ActionController::TestCase
     assert_redirected_to @page.path
     assert !@page.published?
     assert_equal "Test", @page.name
-    assert_equal 4, @page.version
+    assert_equal 4, @page.draft.version
   end
 
   protected

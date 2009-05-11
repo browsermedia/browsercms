@@ -56,7 +56,8 @@ class Cms::ImageBlocksControllerTest < ActionController::TestCase
     reset(:image)
     
     assert_redirected_to [:cms, @image]
-    assert_equal 3, @image.version
+    assert_equal 1, @image.version
+    assert_equal 3, @image.draft.version
   end
   
 end

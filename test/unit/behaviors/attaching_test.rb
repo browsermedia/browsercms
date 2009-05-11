@@ -10,14 +10,6 @@ ActiveRecord::Base.connection.instance_eval do
     t.timestamps
   end
   
-  drop_table(:attachables) if table_exists?(:attachables)
-  create_table(:attachables) do |t| 
-    t.string :name
-    t.integer :attachment_id
-    t.integer :attachment_version
-    t.timestamps
-  end
-
   drop_table(:versioned_attachables) if table_exists?(:versioned_attachables)
   drop_table(:versioned_attachable_versions) if table_exists?(:versioned_attachable_versions)
   create_versioned_table(:versioned_attachables) do |t| 
@@ -40,22 +32,6 @@ end
 
 class DefaultAttachable < ActiveRecord::Base
   acts_as_content_block :belongs_to_attachment => true
-end
-
-class Attachable < ActiveRecord::Base
-  belongs_to_attachment
-  
-  def set_attachment_file_path
-    if @attachment_file_path && @attachment_file_path != attachment.file_path
-      attachment.file_path = @attachment_file_path
-    end
-  end
-
-  def set_attachment_section
-    if @attachment_section_id && @attachment_section_id != attachment.section_id
-      attachment.section_id = @attachment_section_id 
-    end
-  end  
 end
 
 class VersionedAttachable < ActiveRecord::Base
@@ -121,7 +97,7 @@ class AttachingTest < ActiveSupport::TestCase
       "Copy of 100% of Paul's Time(1).txt" => "Copy_of_100_of_Pauls_Time-1-.txt"
     }.each do |example, expected|
       assert_equal expected, 
-        Attachable.new.sanitize_file_path(example)
+        VersionedAttachable.new.sanitize_file_path(example)
     end
   end
   
@@ -138,7 +114,7 @@ class AttachableTest < ActiveSupport::TestCase
   end
   
   def test_create_with_attachment_section_id_attachment_file_and_attachment_file_path
-    @attachable = Attachable.new(:name => "Section ID, File and File Name", 
+    @attachable = VersionedAttachable.new(:name => "Section ID, File and File Name", 
       :attachment_section_id => @section.id, 
       :attachment_file => @file, 
       :attachment_file_path => "test.jpg")
@@ -147,7 +123,7 @@ class AttachableTest < ActiveSupport::TestCase
   end  
   
   def test_create_with_attachment_section_attachment_file_and_attachment_file_path
-    @attachable = Attachable.new(:name => "Section, File and File Name", 
+    @attachable = VersionedAttachable.new(:name => "Section, File and File Name", 
      :attachment_section => @section, 
      :attachment_file => @file, 
      :attachment_file_path => "test.jpg")
@@ -156,49 +132,49 @@ class AttachableTest < ActiveSupport::TestCase
   end
   
   def test_create_with_an_attachment_section_but_no_attachment_file
-    @attachable = Attachable.new(:name => "Section, No File", 
+    @attachable = VersionedAttachable.new(:name => "Section, No File", 
       :attachment_section => @section)
     
-    attachable_count = Attachable.count
+    attachable_count = VersionedAttachable.count
     
     assert !@attachable.save
     
-    assert_equal attachable_count, Attachable.count
+    assert_equal attachable_count, VersionedAttachable.count
     assert_equal @section, @attachable.attachment_section
     assert_equal @section.id, @attachable.attachment_section_id
     assert_nil @attachable.attachment_file_path
   end  
   
   def test_create_with_an_attachment_file_but_no_attachment_section
-    @attachable = Attachable.new(:name => "File Name, No File", 
+    @attachable = VersionedAttachable.new(:name => "File Name, No File", 
       :attachment_file_path => "whatever.jpg")
     
-    attachable_count = Attachable.count
+    attachable_count = VersionedAttachable.count
     
     assert !@attachable.save
 
-    assert_equal attachable_count, Attachable.count
+    assert_equal attachable_count, VersionedAttachable.count
     assert_nil @attachable.attachment_section
     assert_nil @attachable.attachment_section_id
     assert_equal "whatever.jpg", @attachable.attachment_file_path
   end  
   
   def test_create_screwy_attachment_file_name
-    @attachable = Attachable.new(:name => "Section ID, File and File Name", 
+    @attachable = VersionedAttachable.new(:name => "Section ID, File and File Name", 
       :attachment_section_id => @section.id, 
       :attachment_file => @file, 
       :attachment_file_path => "Broken? Yes & No!.txt")
     
-    attachable_count = Attachable.count
+    attachable_count = VersionedAttachable.count
     
     assert @attachable.save
 
-    assert_incremented attachable_count, Attachable.count
+    assert_incremented attachable_count, VersionedAttachable.count
     assert_equal "/Broken_Yes_-_No.txt", @attachable.attachment_file_path
   end  
   
   def test_updating_the_attachment_file_name
-    @attachable = Attachable.create!(:name => "Foo", 
+    @attachable = VersionedAttachable.create!(:name => "Foo", 
       :attachment_section_id => @section.id, 
       :attachment_file => @file, 
       :attachment_file_path => "test.jpg")
@@ -208,7 +184,7 @@ class AttachableTest < ActiveSupport::TestCase
     attachment_version = @attachable.attachment_version
     attachment_version_count = Attachment::Version.count
     
-    assert @attachable.update_attributes(:attachment_file_path => "test2.jpg")
+    assert @attachable.update_attributes(:attachment_file_path => "test2.jpg", :publish_on_save => true)
     
     assert_equal attachment_count, Attachment.count
     assert_incremented attachment_version, @attachable.attachment_version
@@ -224,7 +200,7 @@ class AttachableTest < ActiveSupport::TestCase
   end  
   
   def test_updating_the_attachment_file
-    @attachable = Attachable.create!(:name => "Foo", 
+    @attachable = VersionedAttachable.create!(:name => "Foo", 
       :attachment_section_id => @section.id, 
       :attachment_file => @file, 
       :attachment_file_path => "test.jpg")
@@ -242,11 +218,13 @@ class AttachableTest < ActiveSupport::TestCase
     assert @attachable.update_attributes(:attachment_file => @file2)
 
     assert_equal attachment_count, Attachment.count
-    assert_incremented attachment_version, @attachable.attachment_version
-    assert_incremented attachment_version_count, Attachment::Version.count    
-    assert_equal @file2.read, open(@attachable.attachment.full_file_location){|f| f.read}
+    assert_equal attachment_version, @attachable.reload.attachment_version
+    assert_incremented attachment_version_count, Attachment::Version.count
+    @file.rewind
+    assert_equal @file.read, open(@attachable.attachment.full_file_location){|f| f.read}
     
     reset(:attachable)
+    @file.rewind
     @file2.rewind
 
     assert_equal @file.read, open(@attachable.attachment.as_of_version(1).full_file_location){|f| f.read}
@@ -256,11 +234,11 @@ class AttachableTest < ActiveSupport::TestCase
   
   protected
     def assert_was_saved_properly
-      attachable_count = Attachable.count
+      attachable_count = VersionedAttachable.count
 
       assert @attachable.save
 
-      assert_incremented attachable_count, Attachable.count
+      assert_incremented attachable_count, VersionedAttachable.count
       assert_equal @section, @attachable.attachment_section
       assert_equal @section.id, @attachable.attachment_section_id
       assert_equal "/test.jpg", @attachable.attachment_file_path

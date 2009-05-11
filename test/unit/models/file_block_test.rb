@@ -60,7 +60,7 @@ class UpdatingFileBlockTest < ActiveSupport::TestCase
       :attachment_file => nil,
       :publish_on_save => true)
     
-    assert_incremented attachment_version, @attachment.version
+    assert_incremented attachment_version, @attachment.reload.version
     assert_incremented file_attachment_version, @file_block.attachment_version
     assert_incremented attachment_version_count, Attachment::Version.count
   end  
@@ -72,8 +72,8 @@ class UpdatingFileBlockTest < ActiveSupport::TestCase
     @section = Factory(:section, :parent => root_section, :name => "New")
     @file_block.update_attributes!(:attachment_section => @section, :publish_on_save => true)
 
-    assert_equal attachment_version_count, Attachment::Version.count
-    assert_equal file_block_version, @file_block.version
+    assert_incremented attachment_version_count, Attachment::Version.count
+    assert_incremented file_block_version, @file_block.reload.version
     assert_equal @section, @file_block.attachment_section
     assert_equal "/test.jpg", @file_block.attachment.file_path
     assert_equal "test.jpg", @file_block.attachment.file_name
@@ -82,17 +82,17 @@ class UpdatingFileBlockTest < ActiveSupport::TestCase
   def test_change_attachment_data_with_save
     attachment_count = Attachment.count
     attachment_version_count = Attachment::Version.count
-    file_block_version = @file_block.version
+    file_block_version = @file_block.draft.version
 
     @section = Factory(:section, :parent => root_section, :name => "New")
     @file_block.update_attributes!(:attachment_file => mock_file(:read => "new"))
     
     assert_equal attachment_count, Attachment.count
     assert_incremented attachment_version_count, Attachment::Version.count
-    assert_incremented file_block_version, @file_block.version
-    assert_equal "new", open(@file_block.attachment.full_file_location){|f| f.read}
-    assert !@file_block.published?
-    assert !@file_block.attachment.published?
+    assert_incremented file_block_version, @file_block.draft.version
+    assert_equal "new", open(@file_block.as_of_draft_version.attachment.full_file_location){|f| f.read}
+    assert !@file_block.live?
+    assert !@file_block.attachment.live?
   end
   
   def test_change_attachment_data_with_save_and_publish
@@ -105,7 +105,7 @@ class UpdatingFileBlockTest < ActiveSupport::TestCase
     
     assert_equal attachment_count, Attachment.count
     assert_incremented attachment_version_count, Attachment::Version.count
-    assert_incremented file_block_version, @file_block.version
+    assert_incremented file_block_version, @file_block.reload.version
     assert_equal "new", open(@file_block.attachment.full_file_location){|f| f.read}
     assert @file_block.published?
     assert @file_block.attachment.published?
@@ -120,7 +120,7 @@ class UpdatingFileBlockTest < ActiveSupport::TestCase
     
     assert_equal attachment_count, Attachment.count
     assert_equal attachment_version_count, Attachment::Version.count
-    assert_incremented file_block_version, @file_block.version
+    assert_incremented file_block_version, @file_block.reload.version
     assert_equal "Test 2", @file_block.name
   end
   

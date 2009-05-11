@@ -38,7 +38,7 @@ class AttachmentTest < ActiveSupport::TestCase
     original_file_location = attachment.file_location
     attachment = Attachment.find(attachment.id)
     attachment.update_attributes(:file_path => "bar.txt")
-    assert_equal 2, attachment.version 
+    assert_equal 2, attachment.draft.version
     assert_equal "/bar.txt", attachment.file_path
     assert_equal "bar.txt", attachment.file_name
     assert_equal original_file_location, attachment.file_location
@@ -50,11 +50,13 @@ class AttachmentTest < ActiveSupport::TestCase
     file.original_path = "foo.txt"
     file.content_type = "text/plain"    
     attachment.update_attributes(:temp_file => file)
-    assert_equal 3, attachment.version 
-    assert_equal "/bar.txt", attachment.file_path
-    assert_equal "bar.txt", attachment.file_name
-    assert_not_equal original_file_location, attachment.file_location
-    assert_equal "This is a new file", open(attachment.full_file_location){|f| f.read}  
+    # log_table_with Attachment, :id, :name, :version, :file_path
+    # log_table_with Attachment::Version, :id, :name, :version, :file_path, :attachment_id
+    assert_equal 3, attachment.draft.version 
+    assert_equal "/bar.txt", attachment.as_of_draft_version.file_path
+    assert_equal "bar.txt", attachment.as_of_draft_version.file_name
+    assert_not_equal original_file_location, attachment.as_of_draft_version.file_location
+    assert_equal "This is a new file", open(attachment.as_of_draft_version.full_file_location){|f| f.read}  
   end
   
   def test_find_live_by_file_path
@@ -67,12 +69,12 @@ class AttachmentTest < ActiveSupport::TestCase
     assert !attachment.published?, "Attachment should not be published"
     assert_nil Attachment.find_live_by_file_path("/foo.txt")
     
-    attachment.update_attributes(:published => true)
-    assert attachment.published?, "Attachment should be published"
+    attachment.publish
+    assert attachment.reload.published?, "Attachment should be published"
     assert_equal attachment, Attachment.find_live_by_file_path("/foo.txt")
     
-    attachment.update_attributes(:file_type => "text/html", :published => false)
-    assert !attachment.published?, "Attachment should not be published"
+    attachment.update_attributes(:file_type => "text/html")
+    assert !attachment.live?, "Attachment should not be live"
     assert_equal attachment.as_of_version(2), Attachment.find_live_by_file_path("/foo.txt")    
   end
   

@@ -5,6 +5,8 @@ class Attachment < ActiveRecord::Base
 
   #----- Macros ----------------------------------------------------------------
 
+  is_archivable
+  is_publishable
   uses_soft_delete
   is_userstamped
   is_versioned
@@ -12,6 +14,7 @@ class Attachment < ActiveRecord::Base
 
   #----- Callbacks -------------------------------------------------------------
 
+  before_validation :make_dirty_if_temp_file
   before_validation :prepend_file_path_with_slash
   before_validation :extract_file_extension_from_file_name
   before_validation :extract_file_type_from_temp_file
@@ -60,6 +63,10 @@ class Attachment < ActiveRecord::Base
   end
   
   #----- Callbacks Methods -----------------------------------------------------
+  
+  def make_dirty_if_temp_file
+    dirty! if temp_file
+  end
   
   def prepend_file_path_with_slash    
     unless file_path.blank?
@@ -137,13 +144,7 @@ class Attachment < ActiveRecord::Base
   end  
   
   def self.find_live_by_file_path(file_path)
-    if attachment_version = Attachment::Version.first(:conditions => {
-         :file_path => file_path, 
-         :published => true}, 
-         :order => "version desc")
-       attachment = attachment_version.attachment.as_of_version(attachment_version.version)
-       (attachment.live_version? && !attachment.archived?) ? attachment : nil
-     end
+    Attachment.published.not_archived.first(:conditions => {:file_path => file_path})
   end  
   
   #----- Instance Methods ------------------------------------------------------
@@ -155,21 +156,6 @@ class Attachment < ActiveRecord::Base
   def name
     file_name
   end
-  
-  def live?
-    versionable? ? versions.count(:conditions => ['version > ? AND published = ?', version, true]) == 0 && published? : true
-  end
-
-  def live_version
-    if archived? || deleted?
-      nil
-    elsif published?
-      self
-    else
-      live_version = versions.first(:conditions => {:published => true}, :order => "version desc, id desc")
-      live_version ? as_of_version(live_version.version) : nil
-    end                
-  end  
   
   def icon
     {

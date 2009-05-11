@@ -4,7 +4,6 @@ ActiveRecord::Base.connection.instance_eval do
   drop_table(:publishables) if table_exists?(:publishables)
   create_table(:publishables) do |t| 
     t.string :name
-    t.datetime :published_at
     t.boolean :published, :default => false
   end
   drop_table(:unpublishables) if table_exists?(:unpublishables)
@@ -30,26 +29,16 @@ class PublishableTestCase < ActiveSupport::TestCase
     @object = Publishable.new(:name => "New Record")
     assert @object.save
     assert !@object.published?
-    assert_nil @object.published_at
   end
 
   def test_publish_on_save
     @object = Publishable.new(:name => "New Record")
     @object.publish_on_save = true
     assert @object.save
-    assert @object.published?
-    assert @object.published_at <= Time.now
+    log_table_without_stamps Publishable
+    assert @object.reload.published?
   end
 
-  def test_published_at_does_not_change
-    @object = Publishable.create(:name => "New Record")
-    @published_at = 5.minutes.ago
-    assert @object.update_attributes(:published_at => @published_at, :publish_on_save => true)
-    assert_equal @published_at, @object.published_at
-    assert @object.update_attributes(:name => "Changed", :publish_on_save => true)
-    assert_equal @published_at, @object.published_at
-  end
-  
   def test_unpublishable
     @object = Unpublishable.new(:name => "New Record")
     assert !@object.publishable?

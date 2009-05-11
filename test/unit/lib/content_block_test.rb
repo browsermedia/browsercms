@@ -20,31 +20,27 @@ class ContentBlockTest < ActiveSupport::TestCase
 
     assert @block.update_attributes(:name => "Whatever")
     
-    assert !@block.published?
+    assert !@block.live?
     
   end
 
   def test_revision_comment_on_create
-    assert_equal 'Created', @block.current_version.version_comment
-    assert_equal 'Created', @block.as_of_version(@block.version).current_version.version_comment
+    assert_equal 'Created', @block.draft.version_comment
   end
 
   def test_revision_comment_on_update
     assert @block.update_attributes(:name => "Something Else", :content => "Whatever")
-    assert_equal 'Changed content, name', @block.current_version.version_comment
-    assert_equal 'Changed content, name', @block.as_of_version(@block.version).current_version.version_comment
+    assert_equal 'Changed content, name', @block.draft.version_comment
   end
 
   def test_revision_comment_without_changes
     assert @block.update_attributes(:name => @block.name)
-    assert_equal 'Created', @block.current_version.version_comment
-    assert_equal 'Created', @block.as_of_version(@block.version).current_version.version_comment
+    assert_equal 'Created', @block.draft.version_comment
   end
 
   def test_custom_revision_comment
     assert @block.update_attributes(:name => "Something Else", :version_comment => "Something Changed")
-    assert_equal "Something Changed", @block.current_version.version_comment
-    assert_equal "Something Changed", @block.as_of_version(@block.version).current_version.version_comment
+    assert_equal "Something Changed", @block.draft.version_comment
   end
   
   def test_destroy
@@ -91,9 +87,9 @@ class VersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
     reset(:page)
     
     assert !@page.published?
-    assert_equal 3, @page.version
+    assert_equal 3, @page.draft.version
     assert_incremented page_version_count, Page::Version.count
-    assert_match /^HtmlBlock #\d+ was Edited/, @page.current_version.version_comment
+    assert_match /^HtmlBlock #\d+ was Edited/, @page.draft.version_comment
 
     conns = @block.connectors.all(:order => 'id')
     assert_equal 2, conns.size
@@ -116,16 +112,16 @@ class VersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
     @page.publish!
     reset(:page, :block)
 
-    page_connector_count = @page.connectors.for_page_version(@page.version).count
-    page_version = @page.version
+    page_connector_count = @page.connectors.for_page_version(@page.draft.version).count
+    page_version = @page.draft.version
 
     @block.destroy
 
     reset(:page)
 
-    assert_decremented page_connector_count, @page.connectors.for_page_version(@page.version).count
-    assert_incremented page_version, @page.version
-    assert_match /^HtmlBlock #\d+ was Deleted/, @page.current_version.version_comment
+    assert_decremented page_connector_count, @page.connectors.for_page_version(@page.draft.version).count
+    assert_incremented page_version, @page.draft.version
+    assert_match /^HtmlBlock #\d+ was Deleted/, @page.draft.version_comment
   end  
   
 end
@@ -142,7 +138,7 @@ class NonVersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
     page_version_count = Page::Version.count
 
     assert_equal "Dynamic Portlet 'Non-Versioned Content Block' was added to the 'main' container",
-      @page.reload.current_version.version_comment
+      @page.draft.version_comment
     assert !@page.published?
 
     assert @block.update_attributes(:name => "something different", :publish_on_save => true)

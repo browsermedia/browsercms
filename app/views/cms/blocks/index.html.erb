@@ -83,7 +83,8 @@
        col_ct += 1 if content_type.model_class.respond_to?(:updated_at)
        col_ct += 1 if content_type.model_class.connectable?
        col_ct += 1 if content_type.model_class.publishable? %>
-    <% @blocks.each do |block| %>
+    <% @blocks.each do |b| %>
+      <% block = b.as_of_draft_version %>
       <tr id="<%= block.class.name.underscore %>_<%= block.id %>" class="<%= block.class.name.underscore %> <%= block.class.publishable? && !block.published? ? 'draft' : 'published' %>">
 	<td class="first"></td>
         <% content_type.columns_for_index.each_with_index do |column, i| %>

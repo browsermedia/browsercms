@@ -37,8 +37,8 @@ class Cms::LinksControllerTest < ActionController::TestCase
     reset(:link)
 
     assert_redirected_to [:cms, @link.section]
-    assert_equal "Test Updated", @link.name
-    assert_equal "http://www.updated-example.com", @link.url
+    assert_equal "Test Updated", @link.draft.name
+    assert_equal "http://www.updated-example.com", @link.draft.url
   end
 
   protected

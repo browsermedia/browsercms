@@ -82,7 +82,7 @@ class Cms::HtmlBlocksControllerTest < ActionController::TestCase
     assert_redirected_to [:cms, @block]
     assert_equal html_block_count, HtmlBlock.count
     assert_incremented html_block_version_count, HtmlBlock::Version.count
-    assert_equal "Test V2",  @block.name
+    assert_equal "Test V2",  @block.draft.name
     assert_equal "Html Block 'Test V2' was updated", flash[:notice]
   end
     
@@ -109,14 +109,14 @@ class Cms::HtmlBlocksControllerTest < ActionController::TestCase
     put :revert_to, :id => @block.id, :version => "1"
     reset(:block)
     
-    assert_equal 3, @block.version
+    assert_equal 3, @block.draft.version
     assert_equal "Test", @block.reload.name
     assert_equal "Html Block 'Test' was reverted to version 1", flash[:notice]
     assert_redirected_to [:cms, @block]
   end
   
   def test_revert_to_with_invalid_version_parameter
-    @block.update_attributes(:name => "Test V2")
+    @block.update_attributes(:name => "Test V2", :publish_on_save => true)
     reset(:block)
 
     html_block_version_count = HtmlBlock::Version.count

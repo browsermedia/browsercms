@@ -226,6 +226,7 @@ HTML
     
     @page = @press_releases
     output = render_menu
+    
     assert_equal expected, output
     
     assert_equal %Q{<div id="menu" class="menu">\n</div>\n}, 

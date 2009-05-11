@@ -62,14 +62,16 @@ class Cms::ContentControllerTest < ActionController::TestCase
   
   def test_show_archived_file
     create_file
-    
+
     reset(:file_block)
     @file_block.update_attributes(:archived => true, :publish_on_save => true)
     reset(:file_block)
     assert @file_block.attachment.archived?
     
+    log_table_with Attachment,
+      :id, :version, :file_path, :file_extension, :file_type, :file_size, :published, :deleted, :archived
     log_table_with Attachment::Version, 
-      :id, :attachment_id, :version, :file_path, :file_extension, :file_type, :file_size, :published, :deleted, :archived
+      :id, :version, :file_path, :file_extension, :file_type, :file_size, :published, :deleted, :archived, :attachment_id
     get :show, :path => ["test.txt"]
     
     assert_response :not_found

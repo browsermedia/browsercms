@@ -43,10 +43,8 @@ class HtmlBlockTest < ActiveSupport::TestCase
   
   def test_reverting
     # We need a block with a version that was created in the past
-    @html_block = Factory(:html_block, :name => "Version One")
     @v1_created_at = Time.zone.now - 5.days
-    @html_block.created_at = @v1_created_at
-    @html_block.save
+    @html_block = Factory(:html_block, :name => "Version One", :created_at => @v1_created_at)
     
     # Make the version be created in the past as well
     v1 = @html_block.versions.last
@@ -64,7 +62,7 @@ class HtmlBlockTest < ActiveSupport::TestCase
     @html_block.revert_to 1
     @html_block.reload
 
-    assert_equal 3, @html_block.reload.version
+    assert_equal 3, @html_block.draft.version
     assert_equal "Version One", @html_block.name
     assert_equal @v1_created_at.to_i, @html_block.find_version(1).created_at.to_i
     assert_equal @v2_created_at.to_i, @html_block.find_version(2).created_at.to_i
@@ -97,8 +95,8 @@ class HtmlBlockTest < ActiveSupport::TestCase
     
     # We can't freeze the version because we need to be able to load assocations
     assert !@version.frozen?
-    assert !@version.current_version?
-    assert @html_block.current_version?
+    assert !@version.live?
+    assert !@html_block.live?
   end
   
 end

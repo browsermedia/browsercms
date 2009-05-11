@@ -35,15 +35,15 @@ class Cms::ConnectorsControllerTest < ActionController::TestCase
     
     page_version_count = Page::Version.count
     
-    assert_equal 2, @page.version
+    assert_equal 2, @page.draft.version
     
-    delete :destroy, :id => @page.connectors.for_page_version(@page.version).first.id
+    delete :destroy, :id => @page.connectors.for_page_version(@page.draft.version).first.id
     reset(:page)
     
     assert_redirected_to @page.path
     assert_incremented page_version_count, Page::Version.count
-    assert_equal 3, @page.version
-    assert @page.connectors.for_page_version(@page.version).empty?
+    assert_equal 3, @page.draft.version
+    assert @page.connectors.for_page_version(@page.draft.version).empty?
   end
     
 end

@@ -16,7 +16,7 @@ class Cms::ContentBlockController < Cms::BaseController
   end
   
   def show
-    load_block
+    load_block_draft
     render "#{template_directory}/show"
   end
   
@@ -37,7 +37,7 @@ class Cms::ContentBlockController < Cms::BaseController
   end
   
   def edit
-    load_block
+    load_block_draft
     render "#{template_directory}/edit"
   end
   
@@ -90,7 +90,7 @@ class Cms::ContentBlockController < Cms::BaseController
   end
     
   def usages
-    load_block
+    load_block_draft
     @pages = @block.connected_pages.all(:order => 'name')
     render "#{template_directory}/usages"
   end
@@ -133,6 +133,11 @@ class Cms::ContentBlockController < Cms::BaseController
       @block = model_class.find(params[:id])
     end
   
+    def load_block_draft
+      load_block
+      @block = @block.as_of_draft_version if model_class.versioned?
+    end
+  
     # path related methods - available in the view as helpers
   
     def new_block_path(options={})
@@ -173,7 +178,8 @@ class Cms::ContentBlockController < Cms::BaseController
     end
 
     def after_create_on_success
-      flash[:notice] = "#{content_type.display_name} '#{@block.name}' was created"
+      block = @block.class.versioned? ? @block.draft : @block
+      flash[:notice] = "#{content_type.display_name} '#{block.name}' was created"
       if @block.class.connectable? && @block.connected_page
         redirect_to @block.connected_page.path
       else

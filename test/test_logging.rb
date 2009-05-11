@@ -61,4 +61,7 @@ module TestLogging
   def log_table_without_stamps(cls, *columns)
     log_table(cls, :exclude_columns => %w[created_at updated_at created_by_id updated_by_id] + columns)
   end    
+  
+  extend self
+  
 end

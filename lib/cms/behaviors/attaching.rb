@@ -16,7 +16,7 @@ module Cms
           before_validation :process_attachment  
           before_save :update_attachment_if_changed
           after_save :clear_attachment_ivars
-          belongs_to :attachment   
+          belongs_to :attachment, :dependent => :destroy 
           
           validates_each :attachment_file do |record, attr, value|
             if record.attachment && !record.attachment.valid?
@@ -137,14 +137,22 @@ module Cms
         end
 
         def update_attachment_if_changed
+          logger.info "..... attachment version before is #{attachment_version}"
           if attachment
             attachment.archived = archived if self.class.archivable?
-            attachment.published = self.class.publishable? ? !!(publish_on_save) : true
+            logger.info "----- new_record? #{new_record?}"
+            logger.info "----- #{attachment.changed?}"
+            logger.info "----- #{attachment.temp_file}"
             if new_record? || attachment.changed? || attachment.temp_file
               attachment.save
             end
-            self.attachment_version = attachment.version
+            self.attachment_version = attachment.draft.version
+            logger.info "..... attachment version after is #{attachment_version}"
           end
+        end
+
+        def after_publish
+          attachment.publish
         end
 
         #Size in kilobytes
