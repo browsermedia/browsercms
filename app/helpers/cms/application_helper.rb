@@ -35,8 +35,11 @@ module Cms
     def render_connector(connector)
       connectable = connector.connectable_with_deleted
       if logged_in? && @mode == "edit"
+        if connectable.class.versioned?
+          connectable = connectable.as_of_version(connector.connectable_version)
+        end
         render :partial => 'cms/pages/edit_connector', 
-          :locals => {:connector => connector, :connectable => connectable}
+          :locals => { :connector => connector, :connectable => connectable}
       else
         render_connectable(connectable)
       end
@@ -45,7 +48,7 @@ module Cms
     def render_connectable(content_block)
       if content_block
         if content_block.class.renderable?
-          logger.info "Rendering connectable #{content_block.class} ##{content_block.id}"
+          logger.info "..... Rendering connectable #{content_block.class} ##{content_block.id} #{"v#{content_block.version}" if content_block.respond_to?(:version)}"
           content_block.perform_render(@controller)
         else
           logger.warn "Connectable #{content_block.class} ##{content_block.id} is not renderable"

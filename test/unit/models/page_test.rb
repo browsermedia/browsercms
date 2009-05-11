@@ -149,8 +149,8 @@ class PageTest < ActiveRecord::TestCase
       page.reload.draft.version_comment
     assert_equal 'Created', page.live_version.version_comment
 
-    assert_equal "Created", page.as_of_version(1).live_version.version_comment
-    assert_equal "Changed name", page.as_of_version(2).live_version.version_comment
+    assert_equal "Created", page.as_of_version(1).current_version.version_comment
+    assert_equal "Changed name", page.as_of_version(2).current_version.version_comment
     assert_equal "Reverted to version 1", page.draft.version_comment
 
   end  
@@ -201,6 +201,43 @@ class PageTest < ActiveRecord::TestCase
     @page.create_connector(@block, "main")
     reset(:page, :block)
     assert !@page.live?
+  end
+
+  def test_reverting_and_then_publishing_a_page
+    @page = Factory(:page, :section => root_section, :publish_on_save => true)
+    
+    @block = Factory(:html_block, 
+      :connect_to_page_id => @page.id,
+      :connect_to_container => "main")
+    @page.publish
+    
+    reset(:page, :block)
+    
+    assert_equal 2, @page.version
+    assert_equal 1, @page.connectors.for_page_version(@page.version).count
+    
+    @block.update_attributes(:content => "Something else")
+    @page.publish!
+    reset(:page, :block)
+    
+    assert_equal 1, @page.connectors.for_page_version(@page.version).count
+    assert_equal 2, @block.version
+    assert_equal 3, @page.version
+    assert @block.live?
+    assert @page.live?
+    
+    @page.revert_to(2)
+    reset(:page, :block)
+
+    assert_equal 3, @page.version
+    assert_equal 4, @page.draft.version
+    assert_equal 2, @block.version
+    assert_equal 3, @block.draft.version    
+    assert_equal 1, @page.connectors.for_page_version(@page.version).count
+    assert_equal 1, @page.connectors.for_page_version(@page.draft.version).count    
+    assert !@page.live?
+    assert !@block.live?
+      
   end
 
 end

@@ -73,6 +73,7 @@ class Page < ActiveRecord::Base
   end
   
   def copy_connectors(options={})
+    logger.info "..... Copying connectors from #{@copy_connectors_from_version} to #{options[:to_version_number]}"
     connectors.for_page_version(options[:from_version_number]).all(:order => "connectors.container, connectors.position").each do |c|
       # The connector won't have a connectable if it has been deleted
       # Also need to see if the draft has been deleted,
@@ -84,6 +85,7 @@ class Page < ActiveRecord::Base
         #in which case we should create a new version of the block, and connect this page to that block
         if @copy_connectors_from_version && connectable.class.versioned? && (connectable.version != connectable.draft.version)
           connectable = connectable.class.find(connectable.id)
+          connectable.updated_by_page = self
           connectable.revert_to(c.connectable_version)
         end      
       

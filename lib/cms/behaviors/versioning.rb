@@ -178,7 +178,11 @@ module Cms
         end
         
         def live_version
-          versions.first(:conditions => ["version = ?", self.version])
+          find_version(self.class.find(id).version)
+        end
+
+        def current_version
+          find_version(self.version)
         end
 
         def find_version(number)

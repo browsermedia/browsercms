@@ -176,9 +176,11 @@ class Cms::ContentController < Cms::ApplicationController
   def check_access_to_page
     set_page_mode
     if current_user.able_to?(:edit_content, :publish_content, :administrate)
-      @page = Page.first(:conditions => {:path => @path})
+      logger.info "..... Displaying draft version of page"
+      @page = Page.first(:conditions => {:path => @path}).as_of_draft_version
       page_not_found unless @page
     else
+      logger.info "..... Displaying live version of page"
       @page = Page.find_live_by_path(@path)
       page_not_found unless (@page && !@page.archived?)
     end

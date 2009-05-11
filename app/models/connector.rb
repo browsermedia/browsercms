@@ -42,17 +42,10 @@ class Connector < ActiveRecord::Base
     (c && c.class.versioned?) ? c.as_of_version(connectable_version) : c
   end
   
-  def get_connectable
-    #NOTE: This method only exists to work around a bug
-    #If you call connector.connectable and try to use that, 
-    #if that connectable has dynamic attributes (a portlet, for example),
-    #then you will get a NoMethodError when you try to access a dynamic attribute
-    connectable_type.constantize.find(connectable_id)
-  end
-  
   def status
     published? ? :published : :draft
   end        
+
   def status_name
     status.to_s.titleize
   end  

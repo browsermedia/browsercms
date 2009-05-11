@@ -116,24 +116,29 @@ class Cms::ContentControllerTest < ActionController::TestCase
     assert_select "h1", "42"
   end
 
-
   def test_show_page_with_content
-    @page_template = Factory(:page_template, :name => "testing_editting_content")
-    @page = Factory(:page,
-      :section => root_section,
-      :path => "/page_with_content",
-      :template_file_name => "testing_editting_content.html.erb")
-    block = HtmlBlock.create!(:name => "Test",
-            :content => "<h3>TEST</h3>",
-      :connect_to_page_id => @page.id, :connect_to_container => "main")
-
-    reset(:page)
-    @page.publish!
-
+    create_page_with_content
     get :show, :path => ["page_with_content"]
     assert_response :success
     assert_select "h3", "TEST"
   end
+
+  def test_show_draft_page_with_content_as_editor
+    login_as_cms_admin
+    create_page_with_content
+    
+    @block.update_attributes(:content => "<h3>I've been edited</h3>")
+    reset(:page, :block)
+    
+    log_table_with Page::Version, :id, :name, :version, :page_id
+    log_table_without_stamps Connector
+    log_table_with HtmlBlock::Version, :id, :name, :content, :version, :html_block_id
+    get :show, :path => ["page_with_content"]
+    assert_response :success
+    assert_select "h3", "I've been edited"
+  end
+
+
 
   protected
     def create_protected_user_section_group
@@ -175,6 +180,24 @@ class Cms::ContentControllerTest < ActionController::TestCase
         :archived => true, 
         :template_file_name => "default.html.erb", 
         :publish_on_save => true)
+    end
+  
+    def create_page_with_content
+      @page_template = Factory(:page_template, :name => "testing_editting_content")
+
+      @page = Factory(:page,
+        :section => root_section,
+        :path => "/page_with_content",
+        :template_file_name => "testing_editting_content.html.erb")
+
+      @block = HtmlBlock.create!(:name => "Test",
+        :content => "<h3>TEST</h3>",
+        :connect_to_page_id => @page.id, 
+        :connect_to_container => "main")
+
+      reset(:page)
+      @page.publish!
+      
     end
   
 end

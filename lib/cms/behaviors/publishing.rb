@@ -103,7 +103,7 @@ module Cms
         end
 
         def live?
-          self.class.versioned? ? self.version == draft.version && published? : true
+          self.class.versioned? ? live_version.version == draft.version && published? : true
         end
         
       end
