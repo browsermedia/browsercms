@@ -21,6 +21,8 @@ module Cms
 
           before_validation_on_create :initialize_version
 
+          attr_accessor :revert_to_version
+
           #Define the version class
           const_set("Version", Class.new(ActiveRecord::Base)).class_eval do 
             class << self; attr_accessor :versioned_class end
@@ -177,14 +179,22 @@ module Cms
           versions.first(:order => "version desc")    
         end
         
+        def draft_version?
+          version == draft.version
+        end
+        
         def live_version
           find_version(self.class.find(id).version)
+        end
+
+        def live_version?
+          version == self.class.find(id).version
         end
 
         def current_version
           find_version(self.version)
         end
-
+        
         def find_version(number)
           versions.first(:conditions => { :version => number })
         end
@@ -220,7 +230,7 @@ module Cms
 
         def revert_to_without_save(version)
           raise "Version parameter missing" if version.blank?
-          revert_to_version = find_version(version)
+          self.revert_to_version = find_version(version)
           raise "Could not find version #{version}" unless revert_to_version
           (self.class.versioned_columns - ["version"]).each do |a|
             send("#{a}=", revert_to_version.send(a))

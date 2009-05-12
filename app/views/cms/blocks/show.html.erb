@@ -27,7 +27,7 @@
       <div><%= link_to_usages(@block) %> <%= "page".pluralize(@block.connected_pages.count)%></div>
     </div>
   <% end -%>
-  <% if @block.respond_to?(:version) && !@block.live? %>
+  <% if @block.respond_to?(:draft_version?) && !@block.draft_version? %>
     <div class="nv_pair">
       <div class="header">Version:</div> 
       <div>v. <%= @block.version %> ( <%= link_to "Current", [:cms, @block] %> )</div>

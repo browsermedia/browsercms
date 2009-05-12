@@ -139,7 +139,9 @@ module Cms
         def update_attachment_if_changed
           if attachment
             attachment.archived = archived if self.class.archivable?
-            if new_record? || attachment.changed? || attachment.temp_file
+            if respond_to?(:revert_to_version) && revert_to_version
+              attachment.revert_to(revert_to_version.attachment_version)
+            elsif new_record? || attachment.changed? || attachment.temp_file
               attachment.save
             end
             self.attachment_version = attachment.draft.version
@@ -163,7 +165,7 @@ module Cms
 
         def attachment_link
           if attachment
-            live? ? attachment_file_path : "/cms/attachments/#{attachment_id}?version=#{attachment_version}"    
+            live_version? ? attachment_file_path : "/cms/attachments/#{attachment_id}?version=#{attachment_version}"    
           else
             nil
           end  

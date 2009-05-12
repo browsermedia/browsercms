@@ -47,17 +47,29 @@ class Cms::ImageBlocksControllerTest < ActionController::TestCase
   def test_revert_to
     @image = Factory(:image_block, 
       :attachment_section => root_section,
-      :attachment_file => mock_file, 
-      :attachment_file_path => "test.jpg")
-    @image.update_attributes(:attachment_file => mock_file)
+      :attachment_file => mock_file(:read => "11111"), 
+      :attachment_file_path => "test.jpg",
+      :publish_on_save => true)
+    @image.update_attributes(:attachment_file => mock_file(:read => "22222"), :publish_on_save => true)
     reset(:image)
+
+    assert @image.live?    
+    assert_equal 2, @image.version
+    assert_equal 2, @image.attachment_version
+    assert_equal "22222", File.read(@image.attachment.full_file_location)
     
     put :revert_to, :id => @image.id, :version => "1"
     reset(:image)
     
     assert_redirected_to [:cms, @image]
-    assert_equal 1, @image.version
-    assert_equal 3, @image.draft.version
+    assert !@image.live?    
+    @draft_image = @image.as_of_draft_version
+    assert_equal 2, @image.version
+    assert_equal 2, @image.attachment_version
+    assert_equal 3, @draft_image.version
+    assert_equal 3, @draft_image.attachment_version
+    assert_equal "22222", File.read(@image.attachment.full_file_location)
+    assert_equal "11111", File.read(@draft_image.attachment.full_file_location)
   end
   
 end
