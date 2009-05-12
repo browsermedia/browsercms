@@ -2,7 +2,8 @@ class Cms::PagesController < Cms::BaseController
   
   before_filter :set_toolbar_tab
   before_filter :load_section, :only => [:new, :create]
-  before_filter :load_page, :only => [:edit, :versions, :version, :revert_to, :destroy]
+  before_filter :load_page, :only => [:versions, :version, :revert_to, :destroy]
+  before_filter :load_draft_page, :only => [:edit]
   before_filter :hide_toolbar, :only => [:new, :create]
   before_filter :strip_publish_params, :only => [:create, :update]
 
@@ -103,6 +104,11 @@ class Cms::PagesController < Cms::BaseController
 
     def load_page
       @page = Page.find(params[:id])
+    end
+    
+    def load_draft_page
+      load_page
+      @page = @page.as_of_draft_version
     end
   
     def load_section

@@ -13,6 +13,17 @@ class Cms::PagesControllerTest < ActionController::TestCase
     assert_equal root_section, assigns(:page).section
   end
 
+  def test_edit
+    create_page
+    
+    # Make a change to the page, unpublished
+    @page.update_attributes(:name => "V2")
+    
+    get :edit, :id => @page.id
+    assert_response :success
+    assert_select "#page_name[value=?]", "V2"
+  end
+
   def test_publish
     create_page
     
