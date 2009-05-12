@@ -36,6 +36,40 @@ class FileBlockTest < ActiveSupport::TestCase
     assert_equal root_section, @file_block.attachment.section
   end
   
+  def test_reverting
+    assert @file_block.save
+    assert "/test.jpg", @file_block.attachment_file_path
+    assert "01010010101010101", File.read(@file_block.attachment.full_file_location)
+    
+    attachment_id = @file_block.attachment_id
+    new_file = file_upload_object(:original_filename => "foo.jpg",
+      :content_type => "image/jpeg", :rewind => true,
+      :size => "99", :read => "10100101010101010")
+    
+    @file_block.update_attributes(:attachment_file => new_file, :publish_on_save => true)
+    reset(:file_block)
+    
+    assert @file_block.save
+    assert 2, @file_block.version
+    assert attachment_id, @file_block.attachment_id
+    assert 2, @file_block.attachment_version    
+    assert "/test.jpg", @file_block.attachment_file_path
+    assert "10100101010101010", File.read(@file_block.attachment.full_file_location)
+    
+    @file_block.revert_to(1)
+    reset(:file_block)
+
+    assert 2, @file_block.version
+    assert 3, @file_block.draft.version
+    assert attachment_id, @file_block.attachment_id
+    assert 2, @file_block.attachment_version
+    assert 3, @file_block.draft.attachment_version
+    assert "/test.jpg", @file_block.attachment_file_path
+    assert "01010010101010101", File.read(@file_block.attachment.full_file_location)
+    assert "10100101010101010", File.read(@file_block.as_of_draft_version.attachment.full_file_location)
+    
+  end
+  
 end
 
 class UpdatingFileBlockTest < ActiveSupport::TestCase

@@ -14,7 +14,7 @@
 
 <div id="block_content">
   <% if @block.class.publishable? %>
-    <% block_published_status = (@block.published? ? 'published' : 'draft') %>
+    <% block_published_status = (@block.live? ? 'published' : 'draft') %>
     <div class="status">
       <div class="header">Status:</div> 
       <%= status_icon(block_published_status) %> 

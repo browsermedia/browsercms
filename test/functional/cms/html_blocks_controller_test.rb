@@ -5,7 +5,7 @@ class Cms::HtmlBlocksControllerTest < ActionController::TestCase
   
   def setup
     login_as_cms_admin
-    @block = Factory(:html_block, :name => "Test", :content => "I worked.")
+    @block = Factory(:html_block, :name => "Test", :content => "I worked.", :publish_on_save => true)
   end
   
   def test_new
@@ -26,8 +26,23 @@ class Cms::HtmlBlocksControllerTest < ActionController::TestCase
     get :show, :id => @block.id, :format => "html"
 
     assert_response :success
+    log @response.body
     assert_select "div.content", "I worked."
-    assert_select "a", "List Versions"
+    assert_select "a.disabled span", "Publish"
+    assert_select ".block_published_status", "published"
+  end
+  
+  def test_show_draft
+    @block.update_attributes(:content => "Something Different")
+    
+    get :show, :id => @block.id, :format => "html"
+
+    assert_response :success
+    log @response.body
+    assert_select "div.content", "Something Different"
+    assert_select "a.disabled span", :text => "Publish", :count => 0
+    assert_select "a.button span", :text => "Publish", :count => 1    
+    assert_select ".block_published_status", "draft"
   end
   
   def test_creating_a_block_that_should_be_connected_to_a_page
@@ -47,7 +62,7 @@ class Cms::HtmlBlocksControllerTest < ActionController::TestCase
     assert_response :success
     assert_select "td", "Test"
     assert_select "td.block_status"  do
-      assert_select "img[alt=?]", "Draft"
+      assert_select "img[alt=?]", "Published"
     end
   end
   
@@ -87,13 +102,15 @@ class Cms::HtmlBlocksControllerTest < ActionController::TestCase
   end
     
   def test_publish
-    assert !@block.published?
+    @block.update_attributes(:content => "Something Different")
+    
+    assert !@block.live?
 
     put :publish, :id => @block.id
     reset(:block)
 
     assert_redirected_to [:cms, @block]
-    assert @block.published?
+    assert @block.reload.live?
   end  
   
   def test_versions
