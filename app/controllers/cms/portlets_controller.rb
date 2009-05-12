@@ -1,6 +1,14 @@
 class Cms::PortletsController < Cms::ContentBlockController
   
   protected
+    def load_blocks
+      @blocks = Portlet.paginate(
+        :page => params[:page],
+        :order => params[:order] || "name",
+        :conditions => ["deleted = ?", false]
+      )
+    end
+  
     def build_block
       if params[:type].blank?
         @block = model_class.new

@@ -7,6 +7,19 @@ class Cms::PortletsControllerTest < ActionController::TestCase
     login_as_cms_admin
     @block = DynamicPortlet.create!(:name => "V1", :code => "@foo = 42", :template => "<%= @foo %>")    
   end
+  
+  def test_index
+    get :index
+    assert_response :success
+    assert_select "#dynamic_portlet_#{@block.id}"
+  end
+  
+  def test_index_does_not_show_deleted_portlets
+    @block.destroy
+    get :index
+    assert_response :success
+    assert_select "#dynamic_portlet_#{@block.id}", 0
+  end
     
   def test_show
     get :show, :id => @block.id
