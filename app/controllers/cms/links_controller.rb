@@ -2,7 +2,8 @@ class Cms::LinksController < Cms::BaseController
 
   before_filter :set_toolbar_tab
   before_filter :load_section, :only => [:new, :create, :move_to]
-  before_filter :load_link, :only => [:edit, :update, :destroy]
+  before_filter :load_link, :only => [:destroy]
+  before_filter :load_draft_link, :only => [:edit, :update]
   
   def new
     @link = Link.new(:section => @section)
@@ -50,6 +51,11 @@ class Cms::LinksController < Cms::BaseController
 
     def load_link
       @link = Link.find(params[:id])
+    end
+    
+    def load_draft_link
+      load_link
+      @link = @link.as_of_draft_version
     end
 
     def set_toolbar_tab

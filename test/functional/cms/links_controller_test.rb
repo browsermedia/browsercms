@@ -27,7 +27,18 @@ class Cms::LinksControllerTest < ActionController::TestCase
 
     get :edit, :id => @link.id
     assert_response :success
-    assert_equal @link, assigns(:link)
+    assert_select "#link_url[value=?]", "http://v1.example.com"
+  end
+
+  def test_edit_draft
+    create_link
+
+    # Make unpublished change
+    @link.update_attributes(:url => "http://v2.example.com")
+
+    get :edit, :id => @link.id
+    assert_response :success
+    assert_select "#link_url[value=?]", "http://v2.example.com"
   end
 
   def test_update
@@ -43,7 +54,7 @@ class Cms::LinksControllerTest < ActionController::TestCase
 
   protected
     def create_link
-      @link = Factory(:link, :section => root_section)
+      @link = Factory(:link, :section => root_section, :url => "http://v1.example.com")
     end
 
 end
