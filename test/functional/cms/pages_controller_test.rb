@@ -24,6 +24,22 @@ class Cms::PagesControllerTest < ActionController::TestCase
     assert_select "#page_name[value=?]", "V2"
   end
 
+  def test_unhide
+
+    create_page
+    
+    @page.update_attributes(:hidden => true)
+    reset(:page)
+    
+    assert @page.draft.hidden?
+    
+    put :update, :id => @page.id, :page => {:hidden => false}
+    assert_redirected_to [:cms, @page]
+    
+    reset(:page)
+    assert !@page.draft.hidden?
+  end
+
   def test_publish
     create_page
     

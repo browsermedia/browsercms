@@ -214,11 +214,16 @@ module Cms
           obj.id = id
           obj.lock_version = lock_version
 
-          #Need to do this so associations can be loaded
+          # Need to do this so associations can be loaded
           obj.instance_variable_set("@new_record", false)
 
-          #Callback to allow us to load other data when an older version is loaded
+          # Callback to allow us to load other data when an older version is loaded
           obj.after_as_of_version if obj.respond_to?(:after_as_of_version)
+
+          # Last but not least, clear the changed attributes
+          if changed_attrs = obj.send(:changed_attributes)
+            changed_attrs.clear
+          end
 
           obj      
         end

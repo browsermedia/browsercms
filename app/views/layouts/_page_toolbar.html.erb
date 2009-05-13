@@ -16,7 +16,7 @@
     <div class="page_attribute_label">Section:</div>
     <div class="page_attribute_value_container">
       <%= image_tag "cms/page_toolbar/page_toolbar_inset_l.gif", :style => "float: left;" %>
-      <div class="page_attribute_value"><%= link_to h(@page.section.name), cms_sections_path(:page_id => @page), :target => "_top" %></div>
+      <div id="section_link" class="page_attribute_value"><%= link_to h(@page.section.name), cms_sections_path(:page_id => @page), :target => "_top" %></div>
       <%= image_tag "cms/page_toolbar/page_toolbar_inset_r.gif", :style => "float: left;" %>
     </div>
   </div>
@@ -46,16 +46,36 @@
   </div>
 </div>  
 <div class="buttons">
-  <%= link_to("<span>Publish</span>", 
-    @page.live? ? @page.path : publish_cms_page_path(@page), 
-    :target => "_top", 
-    :class => "http_put button publish_button#{' disabled' if !current_user.able_to?(:publish_content) || @page.version != @page.draft.version || @page.live?} left") %>
-  <%= link_to "<span>Assign</span>", new_cms_page_task_path(@page), :class => "button#{ ' disabled' if @page.assigned_to == current_user} middle", :target => "_top" %>
-  <%= link_to "<span>Complete Task</span>", @page.current_task ? complete_cms_task_path(@page.current_task) : '#', :class => "http_put button#{ ' disabled' unless @page.assigned_to == current_user} right", :target => "_top" %>
-
-  <%= link_to "<span>Edit Properties</span>", [:edit, :cms, @page], :class => "spacer button#{' disabled' if !@page.live?}", :target => "_top" %>
   
-  <%= link_to "<span>List Versions</span>", versions_cms_page_path(@page), :target => "_top", :class => "spacer button left" %>
+  <%= link_to "<span>Publish</span>", 
+    @page.live? ? '#' : publish_cms_page_path(@page), 
+    :id => "publish_button",
+    :class => "http_put button#{' disabled' if !current_user.able_to?(:publish_content) || @page.version != @page.draft.version || @page.live?} left",
+    :target => "_top" %>
+    
+  <%= link_to "<span>Assign</span>", 
+    new_cms_page_task_path(@page), 
+    :id => "assign_button",
+    :class => "button#{ ' disabled' if @page.assigned_to == current_user} middle",
+    :target => "_top" %>
+    
+  <%= link_to "<span>Complete Task</span>", 
+    @page.current_task ? complete_cms_task_path(@page.current_task) : '#', 
+    :id => "complete_task_button",
+    :class => "http_put button#{ ' disabled' unless @page.assigned_to == current_user} right", 
+    :target => "_top" %>
+
+  <%= link_to "<span>Edit Properties</span>", 
+    [:edit, :cms, @page], 
+    :id => "edit_properties_button",
+    :class => "spacer button", 
+    :target => "_top" %>
+  
+  <%= link_to "<span>List Versions</span>", 
+    versions_cms_page_path(@page), 
+    :class => "spacer button left",
+    :target => "_top" %>
+    
   <% able_to? :publish_content do %>
     <% if @page.live? %>  
       <%= link_to "<span><span class=\"delete_img\">&nbsp;</span>Delete</span>", [:cms, @page], :title => "Are you sure you want to delete '#{@page.name}'?", :target => "_top", :class => "confirm_with_title http_delete button#{' disabled' if !@page.live?} right" %>
@@ -69,16 +89,16 @@
         <div class="visual_editor_label">Visual Editor:</div>
         <div class="visual_editor_value_container">
           <% if @mode == "edit" %>
-	    <div><span>ON</span></div>
+	    <div><span id="visual_editor_state">ON</span></div>
           <% else %>
-	    <div><span>OFF</span></div>
+	    <div><span id="visual_editor_state">OFF</span></div>
           <% end %>
         </div>
         <div class="visual_editor_toggle_container">
           <% if @mode == "edit" %>
-          <div class="sm_button"><%= link_to "<span>TURN OFF</span>", url_with_mode(request.referrer, "view"), :target => "_top", :class => "sm_button" %></div>    
+          <div class="sm_button"><%= link_to '<span id="visual_editor_action">TURN OFF</span>', url_with_mode(request.referrer, "view"), :target => "_top", :class => "sm_button" %></div>    
 	  <% else %>
-          <div class="sm_button"><%= link_to "<span>TURN ON</span>", url_with_mode(request.referrer, "edit"), :target => "_top", :class => "sm_button" %></div>    	  <% end %>
+          <div class="sm_button"><%= link_to '<span id="visual_editor_action">TURN ON</span>', url_with_mode(request.referrer, "edit"), :target => "_top", :class => "sm_button" %></div>    	  <% end %>
 	</div>
 <% else %>
 	</div>

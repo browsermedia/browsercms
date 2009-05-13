@@ -73,7 +73,6 @@ class Page < ActiveRecord::Base
   end
   
   def copy_connectors(options={})
-    logger.info "..... Copying connectors from #{@copy_connectors_from_version} to #{options[:to_version_number]}"
     connectors.for_page_version(options[:from_version_number]).all(:order => "connectors.container, connectors.position").each do |c|
       # The connector won't have a connectable if it has been deleted
       # Also need to see if the draft has been deleted,
