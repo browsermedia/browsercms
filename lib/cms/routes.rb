@@ -118,10 +118,6 @@ module Cms::Routes
       
     end
 
-    image_missing '/images/*path', :controller => 'cms/missing_asset'
-    stylesheet_missing '/stylesheets/*path', :controller => 'cms/missing_asset'
-    javascript_missing '/javascripts/*path', :controller => 'cms/missing_asset'
-
     if PageRoute.table_exists?
       PageRoute.all(:order => "page_routes.name").each do |r|
         send((r.route_name || 'connect').to_sym, r.pattern, r.options_map)
