@@ -8,33 +8,24 @@ BrowserCMS is a general purpose, open source Web Content Management System (CMS)
 
 This guide is for BrowserCMS v3.0.0 (Beta).
 
-.link:getting_started.html[Getting Started]
-***********************************************************
+== Guides
+Below are a list of guides on how the above groups can use BrowswerCMS, to design, build and maintain websites.
+
+=== link:getting_started.html[Getting Started]
 How to install BrowserCMS and start using it.
-***********************************************************
 
-.link:user_guide.html[User Guide]
-***********************************************************
+=== link:user_guide.html[User's Guide]
 How to use the basic features of BrowserCMS.
-***********************************************************
 
-.link:installing-modules.html[Installing a Module]
-**************************************************************
+=== link:installing_modules.html[Installing a Module]
 How to add a module to your BrowserCMS project.
-**************************************************************
 
-.link:developer_guide.html[Customizing the CMS]
-**************************************************************
+=== link:developer_guide.html[Customizing the CMS]
 How to customize and extend a BrowserCMS site to add dynamic behavior and content.
-**************************************************************
 
-.link:designer_guide.html[Building Templates]
-**************************************************************
+=== link:designer_guide.html[Building Templates]
 How to turn a design into a styled website.
-**************************************************************
 
-.link:deployment_guide.html[Deploying to Production Servers]
-**************************************************************
+=== link:deployment_guide.html[Deploying to Production Servers]
 How to configure Apache and Passenger to work with BrowserCMS in production mode.
-**************************************************************
 

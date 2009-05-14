@@ -26,44 +26,13 @@ Here's a quick overview of some of the more notable features:
 ## License
 BrowserCMS is released under a LGPL license, and is copyright 1998-2009 BrowserMedia. The complete copyright can be found in COPYRIGHT.txt, and copy of the license can be found in LICENSE.txt.
 
-## Installation
-BrowserCMS is packaged as a gem, which can be included in any Rails project. The gem contains the code for the cms application itself. It also has a lot of public assets, including stylesheets, images and javascript, which will be copied from the gem as part of the install process. This section assumes that:
-
-1. There is no gem available on rubyforge yet. (Because we haven't released yet)
-2. You have downloaded the source code from github
-3. You want to build the gem locally and install it.
-4. You already have Rails 2.3 installed.
-
-## Building the gem
-To build the gem from source, and install it on your system, type the following:
-
-    git clone git://github.com/browsermedia/browsercms.git
-    cd browsercms
-    rake install
-
-On *unix, this will sudo install, so you will need to provide your password.  The gem management is now handled with <a href="http://technicalpickles.github.com/jeweler">Jeweler</a>, so you must install Jeweler to install the gem.
-
-## Starting a new project
-The next step is to create a rails project, which will include BrowserCMS, much like you would with any rails project. To make things easier, BrowserCMS comes with two application templates (a feature new to Rails 2.3), which create the initial rails application, configured for BrowserCMS. For now, you need to use the app templates from the source directory of cms. Here are the two options when starting a project.
-
-* /templates/demo.rb - If you are new to BrowserCMS, and want to experiment, use this. It builds a sample site with a few pages, using our default theme, and adds some content to play around with.
-* /templates/blank.rb - Use this if you want a completely empty site. Most 'real' projects will use this to start, as there is no 'dummy' data to remove before building a site.
-
-To create a new project (using the demo template), run the following:
-
-    cd ~/projects
-    rails my_new_project_name -m /path/to/browsercms_source_code/templates/demo.rb
-    cd my_new_project_name
-    script/server
-
-This is going to create the development and testing copies of the database, migrate the db, populate it with some initial data, and copy all of the necessary files from the gem into the rails project.
-
-From here, you can go to http://localhost:3000 to see the running CMS application. To log into the admin for the CMS, go to http://localhost:3000/cms, and type in the username and password. The default when running in dev mode is username=cmsadmin, password=cmsadmin. 
+## Getting Started
+Before you can use BrowserCMS, you will need to install the gem. See the Getting Started guide at http://browsercms.org/guides/getting_started.html, or packaged with this source code (under doc/guides/html/getting_started.html)
 
 ## Documentation
 The user documentation and guides for this version of the application can be found at:
 
-1. doc/guides/html/index.html - User guides and manuals that cover the features and general functionality of the project.
+1. http://browsercms.org/guides/index.html - User guides and manuals that cover the features and general functionality of the project. (Found locally at doc/guides/html/index.html)
 2. doc/app/index.html - The RDoc API documenation.
 
 ## Modifying the source

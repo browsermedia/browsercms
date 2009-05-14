@@ -1,6 +1,4 @@
-
-Building a Site with BrowserCMS
-===============================
+= User Guide for BrowserCMS
 
 == What to Expect
 
@@ -12,10 +10,10 @@ This guide covers how to use BrowserCMS to build and manage websites. After read
 * Dynamically display content on pages using portlets.
 * Create and assign permissions to users.
 
-This guide is aimed at people who are managing sites using BrowserCMS, as opposed to programmers who want to customize it, or designers who want to create new designs for a site.
+This guide is aimed at people who are managing sites using BrowserCMS, as opposed to programmers who want to link:developer_guide.html[customize it], or designers who want to link:designer_guide.html[create new designs]  for a site.
 
 === What not to expect
-This document assumes that users have a working copy of BrowserCMS to play with, either on their local machine, or on a demo site. We don't cover how to install CMS here, so see the Installation Guide in order to get a copy up and running. 
+This document assumes that users have a working copy of BrowserCMS to play with, either on their local machine, or on a demo site. We don't cover how to install CMS here, so see the link:getting_started.html[Getting Started] Guide in order to get up and running. 
 
 In addition, an installation of BrowserCMS will have several templates already installed. The 'theme' might be the default BrowserCMS theme, or a custom theme designed for a specific client. This document does not cover how to design and create new themes/templates, but focuses on the day to day work that content managers will need to do.
 
