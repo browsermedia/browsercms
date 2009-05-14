@@ -40,7 +40,7 @@
       <tr id="<%= dynamic_view_type.name.underscore %>_<%= view.id %>">
         <td class="first"></td>
         <td><div class="dividers" title="<%=h view.file_path %>"><%=h view.display_name %></div></td>
-        <td><div><%= view.updated_at.to_s(:date) %></div></td>
+        <td><div><%= view.updated_at && view.updated_at.to_s(:date) %></div></td>
         <td class="last"></td>
       </tr>
     <% end %>

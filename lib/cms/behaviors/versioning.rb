@@ -172,7 +172,7 @@ module Cms
         end
 
         def save!(perform_validations=true)
-          save || raise(RecordNotSaved)
+          save || raise(ActiveRecord::RecordNotSaved.new(errors.full_messages))
         end
 
         def draft
