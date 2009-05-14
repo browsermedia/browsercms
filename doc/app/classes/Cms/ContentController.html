@@ -88,12 +88,13 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000556">assign</a>&nbsp;&nbsp;
-      <a href="#M000554">handle_access_denied_on_page</a>&nbsp;&nbsp;
-      <a href="#M000553">handle_not_found_on_page</a>&nbsp;&nbsp;
-      <a href="#M000555">handle_server_error_on_page</a>&nbsp;&nbsp;
-      <a href="#M000551">show</a>&nbsp;&nbsp;
-      <a href="#M000552">show_page_route</a>&nbsp;&nbsp;
+      <a href="#M000589">assign</a>&nbsp;&nbsp;
+      <a href="#M000586">handle_access_denied_on_page</a>&nbsp;&nbsp;
+      <a href="#M000585">handle_not_found_on_page</a>&nbsp;&nbsp;
+      <a href="#M000587">handle_server_error_on_page</a>&nbsp;&nbsp;
+      <a href="#M000588">instance_variables_for_rendering</a>&nbsp;&nbsp;
+      <a href="#M000583">show</a>&nbsp;&nbsp;
+      <a href="#M000584">show_page_route</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -115,19 +116,19 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000554" class="method-detail">
-        <a name="M000554"></a>
+      <div id="method-M000586" class="method-detail">
+        <a name="M000586"></a>
 
         <div class="method-heading">
-          <a href="#M000554" class="method-signature">
+          <a href="#M000586" class="method-signature">
           <span class="method-name">handle_access_denied_on_page</span><span class="method-args">(exception)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000554-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000554-source">
+            onclick="toggleCode('M000586-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000586-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/cms/content_controller.rb, line 31</span>
 31:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle_access_denied_on_page</span>(<span class="ruby-identifier">exception</span>)
@@ -139,11 +140,11 @@
         </div>
       </div>
 
-      <div id="method-M000553" class="method-detail">
-        <a name="M000553"></a>
+      <div id="method-M000585" class="method-detail">
+        <a name="M000585"></a>
 
         <div class="method-heading">
-          <a href="#M000553" class="method-signature">
+          <a href="#M000585" class="method-signature">
           <span class="method-name">handle_not_found_on_page</span><span class="method-args">(exception)</span>
           </a>
         </div>
@@ -154,8 +155,8 @@
 &#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;-
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000553-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000553-source">
+            onclick="toggleCode('M000585-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000585-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/cms/content_controller.rb, line 26</span>
 26:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle_not_found_on_page</span>(<span class="ruby-identifier">exception</span>)
@@ -167,19 +168,19 @@
         </div>
       </div>
 
-      <div id="method-M000555" class="method-detail">
-        <a name="M000555"></a>
+      <div id="method-M000587" class="method-detail">
+        <a name="M000587"></a>
 
         <div class="method-heading">
-          <a href="#M000555" class="method-signature">
+          <a href="#M000587" class="method-signature">
           <span class="method-name">handle_server_error_on_page</span><span class="method-args">(exception)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000555-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000555-source">
+            onclick="toggleCode('M000587-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000587-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/cms/content_controller.rb, line 36</span>
 36:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">handle_server_error_on_page</span>(<span class="ruby-identifier">exception</span>)
@@ -192,11 +193,37 @@
         </div>
       </div>
 
-      <div id="method-M000551" class="method-detail">
-        <a name="M000551"></a>
+      <div id="method-M000588" class="method-detail">
+        <a name="M000588"></a>
 
         <div class="method-heading">
-          <a href="#M000551" class="method-signature">
+          <a href="#M000588" class="method-signature">
+          <span class="method-name">instance_variables_for_rendering</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Used by the rendering behavior
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000588-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000588-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/cms/content_controller.rb, line 43</span>
+43:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">instance_variables_for_rendering</span>
+44:     <span class="ruby-identifier">instance_variables</span> <span class="ruby-operator">-</span> (<span class="ruby-ivar">@initial_ivars</span> <span class="ruby-operator">||</span> []) <span class="ruby-operator">-</span> [<span class="ruby-value str">&quot;@initial_ivars&quot;</span>]
+45:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000583" class="method-detail">
+        <a name="M000583"></a>
+
+        <div class="method-heading">
+          <a href="#M000583" class="method-signature">
           <span class="method-name">show</span><span class="method-args">()</span>
           </a>
         </div>
@@ -207,8 +234,8 @@
 &#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;&#8212;
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000551-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000551-source">
+            onclick="toggleCode('M000583-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000583-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/cms/content_controller.rb, line 16</span>
 16:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">show</span>
@@ -219,19 +246,19 @@
         </div>
       </div>
 
-      <div id="method-M000552" class="method-detail">
-        <a name="M000552"></a>
+      <div id="method-M000584" class="method-detail">
+        <a name="M000584"></a>
 
         <div class="method-heading">
-          <a href="#M000552" class="method-signature">
+          <a href="#M000584" class="method-signature">
           <span class="method-name">show_page_route</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000552-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000552-source">
+            onclick="toggleCode('M000584-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000584-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/cms/content_controller.rb, line 20</span>
 20:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">show_page_route</span>
@@ -244,28 +271,28 @@
 
       <h3 class="section-bar">Protected Instance methods</h3>
 
-      <div id="method-M000556" class="method-detail">
-        <a name="M000556"></a>
+      <div id="method-M000589" class="method-detail">
+        <a name="M000589"></a>
 
         <div class="method-heading">
-          <a href="#M000556" class="method-signature">
+          <a href="#M000589" class="method-signature">
           <span class="method-name">assign</span><span class="method-args">(key, value)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-This will <a href="ContentController.html#M000556">assign</a> the value to
+This will <a href="ContentController.html#M000589">assign</a> the value to
 an instance variable
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000556-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000556-source">
+            onclick="toggleCode('M000589-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000589-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/content_controller.rb, line 45</span>
-45:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">assign</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>)
-46:     <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-node">&quot;@#{key}&quot;</span>, <span class="ruby-identifier">value</span>)
-47:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/content_controller.rb, line 50</span>
+50:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">assign</span>(<span class="ruby-identifier">key</span>, <span class="ruby-identifier">value</span>)
+51:     <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-node">&quot;@#{key}&quot;</span>, <span class="ruby-identifier">value</span>)
+52:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

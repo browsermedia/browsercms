@@ -86,29 +86,28 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000143">clear_ivars</a>&nbsp;&nbsp;
-      <a href="#M000154">dirty!</a>&nbsp;&nbsp;
-      <a href="#M000137">extract_file_extension_from_file_name</a>&nbsp;&nbsp;
-      <a href="#M000139">extract_file_size_from_temp_file</a>&nbsp;&nbsp;
-      <a href="#M000138">extract_file_type_from_temp_file</a>&nbsp;&nbsp;
-      <a href="#M000147">file_name</a>&nbsp;&nbsp;
-      <a href="#M000146">find_live_by_file_path</a>&nbsp;&nbsp;
-      <a href="#M000153">full_file_location</a>&nbsp;&nbsp;
-      <a href="#M000151">icon</a>&nbsp;&nbsp;
-      <a href="#M000149">live?</a>&nbsp;&nbsp;
-      <a href="#M000150">live_version</a>&nbsp;&nbsp;
-      <a href="#M000148">name</a>&nbsp;&nbsp;
-      <a href="#M000136">prepend_file_path_with_slash</a>&nbsp;&nbsp;
-      <a href="#M000141">process_section</a>&nbsp;&nbsp;
-      <a href="#M000152">public?</a>&nbsp;&nbsp;
-      <a href="#M000134">section</a>&nbsp;&nbsp;
-      <a href="#M000135">section=</a>&nbsp;&nbsp;
-      <a href="#M000132">section_id</a>&nbsp;&nbsp;
-      <a href="#M000133">section_id=</a>&nbsp;&nbsp;
-      <a href="#M000140">set_file_location</a>&nbsp;&nbsp;
-      <a href="#M000144">storage_location</a>&nbsp;&nbsp;
-      <a href="#M000145">storage_location=</a>&nbsp;&nbsp;
-      <a href="#M000142">write_temp_file_to_storage_location</a>&nbsp;&nbsp;
+      <a href="#M000171">clear_ivars</a>&nbsp;&nbsp;
+      <a href="#M000180">dirty!</a>&nbsp;&nbsp;
+      <a href="#M000165">extract_file_extension_from_file_name</a>&nbsp;&nbsp;
+      <a href="#M000167">extract_file_size_from_temp_file</a>&nbsp;&nbsp;
+      <a href="#M000166">extract_file_type_from_temp_file</a>&nbsp;&nbsp;
+      <a href="#M000175">file_name</a>&nbsp;&nbsp;
+      <a href="#M000174">find_live_by_file_path</a>&nbsp;&nbsp;
+      <a href="#M000179">full_file_location</a>&nbsp;&nbsp;
+      <a href="#M000177">icon</a>&nbsp;&nbsp;
+      <a href="#M000163">make_dirty_if_temp_file</a>&nbsp;&nbsp;
+      <a href="#M000176">name</a>&nbsp;&nbsp;
+      <a href="#M000164">prepend_file_path_with_slash</a>&nbsp;&nbsp;
+      <a href="#M000169">process_section</a>&nbsp;&nbsp;
+      <a href="#M000178">public?</a>&nbsp;&nbsp;
+      <a href="#M000161">section</a>&nbsp;&nbsp;
+      <a href="#M000162">section=</a>&nbsp;&nbsp;
+      <a href="#M000159">section_id</a>&nbsp;&nbsp;
+      <a href="#M000160">section_id=</a>&nbsp;&nbsp;
+      <a href="#M000168">set_file_location</a>&nbsp;&nbsp;
+      <a href="#M000172">storage_location</a>&nbsp;&nbsp;
+      <a href="#M000173">storage_location=</a>&nbsp;&nbsp;
+      <a href="#M000170">write_temp_file_to_storage_location</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -143,76 +142,70 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000146" class="method-detail">
-        <a name="M000146"></a>
+      <div id="method-M000174" class="method-detail">
+        <a name="M000174"></a>
 
         <div class="method-heading">
-          <a href="#M000146" class="method-signature">
+          <a href="#M000174" class="method-signature">
           <span class="method-name">find_live_by_file_path</span><span class="method-args">(file_path)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000146-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000146-source">
+            onclick="toggleCode('M000174-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000174-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/attachment.rb, line 135</span>
-135:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_live_by_file_path</span>(<span class="ruby-identifier">file_path</span>)
-136:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">attachment_version</span> = <span class="ruby-constant">Attachment</span><span class="ruby-operator">::</span><span class="ruby-constant">Version</span>.<span class="ruby-identifier">first</span>(<span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> {
-137:          <span class="ruby-identifier">:file_path</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">file_path</span>, 
-138:          <span class="ruby-identifier">:published</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>}, 
-139:          <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;version desc&quot;</span>)
-140:        <span class="ruby-identifier">attachment</span> = <span class="ruby-identifier">attachment_version</span>.<span class="ruby-identifier">attachment</span>.<span class="ruby-identifier">as_of_version</span>(<span class="ruby-identifier">attachment_version</span>.<span class="ruby-identifier">version</span>)
-141:        (<span class="ruby-identifier">attachment</span>.<span class="ruby-identifier">live_version?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">attachment</span>.<span class="ruby-identifier">archived?</span>) <span class="ruby-operator">?</span> <span class="ruby-identifier">attachment</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
-142:      <span class="ruby-keyword kw">end</span>
-143:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/attachment.rb, line 146</span>
+146:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">find_live_by_file_path</span>(<span class="ruby-identifier">file_path</span>)
+147:     <span class="ruby-constant">Attachment</span>.<span class="ruby-identifier">published</span>.<span class="ruby-identifier">not_archived</span>.<span class="ruby-identifier">first</span>(<span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:file_path</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">file_path</span>})
+148:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000144" class="method-detail">
-        <a name="M000144"></a>
+      <div id="method-M000172" class="method-detail">
+        <a name="M000172"></a>
 
         <div class="method-heading">
-          <a href="#M000144" class="method-signature">
+          <a href="#M000172" class="method-signature">
           <span class="method-name">storage_location</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000144-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000144-source">
+            onclick="toggleCode('M000172-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000172-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/attachment.rb, line 127</span>
-127:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">storage_location</span>
-128:     <span class="ruby-ivar">@storage_location</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">Rails</span>.<span class="ruby-identifier">root</span>, <span class="ruby-value str">&quot;/tmp/uploads&quot;</span>)
-129:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/attachment.rb, line 138</span>
+138:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">storage_location</span>
+139:     <span class="ruby-ivar">@storage_location</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">Rails</span>.<span class="ruby-identifier">root</span>, <span class="ruby-value str">&quot;/tmp/uploads&quot;</span>)
+140:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000145" class="method-detail">
-        <a name="M000145"></a>
+      <div id="method-M000173" class="method-detail">
+        <a name="M000173"></a>
 
         <div class="method-heading">
-          <a href="#M000145" class="method-signature">
+          <a href="#M000173" class="method-signature">
           <span class="method-name">storage_location=</span><span class="method-args">(storage_location)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000145-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000145-source">
+            onclick="toggleCode('M000173-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000173-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/attachment.rb, line 131</span>
-131:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">storage_location=</span>(<span class="ruby-identifier">storage_location</span>)
-132:     <span class="ruby-ivar">@storage_location</span> = <span class="ruby-identifier">storage_location</span>
-133:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/attachment.rb, line 142</span>
+142:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">storage_location=</span>(<span class="ruby-identifier">storage_location</span>)
+143:     <span class="ruby-ivar">@storage_location</span> = <span class="ruby-identifier">storage_location</span>
+144:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -220,36 +213,36 @@
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000143" class="method-detail">
-        <a name="M000143"></a>
+      <div id="method-M000171" class="method-detail">
+        <a name="M000171"></a>
 
         <div class="method-heading">
-          <a href="#M000143" class="method-signature">
+          <a href="#M000171" class="method-signature">
           <span class="method-name">clear_ivars</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000143-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000143-source">
+            onclick="toggleCode('M000171-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000171-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/attachment.rb, line 119</span>
-119:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">clear_ivars</span>
-120:     <span class="ruby-ivar">@temp_file</span> = <span class="ruby-keyword kw">nil</span>
-121:     <span class="ruby-ivar">@section</span> = <span class="ruby-keyword kw">nil</span>
-122:     <span class="ruby-ivar">@section_id</span> = <span class="ruby-keyword kw">nil</span>
-123:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/attachment.rb, line 130</span>
+130:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">clear_ivars</span>
+131:     <span class="ruby-ivar">@temp_file</span> = <span class="ruby-keyword kw">nil</span>
+132:     <span class="ruby-ivar">@section</span> = <span class="ruby-keyword kw">nil</span>
+133:     <span class="ruby-ivar">@section_id</span> = <span class="ruby-keyword kw">nil</span>
+134:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000154" class="method-detail">
-        <a name="M000154"></a>
+      <div id="method-M000180" class="method-detail">
+        <a name="M000180"></a>
 
         <div class="method-heading">
-          <a href="#M000154" class="method-signature">
+          <a href="#M000180" class="method-signature">
           <span class="method-name">dirty!</span><span class="method-args">()</span>
           </a>
         </div>
@@ -260,433 +253,403 @@ Forces this record to be changed, even if nothing has changed This is
 necessary if just the section.id has changed, for example
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000154-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000154-source">
+            onclick="toggleCode('M000180-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000180-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/attachment.rb, line 198</span>
-198:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">dirty!</span>
-199:     <span class="ruby-comment cmt"># Seems like a hack, is there a better way?</span>
-200:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">updated_at</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
-201:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/attachment.rb, line 188</span>
+188:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">dirty!</span>
+189:     <span class="ruby-comment cmt"># Seems like a hack, is there a better way?</span>
+190:     <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">updated_at</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+191:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000137" class="method-detail">
-        <a name="M000137"></a>
+      <div id="method-M000165" class="method-detail">
+        <a name="M000165"></a>
 
         <div class="method-heading">
-          <a href="#M000137" class="method-signature">
+          <a href="#M000165" class="method-signature">
           <span class="method-name">extract_file_extension_from_file_name</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000137-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000137-source">
+            onclick="toggleCode('M000165-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000165-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/attachment.rb, line 70</span>
-70:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">extract_file_extension_from_file_name</span>
-71:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">file_name</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">file_name</span>[<span class="ruby-value str">'.'</span>]
-72:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_extension</span> = <span class="ruby-identifier">file_name</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'.'</span>).<span class="ruby-identifier">last</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">downcase</span>
-73:     <span class="ruby-keyword kw">end</span>    
-74:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/attachment.rb, line 77</span>
+77:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">extract_file_extension_from_file_name</span>
+78:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">file_name</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">file_name</span>[<span class="ruby-value str">'.'</span>]
+79:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_extension</span> = <span class="ruby-identifier">file_name</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'.'</span>).<span class="ruby-identifier">last</span>.<span class="ruby-identifier">to_s</span>.<span class="ruby-identifier">downcase</span>
+80:     <span class="ruby-keyword kw">end</span>    
+81:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000139" class="method-detail">
-        <a name="M000139"></a>
+      <div id="method-M000167" class="method-detail">
+        <a name="M000167"></a>
 
         <div class="method-heading">
-          <a href="#M000139" class="method-signature">
+          <a href="#M000167" class="method-signature">
           <span class="method-name">extract_file_size_from_temp_file</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000139-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000139-source">
+            onclick="toggleCode('M000167-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000167-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/attachment.rb, line 82</span>
-82:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">extract_file_size_from_temp_file</span>  
-83:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">temp_file</span>.<span class="ruby-identifier">blank?</span>
-84:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_size</span> = <span class="ruby-identifier">temp_file</span>.<span class="ruby-identifier">size</span>
-85:     <span class="ruby-keyword kw">end</span>    
-86:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/attachment.rb, line 89</span>
+89:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">extract_file_size_from_temp_file</span>  
+90:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">temp_file</span>.<span class="ruby-identifier">blank?</span>
+91:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_size</span> = <span class="ruby-identifier">temp_file</span>.<span class="ruby-identifier">size</span>
+92:     <span class="ruby-keyword kw">end</span>    
+93:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000138" class="method-detail">
-        <a name="M000138"></a>
+      <div id="method-M000166" class="method-detail">
+        <a name="M000166"></a>
 
         <div class="method-heading">
-          <a href="#M000138" class="method-signature">
+          <a href="#M000166" class="method-signature">
           <span class="method-name">extract_file_type_from_temp_file</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000138-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000138-source">
+            onclick="toggleCode('M000166-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000166-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/attachment.rb, line 76</span>
-76:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">extract_file_type_from_temp_file</span>
-77:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">temp_file</span>.<span class="ruby-identifier">blank?</span>
-78:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_type</span> = <span class="ruby-identifier">temp_file</span>.<span class="ruby-identifier">content_type</span>
-79:     <span class="ruby-keyword kw">end</span>    
-80:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/attachment.rb, line 83</span>
+83:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">extract_file_type_from_temp_file</span>
+84:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">temp_file</span>.<span class="ruby-identifier">blank?</span>
+85:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_type</span> = <span class="ruby-identifier">temp_file</span>.<span class="ruby-identifier">content_type</span>
+86:     <span class="ruby-keyword kw">end</span>    
+87:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000147" class="method-detail">
-        <a name="M000147"></a>
+      <div id="method-M000175" class="method-detail">
+        <a name="M000175"></a>
 
         <div class="method-heading">
-          <a href="#M000147" class="method-signature">
+          <a href="#M000175" class="method-signature">
           <span class="method-name">file_name</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000147-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000147-source">
+            onclick="toggleCode('M000175-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000175-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/attachment.rb, line 147</span>
-147:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_name</span>
-148:     <span class="ruby-identifier">file_path</span> <span class="ruby-value">? </span><span class="ruby-identifier">file_path</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'/'</span>).<span class="ruby-identifier">last</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
-149:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/attachment.rb, line 152</span>
+152:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_name</span>
+153:     <span class="ruby-identifier">file_path</span> <span class="ruby-value">? </span><span class="ruby-identifier">file_path</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'/'</span>).<span class="ruby-identifier">last</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+154:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000153" class="method-detail">
-        <a name="M000153"></a>
+      <div id="method-M000179" class="method-detail">
+        <a name="M000179"></a>
 
         <div class="method-heading">
-          <a href="#M000153" class="method-signature">
+          <a href="#M000179" class="method-signature">
           <span class="method-name">full_file_location</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000153-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000153-source">
+            onclick="toggleCode('M000179-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000179-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/attachment.rb, line 192</span>
-192:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">full_file_location</span>
-193:     <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">Attachment</span>.<span class="ruby-identifier">storage_location</span>, <span class="ruby-identifier">file_location</span>)
-194:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/attachment.rb, line 182</span>
+182:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">full_file_location</span>
+183:     <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">Attachment</span>.<span class="ruby-identifier">storage_location</span>, <span class="ruby-identifier">file_location</span>)
+184:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000151" class="method-detail">
-        <a name="M000151"></a>
+      <div id="method-M000177" class="method-detail">
+        <a name="M000177"></a>
 
         <div class="method-heading">
-          <a href="#M000151" class="method-signature">
+          <a href="#M000177" class="method-signature">
           <span class="method-name">icon</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000151-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000151-source">
+            onclick="toggleCode('M000177-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000177-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/attachment.rb, line 170</span>
-170:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">icon</span>
-171:     {
-172:         <span class="ruby-identifier">:doc</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">%w[doc]</span>,
-173:         <span class="ruby-identifier">:gif</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">%w[gif jpg jpeg png tiff bmp]</span>,
-174:         <span class="ruby-identifier">:htm</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">%w[htm html]</span>,
-175:         <span class="ruby-identifier">:pdf</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">%w[pdf]</span>,
-176:         <span class="ruby-identifier">:ppt</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">%w[ppt]</span>,
-177:         <span class="ruby-identifier">:swf</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">%w[swf]</span>,
-178:         <span class="ruby-identifier">:txt</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">%w[txt]</span>,
-179:         <span class="ruby-identifier">:xls</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">%w[xls]</span>,
-180:         <span class="ruby-identifier">:xml</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">%w[xml]</span>,
-181:         <span class="ruby-identifier">:zip</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">%w[zip rar tar gz tgz]</span>
-182:     }.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">icon</span>, <span class="ruby-identifier">extensions</span><span class="ruby-operator">|</span>
-183:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">icon</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">extensions</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">file_extension</span>.<span class="ruby-identifier">to_s</span>)
-184:     <span class="ruby-keyword kw">end</span>
-185:     <span class="ruby-identifier">:file</span>
-186:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/attachment.rb, line 160</span>
+160:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">icon</span>
+161:     {
+162:         <span class="ruby-identifier">:doc</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">%w[doc]</span>,
+163:         <span class="ruby-identifier">:gif</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">%w[gif jpg jpeg png tiff bmp]</span>,
+164:         <span class="ruby-identifier">:htm</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">%w[htm html]</span>,
+165:         <span class="ruby-identifier">:pdf</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">%w[pdf]</span>,
+166:         <span class="ruby-identifier">:ppt</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">%w[ppt]</span>,
+167:         <span class="ruby-identifier">:swf</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">%w[swf]</span>,
+168:         <span class="ruby-identifier">:txt</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">%w[txt]</span>,
+169:         <span class="ruby-identifier">:xls</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">%w[xls]</span>,
+170:         <span class="ruby-identifier">:xml</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">%w[xml]</span>,
+171:         <span class="ruby-identifier">:zip</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">%w[zip rar tar gz tgz]</span>
+172:     }.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">icon</span>, <span class="ruby-identifier">extensions</span><span class="ruby-operator">|</span>
+173:       <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">icon</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">extensions</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">file_extension</span>.<span class="ruby-identifier">to_s</span>)
+174:     <span class="ruby-keyword kw">end</span>
+175:     <span class="ruby-identifier">:file</span>
+176:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000149" class="method-detail">
-        <a name="M000149"></a>
+      <div id="method-M000163" class="method-detail">
+        <a name="M000163"></a>
 
         <div class="method-heading">
-          <a href="#M000149" class="method-signature">
-          <span class="method-name">live?</span><span class="method-args">()</span>
+          <a href="#M000163" class="method-signature">
+          <span class="method-name">make_dirty_if_temp_file</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000149-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000149-source">
+            onclick="toggleCode('M000163-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000163-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/attachment.rb, line 155</span>
-155:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">live?</span>
-156:     <span class="ruby-identifier">versionable?</span> <span class="ruby-value">? </span><span class="ruby-identifier">versions</span>.<span class="ruby-identifier">count</span>(<span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> [<span class="ruby-value str">'version &gt; ? AND published = ?'</span>, <span class="ruby-identifier">version</span>, <span class="ruby-keyword kw">true</span>]) <span class="ruby-operator">==</span> <span class="ruby-value">0</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">published?</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">true</span>
-157:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/attachment.rb, line 67</span>
+67:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">make_dirty_if_temp_file</span>
+68:     <span class="ruby-identifier">dirty!</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">temp_file</span>
+69:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000150" class="method-detail">
-        <a name="M000150"></a>
+      <div id="method-M000176" class="method-detail">
+        <a name="M000176"></a>
 
         <div class="method-heading">
-          <a href="#M000150" class="method-signature">
-          <span class="method-name">live_version</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000150-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000150-source">
-<pre>
-     <span class="ruby-comment cmt"># File app/models/attachment.rb, line 159</span>
-159:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">live_version</span>
-160:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">archived?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">deleted?</span>
-161:       <span class="ruby-keyword kw">nil</span>
-162:     <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">published?</span>
-163:       <span class="ruby-keyword kw">self</span>
-164:     <span class="ruby-keyword kw">else</span>
-165:       <span class="ruby-identifier">live_version</span> = <span class="ruby-identifier">versions</span>.<span class="ruby-identifier">first</span>(<span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:published</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>}, <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;version desc, id desc&quot;</span>)
-166:       <span class="ruby-identifier">live_version</span> <span class="ruby-value">? </span><span class="ruby-identifier">as_of_version</span>(<span class="ruby-identifier">live_version</span>.<span class="ruby-identifier">version</span>) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
-167:     <span class="ruby-keyword kw">end</span>                
-168:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000148" class="method-detail">
-        <a name="M000148"></a>
-
-        <div class="method-heading">
-          <a href="#M000148" class="method-signature">
+          <a href="#M000176" class="method-signature">
           <span class="method-name">name</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000148-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000148-source">
+            onclick="toggleCode('M000176-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000176-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/attachment.rb, line 151</span>
-151:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">name</span>
-152:     <span class="ruby-identifier">file_name</span>
-153:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/attachment.rb, line 156</span>
+156:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">name</span>
+157:     <span class="ruby-identifier">file_name</span>
+158:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000136" class="method-detail">
-        <a name="M000136"></a>
+      <div id="method-M000164" class="method-detail">
+        <a name="M000164"></a>
 
         <div class="method-heading">
-          <a href="#M000136" class="method-signature">
+          <a href="#M000164" class="method-signature">
           <span class="method-name">prepend_file_path_with_slash</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000136-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000136-source">
+            onclick="toggleCode('M000164-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000164-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/attachment.rb, line 64</span>
-64:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">prepend_file_path_with_slash</span>    
-65:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">file_path</span>.<span class="ruby-identifier">blank?</span>
-66:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_path</span> = <span class="ruby-node">&quot;/#{file_path}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">file_path</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\//</span>
-67:     <span class="ruby-keyword kw">end</span>
-68:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/attachment.rb, line 71</span>
+71:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">prepend_file_path_with_slash</span>    
+72:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">file_path</span>.<span class="ruby-identifier">blank?</span>
+73:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_path</span> = <span class="ruby-node">&quot;/#{file_path}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">file_path</span> <span class="ruby-operator">=~</span> <span class="ruby-regexp re">/^\//</span>
+74:     <span class="ruby-keyword kw">end</span>
+75:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000141" class="method-detail">
-        <a name="M000141"></a>
+      <div id="method-M000169" class="method-detail">
+        <a name="M000169"></a>
 
         <div class="method-heading">
-          <a href="#M000141" class="method-signature">
+          <a href="#M000169" class="method-signature">
           <span class="method-name">process_section</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000141-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000141-source">
+            onclick="toggleCode('M000169-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000169-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/attachment.rb, line 99</span>
- 99:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process_section</span>
-100:     <span class="ruby-comment cmt">#logger.info &quot;processing section, section_id =&gt; #{section_id}, section_node =&gt; #{section_node.inspect}&quot;</span>
-101:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">section_node</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">new_record?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">section_id</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">section_id</span>
-102:       <span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">move_to_end</span>(<span class="ruby-constant">Section</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">section_id</span>))
-103:     <span class="ruby-keyword kw">else</span>
-104:       <span class="ruby-identifier">build_section_node</span>(<span class="ruby-identifier">:node</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">:section_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">section_id</span>)
-105:     <span class="ruby-keyword kw">end</span>    
-106:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/attachment.rb, line 106</span>
+106:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process_section</span>
+107:     <span class="ruby-comment cmt">#logger.info &quot;processing section, section_id =&gt; #{section_id}, section_node =&gt; #{section_node.inspect}&quot;</span>
+108:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">section_node</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-operator">!</span><span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">new_record?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">section_id</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">section_id</span>
+109:       <span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">move_to_end</span>(<span class="ruby-constant">Section</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">section_id</span>))
+110:     <span class="ruby-keyword kw">else</span>
+111:       <span class="ruby-identifier">build_section_node</span>(<span class="ruby-identifier">:node</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">:section_id</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">section_id</span>)
+112:     <span class="ruby-keyword kw">end</span>    
+113:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000152" class="method-detail">
-        <a name="M000152"></a>
+      <div id="method-M000178" class="method-detail">
+        <a name="M000178"></a>
 
         <div class="method-heading">
-          <a href="#M000152" class="method-signature">
+          <a href="#M000178" class="method-signature">
           <span class="method-name">public?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000152-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000152-source">
+            onclick="toggleCode('M000178-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000178-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/attachment.rb, line 188</span>
-188:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">public?</span>
-189:     <span class="ruby-identifier">section</span> <span class="ruby-value">? </span><span class="ruby-identifier">section</span>.<span class="ruby-identifier">public?</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">false</span>
-190:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/attachment.rb, line 178</span>
+178:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">public?</span>
+179:     <span class="ruby-identifier">section</span> <span class="ruby-value">? </span><span class="ruby-identifier">section</span>.<span class="ruby-identifier">public?</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">false</span>
+180:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000134" class="method-detail">
-        <a name="M000134"></a>
+      <div id="method-M000161" class="method-detail">
+        <a name="M000161"></a>
 
         <div class="method-heading">
-          <a href="#M000134" class="method-signature">
+          <a href="#M000161" class="method-signature">
           <span class="method-name">section</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000134-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000134-source">
+            onclick="toggleCode('M000161-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000161-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/attachment.rb, line 50</span>
-50:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">section</span>
-51:     <span class="ruby-ivar">@section</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">section_node</span> <span class="ruby-value">? </span><span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">section</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
-52:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/attachment.rb, line 53</span>
+53:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">section</span>
+54:     <span class="ruby-ivar">@section</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">section_node</span> <span class="ruby-value">? </span><span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">section</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+55:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000135" class="method-detail">
-        <a name="M000135"></a>
+      <div id="method-M000162" class="method-detail">
+        <a name="M000162"></a>
 
         <div class="method-heading">
-          <a href="#M000135" class="method-signature">
+          <a href="#M000162" class="method-signature">
           <span class="method-name">section=</span><span class="method-args">(section)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000135-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000135-source">
+            onclick="toggleCode('M000162-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000162-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/attachment.rb, line 54</span>
-54:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">section=</span>(<span class="ruby-identifier">section</span>)
-55:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@section</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">section</span>
-56:       <span class="ruby-identifier">dirty!</span>
-57:       <span class="ruby-ivar">@section_id</span> = <span class="ruby-identifier">section</span> <span class="ruby-value">? </span><span class="ruby-identifier">section</span>.<span class="ruby-identifier">id</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
-58:       <span class="ruby-ivar">@section</span> = <span class="ruby-identifier">section</span>
-59:     <span class="ruby-keyword kw">end</span>
-60:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/attachment.rb, line 57</span>
+57:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">section=</span>(<span class="ruby-identifier">section</span>)
+58:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@section</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">section</span>
+59:       <span class="ruby-identifier">dirty!</span>
+60:       <span class="ruby-ivar">@section_id</span> = <span class="ruby-identifier">section</span> <span class="ruby-value">? </span><span class="ruby-identifier">section</span>.<span class="ruby-identifier">id</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+61:       <span class="ruby-ivar">@section</span> = <span class="ruby-identifier">section</span>
+62:     <span class="ruby-keyword kw">end</span>
+63:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000132" class="method-detail">
-        <a name="M000132"></a>
+      <div id="method-M000159" class="method-detail">
+        <a name="M000159"></a>
 
         <div class="method-heading">
-          <a href="#M000132" class="method-signature">
+          <a href="#M000159" class="method-signature">
           <span class="method-name">section_id</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000132-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000132-source">
+            onclick="toggleCode('M000159-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000159-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/attachment.rb, line 39</span>
-39:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">section_id</span>
-40:     <span class="ruby-ivar">@section_id</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">section_node</span> <span class="ruby-value">? </span><span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">section_id</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
-41:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/attachment.rb, line 42</span>
+42:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">section_id</span>
+43:     <span class="ruby-ivar">@section_id</span> <span class="ruby-operator">||=</span> <span class="ruby-identifier">section_node</span> <span class="ruby-value">? </span><span class="ruby-identifier">section_node</span>.<span class="ruby-identifier">section_id</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
+44:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000133" class="method-detail">
-        <a name="M000133"></a>
+      <div id="method-M000160" class="method-detail">
+        <a name="M000160"></a>
 
         <div class="method-heading">
-          <a href="#M000133" class="method-signature">
+          <a href="#M000160" class="method-signature">
           <span class="method-name">section_id=</span><span class="method-args">(section_id)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000133-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000133-source">
+            onclick="toggleCode('M000160-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000160-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/attachment.rb, line 43</span>
-43:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">section_id=</span>(<span class="ruby-identifier">section_id</span>)
-44:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@section_id</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">section_id</span> 
-45:       <span class="ruby-identifier">dirty!</span>
-46:       <span class="ruby-ivar">@section_id</span> = <span class="ruby-identifier">section_id</span>
-47:     <span class="ruby-keyword kw">end</span>
-48:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/attachment.rb, line 46</span>
+46:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">section_id=</span>(<span class="ruby-identifier">section_id</span>)
+47:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@section_id</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">section_id</span> 
+48:       <span class="ruby-identifier">dirty!</span>
+49:       <span class="ruby-ivar">@section_id</span> = <span class="ruby-identifier">section_id</span>
+50:     <span class="ruby-keyword kw">end</span>
+51:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000140" class="method-detail">
-        <a name="M000140"></a>
+      <div id="method-M000168" class="method-detail">
+        <a name="M000168"></a>
 
         <div class="method-heading">
-          <a href="#M000140" class="method-signature">
+          <a href="#M000168" class="method-signature">
           <span class="method-name">set_file_location</span><span class="method-args">()</span>
           </a>
         </div>
@@ -694,51 +657,55 @@ necessary if just the section.id has changed, for example
         <div class="method-description">
           <p>
 The file will be stored on disk at <a
-href="Attachment.html#M000144">Attachment.storage_location</a>/year/month/day/sha1
+href="Attachment.html#M000172">Attachment.storage_location</a>/year/month/day/sha1
 The sha1 is a 40 character hash based on the original_filename of the file
 uploaded and the current time
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000140-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000140-source">
+            onclick="toggleCode('M000168-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000168-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/attachment.rb, line 92</span>
-92:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_file_location</span>
-93:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">temp_file</span>.<span class="ruby-identifier">blank?</span>
-94:       <span class="ruby-identifier">sha1</span> = <span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">SHA1</span>.<span class="ruby-identifier">hexdigest</span>(<span class="ruby-node">&quot;#{temp_file.original_filename}#{Time.now.to_f}&quot;</span>)
-95:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_location</span> = <span class="ruby-node">&quot;#{Time.now.strftime(&quot;%Y/%m/%d&quot;)}/#{sha1}&quot;</span>
-96:     <span class="ruby-keyword kw">end</span>
-97:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/attachment.rb, line 99</span>
+ 99:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_file_location</span>
+100:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">temp_file</span>.<span class="ruby-identifier">blank?</span>
+101:       <span class="ruby-identifier">sha1</span> = <span class="ruby-constant">Digest</span><span class="ruby-operator">::</span><span class="ruby-constant">SHA1</span>.<span class="ruby-identifier">hexdigest</span>(<span class="ruby-node">&quot;#{temp_file.original_filename}#{Time.now.to_f}&quot;</span>)
+102:       <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_location</span> = <span class="ruby-node">&quot;#{Time.now.strftime(&quot;%Y/%m/%d&quot;)}/#{sha1}&quot;</span>
+103:     <span class="ruby-keyword kw">end</span>
+104:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000142" class="method-detail">
-        <a name="M000142"></a>
+      <div id="method-M000170" class="method-detail">
+        <a name="M000170"></a>
 
         <div class="method-heading">
-          <a href="#M000142" class="method-signature">
+          <a href="#M000170" class="method-signature">
           <span class="method-name">write_temp_file_to_storage_location</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000142-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000142-source">
+            onclick="toggleCode('M000170-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000170-source">
 <pre>
-     <span class="ruby-comment cmt"># File app/models/attachment.rb, line 108</span>
-108:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_temp_file_to_storage_location</span>
-109:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">temp_file</span>.<span class="ruby-identifier">blank?</span>
-110:       <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">full_file_location</span>)
-111:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">temp_file</span>.<span class="ruby-identifier">local_path</span>
-112:         <span class="ruby-constant">File</span>.<span class="ruby-identifier">copy</span> <span class="ruby-identifier">temp_file</span>.<span class="ruby-identifier">local_path</span>, <span class="ruby-identifier">full_file_location</span>
-113:       <span class="ruby-keyword kw">else</span>
-114:         <span class="ruby-identifier">open</span>(<span class="ruby-identifier">full_file_location</span>, <span class="ruby-value str">'w'</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">temp_file</span>.<span class="ruby-identifier">read</span> }
-115:       <span class="ruby-keyword kw">end</span>
-116:     <span class="ruby-keyword kw">end</span>
-117:   <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File app/models/attachment.rb, line 115</span>
+115:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">write_temp_file_to_storage_location</span>
+116:     <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">temp_file</span>.<span class="ruby-identifier">blank?</span>
+117:       <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">mkdir_p</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">dirname</span>(<span class="ruby-identifier">full_file_location</span>)
+118:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">temp_file</span>.<span class="ruby-identifier">local_path</span>
+119:         <span class="ruby-constant">File</span>.<span class="ruby-identifier">copy</span> <span class="ruby-identifier">temp_file</span>.<span class="ruby-identifier">local_path</span>, <span class="ruby-identifier">full_file_location</span>
+120:       <span class="ruby-keyword kw">else</span>
+121:         <span class="ruby-identifier">open</span>(<span class="ruby-identifier">full_file_location</span>, <span class="ruby-value str">'w'</span>) {<span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">f</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">temp_file</span>.<span class="ruby-identifier">read</span> }
+122:       <span class="ruby-keyword kw">end</span>
+123:       
+124:       <span class="ruby-keyword kw">if</span> <span class="ruby-constant">Cms</span>.<span class="ruby-identifier">attachment_file_permission</span>
+125:         <span class="ruby-constant">FileUtils</span>.<span class="ruby-identifier">chmod</span> <span class="ruby-constant">Cms</span>.<span class="ruby-identifier">attachment_file_permission</span>, <span class="ruby-identifier">full_file_location</span>
+126:       <span class="ruby-keyword kw">end</span>
+127:     <span class="ruby-keyword kw">end</span>
+128:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

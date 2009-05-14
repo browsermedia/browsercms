@@ -210,7 +210,7 @@
 
     <div id="description">
       <p>
-This is just a repackaged <a href="Cms.html#M000231">version</a> of Will
+This is just a repackaged <a href="Cms.html#M000232">version</a> of Will
 Paginate 2.2.2
 </p>
 
@@ -223,16 +223,15 @@ Paginate 2.2.2
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000235">add_generator_paths</a>&nbsp;&nbsp;
-      <a href="#M000237">add_to_rails_paths</a>&nbsp;&nbsp;
-      <a href="#M000232">build_number</a>&nbsp;&nbsp;
-      <a href="#M000236">generator_paths</a>&nbsp;&nbsp;
-      <a href="#M000234">init</a>&nbsp;&nbsp;
-      <a href="#M000233">load_rake_tasks</a>&nbsp;&nbsp;
-      <a href="#M000238">markdown?</a>&nbsp;&nbsp;
-      <a href="#M000239">reserved_paths</a>&nbsp;&nbsp;
-      <a href="#M000230">spec_version</a>&nbsp;&nbsp;
-      <a href="#M000231">version</a>&nbsp;&nbsp;
+      <a href="#M000236">add_generator_paths</a>&nbsp;&nbsp;
+      <a href="#M000238">add_to_rails_paths</a>&nbsp;&nbsp;
+      <a href="#M000233">build_number</a>&nbsp;&nbsp;
+      <a href="#M000237">generator_paths</a>&nbsp;&nbsp;
+      <a href="#M000235">init</a>&nbsp;&nbsp;
+      <a href="#M000234">load_rake_tasks</a>&nbsp;&nbsp;
+      <a href="#M000239">markdown?</a>&nbsp;&nbsp;
+      <a href="#M000240">reserved_paths</a>&nbsp;&nbsp;
+      <a href="#M000232">version</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -281,7 +280,6 @@ Class <a href="Cms/ContentTypesController.html" class="link">Cms::ContentTypesCo
 Class <a href="Cms/DashboardController.html" class="link">Cms::DashboardController</a><br />
 Class <a href="Cms/DynamicViewsController.html" class="link">Cms::DynamicViewsController</a><br />
 Class <a href="Cms/EmailMessagesController.html" class="link">Cms::EmailMessagesController</a><br />
-Class <a href="Cms/EmailPagePortletController.html" class="link">Cms::EmailPagePortletController</a><br />
 Class <a href="Cms/FileBlocksController.html" class="link">Cms::FileBlocksController</a><br />
 Class <a href="Cms/FormBuilder.html" class="link">Cms::FormBuilder</a><br />
 Class <a href="Cms/GroupsController.html" class="link">Cms::GroupsController</a><br />
@@ -326,6 +324,19 @@ Class <a href="Cms/UsersController.html" class="link">Cms::UsersController</a><b
 
 
 
+    <div id="attribute-list">
+      <h3 class="section-bar">Attributes</h3>
+
+      <div class="name-list">
+        <table>
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">attachment_file_permission</td>
+          <td class="context-item-value">&nbsp;[RW]&nbsp;</td>
+          <td class="context-item-desc"></td>
+        </tr>
+        </table>
+      </div>
+    </div>
       
 
 
@@ -333,11 +344,11 @@ Class <a href="Cms/UsersController.html" class="link">Cms::UsersController</a><b
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000235" class="method-detail">
-        <a name="M000235"></a>
+      <div id="method-M000236" class="method-detail">
+        <a name="M000236"></a>
 
         <div class="method-heading">
-          <a href="#M000235" class="method-signature">
+          <a href="#M000236" class="method-signature">
           <span class="method-name">add_generator_paths</span><span class="method-args">(src_root, *files)</span>
           </a>
         </div>
@@ -350,141 +361,13 @@ the absolute path to the root of the files, then each argument after that
 is a Dir.glob pattern string.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000235-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000235-source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/cms/init.rb, line 44</span>
-44:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_generator_paths</span>(<span class="ruby-identifier">src_root</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">files</span>)
-45:       <span class="ruby-identifier">generator_paths</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">src_root</span>, <span class="ruby-identifier">files</span>]
-46:     <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000237" class="method-detail">
-        <a name="M000237"></a>
-
-        <div class="method-heading">
-          <a href="#M000237" class="method-signature">
-          <span class="method-name">add_to_rails_paths</span><span class="method-args">(path)</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000237-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000237-source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/cms/init.rb, line 52</span>
-52:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_to_rails_paths</span>(<span class="ruby-identifier">path</span>)
-53:       <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Dependencies</span>.<span class="ruby-identifier">load_paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">path</span>, <span class="ruby-value str">&quot;app&quot;</span>, <span class="ruby-value str">&quot;portlets&quot;</span>)
-54:     <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000232" class="method-detail">
-        <a name="M000232"></a>
-
-        <div class="method-heading">
-          <a href="#M000232" class="method-signature">
-          <span class="method-name">build_number</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000232-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000232-source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/cms/init.rb, line 17</span>
-17:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">build_number</span>
-18:       <span class="ruby-ivar">@build_number</span> = <span class="ruby-identifier">spec_version</span>.<span class="ruby-identifier">last</span>
-19:     <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000236" class="method-detail">
-        <a name="M000236"></a>
-
-        <div class="method-heading">
-          <a href="#M000236" class="method-signature">
-          <span class="method-name">generator_paths</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
             onclick="toggleCode('M000236-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000236-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/init.rb, line 48</span>
-48:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">generator_paths</span>
-49:       <span class="ruby-ivar">@generator_paths</span> <span class="ruby-operator">||=</span> []
-50:     <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000234" class="method-detail">
-        <a name="M000234"></a>
-
-        <div class="method-heading">
-          <a href="#M000234" class="method-signature">
-          <span class="method-name">init</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p>
-This is called after the environment is ready
-</p>
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000234-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000234-source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/cms/init.rb, line 26</span>
-26:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">init</span>
-27:       <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">Routing</span><span class="ruby-operator">::</span><span class="ruby-constant">RouteSet</span><span class="ruby-operator">::</span><span class="ruby-constant">Mapper</span>.<span class="ruby-identifier">send</span> <span class="ruby-identifier">:include</span>, <span class="ruby-constant">Cms</span><span class="ruby-operator">::</span><span class="ruby-constant">Routes</span>
-28:       <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Dependencies</span>.<span class="ruby-identifier">load_paths</span> <span class="ruby-operator">+=</span> ??( <span class="ruby-comment cmt">#{RAILS_ROOT}/app/portlets )</span>
-29:       <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Dependencies</span>.<span class="ruby-identifier">load_paths</span> <span class="ruby-operator">+=</span> ??( <span class="ruby-comment cmt">#{RAILS_ROOT}/app/portlets/helpers )      </span>
-30:       <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">append_view_path</span> <span class="ruby-constant">DynamicView</span>.<span class="ruby-identifier">base_path</span>
-31:       <span class="ruby-constant">ActionView</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">default_form_builder</span> = <span class="ruby-constant">Cms</span><span class="ruby-operator">::</span><span class="ruby-constant">FormBuilder</span>
-32:       
-33:       <span class="ruby-comment cmt"># This is jsut to be safe</span>
-34:       <span class="ruby-comment cmt"># dynamic views are stored in a tmp dir</span>
-35:       <span class="ruby-comment cmt"># so they could be blown away on a server restart or something</span>
-36:       <span class="ruby-comment cmt"># so this just makes sure they get written out</span>
-37:       <span class="ruby-constant">DynamicView</span>.<span class="ruby-identifier">write_all_to_disk!</span> <span class="ruby-keyword kw">if</span> <span class="ruby-constant">DynamicView</span>.<span class="ruby-identifier">table_exists?</span>
-38:     <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000233" class="method-detail">
-        <a name="M000233"></a>
-
-        <div class="method-heading">
-          <a href="#M000233" class="method-signature">
-          <span class="method-name">load_rake_tasks</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000233-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000233-source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/cms/init.rb, line 21</span>
-21:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">load_rake_tasks</span>
-22:       <span class="ruby-identifier">load</span> <span class="ruby-node">&quot;#{Cms.root}/lib/tasks/cms.rake&quot;</span>
-23:     <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/init.rb, line 40</span>
+40:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_generator_paths</span>(<span class="ruby-identifier">src_root</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">files</span>)
+41:       <span class="ruby-identifier">generator_paths</span> <span class="ruby-operator">&lt;&lt;</span> [<span class="ruby-identifier">src_root</span>, <span class="ruby-identifier">files</span>]
+42:     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -495,7 +378,7 @@ This is called after the environment is ready
 
         <div class="method-heading">
           <a href="#M000238" class="method-signature">
-          <span class="method-name">markdown?</span><span class="method-args">()</span>
+          <span class="method-name">add_to_rails_paths</span><span class="method-args">(path)</span>
           </a>
         </div>
       
@@ -504,10 +387,113 @@ This is called after the environment is ready
             onclick="toggleCode('M000238-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000238-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/init.rb, line 56</span>
-56:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">markdown?</span>
-57:       <span class="ruby-constant">Object</span>.<span class="ruby-identifier">const_defined?</span>(<span class="ruby-value str">&quot;Markdown&quot;</span>)
-58:     <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/init.rb, line 48</span>
+48:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_to_rails_paths</span>(<span class="ruby-identifier">path</span>)
+49:       <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Dependencies</span>.<span class="ruby-identifier">load_paths</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">path</span>, <span class="ruby-value str">&quot;app&quot;</span>, <span class="ruby-value str">&quot;portlets&quot;</span>)
+50:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000233" class="method-detail">
+        <a name="M000233"></a>
+
+        <div class="method-heading">
+          <a href="#M000233" class="method-signature">
+          <span class="method-name">build_number</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000233-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000233-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/init.rb, line 15</span>
+15:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">build_number</span>; <span class="ruby-value">228</span> <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000237" class="method-detail">
+        <a name="M000237"></a>
+
+        <div class="method-heading">
+          <a href="#M000237" class="method-signature">
+          <span class="method-name">generator_paths</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000237-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000237-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/init.rb, line 44</span>
+44:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">generator_paths</span>
+45:       <span class="ruby-ivar">@generator_paths</span> <span class="ruby-operator">||=</span> []
+46:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000235" class="method-detail">
+        <a name="M000235"></a>
+
+        <div class="method-heading">
+          <a href="#M000235" class="method-signature">
+          <span class="method-name">init</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+This is called after the environment is ready
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000235-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000235-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/init.rb, line 22</span>
+22:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">init</span>
+23:       <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">Routing</span><span class="ruby-operator">::</span><span class="ruby-constant">RouteSet</span><span class="ruby-operator">::</span><span class="ruby-constant">Mapper</span>.<span class="ruby-identifier">send</span> <span class="ruby-identifier">:include</span>, <span class="ruby-constant">Cms</span><span class="ruby-operator">::</span><span class="ruby-constant">Routes</span>
+24:       <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Dependencies</span>.<span class="ruby-identifier">load_paths</span> <span class="ruby-operator">+=</span> ??( <span class="ruby-comment cmt">#{RAILS_ROOT}/app/portlets )</span>
+25:       <span class="ruby-constant">ActiveSupport</span><span class="ruby-operator">::</span><span class="ruby-constant">Dependencies</span>.<span class="ruby-identifier">load_paths</span> <span class="ruby-operator">+=</span> ??( <span class="ruby-comment cmt">#{RAILS_ROOT}/app/portlets/helpers )      </span>
+26:       <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">append_view_path</span> <span class="ruby-constant">DynamicView</span>.<span class="ruby-identifier">base_path</span>
+27:       <span class="ruby-constant">ActionView</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">default_form_builder</span> = <span class="ruby-constant">Cms</span><span class="ruby-operator">::</span><span class="ruby-constant">FormBuilder</span>
+28:       
+29:       <span class="ruby-comment cmt"># This is jsut to be safe</span>
+30:       <span class="ruby-comment cmt"># dynamic views are stored in a tmp dir</span>
+31:       <span class="ruby-comment cmt"># so they could be blown away on a server restart or something</span>
+32:       <span class="ruby-comment cmt"># so this just makes sure they get written out</span>
+33:       <span class="ruby-constant">DynamicView</span>.<span class="ruby-identifier">write_all_to_disk!</span> <span class="ruby-keyword kw">if</span> <span class="ruby-constant">DynamicView</span>.<span class="ruby-identifier">table_exists?</span>
+34:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000234" class="method-detail">
+        <a name="M000234"></a>
+
+        <div class="method-heading">
+          <a href="#M000234" class="method-signature">
+          <span class="method-name">load_rake_tasks</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000234-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000234-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/init.rb, line 17</span>
+17:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">load_rake_tasks</span>
+18:       <span class="ruby-identifier">load</span> <span class="ruby-node">&quot;#{Cms.root}/lib/tasks/cms.rake&quot;</span>
+19:     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -518,7 +504,7 @@ This is called after the environment is ready
 
         <div class="method-heading">
           <a href="#M000239" class="method-signature">
-          <span class="method-name">reserved_paths</span><span class="method-args">()</span>
+          <span class="method-name">markdown?</span><span class="method-args">()</span>
           </a>
         </div>
       
@@ -527,56 +513,56 @@ This is called after the environment is ready
             onclick="toggleCode('M000239-source');return false;">[Source]</a></p>
           <div class="method-source-code" id="M000239-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/init.rb, line 60</span>
-60:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reserved_paths</span>
-61:       <span class="ruby-ivar">@reserved_paths</span> <span class="ruby-operator">||=</span> [<span class="ruby-value str">&quot;/cms&quot;</span>, <span class="ruby-value str">&quot;/cache&quot;</span>]
-62:     <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/init.rb, line 52</span>
+52:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">markdown?</span>
+53:       <span class="ruby-constant">Object</span>.<span class="ruby-identifier">const_defined?</span>(<span class="ruby-value str">&quot;Markdown&quot;</span>)
+54:     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000230" class="method-detail">
-        <a name="M000230"></a>
+      <div id="method-M000240" class="method-detail">
+        <a name="M000240"></a>
 
         <div class="method-heading">
-          <a href="#M000230" class="method-signature">
-          <span class="method-name">spec_version</span><span class="method-args">()</span>
+          <a href="#M000240" class="method-signature">
+          <span class="method-name">reserved_paths</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000230-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000230-source">
+            onclick="toggleCode('M000240-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000240-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/init.rb, line 9</span>
- 9:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">spec_version</span>
-10:       <span class="ruby-constant">SPEC</span>.<span class="ruby-identifier">version</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:parts</span>) <span class="ruby-operator">?</span> <span class="ruby-constant">SPEC</span>.<span class="ruby-identifier">version</span>.<span class="ruby-identifier">parts</span> <span class="ruby-operator">:</span> <span class="ruby-constant">SPEC</span>.<span class="ruby-identifier">version</span>.<span class="ruby-identifier">ints</span>
-11:     <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/init.rb, line 56</span>
+56:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reserved_paths</span>
+57:       <span class="ruby-ivar">@reserved_paths</span> <span class="ruby-operator">||=</span> [<span class="ruby-value str">&quot;/cms&quot;</span>, <span class="ruby-value str">&quot;/cache&quot;</span>]
+58:     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000231" class="method-detail">
-        <a name="M000231"></a>
+      <div id="method-M000232" class="method-detail">
+        <a name="M000232"></a>
 
         <div class="method-heading">
-          <a href="#M000231" class="method-signature">
+          <a href="#M000232" class="method-signature">
           <span class="method-name">version</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000231-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000231-source">
+            onclick="toggleCode('M000232-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000232-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/init.rb, line 13</span>
-13:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">version</span>
-14:       <span class="ruby-ivar">@version</span> = <span class="ruby-identifier">spec_version</span>[<span class="ruby-value">0</span>,<span class="ruby-value">3</span>].<span class="ruby-identifier">join</span>(<span class="ruby-value str">'.'</span>)
-15:     <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/init.rb, line 11</span>
+11:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">version</span>
+12:       <span class="ruby-ivar">@version</span> = <span class="ruby-constant">SPEC</span>.<span class="ruby-identifier">version</span>.<span class="ruby-identifier">version</span>
+13:     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

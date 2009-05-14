@@ -80,7 +80,7 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000283">render_menu</a>&nbsp;&nbsp;
+      <a href="#M000299">render_menu</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -102,11 +102,11 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000283" class="method-detail">
-        <a name="M000283"></a>
+      <div id="method-M000299" class="method-detail">
+        <a name="M000299"></a>
 
         <div class="method-heading">
-          <a href="#M000283" class="method-signature">
+          <a href="#M000299" class="method-signature">
           <span class="method-name">render_menu</span><span class="method-args">(options={})</span>
           </a>
         </div>
@@ -246,8 +246,8 @@ href="http://sports.yahoo.com/nfl/teams">sports.yahoo.com/nfl/teams</a>
   &lt;/div&gt;
 </pre>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000283-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000283-source">
+            onclick="toggleCode('M000299-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000299-source">
 <pre>
      <span class="ruby-comment cmt"># File app/helpers/cms/menu_helper.rb, line 111</span>
 111:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">render_menu</span>(<span class="ruby-identifier">options</span>={})
@@ -282,24 +282,24 @@ href="http://sports.yahoo.com/nfl/teams">sports.yahoo.com/nfl/teams</a>
 140:           <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">i</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">nodes</span>.<span class="ruby-identifier">size</span><span class="ruby-operator">-</span><span class="ruby-value">1</span>
 141:             <span class="ruby-identifier">classes</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;last&quot;</span>
 142:           <span class="ruby-keyword kw">end</span>
-143:           <span class="ruby-identifier">classes</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;open&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ancestors</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">sn</span>.<span class="ruby-identifier">live_node</span>)
-144:           <span class="ruby-identifier">classes</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;on&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">page</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">sn</span>.<span class="ruby-identifier">live_node</span>
+143:           <span class="ruby-identifier">classes</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;open&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">ancestors</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">sn</span>.<span class="ruby-identifier">node</span>)
+144:           <span class="ruby-identifier">classes</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">&quot;on&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">page</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">sn</span>.<span class="ruby-identifier">node</span>
 145:           <span class="ruby-identifier">cls</span> = <span class="ruby-identifier">classes</span>.<span class="ruby-identifier">empty?</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">nil</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">classes</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot; &quot;</span>)
 146:           
-147:           <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">%Q{&lt;li id=&quot;#{sn.node_type.underscore}_#{sn.live_node.id}&quot;#{cls ? &quot; class=\&quot;#{cls}\&quot;&quot; : ''}&gt;\n}</span>.<span class="ruby-identifier">indent</span>(<span class="ruby-identifier">indent</span><span class="ruby-operator">+</span><span class="ruby-value">4</span>)
+147:           <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">%Q{&lt;li id=&quot;#{sn.node_type.underscore}_#{sn.node.id}&quot;#{cls ? &quot; class=\&quot;#{cls}\&quot;&quot; : ''}&gt;\n}</span>.<span class="ruby-identifier">indent</span>(<span class="ruby-identifier">indent</span><span class="ruby-operator">+</span><span class="ruby-value">4</span>)
 148:           
 149:           <span class="ruby-comment cmt">#Figure out what this link for this node should be</span>
 150:           <span class="ruby-comment cmt">#If it is a page, then the page will simply be used</span>
 151:           <span class="ruby-comment cmt">#But if is a page, we call the first_page_or_link method</span>
-152:           <span class="ruby-identifier">p</span> = <span class="ruby-identifier">sn</span>.<span class="ruby-identifier">node_type</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;Section&quot;</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">sn</span>.<span class="ruby-identifier">live_node</span>.<span class="ruby-identifier">first_page_or_link</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">sn</span>.<span class="ruby-identifier">live_node</span>
-153:           <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">%Q{&lt;a href=&quot;#{p ? p.path : '#'}&quot;#{(p.respond_to?(:new_window) &amp;&amp; p.new_window?) ? ' target=&quot;_blank&quot;' : ''}&gt;#{sn.live_node.name}&lt;/a&gt;\n}</span>.<span class="ruby-identifier">indent</span>(<span class="ruby-identifier">indent</span><span class="ruby-operator">+</span><span class="ruby-value">6</span>)
+152:           <span class="ruby-identifier">p</span> = <span class="ruby-identifier">sn</span>.<span class="ruby-identifier">node_type</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;Section&quot;</span> <span class="ruby-operator">?</span> <span class="ruby-identifier">sn</span>.<span class="ruby-identifier">node</span>.<span class="ruby-identifier">first_page_or_link</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">sn</span>.<span class="ruby-identifier">node</span>
+153:           <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-node">%Q{&lt;a href=&quot;#{p ? p.path : '#'}&quot;#{(p.respond_to?(:new_window) &amp;&amp; p.new_window?) ? ' target=&quot;_blank&quot;' : ''}&gt;#{sn.node.name}&lt;/a&gt;\n}</span>.<span class="ruby-identifier">indent</span>(<span class="ruby-identifier">indent</span><span class="ruby-operator">+</span><span class="ruby-value">6</span>)
 154:           
 155:           <span class="ruby-comment cmt">#Now if this is a section, we do the child nodes, </span>
 156:           <span class="ruby-comment cmt">#but only if the show_all_siblings parameter is true, </span>
 157:           <span class="ruby-comment cmt">#or if this section is one of the current page's ancestors</span>
 158:           <span class="ruby-comment cmt">#and also if the current depth is less than the target depth</span>
-159:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">sn</span>.<span class="ruby-identifier">node_type</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;Section&quot;</span> <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-identifier">show_all_siblings</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">ancestors</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">sn</span>.<span class="ruby-identifier">live_node</span>)) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">d</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">depth</span>
-160:             <span class="ruby-identifier">fn</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">sn</span>.<span class="ruby-identifier">live_node</span>.<span class="ruby-identifier">visible_child_nodes</span>, <span class="ruby-identifier">d</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>)
+159:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">sn</span>.<span class="ruby-identifier">node_type</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;Section&quot;</span> <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-identifier">show_all_siblings</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">ancestors</span>.<span class="ruby-identifier">include?</span>(<span class="ruby-identifier">sn</span>.<span class="ruby-identifier">node</span>)) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">d</span> <span class="ruby-operator">&lt;</span> <span class="ruby-identifier">depth</span>
+160:             <span class="ruby-identifier">fn</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">sn</span>.<span class="ruby-identifier">node</span>.<span class="ruby-identifier">visible_child_nodes</span>, <span class="ruby-identifier">d</span><span class="ruby-operator">+</span><span class="ruby-value">1</span>)
 161:           <span class="ruby-keyword kw">end</span>
 162:           
 163:           <span class="ruby-identifier">html</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-value str">%Q{&lt;/li&gt;\n}</span>.<span class="ruby-identifier">indent</span>(<span class="ruby-identifier">indent</span><span class="ruby-operator">+</span><span class="ruby-value">4</span>)

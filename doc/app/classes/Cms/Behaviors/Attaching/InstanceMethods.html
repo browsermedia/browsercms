@@ -80,25 +80,26 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000392">after_as_of_version</a>&nbsp;&nbsp;
-      <a href="#M000376">attachment_file</a>&nbsp;&nbsp;
-      <a href="#M000377">attachment_file=</a>&nbsp;&nbsp;
-      <a href="#M000378">attachment_file_name</a>&nbsp;&nbsp;
-      <a href="#M000379">attachment_file_path</a>&nbsp;&nbsp;
-      <a href="#M000380">attachment_file_path=</a>&nbsp;&nbsp;
-      <a href="#M000393">attachment_link</a>&nbsp;&nbsp;
-      <a href="#M000383">attachment_section</a>&nbsp;&nbsp;
-      <a href="#M000384">attachment_section=</a>&nbsp;&nbsp;
-      <a href="#M000381">attachment_section_id</a>&nbsp;&nbsp;
-      <a href="#M000382">attachment_section_id=</a>&nbsp;&nbsp;
-      <a href="#M000386">clear_attachment_ivars</a>&nbsp;&nbsp;
-      <a href="#M000394">dirty!</a>&nbsp;&nbsp;
-      <a href="#M000391">file_size</a>&nbsp;&nbsp;
-      <a href="#M000385">process_attachment</a>&nbsp;&nbsp;
-      <a href="#M000389">sanitize_file_path</a>&nbsp;&nbsp;
-      <a href="#M000388">set_attachment_file_path</a>&nbsp;&nbsp;
-      <a href="#M000387">set_attachment_section</a>&nbsp;&nbsp;
-      <a href="#M000390">update_attachment_if_changed</a>&nbsp;&nbsp;
+      <a href="#M000446">after_as_of_version</a>&nbsp;&nbsp;
+      <a href="#M000444">after_publish</a>&nbsp;&nbsp;
+      <a href="#M000429">attachment_file</a>&nbsp;&nbsp;
+      <a href="#M000430">attachment_file=</a>&nbsp;&nbsp;
+      <a href="#M000431">attachment_file_name</a>&nbsp;&nbsp;
+      <a href="#M000432">attachment_file_path</a>&nbsp;&nbsp;
+      <a href="#M000433">attachment_file_path=</a>&nbsp;&nbsp;
+      <a href="#M000447">attachment_link</a>&nbsp;&nbsp;
+      <a href="#M000436">attachment_section</a>&nbsp;&nbsp;
+      <a href="#M000437">attachment_section=</a>&nbsp;&nbsp;
+      <a href="#M000434">attachment_section_id</a>&nbsp;&nbsp;
+      <a href="#M000435">attachment_section_id=</a>&nbsp;&nbsp;
+      <a href="#M000439">clear_attachment_ivars</a>&nbsp;&nbsp;
+      <a href="#M000448">dirty!</a>&nbsp;&nbsp;
+      <a href="#M000445">file_size</a>&nbsp;&nbsp;
+      <a href="#M000438">process_attachment</a>&nbsp;&nbsp;
+      <a href="#M000442">sanitize_file_path</a>&nbsp;&nbsp;
+      <a href="#M000441">set_attachment_file_path</a>&nbsp;&nbsp;
+      <a href="#M000440">set_attachment_section</a>&nbsp;&nbsp;
+      <a href="#M000443">update_attachment_if_changed</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -120,44 +121,67 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000392" class="method-detail">
-        <a name="M000392"></a>
+      <div id="method-M000446" class="method-detail">
+        <a name="M000446"></a>
 
         <div class="method-heading">
-          <a href="#M000392" class="method-signature">
+          <a href="#M000446" class="method-signature">
           <span class="method-name">after_as_of_version</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000392-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000392-source">
+            onclick="toggleCode('M000446-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000446-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/cms/behaviors/attaching.rb, line 155</span>
-155:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">after_as_of_version</span>
-156:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">attachment_id</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">attachment_version</span>
-157:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">attachment</span> = <span class="ruby-constant">Attachment</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">attachment_id</span>).<span class="ruby-identifier">as_of_version</span>(<span class="ruby-identifier">attachment_version</span>)
-158:           <span class="ruby-keyword kw">end</span>
-159:         <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File lib/cms/behaviors/attaching.rb, line 160</span>
+160:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">after_as_of_version</span>
+161:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">attachment_id</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">attachment_version</span>
+162:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">attachment</span> = <span class="ruby-constant">Attachment</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">attachment_id</span>).<span class="ruby-identifier">as_of_version</span>(<span class="ruby-identifier">attachment_version</span>)
+163:           <span class="ruby-keyword kw">end</span>
+164:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000376" class="method-detail">
-        <a name="M000376"></a>
+      <div id="method-M000444" class="method-detail">
+        <a name="M000444"></a>
 
         <div class="method-heading">
-          <a href="#M000376" class="method-signature">
+          <a href="#M000444" class="method-signature">
+          <span class="method-name">after_publish</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000444-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000444-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/cms/behaviors/attaching.rb, line 151</span>
+151:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">after_publish</span>
+152:           <span class="ruby-identifier">attachment</span>.<span class="ruby-identifier">publish</span>
+153:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000429" class="method-detail">
+        <a name="M000429"></a>
+
+        <div class="method-heading">
+          <a href="#M000429" class="method-signature">
           <span class="method-name">attachment_file</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000376-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000376-source">
+            onclick="toggleCode('M000429-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000429-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/behaviors/attaching.rb, line 36</span>
 36:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">attachment_file</span>
@@ -168,19 +192,19 @@
         </div>
       </div>
 
-      <div id="method-M000377" class="method-detail">
-        <a name="M000377"></a>
+      <div id="method-M000430" class="method-detail">
+        <a name="M000430"></a>
 
         <div class="method-heading">
-          <a href="#M000377" class="method-signature">
+          <a href="#M000430" class="method-signature">
           <span class="method-name">attachment_file=</span><span class="method-args">(file)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000377-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000377-source">
+            onclick="toggleCode('M000430-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000430-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/behaviors/attaching.rb, line 40</span>
 40:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">attachment_file=</span>(<span class="ruby-identifier">file</span>)
@@ -194,19 +218,19 @@
         </div>
       </div>
 
-      <div id="method-M000378" class="method-detail">
-        <a name="M000378"></a>
+      <div id="method-M000431" class="method-detail">
+        <a name="M000431"></a>
 
         <div class="method-heading">
-          <a href="#M000378" class="method-signature">
+          <a href="#M000431" class="method-signature">
           <span class="method-name">attachment_file_name</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000378-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000378-source">
+            onclick="toggleCode('M000431-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000431-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/behaviors/attaching.rb, line 47</span>
 47:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">attachment_file_name</span>
@@ -217,19 +241,19 @@
         </div>
       </div>
 
-      <div id="method-M000379" class="method-detail">
-        <a name="M000379"></a>
+      <div id="method-M000432" class="method-detail">
+        <a name="M000432"></a>
 
         <div class="method-heading">
-          <a href="#M000379" class="method-signature">
+          <a href="#M000432" class="method-signature">
           <span class="method-name">attachment_file_path</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000379-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000379-source">
+            onclick="toggleCode('M000432-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000432-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/behaviors/attaching.rb, line 51</span>
 51:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">attachment_file_path</span>
@@ -240,19 +264,19 @@
         </div>
       </div>
 
-      <div id="method-M000380" class="method-detail">
-        <a name="M000380"></a>
+      <div id="method-M000433" class="method-detail">
+        <a name="M000433"></a>
 
         <div class="method-heading">
-          <a href="#M000380" class="method-signature">
+          <a href="#M000433" class="method-signature">
           <span class="method-name">attachment_file_path=</span><span class="method-args">(file_path)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000380-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000380-source">
+            onclick="toggleCode('M000433-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000433-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/behaviors/attaching.rb, line 55</span>
 55:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">attachment_file_path=</span>(<span class="ruby-identifier">file_path</span>)
@@ -267,46 +291,46 @@
         </div>
       </div>
 
-      <div id="method-M000393" class="method-detail">
-        <a name="M000393"></a>
+      <div id="method-M000447" class="method-detail">
+        <a name="M000447"></a>
 
         <div class="method-heading">
-          <a href="#M000393" class="method-signature">
+          <a href="#M000447" class="method-signature">
           <span class="method-name">attachment_link</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000393-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000393-source">
+            onclick="toggleCode('M000447-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000447-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/cms/behaviors/attaching.rb, line 161</span>
-161:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">attachment_link</span>
-162:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">attachment</span>
-163:             <span class="ruby-identifier">live?</span> <span class="ruby-value">? </span><span class="ruby-identifier">attachment_file_path</span> <span class="ruby-operator">:</span> <span class="ruby-node">&quot;/cms/attachments/#{attachment_id}?version=#{attachment_version}&quot;</span>    
-164:           <span class="ruby-keyword kw">else</span>
-165:             <span class="ruby-keyword kw">nil</span>
-166:           <span class="ruby-keyword kw">end</span>  
-167:         <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File lib/cms/behaviors/attaching.rb, line 166</span>
+166:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">attachment_link</span>
+167:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">attachment</span>
+168:             <span class="ruby-identifier">live_version?</span> <span class="ruby-value">? </span><span class="ruby-identifier">attachment_file_path</span> <span class="ruby-operator">:</span> <span class="ruby-node">&quot;/cms/attachments/#{attachment_id}?version=#{attachment_version}&quot;</span>    
+169:           <span class="ruby-keyword kw">else</span>
+170:             <span class="ruby-keyword kw">nil</span>
+171:           <span class="ruby-keyword kw">end</span>  
+172:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000383" class="method-detail">
-        <a name="M000383"></a>
+      <div id="method-M000436" class="method-detail">
+        <a name="M000436"></a>
 
         <div class="method-heading">
-          <a href="#M000383" class="method-signature">
+          <a href="#M000436" class="method-signature">
           <span class="method-name">attachment_section</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000383-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000383-source">
+            onclick="toggleCode('M000436-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000436-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/behaviors/attaching.rb, line 74</span>
 74:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">attachment_section</span>
@@ -317,19 +341,19 @@
         </div>
       </div>
 
-      <div id="method-M000384" class="method-detail">
-        <a name="M000384"></a>
+      <div id="method-M000437" class="method-detail">
+        <a name="M000437"></a>
 
         <div class="method-heading">
-          <a href="#M000384" class="method-signature">
+          <a href="#M000437" class="method-signature">
           <span class="method-name">attachment_section=</span><span class="method-args">(section)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000384-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000384-source">
+            onclick="toggleCode('M000437-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000437-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/behaviors/attaching.rb, line 78</span>
 78:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">attachment_section=</span>(<span class="ruby-identifier">section</span>)
@@ -344,19 +368,19 @@
         </div>
       </div>
 
-      <div id="method-M000381" class="method-detail">
-        <a name="M000381"></a>
+      <div id="method-M000434" class="method-detail">
+        <a name="M000434"></a>
 
         <div class="method-heading">
-          <a href="#M000381" class="method-signature">
+          <a href="#M000434" class="method-signature">
           <span class="method-name">attachment_section_id</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000381-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000381-source">
+            onclick="toggleCode('M000434-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000434-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/behaviors/attaching.rb, line 63</span>
 63:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">attachment_section_id</span>
@@ -367,19 +391,19 @@
         </div>
       </div>
 
-      <div id="method-M000382" class="method-detail">
-        <a name="M000382"></a>
+      <div id="method-M000435" class="method-detail">
+        <a name="M000435"></a>
 
         <div class="method-heading">
-          <a href="#M000382" class="method-signature">
+          <a href="#M000435" class="method-signature">
           <span class="method-name">attachment_section_id=</span><span class="method-args">(section_id)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000382-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000382-source">
+            onclick="toggleCode('M000435-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000435-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/behaviors/attaching.rb, line 67</span>
 67:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">attachment_section_id=</span>(<span class="ruby-identifier">section_id</span>)
@@ -393,19 +417,19 @@
         </div>
       </div>
 
-      <div id="method-M000386" class="method-detail">
-        <a name="M000386"></a>
+      <div id="method-M000439" class="method-detail">
+        <a name="M000439"></a>
 
         <div class="method-heading">
-          <a href="#M000386" class="method-signature">
+          <a href="#M000439" class="method-signature">
           <span class="method-name">clear_attachment_ivars</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000386-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000386-source">
+            onclick="toggleCode('M000439-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000439-source">
 <pre>
      <span class="ruby-comment cmt"># File lib/cms/behaviors/attaching.rb, line 112</span>
 112:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">clear_attachment_ivars</span>
@@ -419,11 +443,11 @@
         </div>
       </div>
 
-      <div id="method-M000394" class="method-detail">
-        <a name="M000394"></a>
+      <div id="method-M000448" class="method-detail">
+        <a name="M000448"></a>
 
         <div class="method-heading">
-          <a href="#M000394" class="method-signature">
+          <a href="#M000448" class="method-signature">
           <span class="method-name">dirty!</span><span class="method-args">()</span>
           </a>
         </div>
@@ -434,24 +458,24 @@ Forces this record to be changed, even if nothing has changed This is
 necessary if just the section.id has changed, for example
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000394-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000394-source">
+            onclick="toggleCode('M000448-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000448-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/cms/behaviors/attaching.rb, line 171</span>
-171:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">dirty!</span>
-172:           <span class="ruby-comment cmt"># Seems like a hack, is there a better way?</span>
-173:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">updated_at</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
-174:         <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File lib/cms/behaviors/attaching.rb, line 176</span>
+176:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">dirty!</span>
+177:           <span class="ruby-comment cmt"># Seems like a hack, is there a better way?</span>
+178:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">updated_at</span> = <span class="ruby-constant">Time</span>.<span class="ruby-identifier">now</span>
+179:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000391" class="method-detail">
-        <a name="M000391"></a>
+      <div id="method-M000445" class="method-detail">
+        <a name="M000445"></a>
 
         <div class="method-heading">
-          <a href="#M000391" class="method-signature">
+          <a href="#M000445" class="method-signature">
           <span class="method-name">file_size</span><span class="method-args">()</span>
           </a>
         </div>
@@ -461,31 +485,31 @@ necessary if just the section.id has changed, for example
 Size in kilobytes
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000391-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000391-source">
+            onclick="toggleCode('M000445-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000445-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/cms/behaviors/attaching.rb, line 151</span>
-151:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_size</span>
-152:           <span class="ruby-identifier">attachment</span> <span class="ruby-value">? </span><span class="ruby-value str">&quot;%0.2f&quot;</span> <span class="ruby-operator">%</span> (<span class="ruby-identifier">attachment</span>.<span class="ruby-identifier">file_size</span> <span class="ruby-operator">/</span> <span class="ruby-value">1024.0</span>) <span class="ruby-operator">:</span> <span class="ruby-value str">&quot;?&quot;</span>
-153:         <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File lib/cms/behaviors/attaching.rb, line 156</span>
+156:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_size</span>
+157:           <span class="ruby-identifier">attachment</span> <span class="ruby-value">? </span><span class="ruby-value str">&quot;%0.2f&quot;</span> <span class="ruby-operator">%</span> (<span class="ruby-identifier">attachment</span>.<span class="ruby-identifier">file_size</span> <span class="ruby-operator">/</span> <span class="ruby-value">1024.0</span>) <span class="ruby-operator">:</span> <span class="ruby-value str">&quot;?&quot;</span>
+158:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000385" class="method-detail">
-        <a name="M000385"></a>
+      <div id="method-M000438" class="method-detail">
+        <a name="M000438"></a>
 
         <div class="method-heading">
-          <a href="#M000385" class="method-signature">
+          <a href="#M000438" class="method-signature">
           <span class="method-name">process_attachment</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000385-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000385-source">
+            onclick="toggleCode('M000438-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000438-source">
 <pre>
      <span class="ruby-comment cmt"># File lib/cms/behaviors/attaching.rb, line 86</span>
  86:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">process_attachment</span>
@@ -518,19 +542,19 @@ Size in kilobytes
         </div>
       </div>
 
-      <div id="method-M000389" class="method-detail">
-        <a name="M000389"></a>
+      <div id="method-M000442" class="method-detail">
+        <a name="M000442"></a>
 
         <div class="method-heading">
-          <a href="#M000389" class="method-signature">
+          <a href="#M000442" class="method-signature">
           <span class="method-name">sanitize_file_path</span><span class="method-args">(file_path)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000389-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000389-source">
+            onclick="toggleCode('M000442-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000442-source">
 <pre>
      <span class="ruby-comment cmt"># File lib/cms/behaviors/attaching.rb, line 133</span>
 133:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">sanitize_file_path</span>(<span class="ruby-identifier">file_path</span>)
@@ -543,11 +567,11 @@ Size in kilobytes
         </div>
       </div>
 
-      <div id="method-M000388" class="method-detail">
-        <a name="M000388"></a>
+      <div id="method-M000441" class="method-detail">
+        <a name="M000441"></a>
 
         <div class="method-heading">
-          <a href="#M000388" class="method-signature">
+          <a href="#M000441" class="method-signature">
           <span class="method-name">set_attachment_file_path</span><span class="method-args">()</span>
           </a>
         </div>
@@ -557,8 +581,8 @@ Size in kilobytes
 Override this method if you would like to override the way file_path is set
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000388-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000388-source">
+            onclick="toggleCode('M000441-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000441-source">
 <pre>
      <span class="ruby-comment cmt"># File lib/cms/behaviors/attaching.rb, line 127</span>
 127:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_attachment_file_path</span>
@@ -571,11 +595,11 @@ Override this method if you would like to override the way file_path is set
         </div>
       </div>
 
-      <div id="method-M000387" class="method-detail">
-        <a name="M000387"></a>
+      <div id="method-M000440" class="method-detail">
+        <a name="M000440"></a>
 
         <div class="method-heading">
-          <a href="#M000387" class="method-signature">
+          <a href="#M000440" class="method-signature">
           <span class="method-name">set_attachment_section</span><span class="method-args">()</span>
           </a>
         </div>
@@ -586,8 +610,8 @@ Override this method if you would like to override the way the section is
 set
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000387-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000387-source">
+            onclick="toggleCode('M000440-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000440-source">
 <pre>
      <span class="ruby-comment cmt"># File lib/cms/behaviors/attaching.rb, line 120</span>
 120:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">set_attachment_section</span>
@@ -600,31 +624,32 @@ set
         </div>
       </div>
 
-      <div id="method-M000390" class="method-detail">
-        <a name="M000390"></a>
+      <div id="method-M000443" class="method-detail">
+        <a name="M000443"></a>
 
         <div class="method-heading">
-          <a href="#M000390" class="method-signature">
+          <a href="#M000443" class="method-signature">
           <span class="method-name">update_attachment_if_changed</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000390-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000390-source">
+            onclick="toggleCode('M000443-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000443-source">
 <pre>
      <span class="ruby-comment cmt"># File lib/cms/behaviors/attaching.rb, line 139</span>
 139:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update_attachment_if_changed</span>
 140:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">attachment</span>
 141:             <span class="ruby-identifier">attachment</span>.<span class="ruby-identifier">archived</span> = <span class="ruby-identifier">archived</span> <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">archivable?</span>
-142:             <span class="ruby-identifier">attachment</span>.<span class="ruby-identifier">published</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">publishable?</span> <span class="ruby-value">? </span><span class="ruby-operator">!</span><span class="ruby-operator">!</span>(<span class="ruby-identifier">publish_on_save</span>) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">true</span>
-143:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">new_record?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">attachment</span>.<span class="ruby-identifier">changed?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">attachment</span>.<span class="ruby-identifier">temp_file</span>
-144:               <span class="ruby-identifier">attachment</span>.<span class="ruby-identifier">save</span>
-145:             <span class="ruby-keyword kw">end</span>
-146:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">attachment_version</span> = <span class="ruby-identifier">attachment</span>.<span class="ruby-identifier">version</span>
-147:           <span class="ruby-keyword kw">end</span>
-148:         <span class="ruby-keyword kw">end</span>
+142:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:revert_to_version</span>) <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">revert_to_version</span>
+143:               <span class="ruby-identifier">attachment</span>.<span class="ruby-identifier">revert_to</span>(<span class="ruby-identifier">revert_to_version</span>.<span class="ruby-identifier">attachment_version</span>)
+144:             <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">new_record?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">attachment</span>.<span class="ruby-identifier">changed?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">attachment</span>.<span class="ruby-identifier">temp_file</span>
+145:               <span class="ruby-identifier">attachment</span>.<span class="ruby-identifier">save</span>
+146:             <span class="ruby-keyword kw">end</span>
+147:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">attachment_version</span> = <span class="ruby-identifier">attachment</span>.<span class="ruby-identifier">draft</span>.<span class="ruby-identifier">version</span>
+148:           <span class="ruby-keyword kw">end</span>
+149:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

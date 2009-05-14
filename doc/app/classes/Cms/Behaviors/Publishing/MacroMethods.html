@@ -80,8 +80,8 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000398">is_publishable</a>&nbsp;&nbsp;
-      <a href="#M000397">publishable?</a>&nbsp;&nbsp;
+      <a href="#M000452">is_publishable</a>&nbsp;&nbsp;
+      <a href="#M000451">publishable?</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -110,19 +110,19 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000398" class="method-detail">
-        <a name="M000398"></a>
+      <div id="method-M000452" class="method-detail">
+        <a name="M000452"></a>
 
         <div class="method-heading">
-          <a href="#M000398" class="method-signature">
+          <a href="#M000452" class="method-signature">
           <span class="method-name">is_publishable</span><span class="method-args">(options={})</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000398-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000398-source">
+            onclick="toggleCode('M000452-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000452-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/behaviors/publishing.rb, line 16</span>
 16:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">is_publishable</span>(<span class="ruby-identifier">options</span>={})
@@ -131,31 +131,30 @@
 19:           <span class="ruby-identifier">include</span> <span class="ruby-constant">InstanceMethods</span>
 20:         
 21:           <span class="ruby-identifier">attr_accessor</span> <span class="ruby-identifier">:publish_on_save</span>
-22:           <span class="ruby-identifier">attr_accessor</span> <span class="ruby-identifier">:published_by_page</span>
-23:         
-24:           <span class="ruby-identifier">before_save</span> <span class="ruby-identifier">:set_published</span>
-25:         
-26:           <span class="ruby-identifier">named_scope</span> <span class="ruby-identifier">:published</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:published</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>}
-27:           <span class="ruby-identifier">named_scope</span> <span class="ruby-identifier">:unpublished</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:published</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>}        
-28:         <span class="ruby-keyword kw">end</span>
+22:         
+23:           <span class="ruby-identifier">after_save</span> <span class="ruby-identifier">:publish_for_non_versioned</span>
+24:         
+25:           <span class="ruby-identifier">named_scope</span> <span class="ruby-identifier">:published</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:published</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>}
+26:           <span class="ruby-identifier">named_scope</span> <span class="ruby-identifier">:unpublished</span>, <span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:published</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>}        
+27:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000397" class="method-detail">
-        <a name="M000397"></a>
+      <div id="method-M000451" class="method-detail">
+        <a name="M000451"></a>
 
         <div class="method-heading">
-          <a href="#M000397" class="method-signature">
+          <a href="#M000451" class="method-signature">
           <span class="method-name">publishable?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000397-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000397-source">
+            onclick="toggleCode('M000451-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000451-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/behaviors/publishing.rb, line 13</span>
 13:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">publishable?</span>

@@ -80,13 +80,13 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000309">connect_to_page</a>&nbsp;&nbsp;
-      <a href="#M000305">connected_page_count</a>&nbsp;&nbsp;
-      <a href="#M000304">connected_pages</a>&nbsp;&nbsp;
-      <a href="#M000306">content_block_type</a>&nbsp;&nbsp;
-      <a href="#M000307">display_name</a>&nbsp;&nbsp;
-      <a href="#M000308">display_name_plural</a>&nbsp;&nbsp;
-      <a href="#M000310">update_connected_pages</a>&nbsp;&nbsp;
+      <a href="#M000389">connect_to_page</a>&nbsp;&nbsp;
+      <a href="#M000385">connected_page_count</a>&nbsp;&nbsp;
+      <a href="#M000384">connected_pages</a>&nbsp;&nbsp;
+      <a href="#M000386">content_block_type</a>&nbsp;&nbsp;
+      <a href="#M000387">display_name</a>&nbsp;&nbsp;
+      <a href="#M000388">display_name_plural</a>&nbsp;&nbsp;
+      <a href="#M000390">update_connected_pages</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -108,187 +108,190 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000309" class="method-detail">
-        <a name="M000309"></a>
+      <div id="method-M000389" class="method-detail">
+        <a name="M000389"></a>
 
         <div class="method-heading">
-          <a href="#M000309" class="method-signature">
+          <a href="#M000389" class="method-signature">
           <span class="method-name">connect_to_page</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000309-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000309-source">
+            onclick="toggleCode('M000389-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000389-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/connecting.rb, line 59</span>
-59:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">connect_to_page</span>
-60:           <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">connect_to_page_id</span>.<span class="ruby-identifier">blank?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">connect_to_container</span>.<span class="ruby-identifier">blank?</span>
-61:             <span class="ruby-comment cmt">#Note that we are setting connected_page so that page can look at that </span>
-62:             <span class="ruby-comment cmt">#to determine if the page should be published            </span>
-63:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">connected_page</span> = <span class="ruby-constant">Page</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">connect_to_page_id</span>)
-64:             <span class="ruby-identifier">connected_page</span>.<span class="ruby-identifier">create_connector</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">connect_to_container</span>)
-65:           <span class="ruby-keyword kw">end</span>
-66:           <span class="ruby-keyword kw">true</span>
-67:         <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/connecting.rb, line 61</span>
+61:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">connect_to_page</span>
+62:           <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">connect_to_page_id</span>.<span class="ruby-identifier">blank?</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">connect_to_container</span>.<span class="ruby-identifier">blank?</span>
+63:             <span class="ruby-comment cmt">#Note that we are setting connected_page so that page can look at that </span>
+64:             <span class="ruby-comment cmt">#to determine if the page should be published            </span>
+65:             <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">connected_page</span> = <span class="ruby-constant">Page</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">connect_to_page_id</span>)
+66:             <span class="ruby-identifier">connected_page</span>.<span class="ruby-identifier">create_connector</span>(<span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">connect_to_container</span>)
+67:           <span class="ruby-keyword kw">end</span>
+68:           <span class="ruby-keyword kw">true</span>
+69:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000305" class="method-detail">
-        <a name="M000305"></a>
+      <div id="method-M000385" class="method-detail">
+        <a name="M000385"></a>
 
         <div class="method-heading">
-          <a href="#M000305" class="method-signature">
+          <a href="#M000385" class="method-signature">
           <span class="method-name">connected_page_count</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000305-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000305-source">
+            onclick="toggleCode('M000385-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000385-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/connecting.rb, line 43</span>
-43:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">connected_page_count</span>
-44:           <span class="ruby-constant">Page</span>.<span class="ruby-identifier">connected_to</span>(<span class="ruby-keyword kw">self</span>).<span class="ruby-identifier">count</span>
-45:         <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/connecting.rb, line 45</span>
+45:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">connected_page_count</span>
+46:           <span class="ruby-constant">Page</span>.<span class="ruby-identifier">connected_to</span>(<span class="ruby-keyword kw">self</span>).<span class="ruby-identifier">count</span>
+47:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000304" class="method-detail">
-        <a name="M000304"></a>
+      <div id="method-M000384" class="method-detail">
+        <a name="M000384"></a>
 
         <div class="method-heading">
-          <a href="#M000304" class="method-signature">
+          <a href="#M000384" class="method-signature">
           <span class="method-name">connected_pages</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000304-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000304-source">
+            onclick="toggleCode('M000384-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000384-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/connecting.rb, line 39</span>
-39:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">connected_pages</span>
-40:           <span class="ruby-constant">Page</span>.<span class="ruby-identifier">connected_to</span>(<span class="ruby-keyword kw">self</span>)
-41:         <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/connecting.rb, line 41</span>
+41:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">connected_pages</span>
+42:           <span class="ruby-constant">Page</span>.<span class="ruby-identifier">connected_to</span>(<span class="ruby-keyword kw">self</span>)
+43:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000306" class="method-detail">
-        <a name="M000306"></a>
+      <div id="method-M000386" class="method-detail">
+        <a name="M000386"></a>
 
         <div class="method-heading">
-          <a href="#M000306" class="method-signature">
+          <a href="#M000386" class="method-signature">
           <span class="method-name">content_block_type</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000306-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000306-source">
+            onclick="toggleCode('M000386-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000386-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/connecting.rb, line 47</span>
-47:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">content_block_type</span>
-48:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">content_block_type</span>
-49:         <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/connecting.rb, line 49</span>
+49:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">content_block_type</span>
+50:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">content_block_type</span>
+51:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000307" class="method-detail">
-        <a name="M000307"></a>
+      <div id="method-M000387" class="method-detail">
+        <a name="M000387"></a>
 
         <div class="method-heading">
-          <a href="#M000307" class="method-signature">
+          <a href="#M000387" class="method-signature">
           <span class="method-name">display_name</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000307-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000307-source">
+            onclick="toggleCode('M000387-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000387-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/connecting.rb, line 51</span>
-51:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">display_name</span>
-52:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">display_name</span>
-53:         <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/connecting.rb, line 53</span>
+53:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">display_name</span>
+54:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">display_name</span>
+55:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000308" class="method-detail">
-        <a name="M000308"></a>
+      <div id="method-M000388" class="method-detail">
+        <a name="M000388"></a>
 
         <div class="method-heading">
-          <a href="#M000308" class="method-signature">
+          <a href="#M000388" class="method-signature">
           <span class="method-name">display_name_plural</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000308-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000308-source">
+            onclick="toggleCode('M000388-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000388-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/connecting.rb, line 55</span>
-55:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">display_name_plural</span>
-56:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">display_name_plural</span>
-57:         <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/connecting.rb, line 57</span>
+57:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">display_name_plural</span>
+58:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">display_name_plural</span>
+59:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000310" class="method-detail">
-        <a name="M000310"></a>
+      <div id="method-M000390" class="method-detail">
+        <a name="M000390"></a>
 
         <div class="method-heading">
-          <a href="#M000310" class="method-signature">
+          <a href="#M000390" class="method-signature">
           <span class="method-name">update_connected_pages</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000310-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000310-source">
+            onclick="toggleCode('M000390-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000390-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/connecting.rb, line 69</span>
-69:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update_connected_pages</span>
-70:           <span class="ruby-comment cmt"># If this is versioned, then we need make new versions of all the pages this is connected to</span>
-71:           <span class="ruby-comment cmt">#logger.info &quot;updating connected pages -&gt; #{self.inspect}&quot;</span>
-72:           <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned?</span>
-73: 
-74:             <span class="ruby-comment cmt">#Get all the pages the previous version of this connectable was connected to</span>
-75:             <span class="ruby-constant">Page</span>.<span class="ruby-identifier">connected_to</span>(<span class="ruby-identifier">:connectable</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">:version</span> =<span class="ruby-operator">&gt;</span> (<span class="ruby-identifier">version</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>)).<span class="ruby-identifier">all</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span>
-76:               <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">p</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">published_by_page</span>
-77:                 <span class="ruby-comment cmt">#This just creates a new version of the page</span>
-78:                 <span class="ruby-identifier">action</span> = <span class="ruby-identifier">deleted?</span> <span class="ruby-value">? </span><span class="ruby-value str">&quot;Deleted&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-value str">&quot;Edited&quot;</span>
-79:                 <span class="ruby-identifier">p</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">:publish_on_save</span> =<span class="ruby-operator">&gt;</span> (<span class="ruby-identifier">published?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">p</span>.<span class="ruby-identifier">published?</span>), <span class="ruby-identifier">:version_comment</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{self.class.name} ##{id} was #{action}&quot;</span>)
-80: 
-81:                 <span class="ruby-comment cmt">#The previous step will copy over a connector pointing to the previous version of this connectable</span>
-82:                 <span class="ruby-comment cmt">#We need to change that to point at the new version of this connectable</span>
-83:                 <span class="ruby-identifier">p</span>.<span class="ruby-identifier">connectors</span>.<span class="ruby-identifier">for_page_version</span>(<span class="ruby-identifier">p</span>.<span class="ruby-identifier">version</span>).<span class="ruby-identifier">for_connectable</span>(<span class="ruby-keyword kw">self</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">con</span><span class="ruby-operator">|</span>
-84:                   <span class="ruby-identifier">con</span>.<span class="ruby-identifier">update_attribute</span>(<span class="ruby-identifier">:connectable_version</span>, <span class="ruby-identifier">version</span>)
-85:                 <span class="ruby-keyword kw">end</span>                  
-86:               <span class="ruby-keyword kw">end</span>
-87:             <span class="ruby-keyword kw">end</span>
-88:           <span class="ruby-keyword kw">end</span>
-89:           <span class="ruby-keyword kw">true</span>
-90:         <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/connecting.rb, line 71</span>
+71:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update_connected_pages</span>
+72:           <span class="ruby-comment cmt"># If this is versioned, then we need make new versions of all the pages this is connected to</span>
+73:           <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned?</span> 
+74:             <span class="ruby-comment cmt">#logger.info &quot;..... Updating connected pages for #{self.class} #{id} v#{version}&quot;</span>
+75: 
+76:             <span class="ruby-comment cmt">#Get all the pages the previous version of this connectable was connected to</span>
+77:             <span class="ruby-identifier">draft_version</span> = <span class="ruby-identifier">draft</span>.<span class="ruby-identifier">version</span>            
+78:             <span class="ruby-constant">Page</span>.<span class="ruby-identifier">connected_to</span>(<span class="ruby-identifier">:connectable</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>, <span class="ruby-identifier">:version</span> =<span class="ruby-operator">&gt;</span> (<span class="ruby-identifier">draft_version</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>)).<span class="ruby-identifier">all</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span>
+79:               <span class="ruby-comment cmt"># This is needed in the case of updating page,</span>
+80:               <span class="ruby-comment cmt"># which updates this object, so as not to create a loop</span>
+81:               <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">p</span> <span class="ruby-operator">!=</span> <span class="ruby-identifier">updated_by_page</span>              
+82:                 <span class="ruby-comment cmt">#This just creates a new version of the page</span>
+83:                 <span class="ruby-identifier">action</span> = <span class="ruby-identifier">deleted?</span> <span class="ruby-value">? </span><span class="ruby-value str">&quot;Deleted&quot;</span> <span class="ruby-operator">:</span> <span class="ruby-value str">&quot;Edited&quot;</span>
+84:                 <span class="ruby-identifier">p</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">:version_comment</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-node">&quot;#{self.class.name} ##{id} was #{action}&quot;</span>)
+85: 
+86:                 <span class="ruby-comment cmt">#The previous step will copy over a connector pointing to the previous version of this connectable</span>
+87:                 <span class="ruby-comment cmt">#We need to change that to point at the new version of this connectable</span>
+88:                 <span class="ruby-identifier">p</span>.<span class="ruby-identifier">connectors</span>.<span class="ruby-identifier">for_page_version</span>(<span class="ruby-identifier">p</span>.<span class="ruby-identifier">draft</span>.<span class="ruby-identifier">version</span>).<span class="ruby-identifier">for_connectable</span>(<span class="ruby-keyword kw">self</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">con</span><span class="ruby-operator">|</span>
+89:                   <span class="ruby-identifier">con</span>.<span class="ruby-identifier">update_attribute</span>(<span class="ruby-identifier">:connectable_version</span>, <span class="ruby-identifier">draft_version</span>)
+90:                 <span class="ruby-keyword kw">end</span>
+91:               <span class="ruby-keyword kw">end</span>
+92:             <span class="ruby-keyword kw">end</span>
+93:           <span class="ruby-keyword kw">end</span>
+94:           <span class="ruby-keyword kw">true</span>
+95:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

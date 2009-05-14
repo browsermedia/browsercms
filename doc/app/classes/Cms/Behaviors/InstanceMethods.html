@@ -80,8 +80,9 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000372">assigns_for_view</a>&nbsp;&nbsp;
-      <a href="#M000371">perform_render</a>&nbsp;&nbsp;
+      <a href="#M000405">assigns_for_view</a>&nbsp;&nbsp;
+      <a href="#M000404">copy_instance_variables_from_controller!</a>&nbsp;&nbsp;
+      <a href="#M000403">perform_render</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -103,58 +104,60 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000371" class="method-detail">
-        <a name="M000371"></a>
+      <div id="method-M000403" class="method-detail">
+        <a name="M000403"></a>
 
         <div class="method-heading">
-          <a href="#M000371" class="method-signature">
+          <a href="#M000403" class="method-signature">
           <span class="method-name">perform_render</span><span class="method-args">(controller)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000371-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000371-source">
+            onclick="toggleCode('M000403-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000403-source">
 <pre>
      <span class="ruby-comment cmt"># File lib/cms/behaviors/rendering.rb, line 85</span>
  85:       <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">perform_render</span>(<span class="ruby-identifier">controller</span>)
  86:         <span class="ruby-comment cmt"># Give this renderable a reference to the controller</span>
  87:         <span class="ruby-ivar">@controller</span> = <span class="ruby-identifier">controller</span>
  88: 
- 89:         <span class="ruby-comment cmt"># This gives the view a reference to this object</span>
- 90:         <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">instance_variable_name_for_view</span>, <span class="ruby-keyword kw">self</span>)
- 91: 
- 92:         <span class="ruby-comment cmt"># This is like a controller action</span>
- 93:         <span class="ruby-comment cmt"># We will call it if you have defined a render method</span>
- 94:         <span class="ruby-comment cmt"># but if you haven't we won't</span>
- 95:         <span class="ruby-identifier">render</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:render</span>)
- 96:     
- 97:         <span class="ruby-comment cmt"># Create, Instantiate and Initialize the view</span>
- 98:         <span class="ruby-identifier">view_class</span>  = <span class="ruby-constant">Class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">ActionView</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>)      
- 99:         <span class="ruby-identifier">action_view</span> = <span class="ruby-identifier">view_class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">view_paths</span>, {}, <span class="ruby-ivar">@controller</span>)
-100:     
-101:         <span class="ruby-comment cmt"># Make helpers and instance vars available</span>
-102:         <span class="ruby-identifier">view_class</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">:include</span>, <span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">master_helper_module</span>)
-103:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$:</span>.<span class="ruby-identifier">detect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">d</span>, <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">helper_path</span>))}
-104:           <span class="ruby-identifier">view_class</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">:include</span>, <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">helper_class</span>)
-105:         <span class="ruby-keyword kw">end</span>
-106:         
-107:         <span class="ruby-comment cmt"># We want content_for to be called on the controller's view, not this inner view</span>
-108:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">action_view</span>.<span class="ruby-identifier">content_for</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">content</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-109:           <span class="ruby-identifier">controller</span>.<span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-value str">&quot;@template&quot;</span>).<span class="ruby-identifier">content_for</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">content</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
-110:         <span class="ruby-keyword kw">end</span>
-111:         
-112:         <span class="ruby-comment cmt"># Copy instance variables from this renderable object to it's view</span>
-113:         <span class="ruby-identifier">action_view</span>.<span class="ruby-identifier">assigns</span> = <span class="ruby-identifier">assigns_for_view</span>
-114:           
-115:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:inline_options</span>)
-116:           <span class="ruby-identifier">options</span> = {<span class="ruby-identifier">:locals</span> =<span class="ruby-operator">&gt;</span> {}}.<span class="ruby-identifier">merge</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">inline_options</span>)
-117:           <span class="ruby-constant">ActionView</span><span class="ruby-operator">::</span><span class="ruby-constant">InlineTemplate</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:inline</span>], <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:type</span>]).<span class="ruby-identifier">render</span>(<span class="ruby-identifier">action_view</span>, <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:locals</span>])
-118:         <span class="ruby-keyword kw">else</span>
-119:           <span class="ruby-identifier">action_view</span>.<span class="ruby-identifier">render</span>(<span class="ruby-identifier">:file</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">template_path</span>)
-120:         <span class="ruby-keyword kw">end</span>
-121:       <span class="ruby-keyword kw">end</span>
+ 89:         <span class="ruby-identifier">copy_instance_variables_from_controller!</span>
+ 90: 
+ 91:         <span class="ruby-comment cmt"># This gives the view a reference to this object</span>
+ 92:         <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">instance_variable_name_for_view</span>, <span class="ruby-keyword kw">self</span>)
+ 93: 
+ 94:         <span class="ruby-comment cmt"># This is like a controller action</span>
+ 95:         <span class="ruby-comment cmt"># We will call it if you have defined a render method</span>
+ 96:         <span class="ruby-comment cmt"># but if you haven't we won't</span>
+ 97:         <span class="ruby-identifier">render</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:render</span>)
+ 98:     
+ 99:         <span class="ruby-comment cmt"># Create, Instantiate and Initialize the view</span>
+100:         <span class="ruby-identifier">view_class</span>  = <span class="ruby-constant">Class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">ActionView</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>)      
+101:         <span class="ruby-identifier">action_view</span> = <span class="ruby-identifier">view_class</span>.<span class="ruby-identifier">new</span>(<span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">view_paths</span>, {}, <span class="ruby-ivar">@controller</span>)
+102:     
+103:         <span class="ruby-comment cmt"># Make helpers and instance vars available</span>
+104:         <span class="ruby-identifier">view_class</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">:include</span>, <span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">master_helper_module</span>)
+105:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">$:</span>.<span class="ruby-identifier">detect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">d</span><span class="ruby-operator">|</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exists?</span>(<span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">d</span>, <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">helper_path</span>))}
+106:           <span class="ruby-identifier">view_class</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">:include</span>, <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">helper_class</span>)
+107:         <span class="ruby-keyword kw">end</span>
+108:         
+109:         <span class="ruby-comment cmt"># We want content_for to be called on the controller's view, not this inner view</span>
+110:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">action_view</span>.<span class="ruby-identifier">content_for</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">content</span>=<span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+111:           <span class="ruby-identifier">controller</span>.<span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-value str">&quot;@template&quot;</span>).<span class="ruby-identifier">content_for</span>(<span class="ruby-identifier">name</span>, <span class="ruby-identifier">content</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+112:         <span class="ruby-keyword kw">end</span>
+113:         
+114:         <span class="ruby-comment cmt"># Copy instance variables from this renderable object to it's view</span>
+115:         <span class="ruby-identifier">action_view</span>.<span class="ruby-identifier">assigns</span> = <span class="ruby-identifier">assigns_for_view</span>
+116:           
+117:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:inline_options</span>)
+118:           <span class="ruby-identifier">options</span> = {<span class="ruby-identifier">:locals</span> =<span class="ruby-operator">&gt;</span> {}}.<span class="ruby-identifier">merge</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">inline_options</span>)
+119:           <span class="ruby-constant">ActionView</span><span class="ruby-operator">::</span><span class="ruby-constant">InlineTemplate</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">options</span>[<span class="ruby-identifier">:inline</span>], <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:type</span>]).<span class="ruby-identifier">render</span>(<span class="ruby-identifier">action_view</span>, <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:locals</span>])
+120:         <span class="ruby-keyword kw">else</span>
+121:           <span class="ruby-identifier">action_view</span>.<span class="ruby-identifier">render</span>(<span class="ruby-identifier">:file</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">template_path</span>)
+122:         <span class="ruby-keyword kw">end</span>
+123:       <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -162,27 +165,55 @@
 
       <h3 class="section-bar">Protected Instance methods</h3>
 
-      <div id="method-M000372" class="method-detail">
-        <a name="M000372"></a>
+      <div id="method-M000405" class="method-detail">
+        <a name="M000405"></a>
 
         <div class="method-heading">
-          <a href="#M000372" class="method-signature">
+          <a href="#M000405" class="method-signature">
           <span class="method-name">assigns_for_view</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000372-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000372-source">
+            onclick="toggleCode('M000405-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000405-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/cms/behaviors/rendering.rb, line 124</span>
-124:         <span class="ruby-keyword kw">def</span>  <span class="ruby-identifier">assigns_for_view</span><span class="ruby-identifier">assigns_for_view</span>
-125:           (<span class="ruby-identifier">instance_variables</span> <span class="ruby-operator">-</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">ivars_to_ignore</span>).<span class="ruby-identifier">inject</span>({}) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">h</span>,<span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
-126:             <span class="ruby-identifier">h</span>[<span class="ruby-identifier">k</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]] = <span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-identifier">k</span>)
-127:             <span class="ruby-identifier">h</span>
-128:           <span class="ruby-keyword kw">end</span>
-129:         <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File lib/cms/behaviors/rendering.rb, line 135</span>
+135:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">assigns_for_view</span>
+136:           (<span class="ruby-identifier">instance_variables</span> <span class="ruby-operator">-</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">ivars_to_ignore</span>).<span class="ruby-identifier">inject</span>({}) <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">h</span>,<span class="ruby-identifier">k</span><span class="ruby-operator">|</span>
+137:             <span class="ruby-identifier">h</span>[<span class="ruby-identifier">k</span>[<span class="ruby-value">1</span><span class="ruby-operator">..</span><span class="ruby-value">-1</span>]] = <span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-identifier">k</span>)
+138:             <span class="ruby-identifier">h</span>
+139:           <span class="ruby-keyword kw">end</span>
+140:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000404" class="method-detail">
+        <a name="M000404"></a>
+
+        <div class="method-heading">
+          <a href="#M000404" class="method-signature">
+          <span class="method-name">copy_instance_variables_from_controller!</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000404-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000404-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/cms/behaviors/rendering.rb, line 126</span>
+126:         <span class="ruby-keyword kw">def</span>  <span class="ruby-identifier">copy_instance_variables_from_controller!</span><span class="ruby-identifier">copy_instance_variables_from_controller!</span>
+127:           <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:instance_variables_for_rendering</span>)
+128:             <span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">instance_variables_for_rendering</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">iv</span><span class="ruby-operator">|</span>
+129:               <span class="ruby-comment cmt">#logger.info &quot;Copying #{iv} =&gt; #{@controller.instance_variable_get(iv).inspect}&quot;</span>
+130:               <span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-identifier">iv</span>, <span class="ruby-ivar">@controller</span>.<span class="ruby-identifier">instance_variable_get</span>(<span class="ruby-identifier">iv</span>))
+131:             <span class="ruby-keyword kw">end</span>
+132:           <span class="ruby-keyword kw">end</span>
+133:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

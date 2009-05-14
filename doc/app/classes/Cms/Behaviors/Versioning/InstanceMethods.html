@@ -80,20 +80,25 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000436">as_of_version</a>&nbsp;&nbsp;
-      <a href="#M000426">build_new_version</a>&nbsp;&nbsp;
-      <a href="#M000427">build_new_version?</a>&nbsp;&nbsp;
-      <a href="#M000432">current_version</a>&nbsp;&nbsp;
-      <a href="#M000431">current_version?</a>&nbsp;&nbsp;
-      <a href="#M000430">default_version_comment</a>&nbsp;&nbsp;
-      <a href="#M000433">find_version</a>&nbsp;&nbsp;
-      <a href="#M000428">increment_version</a>&nbsp;&nbsp;
-      <a href="#M000434">live_version</a>&nbsp;&nbsp;
-      <a href="#M000435">live_version?</a>&nbsp;&nbsp;
-      <a href="#M000437">revert</a>&nbsp;&nbsp;
-      <a href="#M000439">revert_to</a>&nbsp;&nbsp;
-      <a href="#M000438">revert_to_without_save</a>&nbsp;&nbsp;
-      <a href="#M000429">versioned_attributes</a>&nbsp;&nbsp;
+      <a href="#M000339">as_of_draft_version</a>&nbsp;&nbsp;
+      <a href="#M000340">as_of_version</a>&nbsp;&nbsp;
+      <a href="#M000328">build_new_version</a>&nbsp;&nbsp;
+      <a href="#M000337">current_version</a>&nbsp;&nbsp;
+      <a href="#M000330">default_version_comment</a>&nbsp;&nbsp;
+      <a href="#M000333">draft</a>&nbsp;&nbsp;
+      <a href="#M000329">draft_attributes</a>&nbsp;&nbsp;
+      <a href="#M000334">draft_version?</a>&nbsp;&nbsp;
+      <a href="#M000338">find_version</a>&nbsp;&nbsp;
+      <a href="#M000327">initialize_version</a>&nbsp;&nbsp;
+      <a href="#M000335">live_version</a>&nbsp;&nbsp;
+      <a href="#M000336">live_version?</a>&nbsp;&nbsp;
+      <a href="#M000341">revert</a>&nbsp;&nbsp;
+      <a href="#M000343">revert_to</a>&nbsp;&nbsp;
+      <a href="#M000342">revert_to_without_save</a>&nbsp;&nbsp;
+      <a href="#M000331">save</a>&nbsp;&nbsp;
+      <a href="#M000332">save!</a>&nbsp;&nbsp;
+      <a href="#M000344">version_comment</a>&nbsp;&nbsp;
+      <a href="#M000345">version_comment=</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -115,365 +120,551 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000436" class="method-detail">
-        <a name="M000436"></a>
+      <div id="method-M000339" class="method-detail">
+        <a name="M000339"></a>
 
         <div class="method-heading">
-          <a href="#M000436" class="method-signature">
+          <a href="#M000339" class="method-signature">
+          <span class="method-name">as_of_draft_version</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000339-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000339-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 202</span>
+202:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">as_of_draft_version</span>
+203:           <span class="ruby-identifier">as_of_version</span>(<span class="ruby-identifier">draft</span>.<span class="ruby-identifier">version</span>)
+204:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000340" class="method-detail">
+        <a name="M000340"></a>
+
+        <div class="method-heading">
+          <a href="#M000340" class="method-signature">
           <span class="method-name">as_of_version</span><span class="method-args">(version)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000436-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000436-source">
+            onclick="toggleCode('M000340-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000340-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 130</span>
-130:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">as_of_version</span>(<span class="ruby-identifier">version</span>)
-131:           <span class="ruby-identifier">v</span> = <span class="ruby-identifier">find_version</span>(<span class="ruby-identifier">version</span>)
-132:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordNotFound</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;version #{version.inspect} does not exist for &lt;#{self.class}:#{id}&gt;&quot;</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">v</span>
-133:           <span class="ruby-identifier">obj</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>
-134: 
-135:           (<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned_columns</span> <span class="ruby-operator">+</span> [<span class="ruby-identifier">:version</span>, <span class="ruby-identifier">:updated_at</span>]).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span>
-136:             <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{a}=&quot;</span>, <span class="ruby-identifier">v</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">a</span>))
-137:           <span class="ruby-keyword kw">end</span>
-138:           <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">id</span> = <span class="ruby-identifier">id</span>
-139:           <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">lock_version</span> = <span class="ruby-identifier">lock_version</span>
-140:           
-141:           <span class="ruby-comment cmt">#Need to do this so associations can be loaded</span>
-142:           <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-value str">&quot;@new_record&quot;</span>, <span class="ruby-keyword kw">false</span>)
-143: 
-144:           <span class="ruby-comment cmt">#Callback to allow us to load other data when an older version is loaded</span>
-145:           <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">after_as_of_version</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:after_as_of_version</span>)
-146: 
-147:           <span class="ruby-identifier">obj</span>      
-148:         <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 206</span>
+206:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">as_of_version</span>(<span class="ruby-identifier">version</span>)
+207:           <span class="ruby-identifier">v</span> = <span class="ruby-identifier">find_version</span>(<span class="ruby-identifier">version</span>)
+208:           <span class="ruby-identifier">raise</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">RecordNotFound</span>.<span class="ruby-identifier">new</span>(<span class="ruby-node">&quot;version #{version.inspect} does not exist for &lt;#{self.class}:#{id}&gt;&quot;</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">v</span>
+209:           <span class="ruby-identifier">obj</span> = <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">new</span>
+210: 
+211:           (<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned_columns</span> <span class="ruby-operator">+</span> [<span class="ruby-identifier">:version</span>, <span class="ruby-identifier">:updated_at</span>]).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span>
+212:             <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{a}=&quot;</span>, <span class="ruby-identifier">v</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">a</span>))
+213:           <span class="ruby-keyword kw">end</span>
+214:           <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">id</span> = <span class="ruby-identifier">id</span>
+215:           <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">lock_version</span> = <span class="ruby-identifier">lock_version</span>
+216: 
+217:           <span class="ruby-comment cmt"># Need to do this so associations can be loaded</span>
+218:           <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">instance_variable_set</span>(<span class="ruby-value str">&quot;@new_record&quot;</span>, <span class="ruby-keyword kw">false</span>)
+219: 
+220:           <span class="ruby-comment cmt"># Callback to allow us to load other data when an older version is loaded</span>
+221:           <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">after_as_of_version</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:after_as_of_version</span>)
+222: 
+223:           <span class="ruby-comment cmt"># Last but not least, clear the changed attributes</span>
+224:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">changed_attrs</span> = <span class="ruby-identifier">obj</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">:changed_attributes</span>)
+225:             <span class="ruby-identifier">changed_attrs</span>.<span class="ruby-identifier">clear</span>
+226:           <span class="ruby-keyword kw">end</span>
+227: 
+228:           <span class="ruby-identifier">obj</span>      
+229:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000426" class="method-detail">
-        <a name="M000426"></a>
+      <div id="method-M000328" class="method-detail">
+        <a name="M000328"></a>
 
         <div class="method-heading">
-          <a href="#M000426" class="method-signature">
+          <a href="#M000328" class="method-signature">
           <span class="method-name">build_new_version</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000426-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000426-source">
+            onclick="toggleCode('M000328-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000328-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 72</span>
-72:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">build_new_version</span>
-73:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">build_new_version?</span>
-74:             <span class="ruby-identifier">increment_version</span>            
-75:             <span class="ruby-identifier">attrs</span> = <span class="ruby-identifier">versioned_attributes</span>
-76:             <span class="ruby-identifier">attrs</span>[<span class="ruby-identifier">:version_comment</span>] = <span class="ruby-ivar">@version_comment</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">default_version_comment</span>
-77:             <span class="ruby-ivar">@version_comment</span> = <span class="ruby-keyword kw">nil</span>            
-78:             <span class="ruby-identifier">new_version</span> = <span class="ruby-identifier">versions</span>.<span class="ruby-identifier">build</span>(<span class="ruby-identifier">attrs</span>)
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 76</span>
+76:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">build_new_version</span>
+77:           <span class="ruby-comment cmt"># First get the values from the draft</span>
+78:           <span class="ruby-identifier">attrs</span> = <span class="ruby-identifier">draft_attributes</span>
 79: 
-80:             <span class="ruby-identifier">after_build_new_version</span>(<span class="ruby-identifier">new_version</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:after_build_new_version</span>)
-81:           <span class="ruby-keyword kw">end</span>          
-82:           <span class="ruby-keyword kw">true</span>
-83:         <span class="ruby-keyword kw">end</span>
+80:           <span class="ruby-comment cmt"># Now overwrite any changed values      </span>
+81:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned_columns</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">col</span><span class="ruby-operator">|</span>
+82:             <span class="ruby-keyword kw">if</span>(<span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{col}_changed?&quot;</span>))
+83:               <span class="ruby-identifier">attrs</span>[<span class="ruby-identifier">col</span>] = <span class="ruby-identifier">send</span>(<span class="ruby-identifier">col</span>)
+84:             <span class="ruby-keyword kw">end</span>
+85:           <span class="ruby-keyword kw">end</span>
+86: 
+87:           <span class="ruby-identifier">attrs</span>[<span class="ruby-identifier">:version_comment</span>] = <span class="ruby-ivar">@version_comment</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">default_version_comment</span>
+88:           <span class="ruby-ivar">@version_comment</span> = <span class="ruby-keyword kw">nil</span>            
+89:           <span class="ruby-identifier">new_version</span> = <span class="ruby-identifier">versions</span>.<span class="ruby-identifier">build</span>(<span class="ruby-identifier">attrs</span>)
+90:           <span class="ruby-identifier">new_version</span>.<span class="ruby-identifier">version</span> = <span class="ruby-identifier">new_record?</span> <span class="ruby-value">? </span><span class="ruby-value">1</span> <span class="ruby-operator">:</span> (<span class="ruby-identifier">draft</span>.<span class="ruby-identifier">version</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>)
+91:           <span class="ruby-identifier">after_build_new_version</span>(<span class="ruby-identifier">new_version</span>) <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:after_build_new_version</span>)
+92:           <span class="ruby-identifier">new_version</span>
+93:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000427" class="method-detail">
-        <a name="M000427"></a>
+      <div id="method-M000337" class="method-detail">
+        <a name="M000337"></a>
 
         <div class="method-heading">
-          <a href="#M000427" class="method-signature">
-          <span class="method-name">build_new_version?</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000427-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000427-source">
-<pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 85</span>
-85:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">build_new_version?</span>
-86:           <span class="ruby-operator">!</span><span class="ruby-operator">!</span>(<span class="ruby-identifier">new_record?</span> <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-ivar">@version_comment</span>.<span class="ruby-identifier">blank?</span> <span class="ruby-operator">||</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned_columns</span>.<span class="ruby-identifier">detect</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">c</span><span class="ruby-operator">|</span> <span class="ruby-identifier">__send__</span> <span class="ruby-node">&quot;#{c}_changed?&quot;</span> })
-87:         <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000432" class="method-detail">
-        <a name="M000432"></a>
-
-        <div class="method-heading">
-          <a href="#M000432" class="method-signature">
+          <a href="#M000337" class="method-signature">
           <span class="method-name">current_version</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000432-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000432-source">
+            onclick="toggleCode('M000337-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000337-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 109</span>
-109:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">current_version</span>
-110:           <span class="ruby-identifier">find_version</span>(<span class="ruby-identifier">version</span>)
-111:         <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 194</span>
+194:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">current_version</span>
+195:           <span class="ruby-identifier">find_version</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">version</span>)
+196:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000431" class="method-detail">
-        <a name="M000431"></a>
+      <div id="method-M000330" class="method-detail">
+        <a name="M000330"></a>
 
         <div class="method-heading">
-          <a href="#M000431" class="method-signature">
-          <span class="method-name">current_version?</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000431-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000431-source">
-<pre>
-     <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 105</span>
-105:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">current_version?</span>
-106:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">id</span>).<span class="ruby-identifier">version</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">version</span>
-107:         <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000430" class="method-detail">
-        <a name="M000430"></a>
-
-        <div class="method-heading">
-          <a href="#M000430" class="method-signature">
+          <a href="#M000330" class="method-signature">
           <span class="method-name">default_version_comment</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000430-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000430-source">
+            onclick="toggleCode('M000330-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000330-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 97</span>
- 97:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">default_version_comment</span>
- 98:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">new_record?</span>
- 99:             <span class="ruby-value str">&quot;Created&quot;</span>
-100:           <span class="ruby-keyword kw">else</span>
-101:             <span class="ruby-node">&quot;Changed #{(changes.keys - %w[version created_by_id updated_by_id]).sort.join(', ')}&quot;</span>
-102:           <span class="ruby-keyword kw">end</span>
-103:         <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 102</span>
+102:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">default_version_comment</span>
+103:           <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">new_record?</span>
+104:             <span class="ruby-value str">&quot;Created&quot;</span>
+105:           <span class="ruby-keyword kw">else</span>
+106:             <span class="ruby-node">&quot;Changed #{(changes.keys - %w[version created_by_id updated_by_id]).sort.join(', ')}&quot;</span>
+107:           <span class="ruby-keyword kw">end</span>
+108:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000433" class="method-detail">
-        <a name="M000433"></a>
+      <div id="method-M000333" class="method-detail">
+        <a name="M000333"></a>
 
         <div class="method-heading">
-          <a href="#M000433" class="method-signature">
+          <a href="#M000333" class="method-signature">
+          <span class="method-name">draft</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000333-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000333-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 178</span>
+178:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">draft</span>
+179:           <span class="ruby-identifier">versions</span>.<span class="ruby-identifier">first</span>(<span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;version desc&quot;</span>)    
+180:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000329" class="method-detail">
+        <a name="M000329"></a>
+
+        <div class="method-heading">
+          <a href="#M000329" class="method-signature">
+          <span class="method-name">draft_attributes</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000329-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000329-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 95</span>
+ 95:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">draft_attributes</span>
+ 96:           <span class="ruby-comment cmt"># When there is no draft, we'll just copy the attibutes from this object</span>
+ 97:           <span class="ruby-comment cmt"># Otherwise we need to use the draft</span>
+ 98:           <span class="ruby-identifier">d</span> = <span class="ruby-identifier">new_record?</span> <span class="ruby-value">? </span><span class="ruby-keyword kw">self</span> <span class="ruby-operator">:</span> <span class="ruby-identifier">draft</span>
+ 99:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned_columns</span>.<span class="ruby-identifier">inject</span>({}){<span class="ruby-operator">|</span><span class="ruby-identifier">attrs</span>, <span class="ruby-identifier">col</span><span class="ruby-operator">|</span> <span class="ruby-identifier">attrs</span>[<span class="ruby-identifier">col</span>] = <span class="ruby-identifier">d</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">col</span>); <span class="ruby-identifier">attrs</span> }
+100:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000334" class="method-detail">
+        <a name="M000334"></a>
+
+        <div class="method-heading">
+          <a href="#M000334" class="method-signature">
+          <span class="method-name">draft_version?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000334-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000334-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 182</span>
+182:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">draft_version?</span>
+183:           <span class="ruby-identifier">version</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">draft</span>.<span class="ruby-identifier">version</span>
+184:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000338" class="method-detail">
+        <a name="M000338"></a>
+
+        <div class="method-heading">
+          <a href="#M000338" class="method-signature">
           <span class="method-name">find_version</span><span class="method-args">(number)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000433-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000433-source">
+            onclick="toggleCode('M000338-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000338-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 113</span>
-113:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_version</span>(<span class="ruby-identifier">number</span>)
-114:           <span class="ruby-identifier">versions</span>.<span class="ruby-identifier">first</span>(<span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-identifier">:version</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">number</span> })
-115:         <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 198</span>
+198:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">find_version</span>(<span class="ruby-identifier">number</span>)
+199:           <span class="ruby-identifier">versions</span>.<span class="ruby-identifier">first</span>(<span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> { <span class="ruby-identifier">:version</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">number</span> })
+200:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000428" class="method-detail">
-        <a name="M000428"></a>
+      <div id="method-M000327" class="method-detail">
+        <a name="M000327"></a>
 
         <div class="method-heading">
-          <a href="#M000428" class="method-signature">
-          <span class="method-name">increment_version</span><span class="method-args">()</span>
+          <a href="#M000327" class="method-signature">
+          <span class="method-name">initialize_version</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000428-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000428-source">
+            onclick="toggleCode('M000327-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000327-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 89</span>
-89:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">increment_version</span>
-90:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">version</span> = <span class="ruby-identifier">version</span>.<span class="ruby-identifier">to_i</span> <span class="ruby-operator">+</span> <span class="ruby-value">1</span>
-91:         <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 72</span>
+72:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize_version</span>
+73:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">version</span> = <span class="ruby-value">1</span>
+74:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000434" class="method-detail">
-        <a name="M000434"></a>
+      <div id="method-M000335" class="method-detail">
+        <a name="M000335"></a>
 
         <div class="method-heading">
-          <a href="#M000434" class="method-signature">
+          <a href="#M000335" class="method-signature">
           <span class="method-name">live_version</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000434-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000434-source">
+            onclick="toggleCode('M000335-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000335-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 117</span>
-117:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">live_version</span>
-118:           <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">publishable?</span>    
-119:             <span class="ruby-identifier">live_version</span> = <span class="ruby-identifier">versions</span>.<span class="ruby-identifier">first</span>(<span class="ruby-identifier">:conditions</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:published</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>}, <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;version desc, id desc&quot;</span>)
-120:             <span class="ruby-identifier">live_version</span> <span class="ruby-value">? </span><span class="ruby-identifier">as_of_version</span>(<span class="ruby-identifier">live_version</span>.<span class="ruby-identifier">version</span>) <span class="ruby-operator">:</span> <span class="ruby-keyword kw">nil</span>
-121:           <span class="ruby-keyword kw">else</span>
-122:             <span class="ruby-keyword kw">self</span>
-123:           <span class="ruby-keyword kw">end</span>
-124:         <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 186</span>
+186:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">live_version</span>
+187:           <span class="ruby-identifier">find_version</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">id</span>).<span class="ruby-identifier">version</span>)
+188:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000435" class="method-detail">
-        <a name="M000435"></a>
+      <div id="method-M000336" class="method-detail">
+        <a name="M000336"></a>
 
         <div class="method-heading">
-          <a href="#M000435" class="method-signature">
+          <a href="#M000336" class="method-signature">
           <span class="method-name">live_version?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000435-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000435-source">
+            onclick="toggleCode('M000336-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000336-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 126</span>
-126:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">live_version?</span>
-127:           <span class="ruby-identifier">live_version</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">version</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">live_version</span>.<span class="ruby-identifier">version</span>
-128:         <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 190</span>
+190:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">live_version?</span>
+191:           <span class="ruby-identifier">version</span> <span class="ruby-operator">==</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">id</span>).<span class="ruby-identifier">version</span>
+192:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000437" class="method-detail">
-        <a name="M000437"></a>
+      <div id="method-M000341" class="method-detail">
+        <a name="M000341"></a>
 
         <div class="method-heading">
-          <a href="#M000437" class="method-signature">
+          <a href="#M000341" class="method-signature">
           <span class="method-name">revert</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000437-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000437-source">
+            onclick="toggleCode('M000341-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000341-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 150</span>
-150:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">revert</span>
-151:           <span class="ruby-identifier">revert_to</span>(<span class="ruby-identifier">version</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">version</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
-152:         <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 231</span>
+231:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">revert</span>
+232:           <span class="ruby-identifier">draft_version</span> = <span class="ruby-identifier">draft</span>.<span class="ruby-identifier">version</span>
+233:           <span class="ruby-identifier">revert_to</span>(<span class="ruby-identifier">draft_version</span> <span class="ruby-operator">-</span> <span class="ruby-value">1</span>) <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">draft_version</span> <span class="ruby-operator">==</span> <span class="ruby-value">1</span>
+234:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000439" class="method-detail">
-        <a name="M000439"></a>
+      <div id="method-M000343" class="method-detail">
+        <a name="M000343"></a>
 
         <div class="method-heading">
-          <a href="#M000439" class="method-signature">
+          <a href="#M000343" class="method-signature">
           <span class="method-name">revert_to</span><span class="method-args">(version)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000439-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000439-source">
+            onclick="toggleCode('M000343-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000343-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 165</span>
-165:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">revert_to</span>(<span class="ruby-identifier">version</span>)
-166:           <span class="ruby-identifier">revert_to_without_save</span>(<span class="ruby-identifier">version</span>)
-167:           <span class="ruby-identifier">save</span>
-168:         <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 247</span>
+247:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">revert_to</span>(<span class="ruby-identifier">version</span>)
+248:           <span class="ruby-identifier">revert_to_without_save</span>(<span class="ruby-identifier">version</span>)
+249:           <span class="ruby-identifier">save</span>
+250:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000438" class="method-detail">
-        <a name="M000438"></a>
+      <div id="method-M000342" class="method-detail">
+        <a name="M000342"></a>
 
         <div class="method-heading">
-          <a href="#M000438" class="method-signature">
+          <a href="#M000342" class="method-signature">
           <span class="method-name">revert_to_without_save</span><span class="method-args">(version)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000438-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000438-source">
+            onclick="toggleCode('M000342-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000342-source">
 <pre>
-     <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 154</span>
-154:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">revert_to_without_save</span>(<span class="ruby-identifier">version</span>)
-155:           <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Version parameter missing&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">version</span>.<span class="ruby-identifier">blank?</span>
-156:           <span class="ruby-identifier">revert_to_version</span> = <span class="ruby-identifier">find_version</span>(<span class="ruby-identifier">version</span>)
-157:           <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Could not find version #{version}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">revert_to_version</span>
-158:           (<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned_columns</span> <span class="ruby-operator">-</span> [<span class="ruby-value str">&quot;version&quot;</span>]).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span>
-159:             <span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{a}=&quot;</span>, <span class="ruby-identifier">revert_to_version</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">a</span>))
-160:           <span class="ruby-keyword kw">end</span>  
-161:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">version_comment</span> = <span class="ruby-node">&quot;Reverted to version #{version}&quot;</span>
-162:           <span class="ruby-keyword kw">self</span>            
-163:         <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 236</span>
+236:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">revert_to_without_save</span>(<span class="ruby-identifier">version</span>)
+237:           <span class="ruby-identifier">raise</span> <span class="ruby-value str">&quot;Version parameter missing&quot;</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">version</span>.<span class="ruby-identifier">blank?</span>
+238:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">revert_to_version</span> = <span class="ruby-identifier">find_version</span>(<span class="ruby-identifier">version</span>)
+239:           <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Could not find version #{version}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">revert_to_version</span>
+240:           (<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned_columns</span> <span class="ruby-operator">-</span> [<span class="ruby-value str">&quot;version&quot;</span>]).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">a</span><span class="ruby-operator">|</span>
+241:             <span class="ruby-identifier">send</span>(<span class="ruby-node">&quot;#{a}=&quot;</span>, <span class="ruby-identifier">revert_to_version</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">a</span>))
+242:           <span class="ruby-keyword kw">end</span>  
+243:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">version_comment</span> = <span class="ruby-node">&quot;Reverted to version #{version}&quot;</span>
+244:           <span class="ruby-keyword kw">self</span>            
+245:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000429" class="method-detail">
-        <a name="M000429"></a>
+      <div id="method-M000331" class="method-detail">
+        <a name="M000331"></a>
 
         <div class="method-heading">
-          <a href="#M000429" class="method-signature">
-          <span class="method-name">versioned_attributes</span><span class="method-args">()</span>
+          <a href="#M000331" class="method-signature">
+          <span class="method-name">save</span><span class="method-args">(perform_validations=true)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000429-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000429-source">
+            onclick="toggleCode('M000331-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000331-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 93</span>
-93:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">versioned_attributes</span>
-94:           <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">versioned_columns</span>.<span class="ruby-identifier">inject</span>({}){<span class="ruby-operator">|</span><span class="ruby-identifier">attrs</span>, <span class="ruby-identifier">col</span><span class="ruby-operator">|</span> <span class="ruby-identifier">attrs</span>[<span class="ruby-identifier">col</span>] = <span class="ruby-identifier">send</span>(<span class="ruby-identifier">col</span>); <span class="ruby-identifier">attrs</span> }
-95:         <span class="ruby-keyword kw">end</span>
+     <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 110</span>
+110:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">save</span>(<span class="ruby-identifier">perform_validations</span>=<span class="ruby-keyword kw">true</span>)
+111:           <span class="ruby-identifier">transaction</span> <span class="ruby-keyword kw">do</span>
+112:             <span class="ruby-comment cmt">#logger.info &quot;..... Calling valid?&quot;</span>
+113:             <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">valid?</span>            
+114:             
+115:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">changed?</span>
+116:               <span class="ruby-comment cmt">#logger.info &quot;..... Changes =&gt; #{changes.inspect}&quot;</span>
+117:             <span class="ruby-keyword kw">else</span>
+118:               <span class="ruby-comment cmt">#logger.info &quot;..... No Changes&quot;</span>
+119:               <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+120:             <span class="ruby-keyword kw">end</span>
+121:             
+122:             <span class="ruby-comment cmt">#logger.info &quot;..... Calling before_save&quot;</span>
+123:             <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">callback</span>(<span class="ruby-identifier">:before_save</span>) <span class="ruby-operator">==</span> <span class="ruby-keyword kw">false</span>
+124: 
+125:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">new_record?</span>
+126:               <span class="ruby-comment cmt">#logger.info &quot;..... Calling before_create&quot;</span>
+127:               <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">callback</span>(<span class="ruby-identifier">:before_create</span>) <span class="ruby-operator">==</span> <span class="ruby-keyword kw">false</span>
+128:             <span class="ruby-keyword kw">else</span>      
+129:               <span class="ruby-comment cmt">#logger.info &quot;..... Calling before_update&quot;</span>
+130:               <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">false</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">callback</span>(<span class="ruby-identifier">:before_update</span>) <span class="ruby-operator">==</span> <span class="ruby-keyword kw">false</span>
+131:             <span class="ruby-keyword kw">end</span>
+132: 
+133:             <span class="ruby-comment cmt">#logger.info &quot;..... Calling build_new_version&quot;</span>
+134:             <span class="ruby-identifier">new_version</span> = <span class="ruby-identifier">build_new_version</span>
+135:             <span class="ruby-comment cmt">#logger.info &quot;..... Is new version valid? #{new_version.valid?}&quot;</span>
+136:             <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">new_record?</span>
+137:               <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">version</span> = <span class="ruby-value">1</span>
+138:               <span class="ruby-comment cmt">#logger.info &quot;..... Calling create_without_callbacks&quot;</span>
+139:               <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">result</span> = <span class="ruby-identifier">create_without_callbacks</span>
+140:                 <span class="ruby-comment cmt">#logger.info &quot;..... Calling after_create&quot;</span>
+141:                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">callback</span>(<span class="ruby-identifier">:after_create</span>) <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">false</span>
+142:                   <span class="ruby-comment cmt">#logger.info &quot;..... Calling after_save&quot;</span>
+143:                   <span class="ruby-identifier">callback</span>(<span class="ruby-identifier">:after_save</span>)
+144:                 <span class="ruby-keyword kw">end</span>
+145:                 
+146:                 <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@publish_on_save</span>
+147:                   <span class="ruby-identifier">publish</span>
+148:                   <span class="ruby-ivar">@publish_on_save</span> = <span class="ruby-keyword kw">nil</span>
+149:                 <span class="ruby-keyword kw">end</span>                
+150:                 <span class="ruby-identifier">changed_attributes</span>.<span class="ruby-identifier">clear</span>                                   
+151:               <span class="ruby-keyword kw">end</span>
+152:               <span class="ruby-identifier">result</span>
+153:             <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">new_version</span>
+154:               <span class="ruby-comment cmt">#logger.info &quot;..... Calling save&quot;</span>
+155:               <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">result</span> = <span class="ruby-identifier">new_version</span>.<span class="ruby-identifier">save</span>
+156:                 <span class="ruby-comment cmt">#logger.info &quot;..... Calling after_save&quot;</span>
+157:                 <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">callback</span>(<span class="ruby-identifier">:after_update</span>) <span class="ruby-operator">!=</span> <span class="ruby-keyword kw">false</span>
+158:                   <span class="ruby-comment cmt">#logger.info &quot;..... Calling after_update&quot;</span>
+159:                   <span class="ruby-identifier">callback</span>(<span class="ruby-identifier">:after_save</span>)
+160:                 <span class="ruby-keyword kw">end</span>
+161:                 
+162:                 <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@publish_on_save</span>
+163:                   <span class="ruby-identifier">publish</span>
+164:                   <span class="ruby-ivar">@publish_on_save</span> = <span class="ruby-keyword kw">nil</span>
+165:                 <span class="ruby-keyword kw">end</span> 
+166:                 <span class="ruby-identifier">changed_attributes</span>.<span class="ruby-identifier">clear</span>
+167:               <span class="ruby-keyword kw">end</span>
+168:               <span class="ruby-identifier">result</span>
+169:             <span class="ruby-keyword kw">end</span>
+170:             <span class="ruby-keyword kw">true</span>
+171:           <span class="ruby-keyword kw">end</span>
+172:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000332" class="method-detail">
+        <a name="M000332"></a>
+
+        <div class="method-heading">
+          <a href="#M000332" class="method-signature">
+          <span class="method-name">save!</span><span class="method-args">(perform_validations=true)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000332-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000332-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 174</span>
+174:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">save!</span>(<span class="ruby-identifier">perform_validations</span>=<span class="ruby-keyword kw">true</span>)
+175:           <span class="ruby-identifier">save</span> <span class="ruby-operator">||</span> <span class="ruby-identifier">raise</span>(<span class="ruby-constant">RecordNotSaved</span>)
+176:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000344" class="method-detail">
+        <a name="M000344"></a>
+
+        <div class="method-heading">
+          <a href="#M000344" class="method-signature">
+          <span class="method-name">version_comment</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000344-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000344-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 252</span>
+252:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">version_comment</span>
+253:           <span class="ruby-ivar">@version_comment</span>
+254:         <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000345" class="method-detail">
+        <a name="M000345"></a>
+
+        <div class="method-heading">
+          <a href="#M000345" class="method-signature">
+          <span class="method-name">version_comment=</span><span class="method-args">(version_comment)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000345-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000345-source">
+<pre>
+     <span class="ruby-comment cmt"># File lib/cms/behaviors/versioning.rb, line 256</span>
+256:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">version_comment=</span>(<span class="ruby-identifier">version_comment</span>)
+257:           <span class="ruby-ivar">@version_comment</span> = <span class="ruby-identifier">version_comment</span>
+258:           <span class="ruby-identifier">send</span>(<span class="ruby-identifier">:changed_attributes</span>)[<span class="ruby-value str">&quot;version_comment&quot;</span>] = <span class="ruby-ivar">@version_comment</span>
+259:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
