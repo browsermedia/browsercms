@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>How to Install a Module</title>
+    <style type="text/css">
+      body {
+        background: #FFFFFF url(images/bg.png) repeat-x scroll 0 0;
+        font-family: "Trebuchet MS", Helvetica, Verdana, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+  
+      #page {
+        margin: 0 auto;
+        text-align: left;
+        width: 1000px;
+      }
+  
+      #header {
+        height: 110px;
+      }
+  
+      div.top_cap {
+        background: transparent url(images/top_cap.png) no-repeat scroll 0 0;
+        height: 10px;
+      }    
+  
+      #contentwrap {
+        background: transparent url(images/dot.png) repeat scroll 0 0;
+        float: left;
+        width: 1000px;
+      }
+      
+      div.bottom_cap {
+        background: transparent url(images/bottom_cap.png) no-repeat scroll 0 0;
+        height: 9px;
+      }
+
+      div.top_cap_content {
+        background: transparent url(images/top_cap_content.png) no-repeat scroll 0 0;
+        height: 5px;
+      }
+  
+      #content {
+        background-color: #FFFFFF;
+        margin: 0 5px;
+      }
+  
+      div.title {
+        padding: 20px;
+      }
+  
+      div.title h1 {
+        border-bottom: 3px solid #505358;
+        color: #FFFFFF;
+        font-size: 24pt;
+        font-weight: normal;
+        line-height: 1;
+        margin: 0 0 10px;
+        padding-bottom: 10px;
+      }
+      
+      td.sidebar {
+        font-size: 8pt;
+        width: 165px;
+        padding: 5px;
+      }
+      
+      td.sidebar ol {
+        margin-left: 20px;
+        padding: 0;
+        line-height: 1.5;
+      }
+      
+      td.sidebar ol li {
+        margin: 0;
+        padding: 0;
+      }
+      
+      td.sidebar ol li ul {
+        list-style-type: none;
+        padding-left: 10px;
+      }
+      
+      td.guides {
+        font-size: 10pt;
+        width: 800px;
+        padding: 10px;
+      }
+      
+      pre {
+        padding: 10px;
+        background: #eee;
+        border: 1px solid #ccc;
+        overflow: auto;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <div id="page">
+      <div id="header">
+        <a href="index.html"><img src="images/browsercms_logo.png" alt="BrowserCMS"/></a>
+      </div>
+      <div id="main">
+        <div class="top_cap"></div>
+        <div id="contentwrap">
+          <div class="title">
+            <h1>How to Install a Module</h1>
+          </div>
+          <div class="top_cap_content"></div>
+          <div id="content">
+            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr>                
+                
+                  <td class="sidebar" valign="top">
+                    <h2>Chapters</h2>
+                    <ol>
+                          <li>
+                            <a href="#_installation">Installation</a>
+                              <ul>
+                                
+                                  <li><a href="#_build_and_install_the_gem_from_source">Build and install the gem from source</a></li>
+                                
+                                  <li><a href="#_adding_the_module_to_your_project">Adding the Module to your project</a></li>
+                                
+                              </ul>
+                          </li>
+                    </ol>
+                  </td>
+                
+                <td class="guides">
+                  <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>This guide covers how to download and install a module for BrowserCMS. With BrowserCMS, modules are packaged as Ruby Gems,
+which contain the code to add new behavior to a BrowserCMS project. Installing a module consists of several
+steps, including:</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+Getting the Gem installed
+</p>
+</li>
+<li>
+<p>
+Telling BrowserCMS to use that Gem
+</p>
+</li>
+<li>
+<p>
+Pulling the module specific code into your project (like migrations)
+</p>
+</li>
+<li>
+<p>
+Running migrations
+</p>
+</li>
+</ol></div>
+<div class="paragraph"><p>Once you have done the above steps, you should have access to the Content blocks and portlets that each module provides,
+and you can add them to your pages.</p></div>
+</div>
+</div>
+<h2 id="_installation">1. Installation</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>This module assumes you are going to be building the module from source code, and installing to a project locally to your
+computer. Let&#8217;s assume you want to install the News module, who&#8217;s project name (and gem name) is <em>bcms_news</em>. If you want to
+install other modules, just substitute the name of the module you want for <em>bcms_news</em>.</p></div>
+<h3 id="_build_and_install_the_gem_from_source">1.1. Build and install the gem from source</h3>
+<div class="paragraph"><p>This assumes you have the latest copy of the code from github on your machine, in a directory ~/my_projects_dir/bcms_news_dir   .</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>cd ~/my_projects_dir/bcms_news
+gem build bcms_news.gemspec
+sudo gem install bcms_news-1.0.0.gem</tt></pre>
+</div></div>
+<div class="paragraph"><p>At this point, the News module gem should be installed as a gem on your system, and can be added to your projects.</p></div>
+<h3 id="_adding_the_module_to_your_project">1.2. Adding the Module to your project</h3>
+<div class="paragraph"><p>In your BrowserCMS application, do the following steps.</p></div>
+<h4 id="_edit_the_confing_environment_rb_file">1.2.1. Edit the confing/environment.rb file</h4>
+<div class="literalblock">
+<div class="content">
+<pre><tt>config.gem 'browsercms'</tt></pre>
+</div></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt># Add this next line after the browsercms gem
+config.gem "bcms_news"</tt></pre>
+</div></div>
+<h4 id="_edit_the_routes_rb_file">1.2.2. Edit the routes.rb file</h4>
+<div class="literalblock">
+<div class="content">
+<pre><tt># Add this route. It must be before the core browser_cms route.
+map.routes_for_bcms_news
+map.routes_for_browser_cms</tt></pre>
+</div></div>
+<h4 id="_install_the_new_module_code">1.2.3. Install the new module code</h4>
+<div class="paragraph"><p>From the root directory of your cms project, run:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>script/generate browser_cms</tt></pre>
+</div></div>
+<div class="paragraph"><p>This will copy all the necessary views and migrations from the gems into your local project. You should messages checking to see if files already exist or were created.</p></div>
+<h4 id="_run_migrations_and_start_the_server">1.2.4. Run migrations and start the server</h4>
+<div class="paragraph"><p>Modules will often add new data types, like content blocks, so you need to run the migrations to add them to your project.</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>rake db:migrate
+script/server</tt></pre>
+</div></div>
+<h4 id="_add_new_content_to_your_site">1.2.5. Add New Content to your Site</h4>
+<div class="paragraph"><p>Most modules will come with a few new types of content, either a new Content Block and one or more Portlets, which are
+designed to display those Content Blocks in interesting ways. To discover what new contents have been added, you can look
+at the Content Library for a new group (like <em>News</em>) or add a new Portlet, which will list all available portlets in the system.</p></div>
+</div>
+
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <br clear="all"/>
+        <div class="bottom_cap"></div>
+      </div>
+    </div>
+  </body>
+</html>

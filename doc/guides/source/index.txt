@@ -1,27 +1,40 @@
-BrowserCMS Guides
-=================
+= BrowserCMS Reference Documenation
 
-.link:getting_started.html[Getting Started with BrowserCMS]
+BrowserCMS is a general purpose, open source Web Content Management System (CMS), written in Ruby on Rails. It is designed to support three distinct groups of people:
+
+1. Non-technical web editors who want a humane system to manage their site, without needing to understand what HTML or even Rails is.
+2. Designers who want to create large and elegantly designed websites with no artificial constraints by the CMS.
+3. Developers who want to add a CMS into their Rails projects, or create CMS driven websites for their clients.
+
+This guide is for BrowserCMS v3.0.0 (Beta).
+
+.link:getting_started.html[Getting Started]
 ***********************************************************
-How to get BrowserCMS up and running.
+How to install BrowserCMS and start using it.
 ***********************************************************
 
-.link:user_guide.html[Building a Site with BrowserCMS]
+.link:user_guide.html[User Guide]
 ***********************************************************
-A user guide that covers how to use BrowserCMS to build and manage websites. Aimed at helping site managers, webmasters, maintainers to understand how to perform the common tasks associated with creating and managing content.
+How to use the basic features of BrowserCMS.
 ***********************************************************
 
-.link:developer_guide.html[Developing with BrowserCMS]
+.link:installing-modules.html[Installing a Module]
 **************************************************************
-Everything you need to know to extend a BrowserCMS site by creating custom content blocks and creating portlets.
+How to add a module to your BrowserCMS project.
 **************************************************************
 
-.link:designer_guide.html[Designing with BrowserCMS]
+.link:developer_guide.html[Customizing the CMS]
 **************************************************************
-Everything you need to know to style pages with BrowserCMS by creating page templates and page partials.
+How to customize and extend a BrowserCMS site to add dynamic behavior and content.
 **************************************************************
 
-.link:deployment_guide.html[BrowserCMS Deployment Guide]
-***********************************************************
-Everything you need to know to setup your server to run a BrowserCMS site in production.
-***********************************************************
+.link:designer_guide.html[Building Templates]
+**************************************************************
+How to turn a design into a styled website.
+**************************************************************
+
+.link:deployment_guide.html[Deploying to Production Servers]
+**************************************************************
+How to configure Apache and Passenger to work with BrowserCMS in production mode.
+**************************************************************
+

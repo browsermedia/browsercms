@@ -1,0 +1,65 @@
+= How to Install a Module
+
+This guide covers how to download and install a module for BrowserCMS. With BrowserCMS, modules are packaged as Ruby Gems,
+which contain the code to add new behavior to a BrowserCMS project. Installing a module consists of several
+steps, including:
+
+1. Getting the Gem installed
+2. Telling BrowserCMS to use that Gem
+3. Pulling the module specific code into your project (like migrations)
+4. Running migrations
+
+Once you have done the above steps, you should have access to the Content blocks and portlets that each module provides,
+and you can add them to your pages.
+
+
+== Installation
+This module assumes you are going to be building the module from source code, and installing to a project locally to your
+computer. Let's assume you want to install the News module, who's project name (and gem name) is 'bcms_news'. If you want to
+install other modules, just substitute the name of the module you want for 'bcms_news'.
+
+=== Build and install the gem from source
+This assumes you have the latest copy of the code from github on your machine, in a directory ~/my_projects_dir/bcms_news_dir   .
+
+        cd ~/my_projects_dir/bcms_news
+        gem build bcms_news.gemspec
+        sudo gem install bcms_news-1.0.0.gem
+
+At this point, the News module gem should be installed as a gem on your system, and can be added to your projects.
+
+=== Adding the Module to your project
+In your BrowserCMS application, do the following steps.
+
+====  Edit the confing/environment.rb file
+
+		config.gem 'browsercms'
+
+		# Add this next line after the browsercms gem
+		config.gem "bcms_news"
+
+==== Edit the routes.rb file
+
+		# Add this route. It must be before the core browser_cms route.
+		map.routes_for_bcms_news
+		map.routes_for_browser_cms
+
+==== Install the new module code
+From the root directory of your cms project, run:
+
+		script/generate browser_cms
+
+This will copy all the necessary views and migrations from the gems into your local project. You should messages checking to see if files already exist or were created.
+
+==== Run migrations and start the server
+Modules will often add new data types, like content blocks, so you need to run the migrations to add them to your project.
+
+		rake db:migrate
+		script/server
+
+==== Add New Content to your Site
+Most modules will come with a few new types of content, either a new Content Block and one or more Portlets, which are
+designed to display those Content Blocks in interesting ways. To discover what new contents have been added, you can look
+at the Content Library for a new group (like 'News') or add a new Portlet, which will list all available portlets in the system.
+
+
+
