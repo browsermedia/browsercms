@@ -15,9 +15,12 @@ class DynamicView < ActiveRecord::Base
   ensure
     subclass.class_eval do
       flush_cache_on_change
+      is_publishable
       uses_soft_delete
       is_userstamped
       is_versioned :version_foreign_key => "dynamic_view_id"
+
+      before_validation :set_publish_on_save
 
       validates_presence_of :name, :format, :handler
       validates_uniqueness_of :name, :scope => [:format, :handler],
@@ -57,7 +60,7 @@ class DynamicView < ActiveRecord::Base
   end
   
   def self.write_all_to_disk!
-    all.each{|v| v.write_file_to_disk }
+    all(:conditions => {:deleted => false}).each{|v| v.write_file_to_disk }
   end
   
   def remove_file_from_disk
@@ -68,6 +71,10 @@ class DynamicView < ActiveRecord::Base
   
   def self.default_body
     ""
+  end
+  
+  def set_publish_on_save
+    self.publish_on_save = true
   end
   
 end

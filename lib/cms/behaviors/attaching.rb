@@ -165,7 +165,7 @@ module Cms
 
         def attachment_link
           if attachment
-            live_version? ? attachment_file_path : "/cms/attachments/#{attachment_id}?version=#{attachment_version}"    
+            (published? && live_version?) ? attachment_file_path : "/cms/attachments/#{attachment_id}?version=#{attachment_version}"
           else
             nil
           end  

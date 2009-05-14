@@ -45,7 +45,11 @@ module Cms
       module InstanceMethods
         #Overrides original destroy method
         def destroy_without_callbacks
-          update_attributes(:deleted => true, :publish_on_save => true)
+          if self.class.publishable?
+            update_attributes(:deleted => true, :publish_on_save => true)
+          else
+            update_attributes(:deleted => true)
+          end
         end
 
         def mark_as_deleted!
