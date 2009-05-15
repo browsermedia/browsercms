@@ -35,7 +35,6 @@ Gem::Specification.new do |s|
     "app/controllers/cms/html_blocks_controller.rb",
     "app/controllers/cms/image_blocks_controller.rb",
     "app/controllers/cms/links_controller.rb",
-    "app/controllers/cms/missing_asset_controller.rb",
     "app/controllers/cms/page_route_conditions_controller.rb",
     "app/controllers/cms/page_route_options_controller.rb",
     "app/controllers/cms/page_route_requirements_controller.rb",
