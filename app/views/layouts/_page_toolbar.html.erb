@@ -77,10 +77,19 @@
     :target => "_top" %>
     
   <% able_to? :publish_content do %>
-    <% if @page.live? %>  
-      <%= link_to "<span><span class=\"delete_img\">&nbsp;</span>Delete</span>", [:cms, @page], :title => "Are you sure you want to delete '#{@page.name}'?", :target => "_top", :class => "confirm_with_title http_delete button#{' disabled' if !@page.live?} right" %>
+    <% if @page.draft_version? %>  
+      <%= link_to "<span><span class=\"delete_img\">&nbsp;</span>Delete</span>",    
+        [:cms, @page], 
+        :id => "delete_button",
+        :title => "Are you sure you want to delete '#{@page.name}'?", 
+        :target => "_top", 
+        :class => "button confirm_with_title http_delete right" %>
     <% else %>
-      <%= link_to "<span>Revert to this Version</span>", revert_to_cms_page_path(@page, @page.version), :class => "button http_put", :target => "_top" %>
+      <%= link_to "<span>Revert to this Version</span>",
+        revert_to_cms_page_path(@page, @page.version), 
+        :id => "revert_button",
+        :class => "button http_put", 
+        :target => "_top" %>
     <% end %>
   <% end %>
 

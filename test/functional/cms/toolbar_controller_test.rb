@@ -49,10 +49,13 @@ class Cms::ToolbarControllerTest < ActionController::TestCase
     assert_select ".buttons .disabled span", :text => "Edit Properties", :count => 0
     assert_select "#edit_properties_button[href=?]", edit_cms_page_path(@page)
     
+    assert_select ".buttons span", :text => "Revert to this Version", :count => 0
+    assert_select "#delete_button", 1
+    
     assert_select "#visual_editor_state", "ON"
     assert_select "#visual_editor_action", "TURN OFF"    
   end
-  
+    
   protected
     def create_page
       @page = Factory(:page, :section => root_section, :name => "Test", :path => "test")      
