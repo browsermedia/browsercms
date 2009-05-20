@@ -12,7 +12,7 @@ module Cms
       @version = SPEC.version.version
     end
     
-    def build_number; 232 end
+    def build_number; 233 end
     
     def load_rake_tasks
       load "#{Cms.root}/lib/tasks/cms.rake"

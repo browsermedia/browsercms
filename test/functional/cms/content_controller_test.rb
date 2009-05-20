@@ -15,6 +15,21 @@ class Cms::ContentControllerTest < ActionController::TestCase
     assert_select "title", "Test About"
   end
   
+  def test_page_not_found_to_guest
+    get :show, :path => ["foo"]
+    assert_response :not_found
+    assert_select "title", "Not Found"
+    assert_select "h1", "Page Not Found"
+  end
+  
+  def test_page_not_found_to_cms_admin
+    login_as_cms_admin
+    get :show, :path => ["foo"]
+    assert_response :not_found
+    assert_select "title", "Page Not Found"
+    assert_select "h2", "There is no page at /foo"
+  end
+  
   def test_show_protected_page_to_guest
     create_protected_page
     
@@ -68,10 +83,6 @@ class Cms::ContentControllerTest < ActionController::TestCase
     reset(:file_block)
     assert @file_block.attachment.archived?
     
-    log_table_with Attachment,
-      :id, :version, :file_path, :file_extension, :file_type, :file_size, :published, :deleted, :archived
-    log_table_with Attachment::Version, 
-      :id, :version, :file_path, :file_extension, :file_type, :file_size, :published, :deleted, :archived, :attachment_id
     get :show, :path => ["test.txt"]
     
     assert_response :not_found
@@ -130,9 +141,6 @@ class Cms::ContentControllerTest < ActionController::TestCase
     @block.update_attributes(:content => "<h3>I've been edited</h3>")
     reset(:page, :block)
     
-    log_table_with Page::Version, :id, :name, :version, :page_id
-    log_table_without_stamps Connector
-    log_table_with HtmlBlock::Version, :id, :name, :content, :version, :html_block_id
     get :show, :path => ["page_with_content"]
     assert_response :success
     assert_select "h3", "I've been edited"

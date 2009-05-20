@@ -1,0 +1,37 @@
+<% page_title "Page Not Found" %>
+
+<%# 
+  Note that we have to clear out the existing contents of
+  the functions and html_head content because you can have
+  an error occur in the view after stuff has been already
+  set in those variables
+%>
+
+<% @content_for_functions = "" %>
+<%= content_for :functions, "<h1>#{ page_title }</h1>" %>
+
+<% @content_for_html_head = "" %>
+<% content_for :html_head do %>
+  <style type="text/css">
+    .cms_error {
+      overflow: auto;
+      padding: 10px;
+    }
+    .cms_error h2 {
+      font-size: 18px;
+      font-weight: bold;
+      line-height: 18px;
+      margin-bottom: 5px;
+    }
+    .cms_error pre {
+      font-family: "Monaco", monospace;
+      font-size: 12px;
+      line-height: 12px;
+      margin-bottom: 20px;
+    }
+  </style>
+<% end %>
+
+<div class="cms_error">
+  <h2>There is no page at <%= @path %></h2>
+</div>
