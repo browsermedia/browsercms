@@ -177,8 +177,13 @@ class Cms::ContentController < Cms::ApplicationController
     set_page_mode
     if current_user.able_to?(:edit_content, :publish_content, :administrate)
       logger.info "..... Displaying draft version of page"
-      @page = Page.first(:conditions => {:path => @path}).as_of_draft_version
-      page_not_found unless @page
+      if page = Page.first(:conditions => {:path => @path})
+        @page = page.as_of_draft_version
+      else
+        return render(:layout => 'cms/application', 
+          :template => 'cms/content/no_page', 
+          :status => :not_found)
+      end
     else
       logger.info "..... Displaying live version of page"
       @page = Page.find_live_by_path(@path)

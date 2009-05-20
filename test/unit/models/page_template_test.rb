@@ -10,13 +10,15 @@ class PageTemplateTest < ActiveSupport::TestCase
     File.delete(@page_template.file_path) if File.exists?(@page_template.file_path)    
   end
   
-  def test_create
+  def test_create_and_destroy
     assert !File.exists?(@page_template.file_path), "template file already exists"
     assert_valid @page_template
     assert @page_template.save
     assert File.exists?(@page_template.file_path), "template file was not written to disk"
+    @page_template.destroy
+    assert !File.exists?(@page_template.file_path), "template file was not removed on destroy"    
   end
-  
+
   def test_for_valid_name
     assert_not_valid Factory.build(:page_template, :name => "Fancy")
     assert_not_valid Factory.build(:page_template, :name => "foo bar")
