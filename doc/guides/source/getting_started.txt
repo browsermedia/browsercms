@@ -44,14 +44,17 @@ directory of cms. Here are the two options when starting a project.
 * /templates/demo.rb - If you are new to BrowserCMS, and want to experiment, use this. It builds a sample site with a few pages, using our default theme, and adds some content to play around with.
 * /templates/blank.rb - Use this if you want a completely empty site. Most 'real' projects will use this to start, as there is no 'dummy' data to remove before building a site.
 
-To create a new project (using the demo template), run the following:
+To create a new project (using the demo template, for a MySQL database), run the following:
 
     cd ~/projects
-    rails my_new_project_name -m /path/to/browsercms_source_code/templates/demo.rb
+    rails my_new_project_name -d mysql -m /path/to/browsercms_source_code/templates/demo.rb
     cd my_new_project_name
     script/server
 
 This is going to create the development and testing copies of the database, migrate the db, populate it with some initial data, and copy all of the necessary files from the gem into the rails project.
+To create a project that uses SQLite, rather than MySQL as the database, you can run the following command instead (You will need the SQLite gem installed already).
+
+    rails my_new_project_name -m /path/to/browsercms_source_code/templates/demo.rb
 
 === Using your Site
 Once installed, you can go to http://localhost:3000 to see the running CMS application. To log into the admin for the CMS,
