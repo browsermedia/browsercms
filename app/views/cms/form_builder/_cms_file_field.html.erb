@@ -18,10 +18,12 @@
   <% else %>
     <%= f.label method %>
   <% end %>
-  <div id="<%= object_name %>_<%= method %>_div">
-    <input type="text" name="temp" class="mock" id="mock_<%= object_name %>_<%= method %>" />
-    <%= image_tag("cms/browse.gif") %>
-    <%= f.file_field method, {:size => 1}.merge(options) %>
+  <div id="<%= object_name %>_<%= method %>_div" class="file_inputs">
+    <%= f.file_field method, {:size => 1, :class=>"file"}.merge(options) %>
+    <div class="fakefile">
+        <input type="text" name="temp" class="mock" id="mock_<%= object_name %>_<%= method %>" />
+        <%= image_tag("cms/browse.gif") %>
+    </div>
   </div>
   <% if cms_options[:instructions] %>
     <div class="instructions"><%=h cms_options[:instructions] %></div>

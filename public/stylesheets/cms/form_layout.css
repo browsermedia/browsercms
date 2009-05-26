@@ -162,10 +162,23 @@ line-height: 15px;
 float: left;
 }
 
-.file_fields input {
+.file_fields div.file_inputs {
+    position:relative;
+}
+
+.file_fields .fakefile {
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:1;
+    display:inline;
+    margin-left: 140px;
+}
+.file_fields input.file {
 opacity: 0;
 filter: alpha(opacity=0);
 position: relative;
+text-align:right;
 z-index: 2;
 }
 
@@ -176,6 +189,7 @@ position: absolute;
 width: 378px;
 padding: 5px;
 margin-top: 2px;
+z-index:1;
 }
 .file_fields img {
 position: absolute;
