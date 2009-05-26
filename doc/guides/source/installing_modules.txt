@@ -33,7 +33,6 @@ In your BrowserCMS application, do the following steps.
 ====  Edit the confing/environment.rb file
 
 		config.gem 'browsercms'
-
 		# Add this next line after the browsercms gem
 		config.gem "bcms_news"
 
