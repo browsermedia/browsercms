@@ -705,3 +705,22 @@ class ViewingAPreviousVersionOfAPageTest < ActiveRecord::TestCase
   end
 end
 
+class PortletsDontHaveDraftsTest < ActiveRecord::TestCase
+
+  def test_connectors_with_portlets_should_correctly_be_copied
+    @page = Factory(:page, :section=> root_section)
+    @portlet = TagCloudPortlet.create(:name=>"Portlet", :connect_to_page_id => @page.id, :connect_to_container => "main")
+
+    # Check some assumptions.
+    assert_equal 2, @page.draft.version, "Verifying that adding a portlet correctly increments page version."
+    connectors = Connector.for_connectable(@portlet)
+    assert_equal 1, connectors.size, "This portlet should have only 1 connector."
+
+    # Verifies that an exception is not thrown while removing connectors
+    @page.remove_connector(connectors[0])
+
+    assert_equal 3, @page.draft.version
+    assert @page.reload.connectors.for_page_version(@page.draft.version).empty?, "Verify that all connectors for the latest page are removed."
+  end
+end
+

@@ -88,5 +88,49 @@ class ConnectorTest < ActiveSupport::TestCase
     assert_equal @block.name, c.name
     assert_equal 1, c.version
   end
-  
+
+  def test_connector_should_be_copied_when_it_has_a_connectable
+    @page = Factory(:page)
+    @block = Factory(:html_block, :connect_to_page_id => @page.id, :connect_to_container => "main")
+
+    conn = Connector.new
+    conn.connectable = @block
+    assert(conn.connectable, "Check the assumption there is connectable.")
+    assert_equal(false, conn.connectable.draft.deleted?, "Check the assumption that the draft is not-deleted.")
+
+    assert(conn.should_be_copied?, "Verifes that normally a connector should be copied.")
+  end
+
+  def test_connector_shouldnt_copy_when_its_connectable_is_nil
+    conn = Connector.new
+    assert_nil(conn.connectable, "Check assumption that connectable is nil.")
+
+    assert_equal false, conn.should_be_copied?, "Shouldn't copy when a connector isn't connected to anything."
+  end
+
+  def test_connector_should_copy_when_its_latest_draft_is_deleted
+    @page = Factory(:page)
+    @block = Factory(:html_block, :connect_to_page_id => @page.id, :connect_to_container => "main")
+
+    @block.destroy
+
+    conn = Connector.new
+    conn.connectable = @block
+
+    assert_equal true, @block.draft.deleted?, "Check assumption that latest draft of this block is 'deleted'."
+    assert_equal false, conn.should_be_copied?, "Should not copy when latest draft is deleted."
+
+  end
+
+  def test_connector_should_copy_even_if_connectable_doesnt_have_drafts
+    @page = Factory(:page)
+    @block = Portlet.create!(:name => "Stuff")
+
+    conn = Connector.new
+    conn.connectable = @block
+
+    assert_equal false, @block.respond_to?(:draft), "Check assumption that portlets do not respond to draft method."
+    assert_equal true, conn.should_be_copied?, "Should not copy when latest draft is deleted."
+
+  end
 end

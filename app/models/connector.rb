@@ -61,5 +61,16 @@ class Connector < ActiveRecord::Base
   def versioned?
     connectable_type.constantize.versioned?
   end
-  
+
+  # Determines if a connector should be copied when a page is updated/versioned, etc.
+  #
+  # 
+  def should_be_copied?
+    if connectable && (!connectable.respond_to?(:draft) || !connectable.draft.deleted?)
+      return true
+    end
+
+
+    false
+  end
 end

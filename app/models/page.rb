@@ -77,7 +77,7 @@ class Page < ActiveRecord::Base
       # The connector won't have a connectable if it has been deleted
       # Also need to see if the draft has been deleted,
       # in which case we are in the process of deleting it
-      if c.connectable && !c.connectable.draft.deleted?
+      if c.should_be_copied?
         connectable = c.connectable_type.constantize.versioned? ? c.connectable.as_of_version(c.connectable_version) : c.connectable
       
         #If we are copying connectors from a previous version, that means we are reverting this page,
