@@ -11,7 +11,7 @@
   <% else %>
     <%= f.label method %>
   <% end %>
-  <%= drop_down_tag :dhtml_selector, options_for_select([["Rich Text", ""],["Simple Text", "disabled"]]), :class => "dhtml_selector", :onchange => "toggleEditor('#{id}', this)" %>
+  <%= drop_down_tag :dhtml_selector, options_for_select([["Rich Text", ""],["Simple Text", "disabled"]], cookies[:editorEnabled] == 'true' ? "" : "disabled"), :class => "dhtml_selector", :onchange => "toggleEditor('#{id}', this)" %>
   <div class="editor">
     <%= f.text_editor method, options %>
   </div>
