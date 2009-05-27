@@ -17,10 +17,3 @@ test:
   password:
   socket: /tmp/mysql.sock
 
-production:
-  adapter: mysql
-  encoding: utf8
-  database: browsercms_production
-  username: root
-  password: 
-  socket: /tmp/mysql.sock
