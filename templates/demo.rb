@@ -1,4 +1,7 @@
+# Remove the file on both *unix and Windows
 run "rm public/index.html"
+run "del public\\index.html"
+
 gem "browsercms"
 rake "db:create"
 route "map.routes_for_browser_cms"

@@ -56,7 +56,25 @@ module Cms
     def reserved_paths
       @reserved_paths ||= ["/cms", "/cache"]
     end
-    
+
+    # This next 'hack' is to allow script/generate browser_cms to work on Windows machines. I'm not sure why this is necessary.
+    #
+    # This Generator is adding an absolute file path to the manifest, which is file (like a .js or migration) in
+    # the gem directory on the developers's machine, rather
+    # than just a relative path with the rails_generator directory. On windows, this will mean you are basically doing this.
+    #
+    # m.file "C:/Ruby/lib/ruby/gems/1.8/gems/browsercms-3.0.0/public/javascripts/jquery-ui.js", "testing/jquery-ui.js"
+    #
+    # When the generator hits this command during playback, it will throw an error like this:
+    #   Pattern 'c' matches more than one generator: content_block, controller
+    # The generator then fails and stops copying. Stripping the C: off the front seems to fix this problem.
+    # I.e. This command correctly copies the file on Windows XP.
+    #   m.file "/Ruby/lib/ruby/gems/1.8/gems/browsercms-3.0.0/public/javascripts/jquery-ui.js", "testing/jquery-ui.js"
+    #
+    def scrub_path(path)
+      windows_drive_pattern =  /[A-Z\\A]:\//    # Works on drives labeled A-Z:
+      scrubbed_source_file_name = path.gsub(windows_drive_pattern, "/")
+    end
   end
   module Errors
     class AccessDenied < StandardError
@@ -73,10 +91,10 @@ ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(
 )
 
 Cms.add_generator_paths(Cms.root, 
-  "public/javascripts/jquery*", 
-  "public/javascripts/cms/**/*", 
-  "public/fckeditor/**/*", 
+  "public/javascripts/jquery*",
+  "public/javascripts/cms/**/*",
+  "public/fckeditor/**/*",
   "public/site/**/*",   
-  "public/stylesheets/cms/**/*", 
+  "public/stylesheets/cms/**/*",
   "public/images/cms/**/*",
   "db/migrate/[0-9]*_*.rb")

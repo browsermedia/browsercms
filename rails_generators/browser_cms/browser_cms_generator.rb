@@ -7,13 +7,12 @@ class BrowserCmsGenerator < Rails::Generator::Base
   end
   def manifest
     record do |m|
-      
       #Cms.generator_paths is an Array of Arrays
       #Each Array has the root as the first element
       #and the array of "files" as the second element
       #Each element in files is actually a Dir.glob pattern string
       Cms.generator_paths.each do |src_root, files|
-        copy_files m, src_root, files
+         copy_files  m, src_root, files
       end
     end
   end
@@ -24,10 +23,11 @@ class BrowserCmsGenerator < Rails::Generator::Base
         if File.file?(f)
           dir = File.dirname(f.gsub("#{src_root}/",''))
           unless dirs.include?(dir)
-            m.directory dir 
+            m.directory dir
             dirs << dir
           end
-          m.file f, f.gsub("#{src_root}/", "")
+          relative_dest_file_name = f.gsub("#{src_root}/", "")
+          m.file Cms.scrub_path(f), relative_dest_file_name
         end
       end
     end

@@ -5,7 +5,8 @@ class BrowserCmsDemoSiteGenerator < Rails::Generator::Base
   end
   
   def templates_dir(file=nil)
-    File.expand_path(File.join(File.dirname(__FILE__), "templates", file))
+    f = File.expand_path(File.join(File.dirname(__FILE__), "templates", file))
+    Cms.scrub_path(f)
   end
   
   def manifest
@@ -15,7 +16,7 @@ class BrowserCmsDemoSiteGenerator < Rails::Generator::Base
         if File.file?(f)
           file_name = f.sub("#{Cms.root}/", '')
           m.directory File.dirname(file_name)
-          m.file f, file_name
+          m.file Cms.scrub_path(f), file_name
         end
       end
       
