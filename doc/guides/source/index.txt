@@ -6,7 +6,7 @@ BrowserCMS is a general purpose, open source Web Content Management System (CMS)
 2. Designers who want to create large and elegantly designed websites with no artificial constraints by the CMS.
 3. Developers who want to add a CMS into their Rails projects, or create CMS driven websites for their clients.
 
-This guide is for BrowserCMS v3.0.0 (Beta).
+This guide is for BrowserCMS v3.0.0.
 
 == Guides
 Below are a list of guides on how the above groups can use BrowswerCMS, to design, build and maintain websites.

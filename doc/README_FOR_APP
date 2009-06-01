@@ -1,9 +1,19 @@
 == BrowserCMS
 
-BrowserCMS is a general purpose, open source Web Content Management System (CMS), written in Ruby on Rails. This is the API documentation for v3.0.0 (Beta).
+BrowserCMS is a general purpose, open source Web Content Management System (CMS), written in Ruby on Rails. This is the API documentation for v3.0.0.
 
-== Getting Started
-Please see the Getting Started guide (http://browsercms.org/doc/guides/html/getting_started.html) for how to install and start a BrowserCMS project.
+== Getting Started (Short Version)
+Need SQLite3 and Rails 2.3.2 (or later).
+
+    sudo gem install browsercms
+    rails my_new_project_name -m http://github.com/browsermedia/browsercms/raw/master/templates/demo.rb
+    cd my_new_project_name
+    script/server
+
+    Go to http://localhost:3000/cms and log in as cmsadmin/cmsadmin.
+
+== Getting Started (Long Version)
+See the Getting Started guide (http://browsercms.org/doc/guides/html/getting_started.html) for how to install and start a BrowserCMS project.
 
 
 
