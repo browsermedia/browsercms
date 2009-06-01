@@ -2,65 +2,67 @@
 
 The purpose of this guide is help new developers get up and running with BrowserCMS. It covers how to:
 
-* Get the latest copy of the source code.
-* Build and install the BrowserCMS product.
+* Install the BrowserCMS gem
 * Create a new project which uses BrowserCMS
 
-== Installation
+== Installing BrowserCMS
 BrowserCMS is packaged as a gem, which can be included in any Rails project. The gem contains the code for the cms
 application itself, as well as public assets, including stylesheets, images and javascript. These assets will
 be copied from the gem into your project as part of the install process.
 
-As of 3.0.0 (Beta), there is there is no gem released yet on rubyforge, so it must be built from source.
+The gem is hosted at RubyForge, so you can install it by doing:
+
+    sudo gem install browsercms
 
 === Things you need first
-Before you can BrowserCMS working, there are few other bits of software you should have installed.
+Before you can create a project using BrowserCMS, you will need to have the following installed.
 
-1. *Git* - Distributed version control system. The code for BrowserCMS is on http://github.com/browsermedia/browsercms/[Git Hub], so you need to http://git-scm.com[get Git] to get it.
-2. *Rails 2.3* (or later) - We make use of some of the newer features from Rails like templates.
-3. *A Database* - Either Mysql or the Sqlite gems should be installed.
-4. *Jeweler* - Another gem http://technicalpickles.github.com/jeweler[Jeweler] is required to build the gem yourself locally.
+1. *Rails 2.3* (or later) - We make use of some of the newer features from Rails like application generator templates.
+2. *A Database* - Either Mysql or the Sqlite gems should be installed.
 
-=== Getting the source from GitHub
-To build the gem from source, and install it on your system, type the following:
+== Trying out BrowserCMS
+This section will cover how to create a demo project using BrowserCMS, so you can play around with it. It will create a sample project,
+with some pages and content to play around with. You will need to choose one of the following options, depending on which database you want to use.
 
-    git clone git://github.com/browsermedia/browsercms.git
+=== With SQLite3
 
-=== Installing the Gem locally
-Once you have the source code, you can build and install the Gem via:
-
-    cd browsercms
-    rake install
-
-On *unix, this will sudo install, so you will need to provide your password. Once you have the BrowserCMS Gem installed,
-you can use it to create new projects, which will be configured to use it.
-
-== Starting a new project
-The next step is to create a rails project, which will include BrowserCMS, much like you would with any rails project.
-To make things easier, BrowserCMS comes with two application templates, which create the
-initial rails application, configured for BrowserCMS. For now, you need to use the app templates from the source
-directory of cms. Here are the two options when starting a project.
-
-* /templates/demo.rb - If you are new to BrowserCMS, and want to experiment, use this. It builds a sample site with a few pages, using our default theme, and adds some content to play around with.
-* /templates/blank.rb - Use this if you want a completely empty site. Most 'real' projects will use this to start, as there is no 'dummy' data to remove before building a site.
-
-To create a new project (using the demo template, for a MySQL database), run the following:
-
-    cd ~/projects
-    rails my_new_project_name -d mysql -m /path/to/browsercms_source_code/templates/demo.rb
+    rails my_new_project_name -m http://github.com/browsermedia/browsercms/raw/master/templates/demo.rb
     cd my_new_project_name
     script/server
 
-This is going to create the development and testing copies of the database, migrate the db, populate it with some initial data, and copy all of the necessary files from the gem into the rails project.
-To create a project that uses SQLite, rather than MySQL as the database, you can run the following command instead (You will need the SQLite gem installed already).
+By default, Rails assumes that if you do not specify a -d flag, that you want to use SQLite as your project's database. You need to have the sqlite3-ruby gem installed for this to work.
 
-    rails my_new_project_name -m /path/to/browsercms_source_code/templates/demo.rb
+=== With MySQL
+
+    rails my_new_project_name -d mysql -m http://github.com/browsermedia/browsercms/raw/master/templates/demo.rb
+    cd my_new_project_name
+    script/server
+
+Here we specify the -m mysql flag to rails, which will create our project using MySQL. You need to have the mysql gem installed for this to work.
 
 === Using your Site
-Once installed, you can go to http://localhost:3000 to see the running CMS application. To log into the admin for the CMS,
-go to http://localhost:3000/cms, and type in the username and password. The default when running in development mode
-is username=cmsadmin, password=cmsadmin.
+Open your browser to http://localhost:3000/cms to log into the admin for the CMS. Enter the default username/password (in development mode)
+is username=cmsadmin, password=cmsadmin. You should be now be logged in, viewing the home page of the site. You can now edit or add new content via the admin interface.
 
-To learn more about the core things you can do with BrowserCMS, see the link:user_guide.html[User's Guide].
+To learn more about the types of things you can do with BrowserCMS, see the link:user_guide.html[User's Guide].
+
+== Starting a 'Real' project
+Demo sites are fine for learning the ropes, but when its time to start working on a 'real' project, you don't want a lot
+of dummy data that needs to be cleaned out. Using Rail's 2.3.2 application template feature, we have a blank template (templates/blank.rb) which will create a
+more stripped down version of site. BrowserCMS projects are started like any other Rails project, using an application
+generator template, which is hosted on github.
+
+Assuming you want to use MySQL as the database. Run the following:
+
+    cd ~/projects
+    rails my_new_project_name -d mysql -m http://github.com/browsermedia/browsercms/raw/master/templates/blank.rb
+    cd my_new_project_name
+    script/server
+
+This is going to create the development and testing copies of the database, migrate the db, populate it with the bare
+minimum content it needs, and copy all of the necessary files from the gem into the rails project. Open your browser to
+http://localhost:3000/cms to log in, using cmsadmin/cmsadmin as the username/password.
+
+
 
 

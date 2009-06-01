@@ -12,7 +12,7 @@ This guide is for BrowserCMS v3.0.0 (Beta).
 Below are a list of guides on how the above groups can use BrowswerCMS, to design, build and maintain websites.
 
 === link:getting_started.html[Getting Started]
-How to install BrowserCMS and start using it.
+The easy way to install BrowserCMS and create a project with it.
 
 === link:user_guide.html[User's Guide]
 How to use the basic features of BrowserCMS.
@@ -28,4 +28,7 @@ How to turn a design into a styled website.
 
 === link:deployment_guide.html[Deploying to Production Servers]
 How to configure Apache and Passenger to work with BrowserCMS in production mode.
+
+=== link:build_it_yourself.html[Building on the Edge]
+For developers who want the very latest source code from Github and build the BrowserCMS gem themselves.
 

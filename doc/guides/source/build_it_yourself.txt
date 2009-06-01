@@ -1,0 +1,44 @@
+= Building on the Edge
+
+The purpose of this guide is to help developers who want to work with the very latest code from Github. It covers how to:
+
+* Get the latest copy of the source code from Github.
+* Build and install the BrowserCMS product.
+* Create a new project which uses BrowserCMS
+
+If you want to get BrowserCMS the easy way, see link:getting_started.html[Getting Started] instead.
+
+== Things you need first
+Before you can build BrowserCMS locally, there are few other bits of software you should have installed.
+
+1. *Git* - Distributed version control system. The code for BrowserCMS is on http://github.com/browsermedia/browsercms/[Git Hub], so you need to http://git-scm.com[get Git] to get it.
+2. *Rails 2.3* (or later) - We make use of some of the newer features from Rails like templates.
+3. *A Database* - Either Mysql or the Sqlite gems should be installed.
+4. *Jeweler* - Another gem http://technicalpickles.github.com/jeweler[Jeweler] is required to build the gem yourself locally.
+
+== Getting the source from GitHub
+To build the gem from source, and install it on your system, type the following:
+
+    git clone git://github.com/browsermedia/browsercms.git
+
+== Installing the Gem locally
+Once you have the source code, you can build and install the Gem via:
+
+    cd browsercms
+    rake install
+
+On *unix, this will sudo install, so you will need to provide your password. Once you have the BrowserCMS Gem installed,
+you can use it to create new projects, which will be configured to use it. At this point, you now have the gem installed,
+so you can follow the instructions in link:getting_started.html[Getting Started] starting with section 2 (Trying out BrowserCMS).
+
+== Quick Start
+You can also just do the following to create a demo project.
+
+    cd ~/projects
+    rails my_new_project_name -d mysql -m http://github.com/browsermedia/browsercms/raw/master/templates/demo.rb
+    cd my_new_project_name
+    script/server
+
+
+
+

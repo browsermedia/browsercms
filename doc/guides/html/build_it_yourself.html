@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Building on the Edge</title>
+    <style type="text/css">
+      body {
+        background: #FFFFFF url(images/bg.png) repeat-x scroll 0 0;
+        font-family: "Trebuchet MS", Helvetica, Verdana, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+  
+      #page {
+        margin: 0 auto;
+        text-align: left;
+        width: 1000px;
+      }
+  
+      #header {
+        height: 110px;
+      }
+  
+      div.top_cap {
+        background: transparent url(images/top_cap.png) no-repeat scroll 0 0;
+        height: 10px;
+      }    
+  
+      #contentwrap {
+        background: transparent url(images/dot.png) repeat scroll 0 0;
+        float: left;
+        width: 1000px;
+      }
+      
+      div.bottom_cap {
+        background: transparent url(images/bottom_cap.png) no-repeat scroll 0 0;
+        height: 9px;
+      }
+
+      div.top_cap_content {
+        background: transparent url(images/top_cap_content.png) no-repeat scroll 0 0;
+        height: 5px;
+      }
+  
+      #content {
+        background-color: #FFFFFF;
+        margin: 0 5px;
+      }
+  
+      div.title {
+        padding: 20px;
+      }
+  
+      div.title h1 {
+        border-bottom: 3px solid #505358;
+        color: #FFFFFF;
+        font-size: 24pt;
+        font-weight: normal;
+        line-height: 1;
+        margin: 0 0 10px;
+        padding-bottom: 10px;
+      }
+      
+      td.sidebar {
+        font-size: 8pt;
+        width: 165px;
+        padding: 5px;
+      }
+      
+      td.sidebar ol {
+        margin-left: 20px;
+        padding: 0;
+        line-height: 1.5;
+      }
+      
+      td.sidebar ol li {
+        margin: 0;
+        padding: 0;
+      }
+      
+      td.sidebar ol li ul {
+        list-style-type: none;
+        padding-left: 10px;
+      }
+      
+      td.guides {
+        font-size: 10pt;
+        width: 800px;
+        padding: 10px;
+      }
+      
+      pre {
+        padding: 10px;
+        background: #eee;
+        border: 1px solid #ccc;
+        overflow: auto;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <div id="page">
+      <div id="header">
+        <a href="index.html"><img style="border:0px" src="images/browsercms_logo.png" alt="BrowserCMS"/></a>
+      </div>
+      <div id="main">
+        <div class="top_cap"></div>
+        <div id="contentwrap">
+          <div class="title">
+            <h1>Building on the Edge</h1>
+          </div>
+          <div class="top_cap_content"></div>
+          <div id="content">
+            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr>                
+                
+                  <td class="sidebar" valign="top">
+                    <h2>Chapters</h2>
+                    <ol>
+                          <li>
+                            <a href="#_things_you_need_first">Things you need first</a>
+                          </li>
+                          <li>
+                            <a href="#_getting_the_source_from_github">Getting the source from GitHub</a>
+                          </li>
+                          <li>
+                            <a href="#_installing_the_gem_locally">Installing the Gem locally</a>
+                          </li>
+                          <li>
+                            <a href="#_quick_start">Quick Start</a>
+                          </li>
+                    </ol>
+                  </td>
+                
+                <td class="guides">
+                  <div id="preamble">
+<div class="sectionbody">
+<div class="paragraph"><p>The purpose of this guide is to help developers who want to work with the very latest code from Github. It covers how to:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Get the latest copy of the source code from Github.
+</p>
+</li>
+<li>
+<p>
+Build and install the BrowserCMS product.
+</p>
+</li>
+<li>
+<p>
+Create a new project which uses BrowserCMS
+</p>
+</li>
+</ul></div>
+<div class="paragraph"><p>If you want to get BrowserCMS the easy way, see <a href="getting_started.html">Getting Started</a> instead.</p></div>
+</div>
+</div>
+<h2 id="_things_you_need_first">1. Things you need first</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Before you can build BrowserCMS locally, there are few other bits of software you should have installed.</p></div>
+<div class="olist arabic"><ol class="arabic">
+<li>
+<p>
+<strong>Git</strong> - Distributed version control system. The code for BrowserCMS is on <a href="http://github.com/browsermedia/browsercms/">Git Hub</a>, so you need to <a href="http://git-scm.com">get Git</a> to get it.
+</p>
+</li>
+<li>
+<p>
+<strong>Rails 2.3</strong> (or later) - We make use of some of the newer features from Rails like templates.
+</p>
+</li>
+<li>
+<p>
+<strong>A Database</strong> - Either Mysql or the Sqlite gems should be installed.
+</p>
+</li>
+<li>
+<p>
+<strong>Jeweler</strong> - Another gem <a href="http://technicalpickles.github.com/jeweler">Jeweler</a> is required to build the gem yourself locally.
+</p>
+</li>
+</ol></div>
+</div>
+<h2 id="_getting_the_source_from_github">2. Getting the source from GitHub</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>To build the gem from source, and install it on your system, type the following:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>git clone git://github.com/browsermedia/browsercms.git</tt></pre>
+</div></div>
+</div>
+<h2 id="_installing_the_gem_locally">3. Installing the Gem locally</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>Once you have the source code, you can build and install the Gem via:</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>cd browsercms
+rake install</tt></pre>
+</div></div>
+<div class="paragraph"><p>On *unix, this will sudo install, so you will need to provide your password. Once you have the BrowserCMS Gem installed,
+you can use it to create new projects, which will be configured to use it. At this point, you now have the gem installed,
+so you can follow the instructions in <a href="getting_started.html">Getting Started</a> starting with section 2 (Trying out BrowserCMS).</p></div>
+</div>
+<h2 id="_quick_start">4. Quick Start</h2>
+<div class="sectionbody">
+<div class="paragraph"><p>You can also just do the following to create a demo project.</p></div>
+<div class="literalblock">
+<div class="content">
+<pre><tt>cd ~/projects
+rails my_new_project_name -d mysql -m http://github.com/browsermedia/browsercms/raw/master/templates/demo.rb
+cd my_new_project_name
+script/server</tt></pre>
+</div></div>
+</div>
+
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <br clear="all"/>
+        <div class="bottom_cap"></div>
+      </div>
+    </div>
+  </body>
+</html>
