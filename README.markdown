@@ -23,17 +23,19 @@ Here's a quick overview of some of the more notable features:
 
 ## Browser Compatibility
 BrowserCMS can create websites that can work in any browser, depending on how developers implement their design as HTML templates. However, the administrator interface is limited to a select # of browsers, with Firefox being the most stable. Supported browsers include:
+
 1. FireFox 3+ (Mac, Windows, Linux) - This is currently the best choice for administering the CMS.
 2. Safari 3.2+ (Mac, Windows) - Works, with some minor layout problems.
 3. Internet Explorer 7+ (Windows) - Mostly functional, though there are a number of layout issues in the admin.
 
-Next releases will be aimed at tightning up the Admin for Safari and IE7+. We will not be supporting the admin UI for IE6.
+The next releases will be aimed at tightning up the admin for both Safari and IE7+. We will not be supporting the admin UI for IE6, or other browsers not explicitly listed above.
+
+## Getting Started
+Before you can use BrowserCMS, you will need to install the gem. See the Getting Started guide at http://browsercms.org/doc/guides/html/getting_started.html, or packaged with this source code (under doc/guides/html/getting_started.html)
 
 ## License
 BrowserCMS is released under a LGPL license, and is copyright 1998-2009 BrowserMedia. The complete copyright can be found in COPYRIGHT.txt, and copy of the license can be found in LICENSE.txt.
 
-## Getting Started
-Before you can use BrowserCMS, you will need to install the gem. See the Getting Started guide at http://browsercms.org/doc/guides/html/getting_started.html, or packaged with this source code (under doc/guides/html/getting_started.html)
 
 ## Documentation
 The user documentation and guides for this version of the application can be found at:
