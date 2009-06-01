@@ -13,10 +13,12 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "browsercms"
-    gem.summary = %Q{A Content Management System for Rails}
+    gem.summary = %Q{BrowserCMS is a general purpose, open source Web Content Management System (CMS), written in Ruby on Rails.}
     gem.email = "github@browsermedia.com"
     gem.homepage = "http://www.browsercms.org"
     gem.authors = ["BrowserMedia"]
+    gem.rubyforge_project = 'browsercms' # This line would be new
+
     gem.files = Dir["rails/*.rb"]
     gem.files += Dir["browsercms.gemspec"]
     gem.files += Dir["app/**/*"]
@@ -36,4 +38,18 @@ begin
   end
 rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
+end
+
+# These are new tasks
+begin
+  require 'rake/contrib/sshpublisher'
+  namespace :rubyforge do
+
+    desc "Release gem to RubyForge"
+    task :release => ["rubyforge:release:gem"]
+
+
+  end
+rescue LoadError
+  puts "Rake SshDirPublisher is unavailable or your rubyforge environment is not configured."
 end

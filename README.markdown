@@ -1,7 +1,5 @@
 # BrowserCMS: Humane Content Management for Rails
 
-(3.0 Beta) - Not quite done, but ready to be tinkered with.
-
 BrowserCMS is a general purpose, open source Web Content Management System (CMS), written in Ruby on Rails. It is designed to support three distinct groups of people:
 
 1. Non-technical web editors who want a humane system to manage their site, without needing to understand what HTML or even Rails is.
@@ -22,6 +20,14 @@ Here's a quick overview of some of the more notable features:
 * Section Based Security: Admins can control which users can access specific sections (public users), as well as who can edit which pages (cms users).
 * Workflow: Supports larger website teams where some users can contribute, but not publish. Users can assign work to other publishers to review.
 * Page Caching: Full page caching allows the web server (Apache) to serve HTML statically when they don't change.
+
+## Browser Compatibility
+BrowserCMS can create websites that can work in any browser, depending on how developers implement their design as HTML templates. However, the administrator interface is limited to a select # of browsers, with Firefox being the most stable. Supported browsers include:
+1. FireFox 3+ (Mac, Windows, Linux) - This is currently the best choice for administering the CMS.
+2. Safari 3.2+ (Mac, Windows) - Works, with some minor layout problems.
+3. Internet Explorer 7+ (Windows) - Mostly functional, though there are a number of layout issues in the admin.
+
+Next releases will be aimed at tightning up the Admin for Safari and IE7+. We will not be supporting the admin UI for IE6.
 
 ## License
 BrowserCMS is released under a LGPL license, and is copyright 1998-2009 BrowserMedia. The complete copyright can be found in COPYRIGHT.txt, and copy of the license can be found in LICENSE.txt.

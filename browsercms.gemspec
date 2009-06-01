@@ -850,8 +850,9 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://www.browsercms.org}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
+  s.rubyforge_project = %q{browsercms}
   s.rubygems_version = %q{1.3.1}
-  s.summary = %q{A Content Management System for Rails}
+  s.summary = %q{BrowserCMS is a general purpose, open source Web Content Management System (CMS), written in Ruby on Rails.}
   s.test_files = [
     "test/custom_assertions.rb",
     "test/factories.rb",
