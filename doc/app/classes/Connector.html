@@ -90,6 +90,7 @@
       <a href="#M000080">current_connectable</a>&nbsp;&nbsp;
       <a href="#M000085">publishable?</a>&nbsp;&nbsp;
       <a href="#M000084">published?</a>&nbsp;&nbsp;
+      <a href="#M000087">should_be_copied?</a>&nbsp;&nbsp;
       <a href="#M000082">status</a>&nbsp;&nbsp;
       <a href="#M000083">status_name</a>&nbsp;&nbsp;
       <a href="#M000086">versioned?</a>&nbsp;&nbsp;
@@ -228,6 +229,38 @@
 53:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">published?</span>
 54:     <span class="ruby-identifier">publishable?</span> <span class="ruby-value">? </span><span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">published?</span> <span class="ruby-operator">:</span> <span class="ruby-keyword kw">true</span>
 55:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000087" class="method-detail">
+        <a name="M000087"></a>
+
+        <div class="method-heading">
+          <a href="#M000087" class="method-signature">
+          <span class="method-name">should_be_copied?</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Determines if a connector should be copied when a page is
+updated/versioned, etc.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000087-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000087-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/connector.rb, line 68</span>
+68:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">should_be_copied?</span>
+69:     <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">connectable</span> <span class="ruby-operator">&amp;&amp;</span> (<span class="ruby-operator">!</span><span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">respond_to?</span>(<span class="ruby-identifier">:draft</span>) <span class="ruby-operator">||</span> <span class="ruby-operator">!</span><span class="ruby-identifier">connectable</span>.<span class="ruby-identifier">draft</span>.<span class="ruby-identifier">deleted?</span>)
+70:       <span class="ruby-keyword kw">return</span> <span class="ruby-keyword kw">true</span>
+71:     <span class="ruby-keyword kw">end</span>
+72: 
+73: 
+74:     <span class="ruby-keyword kw">false</span>
+75:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

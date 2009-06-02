@@ -80,11 +80,11 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000264">authenticate</a>&nbsp;&nbsp;
-      <a href="#M000265">change_password</a>&nbsp;&nbsp;
-      <a href="#M000266">make_token</a>&nbsp;&nbsp;
-      <a href="#M000267">password_digest</a>&nbsp;&nbsp;
-      <a href="#M000268">secure_digest</a>&nbsp;&nbsp;
+      <a href="#M000267">authenticate</a>&nbsp;&nbsp;
+      <a href="#M000268">change_password</a>&nbsp;&nbsp;
+      <a href="#M000269">make_token</a>&nbsp;&nbsp;
+      <a href="#M000270">password_digest</a>&nbsp;&nbsp;
+      <a href="#M000271">secure_digest</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -106,19 +106,19 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000264" class="method-detail">
-        <a name="M000264"></a>
+      <div id="method-M000267" class="method-detail">
+        <a name="M000267"></a>
 
         <div class="method-heading">
-          <a href="#M000264" class="method-signature">
+          <a href="#M000267" class="method-signature">
           <span class="method-name">authenticate</span><span class="method-args">(login, password)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000264-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000264-source">
+            onclick="toggleCode('M000267-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000267-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/authentication/model.rb, line 20</span>
 20:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">authenticate</span>(<span class="ruby-identifier">login</span>, <span class="ruby-identifier">password</span>)
@@ -130,11 +130,11 @@
         </div>
       </div>
 
-      <div id="method-M000265" class="method-detail">
-        <a name="M000265"></a>
+      <div id="method-M000268" class="method-detail">
+        <a name="M000268"></a>
 
         <div class="method-heading">
-          <a href="#M000265" class="method-signature">
+          <a href="#M000268" class="method-signature">
           <span class="method-name">change_password</span><span class="method-args">(login, new_password)</span>
           </a>
         </div>
@@ -145,8 +145,8 @@ Method to make it easy to change a user&#8216;s password from the console,
 not used in the app
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000265-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000265-source">
+            onclick="toggleCode('M000268-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000268-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/authentication/model.rb, line 26</span>
 26:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">change_password</span>(<span class="ruby-identifier">login</span>, <span class="ruby-identifier">new_password</span>)
@@ -157,19 +157,19 @@ not used in the app
         </div>
       </div>
 
-      <div id="method-M000266" class="method-detail">
-        <a name="M000266"></a>
+      <div id="method-M000269" class="method-detail">
+        <a name="M000269"></a>
 
         <div class="method-heading">
-          <a href="#M000266" class="method-signature">
+          <a href="#M000269" class="method-signature">
           <span class="method-name">make_token</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000266-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000266-source">
+            onclick="toggleCode('M000269-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000269-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/authentication/model.rb, line 30</span>
 30:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">make_token</span>
@@ -180,19 +180,19 @@ not used in the app
         </div>
       </div>
 
-      <div id="method-M000267" class="method-detail">
-        <a name="M000267"></a>
+      <div id="method-M000270" class="method-detail">
+        <a name="M000270"></a>
 
         <div class="method-heading">
-          <a href="#M000267" class="method-signature">
+          <a href="#M000270" class="method-signature">
           <span class="method-name">password_digest</span><span class="method-args">(password, salt)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000267-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000267-source">
+            onclick="toggleCode('M000270-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000270-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/authentication/model.rb, line 34</span>
 34:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">password_digest</span>(<span class="ruby-identifier">password</span>, <span class="ruby-identifier">salt</span>)
@@ -208,19 +208,19 @@ not used in the app
         </div>
       </div>
 
-      <div id="method-M000268" class="method-detail">
-        <a name="M000268"></a>
+      <div id="method-M000271" class="method-detail">
+        <a name="M000271"></a>
 
         <div class="method-heading">
-          <a href="#M000268" class="method-signature">
+          <a href="#M000271" class="method-signature">
           <span class="method-name">secure_digest</span><span class="method-args">(*args)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000268-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000268-source">
+            onclick="toggleCode('M000271-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000271-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/authentication/model.rb, line 43</span>
 43:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">secure_digest</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">args</span>)

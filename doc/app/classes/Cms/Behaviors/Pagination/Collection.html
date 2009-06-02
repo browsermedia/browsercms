@@ -86,14 +86,14 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000396">create</a>&nbsp;&nbsp;
-      <a href="#M000395">new</a>&nbsp;&nbsp;
-      <a href="#M000400">next_page</a>&nbsp;&nbsp;
-      <a href="#M000398">offset</a>&nbsp;&nbsp;
-      <a href="#M000397">out_of_bounds?</a>&nbsp;&nbsp;
-      <a href="#M000399">previous_page</a>&nbsp;&nbsp;
-      <a href="#M000402">replace</a>&nbsp;&nbsp;
-      <a href="#M000401">total_entries=</a>&nbsp;&nbsp;
+      <a href="#M000399">create</a>&nbsp;&nbsp;
+      <a href="#M000398">new</a>&nbsp;&nbsp;
+      <a href="#M000403">next_page</a>&nbsp;&nbsp;
+      <a href="#M000401">offset</a>&nbsp;&nbsp;
+      <a href="#M000400">out_of_bounds?</a>&nbsp;&nbsp;
+      <a href="#M000402">previous_page</a>&nbsp;&nbsp;
+      <a href="#M000405">replace</a>&nbsp;&nbsp;
+      <a href="#M000404">total_entries=</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -143,18 +143,18 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000396" class="method-detail">
-        <a name="M000396"></a>
+      <div id="method-M000399" class="method-detail">
+        <a name="M000399"></a>
 
         <div class="method-heading">
-          <a href="#M000396" class="method-signature">
+          <a href="#M000399" class="method-signature">
           <span class="method-name">create</span><span class="method-args">(page, per_page, total = nil) {|pager| ...}</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Just like <tt><a href="Collection.html#M000395">new</a></tt>, but yields
+Just like <tt><a href="Collection.html#M000398">new</a></tt>, but yields
 the object after instantiation and returns it afterwards. This is very
 useful for manual pagination:
 </p>
@@ -188,8 +188,8 @@ The Array#paginate API has since then changed, but this still serves as a
 fine example of WillPaginate::Collection usage.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000396-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000396-source">
+            onclick="toggleCode('M000399-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000399-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/behaviors/pagination.rb, line 59</span>
 59:         <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">create</span>(<span class="ruby-identifier">page</span>, <span class="ruby-identifier">per_page</span>, <span class="ruby-identifier">total</span> = <span class="ruby-keyword kw">nil</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
@@ -202,11 +202,11 @@ fine example of WillPaginate::Collection usage.
         </div>
       </div>
 
-      <div id="method-M000395" class="method-detail">
-        <a name="M000395"></a>
+      <div id="method-M000398" class="method-detail">
+        <a name="M000398"></a>
 
         <div class="method-heading">
-          <a href="#M000395" class="method-signature">
+          <a href="#M000398" class="method-signature">
           <span class="method-name">new</span><span class="method-args">(page, per_page, total = nil)</span>
           </a>
         </div>
@@ -217,11 +217,11 @@ Arguments to the constructor are the current page number, per-page limit
 and the total number of entries. The last argument is optional because it
 is best to do lazy counting; in other words, count <b>conditionally</b>
 after populating the collection using the <tt><a
-href="Collection.html#M000402">replace</a></tt> method.
+href="Collection.html#M000405">replace</a></tt> method.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000395-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000395-source">
+            onclick="toggleCode('M000398-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000398-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/behaviors/pagination.rb, line 23</span>
 23:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span>(<span class="ruby-identifier">page</span>, <span class="ruby-identifier">per_page</span>, <span class="ruby-identifier">total</span> = <span class="ruby-keyword kw">nil</span>)
@@ -239,11 +239,11 @@ href="Collection.html#M000402">replace</a></tt> method.
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000400" class="method-detail">
-        <a name="M000400"></a>
+      <div id="method-M000403" class="method-detail">
+        <a name="M000403"></a>
 
         <div class="method-heading">
-          <a href="#M000400" class="method-signature">
+          <a href="#M000403" class="method-signature">
           <span class="method-name">next_page</span><span class="method-args">()</span>
           </a>
         </div>
@@ -253,8 +253,8 @@ href="Collection.html#M000402">replace</a></tt> method.
 current_page + 1 or nil if there is no next page
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000400-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000400-source">
+            onclick="toggleCode('M000403-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000403-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/behaviors/pagination.rb, line 86</span>
 86:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">next_page</span>
@@ -265,27 +265,27 @@ current_page + 1 or nil if there is no next page
         </div>
       </div>
 
-      <div id="method-M000398" class="method-detail">
-        <a name="M000398"></a>
+      <div id="method-M000401" class="method-detail">
+        <a name="M000401"></a>
 
         <div class="method-heading">
-          <a href="#M000398" class="method-signature">
+          <a href="#M000401" class="method-signature">
           <span class="method-name">offset</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p>
-Current <a href="Collection.html#M000398">offset</a> of the paginated
+Current <a href="Collection.html#M000401">offset</a> of the paginated
 collection. If we&#8216;re on the first page, it is always 0. If
 we&#8216;re on the 2nd page and there are 30 entries per page, the <a
-href="Collection.html#M000398">offset</a> is 30. This property is useful if
+href="Collection.html#M000401">offset</a> is 30. This property is useful if
 you want to render ordinals besides your records: simply start with <a
-href="Collection.html#M000398">offset</a> + 1.
+href="Collection.html#M000401">offset</a> + 1.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000398-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000398-source">
+            onclick="toggleCode('M000401-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000401-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/behaviors/pagination.rb, line 76</span>
 76:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">offset</span>
@@ -296,11 +296,11 @@ href="Collection.html#M000398">offset</a> + 1.
         </div>
       </div>
 
-      <div id="method-M000397" class="method-detail">
-        <a name="M000397"></a>
+      <div id="method-M000400" class="method-detail">
+        <a name="M000400"></a>
 
         <div class="method-heading">
-          <a href="#M000397" class="method-signature">
+          <a href="#M000400" class="method-signature">
           <span class="method-name">out_of_bounds?</span><span class="method-args">()</span>
           </a>
         </div>
@@ -312,8 +312,8 @@ number than the last page. Can be used in combination with flashes and
 redirecting.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000397-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000397-source">
+            onclick="toggleCode('M000400-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000400-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/behaviors/pagination.rb, line 68</span>
 68:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">out_of_bounds?</span>
@@ -324,11 +324,11 @@ redirecting.
         </div>
       </div>
 
-      <div id="method-M000399" class="method-detail">
-        <a name="M000399"></a>
+      <div id="method-M000402" class="method-detail">
+        <a name="M000402"></a>
 
         <div class="method-heading">
-          <a href="#M000399" class="method-signature">
+          <a href="#M000402" class="method-signature">
           <span class="method-name">previous_page</span><span class="method-args">()</span>
           </a>
         </div>
@@ -338,8 +338,8 @@ redirecting.
 current_page - 1 or nil if there is no previous page
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000399-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000399-source">
+            onclick="toggleCode('M000402-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000402-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/behaviors/pagination.rb, line 81</span>
 81:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">previous_page</span>
@@ -350,11 +350,11 @@ current_page - 1 or nil if there is no previous page
         </div>
       </div>
 
-      <div id="method-M000402" class="method-detail">
-        <a name="M000402"></a>
+      <div id="method-M000405" class="method-detail">
+        <a name="M000405"></a>
 
         <div class="method-heading">
-          <a href="#M000402" class="method-signature">
+          <a href="#M000405" class="method-signature">
           <span class="method-name">replace</span><span class="method-args">(array)</span>
           </a>
         </div>
@@ -372,14 +372,14 @@ avoiding unnecessary hits to the database to do the counting after we
 fetched the data for the current page.
 </p>
 <p>
-However, after using <tt><a href="Collection.html#M000402">replace</a></tt>
+However, after using <tt><a href="Collection.html#M000405">replace</a></tt>
 you should always test the value of <tt>total_entries</tt> and set it to a
 proper value if it&#8216;s <tt>nil</tt>. See the example in <tt><a
-href="Collection.html#M000396">create</a></tt>.
+href="Collection.html#M000399">create</a></tt>.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000402-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000402-source">
+            onclick="toggleCode('M000405-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000405-source">
 <pre>
      <span class="ruby-comment cmt"># File lib/cms/behaviors/pagination.rb, line 107</span>
 107:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">replace</span>(<span class="ruby-identifier">array</span>)
@@ -398,19 +398,19 @@ href="Collection.html#M000396">create</a></tt>.
         </div>
       </div>
 
-      <div id="method-M000401" class="method-detail">
-        <a name="M000401"></a>
+      <div id="method-M000404" class="method-detail">
+        <a name="M000404"></a>
 
         <div class="method-heading">
-          <a href="#M000401" class="method-signature">
+          <a href="#M000404" class="method-signature">
           <span class="method-name">total_entries=</span><span class="method-args">(number)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000401-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000401-source">
+            onclick="toggleCode('M000404-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000404-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/behaviors/pagination.rb, line 90</span>
 90:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">total_entries=</span>(<span class="ruby-identifier">number</span>)

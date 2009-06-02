@@ -80,9 +80,9 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000503">content_blocks</a>&nbsp;&nbsp;
-      <a href="#M000504">default_routes_for_content_block</a>&nbsp;&nbsp;
-      <a href="#M000505">routes_for_browser_cms</a>&nbsp;&nbsp;
+      <a href="#M000506">content_blocks</a>&nbsp;&nbsp;
+      <a href="#M000507">default_routes_for_content_block</a>&nbsp;&nbsp;
+      <a href="#M000508">routes_for_browser_cms</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -104,19 +104,19 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000503" class="method-detail">
-        <a name="M000503"></a>
+      <div id="method-M000506" class="method-detail">
+        <a name="M000506"></a>
 
         <div class="method-heading">
-          <a href="#M000503" class="method-signature">
+          <a href="#M000506" class="method-signature">
           <span class="method-name">content_blocks</span><span class="method-args">(content_block_name, options={}, &amp;block)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000503-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000503-source">
+            onclick="toggleCode('M000506-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000506-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/routes.rb, line 3</span>
  3:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">content_blocks</span>(<span class="ruby-identifier">content_block_name</span>, <span class="ruby-identifier">options</span>={}, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
@@ -143,19 +143,19 @@
         </div>
       </div>
 
-      <div id="method-M000504" class="method-detail">
-        <a name="M000504"></a>
+      <div id="method-M000507" class="method-detail">
+        <a name="M000507"></a>
 
         <div class="method-heading">
-          <a href="#M000504" class="method-signature">
+          <a href="#M000507" class="method-signature">
           <span class="method-name">default_routes_for_content_block</span><span class="method-args">(content_block)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000504-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000504-source">
+            onclick="toggleCode('M000507-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000507-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/routes.rb, line 23</span>
 23:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">default_routes_for_content_block</span>(<span class="ruby-identifier">content_block</span>)
@@ -170,19 +170,19 @@
         </div>
       </div>
 
-      <div id="method-M000505" class="method-detail">
-        <a name="M000505"></a>
+      <div id="method-M000508" class="method-detail">
+        <a name="M000508"></a>
 
         <div class="method-heading">
-          <a href="#M000505" class="method-signature">
+          <a href="#M000508" class="method-signature">
           <span class="method-name">routes_for_browser_cms</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000505-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000505-source">
+            onclick="toggleCode('M000508-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000508-source">
 <pre>
      <span class="ruby-comment cmt"># File lib/cms/routes.rb, line 31</span>
  31:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">routes_for_browser_cms</span>
@@ -275,18 +275,14 @@
 118:       
 119:     <span class="ruby-keyword kw">end</span>
 120: 
-121:     <span class="ruby-identifier">image_missing</span> <span class="ruby-value str">'/images/*path'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'cms/missing_asset'</span>
-122:     <span class="ruby-identifier">stylesheet_missing</span> <span class="ruby-value str">'/stylesheets/*path'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'cms/missing_asset'</span>
-123:     <span class="ruby-identifier">javascript_missing</span> <span class="ruby-value str">'/javascripts/*path'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'cms/missing_asset'</span>
-124: 
-125:     <span class="ruby-keyword kw">if</span> <span class="ruby-constant">PageRoute</span>.<span class="ruby-identifier">table_exists?</span>
-126:       <span class="ruby-constant">PageRoute</span>.<span class="ruby-identifier">all</span>(<span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;page_routes.name&quot;</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span>
-127:         <span class="ruby-identifier">send</span>((<span class="ruby-identifier">r</span>.<span class="ruby-identifier">route_name</span> <span class="ruby-operator">||</span> <span class="ruby-value str">'connect'</span>).<span class="ruby-identifier">to_sym</span>, <span class="ruby-identifier">r</span>.<span class="ruby-identifier">pattern</span>, <span class="ruby-identifier">r</span>.<span class="ruby-identifier">options_map</span>)
-128:       <span class="ruby-keyword kw">end</span>
-129:     <span class="ruby-keyword kw">end</span>
-130: 
-131:     <span class="ruby-identifier">connect</span> <span class="ruby-value str">'*path'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'cms/content'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'show'</span>    
-132:   <span class="ruby-keyword kw">end</span>
+121:     <span class="ruby-keyword kw">if</span> <span class="ruby-constant">PageRoute</span>.<span class="ruby-identifier">table_exists?</span>
+122:       <span class="ruby-constant">PageRoute</span>.<span class="ruby-identifier">all</span>(<span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;page_routes.name&quot;</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">r</span><span class="ruby-operator">|</span>
+123:         <span class="ruby-identifier">send</span>((<span class="ruby-identifier">r</span>.<span class="ruby-identifier">route_name</span> <span class="ruby-operator">||</span> <span class="ruby-value str">'connect'</span>).<span class="ruby-identifier">to_sym</span>, <span class="ruby-identifier">r</span>.<span class="ruby-identifier">pattern</span>, <span class="ruby-identifier">r</span>.<span class="ruby-identifier">options_map</span>)
+124:       <span class="ruby-keyword kw">end</span>
+125:     <span class="ruby-keyword kw">end</span>
+126: 
+127:     <span class="ruby-identifier">connect</span> <span class="ruby-value str">'*path'</span>, <span class="ruby-identifier">:controller</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'cms/content'</span>, <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'show'</span>    
+128:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

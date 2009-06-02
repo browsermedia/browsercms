@@ -210,7 +210,7 @@
 
     <div id="description">
       <p>
-This is just a repackaged <a href="Cms.html#M000232">version</a> of Will
+This is just a repackaged <a href="Cms.html#M000234">version</a> of Will
 Paginate 2.2.2
 </p>
 
@@ -223,15 +223,16 @@ Paginate 2.2.2
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000236">add_generator_paths</a>&nbsp;&nbsp;
-      <a href="#M000238">add_to_rails_paths</a>&nbsp;&nbsp;
-      <a href="#M000233">build_number</a>&nbsp;&nbsp;
-      <a href="#M000237">generator_paths</a>&nbsp;&nbsp;
-      <a href="#M000235">init</a>&nbsp;&nbsp;
-      <a href="#M000234">load_rake_tasks</a>&nbsp;&nbsp;
-      <a href="#M000239">markdown?</a>&nbsp;&nbsp;
-      <a href="#M000240">reserved_paths</a>&nbsp;&nbsp;
-      <a href="#M000232">version</a>&nbsp;&nbsp;
+      <a href="#M000238">add_generator_paths</a>&nbsp;&nbsp;
+      <a href="#M000240">add_to_rails_paths</a>&nbsp;&nbsp;
+      <a href="#M000235">build_number</a>&nbsp;&nbsp;
+      <a href="#M000239">generator_paths</a>&nbsp;&nbsp;
+      <a href="#M000237">init</a>&nbsp;&nbsp;
+      <a href="#M000236">load_rake_tasks</a>&nbsp;&nbsp;
+      <a href="#M000241">markdown?</a>&nbsp;&nbsp;
+      <a href="#M000242">reserved_paths</a>&nbsp;&nbsp;
+      <a href="#M000243">scrub_path</a>&nbsp;&nbsp;
+      <a href="#M000234">version</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -287,7 +288,6 @@ Class <a href="Cms/HomeController.html" class="link">Cms::HomeController</a><br 
 Class <a href="Cms/HtmlBlocksController.html" class="link">Cms::HtmlBlocksController</a><br />
 Class <a href="Cms/ImageBlocksController.html" class="link">Cms::ImageBlocksController</a><br />
 Class <a href="Cms/LinksController.html" class="link">Cms::LinksController</a><br />
-Class <a href="Cms/MissingAssetController.html" class="link">Cms::MissingAssetController</a><br />
 Class <a href="Cms/PageRouteConditionsController.html" class="link">Cms::PageRouteConditionsController</a><br />
 Class <a href="Cms/PageRouteOptionsController.html" class="link">Cms::PageRouteOptionsController</a><br />
 Class <a href="Cms/PageRouteRequirementsController.html" class="link">Cms::PageRouteRequirementsController</a><br />
@@ -344,11 +344,11 @@ Class <a href="Cms/UsersController.html" class="link">Cms::UsersController</a><b
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000236" class="method-detail">
-        <a name="M000236"></a>
+      <div id="method-M000238" class="method-detail">
+        <a name="M000238"></a>
 
         <div class="method-heading">
-          <a href="#M000236" class="method-signature">
+          <a href="#M000238" class="method-signature">
           <span class="method-name">add_generator_paths</span><span class="method-args">(src_root, *files)</span>
           </a>
         </div>
@@ -361,8 +361,8 @@ the absolute path to the root of the files, then each argument after that
 is a Dir.glob pattern string.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000236-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000236-source">
+            onclick="toggleCode('M000238-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000238-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/init.rb, line 40</span>
 40:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_generator_paths</span>(<span class="ruby-identifier">src_root</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">files</span>)
@@ -373,19 +373,19 @@ is a Dir.glob pattern string.
         </div>
       </div>
 
-      <div id="method-M000238" class="method-detail">
-        <a name="M000238"></a>
+      <div id="method-M000240" class="method-detail">
+        <a name="M000240"></a>
 
         <div class="method-heading">
-          <a href="#M000238" class="method-signature">
+          <a href="#M000240" class="method-signature">
           <span class="method-name">add_to_rails_paths</span><span class="method-args">(path)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000238-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000238-source">
+            onclick="toggleCode('M000240-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000240-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/init.rb, line 48</span>
 48:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">add_to_rails_paths</span>(<span class="ruby-identifier">path</span>)
@@ -396,40 +396,40 @@ is a Dir.glob pattern string.
         </div>
       </div>
 
-      <div id="method-M000233" class="method-detail">
-        <a name="M000233"></a>
+      <div id="method-M000235" class="method-detail">
+        <a name="M000235"></a>
 
         <div class="method-heading">
-          <a href="#M000233" class="method-signature">
+          <a href="#M000235" class="method-signature">
           <span class="method-name">build_number</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000233-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000233-source">
+            onclick="toggleCode('M000235-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000235-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/init.rb, line 15</span>
-15:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">build_number</span>; <span class="ruby-value">228</span> <span class="ruby-keyword kw">end</span>
+15:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">build_number</span>; <span class="ruby-value">236</span> <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000237" class="method-detail">
-        <a name="M000237"></a>
+      <div id="method-M000239" class="method-detail">
+        <a name="M000239"></a>
 
         <div class="method-heading">
-          <a href="#M000237" class="method-signature">
+          <a href="#M000239" class="method-signature">
           <span class="method-name">generator_paths</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000237-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000237-source">
+            onclick="toggleCode('M000239-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000239-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/init.rb, line 44</span>
 44:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">generator_paths</span>
@@ -440,11 +440,11 @@ is a Dir.glob pattern string.
         </div>
       </div>
 
-      <div id="method-M000235" class="method-detail">
-        <a name="M000235"></a>
+      <div id="method-M000237" class="method-detail">
+        <a name="M000237"></a>
 
         <div class="method-heading">
-          <a href="#M000235" class="method-signature">
+          <a href="#M000237" class="method-signature">
           <span class="method-name">init</span><span class="method-args">()</span>
           </a>
         </div>
@@ -454,8 +454,8 @@ is a Dir.glob pattern string.
 This is called after the environment is ready
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000235-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000235-source">
+            onclick="toggleCode('M000237-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000237-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/init.rb, line 22</span>
 22:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">init</span>
@@ -476,19 +476,19 @@ This is called after the environment is ready
         </div>
       </div>
 
-      <div id="method-M000234" class="method-detail">
-        <a name="M000234"></a>
+      <div id="method-M000236" class="method-detail">
+        <a name="M000236"></a>
 
         <div class="method-heading">
-          <a href="#M000234" class="method-signature">
+          <a href="#M000236" class="method-signature">
           <span class="method-name">load_rake_tasks</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000234-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000234-source">
+            onclick="toggleCode('M000236-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000236-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/init.rb, line 17</span>
 17:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">load_rake_tasks</span>
@@ -499,19 +499,19 @@ This is called after the environment is ready
         </div>
       </div>
 
-      <div id="method-M000239" class="method-detail">
-        <a name="M000239"></a>
+      <div id="method-M000241" class="method-detail">
+        <a name="M000241"></a>
 
         <div class="method-heading">
-          <a href="#M000239" class="method-signature">
+          <a href="#M000241" class="method-signature">
           <span class="method-name">markdown?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000239-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000239-source">
+            onclick="toggleCode('M000241-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000241-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/init.rb, line 52</span>
 52:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">markdown?</span>
@@ -522,19 +522,19 @@ This is called after the environment is ready
         </div>
       </div>
 
-      <div id="method-M000240" class="method-detail">
-        <a name="M000240"></a>
+      <div id="method-M000242" class="method-detail">
+        <a name="M000242"></a>
 
         <div class="method-heading">
-          <a href="#M000240" class="method-signature">
+          <a href="#M000242" class="method-signature">
           <span class="method-name">reserved_paths</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000240-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000240-source">
+            onclick="toggleCode('M000242-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000242-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/init.rb, line 56</span>
 56:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">reserved_paths</span>
@@ -545,19 +545,74 @@ This is called after the environment is ready
         </div>
       </div>
 
-      <div id="method-M000232" class="method-detail">
-        <a name="M000232"></a>
+      <div id="method-M000243" class="method-detail">
+        <a name="M000243"></a>
 
         <div class="method-heading">
-          <a href="#M000232" class="method-signature">
+          <a href="#M000243" class="method-signature">
+          <span class="method-name">scrub_path</span><span class="method-args">(path)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+This next &#8216;hack&#8217; is to allow script/generate browser_cms to
+work on Windows machines. I&#8216;m not sure why this is necessary.
+</p>
+<p>
+This Generator is adding an absolute file path to the manifest, which is
+file (like a .js or migration) in the gem directory on the
+developers&#8216;s machine, rather than just a relative path with the
+rails_generator directory. On windows, this will mean you are basically
+doing this.
+</p>
+<p>
+m.file
+&quot;C:/Ruby/lib/ruby/gems/1.8/gems/browsercms-3.0.0/public/javascripts/jquery-ui.js&quot;,
+&quot;testing/jquery-ui.js&quot;
+</p>
+<p>
+When the generator hits this command during playback, it will throw an
+error like this:
+</p>
+<pre>
+  Pattern 'c' matches more than one generator: content_block, controller
+</pre>
+<p>
+The generator then fails and stops copying. Stripping the C: off the front
+seems to fix this problem. I.e. This command correctly copies the file on
+Windows XP.
+</p>
+<pre>
+  m.file &quot;/Ruby/lib/ruby/gems/1.8/gems/browsercms-3.0.0/public/javascripts/jquery-ui.js&quot;, &quot;testing/jquery-ui.js&quot;
+</pre>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000243-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000243-source">
+<pre>
+    <span class="ruby-comment cmt"># File lib/cms/init.rb, line 74</span>
+74:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">scrub_path</span>(<span class="ruby-identifier">path</span>)
+75:       <span class="ruby-identifier">windows_drive_pattern</span> =  <span class="ruby-regexp re">/[A-Z\\A]:\//</span>    <span class="ruby-comment cmt"># Works on drives labeled A-Z:</span>
+76:       <span class="ruby-identifier">scrubbed_source_file_name</span> = <span class="ruby-identifier">path</span>.<span class="ruby-identifier">gsub</span>(<span class="ruby-identifier">windows_drive_pattern</span>, <span class="ruby-value str">&quot;/&quot;</span>)
+77:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000234" class="method-detail">
+        <a name="M000234"></a>
+
+        <div class="method-heading">
+          <a href="#M000234" class="method-signature">
           <span class="method-name">version</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000232-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000232-source">
+            onclick="toggleCode('M000234-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000234-source">
 <pre>
     <span class="ruby-comment cmt"># File lib/cms/init.rb, line 11</span>
 11:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">version</span>

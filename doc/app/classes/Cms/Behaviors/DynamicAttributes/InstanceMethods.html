@@ -80,8 +80,8 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000354">dynamic_attributes</a>&nbsp;&nbsp;
-      <a href="#M000353">is_dynamic_attribute?</a>&nbsp;&nbsp;
+      <a href="#M000357">dynamic_attributes</a>&nbsp;&nbsp;
+      <a href="#M000356">is_dynamic_attribute?</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -103,11 +103,11 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000354" class="method-detail">
-        <a name="M000354"></a>
+      <div id="method-M000357" class="method-detail">
+        <a name="M000357"></a>
 
         <div class="method-heading">
-          <a href="#M000354" class="method-signature">
+          <a href="#M000357" class="method-signature">
           <span class="method-name">dynamic_attributes</span><span class="method-args">(model)</span>
           </a>
         </div>
@@ -120,8 +120,8 @@ an empty array. If you just have a static list the :fields option is most
 likely easier.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000354-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000354-source">
+            onclick="toggleCode('M000357-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000357-source">
 <pre>
      <span class="ruby-comment cmt"># File lib/cms/behaviors/dynamic_attributes.rb, line 217</span>
 217:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">dynamic_attributes</span>(<span class="ruby-identifier">model</span>); <span class="ruby-keyword kw">nil</span> <span class="ruby-keyword kw">end</span>
@@ -130,11 +130,11 @@ likely easier.
         </div>
       </div>
 
-      <div id="method-M000353" class="method-detail">
-        <a name="M000353"></a>
+      <div id="method-M000356" class="method-detail">
+        <a name="M000356"></a>
 
         <div class="method-heading">
-          <a href="#M000353" class="method-signature">
+          <a href="#M000356" class="method-signature">
           <span class="method-name">is_dynamic_attribute?</span><span class="method-args">(attr, model)</span>
           </a>
         </div>
@@ -143,14 +143,14 @@ likely easier.
           <p>
 Will determine if the given attribute is a dynamic attribute on the given
 model. Override this in your class to provide custom logic if the <a
-href="InstanceMethods.html#M000354">dynamic_attributes</a> method or the
+href="InstanceMethods.html#M000357">dynamic_attributes</a> method or the
 :fields option are not flexible enough. If you override this method :fields
-and <a href="InstanceMethods.html#M000354">dynamic_attributes</a> will not
+and <a href="InstanceMethods.html#M000357">dynamic_attributes</a> will not
 apply at all unless you implement them yourself.
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000353-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000353-source">
+            onclick="toggleCode('M000356-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000356-source">
 <pre>
      <span class="ruby-comment cmt"># File lib/cms/behaviors/dynamic_attributes.rb, line 204</span>
 204:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">is_dynamic_attribute?</span>(<span class="ruby-identifier">attr</span>, <span class="ruby-identifier">model</span>)

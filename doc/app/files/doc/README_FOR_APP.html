@@ -56,7 +56,7 @@
     </tr>
     <tr class="top-aligned-row">
       <td><strong>Last Update:</strong></td>
-      <td>Thu May 14 17:10:38 -0400 2009</td>
+      <td>Mon Jun 01 17:45:35 -0400 2009</td>
     </tr>
     </table>
   </div>
@@ -72,12 +72,23 @@
       <h2>BrowserCMS</h2>
 <p>
 BrowserCMS is a general purpose, open source Web Content Management System
-(CMS), written in Ruby on Rails. This is the API documentation for v3.0.0
-(Beta).
+(CMS), written in Ruby on Rails. This is the API documentation for v3.0.0.
 </p>
-<h2>Getting Started</h2>
+<h2>Getting Started (Short Version)</h2>
 <p>
-Please see the Getting Started guide (<a
+Need SQLite3 and Rails 2.3.2 (or later).
+</p>
+<pre>
+    sudo gem install browsercms
+    rails my_new_project_name -m http://github.com/browsermedia/browsercms/raw/master/templates/demo.rb
+    cd my_new_project_name
+    script/server
+
+    Go to http://localhost:3000/cms and log in as cmsadmin/cmsadmin.
+</pre>
+<h2>Getting Started (Long Version)</h2>
+<p>
+See the Getting Started guide (<a
 href="http://browsercms.org/doc/guides/html/getting_started.html">browsercms.org/doc/guides/html/getting_started.html</a>)
 for how to install and start a BrowserCMS project.
 </p>
