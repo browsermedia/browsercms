@@ -1,6 +1,9 @@
 # Remove the file on both *unix and Windows
-run "rm public/index.html"
-run "del public\\index.html"
+if Gem.win_platform?
+  run "del public\\index.html"
+else
+  run "rm public/index.html"
+end
 
 gem "browsercms"
 rake "db:create"
