@@ -99,16 +99,13 @@ margin-bottom: 1px;
 }
 
 #sitemap ul.rootlet ul td.section img.folder, #sitemap ul.rootlet ul td.section img.no_folder {
-margin-left: 6px;
+margin-left: 5px;
 margin-top: 1px;
 }
 #sitemap ul.rootlet ul td.section div {
 margin-top: 3px;
 }
 
-#sitemap ul.rootlet ul img.folder_toggle, #sitemap ul.rootlet ul img.no_folder_toggle {
-margin-left: 0px;
-}
 
 #sitemap ul.rootlet td.page img {
 padding-left: 23px;
@@ -119,10 +116,16 @@ padding-left: 23px;
 margin: -5px 0 -6px 0;
 }
 #sitemap ul.rootlet table {
-padding-right: 21px;
+padding-right: 1px;
+}
+#sitemap ul ul div.roundedcorners {
+padding-left: 58px;
+}
+#sitemap div.roundedcorners {
+padding-right: 20px;
 }
 #sitemap ul.rootlet ul table {
-padding-left: 59px;
+padding-left: 1px;
 }
 #sitemap ul.rootlet ul td.page img, #sitemap ul.rootlet ul td.link img {
 margin-left: 1px;
@@ -304,16 +307,19 @@ background: transparent url(/images/cms/sitemap/top_cap_content.png) no-repeat 0
 div.on .sbl { 
   position: absolute; 
   bottom: 1px; 
-  left: 0; 
+  left: 0;
   height: 2px; 
   width: 2px; 
   background: url(/images/cms/sitemap/corners.gif) no-repeat 0 -1px
+}
+#sitemap ul ul div.on .sbl {
+  left: 58px; 
 }
 
 div.on .sbr { 
   position: absolute; 
   bottom: 1px; 
-  right: 0; 
+  right: 20px; 
   height: 2px; 
   width: 2px; 
   background: url(/images/cms/sitemap/corners.gif) no-repeat -1px -1px
@@ -322,16 +328,19 @@ div.on .sbr {
 div.on .stl { 
   position: absolute; 
   top: 0; 
-  left: 0; 
+  left: 0px; 
   height: 2px; 
   width: 2px; 
   background: url(/images/cms/sitemap/corners.gif) no-repeat 0 0
+}
+#sitemap ul ul div.on .stl {
+  left: 58px; 
 }
 
 div.on .str { 
   position: absolute; 
   top: 0px; 
-  right: 0px; 
+  right: 20px; 
   height: 2px; 
   width: 2px; 
   background: url(/images/cms/sitemap/corners.gif) no-repeat -1px 0px
@@ -340,16 +349,20 @@ div.on .str {
 div.over .sbl { 
   position: absolute; 
   bottom: 1px; 
-  left: 0; 
+  left: 0px; 
   height: 2px; 
   width: 2px; 
   background: url(/images/cms/sitemap/corners_hover.gif) no-repeat 0 -1px
 }
+#sitemap ul ul div.over .sbl {
+  left: 58px; 
+}
+
 
 div.over .sbr { 
   position: absolute; 
   bottom: 1px; 
-  right: 0; 
+  right: 20px; 
   height: 2px; 
   width: 2px; 
   background: url(/images/cms/sitemap/corners_hover.gif) no-repeat -1px -1px
@@ -358,16 +371,19 @@ div.over .sbr {
 div.over .stl { 
   position: absolute; 
   top: 0; 
-  left: 0; 
+  left: 0px; 
   height: 2px; 
   width: 2px; 
   background: url(/images/cms/sitemap/corners_hover.gif) no-repeat 0 0
+}
+#sitemap ul ul div.over .stl {
+  left: 58px; 
 }
 
 div.over .str { 
   position: absolute; 
   top: 0px; 
-  right: 0px; 
+  right: 20px; 
   height: 2px; 
   width: 2px; 
   background: url(/images/cms/sitemap/corners_hover.gif) no-repeat -1px 0px
