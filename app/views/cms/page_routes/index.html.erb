@@ -20,8 +20,8 @@
 <% end %>
 
 <% content_for :functions do %>
-  <%= link_to(span_tag("Add"), new_cms_page_route_path, :class => "button") %>
-  <%= link_to(span_tag("Edit"), '#', :id => 'edit_button', :class => "button disabled") %>
+  <%= link_to(span_tag("&nbsp;Add&nbsp;"), new_cms_page_route_path, :class => "button") %>
+  <%= link_to(span_tag("&nbsp;Edit&nbsp;"), '#', :id => 'edit_button', :class => "button disabled") %>
   <%= link_to span_tag("Delete"), "#", 
     :id => "delete_button", 
     :class => "button disabled http_delete", 

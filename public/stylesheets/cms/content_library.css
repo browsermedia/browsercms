@@ -106,7 +106,8 @@ text-align: left;
 margin-left: 15px;
 }
 #add_button {
-margin-right: 15px;
+margin-right: 8px;
+margin-left: 3px;
 }
 #section_id_input {
 margin-top: 5px;
