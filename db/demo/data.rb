@@ -6,7 +6,8 @@
     # Apply new templates to core pages
     home_page.template_file_name = "home_page.html.erb"
     home_page.hidden = true
-    home_page.publish!
+    home_page.publish_on_save = true
+    home_page.save!
 
     # Fill out a sample site map
 
