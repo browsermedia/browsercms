@@ -72,7 +72,7 @@ module Cms
     #   m.file "/Ruby/lib/ruby/gems/1.8/gems/browsercms-3.0.0/public/javascripts/jquery-ui.js", "testing/jquery-ui.js"
     #
     def scrub_path(path)
-      windows_drive_pattern =  /[A-Z\\A]:\//    # Works on drives labeled A-Z:
+      windows_drive_pattern =  /\b[A-Za-z]:\//    # Works on drives labeled A-Z:
       scrubbed_source_file_name = path.gsub(windows_drive_pattern, "/")
     end
   end

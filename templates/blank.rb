@@ -6,7 +6,12 @@ else
 end
 
 gem "browsercms"
-rake "db:create"
+if Gem.win_platform?
+  puts "        rake  db:create"
+  `rake.cmd db:create`
+else
+  rake "db:create"
+end
 route "map.routes_for_browser_cms"
 generate :browser_cms
 environment 'SITE_DOMAIN="localhost:3000"', :env => "development"
@@ -17,4 +22,9 @@ environment 'config.action_controller.page_cache_directory = RAILS_ROOT + "/publ
 initializer 'browsercms.rb', <<-CODE
 Cms.attachment_file_permission = 0640
 CODE
-rake "db:migrate"
+if Gem.win_platform?
+  puts "        rake  db:migrate"
+  `rake.cmd db:migrate`
+else
+  rake "db:migrate"
+end
