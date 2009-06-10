@@ -14,18 +14,21 @@ a.button {
     background: url(/images/cms/buttons/button_bg.png) no-repeat 100% 0;
     margin-right: 0;
   }
+  a.button.middle.off, a.button.middle.off:hover {
+    background: url(/images/cms/buttons/button_cap_off_middle.gif) no-repeat 100% 0;
+  }
   
     a.button.middle:hover {
       background: url(/images/cms/buttons/button_bg.png) no-repeat 100% -27px;
     }
 
   a.button.left, a.button.left.disabled:hover {
-    background: url(/images/cms/buttons/button_bg.png) no-repeat 100% 0px;
+    background: url(/images/cms/buttons/button_left_bg.png) no-repeat 100% 0px;
     margin-right: 0;
   }
   
     a.button.left:hover {
-      background: url(/images/cms/buttons/button_bg.png) no-repeat 100% -27px;
+      background: url(/images/cms/buttons/button_left_bg.png) no-repeat 100% -27px;
     }
 
   a.button.right, a.button.right.disabled:hover {
@@ -55,6 +58,9 @@ a.button span {
   a.button.middle span, a.button.middle.disabled:hover span {
     background: url(/images/cms/buttons/button_bg.png) no-repeat 0 0;
   }
+  a.button.middle.off span, a.button.middle.off:hover span {
+    background: url(/images/cms/buttons/button_off_middle.png) no-repeat 0 0;
+  }
     
     a.button.middle:hover span {
       background: url(/images/cms/buttons/button_bg.png) no-repeat 0 -27px;
@@ -62,6 +68,9 @@ a.button span {
   
   a.button.right span, a.button.right.disabled:hover span {
     background: url(/images/cms/buttons/button_bg.png) no-repeat 0 0;
+  }
+  a.button.right.off span, a.button.right.off:hover span {
+    background: url(/images/cms/buttons/button_off_middle.png) no-repeat 0 0;
   }
   
     a.button.right:hover span {

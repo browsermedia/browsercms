@@ -73,7 +73,7 @@
   
   <%= link_to "<span>List Versions</span>", 
     versions_cms_page_path(@page), 
-    :class => "spacer button left",
+    :class => "spacer button",
     :target => "_top" %>
     
   <% able_to? :publish_content do %>
@@ -83,7 +83,7 @@
         :id => "delete_button",
         :title => "Are you sure you want to delete '#{@page.name}'?", 
         :target => "_top", 
-        :class => "button confirm_with_title http_delete right" %>
+        :class => "spacer button confirm_with_title http_delete" %>
     <% else %>
       <%= link_to "<span>Revert to this Version</span>",
         revert_to_cms_page_path(@page, @page.version), 
