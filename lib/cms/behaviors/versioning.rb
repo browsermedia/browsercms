@@ -208,7 +208,7 @@ module Cms
           raise ActiveRecord::RecordNotFound.new("version #{version.inspect} does not exist for <#{self.class}:#{id}>") unless v
           obj = self.class.new
 
-          (self.class.versioned_columns + [:version, :updated_at]).each do |a|
+          (self.class.versioned_columns + [:version, :created_at, :created_by_id, :updated_at, :updated_by_id]).each do |a|
             obj.send("#{a}=", v.send(a))
           end
           obj.id = id
