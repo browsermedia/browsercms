@@ -14,21 +14,31 @@
 <% end %>
 
 <%= render :partial => 'cms/blocks/toolbar' %>
-
-<table class="data">
+<div class="roundedcorners">
+  <table id="blocks" class="data">
   <thead>
     <tr>
-      <th>Page Name</th>
-      <th>Path</th>
-      <th class="last">Page Status</th>
+      <th colspan="2" class="first"><div class="dividers">Page Name</div></th>
+      <th><div class="dividers">Path</div></th>
+      <th colspan="2" class="last"><div class="dividers">Page Status</div></th>
     </tr>
   </thead>
   <% @pages.each do |page| %>
     <% status = page.archived? ? :archived : page.status %>    
     <tr>
+      <td class="first"></td>
       <td class="page_name"><%=  page.name %></td>
       <td class="path"><%=  link_to page.path, page.path %></td>
       <td class="block_status"><%= status_icon(status) %> <div><%= status %></div></td>
+      <td class="last"></td>
     </tr>
   <% end %>
-</table>
+      <tr>
+        <td colspan="8" class="buffer"></td>
+      </tr>
+  </table>
+  <div class="tl"></div>
+  <div class="tr"></div>
+  <div class="bl"></div>
+  <div class="br"></div>
+</div>

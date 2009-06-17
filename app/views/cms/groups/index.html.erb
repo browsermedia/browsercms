@@ -10,8 +10,7 @@
   <table class="data">
     <thead>
       <tr>
-        <th class="first"></th>
-        <th>
+        <th colspan="2" class="first">
           <div class="dividers">
             <%= link_to "Name", cms_groups_path(:order => determine_order(params[:order], "groups.name")) %>
           </div>
@@ -21,8 +20,7 @@
             <%= link_to "Type", cms_groups_path(:order => determine_order(params[:order], "group_types.name")) %>
           </div>
         </th>
-        <th class="last">Permissions</th>
-        <th class="last"></th>
+        <th colspan="2" class="last"><div class="dividers">Permissions</div></th>
       </tr>
     </thead>
     <% section_count = Section.count %>

@@ -89,7 +89,7 @@
 	<td class="first"></td>
         <% content_type.columns_for_index.each_with_index do |column, i| %>
           <td class="<%= column[:label].gsub(' ', '').underscore %>">
-            <div class="dividers">
+            <div<%= ' class="dividers"' if (i + 3 < col_ct) %>>
             <%= block.send(column[:method]) %>
             <% if i.zero? && block.respond_to?(:cannot_be_deleted_message) && block.cannot_be_deleted_message %>
               <div class="cannot_be_deleted_message" style="display: none">

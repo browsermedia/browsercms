@@ -15,15 +15,14 @@
     <% end %>
   <% end %>
 </div>
-
+<div class="roundedcorners">
 <table class="data">
   <tr>
-    <th class="first"></th>
-    <th><div class="dividers">Name</div></th>
-    <th><div class="dividers">Verb</div></th>
+    <th class="first" colspan="2"><div class="dividers">Name</div></th>
+    <th><div class="dividers" style="width: 50px;">Verb</div></th>
     <th><div class="dividers">Pattern</div></th>
-    <th><div class="dividers">Result</div></th>
-    <th class="last"></th>
+    <th class="last" colspan="2"><div class="dividers">Result</div></th>
+
   </tr>
   <% for route in @routes %><tr>
     <td class="first"></td>
@@ -34,3 +33,8 @@
     <td class="last"></td>
   </tr><% end %>
 </table>
+<div class="tl"></div>
+<div class="tr"></div>
+<div class="bl"></div>
+<div class="br"></div>
+</div>
