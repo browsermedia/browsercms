@@ -78,9 +78,7 @@ module Cms
     end
     
     def link_to_usages(block)
-      RAILS_DEFAULT_LOGGER.debug block.inspect
       count = block.connected_pages.count
-      RAILS_DEFAULT_LOGGER.debug "count: #{count} XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
       if count > 0
         # Would love a cleaner solution to this problem, see http://stackoverflow.com/questions/702728
         path = Portlet === block ? usages_cms_portlet_path(block) : [:usages, :cms, block]

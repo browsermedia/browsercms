@@ -19,13 +19,24 @@ class Cms::ConnectorsControllerTest < ActionController::TestCase
   
   def test_new_portlet
     @page = Factory(:page, :section => root_section, :name => "Test Page")
-    @portlet = DynamicPortlet.create!(:name => "Test", :connect_to_page_id => @page.id, :connect_to_container => "main")
+    @portlet = DynamicPortlet.create!(:name => "Test", :connect_to_page_id => @page.id, :connect_to_container => "main")    
     reset(:page)
     
     get :new, :page_id => @page, :container => "main", :block_type => "portlets"
 
     assert_response :success
     assert_select "title", "Add Existing Content to 'Test Page' Page"
+  end
+  
+  def test_new_with_deleted_portlet
+    @page = Factory(:page, :section => root_section, :name => "Test Page")
+    @portlet = DynamicPortlet.create!(:name => "Test Portlet")
+    @portlet.destroy
+    
+    get :new, :page_id => @page, :container => "main", :block_type => "portlets"
+
+    assert_response :success
+    assert_select "#dynamic_portlet_#{@portlet.id}", :count => 0
   end
   
   def test_destroy
