@@ -10,7 +10,10 @@
       <%= image_tag("cms/pages/down_connectable_disabled.gif", :style => "text-decoration: none; padding: 0; background: none; margin: 0; float: none; border: none;") %>
     <% end %>
     <%= link_to image_tag("cms/pages/delete_connectable.gif", :style => "text-decoration: none; padding: 0; background: none; margin: 0; float: none; border: none;"), cms_connector_path(connector, :_redirect_to => @page.path), :class => "confirm_with_title http_delete", :title => "Remove this content from page (#{connectable.name}).  It will remain available in the Content Library." , :style => "text-decoration: none; padding: 0 2px 0 0; background: none; margin: 0; float: none; border: none;"%>
-    <%= link_to (image_tag "cms/#{connector.published? ? 'published' : 'draft'}_status.gif", :class => "published_status"), '', :title => connector.published? ? "This content is published and can be seen by site visitors." : "This content is a draft and won't be seen by site visitors until this page is published." , :style => "text-decoration: none; padding: 0 2px 0 0; background: none; margin: 0; float: none; border: none; position: absolute; top: -1px; right: 10px;"%>
+    <%= status_icon connector.status,
+          :class => "published_status", 
+          :title => connector.live? ? "This content is published and can be seen by site visitors." : "This content is a draft and won't be seen by site visitors until this page is published." , 
+          :style => "text-decoration: none; padding: 0 2px 0 0; background: none; margin: 0; float: none; border: 0; position: absolute; top: -1px; right: 10px;" %>
   </div>
     <%= render_connectable connectable %>
 </div>

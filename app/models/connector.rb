@@ -43,15 +43,19 @@ class Connector < ActiveRecord::Base
   end
   
   def status
-    published? ? :published : :draft
+    live? ? 'published' : 'draft'
   end        
 
   def status_name
     status.to_s.titleize
   end  
   
-  def published?
-    publishable? ? connectable.published? : true
+  def live?
+    if publishable?
+      connectable.live?
+    else
+      true
+    end
   end
   
   def publishable?

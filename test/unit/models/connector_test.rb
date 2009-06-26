@@ -133,4 +133,20 @@ class ConnectorTest < ActiveSupport::TestCase
     assert_equal true, conn.should_be_copied?, "Should not copy when latest draft is deleted."
 
   end
+  
+  def test_connector_with_file_block_status
+    @page = Factory(:page)
+    @file = Factory(:image_block, :connect_to_page_id => @page.id, :connect_to_container => "main", :publish_on_save => true)
+    @page.reload
+    
+    assert @file.live?
+    assert @page.connectors.last.live?
+    
+    @file.update_attributes(:name => "Something Else")
+    @page.reload
+
+    assert !@file.live?
+    assert !@page.connectors.last.live?    
+  end  
+  
 end

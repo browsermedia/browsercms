@@ -9,5 +9,9 @@ class AbstractFileBlock < ActiveRecord::Base
   def path
     attachment_file_path
   end
+  
+  def self.publishable?
+    true
+  end
 
 end
