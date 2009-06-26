@@ -9,8 +9,10 @@ when :attachment
   "file_field :#{attribute.name}_file, :label => \"File\""
 when :category
   "drop_down :category_id, categories_for('#{class_name.titleize}').map{|c| [c.path, c.id]}"
-when :date, :datetime
+when :date
   "date_picker :#{attribute.name}"
+when :datetime
+  "datetime_select :#{attribute.name}"
 when :html
   "text_editor :#{attribute.name}"
 else

@@ -1,0 +1,12 @@
+<div class="fields text_fields">
+  <% if cms_options[:label] %>
+    <%= f.label method, cms_options[:label] %>
+  <% else %>
+    <%= f.label method %>
+  <% end %>
+  <%= f.datetime_select method, options %>
+  <% if cms_options[:instructions] %>
+    <div class="instructions"><%=h cms_options[:instructions] %></div>
+    <br clear="all"/>  
+  <% end %>  
+</div>
