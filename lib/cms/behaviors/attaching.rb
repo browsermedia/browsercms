@@ -149,7 +149,7 @@ module Cms
         end
 
         def after_publish
-          attachment.publish
+          attachment.publish if attachment
         end
 
         #Size in kilobytes
