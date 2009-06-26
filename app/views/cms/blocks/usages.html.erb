@@ -6,9 +6,9 @@
     jQuery(function($) {
       $('#functions .button').addClass('disabled').attr('href','#');
       $('#view_button').removeClass('disabled')
-        .attr('href', '<%= url_for([:cms, @block])%>')
+        .attr('href', '<%= cms_connectable_path(@block)%>')
       $('#edit_button').removeClass('disabled')
-        .attr('href', '<%= url_for([:edit, :cms, @block])%>')
+        .attr('href', '<%= edit_cms_connectable_path(@block)%>')
     })
   <% end %>
 <% end %>

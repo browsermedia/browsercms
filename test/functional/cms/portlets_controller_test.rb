@@ -46,6 +46,16 @@ class Cms::PortletsControllerTest < ActionController::TestCase
     assert_raise(ActiveRecord::RecordNotFound) { DynamicPortlet.find(@block.id) }
   end
 
+  def test_usages
+    @page = Factory(:page, :section => root_section, :name => "Test Page", :path => "test")
+    @page.create_connector(@block, "main")
+    @page.reload
+    
+    get :usages, :id => @block.id
+    
+    assert_response :success
+    assert_select "td.page_name", "Test Page"
+  end
 
   # Doesn't really belong here, but I'm not sure how else to test the behavior of the form_builders
   def test_form_helpers_which_use_instructions
