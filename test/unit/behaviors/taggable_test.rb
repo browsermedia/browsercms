@@ -88,3 +88,22 @@ class TaggableBlockTest < ActiveSupport::TestCase
   end
   
 end
+
+class VersionedTaggableBlockTest < ActiveSupport::TestCase
+  def test_tagging
+    article = VersionedTaggableArticle.create!(:name => "foo")
+    assert_equal 0, article.taggings.count
+    assert_equal 0, article.tags.count
+    assert_equal 0, Tag.count
+    assert_equal 0, Tagging.count
+
+    article.tag_list = "foo bar"
+    assert article.save
+    assert_equal 2, article.taggings.count
+    assert_equal 2, article.tags.count
+    assert_equal 2, Tag.count
+    assert_equal 2, Tagging.count
+  end
+
+  
+end
