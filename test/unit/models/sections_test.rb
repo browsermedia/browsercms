@@ -46,6 +46,10 @@ class SectionTest < ActiveSupport::TestCase
     @a2 = Factory(:page, :section => @a, :name => "A2")
 
     assert_equal @a1, @a.first_page_or_link
+
+    @a2.section_node.move_to(@a, 0)
+    
+    assert_equal @a2, @a.first_page_or_link
   end
   
   def test_find_by_name_path

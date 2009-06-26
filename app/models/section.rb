@@ -113,7 +113,7 @@ class Section < ActiveRecord::Base
   
   #The first page that is a decendent of this section
   def first_page_or_link
-    section_node = child_nodes.of_type(['Link','Page']).first 
+    section_node = child_nodes.of_type(['Link','Page']).first(:order => "section_nodes.position")
     return section_node.node if section_node
     sections.each do |s| 
       node = s.first_page_or_link
