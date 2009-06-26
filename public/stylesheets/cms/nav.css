@@ -10,7 +10,7 @@ float: left;
 /* Buttons */
 
 #nav ul#section {
-margin-top: 45px;
+margin-top: 46px;
 * margin-top: 46px;
 margin-left: 25px;
 list-style-type: none;
@@ -48,22 +48,9 @@ text-shadow: #2C599A 2px -1px 1px;
 display: block;
 padding: 18px 19px 16px 27px;
 }
-#nav ul#section li a:hover span{
-background: url(/images/cms/nav_h.gif) no-repeat 0 0;
-}
-#nav ul#section li a:hover {
-background: url(/images/cms/nav_cap_h.gif) no-repeat 100% 0;
-text-shadow: #FFF 2px -1px 1px;
-}
 
-#nav ul#section li.on a span {
-background: url(/images/cms/nav.png) no-repeat 0 0;
-}
 
-#nav ul#section li.on a {
-background: url(/images/cms/nav_cap.png) no-repeat 100% 0;
-color: #FFF;
-}
+
 
 /* User Links */
 #nav ul#userlinks {
