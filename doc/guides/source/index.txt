@@ -1,4 +1,4 @@
-= BrowserCMS Reference Documenation
+= BrowserCMS Reference Documentation
 
 BrowserCMS is a general purpose, open source Web Content Management System (CMS), written in Ruby on Rails. It is designed to support three distinct groups of people:
 
