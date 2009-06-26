@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["BrowserMedia"]
-  s.date = %q{2009-06-11}
+  s.date = %q{2009-06-26}
   s.email = %q{github@browsermedia.com}
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -701,9 +701,21 @@ Gem::Specification.new do |s|
      "public/images/cms/menu_open_bg.gif",
      "public/images/cms/nav.png",
      "public/images/cms/nav/on_bg.gif",
+     "public/images/cms/nav_admin.gif",
+     "public/images/cms/nav_admin_h.gif",
+     "public/images/cms/nav_admin_on.gif",
      "public/images/cms/nav_cap.png",
      "public/images/cms/nav_cap_h.gif",
+     "public/images/cms/nav_content_library.gif",
+     "public/images/cms/nav_content_library_h.gif",
+     "public/images/cms/nav_content_library_on.gif",
+     "public/images/cms/nav_dash.gif",
+     "public/images/cms/nav_dash_h.gif",
+     "public/images/cms/nav_dash_on.gif",
      "public/images/cms/nav_h.gif",
+     "public/images/cms/nav_sitemap.gif",
+     "public/images/cms/nav_sitemap_h.gif",
+     "public/images/cms/nav_sitemap_on.gif",
      "public/images/cms/page_toolbar/page_toolbar_bg.gif",
      "public/images/cms/page_toolbar/page_toolbar_inset_bg.gif",
      "public/images/cms/page_toolbar/page_toolbar_inset_draft_bg.gif",

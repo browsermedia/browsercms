@@ -114,7 +114,7 @@ module Cms
         # Copy instance variables from this renderable object to it's view
         action_view.assigns = assigns_for_view
           
-        if respond_to?(:inline_options)
+        if respond_to?(:inline_options) && self.inline_options
           options = {:locals => {}}.merge(self.inline_options)
           ActionView::InlineTemplate.new(options[:inline], options[:type]).render(action_view, options[:locals])
         else

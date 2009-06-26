@@ -24,6 +24,10 @@ class Portlet < ActiveRecord::Base
         :publishable => false,
         :renderable => {:instance_variable_name_for_view => "@portlet"})
       
+      def self.template_path
+        default_template_path
+      end      
+      
       def self.helper_path
         "app/portlets/helpers/#{name.underscore}_helper.rb"
       end
