@@ -12,7 +12,7 @@ module Cms
       @version = SPEC.version.version
     end
     
-    def build_number; 243 end
+    def build_number; 244 end
     
     def load_rake_tasks
       load "#{Cms.root}/lib/tasks/cms.rake"
@@ -56,7 +56,7 @@ module Cms
     def reserved_paths
       @reserved_paths ||= ["/cms", "/cache"]
     end
-
+    
     # This next 'hack' is to allow script/generate browser_cms to work on Windows machines. I'm not sure why this is necessary.
     #
     # This Generator is adding an absolute file path to the manifest, which is file (like a .js or migration) in

@@ -57,14 +57,6 @@ class Portlet < ActiveRecord::Base
     type.constantize 
   end
 
-  def self.content_block_type
-    "portlet"
-  end 
-  
-  def self.content_block_type_for_list
-    "portlet"
-  end
-  
   # For column in list
   def portlet_type_name
     type.titleize
@@ -91,7 +83,9 @@ class Portlet < ActiveRecord::Base
   end
 
   def inline_options
-    {:inline => self.template}
+    options = {:inline => self.template}
+    options[:type] = self.handler unless self.handler.blank?
+    options
   end
 
   def type_name
