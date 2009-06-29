@@ -8,16 +8,12 @@ class PortletGenerator < Rails::Generator::NamedBase
       # Check for class naming collisions.
       m.class_collisions class_path, portlet_class_name
 
-      # Create the directory for this portlet 
-      m.directory File.join('app/portlets', class_path)
-
-      # Create unit test dir if needed
-      m.directory File.join('test/unit/portlets')
-
       # Create the unit test for the model
+      m.directory File.join('test/unit/portlets')
       m.template 'unit_test.erb', File.join('test/unit/portlets', "#{portlet_file_name}_test.rb")
 
       # Create the content block
+      m.directory File.join('app/portlets', class_path)
       m.template 'portlet.rb', File.join('app/portlets', class_path, "#{portlet_file_name}.rb")
 
       # Create the edit form for the content type

@@ -7,18 +7,15 @@ class ContentBlockGenerator < Rails::Generator::NamedBase
       m.class_collisions class_path, class_name
 
       # Create the content block
+      m.directory File.join('app/models')
       m.template 'content_block.rb', File.join('app/models', "#{file_name}.rb")
 
-      # Create unit test dir if needed
-      m.directory File.join('test/unit/models')
-
       # Create the unit test for the model
+      m.directory File.join('test/unit/models')
       m.template 'unit_test.erb', File.join('test/unit/models', "#{file_name}_test.rb")
       
-      # Create the cms directory if we need to
-      m.directory File.join('app/controllers/cms')
-
       # Create the controller
+      m.directory File.join('app/controllers/cms')
       m.template 'controller.rb', File.join('app/controllers/cms', "#{file_name.pluralize}_controller.rb")
 
       # Create the edit form for the content type
@@ -26,10 +23,8 @@ class ContentBlockGenerator < Rails::Generator::NamedBase
       m.template '_form.html.erb', File.join('app/views/cms/', file_name.pluralize, "_form.html.erb")
       m.template 'render.html.erb', File.join('app/views/cms/', file_name.pluralize, "render.html.erb")
 
-      # Create unit test dir if needed
-      m.directory File.join('test/functional/cms/')
-
       # Create functional test for the controller
+      m.directory File.join('test/functional/cms/')
       m.template 'functional_test.erb', File.join('test/functional/cms/', "#{file_name.pluralize}_controller_test.rb")
 
       # Create the routes for the content block
