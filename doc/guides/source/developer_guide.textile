@@ -1,0 +1,150 @@
+h2. BrowserCMS Developer Guide
+
+This guide covers how to use the tools that come with BrowserCMS to extend the functionality of your BrowserCMS site.  The target audience for this guide is intermediate to advanced Rails developers.  You should also read the "Building a Site with BrowserCMS":user_guide.html guide first as well, so you know how to create pages and put content on pages.  This guide will cover:
+
+* What content blocks and portlets are and how they work
+* How to create custom content blocks
+* How to create custom portlets
+* How to create friendly URLs for pages
+
+endprologue.
+
+h3. Content Blocks
+
+Content Blocks are the basic unit used to add content to pages in a BrowserCMS site.  There are several pre-built content types that are part of BrowserCMS core.  The most commonly used one is the HtmlBlock content type, so we will use that as a starting example.
+
+If you look at the HtmlBlock model in BrowserCMS core, you will see that it is an ActiveRecord model, just like any model you create in a Rails application.  It also calls the "acts_as_content_block":/doc/app/classes/Cms/Acts/ContentBlock/MacroMethods.html method, which just sets up several "Behaviors":/doc/app/classes/Cms/Behaviors.html on the model.  One of the key Behaviors to understand is the "Rendering":/doc/app/classes/Cms/Behaviors/Rendering.html behavior.  Essentially what this behavior does is to allow a model (by model I mean a subclass of ActiveRecord::Base) to act as a mini-controller.  This is the same thing conceptually as "Merb Parts":http://yehudakatz.com/2007/09/06/merbs-parts-are-pretty-rocking-too or "Rails Cells":http://cells.rubyforge.org, the only difference is that content blocks are models as well, so they have attributes that are stored in the database like any other model. 
+
+In the BrowserCMS implementation, first the render method of the object is called, which is like an action.  This is where instance variables are set.  In the case of an HtmlBlock, there are no other instance variables to set up, so this step is just skipped.  It is similar to a controller action that has no action method, it just goes straight to the view.
+
+The view is the render template, which is inside the <tt>cms/html_blocks</tt> directory in the view path.  If you look in the render template, you will see all it does is print the value of <tt>@content_block.content</tt>.  Content is the name of the property that holds the HTML content.
+
+h3. Creating A Custom Content Block
+
+Let's say that you are using BrowserCMS to build a website that will display a list of products.  The first step would be to create a product content block.  This will give the users of the CMS a way to create products.  To create a product content block, in an existing BrowserCMS project, run the content block generator:
+
+<shell>
+$ script/generate content_block product name:string price:integer description:html
+</shell>
+
+You will notice that several things have been created:
+
+* A model in <tt>app/models/product.rb</tt>
+* A migration for the product model
+* A controller for the product in <tt>app/controllers/cms/products_controller.rb</tt>
+* A form partial in <tt>app/views/cms/products/_form.html.erb</tt>
+* A render template in <tt>app/views/cms/products/render.html.erb</tt>
+* A resource route for the controller
+
+If you look at <tt>app/models/product.rb</tt>, you will see that it is nothing more than:
+
+<ruby>
+class Product < ActiveRecord::Base
+  acts_as_content_block
+end
+</ruby>
+
+The controller created at <tt>app/controllers/cms/products_controller.rb</tt> is equally empty:
+
+<ruby>
+class Cms::ProductsController < Cms::ContentBlockController
+end
+</ruby>
+
+This controller is the controller used in the actual CMS interface.  If you want to create a controller to use in the front end of your application, create a products controller that is not in the CMS namespace, so as not to conflict the CMS functionality.  You will most likely not need to customize the CMS controller at all.
+
+The form partial at <tt>app/views/cms/products/_form.html.erb</tt> is the form that will be used when creating/editing the product content block in the content library of the CMS.  The contents of this file will be:
+
+<erb>
+<%= f.cms_text_field :name %>
+<%= f.cms_text_field :price %>
+<%= f.cms_text_editor :description %>
+</erb>
+
+The form helper methods that are prefixed with <tt>cms_</tt> will wrap that form helper with the CMS styling and extra functionality.  The <tt>cms_text_editor</tt> will show the user a WYSIWYG editor for editing HTML.  Additional CMS form builder extensions are covered in the "BrowserCMS Designer Guide":designer_guide.html.
+
+The render template at <tt>app/views/cms/products/render.html.erb</tt> is the template that will be used to render the HTML when this product is placed directly on a page.  It is also what is shown when you view a product within the content library of the CMS.  
+
+As you will see in the next section, custom content blocks are often not placed directly on a page, instead the data of a product is displayed through a portlet.  For this reason, a more informational display, similar to what is automatically generated by the generator, is what the render template often contains.  Depending on what your content block is, you may want to place the content block directly on a page, in which case you would most likely customize the render template.
+
+h3. Creating A Custom Portlet
+
+Once you have created the product content block and created a few products in the content library, you need a way to display them on a page.  To do that, you will want to create a portlet.
+
+A portlet is used to display dynamic data on a page.  A portlet is a content block.  A portlet will typically perform some kind of database query in the render method and then render it's view.  One difference between a portlet and typical content block is that each instance of a portlet can have a unique template because that template is stored as data along with the portlet.  Let's generate a portlet to display the most recently created products:
+
+<shell>
+$ script/generate portlet recent_products limit:integer
+</shell>
+
+What you will see created is:
+
+* A portlet at <tt>app/portlets/recent_products_portlet.rb</tt>
+* A form partial at <tt>app/views/portlets/recent_products/_form.html.erb</tt>
+* A render template at <tt>app/views/portlets/recent_products/render.html.erb</tt>
+
+What you don't see created is a migration.  Portlets use the "DynamicAttributes":/doc/app/classes/Cms/Behaviors/DynamicAttributes.html behavior in order to store associated values in the database without having to create custom database tables.  What this means is that you can set and then store a value for any attribute for a portlet.
+
+So if you look at the form partial that was generate for this portlet, you will see this:
+
+<erb>
+<%= f.cms_text_field :name %>
+<%= f.cms_text_field :limit %>
+<%= f.cms_text_area :template, :default_value => @block.class.default_template %>
+</erb>
+
+Every portlet instance has to have a name and that is stored in the main <tt>portlets</tt> table, but <tt>limit</tt> is stored in the <tt>portlet_attributes</tt> table.  You could add anything to this form, such as <tt><%= f.cms_text_field :foobar %></tt>, and whatever the user enters for <tt>foobar</tt> would get saved with the portlet.
+
+If you look at the code for the portlet, you will see:
+
+<ruby>
+class RecentProducts < Portlet
+    
+  def render
+    # Your Code Goes Here
+  end
+    
+end
+</ruby>
+
+As the comment says, you will want to fill in your application logic here.  We're going to get the most recent products and use the value the user entered for limit when they filled out the form.  So edit the code to look like:
+
+<ruby>
+class RecentProducts < Portlet
+    
+  def render
+    @products = Product.all(:order => "created_at desc", :limit => self.limit)
+  end
+    
+end
+</ruby>
+
+<tt>self</tt> in this case is the portlet instance, which is also available in the instance variable <tt>@portlet</tt>.  We are setting the <tt>@products</tt> instance variable so that will be available in the view.  If you look at the render template, you will see this:
+
+<erb>
+<%=h @portlet.name %>
+</erb>
+
+This is simply a place holder, you should override this code with something similar to what you expect the user of your portlet to want to use.  In this case, let's go with:
+
+<erb>
+<ul>
+  <% @products.each do |product| %>
+    <li><%=h product.name %></li>
+  <% end %>
+</ul>
+</erb>
+
+Notice that in the last paragraph I said "similar to what you expect the user of your portlet to want to use".  This value is simply the default starting point for the template of a portlet.  The actual value is entered into the form when the user creates an instance of this portlet.
+
+If you look back at the form partial that was generated, you'll see:
+
+<erb>
+<%= f.cms_text_area :template, :default_value => @block.class.default_template %>
+</erb>
+
+What this does is preload the template with whatever you entered into the render template.  The user is free to change it as they see fit and even have different values from one portlet instance to the next.
+
+h3. Page Routes
+
+TODO

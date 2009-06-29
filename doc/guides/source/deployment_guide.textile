@@ -1,13 +1,14 @@
-BrowserCMS Deployment Guide
-===========================
+h2. BrowserCMS Deployment Guide
 
 This guide covers how to setup the Apache Passenger (mod_rails) production environment for your BrowserCMS application.
 
-== Setting Up Virtual Hosts for Page Caching ==
+endprologue.
+
+h3. Setting Up Virtual Hosts for Page Caching
 
 In order to setup BrowserCMS to due page caching, you need to create two virtual hosts for your site.  The main purpose for this is to allow page caching to work when you access a page on the main site, but then have the pages not be served from the cache when you are working in the BrowserCMS interface.
 
-..................
+<plain>
 <VirtualHost *:80>
   ServerName cms.mysite.com
   DocumentRoot "/var/sites/mysite/public"
@@ -37,6 +38,4 @@ In order to setup BrowserCMS to due page caching, you need to create two virtual
     Allow from all
   </directory>
 </VirtualHost>
-..................
-
-
+</plain>

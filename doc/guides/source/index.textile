@@ -1,34 +1,44 @@
-= BrowserCMS Reference Documentation
+h2. BrowserCMS Reference Documentation
 
 BrowserCMS is a general purpose, open source Web Content Management System (CMS), written in Ruby on Rails. It is designed to support three distinct groups of people:
 
-1. Non-technical web editors who want a humane system to manage their site, without needing to understand what HTML or even Rails is.
-2. Designers who want to create large and elegantly designed websites with no artificial constraints by the CMS.
-3. Developers who want to add a CMS into their Rails projects, or create CMS driven websites for their clients.
+# Non-technical web editors who want a humane system to manage their site, without needing to understand what HTML or even Rails is.
+# Designers who want to create large and elegantly designed websites with no artificial constraints by the CMS.
+# Developers who want to add a CMS into their Rails projects, or create CMS driven websites for their clients.
 
 This guide is for BrowserCMS v3.0.0.
 
-== Guides
+endprologue.
+
+h3. Guides
+
 Below are a list of guides on how the above groups can use BrowswerCMS, to design, build and maintain websites.
 
-=== link:getting_started.html[Getting Started]
+h4. "Getting Started":getting_started.html
+
 The easy way to install BrowserCMS and create a project with it.
 
-=== link:user_guide.html[User's Guide]
+h4. "User's Guide":user_guide.html
+
 How to use the basic features of BrowserCMS.
 
-=== link:installing_modules.html[Installing a Module]
+h4. "Installing a Module":installing_modules.html
+
 How to add a module to your BrowserCMS project.
 
-=== link:developer_guide.html[Customizing the CMS]
+h4. "Customizing the CMS":developer_guide.html
+
 How to customize and extend a BrowserCMS site to add dynamic behavior and content.
 
-=== link:designer_guide.html[Building Templates]
+h4. "Building Templates":designer_guide.html
+
 How to turn a design into a styled website.
 
-=== link:deployment_guide.html[Deploying to Production Servers]
+h4. "Deploying to Production Servers":deployment_guide.html
+
 How to configure Apache and Passenger to work with BrowserCMS in production mode.
 
-=== link:build_it_yourself.html[Building on the Edge]
+h4. "Building on the Edge":build_it_yourself.html
+
 For developers who want the very latest source code from Github and build the BrowserCMS gem themselves.
 

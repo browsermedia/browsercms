@@ -3,6 +3,9 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>BrowserCMS Designer Guide</title>
+    <link rel="stylesheet" type="text/css" href="files/stylesheets/syntax.css" />
+    <script type="text/javascript" src="files/javascripts/code_highlighter.js"></script>
+    <script type="text/javascript" src="files/javascripts/highlighters.js"></script>
     <style type="text/css">
       body {
         background: #FFFFFF url(images/bg.png) repeat-x scroll 0 0;
@@ -45,6 +48,7 @@
       #content {
         background-color: #FFFFFF;
         margin: 0 5px;
+        padding: 0 10px;
       }
   
       div.title {
@@ -89,11 +93,17 @@
         padding: 10px;
       }
       
-      pre {
+      .code_container {
         padding: 10px;
         background: #eee;
         border: 1px solid #ccc;
         overflow: auto;
+        width: 760px;
+      }
+      
+      pre, code {
+        overflow: auto;
+        white-space:pre;        
       }
       
     </style>
@@ -113,45 +123,22 @@
           <div id="content">
             <table width="100%" cellpadding="0" cellspacing="0" border="0">
               <tr>                
-                
-                  <td class="sidebar" valign="top">
-                    <h2>Chapters</h2>
-                    <ol>
-                          <li>
-                            <a href="#_introduction">Introduction</a>
-                          </li>
-                    </ol>
-                  </td>
-                
+                <td class="sidebar" valign="top">
+                        <div id="subCol">
+        <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+        <ol class="chapters">
+</ol></div>
+                </td>
                 <td class="guides">
+                  <h2>BrowserCMS Designer Guide</h2>
+<p>This guide covers how to set up styled templates for BrowserCMS.  This guide will cover:</p>
+<ul>
+	<li>How to create custom page templates</li>
+	<li>How to create custom page partials</li>
+	<li>How to use helpers to add dynamic content to templates and partials</li>
+	<li>How to use the <span class="caps">CMS</span>-specific form builder extensions</li>
+</ul>
                   
-<h2 id="_introduction">1. Introduction</h2>
-<div class="sectionbody">
-<div class="paragraph"><p>This guide covers how to set up styled templates for BrowserCMS.  This guide will cover:</p></div>
-<div class="ulist"><ul>
-<li>
-<p>
-How to create custom page templates
-</p>
-</li>
-<li>
-<p>
-How to create custom page partials
-</p>
-</li>
-<li>
-<p>
-How to use helpers to add dynamic content to templates and partials
-</p>
-</li>
-<li>
-<p>
-How to use the CMS-specific form builder extensions
-</p>
-</li>
-</ul></div>
-</div>
-
                 </td>
               </tr>
             </table>
@@ -163,3 +150,4 @@ How to use the CMS-specific form builder extensions
     </div>
   </body>
 </html>
+
