@@ -32,7 +32,7 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
       def cms_#{f}(method, options={})
         add_tabindex!(options)
         set_default_value!(method, options)
-        cms_options = options.extract!(:label, :instructions)
+        cms_options = options.extract!(:label, :instructions, :default_value)
         render_cms_form_partial :#{f},
           :object_name => @object_name, :method => method,
           :options => options, :cms_options => cms_options
@@ -43,7 +43,8 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
   
   def cms_drop_down(method, choices, options={}, html_options={})
     add_tabindex!(html_options)
-    cms_options = options.extract!(:label, :instructions)
+    set_default_value!(method, options)    
+    cms_options = options.extract!(:label, :instructions, :default_value)
     render_cms_form_partial :drop_down,
       :object_name => @object_name, :method => method,
       :choices => choices, :options => options, 
@@ -52,14 +53,16 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
     
   def cms_tag_list(options={})
     add_tabindex!(options)
-    cms_options = options.extract!(:label, :instructions)
+    set_default_value!(:tag_list, options)    
+    cms_options = options.extract!(:label, :instructions, :default_value)
     render_cms_form_partial :tag_list, 
       :options => options, :cms_options => cms_options
   end
 
   def cms_text_editor(method, options = {})
     add_tabindex!(options)
-    cms_options = options.extract!(:label, :instructions)
+    set_default_value!(method, options)    
+    cms_options = options.extract!(:label, :instructions, :default_value)
     render_cms_form_partial :text_editor, 
       :id => (options[:id] || "#{@object_name}_#{method}"), 
       :editor_enabled => (cookies["editorEnabled"].blank? ? true : (cookies["editorEnabled"] == 'true' || cookies["editorEnabled"] == ['true'])),

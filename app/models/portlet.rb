@@ -83,9 +83,24 @@ class Portlet < ActiveRecord::Base
   end
 
   def inline_options
-    options = {:inline => self.template}
+    options = {}
+    options[:inline] = self.template if self.class.render_inline 
     options[:type] = self.handler unless self.handler.blank?
     options
+  end
+
+  def self.handler(handler_type)
+    define_method(:handler) { handler_type }
+  end
+
+  def self.render_inline(*args)
+    if args.length > 0
+      @render_inline = args.first
+    elsif !defined?(@render_inline)
+      @render_inline = true
+    else
+      @render_inline
+    end
   end
 
   def type_name

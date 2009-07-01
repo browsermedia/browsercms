@@ -184,6 +184,7 @@ end</code></div>
 <p>So if you look at the form partial that was generate for this portlet, you will see this:</p>
 <div class="code_container"><code class="html">&lt;%= f.cms_text_field :name %&gt;
 &lt;%= f.cms_text_field :limit %&gt;
+&lt;%= f.cms_drop_down :handler, ActionView::Template.template_handler_extensions, :default_value =&gt; &quot;erb&quot; %&gt;
 &lt;%= f.cms_text_area :template, :default_value =&gt; @block.class.default_template %&gt;</code></div>
 <p>Every portlet instance has to have a name and that is stored in the main <tt>portlets</tt> table, but <tt>limit</tt> is stored in the <tt>portlet_attributes</tt> table.  You could add anything to this form, such as <tt>&lt;%= f.cms_text_field :foobar %&gt;</tt>, and whatever the user enters for <tt>foobar</tt> would get saved with the portlet.</p>
 <p>If you look at the code for the portlet, you will see:</p>
@@ -202,7 +203,9 @@ end</code></div>
   end
     
 end</code></div>
-<p><tt>self</tt> in this case is the portlet instance, which is also available in the instance variable <tt><code>portlet&lt;/tt&gt;.  We are setting the &lt;tt&gt;</code>products</tt> instance variable so that will be available in the view.  If you look at the render template, you will see this:</p>
+<p><code>self</code> in this case is the portlet instance, which is also available in the instance variable 
+<code>@portlet</code>.  
+We are setting the <code>@products</code> instance variable so that will be available in the view.  If you look at the render template, you will see this:</p>
 <div class="code_container"><code class="html">&lt;%=h @portlet.name %&gt;</code></div>
 <p>This is simply a place holder, you should override this code with something similar to what you expect the user of your portlet to want to use.  In this case, let&#8217;s go with:</p>
 <div class="code_container"><code class="html">&lt;ul&gt;
@@ -214,6 +217,31 @@ end</code></div>
 <p>If you look back at the form partial that was generated, you&#8217;ll see:</p>
 <div class="code_container"><code class="html">&lt;%= f.cms_text_area :template, :default_value =&gt; @block.class.default_template %&gt;</code></div>
 <p>What this does is preload the template with whatever you entered into the render template.  The user is free to change it as they see fit and even have different values from one portlet instance to the next.</p>
+<p>If you do not want to have the portlet&#8217;s render template entered in the <span class="caps">CMS</span> and would rather have it just render the file from the file system, simply add this to your portlet code:</p>
+<div class="code_container"><code class="ruby">class RecentProducts &lt; Portlet
+
+    render_inline false
+
+    def render
+      @products = Product.all(:order =&gt; &quot;created_at desc&quot;, :limit =&gt; self.limit)
+    end
+
+  end</code></div>
+<p>The key line being the <code>render_line false</code>.  Also, you will probably notice this line in the form that was generated:</p>
+<div class="code_container"><code class="html">&lt;%= f.cms_drop_down :handler, ActionView::Template.template_handler_extensions, :default_value =&gt; &quot;erb&quot; %&gt;</code></div>
+<p>This generates a drop-down menu for the user creating the portlet to select from the various portlet handlers installed in your Rails app.  The default is erb, but you could install haml and use haml instead, for example.</p>
+<p>If you would rather not have the user select the handler type, or maybe you are using the file system instead of entering the template into the <span class="caps">CMS</span>, you can set the handler to a different value like this:</p>
+<div class="code_container"><code class="ruby">class RecentProducts &lt; Portlet
+
+    handler &quot;haml&quot;
+    render_inline false
+
+    def render
+      @products = Product.all(:order =&gt; &quot;created_at desc&quot;, :limit =&gt; self.limit)
+    end
+
+  end</code></div>
+<p>The key line being <code>handler "haml"</code>.</p>
 <h3 id="page-routes">4 Page Routes</h3>
 <p><span class="caps">TODO</span></p>
                 </td>

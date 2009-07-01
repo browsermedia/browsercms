@@ -21,6 +21,8 @@ begin
 
     gem.files = Dir["rails/*.rb"]
     gem.files += Dir["browsercms.gemspec"]
+    gem.files += Dir["doc/app/**/*"]
+    gem.files += Dir["doc/guides/html/**/*"]
     gem.files += Dir["app/**/*"]
     gem.files += Dir["db/migrate/[0-9]*_*.rb"]
     gem.files += Dir["db/demo/**/*"]
@@ -33,6 +35,7 @@ begin
     gem.files += Dir["public/site/**/*"]
     gem.files += Dir["public/images/cms/**/*"]
     gem.files += Dir["public/themes/**/*"]
+    gem.files += Dir["templates/*.rb"]
 
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end

@@ -90,6 +90,7 @@ So if you look at the form partial that was generate for this portlet, you will 
 <erb>
 <%= f.cms_text_field :name %>
 <%= f.cms_text_field :limit %>
+<%= f.cms_drop_down :handler, ActionView::Template.template_handler_extensions, :default_value => "erb" %>
 <%= f.cms_text_area :template, :default_value => @block.class.default_template %>
 </erb>
 
@@ -119,7 +120,9 @@ class RecentProducts < Portlet
 end
 </ruby>
 
-<tt>self</tt> in this case is the portlet instance, which is also available in the instance variable <tt>@portlet</tt>.  We are setting the <tt>@products</tt> instance variable so that will be available in the view.  If you look at the render template, you will see this:
+<code>self</code> in this case is the portlet instance, which is also available in the instance variable 
+<code>@portlet</code>.  
+We are setting the <code>@products</code> instance variable so that will be available in the view.  If you look at the render template, you will see this:
 
 <erb>
 <%=h @portlet.name %>
@@ -144,6 +147,45 @@ If you look back at the form partial that was generated, you'll see:
 </erb>
 
 What this does is preload the template with whatever you entered into the render template.  The user is free to change it as they see fit and even have different values from one portlet instance to the next.
+
+If you do not want to have the portlet's render template entered in the CMS and would rather have it just render the file from the file system, simply add this to your portlet code:
+
+<ruby>
+  class RecentProducts < Portlet
+
+    render_inline false
+
+    def render
+      @products = Product.all(:order => "created_at desc", :limit => self.limit)
+    end
+
+  end  
+</ruby>
+
+The key line being the <code>render_line false</code>.  Also, you will probably notice this line in the form that was generated:
+
+<erb>
+<%= f.cms_drop_down :handler, ActionView::Template.template_handler_extensions, :default_value => "erb" %>
+</erb>
+
+This generates a drop-down menu for the user creating the portlet to select from the various portlet handlers installed in your Rails app.  The default is erb, but you could install haml and use haml instead, for example.
+
+If you would rather not have the user select the handler type, or maybe you are using the file system instead of entering the template into the CMS, you can set the handler to a different value like this:
+
+<ruby>
+  class RecentProducts < Portlet
+
+    handler "haml"
+    render_inline false
+
+    def render
+      @products = Product.all(:order => "created_at desc", :limit => self.limit)
+    end
+
+  end  
+</ruby>
+
+The key line being <code>handler "haml"</code>.
 
 h3. Page Routes
 
