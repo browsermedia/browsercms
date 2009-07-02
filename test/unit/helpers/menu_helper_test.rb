@@ -196,6 +196,24 @@ HTML
     
     assert_equal expected, render_menu(:from_top => 1, :depth => 1)
     
+    expected = <<HTML 
+<div id="menu" class="menu">
+  <ul>
+    <li id="section_#{@afc_east.id}" class="depth-1 first">
+      <a href="/buf">East</a>
+    </li>
+    <li id="section_#{@afc_north.id}" class="depth-1 open">
+      <a href="/bal">North</a>
+    </li>
+    <li id="section_#{@afc_south.id}" class="depth-1 last">
+      <a href="/hou">South</a>
+    </li>
+  </ul>
+</div>
+HTML
+
+    assert_equal expected, render_menu(:from_top => 1, :depth => 1, :limit => 3)    
+    
   end
   
   def test_menu_with_links

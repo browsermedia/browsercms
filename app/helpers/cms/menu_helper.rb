@@ -9,20 +9,19 @@ module Cms
     # for that Section.  This is commonly done to have a page for a Section and avoid having duplicates in the 
     # navigation.
     #
-    # You can change the behavior with the following options:
+    # You can change the behavior with the following options, all of these are optional:
     #
     # ==== Options
     # * <tt>:page</tt> - What page should be used as the current page.  If this value is omitted, the value in @page will be used.
-    # * <tt>:path</tt> - This is optional, if you pass a value for this, it will be used to look up
-    #   the a section and that section will used to generate the menu.  The current page will
-    #   still be the value of the page option or @page.  Note that this is the path to a section,
-    #   not a path to a page.
+    # * <tt>:path</tt> - This will be used to look up a section and that section will used to generate the menu.  The current page will
+    #   still be the value of the page option or @page.  Note that this is the path to a section, not a path to a page.
     # * <tt>:from_top</tt> - How many below levels from the root the tree should start at.  
     #   All sections at this level will be shown.  The default is 0, which means show all
     #   section that are direct children of the root
     # * <tt>:depth</tt> - How many levels deep should the tree go, relative to from_top.  
     #   If no value is supplied, the tree will go all the way down to the current page.
     #   If a value is supplied, the tree will be that many levels underneath from_top deep.
+    # * <tt>:limit</tt> - Limits the number of top-level elements that will be included in the list
     # * <tt>:class</tt> - The CSS Class that will be applied to the div.  The default value is "menu".
     # * <tt>:show_all_siblings</tt> - Passing true for this option will make all sibilings appear in the tree.
     #   the default is false, in which case only the siblings of nodes within the open path will appear.
@@ -131,6 +130,7 @@ module Cms
       id = options[:id] || "menu"
       css_class = options[:class] || "menu"
       show_all_siblings = !!(options[:show_all_siblings])
+      limit = options[:limit]
 
       html = "<div id=\"#{id}\" class=\"#{css_class}\">\n"
       
@@ -179,7 +179,7 @@ module Cms
         end
         html << "</ul>\n".indent(indent+2)
       end
-      fn.call(ancestors.first.visible_child_nodes, 1) unless ancestors.first.blank?
+      fn.call(ancestors.first.visible_child_nodes(:limit => limit), 1) unless ancestors.first.blank?
       html << "</div>\n"
     end
   end
