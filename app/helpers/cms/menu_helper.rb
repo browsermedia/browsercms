@@ -12,7 +12,11 @@ module Cms
     # You can change the behavior with the following options:
     #
     # ==== Options
-    # * <tt>:page</tt> - What page should be used.  If this value is omitted, the value in @page will be used.
+    # * <tt>:page</tt> - What page should be used as the current page.  If this value is omitted, the value in @page will be used.
+    # * <tt>:path</tt> - This is optional, if you pass a value for this, it will be used to look up
+    #   the a section and that section will used to generate the menu.  The current page will
+    #   still be the value of the page option or @page.  Note that this is the path to a section,
+    #   not a path to a page.
     # * <tt>:from_top</tt> - How many below levels from the root the tree should start at.  
     #   All sections at this level will be shown.  The default is 0, which means show all
     #   section that are direct children of the root
@@ -111,6 +115,17 @@ module Cms
     def render_menu(options={})
       #Intialize parameters
       page = options[:page] || @page
+      return nil unless page
+      
+      # Path to the section
+      if options.has_key?(:path)
+        section_for_path = Section.find_by_path(options[:path])
+        raise "Could not find section for path '#{options[:path]}'" unless section_for_path
+        ancestors = section_for_path.ancestors(:include_self => true)
+      else
+        ancestors = page.ancestors
+      end
+      
       from_top = options.has_key?(:from_top) ? options[:from_top].to_i : 0
       depth = options.has_key?(:depth) ? options[:depth].to_i : 1.0/0
       id = options[:id] || "menu"
@@ -119,11 +134,10 @@ module Cms
 
       html = "<div id=\"#{id}\" class=\"#{css_class}\">\n"
       
-      ancestors = page.ancestors
       if from_top > ancestors.size
         return html << "</div>\n"
       else
-        ancestors = page.ancestors[from_top..-1]
+        ancestors = ancestors[from_top..-1]
       end
       
       #We are defining a recursive lambda that takes the top-level sections

@@ -47,6 +47,8 @@ class Cms::MenuHelperTest < ActionView::TestCase
 </div>
 HTML
 
+    assert_equal expected, render_menu(:page => @bal)
+
     @page = @bal
     assert_equal expected, render_menu
     assert_match /<div id=\"menu\" class=\"leftnav\">/, render_menu(:class => "leftnav")
@@ -79,7 +81,7 @@ HTML
 HTML
     
     assert_equal expected, render_menu(:depth => 2)
-    
+
     expected = <<HTML 
 <div id="menu" class="menu">
   <ul>
@@ -245,6 +247,57 @@ HTML
     assert output =~ /\/test/, "Overview page should show up"
     assert output =~ /Draft v1/, "Original version of draft page should show up"
     assert output !~ /\/never_published/, "Never published should not show up"
+  end
+  
+  def test_render_menu_with_path
+    @test = Factory(:page, :section => root_section, :name => "Test", :path => "/test", :publish_on_save => true)
+    @footer = Factory(:section, :parent => root_section, :name => "Footer", :path => "/footer")
+    @about_us = Factory(:page, :section => @footer, :name => "About Us", :path => "/about_us", :publish_on_save => true)
+    @contact_us = Factory(:page, :section => @footer, :name => "Contact Us", :path => "/contact_us", :publish_on_save => true)
+    @privacy_policy = Factory(:page, :section => @footer, :name => "Privacy Policy", :path => "/privacy_policy", :publish_on_save => true)
+    
+    expected = <<HTML
+<div id="menu" class="menu">
+  <ul>
+    <li id="page_#{@about_us.id}" class="depth-1 first">
+      <a href="/about_us">About Us</a>
+    </li>
+    <li id="page_#{@contact_us.id}" class="depth-1">
+      <a href="/contact_us">Contact Us</a>
+    </li>
+    <li id="page_#{@privacy_policy.id}" class="depth-1 last">
+      <a href="/privacy_policy">Privacy Policy</a>
+    </li>
+  </ul>
+</div>
+HTML
+
+    #puts "Expected:\n#{expected}"
+    actual = render_menu(:page => @test, :path => "/footer", :from_top => 1)
+    #puts "Actual:\n#{actual}"
+    assert_equal expected, actual
+
+    expected = <<HTML
+<div id="menu" class="menu">
+  <ul>
+    <li id="page_#{@about_us.id}" class="depth-1 first">
+      <a href="/about_us">About Us</a>
+    </li>
+    <li id="page_#{@contact_us.id}" class="depth-1 on">
+      <a href="/contact_us">Contact Us</a>
+    </li>
+    <li id="page_#{@privacy_policy.id}" class="depth-1 last">
+      <a href="/privacy_policy">Privacy Policy</a>
+    </li>
+  </ul>
+</div>
+HTML
+
+    puts "Expected:\n#{expected}"
+    actual = render_menu(:page => @contact_us, :path => "/footer", :from_top => 1)
+    puts "Actual:\n#{actual}"
+    assert_equal expected, actual
+    
   end
   
   protected
