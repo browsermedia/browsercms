@@ -293,9 +293,9 @@ HTML
 </div>
 HTML
 
-    puts "Expected:\n#{expected}"
+    #puts "Expected:\n#{expected}"
     actual = render_menu(:page => @contact_us, :path => "/footer", :from_top => 1)
-    puts "Actual:\n#{actual}"
+    #puts "Actual:\n#{actual}"
     assert_equal expected, actual
     
   end
