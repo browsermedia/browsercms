@@ -1,5 +1,6 @@
 class DynamicView < ActiveRecord::Base
   
+  after_save :write_file_to_disk
   after_destroy :remove_file_from_disk
 
   named_scope :with_file_name, lambda{|file_name|
@@ -27,10 +28,7 @@ class DynamicView < ActiveRecord::Base
       validates_presence_of :name, :format, :handler
       validates_uniqueness_of :name, :scope => [:format, :handler],
         :message => "Must have a unique combination of name, format and handler"
-            
-      after_save :write_file_to_disk
-      before_destroy :remove_file_from_disk
-      
+                  
     end 
   end
   
