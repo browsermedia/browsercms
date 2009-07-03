@@ -9,7 +9,13 @@ module Cms
         
         helper Cms::PageHelper
         helper Cms::MenuHelper
+        helper do
+          def cms_toolbar
+            %Q{<iframe src="#{cms_toolbar_path(:page_toolbar => 0)}" width="100%" height="100px" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" name="cms_toolbar"></iframe>}
+          end
+        end
       end
     end
   end
+  
 end
