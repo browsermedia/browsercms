@@ -1,12 +1,20 @@
 module Cms
   module PageHelper
+    def page_title(*args)
+      if args.first
+        @controller.instance_variable_get("@template").instance_variable_set("@page_title", args.first)
+      else
+        @controller.instance_variable_get("@template").instance_variable_get("@page_title")
+      end
+    end    
+    
     def current_page
       @page
     end
     
     def container(name)
       content = instance_variable_get("@content_for_#{name}")
-      if logged_in? && @mode == "edit"
+      if logged_in? && @page && @mode == "edit"
         render :partial => 'cms/pages/edit_container', :locals => {:name => name, :content => content}
       else
         content

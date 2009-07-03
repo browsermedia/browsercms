@@ -1,14 +1,6 @@
 # Methods added to this helper will be available to all templates in the cms.
 module Cms
   module ApplicationHelper
-
-    def page_title(*args)
-      if args.first
-        @controller.instance_variable_get("@template").instance_variable_set("@page_title", args.first)
-      else
-        @controller.instance_variable_get("@template").instance_variable_get("@page_title")
-      end
-    end
     
     def searchable_sections(selected = nil)
       root = Section.root.first
@@ -162,15 +154,6 @@ LBW
         "#{uri.path}?#{uri.query}&mode=#{mode}"
       else
         "#{uri.path}?mode=#{mode}"
-      end
-    end
-    
-    def tb_iframe(path, options={})
-      # The order of the parameters matters.  All parameters that should be sent to the server,
-      # have to appear before TB_iframe.  All parameters that shouldn't be sent to the server and
-      # that are just there for Thickbox should be after TB_iframe
-      {:height => 600, :width => 600, :modal => true}.merge(options).inject("#{path}&TB_iframe=true") do |s, (k,v)|
-        s << "&#{k}=#{CGI::escape(v.to_s)}"
       end
     end
     

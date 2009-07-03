@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["BrowserMedia"]
-  s.date = %q{2009-06-30}
+  s.date = %q{2009-07-03}
   s.email = %q{github@browsermedia.com}
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -59,6 +59,7 @@ Gem::Specification.new do |s|
      "app/helpers/cms/page_helper.rb",
      "app/helpers/cms/path_helper.rb",
      "app/helpers/cms/section_nodes_helper.rb",
+     "app/helpers/cms/template_support.rb",
      "app/models/abstract_file_block.rb",
      "app/models/attachment.rb",
      "app/models/category.rb",
