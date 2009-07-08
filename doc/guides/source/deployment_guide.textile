@@ -4,6 +4,15 @@ This guide covers how to setup the Apache Passenger (mod_rails) production envir
 
 endprologue.
 
+h3. Configure the Production Environment
+
+Make sure the config/environments/production.rb file has these two configuration settings.  If you created your BrowserCMS Rails app using one of the application templates, this will already have been added.
+
+<ruby>
+config.action_view.cache_template_loading = false
+config.action_controller.page_cache_directory = RAILS_ROOT + "/public/cache/"
+</ruby>
+
 h3. Setting Up Virtual Hosts for Page Caching
 
 In order to setup BrowserCMS to due page caching, you need to create two virtual hosts for your site.  The main purpose for this is to allow page caching to work when you access a page on the main site, but then have the pages not be served from the cache when you are working in the BrowserCMS interface.

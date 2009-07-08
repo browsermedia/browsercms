@@ -127,12 +127,16 @@
                         <div id="subCol">
         <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
         <ol class="chapters">
-<li><a href="#setting-up-virtual-hosts-for-page-caching">Setting Up Virtual Hosts for Page Caching</a><ul></ul></li></ol></div>
+<li><a href="#configure-the-production-environment">Configure the Production Environment</a><ul></ul></li><li><a href="#setting-up-virtual-hosts-for-page-caching">Setting Up Virtual Hosts for Page Caching</a><ul></ul></li></ol></div>
                 </td>
                 <td class="guides">
                   <h2>BrowserCMS Deployment Guide</h2>
 <p>This guide covers how to setup the Apache Passenger (mod_rails) production environment for your BrowserCMS application.</p>
-                  <h3 id="setting-up-virtual-hosts-for-page-caching">1 Setting Up Virtual Hosts for Page Caching</h3>
+                  <h3 id="configure-the-production-environment">1 Configure the Production Environment</h3>
+<p>Make sure the config/environments/production.rb file has these two configuration settings.  If you created your BrowserCMS Rails app using one of the application templates, this will already have been added.</p>
+<div class="code_container"><code class="ruby">config.action_view.cache_template_loading = false
+config.action_controller.page_cache_directory = RAILS_ROOT + &quot;/public/cache/&quot;</code></div>
+<h3 id="setting-up-virtual-hosts-for-page-caching">2 Setting Up Virtual Hosts for Page Caching</h3>
 <p>In order to setup BrowserCMS to due page caching, you need to create two virtual hosts for your site.  The main purpose for this is to allow page caching to work when you access a page on the main site, but then have the pages not be served from the cache when you are working in the BrowserCMS interface.</p>
 <div class="code_container"><code class="plain">&lt;VirtualHost *:80&gt;
   ServerName cms.mysite.com
