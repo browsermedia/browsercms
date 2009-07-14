@@ -6,7 +6,7 @@ BrowserCMS is a general purpose, open source Web Content Management System (CMS)
 # Designers who want to create large and elegantly designed websites with no artificial constraints by the CMS.
 # Developers who want to add a CMS into their Rails projects, or create CMS driven websites for their clients.
 
-This guide is for BrowserCMS v3.0.0.
+This guide is for BrowserCMS v3.0.1.
 
 endprologue.
 
@@ -26,15 +26,15 @@ h4. "Installing a Module":installing_modules.html
 
 How to add a module to your BrowserCMS project.
 
-h4. "Customizing the CMS":developer_guide.html
+h4. "Developer Guide":developer_guide.html
 
 How to customize and extend a BrowserCMS site to add dynamic behavior and content.
 
-h4. "Building Templates":designer_guide.html
+h4. "Designer's Guide":designer_guide.html
 
-How to turn a design into a styled website.
+How to turn a design into a styled website, by building templates. (Incomplete)
 
-h4. "Deploying to Production Servers":deployment_guide.html
+h4. "Deployment Guide":deployment_guide.html
 
 How to configure Apache and Passenger to work with BrowserCMS in production mode.
 
