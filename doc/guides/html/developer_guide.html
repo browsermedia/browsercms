@@ -127,7 +127,7 @@
                         <div id="subCol">
         <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
         <ol class="chapters">
-<li><a href="#content-blocks">Content Blocks</a><ul></ul></li><li><a href="#creating-a-custom-content-block">Creating A Custom Content Block</a><ul></ul></li><li><a href="#creating-a-custom-portlet">Creating A Custom Portlet</a><ul></ul></li><li><a href="#page-routes">Page Routes</a><ul></ul></li></ol></div>
+<li><a href="#content-blocks">Content Blocks</a><ul></ul></li><li><a href="#creating-a-custom-content-block">Creating A Custom Content Block</a><ul></ul></li><li><a href="#creating-a-custom-portlet">Creating A Custom Portlet</a><ul><li><a href="#rendering-portlets-views-from-the-file-system">Rendering Portlets views from the file system</a></li><li><a href="#choosing-a-handler-ahead-of-time">Choosing a handler ahead of time</a></li></ul></li><li><a href="#page-routes">Page Routes</a><ul></ul></li></ol></div>
                 </td>
                 <td class="guides">
                   <h2>BrowserCMS Developer Guide</h2>
@@ -217,7 +217,8 @@ We are setting the <code>@products</code> instance variable so that will be avai
 <p>If you look back at the form partial that was generated, you&#8217;ll see:</p>
 <div class="code_container"><code class="html">&lt;%= f.cms_text_area :template, :default_value =&gt; @block.class.default_template %&gt;</code></div>
 <p>What this does is preload the template with whatever you entered into the render template.  The user is free to change it as they see fit and even have different values from one portlet instance to the next.</p>
-<p>If you do not want to have the portlet&#8217;s render template entered in the <span class="caps">CMS</span> and would rather have it just render the file from the file system, simply add this to your portlet code:</p>
+<h4 id="rendering-portlets-views-from-the-file-system">3.1 Rendering Portlets views from the file system
+If you do not want to have the portlet&#8217;s render template entered in the <span class="caps">CMS</span> and would rather have it just render the file from the file system, simply add this to your portlet code:</h4>
 <div class="code_container"><code class="ruby">class RecentProducts &lt; Portlet
 
     render_inline false
@@ -229,8 +230,11 @@ We are setting the <code>@products</code> instance variable so that will be avai
   end</code></div>
 <p>The key line being the <code>render_line false</code>.  Also, you will probably notice this line in the form that was generated:</p>
 <div class="code_container"><code class="html">&lt;%= f.cms_drop_down :handler, ActionView::Template.template_handler_extensions, :default_value =&gt; &quot;erb&quot; %&gt;</code></div>
-<p>This generates a drop-down menu for the user creating the portlet to select from the various portlet handlers installed in your Rails app.  The default is erb, but you could install haml and use haml instead, for example.</p>
-<p>If you would rather not have the user select the handler type, or maybe you are using the file system instead of entering the template into the <span class="caps">CMS</span>, you can set the handler to a different value like this:</p>
+<p>This generates a drop-down menu for the user creating the portlet to select from the various portlet handlers installed in your Rails app.
+The default handler for portlet views is erb, but you could use alternative ones, like Haml. To do that, install the <span class="caps">HAML</span> gem and set the default_value to &#8216;haml&#8217; like so:</p>
+<div class="code_container"><code class="html">&lt;%= f.cms_drop_down :handler, ActionView::Template.template_handler_extensions, :default_value =&gt; &quot;haml&quot; %&gt;</code></div>
+<h4 id="choosing-a-handler-ahead-of-time">3.2 Choosing a handler ahead of time
+If you would rather not have the user select the handler type, or if you are using the file system instead of storing the template code in the <span class="caps">CMS</span>, you can set the handler to a different value like this:</h4>
 <div class="code_container"><code class="ruby">class RecentProducts &lt; Portlet
 
     handler &quot;haml&quot;

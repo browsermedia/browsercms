@@ -148,6 +148,7 @@ If you look back at the form partial that was generated, you'll see:
 
 What this does is preload the template with whatever you entered into the render template.  The user is free to change it as they see fit and even have different values from one portlet instance to the next.
 
+h4. Rendering Portlets views from the file system
 If you do not want to have the portlet's render template entered in the CMS and would rather have it just render the file from the file system, simply add this to your portlet code:
 
 <ruby>
@@ -168,9 +169,15 @@ The key line being the <code>render_line false</code>.  Also, you will probably 
 <%= f.cms_drop_down :handler, ActionView::Template.template_handler_extensions, :default_value => "erb" %>
 </erb>
 
-This generates a drop-down menu for the user creating the portlet to select from the various portlet handlers installed in your Rails app.  The default is erb, but you could install haml and use haml instead, for example.
+This generates a drop-down menu for the user creating the portlet to select from the various portlet handlers installed in your Rails app.
+The default handler for portlet views is erb, but you could use alternative ones, like Haml. To do that, install the HAML gem and set the default_value to 'haml' like so:
 
-If you would rather not have the user select the handler type, or maybe you are using the file system instead of entering the template into the CMS, you can set the handler to a different value like this:
+<erb>
+<%= f.cms_drop_down :handler, ActionView::Template.template_handler_extensions, :default_value => "haml" %>
+</erb>
+
+h4. Choosing a handler ahead of time
+If you would rather not have the user select the handler type, or if you are using the file system instead of storing the template code in the CMS, you can set the handler to a different value like this:
 
 <ruby>
   class RecentProducts < Portlet
