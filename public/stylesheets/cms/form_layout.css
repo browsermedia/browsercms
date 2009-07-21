@@ -1,6 +1,6 @@
 @import url(/stylesheets/cms/selectbox.css);
 
-form {
+form, .faux_form {
 font-size: 10pt;
 font-family: "Trebuchet MS", Helvetica, Verdana, Arial, sans-serif;
 color:#485561;
@@ -19,6 +19,19 @@ font-size: 100%;
 .fields {
 padding: 10px 0;
 background: url(/images/cms/dashed.gif) repeat-x 100% 100%;
+overflow: hidden;
+}
+
+/* Fake forms */
+.faux_form .fields {
+padding: 22px 0 10px 0;
+font-size: 12px;
+}
+.faux_form .fields .label {
+padding: 0 0 12px 0;
+float: left;
+width: 140px;
+font-weight: bold;
 }
 
 /* LABELS */
@@ -39,7 +52,8 @@ font-size: 12px;
 .select_fields label,
 .text_editor_fields label,
 .file_fields label,
-.checkboxes label
+.checkboxes label,
+.faux_label
  {
 font-weight: bold;
 font-size: 12px;

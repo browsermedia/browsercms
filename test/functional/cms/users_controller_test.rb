@@ -6,7 +6,6 @@ class Cms::UsersControllerTest < ActionController::TestCase
   def setup
     login_as_cms_admin
     @user = User.first
-    
   end
   
   def test_index
@@ -130,6 +129,11 @@ class Cms::UsersControllerTest < ActionController::TestCase
     assert_select "input#user_last_name[value=?]", @user.last_name
     assert_select "input#user_email[value=?]", @user.email
     assert_select "input#user_expires_at"
+  end
+  
+  def test_show
+    get :show, :id => @user.id
+    assert_response :success
   end
   
   def test_update
