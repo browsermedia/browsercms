@@ -1,6 +1,6 @@
 class <%= migration_name %> < ActiveRecord::Migration
   def self.up
-    create_versioned_table :<%= table_name %> do |t|
+    create_content_table :<%= table_name %> do |t|
 <% for attribute in attributes -%>
       <%= 
         case attribute.type
@@ -31,6 +31,7 @@ class <%= migration_name %> < ActiveRecord::Migration
   def self.down
     ContentType.delete_all(['name = ?', '<%= class_name %>'])
     CategoryType.all(:conditions => ['name = ?', '<%= class_name.titleize %>']).each(&:destroy)
+    #If you aren't creating a versioned table, be sure to comment this out.
     drop_table :<%= table_name.singularize %>_versions
     drop_table :<%= table_name %>
   end

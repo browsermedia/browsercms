@@ -1,14 +1,19 @@
 module ActiveRecord
   module ConnectionAdapters # :nodoc:
     module SchemaStatements
-      def create_versioned_table(table_name, options={}, &block)
+
+      # Pass in ":versioned => false" in the options hash to create a non-versioned table.
+      def create_content_table(table_name, options={}, &block)
 
         #Do the primary table
         t = TableDefinition.new(self)
         t.primary_key(options[:primary_key] || Base.get_primary_key(table_name)) unless options[:id] == false
 
-        t.integer :version
-        t.integer :lock_version, :default => 0
+        unless options[:versioned] == false
+          t.integer :version
+          t.integer :lock_version, :default => 0
+        end
+
         yield t
 
         # Blocks currently must have a name column, otherwise the UI fails in several places.
@@ -21,35 +26,36 @@ module ActiveRecord
         t.integer :created_by_id
         t.integer :updated_by_id
         t.timestamps
-
         
         create_table_from_definition(table_name, options, t)
 
-        #Do the versions table
-        vt = TableDefinition.new(self)
-        vt.primary_key(options[:primary_key] || Base.get_primary_key(table_name)) unless options[:id] == false
+        unless options[:versioned] == false
+          #Do the versions table
+          vt = TableDefinition.new(self)
+          vt.primary_key(options[:primary_key] || Base.get_primary_key(table_name)) unless options[:id] == false
 
-        vt.integer "#{table_name.to_s.singularize}_id".to_sym
-        vt.integer :version
-        yield vt
+          vt.integer "#{table_name.to_s.singularize}_id".to_sym
+          vt.integer :version
+          yield vt
 
-        # Create implicit name column in version table as well.
-        vt.string :name unless vt[:name]
+          # Create implicit name column in version table as well.
+          vt.string :name unless vt[:name]
 
-        vt.boolean :published, :default => false
-        vt.boolean :deleted, :default => false
-        vt.boolean :archived, :default => false        
-        vt.string :version_comment
-        vt.integer :created_by_id
-        vt.integer :updated_by_id
-        vt.timestamps            
-        
+          vt.boolean :published, :default => false
+          vt.boolean :deleted, :default => false
+          vt.boolean :archived, :default => false        
+          vt.string :version_comment
+          vt.integer :created_by_id
+          vt.integer :updated_by_id
+          vt.timestamps
 
-        
-        create_table_from_definition("#{table_name.to_s.singularize}_versions".to_sym, options, vt)
+          create_table_from_definition("#{table_name.to_s.singularize}_versions".to_sym, options, vt)
+        end
         
       end   
          
+      alias :create_versioned_table :create_content_table
+
       def create_table_from_definition(table_name, options, table_definition)
         if options[:force] && table_exists?(table_name)
          drop_table(table_name, options)
