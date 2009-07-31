@@ -1,7 +1,7 @@
 module Cms::Routes
   
   def content_blocks(content_block_name, options={}, &block)
-    content_block = content_block_name.to_s.classify.constantize
+    content_block = content_block_name.to_s.tableize.classify.constantize
     resources(*[content_block_name, default_routes_for_content_block(content_block).deep_merge(options)], &block)
     if content_block.versioned?
       # I'm not sure why, but these named routes 
