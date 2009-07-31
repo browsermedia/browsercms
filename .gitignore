@@ -14,3 +14,4 @@ vendor/plugins/selenium-on-rails/log/*.yml
 .idea
 tmp/restart.txt
 public/cache
+patches

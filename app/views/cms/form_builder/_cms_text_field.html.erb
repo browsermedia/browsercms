@@ -7,5 +7,6 @@
   <%= f.text_field method, options %>
   <% if cms_options[:instructions] %>
     <div class="instructions"><%=h cms_options[:instructions] %></div>
-  <% end %>  
+    <br clear="all" /><%# Fixes issue with bad line wrapping %>
+  <% end %>
 </div>
