@@ -19,7 +19,7 @@ class ContentType < ActiveRecord::Base
   # Given a 'key' like 'html_blocks' or 'portlet'
   # Raises exception if nothing was found.
   def self.find_by_key(key)
-    class_name = key.tableize.classify
+    class_name = key.classify
     content_type = find_by_name(class_name)
     if content_type.nil?
       if class_name.constantize.ancestors.include?(Portlet)
@@ -54,7 +54,7 @@ class ContentType < ActiveRecord::Base
   end
 
   def model_class
-    name.tableize.classify.constantize
+    name.classify.constantize
   end
 
   # Allows models to show additional columns when being shown in a list.
