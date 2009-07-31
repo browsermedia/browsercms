@@ -46,7 +46,7 @@ $ cd my_new_project_name
 $ script/server
 </shell>
 
-Here we specify the -m mysql flag to rails, which will create our project using MySQL. You need to have the mysql gem installed for this to work.
+Here we specify the -d mysql flag to rails, which will create our project using MySQL. You need to have the mysql gem installed for this to work.
 
 h4. Using your Site
 
