@@ -8,8 +8,9 @@ module Cms
           !current_user.nil? && !current_user.guest?
         end
 
-        # Accesses the current user from the session.
-        # If the user is not logged in, this will be set to the guest user
+        # Accesses the current user from the session or 'remember me' cookie.
+        # If the user is not logged in, this will be set to the guest user, which represents a public
+        # user, who will likely have more limited permissions
         def current_user
           @current_user ||= begin
             User.current = (login_from_session || login_from_cookie || User.guest)  
