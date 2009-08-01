@@ -111,11 +111,12 @@ class User < ActiveRecord::Base
     !!(viewable_sections.include?(section) || groups.cms_access.count > 0)
   end
   
-  #Expects section to be a Section
-  #Returns true if any of the sections of the groups that have group_type = 'CMS User' 
-  #that the user is in match the section.
-  def able_to_edit?(section)    
-    !!(editable_sections.include?(section) && able_to?(:edit_content))
+  #Expects node to be a Section, Page or Link
+  #Returns true if the specified node, or any of its ancestor sections, is editable by any of 
+  #the user's 'CMS User' groups.
+  def able_to_edit?(node)    
+    section = node.is_a?(Section) ? node : node.section
+    !!(able_to?(:edit_content) && section.with_ancestors.any? { |section| editable_sections.include?(section) })
   end
   
   def able_to_edit_or_publish_content?

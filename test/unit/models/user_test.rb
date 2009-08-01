@@ -81,13 +81,28 @@ class UserPermssionsTest < ActiveSupport::TestCase
     @group.permissions << create_or_find_permission_named("publish_content")
     @user.groups << @group
     @editable_section = Factory(:section, :parent => root_section, :name => "Editable")
+    @editable_subsection = Factory(:section, :parent => @editable_section, :name => "Editable Subsection")
     @group.sections << @editable_section
     @noneditable_section = Factory(:section, :parent => root_section, :name => "Not Editable")
     @editable_page = Factory(:page, :section => @editable_section)
+    @editable_page2 = Factory(:page, :section => @editable_subsection)
     @noneditable_page = Factory(:page, :section => @noneditable_section)
+    @editable_link = Factory(:link, :section => @editable_section)
+    @editable_link2 = Factory(:link, :section => @editable_subsection)
+    @noneditable_link = Factory(:link, :section => @noneditable_section)
     
     assert @user.able_to_edit?(@editable_section)
+    assert @user.able_to_edit?(@editable_subsection)
     assert !@user.able_to_edit?(@noneditable_section)
+
+    assert @user.able_to_edit?(@editable_page)
+    assert @user.able_to_edit?(@editable_page2)
+    assert !@user.able_to_edit?(@noneditable_page)
+
+    assert @user.able_to_edit?(@editable_link)
+    assert @user.able_to_edit?(@editable_link2)
+    assert !@user.able_to_edit?(@noneditable_link)
+
     assert @user.able_to_view?(@editable_page)
     assert @user.able_to_view?(@noneditable_page)
   end

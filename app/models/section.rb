@@ -75,7 +75,11 @@ class Section < ActiveRecord::Base
     ancs = node ? node.ancestors : []
     options[:include_self] ? ancs + [self] : ancs
   end
-  
+
+  def with_ancestors(options = {})
+    self.ancestors(options) + [self]
+  end
+
   def move_to(section)
     if root?
       false
