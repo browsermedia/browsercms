@@ -188,13 +188,15 @@ jQuery(function($){
     
     var enableButtonsForNode = function(node) {
 	var id = getId(node.id, /(section|page|link)_/)
-	if($(node).hasClass('section')) {
-	    enableButtonsForSection(id)
-	} else if($(node).hasClass('page')) {
-	    enableButtonsForPage(id)
-	} else if($(node).hasClass('link')) {
-	    enableButtonsForLink(id)
-	}  
+	if(!$(node).is(".non-editable")) {
+		if($(node).hasClass('section')) {
+		    enableButtonsForSection(id)
+		} else if($(node).hasClass('page')) {
+		    enableButtonsForPage(id)
+		} else if($(node).hasClass('link')) {
+		    enableButtonsForLink(id)
+		}  
+	}
     }
     
     var enableButtonsForSection = function(id) {
