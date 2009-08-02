@@ -77,7 +77,8 @@ class Section < ActiveRecord::Base
   end
 
   def with_ancestors(options = {})
-    self.ancestors(options) + [self]
+    options.merge! :include_self => true
+    self.ancestors(options)
   end
 
   def move_to(section)
