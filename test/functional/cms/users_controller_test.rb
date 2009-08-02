@@ -205,7 +205,7 @@ class Cms::UsersControllerNonAdminTest < ActionController::TestCase
   
   def test_show_other
     get :show, :id => Factory(:user).id
-    assert @response.body.include?("Cms::Errors::AccessDenied")
+    assert @response.body.include?("Access Denied")
   end
   
   def test_change_password_self
@@ -215,7 +215,7 @@ class Cms::UsersControllerNonAdminTest < ActionController::TestCase
   
   def test_change_password_other
     get :change_password, :id => Factory(:user).id
-    assert @response.body.include?("Cms::Errors::AccessDenied")
+    assert @response.body.include?("Access Denied")
   end
   
   def test_update_password_self
@@ -226,6 +226,6 @@ class Cms::UsersControllerNonAdminTest < ActionController::TestCase
   
   def test_update_password_other
     put :update_password, :id => Factory(:user).id
-    assert @response.body.include?("Cms::Errors::AccessDenied")
+    assert @response.body.include?("Access Denied")
   end
 end
