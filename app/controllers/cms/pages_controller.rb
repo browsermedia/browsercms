@@ -103,6 +103,7 @@ class Cms::PagesController < Cms::BaseController
 
     def load_page
       @page = Page.find(params[:id])
+      raise Cms::Errors::AccessDenied unless current_user.able_to_edit?(@page)
     end
     
     def load_draft_page
@@ -112,6 +113,7 @@ class Cms::PagesController < Cms::BaseController
   
     def load_section
       @section = Section.find(params[:section_id])
+      raise Cms::Errors::AccessDenied unless current_user.able_to_edit?(@section)
     end
     
     def hide_toolbar

@@ -1,6 +1,7 @@
 class Cms::SectionsController < Cms::BaseController
 
   before_filter :load_parent, :only => [:new, :create]
+  before_filter :load_section, :only => [:edit, :update, :destroy, :move]
   before_filter :set_toolbar_tab
   
   helper_method :public_groups
@@ -31,12 +32,9 @@ class Cms::SectionsController < Cms::BaseController
   end
 
   def edit
-    @section = Section.find(params[:id])
-    raise Cms::Errors::AccessDenied unless current_user.able_to_edit?(@section)
   end
   
   def update
-    @section = Section.find(params[:id])
     if @section.update_attributes(params[:section])
       flash[:notice] = "Section '#{@section.name}' was updated"
       redirect_to [:cms, @section]
@@ -46,7 +44,6 @@ class Cms::SectionsController < Cms::BaseController
   end
   
   def destroy
-    @section = Section.find(params[:id])  
     respond_to do |format|
       if @section.deletable? && @section.destroy
         message = "Section '#{@section.name}' was deleted."
@@ -61,7 +58,6 @@ class Cms::SectionsController < Cms::BaseController
   end  
   
   def move
-    @section = Section.find(params[:id])
     if params[:section_id]
       @move_to = Section.find(params[:section_id])
     else
@@ -81,6 +77,12 @@ class Cms::SectionsController < Cms::BaseController
   protected
     def load_parent
       @parent = Section.find(params[:section_id])
+      raise Cms::Errors::AccessDenied unless current_user.able_to_edit?(@parent)
+    end
+
+    def load_section
+      @section = Section.find(params[:id])
+      raise Cms::Errors::AccessDenied unless current_user.able_to_edit?(@section)
     end
 
     def handle_file_browser_upload
