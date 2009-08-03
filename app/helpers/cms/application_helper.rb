@@ -26,7 +26,7 @@ module Cms
 
     def render_connector(connector)
       connectable = connector.connectable_with_deleted
-      if logged_in? && @mode == "edit"
+      if logged_in? && @mode == "edit" && current_user.able_to_edit?(connector.page)
         if connectable.class.versioned?
           connectable = connectable.as_of_version(connector.connectable_version)
         end
