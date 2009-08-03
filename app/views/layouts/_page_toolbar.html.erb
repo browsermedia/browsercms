@@ -98,7 +98,7 @@
         <div class="visual_editor_label">Visual Editor:</div>
         <div class="visual_editor_value_container">
           <% if @mode == "edit" %>
-	    <div><span id="visual_editor_state">ON<% if !current_user.able_to_edit?(@page) %><span title="You don't have permission to edit this page's contents.">*</span><% end %></span></div>
+	    <div><span id="visual_editor_state">ON<% if !current_user.able_to_edit?(@page) %><em title="You don't have permission to edit this page's contents.">*</em><% end %></span></div>
           <% else %>
 	    <div><span id="visual_editor_state">OFF</span></div>
           <% end %>
