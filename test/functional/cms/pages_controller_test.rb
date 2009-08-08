@@ -125,7 +125,7 @@ class Cms::PagesControllerPermissionsTest < ActionController::TestCase
     assert_response :success
 
     get :new, :section_id => @noneditable_section
-    assert_response :error # shouldn't it be 403?
+    assert_response 403
   end
 
   def test_create_permissions
@@ -135,7 +135,7 @@ class Cms::PagesControllerPermissionsTest < ActionController::TestCase
     assert_response :success
 
     post :create, :section_id => @noneditable_section, :name => "Another non-editable page"
-    assert_response :error # shouldn't it be 403?
+    assert_response 403
   end
 
   def test_edit_permissions
@@ -145,7 +145,7 @@ class Cms::PagesControllerPermissionsTest < ActionController::TestCase
     assert_response :success
 
     get :edit, :id => @noneditable_page
-    assert_response :error # shouldn't it be 403?
+    assert_response 403
   end
 
   def test_update_permissions
@@ -156,28 +156,28 @@ class Cms::PagesControllerPermissionsTest < ActionController::TestCase
     assert_response :redirect
 
     put :update, :id => @noneditable_page, :name => "Modified non-editable page"
-    assert_response :error # shouldn't it be 403?
+    assert_response 403
 
     # archive
     put :archive, :id => @editable_page
     assert_response :redirect
 
     put :archive, :id => @noneditable_page
-    assert_response :error # shouldn't it be 403?
+    assert_response 403
 
     # hide
     put :hide, :id => @editable_page
     assert_response :redirect
 
     put :hide, :id => @noneditable_page
-    assert_response :error # shouldn't it be 403?
+    assert_response 403
 
     # publish
     put :publish, :id => @editable_page
     assert_response :redirect
 
     put :publish, :id => @noneditable_page
-    assert_response :error # shouldn't it be 403?
+    assert_response 403
 
     # revert_to
     # can't find route...
@@ -195,7 +195,7 @@ class Cms::PagesControllerPermissionsTest < ActionController::TestCase
     assert_response :redirect
 
     delete :destroy, :id => @noneditable_page
-    assert_response :error # shouldn't it be 403?
+    assert_response 403
   end
 end
 

@@ -96,7 +96,7 @@ class Cms::LinksControllerPermissionsTest < ActionController::TestCase
     assert_response :success
 
     get :new, :section_id => @noneditable_section
-    assert_response :error # shouldn't it be 403?
+    assert_response 403
   end
 
   def test_create_permissions
@@ -106,7 +106,7 @@ class Cms::LinksControllerPermissionsTest < ActionController::TestCase
     assert_response :success
 
     post :create, :section_id => @noneditable_section, :name => "Another non-editable link"
-    assert_response :error # shouldn't it be 403?
+    assert_response 403
   end
 
   def test_edit_permissions
@@ -116,7 +116,7 @@ class Cms::LinksControllerPermissionsTest < ActionController::TestCase
     assert_response :success
 
     get :edit, :id => @noneditable_link
-    assert_response :error # shouldn't it be 403?
+    assert_response 403
   end
 
   def test_update_permissions
@@ -126,7 +126,7 @@ class Cms::LinksControllerPermissionsTest < ActionController::TestCase
     assert_response :redirect
 
     put :update, :id => @noneditable_link, :name => "Modified non-editable link"
-    assert_response :error # shouldn't it be 403?
+    assert_response 403
   end
 
   def test_destroy_permissions
@@ -136,7 +136,7 @@ class Cms::LinksControllerPermissionsTest < ActionController::TestCase
     assert_response :redirect
 
     delete :destroy, :id => @noneditable_link
-    assert_response :error # shouldn't it be 403?
+    assert_response 403
   end
 end
 
