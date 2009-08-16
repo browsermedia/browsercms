@@ -115,6 +115,7 @@ class Cms::SectionsControllerPermissionsTest < ActionController::TestCase
 
     get :new, :section_id => @noneditable_section
     assert_response 403
+    assert_template "cms/shared/access_denied"
   end
 
   def test_create_permissions
@@ -125,6 +126,7 @@ class Cms::SectionsControllerPermissionsTest < ActionController::TestCase
 
     post :create, :section_id => @noneditable_section, :name => "Another non-editable subsection"
     assert_response 403
+    assert_template "cms/shared/access_denied"
   end
 
   def test_edit_permissions
@@ -135,6 +137,7 @@ class Cms::SectionsControllerPermissionsTest < ActionController::TestCase
 
     get :edit, :id => @noneditable_section
     assert_response 403
+    assert_template "cms/shared/access_denied"
   end
 
   def test_update_permissions
@@ -145,6 +148,7 @@ class Cms::SectionsControllerPermissionsTest < ActionController::TestCase
 
     put :update, :id => @noneditable_section, :name => "Modified non-editable subsection"
     assert_response 403
+    assert_template "cms/shared/access_denied"
   end
 
   def test_destroy_permissions
@@ -155,6 +159,7 @@ class Cms::SectionsControllerPermissionsTest < ActionController::TestCase
 
     delete :destroy, :id => @noneditable_section
     assert_response 403
+    assert_template "cms/shared/access_denied"
   end
 end
 
