@@ -13,6 +13,13 @@ class Cms::SectionsControllerTest < ActionController::TestCase
     assert_select "input[name=?][value=?]", "section[name]", root_section.name
   end
   
+  test "GET new should set the groups to the parent section's groups by default" do
+    @group = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
+    get :new, :section_id => root_section.to_param
+    assert_equal root_section.groups, assigns(:section).groups
+    assert !assigns(:section).groups.include?(@group)
+  end
+  
   def test_update
     @section = Factory(:section, :name => "V1", :parent => root_section)
     

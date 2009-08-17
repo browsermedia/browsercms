@@ -17,11 +17,12 @@ class Cms::SectionsController < Cms::BaseController
   
   def new
     @section = @parent.sections.build
-    @section.groups = [Group.find_by_code('guest'), Group.find_by_code('cms-admin'), Group.find_by_code('content-editor')]
+    set_default_groups
   end
   
   def create
     @section = Section.new(params[:section])
+    set_default_groups unless current_user.able_to?(:administrate)
     @section.parent = @parent
     if @section.save
       flash[:notice] = "Section '#{@section.name}' was created"
@@ -123,5 +124,9 @@ class Cms::SectionsController < Cms::BaseController
 
     def set_toolbar_tab
       @toolbar_tab = :sitemap
+    end
+    
+    def set_default_groups
+      @section.groups = @parent.groups
     end
 end
