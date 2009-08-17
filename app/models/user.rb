@@ -89,12 +89,12 @@ class User < ActiveRecord::Base
     @viewable_sections ||= Section.find(:all, :include => {:groups => :users}, :conditions => ["users.id = ?", id])
   end
 
-  def editable_sections
-    @editable_sections ||= Section.find(:all, :include => {:groups => [:group_type, :users]}, :conditions => ["users.id = ? and group_types.cms_access = ?", id, true])
+  def modifiable_sections
+    @modifiable_sections ||= Section.find(:all, :include => {:groups => [:group_type, :users]}, :conditions => ["users.id = ? and group_types.cms_access = ?", id, true])
   end
 
-  #Expects a list of names of Permissions
-  #true if the user has any of the permissions
+  # Expects a list of names of Permissions
+  # true if the user has any of the permissions
   def able_to?(*required_permissions)
     perms = required_permissions.map(&:to_sym)
     permissions.any? do |p| 
@@ -102,29 +102,29 @@ class User < ActiveRecord::Base
     end
   end
     
-  #Expects object to be an object or a section
-  #If it's a section, that will be used
-  #If it's not a section, it will call section on the object
-  #returns true if any of the sections of the groups the user is in matches the page's section.
+  # Expects object to be an object or a section
+  # If it's a section, that will be used
+  # If it's not a section, it will call section on the object
+  # returns true if any of the sections of the groups the user is in matches the page's section.
   def able_to_view?(object)
     section = object.is_a?(Section) ? object : object.section
-    !!(viewable_sections.include?(section) || groups.cms_access.count > 0)
+    viewable_sections.include?(section) || groups.cms_access.count > 0
   end
   
-  def has_access_to?(node)
+  def able_to_modify?(node)
     section = node.is_a?(Section) ? node : node.section
-    section.with_ancestors.any? { |section| editable_sections.include?(section) }
+    section.with_ancestors.any? { |section| modifiable_sections.include?(section) }
   end
   
-  #Expects node to be a Section, Page or Link
-  #Returns true if the specified node, or any of its ancestor sections, is editable by any of 
-  #the user's 'CMS User' groups.
+  # Expects node to be a Section, Page or Link
+  # Returns true if the specified node, or any of its ancestor sections, is editable by any of 
+  # the user's 'CMS User' groups.
   def able_to_edit?(node)    
-    able_to?(:edit_content) && has_access_to?(node)
+    able_to?(:edit_content) && able_to_modify?(node)
   end
   
   def able_to_publish?(node)
-    able_to?(:publish_content) && has_access_to?(node)
+    able_to?(:publish_content) && able_to_modify?(node)
   end
   
   def able_to_edit_or_publish_content?

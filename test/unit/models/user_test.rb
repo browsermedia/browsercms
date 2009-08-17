@@ -75,93 +75,93 @@ class UserPermissionsTest < ActiveSupport::TestCase
     assert !@user.able_to?("do something the group does not have permission to do")
   end
   
-  def create_user_with_group_with_various_node_access
+  test "cms user access to nodes" do
     @group = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
     @user.groups << @group
     
-    @accessible_section = Factory(:section, :parent => root_section, :name => "Accessible")
-    @accessible_subsection = Factory(:section, :parent => @accessible_section, :name => "Accessible Subsection")
-    @non_accessible_section = Factory(:section, :parent => root_section, :name => "Not Accessible")
+    @modifiable_section = Factory(:section, :parent => root_section, :name => "Modifiable")
+    @modifiable_subsection = Factory(:section, :parent => @modifiable_section, :name => "Modifiable Subsection")
+    @non_modifiable_section = Factory(:section, :parent => root_section, :name => "Not Modifiable")
     
-    @group.sections << @accessible_section
+    @group.sections << @modifiable_section
     
-    @accessible_page = Factory(:page, :section => @accessible_section)
-    @accessible_page2 = Factory(:page, :section => @accessible_subsection)
-    @non_accessible_page = Factory(:page, :section => @non_accessible_section)
+    @modifiable_page = Factory(:page, :section => @modifiable_section)
+    @modifiable_page2 = Factory(:page, :section => @modifiable_subsection)
+    @non_modifiable_page = Factory(:page, :section => @non_modifiable_section)
     
-    @accessible_link = Factory(:link, :section => @accessible_section)
-    @accessible_link2 = Factory(:link, :section => @accessible_subsection)
-    @non_accessible_link = Factory(:link, :section => @non_accessible_section)
+    @modifiable_link = Factory(:link, :section => @modifiable_section)
+    @modifiable_link2 = Factory(:link, :section => @modifiable_subsection)
+    @non_modifiable_link = Factory(:link, :section => @non_modifiable_section)
+    
+    assert @user.able_to_modify?(@modifiable_section)
+    assert @user.able_to_modify?(@modifiable_subsection)
+    assert !@user.able_to_modify?(@non_modifiable_section)
+    
+    assert @user.able_to_modify?(@modifiable_page)
+    assert @user.able_to_modify?(@modifiable_page2)
+    assert !@user.able_to_modify?(@non_modifiable_page)
+    
+    assert @user.able_to_modify?(@modifiable_link)
+    assert @user.able_to_modify?(@modifiable_link2)
+    assert !@user.able_to_modify?(@non_modifiable_link)
   end
   
-  def test_cms_user_with_no_permissions
-    create_user_with_group_with_various_node_access
-    assert @user.able_to_view?(@accessible_page)
-    assert @user.able_to_view?(@non_accessible_page)
-  end
-  
-  def test_cms_user_with_edit_but_not_publish_permissions
-    create_user_with_group_with_various_node_access
-    @group.permissions << create_or_find_permission_named("edit_content")
-    
-    assert @user.able_to_edit?(@accessible_section)
-    assert !@user.able_to_publish?(@accessible_section)
-    
-    assert @user.able_to_edit?(@accessible_subsection)
-    assert !@user.able_to_publish?(@accessible_subsection)
-    
-    assert !@user.able_to_edit?(@non_accessible_section)
-    assert !@user.able_to_publish?(@non_accessible_section)
-    
-    assert @user.able_to_edit?(@accessible_page)
-    assert !@user.able_to_publish?(@accessible_page)
-    
-    assert @user.able_to_edit?(@accessible_page2)
-    assert !@user.able_to_publish?(@accessible_page2)
-    
-    assert !@user.able_to_edit?(@non_accessible_page)
-    assert !@user.able_to_publish?(@non_accessible_page)
-
-    assert @user.able_to_edit?(@accessible_link)
-    assert !@user.able_to_publish?(@accessible_link)
-    
-    assert @user.able_to_edit?(@accessible_link2)
-    assert !@user.able_to_publish?(@accessible_link2)
-    
-    assert !@user.able_to_edit?(@non_accessible_link)
-    assert !@user.able_to_publish?(@non_accessible_link)
-  end
-  
-  def test_cms_user_with_publish_permissions
-    create_user_with_group_with_various_node_access
-    @group.permissions << create_or_find_permission_named("publish_content")
-    
-    assert @user.able_to_publish?(@accessible_section)
-    assert @user.able_to_publish?(@accessible_subsection)
-    assert !@user.able_to_publish?(@non_accessible_section)
-    
-    assert @user.able_to_publish?(@accessible_page)
-    assert @user.able_to_publish?(@accessible_page2)
-    assert !@user.able_to_publish?(@non_accessible_page)
-
-    assert @user.able_to_publish?(@accessible_link)
-    assert @user.able_to_publish?(@accessible_link2)
-    assert !@user.able_to_publish?(@non_accessible_link)
-  end
-  
-  def test_non_cms_user_permissions
+  test "non cms user access to nodes" do
     @group = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "Registered User"))
     @user.groups << @group
-    @editable_section = Factory(:section, :parent => root_section, :name => "Editable")
-    @group.sections << @editable_section
-    @noneditable_section = Factory(:section, :parent => root_section, :name => "Not Editable")
-    @editable_page = Factory(:page, :section => @editable_section)
-    @noneditable_page = Factory(:page, :section => @noneditable_section)
+    
+    @modifiable_section = Factory(:section, :parent => root_section, :name => "Modifiable")
+    @group.sections << @modifiable_section
+    @non_modifiable_section = Factory(:section, :parent => root_section, :name => "Not Modifiable")
+    
+    @modifiable_page = Factory(:page, :section => @modifiable_section)
+    @non_modifiable_page = Factory(:page, :section => @non_modifiable_section)
 
-    assert !@user.able_to_edit?(@editable_section)
-    assert !@user.able_to_edit?(@noneditable_section)
-    assert @user.able_to_view?(@editable_page)
-    assert !@user.able_to_view?(@noneditable_page)
+    assert !@user.able_to_modify?(@modifiable_section)
+    assert !@user.able_to_modify?(@non_modifiable_section)
+    
+    assert @user.able_to_view?(@modifiable_page)
+    assert !@user.able_to_view?(@non_modifiable_page)
+  end
+  
+  test "cms user with no permissions should still be able to view pages" do
+    @group = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
+    @user.groups << @group
+    
+    @page = Factory(:page)
+    assert @user.able_to_view?(@page)
+  end
+  
+  test "cms user who can edit content" do
+    @group = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
+    @group.permissions << create_or_find_permission_named("edit_content")
+    @user.groups << @group
+    
+    node = stub
+    
+    @user.stubs(:able_to_modify?).with(node).returns(true)
+    assert @user.able_to_edit?(node)
+    assert !@user.able_to_publish?(node)
+    
+    @user.stubs(:able_to_modify?).with(node).returns(false)
+    assert !@user.able_to_edit?(node)
+    assert !@user.able_to_publish?(node)
+  end
+  
+  test "cms user who can publish content" do
+    @group = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
+    @group.permissions << create_or_find_permission_named("publish_content")
+    @user.groups << @group
+    
+    node = stub
+    
+    @user.stubs(:able_to_modify?).with(node).returns(true)
+    assert !@user.able_to_edit?(node)
+    assert @user.able_to_publish?(node)
+    
+    @user.stubs(:able_to_modify?).with(node).returns(false)
+    assert !@user.able_to_edit?(node)
+    assert !@user.able_to_publish?(node)
   end
   
 end
