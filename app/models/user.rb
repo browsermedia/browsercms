@@ -111,12 +111,20 @@ class User < ActiveRecord::Base
     !!(viewable_sections.include?(section) || groups.cms_access.count > 0)
   end
   
+  def has_access_to?(node)
+    section = node.is_a?(Section) ? node : node.section
+    section.with_ancestors.any? { |section| editable_sections.include?(section) }
+  end
+  
   #Expects node to be a Section, Page or Link
   #Returns true if the specified node, or any of its ancestor sections, is editable by any of 
   #the user's 'CMS User' groups.
   def able_to_edit?(node)    
-    section = node.is_a?(Section) ? node : node.section
-    !!(able_to?(:edit_content) && section.with_ancestors.any? { |section| editable_sections.include?(section) })
+    able_to?(:edit_content) && has_access_to?(node)
+  end
+  
+  def able_to_publish?(node)
+    able_to?(:publish_content) && has_access_to?(node)
   end
   
   def able_to_edit_or_publish_content?

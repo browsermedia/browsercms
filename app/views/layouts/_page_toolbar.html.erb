@@ -67,13 +67,13 @@
 
   <%= link_to "<span>Edit Properties</span>", 
     [:edit, :cms, @page], 
-    :id => "edit_properties_button#{ ' disabled' if !current_user.able_to_edit?(@page) }",
-    :class => "spacer button", 
+    :id => "edit_properties_button",
+    :class => "spacer button#{ ' disabled' unless current_user.able_to_edit?(@page) }", 
     :target => "_top" %>
   
   <%= link_to "<span>List Versions</span>", 
     versions_cms_page_path(@page), 
-    :class => "spacer button",
+    :class => "spacer button#{ ' disabled' unless current_user.able_to_edit?(@page) }",
     :target => "_top" %>
     
   <% able_to? :publish_content do %>
@@ -83,7 +83,7 @@
         :id => "delete_button",
         :title => "Are you sure you want to delete '#{@page.name}'?", 
         :target => "_top", 
-        :class => "spacer button confirm_with_title http_delete" %>
+        :class => "spacer button confirm_with_title http_delete#{ ' disabled' unless current_user.able_to_publish?(@page) }" %>
     <% else %>
       <%= link_to "<span>Revert to this Version</span>",
         revert_to_cms_page_path(@page, @page.version), 
