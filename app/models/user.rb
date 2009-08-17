@@ -112,11 +112,17 @@ class User < ActiveRecord::Base
   end
   
   def able_to_modify?(object)
-    if object.class.respond_to?(:connectable?) && object.class.connectable?
-      object.connected_pages.all? { |page| able_to_modify?(page) }
-    else
-      section = object.is_a?(Section) ? object : object.section
-      section.with_ancestors.any? { |section| modifiable_sections.include?(section) }
+    case object
+      when Section
+        object.with_ancestors.any? { |section| modifiable_sections.include?(section) }
+      when Page, Link
+        object.section.with_ancestors.any? { |section| modifiable_sections.include?(section) }
+      else
+        if object.class.respond_to?(:connectable?) && object.class.connectable?
+          object.connected_pages.all? { |page| able_to_modify?(page) }
+        else
+          true
+        end
     end
   end
   

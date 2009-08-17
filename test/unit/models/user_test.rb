@@ -106,7 +106,6 @@ class UserPermissionsTest < ActiveSupport::TestCase
     assert !@user.able_to_modify?(@non_modifiable_link)
   end
   
-  # Connectables are things which can be connected to a page, so this includes all content blocks
   test "cms user access to connectables" do
     @group = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
     @user.groups << @group
@@ -119,13 +118,24 @@ class UserPermissionsTest < ActiveSupport::TestCase
     @modifiable_page = Factory(:page, :section => @modifiable_section)
     @non_modifiable_page = Factory(:page, :section => @non_modifiable_section)
     
-    @all_modifiable_connectable = stub(:class => stub(:connectable? => true), :connected_pages => [@modifiable_page])
-    @some_modifiable_connectable = stub(:class => stub(:connectable? => true), :connected_pages => [@modifiable_page, @non_modifiable_page])
-    @none_modifiable_connectable = stub(:class => stub(:connectable? => true), :connected_pages => [@non_modifiable_page])
+    @all_modifiable_connectable = stub(
+      :class => stub(:content_block? => true, :connectable? => true),
+      :connected_pages => [@modifiable_page])
+    @some_modifiable_connectable = stub(
+      :class => stub(:content_block? => true, :connectable? => true),
+      :connected_pages => [@modifiable_page, @non_modifiable_page])
+    @none_modifiable_connectable = stub(
+      :class => stub(:content_block? => true, :connectable? => true),
+      :connected_pages => [@non_modifiable_page])
     
     assert @user.able_to_modify?(@all_modifiable_connectable)
     assert !@user.able_to_modify?(@some_modifiable_connectable)
     assert !@user.able_to_modify?(@none_modifiable_connectable)
+  end
+  
+  test "cms user access to non-connectable content blocks" do
+    @content_block = stub(:class => stub(:content_block? => true))
+    assert @user.able_to_modify?(@content_block)
   end
   
   test "non cms user access to nodes" do
