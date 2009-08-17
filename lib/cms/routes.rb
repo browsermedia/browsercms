@@ -116,6 +116,10 @@ module Cms::Routes
         :enable => :put
       }
       
+      if RAILS_ENV == "test" && File.expand_path(RAILS_ROOT) == File.expand_path(File.dirname(__FILE__) + "/../..")
+        cms.content_blocks :content_block
+      end
+      
     end
 
     if PageRoute.table_exists?

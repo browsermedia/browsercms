@@ -119,9 +119,9 @@ class UserPermissionsTest < ActiveSupport::TestCase
     @modifiable_page = Factory(:page, :section => @modifiable_section)
     @non_modifiable_page = Factory(:page, :section => @non_modifiable_section)
     
-    @all_modifiable_connectable = stub(:connectable? => true, :connected_pages => [@modifiable_page])
-    @some_modifiable_connectable = stub(:connectable? => true, :connected_pages => [@modifiable_page, @non_modifiable_page])
-    @none_modifiable_connectable = stub(:connectable? => true, :connected_pages => [@non_modifiable_page])
+    @all_modifiable_connectable = stub(:class => stub(:connectable? => true), :connected_pages => [@modifiable_page])
+    @some_modifiable_connectable = stub(:class => stub(:connectable? => true), :connected_pages => [@modifiable_page, @non_modifiable_page])
+    @none_modifiable_connectable = stub(:class => stub(:connectable? => true), :connected_pages => [@non_modifiable_page])
     
     assert @user.able_to_modify?(@all_modifiable_connectable)
     assert !@user.able_to_modify?(@some_modifiable_connectable)

@@ -112,7 +112,7 @@ class User < ActiveRecord::Base
   end
   
   def able_to_modify?(object)
-    if object.respond_to?(:connectable?) && object.connectable?
+    if object.class.respond_to?(:connectable?) && object.class.connectable?
       object.connected_pages.all? { |page| able_to_modify?(page) }
     else
       section = object.is_a?(Section) ? object : object.section
