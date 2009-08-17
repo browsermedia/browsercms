@@ -124,6 +124,14 @@ class Cms::SectionsControllerPermissionsTest < ActionController::TestCase
     assert_response 403
     assert_template "cms/shared/access_denied"
   end
+  
+  test "POST create should set the groups to the parent section's groups for non-admin user" do
+    @group = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
+    login_as(@user)
+    get :new, :section_id => @editable_section
+    assert_equal @editable_section.groups, assigns(:section).groups
+    assert !assigns(:section).groups.include?(@group)
+  end
 
   def test_create_permissions
     login_as(@user)
@@ -156,6 +164,14 @@ class Cms::SectionsControllerPermissionsTest < ActionController::TestCase
     put :update, :id => @noneditable_section, :name => "Modified non-editable subsection"
     assert_response 403
     assert_template "cms/shared/access_denied"
+  end
+  
+  test "PUT update should set the groups to the parent section's groups for non-admin user" do
+    @group = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
+    login_as(@user)
+    put :update, :id => @editable_subsection
+    assert_equal @editable_section.groups, assigns(:section).groups
+    assert !assigns(:section).groups.include?(@group)
   end
 
   def test_destroy_permissions
