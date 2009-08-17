@@ -17,7 +17,7 @@ class Cms::SectionsController < Cms::BaseController
   
   def new
     @section = @parent.sections.build
-    @section.groups = public_groups + cms_groups
+    @section.groups = [Group.find_by_code('guest'), Group.find_by_code('cms-admin'), Group.find_by_code('content-editor')]
   end
   
   def create
