@@ -11,12 +11,14 @@
         var match = this.id.match(/(.*)_(\d+)/) 
         var type = match[1]
         var id = match[2]
+        var editable = !$(this).hasClass("non-editable")
+        var publishable = !$(this).hasClass("non-publishable")
         $('table.data tbody tr').removeClass('selected')
         $(this).addClass('selected')
         $('#functions .button').addClass('disabled').attr('href','#')
         $('#add_button').removeClass('disabled').attr('href', '/cms/'+collectionName+'/new')
         $('#view_button').removeClass('disabled').attr('href', '/cms/'+collectionName+'/'+id)
-        $('#edit_button').removeClass('disabled').attr('href', '/cms/'+collectionName+'/'+id+'/edit')
+        if (editable) $('#edit_button').removeClass('disabled').attr('href', '/cms/'+collectionName+'/'+id+'/edit')
         <% if content_type.model_class.versioned? %>
           $('#revisions_button').removeClass('disabled').attr('href', '/cms/'+collectionName+'/'+id+'/versions')
         <% else %>
@@ -28,12 +30,14 @@
           $('#delete_button').addClass('disabled')
             .attr('title', $.trim(cannot_be_deleted_message.text()))
         } else {
-          $('#delete_button').removeClass('disabled')
-            .attr('href', '/cms/'+collectionName+'/'+id)  
-            .attr('title', 'Are You Sure You Want To Delete This Record?')
+          if (publishable) {
+            $('#delete_button').removeClass('disabled')
+              .attr('href', '/cms/'+collectionName+'/'+id)  
+              .attr('title', 'Are You Sure You Want To Delete This Record?')
+          }
         }        
         <% able_to? :publish_content do -%>
-          if($(this).hasClass('draft')) {
+          if($(this).hasClass('draft') && publishable) {
             $('#publish_button').removeClass('disabled').attr('href', '/cms/'+collectionName+'/'+id+'/publish?_redirect_to='+location.href)        
           }
         <% end %>  
@@ -85,7 +89,7 @@
        col_ct += 1 if content_type.model_class.publishable? %>
     <% @blocks.each do |b| %>
       <% block = b.class.versioned? ? b.as_of_draft_version : b %>
-      <tr id="<%= block.class.name.underscore %>_<%= block.id %>" class="<%= block.class.name.underscore %> <%= block.class.publishable? && !block.published? ? 'draft' : 'published' %>">
+      <tr id="<%= block.class.name.underscore %>_<%= block.id %>" class="<%= block.class.name.underscore %> <%= block.class.publishable? && !block.published? ? 'draft' : 'published' %> <%= 'non-editable' unless current_user.able_to_edit?(block) %> <%= 'non-publishable' unless current_user.able_to_publish?(block) %>">
 	<td class="first"></td>
         <% content_type.columns_for_index.each_with_index do |column, i| %>
           <td class="<%= column[:label].gsub(' ', '').underscore %>">
