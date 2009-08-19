@@ -52,7 +52,7 @@ module Cms
         end
 
         def version_class_name
-          "#{name}::Version"
+          "::#{name}::Version"
         end        
 
         def version_foreign_key

@@ -16,7 +16,7 @@ module Cms
           before_validation :process_attachment  
           before_save :update_attachment_if_changed
           after_save :clear_attachment_ivars
-          belongs_to :attachment, :dependent => :destroy 
+          belongs_to :attachment, :dependent => :destroy , :class_name => '::Attachment'
           
           validates_each :attachment_file do |record, attr, value|
             if record.attachment && !record.attachment.valid?
