@@ -53,7 +53,11 @@ module ActiveRecord
         end
         
       end   
-         
+
+      #
+      # @deprecated - create_versioned_table should be considered deprecated and may be removed in a future version.
+      # Use create_content_table instead in your migrations
+      #
       alias :create_versioned_table :create_content_table
 
       def create_table_from_definition(table_name, options, table_definition)
@@ -72,7 +76,13 @@ module ActiveRecord
         drop_table "#{table_name.singularize}_versions".to_sym
         drop_table table_name
       end
-      
+
+      # Adds a column to both the primary and versioned table. Save needing two calls.
+      # This is only needed if your content block is versioned, otherwise add_column will work just fine.
+      def add_content_column(table_name, column_name, type, options={})
+        add_column table_name, column_name, type, options
+        add_column "#{table_name.to_s.singularize}_versions".to_sym, column_name, type, options
+      end
     end
   end
 end
