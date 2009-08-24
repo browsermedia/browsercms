@@ -36,7 +36,7 @@ class RoutesTest < ActiveSupport::TestCase
     # Verifies the exact messages being passed to the route generator
   end
 
-  test "behavior of 'content_blocks' route generator with model names with s at the end" do
+  test "model names with s at the end behave identically (since content_blocks expects plural symbols)" do
     rb = RouteBuilder.new
 
     # Expect
