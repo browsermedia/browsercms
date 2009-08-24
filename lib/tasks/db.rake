@@ -18,7 +18,7 @@ namespace :db do
       puts "Models: " + models.join(', ')
       
       models.each do |m|
-        model = m.classify.constantize
+        model = m.tableize.classify.constantize
         create_fixture(model)
         create_fixture(model.version_class) if model.versioned?
       end

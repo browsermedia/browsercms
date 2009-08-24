@@ -1,5 +1,8 @@
 module Cms::Routes
-  
+
+  #
+  # content_block_name - Should be a plural symbol matching the name of the content_block, like :dogs or donation_statuses
+  #
   def content_blocks(content_block_name, options={}, &block)
     content_block = content_block_name.to_s.classify.constantize
     resources(*[content_block_name, default_routes_for_content_block(content_block).deep_merge(options)], &block)
