@@ -21,7 +21,11 @@ module ActiveRecord
         t.string :name unless t[:name]
 
         t.boolean :published, :default => false
-        t.boolean :deleted, :default => false
+
+        unless options[:soft_delete] == false
+          t.boolean :deleted, :default => false
+        end
+
         t.boolean :archived, :default => false
         t.integer :created_by_id
         t.integer :updated_by_id
