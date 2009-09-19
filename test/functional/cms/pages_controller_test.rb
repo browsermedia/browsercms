@@ -186,6 +186,16 @@ class Cms::PagesControllerPermissionsTest < ActionController::TestCase
     assert_response 403
     assert_template "cms/shared/access_denied"
 
+    # publish many
+    put :publish, :page_ids => [@editable_page.id]
+    assert_response :redirect
+    
+    put :publish, :page_ids => [@noneditable_page.id]
+    assert_response 403
+    
+    put :publish, :page_ids => [@editable_page.id, @noneditable_page.id]
+    assert_response 403
+
     # revert_to
     # can't find route...
 #    put :revert_to, :id => @editable_page.id

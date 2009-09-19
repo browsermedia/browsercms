@@ -60,9 +60,9 @@ class Cms::PagesController < Cms::BaseController
   {:publish => "published", :hide => "hidden", :archive => "archived"}.each do |status, verb|
     define_method status do
       if params[:page_ids]
-        params[:page_ids].each do |id|
-          Page.find(id).send(status)
-        end
+        @pages = params[:page_ids].map { |id| Page.find(id) }
+        raise Cms::Errors::AccessDenied unless @pages.all? { |page| current_user.able_to_edit?(page) }
+        @pages.each { |page| page.send(status) }
         flash[:notice] = "#{params[:page_ids].size} pages #{verb}"
         redirect_to cms_dashboard_url
       else
