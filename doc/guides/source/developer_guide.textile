@@ -121,7 +121,7 @@ end
 
 In create_products.rb (Migration)
 <ruby>
-create_versioned_table :products do |t|
+create_content_table :products do |t|
     t.belongs_to :attachment
     t.integer :attachment_version
 end

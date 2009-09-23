@@ -1,0 +1,10 @@
+Here are the basic steps required to release a new version of the browsercms gem, as well as testing, etc.
+
+A. Releasing and testing the gem upgrade locally
+1. rake version:bump:patch (move from 3.0.1 to 3.0.2, including git commit)
+2. rake gemspec (Regenerates the gemspec locally)
+3. rake build (Creates the gem, puts into /pkg directory)
+4. sudo gem install pkg/browsercms-3.x.gem
+5. cd /myproject
+6. script/generate browser_cms (Upgrades the project to use the latest gem version)
+
