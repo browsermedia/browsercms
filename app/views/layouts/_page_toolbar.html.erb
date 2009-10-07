@@ -50,30 +50,30 @@
   <%= link_to "<span>Publish</span>", 
     @page.live? ? '#' : publish_cms_page_path(@page), 
     :id => "publish_button",
-    :class => "http_put button#{' disabled' if !current_user.able_to?(:publish_content) || @page.version != @page.draft.version || @page.live?} left",
+    :class => "http_put button#{' disabled' if !current_user.able_to?(:publish_content) || !current_user.able_to_edit?(@page) || @page.version != @page.draft.version || @page.live?} left",
     :target => "_top" %>
     
   <%= link_to "<span>Assign</span>", 
     new_cms_page_task_path(@page), 
     :id => "assign_button",
-    :class => "button#{ ' disabled' if @page.assigned_to == current_user} middle",
+    :class => "button#{ ' disabled' if @page.assigned_to == current_user || !current_user.able_to_edit?(@page) } middle",
     :target => "_top" %>
     
   <%= link_to "<span>Complete Task</span>", 
     @page.current_task ? complete_cms_task_path(@page.current_task) : '#', 
     :id => "complete_task_button",
-    :class => "http_put button#{ ' disabled' unless @page.assigned_to == current_user} right", 
+    :class => "http_put button#{ ' disabled' if @page.assigned_to != current_user || !current_user.able_to_edit?(@page) } right", 
     :target => "_top" %>
 
   <%= link_to "<span>Edit Properties</span>", 
     [:edit, :cms, @page], 
     :id => "edit_properties_button",
-    :class => "spacer button", 
+    :class => "spacer button#{ ' disabled' unless current_user.able_to_edit?(@page) }", 
     :target => "_top" %>
   
   <%= link_to "<span>List Versions</span>", 
     versions_cms_page_path(@page), 
-    :class => "spacer button",
+    :class => "spacer button#{ ' disabled' unless current_user.able_to_edit?(@page) }",
     :target => "_top" %>
     
   <% able_to? :publish_content do %>
@@ -83,7 +83,7 @@
         :id => "delete_button",
         :title => "Are you sure you want to delete '#{@page.name}'?", 
         :target => "_top", 
-        :class => "spacer button confirm_with_title http_delete" %>
+        :class => "spacer button confirm_with_title http_delete#{ ' disabled' unless current_user.able_to_publish?(@page) }" %>
     <% else %>
       <%= link_to "<span>Revert to this Version</span>",
         revert_to_cms_page_path(@page, @page.version), 
@@ -98,7 +98,7 @@
         <div class="visual_editor_label">Visual Editor:</div>
         <div class="visual_editor_value_container">
           <% if @mode == "edit" %>
-	    <div><span id="visual_editor_state">ON</span></div>
+	    <div><span id="visual_editor_state"<%= ' title="You don\'t have permission to edit this page"' unless current_user.able_to_edit?(@page) %>>ON<%= '*' unless current_user.able_to_edit?(@page) %></span></div>
           <% else %>
 	    <div><span id="visual_editor_state">OFF</span></div>
           <% end %>

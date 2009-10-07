@@ -33,6 +33,7 @@ class Cms::ContentBlockController < Cms::BaseController
       after_create_on_failure
     end
   rescue Exception => @exception
+    raise @exception if @exception.is_a?(Cms::Errors::AccessDenied)
     after_create_on_error
   end
   
@@ -50,6 +51,7 @@ class Cms::ContentBlockController < Cms::BaseController
   rescue ActiveRecord::StaleObjectError => @exception
     after_update_on_edit_conflict
   rescue Exception => @exception
+    raise @exception if @exception.is_a?(Cms::Errors::AccessDenied)
     after_update_on_error
   end
   
@@ -127,15 +129,18 @@ class Cms::ContentBlockController < Cms::BaseController
       options[:order] = params[:order] unless params[:order].blank?
       scope = model_class.respond_to?(:list) ? model_class.list : model_class
       @blocks = scope.searchable? ? scope.search(params[:search]).paginate(options) : scope.paginate(options)
+      check_permissions
     end
   
     def load_block
       @block = model_class.find(params[:id])
+      check_permissions
     end
   
     def load_block_draft
-      load_block
+      @block = model_class.find(params[:id])
       @block = @block.as_of_draft_version if model_class.versioned?
+      check_permissions
     end
   
     # path related methods - available in the view as helpers
@@ -162,6 +167,7 @@ class Cms::ContentBlockController < Cms::BaseController
   
     def build_block
       @block = model_class.new(params[model_name])
+      check_permissions
     end
 
     def set_default_category
@@ -242,6 +248,23 @@ class Cms::ContentBlockController < Cms::BaseController
         logger.warn "Could not revert #{@block.inspect} to version #{to_version}"
         logger.warn "#{@exception.message}\n:#{@exception.backtrace.join("\n")}"
         false
+      end
+    end
+    
+    # Use a "whitelist" approach to access to avoid mistakes
+    # By default everyone can create new block and view them and their properties,
+    # but blocks can only be modified based on the permissions of the pages they
+    # are connected to.
+    def check_permissions
+      case action_name
+        when "index", "show", "new", "create", "version", "versions", "usages"
+          # Allow
+        when "edit", "update"
+          raise Cms::Errors::AccessDenied unless current_user.able_to_edit?(@block)
+        when "destroy", "publish", "revert_to"
+          raise Cms::Errors::AccessDenied unless current_user.able_to_publish?(@block)
+        else
+          raise Cms::Errors::AccessDenied
       end
     end
 
