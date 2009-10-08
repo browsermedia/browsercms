@@ -1,3 +1,27 @@
+#
+# Defines the authentication behavior for controllers in BrowserCMS. It can be added to any controller that needs to 
+# hook into the BrowserCMS Authentication behavior like so:
+#
+# class MySuperSecureController < ApplicationController
+#   include Cms::Authentication::Controller
+#
+# It is based off Restful_Authentication, and adds in behavior to deal with several concepts specific to BrowserCMS.
+#
+# (Note: 10/8/09 - I was comparing this to a very old version of the generated code from Restful_Authentication,
+# so some of the following items may be 'stock' to that. (Especially #2)
+#
+# 1. Guests - These represents users that are not logged in. What guests can see and do can be modified via the CMS UI. Guests
+#             are not considered to be 'logged in'.
+# 2. 'Current' User - The currently logged in user is stored in a thread local, and can be accessed anywhere via 'User.current'.
+#             This allows model code to easily record which user is making changes to records, for versioning, etc.
+#
+# 3. 'Admin' Access Denied Page - If users try to access a protected controller, they are redirected to the CMS administration Login page
+#             which may be different than the 'front end' user login page. (Cms::Controller handles that differently)
+#
+#
+# To Dos: It appears as though we are storing the 'current' user in two places, @current_user and User.current. This is probably not DRY, but
+#   more testing would be needed.
+#
 module Cms
   module Authentication
     module Controller
@@ -12,6 +36,7 @@ module Cms
         # If the user is not logged in, this will be set to the guest user, which represents a public
         # user, who will likely have more limited permissions
         def current_user
+          # Note: We have disabled basic_http_auth
           @current_user ||= begin
             User.current = (login_from_session || login_from_cookie || User.guest)  
           end
@@ -61,7 +86,7 @@ module Cms
 
         # Redirect as appropriate when an access request fails.
         #
-        # The default action is to redirect to the login screen.
+        # The default action is to redirect to the BrowserCMS admin login screen.
         #
         # Override this method in your controllers if you want to have special
         # behavior in case the user is not authorized
@@ -73,11 +98,6 @@ module Cms
               store_location
               redirect_to cms_login_path
             end
-            # format.any doesn't work in rails version < http://dev.rubyonrails.org/changeset/8987
-            # you may want to change format.any to e.g. format.any(:js, :xml)
-            # format.any do
-            #   request_http_basic_authentication 'Web Password'
-            # end
           end
         end
 
@@ -162,7 +182,6 @@ module Cms
 
         # Cookies shouldn't be allowed to persist past their freshness date,
         # and they should be changed at each login
-
         def valid_remember_cookie?
           return nil unless User.current
           (User.current.remember_token?) && 
