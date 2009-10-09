@@ -166,13 +166,50 @@ class Cms::SectionsControllerPermissionsTest < ActionController::TestCase
     assert_template "cms/shared/access_denied"
   end
   
-  test "PUT update should leave groups alone for non-admin user" do
-    @group = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
-    expected_groups = @editable_subsection.groups
+  def test_update_permissions_of_subsection
     login_as(@user)
-    put :update, :id => @editable_subsection
+
+    put :update, :id => @editable_section, :name => "Modified editable subsection"
+    assert_response :redirect
+
+    put :update, :id => @editable_subsection, :name => "Section below editable section"
+    assert_response 403
+    assert_template "cms/shared/access_denied"
+  end
+  
+  test "PUT update should leave groups alone for non-admin user" do
+    @group2 = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
+    expected_groups = @editable_section.groups
+    login_as(@user)
+    put :update, :id => @editable_section
+    assert_response :redirect
     assert_equal expected_groups, assigns(:section).groups
-    assert !assigns(:section).groups.include?(@group)
+    assert !assigns(:section).groups.include?(@group2)
+  end
+
+  test "PUT update should leave groups alone for non-admin user even if hack url" do
+    @group2 = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
+    expected_groups = @editable_section.groups
+    login_as(@user)
+    RAILS_DEFAULT_LOGGER.warn("starting...")
+    put :update, :id => @editable_section, :section => {:name => "new name", :group_ids => [@group, @group2]}
+    assert_response :redirect
+    assert_equal expected_groups, assigns(:section).groups
+    assert_equal "new name", assigns(:section).name
+    assert !assigns(:section).groups.include?(@group2)
+  end
+
+
+
+  test "PUT update should add groups for admin user" do
+# This step is unnecessary in the actual cms, as you can't stop the admin from doing anything
+    Group.find(:first, :conditions => "code = 'cms-admin'").sections << @editable_subsection
+    @group2 = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
+    expected_groups = [@group, @group2]
+    login_as_cms_admin
+    put :update, :id => @editable_subsection, :section => {:name => "new name", :group_ids => [@group, @group2]}
+    assert_response :redirect
+    assert_equal expected_groups, assigns(:section).groups
   end
 
   def test_destroy_permissions
@@ -186,5 +223,3 @@ class Cms::SectionsControllerPermissionsTest < ActionController::TestCase
     assert_template "cms/shared/access_denied"
   end
 end
-
-
