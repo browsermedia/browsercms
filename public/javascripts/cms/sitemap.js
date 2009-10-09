@@ -187,17 +187,26 @@ jQuery(function($){
     }
     
     var enableButtonsForNode = function(node) {
-	var id = getId(node.id, /(section|page|link)_/)
+	var id = getId(node.id, /(section|page|link)_/);
 	if(!$(node).is(".non-editable")) {
 		if($(node).hasClass('section')) {
-		    enableButtonsForSection(id)
+		    enableButtonsForSection(id);
 		} else if($(node).hasClass('page')) {
-		    enableButtonsForPage(id)
+		    enableButtonsForPage(id);
 		} else if($(node).hasClass('link')) {
-		    enableButtonsForLink(id)
+		    enableButtonsForLink(id);
 		}  
+	}else if($(node).hasClass('page')) {
+	    $('#edit-button')
+	        .html('<span>View Page</span>')
+		.removeClass('disabled')
+		.attr('href','/cms/pages/'+id)
+		.unbind('click')
+		.click(function(){return true});
+	} else {
+	    $('#properties-button').attr('href','/cms/sitemap');
 	}
-    }
+    };
     
     var enableButtonsForSection = function(id) {
 	$('#properties-button')
@@ -255,6 +264,7 @@ jQuery(function($){
     
     var enableButtonsForPage = function(id) {
 	$('#edit-button')
+	.html('<span>Edit Page</span>')
 	.removeClass('disabled')
 	.attr('href','/cms/pages/'+id)
 	.unbind('click')

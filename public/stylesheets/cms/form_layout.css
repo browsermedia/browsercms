@@ -19,13 +19,13 @@ font-size: 100%;
 .fields {
 padding: 10px 0;
 background: url(/images/cms/dashed.gif) repeat-x 100% 100%;
-overflow: hidden;
 }
 
 /* Fake forms */
 .faux_form .fields {
 padding: 22px 0 10px 0;
 font-size: 12px;
+overflow: hidden;
 }
 .faux_form .fields .label {
 padding: 0 0 12px 0;

@@ -21,7 +21,7 @@ class Cms::SectionsControllerTest < ActionController::TestCase
   end
   
   def test_update
-    @section = Factory(:section, :name => "V1", :parent => root_section)
+    @section = Factory(:section, :name => "V1", :parent => root_section, :groups => root_section.groups)
     
     put :update, :id => @section.to_param, :section => {:name => "V2"}
     reset(:section)
@@ -166,11 +166,12 @@ class Cms::SectionsControllerPermissionsTest < ActionController::TestCase
     assert_template "cms/shared/access_denied"
   end
   
-  test "PUT update should set the groups to the parent section's groups for non-admin user" do
+  test "PUT update should leave groups alone for non-admin user" do
     @group = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
+    expected_groups = @editable_subsection.groups
     login_as(@user)
     put :update, :id => @editable_subsection
-    assert_equal @editable_section.groups, assigns(:section).groups
+    assert_equal expected_groups, assigns(:section).groups
     assert !assigns(:section).groups.include?(@group)
   end
 

@@ -80,29 +80,23 @@ class UserPermissionsTest < ActiveSupport::TestCase
     @user.groups << @group
     
     @modifiable_section = Factory(:section, :parent => root_section, :name => "Modifiable")
-    @modifiable_subsection = Factory(:section, :parent => @modifiable_section, :name => "Modifiable Subsection")
     @non_modifiable_section = Factory(:section, :parent => root_section, :name => "Not Modifiable")
     
     @group.sections << @modifiable_section
     
     @modifiable_page = Factory(:page, :section => @modifiable_section)
-    @modifiable_page2 = Factory(:page, :section => @modifiable_subsection)
     @non_modifiable_page = Factory(:page, :section => @non_modifiable_section)
     
     @modifiable_link = Factory(:link, :section => @modifiable_section)
-    @modifiable_link2 = Factory(:link, :section => @modifiable_subsection)
     @non_modifiable_link = Factory(:link, :section => @non_modifiable_section)
     
     assert @user.able_to_modify?(@modifiable_section)
-    assert @user.able_to_modify?(@modifiable_subsection)
     assert !@user.able_to_modify?(@non_modifiable_section)
     
     assert @user.able_to_modify?(@modifiable_page)
-    assert @user.able_to_modify?(@modifiable_page2)
     assert !@user.able_to_modify?(@non_modifiable_page)
     
     assert @user.able_to_modify?(@modifiable_link)
-    assert @user.able_to_modify?(@modifiable_link2)
     assert !@user.able_to_modify?(@non_modifiable_link)
   end
   

@@ -114,9 +114,9 @@ class User < ActiveRecord::Base
   def able_to_modify?(object)
     case object
       when Section
-        object.with_ancestors.any? { |section| modifiable_sections.include?(section) }
+        modifiable_sections.include?(object)
       when Page, Link
-        object.section.with_ancestors.any? { |section| modifiable_sections.include?(section) }
+        modifiable_sections.include?(object.section)
       else
         if object.class.respond_to?(:connectable?) && object.class.connectable?
           object.connected_pages.all? { |page| able_to_modify?(page) }

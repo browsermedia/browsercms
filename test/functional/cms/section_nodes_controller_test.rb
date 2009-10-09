@@ -52,21 +52,18 @@ class Cms::SectionNodesControllerPermissionsTest < ActionController::TestCase
     @user.groups << @group
     
     @editable_section = Factory(:section, :parent => root_section, :name => "Editable")
-    @editable_subsection = Factory(:section, :parent => @editable_section, :name => "Editable Subsection")
     @group.sections << @editable_section
     @editable_page = Factory(:page, :section => @editable_section, :name => "Editable Page")
-    @editable_subpage = Factory(:page, :section => @editable_subsection, :name => "Editable SubPage")
     @editable_link = Factory(:link, :section => @editable_section, :name => "Editable Link")
-    @editable_sublink = Factory(:link, :section => @editable_subsection, :name => "Editable SubLink")
     
     @noneditable_section = Factory(:section, :parent => root_section, :name => "Not Editable")
     @noneditable_page = Factory(:page, :section => @noneditable_section, :name => "Non-Editable Page")
     @noneditable_link = Factory(:link, :section => @noneditable_section, :name => "Non-Editable Link")
     
     @noneditables = [@noneditable_section, @noneditable_page, @noneditable_link]
-    @editables = [@editable_section, @editable_subsection, 
-      @editable_page, @editable_subpage, 
-      @editable_link, @editable_sublink]
+    @editables = [@editable_section,
+      @editable_page, 
+      @editable_link,]
   end
   
   def test_index_as_contributor_with_subsections

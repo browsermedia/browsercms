@@ -22,8 +22,8 @@ class Cms::SectionsController < Cms::BaseController
   
   def create
     @section = Section.new(params[:section])
-    @section.groups = @parent.groups unless current_user.able_to?(:administrate)
     @section.parent = @parent
+    @section.groups = @section.parent.groups unless current_user.able_to?(:administrate)
     if @section.save
       flash[:notice] = "Section '#{@section.name}' was created"
       redirect_to [:cms, @section]
@@ -36,8 +36,8 @@ class Cms::SectionsController < Cms::BaseController
   end
   
   def update
+    params[:section].delete('group_ids') if params[:section] &&  !current_user.able_to?(:administrate)
     @section.attributes = params[:section]
-    @section.groups = @section.parent.groups unless current_user.able_to?(:administrate)
     if @section.save
       flash[:notice] = "Section '#{@section.name}' was updated"
       redirect_to [:cms, @section]
