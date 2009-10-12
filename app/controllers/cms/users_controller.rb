@@ -1,7 +1,9 @@
 class Cms::UsersController < Cms::ResourceController
   layout 'cms/administration'
 
-  check_permissions :administrate
+  check_permissions :administrate, :except => [:show, :change_password, :update_password]
+  before_filter :only_self_or_administrator, :only => [:show, :change_password, :update_password]
+  
   before_filter :set_menu_section
   after_filter :update_group_membership, :only => [:update, :create]
   after_filter :update_flash, :only => [ :update, :create ]
@@ -33,10 +35,6 @@ class Cms::UsersController < Cms::ResourceController
     @users = User.paginate(:page => params[:page], :per_page => per_page, :include => :user_group_memberships, :conditions => conditions, :order => "first_name, last_name, email")
   end
 
-  def show
-    redirect_to [:edit, :cms, user]
-  end
-
   def change_password
     user
   end
@@ -44,7 +42,7 @@ class Cms::UsersController < Cms::ResourceController
   def update_password
     if user.update_attributes(params[:user])
       flash[:notice] = "Password for '#{user.login}' was changed"
-      redirect_to cms_users_path
+      redirect_to(current_user.able_to?(:administrate) ? cms_users_path : cms_user_path(user))
     else
       render :action => 'change_password'
     end
@@ -94,5 +92,9 @@ class Cms::UsersController < Cms::ResourceController
     end
     def set_menu_section
       @menu_section = 'users'
+    end
+    
+    def only_self_or_administrator
+      raise Cms::Errors::AccessDenied if !current_user.able_to?(:administrate) && params[:id].to_i != current_user.id
     end
 end

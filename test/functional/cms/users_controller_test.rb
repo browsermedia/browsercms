@@ -6,7 +6,6 @@ class Cms::UsersControllerTest < ActionController::TestCase
   def setup
     login_as_cms_admin
     @user = User.first
-    
   end
   
   def test_index
@@ -132,6 +131,11 @@ class Cms::UsersControllerTest < ActionController::TestCase
     assert_select "input#user_expires_at"
   end
   
+  def test_show
+    get :show, :id => @user.id
+    assert_response :success
+  end
+  
   def test_update
     put :update, :id => @user.id, :user => { :first_name => "First"}
     reset(:user)
@@ -181,4 +185,47 @@ class Cms::UsersControllerTest < ActionController::TestCase
       @user_with_login = Factory(:user, :login => "mylogin")
     end
   
+end
+
+class Cms::UsersControllerNonAdminTest < ActionController::TestCase
+  tests Cms::UsersController
+  include Cms::ControllerTestHelper
+
+  def setup
+    @user = Factory.build(:user)
+    @user.groups = [groups(:group_3)]
+    @user.save!
+    login_as(@user)
+  end
+  
+  def test_show_self
+    get :show, :id => @user.id
+    assert_response :success
+  end
+  
+  def test_show_other
+    get :show, :id => Factory(:user).id
+    assert @response.body.include?("Access Denied")
+  end
+  
+  def test_change_password_self
+    get :change_password, :id => @user.id
+    assert_response :success
+  end
+  
+  def test_change_password_other
+    get :change_password, :id => Factory(:user).id
+    assert @response.body.include?("Access Denied")
+  end
+  
+  def test_update_password_self
+    put :update_password, :id => @user.id,
+        :user => {:password => "something_else", :password_confirmation => "something_else"}
+    assert_redirected_to cms_user_path(@user)
+  end
+  
+  def test_update_password_other
+    put :update_password, :id => Factory(:user).id
+    assert @response.body.include?("Access Denied")
+  end
 end

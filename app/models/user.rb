@@ -89,12 +89,12 @@ class User < ActiveRecord::Base
     @viewable_sections ||= Section.find(:all, :include => {:groups => :users}, :conditions => ["users.id = ?", id])
   end
 
-  def editable_sections
-    @editable_sections ||= Section.find(:all, :include => {:groups => [:group_type, :users]}, :conditions => ["users.id = ? and group_types.cms_access = ?", id, true])
+  def modifiable_sections
+    @modifiable_sections ||= Section.find(:all, :include => {:groups => [:group_type, :users]}, :conditions => ["users.id = ? and group_types.cms_access = ?", id, true])
   end
 
-  #Expects a list of names of Permissions
-  #true if the user has any of the permissions
+  # Expects a list of names of Permissions
+  # true if the user has any of the permissions
   def able_to?(*required_permissions)
     perms = required_permissions.map(&:to_sym)
     permissions.any? do |p| 
@@ -102,20 +102,39 @@ class User < ActiveRecord::Base
     end
   end
     
-  #Expects object to be an object or a section
-  #If it's a section, that will be used
-  #If it's not a section, it will call section on the object
-  #returns true if any of the sections of the groups the user is in matches the page's section.
+  # Expects object to be an object or a section
+  # If it's a section, that will be used
+  # If it's not a section, it will call section on the object
+  # returns true if any of the sections of the groups the user is in matches the page's section.
   def able_to_view?(object)
     section = object.is_a?(Section) ? object : object.section
-    !!(viewable_sections.include?(section) || groups.cms_access.count > 0)
+    viewable_sections.include?(section) || groups.cms_access.count > 0
   end
   
-  #Expects section to be a Section
-  #Returns true if any of the sections of the groups that have group_type = 'CMS User' 
-  #that the user is in match the section.
-  def able_to_edit?(section)    
-    !!(editable_sections.include?(section) && able_to?(:edit_content))
+  def able_to_modify?(object)
+    case object
+      when Section
+        modifiable_sections.include?(object)
+      when Page, Link
+        modifiable_sections.include?(object.section)
+      else
+        if object.class.respond_to?(:connectable?) && object.class.connectable?
+          object.connected_pages.all? { |page| able_to_modify?(page) }
+        else
+          true
+        end
+    end
+  end
+  
+  # Expects node to be a Section, Page or Link
+  # Returns true if the specified node, or any of its ancestor sections, is editable by any of 
+  # the user's 'CMS User' groups.
+  def able_to_edit?(object)    
+    able_to?(:edit_content) && able_to_modify?(object)
+  end
+  
+  def able_to_publish?(object)
+    able_to?(:publish_content) && able_to_modify?(object)
   end
   
   def able_to_edit_or_publish_content?

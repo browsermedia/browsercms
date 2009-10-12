@@ -70,13 +70,14 @@ color: #666;
 font-weight: bold;
 }
 
-#nav ul#userlinks li a,	#nav ul#userlinks li span {
-padding: 8px 19px 11px 19px;
+#nav ul#userlinks li a {
+padding: 4px 19px 11px 19px;
 background: url(/images/cms/usercontrols_bg_cap.png) no-repeat 100% 0;
 color: #666;
 display: block;
 float: left;
 text-decoration: none;
+line-height: 18px;
 }
 
 #nav ul#userlinks li span {
@@ -88,7 +89,7 @@ padding: 9px 10px;
 }
 #nav ul#userlinks li#user_info img {
 float:left;
-margin: 4px 0 0 5px;
+margin: 0 5px 0 0;
 }
 
 #nav .cmssearch {

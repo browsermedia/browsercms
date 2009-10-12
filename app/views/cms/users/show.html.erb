@@ -1,0 +1,50 @@
+<% @page_title = @toolbar_title = h(@user.login) %>
+
+<% content_for :toolbar_links do %>
+  <%= link_to(span_tag("List All"), cms_users_path, 
+    :id => "list_all_button", 
+    :class => "button") if current_user.able_to?(:administrate) %>
+  <%= link_to(span_tag("Change Password"), [:change_password, :cms, @user], 
+    :id => "change_password_button", 
+    :class => "button") %>
+<% end %>
+
+<% content_for :functions do %> 
+  <%= render(:partial => "toolbar") %>
+<% end %>
+
+<% content_for :html_head do %>
+  <%= stylesheet_link_tag('cms/form_layout') %>
+<% end %>
+
+<div class="faux_form">
+  <div class="fields">
+    <span class="label">Username</span>
+    <%=h @user.login %>
+  </div>
+  
+  <div class="fields">
+    <span class="label">Email</span>
+    <%=h @user.email %>
+  </div>
+  
+  <div class="fields">
+    <span class="label">First name</span>
+    <%=h @user.first_name %>
+  </div>
+  
+  <div class="fields">
+    <span class="label">Last name</span>
+    <%=h @user.last_name %>
+  </div>
+  
+  <div class="fields">
+    <span class="label">Groups</span>
+    
+    <ul>
+      <% @user.groups.each do |group| -%>
+        <li><%= group.name %></li>
+      <% end -%>
+    </ul>
+  </div>
+</div>

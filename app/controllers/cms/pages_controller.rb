@@ -60,9 +60,9 @@ class Cms::PagesController < Cms::BaseController
   {:publish => "published", :hide => "hidden", :archive => "archived"}.each do |status, verb|
     define_method status do
       if params[:page_ids]
-        params[:page_ids].each do |id|
-          Page.find(id).send(status)
-        end
+        @pages = params[:page_ids].map { |id| Page.find(id) }
+        raise Cms::Errors::AccessDenied unless @pages.all? { |page| current_user.able_to_edit?(page) }
+        @pages.each { |page| page.send(status) }
         flash[:notice] = "#{params[:page_ids].size} pages #{verb}"
         redirect_to cms_dashboard_url
       else
@@ -103,6 +103,7 @@ class Cms::PagesController < Cms::BaseController
 
     def load_page
       @page = Page.find(params[:id])
+      raise Cms::Errors::AccessDenied unless current_user.able_to_edit?(@page)
     end
     
     def load_draft_page
@@ -112,6 +113,7 @@ class Cms::PagesController < Cms::BaseController
   
     def load_section
       @section = Section.find(params[:section_id])
+      raise Cms::Errors::AccessDenied unless current_user.able_to_edit?(@section)
     end
     
     def hide_toolbar
