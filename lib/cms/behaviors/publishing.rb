@@ -23,7 +23,18 @@ module Cms
           after_save :publish_for_non_versioned
         
           named_scope :published, :conditions => {:published => true}
-          named_scope :unpublished, :conditions => {:published => false}        
+          named_scope :unpublished, lambda {
+            if versioned?
+              { :joins => :versions,
+                :conditions =>
+                  "#{connection.quote_table_name(version_table_name)}.#{connection.quote_column_name('version')} > " +
+                  "#{connection.quote_table_name(table_name)}.#{connection.quote_column_name('version')}",
+                :select => "distinct #{connection.quote_table_name(table_name)}.*" }
+            else
+              { :conditions => { :published => false } }
+            end
+          }
+
         end
       end
       module ClassMethods
