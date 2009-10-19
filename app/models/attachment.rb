@@ -1,5 +1,5 @@
 require 'digest/sha1'
-require 'ftools'
+require 'fileutils'
 
 class Attachment < ActiveRecord::Base
 
@@ -116,7 +116,7 @@ class Attachment < ActiveRecord::Base
     unless temp_file.blank?
       FileUtils.mkdir_p File.dirname(full_file_location)
       if temp_file.local_path
-        File.copy temp_file.local_path, full_file_location
+        FileUtils.copy temp_file.local_path, full_file_location
       else
         open(full_file_location, 'w') {|f| f << temp_file.read }
       end
