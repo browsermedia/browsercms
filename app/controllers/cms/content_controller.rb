@@ -58,6 +58,7 @@ class Cms::ContentController < Cms::ApplicationController
   # if caching is not enabled
   def render_page
     @_page_route.execute(self) if @_page_route
+    prepare_connectables_for_render unless (logged_in? && current_user.able_to?(:administrate, :edit_content, :publish_content))
     render :layout => @page.layout, :action => 'show'
   end
   
@@ -94,11 +95,34 @@ class Cms::ContentController < Cms::ApplicationController
         @template.instance_variable_set("#{v}", nil)
       end
       
+      prepare_connectables_for_render unless (logged_in? && current_user.able_to?(:administrate, :edit_content, :publish_content))
       render :layout => @page.layout, :template => 'cms/content/show', :status => status
     else
       handle_server_error(exception)
     end      
-  end    
+  end   
+  
+  # If any of the page's connectables (portlets, etc) are renderable, they may have a render method
+  # which does "controller" stuff, so we need to get that run before rendering the page.
+  def prepare_connectables_for_render
+    worst_exception = nil
+    @page.connectables_by_connector.values.each do |c| 
+      begin
+        c.prepare_to_render(self) 
+      rescue
+        logger.debug "THROWN EXCEPTION by connectable #{c}: #{$!}"
+        case $!
+        when ActiveRecord::RecordNotFound
+          raise
+        when Cms::Errors::AccessDenied
+          worst_exception = $!
+         else
+          c.render_exception = $!
+        end
+      end
+    end
+    raise worst_exception if worst_exception
+  end 
 
   # ----- Before Filters -------------------------------------------------------
   def construct_path

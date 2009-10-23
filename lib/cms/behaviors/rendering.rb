@@ -82,7 +82,7 @@ module Cms
   
     end
     module InstanceMethods
-      def perform_render(controller)
+      def prepare_to_render(controller)
         # Give this renderable a reference to the controller
         @controller = controller
 
@@ -90,12 +90,21 @@ module Cms
 
         # This gives the view a reference to this object
         instance_variable_set(self.class.instance_variable_name_for_view, self)
-
+    
         # This is like a controller action
         # We will call it if you have defined a render method
         # but if you haven't we won't
         render if respond_to?(:render)
+      end
     
+      def perform_render(controller)
+        return "Exception: #{@render_exception}" if @render_exception
+        unless @controller
+          # We haven't prepared to render. This should only happen when logged in, as we don't want
+          # errors to bubble up and prevent the page being edited in that case.
+          prepare_to_render(controller)
+        end
+        
         # Create, Instantiate and Initialize the view
         view_class  = Class.new(ActionView::Base)      
         action_view = view_class.new(@controller.view_paths, {}, @controller)
@@ -108,7 +117,7 @@ module Cms
         
         # We want content_for to be called on the controller's view, not this inner view
         def action_view.content_for(name, content=nil, &block)
-          controller.instance_variable_get("@template").content_for(name, content, &block)
+          @controller.instance_variable_get("@template").content_for(name, content, &block)
         end
         
         # Copy instance variables from this renderable object to it's view
@@ -122,6 +131,10 @@ module Cms
         end
       end
   
+      def render_exception=(exception)
+        @render_exception = exception
+      end
+
       protected
         def copy_instance_variables_from_controller!
           if @controller.respond_to?(:instance_variables_for_rendering)
