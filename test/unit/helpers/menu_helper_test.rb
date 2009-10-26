@@ -2,217 +2,96 @@ require File.join(File.dirname(__FILE__), '/../../test_helper')
 
 class Cms::MenuHelperTest < ActionView::TestCase
   
-  def test_render_menu
+  def test_menu_items
     Page.first.update_attributes(:hidden => true, :publish_on_save => true)
     create_nfl_data
 
-    expected = <<HTML 
-<div id="menu" class="menu">
-  <ul>
-    <li id="section_#{@afc.id}" class="depth-1 first open">
-      <a href="/buf">AFC</a>
-      <ul>
-        <li id="section_#{@afc_east.id}" class="depth-2 first">
-          <a href="/buf">East</a>
-        </li>
-        <li id="section_#{@afc_north.id}" class="depth-2 open">
-          <a href="/bal">North</a>
-          <ul>
-            <li id="page_#{@bal.id}" class="depth-3 first on">
-              <a href="/bal">Baltimore Ravens</a>
-            </li>
-            <li id="page_#{@cin.id}" class="depth-3">
-              <a href="/cin">Cincinnati Bengals</a>
-            </li>
-            <li id="page_#{@cle.id}" class="depth-3">
-              <a href="/cle">Cleveland Browns</a>
-            </li>
-            <li id="page_#{@pit.id}" class="depth-3 last">
-              <a href="/pit">Pittsburgh Steelers</a>
-            </li>
-          </ul>
-        </li>
-        <li id="section_#{@afc_south.id}" class="depth-2">
-          <a href="/hou">South</a>
-        </li>
-        <li id="section_#{@afc_west.id}" class="depth-2 last">
-          <a href="/den">West</a>
-        </li>
-      </ul>
-    </li>
-    <li id="section_#{@nfc.id}" class="depth-1 last">
-      <a href="/dal">NFC</a>
-    </li>
-  </ul>
-</div>
-HTML
-
-    assert_equal expected, render_menu(:page => @bal)
+    expected = [
+      { :id => "section_#{@afc.id}", :url => "/buf", :name => "AFC", :children => [
+          { :id => "section_#{@afc_east.id}", :url => "/buf", :name => "East" },
+          { :id => "section_#{@afc_north.id}", :url => "/bal", :name => "North", :children => [
+              { :id => "page_#{@bal.id}", :selected => true, :url => "/bal", :name => "Baltimore Ravens" },
+              { :id => "page_#{@cin.id}", :url => "/cin", :name => "Cincinnati Bengals" },
+              { :id => "page_#{@cle.id}", :url => "/cle", :name => "Cleveland Browns" },
+              { :id => "page_#{@pit.id}", :url => "/pit", :name => "Pittsburgh Steelers" }
+            ] },
+          { :id => "section_#{@afc_south.id}", :url => "/hou", :name => "South" },
+          { :id => "section_#{@afc_west.id}", :url => "/den", :name => "West" }
+        ] },
+      { :id => "section_#{@nfc.id}", :url => "/dal", :name => "NFC" }
+    ]
+    
+    assert_equal expected, menu_items(:page => @bal)
 
     @page = @bal
-    assert_equal expected, render_menu
-    assert_match /<div id=\"menu\" class=\"leftnav\">/, render_menu(:class => "leftnav")
+    assert_equal expected, menu_items
     
-    expected =  <<HTML 
-<div id="menu" class="menu">
-  <ul>
-    <li id="section_#{@afc.id}" class="depth-1 first open">
-      <a href="/buf">AFC</a>
-      <ul>
-        <li id="section_#{@afc_east.id}" class="depth-2 first">
-          <a href="/buf">East</a>
-        </li>
-        <li id="section_#{@afc_north.id}" class="depth-2 open">
-          <a href="/bal">North</a>
-        </li>
-        <li id="section_#{@afc_south.id}" class="depth-2">
-          <a href="/hou">South</a>
-        </li>
-        <li id="section_#{@afc_west.id}" class="depth-2 last">
-          <a href="/den">West</a>
-        </li>
-      </ul>
-    </li>
-    <li id="section_#{@nfc.id}" class="depth-1 last">
-      <a href="/dal">NFC</a>
-    </li>
-  </ul>
-</div>
-HTML
+    expected = [
+      { :id => "section_#{@afc.id}", :url => "/buf", :name => "AFC", :children => [
+          { :id => "section_#{@afc_east.id}", :url => "/buf", :name => "East" },
+          { :id => "section_#{@afc_north.id}", :url => "/bal", :name => "North" },
+          { :id => "section_#{@afc_south.id}", :url => "/hou", :name => "South" },
+          { :id => "section_#{@afc_west.id}", :url => "/den", :name => "West" }
+        ] },
+      { :id => "section_#{@nfc.id}", :url => "/dal", :name => "NFC" }
+    ]
     
-    assert_equal expected, render_menu(:depth => 2)
-
-    expected = <<HTML 
-<div id="menu" class="menu">
-  <ul>
-    <li id="section_#{@afc_east.id}" class="depth-1 first">
-      <a href="/buf">East</a>
-    </li>
-    <li id="section_#{@afc_north.id}" class="depth-1 open">
-      <a href="/bal">North</a>
-      <ul>
-        <li id="page_#{@bal.id}" class="depth-2 first on">
-          <a href="/bal">Baltimore Ravens</a>
-        </li>
-        <li id="page_#{@cin.id}" class="depth-2">
-          <a href="/cin">Cincinnati Bengals</a>
-        </li>
-        <li id="page_#{@cle.id}" class="depth-2">
-          <a href="/cle">Cleveland Browns</a>
-        </li>
-        <li id="page_#{@pit.id}" class="depth-2 last">
-          <a href="/pit">Pittsburgh Steelers</a>
-        </li>
-      </ul>
-    </li>
-    <li id="section_#{@afc_south.id}" class="depth-1">
-      <a href="/hou">South</a>
-    </li>
-    <li id="section_#{@afc_west.id}" class="depth-1 last">
-      <a href="/den">West</a>
-    </li>
-  </ul>
-</div>
-HTML
+    assert_equal expected, menu_items(:depth => 2)
     
-    assert_equal expected, render_menu(:from_top => 1, :depth => 2)
+    expected = [
+      { :id => "section_#{@afc_east.id}", :url => "/buf", :name => "East" },
+      { :id => "section_#{@afc_north.id}", :url => "/bal", :name => "North", :children => [
+          { :id => "page_#{@bal.id}", :selected => true, :url => "/bal", :name => "Baltimore Ravens" },
+          { :id => "page_#{@cin.id}", :url => "/cin", :name => "Cincinnati Bengals" },
+          { :id => "page_#{@cle.id}", :url => "/cle", :name => "Cleveland Browns" },
+          { :id => "page_#{@pit.id}", :url => "/pit", :name => "Pittsburgh Steelers" }
+        ] },
+      { :id => "section_#{@afc_south.id}", :url => "/hou", :name => "South" },
+      { :id => "section_#{@afc_west.id}", :url => "/den", :name => "West" }
+    ]
     
-    expected = <<HTML 
-<div id="menu" class="menu">
-  <ul>
-    <li id="section_#{@afc.id}" class="depth-1 first open">
-      <a href="/buf">AFC</a>
-      <ul>
-        <li id="section_#{@afc_east.id}" class="depth-2 first">
-          <a href="/buf">East</a>
-        </li>
-        <li id="section_#{@afc_north.id}" class="depth-2 open">
-          <a href="/bal">North</a>
-        </li>
-        <li id="section_#{@afc_south.id}" class="depth-2">
-          <a href="/hou">South</a>
-        </li>
-        <li id="section_#{@afc_west.id}" class="depth-2 last">
-          <a href="/den">West</a>
-        </li>
-      </ul>
-    </li>
-    <li id="section_#{@nfc.id}" class="depth-1 last">
-      <a href="/dal">NFC</a>
-      <ul>
-        <li id="section_#{@nfc_east.id}" class="depth-2 first">
-          <a href="/dal">East</a>
-        </li>
-        <li id="section_#{@nfc_north.id}" class="depth-2">
-          <a href="/chi">North</a>
-        </li>
-        <li id="section_#{@nfc_south.id}" class="depth-2">
-          <a href="/atl">South</a>
-        </li>
-        <li id="section_#{@nfc_west.id}" class="depth-2 last">
-          <a href="/ari">West</a>
-        </li>
-      </ul>
-    </li>
-  </ul>
-</div>
-HTML
+    assert_equal expected, menu_items(:from_top => 1, :depth => 2)
     
-    assert_equal expected, render_menu(:depth => 2, :show_all_siblings => true)
+    expected = [
+      { :id => "section_#{@afc.id}", :url => "/buf", :name => "AFC", :children => [
+          { :id => "section_#{@afc_east.id}", :url => "/buf", :name => "East" },
+          { :id => "section_#{@afc_north.id}", :url => "/bal", :name => "North" },
+          { :id => "section_#{@afc_south.id}", :url => "/hou", :name => "South" },
+          { :id => "section_#{@afc_west.id}", :url => "/den", :name => "West" }
+        ] },
+      { :id => "section_#{@nfc.id}", :url => "/dal", :name => "NFC", :children => [
+          { :id => "section_#{@nfc_east.id}", :url => "/dal", :name => "East" },
+          { :id => "section_#{@nfc_north.id}", :url => "/chi", :name => "North" },
+          { :id => "section_#{@nfc_south.id}", :url => "/atl", :name => "South" },
+          { :id => "section_#{@nfc_west.id}", :url => "/ari", :name => "West" }
+        ] }
+    ]
     
-    expected = <<HTML 
-<div id="menu" class="menu">
-  <ul>
-    <li id="section_#{@afc.id}" class="depth-1 first open">
-      <a href="/buf">AFC</a>
-    </li>
-    <li id="section_#{@nfc.id}" class="depth-1 last">
-      <a href="/dal">NFC</a>
-    </li>
-  </ul>
-</div>
-HTML
+    assert_equal expected, menu_items(:depth => 2, :show_all_siblings => true)
     
-    assert_equal expected, render_menu(:depth => 1)
+    expected = [
+      { :id => "section_#{@afc.id}", :url => "/buf", :name => "AFC" },
+      { :id => "section_#{@nfc.id}", :url => "/dal", :name => "NFC" }
+    ]
     
-    expected = <<HTML 
-<div id="menu" class="menu">
-  <ul>
-    <li id="section_#{@afc_east.id}" class="depth-1 first">
-      <a href="/buf">East</a>
-    </li>
-    <li id="section_#{@afc_north.id}" class="depth-1 open">
-      <a href="/bal">North</a>
-    </li>
-    <li id="section_#{@afc_south.id}" class="depth-1">
-      <a href="/hou">South</a>
-    </li>
-    <li id="section_#{@afc_west.id}" class="depth-1 last">
-      <a href="/den">West</a>
-    </li>
-  </ul>
-</div>
-HTML
+    assert_equal expected, menu_items(:depth => 1)
     
-    assert_equal expected, render_menu(:from_top => 1, :depth => 1)
+    expected = [
+      { :id => "section_#{@afc_east.id}", :url => "/buf", :name => "East" },
+      { :id => "section_#{@afc_north.id}", :url => "/bal", :name => "North" },
+      { :id => "section_#{@afc_south.id}", :url => "/hou", :name => "South" },
+      { :id => "section_#{@afc_west.id}", :url => "/den", :name => "West" }
+    ]
     
-    expected = <<HTML 
-<div id="menu" class="menu">
-  <ul>
-    <li id="section_#{@afc_east.id}" class="depth-1 first">
-      <a href="/buf">East</a>
-    </li>
-    <li id="section_#{@afc_north.id}" class="depth-1 open">
-      <a href="/bal">North</a>
-    </li>
-    <li id="section_#{@afc_south.id}" class="depth-1 last">
-      <a href="/hou">South</a>
-    </li>
-  </ul>
-</div>
-HTML
-
-    assert_equal expected, render_menu(:from_top => 1, :depth => 1, :limit => 3)    
+    assert_equal expected, menu_items(:from_top => 1, :depth => 1)
+    
+    expected = [
+      { :id => "section_#{@afc_east.id}", :url => "/buf", :name => "East" },
+      { :id => "section_#{@afc_north.id}", :url => "/bal", :name => "North" },
+      { :id => "section_#{@afc_south.id}", :url => "/hou", :name => "South" }
+    ]
+    
+    assert_equal expected, menu_items(:from_top => 1, :depth => 1, :limit => 3)
     
   end
   
@@ -223,36 +102,20 @@ HTML
     @press_releases = Factory(:page, :section => @news, :name => "Press Releases", :path => "/press_releases", :publish_on_save => true)
     @corporate_news = Factory(:link, :section => @news, :name => "Corporate News", :url => "/news", :new_window => false, :publish_on_save => true)
     @cnn = Factory(:link, :section => @news, :name => "CNN", :url => "http://www.cnn.com", :new_window => true, :publish_on_save => true)
-    expected = <<HTML 
-<div id="menu" class="menu">
-  <ul>
-    <li id="section_#{@news.id}" class="depth-1 first open">
-      <a href="/press_releases">News</a>
-      <ul>
-        <li id="page_#{@press_releases.id}" class="depth-2 first on">
-          <a href="/press_releases">Press Releases</a>
-        </li>
-        <li id="link_#{@corporate_news.id}" class="depth-2">
-          <a href="/news">Corporate News</a>
-        </li>
-        <li id="link_#{@cnn.id}" class="depth-2 last">
-          <a href="http://www.cnn.com" target="_blank">CNN</a>
-        </li>
-      </ul>
-    </li>
-  </ul>
-</div>
-HTML
+    
+    expected = [
+      { :id => "section_#{@news.id}", :url => "/press_releases", :name => "News", :children => [
+          { :id => "page_#{@press_releases.id}", :selected => true, :url => "/press_releases", :name => "Press Releases" },
+          { :id => "link_#{@corporate_news.id}", :url => "/news", :name => "Corporate News" },
+          { :id => "link_#{@cnn.id}", :url => "http://www.cnn.com", :target => "_blank", :name => "CNN" }
+        ] }
+    ]
     
     @page = @press_releases
-    output = render_menu
-    
-    assert_equal expected, output
-    
-    assert_equal %Q{<div id="menu" class="menu">\n</div>\n}, 
-      render_menu(:from_top => 42)
+    assert_equal expected, menu_items
+    assert_equal [], menu_items(:from_top => 42)
   end
-  
+
   def test_render_menu_does_not_show_unpublished_pages
     @section = Factory(:section, :name => "Test", :path => "/test")
     @page = Factory(:page, :section => @section, :name => "Overview", :path => "/test", :publish_on_save => true)
@@ -260,11 +123,13 @@ HTML
     @draft_page = Factory(:page, :section => @section, :name => "Draft v1", :path => "/draft", :publish_on_save => true)
     @draft_page.update_attributes(:name => "Draft v2")    
     @never_published = Factory(:page, :section => @section, :name => "Never Published", :path => "/never_published")
-    output = render_menu(:from_top => 1)
-
-    assert output =~ /\/test/, "Overview page should show up"
-    assert output =~ /Draft v1/, "Original version of draft page should show up"
-    assert output !~ /\/never_published/, "Never published should not show up"
+    
+    expected = [
+      { :id => "page_#{@page.id}", :name => "Overview", :url => "/test", :selected => true },
+      { :id => "page_#{@draft_page.id}", :name => "Draft v1", :url => "/draft" }
+    ]
+    
+    assert_equal expected, menu_items(:from_top => 1)
   end
   
   def test_render_menu_with_path
@@ -274,48 +139,23 @@ HTML
     @contact_us = Factory(:page, :section => @footer, :name => "Contact Us", :path => "/contact_us", :publish_on_save => true)
     @privacy_policy = Factory(:page, :section => @footer, :name => "Privacy Policy", :path => "/privacy_policy", :publish_on_save => true)
     
-    expected = <<HTML
-<div id="menu" class="menu">
-  <ul>
-    <li id="page_#{@about_us.id}" class="depth-1 first">
-      <a href="/about_us">About Us</a>
-    </li>
-    <li id="page_#{@contact_us.id}" class="depth-1">
-      <a href="/contact_us">Contact Us</a>
-    </li>
-    <li id="page_#{@privacy_policy.id}" class="depth-1 last">
-      <a href="/privacy_policy">Privacy Policy</a>
-    </li>
-  </ul>
-</div>
-HTML
-
-    #puts "Expected:\n#{expected}"
-    actual = render_menu(:page => @test, :path => "/footer", :from_top => 1)
-    #puts "Actual:\n#{actual}"
-    assert_equal expected, actual
-
-    expected = <<HTML
-<div id="menu" class="menu">
-  <ul>
-    <li id="page_#{@about_us.id}" class="depth-1 first">
-      <a href="/about_us">About Us</a>
-    </li>
-    <li id="page_#{@contact_us.id}" class="depth-1 on">
-      <a href="/contact_us">Contact Us</a>
-    </li>
-    <li id="page_#{@privacy_policy.id}" class="depth-1 last">
-      <a href="/privacy_policy">Privacy Policy</a>
-    </li>
-  </ul>
-</div>
-HTML
-
-    #puts "Expected:\n#{expected}"
-    actual = render_menu(:page => @contact_us, :path => "/footer", :from_top => 1)
-    #puts "Actual:\n#{actual}"
-    assert_equal expected, actual
+    expected = [
+      { :id => "page_#{@about_us.id}", :url => "/about_us", :name => "About Us" },
+      { :id => "page_#{@contact_us.id}", :url => "/contact_us", :name => "Contact Us" },
+      { :id => "page_#{@privacy_policy.id}", :url => "/privacy_policy", :name => "Privacy Policy" }
+    ]
     
+    actual = menu_items(:page => @test, :path => "/footer", :from_top => 1)
+    assert_equal expected, actual
+
+    expected = [
+      { :id => "page_#{@about_us.id}", :url => "/about_us", :name => "About Us" },
+      { :id => "page_#{@contact_us.id}", :url => "/contact_us", :name => "Contact Us", :selected => true },
+      { :id => "page_#{@privacy_policy.id}", :url => "/privacy_policy", :name => "Privacy Policy" }
+    ]
+    
+    actual = menu_items(:page => @contact_us, :path => "/footer", :from_top => 1)
+    assert_equal expected, actual
   end
   
   protected

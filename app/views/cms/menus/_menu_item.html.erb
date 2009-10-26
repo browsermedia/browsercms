@@ -1,0 +1,11 @@
+<% indent = (depth - 1) * 4
+%><%= " "*(indent + 4) %><li id="<%= menu_item[:id] %>" class="depth-<%= depth %><%= ' first' if position == 1 %><%= ' last' if position == item_count %><%= ' on' if menu_item[:selected] %><%= ' open' unless menu_item[:children].blank? %>">
+<%= " "*(indent + 6) %><a href="<%= menu_item[:url] %>"<%= ' target=#{menu_item[:target]}' if menu_item[:target] %>><%= menu_item[:name] %></a>
+<% unless menu_item[:children].blank?
+%><%= " "*(indent + 6)  %><ul>
+<% menu_item[:children].each_with_index do |item, i|
+%><%= render :partial => "/cms/menus/menu_item", :object => item, :locals => { :depth => depth + 1, :position => i + 1, :item_count => menu_item[:children].length }
+%><% end 
+%><%= " "*(indent + 6)  %></ul>
+<% end 
+%><%= " "*(indent + 4)  %></li>
