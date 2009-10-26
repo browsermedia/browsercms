@@ -16,7 +16,6 @@ class UserTest < ActiveSupport::TestCase
     @user.disable!
     assert_nil User.authenticate(@user.login, @user.password)
   end
-  
   def test_expiration
     @user = Factory.build(:user)
     assert_nil @user.expires_at
@@ -32,7 +31,6 @@ class UserTest < ActiveSupport::TestCase
     @user.expires_at = 1.day.ago
     assert @user.expired?
   end  
-
   def test_disable_enable
     @user = Factory(:user)
 
@@ -52,6 +50,23 @@ class UserTest < ActiveSupport::TestCase
     assert !@user.expired?
     assert User.active.all.include?(@user)
   end
+  test "email validation" do 
+    @user = Factory(:user)
+    assert @user.valid?
+    
+    valid_emails = ['t@test.com', 'T@test.com', 'test@somewhere.mobi', 'test@somewhere.tv', 'joe_blow@somewhere.co.nz', 'joe_blow@somewhere.com.au', 't@t-t.co']
+    valid_emails.each do |email|
+      @user.email = email
+      assert @user.valid?
+    end
+
+    invalid_emails = ['', '@test.com', '@test', 'test@test', 'test@somewhere', 'test@somewhere.', 'test@somewhere.x', 'test@somewhere..']
+    invalid_emails.each do |email|
+      @user.email = email
+      assert !@user.valid?
+    end
+  end
+
 end
 
 class UserPermissionsTest < ActiveSupport::TestCase
