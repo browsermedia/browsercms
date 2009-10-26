@@ -118,14 +118,14 @@ module Cms
 
         # Override this method if you would like to override the way the section is set
         def set_attachment_section
-          if new_record? && !attachment_file.blank?
+          if !attachment_file.blank?
             attachment.section = Section.root.first
           end
         end
 
         # Override this method if you would like to override the way file_path is set
         def set_attachment_file_path
-          if new_record? && !attachment_file.blank?
+          if !attachment_file.blank?
             attachment.file_path = "/attachments/#{File.basename(attachment_file.original_filename).to_s.downcase}"
           end
         end
