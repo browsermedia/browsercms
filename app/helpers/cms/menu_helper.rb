@@ -23,7 +23,7 @@ module Cms
     #   tree structure comes in.
     def render_menu(options = {})
       options[:items] ||= menu_items
-      options[:partial] ||= "/cms/menus/menu"
+      options[:partial] ||= "cms/menus/menu"
       options[:id] ||= "menu"
       options[:class] ||= "menu"
       render :partial => options[:partial], :locals => { :items => options[:items], :css_id => options[:id], :css_class => options[:class] }

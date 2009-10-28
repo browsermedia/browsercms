@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{browsercms}
-  s.version = "3.0.2"
+  s.version = "3.0.3"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["BrowserMedia"]
-  s.date = %q{2009-10-06}
+  s.date = %q{2009-10-28}
   s.email = %q{github@browsermedia.com}
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -155,6 +155,8 @@ Gem::Specification.new do |s|
      "app/views/cms/links/destroy.js.rjs",
      "app/views/cms/links/edit.html.erb",
      "app/views/cms/links/new.html.erb",
+     "app/views/cms/menus/_menu.html.erb",
+     "app/views/cms/menus/_menu_item.html.erb",
      "app/views/cms/page_routes/_form.html.erb",
      "app/views/cms/page_routes/edit.html.erb",
      "app/views/cms/page_routes/index.html.erb",
@@ -191,6 +193,7 @@ Gem::Specification.new do |s|
      "app/views/cms/shared/_pagination.html.erb",
      "app/views/cms/shared/_version_conflict_diff.html.erb",
      "app/views/cms/shared/_version_conflict_error.html.erb",
+     "app/views/cms/shared/access_denied.html.erb",
      "app/views/cms/shared/error.html.erb",
      "app/views/cms/tags/_form.html.erb",
      "app/views/cms/tags/render.html.erb",
@@ -205,6 +208,7 @@ Gem::Specification.new do |s|
      "app/views/cms/users/edit.html.erb",
      "app/views/cms/users/index.html.erb",
      "app/views/cms/users/new.html.erb",
+     "app/views/cms/users/show.html.erb",
      "app/views/layouts/_cms_toolbar.html.erb",
      "app/views/layouts/_page_toolbar.html.erb",
      "app/views/layouts/application.html.erb",
@@ -1228,12 +1232,11 @@ Gem::Specification.new do |s|
      "templates/demo.rb",
      "templates/module.rb"
   ]
-  s.has_rdoc = true
   s.homepage = %q{http://www.browsercms.org}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{browsercms}
-  s.rubygems_version = %q{1.3.1}
+  s.rubygems_version = %q{1.3.5}
   s.summary = %q{BrowserCMS is a general purpose, open source Web Content Management System (CMS), written in Ruby on Rails.}
   s.test_files = [
     "test/functional/cms/file_blocks_controller_test.rb",
@@ -1248,6 +1251,7 @@ Gem::Specification.new do |s|
      "test/functional/cms/links_controller_test.rb",
      "test/functional/cms/dynamic_views_controller_test.rb",
      "test/functional/cms/categories_controller_test.rb",
+     "test/functional/cms/content_block_controller_test.rb",
      "test/functional/cms/pages_controller_test.rb",
      "test/functional/cms/connectors_controller_test.rb",
      "test/functional/cms/home_controller_test.rb",
@@ -1303,7 +1307,7 @@ Gem::Specification.new do |s|
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
-    s.specification_version = 2
+    s.specification_version = 3
 
     if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
     else
