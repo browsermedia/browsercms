@@ -61,7 +61,7 @@ module ActsAsList
 
         #{scope_condition_method}
 
-        before_destroy :remove_from_list
+        before_destroy :remove_from_list_without_saving
         before_create  :add_to_list_bottom
       EOV
     end
@@ -118,11 +118,15 @@ module ActsAsList
     end
 
     # Removes the item from the list.
-    def remove_from_list
+    def remove_from_list(save = true)
       if in_list?
         decrement_positions_on_lower_items
-        update_attribute position_column, nil
+        update_attribute(position_column, nil) if save
       end
+    end
+
+    def remove_from_list_without_saving
+      self.remove_from_list(false)
     end
 
     # Increase the position of this item without adjusting the rest of the list.

@@ -2,6 +2,9 @@ require File.join(File.dirname(__FILE__), '/../../test_helper')
 
 class Cms::SessionsControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
+  def teardown
+    User.current = nil
+  end
   
   def test_not_redirected_to_cms_site_if_public_site
     @request.host = "foo.com"
@@ -17,6 +20,22 @@ class Cms::SessionsControllerTest < ActionController::TestCase
     assert_response :success
     log @response.body
     assert_select "title", "CMS Login"
+  end
+  
+  def test_return_to
+    user = Factory(:user)
+    expected_url = "/expected_url"
+
+    post :create, {:success_url => "", :login => user.login, :password => "password"}, {:return_to => expected_url }
+    assert_redirected_to(expected_url)
+  end
+  def test_success_url_overrides_return_to
+    user = Factory(:user)
+    expected_url = "/expected_url"
+
+    post :create, {:success_url => expected_url, :login => user.login, :password => "password"}, {:return_to => "/somewhere_else" }
+
+    assert_redirected_to(expected_url)
   end
   
 end

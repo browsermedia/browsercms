@@ -24,12 +24,8 @@ module Cms
       text
     end
 
-    def render_connector(connector)
-      connectable = connector.connectable_with_deleted
-      if logged_in? && @mode == "edit"
-        if connectable.class.versioned?
-          connectable = connectable.as_of_version(connector.connectable_version)
-        end
+    def render_connector_and_connectable(connector, connectable)
+      if logged_in? && @mode == "edit" && current_user.able_to_edit?(connector.page)
         render :partial => 'cms/pages/edit_connector', 
           :locals => { :connector => connector, :connectable => connectable}
       else

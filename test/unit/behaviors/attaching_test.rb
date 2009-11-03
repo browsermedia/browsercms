@@ -81,6 +81,32 @@ class DefaultAttachableTest < ActiveSupport::TestCase
     assert_equal "/attachments/foo.jpg", @attachable.attachment_file_path
     assert @attachable.attachment.published?
   end  
+
+  def test_create_without_attachment_and_then_add_attachment_on_edit
+    @attachable = DefaultAttachable.new(:name => "File Name", 
+      :attachment_file => nil, :publish_on_save => true)
+
+    assert_difference 'DefaultAttachable.count' do
+      assert_valid @attachable
+      @attachable.save!
+    end
+
+    assert_nil @attachable.attachment_file_path
+
+    reset(:attachable)
+
+    @attachable.attachment_file = @file
+    @attachable.save
+    @attachable.publish
+    assert_equal "/attachments/foo.jpg", @attachable.attachment_file_path
+
+    reset(:attachable)
+
+    assert_equal @section, @attachable.attachment_section
+    assert_equal @section.id, @attachable.attachment_section_id
+    assert_equal "/attachments/foo.jpg", @attachable.attachment_file_path
+    assert @attachable.attachment.published?
+  end
   
   
 end

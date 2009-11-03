@@ -21,7 +21,7 @@ class Cms::SessionsController < Cms::ApplicationController
       handle_remember_cookie! new_cookie_flag
       flash[:notice] = "Logged in successfully"
       if params[:success_url] # Coming from login portlet
-        redirect_to(session[:return_to] || params[:success_url] || "/")          
+        redirect_to((!params[:success_url].blank? && params[:success_url]) || session[:return_to] || "/")          
         session[:return_to] = nil
       else
         redirect_back_or_default(cms_home_url)

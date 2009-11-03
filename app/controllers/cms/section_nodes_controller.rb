@@ -1,5 +1,5 @@
 class Cms::SectionNodesController < Cms::BaseController
-  check_permissions :publish_content, :only => [:move_before, :move_after]
+  check_permissions :publish_content, :except => [:index]
   
   def index
     @toolbar_tab = :sitemap

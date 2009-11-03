@@ -110,7 +110,7 @@ module Cms
         def save(perform_validations=true)
           transaction do
             #logger.info "..... Calling valid?"
-            return false unless valid?            
+            return false unless !perform_validations || valid?            
             
             if changed?
               #logger.info "..... Changes => #{changes.inspect}"
@@ -172,7 +172,7 @@ module Cms
         end
 
         def save!(perform_validations=true)
-          save || raise(ActiveRecord::RecordNotSaved.new(errors.full_messages))
+          save(perform_validations) || raise(ActiveRecord::RecordNotSaved.new(errors.full_messages))
         end
 
         def draft

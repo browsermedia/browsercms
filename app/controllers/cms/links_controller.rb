@@ -47,10 +47,12 @@ class Cms::LinksController < Cms::BaseController
 
     def load_section
       @section = Section.find(params[:section_id])
+      raise Cms::Errors::AccessDenied unless current_user.able_to_edit?(@section)
     end
 
     def load_link
       @link = Link.find(params[:id])
+      raise Cms::Errors::AccessDenied unless current_user.able_to_edit?(@link)
     end
     
     def load_draft_link
