@@ -12,9 +12,9 @@
   <iframe src="<%=h cms_toolbar_path(:page_id => @page.id, :page_version => @page.version, :mode => @mode, :page_toolbar => @show_page_toolbar ? 1 : 0) %>" width="100%" height="<%= @show_page_toolbar ? 159 : 100 %>px" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" name="cms_toolbar"></iframe>
 <% end %>
 
-<% @page.connectables_by_connector.each_pair do |connector, connectable| %>
+<% @_connectors.each_with_index do |connector, i| %>
   <% content_for(connector.container.to_sym) do %>
-    <%= render_connector_and_connectable(connector, connectable) %>
+    <%= render_connector_and_connectable(connector, @_connectables[i]) %>
   <% end %>
 <% end %> 
 

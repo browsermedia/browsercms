@@ -151,17 +151,6 @@ class Page < ActiveRecord::Base
   def delete_connectors
     connectors.for_page_version(version).all.each{|c| c.destroy }
   end
-  
-  def connectables_by_connector
-    @connectables_by_connector ||= connectors.for_page_version(version).inject({}) do |mem, connector|
-      connectable = connector.connectable_with_deleted
-      if connectable.class.versioned?
-        connectable = connectable.as_of_version(connector.connectable_version)
-      end
-      mem[connector] = connectable
-      mem
-    end
-  end
          
   #This is done to let copy_connectors know which version to pull from
   #copy_connectors will get called later as an after_update callback
