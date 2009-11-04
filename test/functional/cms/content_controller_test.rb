@@ -230,7 +230,7 @@ class Cms::ContentCachingEnabledControllerTest < ActionController::TestCase
     ActionController::Base.perform_caching = true
     @page = Factory(:page, :section => root_section, :name => "Test Page", :path => "/page", :publish_on_save => true)
     @registered_user = Factory(:user)
-    @registered_user.groups << Group.with_code("guest").first
+    @registered_user.groups << Group.guest
   end
 
   def teardown
@@ -315,7 +315,7 @@ class Cms::ContentCachingDisabledControllerTest < ActionController::TestCase
     ActionController::Base.perform_caching = false
     @page = Factory(:page, :section => root_section, :name => "Test Page", :path => "/page", :publish_on_save => true)
     @registered_user = Factory(:user)
-    @registered_user.groups << Group.with_code("guest").first
+    @registered_user.groups << Group.guest
   end
 
   def test_guest_user_views_page_on_public_site

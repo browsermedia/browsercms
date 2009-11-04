@@ -99,7 +99,7 @@ class ActiveSupport::TestCase
   end
 
   def guest_group
-    Group.find_by_code("guest") || Factory(:group, :code => "guest")
+    Group.guest || Factory(:group, :code => Group::GUEST_CODE)
   end  
 
   def login_as(user)

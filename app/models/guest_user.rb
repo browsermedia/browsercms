@@ -1,7 +1,13 @@
+#
+# Guests are a special user that represents a non-logged in user. The main reason to create an explicit
+# instance of this type of user is so that the permissions a Guest user can have can be set via the Admin interface.
+#
+# Every request that a non-logged in user makes will use this User's permissions to determine what they can/can't do.
+#
 class GuestUser < User
-  
+
   def initialize(attributes={})
-    super({:login => "guest", :first_name => "Anonymous", :last_name => "User"}.merge(attributes))
+    super({:login => Group::GUEST_CODE, :first_name => "Anonymous", :last_name => "User"}.merge(attributes))
     @guest = true
   end
     
@@ -18,7 +24,7 @@ class GuestUser < User
   end
   
   def group
-    @group ||= Group.find_by_code("guest")
+    @group ||= Group.guest
   end
   
   def groups

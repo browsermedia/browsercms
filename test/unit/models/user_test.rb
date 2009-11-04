@@ -72,7 +72,7 @@ end
 class UserPermissionsTest < ActiveSupport::TestCase
   def setup
     @user = Factory(:user)
-    @guest_group = Group.first(:conditions => {:code => "guest"})    
+    @guest_group = Group.guest
   end
   
   def test_user_permissions
@@ -210,7 +210,7 @@ end
 class GuestUserTest < ActiveSupport::TestCase
   def setup
     @user = User.guest
-    @guest_group = Group.with_code("guest").first
+    @guest_group = Group.guest
     @public_page = Factory(:page, :section => root_section)
     @protected_section = Factory(:section, :parent => root_section)
     @protected_page = Factory(:page, :section => @protected_section)
