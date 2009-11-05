@@ -67,5 +67,10 @@ class Cms::SessionsControllerCacheEnabledTest < ActionController::TestCase
     log @response.body
     assert_select "title", "CMS Login"
   end
-  
+
+  test "destroy" do
+    Cms::SessionsController.any_instance.expects(:logout_user)
+    delete :destroy
+    assert_redirected_to "/" 
+  end
 end
