@@ -42,6 +42,7 @@ The user documentation and guides for this version of the application can be fou
 
 1. http://browsercms.org/doc/guides/html/index.html - User guides and manuals that cover the features and general functionality of the project. (Found locally at doc/guides/html/index.html)
 2. http://browsercms.org/doc/app/index.html - The RDoc API documenation (locally at doc/app/index.html)
+3. http://wiki.github.com/browsermedia/browsercms - The project wiki
 
 ## Modifying the source
 If you want to experiment with the source code, the BrowserCMS project can bootstrap itself as a web application. This allows developers who want to contribute to the project to easily alter and test changes. To run the application itself, do the following:
