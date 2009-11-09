@@ -1,0 +1,24 @@
+<%= error_message_on :user, :password %>
+
+<% if flash_scope = flash[:reset_password] -%>
+  <% if flash_scope[:error] -%>
+    <span class="reset-password-error"><%= flash_scope[:error] %></span>
+  <% end -%>
+  <% if flash_scope[:notice] -%>
+    <span class="reset-password-notice"><%= flash_scope[:notice] %></span>
+  <% end -%>
+<% end -%>
+
+<% form_tag do %>
+  <% if params[:token] -%>
+  <%= hidden_field_tag "token", params[:token] %>
+  <% end -%>
+
+  <label for="password">New Password:</label>
+  <%= password_field_tag "password" %><br>
+
+  <label for="password_confirmation">Confirm New Password:</label>
+  <%= password_field_tag "password_confirmation" %><br>
+
+  <%= submit_tag "Reset Password" %>
+<% end %>
