@@ -22,7 +22,7 @@ module Cms
     # * <tt>:children</tt> - An array of hashes containing the child menu items. This is where the
     #   tree structure comes in.
     def render_menu(options = {})
-      options[:items] ||= menu_items
+      options[:items] ||= menu_items(options)
       options[:partial] ||= "cms/menus/menu"
       options[:id] ||= "menu"
       options[:class] ||= "menu"
