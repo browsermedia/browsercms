@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{browsercms}
-  s.version = "3.0.3"
+  s.version = "3.0.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["BrowserMedia"]
-  s.date = %q{2009-11-06}
+  s.date = %q{2009-11-09}
   s.email = %q{github@browsermedia.com}
   s.extra_rdoc_files = [
     "LICENSE.txt",
