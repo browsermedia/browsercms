@@ -1,7 +1,7 @@
 class Cms::ApplicationController < ApplicationController
   include Cms::Authentication::Controller
   include Cms::ErrorHandling
-  include Cms::PageRenderer
+  include Cms::DomainSupport
 
   helper :all # include all helpers, all the time
 

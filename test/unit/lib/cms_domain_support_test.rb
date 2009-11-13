@@ -1,7 +1,7 @@
 require File.join(File.dirname(__FILE__), '/../../test_helper')
 require 'mocha'
 
-class PageRendererTest < ActiveSupport::TestCase
+class CmsDomainSupportTest < ActiveSupport::TestCase
 
   def setup
 

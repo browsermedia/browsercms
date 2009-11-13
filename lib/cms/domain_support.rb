@@ -1,6 +1,9 @@
-# A support module for pages that need to render pages.
+#
+# A support module for handling detecting if a page or controller is being
+# served by the public or cms domain.
+#
 module Cms
-  module PageRenderer
+  module DomainSupport
 
     protected
 
