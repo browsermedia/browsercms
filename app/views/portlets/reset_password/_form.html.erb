@@ -1,0 +1,3 @@
+<%= f.cms_text_field :name %>
+<%= f.cms_drop_down :handler, ActionView::Template.template_handler_extensions, :default => "erb" %>
+<%= f.cms_text_area :template, :default_value => @block.class.default_template %>
