@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["BrowserMedia"]
-  s.date = %q{2009-11-09}
+  s.date = %q{2009-11-17}
   s.email = %q{github@browsermedia.com}
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -74,6 +74,7 @@ Gem::Specification.new do |s|
      "app/models/email_message.rb",
      "app/models/email_message_mailer.rb",
      "app/models/file_block.rb",
+     "app/models/forgot_password_mailer.rb",
      "app/models/group.rb",
      "app/models/group_permission.rb",
      "app/models/group_section.rb",
@@ -103,7 +104,9 @@ Gem::Specification.new do |s|
      "app/models/user_group_membership.rb",
      "app/portlets/dynamic_portlet.rb",
      "app/portlets/email_page_portlet.rb",
+     "app/portlets/forgot_password_portlet.rb",
      "app/portlets/login_portlet.rb",
+     "app/portlets/reset_password_portlet.rb",
      "app/portlets/tag_cloud_portlet.rb",
      "app/views/cms/blocks/_hidden_fields.html.erb",
      "app/views/cms/blocks/_toolbar.html.erb",
@@ -133,6 +136,8 @@ Gem::Specification.new do |s|
      "app/views/cms/email_messages/show.html.erb",
      "app/views/cms/file_blocks/_form.html.erb",
      "app/views/cms/file_blocks/render.html.erb",
+     "app/views/cms/forgot_password_mailer/reset_password.text.html.erb",
+     "app/views/cms/forgot_password_mailer/reset_password.text.plain.erb",
      "app/views/cms/form_builder/_cms_date_picker.html.erb",
      "app/views/cms/form_builder/_cms_datetime_select.html.erb",
      "app/views/cms/form_builder/_cms_drop_down.html.erb",
@@ -225,9 +230,13 @@ Gem::Specification.new do |s|
      "app/views/portlets/dynamic/_form.html.erb",
      "app/views/portlets/email_page/_form.html.erb",
      "app/views/portlets/email_page/render.html.erb",
+     "app/views/portlets/forgot_password/_form.html.erb",
+     "app/views/portlets/forgot_password/render.html.erb",
      "app/views/portlets/login/_form.html.erb",
      "app/views/portlets/login/render.html.erb",
      "app/views/portlets/portlets/_form.html.erb",
+     "app/views/portlets/reset_password/_form.html.erb",
+     "app/views/portlets/reset_password/render.html.erb",
      "app/views/portlets/tag_cloud/_form.html.erb",
      "app/views/portlets/tag_cloud/render.html.erb",
      "browsercms.gemspec",
@@ -238,6 +247,7 @@ Gem::Specification.new do |s|
      "db/demo/page_templates/sub_page.html.erb",
      "db/migrate/20080815014337_browsercms_3_0_0.rb",
      "db/migrate/20081114172307_load_seed_data.rb",
+     "db/migrate/20091109175123_browsercms_3_0_5.rb",
      "doc/app/classes/AbstractFileBlock.html",
      "doc/app/classes/ActiveRecord.html",
      "doc/app/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html",
@@ -1303,6 +1313,7 @@ Gem::Specification.new do |s|
      "test/unit/lib/routes_test.rb",
      "test/unit/lib/generators_test.rb",
      "test/unit/lib/content_block_test.rb",
+     "test/integration/cms/password_management_test.rb",
      "test/integration/login_test.rb"
   ]
 

@@ -1,4 +1,4 @@
-class Browsercms304 < ActiveRecord::Migration
+class Browsercms305 < ActiveRecord::Migration
   def self.up
     add_column :users, :reset_token, :string
   end
