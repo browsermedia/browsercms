@@ -38,6 +38,12 @@ class User < ActiveRecord::Base
     !!@guest
   end
 
+  # Determines if this user should have access to the CMS administration tools. Can be overridden by specific users (like GuestUser)
+  # which may not need to check the database for that information.
+  def cms_access?
+    groups.cms_access.count > 0 
+  end
+  
   def disable
     if self.class.count(:conditions => ["expires_at is null and id != ?", id]) > 0
       self.expires_at = Time.now - 1.minutes
@@ -101,15 +107,27 @@ class User < ActiveRecord::Base
     end
   end
     
-  # Expects object to be an object or a section
-  # If it's a section, that will be used
-  # If it's not a section, it will call section on the object
-  # returns true if any of the sections of the groups the user is in matches the page's section.
+  # Determine if this user has permission to view the specific object. Permissions
+  #   are always tied to a specific section. This method can take different input parameters
+  #   and will attempt to determine the relevant section to check.
+  # Expects object to be of type:
+  #   1. Section - Will check the user's groups to see if any of those groups can view this section.
+  #   2. Path - Will look up the section based on the path, then check it.  (Note that section paths are not currently unique, so this will check the first one it finds).
+  #   3. Other - Assumes it has a section attribute and will call that and check the return value. 
+  #
+  # Returns: true if the user can view this object, false otherwise.
+  # Raises: ActiveRecord::RecordNotFound if a path to a not existent section is passed in.
   def able_to_view?(object)
-    section = object.is_a?(Section) ? object : object.section
-    viewable_sections.include?(section) || groups.cms_access.count > 0
+    section = object
+    if object.is_a?(String)
+       section = Section.find_by_path(object)
+       raise ActiveRecord::RecordNotFound.new("Could not find section with path = '#{object}'") unless section
+    elsif !object.is_a?(Section)
+      section = object.section
+    end
+    viewable_sections.include?(section) || cms_access?
   end
-  
+
   def able_to_modify?(object)
     case object
       when Section
