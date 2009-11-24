@@ -177,6 +177,7 @@ float: left;
 }
 
 .file_fields div.file_inputs {
+    padding-bottom: 2px;
     position:relative;
 }
 
@@ -188,7 +189,7 @@ float: left;
     display:inline;
     margin-left: 140px;
 }
-.file_fields input.file {
+.file_fields input.fancy_file {
 opacity: 0;
 filter: alpha(opacity=0);
 position: relative;
@@ -275,9 +276,4 @@ margin: 8px 0;
 
 .checkboxes .instructions {
   margin-left: 0;
-}
-#file_block_attachment_file, #image_block_attachment_file { 
-height: 30px; 
-margin-left: 364px;
-* margin-left: 352px;
 }

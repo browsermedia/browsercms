@@ -32,7 +32,7 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
       def cms_#{f}(method, options={})
         add_tabindex!(options)
         set_default_value!(method, options)
-        cms_options = options.extract!(:label, :instructions, :default_value)
+        cms_options = options.extract!(:label, :instructions, :default_value, :fancy)
         render_cms_form_partial :#{f},
           :object_name => @object_name, :method => method,
           :options => options, :cms_options => cms_options
