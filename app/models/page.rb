@@ -42,7 +42,7 @@ class Page < ActiveRecord::Base
     end 
   }  
   
-  has_one :section_node, :as => :node
+  has_one :section_node, :as => :node, :dependent => :destroy
   
   has_many :tasks
   

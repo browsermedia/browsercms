@@ -51,6 +51,18 @@ class SectionTest < ActiveSupport::TestCase
     
     assert_equal @a2, @a.first_page_or_link
   end
+
+  def test_find_first_page_or_link_after_delete
+    @a = Factory(:section, :parent => root_section, :name => "A")
+    @a1 = Factory(:page, :section => @a, :name => "A1")
+    @a2 = Factory(:page, :section => @a, :name => "A2")
+    @a3 = Factory(:page, :section => @a, :name => "A3")
+    assert_equal @a1, @a.first_page_or_link
+    @a1.destroy
+    
+    assert_equal @a2, @a.first_page_or_link
+  end
+
   
   def test_find_by_name_path
     @a = Factory(:section, :parent => root_section, :name => "A")

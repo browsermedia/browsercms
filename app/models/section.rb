@@ -3,7 +3,7 @@ class Section < ActiveRecord::Base
   flush_cache_on_change
   
   #The node that links this section to its parent
-  has_one :node, :class_name => "SectionNode", :as => :node
+  has_one :node, :class_name => "SectionNode", :as => :node, :dependent => :destroy
   
   #The nodes that link this section to its children
   has_many :child_nodes, :class_name => "SectionNode"
