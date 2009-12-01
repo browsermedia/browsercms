@@ -6,7 +6,7 @@
 class Tests::PretendController < ApplicationController
   include Cms::Acts::ContentPage
 
-  place_in_section "/members", :only=>[:restricted]
+  requires_permission_for_section "/members", :only=>[:restricted]
 
   RESTRICTED_H1 = "Restricted"
 

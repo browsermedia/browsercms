@@ -35,12 +35,26 @@ module Cms
 
       module ClassMethods
 
-        # Sets which section this Controller should pretend that it's in. Should match the 'path' attribute for a given section.
-        def place_in_section(path, options={})
+        # Sets which section this Controller should pretend that it's in.
+        # Params:
+        #   path - Should match the 'path' attribute for a given section.
+        #   options - Hash of options that will be passed to the before_filter call. See before_filter for valid options.
+        #
+        # Example:
+        #   MyController < ApplicationController
+        #     include Cms::Acts::ContentPage
+        #     requires_permission_for_section "/somepath", :except=>"action_name"
+        #   ...
+        #
+        def requires_permission_for_section(path, options={})
           logger.warn "Setting path #{path}"
           @section_path = path
           before_filter :check_access_to_section, options
         end
+
+#        def requires_permission()
+#
+#        end
 
         def in_section
           @section_path

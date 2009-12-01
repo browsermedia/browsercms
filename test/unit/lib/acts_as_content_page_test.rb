@@ -6,7 +6,7 @@ class CmsActsAsContentPageTest < ActiveSupport::TestCase
 
   class MyController < ActionController::Base
     include Cms::Acts::ContentPage
-    place_in_section EXPECTED_SECTION
+    requires_permission_for_section EXPECTED_SECTION
   end
 
   test "Arbitrary controller should have authentication methods" do
@@ -20,7 +20,7 @@ class CmsActsAsContentPageTest < ActiveSupport::TestCase
     assert(c.respond_to?(:logged_in?), "Should include Cms::Authentication::Controller methods")
     assert(c.respond_to?(:handle_server_error), "Should include Cms::ErrorHandling methods")
 
-    assert(MyController.respond_to?(:place_in_section), "Should add ClassMethods to the controller.")
+    assert(MyController.respond_to?(:requires_permission_for_section), "Should add ClassMethods to the controller.")
   end
 
   test "check_access_to_section_filter" do
@@ -39,7 +39,7 @@ class CmsActsAsContentPageTest < ActiveSupport::TestCase
   test "sets section in startup" do
     class AController < ActionController::Base
       include Cms::Acts::ContentPage
-      place_in_section EXPECTED_SECTION
+      requires_permission_for_section EXPECTED_SECTION
     end
 
     assert_equal EXPECTED_SECTION, AController.in_section
@@ -52,20 +52,21 @@ class CmsActsAsContentPageTest < ActiveSupport::TestCase
   test "placing in a section should create a before_filter for that section for all actions" do
     NewController.expects(:before_filter).with(:check_access_to_section, {})
 
-    NewController.send :place_in_section, EXPECTED_SECTION
+    NewController.send :requires_permission_for_section, EXPECTED_SECTION
 
   end
 
   test "can put only conditions on filters" do
     NewController.expects(:before_filter).with(:check_access_to_section, :only=>[:create])
 
-    NewController.send :place_in_section, EXPECTED_SECTION, :only=>[:create]
+    NewController.send :requires_permission_for_section, EXPECTED_SECTION, :only=>[:create]
   end
 
   test "can put except conditions on filters" do
     NewController.expects(:before_filter).with(:check_access_to_section, :except=>[:create])
 
-    NewController.send :place_in_section, EXPECTED_SECTION, :except=>[:create]
+    NewController.send :requires_permission_for_section, EXPECTED_SECTION, :except=>[:create]
   end
+
 
 end
