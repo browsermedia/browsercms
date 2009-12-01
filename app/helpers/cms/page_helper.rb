@@ -63,6 +63,11 @@ module Cms
         render_connectable(portlets.first)
       end
     end
-            
+
+    # Determines if the current_user is able to do specific permissions.
+    def able_to?(*perms, &block)
+      yield if current_user.able_to?(*perms)
+    end
+
   end
 end

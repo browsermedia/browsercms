@@ -4,16 +4,24 @@
 #
 #   1. Marked as being in a particular section, which will make them use the same security rules as that section.
 #   2. Handle errors thrown from within the methods in the same way that CMS Pages do.
-
-
+#
+#   Error handling for Page not found behaves slightly differently than ContentController currently. If the user is logged
+#   in as an editor, they will get a 500 page rather than 404. This would require reworking how the error processing
+#   works in Cms::ContentRenderingSupport. 
 module Cms
   module Acts
+
+
     module ContentPage
 
       def self.included(base)
         base.send :include, Cms::ContentRenderingSupport
         base.send :include, Cms::Authentication::Controller
         base.extend ClassMethods
+
+        base.helper Cms::PageHelper
+        base.helper Cms::RenderingHelper
+        base.helper Cms::MenuHelper
       end
 
       def check_access_to_section

@@ -7,6 +7,8 @@ class Cms::PagesController < Cms::BaseController
   before_filter :hide_toolbar, :only => [:new, :create]
   before_filter :strip_publish_params, :only => [:create, :update]
 
+  helper Cms::RenderingHelper
+  
   def new
     @page = Page.new(:section => @section, :cacheable => true)
     if @section.child_nodes.count < 1

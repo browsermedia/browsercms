@@ -6,20 +6,23 @@
 class Tests::PretendController < ApplicationController
   include Cms::Acts::ContentPage
 
-  # Needed for the error/access denied pages to work.
-  helper Cms::PageHelper
-  helper Cms::MenuHelper
-  helper Cms::ApplicationHelper
-  
-  place_in_section "/members", :except=>[:open]
+  place_in_section "/members", :only=>[:restricted]
+
+  RESTRICTED_H1 = "Restricted"
 
   def restricted
-    render :text =>"You can see this restricted page."
+    render :text =>"<h1>#{RESTRICTED_H1}</h1> You can see this restricted page."
   end
 
   def open
-    render :text =>"You can see this public page."
-   
+    render :text =>"<h1>Open Page</h1> You can see this public page."   
   end
 
+  def error
+    raise StandardError     
+  end
+
+  def not_found
+    raise ActiveRecord::RecordNotFound.new("This thing was missing!")
+  end
 end

@@ -7,7 +7,7 @@ class Cms::ContentBlockController < Cms::BaseController
   before_filter :set_toolbar_tab
   
   helper_method :block_form, :new_block_path, :block_path, :blocks_path, :content_type
-  
+  helper Cms::RenderingHelper
   # Basic REST Crud Action
   
   def index
