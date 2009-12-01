@@ -21,8 +21,14 @@ module Cms
     # * <tt>:target</tt> - The target attribute for the link
     # * <tt>:children</tt> - An array of hashes containing the child menu items. This is where the
     #   tree structure comes in.
+    #
+    # Edge Cases:
+    #   If both @page and :items are nil/empty, this will return an empty string. This might happen if used on an CMS
+    #   rendered page, where @page isn't set.
+    #
     def render_menu(options = {})
       options[:items] ||= menu_items
+      return "" unless options[:items]
       options[:partial] ||= "cms/menus/menu"
       options[:id] ||= "menu"
       options[:class] ||= "menu"

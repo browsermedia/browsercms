@@ -17,6 +17,7 @@ if RAILS_ROOT == File.expand_path(File.dirname(__FILE__) + "/..")
     # These are for testing and might need to be stripped out.
     map.connect "/tests/restricted", :controller => "tests/pretend", :action => "restricted"
     map.connect "/tests/open", :controller => "tests/pretend", :action => "open"
+    map.connect "/tests/open_with_layout", :controller => "tests/pretend", :action => "open_with_layout"
     map.connect "/tests/error", :controller => "tests/pretend", :action => "error"
     map.connect "/tests/not-found", :controller => "tests/pretend", :action => "not_found"
 

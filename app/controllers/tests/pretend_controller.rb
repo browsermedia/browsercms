@@ -5,7 +5,7 @@
 # This should be moved to the test directory if possible.
 class Tests::PretendController < ApplicationController
   include Cms::Acts::ContentPage
-
+  
   requires_permission_for_section "/members", :only=>[:restricted]
 
   RESTRICTED_H1 = "Restricted"
@@ -24,5 +24,9 @@ class Tests::PretendController < ApplicationController
 
   def not_found
     raise ActiveRecord::RecordNotFound.new("This thing was missing!")
+  end
+
+  def open_with_layout
+    render :text=>"hello", :layout=>"templates/subpage"
   end
 end

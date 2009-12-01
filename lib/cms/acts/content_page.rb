@@ -5,6 +5,7 @@
 #   1. Marked as being in a particular section, which will make them use the same security rules as that section.
 #   2. Handle errors thrown from within the methods in the same way that CMS Pages do.
 #
+# Minor Issue:
 #   Error handling for Page not found behaves slightly differently than ContentController currently. If the user is logged
 #   in as an editor, they will get a 500 page rather than 404. This would require reworking how the error processing
 #   works in Cms::ContentRenderingSupport. 
@@ -35,7 +36,9 @@ module Cms
 
       module ClassMethods
 
-        # Sets which section this Controller should pretend that it's in.
+        # Requires that some or all of the actions on this controller require the same permissions as a specific section of the website.
+        # Note that section paths aren't currently unique so the 'first' section found will be looked at.
+        #
         # Params:
         #   path - Should match the 'path' attribute for a given section.
         #   options - Hash of options that will be passed to the before_filter call. See before_filter for valid options.
@@ -51,10 +54,6 @@ module Cms
           @section_path = path
           before_filter :check_access_to_section, options
         end
-
-#        def requires_permission()
-#
-#        end
 
         def in_section
           @section_path

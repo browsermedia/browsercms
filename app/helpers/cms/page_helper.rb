@@ -34,8 +34,27 @@ module Cms
     def cms_toolbar
       instance_variable_get("@content_for_layout")
     end
-    
+
+
+    # Renders breadcrumbs based on the current_page. This will generate an unordered list representing the
+    # current page and all it's ancestors including the root name of of the site. The UL can be styled via CSS for
+    # layout purposes. Each breadcrumb except the last will be linked to the page in question.
+    #
+    # If the current_page is nil, it will return an empty string.
+    #
+    # ==== Params:
+    #   options = A hash of options which determine how the breadcrumbs will be laid out.
+    #
+    # ==== Options:
+    # * <tt>:from_top</tt> - How many below levels from the root the tree should start at.
+    #   All sections at this level will be shown.  The default is 0, which means show all
+    #   nodes that are direct children of the root.
+    # * <tt>:show_parent</tt> - Determines if the name of the page itself show be shown as a breadcrumb link. Defaults to false, meaning
+    #   that the parent section of the current page will be the 'last' breadcrumb link. (Note: This probably better renamed as 'show_page').
+    #
     def render_breadcrumbs(options={})
+      return "" unless current_page
+
       start = options[:from_top] || 0
       show_parent = options[:show_parent].nil? ? false : options[:show_parent]
       ancestors = current_page.ancestors
