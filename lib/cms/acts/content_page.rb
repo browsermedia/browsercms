@@ -2,8 +2,11 @@
 # Can be included into Controllers in your project to allow them to act as though they are CMS pages.
 # This means they can be:
 #
-#   1. Marked as being in a particular section, which will make them use the same security rules as that section.
+#   1. Marked as having requiring permission as though they were in a particular section.
 #   2. Handle errors thrown from within the methods in the same way that CMS Pages do.
+#   3. Use CMS page templates as layouts (like TemplateSupport)
+#
+# This is intend to replace and deprecate TemplateSupport (which will be supported for a while for backwards compatibility)
 #
 # Minor Issue:
 #   Error handling for Page not found behaves slightly differently than ContentController currently. If the user is logged
@@ -25,6 +28,7 @@ module Cms
         base.helper Cms::MenuHelper
       end
 
+      # Before filter that determines if the current user can access a specific section.
       def check_access_to_section
         user = current_user
         logger.warn "Checking that current_user '#{user.login}' has access to view section with path '#{self.class.in_section}'."

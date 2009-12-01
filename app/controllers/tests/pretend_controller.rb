@@ -27,6 +27,6 @@ class Tests::PretendController < ApplicationController
   end
 
   def open_with_layout
-    render :text=>"hello", :layout=>"templates/subpage"
+    render :layout=>"templates/subpage"
   end
 end
