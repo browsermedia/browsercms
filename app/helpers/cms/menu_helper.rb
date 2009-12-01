@@ -27,8 +27,9 @@ module Cms
     #   rendered page, where @page isn't set.
     #
     def render_menu(options = {})
-      options[:items] ||= menu_items
+      options[:items] ||= menu_items(options)
       return "" unless options[:items]
+
       options[:partial] ||= "cms/menus/menu"
       options[:id] ||= "menu"
       options[:class] ||= "menu"

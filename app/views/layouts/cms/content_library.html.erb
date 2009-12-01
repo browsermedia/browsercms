@@ -59,7 +59,7 @@
                       <% else %>
                         <%= link_to h(g.name), cms_index_path_for(g.content_types.first) %>
                         <ul>
-                          <% g.content_types(:order => 'priority, name').each do |t| %>
+                          <% g.content_types.find(:all, :order => 'priority, name').each do |t| %>
                             <li<%= ' class="on"' if content_type.is_child_of?(t) %>><%= link_to h(t.display_name), cms_index_path_for(t) %></li>
                           <% end -%>
                         </ul>

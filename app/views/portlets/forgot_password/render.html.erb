@@ -1,0 +1,14 @@
+<% if flash_scope = flash[:forgot_password] -%>
+  <% if flash_scope[:error] -%>
+    <span class="forgot-password-error"><%= flash_scope[:error] %></span>
+  <% end -%>
+  <% if flash_scope[:notice] -%>
+    <span class="forgot-password-notice"><%= flash_scope[:notice] %></span>
+  <% end -%>
+<% end -%>
+
+<% form_tag do %>
+  <label for="email">Your account email address:</label>
+  <%= text_field_tag "email" %><br>
+  <%= submit_tag "Request reset password token"%>
+<% end %>
