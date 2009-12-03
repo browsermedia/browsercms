@@ -2,5 +2,4 @@
 <% for attribute in attributes -%>
 <%%= f.cms_text_field :<%= attribute.name %> %>
 <% end -%>
-<%%= f.cms_drop_down :handler, ActionView::Template.template_handler_extensions, :default => "erb" %>
-<%%= f.cms_text_area :template, :default_value => @block.class.default_template %>
+<%%= f.cms_template_editor :template %>
