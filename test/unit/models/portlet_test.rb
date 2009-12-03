@@ -18,4 +18,9 @@ class PortletTest < ActiveSupport::TestCase
 
     assert_equal list.size, Portlet.types.size
   end
+
+  test "render_inline" do
+        
+  end
+
 end

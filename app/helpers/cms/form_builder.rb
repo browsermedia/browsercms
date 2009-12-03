@@ -1,3 +1,6 @@
+#
+# Adds additional form fields to the Rails FormBuilder which can be used to create CMS forms.
+#
 class Cms::FormBuilder < ActionView::Helpers::FormBuilder
   
   # These are the new fields we are adding
@@ -5,14 +8,6 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
   # A JavaScript/CSS styled select
   def drop_down(method, choices, options = {}, html_options = {})
     @template.drop_down(@object_name, method, choices, objectify_options(options), add_tabindex!(@default_options.merge(html_options)))
-  end
-
-  def text_editor(method, options = {})
-    @template.send(
-      "text_editor",
-      @object_name,
-      method,
-      objectify_options(options))
   end
 
   def date_picker(method, options={})
@@ -59,6 +54,19 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
       :options => options, :cms_options => cms_options
   end
 
+  #
+  # Renders a WYWIWYG editor without the 'type' selector. Should probably depracted in favor of
+  # cms_text_editor.
+  #
+  def text_editor(method, options = {})
+    @template.send(
+      "text_editor",
+      @object_name,
+      method,
+      objectify_options(options))
+  end
+
+  # Renders a WYWIWYG editor with the 'type' selector. 
   def cms_text_editor(method, options = {})
     add_tabindex!(options)
     set_default_value!(method, options)    
@@ -70,8 +78,23 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
       :options => options, :cms_options => cms_options
   end
 
-  private
+  #
+  # Renders a template editor that allows developers to edit the view used to render a specific block. Render both
+  # a 'Handler' select box (erb, builder, etc) and a text_area for editing.
+  #
+  # For example, Portlets will often specify a :template to allow runtime update of their view.
+  #
+  def cms_template_editor(method, options={})
+    render_cms_form_partial :template_editor, :method=>method, :options => options
+  end
 
+
+  private
+    # Returns the underlying model object that this form is for.
+    def form_object
+      @template.instance_variable_get("@#{@object_name}")
+    end
+  
     def set_default_value!(method, options={})
       if options.has_key?(:default_value) && @object.send(method).blank?
         @object.send("#{method}=", options[:default_value])
