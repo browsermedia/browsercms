@@ -93,6 +93,13 @@ class Portlet < ActiveRecord::Base
     define_method(:handler) { handler_type }
   end
 
+  # Determines if the template editor in the CMS UI will be enabled when creating or editing instances of this portlet
+  # If enabled, the portlet will use the template code stored in the database. If not, it will render from the render.html.erb
+  # file created.
+  def self.enable_template_editing(allowed)
+    render_inline allowed
+  end
+
   def self.render_inline(*args)
     if args.length > 0
       @render_inline = args.first

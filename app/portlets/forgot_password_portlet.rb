@@ -1,6 +1,7 @@
 class ForgotPasswordPortlet < Portlet
   require 'digest/sha1'  
 
+  
   def render
     flash[:forgot_password] = {}
 
