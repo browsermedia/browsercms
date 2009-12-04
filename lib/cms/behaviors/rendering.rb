@@ -22,7 +22,6 @@ module Cms
     # format and template engine options as regular views, to the file name should
     # be render.html.erb.
     #
-    # One gotcha to be aware of with this behavior
     module Rendering
       def self.included(model)
         model.extend(MacroMethods)

@@ -8,12 +8,12 @@ end
 class InlinePortlet < Portlet
 end
 
-class EditablePortlet < Portlet
-  enable_template_editing false
+class NonEditablePortlet < Portlet
+  enable_template_editor false
 end
 
-class NonEditablePortlet < Portlet
-  enable_template_editing true
+class EditablePortlet < Portlet
+  enable_template_editor true
 end
 
 
@@ -46,8 +46,24 @@ class PortletTest < ActiveSupport::TestCase
   end
 
   test "allow_template_editing" do
-    assert_equal false, EditablePortlet.render_inline
+    assert_equal true, EditablePortlet.render_inline
 
-    assert_equal true, NonEditablePortlet.render_inline
+    assert_equal false, NonEditablePortlet.render_inline
+  end
+
+  test "If render_inline is true, should return the value of 'template'" do
+    p = EditablePortlet.new
+    p.template = "<b>CODE HERE</b>"
+
+    assert_equal p.template, p.inline_options[:inline]
+  end
+  test "If render_inline is true, but template is blank, don't render inline" do
+    p = EditablePortlet.new
+
+    p.template = nil
+    assert_equal({}, p.inline_options)
+
+    p.template = ""
+    assert_equal({}, p.inline_options)
   end
 end

@@ -84,7 +84,7 @@ class Portlet < ActiveRecord::Base
 
   def inline_options
     options = {}
-    options[:inline] = self.template if self.class.render_inline 
+    options[:inline] = self.template if self.class.render_inline && !(self.template.nil? || self.template.empty?)
     options[:type] = self.handler unless self.handler.blank?
     options
   end
@@ -96,8 +96,8 @@ class Portlet < ActiveRecord::Base
   # Determines if the template editor in the CMS UI will be enabled when creating or editing instances of this portlet
   # If enabled, the portlet will use the template code stored in the database. If not, it will render from the render.html.erb
   # file created.
-  def self.enable_template_editing(allowed)
-    render_inline allowed
+  def self.enable_template_editor (enabled)
+    render_inline enabled
   end
 
   def self.render_inline(*args)
