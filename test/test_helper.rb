@@ -159,3 +159,17 @@ module Cms::ControllerTestHelper
     output.instance_variable_get("@contents")
   end
 end
+
+module Cms::IntegrationTestHelper
+  def login_as(user, password = "password")
+    get cms_login_url
+    assert_response :success
+    post cms_login_url, :login => user.login, :password => password
+    assert_response :redirect
+    assert flash[:notice]
+  end
+
+  def login_as_cms_admin
+    login_as(User.first, "cmsadmin")
+  end
+end

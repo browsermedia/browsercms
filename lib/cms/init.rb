@@ -93,7 +93,7 @@ ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(
 Cms.add_generator_paths(Cms.root, 
   "public/javascripts/jquery*",
   "public/javascripts/cms/**/*",
-  "public/fckeditor/**/*",
+  "public/bcms/ckeditor/**/*",
   "public/site/**/*",   
   "public/stylesheets/cms/**/*",
   "public/images/cms/**/*",
