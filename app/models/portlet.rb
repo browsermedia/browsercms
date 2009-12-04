@@ -82,9 +82,11 @@ class Portlet < ActiveRecord::Base
     @default_template_path ||= "portlets/#{name.tableize.sub('_portlets','')}/render"
   end
 
+  # Called by 'render' to determine if this portlet should render itself using a file (render.html.erb) or using
+  # its 'template' attribute.
   def inline_options
     options = {}
-    options[:inline] = self.template if self.class.render_inline && !(self.template.nil? || self.template.empty?)
+    options[:inline] = self.template if self.class.render_inline && !(self.template.nil? || self.template.blank?)
     options[:type] = self.handler unless self.handler.blank?
     options
   end
