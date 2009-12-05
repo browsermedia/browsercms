@@ -3,8 +3,6 @@ require File.join(File.dirname(__FILE__), '../../test_helper')
 silence_warnings do
 
   class Block < Struct.new(:id, :name)
-#      include Cms::Acts::ContentBlock
-#      acts_as_content_block
   end
 end
 

@@ -1,2 +1,4 @@
-<%= f.cms_drop_down "#{method}_handler", ActionView::Template.template_handler_extensions, :default_value => "erb" %>
+<% options[:default_handler] = "erb" unless options[:default_handler] %>
+
+<%= f.cms_drop_down "#{method}_handler", ActionView::Template.template_handler_extensions, :default_value => options[:default_handler] %>
 <%= f.cms_text_area method, :default_value => @block.class.default_template, :instructions=>options[:instructions] %>

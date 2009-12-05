@@ -85,20 +85,21 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
   # how the model displays.
   #
   # For example, Portlets will often specify a :template to allow runtime update of their view.
+  #
+  # Options:
+  #   :default_handler - The handler that will be set for new instances. Defaults to erb
+  #   :instructions   
   #                                                                               
   def cms_template_editor(method, options={})
     if object.class.render_inline
+      logger.warn ":default =#{options[:default_handler]}" 
       render_cms_form_partial :template_editor, :method=>method, :options => options
     end
   end
 
 
   private
-  # Returns the underlying model object that this form is for.
-  def form_object
-    @template.instance_variable_get("@#{@object_name}")
-  end
-
+  
   def set_default_value!(method, options={})
     if options.has_key?(:default_value) && @object.send(method).blank?
       @object.send("#{method}=", options[:default_value])
