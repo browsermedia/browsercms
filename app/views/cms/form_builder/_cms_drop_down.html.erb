@@ -1,10 +1,3 @@
-<% content_for :html_head do %>
-  <% javascript_tag do %>
-    jQuery(function($) {
-      $('#<%= object_name %>_<%= method %>').selectbox({width: '455px'});
-    })
-  <% end %>
-<% end %>
 <div class="fields select_fields">
   <% if cms_options[:label] %>
     <%= f.label method, cms_options[:label] %>

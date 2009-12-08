@@ -1,4 +1,16 @@
 <% options[:default_handler] = "erb" unless options[:default_handler] %>
-
-<%= f.cms_drop_down "#{method}_handler", ActionView::Template.template_handler_extensions, :default_value => options[:default_handler] %>
-<%= f.cms_text_area method, :default_value => @block.class.default_template, :instructions=>options[:instructions] %>
+<div class="fields text_editor_fields">
+  <% if cms_options[:label] %>
+    <%= f.label method, cms_options[:label] %>
+  <% else %>
+    <%= f.label method %>
+  <% end %>
+  <%= f.drop_down "#{method}_handler", ActionView::Template.template_handler_extensions, :default_value => options[:default_handler] %>
+  <div class="template_editor">
+    <%= f.text_area method %>
+  </div>
+  <% if cms_options[:instructions] %>
+    <div class="instructions"><%=h cms_options[:instructions] %></div>
+    <br clear="all"/>
+  <% end %>
+</div>

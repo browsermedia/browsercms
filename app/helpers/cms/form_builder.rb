@@ -3,11 +3,26 @@
 #
 class Cms::FormBuilder < ActionView::Helpers::FormBuilder
 
-  # These are the new fields we are adding
 
-  # A JavaScript/CSS styled select
+  # Renders a CMS styled JavaScript/CSS styled select box, by itself with no label or other markup besides the js.
+  #
+  # Options:
+  #   * All standard select tag options plus:
+  #   * :default_value - The default item to have selected (defaults to the value of the underlying model)
+  #   * :width - The width for the select (defaults to 455px).
+  #
   def drop_down(method, choices, options = {}, html_options = {})
-    @template.drop_down(@object_name, method, choices, objectify_options(options), add_tabindex!(@default_options.merge(html_options)))
+    select_class = "#{@object_name}_#{method}"
+    h_opts = add_tabindex!(@default_options.merge(html_options))
+    h_opts[:class] = select_class
+
+    opts = objectify_options(options)
+    set_default_value!(method, options)
+    cms_options = options.extract!(:default_value, :width)
+    render_cms_form_partial :fancy_drop_down,
+                            :object_name => @object_name, :method => method,
+                            :choices => choices, :options => opts,
+                            :cms_options => cms_options, :html_options => h_opts
   end
 
   def date_picker(method, options={})
@@ -55,8 +70,7 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
   end
 
   #
-  # Renders a WYWIWYG editor without the 'type' selector. Should probably depracted in favor of
-  # cms_text_editor.
+  # Renders a WYWIWYG editor without the 'type' selector.
   #
   def text_editor(method, options = {})
     @template.send(
@@ -92,8 +106,10 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
   #                                                                               
   def cms_template_editor(method, options={})
     if object.class.render_inline
-      logger.warn ":default =#{options[:default_handler]}" 
-      render_cms_form_partial :template_editor, :method=>method, :options => options
+#      set_default_value!(method, options)
+      @object.send("#{method}=", @object.class.default_template)
+      cms_options = options.extract!( :width, :label, :instructions)
+      render_cms_form_partial :template_editor, :method=>method, :options => options, :cms_options=>cms_options
     end
   end
 

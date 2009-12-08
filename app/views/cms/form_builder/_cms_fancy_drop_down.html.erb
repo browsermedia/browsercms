@@ -1,0 +1,9 @@
+<% cms_options[:width] = "455px" unless cms_options[:width]%>
+<% content_for :html_head do %>
+  <% javascript_tag do %>
+    jQuery(function($) {
+      $('select.<%= object_name %>_<%= method %>').selectbox({width: '<%= cms_options[:width]%>'});
+    })
+  <% end -%>
+<% end -%>
+<%= f.select method, choices, options, html_options %>
