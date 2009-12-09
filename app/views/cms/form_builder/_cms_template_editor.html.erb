@@ -5,7 +5,7 @@
   <% else %>
     <%= f.label method %>
   <% end %>
-  <%= f.drop_down "#{method}_handler", ActionView::Template.template_handler_extensions, :default_value => options[:default_handler] %>
+  <%= f.drop_down "#{method}_handler", ActionView::Template.template_handler_extensions, :default_value => options[:default_handler], :width=>"96px" %>
   <div class="template_editor">
     <%= f.text_area method %>
   </div>
