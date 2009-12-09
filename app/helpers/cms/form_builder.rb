@@ -92,6 +92,16 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
                             :options => options, :cms_options => cms_options
   end
 
+  # Renders instructions for a given field below the field itself. Instructions can be used to provide helpful
+  # guidance to content editors including formatting help or just explaining what a field is for.
+  #
+  # Will not render if instructions are blank/nil.
+  #
+  # * instructions - The text of the instructions to show (Defaults to blank)
+  def cms_instructions(instructions)
+    render_cms_form_partial :instructions, :instructions=>instructions
+  end
+
   #
   # Renders a template editor that allows developers to edit the view used to render a specific block. Render both
   # a 'Handler' select box (erb, builder, etc) and a text_area for editing. Will not display the editor if the underlying

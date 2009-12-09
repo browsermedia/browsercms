@@ -1,15 +1,8 @@
 <div class="fields text_editor_fields">
-  <% if cms_options[:label] %>
-    <%= f.label method, cms_options[:label] %>
-  <% else %>
-    <%= f.label method %>
-  <% end %>
+  <%= f.label method, cms_options[:label] %>
   <%= f.drop_down "#{method}_handler", ActionView::Template.template_handler_extensions, :default_value => dropdown_options[:default_handler], :width=>"96px" %>
   <div class="template_editor">
     <%= f.text_area method, options %>
   </div>
-  <% if cms_options[:instructions] %>
-    <div class="instructions"><%=h cms_options[:instructions] %></div>
-    <br clear="all"/>
-  <% end %>
+  <%= f.cms_instructions cms_options[:instructions] %>
 </div>
