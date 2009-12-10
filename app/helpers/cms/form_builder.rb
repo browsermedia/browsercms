@@ -102,6 +102,22 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
     render_cms_form_partial :instructions, :instructions=>instructions
   end
 
+  # Renders a label and checkbox suitable for allow editors to update a boolean field.
+  #
+  # Params:
+  #   * method - The name of the field this check_box will update.
+  #   * options - Hash of values including:
+  #       - :label
+  #       - :instructions
+  #       - :default_value
+  #       - Any other standard FormBuilder.check_box options that will be passed directly to the check_box method.
+  def cms_check_box(method, options={})
+    add_tabindex!(options)
+    set_default_value!(method, options)
+    cms_options = options.extract!(:label, :instructions, :default_value)
+    render_cms_form_partial "check_box", :method=>method, :options => options, :cms_options => cms_options
+  end
+
   #
   # Renders a template editor that allows developers to edit the view used to render a specific block. Render both
   # a 'Handler' select box (erb, builder, etc) and a text_area for editing. Will not display the editor if the underlying
@@ -130,7 +146,7 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
 
 
   private
-  
+
   def set_default_value!(method, options={})
     if options.has_key?(:default_value) && @object.send(method).blank?
       @object.send("#{method}=", options[:default_value])
