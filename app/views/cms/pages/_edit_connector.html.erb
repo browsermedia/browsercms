@@ -1,4 +1,4 @@
-<div class="cms_edit_connectable" style="display: block; height: auto; position: relative; border: 1px solid #999; margin: 1px -6px 0 -6px; padding: 25px 5px 0 5px;  background: url(/images/cms/containers/beta.png) repeat-x 0 0;">
+<div id="connector_<%= connector.id %>" class="cms_edit_connectable" style="display: block; height: auto; position: relative; border: 1px solid #999; margin: 1px -6px 0 -6px; padding: 25px 5px 0 5px;  background: url(/images/cms/containers/beta.png) repeat-x 0 0;">
   <div style="display: block; width: 100%; position: absolute; top: 5px; left: 5px; height: 30px;">
     <%= link_to image_tag("cms/pages/show_connectable.gif", :style => "text-decoration: none; padding: 0; background: none; margin: 0; float: none; border: none;"), cms_connectable_path(connectable), :title => "View this content (#{connectable.name})" , :style => "text-decoration: none; padding: 0 2px 0 0; background: none; margin: 0; float: none; border: none;"%>
     <%= link_to image_tag("cms/pages/edit_connectable.gif", :style => "text-decoration: none; padding: 0; background: none; margin: 0; float: none; border: none;"), edit_cms_connectable_path(connectable, :_redirect_to => @page.path), :title => "Edit this content (#{connectable.name})" , :style => "text-decoration: none; padding: 0 2px 0 0; background: none; margin: 0; float: none; border: none;"%>
@@ -17,3 +17,5 @@
   </div>
     <%= render_connectable connectable %>
 </div>
+<% require_javascript_include ['jquery', 'cms/application'] %>
+
