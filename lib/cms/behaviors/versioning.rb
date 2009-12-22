@@ -77,11 +77,9 @@ module Cms
           # First get the values from the draft
           attrs = draft_attributes
 
-          # Now overwrite any changed values      
-          self.class.versioned_columns.each do |col|
-            if(send("#{col}_changed?"))
-              attrs[col] = send(col)
-            end
+          # Now overwrite all values
+          (self.class.versioned_columns - %w(version)).each do |col|
+            attrs[col] = send(col)
           end
 
           attrs[:version_comment] = @version_comment || default_version_comment
@@ -112,7 +110,7 @@ module Cms
             #logger.info "..... Calling valid?"
             return false unless !perform_validations || valid?            
             
-            if changed?
+            if different_from_last_draft?
               #logger.info "..... Changes => #{changes.inspect}"
             else
               #logger.info "..... No Changes"
@@ -256,6 +254,16 @@ module Cms
         def version_comment=(version_comment)
           @version_comment = version_comment
           send(:changed_attributes)["version_comment"] = @version_comment
+        end
+
+        def different_from_last_draft?
+          return true if self.changed?
+          last_draft = self.draft
+          return true unless last_draft
+          (self.class.versioned_columns - %w(version)).each do |col|
+            return true if self.send(col) != last_draft.send(col)
+          end
+          return false
         end
 
       end
