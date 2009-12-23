@@ -53,8 +53,8 @@ class AttachmentTest < ActiveSupport::TestCase
     # log_table_with Attachment, :id, :name, :version, :file_path
     # log_table_with Attachment::Version, :id, :name, :version, :file_path, :attachment_id
     assert_equal 3, attachment.draft.version 
-    assert_equal "/bar.txt", attachment.as_of_draft_version.file_path
-    assert_equal "bar.txt", attachment.as_of_draft_version.file_name
+    assert_equal "/foo.txt", attachment.as_of_draft_version.file_path
+    assert_equal "foo.txt", attachment.as_of_draft_version.file_name
     assert_not_equal original_file_location, attachment.as_of_draft_version.file_location
     assert_equal "This is a new file", open(attachment.as_of_draft_version.full_file_location){|f| f.read}  
   end

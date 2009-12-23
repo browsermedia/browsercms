@@ -27,3 +27,54 @@ class Cms::ApplicationHelperTest < ActionView::TestCase
   end
   
 end
+
+class ApplicationHelperTest < ActionView::TestCase
+  # returns content supplied to this method for testing
+  def content_for(name, content = nil, &block)
+    return name, content
+  end
+  def test_require_stylesheet_link_renders_to_correct_area
+    stylesheet = 'site'
+    stylesheet2 = 'site2'
+    # default = :html_head
+    assert_equal :html_head, require_stylesheet_link(stylesheet)[0]
+    assert_equal :other_place, require_stylesheet_link(stylesheet2, :other_place)[0]
+  end
+
+  def test_require_stylesheet_link_renders_link_tag
+    stylesheet = 'site'
+    assert_equal stylesheet_link_tag(stylesheet), require_stylesheet_link(stylesheet)[1]
+  end
+  def test_require_stylesheet_link_renders_link_tags
+    stylesheet = ['site','site2']
+    assert_equal stylesheet_link_tag(stylesheet), require_stylesheet_link(stylesheet)[1]
+  end
+  def test_require_stylesheet_link_does_not_re_render_tag
+    stylesheet = 'site'
+    stylesheet2 = ['site','site2']
+    require_stylesheet_link(stylesheet)
+    assert_equal stylesheet_link_tag('site2'), require_stylesheet_link(stylesheet2)[1]    
+  end
+  def test_require_javascript_include_renders_to_correct_area
+    js = 'site'
+    js2 = 'site2'
+    # default = :html_head
+    assert_equal :html_head, require_javascript_include(js)[0]
+    assert_equal :other_place, require_javascript_include(js2, :other_place)[0]
+  end
+
+  def test_require_javascript_include_renders_link_tag
+    js = 'site'
+    assert_equal javascript_include_tag(js), require_javascript_include(js)[1]
+  end
+  def test_require_javascript_include_renders_link_tags
+    js = ['site','site2']
+    assert_equal javascript_include_tag(js), require_javascript_include(js)[1]
+  end
+  def test_require_javascript_include_does_not_re_render_tag
+    js = 'site'
+    js2 = ['site','site2']
+    require_javascript_include(js)
+    assert_equal javascript_include_tag('site2'), require_javascript_include(js2)[1]    
+  end
+end

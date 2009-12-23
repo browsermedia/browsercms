@@ -10,7 +10,6 @@ class ContentBlockTest < ActiveSupport::TestCase
     assert !@block.published?
 
     @block.publish
-
     assert @block.published?
 
     @block.publish_on_save = true
@@ -69,6 +68,45 @@ class ContentBlockTest < ActiveSupport::TestCase
     assert HtmlBlock.find_with_deleted(@block.id).deleted?
   end
   
+end
+
+class VersionedContentBlock < ActiveSupport::TestCase
+  def setup
+    @block = Factory(:html_block, :name => "Versioned Content Block")
+  end  
+
+  def test_edit
+    old_name = "Versioned Content Block"
+    new_name  = "New version of content block"
+    @block.publish!
+    @block.reload
+    assert_equal @block.draft.name, old_name
+    @block.name = new_name
+    @block.save
+    @block.reload
+    assert_equal @block.draft.name, new_name
+    @block.name = old_name
+    @block.save
+    @block.reload
+    assert_equal @block.draft.name, old_name    
+  end
+
+  def test_revert
+    old_name = "Versioned Content Block"
+    new_name  = "New version of content block"
+    @block.publish!
+    @block.reload
+    assert_equal @block.draft.name, old_name
+    version = @block.version
+    @block.name = new_name
+    @block.save
+    @block.reload
+    assert_equal @block.draft.name, new_name
+    @block.revert_to(version)
+    @block.reload
+    assert_equal @block.draft.name, old_name
+  end
+
 end
 
 class VersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
@@ -137,8 +175,7 @@ class NonVersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
   def test_editing_connected_to_an_unpublished_page
     page_version_count = Page::Version.count
 
-    assert_equal "Dynamic Portlet 'Non-Versioned Content Block' was added to the 'main' container",
-      @page.draft.version_comment
+    assert_equal "Dynamic Portlet 'Non-Versioned Content Block' was added to the 'main' container", @page.draft.version_comment
     assert !@page.published?
 
     assert @block.update_attributes(:name => "something different", :publish_on_save => true)
