@@ -26,7 +26,11 @@ module Cms
       ActionController::Base.append_view_path DynamicView.base_path
       ActionView::Base.default_form_builder = Cms::FormBuilder
       
-      # This is jsut to be safe
+      # ActiveRecord JDBC adapter depends on no database connection having
+      # been established to work properly.
+      require 'jdbc_adapter' if defined?(JRUBY_VERSION)
+      
+      # This is just to be safe
       # dynamic views are stored in a tmp dir
       # so they could be blown away on a server restart or something
       # so this just makes sure they get written out
