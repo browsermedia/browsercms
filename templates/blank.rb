@@ -7,10 +7,7 @@ end
 
 gem "browsercms"
 
-if defined?(JRUBY_VERSION)
-  gem "activerecord-jdbc-adapter", :version => ">= 0.9.2"
-  generate :jdbc
-end
+generate :jdbc if defined?(JRUBY_VERSION)
 
 if Gem.win_platform?
   puts "        rake  db:create"
