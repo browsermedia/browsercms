@@ -7,7 +7,7 @@ end
 
 gem "browsercms"
 
-run "jruby script/generate jdbc" if defined?(JRUBY_VERSION)
+generate :jdbc if defined?(JRUBY_VERSION)
 
 if Gem.win_platform?
   puts "        rake  db:create"
@@ -16,13 +16,13 @@ else
   rake "db:create"
 end
 route "map.routes_for_browser_cms"
-run "jruby script/generate browser_cms"
+generate :browser_cms
 environment 'SITE_DOMAIN="localhost:3000"', :env => "development"
 environment 'SITE_DOMAIN="localhost:3000"', :env => "test"
 environment 'SITE_DOMAIN="localhost:3000"', :env => "production"
 environment 'config.action_view.cache_template_loading = false', :env => "production"
 environment 'config.action_controller.page_cache_directory = RAILS_ROOT + "/public/cache/"', :env => "production"
-run "jruby script/generate browser_cms_demo_site"
+generate :browser_cms_demo_site
 if Gem.win_platform?
   puts "        rake  db:migrate"
   `rake.cmd db:migrate`
