@@ -5,7 +5,7 @@ class Tag < ActiveRecord::Base
   validates_uniqueness_of :name
   
   attr_accessor :size
-  
+  is_searchable  
   named_scope :named, lambda{|tag| {:conditions => ["tags.name = ? ", tag]} }
   
   # Returns an array of tags with a count attribute

@@ -2,7 +2,7 @@ class Cms::PortletsController < Cms::ContentBlockController
   
   protected
     def load_blocks
-      @blocks = Portlet.paginate(
+      @blocks = Portlet.search(params[:search]).paginate(
         :page => params[:page],
         :order => params[:order] || "name",
         :conditions => ["deleted = ?", false]
