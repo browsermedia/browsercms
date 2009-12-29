@@ -26,9 +26,6 @@ class Cms::ApplicationHelperTest < ActionView::TestCase
     assert_equal "bar", determine_order("foo", "bar")
   end
   
-end
-
-class ApplicationHelperTest < ActionView::TestCase
   # returns content supplied to this method for testing
   def content_for(name, content = nil, &block)
     return name, content
