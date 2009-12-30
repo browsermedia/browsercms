@@ -18,4 +18,10 @@
     <%= render_connectable connectable %>
 </div>
 <% require_javascript_include ['jquery', 'cms/application'] %>
-
+<% content_for :html_head do %>
+    <% if protect_against_forgery? && @authenticity_token_loaded.nil? %><script type="text/javascript">
+      jQuery(function($){
+        $.cms.authenticity_token = '<%= form_authenticity_token %>'
+      })
+    </script><% end %><% @authenticity_token_loaded = true %>
+<% end %>
