@@ -14,11 +14,12 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "browsercms"
     gem.summary = %Q{BrowserCMS is a general purpose, open source Web Content Management System (CMS), written in Ruby on Rails.}
+    gem.description = %Q{Web Content Management in Rails.}
     gem.email = "github@browsermedia.com"
     gem.homepage = "http://www.browsercms.org"
     gem.authors = ["BrowserMedia"]
     gem.rubyforge_project = 'browsercms' # This line would be new
-
+    gem.executables = ['browsercms']
     gem.files = Dir["rails/*.rb"]
     gem.files += Dir["browsercms.gemspec"]
     gem.files += Dir["doc/app/**/*"]
@@ -56,3 +57,4 @@ begin
 rescue LoadError
   puts "Rake SshDirPublisher is unavailable or your rubyforge environment is not configured."
 end
+

@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+require File.join(File.dirname(__FILE__), "..", 'lib/command_line')
+
+# Replace short hand versions of the templates with the absolute path on the local machine.
+CommandLine.set_template(ARGV)
+
+command = "rails #{ARGV.join(" ")}"
+puts "Running #{command}"
+
+system(command)
+
+puts "\nCreated new BrowserCMS project '#{ARGV[0]}'."

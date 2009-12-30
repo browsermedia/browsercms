@@ -35,5 +35,11 @@ namespace :cms do
     CmsGuides::Generator.new.generate
 
   end    
-    
+
+  desc "Rebuild the browsercms gem locally and install it, Useful for testing releases."
+  task :gem => ["gemspec", :build, :install]
+
+  task :install do
+    sh("sudo gem install pkg/browsercms-3.1.0")      
+  end
 end
