@@ -1,0 +1,141 @@
+Here is a series of tasks to test the basic interface functionality of the CMS.
+
+Note: It is best to build the cms gem and install it, then test the functionality in a rails app that has been configured to use the new gem.
+
+Sitemap:
+  Add Section
+  Add Page
+  Test Edit Page Link
+  Add Link
+  Edit Section Properties
+  Edit Page Properties
+  Edit Link Properties
+  Publish Link
+  Move Link
+  Move Page
+  Move Section
+  Delete Link
+  Delete Page
+  Delete Section
+
+Content Library:
+  Add Image
+  Edit Image Metadata
+  Edit Image File
+  Revert Image to different metadata
+  Revert Image to different file
+  Search Image
+  Add Text
+  Edit Text
+  Add Link to Text
+  Add Image to Text
+  Revert Text
+  Bulk add Text
+  Paginated Search links
+  Delete Text
+  Delete Image
+  Add Portlet
+  Edit Portlet
+  Search Portlet
+  Delete Portlet
+  Add File
+  Edit File Metadata
+  Edit File File
+  Revert File to metadata
+  Revert File to different file
+  Search File
+  Delete File
+  Add Category Type
+  Edit Category Type
+  Search Category Type
+  Add Category
+  Edit Category
+  Search Category
+  Delete Category
+  Delete Category Type
+  Add Tag
+  Edit Tag
+  Search Tag
+  Delete Tag
+
+Administration:
+  Add Public User Group
+  Add Admin Group
+  Edit Public User Group
+  Edit Admin Group
+  Add User
+  Edit User
+  Search User
+  Disable User
+  Search inactive User
+  Enable User
+  Login as User
+  Change User Password
+  Login as User
+  Add Page Partial
+  Edit Page Partial
+  Add Page Partial
+  Delete Page Partial
+  Add Page Template
+  Edit Page Template
+  Add Page Template
+  Delete Page Template
+  Add Page Route
+  Test Page Route
+  Edit Page Route
+  Test old Page Route
+  Test new Page Route
+  Delete Page Route
+  Test old Page Route
+  Test new Page Route
+  Test Rails Route
+  Clear Page Cache
+  Add Redirect
+  Test Redirect
+  Edit Redirect
+  Test old Redirect
+  Test new Redirect
+  Delete Redirect
+  Test old Redirect
+  Test new Redirect
+
+Page:
+  Toggle Visual Editor On
+  Toggle Visual Editor Off
+  Toggle Visual Editor On
+  Add New Text to Container
+  Add Existing Text to Container
+  Move Text Up
+  Move Text Down
+  Edit Text
+  Remove Text
+  Publish
+  List Versions
+  Revert
+  Assign
+  Complete Task
+  Edit Properties
+  Add New Portlet to Container
+  Add Existing Portlet to Container
+  Move Portlet Up
+  Move Portlet Down
+  Edit Portlet
+  Remove Portlet
+  Add New File to Container
+  Add Existing File to Container
+  Move File Up
+  Move File Down
+  Edit File
+  Remove File
+  Add New Image to Container
+  Add Existing Image to Container
+  Move Image Up
+  Move Image Down
+  Edit Image
+  Remove Image
+  Delete Page
+
+Dashboard:
+  Publish page
+  Publish pages
+  Remove task
