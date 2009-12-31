@@ -124,5 +124,5 @@
 <% if params[:search] && @blocks.size == 0 %>
   <div class="pagination">No results found for '<%= params[:search][:term] %>'</div>
 <% elsif @blocks.total_pages > 1 %>
-  <%= render_pagination @blocks, content_type.content_block_type, :order => params[:order] %>
+  <%= render_pagination @blocks, content_type.content_block_type, :order => params[:order], :search => params[:search] %>
 <% end %>

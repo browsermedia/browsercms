@@ -1,0 +1,167 @@
+v3.0.5
+
+BrowserCMS 3.0.5 has been released to gemcutter. This is primarily a bug fix release, correcting some IE support issues as well as some problems with reverting. We also made some subtle changes to how JS gets loaded on page templates in the CMS admin UI. If your project had been using its own javascript (like jquery/prototype) in the page templates, you should double check to make sure its working correctly.  See item #2 below for more details.
+
+This is the first release directly to gemcutter and we will likely move to shutdown the rubyforge project since we are only it for gem hosting. Since GemCutter is now the default gem hosting environment this shouldn't really affect anybody.
+
+The highlights of what has been fixed are as follows. You can also see the original tickets in Lighthouse here: https://browsermedia.lighthouseapp.com/projects/28481-browsercms-30/milestones/57844-305
+ 
+Features/Enhancements:
+1. Javascript and Stylesheet assets may be "required" from any template or partial via helper methods.  These methods add the asset to the header only if it has not already been added via a "required" statement.  This may be useful for developer who create portlets that rely on common javascript libraries like jquery. You can add a '<%= require_javascript_include "jquery" %>' to your portlet template and be assured it will only be added to the page template once. LIGHTHOUSE #248.
+
+Bug Fixes:
+1. Fixed an issue where you couldn't revert some pages/blocks. Attributes of draft versions could not be updated (or reverted) to the same attributes as the published version of the object.  This problem affected pages and versioned content blocks.  You can now update draft attributes to any value.  The feature in which a new draft is only created if there is a change still works.  LIGHTHOUSE #225.
+2. Internet Explorer 7 could not remove blocks from page containers nor move blocks within page containers.  This problem seemed to be due to JavaScript permissions, as the iframe rendering the page toolbar could not attach the update form to the parent window.  The edit container now requires JavaScript (see the enhancement) in the actual page to build the update forms.  LIGHTHOUSE #229.
+3. Search parameters were not included with pagination links in the Content Library, so clicking the "next page" link of the searched results would lose the search filter, thus showing results the user had previously filtered out.  Search parameters are now included in the pagination links.  LIGHTHOUSE #239.
+
+==========
+
+v3.0.4
+We found an unfortunate bug in the changes we introduced to the
+"render menu" functionality in the 3.0.3 release.  We have quickly
+patched this and have released the 3.0.4 gem on RubyForge. BrowserCMS 3.0.3 is now released and available for download. 
+
+==========
+
+v3.0.3
+
+The primary goal of this release was to incorporate the many community
+patches/changes that folks have been providing over the past few
+months. A lot of developers put some hard work and smart thinking into
+these patches, so many thanks to everyone who contributed to helping
+make BrowserCMS even just a little bit better.
+
+As always,the complete list of fixes can be found in Lighthouse -
+https://browsermedia.lighthouseapp.com/projects/28481-browsercms-30/t...
+
+Release Notes:
+
+1. Section editing permissions are now enforced. A CMS User must have
+edit permission for a given section to add pages, links, or
+subsections to it, as well as to edit the pages or links in that
+section.  Only CMS Administrators may change permissions. Blocks that
+appears in multiple sections can be edited only by someone with
+permissions to edit all of the sections.  Patch supplied by Jon
+Leighton, who incorporated the work of nachokb and webficient.
+
+2. Portlets can force redirects to Access Denied and Page not found
+pages by raising AccessDenied and RecordNotFound errors.  Patch
+supplied by Jon Leighton.
+
+3. Versioning no longer breaks "update_attribute" api.  Patch supplied
+by nachokb.
+
+4. Bug fixed in which Attachment Blocks could not have attachments
+added to them if there was no attachment at creation. Patch supplied
+by Joshua Vial.
+
+5. Styles for containers improved to accommodate relative-width
+formats.  Patch supplied by djcp.
+
+6. File handling uses fileutils instead of ftools for Ruby 1.9
+compatibility.  Patch supplied by ahaller.
+
+7. Menu helper can now take an arbitrary tree of nodes.  Patch
+supplied by Jon Leighton.
+
+8. All unpublished pages publishable by the current user show up on
+the dashboard.  Patch supplied by Jon Leighton.
+
+9. If the login portlet has a success url set, this url overrides
+wherever the user was trying to get to.  Patch supplied by Luciano
+Ruete.
+
+10. Bug fixed in which the routes in vendored gems overrode routes in
+config.  Patch supplied by Jon Leighton.
+
+11. Regular expression for email validation improved.  Patch supplied
+by Joshua Vial.
+
+12. Username in navigation now a link to view your account for non-
+administrators.  Also added the ability to change your password.
+Patch supplied by Jon Leighton.
+
+13. Double-clicking a content item in the Content Library now takes
+you to the edit (or view, if you are not allowed to edit) page.
+
+14. Method added to Group to check if guest.
+
+15. Added PSDs for some administrative buttons for use by those
+working to improve the UI.
+
+16. Deprecated cms:install rake task removed. 
+
+
+==========
+
+v3.0.2
+
+We just released the 3.0.2 release through rubyforge, and it includes
+a few small fixes.
+Daniel Collis-Puro supplied a patch for the cms_text_field
+instructions float problem.
+Content blocks ending with 'ss' were causing problems, and now they
+don't.
+You can add columns to both the block and version table with one line
+in migrations now. 
+
+For further info on what was changed, refer to this URL.
+https://browsermedia.lighthouseapp.com/projects/28481-browsercms-30/t...
+. It's pretty short list, but the instructions bug was quite
+bothersome. We also have set up a Wiki for the project (on Github),
+which can be found here: http://wiki.github.com/browsermedia/browsercms
+.
+
+The next release will be 3.0.3 and we are going to focus on rolling in
+most of the community patches which folks have been sending pull
+requests for, that we just haven't have a chance to get included. 
+
+==========
+
+v3.0.1
+
+I have just released 3.0.1 as a gem to ruby forge. This is mostly a  
+bug fix release, with a few notable issues I will mention in this  
+email. For a complete list of all the tickets fixed, see Lighthouse (https://browsermedia.lighthouseapp.com/projects/28481-browsercms-30/t...
+)
+
+h1. Release Notes
+Here are some tickets fixed which might be of interest, along with the  
+corresponding LH ticket #.
+
+* #116 - Changed guide format to Textile: This should be more inline  
+with how Rails guides works, which should make it easier for users to  
+contribute to the documentation.
+* #67 - render_menu can now cap how many nav items to show: This  
+should help with menus that have a fixed amount of space (like  
+horizontal nav), where you want at most X number of items to show, and  
+you don't want to accidentally break your nav when adding an item to  
+the sitemap.
+* #66 - render_menu can now dynamically render nav items from specific  
+sections: This helps with making 'utility' nav, where you might want  
+items from a specific section to be consistent on all templates (for  
+example, your 'contact us'/Sitemap/Directions to our office pages can  
+be in a specific section).
+* #121 - Sample modules are released as gems: All the modules (except  
+google_mini) found here https://github.com/browsermedia can now be  
+installed as gems from rubyforge (i.e. gem install bcms_news)
+* #51 - Portlets can be configured to render views from the file  
+system: Portlets by default use store the view in the database, so  
+they can be editted through the UI at runtime. This option lets you  
+have it use the copy on the file system, which should allow for quick  
+edit cycles. (See doc/guides/html/developer_guide.html for details)
+
+Haml Support for templates- There is no ticket # for this, but the  
+Developers Guide has some instructions on how to use HAML for your  
+portlet views as well.
+
+Plus a number of reported bugs from LH.
+
+h1. Docs
+I will update browsercms.org sometime today with the latest version of  
+the docs, but as always, you can find a copy with the latest source  
+code.
+
+h1. Issues
+If folks run into issues w/ 3.0.1, please report them in Lighthouse (https://browsermedia.lighthouseapp.com/projects/28481-browsercms-30
+), to be fixed in 3.0.2. 

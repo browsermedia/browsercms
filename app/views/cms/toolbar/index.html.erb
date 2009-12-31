@@ -1,12 +1,1 @@
-<% content_for :html_head do %>
-  <script type="text/javascript">
-  jQuery(function($){
-    $.cms.attachEventHandlers(parent.window.document)
-    $('.cms_connectable_header a.cms_connectable_edit', parent.window.document).each(function(){
-      $(this).attr('href', 
-        $(this).parents('.cms_edit_connectable').find('.cms_connectable_edit_link').attr('href'))      
-    })
-  })
-  </script>
-<% end %>
 <%= render_cms_toolbar(:sitemap) %>

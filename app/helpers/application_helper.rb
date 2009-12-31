@@ -2,5 +2,4 @@
 #
 # Really, don't anything in here as all BrowserCMS projects will have a generated file that obscures this one.
 module ApplicationHelper
-  
 end
