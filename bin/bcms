@@ -3,5 +3,4 @@
 ##
 # Just a shorter version of 'browsercms' command.
 
-command = "browsercms #{ARGV.join(" ")}"
-system(command)
+load File.join(File.dirname(__FILE__), 'browsercms')
