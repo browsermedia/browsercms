@@ -18,8 +18,8 @@ begin
     gem.email = "github@browsermedia.com"
     gem.homepage = "http://www.browsercms.org"
     gem.authors = ["BrowserMedia"]
-    gem.rubyforge_project = 'browsercms' # This line would be new
-    gem.executables = ['browsercms']
+    gem.rubyforge_project = 'browsercms'
+    gem.executables = ['browsercms', 'bcms']
     gem.files = Dir["rails/*.rb"]
     gem.files += Dir["browsercms.gemspec"]
     gem.files += Dir["doc/app/**/*"]

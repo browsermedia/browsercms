@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+##
+# Just a shorter version of 'browsercms' command.
+
+command = "browsercms #{ARGV.join(" ")}"
+system(command)

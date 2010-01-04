@@ -1,5 +1,8 @@
 #!/usr/bin/env ruby
 
+##
+# A fancy wrapper around 'rails' that creates a BrowserCMS project.
+#
 require File.join(File.dirname(__FILE__), "..", 'lib/command_line')
 require 'optparse'
 
