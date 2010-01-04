@@ -12,6 +12,13 @@ class CommandLine
       elsif args[index+1] == "module"
         args[index + 1] = template("module.rb")
       end
+    elsif args.include?("--template")
+      index = args.index("--template")
+      if args[index + 1] == "demo"
+        args[index + 1] = template("demo.rb")
+      elsif args[index+1] == "module"
+        args[index + 1] = template("module.rb")
+      end
     else
       args << "-m" << template("blank.rb")
     end

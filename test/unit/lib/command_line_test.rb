@@ -3,7 +3,7 @@ require "mocha"
 
 class CommandLineTest < ActiveSupport::TestCase
 
-  test "Check for -m" do
+  test "Use the correct demo template with '-m demo'" do
     CommandLine.expects(:template).with("demo.rb").returns("./templates/demo.rb")
     args = ["-m", "demo"]
 
@@ -45,7 +45,26 @@ class CommandLineTest < ActiveSupport::TestCase
     assert_equal ["-m", "./templates/module.rb"], args
   end
 
-  test "Sets the module template with --template"
+  test "Sets the module template with --template" do
+    CommandLine.expects(:template).with("module.rb").returns("./templates/module.rb")
+    args = ["--template", "module"]
 
-  test "Sets the demo template with --template"
+    CommandLine.set_template(args)
+
+    assert_equal ["--template", "./templates/module.rb"], args 
+  end
+
+  test "Sets the demo template with --template" do
+    CommandLine.expects(:template).with("demo.rb").returns("./templates/demo.rb")
+    args = ["--template", "demo"]
+
+    CommandLine.set_template(args)
+
+    assert_equal ["--template", "./templates/demo.rb"], args
+  end
+
+  test "Set usage" do
+    
+  end
+
 end
