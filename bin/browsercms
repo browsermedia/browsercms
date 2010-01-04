@@ -59,11 +59,15 @@ end
 
 # Replace short hand versions of the templates with the absolute path on the local machine.
 CommandLine.set_template(ARGV)
-
-command = "rails #{ARGV.join(" ")}"
-system(command)
+command = (RUBY_PLATFORM =~ /mswin32/ ? "cmd /c " : "")
+command += "rails #{ARGV.join(" ")}"
+success = system(command)
 
 project_name = ARGV[0]
-puts "\nCreated new BrowserCMS project '#{project_name}'."
-puts "    To get started, type 'cd #{project_name}'"
-puts "    then 'ruby script/server' and open your browser to 'http://localhost:3000'."
+if (success)
+  puts "\nCreated new BrowserCMS project '#{project_name}'."
+  puts "    To get started, type 'cd #{project_name}'"
+  puts "    then 'ruby script/server' and open your browser to 'http://localhost:3000'."
+else
+  puts "\n Unable to create BrowserCMS project '#{project_name}'."
+end
