@@ -1,5 +1,7 @@
+##
 # Provides specific helper methods to render content blocks and connectors.
 # Split off from Cms::ApplicationController so it can be included in Cms::Acts::ContentPage
+#
 module Cms
   module RenderingHelper
     def render_connector_and_connectable(connector, connectable)
@@ -27,9 +29,11 @@ module Cms
       "ERROR: #{e.message}"
     end
 
-    # Helper that will render the toolbar for the CMS.
-    # Expects:
-    #   tab - Symbol for which tab of the dashboard to highlight. Defaults to :dashboard.
+    ##
+    # Renders the toolbar for the CMS. All page templates need to include this or they won't be editable.
+    # Typically rendered as an iframe to avoid CSS/JS conflicts.
+    #
+    # @param [Symbol] tab Which tab of the dashboard to highlight. Defaults to :dashboard.
     #
     def render_cms_toolbar(tab=:dashboard)
       render :partial => 'layouts/cms_toolbar', :locals => {:tab => tab}

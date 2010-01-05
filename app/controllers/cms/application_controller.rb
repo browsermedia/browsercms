@@ -3,8 +3,6 @@ class Cms::ApplicationController < ApplicationController
   include Cms::ErrorHandling
   include Cms::DomainSupport
 
-  helper :all # include all helpers, all the time
-
   helper Cms::ApplicationHelper
   helper Cms::FormTagHelper
   include Cms::PathHelper
@@ -12,6 +10,7 @@ class Cms::ApplicationController < ApplicationController
   include Cms::PageHelper
   helper Cms::PageHelper
   helper Cms::MenuHelper
+  helper Cms::RenderingHelper
   
   protected
     def escape_javascript(javascript)
