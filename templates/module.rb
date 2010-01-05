@@ -27,6 +27,10 @@ CODE
 module_name = File.basename(root).match(/bcms_(.+)/)[1]
 gem_name = "bcms_#{module_name}"
 
+file "public/bcms/#{module_name}/README", <<-CODE
+Use this directory to add public files that should copied from the gem into the project.
+CODE
+
 file "#{File.basename(root)}.gemspec", <<-CODE
 SPEC = Gem::Specification.new do |spec| 
   spec.name = "#{gem_name}"
