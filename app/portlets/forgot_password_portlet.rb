@@ -1,4 +1,4 @@
-class ForgotPasswordPortlet < Portlet
+class ForgotPasswordPortlet < Cms::Portlet
   require 'digest/sha1'  
 
   

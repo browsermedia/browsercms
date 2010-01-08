@@ -11,7 +11,7 @@ module Cms
         def is_versioned(options={})
           @is_versioned = true
 
-          @version_foreign_key = (options[:version_foreign_key] || "#{name.underscore}_id").to_s
+          @version_foreign_key = (options[:version_foreign_key] || "#{table_name.singularize}_id").to_s
           @version_table_name = (options[:version_table_name] || "#{table_name.singularize}_versions").to_s
 
           extend ClassMethods
@@ -32,6 +32,7 @@ module Cms
             end
             def versioned_object_id
               send("#{versioned_class.name.underscore}_id")
+#              send("#{versioned_class.table_name}_id")
             end
             def versioned_object
               send(versioned_class.name.underscore.to_sym)
@@ -40,7 +41,7 @@ module Cms
 
           version_class.versioned_class = self
 
-          version_class.belongs_to(name.underscore.to_sym, :foreign_key => version_foreign_key)
+          version_class.belongs_to(table_name.underscore.to_sym,:foreign_key => version_foreign_key)
 
           version_class.is_userstamped if userstamped?
 
@@ -118,13 +119,16 @@ module Cms
             end
             
             #logger.info "..... Calling before_save"
+#        puts "@1#{self.class.before_save_callback_chain.map(&:method)}"
             return false if callback(:before_save) == false
 
             if new_record?
               #logger.info "..... Calling before_create"
+#        puts "@2#{self.class.before_create_callback_chain.map(&:method)}"
               return false if callback(:before_create) == false
             else      
               #logger.info "..... Calling before_update"
+#        puts "@3#{self.class.before_update_callback_chain.map(&:method)}"
               return false if callback(:before_update) == false
             end
 
@@ -136,8 +140,11 @@ module Cms
               #logger.info "..... Calling create_without_callbacks"
               if result = create_without_callbacks
                 #logger.info "..... Calling after_create"
+
+#        puts "@4#{self.class.after_create_callback_chain.map(&:method)}"
                 if callback(:after_create) != false
                   #logger.info "..... Calling after_save"
+#       puts "@5#{self.class.after_save_callback_chain.map(&:method)}"
                   callback(:after_save)
                 end
                 

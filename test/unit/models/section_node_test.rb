@@ -25,7 +25,7 @@ class SectionNodeTest < ActiveSupport::TestCase
   def test_reorder_nodes_within_same_section
     @node_a2.move_to(@a, 1)
     reset(:node_a, :node_a1, :node_a2, :node_a3, :node_b, :node_b1, :node_b2, :node_b3)
-    log_table_without_stamps(SectionNode)
+    log_table_without_stamps(Cms::SectionNode)
     assert_properties(@node_a, :section_id => @parent.id, :node_type => "Section", :node_id => @a.id, :position => 1)
     assert_properties(@node_b, :section_id => @parent.id, :node_type => "Section", :node_id => @b.id, :position => 2)
     assert_properties(@node_a1, :section_id => @a.id, :node_type => "Page", :node_id => @a1.id, :position => 2)

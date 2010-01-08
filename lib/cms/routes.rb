@@ -4,7 +4,12 @@ module Cms::Routes
   # content_block_name - Should be a plural symbol matching the name of the content_block, like :dogs or donation_statuses
   #
   def content_blocks(content_block_name, options={}, &block)
-    content_block = content_block_name.to_s.classify.constantize
+    content_name = content_block_name.to_s.classify
+    if Object.const_defined?(content_name.intern)
+      content_block = content_name.constantize
+    else
+      content_block = ('Cms::' + content_name).constantize
+    end
     resources(*[content_block_name, default_routes_for_content_block(content_block).deep_merge(options)], &block)
     if content_block.versioned?
       # I'm not sure why, but these named routes 
@@ -22,7 +27,8 @@ module Cms::Routes
         :conditions => {:method => :put})
     end
   end
-  
+
+
   def default_routes_for_content_block(content_block)
     member_routes = {}
     member_routes[:publish] = :put if content_block.publishable?
@@ -30,6 +36,8 @@ module Cms::Routes
     member_routes[:usages] = :get if content_block.connectable?    
     {:member => member_routes}
   end
+
+
   
   def routes_for_browser_cms
 
@@ -125,8 +133,8 @@ module Cms::Routes
       
     end
 
-    if PageRoute.table_exists?
-      PageRoute.all(:order => "page_routes.name").each do |r|
+    if Cms::PageRoute.table_exists?
+      Cms::PageRoute.all(:order => "page_routes.name").each do |r|
         send((r.route_name || 'connect').to_sym, r.pattern, r.options_map)
       end
     end

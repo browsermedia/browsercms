@@ -1,4 +1,4 @@
-class EmailMessage < ActiveRecord::Base
+class Cms::EmailMessage < ActiveRecord::Base
   
   named_scope :undelivered, :conditions => "delivered_at is null"
   
@@ -24,7 +24,7 @@ class EmailMessage < ActiveRecord::Base
   
   def deliver!
     return false if delivered?
-    EmailMessageMailer.deliver_email_message(self)
+    Cms::EmailMessageMailer.deliver_email_message(self)
     update_attributes(:delivered_at => Time.now)
   end
   

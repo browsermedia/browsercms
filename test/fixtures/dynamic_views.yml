@@ -2,7 +2,7 @@ dynamic_view_1:
   id: 1
   lock_version: 2
   version: 1
-  type: PageTemplate
+  type: Cms::PageTemplate
   name: default
   format: html
   handler: erb

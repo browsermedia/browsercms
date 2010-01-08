@@ -1,4 +1,4 @@
-class ForgotPasswordMailer < ActionMailer::Base
+class Cms::ForgotPasswordMailer < ActionMailer::Base
 
   def reset_password(link, email)
     @subject    = "Account Management"

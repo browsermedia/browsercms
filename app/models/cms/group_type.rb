@@ -1,7 +1,7 @@
-class GroupType < ActiveRecord::Base
-  has_many :groups
-  has_many :group_type_permissions
-  has_many :permissions, :through => :group_type_permissions
+class Cms::GroupType < ActiveRecord::Base
+  has_many :groups, :class_name => 'Cms::Group'
+  has_many :group_type_permissions, :class_name => 'Cms::GroupTypePermission'
+  has_many :permissions, :through => :group_type_permissions , :class_name => 'Cms::Permission'
 
   named_scope :guest, :conditions => ["group_types.guest = ?", true]
   named_scope :non_guest, :conditions => ["group_types.guest = ?", false]

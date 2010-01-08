@@ -1,7 +1,7 @@
 require 'digest/sha1'
 require 'fileutils'
 
-class Attachment < ActiveRecord::Base
+class Cms::Attachment < ActiveRecord::Base
 
   #----- Macros ----------------------------------------------------------------
 
@@ -27,7 +27,7 @@ class Attachment < ActiveRecord::Base
   
   #----- Associations ----------------------------------------------------------
 
-  has_one :section_node, :as => :node
+  has_one :section_node, :as => :node, :class_name => 'Cms::SectionNode'
 
   #----- Validations -----------------------------------------------------------
 
@@ -106,7 +106,7 @@ class Attachment < ActiveRecord::Base
   def process_section
     #logger.info "processing section, section_id => #{section_id}, section_node => #{section_node.inspect}"
     if section_node && !section_node.new_record? && section_node.section_id != section_id
-      section_node.move_to_end(Section.find(section_id))
+      section_node.move_to_end(Cms::Section.find(section_id))
     else
       build_section_node(:node => self, :section_id => section_id)
     end    
@@ -144,7 +144,7 @@ class Attachment < ActiveRecord::Base
   end  
   
   def self.find_live_by_file_path(file_path)
-    Attachment.published.not_archived.first(:conditions => {:file_path => file_path})
+    Cms::Attachment.published.not_archived.first(:conditions => {:file_path => file_path})
   end  
   
   #----- Instance Methods ------------------------------------------------------
@@ -180,7 +180,7 @@ class Attachment < ActiveRecord::Base
   end
   
   def full_file_location
-    File.join(Attachment.storage_location, file_location)
+    File.join(Cms::Attachment.storage_location, file_location)
   end
 
   # Forces this record to be changed, even if nothing has changed

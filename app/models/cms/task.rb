@@ -1,7 +1,7 @@
-class Task < ActiveRecord::Base
-  belongs_to :assigned_by, :class_name => "User"
-  belongs_to :assigned_to, :class_name => "User"
-  belongs_to :page
+class Cms::Task < ActiveRecord::Base
+  belongs_to :assigned_by, :class_name => 'Cms::User'
+  belongs_to :assigned_to, :class_name => 'Cms::User'
+  belongs_to :page, :class_name => 'Cms::Page'
   
   after_create :mark_other_tasks_for_the_same_page_as_complete
   after_create :send_email
@@ -41,7 +41,7 @@ class Task < ActiveRecord::Base
       elsif assigned_to.email.blank?
         logger.warn "Can't send email for task because assigned to user #{assigned_to.login}:#{assigned_to.id} has no email address"
       else
-        email = EmailMessage.create(
+        email = Cms::EmailMessage.create(
           :sender => assigned_by.email,
           :recipients => assigned_to.email,
           :subject => "Page '#{page.name}' has been assigned to you",

@@ -4,18 +4,27 @@ class CreatingPageTest < ActiveRecord::TestCase
   
   def test_it
     
-    @page = Page.new(
+    @page = Cms::Page.new(
       :name => "Test", 
       :path => "test", 
       :section => root_section, 
       :publish_on_save => true)
+
+    puts "@Name=#{@page.name}"
+    puts "@ClassName=#{Cms::Page.name}"
+    puts "@TableName=#{Cms::Page.table_name}"
+    puts "@VersionClass=#{Cms::Page.version_class}"
+    puts "@VersionForeignKey=#{Cms::Page.version_foreign_key}"
+    puts "@VersionTableName=#{Cms::Page.version_table_name}"
+    puts "@VersionedColumns=#{Cms::Page.versioned_columns}"
+
     
     assert @page.save
     assert_path_is_unique
     
     @page.update_attributes(:name => "Test v2")
     
-    page = Page.find_live_by_path("/test")
+    page = Cms::Page.find_live_by_path("/test")
     assert_equal page.name, "Test"
     assert_equal 1, page.version
     
@@ -33,34 +42,34 @@ end
 class PageTest < ActiveRecord::TestCase
 
   def test_creating_page_with_reserved_path
-    @page = Page.new(:name => "FAIL", :path => "/cms")
+    @page = Cms::Page.new(:name => "FAIL", :path => "/cms")
     assert_not_valid @page
     assert_has_error_on(@page, :path, "is invalid, '/cms' a reserved path")
     
-    @page = Page.new(:name => "FAIL", :path => "/cache")
+    @page = Cms::Page.new(:name => "FAIL", :path => "/cache")
     assert_not_valid @page
     assert_has_error_on(@page, :path, "is invalid, '/cache' a reserved path")
     
-    @page = Page.new(:name => "FTW", :path => "/whatever")
+    @page = Cms::Page.new(:name => "FTW", :path => "/whatever")
     assert_valid @page
   end
 
   def test_find_live_by_path
     @page = Factory.build(:page, :path => '/foo')
-    assert_nil Page.find_live_by_path('/foo')
+    assert_nil Cms::Page.find_live_by_path('/foo')
     
     @page.publish!
     reset(:page)
-    assert_equal @page, Page.find_live_by_path('/foo')
+    assert_equal @page, Cms::Page.find_live_by_path('/foo')
     
     @page.update_attributes(:path => '/bar')
-    assert_equal @page, Page.find_live_by_path('/foo')
-    assert_nil Page.find_live_by_path('/bar')
+    assert_equal @page, Cms::Page.find_live_by_path('/foo')
+    assert_nil Cms::Page.find_live_by_path('/bar')
     
     @page.publish!
     reset(:page)
-    assert_nil Page.find_live_by_path('/foo')
-    assert_equal @page, Page.find_live_by_path('/bar')
+    assert_nil Cms::Page.find_live_by_path('/foo')
+    assert_equal @page, Cms::Page.find_live_by_path('/bar')
   end
 
   def test_find_live_by_path_after_delete
@@ -69,14 +78,14 @@ class PageTest < ActiveRecord::TestCase
     reset(:page)
 
     @page.mark_as_deleted!
-    assert_nil Page.find_live_by_path('/foo')
+    assert_nil Cms::Page.find_live_by_path('/foo')
 
     @new_page = Factory.build(:page, :path => '/foo')
-    assert_nil Page.find_live_by_path('/foo')
+    assert_nil Cms::Page.find_live_by_path('/foo')
 
     @new_page.publish!
     reset(:new_page)
-    assert_equal @new_page, Page.find_live_by_path('/foo')
+    assert_equal @new_page, Cms::Page.find_live_by_path('/foo')
     assert_not_equal @page, @new_page
   end
   
@@ -178,17 +187,17 @@ class PageTest < ActiveRecord::TestCase
   def test_deleting_page
     page = Factory(:page)
     
-    page_count = Page.count_with_deleted
+    page_count = Cms::Page.count_with_deleted
     page_version_count = page.versions.count
     assert !page.deleted?
         
     page.destroy
     
-    assert_equal page_count, Page.count_with_deleted
+    assert_equal page_count, Cms::Page.count_with_deleted
     assert_incremented page_version_count, page.versions.count
     assert page.deleted?
     assert_raise ActiveRecord::RecordNotFound do
-      Page.find(page.id)
+      Cms::Page.find(page.id)
     end    
   end
 
@@ -247,11 +256,11 @@ class PageVersioningTest < ActiveRecord::TestCase
   def setup
     @first_guy = Factory(:user, :login => "first_guy")
     @next_guy = Factory(:user, :login => "next_guy")
-    User.current = @first_guy    
+    Cms::User.current = @first_guy    
   end
   
   def teardown
-    User.current = nil
+    Cms::User.current = nil
   end
   
   def test_that_it_works
@@ -260,7 +269,7 @@ class PageVersioningTest < ActiveRecord::TestCase
     assert_equal page, page.draft.page
     assert_equal @first_guy, page.updated_by
     
-    User.current = @new_guy
+    Cms::User.current = @new_guy
     page.update_attributes(:name => "Something Different")
 
     assert_equal "Something Different", page.draft.name
@@ -321,38 +330,38 @@ class PageWithAssociatedBlocksTest < ActiveRecord::TestCase
   
   # It should create a new page version and a new connector
   def test_updating_the_page_with_changes
-    connector_count = Connector.count
+    connector_count = Cms::Connector.count
     page_version = @page.version
     
     @page.update_attributes(:name => "Foo") 
     
-    assert_incremented connector_count, Connector.count
+    assert_incremented connector_count, Cms::Connector.count
     assert_equal page_version, @page.version
     assert_incremented page_version, @page.draft.version
   end
   
   # It should not create a new page version or a new connector
   def test_updating_the_page_without_changes  
-    connector_count = Connector.count
+    connector_count = Cms::Connector.count
     page_version = @page.version
     
     @page.update_attributes(:name => @page.name) 
     
-    assert_equal connector_count, Connector.count
+    assert_equal connector_count, Cms::Connector.count
     assert_equal page_version, @page.version
   end
 
   def test_deleting_a_page
-    connector_count = Connector.count
-    assert Connector.exists?(@page_connector.id)
-    assert Connector.exists?(@other_connector.id)
+    connector_count = Cms::Connector.count
+    assert Cms::Connector.exists?(@page_connector.id)
+    assert Cms::Connector.exists?(@other_connector.id)
     
     @page.destroy
     
-    assert_decremented connector_count, Connector.count
-    assert !Connector.exists?(@page_connector.id)
-    assert Connector.exists?(@other_connector.id)
-    assert HtmlBlock.exists?(@block.id)
+    assert_decremented connector_count, Cms::Connector.count
+    assert !Cms::Connector.exists?(@page_connector.id)
+    assert Cms::Connector.exists?(@other_connector.id)
+    assert Cms::HtmlBlock.exists?(@block.id)
     assert !@block.deleted?
   end
 end
@@ -366,7 +375,7 @@ class AddingBlocksToPageTest < ActiveRecord::TestCase
     @second_conn = @page.create_connector(@block2, "testing")
     
     page_version_count = @page.versions.count
-    connector_count = Connector.count
+    connector_count = Cms::Connector.count
     
     @conn = @page.create_connector(@block2, "testing")
 
@@ -375,7 +384,7 @@ class AddingBlocksToPageTest < ActiveRecord::TestCase
     assert_equal 1, @conn.connectable_version
     assert_incremented page_version_count, @page.versions.count
     assert_equal 3, @page.connectors.for_page_version(@page.draft.version).count
-    assert_equal connector_count + 3, Connector.count
+    assert_equal connector_count + 3, Cms::Connector.count
     
     # should leave the previous connectors untouched
     @conns = @page.connectors.all(:conditions => ["page_version < 4"], :order => "id")
@@ -454,11 +463,11 @@ class PageWithTwoBlocksTest < ActiveRecord::TestCase
   def test_removing_and_reverting_to_previous_version
     remove_both_connectors!
     
-    connector_count = Connector.count
+    connector_count = Cms::Connector.count
     
     @page.revert
     
-    assert_incremented connector_count, Connector.count
+    assert_incremented connector_count, Cms::Connector.count
         
     assert_properties @page.reload.connectors.for_page_version(@page.draft.version).first, {
       :page => @page, 
@@ -474,11 +483,11 @@ class PageWithTwoBlocksTest < ActiveRecord::TestCase
   def test_removing_and_reverting_to_version_with_both_connectors
     remove_both_connectors!
     
-    connector_count = Connector.count
+    connector_count = Cms::Connector.count
     
     @page.revert_to(3)
     
-    assert_equal connector_count + 2, Connector.count
+    assert_equal connector_count + 2, Cms::Connector.count
         
     foo, bar = @page.reload.connectors.for_page_version(@page.draft.version).find(:all, :order => "connectors.position")
     assert_properties foo, {
@@ -530,12 +539,12 @@ class PageWithBlockTest < ActiveRecord::TestCase
   
   def test_removing_connector
     page_version = @page.draft.version
-    page_version_count = Page::Version.count
+    page_version_count = Cms::Page::Version.count
     assert @page.published?
     
     @page.remove_connector(@conn)    
     
-    assert_incremented page_version_count, Page::Version.count
+    assert_incremented page_version_count, Cms::Page::Version.count
     assert_incremented page_version, @page.draft.version
     
     conns = @page.connectors.for_page_version(@page.draft.version-1).all
@@ -557,18 +566,18 @@ class PageWithBlockTest < ActiveRecord::TestCase
     @conn2 = @page.create_connector(@block2, "bar")
     @conn3 = @page.create_connector(@block2, "foo")
     #Need to get the new connector that matches @conn2, otherwise you will delete an older version, not the latest connector
-    @conn2 = Connector.first(:conditions => {:page_id => @page.reload.id, :page_version => @page.draft.version, :connectable_id => @block2.id, :connectable_version => @block2.version, :container => "bar"})
+    @conn2 = Cms::Connector.first(:conditions => {:page_id => @page.reload.id, :page_version => @page.draft.version, :connectable_id => @block2.id, :connectable_version => @block2.version, :container => "bar"})
     @page.remove_connector(@conn2)
     
-    page_version_count = Page::Version.count
+    page_version_count = Cms::Page::Version.count
     page_version = @page.draft.version
     page_connector_count = @page.connectors.for_page_version(@page.draft.version).count
     
-    @conn = Connector.first(:conditions => {:page_id => @page.reload.id, :page_version => @page.draft.version, :connectable_id => @block2.id, :connectable_version => @block2.version, :container => "foo"})
+    @conn = Cms::Connector.first(:conditions => {:page_id => @page.reload.id, :page_version => @page.draft.version, :connectable_id => @block2.id, :connectable_version => @block2.version, :container => "foo"})
     @page.remove_connector(@conn) 
     @page.reload
     
-    assert_incremented page_version_count, Page::Version.count
+    assert_incremented page_version_count, Cms::Page::Version.count
     assert_incremented page_version, @page.draft.version
     assert_decremented page_connector_count, 
       @page.connectors.for_page_version(@page.draft.version).count
@@ -611,13 +620,13 @@ class UnpublishedPageWithOnePublishedAndOneUnpublishedBlockTest < ActiveRecord::
   end
   
   def test_publishing_the_page
-    page_version_count = Page::Version.count
+    page_version_count = Cms::Page::Version.count
     unpublished_block_version_count = @unpublished_block.versions.count
     published_block_version_count = @published_block.versions.count
     
     @page.publish!
     
-    assert_equal page_version_count, Page::Version.count
+    assert_equal page_version_count, Cms::Page::Version.count
     assert_equal unpublished_block_version_count, @unpublished_block.versions.count
     assert_equal published_block_version_count, @published_block.versions.count
     assert @page.live?
@@ -698,7 +707,7 @@ class ViewingAPreviousVersionOfAPageTest < ActiveRecord::TestCase
     assert_equal 2, @block.draft.version 
      
     # Open Page A in a different browser (as guest)
-    @live_page = Page.find_live_by_path(@page.path)
+    @live_page = Cms::Page.find_live_by_path(@page.path)
     assert_equal 2, @live_page.version
     assert_equal "Block 1", @live_page.connectors.for_page_version(@live_page.version).first.connectable.live_version.name
      
@@ -713,7 +722,7 @@ class PortletsDontHaveDraftsTest < ActiveRecord::TestCase
 
     # Check some assumptions.
     assert_equal 2, @page.draft.version, "Verifying that adding a portlet correctly increments page version."
-    connectors = Connector.for_connectable(@portlet)
+    connectors = Cms::Connector.for_connectable(@portlet)
     assert_equal 1, connectors.size, "This portlet should have only 1 connector."
 
     # Verifies that an exception is not thrown while removing connectors

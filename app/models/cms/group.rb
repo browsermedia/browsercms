@@ -2,20 +2,20 @@
 # A group represents a collection of permissions. Each User can be assigned to one or more groups, and the sum of
 # their permissions from all groups combined represents what they can do.
 #
-class Group < ActiveRecord::Base
+class Cms::Group < ActiveRecord::Base
 
   GUEST_CODE = "guest"
 
-  has_many :user_group_memberships
-  has_many :users, :through => :user_group_memberships
+  has_many :user_group_memberships, :class_name => 'Cms::UserGroupMembership'
+  has_many :users, :through => :user_group_memberships, :class_name => 'Cms::User'
   
-  has_many :group_permissions
-  has_many :permissions, :through => :group_permissions
+  has_many :group_permissions, :class_name => 'Cms::GroupPermission'
+  has_many :permissions, :through => :group_permissions, :class_name => 'Cms::Permission'
   
-  has_many :group_sections
-  has_many :sections, :through => :group_sections
+  has_many :group_sections, :class_name => 'Cms::GroupSection'
+  has_many :sections, :through => :group_sections, :class_name => 'Cms::Section'
   
-  belongs_to :group_type
+  belongs_to :group_type, :class_name => 'Cms::GroupType'
     
   validates_presence_of :name
   

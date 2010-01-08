@@ -3,7 +3,7 @@ require File.join(File.dirname(__FILE__), '/../../test_helper')
 class Cms::MenuHelperTest < ActionView::TestCase
 
   def test_menu_items
-    Page.first.update_attributes(:hidden => true, :publish_on_save => true)
+    Cms::Page.first.update_attributes(:hidden => true, :publish_on_save => true)
     create_nfl_data
 
     expected = [
@@ -20,6 +20,7 @@ class Cms::MenuHelperTest < ActionView::TestCase
             ] },
             { :id => "section_#{@nfc.id}", :url => "/dal", :name => "NFC" }
     ]
+    puts "--#{@bal.ancestors.first.visible_child_nodes(:limit => nil)}"
 
     assert_equal expected, menu_items(:page => @bal)
 
@@ -96,7 +97,7 @@ class Cms::MenuHelperTest < ActionView::TestCase
   end
 
   def test_menu_with_links
-    Page.first.update_attributes(:hidden => true, :publish_on_save => true)
+    Cms::Page.first.update_attributes(:hidden => true, :publish_on_save => true)
 
     @news = Factory(:section, :parent => root_section, :name => "News", :path => "/whatever")
     @press_releases = Factory(:page, :section => @news, :name => "Press Releases", :path => "/press_releases", :publish_on_save => true)

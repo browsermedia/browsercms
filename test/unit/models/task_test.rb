@@ -62,7 +62,7 @@ class CreateTaskTest < TaskTest
     end
 
     def create_the_task!
-      @task = Task.create!(
+      @task = Cms::Task.create!(
         :assigned_by => @editor_a, 
         :assigned_to => @editor_b,
         :due_date => 5.minutes.ago,
@@ -71,7 +71,7 @@ class CreateTaskTest < TaskTest
     end
 
     def assert_that_an_email_is_sent_to_the_user_the_task_was_assigned_to
-      email = EmailMessage.first(:order => "created_at desc")
+      email = Cms::EmailMessage.first(:order => "created_at desc")
       assert_equal @editor_a.email, email.sender
       assert_equal @editor_b.email, email.recipients
       assert_equal "Page '#{@page.name}' has been assigned to you", email.subject
@@ -102,7 +102,7 @@ class ExistingIncompleteTaskTest < TaskTest
     assert !@existing_task.completed?
     
     @new_task = Factory(:task, :assigned_by => @editor_b, :assigned_to => @editor_a, :page => @page)
-    @existing_task = Task.find(@existing_task.id)
+    @existing_task = Cms::Task.find(@existing_task.id)
 
     assert @existing_task.completed?
     assert !@new_task.completed?

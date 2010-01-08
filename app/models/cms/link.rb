@@ -1,9 +1,11 @@
+module Cms
+
 class Link < ActiveRecord::Base
   acts_as_content_block :connectable => false
   
   named_scope :named, lambda{|name| {:conditions => ['links.name = ?', name]}}
   
-  has_one :section_node, :as => :node, :dependent => :destroy
+  has_one :section_node, :as => :node, :dependent => :destroy, :class_name => 'Cms::SectionNode'
   
   validates_presence_of :name
 
@@ -16,7 +18,7 @@ class Link < ActiveRecord::Base
   end
   
   def section_id=(sec_id)
-    self.section = Section.find(sec_id)
+    self.section = Cms::Section.find(sec_id)
   end
   
   def section=(sec)
@@ -31,5 +33,7 @@ class Link < ActiveRecord::Base
   def path
     url
   end
+
+end
 
 end

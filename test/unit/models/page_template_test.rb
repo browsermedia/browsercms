@@ -27,11 +27,11 @@ class PageTemplateTest < ActiveSupport::TestCase
   
   def test_find_by_file_name
     assert @page_template.save, "Could not save page template"
-    assert_equal @page_template, PageTemplate.find_by_file_name("test.html.erb")
-    assert_nil PageTemplate.find_by_file_name("fail.html.erb")
-    assert_nil PageTemplate.find_by_file_name("fail.erb")
-    assert_nil PageTemplate.find_by_file_name("fail")
-    assert_nil PageTemplate.find_by_file_name(nil)  
+    assert_equal @page_template, Cms::PageTemplate.find_by_file_name("test.html.erb")
+    assert_nil Cms::PageTemplate.find_by_file_name("fail.html.erb")
+    assert_nil Cms::PageTemplate.find_by_file_name("fail.erb")
+    assert_nil Cms::PageTemplate.find_by_file_name("fail")
+    assert_nil Cms::PageTemplate.find_by_file_name(nil)  
   end
   
 end

@@ -1,6 +1,6 @@
 require 'digest/sha1'
 
-class User < ActiveRecord::Base
+class Cms::User < ActiveRecord::Base
   include Cms::Authentication::Model
 
   validates_presence_of     :login
@@ -14,9 +14,9 @@ class User < ActiveRecord::Base
   validates_format_of       :email,    :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => "should be an email address, ex. xx@xx.com"
   attr_accessible :login, :email, :name, :first_name, :last_name, :password, :password_confirmation, :expires_at
 
-  has_many :user_group_memberships
-  has_many :groups, :through => :user_group_memberships
-  has_many :tasks, :foreign_key => "assigned_to_id"
+  has_many :user_group_memberships, :class_name => 'Cms::UserGroupMembership'
+  has_many :groups, :through => :user_group_memberships, :class_name => 'Cms::Group'
+  has_many :tasks, :foreign_key => "assigned_to_id", :class_name => 'Cms::Task'
     
   named_scope :active, :conditions => {:expires_at => nil }
   named_scope :able_to_edit_or_publish_content, 
@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
   end
     
   def self.guest(options = {})
-    GuestUser.new(options)
+    Cms::GuestUser.new(options)
   end
 
   def guest?
@@ -87,15 +87,15 @@ class User < ActiveRecord::Base
   end
 
   def permissions
-    @permissions ||= Permission.find(:all, :include => {:groups => :users}, :conditions => ["users.id = ?", id])
+    @permissions ||= Cms::Permission.find(:all, :include => {:groups => :users}, :conditions => ["users.id = ?", id])
   end
 
   def viewable_sections
-    @viewable_sections ||= Section.find(:all, :include => {:groups => :users}, :conditions => ["users.id = ?", id])
+    @viewable_sections ||= Cms::Section.find(:all, :include => {:groups => :users}, :conditions => ["users.id = ?", id])
   end
 
   def modifiable_sections
-    @modifiable_sections ||= Section.find(:all, :include => {:groups => [:group_type, :users]}, :conditions => ["users.id = ? and group_types.cms_access = ?", id, true])
+    @modifiable_sections ||= Cms::Section.find(:all, :include => {:groups => [:group_type, :users]}, :conditions => ["users.id = ? and group_types.cms_access = ?", id, true])
   end
 
   # Expects a list of names of Permissions
@@ -120,9 +120,9 @@ class User < ActiveRecord::Base
   def able_to_view?(object)
     section = object
     if object.is_a?(String)
-       section = Section.find_by_path(object)
+       section = Cms::Section.find_by_path(object)
        raise ActiveRecord::RecordNotFound.new("Could not find section with path = '#{object}'") unless section
-    elsif !object.is_a?(Section)
+    elsif !object.is_a?(Cms::Section)
       section = object.section
     end
     viewable_sections.include?(section) || cms_access?
@@ -130,9 +130,9 @@ class User < ActiveRecord::Base
 
   def able_to_modify?(object)
     case object
-      when Section
+      when Cms::Section
         modifiable_sections.include?(object)
-      when Page, Link
+      when Cms::Page, Cms::Link
         modifiable_sections.include?(object.section)
       else
         if object.class.respond_to?(:connectable?) && object.class.connectable?

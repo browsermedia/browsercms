@@ -1,4 +1,4 @@
-class GroupPermission < ActiveRecord::Base
+class Cms::GroupPermission < ActiveRecord::Base
   belongs_to :group
   belongs_to :permission
   

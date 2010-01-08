@@ -1,4 +1,4 @@
-class EmailMessageMailer < ActionMailer::Base
+class Cms::EmailMessageMailer < ActionMailer::Base
   
   def email_message(message)
     @recipients = message.recipients

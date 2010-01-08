@@ -1,6 +1,6 @@
-class SectionNode < ActiveRecord::Base
-  belongs_to :section
-  belongs_to :node, :polymorphic => :true
+class Cms::SectionNode < ActiveRecord::Base
+  belongs_to :section, :class_name => 'Cms::Section'
+  belongs_to :node, :polymorphic => :true, :class_name => 'Cms::SectionNode', :foreign_type => 'node_type'
 
   acts_as_list :scope => :section
 
@@ -20,12 +20,12 @@ class SectionNode < ActiveRecord::Base
 
   #Is this node a section
   def section?
-    node_type == 'Section'
+    node_type == 'Cms::Section'
   end
 
   #Is this node a page
   def page?
-    node_type == 'Page'
+    node_type == 'Cms::Page'
   end
   
   def move_to(sec, pos)
@@ -43,7 +43,7 @@ class SectionNode < ActiveRecord::Base
         #This helps prevent the position from getting out of whack
         #If you pass in a really high number for position, 
         #this just corrects it to the right number
-        node_count = SectionNode.count(:conditions => {:section_id => section_id})
+        node_count = Cms::SectionNode.count(:conditions => {:section_id => section_id})
         pos = node_count if pos > node_count
       end
       

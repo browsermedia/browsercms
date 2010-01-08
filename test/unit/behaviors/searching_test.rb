@@ -55,11 +55,11 @@ class SearchableHtmlBlockTest < ActiveSupport::TestCase
     @b1 = Factory(:html_block, :name => "b1", :content => "b one")
     @b2 = Factory(:html_block, :name => "b2", :content => "b two")
 
-    assert HtmlBlock.searchable?
-    assert_equal [@a2, @b2], HtmlBlock.search("2").all
-    assert HtmlBlock.search(:term => "one").all.empty?
-    assert_equal [@a1, @b1], HtmlBlock.search(:term => "one", :include_body => true).all
-    assert HtmlBlock.search(nil).include?(@b2)
+    assert Cms::HtmlBlock.searchable?
+    assert_equal [@a2, @b2], Cms::HtmlBlock.search("2").all
+    assert Cms::HtmlBlock.search(:term => "one").all.empty?
+    assert_equal [@a1, @b1], Cms::HtmlBlock.search(:term => "one", :include_body => true).all
+    assert Cms::HtmlBlock.search(nil).include?(@b2)
   end
 end
 

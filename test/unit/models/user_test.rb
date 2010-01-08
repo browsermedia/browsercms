@@ -7,14 +7,14 @@ class UserTest < ActiveSupport::TestCase
   
   def test_authenticate
     @user = Factory(:user)
-    assert_equal @user, User.authenticate(@user.login, @user.password)
-    assert_nil User.authenticate(@user.login, 'FAIL')
+    assert_equal @user, Cms::User.authenticate(@user.login, @user.password)
+    assert_nil Cms::User.authenticate(@user.login, 'FAIL')
   end
   
   def test_authenticate_expired_user
     @user = Factory(:user)
     @user.disable!
-    assert_nil User.authenticate(@user.login, @user.password)
+    assert_nil Cms::User.authenticate(@user.login, @user.password)
   end
   def test_expiration
     @user = Factory.build(:user)
@@ -36,19 +36,19 @@ class UserTest < ActiveSupport::TestCase
 
     assert_nil @user.expires_at
     assert !@user.expired?
-    assert User.active.all.include?(@user)
+    assert Cms::User.active.all.include?(@user)
     
     @user.disable!
 
     assert @user.expires_at <= Time.now
     assert @user.expired?
-    assert !User.active.all.include?(@user)
+    assert !Cms::User.active.all.include?(@user)
 
     @user.enable!
     
     assert_nil @user.expires_at
     assert !@user.expired?
-    assert User.active.all.include?(@user)
+    assert Cms::User.active.all.include?(@user)
   end
   test "email validation" do 
     @user = Factory(:user)
@@ -71,7 +71,7 @@ end
 class UserAbleToViewTest < ActiveSupport::TestCase
 
   test "User able_to_view? with String path" do
-    non_admin = GroupType.create!(:cms_access=>false)
+    non_admin = Cms::GroupType.create!(:cms_access=>false)
     group = Factory(:group, :group_type=>non_admin)
     public_user = Factory(:user)
     public_user.groups<< group
@@ -85,9 +85,9 @@ class UserAbleToViewTest < ActiveSupport::TestCase
   end
 
   test "User can't view a nil section" do
-    user = User.new
+    user = Cms::User.new
 
-    Section.expects(:find_by_path).with("/members").returns(nil)
+    Cms::Section.expects(:find_by_path).with("/members").returns(nil)
     user.expects(:able_to_view_without_paths?).never
 
     assert_raise ActiveRecord::RecordNotFound do
@@ -97,7 +97,7 @@ class UserAbleToViewTest < ActiveSupport::TestCase
   end
 
   test "Users with cmsaccess?" do
-    @non_admin = GroupType.create!(:cms_access=>true)
+    @non_admin = Cms::GroupType.create!(:cms_access=>true)
     @group = Factory(:group, :group_type=>@non_admin)
     @public_user = Factory(:user)
     @public_user.groups<< @group
@@ -107,7 +107,7 @@ class UserAbleToViewTest < ActiveSupport::TestCase
   end
   
   test "cms_access? determines if a user is considered to have cmsadmin privledges or not." do
-    user = User.new
+    user = Cms::User.new
     assert(!user.cms_access?, "")
   end
   
@@ -117,7 +117,7 @@ end
 class UserPermissionsTest < ActiveSupport::TestCase
   def setup
     @user = Factory(:user)
-    @guest_group = Group.guest
+    @guest_group = Cms::Group.guest
   end
   
   def test_user_permissions
@@ -254,8 +254,8 @@ end
 
 class GuestUserTest < ActiveSupport::TestCase
   def setup
-    @user = User.guest
-    @guest_group = Group.guest
+    @user = Cms::User.guest
+    @guest_group = Cms::Group.guest
     @public_page = Factory(:page, :section => root_section)
     @protected_section = Factory(:section, :parent => root_section)
     @protected_page = Factory(:page, :section => @protected_section)
@@ -273,15 +273,15 @@ class GuestUserTest < ActiveSupport::TestCase
 
   test "override viewable sections for the guest group" do
     @user.expects(:viewable_sections).returns([@protected_section])
-    assert_equal Section, @protected_section.class
-    assert(@protected_section.is_a?(Section), "")
+    assert_equal Cms::Section, @protected_section.class
+    assert(@protected_section.is_a?(Cms::Section), "")
     assert @user.able_to_view?(@protected_section)
   end
 
   test "GuestUser can't view a nil section" do
-    user = GuestUser.new
+    user = Cms::GuestUser.new
 
-    Section.expects(:find_by_path).with("/members").returns(nil)
+    Cms::Section.expects(:find_by_path).with("/members").returns(nil)
 
     assert_raise ActiveRecord::RecordNotFound do
       user.able_to_view?("/members")

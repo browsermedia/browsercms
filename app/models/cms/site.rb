@@ -1,4 +1,4 @@
-class Site < ActiveRecord::Base
+class Cms::Site < ActiveRecord::Base
   
   validates_uniqueness_of :domain
   

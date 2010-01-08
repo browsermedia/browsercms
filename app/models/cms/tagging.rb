@@ -1,9 +1,9 @@
-class Tagging < ActiveRecord::Base
-  belongs_to :tag
-  belongs_to :taggable, :polymorphic => true
+class Cms::Tagging < ActiveRecord::Base
+  belongs_to :tag, :class_name => 'Cms::Tag'
+  belongs_to :taggable, :polymorphic => true, :class_name => 'Cms::Taggable', :foreign_type => 'taggable_type'
   
   def content_type
-    ContentType.first(:conditions => {:name => taggable_type})
+    Cms::ContentType.first(:conditions => {:name => taggable_type})
   end
     
 end

@@ -1,4 +1,4 @@
-class ContentType < ActiveRecord::Base
+class Cms::ContentType < ActiveRecord::Base
 
   attr_accessor :group_name
   belongs_to :content_type_group
@@ -22,9 +22,9 @@ class ContentType < ActiveRecord::Base
     class_name = key.tableize.classify
     content_type = find_by_name(class_name)
     if content_type.nil?
-      if class_name.constantize.ancestors.include?(Portlet)
-        content_type = ContentType.new(:name => class_name)
-        content_type.content_type_group = ContentTypeGroup.find_by_name('Core')
+      if class_name.constantize.ancestors.include?(Cms::Portlet)
+        content_type = Cms::ContentType.new(:name => class_name)
+        content_type.content_type_group = Cms::ContentTypeGroup.find_by_name('Core')
         content_type.freeze
         content_type
       else
@@ -87,7 +87,7 @@ class ContentType < ActiveRecord::Base
   
   def set_content_type_group
     if group_name
-      group = ContentTypeGroup.first(:conditions => {:name => group_name})
+      group = Cms::ContentTypeGroup.first(:conditions => {:name => group_name})
       self.content_type_group = group || build_content_type_group(:name => group_name)
     end
   end

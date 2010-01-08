@@ -1,4 +1,4 @@
-class HtmlBlock < ActiveRecord::Base
+class Cms::HtmlBlock < ActiveRecord::Base
 
   acts_as_content_block :taggable => true
   

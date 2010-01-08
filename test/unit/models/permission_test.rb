@@ -5,6 +5,6 @@ class PermissionTest < ActiveSupport::TestCase
     perm = Factory(:permission, :name => "test")
     assert !Factory.build(:permission, :name => "").valid?
     assert !Factory.build(:permission, :name => "test").valid?
-    assert_equal perm, Permission.named("test").first
+    assert_equal perm, Cms::Permission.named("test").first
   end
 end

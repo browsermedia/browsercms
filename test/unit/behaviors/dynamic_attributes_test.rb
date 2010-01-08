@@ -20,7 +20,7 @@ end
 
 class ThingTest < ActiveSupport::TestCase
   def test_dynamic_attributes
-    assert !User.has_dynamic_attributes?
+    assert !Cms::User.has_dynamic_attributes?
     assert Thing.has_dynamic_attributes?
 
     thing = Thing.new(:foo => "bar")

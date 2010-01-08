@@ -1,7 +1,7 @@
-class PageRoute < ActiveRecord::Base
+class Cms::PageRoute < ActiveRecord::Base
   belongs_to :page
-  has_many :conditions, :class_name => "PageRouteCondition"
-  has_many :requirements, :class_name => "PageRouteRequirement"
+  has_many :conditions, :class_name => 'Cms::PageRouteCondition'
+  has_many :requirements, :class_name => 'Cms::PageRouteRequirement'
   
   validates_presence_of :pattern, :page_id
   validates_uniqueness_of :pattern

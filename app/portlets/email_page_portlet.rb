@@ -1,4 +1,4 @@
-class EmailPagePortlet < Portlet
+class EmailPagePortlet < Cms::Portlet
   
   def render
     pmap = flash[instance_name] || params

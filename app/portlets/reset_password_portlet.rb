@@ -1,4 +1,4 @@
-class ResetPasswordPortlet < Portlet
+class ResetPasswordPortlet < Cms::Portlet
 
   def render
     flash[:reset_password] = {}

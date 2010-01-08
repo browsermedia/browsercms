@@ -4,10 +4,10 @@
 #
 # Every request that a non-logged in user makes will use this User's permissions to determine what they can/can't do.
 #
-class GuestUser < User
+class Cms::GuestUser < Cms::User
 
   def initialize(attributes={})
-    super({:login => Group::GUEST_CODE, :first_name => "Anonymous", :last_name => "User"}.merge(attributes))
+    super({:login => Cms::Group::GUEST_CODE, :first_name => "Anonymous", :last_name => "User"}.merge(attributes))
     @guest = true
   end
     
@@ -32,7 +32,7 @@ class GuestUser < User
   end
   
   def group
-    @group ||= Group.guest
+    @group ||= Cms::Group.guest
   end
   
   def groups

@@ -37,6 +37,27 @@ class ActiveSupport::TestCase
   # -- they do not yet inherit this setting
   fixtures :all
 
+  set_fixture_class :sections => Cms::Section
+  set_fixture_class :section_nodes => Cms::SectionNode
+  set_fixture_class :connectors => Cms::Connector
+  set_fixture_class :content_type_groups => Cms::ContentTypeGroup
+  set_fixture_class :content_types => Cms::ContentType
+
+  set_fixture_class :dynamic_views => Cms::DynamicView
+  set_fixture_class :group_permissions => Cms::GroupPermission
+  set_fixture_class :group_sections => Cms::GroupSection
+  set_fixture_class :group_type_permissions => Cms::GroupTypePermission
+  set_fixture_class :group_types => Cms::GroupType
+  set_fixture_class :groups => Cms::Group
+  set_fixture_class :html_blocks => Cms::HtmlBlock
+  set_fixture_class :pages => Cms::Page
+  set_fixture_class :permissions => Cms::Permission
+  set_fixture_class :section_nodes => Cms::SectionNode
+  set_fixture_class :sections => Cms::Section
+  set_fixture_class :sites => Cms::Site
+  set_fixture_class :user_group_memberships => Cms::UserGroupMembership
+  set_fixture_class :users => Cms::User
+
   # Add more helper methods to be used by all tests here...
 
   require File.dirname(__FILE__) + '/test_logging'
@@ -77,7 +98,7 @@ class ActiveSupport::TestCase
   end
 
   def create_or_find_permission_named(name)
-    Permission.named(name).first || Factory(:permission, :name => name)
+    Cms::Permission.named(name).first || Factory(:permission, :name => name)
   end
 
   def create_admin_user(attrs={})
@@ -99,7 +120,7 @@ class ActiveSupport::TestCase
   end
 
   def guest_group
-    Group.guest || Factory(:group, :code => Group::GUEST_CODE)
+    Cms::Group.guest || Factory(:group, :code => Group::GUEST_CODE)
   end  
 
   def login_as(user)
@@ -107,7 +128,7 @@ class ActiveSupport::TestCase
   end
 
   def login_as_cms_admin
-    login_as(User.first)
+    login_as(Cms::User.first)
   end
 
   def mock_file(options = {})
@@ -170,6 +191,6 @@ module Cms::IntegrationTestHelper
   end
 
   def login_as_cms_admin
-    login_as(User.first, "cmsadmin")
+    login_as(Cms::User.first, "cmsadmin")
   end
 end

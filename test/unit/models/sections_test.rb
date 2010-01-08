@@ -69,10 +69,10 @@ class SectionTest < ActiveSupport::TestCase
     @b = Factory(:section, :parent => @a, :name => "B")
     @c = Factory(:section, :parent => @b, :name => "C")
     
-    assert_equal root_section, Section.find_by_name_path("/")
-    assert_equal @a, Section.find_by_name_path("/A/")
-    assert_equal @b, Section.find_by_name_path("/A/B/")
-    assert_equal @c, Section.find_by_name_path("/A/B/C/")
+    assert_equal root_section, Cms::Section.find_by_name_path("/")
+    assert_equal @a, Cms::Section.find_by_name_path("/A/")
+    assert_equal @b, Cms::Section.find_by_name_path("/A/B/")
+    assert_equal @c, Cms::Section.find_by_name_path("/A/B/C/")
   end  
   
   def test_section_with_sub_section
@@ -82,9 +82,9 @@ class SectionTest < ActiveSupport::TestCase
     assert !@section.empty?
     assert !@section.deletable?
 
-    section_count = Section.count
+    section_count = Cms::Section.count
     assert !@section.destroy
-    assert_equal section_count, Section.count
+    assert_equal section_count, Cms::Section.count
   end
   
   def test_section_with_page
@@ -94,9 +94,9 @@ class SectionTest < ActiveSupport::TestCase
     assert !@section.empty?
     assert !@section.deletable?
     
-    section_count = Section.count
+    section_count = Cms::Section.count
     assert !@section.destroy
-    assert_equal section_count, Section.count
+    assert_equal section_count, Cms::Section.count
   end
   
   def test_root_section
@@ -105,9 +105,9 @@ class SectionTest < ActiveSupport::TestCase
     assert !@section.empty?
     assert !@section.deletable?
     
-    section_count = Section.count
+    section_count = Cms::Section.count
     assert !@section.destroy
-    assert_equal section_count, Section.count
+    assert_equal section_count, Cms::Section.count
   end  
   
   def test_empty_section
@@ -116,21 +116,21 @@ class SectionTest < ActiveSupport::TestCase
     assert @section.empty?
     assert @section.deletable?
     
-    section_count = Section.count
+    section_count = Cms::Section.count
     assert @section.destroy
-    assert_decremented section_count, Section.count
+    assert_decremented section_count, Cms::Section.count
   end
   
   def test_creating_page_with_reserved_path
-    @section = Section.new(:name => "FAIL", :path => "/cms")
+    @section = Cms::Section.new(:name => "FAIL", :path => "/cms")
     assert_not_valid @section
     assert_has_error_on(@section, :path, "is invalid, '/cms' a reserved path")
     
-    @section = Section.new(:name => "FAIL", :path => "/cache")
+    @section = Cms::Section.new(:name => "FAIL", :path => "/cache")
     assert_not_valid @section
     assert_has_error_on(@section, :path, "is invalid, '/cache' a reserved path")
     
-    @section = Section.new(:name => "FTW", :path => "/whatever")
+    @section = Cms::Section.new(:name => "FTW", :path => "/whatever")
     assert_valid @section
   end  
   

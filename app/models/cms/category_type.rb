@@ -1,5 +1,5 @@
-class CategoryType < ActiveRecord::Base
-  has_many :categories
+class Cms::CategoryType < ActiveRecord::Base
+  has_many :categories, :class_name => 'Cms::Category'
   validates_presence_of :name
   validates_uniqueness_of :name
   is_searchable

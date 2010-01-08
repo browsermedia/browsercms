@@ -1,4 +1,4 @@
-class FileBlock < AbstractFileBlock
+class Cms::FileBlock < Cms::AbstractFileBlock
 
   acts_as_content_block :belongs_to_attachment => true, :taggable => true
 

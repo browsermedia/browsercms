@@ -1,7 +1,8 @@
 module Cms
   module Behaviors
     module Attaching
-      SANITIZATION_REGEXES = [ [/\s/, '_'], [/[&+()]/, '-'], [/[=?!'"{}\[\]#<>%]/, ''] ]
+      SANITIZATION_REGEXES = [ [/\s/, '_'], [/[&+()]/, '-'], [/[=?!'"{}\[\]#<>%]/, ''] ]  
+      #' this tic cleans up emacs ruby mode
       
       def self.included(model_class)
         model_class.extend(MacroMethods)
@@ -16,7 +17,7 @@ module Cms
           before_validation :process_attachment  
           before_save :update_attachment_if_changed
           after_save :clear_attachment_ivars
-          belongs_to :attachment, :dependent => :destroy 
+          belongs_to :attachment, :dependent => :destroy, :class_name => 'Cms::Attachment' 
           
           validates_each :attachment_file do |record, attr, value|
             if record.attachment && !record.attachment.valid?
@@ -119,7 +120,7 @@ module Cms
         # Override this method if you would like to override the way the section is set
         def set_attachment_section
           if !attachment_file.blank?
-            attachment.section = Section.root.first
+            attachment.section = Cms::Section.root.first
           end
         end
 
@@ -159,7 +160,7 @@ module Cms
 
         def after_as_of_version
           if attachment_id && attachment_version
-            self.attachment = Attachment.find(attachment_id).as_of_version(attachment_version)
+            self.attachment = Cms::Attachment.find(attachment_id).as_of_version(attachment_version)
           end
         end
 

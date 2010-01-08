@@ -1,4 +1,4 @@
-class Portlet < ActiveRecord::Base
+class Cms::Portlet < ActiveRecord::Base
 
   validates_presence_of :name
 

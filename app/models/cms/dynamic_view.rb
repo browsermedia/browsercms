@@ -1,4 +1,4 @@
-class DynamicView < ActiveRecord::Base
+class Cms::DynamicView < ActiveRecord::Base
   
   after_save :write_file_to_disk
   after_destroy :remove_file_from_disk

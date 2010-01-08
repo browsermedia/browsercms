@@ -23,14 +23,14 @@ module Cms
       ActionController::Routing::RouteSet::Mapper.send :include, Cms::Routes
       ActiveSupport::Dependencies.load_paths += %W( #{RAILS_ROOT}/app/portlets )
       ActiveSupport::Dependencies.load_paths += %W( #{RAILS_ROOT}/app/portlets/helpers )      
-      ActionController::Base.append_view_path DynamicView.base_path
+      ActionController::Base.append_view_path Cms::DynamicView.base_path
       ActionView::Base.default_form_builder = Cms::FormBuilder
       
       # This is jsut to be safe
       # dynamic views are stored in a tmp dir
       # so they could be blown away on a server restart or something
       # so this just makes sure they get written out
-      DynamicView.write_all_to_disk! if DynamicView.table_exists?
+      Cms::DynamicView.write_all_to_disk! if Cms::DynamicView.table_exists?
     end
     
     # This is used by CMS modules to register with the CMS generator

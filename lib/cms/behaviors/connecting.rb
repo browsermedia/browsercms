@@ -17,7 +17,7 @@ module Cms
           attr_accessor :connect_to_container
           attr_accessor :connected_page
         
-          has_many :connectors, :as => :connectable    
+          has_many :connectors, :as => :connectable, :class_name => 'Cms::Connector'
 
           attr_accessor :updated_by_page
 

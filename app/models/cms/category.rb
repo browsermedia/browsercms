@@ -1,7 +1,7 @@
-class Category < ActiveRecord::Base
-  belongs_to :category_type
-  belongs_to :parent, :class_name => "Category"
-  has_many :children, :class_name => "Category", :foreign_key => "parent_id"
+class Cms::Category < ActiveRecord::Base
+  belongs_to :category_type, :class_name => 'Cms::CategoryType'
+  belongs_to :parent, :class_name => 'Cms::Category'
+  has_many :children, :class_name => 'Cms::Category', :foreign_key => "parent_id"
   is_searchable
   validates_presence_of :category_type_id, :name
   validates_uniqueness_of :name, :scope => :category_type_id

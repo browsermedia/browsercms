@@ -1,3 +1,4 @@
+module Cms
 class Page < ActiveRecord::Base
   
   is_archivable
@@ -8,8 +9,8 @@ class Page < ActiveRecord::Base
   is_userstamped
   is_versioned
   
-  has_many :connectors, :order => "connectors.container, connectors.position"
-  has_many :page_routes
+  has_many :connectors, :class_name => 'Cms::Connector', :order => "connectors.container, connectors.position"
+  has_many :page_routes, :class_name => 'Cms::PageRoute'
   
   named_scope :named, lambda{|name| {:conditions => ['pages.name = ?', name]}}
   named_scope :with_path, lambda{|path| {:conditions => ['pages.path = ?', path]}}
@@ -42,9 +43,9 @@ class Page < ActiveRecord::Base
     end 
   }  
   
-  has_one :section_node, :as => :node, :dependent => :destroy
+  has_one :section_node, :as => :node, :dependent => :destroy, :class_name => 'Cms::SectionNode'
   
-  has_many :tasks
+  has_many :tasks, :class_name => 'Cms::Task'
   
   before_validation :append_leading_slash_to_path
   before_destroy :delete_connectors
@@ -272,4 +273,4 @@ class Page < ActiveRecord::Base
   end
   
 end
-
+end

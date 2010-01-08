@@ -87,7 +87,7 @@ class UpdatingFileBlockTest < ActiveSupport::TestCase
   def test_change_attachment_file_name
     attachment_version = @attachment.version
     file_attachment_version = @file_block.attachment_version
-    attachment_version_count = Attachment::Version.count
+    attachment_version_count = Cms::Attachment::Version.count
     
     assert @file_block.update_attributes(
       :attachment_file_path => "test_new.jpg",
@@ -96,17 +96,17 @@ class UpdatingFileBlockTest < ActiveSupport::TestCase
     
     assert_incremented attachment_version, @attachment.reload.version
     assert_incremented file_attachment_version, @file_block.attachment_version
-    assert_incremented attachment_version_count, Attachment::Version.count
+    assert_incremented attachment_version_count, Cms::Attachment::Version.count
   end  
   
   def test_change_attachment_section
-    attachment_version_count = Attachment::Version.count
+    attachment_version_count = Cms::Attachment::Version.count
     file_block_version = @file_block.version
 
     @section = Factory(:section, :parent => root_section, :name => "New")
     @file_block.update_attributes!(:attachment_section => @section, :publish_on_save => true)
 
-    assert_incremented attachment_version_count, Attachment::Version.count
+    assert_incremented attachment_version_count, Cms::Attachment::Version.count
     assert_incremented file_block_version, @file_block.reload.version
     assert_equal @section, @file_block.attachment_section
     assert_equal "/test.jpg", @file_block.attachment.file_path
@@ -114,15 +114,15 @@ class UpdatingFileBlockTest < ActiveSupport::TestCase
   end  
   
   def test_change_attachment_data_with_save
-    attachment_count = Attachment.count
-    attachment_version_count = Attachment::Version.count
+    attachment_count = Cms::Attachment.count
+    attachment_version_count = Cms::Attachment::Version.count
     file_block_version = @file_block.draft.version
 
     @section = Factory(:section, :parent => root_section, :name => "New")
     @file_block.update_attributes!(:attachment_file => mock_file(:read => "new"))
     
-    assert_equal attachment_count, Attachment.count
-    assert_incremented attachment_version_count, Attachment::Version.count
+    assert_equal attachment_count, Cms::Attachment.count
+    assert_incremented attachment_version_count, Cms::Attachment::Version.count
     assert_incremented file_block_version, @file_block.draft.version
     assert_equal "new", open(@file_block.as_of_draft_version.attachment.full_file_location){|f| f.read}
     assert !@file_block.live?
@@ -130,15 +130,15 @@ class UpdatingFileBlockTest < ActiveSupport::TestCase
   end
   
   def test_change_attachment_data_with_save_and_publish
-    attachment_count = Attachment.count
-    attachment_version_count = Attachment::Version.count
+    attachment_count = Cms::Attachment.count
+    attachment_version_count = Cms::Attachment::Version.count
     file_block_version = @file_block.version
 
     @section = Factory(:section, :parent => root_section, :name => "New")
     @file_block.update_attributes!(:attachment_file => mock_file(:read => "new"), :publish_on_save => true)
     
-    assert_equal attachment_count, Attachment.count
-    assert_incremented attachment_version_count, Attachment::Version.count
+    assert_equal attachment_count, Cms::Attachment.count
+    assert_incremented attachment_version_count, Cms::Attachment::Version.count
     assert_incremented file_block_version, @file_block.reload.version
     assert_equal "new", open(@file_block.attachment.full_file_location){|f| f.read}
     assert @file_block.published?
@@ -146,14 +146,14 @@ class UpdatingFileBlockTest < ActiveSupport::TestCase
   end
   
   def test_no_changes_to_the_attachment
-    attachment_count = Attachment.count
-    attachment_version_count = Attachment::Version.count
+    attachment_count = Cms::Attachment.count
+    attachment_version_count = Cms::Attachment::Version.count
     file_block_version = @file_block.version
     
     @file_block.update_attributes!(:name => "Test 2", :publish_on_save => true)
     
-    assert_equal attachment_count, Attachment.count
-    assert_equal attachment_version_count, Attachment::Version.count
+    assert_equal attachment_count, Cms::Attachment.count
+    assert_equal attachment_version_count, Cms::Attachment::Version.count
     assert_incremented file_block_version, @file_block.reload.version
     assert_equal "Test 2", @file_block.name
   end
@@ -185,7 +185,7 @@ class ExistingFileBlockTest < ActiveSupport::TestCase
   
   def test_destroy
     @file_block.destroy      
-    assert_nil Attachment.find_live_by_file_path("/test.txt")
+    assert_nil Cms::Attachment.find_live_by_file_path("/test.txt")
   end
 end
 
@@ -200,11 +200,11 @@ class ExistingFileBlocksTest < ActiveSupport::TestCase
   end
   
   def test_find_blocks_in_root_section
-    assert_equal [@one, @two], FileBlock.by_section(root_section).all(:order => "file_blocks.id")
+    assert_equal [@one, @two], Cms::FileBlock.by_section(root_section).all(:order => "file_blocks.id")
   end
   
   def test_find_blocks_in_sub_section
-    assert_equal [@a1, @a2], FileBlock.by_section(@section).all(:order => "file_blocks.id")
+    assert_equal [@a1, @a2], Cms::FileBlock.by_section(@section).all(:order => "file_blocks.id")
   end
 end
 
