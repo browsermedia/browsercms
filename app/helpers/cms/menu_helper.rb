@@ -130,12 +130,16 @@ module Cms
           node = section_node.node
           
           item = {}
-          item[:selected] = true if selected_page == node
           item[:id] = "#{section_node.node_type.underscore}_#{section_node.node_id}"
           
           # If we are showing a section item, we want to use the path for the first page
           page = section_node.section? ? node.first_page_or_link : node
-          
+          if section_node.section? && page
+            item[:selected] = true if page.hidden? && selected_page == page
+          else
+            item[:selected] = true if selected_page == page
+          end
+         
           item[:url] = page && page.path || '#'
           item[:name] = node.name
           item[:target] = "_blank" if page.respond_to?(:new_window?) && page.new_window?
