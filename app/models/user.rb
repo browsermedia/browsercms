@@ -80,6 +80,14 @@ class User < ActiveRecord::Base
     "#{full_name} (#{login})"
   end
 
+  def full_name_or_login
+    if full_name.strip.blank?
+      login
+    else
+      full_name
+    end
+  end
+
   # This is to show a formated date on the input form. I'm unsure that
   # this is the best way to solve this, but it works.
   def expires_at_formatted

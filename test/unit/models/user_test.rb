@@ -66,6 +66,18 @@ class UserTest < ActiveSupport::TestCase
       assert !@user.valid?
     end
   end
+  test "full name or login" do
+    login = 'robbo'
+    fn = 'Bob'
+    ln = 'Smith'
+    u = User.new(:login => 'robbo')
+    assert_equal login, u.full_name_or_login 
+    u.first_name = fn
+    assert_equal fn, u.full_name_or_login 
+    u.last_name = ln
+    assert_equal fn + ' ' + ln, u.full_name_or_login 
+    
+  end
 end
 
 class UserAbleToViewTest < ActiveSupport::TestCase
