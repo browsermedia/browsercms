@@ -18,7 +18,8 @@ class Cms::MenuHelperTest < ActionView::TestCase
                     { :id => "section_#{@afc_south.id}", :url => "/hou", :name => "South" },
                     { :id => "section_#{@afc_west.id}", :url => "/den", :name => "West" }
             ] },
-            { :id => "section_#{@nfc.id}", :url => "/dal", :name => "NFC" }
+            { :id => "section_#{@nfc.id}", :url => "/dal", :name => "NFC" },
+            { :id => "section_#{@int.id}", :url => "/international", :name => "International" }
     ]
 
     assert_equal expected, menu_items(:page => @bal)
@@ -33,7 +34,8 @@ class Cms::MenuHelperTest < ActionView::TestCase
                     { :id => "section_#{@afc_south.id}", :url => "/hou", :name => "South" },
                     { :id => "section_#{@afc_west.id}", :url => "/den", :name => "West" }
             ] },
-            { :id => "section_#{@nfc.id}", :url => "/dal", :name => "NFC" }
+            { :id => "section_#{@nfc.id}", :url => "/dal", :name => "NFC" },
+            { :id => "section_#{@int.id}", :url => "/international", :name => "International" }
     ]
 
     assert_equal expected, menu_items(:depth => 2)
@@ -64,14 +66,16 @@ class Cms::MenuHelperTest < ActionView::TestCase
                     { :id => "section_#{@nfc_north.id}", :url => "/chi", :name => "North" },
                     { :id => "section_#{@nfc_south.id}", :url => "/atl", :name => "South" },
                     { :id => "section_#{@nfc_west.id}", :url => "/ari", :name => "West" }
-            ] }
+            ] },
+            { :id => "section_#{@int.id}", :url => "/international", :name => "International" }
     ]
 
     assert_equal expected, menu_items(:depth => 2, :show_all_siblings => true)
 
     expected = [
             { :id => "section_#{@afc.id}", :url => "/buf", :name => "AFC" },
-            { :id => "section_#{@nfc.id}", :url => "/dal", :name => "NFC" }
+            { :id => "section_#{@nfc.id}", :url => "/dal", :name => "NFC" },
+            { :id => "section_#{@int.id}", :url => "/international", :name => "International" }
     ]
 
     assert_equal expected, menu_items(:depth => 1)
@@ -93,6 +97,14 @@ class Cms::MenuHelperTest < ActionView::TestCase
 
     assert_equal expected, menu_items(:from_top => 1, :depth => 1, :limit => 3)
 
+    expected = [
+            { :id => "section_#{@afc.id}", :url => "/buf", :name => "AFC" },
+            { :id => "section_#{@nfc.id}", :url => "/dal", :name => "NFC" },
+            { :id => "section_#{@int.id}", :selected => true, :url => "/international", :name => "International" }
+    ]
+
+    assert_equal expected, menu_items(:page => @overview)
+    
   end
 
   def test_menu_with_links
@@ -219,6 +231,8 @@ class Cms::MenuHelperTest < ActionView::TestCase
     @sea = Factory(:page, :section => @nfc_west, :name => "Seattle Seahawks", :path => "/sea", :publish_on_save => true)
     @stl = Factory(:page, :section => @nfc_west, :name => "St. Louis Rams", :path => "/stl", :publish_on_save => true)
 
+    @int = Factory(:section, :parent => root_section, :name => "International", :path => '/international')
+    @overview = Factory(:page, :section => @int, :name => "Overview", :path => "/international", :publish_on_save => true, :hidden => true)
   end
 
 
