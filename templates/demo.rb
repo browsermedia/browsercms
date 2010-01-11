@@ -6,6 +6,9 @@ else
 end
 
 gem "browsercms"
+
+generate :jdbc if defined?(JRUBY_VERSION)
+
 if Gem.win_platform?
   puts "        rake  db:create"
   `rake.cmd db:create`
