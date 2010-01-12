@@ -243,7 +243,7 @@ Library.
 CODE
 
 file "COPYRIGHT.txt", <<-CODE
-All BrowserCMS code is Copyright (C) 1998-2009 by BrowserMedia, LLC.
+All BrowserCMS code is Copyright (C) 1998-2010 by BrowserMedia, LLC.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -265,7 +265,7 @@ according to the terms of the GNU Lesser Public License or a compatible
 license, including:
 
 - jQuery - Copyright (C) 2009 John Resig
-- FCKEditor - Copyright (C) 2003-2009 Frederico Caldeira Knabben
+- CKEditor - Copyright (C) 2003-2009 Frederico Caldeira Knabben
 CODE
 
 file "GPL.txt", <<-CODE

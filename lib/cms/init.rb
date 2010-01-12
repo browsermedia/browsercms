@@ -52,6 +52,21 @@ module Cms
     def add_to_rails_paths(path)
       ActiveSupport::Dependencies.load_paths << File.join(path, "app", "portlets")
     end
+
+    def add_to_routes(route)
+      routes << route
+    end
+    def routes
+      @routes ||=[]
+    end
+
+    def wysiwig_js
+      @wysiwig_js ||= ['/bcms/ckeditor/ckeditor.js', '/bcms/ckeditor/editor.js']
+    end
+
+    def wysiwig_js=(path_array)
+      @wysiwig_js = path_array
+    end
     
     def markdown?
       Object.const_defined?("Markdown")

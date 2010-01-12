@@ -32,7 +32,7 @@ begin
     gem.files += Dir["public/stylesheets/cms/**/*"]
     gem.files += Dir["public/javascripts/jquery*"]
     gem.files += Dir["public/javascripts/cms/**/*"]
-    gem.files += Dir["public/fckeditor/**/*"]
+    gem.files += Dir["public/bcms/**/*"]
     gem.files += Dir["public/site/**/*"]
     gem.files += Dir["public/images/cms/**/*"]
     gem.files += Dir["public/themes/**/*"]
