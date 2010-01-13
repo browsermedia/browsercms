@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["BrowserMedia"]
-  s.date = %q{2010-01-12}
+  s.date = %q{2010-01-13}
   s.description = %q{Web Content Management in Rails.}
   s.email = %q{github@browsermedia.com}
   s.executables = ["browsercms", "bcms"]
@@ -568,6 +568,7 @@ Gem::Specification.new do |s|
      "doc/app/fr_method_index.html",
      "doc/app/index.html",
      "doc/app/rdoc-style.css",
+     "doc/guides/html/authentication.html",
      "doc/guides/html/build_it_yourself.html",
      "doc/guides/html/building_modules.html",
      "doc/guides/html/deployment_guide.html",

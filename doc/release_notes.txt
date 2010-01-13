@@ -1,3 +1,13 @@
+3.0.6 is a small bug fix release which should correct the big issues that were preventing use of 3.0.5. Here's the rundown:
+
+1. The 'require_javacript_include' and 'require_stylesheet_link' methods were not working properly, and now they do.
+2. You could not publish a changed link without modifying it in some way, and now you can. (LIGHTHOUSE #256)
+3. You can now search for portlets and tags by name in the Content Library. (LIGHTHOUSE #257 and #258)
+4. After creating or updating a category or tag via the Content Library, you are now redirected to the list page (as with Category Types) instead of being shown a blank page. (LIGHTHOUSE #259)
+5. The user list in the Admin area now shows a user's login (instead of nothing) if the user does not ahve a name. (LIGHTHOUSE #260)
+
+==========
+
 v3.0.5
 
 BrowserCMS 3.0.5 has been released to gemcutter. This is primarily a bug fix release, correcting some IE support issues as well as some problems with reverting. We also made some subtle changes to how JS gets loaded on page templates in the CMS admin UI. If your project had been using its own javascript (like jquery/prototype) in the page templates, you should double check to make sure its working correctly.  See item #2 below for more details.

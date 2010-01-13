@@ -131,54 +131,88 @@
                 </td>
                 <td class="guides">
                   
-                  <h2>Using <span class="caps">CMS</span> Authentication</h2>
-<p>When you create public controllers, you may want to take advantage of the <span class="caps">CMS</span> authentication system. Create an action that
-looks like this:</p>
-<div class="code_container"><code class="ruby">class MyNewController &lt; ApplicationController
-
-  # This adds methods to your controller to work with the authenticated user.
-  include Cms::Authentication::Controller
-
-  def do_something_interesting
-    # The current_user method looks up the user based on either a cookie, or session variable.
-    user = current_user
-
-    if user.guest?
-      redirect_to &quot;/system/access-denied&quot;
-    else
-      redirect_to &quot;/my_target/page&quot;
-    end
-  end
+                  <h2>Creating your own modules</h2>
+<p>Creating your own modules is a useful way to expand the functionality of BrowserCMS via gems.</p>
+<h3>Getting Started</h3>
+<p>Run the following command to generate a basic BrowserCMS application that is ready to turn into a module.</p>
+<p><code>bcms bcms_[module name] -m module</code></p>
+<p>The module template used to create this application will create the following files:</p>
+<ul>
+	<li><code>.gitignore</code></li>
+</ul>
+<blockquote>
+<p>This file prevents files you almost certainly will not want to be added to git to be added to git.</p>
+</blockquote>
+<ul>
+	<li><code>public/bcms/[module name]/README</code></li>
+</ul>
+<blockquote>
+<p>Explains what this directory is for.  It can safely be deleted.</p>
+</blockquote>
+<ul>
+	<li><code>bcms_[module name].gemspec</code></li>
+</ul>
+<blockquote>
+<p>Creates a gemspec file in case you want to manage the gemspec by hand.</p>
+</blockquote>
+<ul>
+	<li><code>config/initializers/init_module.rb</code></li>
+</ul>
+<blockquote>
+<p>Requires the following file.</p>
+</blockquote>
+<ul>
+	<li><code>lib/bcms_[module name].rb</code></li>
+</ul>
+<blockquote>
+<p>Requires the following file.</p>
+</blockquote>
+<ul>
+	<li><code>lib/bcms_[module name]/routes.rb</code></li>
+</ul>
+<blockquote>
+<p>Has boilerplate code ready in case you have specific routes the application will need to have available.  For example, if your module has content blocks that will be managed by the <span class="caps">CMS</span> administrative interface, routes for the controllers handling this management will need to be added here.</p>
+</blockquote>
+<ul>
+	<li><code>rails/init.rb</code></li>
+</ul>
+<blockquote>
+<p>Adds the gem root to the rails paths, adds all migration files to the list of files that will be copied into any application using the module when <code>script/generate browser_cms</code> is run, and adds all files in <code>public/bcms/bcms_[module name]/</code> to the list of files that will be copied into any application using the module when <code>script/generate browser_cms</code> is run.</p>
+</blockquote>
+<ul>
+	<li><code>LICENSE.txt</code></li>
+</ul>
+<blockquote>
+<p><span class="caps">GNU</span> Lesser General Public License</p>
+</blockquote>
+<ul>
+	<li><code>COPYRIGHT.txt</code></li>
+</ul>
+<blockquote>
+<p>BrowserMedia&#8217;s copyright text.</p>
+</blockquote>
+<ul>
+	<li><code>GPL.txt</code></li>
+</ul>
+<blockquote>
+<p><span class="caps">GNU</span> General Public License</p>
+</blockquote>
+<p>Note: the module template was developed primarily for BrowserMedia in-house use.  Therefore the license, copywrite, and gemspec files all reflect our organization.  Please edit and/or remove these files to fit your needs.</p>
+<h3>Conventions When Building Your Module</h3>
+<p>Build your module as if you were building a rails application that does whatever you want.</p>
+<p>That said, there are some conventions that tend to make things easier.</p>
+<p>First, place any files that are used as configuration files for public assects (for example, the fckeditor) in the <code>public/bcms_config/[module_name]</code> directory and have the gem only copy them if they are not already there.  For example you can add code like the following to the <code>rails/init.rb</code> file.</p>
+<div class="code_container"><code class="ruby">unless File.exists?(&quot;#{RAILS_ROOT}/public/bcms_config/fckeditor/fckstyles.xml&quot;)
+  Cms.add_generator_paths gem_root, &quot;public/bcms_config/fckeditor/fckstyles.xml&quot;  
 end</code></div>
-<p>The current_user method is also available in Portlets (maybe), as well as in the view files for both portlets and templates.</p>
-<h3>Understanding Guest users
-Many visitors to a <span class="caps">CMS</span> site will not be logged in. These users are considered to be members of a special group, called &#8216;Guest&#8217;. This
-group allows staff to set permissions for denying entry to specific sections. When you call the following:</h3>
-<div class="code_container"><code class="ruby">user = current_user</code></div>
-<p>if there the user is not logged in, a 
-dirty_workaround_for_notextile_2
- object will be returned. This user has all the permissions of the guest group, which are
-usually limited to viewing public sections.</p>
-<h2>Working with the Content <span class="caps">API</span>
-One of the central features that the content <span class="caps">API</span> adds to models is versioning and publishing. Each content block can either be published or in draft. The data for a block is split between two tables, the primary table and it&#8217;s version table. The primary table
-stores the &#8216;live&#8217; version of a block, typically the last &#8216;Published&#8217; version of a block. The versions table stores all other versions, including future edits which are unpublished.</h2>
-<h3>Differences between ActiveRecord and Content <span class="caps">API</span>
-This can cause some confusion when using basic ActiveRecord operations, where you might not get what you expect. For example, suppose we create an Event Block</h3>
-<div class="code_container"><code class="ruby">class Event &lt; ActiveRecord::Base
-  acts_as_content_block
-end
-
-event = Event.create!(:name=&gt;&quot;Event #1&quot;, :save_and_publish=&gt;true)
-event.name = &quot;Event #2&quot;
-event.save!
-
-assert_equals &quot;Event #2&quot;, Event.find(event.id) # This is false, and will fail.</code></div>
-<p>In this case, &#8220;Event #2&#8221; is a draft, stored in the &#8216;events_versions&#8217; table. To create and publish the event, you can do this:</p>
-<div class="code_container"><code class="ruby">event = Event.create!(:name=&gt;&quot;Event #1&quot;, :save_and_publish=&gt;true)
-event.name = &quot;Event #2&quot;
-event.publish! # This will both publish and save the record.
-
-assert_equals &quot;Event #2&quot;, Event.find(event.id) # This is now true.</code></div>
+<p>This will make the required configuration file available to the fckeditor, but it won&#8217;t overwrite it (or even ask you if you want to overwrite it) every time you run <code>script/generate browser_cms</code> for your application.</p>
+<h3>Testing Your Gem</h3>
+<p>We strongly encourage the creation of unit, functional, and integration tests as part of your module.</p>
+<p>We also suggest that you test your gem against a BrowserCMS application.  To do this, first run</p>
+<p><code>bcms module_tester -m demo</code></p>
+<p>wherever (I use <code>/var/tmp</code>).  Edit the <code>config/environment.rb</code> file to include the line</p>
+<p><code>gem.config 'bcms_[module name]'</code></p>
+<p>then run the app locally and make sure your module works as expected.</p>
                 </td>
               </tr>
             </table>
