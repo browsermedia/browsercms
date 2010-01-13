@@ -1,4 +1,5 @@
-class Cms::Portlet < ActiveRecord::Base
+module Cms
+class Portlet < ActiveRecord::Base
 
   validates_presence_of :name
 
@@ -163,4 +164,5 @@ class Cms::Portlet < ActiveRecord::Base
     end      
   end  
   
+end
 end

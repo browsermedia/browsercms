@@ -1,4 +1,5 @@
-class Cms::HtmlBlock < ActiveRecord::Base
+module Cms
+class HtmlBlock < ActiveRecord::Base
 
   acts_as_content_block :taggable => true
   
@@ -37,4 +38,5 @@ class Cms::HtmlBlock < ActiveRecord::Base
     "Text"
   end
   
+end
 end

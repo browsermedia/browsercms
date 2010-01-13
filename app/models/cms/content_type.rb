@@ -1,7 +1,8 @@
-class Cms::ContentType < ActiveRecord::Base
+module Cms
+class ContentType < ActiveRecord::Base
 
   attr_accessor :group_name
-  belongs_to :content_type_group
+  belongs_to :content_type_group, :class_name => 'Cms::ContentTypeGroup'
   validates_presence_of :content_type_group
   before_validation :set_content_type_group
   
@@ -92,4 +93,5 @@ class Cms::ContentType < ActiveRecord::Base
     end
   end
   
+end
 end

@@ -1,6 +1,7 @@
 require 'digest/sha1'
 
-class Cms::User < ActiveRecord::Base
+module Cms
+class User < ActiveRecord::Base
   include Cms::Authentication::Model
 
   validates_presence_of     :login
@@ -158,4 +159,5 @@ class Cms::User < ActiveRecord::Base
     able_to?(:edit_content, :publish_content)
   end
   
+end
 end

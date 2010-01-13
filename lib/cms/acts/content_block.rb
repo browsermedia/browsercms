@@ -22,7 +22,7 @@ module Cms
         end
         module InstanceMethods
           def to_s
-            "#{self.class.name.titleize} '#{name}'"
+            "#{self.class.name.demodulize.titleize} '#{name}'"
           end
         end
       end

@@ -1,4 +1,5 @@
-class Cms::Category < ActiveRecord::Base
+module Cms
+class Category < ActiveRecord::Base
   belongs_to :category_type, :class_name => 'Cms::CategoryType'
   belongs_to :parent, :class_name => 'Cms::Category'
   has_many :children, :class_name => 'Cms::Category', :foreign_key => "parent_id"
@@ -37,4 +38,5 @@ class Cms::Category < ActiveRecord::Base
       {:label => "Type", :method => :category_type_name, :order => "category_types.name" },
       {:label => "Updated On", :method => :updated_on_string, :order => "categories.updated_at"}  ]
   end
+end
 end

@@ -1,4 +1,5 @@
-class Cms::Permission < ActiveRecord::Base
+module Cms
+class Permission < ActiveRecord::Base
   has_many :group_permissions, :class_name => 'Cms::GroupPermission'
   has_many :groups, :through => :group_permissions, :class_name => 'Cms::Group'
   
@@ -7,4 +8,5 @@ class Cms::Permission < ActiveRecord::Base
   
   named_scope :named, lambda{|name| {:conditions => {:name => name}}}
   
+end
 end

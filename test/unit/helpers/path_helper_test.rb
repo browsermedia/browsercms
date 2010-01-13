@@ -46,9 +46,9 @@ class Cms::PathHelperTest < ActionView::TestCase
   #
   def test_how_rails_path_building_works
     block = Cms::HtmlBlock.create!(:name=>"Name")
-    assert_equal "/cms/html_blocks/#{block.id}/edit", url_for([:edit, :cms, block])
-    assert_equal "/cms/html_blocks/#{block.id}/edit", polymorphic_path([:edit, :cms, block])
-    assert_equal "/cms/html_blocks/#{block.id}/edit?redirect_to=go_here", polymorphic_path([:edit, :cms, block], :redirect_to=>"go_here")
+    assert_equal "/cms/html_blocks/#{block.id}/edit", url_for([:edit, block])
+    assert_equal "/cms/html_blocks/#{block.id}/edit", polymorphic_path([:edit, block])
+    assert_equal "/cms/html_blocks/#{block.id}/edit?redirect_to=go_here", polymorphic_path([:edit, block], :redirect_to=>"go_here")
   end
 
 

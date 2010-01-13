@@ -1,4 +1,5 @@
-class Cms::PageTemplate < Cms::DynamicView
+module Cms
+class PageTemplate < Cms::DynamicView
 
   validates_format_of :name, :with => /\A[a-z]+[a-z0-9_]*\Z/, :message => "can only contain lowercase letters, numbers and underscores and must begin with a lowercase letter"
 
@@ -45,4 +46,5 @@ HTML
     page_templates.map{|f| [display_name(f), f] }.sort.uniq
   end
   
+end
 end

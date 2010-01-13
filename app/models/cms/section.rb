@@ -1,4 +1,5 @@
-class Cms::Section < ActiveRecord::Base
+module Cms
+class Section < ActiveRecord::Base
 
   flush_cache_on_change
   
@@ -144,4 +145,5 @@ class Cms::Section < ActiveRecord::Base
     end
   end
       
+end
 end

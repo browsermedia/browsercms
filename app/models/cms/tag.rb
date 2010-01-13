@@ -1,4 +1,5 @@
-class Cms::Tag < ActiveRecord::Base
+module Cms
+class Tag < ActiveRecord::Base
   
   has_many :taggings, :class_name => 'Cms::Tagging'
   
@@ -59,4 +60,5 @@ class Cms::Tag < ActiveRecord::Base
     @taggings = @content_block.taggings.paginate(:page => params[:page])
   end  
   
+end
 end

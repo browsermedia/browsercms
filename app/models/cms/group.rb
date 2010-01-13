@@ -2,7 +2,8 @@
 # A group represents a collection of permissions. Each User can be assigned to one or more groups, and the sum of
 # their permissions from all groups combined represents what they can do.
 #
-class Cms::Group < ActiveRecord::Base
+module Cms
+class Group < ActiveRecord::Base
 
   GUEST_CODE = "guest"
 
@@ -38,4 +39,5 @@ class Cms::Group < ActiveRecord::Base
     with_code(GUEST_CODE).first
   end
 
+end
 end

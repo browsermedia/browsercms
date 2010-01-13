@@ -1,4 +1,5 @@
-class Cms::Task < ActiveRecord::Base
+module Cms
+class Task < ActiveRecord::Base
   belongs_to :assigned_by, :class_name => 'Cms::User'
   belongs_to :assigned_to, :class_name => 'Cms::User'
   belongs_to :page, :class_name => 'Cms::Page'
@@ -64,4 +65,5 @@ class Cms::Task < ActiveRecord::Base
     end
 
   
+end
 end

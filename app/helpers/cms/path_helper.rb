@@ -28,7 +28,7 @@ module Cms
       if Portlet === connectable
         edit_cms_portlet_path(connectable, options)
       else
-        polymorphic_path([:edit, :cms, connectable], options)        
+        polymorphic_path([:edit, connectable], options)        
       end
     end
     

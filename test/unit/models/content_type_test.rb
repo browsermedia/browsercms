@@ -23,7 +23,7 @@ class ContentTypeTest < ActiveSupport::TestCase
   end
 
   def test_content_block_type
-    assert_equal "html_blocks", @c.content_block_type
+    assert_equal "cms/html_blocks", @c.content_block_type
   end
 
   test "find_by_key handles names that end with s correctly" do

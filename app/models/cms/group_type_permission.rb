@@ -1,4 +1,6 @@
-class Cms::GroupTypePermission < ActiveRecord::Base
+module Cms
+class GroupTypePermission < ActiveRecord::Base
   belongs_to :group_type
   belongs_to :permission
+end
 end
