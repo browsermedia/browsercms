@@ -1,3 +1,5 @@
+v3.0.6
+
 3.0.6 is a small bug fix release which should correct the big issues that were preventing use of 3.0.5. Here's the rundown:
 
 1. The 'require_javacript_include' and 'require_stylesheet_link' methods were not working properly, and now they do.
