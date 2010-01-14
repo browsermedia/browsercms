@@ -309,4 +309,9 @@ class GuestUserTest < ActiveSupport::TestCase
     assert @user.able_to_view?("/members")
 
   end
+
+  test "Group.guest is in fixtures." do
+    assert_not_nil Group.guest, "Expected to be in the database for tests."    
+  end
+ 
 end
