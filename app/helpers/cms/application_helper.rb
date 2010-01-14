@@ -58,7 +58,7 @@ module Cms
       count = block.connected_pages.count
       if count > 0
         # Would love a cleaner solution to this problem, see http://stackoverflow.com/questions/702728
-        path = Portlet === block ? usages_cms_portlet_path(block) : [:usages, :cms, block]
+        path = Portlet === block ? usages_cms_portlet_path(block) : [:usages, block]
         link_to count, path, :id => block.id, :block_type => block.content_block_type
       else
         count

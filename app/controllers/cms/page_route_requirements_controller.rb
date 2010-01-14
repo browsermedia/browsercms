@@ -1,2 +1,4 @@
-class Cms::PageRouteRequirementsController < Cms::PageRouteOptionsController
+module Cms
+class PageRouteRequirementsController < Cms::PageRouteOptionsController
+end
 end

@@ -1,4 +1,5 @@
-class Cms::PagesController < Cms::BaseController
+module Cms
+class PagesController < Cms::BaseController
  
   before_filter :set_toolbar_tab
   before_filter :load_section, :only => [:new, :create]
@@ -26,7 +27,7 @@ class Cms::PagesController < Cms::BaseController
     @page.section = @section
     if @page.save
       flash[:notice] = "Page was '#{@page.name}' created."
-      redirect_to [:cms, @page]
+      redirect_to @page
     else
       render :action => "new"
     end
@@ -35,7 +36,7 @@ class Cms::PagesController < Cms::BaseController
   def update
     if @page.update_attributes(params[:page])
       flash[:notice] = "Page was '#{@page.name}' updated."
-      redirect_to [:cms, @page]
+      redirect_to @page
     else
       render :action => "edit"
     end
@@ -132,4 +133,5 @@ class Cms::PagesController < Cms::BaseController
       @templates = PageTemplate.options
     end
    
+end
 end

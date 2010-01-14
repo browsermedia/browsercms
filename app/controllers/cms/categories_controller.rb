@@ -1,2 +1,4 @@
-class Cms::CategoriesController < Cms::ContentBlockController
+module Cms
+class CategoriesController < Cms::ContentBlockController
+end
 end

@@ -1,6 +1,7 @@
 require File.join(File.dirname(__FILE__), '/../../test_helper')
 
-class Cms::UsersControllerTest < ActionController::TestCase
+module Cms
+class UsersControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
 
   def setup
@@ -187,7 +188,7 @@ class Cms::UsersControllerTest < ActionController::TestCase
   
 end
 
-class Cms::UsersControllerNonAdminTest < ActionController::TestCase
+class UsersControllerNonAdminTest < ActionController::TestCase
   tests Cms::UsersController
   include Cms::ControllerTestHelper
 
@@ -228,4 +229,5 @@ class Cms::UsersControllerNonAdminTest < ActionController::TestCase
     put :update_password, :id => Factory(:user).id
     assert @response.body.include?("Access Denied")
   end
+end
 end

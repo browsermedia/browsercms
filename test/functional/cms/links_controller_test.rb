@@ -1,6 +1,7 @@
 require File.join(File.dirname(__FILE__), '/../../test_helper')
 
-class Cms::LinksControllerTest < ActionController::TestCase
+module Cms
+class LinksControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
 
   def setup
@@ -18,7 +19,7 @@ class Cms::LinksControllerTest < ActionController::TestCase
     link_count = Link.count
     post :create, :link => { :name => "Test", :url => "http://www.example.com" }, :section_id => root_section.id
     
-    assert_redirected_to [:cms, root_section]
+    assert_redirected_to root_section
     assert_incremented link_count, Link.count
   end
 
@@ -47,7 +48,7 @@ class Cms::LinksControllerTest < ActionController::TestCase
     put :update, :link => { :name => "Test Updated", :url => "http://www.updated-example.com" }, :id => @link.id
     reset(:link)
 
-    assert_redirected_to [:cms, @link.section]
+    assert_redirected_to @link.section
     assert_equal "Test Updated", @link.draft.name
     assert_equal "http://www.updated-example.com", @link.draft.url
   end
@@ -59,7 +60,7 @@ class Cms::LinksControllerTest < ActionController::TestCase
 
 end
 
-class Cms::LinksControllerPermissionsTest < ActionController::TestCase
+class LinksControllerPermissionsTest < ActionController::TestCase
   tests Cms::LinksController
   include Cms::ControllerTestHelper
   
@@ -146,3 +147,4 @@ class Cms::LinksControllerPermissionsTest < ActionController::TestCase
 end
 
 
+end

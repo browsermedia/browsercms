@@ -46,7 +46,7 @@
   <div style="margin: 20px 2px;">
     <label>
       Choose Type of Content
-      <%= select_tag "block_type", options_for_select(ContentType.connectable.all.map{|ct| [ct.display_name, ct.content_block_type]}, @block_type.content_block_type), :onchange => 'this.form.submit()' %>
+      <%= select_tag "block_type", options_for_select(Cms::ContentType.connectable.all.map{|ct| [ct.display_name, ct.content_block_type]}, @block_type.content_block_type), :onchange => 'this.form.submit()' %>
     </label>
   </div>
 <% end %>

@@ -1,4 +1,5 @@
-class Cms::UsersController < Cms::ResourceController
+module Cms
+class UsersController < Cms::ResourceController
   layout 'cms/administration'
 
   check_permissions :administrate, :except => [:show, :change_password, :update_password]
@@ -97,4 +98,5 @@ class Cms::UsersController < Cms::ResourceController
     def only_self_or_administrator
       raise Cms::Errors::AccessDenied if !current_user.able_to?(:administrate) && params[:id].to_i != current_user.id
     end
+end
 end

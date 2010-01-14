@@ -2,7 +2,7 @@
 <%= content_for :functions, "<h1>#{ @page_title }</h1>" %>
 <%= content_for :html_head, stylesheet_link_tag('cms/content_types') %>
 <ul id="content_types">
-  <% ContentType.connectable.all.each_with_index do |type, i| %>
+  <% Cms::ContentType.connectable.all.each_with_index do |type, i| %>
     <li>
       <%= link_to h(type.display_name), cms_new_path_for(type, 
         "#{type.name.underscore}[connect_to_page_id]" => params[:connect_to_page_id], 

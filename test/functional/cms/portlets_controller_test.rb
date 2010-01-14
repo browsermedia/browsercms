@@ -1,6 +1,7 @@
 require File.join(File.dirname(__FILE__), '/../../test_helper')
 
-class Cms::PortletsControllerTest < ActionController::TestCase
+module Cms
+class PortletsControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
     
   def setup
@@ -64,4 +65,5 @@ class Cms::PortletsControllerTest < ActionController::TestCase
     assert_select "div.instructions", "Leave blank to send the user to the page they were trying to access"
 
   end
+end
 end

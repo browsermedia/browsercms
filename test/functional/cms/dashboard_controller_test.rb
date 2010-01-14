@@ -1,6 +1,7 @@
 require File.join(File.dirname(__FILE__), '/../../test_helper')
 
-class Cms::DashboardControllerTest < ActionController::TestCase
+module Cms
+class DashboardControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
   
   def setup
@@ -14,4 +15,5 @@ class Cms::DashboardControllerTest < ActionController::TestCase
     assert_select "title", "Dashboard"
   end
   
+end
 end

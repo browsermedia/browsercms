@@ -1,6 +1,7 @@
 require File.join(File.dirname(__FILE__), '/../../test_helper')
 
-class Cms::PagesControllerTest < ActionController::TestCase
+module Cms
+class PagesControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
 
   def setup
@@ -34,7 +35,7 @@ class Cms::PagesControllerTest < ActionController::TestCase
     assert @page.draft.hidden?
     
     put :update, :id => @page.id, :page => {:hidden => false}
-    assert_redirected_to [:cms, @page]
+    assert_redirected_to @page
     
     reset(:page)
     assert !@page.draft.hidden?
@@ -95,7 +96,7 @@ class Cms::PagesControllerTest < ActionController::TestCase
 
 end
 
-class Cms::PagesControllerPermissionsTest < ActionController::TestCase
+class PagesControllerPermissionsTest < ActionController::TestCase
   tests Cms::PagesController
   include Cms::ControllerTestHelper
   
@@ -225,3 +226,4 @@ class Cms::PagesControllerPermissionsTest < ActionController::TestCase
 end
 
 
+end

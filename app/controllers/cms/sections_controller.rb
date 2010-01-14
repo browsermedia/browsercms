@@ -1,4 +1,5 @@
-class Cms::SectionsController < Cms::BaseController
+module Cms
+class SectionsController < Cms::BaseController
 
   before_filter :load_parent, :only => [:new, :create]
   before_filter :load_section, :only => [:edit, :update, :destroy, :move]
@@ -26,7 +27,7 @@ class Cms::SectionsController < Cms::BaseController
     @section.groups = @section.parent.groups unless current_user.able_to?(:administrate)
     if @section.save
       flash[:notice] = "Section '#{@section.name}' was created"
-      redirect_to [:cms, @section]
+      redirect_to @section
     else
       render :action => 'new'
     end    
@@ -40,7 +41,7 @@ class Cms::SectionsController < Cms::BaseController
     @section.attributes = params[:section]
     if @section.save
       flash[:notice] = "Section '#{@section.name}' was updated"
-      redirect_to [:cms, @section]
+      redirect_to @section
     else
       render :action => 'edit'
     end      
@@ -127,4 +128,5 @@ class Cms::SectionsController < Cms::BaseController
     def set_toolbar_tab
       @toolbar_tab = :sitemap
     end
+end
 end

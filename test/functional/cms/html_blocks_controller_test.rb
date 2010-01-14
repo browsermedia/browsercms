@@ -1,6 +1,7 @@
 require File.join(File.dirname(__FILE__), '/../../test_helper')
 
-class Cms::HtmlBlocksControllerTest < ActionController::TestCase
+module Cms
+class HtmlBlocksControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
   
   def setup
@@ -94,7 +95,7 @@ class Cms::HtmlBlocksControllerTest < ActionController::TestCase
     put :update, :id => @block.id, :html_block => {:name => "Test V2"}
     reset(:block)
 
-    assert_redirected_to [:cms, @block]
+    assert_redirected_to @block
     assert_equal html_block_count, HtmlBlock.count
     assert_incremented html_block_version_count, HtmlBlock::Version.count
     assert_equal "Test V2",  @block.draft.name
@@ -109,7 +110,7 @@ class Cms::HtmlBlocksControllerTest < ActionController::TestCase
     put :publish, :id => @block.id
     reset(:block)
 
-    assert_redirected_to [:cms, @block]
+    assert_redirected_to @block
     assert @block.reload.live?
   end  
   
@@ -129,7 +130,7 @@ class Cms::HtmlBlocksControllerTest < ActionController::TestCase
     assert_equal 3, @block.draft.version
     assert_equal "Test", @block.reload.name
     assert_equal "Html Block 'Test' was reverted to version 1", flash[:notice]
-    assert_redirected_to [:cms, @block]
+    assert_redirected_to @block
   end
   
   def test_revert_to_with_invalid_version_parameter
@@ -143,7 +144,7 @@ class Cms::HtmlBlocksControllerTest < ActionController::TestCase
     
     assert_equal html_block_version_count, HtmlBlock::Version.count
     assert_equal "Html Block 'Test V2' could not be reverted to version 99", flash[:error]
-    assert_redirected_to [:cms, @block]
+    assert_redirected_to  @block
   end
   
   def test_usages
@@ -160,4 +161,5 @@ class Cms::HtmlBlocksControllerTest < ActionController::TestCase
     assert_select "h3", "Content Types"
   end
   
+end
 end

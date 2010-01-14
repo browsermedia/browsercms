@@ -1,6 +1,7 @@
 require File.join(File.dirname(__FILE__), '/../../test_helper')
 
-class Cms::CacheControllerTest < ActionController::TestCase
+module Cms
+class CacheControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
   
   def setup
@@ -11,4 +12,5 @@ class Cms::CacheControllerTest < ActionController::TestCase
     #TODO: Implement Cache Expiration
   end
   
+end
 end

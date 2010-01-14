@@ -1,6 +1,7 @@
 #This is meant to be extended by other controller
 #Provides basic Restful CRUD
-class Cms::ResourceController < Cms::BaseController
+module Cms
+class ResourceController < Cms::BaseController
 
   def index
     instance_variable_set("@#{variable_name.pluralize}", resource.all(:order => order_by_column))
@@ -66,7 +67,9 @@ class Cms::ResourceController < Cms::BaseController
   end
 
   def resource
-    resource_name.classify.constantize
+    r = resource_name.classify.constantize rescue nil
+    r = "Cms::#{resource_name.classify}".constantize if r == nil
+    r
   end
 
   def build_object(params={})
@@ -79,7 +82,7 @@ class Cms::ResourceController < Cms::BaseController
   end
 
   def index_url
-    cms_index_url_for(resource_name)
+    cms_index_url_for("cms_#{resource_name}")
   end
 
   def after_create_url
@@ -91,7 +94,7 @@ class Cms::ResourceController < Cms::BaseController
   end
 
   def show_url
-    [:cms, @object]
+    @object
   end
 
   def order_by_column
@@ -105,4 +108,5 @@ class Cms::ResourceController < Cms::BaseController
     'cms/blocks/edit'
   end
 
+end
 end

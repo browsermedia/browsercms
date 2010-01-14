@@ -39,7 +39,11 @@ class ContentType < ActiveRecord::Base
   end
   
   def is_child_of?(content_type)
-    name.constantize.ancestors.map{|c| c.name}.include?(content_type.name)  
+    if Object.const_defined?(name.tableize.classify)
+      name.constantize.ancestors.map{|c| c.name}.include?(content_type.name)  
+    else
+      "Cms::#{name}".constantize.ancestors.map{|c| c.name}.include?(content_type.name)  
+    end
   end
   
   def form
@@ -55,7 +59,9 @@ class ContentType < ActiveRecord::Base
   end
 
   def model_class
-    name.tableize.classify.constantize
+    m = name.tableize.classify.constantize rescue nil
+    m = "Cms::#{name.tableize.classify}".constantize if m == nil
+    m
   end
 
   # Allows models to show additional columns when being shown in a list.

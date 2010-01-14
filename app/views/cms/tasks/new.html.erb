@@ -9,7 +9,7 @@
   <br clear="all"/>
 <% end %>
 
-<% form_for([:cms, @page, @task]) do |f| %>
+<% form_for([@page, @task]) do |f| %>
 
   <%= f.error_messages %>
   <div class="fields text_fields">

@@ -1,6 +1,7 @@
 require File.join(File.dirname(__FILE__), '/../../test_helper')
 
-class Cms::SectionNodesControllerTest < ActionController::TestCase
+module Cms
+class SectionNodesControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
   
   def test_index_as_admin
@@ -38,7 +39,7 @@ class Cms::SectionNodesControllerTest < ActionController::TestCase
   
 end
 
-class Cms::SectionNodesControllerPermissionsTest < ActionController::TestCase
+class SectionNodesControllerPermissionsTest < ActionController::TestCase
   tests Cms::SectionNodesController
   include Cms::ControllerTestHelper
   
@@ -82,3 +83,4 @@ class Cms::SectionNodesControllerPermissionsTest < ActionController::TestCase
   end
 end
 
+end

@@ -1,4 +1,5 @@
-class Cms::ConnectorsController < Cms::BaseController
+module Cms
+class ConnectorsController < Cms::BaseController
   
   before_filter :set_toolbar_tab
   before_filter :load_page, :only => [:new, :create]
@@ -60,4 +61,5 @@ class Cms::ConnectorsController < Cms::BaseController
     def set_toolbar_tab
       @toolbar_tab = :content_library
     end
+end
 end

@@ -1,4 +1,5 @@
-class Cms::DynamicViewsController < Cms::BaseController
+module Cms
+class DynamicViewsController < Cms::BaseController
   
   layout 'cms/administration'
   check_permissions :administrate  
@@ -27,7 +28,7 @@ class Cms::DynamicViewsController < Cms::BaseController
   end
   
   def show
-    redirect_to [:edit, :cms, @view]
+    redirect_to [:edit, @view]
   end
   
   def update
@@ -48,7 +49,9 @@ class Cms::DynamicViewsController < Cms::BaseController
   protected
     def dynamic_view_type
       @dynamic_view_type ||= begin
-        type = request.request_uri.split('/')[2].classify.constantize
+        type = request.request_uri.split('/')[2].classify.constantize rescue nil
+        type = "Cms::#{request.request_uri.split('/')[2].classify}".constantize if type == nil
+
         raise "Invalid Type" unless type.ancestors.include?(DynamicView)
         type
       end
@@ -62,4 +65,5 @@ class Cms::DynamicViewsController < Cms::BaseController
       @view = dynamic_view_type.find(params[:id])
     end
   
+end
 end

@@ -1,4 +1,5 @@
-class Cms::DashboardController < Cms::BaseController
+module Cms
+class DashboardController < Cms::BaseController
       
   def index
     @unpublished_pages = Page.unpublished.all(:order => "updated_at desc")
@@ -7,4 +8,5 @@ class Cms::DashboardController < Cms::BaseController
       :include => :page, 
       :order => "tasks.due_date desc, pages.name")
   end
+end
 end

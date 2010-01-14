@@ -1,6 +1,7 @@
 require File.join(File.dirname(__FILE__), '/../../test_helper')
 
-class Cms::ToolbarControllerTest < ActionController::TestCase
+module Cms
+class ToolbarControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
 
   def setup
@@ -61,4 +62,5 @@ class Cms::ToolbarControllerTest < ActionController::TestCase
       @page = Factory(:page, :section => root_section, :name => "Test", :path => "test")      
     end  
   
+end
 end

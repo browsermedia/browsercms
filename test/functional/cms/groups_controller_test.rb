@@ -1,6 +1,7 @@
 require File.join(File.dirname(__FILE__), '/../../test_helper')
 
-class Cms::GroupsControllerTest < ActionController::TestCase
+module Cms
+class GroupsControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
 
   def setup
@@ -47,4 +48,5 @@ class Cms::GroupsControllerTest < ActionController::TestCase
     assert !group.permission_ids.include?(@publish_content.id)
   end
 
+end
 end

@@ -1,6 +1,7 @@
 require File.join(File.dirname(__FILE__), '/../../test_helper')
 
-class Cms::SectionsControllerTest < ActionController::TestCase
+module Cms
+class SectionsControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
   
   def setup
@@ -26,14 +27,14 @@ class Cms::SectionsControllerTest < ActionController::TestCase
     put :update, :id => @section.to_param, :section => {:name => "V2"}
     reset(:section)
     
-    assert_redirected_to [:cms, @section]
+    assert_redirected_to @section
     assert_equal "V2", @section.name
     assert_equal "Section 'V2' was updated", flash[:notice]
   end  
   
 end
 
-class Cms::SectionFileBrowserControllerTest < ActionController::TestCase
+class SectionFileBrowserControllerTest < ActionController::TestCase
   tests Cms::SectionsController
   include Cms::ControllerTestHelper
   
@@ -84,7 +85,7 @@ class Cms::SectionFileBrowserControllerTest < ActionController::TestCase
   
 end
 
-class Cms::SectionsControllerPermissionsTest < ActionController::TestCase
+class SectionsControllerPermissionsTest < ActionController::TestCase
   tests Cms::SectionsController
   include Cms::ControllerTestHelper
   
@@ -222,4 +223,5 @@ class Cms::SectionsControllerPermissionsTest < ActionController::TestCase
     assert_response 403
     assert_template "cms/shared/access_denied"
   end
+end
 end

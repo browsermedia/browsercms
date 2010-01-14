@@ -1,6 +1,7 @@
 require File.join(File.dirname(__FILE__), '/../../test_helper')
 
-class Cms::ContentTypesControllerTest < ActionController::TestCase
+module Cms
+class ContentTypesControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
   
   def test_select
@@ -15,4 +16,5 @@ class Cms::ContentTypesControllerTest < ActionController::TestCase
     assert_select "a[href=?]", /.*html_block%5Bconnect_to_page_id%5D=#{@page.id}.*/, @html_block.display_name
   end  
   
+end
 end

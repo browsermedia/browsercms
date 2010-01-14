@@ -20,7 +20,6 @@ class Cms::MenuHelperTest < ActionView::TestCase
             ] },
             { :id => "cms/section_#{@nfc.id}", :url => "/dal", :name => "NFC" }
     ]
-    puts "--#{@bal.ancestors.first.visible_child_nodes(:limit => nil)}"
 
     assert_equal expected, menu_items(:page => @bal)
 

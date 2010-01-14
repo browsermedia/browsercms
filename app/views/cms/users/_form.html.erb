@@ -1,7 +1,7 @@
 <% content_for :html_head do %>
   <%= stylesheet_link_tag('cms/form_layout') %>
 <% end %>
-<% form_for([:cms, @user]) do |f| %>
+<% form_for(@user) do |f| %>
   <%= f.error_messages %>
   <%= render :partial => 'user_fields', :locals => {:f => f} unless @change_password %>
   <%= render :partial => 'password', :locals => {:f => f} if @user.new_record? %>

@@ -1,6 +1,7 @@
 require File.join(File.dirname(__FILE__), '/../../test_helper')
 
-class Cms::ContentControllerTest < ActionController::TestCase
+module Cms
+class ContentControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
 
   def test_show_home_page
@@ -222,7 +223,7 @@ end
 #   Logged in as cms user
 #         mysite.com/page         -> serves cached page
 #     cms.mysite.com/page         -> renders cms page editor
-class Cms::ContentCachingEnabledControllerTest < ActionController::TestCase
+class ContentCachingEnabledControllerTest < ActionController::TestCase
   tests Cms::ContentController
   include Cms::ControllerTestHelper
 
@@ -307,7 +308,7 @@ end
 #   Logged in as cms user
 #         mysite.com/page         -> renders cms page editor
 #     cms.mysite.com/page         -> renders cms page editor
-class Cms::ContentCachingDisabledControllerTest < ActionController::TestCase
+class ContentCachingDisabledControllerTest < ActionController::TestCase
   tests Cms::ContentController
   include Cms::ControllerTestHelper
 
@@ -431,4 +432,5 @@ class Cms::ContentCachingDisabledControllerTest < ActionController::TestCase
     assert_select "#hi", "hello"
 
   end
+end
 end

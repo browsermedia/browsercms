@@ -9,15 +9,6 @@ class CreatingPageTest < ActiveRecord::TestCase
       :path => "test", 
       :section => root_section, 
       :publish_on_save => true)
-
-    puts "@Name=#{@page.name}"
-    puts "@ClassName=#{Cms::Page.name}"
-    puts "@TableName=#{Cms::Page.table_name}"
-    puts "@VersionClass=#{Cms::Page.version_class}"
-    puts "@VersionForeignKey=#{Cms::Page.version_foreign_key}"
-    puts "@VersionTableName=#{Cms::Page.version_table_name}"
-    puts "@VersionedColumns=#{Cms::Page.versioned_columns}"
-
     
     assert @page.save
     assert_path_is_unique

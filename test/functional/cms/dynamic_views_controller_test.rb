@@ -1,6 +1,7 @@
 require File.join(File.dirname(__FILE__), '/../../test_helper')
 
-class Cms::DynamicViewsControllerTest < ActionController::TestCase
+module Cms
+class DynamicViewsControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
 
   def setup
@@ -25,4 +26,5 @@ class Cms::DynamicViewsControllerTest < ActionController::TestCase
       :text => "Deleted (html/erb)", :count => 0
   end
   
+end
 end

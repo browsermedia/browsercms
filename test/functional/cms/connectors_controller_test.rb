@@ -1,6 +1,7 @@
 require File.join(File.dirname(__FILE__), '/../../test_helper')
 
-class Cms::ConnectorsControllerTest < ActionController::TestCase
+module Cms
+class ConnectorsControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
   
   def setup
@@ -57,4 +58,5 @@ class Cms::ConnectorsControllerTest < ActionController::TestCase
     assert @page.connectors.for_page_version(@page.draft.version).empty?
   end
     
+end
 end

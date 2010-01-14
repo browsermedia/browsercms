@@ -6,7 +6,7 @@ class PasswordManagementTest < ActionController::IntegrationTest
     @group = Factory(:group, :name => "Member")
 
     @section = Factory(:section, :parent => root_section, :name => "Passwords", :path => "/passwords")
-    @section.groups = Group.all
+    @section.groups = Cms::Group.all
     @section.save
 
     @user = Factory(:user, :email => "dexter@miamidade.gov")
@@ -37,7 +37,7 @@ class PasswordManagementTest < ActionController::IntegrationTest
     get "/passwords"
     assert_response :success
     
-    post "/passwords", :email => User.last.email
+    post "/passwords", :email => Cms::User.last.email
     assert_response :success    
     assert flash[:forgot_password][:notice]
     assert ActionMailer::Base.deliveries.empty?
@@ -45,7 +45,7 @@ class PasswordManagementTest < ActionController::IntegrationTest
 
   def test_reset_password
     test_forgot_password
-    token = User.last.reset_token    
+    token = Cms::User.last.reset_token    
     get "/passwords/reset?token=#{token}"
     assert_response :success
     

@@ -4,7 +4,7 @@
   <%= link_to(span_tag("List All"), cms_users_path, 
     :id => "list_all_button", 
     :class => "button") if current_user.able_to?(:administrate) %>
-  <%= link_to(span_tag("Change Password"), [:change_password, :cms, @user], 
+  <%= link_to(span_tag("Change Password"), [:change_password, @user], 
     :id => "change_password_button", 
     :class => "button") %>
 <% end %>

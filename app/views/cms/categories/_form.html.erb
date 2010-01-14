@@ -1,8 +1,8 @@
-<% if CategoryType.count > 0 %>
+<% if Cms::CategoryType.count > 0 %>
   <% content_for :html_head do %>
     <script type="text/javascript">
       jQuery(function($){
-        var categoriesByType = <%= CategoryType.category_map.to_json %>
+        var categoriesByType = <%= Cms::CategoryType.category_map.to_json %>
         $("#category_category_type_id").change(function(){
           $("#category_parent_id option").remove()
           $.each(categoriesByType[$(this).val()], function(){        
@@ -13,8 +13,8 @@
     </script>
   <% end %>
 
-  <% @block.category_type ||= (Category.last(:include => :category_type) && Category.last.category_type) %>  
-  <%= f.cms_drop_down :category_type_id, CategoryType.all(:order => "name").map{|c| [c.name, c.id]}, :prompt => "Select a Type of Category", :label => "Type" %>
+  <% @block.category_type ||= (Cms::Category.last(:include => :category_type) && Cms::Category.last.category_type) %>  
+  <%= f.cms_drop_down :category_type_id, Cms::CategoryType.all(:order => "name").map{|c| [c.name, c.id]}, :prompt => "Select a Type of Category", :label => "Type" %>
 
   <% categories = @block.category_type ? @block.category_type.category_list.map{|c| [c.path, c.id]} : [] %>
   <% unless categories.empty? %>

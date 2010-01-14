@@ -1,6 +1,7 @@
 require File.join(File.dirname(__FILE__), '/../../test_helper')
 
-class Cms::ImageBlocksControllerTest < ActionController::TestCase
+module Cms
+class ImageBlocksControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
 
   def setup
@@ -40,7 +41,7 @@ class Cms::ImageBlocksControllerTest < ActionController::TestCase
     put :update, :id => @image.id, :image_block => {:attachment_section_id => @other_section.id}
     reset(:image)
 
-    assert_redirected_to [:cms, @image]
+    assert_redirected_to @image
     assert_equal @other_section, @image.attachment_section
   end  
   
@@ -61,7 +62,7 @@ class Cms::ImageBlocksControllerTest < ActionController::TestCase
     put :revert_to, :id => @image.id, :version => "1"
     reset(:image)
     
-    assert_redirected_to [:cms, @image]
+    assert_redirected_to @image
     assert !@image.live?    
     @draft_image = @image.as_of_draft_version
     assert_equal 2, @image.version
@@ -72,4 +73,5 @@ class Cms::ImageBlocksControllerTest < ActionController::TestCase
     assert_equal "11111", File.read(@draft_image.attachment.full_file_location)
   end
   
+end
 end
