@@ -30,7 +30,14 @@ class UserTest < ActiveSupport::TestCase
 
     @user.expires_at = 1.day.ago
     assert @user.expired?
-  end  
+  end
+  def test_active
+    @user = Factory(:user)
+    assert User.active.all.include?(@user)
+
+    @user.update_attribute(:expires_at, 1.year.from_now)
+    assert User.active.all.include?(@user)
+  end
   def test_disable_enable
     @user = Factory(:user)
 
