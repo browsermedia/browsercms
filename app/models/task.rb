@@ -28,7 +28,7 @@ class Task < ActiveRecord::Base
   
   protected
     def mark_other_tasks_for_the_same_page_as_complete
-      self.class.other_than(self).incomplete.all.each do |t|
+      self.class.for_page(self.page_id.to_i).other_than(self).incomplete.all.each do |t|
         t.mark_as_complete!
       end
     end
