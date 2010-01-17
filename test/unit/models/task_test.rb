@@ -6,7 +6,8 @@ class TaskTest < ActiveSupport::TestCase
     @editor_a = create_admin_user(:login => "editor_a", :email => "editor_a@example.com")    
     @editor_b = create_admin_user(:login => "editor_b", :email => "editor_b@example.com")
     @non_editor = Factory(:user, :login => "non_editor", :email => "non_editor@example.com")
-    @page = Factory(:page, :name => "Task Test", :path => "/task_test")          
+    @page = Factory(:page, :name => "Task Test", :path => "/task_test")
+    @page2 = Factory(:page, :name => "Task Test 2", :path => "/task_test_2")
   end
 end
   
@@ -19,6 +20,7 @@ class CreateTaskTest < TaskTest
     assert_that_a_page_is_required
   
     create_the_task!
+    create_the_second_task!
   
     assert !@task.completed?
     assert(@task.due_date < Time.now)
@@ -70,6 +72,15 @@ class CreateTaskTest < TaskTest
         :page => @page)      
     end
 
+    def create_the_second_task!
+      @task2 = Task.create!(
+        :assigned_by => @editor_a,
+        :assigned_to => @editor_b,
+        :due_date => 1.minutes.ago,
+        :comment => "Howdy Again!",
+        :page => @page2)
+    end
+
     def assert_that_an_email_is_sent_to_the_user_the_task_was_assigned_to
       email = EmailMessage.first(:order => "created_at desc")
       assert_equal @editor_a.email, email.sender
@@ -86,8 +97,12 @@ class CreateTaskTest < TaskTest
     def assert_that_the_task_is_added_to_the_users_incomplete_tasks
       assert !@editor_a.tasks.incomplete.all.include?(@task), 
         "Expected Editor A's incomplete tasks not to include the task"
+      assert !@editor_a.tasks.incomplete.all.include?(@task2),
+        "Expected Editor A's incomplete tasks not to include the second task"
       assert @editor_b.tasks.incomplete.all.include?(@task),
-        "Expected Editor B's incomplete tasks to include the task"      
+        "Expected Editor B's incomplete tasks to include the task"
+      assert @editor_b.tasks.incomplete.all.include?(@task2),
+        "Expected Editor B's incomplete tasks to include the second task"
     end
   
 end
