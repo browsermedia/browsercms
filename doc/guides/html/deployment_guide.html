@@ -127,15 +127,18 @@
                         <div id="subCol">
         <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
         <ol class="chapters">
-<li><a href="#configure-the-production-environment">Configure the Production Environment</a><ul></ul></li><li><a href="#setting-up-virtual-hosts-for-page-caching">Setting Up Virtual Hosts for Page Caching</a><ul></ul></li></ol></div>
+<li><a href="#configure-the-production-environment">Configure the Production Environment</a><ul></ul></li><li><a href="#setting-up-virtual-hosts-for-page-caching">Setting Up Virtual Hosts for Page Caching</a><ul></ul></li><li><a href="#using-capistrano-to-deploy">Using Capistrano to Deploy</a><ul></ul></li></ol></div>
                 </td>
                 <td class="guides">
                   <h2>BrowserCMS Deployment Guide</h2>
 <p>This guide covers how to setup the Apache Passenger (mod_rails) production environment for your BrowserCMS application.</p>
                   <h3 id="configure-the-production-environment">1 Configure the Production Environment</h3>
-<p>Make sure the config/environments/production.rb file has these two configuration settings.  If you created your BrowserCMS Rails app using one of the application templates, this will already have been added.</p>
-<div class="code_container"><code class="ruby">config.action_view.cache_template_loading = false
-config.action_controller.page_cache_directory = RAILS_ROOT + &quot;/public/cache/&quot;</code></div>
+<p>Make sure the config/environments/production.rb file has these following configuration settings.  If you created your BrowserCMS Rails app using one of the application templates, this will already have been added but you may need to configure them to match your site&#8217;s domain and mail server.</p>
+<div class="code_container"><code class="ruby">SITE_DOMAIN=&quot;www.sitedomain.com&quot; # This should match the URL for your public CMS site.
+config.action_view.cache_template_loading = false
+config.action_controller.page_cache_directory = RAILS_ROOT + &quot;/public/cache/&quot;
+config.action_mailer.smtp_settings = {:address =&gt; 'mail.yourmailserver.com', :domain =&gt; &quot;#{SITE_DOMAIN}&quot;}</code></div>
+<p>The SITE_DOMAIN in particular is used to build links to <span class="caps">CMS</span> pages that can be emailed.</p>
 <h3 id="setting-up-virtual-hosts-for-page-caching">2 Setting Up Virtual Hosts for Page Caching</h3>
 <p>In order to setup BrowserCMS to due page caching, you need to create two virtual hosts for your site.  The main purpose for this is to allow page caching to work when you access a page on the main site, but then have the pages not be served from the cache when you are working in the BrowserCMS interface.</p>
 <div class="code_container"><code class="plain">&lt;VirtualHost *:80&gt;
@@ -167,6 +170,19 @@ config.action_controller.page_cache_directory = RAILS_ROOT + &quot;/public/cache
     Allow from all
   &lt;/directory&gt;
 &lt;/VirtualHost&gt;</code></div>
+<h3 id="using-capistrano-to-deploy">3 Using Capistrano to Deploy</h3>
+<p>If you plan to use Capistrano to deploy your sites, you will likely need to make some additional configuration changes. In particular, you will want to change where files are uploaded to. For example, add the following your <em>config/initializers/browsercms.rb</em> file.</p>
+<div class="code_container"><code class="ruby">if RAILS_ENV == 'production'
+  # Uploaded files/images will be written out to this directory instead of the default (tmp/uplaods) directory
+  Attachment.storage_location = File.join(Rails.root, &quot;uploads&quot;)
+end</code></div>
+<p>Then update your config/deploy.rb (which Capistrano should generate) so that it creates an shared/uploads directory, and a symlink to it from within your project.</p>
+<div class="code_container"><code class="ruby">task :link_shared_directories do
+  run &quot;ln -s #{shared_path}/uploads #{release_path}/uploads&quot;
+end
+
+after &quot;deploy:update_code&quot;, :link_shared_directories</code></div>
+<p>The binary data for uploaded files will be placed in shared/uploads and the <span class="caps">CMS</span> will serve the data from there.</p>
                 </td>
               </tr>
             </table>

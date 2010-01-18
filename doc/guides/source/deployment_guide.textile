@@ -6,12 +6,16 @@ endprologue.
 
 h3. Configure the Production Environment
 
-Make sure the config/environments/production.rb file has these two configuration settings.  If you created your BrowserCMS Rails app using one of the application templates, this will already have been added.
+Make sure the config/environments/production.rb file has these following configuration settings.  If you created your BrowserCMS Rails app using one of the application templates, this will already have been added but you may need to configure them to match your site's domain and mail server. 
 
 <ruby>
+SITE_DOMAIN="www.sitedomain.com" # This should match the URL for your public CMS site.
 config.action_view.cache_template_loading = false
 config.action_controller.page_cache_directory = RAILS_ROOT + "/public/cache/"
+config.action_mailer.smtp_settings = {:address => 'mail.yourmailserver.com', :domain => "#{SITE_DOMAIN}"}
 </ruby>
+
+The SITE_DOMAIN in particular is used to build links to CMS pages that can be emailed.
 
 h3. Setting Up Virtual Hosts for Page Caching
 
@@ -48,3 +52,26 @@ In order to setup BrowserCMS to due page caching, you need to create two virtual
   </directory>
 </VirtualHost>
 </plain>
+
+h3. Using Capistrano to Deploy
+
+If you plan to use Capistrano to deploy your sites, you will likely need to make some additional configuration changes. In particular, you will want to change where files are uploaded to. For example, add the following your _config/initializers/browsercms.rb_ file.
+
+<ruby>
+if RAILS_ENV == 'production'
+  # Uploaded files/images will be written out to this directory instead of the default (tmp/uplaods) directory
+  Attachment.storage_location = File.join(Rails.root, "uploads")
+end	
+</ruby>
+
+Then update your config/deploy.rb (which Capistrano should generate) so that it creates an shared/uploads directory, and a symlink to it from within your project. 
+
+<ruby>
+task :link_shared_directories do
+  run "ln -s #{shared_path}/uploads #{release_path}/uploads"
+end
+
+after "deploy:update_code", :link_shared_directories
+</ruby> 
+
+The binary data for uploaded files will be placed in shared/uploads and the CMS will serve the data from there.
