@@ -18,7 +18,7 @@ class User < ActiveRecord::Base
   has_many :groups, :through => :user_group_memberships
   has_many :tasks, :foreign_key => "assigned_to_id"
 
-  named_scope :active, :conditions => ["expires_at IS NULL OR expires_at > ?", Time.now]    
+  named_scope :active, :conditions => ["expires_at IS NULL OR expires_at > ?", Time.now.utc]    
   named_scope :able_to_edit_or_publish_content, 
     :include => {:groups => :permissions}, 
     :conditions => ["permissions.name = ? OR permissions.name = ?", "edit_content", "publish_content"]
