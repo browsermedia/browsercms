@@ -36,7 +36,7 @@ module Cms
             def versioned_object
               send(versioned_class.name.underscore.to_sym)
             end                 
-          end
+          end unless self.const_defined?("Version")
 
           version_class.versioned_class = self
 
