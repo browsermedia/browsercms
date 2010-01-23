@@ -133,5 +133,32 @@ class SectionTest < ActiveSupport::TestCase
     @section = Section.new(:name => "FTW", :path => "/whatever")
     assert_valid @section
   end  
-  
+
+  def test_loading_groups_into_map
+    groups = Group.all(&:id)
+    assert_equal Group, groups[0].class
+
+    groups = Group.all()
+    assert_equal Group, groups[0].class, "No difference between this and the previous call."
+
+    group_ids = Group.all.map(&:id)
+    assert_equal Fixnum, group_ids[0].class
+  end
+
+  def test_new_section_with_groups
+    section = Section.new(:allow_groups=>:all)
+    assert_equal Group.all, section.groups
+
+  end
+
+  def test_new_section_with_no_groups
+    s = Section.new(:allow_groups=>:none)
+    assert_equal 0, s.groups.size
+  end
+
+  def test_create_section
+    s = Section.create!(:name=>"For All", :path=>"/", :allow_groups=>:all)
+
+    assert_equal Group.count, Section.with_path("/").first.groups.size
+  end
 end
