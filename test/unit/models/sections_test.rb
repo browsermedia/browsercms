@@ -134,9 +134,9 @@ class SectionTest < ActiveSupport::TestCase
     assert_valid @section
   end  
 
-  def test_loading_groups_into_map
+  def test_old_syntax_for_marking_group_sections
     groups = Group.all(&:id)
-    assert_equal Group, groups[0].class
+    assert_equal Group, groups[0].class, "This is previous"
 
     groups = Group.all()
     assert_equal Group, groups[0].class, "No difference between this and the previous call."
