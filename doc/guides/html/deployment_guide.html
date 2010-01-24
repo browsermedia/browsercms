@@ -137,7 +137,8 @@
 <div class="code_container"><code class="ruby">SITE_DOMAIN=&quot;www.sitedomain.com&quot; # This should match the URL for your public CMS site.
 config.action_view.cache_template_loading = false
 config.action_controller.page_cache_directory = RAILS_ROOT + &quot;/public/cache/&quot;
-config.action_mailer.smtp_settings = {:address =&gt; 'mail.yourmailserver.com', :domain =&gt; &quot;#{SITE_DOMAIN}&quot;}</code></div>
+config.action_mailer.smtp_settings = {:address =&gt; 'mail.yourmailserver.com',
+                                      :domain =&gt; &quot;#{SITE_DOMAIN}&quot;}</code></div>
 <p>The SITE_DOMAIN in particular is used to build links to <span class="caps">CMS</span> pages that can be emailed.</p>
 <h3 id="setting-up-virtual-hosts-for-page-caching">2 Setting Up Virtual Hosts for Page Caching</h3>
 <p>In order to setup BrowserCMS to due page caching, you need to create two virtual hosts for your site.  The main purpose for this is to allow page caching to work when you access a page on the main site, but then have the pages not be served from the cache when you are working in the BrowserCMS interface.</p>

@@ -3,15 +3,16 @@ h2. Getting Started
 The purpose of this guide is help new developers get up and running with BrowserCMS. It covers how to:
 
 * Install the BrowserCMS gem
-* Create a new project which uses BrowserCMS
+* Create a demo project to explore BrowserCMS
+* Create a blank project for building a website from scratch
 
 endprologue.
 
 h3. Installing BrowserCMS
 
-BrowserCMS is packaged as a gem, which can be included in any Rails project. The gem contains the code for the cms application itself, as well as public assets, including stylesheets, images and javascript. These assets will be copied from the gem into your project as part of the install process.
+BrowserCMS is packaged as a gem which can be included in any Rails project. The gem contains the code for the cms application itself, as well as public assets, including stylesheets, images and javascript. These assets will be copied from the gem into your project as part of the install process.
 
-The gem is hosted at RubyForge, so you can install it by doing:
+The gem is hosted at Gemcutter, so you can install it by doing:
 
 <shell>
 $ sudo gem install browsercms
@@ -21,32 +22,23 @@ h4. Things you need first
 
 Before you can create a project using BrowserCMS, you will need to have the following installed.
 
-1. *Rails 2.3* (or later) - We make use of some of the newer features from Rails like application generator templates.
-2. *A Database* - Either Mysql or the Sqlite gems should be installed.
+# *Rails 2.3* (or later) - We make use of some of the newer features from Rails like application generator templates.
+# *A Database* - Either Mysql or the Sqlite gems should be installed.
 
 h3. Trying out BrowserCMS
 
-This section will cover how to create a demo project using BrowserCMS, so you can play around with it. It will create a sample project, with some pages and content to play around with. You will need to choose one of the following options, depending on which database you want to use.
+This section will cover how to create a demo project using BrowserCMS, so you can play around with it. It will create a sample project, with some pages and content to play around with.
 
-h4. With SQLite3
+h4. Your first project
+BrowserCMS
 
 <shell>
-$ rails my_new_project_name -m http://browsercms.org/templates/demo.rb
-$ cd my_new_project_name
+$ browsercms project_name -m demo
+$ cd project_name
 $ script/server
 </shell>
 
 By default, Rails assumes that if you do not specify a -d flag, that you want to use SQLite as your project's database. You need to have the sqlite3-ruby gem installed for this to work.
-
-h4. With MySQL
-
-<shell>
-$ rails my_new_project_name -d mysql -m http://browsercms.org/templates/demo.rb
-$ cd my_new_project_name
-$ script/server
-</shell>
-
-Here we specify the -d mysql flag to rails, which will create our project using MySQL. You need to have the mysql gem installed for this to work.
 
 h4. Using your Site
 
@@ -56,15 +48,45 @@ To learn more about the types of things you can do with BrowserCMS, see the "Use
 
 h3. Starting a 'Real' project
 
-Demo sites are fine for learning the ropes, but when its time to start working on a 'real' project, you don't want a lot of dummy data that needs to be cleaned out. Using Rails' 2.3 application template feature, we have a blank template (templates/blank.rb) which will create a more stripped down version of site. BrowserCMS projects are started like any other Rails project, using an application generator template, which is hosted on github.
+Demo sites are fine for learning the ropes, but when its time to start working on a 'real' project, you don't want a lot
+of dummy data that needs to be cleaned out. To start a typical, 'blank' project, you can run the following command. Here
+we will specify the -d flag, which will use MySQL as the database.
 
-Assuming you want to use MySQL as the database. Run the following:
+Run the following:
 
 <shell>
-$ cd ~/projects
-$ rails my_new_project_name -d mysql -m http://browsercms.org/templates/blank.rb
-$ cd my_new_project_name
+$ browsercms project_name -d mysql
+$ cd project_name
 $ script/server
 </shell>
 
-This is going to create the development and testing copies of the database, migrate the db, populate it with the bare minimum content it needs, and copy all of the necessary files from the gem into the rails project. Open your browser to "http://localhost:3000/cms":http://localhost:3000/cms to log in, using cmsadmin/cmsadmin as the username/password.
+You need to have the mysql gem installed for this to work. This is going to create the development and testing copies of
+the database, migrate the db, populate it with the bare minimum content it needs, and copy all of the necessary files
+from the gem into the rails project. Open your browser to "http://localhost:3000/cms":http://localhost:3000/cms to log in,
+using cmsadmin/cmsadmin as the username/password.
+
+h3. The really short version
+
+There is a shorter version of the commandline script, which works identically to the longer form detailed above.
+
+<shell>
+$ bcms project_name -d mysql
+</shell>
+
+No difference in functionality, just less to type.
+
+h3. Getting Command line Help
+
+You can get assistance from the commandline tool by running +browsercms+ with no arguments, like so:
+
+<shell>
+$ browsercms
+</shell>
+
+This will show common usages, as well as all the help options available. The +browsercms+ command piggybacks on top of the
++rails+ command, so many of the options available are the same as +rails+, including +-f+ or +--force+.
+
+h3. Deploying to production
+
+Once you get ready to start deploying your application into production environments, be sure to review the "Deployment Guide":deployment_guide.html.
+There are several 'gotchas' to be aware of that may differ from deploying other Rails applications. 

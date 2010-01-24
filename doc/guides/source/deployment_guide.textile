@@ -12,7 +12,8 @@ Make sure the config/environments/production.rb file has these following configu
 SITE_DOMAIN="www.sitedomain.com" # This should match the URL for your public CMS site.
 config.action_view.cache_template_loading = false
 config.action_controller.page_cache_directory = RAILS_ROOT + "/public/cache/"
-config.action_mailer.smtp_settings = {:address => 'mail.yourmailserver.com', :domain => "#{SITE_DOMAIN}"}
+config.action_mailer.smtp_settings = {:address => 'mail.yourmailserver.com',
+                                      :domain => "#{SITE_DOMAIN}"}
 </ruby>
 
 The SITE_DOMAIN in particular is used to build links to CMS pages that can be emailed.
