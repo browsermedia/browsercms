@@ -6,13 +6,14 @@ require(File.join(File.dirname(__FILE__), 'config', 'boot'))
 require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
-
 require 'tasks/rails'
+require File.dirname(__FILE__) + "/lib/cms/version.rb"
 
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "browsercms"
+    gem.version = Cms::VERSION
     gem.summary = %Q{BrowserCMS is a general purpose, open source Web Content Management System (CMS), written in Ruby on Rails.}
     gem.description = %Q{Web Content Management in Rails.}
     gem.email = "github@browsermedia.com"

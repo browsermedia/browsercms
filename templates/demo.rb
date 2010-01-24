@@ -5,7 +5,10 @@ else
   run "rm public/index.html"
 end
 
-gem "browsercms"
+# Loads the version, so we can explicitly set in the generated cms project.
+template_root = File.dirname(File.expand_path(template))
+require File.join(template_root, '..', 'lib', 'cms', 'version.rb')
+gem "browsercms", :version=>Cms::VERSION
 
 generate :jdbc if defined?(JRUBY_VERSION)
 
