@@ -6,7 +6,7 @@ API documentation for v3.1.0.
 == Getting Started (Short Version)
 The following requires SQLite3 and Rails 2.3.2 (or later).
 
-    sudo gem install browsercms
+    gem install browsercms
 
     browsercms project_name -m demo
     cd project_name
