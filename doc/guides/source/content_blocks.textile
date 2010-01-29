@@ -213,6 +213,34 @@ This will render a styled select box which will present the four choices and sto
 
 !images/content_blocks/add_field_to_form.png!
 
+h3. Renaming Content Types
+
+When you generate a content block, by default it will use the name of the class as the 'Display Name' through out the user interface. In the content library in the content type menu you see 'Products' and the page says 'View Product'. In some cases, the name of the class may be different that how you want it displayed, or you might want to relabel it without rewriting your code. 
+
+You can set the display_name of a given content type by defining a new method in your block. Suppose we wanted to rename our +Product+ Block from "Product" to "Book" throughout the UI. Edit the +app/model/product.rb+ to add the following method.
+
+<ruby>
+class Product < ActiveRecord::Base
+  # ...
+  def self.display_name
+    "Book"
+  end
+end	
+</ruby>
+
+BrowserCMS will use whatever value is returned by +display_name+ in the UI for singular labels (i.e. Add New Book). It will automatically pluralize +display_name+ as well. If you want to explicitly set the plural form of your block, you can do so by adding the following method to the block.
+
+<ruby>
+class Product < ActiveRecord::Base
+  # ...
+  def self.display_name_plural
+    "Bookz"
+  end
+end	
+</ruby>
+
+NOTE. This will not change the path to manage the block. I.e. even after change from "Product" to "Book", the route for viewing a Product will be +/cms/products/1+, not +/cms/books/1+.
+
 h3. Grouping Related Blocks
 
 As you define new Content Blocks in your project, you will notice that each new one will appear in its own group on the Content Types menu of the Content Library. By default, each Block will be assigned to its own group. It's often a good idea to group several related Content Blocks together into a single group to keep users understand which types belong together. Open the +db/migrate/20100128194303_create_products.rb+ migration file, which is where the 'Group' name is set.

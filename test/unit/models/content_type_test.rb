@@ -5,25 +5,37 @@ class Kindness < ActiveRecord::Base
   acts_as_content_block
 end
 
+class ReallyLongNameClass < ActiveRecord::Base
+  acts_as_content_block
+
+  def self.display_name
+    "Short"
+  end
+
+  def self.display_name_plural
+    "Shorteez"
+  end
+end
+
 class ContentTypeTest < ActiveSupport::TestCase
   def setup
-    @c = ContentType.new(:name => "HtmlBlock")
+    @c = ContentType.new(:name => "ReallyLongNameClass")
   end
 
   def test_model_class
-    assert_equal HtmlBlock, @c.model_class
+    assert_equal ReallyLongNameClass, @c.model_class
   end
 
-  def test_display_name
-    assert_equal "Text", @c.display_name
+  test "creating self.display_name on content block will set display_name on content type" do
+    assert_equal "Short", @c.display_name
   end
 
-  def test_display_name_plural
-    assert_equal "Text", @c.display_name_plural
+  test "creating self.display_name_plural on content block will set display_name_plural on content type" do
+    assert_equal "Shorteez", @c.display_name_plural
   end
 
   def test_content_block_type
-    assert_equal "html_blocks", @c.content_block_type
+    assert_equal "really_long_name_classes", @c.content_block_type
   end
 
   test "find_by_key handles names that end with s correctly" do

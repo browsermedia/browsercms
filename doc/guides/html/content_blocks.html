@@ -135,7 +135,7 @@
                         <div id="subCol">
         <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
         <ol class="chapters">
-<li><a href="#generating-a-new-content-block">Generating a new Content Block</a><ul><li><a href="#generated-files">Generated files</a></li><li><a href="#migrating-the-database">Migrating the database</a></li><li><a href="#viewing-the-user-interface">Viewing the User Interface</a></li></ul></li><li><a href="#available-attributes">Available Attributes</a><ul><li><a href="#examples">Examples</a></li><li><a href="#gotchas">Gotchas</a></li><li><a href="#other-attributes">Other Attributes</a></li></ul></li><li><a href="#validations">Validations</a><ul></ul></li><li><a href="#customizing-the-form">Customizing the Form</a><ul></ul></li><li><a href="#changing-the-view">Changing the View</a><ul></ul></li><li><a href="#adding-more-attributes">Adding more attributes</a><ul><li><a href="#adding-a-content-column-via-migration">Adding a content column via migration</a></li><li><a href="#add-field-to-form">Add Field to Form</a></li></ul></li><li><a href="#grouping-related-blocks">Grouping Related Blocks</a><ul><li><a href="#adding-a-second-block-to-store-group">Adding a Second Block to &#8216;Store&#8217; Group</a></li></ul></li><li><a href="#associations-between-blocks">Associations between Blocks</a><ul></ul></li><li><a href="#field-types">Field Types</a><ul><li><a href="#select--cms-drop-down">Select / <tt>cms_drop_down</tt></a></li><li><a href="#attachments--cms-file-field">Attachments / <tt>cms_file_field</tt></a></li></ul></li><li><a href="#controllers">Controllers</a><ul><li><a href="#public-controllers">Public Controllers</a></li></ul></li></ol></div>
+<li><a href="#generating-a-new-content-block">Generating a new Content Block</a><ul><li><a href="#generated-files">Generated files</a></li><li><a href="#migrating-the-database">Migrating the database</a></li><li><a href="#viewing-the-user-interface">Viewing the User Interface</a></li></ul></li><li><a href="#available-attributes">Available Attributes</a><ul><li><a href="#examples">Examples</a></li><li><a href="#gotchas">Gotchas</a></li><li><a href="#other-attributes">Other Attributes</a></li></ul></li><li><a href="#validations">Validations</a><ul></ul></li><li><a href="#customizing-the-form">Customizing the Form</a><ul></ul></li><li><a href="#changing-the-view">Changing the View</a><ul></ul></li><li><a href="#adding-more-attributes">Adding more attributes</a><ul><li><a href="#adding-a-content-column-via-migration">Adding a content column via migration</a></li><li><a href="#add-field-to-form">Add Field to Form</a></li></ul></li><li><a href="#renaming-content-types">Renaming Content Types</a><ul></ul></li><li><a href="#grouping-related-blocks">Grouping Related Blocks</a><ul><li><a href="#adding-a-second-block-to-store-group">Adding a Second Block to &#8216;Store&#8217; Group</a></li></ul></li><li><a href="#associations-between-blocks">Associations between Blocks</a><ul></ul></li><li><a href="#field-types">Field Types</a><ul><li><a href="#select--cms-drop-down">Select / <tt>cms_drop_down</tt></a></li><li><a href="#attachments--cms-file-field">Attachments / <tt>cms_file_field</tt></a></li></ul></li><li><a href="#controllers">Controllers</a><ul><li><a href="#public-controllers">Public Controllers</a></li></ul></li></ol></div>
                 </td>
                 <td class="guides">
                   <h2>Understanding Content Blocks</h2>
@@ -360,7 +360,24 @@ end</code></div>
 &lt;%= f.cms_text_field :price, :instructions=&gt;&quot;Required. Must be an integer (i.e. 1, not 1.0)&quot; %&gt;</code></div>
 <p>This will render a styled select box which will present the four choices and store the value as a string. Open <tt>/cms/products/new</tt> and you should see the following:</p>
 <p><img src="images/content_blocks/add_field_to_form.png" alt="" /></p>
-<h3 id="grouping-related-blocks">7 Grouping Related Blocks</h3>
+<h3 id="renaming-content-types">7 Renaming Content Types</h3>
+<p>When you generate a content block, by default it will use the name of the class as the &#8216;Display Name&#8217; through out the user interface. In the content library in the content type menu you see &#8216;Products&#8217; and the page says &#8216;View Product&#8217;. In some cases, the name of the class may be different that how you want it displayed, or you might want to relabel it without rewriting your code.</p>
+<p>You can set the display_name of a given content type by defining a new method in your block. Suppose we wanted to rename our <tt>Product</tt> Block from &#8220;Product&#8221; to &#8220;Book&#8221; throughout the UI. Edit the <tt>app/model/product.rb</tt> to add the following method.</p>
+<div class="code_container"><code class="ruby">class Product &lt; ActiveRecord::Base
+  # ...
+  def self.display_name
+    &quot;Book&quot;
+  end
+end</code></div>
+<p>BrowserCMS will use whatever value is returned by <tt>display_name</tt> in the UI for singular labels (i.e. Add New Book). It will automatically pluralize <tt>display_name</tt> as well. If you want to explicitly set the plural form of your block, you can do so by adding the following method to the block.</p>
+<div class="code_container"><code class="ruby">class Product &lt; ActiveRecord::Base
+  # ...
+  def self.display_name_plural
+    &quot;Bookz&quot;
+  end
+end</code></div>
+<div class='note'><p>This will not change the path to manage the block. I.e. even after change from &#8220;Product&#8221; to &#8220;Book&#8221;, the route for viewing a Product will be <tt>/cms/products/1</tt>, not <tt>/cms/books/1</tt>.</p></div>
+<h3 id="grouping-related-blocks">8 Grouping Related Blocks</h3>
 <p>As you define new Content Blocks in your project, you will notice that each new one will appear in its own group on the Content Types menu of the Content Library. By default, each Block will be assigned to its own group. It&#8217;s often a good idea to group several related Content Blocks together into a single group to keep users understand which types belong together. Open the <tt>db/migrate/20100128194303_create_products.rb</tt> migration file, which is where the &#8216;Group&#8217; name is set.</p>
 <div class="code_container"><code class="ruby">class CreateProducts &lt; ActiveRecord::Migration
   def self.up
@@ -371,7 +388,7 @@ end</code></div>
 end</code></div>
 <p>When a new <tt>ContentType</tt> is created, it determines which group_name is used. By default, the group name will be the same as the block name. Change the <tt>:group_name=>"Product"</tt> to <tt>:group_name=>"Store"</tt>, then run the following command to drop and rebuild the database using the migrations <tt>rake db:drop db:create db:migrate</tt></p>
 <div class='note'><p>This technique is an easy way to just toss out all your development data and start over. Often times, its quicker to just edit an existing migration and rerun them all, rather than create a ton of little migrations just for changes to your local database.</p></div>
-<h4 id="adding-a-second-block-to-store-group">7.1 Adding a Second Block to &#8216;Store&#8217; Group</h4>
+<h4 id="adding-a-second-block-to-store-group">8.1 Adding a Second Block to &#8216;Store&#8217; Group</h4>
 <p>Now that we have renamed our Group from &#8216;Product&#8217; to &#8216;Store&#8217;, lets add another block to the &#8216;Store&#8217;. Run the following:</p>
 <div class="code_container"><code class="html">$ script/generate content_block ShippingMethod name:string insured:boolean</code></div>
 <p>Before running the migration, edit the <tt>db/migrate/20100129154902_create_shipping_methods.rb</tt> file to alter the following line:</p>
@@ -385,12 +402,12 @@ end</code></div>
 end</code></div>
 <p>Now run the migration to add the Shipping Method block. Open your browser to <tt>/cms/products</tt> and your Content Types menu should look like this:</p>
 <p><img src="images/content_blocks/add_second_block.png" alt="" /></p>
-<h3 id="associations-between-blocks">8 Associations between Blocks</h3>
+<h3 id="associations-between-blocks">9 Associations between Blocks</h3>
 <p>Since Content Blocks are Active Record objects, they can be associated with each other like any models can. This includes the commonly used <tt>belongs_to</tt> and <tt>has_many</tt> associations. You can see the <a href="http://guides.rubyonrails.org/association_basics.html">Active Record Associations Guide</a> for details on how associations work.</p>
 <p>When you associate Content Blocks, you will need to determine how you allow users to edit content. For instance, if our <tt>Product</tt> had a <tt>belongs_to</tt> relationship with a <tt>Category</tt> object you can use a <tt>cms_drop_down</tt> Field that allows users to select a single category.</p>
 <p>In some cases, you may need to build your own form fields for more complex relationships (Like javascript based controls). You can use the basic Rails <tt>FormBuilder</tt> methods to construct new Fields. To get things to look right (with labels and alignments), you should start with the html used to generate other fields and work backwards from there.</p>
 <div class='note'><p><strong>Understanding Versioning:</strong> It&#8217;s important to recognize how versioning works with respect to related blocks. Versioning will keep track of the state of each block everytime the row is saved, but does not keep track of the relationships between blocks. So if I update our <tt>Product</tt> block, then renamed the <tt>Category</tt> block it&#8217;s related to, reverting that <tt>Product</tt> will not undo the Category name change.</p></div>
-<h3 id="field-types">9 Field Types</h3>
+<h3 id="field-types">10 Field Types</h3>
 <p>This section servers as a quick reference of the field types that Content Blocks can have. Fields are the html widgets you use to edit properties on blocks. The complete list of available fields is:</p>
 <ul>
 	<li>Text Fields (<tt>cms_text_field</tt>)</li>
@@ -403,7 +420,7 @@ end</code></div>
 	<li>Date Picker (<tt>cms_date_picker</tt>)</li>
 	<li>Date Time Select (<tt>cms_datetime_select</tt>)</li>
 </ul>
-<h4 id="select--cms-drop-down">9.1 Select / <tt>cms_drop_down</tt></h4>
+<h4 id="select--cms-drop-down">10.1 Select / <tt>cms_drop_down</tt></h4>
 <p>This is similar to the traditional &#8216;select&#8217; helper, it renders a stylized select control which allows users to choose one item from a list.</p>
 <p>In _form.html.erb:</p>
 <div class="code_container"><code class="html">&lt;%= f.cms_drop_down :category_id, Category.all(:order =&gt; &quot;name&quot;).map{|c| [c.name, c.id]},
@@ -413,7 +430,7 @@ end</code></div>
 <div class="code_container"><code class="ruby">class Product &lt; ActiveRecord::Base
     belongs_to :category
 end</code></div>
-<h4 id="attachments--cms-file-field">9.2 Attachments / <tt>cms_file_field</tt></h4>
+<h4 id="attachments--cms-file-field">10.2 Attachments / <tt>cms_file_field</tt></h4>
 <p>Each content block can have a single file attachment, which will allow users to upload files into the content repository. After uploading, the file will be
 stored in a section within the <span class="caps">CMS</span>. Since sections determine permissions, this will allow you to control which users can access the file itself. Attached files
 will have their own versioning history, which will keep track of changes.</p>
@@ -432,12 +449,12 @@ end</code></div>
 <ol>
 	<li>To Do &#8211; Add additional examples of other Fields (like cms_drop_down with example of relationships)</li>
 </ol>
-<h3 id="controllers">10 Controllers</h3>
+<h3 id="controllers">11 Controllers</h3>
 <p>Each block is will also have an associated Controller, which gives it the same <span class="caps">CRUD</span> methods that a typical Rails resource would have, along with a few others (like publishing and reverting). By default, the generated controller inherits all this behavior from <tt>Cms::ContentBlockController</tt> and is therefore pretty empty. Like so:</p>
 <div class="code_container"><code class="ruby">class Cms::ProductsController &lt; Cms::ContentBlockController
 end</code></div>
 <p>If you want to define new methods (or override the existing methods) you can do so by editing this controller.</p>
-<h4 id="public-controllers">10.1 Public Controllers</h4>
+<h4 id="public-controllers">11.1 Public Controllers</h4>
 <p>The above controller is intended to handle only admin related actions. If you want to create a controller to use in the front end of your application, create a products controller that is not in the <span class="caps">CMS</span> namespace, so as not to conflict the <span class="caps">CMS</span> functionality.</p>
                 </td>
               </tr>

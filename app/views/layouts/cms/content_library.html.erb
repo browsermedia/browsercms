@@ -52,15 +52,15 @@
                 <%= yield :sidebar %>
                 <h3>Content Types</h3>
                 <ul>
-                  <% ContentTypeGroup.all(:order => "content_type_groups.id").each do |g| %>
-                    <li<%= ' class="open"' if (g == content_type.content_type_group) %>>
-                      <% if g.content_types.blank? %>
-                        <%= link_to h(g.name), "#" %>
+                  <% ContentTypeGroup.all(:order => "content_type_groups.id").each do |group| %>
+                    <li<%= ' class="open"' if (group == content_type.content_type_group) %>>
+                      <% if group.content_types.blank? %>
+                        <%= link_to h(group.name), "#" %>
                       <% else %>
-                        <%= link_to h(g.name), cms_index_path_for(g.content_types.first) %>
+                        <%= link_to h(group.name), cms_index_path_for(group.content_types.first) %>
                         <ul>
-                          <% g.content_types.find(:all, :order => 'priority, name').each do |t| %>
-                            <li<%= ' class="on"' if content_type.is_child_of?(t) %>><%= link_to h(t.display_name), cms_index_path_for(t) %></li>
+                          <% group.content_types.find(:all, :order => 'priority, name').each do |type| %>
+                            <li<%= ' class="on"' if content_type.is_child_of?(type) %>><%= link_to h(type.display_name), cms_index_path_for(type) %></li>
                           <% end -%>
                         </ul>
                       <% end -%>
