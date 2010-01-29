@@ -1,0 +1,143 @@
+h2. Portlets Guide
+
+This guide covers how to use the Portlets extend the functionality of your BrowserCMS site.  The target audience for this guide is developers who are familiar with Rails. You should also read the "Building a Site with BrowserCMS":user_guide.html guide first as well, so you know how to create pages and put content on pages.  This guide will cover:
+
+* What portlets are and how they work
+* How to create custom portlets
+
+endprologue.
+
+h3. Creating A Portlet
+
+Once you have created the product content block and created a few products in the content library, you need a way to
+display them on a page.  To do that, you will want to create a portlet.
+
+A portlet is a type of content block used to display dynamic data on a page (usually other content blocks). A portlet will typically perform
+some kind of database query in the render method and then render it's view.  One difference between a portlet and
+typical content block is that each instance of a portlet can have a view template that is editable via the CMS admin interface.
+Let's generate a portlet to display the most recently created products:
+
+<shell>
+$ script/generate portlet recent_products limit:integer
+</shell>
+
+What you will see created is:
+
+* A portlet at <tt>app/portlets/recent_products_portlet.rb</tt>
+* A form partial at <tt>app/views/portlets/recent_products/_form.html.erb</tt>
+* A render template at <tt>app/views/portlets/recent_products/render.html.erb</tt>
+
+What you don't see created is a migration.  Portlets use the "DynamicAttributes":/doc/app/classes/Cms/Behaviors/DynamicAttributes.html
+behavior in order to store associated values in the database without having to create custom database tables.  What
+this means is that you can set and then store a value for any attribute for a portlet.
+
+So if you look at the form partial that was generate for this portlet, you will see this:
+
+<erb>
+<%= f.cms_text_field :name %>
+<%= f.cms_text_field :limit %>
+<%= f.cms_template_editor :template %>
+</erb>
+
+Every portlet instance has to have a name and that is stored in the main <tt>portlets</tt> table, but <tt>limit</tt> is stored in the <tt>portlet_attributes</tt> table.
+You could add anything to this form, such as <tt><%= f.cms_text_field :foobar %></tt>, and whatever the user enters for <tt>foobar</tt> would get saved with the portlet.
+
+If you look at the code for the portlet, you will see:
+
+<ruby>
+class RecentProducts < Portlet
+
+  enable_template_editor false
+
+  def render
+    # Your Code Goes Here
+  end
+    
+end
+</ruby>
+
+As the comment says, you will want to fill in your application logic here.  We're going to get the most recent products
+and use the value the user entered for limit when they filled out the form.  So edit the render method to look like:
+
+<ruby>
+class RecentProducts < Portlet
+    
+  def render
+    @products = Product.all(:order => "created_at desc", :limit => self.limit)
+  end
+    
+end
+</ruby>
+
+<code>self</code> in this case is the portlet instance, which is also available in the instance variable 
+<code>@portlet</code>.  
+We are setting the <code>@products</code> instance variable so that will be available in the view.  If you look at the render template, you will see this:
+
+<erb>
+<%=h @portlet.name %>
+</erb>
+
+This is simply a place holder, you should override this code with how you want the portlet to display. In this case, let's go with:
+
+<erb>
+<ul>
+  <% @products.each do |product| %>
+    <li><%=h product.name %></li>
+  <% end %>
+</ul>
+</erb>
+
+
+h4. Allowing template editing via the UI
+
+By default, each instance of a Portlet will render itself using the contents of it's 'render.html.erb' file, because 'enable_template_editor' was marked false.
+If you look back at the form partial that was generated, you'll see:
+
+<erb>
+<%= f.cms_template_editor :template %>
+</erb>
+
+This is the editing control for the Portlet's template, which will not appear on CMS UI by default. This allows you to quickly
+refine how you want the default view to look. Once you like the layout for a portlet, you can enable the editor like so:
+
+<ruby>
+class RecentProducts < Portlet
+    enable_template_editor true
+end
+</ruby>
+
+Now each instance of the RecentProducts can have its own unique template. Each time a new portlet is created, the contents of
+the 'render.html.erb' will be copied into the template attribute of the portlet and used to display the portlet. Users can
+update these views as they see fit.
+
+*Gotcha:* It's important to remember that once a portlet has a saved template, it will ignore what's in the render.html.erb. So changes made there won't
+be reflected until the portlet's template has been updated again.
+
+h4. Default Template Handlers
+
+By default, templates are treated as erb views. The template editor has a drop down that allows users to choose other types like 'builder' or 'rhtml'. To set the default handler
+to something other than erb, modify the _form.html.erb to the following:
+
+<erb>
+<%= f.template_editor :template, :default_handler=>"builder" %>
+</erb>
+
+h4. Alternative handlers for non-editable templates
+
+If the template_editor is disabled, you can also set the handler directly on the portlet like so:
+
+<ruby>
+  class RecentProducts < Portlet
+    enable_template_editor false
+    handler "builder"
+  end
+</ruby>
+
+h4. Using HAML templates
+
+The default list of handlers does not include Haml. To do that, install the HAML gem and set the default_value to 'haml' like so:
+
+<erb>
+<%= f.template_editor :template, :default_handler=>"haml" %>
+</erb>
+

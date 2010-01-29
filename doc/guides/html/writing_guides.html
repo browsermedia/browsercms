@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title><%= yield :page_title %></title>
+    <title></title>
     <link rel="stylesheet" type="text/css" href="files/stylesheets/syntax.css" />
     <script type="text/javascript" src="files/javascripts/code_highlighter.js"></script>
     <script type="text/javascript" src="files/javascripts/highlighters.js"></script>
@@ -125,18 +125,31 @@
         <div class="top_cap"></div>
         <div id="contentwrap">
           <div class="title">
-            <h1><%= yield :page_title %></h1>
+            <h1></h1>
           </div>
           <div class="top_cap_content"></div>
           <div id="content">
             <table width="100%" cellpadding="0" cellspacing="0" border="0">
               <tr>                
                 <td class="sidebar" valign="top">
-                  <%= yield :index_section %>
+                        <div id="subCol">
+        <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+        <ol class="chapters">
+</ol></div>
                 </td>
                 <td class="guides">
-                  <%= yield :header_section %>
-                  <%= yield %>
+                  
+                  <h2>Writing Guides</h2>
+<p>Things to keep in mind:</p>
+<ul>
+	<li>Use a text editor that supports word wrapping (like Textmate) to avoid having line breaks in paragraphs.</li>
+	<li>We are using the same textile extensions that Rails Guides uses. See http://github.com/lifo/docrails/raw/master/railties/guides/source/ for examples of their documentation.</li>
+	<li>From within browsercms, run <tt>rake cms:guides</tt> to generate all the docs.</li>
+	<li>To generate only one guide (like <tt>writing_guides.textile</tt>), run <tt>rake cms:guides ONLY=writing_guides</tt></li>
+</ul>
+<h3>Textile Extensions:</h3>
+<div class='info'><p>Adds a tip.</p></div>
+<div class='note'><p>Adds a note.</p></div>
                 </td>
               </tr>
             </table>

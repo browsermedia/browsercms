@@ -1,42 +1,54 @@
 h2. BrowserCMS Reference Documentation
 
-BrowserCMS is a general purpose, open source Web Content Management System (CMS), written in Ruby on Rails. It is designed to support three distinct groups of people:
+These guides are designed to provide details on how to work with BrowserCMS, and to assist in understanding how different parts of the CMS work together. As a Web Content Management system, there are two general pieces to understand; how to use the CMS interface to build websites and how to extend/deploy BrowserCMS websites.
 
-# Non-technical web editors who want a humane system to manage their site, without needing to understand what HTML or even Rails is.
-# Designers who want to create large and elegantly designed websites with no artificial constraints by the CMS.
-# Developers who want to add a CMS into their Rails projects, or create CMS driven websites for their clients.
-
-This guide is for BrowserCMS v3.0.1.
+These guides are for BrowserCMS v3.1.0.
 
 endprologue.
 
-h3. Guides
+h3. Getting Started
 
-Below are a list of guides on how the above groups can use BrowswerCMS, to design, build and maintain websites.
+h4. "Getting Started with BrowserCMS":getting_started.html
 
-h4. "Getting Started":getting_started.html
+Everything you need to know to install BrowserCMS and create your first website.
 
-The easy way to install BrowserCMS and create a project with it.
+h3. Interface Guide
 
-h4. "User's Guide":user_guide.html
+h4. "Interface Guide":user_guide.html
 
-How to use the basic features of BrowserCMS.
+Designed as an overview of the BrowserCMS interface for Cms editors and site builders.
+
+h3. Installation / Deployment
 
 h4. "Installing a Module":installing_modules.html
 
 How to add a module to your BrowserCMS project.
 
-h4. "Developer Guide":developer_guide.html
-
-How to customize and extend a BrowserCMS site to add dynamic behavior and content.
-
-h4. "Designer's Guide":designer_guide.html
-
-How to turn a design into a styled website, by building templates. (Incomplete)
-
 h4. "Deployment Guide":deployment_guide.html
 
 How to configure Apache and Passenger to work with BrowserCMS in production mode.
+
+h3. Developing on BrowserCMS
+
+h4. "Customizing BrowserCMS":customizing_browsercms_.html
+
+Basic overview of the ways to modify and extend how BrowserCMS works.
+
+h4. "Content Blocks":content_blocks_.html
+
+This guide covers how to create, customize and use Content Blocks.
+
+h4. "Portlets":portlets.html
+
+This guide covers how to create and customize Portlets.
+
+h4. "Building Templates":designer_guide.html
+
+How to turn a design into a styled website, by building templates. (Incomplete)
+
+h4. "Building Modules":building_modules.html
+
+This guide covers how to create new modules to be packaged and shared with other BrowserCMS developers. (Incomplete)
 
 h4. "Building on the Edge":build_it_yourself.html
 

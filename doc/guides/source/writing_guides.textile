@@ -1,0 +1,15 @@
+h2. Writing Guides
+
+Things to keep in mind:
+
+* Use a text editor that supports word wrapping (like Textmate) to avoid having line breaks in paragraphs.
+* We are using the same textile extensions that Rails Guides uses. See http://github.com/lifo/docrails/raw/master/railties/guides/source/ for examples of their documentation.
+* From within browsercms, run +rake cms:guides+ to generate all the docs.
+* To generate only one guide (like +writing_guides.textile+), run +rake cms:guides ONLY=writing_guides+
+
+h3. Textile Extensions:
+
+TIP: Adds a tip.
+
+NOTE. Adds a note.
+
