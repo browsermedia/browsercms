@@ -64,6 +64,7 @@ Blocks are really just ActiveRecord models, and they will support all of the sam
 
 |_. Generator |_. Migration |_. Field |_. Description |
 | string | string | cms_text_field | A single line text field allowing for basic text entry. |
+| text | text | cms_text_area | A multiline text area for basic text. |
 | integer | integer | cms_text_field | See +string+ |
 | decimal | decimal | cms_text_field | See +string+ |
 | boolean | boolean | cms_check_box | A single check box |

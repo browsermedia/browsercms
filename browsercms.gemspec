@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["BrowserMedia"]
-  s.date = %q{2010-01-26}
+  s.date = %q{2010-01-29}
   s.description = %q{Web Content Management in Rails.}
   s.email = %q{github@browsermedia.com}
   s.executables = ["browsercms", "bcms"]
@@ -571,9 +571,10 @@ Gem::Specification.new do |s|
      "doc/guides/html/authentication.html",
      "doc/guides/html/build_it_yourself.html",
      "doc/guides/html/building_modules.html",
+     "doc/guides/html/content_blocks.html",
+     "doc/guides/html/customizing_browsercms.html",
      "doc/guides/html/deployment_guide.html",
      "doc/guides/html/designer_guide.html",
-     "doc/guides/html/developer_guide.html",
      "doc/guides/html/files/javascripts/code_highlighter.js",
      "doc/guides/html/files/javascripts/guides.js",
      "doc/guides/html/files/javascripts/highlighters.js",
@@ -585,6 +586,8 @@ Gem::Specification.new do |s|
      "doc/guides/html/images/bg.png",
      "doc/guides/html/images/bottom_cap.png",
      "doc/guides/html/images/browsercms_logo.png",
+     "doc/guides/html/images/content_blocks/add_field_to_form.png",
+     "doc/guides/html/images/content_blocks/add_second_block.png",
      "doc/guides/html/images/dot.png",
      "doc/guides/html/images/icons/README",
      "doc/guides/html/images/icons/callouts/1.png",
@@ -616,7 +619,9 @@ Gem::Specification.new do |s|
      "doc/guides/html/images/top_cap_content.png",
      "doc/guides/html/index.html",
      "doc/guides/html/installing_modules.html",
+     "doc/guides/html/portlets.html",
      "doc/guides/html/user_guide.html",
+     "doc/guides/html/writing_guides.html",
      "lib/acts_as_list.rb",
      "lib/browsercms.rb",
      "lib/cms/acts/content_block.rb",
@@ -1296,6 +1301,7 @@ Gem::Specification.new do |s|
      "rails_generators/portlet/portlet_generator.rb",
      "rails_generators/portlet/templates/_form.html.erb",
      "rails_generators/portlet/templates/portlet.rb",
+     "rails_generators/portlet/templates/portlet_helper.rb",
      "rails_generators/portlet/templates/render.html.erb",
      "rails_generators/portlet/templates/unit_test.erb",
      "templates/blank.rb",

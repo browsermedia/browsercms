@@ -16,6 +16,10 @@ class PortletGenerator < Rails::Generator::NamedBase
       m.directory File.join('app/portlets', class_path)
       m.template 'portlet.rb', File.join('app/portlets', class_path, "#{portlet_file_name}.rb")
 
+      # Create the helper
+      m.directory File.join('app/portlets/helpers')
+      m.template 'portlet_helper.rb', File.join('app/portlets/helpers', class_path, "#{portlet_file_name}_helper.rb")
+
       # Create the edit form for the content type
       m.directory File.join('app/views/portlets', file_name)
       m.template '_form.html.erb', File.join('app/views/portlets/', file_name, "_form.html.erb")

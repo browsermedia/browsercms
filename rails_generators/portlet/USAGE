@@ -4,7 +4,7 @@ Description:
 
     Attribute pairs are column_name:sql_type arguments specifying the
     model's attributes. By default, portlets include name:string and template:text
-    attributes, so don't specify them.
+    attributes, so do not specify them.
 
     This generates a portlet class in app/portlets, a form in app/view/portlets and
     a default view to render the portlet in app/view/portlets, and a unit test in
@@ -17,6 +17,7 @@ Example:
 
         A portlet to find and display a list of recent Article blocks.
             Portlet:            app/portlets/list_recent_articles_portlet.rb
+            Helper:             app/portlets/helpers/list_recent_articles_portlet_helper.rb
             Form View:          app/views/portlets/list_recent_articles/_form.html.erb
             Default Template:   app/views/portlets/list_recent_articles/render.html.erb
             Unit Test:          test/unit/portlets/list_recent_articles_portlet_test.rb
@@ -29,6 +30,7 @@ Example with attributes:
 
         A portlet to display a specific number of articles, as specified in the admin UI.
             Portlet:            app/portlets/find_top_x_articles_portlet.rb
+            Helper:             app/portlets/helpers/find_top_x_articles_portlet_helper.rb
             Form View:          app/views/portlets/find_top_x_articles/_form.html.erb
             Default Template:   app/views/portlets/find_top_x_articles/render.html.erb
             Unit Test:          test/unit/portlets/find_top_x_articles_portlet_test.rb
