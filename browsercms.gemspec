@@ -1305,6 +1305,9 @@ Gem::Specification.new do |s|
      "rails_generators/portlet/templates/portlet_helper.rb",
      "rails_generators/portlet/templates/render.html.erb",
      "rails_generators/portlet/templates/unit_test.erb",
+     "rails_generators/template/USAGE",
+     "rails_generators/template/template_generator.rb",
+     "rails_generators/template/templates/template.erb",
      "templates/blank.rb",
      "templates/demo.rb",
      "templates/module.rb"
