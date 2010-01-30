@@ -28,6 +28,10 @@ environment 'config.action_controller.page_cache_directory = RAILS_ROOT + "/publ
 initializer 'browsercms.rb', <<-CODE
 Cms.attachment_file_permission = 0640
 CODE
+
+require File.join(template_root, '..', 'app', 'models', 'templates.rb')
+file 'app/views/layouts/templates/default.html.erb', Templates.default_body
+
 if Gem.win_platform?
   puts "        rake  db:migrate"
   `rake.cmd db:migrate`
