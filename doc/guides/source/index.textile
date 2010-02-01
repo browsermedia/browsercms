@@ -42,9 +42,9 @@ h4. "Portlets":portlets.html
 
 This guide covers how to create and customize Portlets.
 
-h4. "Building Templates":designer_guide.html
+h4. "Building Templates":building_templates_.html
 
-How to turn a design into a styled website, by building templates. (Incomplete)
+This guide covers how to create and organize page templates which govern the design/theme of a website.
 
 h4. "Building Modules":building_modules.html
 
