@@ -5,8 +5,7 @@ This guide covers how to set up templates for BrowserCMS. After reading this gui
 * How to create page templates
 * How to take advantage of dynamic menus
 * How to reuse common bits of html with page partials
-* How to use helpers to add dynamic content to templates and partials
-* How to use the CMS-specific form builder extensions
+* How to use tags to add dynamic content to templates and partials
 
 endprologue.
 
@@ -122,6 +121,7 @@ This section covers a reference for all the tags (aka Helper Methods) that can b
 | +cms_toolbar+ | Renders the CMS toolbar controller required for editing and navigation. Should be very first element in +body+ | Yes |
 | +yield :html_head | This allows the CMS to insert javascript and other information into the page. Should be last element in +head+ | Yes | 
 | +page_title+ | Inserts the 'Name' of the page (or 'Title' if it exists) | No |
+| +current_page+ | Returns a reference to the +Page+ object that is currently being rendered | No |
 | +render_breadcrumbs+ | Generates breadcrumbs based on the current page and its location in the sitemap | No |
 | +render_menu+ | Generates a menu based on the current page and its location in the sitemap | No |
 | +render_portlet+ | Renders a specific portlet by name | No |
@@ -137,11 +137,319 @@ While most of the tags are optional, there are several tags which must be includ
 2. +cms_toolbar+ - Leaving this out will provide editing and navigation to other CMS pages.
 3. +container+ - Having at least one (typically called +:main+) is required to allow content to be added to pages.
 
-h3. Menus and Breadcrumbs
+h4. +container+ Tag
 
-BrowserCMS provides an API to allow menus and breadcrumbs to be dynamically generated based on the sitemap. The advantage of this is menus can automatically include new pages as they are added to the site, and can detect which section of the 
+This tag is used to allow areas of the page to be editted and render through the CMS. It takes a single argument which is the name of the container. Template developers can name containers whatever they like, but its recommened that the names should generally reflect the area or purpose of a particular container. 
+
+<erb>
+	<div><%= container :main %></div>
+	<div><%= container :footer %></div>
+</erb>
+
+Container names are just labels. So if you defined 5 containers on a template (header, footer, left, main, right), you could swap between any two templates which defined all those containers. 
+
+NOTE. Be aware that if you add content to a page in a container (like +:sidebar+) then change a pages template to one which does not have that container, the content will be 'orphaned'. To remove that content, you would need to swap back to the previous template, remove the content, then change back to the new template again.
+
+h4. +cms_toolbar+ Tag
+
+This tag is how the toolbar is inserted into templates. It should be the first element in the +body+ element of a page. In most cases, you can just use it as follows:
+
+<erb>
+<body>
+	<%= cms_toolbar %>
+	<h2>About Us</h2>
+	<!-- Text goes here -->
+</body>
+</erb>
+
+The toolbar is written out as an iframe which makes its less likely that styles/javascript will clash with the page being editted.
+
+h4. HTML Head Tag
+
+This tag is technically a standard +yield+ call, with a particularly named +:html_head+. This tag must be included in all CMS templates to allow it to insert the necessary javascript and style elements. It should probably be the last element in +head+ element of a page.
+
+<erb>
+<head>
+  <title><%= page_title %></title>
+  <%= yield :html_head %>
+</head>	
+</erb>
+
+h4. +page_title+ Tag
+
+This tag will output the +name+ attribute of the current page. If the +title+ attribute is specified, it will output that instead. This allows users to have one label for a page appear in the navigation (navigation and the sitemap always use +name+) and another in the header or title bar on a page.
+
+Example:
+
+<erb>
+<title>My Site | <%= page_title %></title>
+</erb>
+
+This is using the page_title tag to title element of a page.
+
+<erb>
+<h1><%= page_title %></h1>
+</erb>
+
+Another common usage of +page_title+ is for the H1 or H2 on a page.
+
+h4. +current_page+ Tag
+
+This doesn't render anything, but returns a reference to the current +Page+ object that is being rendered. It can be used to access other attributes of the page, like the name of the section or the +description+ of the Page. Here are some common examples:
+
+<erb>
+<%= current_page.name %>
+</erb>
+
+This outputs the +name+ attribute of the page, similar to how +page_title+ works. You might do this if you had specified a +title+ attribute for pages which was different than the +name+, but wanted to compare names.
+
+<erb>
+<%= current_page.section.name %>	
+</erb>
+
+This outputs the +name+ of the current page's section.
+
+<erb>
+<% if current_page.top_level_section.name == 'About Us' %>
+<%= image_tag "/fancy/about_us_section_image.png" %>
+<% end %>	
+</erb>
+
+This renders a specific image if the page is within the top level 'About Us' section. The +top_level_section+ method finds the very top level section for a give page, regardless of how far down it is in the sitemap. Useful for making comparisons based on the first level of navigation.
+
+NOTE. Any page or section attribute is reachable in the way. You will need to look at the API documentation for +Page+ and +Section+ to see all the available attributes. 
+
+h4. +render_portlet+ Tag
+
+This tag will render a portlet from a template. Normally portlets are placed individually on each page by users. This tag is useful for common elements that might appear on multiple pages throughout the site. An example of this might be a Login Portlet which should appear as part of the header on all pages. Here's an example:
+
+<erb>
+<%= render_portlet "Nav Login Form" %>	
+</erb>
+
+The only argument to +render_portlet+ is a name. This name will match the name specified in the UI when you add a portlet. You will need to create the portlet and name in appropriately for this tag to work. The portlet will render itself based on its template.
+
+h4. +render_connectable+ Tag
+
+This tag can render a specific block in a page. It takes one argument, the block itself. This could be used to automatically include, say a footer, into a page as part of the template. For instance:
+
+<erb>
+	<% footer = HtmlBlock.find(12) %>
+	<%= render_connectable(footer) %>
+</erb>
+
+Here we use Active Record to query for a specific HtmlBlock (i.e. Text) with the id of 12. Then we pass it to +render_connectable+ to display itself.
+
+h3. Navigation
+
+Most websites typically features some form of navigation via menus and/or breadcrumbs. Some navigation is highly graphical and changes infrequently. Other's might use drop downs (via Javascript), while still users have site maps that drill down to the deepest pages. BrowserCMS is designed to support many different navigation choices, including everything from hand coded horizontal navigation to dynamic left side menus.
+
+h4. Dynamic Menus and Breadcrumbs
+
+One of the features that BrowserCMS provides is an menu and breadcrumb generation tags. These tags can automatically generate menus/breadcrumbs based on the current page. For breadcrumbs, they render linkable items for the page and its parents. For menus, it can show a page, all it's siblings as well as highlight the currently selected sections. The primary advantage of this is for rendering menus which can frequently change, like section navigation. As pages are added to the sitemap, they will automatically appear in the menus.
+
+h4. Basic Rules of Menus
+
+Understanding dynamic menus can be tricky things, so you will likely need to experiment with them, but here are some basic rules to remember.
+
+# Menus will automatically generate names and URLs based on the +name+ and +path+ attributes of pages in the sitemap.
+# Hidden pages/section are not shown. If you mark a page or section as 'hidden' via the sitemap, it will never be shown in the menu.
+# Unpublished pages are not shown. If you change a page name or url, it won't appear until the page is published.
+# Menus are built as nested unordered lists. 
+# Menus can show currently 'open' sections, as well as the 'selected' item via CSS. 
+
+Here's an example of a site map using part of the "National Football League's":http://en.wikipedia.org/wiki/National_Football_Conference conference system. While not all reader may be familiar with 'American' football, it does provide a nice example of a tree structure that has multiple levels (Conferences > Divisions > Teams).
+
+!images/nfl_sitemap.png!
+
+h4. Basic Vertical Menus
+
+When you generate a template, you should have a basic menu which will look something like this:
 
 <ruby>
-render_menu
+<%= render_menu %>
 </ruby>
 
+This would render a menu starting with all the top level sections, creating unordered lists as far down as the current page. If I navigate to the _Dallas_ page (+/nfc/east/dallas), the following HTML would be rendered:
+
+<html>
+<div id="menu" class="menu">
+  <ul>
+    <li id="page_1" class="depth-1 first">
+      <a href="/">Home</a>
+    </li>
+    <li id="section_3" class="depth-1 open">
+      <a href="/nfc/east/dallas">NFC</a>
+      <ul>
+        <li id="section_5" class="depth-2 first open">
+          <a href="/nfc/east/dallas">East</a>
+          <ul>
+            <li id="page_5" class="depth-3 first on">
+              <a href="/nfc/east/dallas">Dallas</a>
+            </li>
+            <li id="page_6" class="depth-3 last">
+              <a href="/nfc/east/new-york">New York</a>
+            </li>
+          </ul>
+        </li>
+        <li id="section_6" class="depth-2">
+          <a href="/nfc/north/chicago">North</a>
+        </li>
+        <li id="section_7" class="depth-2">
+          <a href="/nfc/west/atlanta">West</a>
+        </li>
+        <li id="section_11" class="depth-2 last">
+          <a href="/nfc/south/tampa-bay">South</a>
+        </li>
+      </ul>
+    </li>
+    <li id="section_4" class="depth-1 last">
+      <a href="#">AFC</a>
+    </li>
+  </ul>
+</div>
+</html>
+
+Things to note:
+* The top level containing element for the menu is marked as +id+ and +class+ = +menu+. (This can be changed via parameters.)
+* We are currently on the 'Dallas' page. So the +li+ is marked with an +on+ class.
+* The 'NFC' and 'East' sections are open (because they are ancestors of the 'Dallas' page). They are marked with an +open+ class.
+* All siblings to 'open' sections are shown (i.e. we see 'AFC' and 'North', but nothing under them). The first and last element of each list is marked with +first+ and +last+.
+* The depth of each element has a style. For instance, the 'Dallas' page is at +depth-3+.
+
+h4. How Deep Should Menus Be?
+
+Since we have not given any options to +render_menu+, it will render all levels down to the current page. In a deeply nested site, you could end up with 4 to 5 levels. In general practice, its often best to limit menus to 2-3 levels. You can do this by specifying how deep and when we want to start menus. For instance, the following menu code would behave identically to the previous one.
+
+<erb>
+<%= render_menu :from_top=>0, :depth=>3 %>
+</erb>
+
+This menu will show all items below level 0 (+from_top=>0+) and showing a total 3 levels of navigation (+depth=>3). Our 'top level' sections/pages (like _AFC_, _NFC_ and _Home__) are all at depth=>1, so they are shown. The _East_ page is second level and the _Dallas_ page is the 3 level, so we see all three levels of navigation. 
+
+In general, the +:depth+ option is used to 'cut off' navigation after a certain point (since a vertical leftside nav can only render so many levels), while +:from_top+ is used to determine how high to start. Here's some further examples:
+
+h4. Primary Navigation
+
+Want to show only the first level of navigation? Try this:
+
+<erb>
+<%= render_menu :from_top=>0, :depth=>1 %>	
+</erb>
+
+This will render only a single level of our top level navigation, regardless of how deep our site goes. Here's the output when we are on the _Dallas_ page.
+
+<html>
+<div id="menu" class="menu">
+  <ul>
+    <li id="page_1" class="depth-1 first">
+      <a href="/">Home</a>
+    </li>
+    <li id="section_3" class="depth-1">
+      <a href="/nfc/east/dallas">NFC</a>
+    </li>
+    <li id="section_4" class="depth-1 last">
+      <a href="#">AFC</a>
+    </li>
+  </ul>
+</div>
+<h1>Dallas</h1>
+</html>
+
+h4. Sub Navigation
+
+Suppose we wanted to have two menus on a site, a horizontal 'primary' navigation and a vertical 'sub' navigation. In this case, we want to show our NFL conferences as the primary navigation, and when you drill down the Division would be shown as the left side navigation. Here's how the left nav can be generated.
+
+<erb>
+<%= render_menu :from_top=>1, :depth=>2, :class=>"leftmenu" %>	
+</erb>
+
+Here is the output when we are on the _Dallas_ page.
+
+<html>
+<div id="menu" class="leftmenu">
+  <ul>
+    <li id="section_5" class="depth-1 first open">
+      <a href="/nfc/east/dallas">East</a>
+      <ul>
+        <li id="page_5" class="depth-2 first on">
+          <a href="/nfc/east/dallas">Dallas</a>
+
+        </li>
+        <li id="page_6" class="depth-2 last">
+          <a href="/nfc/east/new-york">New York</a>
+        </li>
+      </ul>
+    </li>
+    <li id="section_6" class="depth-1">
+      <a href="/nfc/north/chicago">North</a>
+
+    </li>
+    <li id="section_7" class="depth-1">
+      <a href="/nfc/west/atlanta">West</a>
+    </li>
+    <li id="section_11" class="depth-1 last">
+      <a href="/nfc/south/tampa-bay">South</a>
+    </li>
+  </ul>
+
+</div>
+</html>
+
+h4. Site Maps and Flyout Menus
+
+You can also handle sitemaps and flyout menus by specifying some additional attributes. Normally, menus will not show the entire tree, but you can make them by doing the following:
+
+<erb>
+	<%= render_menu :show_all_siblings=>true %>
+</erb>
+
+This will render every visible node in the tree, regardless of which page we are currently on. It follows the same +:from_top+ and +:depth+ rules as other menus. 
+
+h4. Breadcrumbs
+
+Breadcrumbs work very similar fashion to menus, except that they only render a single list which includes the current page and all ancestors. 
+
+<erb>
+<%= render_breadcrumbs %>
+</erb>
+
+If we are on the _Dallas_ page, this will render the following HTML:
+
+<html>
+<ul class="breadcrumbs">
+  <li class="first"><a href="/">My Site</a></li>
+  <li><a href="/nfc/east/dallas">NFC</a></li>
+  <li><a href="/nfc/east/dallas">East</a></li>
+
+  <li>Dallas</li>
+</ul>
+</html>
+
+If we moved to the _Detroit_ page, it would render this:
+
+<html>
+<ul class="breadcrumbs">
+  <li class="first"><a href="/">My Site</a></li>
+  <li><a href="/nfc/east/dallas">NFC</a></li>
+  <li><a href="/nfc/north/chicago">North</a></li>
+
+  <li>Detroit</li>
+</ul>
+</html>
+ 
+You can also specify some options to it:
+
+<erb>
+<%= render_breadcrumbs :from_top=>1 %>
+</erb>
+
+This would exclude the top level section (i.e. the name of the site _My Site_). This would render the following if I was on the _Dallas_ page:
+
+<html>
+<ul class="breadcrumbs">
+  <li class="first"><a href="/nfc/east/dallas">NFC</a></li>
+  <li><a href="/nfc/east/dallas">East</a></li>
+  <li>Dallas</li>
+</ul>
+</html>

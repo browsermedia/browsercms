@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Templates</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Templates</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../files/app/models/templates_rb.html">
+                app/models/templates.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+    <div id="description">
+      <p>
+Separated into its own file so it can be required in Application <a
+href="Templates.html">Templates</a> and Generators easier.
+</p>
+
+    </div>
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000252">default_body</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000252" class="method-detail">
+        <a name="M000252"></a>
+
+        <div class="method-heading">
+          <a href="#M000252" class="method-signature">
+          <span class="method-name">default_body</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Generates a basic empty template for a page.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000252-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000252-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/templates.rb, line 8</span>
+ 8:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">default_body</span>
+ 9:     <span class="ruby-identifier">html</span> = <span class="ruby-value str">&quot;&lt;!DOCTYPE html PUBLIC \&quot;-//W3C//DTD XHTML 1.0 Transitional//EN\&quot; \&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\&quot;&gt;\n&lt;html xmlns=\&quot;http://www.w3.org/1999/xhtml\&quot; xml:lang=\&quot;en\&quot; lang=\&quot;en\&quot;&gt;\n  &lt;head&gt;\n    &lt;meta http-equiv=\&quot;Content-Type\&quot; content=\&quot;text/html;charset=utf-8\&quot; /&gt;\n    &lt;title&gt;&lt;%= page_title %&gt;&lt;/title&gt;\n    &lt;%= yield :html_head %&gt;\n  &lt;/head&gt;\n  &lt;body style=\&quot;margin: 0; padding: 0; text-align: center;\&quot;&gt;\n    &lt;%= cms_toolbar %&gt;\n    &lt;div id=\&quot;wrapper\&quot; style=\&quot;width: 700px; margin: 0 auto; text-align: left; padding: 30px\&quot;&gt;\n      Breadcrumbs: &lt;%= render_breadcrumbs %&gt;\n      Main Menu: &lt;%= render_menu %&gt;\n      &lt;h1&gt;&lt;%= page_title %&gt;&lt;/h1&gt;\n      &lt;%= container :main %&gt;\n    &lt;/div&gt;\n  &lt;/body&gt;\n&lt;/html&gt;\n&quot;</span>
+10:     <span class="ruby-identifier">html</span>
+11:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

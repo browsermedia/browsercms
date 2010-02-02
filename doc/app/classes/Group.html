@@ -78,6 +78,15 @@
 
   <div id="contextContent">
 
+    <div id="description">
+      <p>
+A group represents a collection of permissions. Each <a
+href="User.html">User</a> can be assigned to one or more groups, and the
+sum of their permissions from all groups combined represents what they can
+do.
+</p>
+
+    </div>
 
 
    </div>
@@ -86,8 +95,9 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000042">cms_access?</a>&nbsp;&nbsp;
-      <a href="#M000041">guest?</a>&nbsp;&nbsp;
+      <a href="#M000048">cms_access?</a>&nbsp;&nbsp;
+      <a href="#M000049">guest</a>&nbsp;&nbsp;
+      <a href="#M000047">guest?</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -99,6 +109,19 @@
     <div id="section">
 
 
+    <div id="constants-list">
+      <h3 class="section-bar">Constants</h3>
+
+      <div class="name-list">
+        <table summary="Constants">
+        <tr class="top-aligned-row context-row">
+          <td class="context-item-name">GUEST_CODE</td>
+          <td>=</td>
+          <td class="context-item-value">&quot;guest&quot;</td>
+        </tr>
+        </table>
+      </div>
+    </div>
 
 
 
@@ -107,49 +130,78 @@
 
     <!-- if method_list -->
     <div id="methods">
-      <h3 class="section-bar">Public Instance methods</h3>
+      <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000042" class="method-detail">
-        <a name="M000042"></a>
+      <div id="method-M000049" class="method-detail">
+        <a name="M000049"></a>
 
         <div class="method-heading">
-          <a href="#M000042" class="method-signature">
+          <a href="#M000049" class="method-signature">
+          <span class="method-name">guest</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Finds the <a href="Group.html#M000049">guest</a> group, which is a special
+group that represents public non-logged in users.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000049-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000049-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/group.rb, line 37</span>
+37:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">guest</span>
+38:     <span class="ruby-identifier">with_code</span>(<span class="ruby-constant">GUEST_CODE</span>).<span class="ruby-identifier">first</span>
+39:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000048" class="method-detail">
+        <a name="M000048"></a>
+
+        <div class="method-heading">
+          <a href="#M000048" class="method-signature">
           <span class="method-name">cms_access?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000042-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000042-source">
+            onclick="toggleCode('M000048-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000048-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/group.rb, line 26</span>
-26:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cms_access?</span>
-27:     <span class="ruby-identifier">group_type</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">group_type</span>.<span class="ruby-identifier">cms_access?</span>
-28:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/group.rb, line 32</span>
+32:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cms_access?</span>
+33:     <span class="ruby-identifier">group_type</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">group_type</span>.<span class="ruby-identifier">cms_access?</span>
+34:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000041" class="method-detail">
-        <a name="M000041"></a>
+      <div id="method-M000047" class="method-detail">
+        <a name="M000047"></a>
 
         <div class="method-heading">
-          <a href="#M000041" class="method-signature">
+          <a href="#M000047" class="method-signature">
           <span class="method-name">guest?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000041-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000041-source">
+            onclick="toggleCode('M000047-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000047-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/group.rb, line 22</span>
-22:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">guest?</span>
-23:     <span class="ruby-identifier">group_type</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">group_type</span>.<span class="ruby-identifier">guest?</span>
-24:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/group.rb, line 28</span>
+28:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">guest?</span>
+29:     <span class="ruby-identifier">group_type</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">group_type</span>.<span class="ruby-identifier">guest?</span>
+30:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

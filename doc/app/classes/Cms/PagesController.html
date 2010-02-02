@@ -88,13 +88,13 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000558">create</a>&nbsp;&nbsp;
-      <a href="#M000560">destroy</a>&nbsp;&nbsp;
-      <a href="#M000556">new</a>&nbsp;&nbsp;
-      <a href="#M000562">revert_to</a>&nbsp;&nbsp;
-      <a href="#M000557">show</a>&nbsp;&nbsp;
-      <a href="#M000559">update</a>&nbsp;&nbsp;
-      <a href="#M000561">version</a>&nbsp;&nbsp;
+      <a href="#M000605">create</a>&nbsp;&nbsp;
+      <a href="#M000607">destroy</a>&nbsp;&nbsp;
+      <a href="#M000603">new</a>&nbsp;&nbsp;
+      <a href="#M000609">revert_to</a>&nbsp;&nbsp;
+      <a href="#M000604">show</a>&nbsp;&nbsp;
+      <a href="#M000606">update</a>&nbsp;&nbsp;
+      <a href="#M000608">version</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -116,201 +116,203 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000558" class="method-detail">
-        <a name="M000558"></a>
+      <div id="method-M000605" class="method-detail">
+        <a name="M000605"></a>
 
         <div class="method-heading">
-          <a href="#M000558" class="method-signature">
+          <a href="#M000605" class="method-signature">
           <span class="method-name">create</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000558-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000558-source">
+            onclick="toggleCode('M000605-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000605-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/pages_controller.rb, line 22</span>
-22:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create</span>
-23:     <span class="ruby-ivar">@page</span> = <span class="ruby-constant">Page</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:page</span>])
-24:     <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">section</span> = <span class="ruby-ivar">@section</span>
-25:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">save</span>
-26:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-node">&quot;Page was '#{@page.name}' created.&quot;</span>
-27:       <span class="ruby-identifier">redirect_to</span> [<span class="ruby-identifier">:cms</span>, <span class="ruby-ivar">@page</span>]
-28:     <span class="ruby-keyword kw">else</span>
-29:       <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;new&quot;</span>
-30:     <span class="ruby-keyword kw">end</span>
-31:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/pages_controller.rb, line 24</span>
+24:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create</span>
+25:     <span class="ruby-ivar">@page</span> = <span class="ruby-constant">Page</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:page</span>])
+26:     <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">section</span> = <span class="ruby-ivar">@section</span>
+27:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">save</span>
+28:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-node">&quot;Page was '#{@page.name}' created.&quot;</span>
+29:       <span class="ruby-identifier">redirect_to</span> [<span class="ruby-identifier">:cms</span>, <span class="ruby-ivar">@page</span>]
+30:     <span class="ruby-keyword kw">else</span>
+31:       <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;new&quot;</span>
+32:     <span class="ruby-keyword kw">end</span>
+33:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000560" class="method-detail">
-        <a name="M000560"></a>
+      <div id="method-M000607" class="method-detail">
+        <a name="M000607"></a>
 
         <div class="method-heading">
-          <a href="#M000560" class="method-signature">
+          <a href="#M000607" class="method-signature">
           <span class="method-name">destroy</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000560-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000560-source">
+            onclick="toggleCode('M000607-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000607-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/pages_controller.rb, line 45</span>
-45:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroy</span>
-46:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
-47:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">destroy</span>
-48:         <span class="ruby-identifier">message</span> = <span class="ruby-node">&quot;Page '#{@page.name}' was deleted.&quot;</span>
-49:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-identifier">message</span>; <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">cms_sitemap_url</span>) }
-50:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">json</span> { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:json</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:success</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">:message</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">message</span> } }
-51:       <span class="ruby-keyword kw">else</span>
-52:         <span class="ruby-identifier">message</span> = <span class="ruby-node">&quot;Page '#{@page.name}' could not be deleted&quot;</span>
-53:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:error</span>] = <span class="ruby-identifier">message</span>; <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">cms_sitemap_url</span>) }
-54:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">json</span> { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:json</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:success</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>, <span class="ruby-identifier">:message</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">message</span> } }
-55:       <span class="ruby-keyword kw">end</span>
-56:     <span class="ruby-keyword kw">end</span>
-57:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/pages_controller.rb, line 47</span>
+47:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroy</span>
+48:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+49:       <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">destroy</span>
+50:         <span class="ruby-identifier">message</span> = <span class="ruby-node">&quot;Page '#{@page.name}' was deleted.&quot;</span>
+51:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-identifier">message</span>; <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">cms_sitemap_url</span>) }
+52:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">json</span> { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:json</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:success</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>, <span class="ruby-identifier">:message</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">message</span> } }
+53:       <span class="ruby-keyword kw">else</span>
+54:         <span class="ruby-identifier">message</span> = <span class="ruby-node">&quot;Page '#{@page.name}' could not be deleted&quot;</span>
+55:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:error</span>] = <span class="ruby-identifier">message</span>; <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">cms_sitemap_url</span>) }
+56:         <span class="ruby-identifier">format</span>.<span class="ruby-identifier">json</span> { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:json</span> =<span class="ruby-operator">&gt;</span> {<span class="ruby-identifier">:success</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">false</span>, <span class="ruby-identifier">:message</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">message</span> } }
+57:       <span class="ruby-keyword kw">end</span>
+58:     <span class="ruby-keyword kw">end</span>
+59:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000556" class="method-detail">
-        <a name="M000556"></a>
+      <div id="method-M000603" class="method-detail">
+        <a name="M000603"></a>
 
         <div class="method-heading">
-          <a href="#M000556" class="method-signature">
+          <a href="#M000603" class="method-signature">
           <span class="method-name">new</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000556-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000556-source">
+            onclick="toggleCode('M000603-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000603-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/pages_controller.rb, line 10</span>
-10:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new</span>
-11:     <span class="ruby-ivar">@page</span> = <span class="ruby-constant">Page</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:section</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@section</span>, <span class="ruby-identifier">:cacheable</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>)
-12:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@section</span>.<span class="ruby-identifier">child_nodes</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">1</span>
-13:       <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">name</span> = <span class="ruby-value str">&quot;Overview&quot;</span>
-14:       <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">path</span> = <span class="ruby-ivar">@section</span>.<span class="ruby-identifier">path</span>
-15:     <span class="ruby-keyword kw">end</span>
-16:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/pages_controller.rb, line 12</span>
+12:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new</span>
+13:     <span class="ruby-ivar">@page</span> = <span class="ruby-constant">Page</span>.<span class="ruby-identifier">new</span>(<span class="ruby-identifier">:section</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@section</span>, <span class="ruby-identifier">:cacheable</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-keyword kw">true</span>)
+14:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@section</span>.<span class="ruby-identifier">child_nodes</span>.<span class="ruby-identifier">count</span> <span class="ruby-operator">&lt;</span> <span class="ruby-value">1</span>
+15:       <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">name</span> = <span class="ruby-value str">&quot;Overview&quot;</span>
+16:       <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">path</span> = <span class="ruby-ivar">@section</span>.<span class="ruby-identifier">path</span>
+17:     <span class="ruby-keyword kw">end</span>
+18:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000562" class="method-detail">
-        <a name="M000562"></a>
+      <div id="method-M000609" class="method-detail">
+        <a name="M000609"></a>
 
         <div class="method-heading">
-          <a href="#M000562" class="method-signature">
+          <a href="#M000609" class="method-signature">
           <span class="method-name">revert_to</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000562-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000562-source">
+            onclick="toggleCode('M000609-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000609-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/pages_controller.rb, line 85</span>
-85:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">revert_to</span>
-86:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">revert_to</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:version</span>])
-87:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-node">&quot;Page '#{@page.name}' was reverted to version #{params[:version]}&quot;</span>
-88:     <span class="ruby-keyword kw">end</span>
-89:     
-90:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
-91:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span> <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">path</span> }
-92:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">js</span> { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:template</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'cms/shared/show_notice'</span> }
-93:     <span class="ruby-keyword kw">end</span>    
-94:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/pages_controller.rb, line 89</span>
+89:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">revert_to</span>
+90:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">revert_to</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:version</span>])
+91:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-node">&quot;Page '#{@page.name}' was reverted to version #{params[:version]}&quot;</span>
+92:     <span class="ruby-keyword kw">end</span>
+93:    
+94:     <span class="ruby-identifier">respond_to</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">format</span><span class="ruby-operator">|</span>
+95:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">html</span> { <span class="ruby-identifier">redirect_to</span> <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">path</span> }
+96:       <span class="ruby-identifier">format</span>.<span class="ruby-identifier">js</span> { <span class="ruby-identifier">render</span> <span class="ruby-identifier">:template</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'cms/shared/show_notice'</span> }
+97:     <span class="ruby-keyword kw">end</span>   
+98:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000557" class="method-detail">
-        <a name="M000557"></a>
+      <div id="method-M000604" class="method-detail">
+        <a name="M000604"></a>
 
         <div class="method-heading">
-          <a href="#M000557" class="method-signature">
+          <a href="#M000604" class="method-signature">
           <span class="method-name">show</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000557-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000557-source">
+            onclick="toggleCode('M000604-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000604-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/pages_controller.rb, line 18</span>
-18:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">show</span>
-19:     <span class="ruby-identifier">redirect_to</span> <span class="ruby-constant">Page</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>]).<span class="ruby-identifier">path</span>
-20:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/pages_controller.rb, line 20</span>
+20:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">show</span>
+21:     <span class="ruby-identifier">redirect_to</span> <span class="ruby-constant">Page</span>.<span class="ruby-identifier">find</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:id</span>]).<span class="ruby-identifier">path</span>
+22:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000559" class="method-detail">
-        <a name="M000559"></a>
+      <div id="method-M000606" class="method-detail">
+        <a name="M000606"></a>
 
         <div class="method-heading">
-          <a href="#M000559" class="method-signature">
+          <a href="#M000606" class="method-signature">
           <span class="method-name">update</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000559-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000559-source">
+            onclick="toggleCode('M000606-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000606-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/pages_controller.rb, line 33</span>
-33:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update</span>
-34:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:page</span>])
-35:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-node">&quot;Page was '#{@page.name}' updated.&quot;</span>
-36:       <span class="ruby-identifier">redirect_to</span> [<span class="ruby-identifier">:cms</span>, <span class="ruby-ivar">@page</span>]
-37:     <span class="ruby-keyword kw">else</span>
-38:       <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;edit&quot;</span>
-39:     <span class="ruby-keyword kw">end</span>
-40:   <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">StaleObjectError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
-41:     <span class="ruby-ivar">@other_version</span> = <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">find</span>(<span class="ruby-ivar">@page</span>.<span class="ruby-identifier">id</span>) 
-42:     <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;edit&quot;</span>
-43:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/pages_controller.rb, line 35</span>
+35:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">update</span>
+36:     <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">update_attributes</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:page</span>])
+37:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-node">&quot;Page was '#{@page.name}' updated.&quot;</span>
+38:       <span class="ruby-identifier">redirect_to</span> [<span class="ruby-identifier">:cms</span>, <span class="ruby-ivar">@page</span>]
+39:     <span class="ruby-keyword kw">else</span>
+40:       <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;edit&quot;</span>
+41:     <span class="ruby-keyword kw">end</span>
+42:   <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">ActiveRecord</span><span class="ruby-operator">::</span><span class="ruby-constant">StaleObjectError</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">e</span>
+43:     <span class="ruby-ivar">@other_version</span> = <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">find</span>(<span class="ruby-ivar">@page</span>.<span class="ruby-identifier">id</span>)
+44:     <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;edit&quot;</span>
+45:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000561" class="method-detail">
-        <a name="M000561"></a>
+      <div id="method-M000608" class="method-detail">
+        <a name="M000608"></a>
 
         <div class="method-heading">
-          <a href="#M000561" class="method-signature">
+          <a href="#M000608" class="method-signature">
           <span class="method-name">version</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000561-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000561-source">
+            onclick="toggleCode('M000608-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000608-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/pages_controller.rb, line 78</span>
-78:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">version</span>
-79:     <span class="ruby-ivar">@page</span> = <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">as_of_version</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:version</span>])
-80:     <span class="ruby-ivar">@show_toolbar</span> = <span class="ruby-keyword kw">true</span>
-81:     <span class="ruby-ivar">@show_page_toolbar</span> = <span class="ruby-keyword kw">true</span>
-82:     <span class="ruby-identifier">render</span> <span class="ruby-identifier">:layout</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">layout</span>, <span class="ruby-identifier">:template</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'cms/content/show'</span>
-83:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/pages_controller.rb, line 80</span>
+80:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">version</span>
+81:     <span class="ruby-ivar">@page</span> = <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">as_of_version</span>(<span class="ruby-identifier">params</span>[<span class="ruby-identifier">:version</span>])
+82:     <span class="ruby-ivar">@show_toolbar</span> = <span class="ruby-keyword kw">true</span>
+83:     <span class="ruby-ivar">@show_page_toolbar</span> = <span class="ruby-keyword kw">true</span>
+84:     <span class="ruby-ivar">@_connectors</span> = <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">connectors</span>.<span class="ruby-identifier">for_page_version</span>(<span class="ruby-ivar">@page</span>.<span class="ruby-identifier">version</span>)
+85:     <span class="ruby-ivar">@_connectables</span> = <span class="ruby-ivar">@_connectors</span>.<span class="ruby-identifier">map</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">:connectable_with_deleted</span>)   
+86:     <span class="ruby-identifier">render</span> <span class="ruby-identifier">:layout</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-ivar">@page</span>.<span class="ruby-identifier">layout</span>, <span class="ruby-identifier">:template</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">'cms/content/show'</span>
+87:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

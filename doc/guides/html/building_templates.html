@@ -135,7 +135,7 @@
                         <div id="subCol">
         <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
         <ol class="chapters">
-<li><a href="#introduction">Introduction</a><ul><li><a href="#typical-design-process">Typical Design Process</a></li><li><a href="#template-design-considerations">Template Design Considerations</a></li></ul></li><li><a href="#creating-a-page-template">Creating a Page Template</a><ul><li><a href="#understanding-containers">Understanding Containers</a></li><li><a href="#adding-a-sidebar-container">Adding A Sidebar Container</a></li></ul></li><li><a href="#tags-quick-reference">Tags Quick Reference</a><ul><li><a href="#required-tags">Required Tags</a></li></ul></li><li><a href="#menus-and-breadcrumbs">Menus and Breadcrumbs</a><ul></ul></li></ol></div>
+<li><a href="#introduction">Introduction</a><ul><li><a href="#typical-design-process">Typical Design Process</a></li><li><a href="#design-considerations">Design Considerations</a></li></ul></li><li><a href="#creating-a-page-template">Creating a Page Template</a><ul><li><a href="#understanding-containers">Understanding Containers</a></li><li><a href="#adding-a-sidebar-container">Adding A Sidebar Container</a></li></ul></li><li><a href="#tags-quick-reference">Tags Quick Reference</a><ul><li><a href="#required-tags">Required Tags</a></li><li><a href="#container-tag"><tt>container</tt> Tag</a></li><li><a href="#cms-toolbar-tag"><tt>cms_toolbar</tt> Tag</a></li><li><a href="#html-head-tag"><span class="caps">HTML</span> Head Tag</a></li><li><a href="#page-title-tag"><tt>page_title</tt> Tag</a></li><li><a href="#current-page-tag"><tt>current_page</tt> Tag</a></li><li><a href="#render-portlet-tag"><tt>render_portlet</tt> Tag</a></li><li><a href="#render-connectable-tag"><tt>render_connectable</tt> Tag</a></li></ul></li><li><a href="#navigation">Navigation</a><ul><li><a href="#dynamic-menus-and-breadcrumbs">Dynamic Menus and Breadcrumbs</a></li><li><a href="#basic-rules-of-menus">Basic Rules of Menus</a></li><li><a href="#basic-vertical-menus">Basic Vertical Menus</a></li><li><a href="#how-deep-should-menus-be">How Deep Should Menus Be?</a></li><li><a href="#primary-navigation">Primary Navigation</a></li><li><a href="#sub-navigation">Sub Navigation</a></li><li><a href="#site-maps-and-flyout-menus">Site Maps and Flyout Menus</a></li><li><a href="#breadcrumbs">Breadcrumbs</a></li></ul></li></ol></div>
                 </td>
                 <td class="guides">
                   <h2>BrowserCMS Designer Guide</h2>
@@ -144,8 +144,7 @@
 	<li>How to create page templates</li>
 	<li>How to take advantage of dynamic menus</li>
 	<li>How to reuse common bits of html with page partials</li>
-	<li>How to use helpers to add dynamic content to templates and partials</li>
-	<li>How to use the <span class="caps">CMS</span>-specific form builder extensions</li>
+	<li>How to use tags to add dynamic content to templates and partials</li>
 </ul>
                   <h3 id="introduction">1 Introduction</h3>
 <p>One of the primary goals of implementing a content management system is to separate Design from Content. This allows designers to provide an attractive design that users can easily apply. A <span class="caps">CMS</span> can be thought of as a &#8216;Web Page&#8217; factory, where designers can create the template (i.e. the molds) that users without design knowledge can use to stamp out new pages.</p>
@@ -165,7 +164,7 @@
 	<li>Developer &#8211; A person in charge of converting the ideal look (<span class="caps">PSD</span>) into an <span class="caps">HTML</span> page and ultimately a <span class="caps">CMS</span> template.</li>
 	<li>Programmer &#8211; A person in charge of coding content types (blocks) and dynamic behavior (portlets).</li>
 </ol>
-<h4 id="template-design-considerations">1.2 Template Design Considerations</h4>
+<h4 id="design-considerations">1.2 Design Considerations</h4>
 <p>There are some considerations that designers/developers should take into account if they want to get the maximum benefit from working w/ BrowserCMS. Here&#8217;s a quick list:</p>
 <p>1. BrowserCMS can render menus (one or more levels deep) automatically from the site architecture. Developers should understand how menu code is generated when styling them, which happens in a <a href="http://www.csszengarden.com"><span class="caps">CSS</span> Zen Garden</a> style.
 2. The Site Map is how pages and sections are organized. Developers should understand how this will affect auto-generated menus.
@@ -229,6 +228,7 @@
 | <tt>cms</em>toolbar</tt></notextile> | Renders the <span class="caps">CMS</span> toolbar controller required for editing and navigation. Should be very first element in <tt>body</tt> | Yes |
 | <tt>yield :html_head | This allows the CMS to insert javascript and other information into the page. Should be last element in </tt>head+ | Yes | 
 | <tt>page_title</tt> | Inserts the &#8216;Name&#8217; of the page (or &#8216;Title&#8217; if it exists) | No |
+| <tt>current_page</tt> | Returns a reference to the <tt>Page</tt> object that is currently being rendered | No |
 | <tt>render_breadcrumbs</tt> | Generates breadcrumbs based on the current page and its location in the sitemap | No |
 | <tt>render_menu</tt> | Generates a menu based on the current page and its location in the sitemap | No |
 | <tt>render_portlet</tt> | Renders a specific portlet by name | No |
@@ -239,9 +239,201 @@
 <p>1. <tt>yield :html_head</tt> &#8211; Leaving this out will cause problems with in page editing.
 2. <tt>cms_toolbar</tt> &#8211; Leaving this out will provide editing and navigation to other <span class="caps">CMS</span> pages.
 3. <tt>container</tt> &#8211; Having at least one (typically called <tt>:main</tt>) is required to allow content to be added to pages.</p>
-<h3 id="menus-and-breadcrumbs">4 Menus and Breadcrumbs</h3>
-<p>BrowserCMS provides an <span class="caps">API</span> to allow menus and breadcrumbs to be dynamically generated based on the sitemap. The advantage of this is menus can automatically include new pages as they are added to the site, and can detect which section of the</p>
-<div class="code_container"><code class="ruby">render_menu</code></div>
+<h4 id="container-tag">3.2 <tt>container</tt> Tag</h4>
+<p>This tag is used to allow areas of the page to be editted and render through the <span class="caps">CMS</span>. It takes a single argument which is the name of the container. Template developers can name containers whatever they like, but its recommened that the names should generally reflect the area or purpose of a particular container.</p>
+<div class="code_container"><code class="html">&lt;div&gt;&lt;%= container :main %&gt;&lt;/div&gt;
+	&lt;div&gt;&lt;%= container :footer %&gt;&lt;/div&gt;</code></div>
+<p>Container names are just labels. So if you defined 5 containers on a template (header, footer, left, main, right), you could swap between any two templates which defined all those containers.</p>
+<div class='note'><p>Be aware that if you add content to a page in a container (like <tt>:sidebar</tt>) then change a pages template to one which does not have that container, the content will be &#8216;orphaned&#8217;. To remove that content, you would need to swap back to the previous template, remove the content, then change back to the new template again.</p></div>
+<h4 id="cms-toolbar-tag">3.3 <tt>cms_toolbar</tt> Tag</h4>
+<p>This tag is how the toolbar is inserted into templates. It should be the first element in the <tt>body</tt> element of a page. In most cases, you can just use it as follows:</p>
+<div class="code_container"><code class="html">&lt;body&gt;
+	&lt;%= cms_toolbar %&gt;
+	&lt;h2&gt;About Us&lt;/h2&gt;
+	&lt;!-- Text goes here --&gt;
+&lt;/body&gt;</code></div>
+<p>The toolbar is written out as an iframe which makes its less likely that styles/javascript will clash with the page being editted.</p>
+<h4 id="html-head-tag">3.4 <span class="caps">HTML</span> Head Tag</h4>
+<p>This tag is technically a standard <tt>yield</tt> call, with a particularly named <tt>:html_head</tt>. This tag must be included in all <span class="caps">CMS</span> templates to allow it to insert the necessary javascript and style elements. It should probably be the last element in <tt>head</tt> element of a page.</p>
+<div class="code_container"><code class="html">&lt;head&gt;
+  &lt;title&gt;&lt;%= page_title %&gt;&lt;/title&gt;
+  &lt;%= yield :html_head %&gt;
+&lt;/head&gt;</code></div>
+<h4 id="page-title-tag">3.5 <tt>page_title</tt> Tag</h4>
+<p>This tag will output the <tt>name</tt> attribute of the current page. If the <tt>title</tt> attribute is specified, it will output that instead. This allows users to have one label for a page appear in the navigation (navigation and the sitemap always use <tt>name</tt>) and another in the header or title bar on a page.</p>
+<p>Example:</p>
+<div class="code_container"><code class="html">&lt;title&gt;My Site | &lt;%= page_title %&gt;&lt;/title&gt;</code></div>
+<p>This is using the page_title tag to title element of a page.</p>
+<div class="code_container"><code class="html">&lt;h1&gt;&lt;%= page_title %&gt;&lt;/h1&gt;</code></div>
+<p>Another common usage of <tt>page_title</tt> is for the H1 or H2 on a page.</p>
+<h4 id="current-page-tag">3.6 <tt>current_page</tt> Tag</h4>
+<p>This doesn&#8217;t render anything, but returns a reference to the current <tt>Page</tt> object that is being rendered. It can be used to access other attributes of the page, like the name of the section or the <tt>description</tt> of the Page. Here are some common examples:</p>
+<div class="code_container"><code class="html">&lt;%= current_page.name %&gt;</code></div>
+<p>This outputs the <tt>name</tt> attribute of the page, similar to how <tt>page_title</tt> works. You might do this if you had specified a <tt>title</tt> attribute for pages which was different than the <tt>name</tt>, but wanted to compare names.</p>
+<div class="code_container"><code class="html">&lt;%= current_page.section.name %&gt;</code></div>
+<p>This outputs the <tt>name</tt> of the current page&#8217;s section.</p>
+<div class="code_container"><code class="html">&lt;% if current_page.top_level_section.name == 'About Us' %&gt;
+&lt;%= image_tag &quot;/fancy/about_us_section_image.png&quot; %&gt;
+&lt;% end %&gt;</code></div>
+<p>This renders a specific image if the page is within the top level &#8216;About Us&#8217; section. The <tt>top_level_section</tt> method finds the very top level section for a give page, regardless of how far down it is in the sitemap. Useful for making comparisons based on the first level of navigation.</p>
+<div class='note'><p>Any page or section attribute is reachable in the way. You will need to look at the <span class="caps">API</span> documentation for <tt>Page</tt> and <tt>Section</tt> to see all the available attributes.</p></div>
+<h4 id="render-portlet-tag">3.7 <tt>render_portlet</tt> Tag</h4>
+<p>This tag will render a portlet from a template. Normally portlets are placed individually on each page by users. This tag is useful for common elements that might appear on multiple pages throughout the site. An example of this might be a Login Portlet which should appear as part of the header on all pages. Here&#8217;s an example:</p>
+<div class="code_container"><code class="html">&lt;%= render_portlet &quot;Nav Login Form&quot; %&gt;</code></div>
+<p>The only argument to <tt>render_portlet</tt> is a name. This name will match the name specified in the UI when you add a portlet. You will need to create the portlet and name in appropriately for this tag to work. The portlet will render itself based on its template.</p>
+<h4 id="render-connectable-tag">3.8 <tt>render_connectable</tt> Tag</h4>
+<p>This tag can render a specific block in a page. It takes one argument, the block itself. This could be used to automatically include, say a footer, into a page as part of the template. For instance:</p>
+<div class="code_container"><code class="html">&lt;% footer = HtmlBlock.find(12) %&gt;
+	&lt;%= render_connectable(footer) %&gt;</code></div>
+<p>Here we use Active Record to query for a specific HtmlBlock (i.e. Text) with the id of 12. Then we pass it to <tt>render_connectable</tt> to display itself.</p>
+<h3 id="navigation">4 Navigation</h3>
+<p>Most websites typically features some form of navigation via menus and/or breadcrumbs. Some navigation is highly graphical and changes infrequently. Other&#8217;s might use drop downs (via Javascript), while still users have site maps that drill down to the deepest pages. BrowserCMS is designed to support many different navigation choices, including everything from hand coded horizontal navigation to dynamic left side menus.</p>
+<h4 id="dynamic-menus-and-breadcrumbs">4.1 Dynamic Menus and Breadcrumbs</h4>
+<p>One of the features that BrowserCMS provides is an menu and breadcrumb generation tags. These tags can automatically generate menus/breadcrumbs based on the current page. For breadcrumbs, they render linkable items for the page and its parents. For menus, it can show a page, all it&#8217;s siblings as well as highlight the currently selected sections. The primary advantage of this is for rendering menus which can frequently change, like section navigation. As pages are added to the sitemap, they will automatically appear in the menus.</p>
+<h4 id="basic-rules-of-menus">4.2 Basic Rules of Menus</h4>
+<p>Understanding dynamic menus can be tricky things, so you will likely need to experiment with them, but here are some basic rules to remember.</p>
+<ol>
+	<li>Menus will automatically generate names and URLs based on the <tt>name</tt> and <tt>path</tt> attributes of pages in the sitemap.</li>
+	<li>Hidden pages/section are not shown. If you mark a page or section as &#8216;hidden&#8217; via the sitemap, it will never be shown in the menu.</li>
+	<li>Unpublished pages are not shown. If you change a page name or url, it won&#8217;t appear until the page is published.</li>
+	<li>Menus are built as nested unordered lists.</li>
+	<li>Menus can show currently &#8216;open&#8217; sections, as well as the &#8216;selected&#8217; item via <span class="caps">CSS</span>.</li>
+</ol>
+<p>Here&#8217;s an example of a site map using part of the <a href="http://en.wikipedia.org/wiki/National_Football_Conference">National Football League&#8217;s</a> conference system. While not all reader may be familiar with &#8216;American&#8217; football, it does provide a nice example of a tree structure that has multiple levels (Conferences &gt; Divisions &gt; Teams).</p>
+<p><img src="images/nfl_sitemap.png" alt="" /></p>
+<h4 id="basic-vertical-menus">4.3 Basic Vertical Menus</h4>
+<p>When you generate a template, you should have a basic menu which will look something like this:</p>
+<div class="code_container"><code class="ruby">&lt;%= render_menu %&gt;</code></div>
+<p>This would render a menu starting with all the top level sections, creating unordered lists as far down as the current page. If I navigate to the <em>Dallas</em> page (+/nfc/east/dallas), the following <span class="caps">HTML</span> would be rendered:</p>
+<div class="code_container"><code class="html">&lt;div id=&quot;menu&quot; class=&quot;menu&quot;&gt;
+  &lt;ul&gt;
+    &lt;li id=&quot;page_1&quot; class=&quot;depth-1 first&quot;&gt;
+      &lt;a href=&quot;/&quot;&gt;Home&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;section_3&quot; class=&quot;depth-1 open&quot;&gt;
+      &lt;a href=&quot;/nfc/east/dallas&quot;&gt;NFC&lt;/a&gt;
+      &lt;ul&gt;
+        &lt;li id=&quot;section_5&quot; class=&quot;depth-2 first open&quot;&gt;
+          &lt;a href=&quot;/nfc/east/dallas&quot;&gt;East&lt;/a&gt;
+          &lt;ul&gt;
+            &lt;li id=&quot;page_5&quot; class=&quot;depth-3 first on&quot;&gt;
+              &lt;a href=&quot;/nfc/east/dallas&quot;&gt;Dallas&lt;/a&gt;
+            &lt;/li&gt;
+            &lt;li id=&quot;page_6&quot; class=&quot;depth-3 last&quot;&gt;
+              &lt;a href=&quot;/nfc/east/new-york&quot;&gt;New York&lt;/a&gt;
+            &lt;/li&gt;
+          &lt;/ul&gt;
+        &lt;/li&gt;
+        &lt;li id=&quot;section_6&quot; class=&quot;depth-2&quot;&gt;
+          &lt;a href=&quot;/nfc/north/chicago&quot;&gt;North&lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li id=&quot;section_7&quot; class=&quot;depth-2&quot;&gt;
+          &lt;a href=&quot;/nfc/west/atlanta&quot;&gt;West&lt;/a&gt;
+        &lt;/li&gt;
+        &lt;li id=&quot;section_11&quot; class=&quot;depth-2 last&quot;&gt;
+          &lt;a href=&quot;/nfc/south/tampa-bay&quot;&gt;South&lt;/a&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;section_4&quot; class=&quot;depth-1 last&quot;&gt;
+      &lt;a href=&quot;#&quot;&gt;AFC&lt;/a&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;</code></div>
+<p>Things to note:</p>
+<ul>
+	<li>The top level containing element for the menu is marked as <tt>id</tt> and <tt>class</tt> = <tt>menu</tt>. (This can be changed via parameters.)</li>
+	<li>We are currently on the &#8216;Dallas&#8217; page. So the <tt>li</tt> is marked with an <tt>on</tt> class.</li>
+	<li>The &#8216;<span class="caps">NFC</span>&#8217; and &#8216;East&#8217; sections are open (because they are ancestors of the &#8216;Dallas&#8217; page). They are marked with an <tt>open</tt> class.</li>
+	<li>All siblings to &#8216;open&#8217; sections are shown (i.e. we see &#8216;<span class="caps">AFC</span>&#8217; and &#8216;North&#8217;, but nothing under them). The first and last element of each list is marked with <tt>first</tt> and <tt>last</tt>.</li>
+	<li>The depth of each element has a style. For instance, the &#8216;Dallas&#8217; page is at <tt>depth-3</tt>.</li>
+</ul>
+<h4 id="how-deep-should-menus-be">4.4 How Deep Should Menus Be?</h4>
+<p>Since we have not given any options to <tt>render_menu</tt>, it will render all levels down to the current page. In a deeply nested site, you could end up with 4 to 5 levels. In general practice, its often best to limit menus to 2-3 levels. You can do this by specifying how deep and when we want to start menus. For instance, the following menu code would behave identically to the previous one.</p>
+<div class="code_container"><code class="html">&lt;%= render_menu :from_top=&gt;0, :depth=&gt;3 %&gt;</code></div>
+<p>This menu will show all items below level 0 (<tt>from_top=>0</tt>) and showing a total 3 levels of navigation (+depth=&gt;3). Our &#8216;top level&#8217; sections/pages (like <em><span class="caps">AFC</span></em>, <em><span class="caps">NFC</span></em> and _Home__) are all at depth=&gt;1, so they are shown. The <em>East</em> page is second level and the <em>Dallas</em> page is the 3 level, so we see all three levels of navigation.</p>
+<p>In general, the <tt>:depth</tt> option is used to &#8216;cut off&#8217; navigation after a certain point (since a vertical leftside nav can only render so many levels), while <tt>:from_top</tt> is used to determine how high to start. Here&#8217;s some further examples:</p>
+<h4 id="primary-navigation">4.5 Primary Navigation</h4>
+<p>Want to show only the first level of navigation? Try this:</p>
+<div class="code_container"><code class="html">&lt;%= render_menu :from_top=&gt;0, :depth=&gt;1 %&gt;</code></div>
+<p>This will render only a single level of our top level navigation, regardless of how deep our site goes. Here&#8217;s the output when we are on the <em>Dallas</em> page.</p>
+<div class="code_container"><code class="html">&lt;div id=&quot;menu&quot; class=&quot;menu&quot;&gt;
+  &lt;ul&gt;
+    &lt;li id=&quot;page_1&quot; class=&quot;depth-1 first&quot;&gt;
+      &lt;a href=&quot;/&quot;&gt;Home&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;section_3&quot; class=&quot;depth-1&quot;&gt;
+      &lt;a href=&quot;/nfc/east/dallas&quot;&gt;NFC&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;section_4&quot; class=&quot;depth-1 last&quot;&gt;
+      &lt;a href=&quot;#&quot;&gt;AFC&lt;/a&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;
+&lt;h1&gt;Dallas&lt;/h1&gt;</code></div>
+<h4 id="sub-navigation">4.6 Sub Navigation</h4>
+<p>Suppose we wanted to have two menus on a site, a horizontal &#8216;primary&#8217; navigation and a vertical &#8216;sub&#8217; navigation. In this case, we want to show our <span class="caps">NFL</span> conferences as the primary navigation, and when you drill down the Division would be shown as the left side navigation. Here&#8217;s how the left nav can be generated.</p>
+<div class="code_container"><code class="html">&lt;%= render_menu :from_top=&gt;1, :depth=&gt;2, :class=&gt;&quot;leftmenu&quot; %&gt;</code></div>
+<p>Here is the output when we are on the <em>Dallas</em> page.</p>
+<div class="code_container"><code class="html">&lt;div id=&quot;menu&quot; class=&quot;leftmenu&quot;&gt;
+  &lt;ul&gt;
+    &lt;li id=&quot;section_5&quot; class=&quot;depth-1 first open&quot;&gt;
+      &lt;a href=&quot;/nfc/east/dallas&quot;&gt;East&lt;/a&gt;
+      &lt;ul&gt;
+        &lt;li id=&quot;page_5&quot; class=&quot;depth-2 first on&quot;&gt;
+          &lt;a href=&quot;/nfc/east/dallas&quot;&gt;Dallas&lt;/a&gt;
+
+        &lt;/li&gt;
+        &lt;li id=&quot;page_6&quot; class=&quot;depth-2 last&quot;&gt;
+          &lt;a href=&quot;/nfc/east/new-york&quot;&gt;New York&lt;/a&gt;
+        &lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;section_6&quot; class=&quot;depth-1&quot;&gt;
+      &lt;a href=&quot;/nfc/north/chicago&quot;&gt;North&lt;/a&gt;
+
+    &lt;/li&gt;
+    &lt;li id=&quot;section_7&quot; class=&quot;depth-1&quot;&gt;
+      &lt;a href=&quot;/nfc/west/atlanta&quot;&gt;West&lt;/a&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;section_11&quot; class=&quot;depth-1 last&quot;&gt;
+      &lt;a href=&quot;/nfc/south/tampa-bay&quot;&gt;South&lt;/a&gt;
+    &lt;/li&gt;
+  &lt;/ul&gt;
+
+&lt;/div&gt;</code></div>
+<h4 id="site-maps-and-flyout-menus">4.7 Site Maps and Flyout Menus</h4>
+<p>You can also handle sitemaps and flyout menus by specifying some additional attributes. Normally, menus will not show the entire tree, but you can make them by doing the following:</p>
+<div class="code_container"><code class="html">&lt;%= render_menu :show_all_siblings=&gt;true %&gt;</code></div>
+<p>This will render every visible node in the tree, regardless of which page we are currently on. It follows the same <tt>:from_top</tt> and <tt>:depth</tt> rules as other menus.</p>
+<h4 id="breadcrumbs">4.8 Breadcrumbs</h4>
+<p>Breadcrumbs work very similar fashion to menus, except that they only render a single list which includes the current page and all ancestors.</p>
+<div class="code_container"><code class="html">&lt;%= render_breadcrumbs %&gt;</code></div>
+<p>If we are on the <em>Dallas</em> page, this will render the following <span class="caps">HTML</span>:</p>
+<div class="code_container"><code class="html">&lt;ul class=&quot;breadcrumbs&quot;&gt;
+  &lt;li class=&quot;first&quot;&gt;&lt;a href=&quot;/&quot;&gt;My Site&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/nfc/east/dallas&quot;&gt;NFC&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/nfc/east/dallas&quot;&gt;East&lt;/a&gt;&lt;/li&gt;
+
+  &lt;li&gt;Dallas&lt;/li&gt;
+&lt;/ul&gt;</code></div>
+<p>If we moved to the <em>Detroit</em> page, it would render this:</p>
+<div class="code_container"><code class="html">&lt;ul class=&quot;breadcrumbs&quot;&gt;
+  &lt;li class=&quot;first&quot;&gt;&lt;a href=&quot;/&quot;&gt;My Site&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/nfc/east/dallas&quot;&gt;NFC&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/nfc/north/chicago&quot;&gt;North&lt;/a&gt;&lt;/li&gt;
+
+  &lt;li&gt;Detroit&lt;/li&gt;
+&lt;/ul&gt;</code></div>
+
+<p>You can also specify some options to it:</p>
+<div class="code_container"><code class="html">&lt;%= render_breadcrumbs :from_top=&gt;1 %&gt;</code></div>
+<p>This would exclude the top level section (i.e. the name of the site <em>My Site</em>). This would render the following if I was on the <em>Dallas</em> page:</p>
+<div class="code_container"><code class="html">&lt;ul class=&quot;breadcrumbs&quot;&gt;
+  &lt;li class=&quot;first&quot;&gt;&lt;a href=&quot;/nfc/east/dallas&quot;&gt;NFC&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;/nfc/east/dallas&quot;&gt;East&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Dallas&lt;/li&gt;
+&lt;/ul&gt;</code></div>
                 </td>
               </tr>
             </table>
