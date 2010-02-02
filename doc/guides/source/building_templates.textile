@@ -73,6 +73,12 @@ This generates a file called +app/views/layouts/templates/subpage.html.erb+. For
 
 This is a bare bones XHTML template with one editable area (i.e. One Column). It has no CSS stylesheets or javascript. It's about the simplest possible template we can have to create a renderable page in BrowserCMS. 
 
+h4. Files or Content?
+
+Since templates can stored as either files or database content (or a combination of both), site designers will need to decide which path they want to use. Ultimately, the decision is based on the question of *who should be able to modify templates*? On projects where site users have some HTML knowledge and want to be to update templates via the CMS UI, database templates may be appropriate. On other projects, where design is intended to more tightly controlled, file templates might be appropriate.
+
+It's also possible to start out using file templates for speed of development, and then migrate the content of the templates into the database before launch.
+
 h4. Understanding Containers
 
 There are a bits of ruby code (helpers) that our basic template has, but let's focus on the +container+ helper. Open up the CMS UI and go to +/cms/sitemap+ and Add a New Page. Name it 'About Us', and select 'Subpage' from the 'Template' dropdown to use this new template. Click Save. You should see a mostly white page. Click the 'Turn On' button in the upper right to enable the editor, and you should see a single grey box. This box is the +container+ we defined in our template. Users can insert new or existing content into pages, and the containers determine where they go. Add some Text content to the page in this container.
@@ -244,9 +250,7 @@ h3. Navigation
 
 Most websites typically features some form of navigation via menus and/or breadcrumbs. Some navigation is highly graphical and changes infrequently. Other's might use drop downs (via Javascript), while still users have site maps that drill down to the deepest pages. BrowserCMS is designed to support many different navigation choices, including everything from hand coded horizontal navigation to dynamic left side menus.
 
-h4. Dynamic Menus and Breadcrumbs
-
-One of the features that BrowserCMS provides is an menu and breadcrumb generation tags. These tags can automatically generate menus/breadcrumbs based on the current page. For breadcrumbs, they render linkable items for the page and its parents. For menus, it can show a page, all it's siblings as well as highlight the currently selected sections. The primary advantage of this is for rendering menus which can frequently change, like section navigation. As pages are added to the sitemap, they will automatically appear in the menus.
+One of the features that BrowserCMS provides is an menu and breadcrumb generation tags. These tags can automatically generate menus/breadcrumbs based on the current page. For breadcrumbs, they render linkable items for the page and its parents. For menus, it can show a page, all it's siblings as well as highlight the currently selected sections. The primary advantage of this is for rendering menus which can frequently change, like section navigation. As pages are added and published in the sitemap, they will automatically appear in the menus.
 
 h4. Basic Rules of Menus
 
@@ -255,16 +259,15 @@ Understanding dynamic menus can be tricky things, so you will likely need to exp
 # Menus will automatically generate names and URLs based on the +name+ and +path+ attributes of pages in the sitemap.
 # Hidden pages/section are not shown. If you mark a page or section as 'hidden' via the sitemap, it will never be shown in the menu.
 # Unpublished pages are not shown. If you change a page name or url, it won't appear until the page is published.
-# Menus are built as nested unordered lists. 
-# Menus can show currently 'open' sections, as well as the 'selected' item via CSS. 
+# Moving pages and sections around in the sitemap will reorder them in the menus automatically.
 
-Here's an example of a site map using part of the "National Football League's":http://en.wikipedia.org/wiki/National_Football_Conference conference system. While not all reader may be familiar with 'American' football, it does provide a nice example of a tree structure that has multiple levels (Conferences > Divisions > Teams).
+Here's an example of a site map representing part of the "National Football League's":http://en.wikipedia.org/wiki/National_Football_Conference conference system. While not all readesr may be familiar with 'American' football, it does provide a nice example of a tree structure that has multiple levels (Conferences > Divisions > Teams). We will use this sitemap in the following examples to highlight how to build menus.
 
 !images/nfl_sitemap.png!
 
-h4. Basic Vertical Menus
+h4. Using Menus
 
-When you generate a template, you should have a basic menu which will look something like this:
+To render a menu, you can make use of the +render_menu+ tag. It will generate HTML markup that can be styled via CSS to render either horizontal or vertical navigation. 
 
 <ruby>
 <%= render_menu %>
@@ -275,10 +278,7 @@ This would render a menu starting with all the top level sections, creating unor
 <html>
 <div id="menu" class="menu">
   <ul>
-    <li id="page_1" class="depth-1 first">
-      <a href="/">Home</a>
-    </li>
-    <li id="section_3" class="depth-1 open">
+    <li id="section_3" class="depth-1 first open">
       <a href="/nfc/east/dallas">NFC</a>
       <ul>
         <li id="section_5" class="depth-2 first open">
@@ -296,7 +296,7 @@ This would render a menu starting with all the top level sections, creating unor
           <a href="/nfc/north/chicago">North</a>
         </li>
         <li id="section_7" class="depth-2">
-          <a href="/nfc/west/atlanta">West</a>
+          <a href="/nfc/west">West</a>
         </li>
         <li id="section_11" class="depth-2 last">
           <a href="/nfc/south/tampa-bay">South</a>
@@ -304,15 +304,15 @@ This would render a menu starting with all the top level sections, creating unor
       </ul>
     </li>
     <li id="section_4" class="depth-1 last">
-      <a href="#">AFC</a>
+      <a href="/afc/east">AFC</a>
     </li>
   </ul>
 </div>
 </html>
 
 Things to note:
-* The top level containing element for the menu is marked as +id+ and +class+ = +menu+. (This can be changed via parameters.)
-* We are currently on the 'Dallas' page. So the +li+ is marked with an +on+ class.
+* The top level containing element for the menu is marked as +id+ and +class+ = +menu+. (+class+ can be changed via parameters.)
+* We are currently on the 'Dallas' page. So the dallas +li+ is marked with an +on+ class.
 * The 'NFC' and 'East' sections are open (because they are ancestors of the 'Dallas' page). They are marked with an +open+ class.
 * All siblings to 'open' sections are shown (i.e. we see 'AFC' and 'North', but nothing under them). The first and last element of each list is marked with +first+ and +last+.
 * The depth of each element has a style. For instance, the 'Dallas' page is at +depth-3+.
@@ -406,7 +406,7 @@ You can also handle sitemaps and flyout menus by specifying some additional attr
 
 This will render every visible node in the tree, regardless of which page we are currently on. It follows the same +:from_top+ and +:depth+ rules as other menus. 
 
-h4. Breadcrumbs
+h4. Using Breadcrumbs
 
 Breadcrumbs work very similar fashion to menus, except that they only render a single list which includes the current page and all ancestors. 
 
@@ -453,3 +453,81 @@ This would exclude the top level section (i.e. the name of the site _My Site_). 
   <li>Dallas</li>
 </ul>
 </html>
+
+h3. Using Partials
+
+A site which has multiple templates will likely have duplicate HTML. Areas of the page like Headers and Footers can easily be exactly the same between two templates. In order to avoid duplication, it is possible to use partials to extract and reuse view code. Like templates, partials can either be content in the repository or files, depending on how developers want to organize their project. See the Rails "Layouts and Views Guide":http://guides.rubyonrails.org/layouts_and_rendering.html#using-partials for more information on how partials work.
+
+Let's extract our common header code from our +subpage+ template. Here's how the file looked earlier:
+
+<erb>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+<head>
+  <title><%= page_title %> | Our Fancy Site</title>
+  <style>
+      body, html { margin: 0; padding: 0; text-align: center; }
+      #wrapper { width: 700px; margin: 0 auto; text-align: left; padding: 30px }
+      #main { float: left; width: 500px; }
+      #sidebar { float: right; padding: 0 30px 0 0; width: 150px;}
+  </style>
+  <%= yield :html_head %>
+</head>
+<body>
+<%= cms_toolbar %>
+<div id="wrapper">
+  <div id="header">
+    Breadcrumbs: <%= render_breadcrumbs %>
+    Main Menu: <%= render_menu %>
+    <h1><%= page_title %></h1>
+  </div>
+  <div id="main"><%= container :main %></div>
+  <div id="sidebar"><%= container :sidebar %></div>
+</div>
+</body>
+</html>
+</erb>
+
+Create a new file called +app/views/partials/_header.html.erb+. By placing partials in this directory, they will match where the content repository based templates are written out to. This will allow templates to include partials regardless of where its data is stored. Copy/Paste code from +subpage.html.erb+ so that +_header.html.erb+ looks like this:
+
+<erb>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title><%= page_title %> | Our Fancy Site</title>
+  <style>
+      body, html { margin: 0; padding: 0; text-align: center; }
+      #wrapper { width: 700px; margin: 0 auto; text-align: left; padding: 30px }
+      #main { float: left; width: 500px; }
+      #sidebar { float: right; padding: 0 30px 0 0; width: 150px;}
+  </style>
+  <%= yield :html_head %>
+</head>
+<body>
+<%= cms_toolbar %>
+</erb>
+
+Then update +subpage+ to look like this:
+
+<erb>
+<%= render :partial=>"partials/header" %>
+<div id="wrapper">
+  <div id="header">
+    Breadcrumbs: <%= render_breadcrumbs %>
+    Main Menu: <%= render_menu %>
+    <h1><%= page_title %></h1>
+  </div>
+  <div id="main"><%= container :main %></div>
+  <div id="sidebar"><%= container :sidebar %></div>
+</div>
+</body>
+</html>
+</erb>
+
+Now when you refresh a page using the Subpage template, it should look exactly the same. 
+
+
+  

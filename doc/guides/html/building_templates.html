@@ -135,7 +135,7 @@
                         <div id="subCol">
         <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
         <ol class="chapters">
-<li><a href="#introduction">Introduction</a><ul><li><a href="#typical-design-process">Typical Design Process</a></li><li><a href="#design-considerations">Design Considerations</a></li></ul></li><li><a href="#creating-a-page-template">Creating a Page Template</a><ul><li><a href="#understanding-containers">Understanding Containers</a></li><li><a href="#adding-a-sidebar-container">Adding A Sidebar Container</a></li></ul></li><li><a href="#tags-quick-reference">Tags Quick Reference</a><ul><li><a href="#required-tags">Required Tags</a></li><li><a href="#container-tag"><tt>container</tt> Tag</a></li><li><a href="#cms-toolbar-tag"><tt>cms_toolbar</tt> Tag</a></li><li><a href="#html-head-tag"><span class="caps">HTML</span> Head Tag</a></li><li><a href="#page-title-tag"><tt>page_title</tt> Tag</a></li><li><a href="#current-page-tag"><tt>current_page</tt> Tag</a></li><li><a href="#render-portlet-tag"><tt>render_portlet</tt> Tag</a></li><li><a href="#render-connectable-tag"><tt>render_connectable</tt> Tag</a></li></ul></li><li><a href="#navigation">Navigation</a><ul><li><a href="#dynamic-menus-and-breadcrumbs">Dynamic Menus and Breadcrumbs</a></li><li><a href="#basic-rules-of-menus">Basic Rules of Menus</a></li><li><a href="#basic-vertical-menus">Basic Vertical Menus</a></li><li><a href="#how-deep-should-menus-be">How Deep Should Menus Be?</a></li><li><a href="#primary-navigation">Primary Navigation</a></li><li><a href="#sub-navigation">Sub Navigation</a></li><li><a href="#site-maps-and-flyout-menus">Site Maps and Flyout Menus</a></li><li><a href="#breadcrumbs">Breadcrumbs</a></li></ul></li></ol></div>
+<li><a href="#introduction">Introduction</a><ul><li><a href="#typical-design-process">Typical Design Process</a></li><li><a href="#design-considerations">Design Considerations</a></li></ul></li><li><a href="#creating-a-page-template">Creating a Page Template</a><ul><li><a href="#files-or-content">Files or Content?</a></li><li><a href="#understanding-containers">Understanding Containers</a></li><li><a href="#adding-a-sidebar-container">Adding A Sidebar Container</a></li></ul></li><li><a href="#tags-quick-reference">Tags Quick Reference</a><ul><li><a href="#required-tags">Required Tags</a></li><li><a href="#container-tag"><tt>container</tt> Tag</a></li><li><a href="#cms-toolbar-tag"><tt>cms_toolbar</tt> Tag</a></li><li><a href="#html-head-tag"><span class="caps">HTML</span> Head Tag</a></li><li><a href="#page-title-tag"><tt>page_title</tt> Tag</a></li><li><a href="#current-page-tag"><tt>current_page</tt> Tag</a></li><li><a href="#render-portlet-tag"><tt>render_portlet</tt> Tag</a></li><li><a href="#render-connectable-tag"><tt>render_connectable</tt> Tag</a></li></ul></li><li><a href="#navigation">Navigation</a><ul><li><a href="#basic-rules-of-menus">Basic Rules of Menus</a></li><li><a href="#using-menus">Using Menus</a></li><li><a href="#how-deep-should-menus-be">How Deep Should Menus Be?</a></li><li><a href="#primary-navigation">Primary Navigation</a></li><li><a href="#sub-navigation">Sub Navigation</a></li><li><a href="#site-maps-and-flyout-menus">Site Maps and Flyout Menus</a></li><li><a href="#using-breadcrumbs">Using Breadcrumbs</a></li></ul></li><li><a href="#using-partials">Using Partials</a><ul></ul></li></ol></div>
                 </td>
                 <td class="guides">
                   <h2>BrowserCMS Designer Guide</h2>
@@ -192,10 +192,13 @@
   &lt;/body&gt;
 &lt;/html&gt;</code></div>
 <p>This is a bare bones <span class="caps">XHTML</span> template with one editable area (i.e. One Column). It has no <span class="caps">CSS</span> stylesheets or javascript. It&#8217;s about the simplest possible template we can have to create a renderable page in BrowserCMS.</p>
-<h4 id="understanding-containers">2.1 Understanding Containers</h4>
+<h4 id="files-or-content">2.1 Files or Content?</h4>
+<p>Since templates can stored as either files or database content (or a combination of both), site designers will need to decide which path they want to use. Ultimately, the decision is based on the question of <strong>who should be able to modify templates</strong>? On projects where site users have some <span class="caps">HTML</span> knowledge and want to be to update templates via the <span class="caps">CMS</span> UI, database templates may be appropriate. On other projects, where design is intended to more tightly controlled, file templates might be appropriate.</p>
+<p>It&#8217;s also possible to start out using file templates for speed of development, and then migrate the content of the templates into the database before launch.</p>
+<h4 id="understanding-containers">2.2 Understanding Containers</h4>
 <p>There are a bits of ruby code (helpers) that our basic template has, but let&#8217;s focus on the <tt>container</tt> helper. Open up the <span class="caps">CMS</span> UI and go to <tt>/cms/sitemap</tt> and Add a New Page. Name it &#8216;About Us&#8217;, and select &#8216;Subpage&#8217; from the &#8216;Template&#8217; dropdown to use this new template. Click Save. You should see a mostly white page. Click the &#8216;Turn On&#8217; button in the upper right to enable the editor, and you should see a single grey box. This box is the <tt>container</tt> we defined in our template. Users can insert new or existing content into pages, and the containers determine where they go. Add some Text content to the page in this container.</p>
 <div class='note'><p>Container are placeholders for content. When you have two pages that use the same template, they do not share the content. Putting some Text into the <tt>:main</tt> container of Page A doesn&#8217;t mean it will also appear on Page B just because that page also has a <tt>:main</tt> container.</p></div>
-<h4 id="adding-a-sidebar-container">2.2 Adding A Sidebar Container</h4>
+<h4 id="adding-a-sidebar-container">2.3 Adding A Sidebar Container</h4>
 <p>Let&#8217;s alter our template to add a second column (i.e. Sidebar). Modify the <tt>subpage.html</tt> to look like the following:</p>
 <div class="code_container"><code class="html">&lt;head&gt;
   &lt;title&gt;&lt;%= page_title %&gt; | Our Fancy Site&lt;/title&gt;
@@ -288,29 +291,24 @@
 <p>Here we use Active Record to query for a specific HtmlBlock (i.e. Text) with the id of 12. Then we pass it to <tt>render_connectable</tt> to display itself.</p>
 <h3 id="navigation">4 Navigation</h3>
 <p>Most websites typically features some form of navigation via menus and/or breadcrumbs. Some navigation is highly graphical and changes infrequently. Other&#8217;s might use drop downs (via Javascript), while still users have site maps that drill down to the deepest pages. BrowserCMS is designed to support many different navigation choices, including everything from hand coded horizontal navigation to dynamic left side menus.</p>
-<h4 id="dynamic-menus-and-breadcrumbs">4.1 Dynamic Menus and Breadcrumbs</h4>
-<p>One of the features that BrowserCMS provides is an menu and breadcrumb generation tags. These tags can automatically generate menus/breadcrumbs based on the current page. For breadcrumbs, they render linkable items for the page and its parents. For menus, it can show a page, all it&#8217;s siblings as well as highlight the currently selected sections. The primary advantage of this is for rendering menus which can frequently change, like section navigation. As pages are added to the sitemap, they will automatically appear in the menus.</p>
-<h4 id="basic-rules-of-menus">4.2 Basic Rules of Menus</h4>
+<p>One of the features that BrowserCMS provides is an menu and breadcrumb generation tags. These tags can automatically generate menus/breadcrumbs based on the current page. For breadcrumbs, they render linkable items for the page and its parents. For menus, it can show a page, all it&#8217;s siblings as well as highlight the currently selected sections. The primary advantage of this is for rendering menus which can frequently change, like section navigation. As pages are added and published in the sitemap, they will automatically appear in the menus.</p>
+<h4 id="basic-rules-of-menus">4.1 Basic Rules of Menus</h4>
 <p>Understanding dynamic menus can be tricky things, so you will likely need to experiment with them, but here are some basic rules to remember.</p>
 <ol>
 	<li>Menus will automatically generate names and URLs based on the <tt>name</tt> and <tt>path</tt> attributes of pages in the sitemap.</li>
 	<li>Hidden pages/section are not shown. If you mark a page or section as &#8216;hidden&#8217; via the sitemap, it will never be shown in the menu.</li>
 	<li>Unpublished pages are not shown. If you change a page name or url, it won&#8217;t appear until the page is published.</li>
-	<li>Menus are built as nested unordered lists.</li>
-	<li>Menus can show currently &#8216;open&#8217; sections, as well as the &#8216;selected&#8217; item via <span class="caps">CSS</span>.</li>
+	<li>Moving pages and sections around in the sitemap will reorder them in the menus automatically.</li>
 </ol>
-<p>Here&#8217;s an example of a site map using part of the <a href="http://en.wikipedia.org/wiki/National_Football_Conference">National Football League&#8217;s</a> conference system. While not all reader may be familiar with &#8216;American&#8217; football, it does provide a nice example of a tree structure that has multiple levels (Conferences &gt; Divisions &gt; Teams).</p>
+<p>Here&#8217;s an example of a site map representing part of the <a href="http://en.wikipedia.org/wiki/National_Football_Conference">National Football League&#8217;s</a> conference system. While not all readesr may be familiar with &#8216;American&#8217; football, it does provide a nice example of a tree structure that has multiple levels (Conferences &gt; Divisions &gt; Teams). We will use this sitemap in the following examples to highlight how to build menus.</p>
 <p><img src="images/nfl_sitemap.png" alt="" /></p>
-<h4 id="basic-vertical-menus">4.3 Basic Vertical Menus</h4>
-<p>When you generate a template, you should have a basic menu which will look something like this:</p>
+<h4 id="using-menus">4.2 Using Menus</h4>
+<p>To render a menu, you can make use of the <tt>render_menu</tt> tag. It will generate <span class="caps">HTML</span> markup that can be styled via <span class="caps">CSS</span> to render either horizontal or vertical navigation.</p>
 <div class="code_container"><code class="ruby">&lt;%= render_menu %&gt;</code></div>
 <p>This would render a menu starting with all the top level sections, creating unordered lists as far down as the current page. If I navigate to the <em>Dallas</em> page (+/nfc/east/dallas), the following <span class="caps">HTML</span> would be rendered:</p>
 <div class="code_container"><code class="html">&lt;div id=&quot;menu&quot; class=&quot;menu&quot;&gt;
   &lt;ul&gt;
-    &lt;li id=&quot;page_1&quot; class=&quot;depth-1 first&quot;&gt;
-      &lt;a href=&quot;/&quot;&gt;Home&lt;/a&gt;
-    &lt;/li&gt;
-    &lt;li id=&quot;section_3&quot; class=&quot;depth-1 open&quot;&gt;
+    &lt;li id=&quot;section_3&quot; class=&quot;depth-1 first open&quot;&gt;
       &lt;a href=&quot;/nfc/east/dallas&quot;&gt;NFC&lt;/a&gt;
       &lt;ul&gt;
         &lt;li id=&quot;section_5&quot; class=&quot;depth-2 first open&quot;&gt;
@@ -328,7 +326,7 @@
           &lt;a href=&quot;/nfc/north/chicago&quot;&gt;North&lt;/a&gt;
         &lt;/li&gt;
         &lt;li id=&quot;section_7&quot; class=&quot;depth-2&quot;&gt;
-          &lt;a href=&quot;/nfc/west/atlanta&quot;&gt;West&lt;/a&gt;
+          &lt;a href=&quot;/nfc/west&quot;&gt;West&lt;/a&gt;
         &lt;/li&gt;
         &lt;li id=&quot;section_11&quot; class=&quot;depth-2 last&quot;&gt;
           &lt;a href=&quot;/nfc/south/tampa-bay&quot;&gt;South&lt;/a&gt;
@@ -336,24 +334,24 @@
       &lt;/ul&gt;
     &lt;/li&gt;
     &lt;li id=&quot;section_4&quot; class=&quot;depth-1 last&quot;&gt;
-      &lt;a href=&quot;#&quot;&gt;AFC&lt;/a&gt;
+      &lt;a href=&quot;/afc/east&quot;&gt;AFC&lt;/a&gt;
     &lt;/li&gt;
   &lt;/ul&gt;
 &lt;/div&gt;</code></div>
 <p>Things to note:</p>
 <ul>
-	<li>The top level containing element for the menu is marked as <tt>id</tt> and <tt>class</tt> = <tt>menu</tt>. (This can be changed via parameters.)</li>
-	<li>We are currently on the &#8216;Dallas&#8217; page. So the <tt>li</tt> is marked with an <tt>on</tt> class.</li>
+	<li>The top level containing element for the menu is marked as <tt>id</tt> and <tt>class</tt> = <tt>menu</tt>. (<tt>class</tt> can be changed via parameters.)</li>
+	<li>We are currently on the &#8216;Dallas&#8217; page. So the dallas <tt>li</tt> is marked with an <tt>on</tt> class.</li>
 	<li>The &#8216;<span class="caps">NFC</span>&#8217; and &#8216;East&#8217; sections are open (because they are ancestors of the &#8216;Dallas&#8217; page). They are marked with an <tt>open</tt> class.</li>
 	<li>All siblings to &#8216;open&#8217; sections are shown (i.e. we see &#8216;<span class="caps">AFC</span>&#8217; and &#8216;North&#8217;, but nothing under them). The first and last element of each list is marked with <tt>first</tt> and <tt>last</tt>.</li>
 	<li>The depth of each element has a style. For instance, the &#8216;Dallas&#8217; page is at <tt>depth-3</tt>.</li>
 </ul>
-<h4 id="how-deep-should-menus-be">4.4 How Deep Should Menus Be?</h4>
+<h4 id="how-deep-should-menus-be">4.3 How Deep Should Menus Be?</h4>
 <p>Since we have not given any options to <tt>render_menu</tt>, it will render all levels down to the current page. In a deeply nested site, you could end up with 4 to 5 levels. In general practice, its often best to limit menus to 2-3 levels. You can do this by specifying how deep and when we want to start menus. For instance, the following menu code would behave identically to the previous one.</p>
 <div class="code_container"><code class="html">&lt;%= render_menu :from_top=&gt;0, :depth=&gt;3 %&gt;</code></div>
 <p>This menu will show all items below level 0 (<tt>from_top=>0</tt>) and showing a total 3 levels of navigation (+depth=&gt;3). Our &#8216;top level&#8217; sections/pages (like <em><span class="caps">AFC</span></em>, <em><span class="caps">NFC</span></em> and _Home__) are all at depth=&gt;1, so they are shown. The <em>East</em> page is second level and the <em>Dallas</em> page is the 3 level, so we see all three levels of navigation.</p>
 <p>In general, the <tt>:depth</tt> option is used to &#8216;cut off&#8217; navigation after a certain point (since a vertical leftside nav can only render so many levels), while <tt>:from_top</tt> is used to determine how high to start. Here&#8217;s some further examples:</p>
-<h4 id="primary-navigation">4.5 Primary Navigation</h4>
+<h4 id="primary-navigation">4.4 Primary Navigation</h4>
 <p>Want to show only the first level of navigation? Try this:</p>
 <div class="code_container"><code class="html">&lt;%= render_menu :from_top=&gt;0, :depth=&gt;1 %&gt;</code></div>
 <p>This will render only a single level of our top level navigation, regardless of how deep our site goes. Here&#8217;s the output when we are on the <em>Dallas</em> page.</p>
@@ -371,7 +369,7 @@
   &lt;/ul&gt;
 &lt;/div&gt;
 &lt;h1&gt;Dallas&lt;/h1&gt;</code></div>
-<h4 id="sub-navigation">4.6 Sub Navigation</h4>
+<h4 id="sub-navigation">4.5 Sub Navigation</h4>
 <p>Suppose we wanted to have two menus on a site, a horizontal &#8216;primary&#8217; navigation and a vertical &#8216;sub&#8217; navigation. In this case, we want to show our <span class="caps">NFL</span> conferences as the primary navigation, and when you drill down the Division would be shown as the left side navigation. Here&#8217;s how the left nav can be generated.</p>
 <div class="code_container"><code class="html">&lt;%= render_menu :from_top=&gt;1, :depth=&gt;2, :class=&gt;&quot;leftmenu&quot; %&gt;</code></div>
 <p>Here is the output when we are on the <em>Dallas</em> page.</p>
@@ -402,11 +400,11 @@
   &lt;/ul&gt;
 
 &lt;/div&gt;</code></div>
-<h4 id="site-maps-and-flyout-menus">4.7 Site Maps and Flyout Menus</h4>
+<h4 id="site-maps-and-flyout-menus">4.6 Site Maps and Flyout Menus</h4>
 <p>You can also handle sitemaps and flyout menus by specifying some additional attributes. Normally, menus will not show the entire tree, but you can make them by doing the following:</p>
 <div class="code_container"><code class="html">&lt;%= render_menu :show_all_siblings=&gt;true %&gt;</code></div>
 <p>This will render every visible node in the tree, regardless of which page we are currently on. It follows the same <tt>:from_top</tt> and <tt>:depth</tt> rules as other menus.</p>
-<h4 id="breadcrumbs">4.8 Breadcrumbs</h4>
+<h4 id="using-breadcrumbs">4.7 Using Breadcrumbs</h4>
 <p>Breadcrumbs work very similar fashion to menus, except that they only render a single list which includes the current page and all ancestors.</p>
 <div class="code_container"><code class="html">&lt;%= render_breadcrumbs %&gt;</code></div>
 <p>If we are on the <em>Dallas</em> page, this will render the following <span class="caps">HTML</span>:</p>
@@ -434,6 +432,66 @@
   &lt;li&gt;&lt;a href=&quot;/nfc/east/dallas&quot;&gt;East&lt;/a&gt;&lt;/li&gt;
   &lt;li&gt;Dallas&lt;/li&gt;
 &lt;/ul&gt;</code></div>
+<h3 id="using-partials">5 Using Partials</h3>
+<p>A site which has multiple templates will likely have duplicate <span class="caps">HTML</span>. Areas of the page like Headers and Footers can easily be exactly the same between two templates. In order to avoid duplication, it is possible to use partials to extract and reuse view code. Like templates, partials can either be content in the repository or files, depending on how developers want to organize their project. See the Rails <a href="http://guides.rubyonrails.org/layouts_and_rendering.html#using-partials">Layouts and Views Guide</a> for more information on how partials work.</p>
+<p>Let&#8217;s extract our common header code from our <tt>subpage</tt> template. Here&#8217;s how the file looked earlier:</p>
+<div class="code_container"><code class="html">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; 
+  &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xml:lang=&quot;en&quot; lang=&quot;en&quot;&gt;
+  &lt;head&gt;
+&lt;head&gt;
+  &lt;title&gt;&lt;%= page_title %&gt; | Our Fancy Site&lt;/title&gt;
+  &lt;style&gt;
+      body, html { margin: 0; padding: 0; text-align: center; }
+      #wrapper { width: 700px; margin: 0 auto; text-align: left; padding: 30px }
+      #main { float: left; width: 500px; }
+      #sidebar { float: right; padding: 0 30px 0 0; width: 150px;}
+  &lt;/style&gt;
+  &lt;%= yield :html_head %&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;%= cms_toolbar %&gt;
+&lt;div id=&quot;wrapper&quot;&gt;
+  &lt;div id=&quot;header&quot;&gt;
+    Breadcrumbs: &lt;%= render_breadcrumbs %&gt;
+    Main Menu: &lt;%= render_menu %&gt;
+    &lt;h1&gt;&lt;%= page_title %&gt;&lt;/h1&gt;
+  &lt;/div&gt;
+  &lt;div id=&quot;main&quot;&gt;&lt;%= container :main %&gt;&lt;/div&gt;
+  &lt;div id=&quot;sidebar&quot;&gt;&lt;%= container :sidebar %&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></div>
+<p>Create a new file called <tt>app/views/partials/_header.html.erb</tt>. By placing partials in this directory, they will match where the content repository based templates are written out to. This will allow templates to include partials regardless of where its data is stored. Copy/Paste code from <tt>subpage.html.erb</tt> so that <tt>_header.html.erb</tt> looks like this:</p>
+<div class="code_container"><code class="html">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Transitional//EN&quot; 
+  &quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd&quot;&gt;
+&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xml:lang=&quot;en&quot; lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;title&gt;&lt;%= page_title %&gt; | Our Fancy Site&lt;/title&gt;
+  &lt;style&gt;
+      body, html { margin: 0; padding: 0; text-align: center; }
+      #wrapper { width: 700px; margin: 0 auto; text-align: left; padding: 30px }
+      #main { float: left; width: 500px; }
+      #sidebar { float: right; padding: 0 30px 0 0; width: 150px;}
+  &lt;/style&gt;
+  &lt;%= yield :html_head %&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;%= cms_toolbar %&gt;</code></div>
+<p>Then update <tt>subpage</tt> to look like this:</p>
+<div class="code_container"><code class="html">&lt;%= render :partial=&gt;&quot;partials/header&quot; %&gt;
+&lt;div id=&quot;wrapper&quot;&gt;
+  &lt;div id=&quot;header&quot;&gt;
+    Breadcrumbs: &lt;%= render_breadcrumbs %&gt;
+    Main Menu: &lt;%= render_menu %&gt;
+    &lt;h1&gt;&lt;%= page_title %&gt;&lt;/h1&gt;
+  &lt;/div&gt;
+  &lt;div id=&quot;main&quot;&gt;&lt;%= container :main %&gt;&lt;/div&gt;
+  &lt;div id=&quot;sidebar&quot;&gt;&lt;%= container :sidebar %&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></div>
+<p>Now when you refresh a page using the Subpage template, it should look exactly the same.</p>
                 </td>
               </tr>
             </table>
