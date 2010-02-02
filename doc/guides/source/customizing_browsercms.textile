@@ -10,6 +10,7 @@ cover the following concepts:
 endprologue.
 
 h3. Overview
+
 As a content management system, BrowserCMS offers a number of avenues for customizing a website. In addition, to the
 standard Rails extension points like Models, Views and Controllers, there are several additional extensions points. These
 include:

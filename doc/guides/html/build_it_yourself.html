@@ -135,40 +135,35 @@
                         <div id="subCol">
         <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
         <ol class="chapters">
-<li><a href="#things-you-need-first">Things you need first</a><ul></ul></li><li><a href="#getting-the-source-from-github">Getting the source from GitHub</a><ul></ul></li><li><a href="#installing-the-gem-locally">Installing the Gem locally</a><ul></ul></li><li><a href="#quick-start">Quick Start</a><ul></ul></li></ol></div>
+<li><a href="#things-you-need-first">Things you need first</a><ul></ul></li><li><a href="#getting-the-source-from-github">Getting the source from GitHub</a><ul></ul></li><li><a href="#installing-the-gem-locally">Installing the Gem locally</a><ul></ul></li></ol></div>
                 </td>
                 <td class="guides">
                   <h2>Building on the Edge</h2>
 <p>The purpose of this guide is to help developers who want to work with the very latest code from Github. It covers how to:</p>
 <ul>
 	<li>Get the latest copy of the source code from Github.</li>
-	<li>Build and install the BrowserCMS product.</li>
-	<li>Create a new project which uses BrowserCMS</li>
+	<li>Build and install BrowserCMS as a gem.</li>
 </ul>
-<p>If you want to get BrowserCMS the easy way, see link:getting_started.html[Getting Started] instead.</p>
+<p>If you want to get BrowserCMS the easy way, see <a href="getting_started.html">Getting Started</a> instead.</p>
+<p>This guide is for BrowserCMS <strong>3.1</strong>. Some code shown here may not work with older versions of BrowserCMS.</p>
                   <h3 id="things-you-need-first">1 Things you need first</h3>
 <p>Before you can build BrowserCMS locally, there are few other bits of software you should have installed.</p>
-<p>1. <strong>Git</strong> &#8211; Distributed version control system. The code for BrowserCMS is on http://github.com/browsermedia/browsercms/[Git Hub], so you need to http://git-scm.com[get Git] to get it.
-2. <strong>Rails 2.3</strong> (or later) &#8211; We make use of some of the newer features from Rails like templates.
-3. <strong>A Database</strong> &#8211; Either Mysql or the Sqlite gems should be installed.
-4. <strong>Jeweler</strong> &#8211; Another gem http://technicalpickles.github.com/jeweler[Jeweler] is required to build the gem yourself locally.</p>
+<ol>
+	<li><strong>Git</strong> &#8211; Distributed version control system. The code for BrowserCMS is on <a href="http://github.com/browsermedia/browsercms">Github</a>, so you need to have <a href="http://git-scm.com">Git</a> fetch the code.</li>
+	<li><strong>Rails 2.3</strong> (or later) &#8211; We make use of some of the newer features from Rails like templates.</li>
+	<li><strong>A Database</strong> &#8211; Either Mysql or the Sqlite gems should be installed. MySQL is required if you want to do development on the core.</li>
+	<li><strong>Jeweler</strong> &#8211; Another gem <a href="http://technicalpickles.github.com/jeweler">Jeweler</a> is required to build the gem yourself locally.</li>
+</ol>
 <h3 id="getting-the-source-from-github">2 Getting the source from GitHub</h3>
 <p>To build the gem from source, and install it on your system, type the following:</p>
 <div class="code_container"><code class="html">$ git clone git://github.com/browsermedia/browsercms.git</code></div>
-
 <h3 id="installing-the-gem-locally">3 Installing the Gem locally</h3>
 <p>Once you have the source code, you can build and install the Gem via:</p>
 <div class="code_container"><code class="html">$ cd browsercms
 $ rake install</code></div>
-<p>On *unix, this will sudo install, so you will need to provide your password. Once you have the BrowserCMS Gem installed,
+<p>This will use Jeweler to build and install the gem. Once you have the BrowserCMS Gem installed,
 you can use it to create new projects, which will be configured to use it. At this point, you now have the gem installed,
-so you can follow the instructions in <a href="getting_started.html">Getting Started</a> starting with section 2 (Trying out BrowserCMS).</p>
-<h3 id="quick-start">4 Quick Start</h3>
-<p>You can also just do the following to create a demo project.</p>
-<div class="code_container"><code class="html">$ cd ~/projects
-$ rails my_new_project_name -d mysql -m http://browsercms.org/templates/demo.rb
-$ cd my_new_project_name
-$ script/server</code></div>
+so you can follow the instructions in <a href="getting_started.html">Getting Started</a>.</p>
                 </td>
               </tr>
             </table>

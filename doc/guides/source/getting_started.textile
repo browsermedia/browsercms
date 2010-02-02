@@ -6,6 +6,8 @@ The purpose of this guide is help new developers get up and running with Browser
 * Create a demo project to explore BrowserCMS
 * Create a blank project for building a website from scratch    
 
+This guide is for BrowserCMS *3.1*. Some code shown here may not work with older versions of BrowserCMS.
+
 endprologue.
 
 h3. This Guide Assumes

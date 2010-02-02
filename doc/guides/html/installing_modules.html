@@ -147,6 +147,7 @@
 	<li>Running migrations</li>
 </ol>
 <p>Once you have done the above steps, you should have access to the Content blocks and portlets that each module provides, and you can add them to your pages.</p>
+<p>This guide is for BrowserCMS <strong>3.1</strong>. Some code shown here may not work with older versions of BrowserCMS.</p>
                   <h3 id="installation">1 Installation</h3>
 <p>This module assumes you are going to be building the module from source code, and installing to a project locally to your computer. Let&#8217;s assume you want to install the News module, who&#8217;s project name (and gem name) is &#8216;bcms_news&#8217;. If you want to install other modules, just substitute the name of the module you want for &#8216;bcms_news&#8217;.</p>
 <h4 id="build-and-install-the-gem-from-source">1.1 Build and install the gem from source</h4>
@@ -157,7 +158,7 @@ $ sudo gem install bcms_news-1.0.0.gem</code></div>
 <p>At this point, the News module gem should be installed as a gem on your system, and can be added to your projects.</p>
 <h4 id="adding-the-module-to-your-project">1.2 Adding the Module to your project</h4>
 <p>In your BrowserCMS application, do the following steps.</p>
-<h5 id="edit-the-confingenvironmentrb-file">1.2.1 Edit the confing/environment.rb file</h5>
+<h5 id="edit-the-configenvironmentrb-file">1.2.1 Edit the config/environment.rb file</h5>
 <div class="code_container"><code class="ruby">config.gem 'browsercms'
 # Add this next line after the browsercms gem
 config.gem &quot;bcms_news&quot;</code></div>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>BrowserCMS Designer Guide</title>
+    <title>Templates Guide</title>
     <link rel="stylesheet" type="text/css" href="files/stylesheets/syntax.css" />
     <script type="text/javascript" src="files/javascripts/code_highlighter.js"></script>
     <script type="text/javascript" src="files/javascripts/highlighters.js"></script>
@@ -125,7 +125,7 @@
         <div class="top_cap"></div>
         <div id="contentwrap">
           <div class="title">
-            <h1>BrowserCMS Designer Guide</h1>
+            <h1>Templates Guide</h1>
           </div>
           <div class="top_cap_content"></div>
           <div id="content">
@@ -138,7 +138,7 @@
 <li><a href="#introduction">Introduction</a><ul><li><a href="#typical-design-process">Typical Design Process</a></li><li><a href="#design-considerations">Design Considerations</a></li></ul></li><li><a href="#creating-a-page-template">Creating a Page Template</a><ul><li><a href="#files-or-content">Files or Content?</a></li><li><a href="#understanding-containers">Understanding Containers</a></li><li><a href="#adding-a-sidebar-container">Adding A Sidebar Container</a></li></ul></li><li><a href="#tags-quick-reference">Tags Quick Reference</a><ul><li><a href="#required-tags">Required Tags</a></li><li><a href="#container-tag"><tt>container</tt> Tag</a></li><li><a href="#cms-toolbar-tag"><tt>cms_toolbar</tt> Tag</a></li><li><a href="#html-head-tag"><span class="caps">HTML</span> Head Tag</a></li><li><a href="#page-title-tag"><tt>page_title</tt> Tag</a></li><li><a href="#current-page-tag"><tt>current_page</tt> Tag</a></li><li><a href="#render-portlet-tag"><tt>render_portlet</tt> Tag</a></li><li><a href="#render-connectable-tag"><tt>render_connectable</tt> Tag</a></li></ul></li><li><a href="#navigation">Navigation</a><ul><li><a href="#basic-rules-of-menus">Basic Rules of Menus</a></li><li><a href="#using-menus">Using Menus</a></li><li><a href="#how-deep-should-menus-be">How Deep Should Menus Be?</a></li><li><a href="#primary-navigation">Primary Navigation</a></li><li><a href="#sub-navigation">Sub Navigation</a></li><li><a href="#site-maps-and-flyout-menus">Site Maps and Flyout Menus</a></li><li><a href="#using-breadcrumbs">Using Breadcrumbs</a></li></ul></li><li><a href="#using-partials">Using Partials</a><ul></ul></li></ol></div>
                 </td>
                 <td class="guides">
-                  <h2>BrowserCMS Designer Guide</h2>
+                  <h2>Templates Guide</h2>
 <p>This guide covers how to set up templates for BrowserCMS. After reading this guide, you should understand how to:</p>
 <ul>
 	<li>How to create page templates</li>
@@ -146,6 +146,7 @@
 	<li>How to reuse common bits of html with page partials</li>
 	<li>How to use tags to add dynamic content to templates and partials</li>
 </ul>
+<p>This guide is for BrowserCMS <strong>3.1</strong>. Some code shown here may not work with older versions of BrowserCMS.</p>
                   <h3 id="introduction">1 Introduction</h3>
 <p>One of the primary goals of implementing a content management system is to separate Design from Content. This allows designers to provide an attractive design that users can easily apply. A <span class="caps">CMS</span> can be thought of as a &#8216;Web Page&#8217; factory, where designers can create the template (i.e. the molds) that users without design knowledge can use to stamp out new pages.</p>
 <p>BrowserCMS supports this concept by the use of page templates. Each page within the site has a single page template that governs it&#8217;s layout. Templates are essentially html pages with the editable areas specified. A template can be anything from a basic two column subpage to homepage design with a half dozen separate editable areas. BrowserCMS supports an &#8216;in-context&#8217; page editor, that allows users to see which areas of the page are editable.</p>

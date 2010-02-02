@@ -10,7 +10,9 @@ This guide covers how to use BrowserCMS to build and manage websites. After read
 * Dynamically display content on pages using portlets.
 * Create and assign permissions to users.
 
-This guide is aimed at people who are managing sites using BrowserCMS, as opposed to programmers who want to "customize it":developer_guide.html, or designers who want to "create new designs":designer_guide.html  for a site.
+This guide is aimed at people who are managing sites using BrowserCMS, as opposed to programmers who want to "customize it":customizing_browsercms.html, or designers who want to "create templates":building_template.html  for a site.
+
+This guide is for BrowserCMS *3.1*. Some code shown here may not work with older versions of BrowserCMS.
 
 h3. What not to expect
 

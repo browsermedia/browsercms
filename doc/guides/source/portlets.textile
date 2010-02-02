@@ -2,8 +2,10 @@ h2. Portlets Guide
 
 This guide covers how to use the Portlets extend the functionality of your BrowserCMS site.  The target audience for this guide is developers who are familiar with Rails. You should also read the "Building a Site with BrowserCMS":user_guide.html guide first as well, so you know how to create pages and put content on pages.  This guide will cover:
 
-* What portlets are and how they work
 * How to create custom portlets
+* Allowing portlets views to be editable via the UI.
+
+This guide is for BrowserCMS *3.1*. Some code shown here may not work with older versions of BrowserCMS.
 
 endprologue.
 

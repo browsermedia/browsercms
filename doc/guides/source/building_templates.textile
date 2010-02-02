@@ -1,4 +1,4 @@
-h2. BrowserCMS Designer Guide
+h2. Templates Guide
 
 This guide covers how to set up templates for BrowserCMS. After reading this guide, you should understand how to:
 
@@ -6,6 +6,8 @@ This guide covers how to set up templates for BrowserCMS. After reading this gui
 * How to take advantage of dynamic menus
 * How to reuse common bits of html with page partials
 * How to use tags to add dynamic content to templates and partials
+
+This guide is for BrowserCMS *3.1*. Some code shown here may not work with older versions of BrowserCMS.
 
 endprologue.
 

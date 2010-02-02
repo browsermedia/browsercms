@@ -9,6 +9,8 @@ This guide covers how to download and install a module for BrowserCMS. With Brow
 
 Once you have done the above steps, you should have access to the Content blocks and portlets that each module provides, and you can add them to your pages.
 
+This guide is for BrowserCMS *3.1*. Some code shown here may not work with older versions of BrowserCMS.
+
 endprologue.
 
 h3. Installation
@@ -31,7 +33,7 @@ h4. Adding the Module to your project
 
 In your BrowserCMS application, do the following steps.
 
-h5. Edit the confing/environment.rb file
+h5. Edit the config/environment.rb file
 
 <ruby>
 config.gem 'browsercms'
