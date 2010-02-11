@@ -98,6 +98,8 @@ module Cms
     
       def perform_render(controller)
         return "Exception: #{@render_exception}" if @render_exception
+        return if self.respond_to?(:deleted) && self.deleted
+
         unless @controller
           # We haven't prepared to render. This should only happen when logged in, as we don't want
           # errors to bubble up and prevent the page being edited in that case.

@@ -5,6 +5,10 @@
 <% page_title "Content Library / Edit #{content_type.display_name}" %>
 <% @toolbar_title = "Edit #{content_type.display_name} '#{@block.name}'" %>
 <% content_for :functions,  render(:partial => 'cms/blocks/toolbar') %>
+
+<% if @block.respond_to?(:deleted) && @block.deleted %>
+  <div class="header">This <%= @block.class.name %> has been deleted.</div>
+<% else %>
 <% form_for(@block, :url => block_path, :html => {:multipart => true}) do |f| %>
   <%= f.error_messages %>
   <%= render :partial => 'cms/shared/exception', :object => @exception if @exception %>  
@@ -22,4 +26,5 @@
       <% end %>
       <%= lt_button_wrapper(f.submit("Save", :class => "submit", :tabindex => next_tabindex)) %>
     </div>
+<% end %>
 <% end %>
