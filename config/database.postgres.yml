@@ -18,3 +18,8 @@ production:
   database: browsercms_production
   username: postgres
   password: 
+
+
+test_sqlite3:
+  adapter: sqlite3
+  database: db/test.sqlite3

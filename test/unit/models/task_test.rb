@@ -82,7 +82,7 @@ class CreateTaskTest < TaskTest
     end
 
     def assert_that_an_email_is_sent_to_the_user_the_task_was_assigned_to
-      email = EmailMessage.first(:order => "created_at desc")
+      email = EmailMessage.first(:order => "id asc")
       assert_equal @editor_a.email, email.sender
       assert_equal @editor_b.email, email.recipients
       assert_equal "Page '#{@page.name}' has been assigned to you", email.subject

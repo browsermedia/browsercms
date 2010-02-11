@@ -5,3 +5,8 @@ development:
 test:
   adapter: sqlite3
   database: db/test.sqlite3
+
+
+test_sqlite3:
+  adapter: sqlite3
+  database: db/test.sqlite3
