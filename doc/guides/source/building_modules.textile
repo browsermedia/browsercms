@@ -1,8 +1,19 @@
 h2. Creating your own modules
 
-Creating your own modules is a useful way to expand the functionality of BrowserCMS via gems.
+This guide covers how to create and package modules for BrowserCMS. Modules are the primary way to expand the functionality of the BrowserCMS core project.  After reading this guide, you should understand how to:
+
+* Start a new module as project
+* Add blocks and portlets
+* Add new controllers
+* Test your module in another CMS project.
+
+This guide is for BrowserCMS *3.1*. Some code shown here may not work with older versions of BrowserCMS.
+
+endprologue.
 
 h3. Getting Started
+
+The guide is going to walk how a new module can be created from scratch. The goal for our sample module will be to add some store-like functionality to BrowserCMS, and allow editors to create new products and users to browse a product catalog. When we are done, we will
 
 Run the following command to generate a basic BrowserCMS application that is ready to turn into a module.
 
