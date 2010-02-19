@@ -22,7 +22,7 @@ class Group < ActiveRecord::Base
   named_scope :named, lambda{|n| {:conditions => {:name => n}}}
   named_scope :with_code, lambda{|c| {:conditions => {:code => c}}}
     
-  named_scope :public, :include => :group_type, :conditions => ["group_types.cms_access = ?", false]
+  named_scope :public_groups, :include => :group_type, :conditions => ["group_types.cms_access = ?", false]
   named_scope :cms_access, :include => :group_type, :conditions => ["group_types.cms_access = ?", true]
   
   def guest?

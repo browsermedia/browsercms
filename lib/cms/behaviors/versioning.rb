@@ -19,7 +19,7 @@ module Cms
 
           has_many :versions, :class_name  => version_class_name, :foreign_key => version_foreign_key
 
-          before_validation_on_create :initialize_version
+          before_validation :initialize_version
 
           attr_accessor :revert_to_version
 
@@ -70,7 +70,7 @@ module Cms
       end
       module InstanceMethods
         def initialize_version
-          self.version = 1
+          self.version = 1 if new_record?
         end
 
         def build_new_version

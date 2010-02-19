@@ -1,4 +1,0 @@
-#!/usr/bin/env ruby
-require 'rubygems'
-require 'spec'
-exit ::Spec::Runner::CommandLine.run(::Spec::Runner::OptionParser.parse(ARGV, STDERR, STDOUT))

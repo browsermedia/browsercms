@@ -117,7 +117,7 @@ class Cms::SectionsController < Cms::BaseController
     end
 
     def public_groups
-      @public_groups ||= Group.public.all(:order => "groups.name")
+      @public_groups ||= Group.public_groups.all(:order => "groups.name")
     end
 
     def cms_groups

@@ -20,7 +20,10 @@ module Cms
 
     # This is called after the environment is ready
     def init
-      ActionController::Routing::RouteSet::Mapper.send :include, Cms::Routes
+      # ToDo: This is how we are adding new methods to the routes.rb file. Rails 3 might provide more direct way.
+      ActionDispatch::Routing::DeprecatedMapper.send :include, Cms::Routes
+# This next line should add the methods to the 'new' router.
+#      ActionController::Routing::Mapper::Base.send :include, Cms::Routes
       ActiveSupport::Dependencies.load_paths += %W( #{RAILS_ROOT}/app/portlets )
       ActiveSupport::Dependencies.load_paths += %W( #{RAILS_ROOT}/app/portlets/helpers )      
       ActionController::Base.append_view_path DynamicView.base_path
@@ -104,7 +107,7 @@ module Cms
   end
 end
 
-ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(
+Time::DATE_FORMATS.merge!(
 	:year_month_day => '%Y/%m/%d',
 	:date => '%m/%d/%Y'	
 )

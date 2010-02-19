@@ -10,8 +10,10 @@ end
 # For BrowserCMS Core testing. These routes should not be used by projects that use BrowserCMS as a gem.
 # Only load these routes if this is the "root" application
 #
-if RAILS_ROOT == File.expand_path(File.dirname(__FILE__) + "/..")
-  ActionController::Routing::Routes.draw do |map|
+#if RAILS_ROOT == File.expand_path(File.dirname(__FILE__) + "/..")
+  Browsercms::Application.routes.draw do |map|
+
+#  ActionController::Routing::Routes.draw do |map|
     map.connect "/__test__", :controller => "cms/content", :action => "show_page_route"
 
     # These are for testing and might need to be stripped out.
@@ -24,4 +26,4 @@ if RAILS_ROOT == File.expand_path(File.dirname(__FILE__) + "/..")
     # Core CMS routes
     map.routes_for_browser_cms
   end
-end
+#end
