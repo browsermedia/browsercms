@@ -24,7 +24,7 @@ environment 'SITE_DOMAIN="localhost:3000"', :env => "development"
 environment 'SITE_DOMAIN="localhost:3000"', :env => "test"
 environment 'SITE_DOMAIN="localhost:3000"', :env => "production"
 environment 'config.action_view.cache_template_loading = false', :env => "production"
-environment 'config.action_controller.page_cache_directory = RAILS_ROOT + "/public/cache/"', :env => "production"
+environment 'config.action_controller.page_cache_directory = Rails.root + "/public/cache/"', :env => "production"
 initializer 'browsercms.rb', <<-CODE
 Cms.attachment_file_permission = 0640
 CODE

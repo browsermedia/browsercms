@@ -22,7 +22,7 @@
 # ClassMethods module and including the InstanceMethods module into the Article class.
 # Each Behavior typically has one macro method which takes an options Hash, which of course
 # varies from Behavior to Behavior.  The macro method will also sometimes call other
-# macro methods, like before_fitler, named_scope, etc. to modify the model.
+# macro methods, like before_fitler, scope, etc. to modify the model.
 # Consult the documentation for each module for specific details as to what
 # the Behavior does.
 module Cms::Behaviors; end

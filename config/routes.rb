@@ -1,4 +1,4 @@
-if RAILS_ENV == "test"
+if Rails.env == "test"
   class ContentBlock
     def self.versioned?; true; end
     def self.publishable?; true; end
@@ -10,7 +10,7 @@ end
 # For BrowserCMS Core testing. These routes should not be used by projects that use BrowserCMS as a gem.
 # Only load these routes if this is the "root" application
 #
-#if RAILS_ROOT == File.expand_path(File.dirname(__FILE__) + "/..")
+#if Rails.root == File.expand_path(File.dirname(__FILE__) + "/..")
   Browsercms::Application.routes.draw do |map|
 
 #  ActionController::Routing::Routes.draw do |map|

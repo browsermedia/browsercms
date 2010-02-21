@@ -24,8 +24,8 @@ module Cms
       ActionDispatch::Routing::DeprecatedMapper.send :include, Cms::Routes
 # This next line should add the methods to the 'new' router.
 #      ActionController::Routing::Mapper::Base.send :include, Cms::Routes
-      ActiveSupport::Dependencies.load_paths += %W( #{RAILS_ROOT}/app/portlets )
-      ActiveSupport::Dependencies.load_paths += %W( #{RAILS_ROOT}/app/portlets/helpers )      
+      ActiveSupport::Dependencies.load_paths += %W( #{Rails.root}/app/portlets )
+      ActiveSupport::Dependencies.load_paths += %W( #{Rails.root}/app/portlets/helpers )      
       ActionController::Base.append_view_path DynamicView.base_path
       ActionView::Base.default_form_builder = Cms::FormBuilder
       

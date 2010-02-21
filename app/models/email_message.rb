@@ -1,6 +1,6 @@
 class EmailMessage < ActiveRecord::Base
   
-  named_scope :undelivered, :conditions => "delivered_at is null"
+  scope :undelivered, :conditions => "delivered_at is null"
   
   validates_presence_of :recipients
   

@@ -62,7 +62,7 @@ That said, there are some conventions that tend to make things easier.
 First, place any files that are used as configuration files for public assects (for example, the fckeditor) in the @public/bcms_config/[module_name]@ directory and have the gem only copy them if they are not already there.  For example you can add code like the following to the @rails/init.rb@ file.
 
 <ruby>
-unless File.exists?("#{RAILS_ROOT}/public/bcms_config/fckeditor/fckstyles.xml")
+unless File.exists?("#{Rails.root}/public/bcms_config/fckeditor/fckstyles.xml")
   Cms.add_generator_paths gem_root, "public/bcms_config/fckeditor/fckstyles.xml"  
 end
 </ruby>

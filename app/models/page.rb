@@ -11,8 +11,8 @@ class Page < ActiveRecord::Base
   has_many :connectors, :order => "connectors.container, connectors.position"
   has_many :page_routes
   
-  named_scope :named, lambda{|name| {:conditions => ['pages.name = ?', name]}}
-  named_scope :with_path, lambda{|path| {:conditions => ['pages.path = ?', path]}}
+  scope :named, lambda{|name| {:conditions => ['pages.name = ?', name]}}
+  scope :with_path, lambda{|path| {:conditions => ['pages.path = ?', path]}}
   
   # This scope will accept a connectable object or a Hash.  The Hash is expect to have
   # a value for the key :connectable, which is the connectable object, and possibly
@@ -20,7 +20,7 @@ class Page < ActiveRecord::Base
   # it will use the value in :version if present, otherwise it will use the version 
   # of the object.  In either case of a connectable object or a Hash, if the object
   # is not versioned, no version will be used
-  named_scope :connected_to, lambda { |b| 
+  scope :connected_to, lambda { |b|
     if b.is_a?(Hash)
       obj = b[:connectable]
       if obj.class.versioned?

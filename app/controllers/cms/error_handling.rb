@@ -2,7 +2,7 @@ module Cms
   module ErrorHandling
     def self.included(controller)
       controller.class_eval do
-        rescue_from Exception, :with => :handle_server_error unless RAILS_ENV == "test"
+        rescue_from Exception, :with => :handle_server_error unless Rails.env == "test"
         rescue_from Cms::Errors::AccessDenied, :with => :handle_access_denied
       end
     end

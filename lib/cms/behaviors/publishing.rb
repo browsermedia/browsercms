@@ -22,8 +22,8 @@ module Cms
         
           after_save :publish_for_non_versioned
         
-          named_scope :published, :conditions => {:published => true}
-          named_scope :unpublished, lambda {
+          scope :published, :conditions => {:published => true}
+          scope :unpublished, lambda {
             if versioned?
               { :joins => :versions,
                 :conditions =>

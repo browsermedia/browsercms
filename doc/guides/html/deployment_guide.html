@@ -145,7 +145,7 @@
 <p>Make sure the config/environments/production.rb file has these following configuration settings.  If you created your BrowserCMS Rails app using one of the application templates, this will already have been added but you may need to configure them to match your site&#8217;s domain and mail server.</p>
 <div class="code_container"><code class="ruby">SITE_DOMAIN=&quot;www.sitedomain.com&quot; # This should match the URL for your public CMS site.
 config.action_view.cache_template_loading = false
-config.action_controller.page_cache_directory = RAILS_ROOT + &quot;/public/cache/&quot;
+config.action_controller.page_cache_directory = Rails.root + &quot;/public/cache/&quot;
 config.action_mailer.smtp_settings = {:address =&gt; 'mail.yourmailserver.com',
                                       :domain =&gt; &quot;#{SITE_DOMAIN}&quot;}</code></div>
 <p>The SITE_DOMAIN in particular is used to build links to <span class="caps">CMS</span> pages that can be emailed.</p>

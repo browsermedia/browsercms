@@ -3,7 +3,7 @@ class DynamicView < ActiveRecord::Base
   after_save :write_file_to_disk
   after_destroy :remove_file_from_disk
 
-  named_scope :with_file_name, lambda{|file_name|
+  scope :with_file_name, lambda{|file_name|
     conditions = {:name => nil, :format => nil, :handler => nil}
     if file_name && (parts = file_name.split(".")).size == 3
       conditions[:name] = parts[0]

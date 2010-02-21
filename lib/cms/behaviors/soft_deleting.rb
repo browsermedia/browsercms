@@ -11,7 +11,7 @@ module Cms
         def uses_soft_delete(options={})
           @uses_soft_delete = true
         
-          named_scope :not_deleted, :conditions => ["#{table_name}.deleted = ?", false]
+          scope :not_deleted, :conditions => ["#{table_name}.deleted = ?", false]
           class << self
             alias_method :find_with_deleted, :find
             alias_method :count_with_deleted, :count

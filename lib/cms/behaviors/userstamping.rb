@@ -18,8 +18,8 @@ module Cms
         
           before_save :set_userstamps
         
-          named_scope :created_by, lambda{|user| {:conditions => {:created_by => user}}}        
-          named_scope :updated_by, lambda{|user| {:conditions => {:updated_by => user}}}        
+          scope :created_by, lambda{|user| {:conditions => {:created_by => user}}}
+          scope :updated_by, lambda{|user| {:conditions => {:updated_by => user}}}        
         end
       end
       module ClassMethods

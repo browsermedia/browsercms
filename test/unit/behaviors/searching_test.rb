@@ -29,7 +29,7 @@ end
 class SearchableContentBlock < ActiveRecord::Base
   acts_as_content_block
   belongs_to :parent, :class_name => "SearchableContentBlockParent"
-  named_scope :created_after, lambda{|time| {:conditions => ["created_at > ?", time]}}
+  scope :created_after, lambda{|time| {:conditions => ["created_at > ?", time]}}
 end
 
 class SearchableContentBlockTest < ActiveSupport::TestCase

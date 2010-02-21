@@ -210,7 +210,7 @@
 <p>Build your module as if you were building a rails application that does whatever you want.</p>
 <p>That said, there are some conventions that tend to make things easier.</p>
 <p>First, place any files that are used as configuration files for public assects (for example, the fckeditor) in the <code>public/bcms_config/[module_name]</code> directory and have the gem only copy them if they are not already there.  For example you can add code like the following to the <code>rails/init.rb</code> file.</p>
-<div class="code_container"><code class="ruby">unless File.exists?(&quot;#{RAILS_ROOT}/public/bcms_config/fckeditor/fckstyles.xml&quot;)
+<div class="code_container"><code class="ruby">unless File.exists?(&quot;#{Rails.root}/public/bcms_config/fckeditor/fckstyles.xml&quot;)
   Cms.add_generator_paths gem_root, &quot;public/bcms_config/fckeditor/fckstyles.xml&quot;  
 end</code></div>
 <p>This will make the required configuration file available to the fckeditor, but it won&#8217;t overwrite it (or even ask you if you want to overwrite it) every time you run <code>script/generate browser_cms</code> for your application.</p>

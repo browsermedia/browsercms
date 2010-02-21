@@ -7,11 +7,11 @@ class Task < ActiveRecord::Base
   after_create :mark_other_tasks_for_the_same_page_as_complete
   after_create :send_email
   
-  named_scope :complete, :conditions => ["completed_at is not null"]
-  named_scope :incomplete, :conditions => ["completed_at is null"]
+  scope :complete, :conditions => ["completed_at is not null"]
+  scope :incomplete, :conditions => ["completed_at is null"]
   
-  named_scope :for_page, lambda{|p| {:conditions => ["page_id = ?", p]}}
-  named_scope :other_than, lambda{|t| {:conditions => ["id != ?", t.id]}}
+  scope :for_page, lambda{|p| {:conditions => ["page_id = ?", p]}}
+  scope :other_than, lambda{|t| {:conditions => ["id != ?", t.id]}}
   
   validates_presence_of :assigned_by_id, :message => "is required"
   validates_presence_of :assigned_to_id, :message => "is required"

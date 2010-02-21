@@ -3,7 +3,7 @@ class CategoryType < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name
   is_searchable
-  named_scope :named, lambda {|name| {:conditions => ['category_types.name = ?', name] } }
+  scope :named, lambda {|name| {:conditions => ['category_types.name = ?', name] } }
   
   # Return a map when the key is category type id as a string
   # and the value is an array of arrays, each entry having 

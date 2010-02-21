@@ -19,11 +19,11 @@ class Group < ActiveRecord::Base
     
   validates_presence_of :name
   
-  named_scope :named, lambda{|n| {:conditions => {:name => n}}}
-  named_scope :with_code, lambda{|c| {:conditions => {:code => c}}}
+  scope :named, lambda{|n| {:conditions => {:name => n}}}
+  scope :with_code, lambda{|c| {:conditions => {:code => c}}}
     
-  named_scope :public_groups, :include => :group_type, :conditions => ["group_types.cms_access = ?", false]
-  named_scope :cms_access, :include => :group_type, :conditions => ["group_types.cms_access = ?", true]
+  scope :public_groups, :include => :group_type, :conditions => ["group_types.cms_access = ?", false]
+  scope :cms_access, :include => :group_type, :conditions => ["group_types.cms_access = ?", true]
   
   def guest?
     group_type && group_type.guest?

@@ -7,7 +7,7 @@ class Site < ActiveRecord::Base
   before_save :unset_default
   after_save :set_default
   
-  named_scope :default, :conditions => {:the_default => true}
+  scope :default, :conditions => {:the_default => true}
     
   def self.find_by_domain(domain)
     d = domain.clone
