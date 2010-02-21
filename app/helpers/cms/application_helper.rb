@@ -86,7 +86,7 @@ module Cms
       content_tag :span, content
     end
     def lt_button_wrapper(content)
-<<LBW
+      button = <<LBW
   <div class="lt_button">
     <img src="/images/cms/lt_button_l.gif" alt="" />
     <div class="lt_button_content">
@@ -95,6 +95,8 @@ module Cms
     <img src="/images/cms/lt_button_r.gif" alt="" style="margin-right: 10px;" />
   </div>
 LBW
+      # For now, return the original content unsanitized. TODO: Figure out how to unsanitize this output.
+      content
     end
 
     def dk_button_wrapper(content)

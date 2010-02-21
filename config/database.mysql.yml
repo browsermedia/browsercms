@@ -1,6 +1,8 @@
 development:
   adapter: mysql
   encoding: utf8
+  reconnect: false
+  pool: 5
   database: browsercms_development
   username: root
   password:
