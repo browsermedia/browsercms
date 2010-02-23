@@ -3,16 +3,16 @@
   <%= javascript_include_tag 'cms/sitemap' %>  
 <% end %>
 
-<% page_title "Sitemap" %>
+<% page_title t("section_nodes.index.sitemap") %>
 
 <% content_for :functions do %>
-  <h1>Sitemap</h1>
-  <%= link_to span_tag("Edit Page"), '#', :id => 'edit-button', :class => "button disabled left" %>
-  <%= link_to span_tag("Edit Properties"), '#', :id => 'properties-button', :class => "button disabled right" %>
-  <%= link_to span_tag("Add Page"), '#', :id => 'add-page-button', :class => "button disabled spacer left" %>
-  <%= link_to span_tag("Add Section"), '#', :id => 'add-section-button', :class => "button disabled middle" %>
-  <%= link_to span_tag("Add Link"), '#', :id => 'add-link-button', :class => "button disabled right" %>
-  <%= link_to span_tag("<span class=\"delete_img\">&nbsp;</span>Delete"), '#', :id => 'delete-button', :class => "button disabled delete_button" %>
+  <h1><%=t "section_nodes.index.sitemap" %></h1>
+  <%= link_to span_tag(t "section_nodes.index.edit_page"), '#', :id => 'edit-button', :class => "button disabled left" %>
+  <%= link_to span_tag(t "section_nodes.index.edit_properties"), '#', :id => 'properties-button', :class => "button disabled right" %>
+  <%= link_to span_tag(t "section_nodes.index.add_page"), '#', :id => 'add-page-button', :class => "button disabled spacer left" %>
+  <%= link_to span_tag(t "section_nodes.index.add_section"), '#', :id => 'add-section-button', :class => "button disabled middle" %>
+  <%= link_to span_tag(t "section_nodes.index.add_link"), '#', :id => 'add-link-button', :class => "button disabled right" %>
+  <%= link_to span_tag("<span class=\"delete_img\">&nbsp;</span>#{t "section_nodes.index.delete"}"), '#', :id => 'delete-button', :class => "button disabled delete_button" %>
   <br clear="all" />
 <% end %>
 

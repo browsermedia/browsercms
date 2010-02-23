@@ -5,7 +5,7 @@
         :node_type => "link", 
         :icon => action_icon(root ? :root_link : :link),
         :published_status_icon => status_icon(node.status),
-        :published_status_label => node.published? ? "Published" : "Draft"
+        :published_status_label => node.published? ? t("section_nodes.link.published") : t("section_nodes.link.draft")
       } %>
   </li>
 </ul>
