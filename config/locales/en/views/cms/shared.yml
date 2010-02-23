@@ -1,0 +1,14 @@
+en:
+  shared:
+    admin_sidebar:
+      users_title: Users
+      users: Users
+      groups: Groups
+      templates: Templates
+      page_partials: Page Partials
+      page_templates: Page Templates
+      page_routes: Page Routes
+      tools: Tools
+      page_caching: Page Caching
+      redirects: Redirects
+      email_messages: Email Messages
