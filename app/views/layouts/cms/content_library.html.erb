@@ -23,7 +23,7 @@
             <div class="top_cap_menu"></div>
             <div id="menu">
               <div class="first">
-                <h3>Search</h3>
+                <h3><%= t "layouts.cms.content_library.search" %></h3>
                 <div class="searchbox">
                   <% form_tag cms_index_path_for(content_type), :method => :get do -%>
                     <div id="search_term_container">
@@ -37,7 +37,7 @@
                     <% if content_type.name == "HtmlBlock" -%>
                       <div id="search_include_body_container">
                         <%= check_box_tag "search[include_body]", true, (params[:search] ? params[:search][:include_body] : false) %>
-                        <label for="search_include_body">Include body?</label>
+                        <label for="search_include_body"><%= t "layouts.cms.content_library.include_body" %></label>
                       </div>
                     <%# TODO: Remove IE 6 Hack %>
                     <% elsif %w[FileBlock ImageBlock].include?(content_type.name) && request.user_agent !~ /MSIE 6/ %>
@@ -50,7 +50,7 @@
               <div class="top_cap"></div>
               <div id="content_types">
                 <%= yield :sidebar %>
-                <h3>Content Types</h3>
+                <h3><%= t "layouts.cms.content_library.content_types" %></h3>
                 <ul>
                   <% ContentTypeGroup.all(:order => "content_type_groups.id").each do |group| %>
                     <li<%= ' class="open"' if (group == content_type.content_type_group) %>>

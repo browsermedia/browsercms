@@ -1,0 +1,9 @@
+es:
+  layouts:
+    cms:
+      content_library:
+        search: Búsqueda
+        include_body: ¿Incluir texto?
+        content_types: Tipos de contenido
+        
+  
