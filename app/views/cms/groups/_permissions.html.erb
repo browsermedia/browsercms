@@ -16,7 +16,7 @@
 <% end %>
 <div id="permissions">
   <div class="checkbox_group">
-    <label>Global Permissions</label>
+    <label><%= t "groups.permissions.global_permissions" %></label>
     <%= hidden_field_tag "group[permission_ids][]", "" %>  
     <div class="checkboxes">
     <% Permission.all(:order => "name").each do |p| %>

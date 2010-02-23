@@ -13,7 +13,7 @@
 <% end %>
 
 <% content_for :functions do %> 
-  <%= link_to(span_tag("List All"), cms_groups_path, 
+  <%= link_to(span_tag(t "groups.form.list_all"), cms_groups_path, 
     :id => "list_all_button", 
     :class => "button") %>
 <% end %>
@@ -22,15 +22,15 @@
 
   <%= f.error_messages %>
   <div class="fields text_fields">
-    <%= f.label :name, "Group Name" %>
+    <%= f.label :name, t("groups.form.group_name") %>
     <%= f.text_field :name %>
   </div>
 
   <% unless @group.guest? %>
     <div class="fields select_fields">
-    	<%= f.label :group_type_id, "Type of User" %>
+    	<%= f.label :group_type_id, t("groups.form.type_of_user") %>
     	<div><%= f.select :group_type_id, GroupType.non_guest.map { |g| [g.name, g.id] } %></div>
-    	<div class="instructions">What kind of user does this group represent?</div>
+    	<div class="instructions"><%= t "groups.form.instructions" %></div>
   	<br clear="all" />
     </div>
   <% end %>
@@ -39,7 +39,7 @@
   <%= render :partial => 'sections' %>
 
   <div class="buttons">
-    <%= lt_button_wrapper(f.submit("Save", :class => "submit")) %>
+    <%= lt_button_wrapper(f.submit(t("groups.form.save"), :class => "submit")) %>
   </div>
 
 <% end %>

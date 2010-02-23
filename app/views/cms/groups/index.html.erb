@@ -1,8 +1,8 @@
-<% page_title "Administration / Group Browser" %>
-<% @toolbar_title = "List Groups" %>
+<% page_title t("groups.index.page_title") %>
+<% @toolbar_title = t("groups.index.toolbar_title") %>
 
 <% content_for :functions do %> 
-  <%= link_to(span_tag("Add Group"), new_cms_group_path, 
+  <%= link_to(span_tag(t "groups.index.add_group"), new_cms_group_path, 
     :id => "new_group_button", :class => "button") %>
 <% end %>
 
@@ -12,15 +12,15 @@
       <tr>
         <th colspan="2" class="first">
           <div class="dividers">
-            <%= link_to "Name", cms_groups_path(:order => determine_order(params[:order], "groups.name")) %>
+            <%= link_to t("groups.index.name"), cms_groups_path(:order => determine_order(params[:order], "groups.name")) %>
           </div>
         </th>
         <th>
           <div class="dividers">
-            <%= link_to "Type", cms_groups_path(:order => determine_order(params[:order], "group_types.name")) %>
+            <%= link_to t("groups.index.type"), cms_groups_path(:order => determine_order(params[:order], "group_types.name")) %>
           </div>
         </th>
-        <th colspan="2" class="last"><div class="dividers">Permissions</div></th>
+        <th colspan="2" class="last"><div class="dividers"><%= t "groups.index.permissions" %></div></th>
       </tr>
     </thead>
     <% section_count = Section.count %>
@@ -41,8 +41,8 @@
           <% g.permissions.uniq.each do |p| %>
             - <%= p.full_name %> <br />
           <% end %>
-          - <%= g.cms_access? ? "Edit" : "View" %>
-          <%= g.sections.count >= section_count ? "All Sections" : "#{g.sections.count} of #{section_count} Sections" %>
+          - <%= g.cms_access? ? t("groups.index.edit") : t("groups.index.view") %>
+          <%= g.sections.count >= section_count ? t("groups.index.all_sections") : "#{g.sections.count} #{t "groups.index.of"} #{section_count} #{t "groups.index.sections"}" %>
         </td>
         <td class="last"></td>
       </tr>
