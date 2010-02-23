@@ -1,0 +1,14 @@
+en:
+  links:
+    form:
+      new_window: Open In New Window?
+    edit: 
+      page_title: Edit link {{link}}
+      list_all: List All
+      save_and_publish: Save and Publish
+      save: Save
+    new:
+      page_title: Add New Link to Sitemap
+      list_all: list all
+      save_and_publish: Save and Publish
+      save: Save

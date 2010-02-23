@@ -1,0 +1,30 @@
+es:
+  page_routes:
+    form:
+      save: Guardar
+    edit:
+      page_title: Editar Ruta de Página
+      list_all: Mostrar todas
+    index:
+      page_title: Lista de Rutas de Página
+      add: Agregar
+      edit: Editar
+      delete: Eliminar
+      confirm: ¿Estás seguro(a) que quieres eliminar esta ruta de página?
+      view: Ver
+      view_rails_routes: Ver Rutas Rails
+      name: Nombre
+      pattern: Patrón
+    new:
+      page_title: Nueva Ruta de Página
+      list_all: Mostrar Todas
+    show:
+      page_title: "Ruta de Página '{{route}}'"
+      add: Agregar
+      edit: Editar
+      delete: Eliminar
+      confirm: ¿Estás seguro(a) que quieres eliminar esta ruta de página?
+      list_all: Mostrar todas
+      view_rails_routes: Ver Rutas Rails
+      
+    

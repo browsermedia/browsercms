@@ -1,14 +1,14 @@
-<% @toolbar_title = page_title "'#{@page_route.name}' Page Route" %>
+<% @toolbar_title = page_title t("page_routes.show.page_title", :route => @page_route.name) %>
 
 <% content_for :functions do %>
-  <%= link_to(span_tag("&nbsp;Add&nbsp;"), new_cms_page_route_path, :class => "button") %>
-  <%= link_to(span_tag("&nbsp;Edit&nbsp;"), edit_cms_page_route_path(@page_route), :id => 'edit_button', :class => "button") %>
-  <%= link_to span_tag("<span class=\"delete_img\">&nbsp;</span>Delete"), [:cms, @page_route], 
+  <%= link_to(span_tag("&nbsp;#{t "page_routes.show.add"}&nbsp;"), new_cms_page_route_path, :class => "button") %>
+  <%= link_to(span_tag("&nbsp;#{t "page_routes.show.edit"}&nbsp;"), edit_cms_page_route_path(@page_route), :id => 'edit_button', :class => "button") %>
+  <%= link_to span_tag("<span class=\"delete_img\">&nbsp;</span>#{t "page_routes.show.delete"}"), [:cms, @page_route], 
     :id => "delete_button", 
     :class => "button http_delete confirm_with_title", 
-    :title => "Are you sure you want to delete this Page Route?" %>
-  <%= link_to(span_tag("List All"), cms_page_routes_path, :class => "button") %>    
-  <%= link_to(span_tag("View Rails Routes"), cms_routes_path, :class => "button") %>
+    :title => t("page_routes.show.confirm") %>
+  <%= link_to(span_tag(t "page_routes.show.list_all"), cms_page_routes_path, :class => "button") %>    
+  <%= link_to(span_tag(t "page_routes.show.view_rails_routes"), cms_routes_path, :class => "button") %>
 <% end %>
 
 <%= @page_route.name %>

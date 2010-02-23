@@ -1,0 +1,28 @@
+en:
+  page_routes:
+    form:
+      save: Save
+    edit:
+      page_title: Edit Page Route
+      list_all: List All
+    index:
+      page_title: List Page Routes
+      add: Add
+      edit: Edit
+      delete: Delete
+      confirm: Are you sure you want to delete this Page Route?
+      view: View
+      view_rails_routes: View Rails Routes
+      name: Name
+      pattern: Pattern
+    new:
+      page_title: New Page Route
+      list_all: List All
+    show:
+      page_title: "'{{route}}' Page Route"
+      add: Add
+      edit: Edit
+      delete: Delete
+      confirm: Are you sure you want to delete this Page Route?
+      list_all: List All
+      view_rails_routes: View Rails Routes

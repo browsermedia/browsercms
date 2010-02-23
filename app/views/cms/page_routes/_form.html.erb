@@ -6,6 +6,6 @@
   <%= f.cms_text_field :pattern %>
   <%= f.cms_text_area :code, :style => "height: 200px" %>
   <div class="buttons">
-    <%= lt_button_wrapper(f.submit("Save", :class => "submit", :tabindex => next_tabindex)) %>
+    <%= lt_button_wrapper(f.submit(t("page_routes.form.save"), :class => "submit", :tabindex => next_tabindex)) %>
   </div>
 <% end %>
