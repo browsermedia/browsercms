@@ -1,0 +1,18 @@
+es:
+  dynamic_views:
+    form:
+      save: Guardar
+    edit:
+      edit: Editar
+      list_all: Mostrar Todo
+    index:
+      list: Lista de
+      delete: Eliminar
+      confirm: ¿Estás seguro de que quieres eliminar este(a) {{object}}?
+      name: Nombre
+      updated_at: Actualizado en
+        
+    new:
+      new: Nuevo(a)
+      list_all: Mostrar todo
+   

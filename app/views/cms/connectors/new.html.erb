@@ -1,4 +1,4 @@
-<% @toolbar_title = @page_title = t("connectors.page_title", :page =>  {@page.page_title}) %>
+<% @toolbar_title = @page_title = t("connectors.page_title", :page => @page.page_title) %>
 
 <% content_for :html_head do %>
   <%= stylesheet_link_tag("cms/content_library") %>
@@ -30,7 +30,7 @@
 <% content_for :functions do %>
   <h1><%=h @toolbar_title %></h1>
   <%= link_to span_tag(t "connectors.add_to_page"), "#", :id => "add_button", :class => "button disabled" %>
-  <%= link_to span_tag("connectors.view_content"), "#", :id => "view_button", :class => "button disabled" %>
+  <%= link_to span_tag(t "connectors.view_content"), "#", :id => "view_button", :class => "button disabled" %>
   <% form_tag cms_connectors_path, :id => 'connect_form' do %>
     <%= hidden_field_tag :page_id, @page.to_param %>
     <%= hidden_field_tag :container,  @container %>

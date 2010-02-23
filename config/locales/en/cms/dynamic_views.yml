@@ -1,0 +1,16 @@
+en:
+  dynamic_views:
+    form:
+      save: Save
+    edit:
+      edit: Edit
+      list_all: List All
+    index:
+      list: List
+      delete: Delete
+      confirm: Are you sure you want to delete this {{object}}?
+      name: Name
+      updated_at: Updated At
+    new:
+      new: New
+      list_all: List All
