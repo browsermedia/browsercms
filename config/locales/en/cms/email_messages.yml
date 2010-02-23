@@ -1,0 +1,18 @@
+en:
+  email_messages:
+    index:
+      page_title: Administration / Email Messages
+      toolbar_title: Email Messages
+      to: To
+      subject: Subject
+      delivered: Delivered
+      no_mail: No email messages.
+    show: 
+      page_title: Email Message {{subject}}
+      delivered_at: "Delivered at:"
+      content_type: "Content-Type:"
+      from: "From:"
+      to: "To:"
+      cc: "CC:"
+      bcc: "BCC:"
+      subject: "Subject:"

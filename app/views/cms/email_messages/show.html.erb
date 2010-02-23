@@ -17,39 +17,39 @@
   <%= link_to span_tag("List All"), cms_email_messages_path, :class => "button" %>
 <% end %>
 
-<% @page_title = @toolbar_title = "Email Message '#{@message.subject}'" %>
+<% @page_title = @toolbar_title = t("email_messages.show.page_title", :subject => @message.subject) %>
 <div class="field">
-  <div class="label">Delivered At:</div> 
+  <div class="label"><%= t "email_messages.show.delivered_at" %></div> 
   <div class="value"><%= time_on_date(@message.delivered_at) %></div>
 </div>
 <% unless @message.content_type.blank? %>
   <div class="field">
-    <div class="label">Content-Type:</div> 
+    <div class="label"><%= t "email_messages.show.content_type" %></div> 
     <div class="value"><%=h @message.content_type %></div>  
   </div>
 <% end %>
 <div class="field">
-  <div class="label">From:</div> 
+  <div class="label"><%= t "email_messages.show.from" %></div> 
   <div class="value"><%=h @message.sender %></div>
 </div>
 <div class="field">
-  <div class="label">To:</div> 
+  <div class="label"><%= t "email_messages.show.to" %></div> 
   <div class="value"><%=h @message.recipients %></div>
 </div>
 <% unless @message.cc.blank? %>
   <div class="field">
-    <div class="label">CC:</div> 
+    <div class="label"><%= t "email_messages.show.cc" %></div> 
     <div class="value"><%=h @message.cc %></div>
   </div>
 <% end %>
 <% unless @message.bcc.blank? %>
   <div class="field">
-    <div class="label">BCC:</div> 
+    <div class="label"><%= t "email_messages.show.bcc" %></div> 
     <div class="value"><%=h @message.bcc %></div>
   </div>
 <% end %>
 <div class="field">
-  <div class="label">Subject:</div> 
+  <div class="label"><%= t "email_messages.show.subject" %></div> 
   <div class="value"><%=h @message.subject %></div>
 </div>
 <div class="field">

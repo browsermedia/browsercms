@@ -1,13 +1,13 @@
-<% page_title "Administration / Email Messages" %>
-<% @toolbar_title = "Email Messages" %>
+<% page_title t("email_messages.index.page_title") %>
+<% @toolbar_title = t("email_messages.index.toolbar_title") %>
 
 <div class="roundedcorners">
   <table  class="data" width="100%">
     <thead>
       <tr>
-        <th class="first" colspan="2"><div class="dividers">To</div></th>
-        <th style="width: 48%;"><div class="dividers">Subject</div></th>
-        <th class="last" colspan="2" style="width: 20%;"><div class="dividers">Delivered</div></th>
+        <th class="first" colspan="2"><div class="dividers"><%= t "email_messages.index.to" %></div></th>
+        <th style="width: 48%;"><div class="dividers"><%= t "email_messages.index.subject" %></div></th>
+        <th class="last" colspan="2" style="width: 20%;"><div class="dividers"><%= t "email_messages.index.delivered" %></div></th>
     </tr>
   </thead>
   <tbody>
@@ -23,7 +23,7 @@
     <% if @messages.empty? %>
       <tr>
 	<td class="first">&nbsp;</td>
-	<td colspan="3" style="height: 30px; padding-top:10px; letter-spacing: 2px;">No email messages.</td>
+	<td colspan="3" style="height: 30px; padding-top:10px; letter-spacing: 2px;"><%= t "email_messages.index.no_mail" %></td>
 	<td class="last">
       </tr>
     <% end %>

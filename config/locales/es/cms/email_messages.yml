@@ -1,0 +1,18 @@
+es:
+  email_messages:
+    index:
+      page_title: Administración / Correos
+      toolbar_title: Mensajes de Correo
+      to: Para
+      subject: Asunto
+      delivered: Entregado
+      no_mail: No hay mensajes de correo.
+    show:
+      page_title: Mensaje {{subject}}
+      delivered_at: "Entregado:"
+      content_type: "Content-Type:"
+      from: "De:"
+      to: "Para:"
+      cc: "CC:"
+      bcc: "BCC:"
+      subject: "Asunto:"
