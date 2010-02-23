@@ -1,0 +1,7 @@
+en:
+  categories:
+    message: |
+        Before you can create a category, you must {{link}}.  
+        Each category must have a category type.  For example, if you plan to 
+        categorize your news releases, you might create a "News Release" category type.
+    create_category_type: create a category type

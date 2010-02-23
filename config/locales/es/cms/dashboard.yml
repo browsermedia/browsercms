@@ -1,0 +1,18 @@
+es:
+  dashboard:
+    page_drafts:
+        page_drafts: Borradores
+        name: Nombre
+        user: Usuario
+        all_published: Todas las páginas están publicadas
+        date: Fecha
+        publish_selected: Publicar seleccionadas
+    tasks:
+        tasks: Tareas
+        name: Nombre
+        assigned_by: Asignado por
+        due_date: Fecha límite
+        no_tasks: No tienes tareas asignadas
+        complete_selected: Completar seleccionadas
+  
+  

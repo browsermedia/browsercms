@@ -24,7 +24,7 @@
   <%= f.cms_text_field :name %>
 
 <% else %>
-  <% page_title "Please Create A Category Type" %>
+  <% page_title t("categories.page_title") %>
   <% content_for :html_head do %>
     <script type="text/javascript">
       jQuery(function($){
@@ -32,5 +32,5 @@
       })
     </script>
   <% end %>
-  <p>Before you can create a category, you must <%= link_to "create a category type", new_cms_category_type_path %>.  Each category must have a category type.  For example, if you plan to categorize your news releases, you might create a "News Release" category type.</p>
+  <p><%= t("categories.message", :link =>  link_to(t("categories.create_category_type"), new_cms_category_type_path)) %></p>
 <% end %>
