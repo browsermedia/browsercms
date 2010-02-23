@@ -1,0 +1,24 @@
+en:
+  layouts:
+    page_toolbar:
+      status: "Status:"
+      section: "Section:"
+      page: "Page:"
+      template: "Template:"
+      version: "Version:"
+      live: LIVE
+      publish: Publish
+      assign: Assign
+      complete_task: Complete Task
+      edit_properties: Edit Properties
+      list_versions: List Versions
+      delete: Delete
+      confirm: "Are you sure you want to delete '{{page_name}}'?"
+      revert: Revert to this Version
+      visual_editor: "Visual Editor:"
+      visual_editor_title: "You don't have premission to edit this page"
+      status_on: ON
+      status_off: OFF
+      turn_off: TURN OFF
+      turn_on: TURN ON
+      view_current: View Current Version

@@ -1,0 +1,24 @@
+es:
+  layouts:
+    page_toolbar:
+      status: "Estatus:"
+      section: "Sección:"
+      page: "Página:"
+      template: "Template:"
+      version: "Versión:"
+      live: EN VIVO
+      publish: Publicar
+      assign: Asignar
+      complete_task: Completar Tarea
+      edit_properties: Editar Propiedades
+      list_versions: Lista de Versiones
+      delete: Eliminar
+      confirm: "¿Estás seugro de que quieres eliminar '{{page_name}}'?"
+      revert: Regresar a esta versión
+      visual_editor: "Editor Visual:"
+      visual_editor_title: "No tienes autorización para editar esta página"
+      status_on: "'ON'"
+      status_off: "'OFF'"
+      turn_off: APAGAR
+      turn_on: ENCENDER
+      view_current: View Current Version
