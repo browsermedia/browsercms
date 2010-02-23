@@ -1,0 +1,6 @@
+en:
+  file_blocks:
+    form:
+      file: File
+      section: Section
+      path: Path
