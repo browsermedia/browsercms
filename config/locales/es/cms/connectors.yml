@@ -1,0 +1,9 @@
+es:
+  connectors:
+    page_title: Agregar Contenido Existente a la Página {{page}}
+    add_to_page: Agregar a Página
+    view_content: Ver Contenido
+    choose_type: Selecciona Tipo de Contenida
+    name: Nombre
+    updated: Actualizado
+    uses: Usos

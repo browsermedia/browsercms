@@ -1,0 +1,8 @@
+es:
+  activerecord:
+    models:
+      category: Categoría
+    attributes:
+      category_type:
+        name: Nombre
+        

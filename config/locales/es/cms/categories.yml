@@ -1,6 +1,6 @@
 es:
   categories:
-    page_title: Por favor crea un tipo de categorías
+    page_title: Por favor crea un tipo de categoría
     message: |
       Antes de que puedas crear una categoría, debes {{link}}.
       Cada categoría debe tener un tipo de categoría. Por ejemplo,
