@@ -1,0 +1,5 @@
+es:
+  content:
+    no_page: 
+      page_not_found: La Página no se encuentra
+      no_page: No existe una página en {{path}}

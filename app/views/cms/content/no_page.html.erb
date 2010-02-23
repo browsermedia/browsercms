@@ -1,4 +1,4 @@
-<% page_title "Page Not Found" %>
+<% page_title t("content.no_page.page_not_found") %>
 
 <%# 
   Note that we have to clear out the existing contents of
@@ -33,5 +33,5 @@
 <% end %>
 
 <div class="cms_error">
-  <h2>There is no page at <%= @path %></h2>
+  <h2><%= t "content.no_page.no_page", :path => @path %>
 </div>
