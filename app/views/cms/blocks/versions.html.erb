@@ -1,5 +1,5 @@
 <% page_title "Content Library / List of Versions" %>
-<% @toolbar_title = "List Versions / '#{@block.name}' #{content_type.display_name}" %>
+<% @toolbar_title = "#{t "blocks.versions.list_versions"} / #{content_type.display_name}' #{@block.name}' " %>
 <% content_for :html_head do %>
 <%= stylesheet_link_tag("cms/content_library") %>
   <% javascript_tag do %>
@@ -33,22 +33,22 @@
 
 <% content_for :functions do %>
   <%= render :partial => 'cms/blocks/toolbar' %>
-  <%= link_to span_tag("Revert"), "#", :id => "revert_button", :class => "http_put button disabled"  %>
+  <%= link_to span_tag(t "blocks.versions.revert"), "#", :id => "revert_button", :class => "http_put button disabled"  %>
 <% end %>
 
 <div class="roundedcorners">
   <table id="blocks" class="data">
     <thead>
       <tr>
-        <th colspan="2" class="first"><div class="dividers">Version</div></th>
+        <th colspan="2" class="first"><div class="dividers"><%= t "blocks.versions.version" %></div></th>
         <th>
-          <div class="dividers">Comment</div>
+          <div class="dividers"><%= t "blocks.versions.comment" %></div>
         </th>
         <th>
-          <div class="dividers">Date</div>
+          <div class="dividers"><%= t "blocks.versions.date" %></div>
         </th>
         <th class="last" colspan="2">
-          <div class="dividers">Editor</div>
+          <div class="dividers"><%= t "blocks.versions.editor" %></div>
         </th>
       </tr>
     </thead>
@@ -59,8 +59,8 @@
           <td>
             <div class="dividers">
               <%= "v. #{r.version}" %>
-              <%= '(LIVE)' if @block.version == r.version %>
-              <%= '<span class="current">(CURRENT)</span>' if i == 0 %>
+              <%= "(#{t("blocks.versions.live")})" if @block.version == r.version %>
+              <%= "<span class=\"current\">(#{t("blocks.versions.current")})</span>" if i == 0 %>
             </div>
           </td>
           <td>

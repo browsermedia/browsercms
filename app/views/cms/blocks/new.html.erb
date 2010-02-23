@@ -2,8 +2,8 @@
   <%= stylesheet_link_tag('cms/form_layout') %>
   <%= stylesheet_link_tag('cms/content_library') %>
 <% end %>
-<% page_title "Content Library / Add New #{content_type.display_name}" %>
-<% @toolbar_title = "Add New #{content_type.display_name}" %>
+<% page_title "#{t "blocks.new.page_title"} #{content_type.display_name}" %>
+<% @toolbar_title = "#{t "blocks.new.add"} #{content_type.display_name}" %>
 <% content_for :functions,  render(:partial => 'cms/blocks/toolbar') %>
 <% form_for(@block, :url => blocks_path, :html => {:multipart => true}) do |f| %>
   <%= f.error_messages %>
@@ -13,9 +13,9 @@
   <% unless @hide_buttons %>
     <div class="buttons">
       <% if current_user.able_to?(:publish_content) && @block.publishable? %>
-        <%= lt_button_wrapper(%Q{<button type="submit" name="#{@block.content_block_type}[publish_on_save]" value="true" class="submit" tabindex="#{next_tabindex}"><span>Save And Publish</span></button>}) %>
+        <%= lt_button_wrapper(%Q{<button type="submit" name="#{@block.content_block_type}[publish_on_save]" value="true" class="submit" tabindex="#{next_tabindex}"><span>#{t "blocks.new.save_and_publish"}</span></button>}) %>
       <% end %>
-      <%= lt_button_wrapper(f.submit("Save", :class => "submit", :tabindex => next_tabindex)) %>
+      <%= lt_button_wrapper(f.submit(t("blocks.new.save"), :class => "submit", :tabindex => next_tabindex)) %>
     </div>
   <% end %>
 <% end %>

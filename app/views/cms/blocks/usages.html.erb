@@ -1,5 +1,5 @@
-<% page_title "Content Library / View Usages" %>
-<% @toolbar_title = "Pages Using #{content_type.display_name} '#{ @block.name }'" %>
+<% page_title t("blocks.usages.page_title") %>
+<% @toolbar_title = "#{t "blocks.usages.pages_using"} #{content_type.display_name} '#{ @block.name }'" %>
 <% content_for :html_head do %>
   <%= stylesheet_link_tag("cms/content_library") %>
   <% javascript_tag do %>
@@ -18,9 +18,9 @@
   <table id="blocks" class="data">
   <thead>
     <tr>
-      <th colspan="2" class="first"><div class="dividers">Page Name</div></th>
-      <th><div class="dividers">Path</div></th>
-      <th colspan="2" class="last"><div class="dividers">Page Status</div></th>
+      <th colspan="2" class="first"><div class="dividers"><%=t "blocks.usages.page_name" %></div></th>
+      <th><div class="dividers"><%=t "blocks.usages.path" %></div></th>
+      <th colspan="2" class="last"><div class="dividers"><%=t "blocks.usages.page_status" %></div></th>
     </tr>
   </thead>
   <% @pages.each do |page| %>

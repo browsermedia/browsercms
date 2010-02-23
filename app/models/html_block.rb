@@ -30,11 +30,11 @@ class HtmlBlock < ActiveRecord::Base
   }
   
   def self.display_name
-    "Text"
+    I18n.t "html_block.display_name"
   end
 
   def self.display_name_plural
-    "Text"
+    I18n.t "html_block.display_name_plural"
   end
   
 end

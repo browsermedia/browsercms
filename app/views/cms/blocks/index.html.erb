@@ -47,7 +47,7 @@
   <% end %>
 <%= stylesheet_link_tag "cms/content_library" %>
 <% end %>
-<% page_title "Content Library / List #{content_type.display_name_plural}" %>
+<% page_title "#{t "blocks.index.page_title"} #{content_type.display_name_plural}" %>
 <% @toolbar_title = "List #{content_type.display_name_plural}" %>
 <%= render :partial => 'cms/blocks/toolbar' %>
 
@@ -76,10 +76,10 @@
         </th>
       <% end %>
       <% if content_type.model_class.respond_to?(:updated_at) %>
-        <th class="updated <%= 'last" colspan="2' unless content_type.model_class.publishable? || content_type.model_class.connectable? %>"><div class="dividers">Updated</div></th>
+        <th class="updated <%= 'last" colspan="2' unless content_type.model_class.publishable? || content_type.model_class.connectable? %>"><div class="dividers"><%=t "blocks.index.updated" %></div></th>
       <% end %>
-      <% if content_type.model_class.connectable? %><th class="used <%= ' last" colspan="2' unless content_type.model_class.publishable? %>"><div class="dividers">Used</div></th><% end %>
-      <% if content_type.model_class.publishable? %><th colspan="2" class="block_status last">Status</th><% end %>
+      <% if content_type.model_class.connectable? %><th class="used <%= ' last" colspan="2' unless content_type.model_class.publishable? %>"><div class="dividers"><%=t "blocks.index.used" %></div></th><% end %>
+      <% if content_type.model_class.publishable? %><th colspan="2" class="block_status last"><%=t "blocks.index.status" %></th><% end %>
     </tr>
   </thead>
   <tbody>
@@ -122,7 +122,7 @@
 </div>
 
 <% if params[:search] && @blocks.size == 0 %>
-  <div class="pagination">No results found for '<%= params[:search][:term] %>'</div>
+  <div class="pagination"><%=t "blocks.index.no_results" %> '<%= params[:search][:term] %>'</div>
 <% elsif @blocks.total_pages > 1 %>
   <%= render_pagination @blocks, content_type.content_block_type, :order => params[:order], :search => params[:search] %>
 <% end %>

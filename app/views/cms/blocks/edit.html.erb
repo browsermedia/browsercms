@@ -2,12 +2,12 @@
   <%= stylesheet_link_tag('cms/form_layout') %>
   <%= stylesheet_link_tag('cms/content_library') %>
 <% end %>
-<% page_title "Content Library / Edit #{content_type.display_name}" %>
-<% @toolbar_title = "Edit #{content_type.display_name} '#{@block.name}'" %>
+<% page_title "#{t "blocks.edit.page_title"} #{content_type.display_name}" %>
+<% @toolbar_title = "#{t "blocks.edit.edit"} #{content_type.display_name} '#{@block.name}'" %>
 <% content_for :functions,  render(:partial => 'cms/blocks/toolbar') %>
 
 <% if @block.respond_to?(:deleted) && @block.deleted %>
-  <div class="header">This <%= @block.class.name %> has been deleted.</div>
+  <div class="header"><%= t "blocks.edit.deleted_message", class_name => @block.class.name %></div>
 <% else %>
 <% form_for(@block, :url => block_path, :html => {:multipart => true}) do |f| %>
   <%= f.error_messages %>
@@ -22,9 +22,9 @@
   <% end %>
     <div class="buttons">
       <% if current_user.able_to?(:publish_content) && @block.publishable? %>
-        <%= lt_button_wrapper(%Q{<button type="submit" name="#{@block.content_block_type}[publish_on_save]" value="true" class="submit" tabindex="#{next_tabindex}"><span>Save And Publish</span></button>}) %>
+        <%= lt_button_wrapper(%Q{<button type="submit" name="#{@block.content_block_type}[publish_on_save]" value="true" class="submit" tabindex="#{next_tabindex}"><span>#{t "blocks.edit.save_and_publish"}</span></button>}) %>
       <% end %>
-      <%= lt_button_wrapper(f.submit("Save", :class => "submit", :tabindex => next_tabindex)) %>
+      <%= lt_button_wrapper(f.submit(t("blocks.edit.save"), :class => "submit", :tabindex => next_tabindex)) %>
     </div>
 <% end %>
 <% end %>

@@ -1,0 +1,15 @@
+es:
+  section_nodes:
+    link:
+      published: Publicado
+      draft: Borrador
+    node:
+      hidden: Oculto
+    index:
+        sitemap: Mapa del sitio
+        edit_page: Editar Página
+        edit_properties: Editar Propiedades
+        add_page: Agregar Página
+        add_section: Agregar Sección
+        add_link: Agregar Link
+        delete: Eliminar

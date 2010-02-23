@@ -1,38 +1,38 @@
 <% able_to? :publish_content do -%>
   <% if @block.respond_to?(:live?) && !@block.live? %>
-    <%= link_to span_tag('Publish'), block_path(:publish), 
+    <%= link_to span_tag(t "blocks.toolbar_for_member.publish"), block_path(:publish), 
       :class => "http_put button left#{' disabled' unless (current_user.able_to_publish?(@block) && @block.publishable?)}", 
       :id => "publish_button" %>
   <% else %>
-    <%= link_to span_tag('Publish'), "#", 
+    <%= link_to span_tag(t "blocks.toolbar_for_member.publish"), "#", 
       :class => "http_put button disabled left", 
       :id => "publish_button" %>
   <% end %>
 <% end -%>
 
-<%= link_to span_tag('View Content'), block_path, 
+<%= link_to span_tag(t "blocks.toolbar_for_member.view_content"), block_path, 
   :class => "button middle#{ ' off' if action_name == 'show'}", 
   :id => "view_button" %>
   
-<%= link_to span_tag('Edit Content'), block_path(:edit), 
+<%= link_to span_tag(t "blocks.toolbar_for_member.edit_content"), block_path(:edit), 
   :class => "button right#{ ' off' if action_name == 'edit'}#{' disabled' unless current_user.able_to_edit?(@block)}", 
   :id => "edit_button" %>
   
-<%= link_to span_tag("Add New Content"), new_block_path, 
+<%= link_to span_tag(t "blocks.toolbar_for_member.add_content"), new_block_path, 
   :class => "button#{ ' off' if action_name == 'new'}", 
   :id => "add_button" %>
 
 <% if @block.class.versioned? %>
-  <%= link_to span_tag('List Versions'), block_path(:versions),
+  <%= link_to span_tag(t "blocks.toolbar_for_member.list_versions"), block_path(:versions),
     :class => "button#{ ' off' if action_name == 'revisions'}", 
     :id => "list_versions" %>
 <% else %>
-  <%= link_to span_tag('List Versions'), '#', 
+  <%= link_to span_tag(t "blocks.toolbar_for_member.list_versions"), '#', 
     :class => "button disabled", 
     :id => "list_versions" %>
 <% end %>
 
-<%= link_to span_tag("<span class=\"delete_img\">&nbsp;</span>Delete"), block_path, 
+<%= link_to span_tag("<span class=\"delete_img\">&nbsp;</span>#{t "blocks.toolbar_for_member.delete"}"), block_path, 
   :class => "http_delete confirm_with_title button#{' disabled' unless current_user.able_to_publish?(@block)}", 
-  :title => "Are you sure you want to delete '#{@block.name}'?", 
+  :title => t("blocks.toolbar_for_member.confirm"), 
   :id => "delete_button" %>

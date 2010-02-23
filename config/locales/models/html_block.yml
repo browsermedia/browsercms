@@ -1,0 +1,9 @@
+es:
+  html_block:
+    display_name: Texto
+    display_name_plural: Textos
+    
+  activerecord:
+    attributes:
+      html_block:
+        name: "Nombre"
