@@ -1,12 +1,12 @@
-<% page_title @toolbar_title = "Page Cache Info" %>
+<% page_title @toolbar_title = t("cache.toolbar_title") %>
 
 <% content_for :html_head do %>
   <%= stylesheet_link_tag("cms/form_layout") %>
 <% end %>
 
 <% content_for :functions do %>
-  <%= link_to(span_tag("Clear Page Cache"), cms_cache_path, 
+  <%= link_to(span_tag(t "cache.clear_cache"), cms_cache_path, 
     :class => "button http_delete") %>
 <% end %>
 
-<p style="font-size: larger; margin: 10px; line-height: 20px;">The CMS System caches pages which are frequently accessed by guest users to increase throughput. If data appears stale, you may manually clear this page cache.</p>
+<p style="font-size: larger; margin: 10px; line-height: 20px;"><%=t "cache.message" %></p>

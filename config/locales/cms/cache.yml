@@ -1,0 +1,9 @@
+es:
+  cache:
+    toolbar_title: Información del Cache de Páginas
+    clear_cache: Eliminar cache
+    message: |
+        El sistema del CMS crea un cache de páginas que son visitadas con frecuencia para
+        mejorar el rendimiento del sitio. Si realizaste cambios en el contenido que no aparecen
+        en el sitio público, puedes eliminar manualmente este cache.
+    
