@@ -1,7 +1,8 @@
 es:
-  html_block:
-    display_name: Texto
-    display_name_plural: Textos
+  models:
+    html_block:
+      display_name: Texto
+      display_name_plural: Textos
     
   activerecord:
     attributes:

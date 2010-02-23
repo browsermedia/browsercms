@@ -16,7 +16,7 @@ class ImageBlock < AbstractFileBlock
   end
 
   def self.display_name
-    "Image"
+    I18n.t "models.image_block.display_name"
   end  
 
 end

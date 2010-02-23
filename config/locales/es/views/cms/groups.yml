@@ -33,39 +33,4 @@ es:
       page_title: Administración / Agregar Grupo
       toolbar_title: Agregar nuevo grupo
       
-      
-en:
-  groups:
-    form:
-      list_all: List All
-      group_name: Group Name
-      type_of_user: Tipo de usuario
-      instructions: What kind of user does this group represent?
-      save: Save
-    permissions:
-      global_permissions: Global Permissions
-    sections:
-      section_permissions: Section Permissions
-      instructions: What sections should group members be allowed to
-      view: view
-      edit: edit
-    edit:
-      page_title: Administration / Add New Group
-      toolbar_title: Add New Group
-    index:
-      page_title: Administration / Group Browser
-      toolbar_title: List Groups
-      add_group: Add Group
-      name: Name
-      type: Type
-      permissions: Permissions
-      edit: Edit
-      view: View
-      of: of
-      sections: Sections
-      all_sections: All Sections
-    new:
-      page_title: Administration / Add New Group
-      toolbar_title: Add New Group
-      
          

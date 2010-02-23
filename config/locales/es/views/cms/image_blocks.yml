@@ -1,0 +1,6 @@
+es:
+  image_blocks:
+    form:
+      file: Archivo
+      section: Sección
+      path: Ruta
