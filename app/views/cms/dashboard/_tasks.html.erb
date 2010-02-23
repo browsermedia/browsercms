@@ -1,5 +1,5 @@
 <div class="dashboard_unit" id="tasks">
-  <h2 class="left">Tasks</h2>
+  <h2 class="left"><%=t "dashboard.tasks.tasks" %></h2>
 
   <% form_tag complete_cms_tasks_path, :method => :put do %>
     <div class="roundedcorners" style="position: relative">
@@ -7,9 +7,9 @@
         <thead>
           <tr>
             <th class="select first unbordered">&nbsp;</th>
-            <th colspan="2"><div class="dividers">Name</div></th>
-            <th class="assigned_by"><div class="dividers">Assigned By</div></th>
-	          <th class="due_date">Due Date</th>
+            <th colspan="2"><div class="dividers"><%=t "dashboard.tasks.name" %></div></th>
+            <th class="assigned_by"><div class="dividers"><%=t "dashboard.tasks.assigned_by" %></div></th>
+	          <th class="due_date"><%=t "dashboard.tasks.due_date" %></th>
 		  <th class="last">&nbsp;</th>
           </tr>
         </thead>
@@ -17,7 +17,7 @@
           <% if @incomplete_tasks.empty? %>
             <tr>
               <td class="first"></td>
-              <td colspan="3" style="letter-spacing: 1px; height: 30px; padding-top: 10px;">You currently have no assigned tasks. </td>
+              <td colspan="3" style="letter-spacing: 1px; height: 30px; padding-top: 10px;"><%=t "dashboard.tasks.no_tasks" %> </td>
 	      <td class="last"></td>
             </tr>
           <% else %>  
@@ -40,7 +40,7 @@
               </tr>
             <% end %>
             <tr>
-              <td colspan="5"><%= lt_button_wrapper(submit_tag("Complete Selected", :class => "submit")) %></td>
+              <td colspan="5"><%= lt_button_wrapper(submit_tag(t("dashboard.tasks.complete_selected"), :class => "submit")) %></td>
             </tr>
           <% end %>
         </tbody>

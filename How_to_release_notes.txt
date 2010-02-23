@@ -5,4 +5,3 @@ A. Releasing and testing the gem upgrade locally
 2. [sudo] rake build install (Builds the gemspec, builds gem and installs it. Use sudo as needed
 4. cd /myproject
 5. script/generate browser_cms (Upgrades the project to use the latest gem version)
-
