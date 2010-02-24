@@ -1,0 +1,18 @@
+es:
+  routes:
+    index:
+      page_title: Rutas Rails
+      path_to_test: Ruta a probar
+      name: Nombre
+      verb: Verbo
+      pattern: Patrón
+      result: Resultado
+en:
+  routes:
+    index:
+      page_title: Rails Routes
+      path_to_test: Path to Test
+      name: Name
+      verb: Verb
+      pattern: Pattern
+      result: Result

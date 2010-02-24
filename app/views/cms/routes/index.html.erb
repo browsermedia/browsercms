@@ -1,4 +1,4 @@
-<% page_title "Rails Routes" %>
+<% page_title t("routes.index.page_title") %>
 <% content_for :functions do %>
   <h1><%=h page_title %></h1>
 <% end %>
@@ -6,7 +6,7 @@
 <div style="margin: 10px 0">
   <% form_tag cms_routes_path, :method => :get do %>
     <label>
-      Path to Test: <%= text_field_tag :path, @path, :size => 50 %>
+      <%= t "routes.index.path_to_test" %> <%= text_field_tag :path, @path, :size => 50 %>
     </label>
     <% unless @route.blank? %>
       <div style="margin: 10px 0">
@@ -18,10 +18,10 @@
 <div class="roundedcorners">
 <table class="data">
   <tr>
-    <th class="first" colspan="2"><div class="dividers">Name</div></th>
-    <th><div class="dividers" style="width: 50px;">Verb</div></th>
-    <th><div class="dividers">Pattern</div></th>
-    <th class="last" colspan="2"><div class="dividers">Result</div></th>
+    <th class="first" colspan="2"><div class="dividers"><%= t "routes.index.name" %></div></th>
+    <th><div class="dividers" style="width: 50px;"><%= t "routes.index.verb" %></div></th>
+    <th><div class="dividers"><%= t "routes.index.pattern" %></div></th>
+    <th class="last" colspan="2"><div class="dividers"><%= t "routes.index.result" %></div></th>
 
   </tr>
   <% for route in @routes %><tr>
