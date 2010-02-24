@@ -12,9 +12,9 @@ I am using the built in I18n module with the simple backend.
     rake reset
     script/server
     
-If you run the above commands you should see no difference in BrowserCMS's UI. Edit the
-file config/initializers/i18n.rb and change the locale to spanish (only spanish and english 
-translations are available but you can create your own)
+If you run the above commands you should see no difference in BrowserCMS's UI. If you do, then
+you found a bug!. Edit the file config/initializers/i18n.rb and change the locale to spanish 
+(only Spanish and English translations are available but you can create your own)
 
     I18n.default_locale = :es
     
@@ -37,12 +37,15 @@ particularly on:
 
 The main toolbar has 4 links that use images: My Dashboard, Sitemap, Content  Library and Administration.
 To translate these, you need to create 12 images. 3 for each link (over, up and active states)
-Yo can use a .psd file that was added to the repository a while back. It's on doc/design.
+You can use a .psd file that was added to the repository a while back. It's on doc/design.
 
 Once you have your images you can:
 
 * Replace the original images on public/images/cms with your own or
 * Place them wherever you want and adjust the paths on the file config/locales/es/views/layouts/cms_toolbar.yml
+
+I have not created these images myself yet but if someone is willing to contribute with the Spanish ones
+that would be awesome! 
 
 ## Creating your own locale files
 
