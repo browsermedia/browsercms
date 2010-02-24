@@ -1,0 +1,7 @@
+es:
+  tags:
+    render:
+      name: Nombre
+      type: Tipo
+
+    

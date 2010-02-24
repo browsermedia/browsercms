@@ -12,5 +12,29 @@ es:
       page_caching: Cache de páginas
       redirects: Redireccionamientos
       email_messages: Mensajes de correo
+    exception:
+      error: Ha Ocurrido un Error
+    pagination:
+      displaying: Mostrando
+      of: de
+    version_conflict:
+      their_version: Su Versión
+      field: Campo
+      value: Valor
+    version_conflict_error:
+      version_conflict: "Conflicto de versiones!"
+      message: |
+        Estás actualmente trabajando en una versión obsoleta de este contenido.
+        Tu trabajo está basado en la <b>versión {{base_version}}</b>, mientras que otro
+        usuario <b>{{other_user}}</b> ya ha guardado la <b>versión {{other_version}}</b>.
+        Compara tus cambios con los del otro usuario y guarda una copia final. 
+      your_version: Tu versión
+    access_denied:
+      page_title: Accesso Restringido
+      message: Lo sentimos, no cuentas con autorización para ingresar a esta página.
+    error:
+      page_title: Error
+      message: Mensaje
+      stacktrace: Stacktrace
 
         

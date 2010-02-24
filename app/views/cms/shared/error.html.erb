@@ -1,4 +1,4 @@
-<% page_title "Error: #{exception.class}" %>
+<% page_title "#{t "shared.error.page_title"}: #{exception.class}" %>
 
 <%# 
   Note that we have to clear out the existing contents of
@@ -33,8 +33,8 @@
 <% end %>
 
 <div class="cms_error">
-  <h2>Message</h2>
+  <h2><%= t "shared.error.message" %></h2>
   <pre><%=h exception.message %></pre>
-  <h2>Stacktrace</h2>
+  <h2><%= t "shared.error.stacktrace" %></h2>
   <pre><%=h exception.backtrace.join("\n") %></pre>
 </div>

@@ -1,0 +1,17 @@
+es:
+  tasks:
+    new:
+      page_title: "Asignar Página '{{page_name}}'"
+      back_to_page: Regresar a la Página
+      assign_to: Asignar A
+      due_date_hint: Dejar en blanco para no asignar fecha límite
+      save: Guardar
+en:
+  tasks:
+    new:
+      page_title: "Assign Page '{{page_name}}'"
+      back_to_page: Back To Page
+      assign_to: Assign To
+      due_date_hint: Leave blank for no due date
+      save: Save
+      

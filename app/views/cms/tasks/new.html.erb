@@ -2,10 +2,10 @@
   <%= stylesheet_link_tag 'cms/form_layout' %>
 <% end %>
 
-<% page_title "Assign Page '#{@page.name}'" %>
+<% page_title t("tasks.new.page_title", :page_name => @page.name) %>
 <% content_for :functions do %>
   <h1><%=h @page_title %></h1>
-  <%= link_to(span_tag("Back To Page"), @page.path, :class => "button") %>
+  <%= link_to(span_tag(t "tasks.new.back_to_page"), @page.path, :class => "button") %>
   <br clear="all"/>
 <% end %>
 
@@ -13,14 +13,14 @@
 
   <%= f.error_messages %>
   <div class="fields text_fields">
-    <%= f.label :assigned_to_id, "Assign To" %>
+    <%= f.label :assigned_to_id, t("tasks.new.assign_to") %>
     <%= f.collection_select :assigned_to_id, User.active.able_to_edit_or_publish_content.all(:order => "first_name, last_name, login"), :id, :full_name_with_login, :include_blank => true, :tabindex => next_tabindex %>
   </div>
   
   <div class="fields text_fields">
       <%= f.label :due_date %>
       <%= f.date_picker :due_date %>
-      <div class="instructions">Leave blank for no due date</div><br clear="all" />
+      <div class="instructions"><%= t "tasks.new.due_date_hint" %></div><br clear="all" />
   </div>  
   
   <div class="fields text_editor_fields">
@@ -30,7 +30,7 @@
   </div>
 
   <div class="buttons">
-    <%= lt_button_wrapper(f.submit("Save", :class => "submit", :tabindex => next_tabindex)) %>
+    <%= lt_button_wrapper(f.submit(t("tasks.new.save"), :class => "submit", :tabindex => next_tabindex)) %>
   </div>
 <% end %>
 

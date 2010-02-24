@@ -1,8 +1,8 @@
-<h3>Their Version (v<%= other_version.version %>)</h3>
+<h3><%= t "shared.version_conflict.their_version" %>(v<%= other_version.version %>)</h3>
 <table id="diff">
   <tr>
-    <th>Field</th>
-    <th>Value</th>
+    <th><%= t "shared.version_conflict.field" %></th>
+    <th><%= t "shared.version_conflict.value" %></th>
   </tr>
   <% other_version.attributes.to_a.reject{|e| ['id', 'deleted','version','lock_version','created_at','updated_by_id','updated_at','version_comment', 'published','hidden','archived'].include?(e.first) }.sort_by(&:first).each do |field, value| %><tr>
     <td><%=h field %></td>

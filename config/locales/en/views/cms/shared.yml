@@ -12,3 +12,27 @@ en:
       page_caching: Page Caching
       redirects: Redirects
       email_messages: Email Messages
+    exception:
+      error: An Error Ocurred
+    pagination:
+      displaying: Displaying
+      of: of
+    version_confilct:
+      their_version: Their Version
+      field: Field
+      value: Value
+    version_conflict_error:
+      version_conflict: "Version Conflict!"
+      message: |
+        You are currently working with an out of date version of this content. 
+        Your work was based off <b>version {{base_version}}</b>, while another user 
+        <b>{{other_user}}</b> has already committed  <b>version {{other_version}}</b>. 
+        Compare your changes below with their changes at the bottom and submit a final copy.
+      your_version: Your Version
+    access_denied:
+      page_title: Access Denied
+      message: Sorry, you do not have permission to access this page.
+    error:
+      page_title: Error
+      message: Message
+      stacktrace: Stacktrace
