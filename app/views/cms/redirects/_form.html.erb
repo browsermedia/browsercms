@@ -2,14 +2,14 @@
 <% form_for([:cms, @redirect]) do |f| %>
   <%= f.error_messages %>
   <div class="fields text_fields">
-    <%= f.label :from_path, "From" %>
+    <%= f.label :from_path, t("redirects.form.from") %>
     <%= f.text_field :from_path, :size => 50 %>
   </div>
   <div class="fields text_fields">
-    <%= f.label :to_path, "To" %>
+    <%= f.label :to_path, t("redirects.form.to") %>
     <%= f.text_field :to_path, :size => 50 %>
   </div>
   <div class="buttons">
-    <%= lt_button_wrapper(f.submit("Save", :class => "submit")) %>
+    <%= lt_button_wrapper(f.submit(t("redirects.form.save"), :class => "submit")) %>
   </div>
 <% end %>

@@ -1,0 +1,21 @@
+en:
+  redirects:
+    form:
+      from: From
+      to: To
+      save: Save
+    edit:
+      page_title: Edit Redirect
+      list_all: List All
+    index:
+      page_title: List Redirects
+      add: Add
+      edit: Edit
+      delete: Delete
+      confirm: Are you sure you want to delete this redirect?
+      from: From
+      to: To
+    new:
+      page_title: New Redirect
+      list_all: List All
+    
