@@ -1,7 +1,8 @@
 # BrowserCMS: Humane Content Management for Rails
 
 This is a fork to extract UI strings to make possible to use BrowserCMS in languages other than English.
-I am using the built in I18n module with the simple backend.
+I am using the built in I18n module with the simple backend, so there is no need to install or do
+anything special. 
 
 ## Try it out
     
