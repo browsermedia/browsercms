@@ -1,8 +1,6 @@
 es:
   redirects:
     form:
-      from: De
-      to: A
       save: Guardar
     edit:
       page_title: Editar Redireccionamiento

@@ -1,0 +1,82 @@
+es:
+  models:
+    html_block:
+      display_name: Text
+      display_name_plural: Text
+    image_block:
+      display_name: Image
+    file_block:
+      display_name: File
+    
+  activerecord:
+    models:
+      category: 
+      category_type:
+      dynamic_view:
+    attributes:
+      category:
+        name:
+        type:
+      category_type:
+        name:
+      dynamic_view:
+        name:
+        format:
+        body:
+      file_block:
+        name:
+        tags:
+        attachment_file:
+      group:
+        name:
+      html_block:
+        name:
+        content:
+        tags:
+      image_block:
+        name:
+        tags:
+        attachment_file:
+        attachment_section:
+        attachment_file_path:
+      link:
+        name:
+        url:
+      page:
+        name:
+        title:
+        path:
+        template_file_name:
+        cacheable:
+        hidden:
+        archived:
+        description:
+        keywords:
+        language:
+      page_route:
+        page:
+        name:
+        pattern:
+        code:
+      redirect:
+        from_path:
+        to_path:
+      section:
+        name:
+        path:
+        hidden:
+      tag:
+        name:
+      task:
+        assigned_to:
+        due_date:
+        comment:
+      user:
+        login:
+        email:
+        first_name:
+        last_name:
+        expires_at:
+        password:
+        confirm_password:
+        

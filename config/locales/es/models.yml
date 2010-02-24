@@ -1,0 +1,82 @@
+es:
+  models:
+    html_block:
+      display_name: Texto
+      display_name_plural: Textos
+    image_block:
+      display_name: Imagen
+    file_block:
+      display_name: Archivo
+    
+  activerecord:
+    models:
+      category: Categoría
+      category_type: Tipo de Categoría
+      dynamic_view: Vista Dinámica
+    attributes:
+      category:
+        name: Nombre
+        type: Tipo
+      category_type:
+        name: Nombre
+      dynamic_view:
+        name: Nombre
+        format: Formato
+        body: Contenido
+      file_block:
+        name: Nombre
+        tags: Etiquetas
+        attachment_file: Archivo
+      group:
+        name: Nombre
+      html_block:
+        name: Nombre
+        content: Contenido
+        tags: Etiquetas
+      image_block:
+        name: Nombre
+        tags: Etiquetas
+        attachment_file: Archivo
+        attachment_section: Sección
+        attachment_file_path: Path
+      link:
+        name: Nombre
+        url: URL
+      page:
+        name: Nombre
+        title: Título
+        path: Ruta
+        template_file_name: Template
+        cacheable: ¿Habilitar cache?
+        hidden: ¿Ocultar de menus?
+        archived: ¿Archivada?
+        description: Descripción
+        keywords: Palabras clave
+        language: Idioma
+      page_route:
+        page: Página
+        name: Nombre
+        pattern: Patrón
+        code: Código
+      redirect:
+        from_path: De
+        to_path: A
+      section:
+        name: Nombre
+        path: Ruta
+        hidden: ¿Ocultar de menus?
+      tag:
+        name: Nombre
+      task:
+        assigned_to: Asignar a
+        due_date: Fecha Límite
+        comment: Comentario
+      user:
+        login: Nombre de usuario
+        email: Email
+        first_name: Nombre
+        last_name: Apellidos
+        expires_at: Expiración
+        password: Password
+        confirm_password: Confirma Password
+        

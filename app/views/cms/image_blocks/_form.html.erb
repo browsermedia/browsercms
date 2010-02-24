@@ -21,10 +21,10 @@
   <% end %>
 <% end %>
 
-<%= f.cms_text_field :name %>
-<%= f.cms_file_field :attachment_file, :label => t("image_blocks.form.file") %>
+<%= f.cms_text_field :name, :label => ImageBlock.human_attribute_name("name") %>
+<%= f.cms_file_field :attachment_file, :label => ImageBlock.human_attribute_name("attachment_file") %>
 <%= f.cms_drop_down :attachment_section_id, 
   @sections.map{|s| [s.full_path, s.id]}, 
-  :label => t("image_blocks.form.section") %>
-<%= f.cms_text_field :attachment_file_path, :label => t("image_blocks.form.path") %>
-<%= f.cms_tag_list %>
+  :label => ImageBlock.human_attribute_name("attachment_section") %>
+<%= f.cms_text_field :attachment_file_path, :label => ImageBlock.human_attribute_name("attachment_file_path") %>
+<%= f.cms_tag_list :label => ImageBlock.human_attribute_name("tags") %>

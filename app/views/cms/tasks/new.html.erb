@@ -13,18 +13,18 @@
 
   <%= f.error_messages %>
   <div class="fields text_fields">
-    <%= f.label :assigned_to_id, t("tasks.new.assign_to") %>
+    <%= f.label :assigned_to_id, Task.human_attribute_name("assigned_to") %>
     <%= f.collection_select :assigned_to_id, User.active.able_to_edit_or_publish_content.all(:order => "first_name, last_name, login"), :id, :full_name_with_login, :include_blank => true, :tabindex => next_tabindex %>
   </div>
   
   <div class="fields text_fields">
-      <%= f.label :due_date %>
+      <%= f.label :due_date, Task.human_attribute_name("due_date") %>
       <%= f.date_picker :due_date %>
       <div class="instructions"><%= t "tasks.new.due_date_hint" %></div><br clear="all" />
   </div>  
   
   <div class="fields text_editor_fields">
-    <%= f.label :comment %>
+    <%= f.label :comment, Task.human_attribute_name("comment") %>
     <br/>
     <%= f.text_area :comment, :tabindex => next_tabindex %>
   </div>

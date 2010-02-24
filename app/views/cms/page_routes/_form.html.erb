@@ -1,10 +1,10 @@
 <%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
 <% form_for([:cms, @page_route]) do |f| %>
   <%= f.error_messages %>
-  <%= f.cms_drop_down :page_id, Page.all(:order => "path").map{|p| ["#{p.path} (#{p.name})", p.id]}%>
-  <%= f.cms_text_field :name %>
-  <%= f.cms_text_field :pattern %>
-  <%= f.cms_text_area :code, :style => "height: 200px" %>
+  <%= f.cms_drop_down :page_id, Page.all(:order => "path").map{|p| ["#{p.path} (#{p.name})", p.id]}, :label => PageRoute.human_attribute_name("page") %>
+  <%= f.cms_text_field :name, :label => PageRoute.human_attribute_name("name") %>
+  <%= f.cms_text_field :pattern, :label => PageRoute.human_attribute_name("pattern") %>
+  <%= f.cms_text_area :code, :style => "height: 200px", :label => PageRoute.human_attribute_name("code") %>
   <div class="buttons">
     <%= lt_button_wrapper(f.submit(t("page_routes.form.save"), :class => "submit", :tabindex => next_tabindex)) %>
   </div>

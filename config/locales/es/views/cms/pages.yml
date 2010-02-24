@@ -14,11 +14,7 @@ es:
       live: Este contenido está publicado y puede ser visto por los visitantes del sitio.
       draft: Este contenido es un borrador y no será visto por los visitantes del sitio hasta que sea publicado.
     form: 
-      title_instructions: (Dejar en blanco si es el mismo que el nombre)
-      template: Template
-      cache_enabled: ¿Habilitar cache?
-      hide_from_menus: ¿Ocultar de menus?
-      archived: ¿Archivada?
+      title_hint: (Dejar en blanco si es el mismo que el nombre)
     edit:
       page_title: "Editar Propiedades / Página '{{page_name}}'"
       list_all: Mostrar todas

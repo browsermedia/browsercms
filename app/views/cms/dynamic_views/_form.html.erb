@@ -1,10 +1,10 @@
 <%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
 <% form_for([:cms, @view]) do |f| %>
   <%= f.error_messages %>
-  <%= f.cms_text_field :name %>
-  <%= f.cms_text_field :format %>
+  <%= f.cms_text_field :name, :label => DynamicView.human_attribute_name("name") %>
+  <%= f.cms_text_field :format, :label => DynamicView.human_attribute_name("format") %>
   <%= f.cms_drop_down :handler, ActionView::Template.template_handler_extensions, :default => "erb" %>
-  <%= f.cms_text_area :body, :style => "height: 500px" %>
+  <%= f.cms_text_area :body, :style => "height: 500px", :label => DynamicView.human_attribute_name("body") %>
   <div class="buttons">
     <%= lt_button_wrapper(f.submit(t("dynamic_views.form.save"), :class => "submit", :tabindex => next_tabindex)) %>
   </div>

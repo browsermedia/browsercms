@@ -7,40 +7,40 @@
   <% end %>
 <% end %>
 <%= f.error_messages %>
-<%= f.cms_text_field :name %>
-<%= f.cms_text_field :title, :instructions => t("pages.form.title_instructions") %>
-<%= f.cms_text_field :path %>
-<%= f.cms_drop_down :template_file_name, PageTemplate.options, {:label => t("pages.form.template")}, :tabindex => next_tabindex %>
+<%= f.cms_text_field :name, :label => Page.human_attribute_name("name") %>
+<%= f.cms_text_field :title, :instructions => t("pages.form.title_hint"), :label => Page.human_attribute_name("title")  %>
+<%= f.cms_text_field :path,:label => Page.human_attribute_name("path") %>
+<%= f.cms_drop_down :template_file_name, PageTemplate.options, {:label => Page.human_attribute_name("template_file_name")}, :tabindex => next_tabindex %>
 
 <div class="checkbox_group fields no_check_all">
   <div class="checkbox_fields">
-    <%= f.label :cacheable, t("pages.form.cache_enabled") %>
+    <%= f.label :cacheable, Page.human_attribute_name("cacheable") %>
     <%= f.check_box :cacheable, :tabindex => next_tabindex %>
   </div>
 </div>
 
 <div class="checkbox_group fields no_check_all">
   <div class="checkbox_fields">
-    <%= f.label :hidden, t("pages.form.hide_from_menus") %>
+    <%= f.label :hidden, Page.human_attribute_name("hidden") %>
     <%= f.check_box :hidden, :disabled => (!current_user.able_to?(:publish_content)), :tabindex => next_tabindex %>
   </div>
 </div>
 
 <div class="checkbox_group fields no_check_all">
   <div class="checkbox_fields">
-    <%= f.label :archived, t("pages.form.archived") %>
+    <%= f.label :archived, Page.human_attribute_name("archived") %>
     <%= f.check_box :archived, :disabled => (!current_user.able_to?(:publish_content)), :tabindex => next_tabindex %>
   </div>
 </div>
 
 <div class="fields textarea_fields">
-  <%= f.label :description %>
+  <%= f.label :description, Page.human_attribute_name("description") %>
   <%= f.text_area :description, :size => "80x5", :tabindex => next_tabindex %>
 </div>
 
 <div class="fields textarea_fields">
-  <%= f.label :keywords %>
+  <%= f.label :keywords, Page.human_attribute_name("keywords") %>
   <%= f.text_area :keywords, :size => "80x3", :tabindex => next_tabindex %>
 </div>
 
-<%= f.cms_text_field :language %>
+<%= f.cms_text_field :language, :label => Page.human_attribute_name("language") %>

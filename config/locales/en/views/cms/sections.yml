@@ -1,7 +1,6 @@
 en:
   sections:
     form:
-      hide_from_menus: Hide from menus?
       public_permissions: Public Permissions 
       public_permissions_hint: "Which 'Public' groups can view pages in this section?"
       cms_permissions: CMS Permissions

@@ -2,11 +2,11 @@
 <% form_for([:cms, @redirect]) do |f| %>
   <%= f.error_messages %>
   <div class="fields text_fields">
-    <%= f.label :from_path, t("redirects.form.from") %>
+    <%= f.label :from_path, Redirect.human_attribute_name("from_path") %>
     <%= f.text_field :from_path, :size => 50 %>
   </div>
   <div class="fields text_fields">
-    <%= f.label :to_path, t("redirects.form.to") %>
+    <%= f.label :to_path, Redirect.human_attribute_name("to_path") %>
     <%= f.text_field :to_path, :size => 50 %>
   </div>
   <div class="buttons">

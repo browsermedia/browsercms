@@ -4,15 +4,8 @@ es:
       save: Guardar
     groups:
       groups: Grupos
-    password:
-      confirm_password: Confirma Password
     toolbar:
       show_inactive: ¿Mostrar inactivos?
-    user_fields:
-      username: Nombre de Usuario
-      first_name: Nombre
-      last_name: Apellidos
-      expiration_date: Fecha de expiración
     change_password:
       page_title: Asignar nuevo password
       list_all: Mostrar Todos

@@ -4,15 +4,8 @@ en:
       save: Save
     groups:
       groups: Groups
-    password:
-      confirm_password: Confirm Password
     toolbar:
       show_inactive: Show inactive?
-    user_fields:
-      username: Username
-      first_name: First Name
-      last_name: Last Name
-      expiration_date: Expiration Date
     change_password:
       page_title: Set New Password
       list_all: List All

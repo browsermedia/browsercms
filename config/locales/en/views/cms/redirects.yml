@@ -1,8 +1,6 @@
 en:
   redirects:
     form:
-      from: From
-      to: To
       save: Save
     edit:
       page_title: Edit Redirect

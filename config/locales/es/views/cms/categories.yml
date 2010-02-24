@@ -1,9 +1,11 @@
 es:
   categories:
-    page_title: Por favor crea un tipo de categoría
-    message: |
-      Antes de que puedas crear una categoría, debes {{link}}.
-      Cada categoría debe tener un tipo de categoría. Por ejemplo,
-      si planeas categorizar tus noticias, debes crear un tipo de
-      categoría "Noticia".
-    create_category_type: crear un tipo de categoría
+    form:
+      page_title: Por favor crea un tipo de categoría
+      type_prompt: Selecciona un tipo de Categoría
+      message: |
+        Antes de que puedas crear una categoría, debes {{link}}.
+        Cada categoría debe tener un tipo de categoría. Por ejemplo,
+        si planeas categorizar tus noticias, debes crear un tipo de
+        categoría "Noticia".
+      create_category_type: crear un tipo de categoría

@@ -14,17 +14,17 @@
   <% end %>
 
   <% @block.category_type ||= (Category.last(:include => :category_type) && Category.last.category_type) %>  
-  <%= f.cms_drop_down :category_type_id, CategoryType.all(:order => "name").map{|c| [c.name, c.id]}, :prompt => "Select a Type of Category", :label => "Type" %>
+  <%= f.cms_drop_down :category_type_id, CategoryType.all(:order => "name").map{|c| [c.name, c.id]}, :prompt => t("categories.form.type_prompt"), :label => Category.human_attribute_name("type") %>
 
   <% categories = @block.category_type ? @block.category_type.category_list.map{|c| [c.path, c.id]} : [] %>
   <% unless categories.empty? %>
     <%= f.cms_drop_down :parent_id, categories, :include_blank => true %>
   <% end %>
   
-  <%= f.cms_text_field :name %>
+  <%= f.cms_text_field :name, :label => Category.human_attribute_name("name") %>
 
 <% else %>
-  <% page_title t("categories.page_title") %>
+  <% page_title t("categories.form.page_title") %>
   <% content_for :html_head do %>
     <script type="text/javascript">
       jQuery(function($){
@@ -32,5 +32,5 @@
       })
     </script>
   <% end %>
-  <p><%= t("categories.message", :link =>  link_to(t("categories.create_category_type"), new_cms_category_type_path)) %></p>
+  <p><%= t("categories.form.message", :link =>  link_to(t("categories.form.create_category_type"), new_cms_category_type_path)) %></p>
 <% end %>

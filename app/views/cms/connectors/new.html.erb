@@ -1,4 +1,4 @@
-<% @toolbar_title = @page_title = t("connectors.page_title", :page => @page.page_title) %>
+<% @toolbar_title = @page_title = t("connectors.new.page_title", :page => @page.page_title) %>
 
 <% content_for :html_head do %>
   <%= stylesheet_link_tag("cms/content_library") %>
@@ -29,8 +29,8 @@
 
 <% content_for :functions do %>
   <h1><%=h @toolbar_title %></h1>
-  <%= link_to span_tag(t "connectors.add_to_page"), "#", :id => "add_button", :class => "button disabled" %>
-  <%= link_to span_tag(t "connectors.view_content"), "#", :id => "view_button", :class => "button disabled" %>
+  <%= link_to span_tag(t "connectors.new.add_to_page"), "#", :id => "add_button", :class => "button disabled" %>
+  <%= link_to span_tag(t "connectors.new.view_content"), "#", :id => "view_button", :class => "button disabled" %>
   <% form_tag cms_connectors_path, :id => 'connect_form' do %>
     <%= hidden_field_tag :page_id, @page.to_param %>
     <%= hidden_field_tag :container,  @container %>
@@ -45,7 +45,7 @@
   <%= hidden_field_tag :container, @container %>
   <div style="margin: 20px 2px;">
     <label>
-      <%= t "connectors.choose_type" %>
+      <%= t "connectors.new.choose_type" %>
       <%= select_tag "block_type", options_for_select(ContentType.connectable.all.map{|ct| [ct.display_name, ct.content_block_type]}, @block_type.content_block_type), :onchange => 'this.form.submit()' %>
     </label>
   </div>
@@ -56,9 +56,9 @@
 <table class="data">
   <thead>
     <tr>
-      <th class="name first"><div class="dividers"><%= t "connectors.name" %></div></th>
-      <th class="updated"><div class="dividers"><%= t "connectors.updated" %></div></th>
-      <th class="used last"><%= t "connectors.uses" %></th>
+      <th class="name first"><div class="dividers"><%= t "connectors.new.name" %></div></th>
+      <th class="updated"><div class="dividers"><%= t "connectors.new.updated" %></div></th>
+      <th class="used last"><%= t "connectors.new.uses" %></th>
     </tr>
   </thead>
   <% @blocks.each do |block| %>

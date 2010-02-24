@@ -14,11 +14,7 @@ en:
       live: This content is published and can be seen by site visitors.
       draft: This content is a draft and won't be seen by site visitors until this page is published.
     form:
-      title_instructions: (Leave blank if same as name)
-      template: Template
-      cache_enabled: Cache Enabled?
-      hide_from_menus: Hide From Menus?
-      archived: Archived?
+      title_hint: (Leave blank if same as name)
     edit:
       page_title: "Edit Properties / '{{page_name}}' Page"
       list_all: List all

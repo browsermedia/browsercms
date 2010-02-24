@@ -1,4 +1,5 @@
 en:
   tags:
-    name: Name
-    type: Type
+    render:
+      name: Name
+      type: Type
