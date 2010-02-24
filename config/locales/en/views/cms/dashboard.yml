@@ -1,0 +1,18 @@
+en:
+  dashboard:
+    page_drafts:
+        page_drafts: Page Drafts
+        name: Name
+        user: User
+        all_published: All pages are published.
+        date: Date
+        publish_selected: Publish selected
+    tasks:
+        tasks: Tasks
+        name: Name
+        assigned_by: Assigned By
+        due_date: Due Date
+        no_tasks: You currently have no assigned tasks.
+        complete_selected: Complete Selected
+  
+  

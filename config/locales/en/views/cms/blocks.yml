@@ -1,0 +1,68 @@
+en:
+  blocks:
+    toolbar_for_collection:
+      publish: Publish
+      view_content: View Content
+      edit_content: Edit Content
+      add_content: Add New Content
+      list_versions: List Versions
+      delete: Delete
+      confirm: Are You Sure You Want To Delete This Record?
+    toolbar_for_member:
+      publish: Publish
+      view_content: View Content
+      edit_content: Edit Content
+      add_content: Add New Content
+      list_versions: List Versions
+      delete: Delete
+      confirm: Are You Sure You Want To Delete This Record?
+    edit:
+      page_title: Content Library / Edit
+      edit: Edit
+      deleted_message: This {{class_name}} has been deleted
+      save_and_publish: Save and Publish
+      save: Save
+    index:
+      page_title: Content Library / List
+      updated: Updated
+      used: Used
+      status: Status
+      draft: Borrador
+      published: Published
+      no_results: No results found for
+    new:
+      page_title: Content Library / Add New
+      add: Add New
+      save_and_publish: Save and Publish
+      save: Save
+    show:
+      page_title: Content Library / View
+      view: View
+      deleted_message: This {{class_name}} has been deleted
+      status: Status
+      used_on: "Used on:"
+      page:
+        one: Page
+        other: Pages
+      version: Version
+      current: Current
+      block_contents: "Block Contents:"
+    usages:
+      page_title: Content Library / View usage
+      pages_using: Pages using
+      page_name: Page Name
+      path: Path
+      page_status: Page Status
+    versions:
+      page_title: Content Library / List of Versions
+      list_versions: List Versions
+      revert: Revert
+      version: Version
+      comment: Comment
+      date: Date
+      editor: Editor
+      live: LIVE
+      current: CURRENT
+      
+      
+      
