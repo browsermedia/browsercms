@@ -7,7 +7,7 @@
 <% content_for :functions,  render(:partial => 'cms/blocks/toolbar') %>
 
 <% if @block.respond_to?(:deleted) && @block.deleted %>
-  <div class="header"><%= t "blocks.edit.deleted_message", class_name => @block.class.name %></div>
+  <div class="header"><%= t "blocks.edit.deleted_message", class_name => @block.class.human_name %></div>
 <% else %>
 <% form_for(@block, :url => block_path, :html => {:multipart => true}) do |f| %>
   <%= f.error_messages %>

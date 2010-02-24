@@ -5,6 +5,13 @@ es:
       display_name_plural: Textos
     
   activerecord:
+    models:
+      category_type: Tipo de Categoría
     attributes:
       html_block:
-        name: "Nombre"
+        name: Nombre
+      category_type:
+        name: Nombre
+      section:
+        name: Nombre
+        path: Ruta

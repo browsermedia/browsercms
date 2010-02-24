@@ -1,8 +1,8 @@
 <%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
 <%= f.error_messages %>
 
-<%= f.cms_text_field :name %>
-<%= f.cms_text_field :path %>
+<%= f.cms_text_field :name, :label => Section.human_attribute_name("name") %>
+<%= f.cms_text_field :path, :label => Section.human_attribute_name("path") %>
 
 <div class="checkbox_group fields no_check_all">
   <div class="checkbox_fields">

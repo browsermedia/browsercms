@@ -15,7 +15,7 @@ class FileBlock < AbstractFileBlock
   end
   
   def self.display_name
-    "File"
+    I18n.t "models.file_block.display_name"
   end
 
 end
