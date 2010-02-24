@@ -1,4 +1,4 @@
-<% @page_title = @toolbar_title = "List Versions / '#{@page.name}' Page" %>
+<% @page_title = @toolbar_title = t("pages.versions.page_title", :page_name => @page.name) %>
 <% content_for(:html_head) do %>
   <% javascript_tag do %>
     jQuery(function($){
@@ -34,10 +34,10 @@
 <% end %>
 <% content_for :functions do %>
   <%=  "<h1>#{ @toolbar_title }</h1>" %>
-  <%= link_to span_tag("view"), "#", :id => "view_button", :class => "button disabled" %>
-  <%= link_to span_tag("edit content"), "#", :id => "edit_content_button", :class => "button disabled" %>
-  <%= link_to span_tag("edit properties"), "#", :id => "edit_properties_button", :class => "button disabled" %>
-  <%= link_to span_tag("revert"), "#", :id => "revert_button", :class => "button disabled", :onclick => "$('#revert_form').submit(); return false;" %>
+  <%= link_to span_tag(t "pages.versions.view"), "#", :id => "view_button", :class => "button disabled" %>
+  <%= link_to span_tag(t "pages.versions.edit_content"), "#", :id => "edit_content_button", :class => "button disabled" %>
+  <%= link_to span_tag(t "pages.versions.edit_properties"), "#", :id => "edit_properties_button", :class => "button disabled" %>
+  <%= link_to span_tag(t "pages.versions.revert"), "#", :id => "revert_button", :class => "button disabled", :onclick => "$('#revert_form').submit(); return false;" %>
   <% form_tag '', :method => 'put', :id => "revert_form" do %>
   <%= hidden_field_tag :version, '', :id => 'revert_form_version'  %>
   <% end %>
@@ -48,10 +48,10 @@
   <table id="blocks" class="data">
     <thead>
       <tr>
-        <th class="first" colspan="2"><div class="dividers">Version</div></th>
-        <th><div class="dividers">Comment</div></th>
-        <th><div class="dividers">Date</div></th>
-        <th class="last" colspan="2"><div class="dividers">Editor</div></th>
+        <th class="first" colspan="2"><div class="dividers"><%= t "pages.versions.version" %></div></th>
+        <th><div class="dividers"><%= t "pages.versions.comment" %></div></th>
+        <th><div class="dividers"><%= t "pages.versions.date" %></div></th>
+        <th class="last" colspan="2"><div class="dividers"><%= t "pages.versions.editor" %></div></th>
       </tr>
     </thead>
     <tbody>
@@ -62,8 +62,8 @@
           <td>
             <div class="dividers">
               <%= "v.#{r.version}" %>
-              <%= '(LIVE)' if @page.version == r.version %>
-              <%= '(CURRENT)' if i == 0 %>
+              <%= t("pages.versions.live") if @page.version == r.version %>
+              <%= t("pages.versions.current") if i == 0 %>
             </div>
           </td>
           <td>

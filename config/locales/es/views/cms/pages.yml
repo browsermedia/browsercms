@@ -1,0 +1,85 @@
+es:
+  pages:
+    edit_connector:
+      show: Ver este contenido ({{connectable_name}})
+      edit: Editar este contenido ({{connectable_name}})
+      up: Mover este contenido hacia arriba ({{connectable_name}})
+      down: Mover este contenido hacia abajo ({{connectable_name}})
+      delete: Eliminar este contenido de la página ({{connectable_name}}) Permanecerá disponible en la Librería de Contenidos
+      live: Este contenido está publicado y puede ser visto por los visitantes del sitio.
+      draft: Este contenido es un borrador y no será visto por los visitantes del sitio hasta que sea publicado.
+    edit_container:
+      add: Agregar contenido nuevo a este contenedor ({{container_name}})
+      insert: Insertar contenido existente a este contenedor ({{container_name}})
+      live: Este contenido está publicado y puede ser visto por los visitantes del sitio.
+      draft: Este contenido es un borrador y no será visto por los visitantes del sitio hasta que sea publicado.
+    form: 
+      title_instructions: (Dejar en blanco si es el mismo que el nombre)
+      template: Template
+      cache_enabled: ¿Habilitar cache?
+      hide_from_menus: ¿Ocultar de menus?
+      archived: ¿Archivada?
+    edit:
+      page_title: "Editar Propiedades / Página '{{page_name}}'"
+      list_all: Mostrar todas
+      edit_content: Editar Contenido
+      save: Guardar
+    new:
+      page_title: Página Nueva
+      list_all: Mostrar Todas
+      save: Guardar
+    versions:
+      page_title: "Lista de Versions / Página '{{page_name}}'"
+      view: ver
+      edit_content: editar contenido
+      edit_properties: editar propiedades
+      revert: Revertir
+      version: Versión
+      comment: Comentario
+      date: Fecha
+      editor: Editor
+      live: (EN VIVO)
+      current: (ACTUAL)
+    
+en:
+  pages:
+    edit_connector:
+      show: View this content ({{connectable_name}})
+      edit: Edit this content ({{connectable_name}})
+      up: Move this content up ({{connectable_name}})
+      down: Move this content down ({{connectable_name}})
+      delete: Remove this content from page ({{connectable_name}}). It will remain available in the Content Library.
+      live: This content is published and can be seen by site visitors.
+      draft: This content is a draft and won't be seen by site visitors until this page is published.
+    edit_container:
+      add: Add new content to this container ({{container_name}})
+      insert: Insert existing content into this container ({{container_name}})
+      live: This content is published and can be seen by site visitors.
+      draft: This content is a draft and won't be seen by site visitors until this page is published.
+    form:
+      title_instructions: (Leave blank if same as name)
+      template: Template
+      cache_enabled: Cache Enabled?
+      hide_from_menus: Hide From Menus?
+      archived: Archived?
+    edit:
+      page_title: "Edit Properties / '{{page_name}}' Page"
+      list_all: List all
+      edit_content: Edit Content
+      save: Save
+    new:
+      page_title: New Page
+      list_all: List all
+      save: Save
+    versions: 
+      page_title: "List Versions / '{{page_name}}' Page"
+      view: view
+      edit_content: edit content
+      edit_properties: edit properties
+      revert: Revert
+      version: Version
+      comment: Comment
+      date: Date
+      editor: Editor
+      live: (LIVE)
+      current: (CURRENT)

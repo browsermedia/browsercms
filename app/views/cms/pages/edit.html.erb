@@ -1,8 +1,8 @@
-<% page_title "Edit Properties / '#{h(@page.name)}' Page" %>
+<% page_title t("pages.edit.page_title", :page_name => @page.name) %>
 <% content_for :functions  do%>
 <h1><%= @page_title %></h1>
-<%= link_to(span_tag("list all"), cms_sitemap_path, :class => "button") %>
-<%= link_to(span_tag("edit content"), @page.path, :class => "button") %>
+<%= link_to(span_tag(t "pages.edit.list_all"), cms_sitemap_path, :class => "button") %>
+<%= link_to(span_tag(t "pages.edit.edit_content"), @page.path, :class => "button") %>
 <br clear="all" />
 <% end %>
 <% form_for([:cms, @page]) do |f| %>
@@ -18,6 +18,6 @@
     <%= render :partial => "cms/shared/version_conflict_diff", :locals => {:other_version => @other_version, :your_version => @page} %>
   <% end %>  
   <div class="buttons">
-    <%= lt_button_wrapper(f.submit("Save", :class => "submit", :tabindex => next_tabindex)) %>
+    <%= lt_button_wrapper(f.submit(t("pages.edit.save"), :class => "submit", :tabindex => next_tabindex)) %>
   </div>
 <% end %>
