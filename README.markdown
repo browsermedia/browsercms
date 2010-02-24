@@ -42,6 +42,8 @@ Once you have your images you can:
 
 * Replace the original images on public/images/cms with your own or
 * Place them wherever you want and adjust the paths on the file config/locales/es/views/layouts/cms_toolbar.yml
+
+## Creating your own locale files
   
 
     
