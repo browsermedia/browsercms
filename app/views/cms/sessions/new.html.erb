@@ -12,19 +12,19 @@
   <% end %>
 <% end %>
 
-<% @login ||= "Username" %>
+<% @login ||= t("sessions.new.username") %>
 <% @password ||= "Password" %>
 <% form_tag cms_login_path, :id => 'login_form' do %>
   <div class="field">
-    <%= text_field_tag 'login', @login, :onfocus => "if(this.value == 'Username') this.value = '';", :onblur => "if(this.value == '') this.value = 'Username';", :tabindex => 1 %>
+    <%= text_field_tag 'login', @login, :onfocus => "if(this.value == '#{t "sessions.new.username"}') this.value = '';", :onblur => "if(this.value == '') this.value = '#{t "sessions.new.username"}';", :tabindex => 1 %>
   </div>
   <div class="field">
     <%= password_field_tag 'password', @password, :onfocus => "if(this.value == 'Password') this.value = '';", :onblur => "if(this.value == '') this.value = 'Password';", :tabindex => 2 %>
   </div>
   <div class="buttons">
-    <div id="login_button"><%= submit_tag("LOGIN") %></div>
+    <div id="login_button"><%= submit_tag(t "sessions.new.login") %></div>
   <div id="remember_me_div">
-    <%= label_tag 'remember_me', 'Remember me', :class => "inline" %>
+    <%= label_tag 'remember_me', t("sessions.new.remember_me"), :class => "inline" %>
    <%= check_box_tag 'remember_me', '1', @remember_me, :tabindex => 3 %>
    <br clear="all" />
   </div>

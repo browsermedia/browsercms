@@ -1,0 +1,7 @@
+en:
+  sessions:
+    new:
+      page_title: CMS Login
+      username: Username
+      login: LOGIN
+      remember_me: Remember me
