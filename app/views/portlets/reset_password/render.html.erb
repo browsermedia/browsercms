@@ -14,11 +14,11 @@
   <%= hidden_field_tag "token", params[:token] %>
   <% end -%>
 
-  <label for="password">New Password:</label>
+  <label for="password"><%= t "views.portlets.reset_password.render.new_password" %></label>
   <%= password_field_tag "password" %><br>
 
-  <label for="password_confirmation">Confirm New Password:</label>
+  <label for="password_confirmation"><%= t "views.portlets.reset_password.render.confirm_new_password" %></label>
   <%= password_field_tag "password_confirmation" %><br>
 
-  <%= submit_tag "Reset Password" %>
+  <%= submit_tag t("views.portlets.reset_password.render.reset_password") %>
 <% end %>

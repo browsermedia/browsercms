@@ -1,7 +1,7 @@
 <div class="login-portlet">
   <% if logged_in? %>
-    <p>Welcome, <%= current_user.login %></p>
-    <p><%= link_to "Logout", cms_logout_path %></p>
+    <p><%= t "views.portlets.login.render.welcome" %>, <%= current_user.login %></p>
+    <p><%= link_to t("views.portlets.login.render.logout"), cms_logout_path %></p>
   <% else %>
     <div class="error"><%= flash[:login_error] %></div>
     <% form_tag cms_login_path do %>
@@ -20,7 +20,7 @@
         <%= check_box_tag :remember_me, '1', @remember_me %>
       </p>
       <p>
-        <%= submit_tag "Login" %>
+        <%= submit_tag t("views.portlets.login.render.login") %>
       </p>
     <% end %>  
   <% end %>

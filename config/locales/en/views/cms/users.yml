@@ -1,0 +1,55 @@
+en:
+  users:
+    form:
+      save: Save
+    groups:
+      groups: Groups
+    password:
+      confirm_password: Confirm Password
+    toolbar:
+      show_inactive: Show inactive?
+    user_fields:
+      username: Username
+      first_name: First Name
+      last_name: Last Name
+      expiration_date: Expiration Date
+    change_password:
+      page_title: Set New Password
+      list_all: List All
+      edit_user: Edit User
+      save: Save
+    edit:
+      page_title: "Edit User '{{user_login}}'"
+      list_all: List All
+      change_password: Change Password
+    index:
+      page_title: Administration / User Browser
+      toolbar_title: List Users
+      add_user: ADD USER
+      name: Name
+      email: Email
+      groups: Groups
+      expiration: Expiration
+      activation: Activation
+      never: Never
+      active: Active
+      disable: Disable
+      inactive: Inactive
+      enable: Enable
+      no_results: "No results found for '{{keyword}}'"
+    new:
+      page_title: New User
+      list_all: List All
+    show:
+      list_all: List All
+      change_password: Change Password
+      username: Username
+      email: Email
+      first_name: First Name
+      last_name: Last Name
+      groups: Groups
+      
+      
+      
+      
+      

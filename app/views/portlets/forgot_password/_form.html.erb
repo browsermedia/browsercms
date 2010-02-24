@@ -1,5 +1,5 @@
 <%= f.cms_text_field :name %>
-<%= f.cms_text_field :reset_password_url, :instructions => 'URL to page where user will reset his or her password.  No get parameters allowed.' %>
+<%= f.cms_text_field :reset_password_url, :instructions => t("views.portlets.forgot_password.form.reset_password_url_hint") %>
 <%= f.cms_template_editor :template %>
 
 

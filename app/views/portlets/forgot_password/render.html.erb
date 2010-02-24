@@ -8,7 +8,7 @@
 <% end -%>
 
 <% form_tag do %>
-  <label for="email">Your account email address:</label>
+  <label for="email"><%= t "views.portlets.forgot_password.render.account_email" %></label>
   <%= text_field_tag "email" %><br>
-  <%= submit_tag "Request reset password token"%>
+  <%= submit_tag  t "views.portlets.forgot_password.render.request_token" %>
 <% end %>

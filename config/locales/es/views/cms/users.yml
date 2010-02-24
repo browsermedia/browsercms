@@ -1,0 +1,54 @@
+es:
+  users:
+    form:
+      save: Guardar
+    groups:
+      groups: Grupos
+    password:
+      confirm_password: Confirma Password
+    toolbar:
+      show_inactive: ¿Mostrar inactivos?
+    user_fields:
+      username: Nombre de Usuario
+      first_name: Nombre
+      last_name: Apellidos
+      expiration_date: Fecha de expiración
+    change_password:
+      page_title: Asignar nuevo password
+      list_all: Mostrar Todos
+      edit_user: Editar Usuario
+      save: Guardar
+    edit:
+      page_title: "Editar Usuario '{{user_login}}'"
+      list_all: Mostrar Todos
+      change_password: Cambiar Password
+    index:
+      page_title: Administración / Lista de Usuarios
+      toolbar_title: Lista de Usuarios
+      add_user: AGREGAR USUARIO
+      name: Nombre
+      email: Email
+      groups: Grupos
+      expiration: Expiración
+      activation: Activación
+      never: Nunca
+      active: Activo
+      disable: Desactivar
+      inactive: Inactivo
+      enable: Activar
+      no_results: "No se encontraron resultados para '{{keyword}}'"
+    new:
+      page_title: Nuevo Usuario
+      list_all: Mostrar Todos
+    show:
+      list_all: Mostrar Todos
+      change_password: Cambiar Password
+      username: Nombre de Usuario
+      email: Email
+      first_name: Nombre
+      last_name: Apellido
+      groups: Grupos
+      
+      
+      
+        

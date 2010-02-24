@@ -19,6 +19,6 @@ es:
       visual_editor_title: "No tienes autorización para editar esta página"
       status_on: "'ON'"
       status_off: "'OFF'"
-      turn_off: APAGAR
-      turn_on: ENCENDER
+      turn_off: OCULTAR
+      turn_on: MOSTRAR
       view_current: View Current Version

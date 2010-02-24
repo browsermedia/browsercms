@@ -1,7 +1,7 @@
 <%= f.cms_text_field :name %>
 <%= f.cms_text_field :subject, 
-  :default_value => "A link you might be interested in" %>
+  :default_value => t("views.portlets.email_page.form.default_subject") %>
 <%= f.cms_text_field :success_url, 
-  :instructions => "Leave blank to return the same page" %>
+  :instructions => t("views.portlets.email_page.form.success_url_hint") %>
 <%= f.cms_text_area :template, 
   :default_value => EmailPagePortlet.default_template %>
