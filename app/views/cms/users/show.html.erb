@@ -1,10 +1,10 @@
 <% @page_title = @toolbar_title = h(@user.login) %>
 
 <% content_for :toolbar_links do %>
-  <%= link_to(span_tag("List All"), cms_users_path, 
+  <%= link_to(span_tag(t "users.show.list_all"), cms_users_path, 
     :id => "list_all_button", 
     :class => "button") if current_user.able_to?(:administrate) %>
-  <%= link_to(span_tag("Change Password"), [:change_password, :cms, @user], 
+  <%= link_to(span_tag(t "users.show.chantge_password"), [:change_password, :cms, @user], 
     :id => "change_password_button", 
     :class => "button") %>
 <% end %>
@@ -19,27 +19,27 @@
 
 <div class="faux_form">
   <div class="fields">
-    <span class="label">Username</span>
+    <span class="label"><%= t "users.show.username" %></span>
     <%=h @user.login %>
   </div>
   
   <div class="fields">
-    <span class="label">Email</span>
+    <span class="label"><%= t "users.show.email" %></span>
     <%=h @user.email %>
   </div>
   
   <div class="fields">
-    <span class="label">First name</span>
+    <span class="label"><%= t "users.show.first_name" %></span>
     <%=h @user.first_name %>
   </div>
   
   <div class="fields">
-    <span class="label">Last name</span>
+    <span class="label"><%= t "users.show.last_name" %></span>
     <%=h @user.last_name %>
   </div>
   
   <div class="fields">
-    <span class="label">Groups</span>
+    <span class="label"><%= t "users.show.groups" %></span>
     
     <ul>
       <% @user.groups.each do |group| -%>

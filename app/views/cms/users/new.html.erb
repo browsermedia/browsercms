@@ -1,7 +1,7 @@
-<% @page_title = @toolbar_title = "New User" %>
+<% @page_title = @toolbar_title = t("users.new.page_title") %>
 
 <% content_for :toolbar_links do %>
-  <%= link_to(span_tag("List All"), cms_users_path, 
+  <%= link_to(span_tag(t "users.new.list_all"), cms_users_path, 
     :id => "list_all_button", 
     :class => "button") %>
 <% end %>

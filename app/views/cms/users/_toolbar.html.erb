@@ -16,7 +16,7 @@
     <div><%= text_field_tag "key_word", params[:key_word] %></div><div id="user_search_submit_container"><input id="user_search_submit" type="image" src="/images/cms/user_search_submit.gif" alt="submit" /></div>
     <div><%= select_per_page %></div>
     <div><%= group_filter %></div>
-    <div class="cb"><label><%= check_box_tag "show_expired", "yes", params[:show_expired] %><span>Show inactive?</span></label></div>
+    <div class="cb"><label><%= check_box_tag "show_expired", "yes", params[:show_expired] %><span><%= t "users.toolbar.show_inactive" %></span></label></div>
     <% end %>
   </div>
 <% end %>

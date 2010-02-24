@@ -1,8 +1,8 @@
-<% page_title "Administration / User Browser" %>
-<% @toolbar_title = "List Users" %>
+<% page_title t("users.index.page_title") %>
+<% @toolbar_title = t("users.index.toolbar_title") %>
 
 <% content_for :toolbar_links do %>
-  <%= link_to(span_tag("ADD USER"), new_cms_user_path, 
+  <%= link_to(span_tag(t "users.index.add_user"), new_cms_user_path, 
     :id => "add_user_button", 
     :class => "button") %>
 <% end %>
@@ -16,11 +16,11 @@
   <thead>
     <tr>
       <th class="first"></th>
-      <th><div class="dividers">Name</div></th>
-      <th><div class="dividers">Email</div></th>
-      <th><div class="dividers">Groups</div></th>
-      <th><div class="dividers">Expiration</div></th>
-      <th class="last" colspan="2">Activation</th>
+      <th><div class="dividers"><%= t "users.index.name" %></div></th>
+      <th><div class="dividers"><%= t "users.index.email" %></div></th>
+      <th><div class="dividers"><%= t "users.index.groups" %></div></th>
+      <th><div class="dividers"><%= t "users.index.expiration" %></div></th>
+      <th class="last" colspan="2"><%= t "users.index.activation" %></th>
     </tr>
   </thead>
     <% @users.each do |user|%>
@@ -35,14 +35,14 @@
 	          <% end %>
 	          </div>
         </td>
-	      <td><div class="dividers"><%= user.expires_at ? format_date(user.expires_at) : "Never" %></div></td>
+	      <td><div class="dividers"><%= user.expires_at ? format_date(user.expires_at) : t("users.index.never") %></div></td>
         <td>
 	  <% unless user.expired? %>
-	  <span class="user_state">Active</span>
-            <%= link_to("<span>Disable</span>", [:disable, :cms, user], :class => "http_put sm_button") if @users.size > 1 %>	  
+	  <span class="user_state"><%= t "users.index.active" %></span>
+            <%= link_to("<span>#{t "users.index.disable"}</span>", [:disable, :cms, user], :class => "http_put sm_button") if @users.size > 1 %>	  
 	    <% else %>
-	  <span class="user_state">Inactive</span>
-            <%= link_to("<span>Enable</span>", [:enable, :cms, user], :class => "http_put sm_button") %>
+	  <span class="user_state"><%= t "users.index.active" %></span>
+            <%= link_to("<span>#{t "users.index.enable"}</span>", [:enable, :cms, user], :class => "http_put sm_button") %>
 	  <% end %>
         </td>
         <td class="last"></td>
@@ -55,7 +55,7 @@
 <div class="br"></div>
 </div>
 <% if @users.size == 0 && params[:key_word]%>
-  <div class="pagination">No results found for '<%= params[:key_word] %>'</div>
+  <div class="pagination"><%= t "users.index.no_results", :keyword => params[:key_word] %></div>
 <% elsif @users.total_pages > 1 %>
   <%= render_pagination @users, :users %>
 <% end %>

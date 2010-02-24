@@ -1,5 +1,5 @@
 <div class="fields text_fields">
-    <%= f.label :login, "Username" %>
+    <%= f.label :login, t("users.user_fields.username") %>
     <%= f.text_field :login, :autocomplete => "off" %>
 </div>
 <div class="fields text_fields">
@@ -7,14 +7,14 @@
     <%= f.text_field :email, :autocomplete => "off" %>
 </div>
 <div class="fields text_fields">
-    <%= f.label :first_name, "First Name" %>
+    <%= f.label :first_name, t("users.user_fields.first_name") %>
     <%= f.text_field :first_name, :autocomplete => "off" %>
 </div>
 <div class="fields text_fields">
-    <%= f.label :last_name, "Last Name" %>
+    <%= f.label :last_name, t("users.user_fields.last_name") %>
     <%= f.text_field :last_name, :autocomplete => "off" %>
 </div>
 <div class="fields text_fields">
-    <%= f.label :expires_at, "Expiration Date" %>
+    <%= f.label :expires_at, t("users.user_fields.expiration_date") %>
     <%= f.date_picker :expires_at, :autocomplete => "off" %>
 </div>
