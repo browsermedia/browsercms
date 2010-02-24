@@ -30,7 +30,8 @@ particularly on:
 * Controllers (to translate flash messages)
 * Portlets
 * Javascripts (there are at least a couple of functions that manipulate toolbar buttons)
-* Helpers 
+* Helpers
+* Models (some models output strings that need translation)
 
 ## Images
 
@@ -44,6 +45,10 @@ Once you have your images you can:
 * Place them wherever you want and adjust the paths on the file config/locales/es/views/layouts/cms_toolbar.yml
 
 ## Creating your own locale files
+
+## Contact
+Juan Alvarez
+alce@mac.com
   
 
     
