@@ -6,7 +6,7 @@ es:
     node:
       hidden: Oculto
     index:
-        sitemap: Mapa del sitio
+        page_title: Mapa del sitio
         edit_page: Editar Página
         edit_properties: Editar Propiedades
         add_page: Agregar Página

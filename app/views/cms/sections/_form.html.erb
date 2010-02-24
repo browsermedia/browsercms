@@ -6,14 +6,14 @@
 
 <div class="checkbox_group fields no_check_all">
   <div class="checkbox_fields">
-    <%= f.label :hidden, "Hide from menus?" %>
+    <%= f.label :hidden, t("sections.form.hide_from_menus") %>
     <%= f.check_box :hidden, :tabindex => next_tabindex %>
   </div>
 </div>
 
 <% able_to?(:administrate) do %>
   <div class="checkbox_group fields" style="float: left; width: 100%">
-    <label>Public Permissions</label>
+    <label><%= t "sections.form.public_permissions" %></label>
     <%= hidden_field_tag "section[group_ids][]", "", :id => nil %>
     <div class="checkboxes">
       <% for group in public_groups %>
@@ -23,7 +23,7 @@
           <label for="public_group_ids_<%= group.id %>"><%= group.name %></label>
       </div>
       <% end %>
-      <div class="instructions">Which &ldquo;Public&rdquo; groups can view pages in this section?</div>
+      <div class="instructions"><%= t "sections.form.public_permissions_hint" %></div>
       <div class="check_uncheck">
         <%= link_to_check_all 'input.public_group_ids' %>, 
         <%= link_to_uncheck_all 'input.public_group_ids' %>
@@ -34,7 +34,7 @@
   <br clear="all" />
 
   <div class="checkbox_group fields" style="float: left; width: 100%">
-    <label>CMS Permissions</label>
+    <label><%= t "sections.form.cms_permissions" %></label>
     <%= hidden_field_tag "section[group_ids][]", "", :id => nil %>
     <div class="checkboxes">
       <% for group in cms_groups %>
@@ -44,7 +44,7 @@
           <label for="cms_group_ids_<%= group.id %>"><%= group.name %></label>
       </div>
       <% end %>
-      <div class="instructions">Which &ldquo;CMS&rdquo; groups can edit pages and content in this section?</div>
+      <div class="instructions"><%= t "sections.form.cms_permissions_hint" %></div>
       <div class="check_uncheck">
         <%= link_to_check_all 'input.cms_group_ids' %>, 
         <%= link_to_uncheck_all 'input.cms_group_ids' %>
@@ -55,5 +55,5 @@
 <% end %>
 
 <div class="buttons">
-  <%= lt_button_wrapper(f.submit("Save", :class => "submit", :tabindex => next_tabindex)) %>
+  <%= lt_button_wrapper(f.submit(t("sections.form.save"), :class => "submit", :tabindex => next_tabindex)) %>
 </div>

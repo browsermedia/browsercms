@@ -264,7 +264,7 @@ jQuery(function($){
     
     var enableButtonsForPage = function(id) {
 	$('#edit-button')
-	.html('<span>Edit Page</span>')
+	.html('<span>Edit Pages</span>')
 	.removeClass('disabled')
 	.attr('href','/cms/pages/'+id)
 	.unbind('click')

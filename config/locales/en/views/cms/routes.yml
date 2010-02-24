@@ -1,0 +1,9 @@
+en:
+  routes:
+    index:
+      page_title: Rails Routes
+      path_to_test: Path to Test
+      name: Name
+      verb: Verb
+      pattern: Pattern
+      result: Result

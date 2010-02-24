@@ -1,0 +1,15 @@
+en:
+  section_nodes:
+    link:
+      published: Published
+      draft: Draft
+    node:
+      hidden: Hidden
+    index:
+        page_title: Sitemap
+        edit_page: Edit Page
+        edit_properties: Edit Properties
+        add_page: Add Page
+        add_section: Add Section
+        add_link: Add Link
+        delete: Delete

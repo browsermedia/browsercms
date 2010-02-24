@@ -1,20 +1,20 @@
 <% content_for :html_head do %>
   <%= javascript_include_tag 'cms/sitemap' %>
 <% end %>
-<% content_for :title do %>Sitemap<% end %>
+<% content_for :title do %><%= t "sections.index.title" %><% end %>
 
 <div class="buttons">
-  <%= link_to "Edit", '#', :id => 'edit-button', :disabled => "disabled" %>
+  <%= link_to t("sections.index.edit"), '#', :id => 'edit-button', :disabled => "disabled" %>
   |
-  <%= link_to "Properties", '#', :id => 'properties-button', :disabled => "disabled" %>
+  <%= link_to t("sections.index.propiedades"), '#', :id => 'properties-button', :disabled => "disabled" %>
   |
-  <%= link_to "Delete", '#', :id => 'delete-button', :disabled => "disabled" %>
+  <%= link_to t("sections.index.eliminar"), '#', :id => 'delete-button', :disabled => "disabled" %>
   |
-  <%= link_to "Add Page", '#', :id => 'add-page-button', :disabled => "disabled" %>
+  <%= link_to t("sections.index.add_page"), '#', :id => 'add-page-button', :disabled => "disabled" %>
   |
-  <%= link_to "Add Section", '#', :id => 'add-section-button', :disabled => "disabled" %>
+  <%= link_to t("sections.index.add_section"), '#', :id => 'add-section-button', :disabled => "disabled" %>
   |
-  <%= link_to "Add Link", '#', :id => 'add-link-button', :disabled => "disabled" %>
+  <%= link_to t("sections.index.add_link"), '#', :id => 'add-link-button', :disabled => "disabled" %>
 </div>
 <div id="sitemap">
   <ul>

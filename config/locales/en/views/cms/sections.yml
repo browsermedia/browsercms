@@ -1,0 +1,24 @@
+en:
+  sections:
+    form:
+      hide_from_menus: Hide from menus?
+      public_permissions: Public Permissions 
+      public_permissions_hint: "Which 'Public' groups can view pages in this section?"
+      cms_permissions: CMS Permissions
+      cms_permissions_hint: "Which 'CMS' groups can edit pages and content in this section?"
+      save: Save
+    edit:
+      page_title: "Edit Properties / '{{section_name}}' Section"
+      list_all: List All
+    index:
+      title: Sitemap
+      edit: Edit
+      properties: Properties
+      delete: Delete
+      add_page: Add Page
+      add_section: Add Section
+      add_link: Add Link
+    new:
+      page_title: New Section
+      list_all: List All
+      

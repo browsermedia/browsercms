@@ -3,10 +3,10 @@
   <%= javascript_include_tag 'cms/sitemap' %>  
 <% end %>
 
-<% page_title t("section_nodes.index.sitemap") %>
+<% page_title t("section_nodes.index.page_title") %>
 
 <% content_for :functions do %>
-  <h1><%=t "section_nodes.index.sitemap" %></h1>
+  <h1><%=t "section_nodes.index.page_title" %></h1>
   <%= link_to span_tag(t "section_nodes.index.edit_page"), '#', :id => 'edit-button', :class => "button disabled left" %>
   <%= link_to span_tag(t "section_nodes.index.edit_properties"), '#', :id => 'properties-button', :class => "button disabled right" %>
   <%= link_to span_tag(t "section_nodes.index.add_page"), '#', :id => 'add-page-button', :class => "button disabled spacer left" %>

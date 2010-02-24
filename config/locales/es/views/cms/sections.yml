@@ -1,0 +1,26 @@
+es:
+  sections:
+    form:
+      hide_from_menus: ¿Ocultar de menus?
+      public_permissions: Permisos Públicos
+      public_permissions_hint: "¿Que grupos 'Publicos' pueden ver páginas en esta sección?"
+      cms_permissions: Permosos del CMS
+      cms_permissions_hint: "¿Qué grupos'CMS' pueden editar contenido en esta sección?"
+      save: Guardar
+    edit:
+      page_title: "Editar Propiedades / Sección '{{section_name}}'"
+      list_all: Mostrar Todas
+    index:
+      title: Mapa del Sitio
+      edit: Editar
+      properties: Propiedades
+      delete: Eliminar
+      add_page: Agregar Página
+      add_section: Agregar Sección
+      add_link: Agregar Link
+    new:
+      page_title: Nueva Sección
+      list_all: Mostrar Todas
+    
+    
+    
