@@ -27,6 +27,8 @@ es:
         name: Nombre
         tags: Etiquetas
         attachment_file: Archivo
+        attachment_file_section: Sección
+        attachment_file_path: Ruta
       group:
         name: Nombre
       html_block:

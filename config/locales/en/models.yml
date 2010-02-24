@@ -1,4 +1,4 @@
-es:
+en:
   models:
     html_block:
       display_name: Text
@@ -26,7 +26,9 @@ es:
       file_block:
         name:
         tags:
-        attachment_file:
+        attachment_file: File
+        attachment_file_section: Section
+        attachment_file_path: Path
       group:
         name:
       html_block:
@@ -36,9 +38,9 @@ es:
       image_block:
         name:
         tags:
-        attachment_file:
-        attachment_section:
-        attachment_file_path:
+        attachment_file: File
+        attachment_section: Section
+        attachment_file_path: Path
       link:
         name:
         url:
@@ -46,10 +48,10 @@ es:
         name:
         title:
         path:
-        template_file_name:
-        cacheable:
-        hidden:
-        archived:
+        template_file_name: Template
+        cacheable: Cache Enabled?
+        hidden: Hide From Menus?
+        archived: Archived?
         description:
         keywords:
         language:
@@ -64,7 +66,7 @@ es:
       section:
         name:
         path:
-        hidden:
+        hidden: Hedden from menus?
       tag:
         name:
       task:
@@ -72,11 +74,11 @@ es:
         due_date:
         comment:
       user:
-        login:
+        login: Username
         email:
         first_name:
         last_name:
-        expires_at:
+        expires_at: Expiration Date
         password:
         confirm_password:
         
