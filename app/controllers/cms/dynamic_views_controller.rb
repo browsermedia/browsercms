@@ -19,7 +19,7 @@ class Cms::DynamicViewsController < Cms::BaseController
   def create
     @view = dynamic_view_type.new(params[dynamic_view_type.name.underscore])
     if @view.save
-      flash[:notice] = "#{dynamic_view_type} '#{@view.name}' was created"
+      flash[:notice] = I18n.t("controllers.dynamic_view.created", :dynamic_view_type => dynamic_view_type, :name => @view.name)
       redirect_to cms_index_path_for(dynamic_view_type.name.underscore.pluralize)
     else
       render :action => "new"
@@ -32,7 +32,7 @@ class Cms::DynamicViewsController < Cms::BaseController
   
   def update
     if @view.update_attributes(params[dynamic_view_type.name.underscore])
-      flash[:notice] = "#{dynamic_view_type} '#{@view.name}' was updated"
+      flash[:notice] = I18n.t("controllers.dynamic_view.updated", :dynamic_view_type => dynamic_view_type, :name => @view.name)
       redirect_to cms_index_path_for(dynamic_view_type.name.underscore.pluralize)
     else
       render :action => "edit"
@@ -41,7 +41,7 @@ class Cms::DynamicViewsController < Cms::BaseController
   
   def destroy
     @view.destroy
-    flash[:notice] = "#{dynamic_view_type} '#{@view.name}' was deleted"
+    flash[:notice] = I18n.t("controllers.dynamic_view.deleted", :dynamic_view_type => dynamic_view_type, :name => @view.name)
     redirect_to cms_index_path_for(dynamic_view_type.name.underscore.pluralize)    
   end
   

@@ -21,3 +21,7 @@ en:
         command_failure: "{{content_type_name}} '{{block_name}}' could not be {{result}}"
       created: "{{content_type}} '{{block_name}}' was created"
       updated: "{{content_type}} '{{block_name}}' was updated"
+    dynamic_view:
+      created: "{{dynamic_view_type}} '{{name}}' was created"
+      updated: "{{dynamic_view_type}} '{{name}}' was updated"
+      deleted: "{{dynamic_view_type}} '{{name}}' was deleted"
