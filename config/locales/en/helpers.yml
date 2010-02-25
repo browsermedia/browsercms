@@ -1,0 +1,8 @@
+en:
+  helpers:
+    application:
+      all: All sections
+      per_page: per page
+      all_groups: Show All Groups
+      no_content: No Content
+      

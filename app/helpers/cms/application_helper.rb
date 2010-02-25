@@ -28,7 +28,7 @@ module Cms
     end
 
     def select_per_page
-      options = [10, 20, 50, 100].collect { |c| ["#{c} per page", c] }
+      options = [10, 20, 50, 100].collect { |c| ["#{c} #{t("helpers.application.per_page")}", c] }
       select_tag("per_page", options_for_select(options, params[:per_page].to_i))
     end
 
@@ -105,7 +105,7 @@ LBW
     end
 
     def group_filter
-      select_tag("group_id", options_from_collection_for_select(Group.all.insert(0, Group.new(:id => nil, :name => "Show All Groups")), "id", "name", params[:group_id].to_i))
+      select_tag("group_id", options_from_collection_for_select(Group.all.insert(0, Group.new(:id => nil, :name => I18n.t("helpers.application.all_groups"))), "id", "name", params[:group_id].to_i))
     end	  	  
     
     def categories_for(category_type_name, order="name")
@@ -115,7 +115,7 @@ LBW
     
     def render_pagination(collection, collection_name, options={})
       if collection.blank?
-        content_tag(:div, "No Content", :class => "pagination")
+        content_tag(:div, I18n.t("helpers.application.no_content"), :class => "pagination")
       else
         render :partial => "cms/shared/pagination", :locals => {
           :collection => collection,

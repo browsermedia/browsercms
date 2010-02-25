@@ -1,0 +1,7 @@
+es:
+  helpers:
+    application:
+      all: Todas las secciones
+      per_page: por página
+      all_groups: Todos los Grupos
+      no_content: No hay Contenido
