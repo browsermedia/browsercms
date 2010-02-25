@@ -58,6 +58,12 @@ en:
       updated: "Section '{{section_name}}' was updated"
       deleted: "Section '{{section_name}}' was deleted"
       failed_delete: "Section '{{section_name}}' could not be deleted"
+    sessions:
+      created: Logged in successfully
+      failed_create: Log in failed
+      deleted: You have been logged out.
+      failed_create_note: "Couldn't log you in as {{login}}"
+      
       
       
       

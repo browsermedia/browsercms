@@ -53,5 +53,10 @@ es:
       created: "La sección '{{section_name}}' ha sido creada"      
       created: "La sección '{{section_name}}' ha sido actualizada"      
       created: "La sección '{{section_name}}' ha sido eliminada"      
-      created: "La sección '{{section_name}}' no pudo ser eliminada"      
+      created: "La sección '{{section_name}}' no pudo ser eliminada"
+    sessions:
+      created: Inicio de sesión exitoso
+      failed_create: Ha fallado el intento de iniciar sesión
+      deleted: Tu sesión ha terminado
+      failed_create_note: "No fue posible iniciar sesión para el usuario {{login}}"      
         

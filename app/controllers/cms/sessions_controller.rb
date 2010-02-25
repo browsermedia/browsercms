@@ -19,7 +19,7 @@ class Cms::SessionsController < Cms::ApplicationController
       self.current_user = user
       new_cookie_flag = (params[:remember_me] == "1")
       handle_remember_cookie! new_cookie_flag
-      flash[:notice] = "Logged in successfully"
+      flash[:notice] = I18n.t("controllers.sessions.created")
       if params[:success_url] # Coming from login portlet
         redirect_to((!params[:success_url].blank? && params[:success_url]) || session[:return_to] || "/")
         session[:return_to] = nil
@@ -30,7 +30,7 @@ class Cms::SessionsController < Cms::ApplicationController
       note_failed_signin
       @login       = params[:login]
       @remember_me = params[:remember_me]
-      flash[:login_error] = "Log in failed"
+      flash[:login_error] = I18n.t("controllers.sessions.failed_create")
       if params[:success_url] # Coming from login portlet
         if params[:success_url].blank?
           success_url = session[:return_to] || "/"
@@ -59,12 +59,12 @@ class Cms::SessionsController < Cms::ApplicationController
   def logout_user
     logout_killing_session!
     cookies.delete :openSectionNodes
-    flash[:notice] = "You have been logged out."
+    flash[:notice] = I18n.t("controllers.sessions.deleted")
   end
 
   # Track failed login attempts
   def note_failed_signin
-    flash[:error] = "Couldn't log you in as '#{params[:login]}'"
+    flash[:error] = I18n.t("controllers.sessions.failed_create_note", :login => params[:login])
     logger.warn "Failed login for '#{params[:login]}' from #{request.remote_ip} at #{Time.now.utc}"
   end
 
