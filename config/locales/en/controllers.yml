@@ -1,4 +1,14 @@
+#flash messages translations
 en:
   controllers:
     cache:
-      
+      flushed: Page Cache Flushed
+    connectors:
+      removed: "Removed '{{connectable_name}}' from the '{{container}}' container"
+      failed_to_remove: "Failed to remove '{{connectable_name}}' from the '{{container}}' container"    
+      up_in: up in
+      down_in: down in
+      to_top: to the top of
+      to_bottom: to the bottom of
+      moved: "Moved '{{connectable_name}}' {{where}} the '{{container}}' container"
+      failed_to_move: "Failed to move '{{connectable_name}}' {{where}} the '{{container}}' container"

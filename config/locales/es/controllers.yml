@@ -1,4 +1,15 @@
+#flash messages translations
 es:
   controllers:
     cache:
-      
+      flushed: El cache de Páginas ha sido eliminado
+    connectors:
+      removed: "Se ha eliminado '{{connectable_name}}' del contenedor '{{container}}'"
+      failed_to_remove: "No fue posible eliminar '{{connectable_name}}' del contenedor '{{container}}'"
+      up_in: hacia arriba
+      down_in: hacia abajo
+      to_top: hasta arriba
+      to_bottom: hasta abajo
+      moved: "Se ha movido '{{connectable_name}}' {{where}} en el contenedor '{{container}}'"
+      failed_to_move: "No fue posible mover '{{connectable_name}}' {{where}} en el contenedor '{{container}}'"
+        

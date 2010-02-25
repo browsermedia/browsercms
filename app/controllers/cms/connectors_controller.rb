@@ -27,27 +27,27 @@ class Cms::ConnectorsController < Cms::BaseController
     @page = @connector.page
     @connectable = @connector.connectable
     if @page.remove_connector(@connector)
-      flash[:notice] = "Removed '#{@connectable.name}' from the '#{@connector.container}' container"
+      flash[:notice] = I18n.t("controllers.connectors.removed", :connectable_name => @connectable.name, :container => @connector.container)
     else
-      flash[:error] = "Failed to remove '#{@connectable.name}' from the '#{@connector.container}' container"
+      flash[:error] = I18n.t("controllers.connectors.faliled_to_remove", :connectable_name => @connectable.name, :container => @connector.container)
     end
     redirect_to @page.path
   end
 
   { #Define actions for moving connectors around
-    :up => "up in",
-    :down => "down in",
-    :to_top => "to the top of",
-    :to_bottom => "to the bottom of"    
+    :up => I18n.t("controllers.connectors.up_in"),
+    :down => I18n.t("controllers.connectors.up_in"),
+    :to_top => I18n.t("controllers.connectors.up_in"),
+    :to_bottom => I18n.t("controllers.connectors.up_in")    
   }.each do |move, where|
     define_method "move_#{move}" do
       @connector = Connector.find(params[:id])
       @page = @connector.page
       @connectable = @connector.connectable
       if @page.send("move_connector_#{move}", @connector)
-        flash[:notice] = "Moved '#{@connectable.name}' #{where} the '#{@connector.container}' container"
+        flash[:notice] = I18n.t("controllers.connectors.moved", :connectable_name => @connectable.name, :where => where, :container => @connector.container)
       else
-        flash[:error] = "Failed to move '#{@connectable.name}' #{where} the '#{@connector.container}' container"
+        flash[:error] = I18n.t("controllers.connectors.failed_to_move", :connectable_name => @connectable.name, :where => where, :container => @connector.container)
       end
       redirect_to @page.path    
     end
