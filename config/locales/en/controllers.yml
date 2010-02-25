@@ -49,6 +49,12 @@ en:
       multiple_pages_action: "{{how_many}} pages {{verb}}"
       single_page_action: "Page '{{page_name}}' was {{verb}}"
       reverted: "Page '{{page_name}}' was reverted to version {{version}}"
+    resource:
+      created: "{{resource_name}} '{{object_name}}' was created"
+      updated: "{{resource_name}} '{{object_name}}' was updated"
+      deleted: "{{resource_name}} '{{object_name}}' was deleted"
+      
+      
       
         
       

@@ -45,4 +45,8 @@ es:
       multiple_pages_action: "{{how_many}} páginas {{verb}}s"
       single_page_action: "La página '{{page_name}}' ha sido {{verb}}"
       reverted: "La página '{{page_name}}' ha sido revertida a la versión {{version}}"
+    resource:
+      created: "{{resource_name}} '{{object_name}}' ha sido creado"
+      updated: "{{resource_name}} '{{object_name}}' ha sido actualizado"
+      deleted: "{{resource_name}} '{{object_name}}' ha sido eliminado"
         

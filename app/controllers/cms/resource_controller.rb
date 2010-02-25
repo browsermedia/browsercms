@@ -13,7 +13,7 @@ class Cms::ResourceController < Cms::BaseController
   def create
     @object = build_object(params[variable_name])
     if @object.save
-      flash[:notice] = "#{resource_name.singularize.titleize} '#{object_name}' was created"
+      flash[:notice] = I18n.t("controllers.resource.created", :resource_name => resource_name.singularize.titleize, :object_name => object_name)
       redirect_to after_create_url
     else
       instance_variable_set("@#{variable_name}", @object)
@@ -36,7 +36,7 @@ class Cms::ResourceController < Cms::BaseController
   def update
     @object = resource.find(params[:id])
     if @object.update_attributes(params[variable_name])
-      flash[:notice] = "#{resource_name.singularize.titleize} '#{object_name}' was updated"
+      flash[:notice] = I18n.t("controllers.resource.updated", :resource_name => resource_name.singularize.titleize, :object_name => object_name)
       redirect_to after_update_url
     else
       instance_variable_set("@#{variable_name}", @object)
@@ -51,7 +51,7 @@ class Cms::ResourceController < Cms::BaseController
   def destroy
     @object = resource.find(params[:id])
     if @object.destroy
-      flash[:notice] = "#{resource_name.singularize.titleize} '#{object_name}' was deleted"
+      flash[:notice] = I18n.t("controllers.resource.deleted", :resource_name => resource_name.singularize.titleize, :object_name => object_name)
     end
     redirect_to index_url
   end
