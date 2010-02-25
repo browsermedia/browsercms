@@ -1,3 +1,10 @@
 en:
   portlets:
+    forgot_password: 
+      unable_to_verify: We were unable to verify your account. Please make sure your email address is accurate.
+      password_sent: "Your password has been sent to {{email}}"
+    reset_password:
+      no_token: No password token given
+      invalid_token: Invalid password token
+      reset: Password has been reset    
     

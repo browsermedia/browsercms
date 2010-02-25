@@ -29,7 +29,6 @@ This is a work in progress. Most of the view files have been prepared for transl
 translated to spanish) but there are a few still pending. Some work still needs to be done, 
 particularly on:
 
-* Portlets
 * Javascripts (there are at least a couple of functions that manipulate toolbar buttons)
 * Helpers
 * Models (some models output strings that need translation)

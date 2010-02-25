@@ -10,13 +10,13 @@ class ForgotPasswordPortlet < Portlet
     user = User.find_by_email(params[:email])
     
     unless user
-      flash[:forgot_password][:error] = "We were unable to verify your account. Please make sure your email address is accurate."
+      flash[:forgot_password][:error] = I18n.t("portlets.forgot_password.unable_to_verify")
       return
     end
     
     user.reset_token = generate_reset_token
     if user.save
-      flash[:forgot_password][:notice] = "Your password has been sent to #{params[:email]}"
+      flash[:forgot_password][:notice] = I18n.t("portlets.forgot_password.password_sent", :email => params[:email])
       ForgotPasswordMailer.deliver_reset_password(self.reset_password_url + '?token=' + user.reset_token, user.email)
     end
   end

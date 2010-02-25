@@ -1,3 +1,10 @@
 es:
   portlets:
+    forgot_password:
+      unable_to_verify: No fue posible verificar tu cuenta. Por favor asegúrate que tu email es correcto.
+      password_sent: "Tu password ha sido enviado a {{email}}"
+    reset_password:
+      no_token: El token para cambiar password no fue proporcionado
+      invalid_token: El token para cambiar password es inválido
+      reset: El password ha sido cambiado
     

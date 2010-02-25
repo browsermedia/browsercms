@@ -4,14 +4,14 @@ class ResetPasswordPortlet < Portlet
     flash[:reset_password] = {}
     
     unless params[:token]
-      flash[:reset_password][:error] = "No password token given"
+      flash[:reset_password][:error] = I18n.t("portlets.reset_password.no_token")
       return
     end
 
     @user = User.find_by_reset_token(params[:token])
 
     unless @user
-      flash[:reset_password][:notice] = "Invalid password token"    
+      flash[:reset_password][:notice] = I18n.t("portlets.reset_password.invalid_token")   
       return
     end
 
@@ -20,7 +20,7 @@ class ResetPasswordPortlet < Portlet
       @user.password_confirmation = params[:password_confirmation]
       
       if @user.save
-        flash[:reset_password][:notice] = 'Password has been reset'
+        flash[:reset_password][:notice] = I18n.t("portlets.reset_password.reset")
       end
     end
   end
