@@ -13,8 +13,8 @@ end
 if RAILS_ROOT == File.expand_path(File.dirname(__FILE__) + "/..")
   ActionController::Routing::Routes.draw do |map|
     
-    #route for changing locales
-    map.locale "/locale", :controller => "cms/locales"
+    #quickly swap locales
+    map.locale "/locale", :controller => "cms/locales" if Rails.env.development?
     
     map.connect "/__test__", :controller => "cms/content", :action => "show_page_route"
 

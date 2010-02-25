@@ -14,14 +14,17 @@ anything special.
     script/server
     
 If you run the above commands you should see no difference in BrowserCMS's UI. If you do, then
-you found a bug!. Edit the file config/initializers/i18n.rb and change the locale to spanish 
-(only Spanish and English translations are available but you can create your own)
+you found a bug!. You can switch between the available locales on your installation by clicking on 
+the links at the top of the toolbar. These links are only for development purposes will not be present 
+on a production site.
+
+To choose a locale for a production site, you need to edit the file config/initializers/i18n.rb and 
+explicitly set the default locale.
 
     I18n.default_locale = :es
     
 Copy the 12 images located at doc/design/es to public/images/cms replacing the original ones,
-restart your server and you should see (most) of the UI in Spanish.
-
+to see the Spanish version of the butons or create your own (see below).
 
 ## Pending transaltions
 
