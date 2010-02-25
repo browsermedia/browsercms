@@ -1,4 +1,4 @@
-#flash messages translations
+#flash messages
 es:
   controllers:
     cache:
@@ -12,4 +12,13 @@ es:
       to_bottom: hasta abajo
       moved: "Se ha movido '{{connectable_name}}' {{where}} en el contenedor '{{container}}'"
       failed_to_move: "No fue posible mover '{{connectable_name}}' {{where}} en el contenedor '{{container}}'"
+    content_block:
+      commands:
+        deleted: eliminado
+        published: publicado
+        reverted: revertido a la versión {{version}}
+        command_success: "El (la) {{content_type_name}} '{{block_name}}' fue {{result}}"
+        command_failure: "El (la) {{content_type_name}} '{{block_name}}' no pudo ser {{result}}"
+      created: "{{content_type}} '{{block_name}}' ha sido creado"
+      updated: "{{content_type}} '{{block_name}}' ha sido actualizado"
         

@@ -56,19 +56,19 @@ class Cms::ContentBlockController < Cms::BaseController
   end
   
   def destroy
-    do_command("deleted") { @block.destroy }
+    do_command(I18n.t("controllers.content_block.commands.deleted")) { @block.destroy }
     redirect_to_first params[:_redirect_to], blocks_path
   end
   
   # Additional CMS Action
   
   def publish
-    do_command("published") { @block.publish! }
+    do_command(I18n.t("controllers.content_block.commands.published")) { @block.publish! }
     redirect_to_first params[:_redirect_to], block_path
   end
   
   def revert_to
-    do_command("reverted to version #{params[:version]}") do
+    do_command(I18n.t("controllers.content_block.commands.reverted", :version => params[:version])) do
       revert_block(params[:version])
     end
     redirect_to_first params[:_redirect_to], block_path
@@ -185,7 +185,7 @@ class Cms::ContentBlockController < Cms::BaseController
 
     def after_create_on_success
       block = @block.class.versioned? ? @block.draft : @block
-      flash[:notice] = "#{content_type.display_name} '#{block.name}' was created"
+      flash[:notice] = I18n.t("controllers.content_block.created", :content_type => content_type.display_name, :block_name => block.name)
       if @block.class.connectable? && @block.connected_page
         redirect_to @block.connected_page.path
       else
@@ -209,7 +209,7 @@ class Cms::ContentBlockController < Cms::BaseController
     end
 
     def after_update_on_success
-      flash[:notice] = "#{content_type_name.titleize} '#{@block.name}' was updated"
+      flash[:notice] = I18n.t("controllers.content_block.updated", :content_type => content_type_name.titleize, :block_name => @block.name)
       redirect_to_first params[:_redirect_to], block_path
     end
 
@@ -235,9 +235,13 @@ class Cms::ContentBlockController < Cms::BaseController
     def do_command(result)
       load_block
       if yield
-        flash[:notice] = "#{content_type_name.titleize} '#{@block.name}' was #{result}"
+        flash[:notice] = I18n.t("controllers.content_block.commands.command_success", :content_type_name => content_type_name.titleize, 
+                                                                                      :block_name => @block.name, 
+                                                                                      :result => result)
       else
-        flash[:error] = "#{content_type_name.titleize} '#{@block.name}' could not be #{result}"
+        flash[:error] = I18n.t("controllers.content_block.commands.command_failure", :content_type_name => content_type_name.titleize, 
+                                                                                      :block_name => @block.name, 
+                                                                                      :result => result)
       end
     end
 
