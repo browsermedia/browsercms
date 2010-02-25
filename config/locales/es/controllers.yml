@@ -34,4 +34,15 @@ es:
       created: La ruta de página ha sido creada
       updated: La ruta de página ha sido actualizada
       deleted: La ruta de página ha sido eliminada
+    pages:
+      created: "La página '{{page_name}}' ha sido creada"
+      updated: "La página '{{page_name}}' ha sido actualizada"
+      deleted: "La página '{{page_name}}' ha sido eliminada"
+      failed_delete: "La página '{{page_name}}' no pudo ser eliminada"
+      published: publicada
+      hidden: ocultada
+      archived: archivada
+      multiple_pages_action: "{{how_many}} páginas {{verb}}s"
+      single_page_action: "La página '{{page_name}}' ha sido {{verb}}"
+      reverted: "La página '{{page_name}}' ha sido revertida a la versión {{version}}"
         

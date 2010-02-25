@@ -38,6 +38,18 @@ en:
       created: Page Route Created
       updated: Page Route Updated
       deleted: Page Route Deleted
+    pages:
+      created: "Page '{{page_name}}' was created"
+      updated: "Page '{{page_name}}' was updated"
+      deleted: "Page '{{page_name}}' was deleted"
+      failed_delete: "Page '{{page_name}}' could not be deleted"
+      published: published
+      hidden: hidden
+      archived: archived
+      multiple_pages_action: "{{how_many}} pages {{verb}}"
+      single_page_action: "Page '{{page_name}}' was {{verb}}"
+      reverted: "Page '{{page_name}}' was reverted to version {{version}}"
+      
         
       
       

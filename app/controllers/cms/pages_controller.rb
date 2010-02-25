@@ -25,7 +25,7 @@ class Cms::PagesController < Cms::BaseController
     @page = Page.new(params[:page])
     @page.section = @section
     if @page.save
-      flash[:notice] = "Page was '#{@page.name}' created."
+      flash[:notice] = I18n.t("controllers.pages.created", :page_name => @page.name)
       redirect_to [:cms, @page]
     else
       render :action => "new"
@@ -34,7 +34,7 @@ class Cms::PagesController < Cms::BaseController
 
   def update
     if @page.update_attributes(params[:page])
-      flash[:notice] = "Page was '#{@page.name}' updated."
+      flash[:notice] = I18n.t("controllers.pages.updated", :page_name => @page.name)
       redirect_to [:cms, @page]
     else
       render :action => "edit"
@@ -47,11 +47,11 @@ class Cms::PagesController < Cms::BaseController
   def destroy
     respond_to do |format|
       if @page.destroy
-        message = "Page '#{@page.name}' was deleted."
+        message = I18n.t("controllers.pages.deleted", :page_name => @page.name)
         format.html { flash[:notice] = message; redirect_to(cms_sitemap_url) }
         format.json { render :json => {:success => true, :message => message } }
       else
-        message = "Page '#{@page.name}' could not be deleted"
+        message = I18n.t("controllers.pages.failed_delete", :page_name => @page.name)
         format.html { flash[:error] = message; redirect_to(cms_sitemap_url) }
         format.json { render :json => {:success => false, :message => message } }
       end
@@ -59,18 +59,20 @@ class Cms::PagesController < Cms::BaseController
   end
  
   #status actions
-  {:publish => "published", :hide => "hidden", :archive => "archived"}.each do |status, verb|
+  {:publish => I18n.t("controllers.pages.published"), 
+    :hide => I18n.t("controllers.pages.hidden"), 
+    :archive => I18n.t("controllers.pages.archived")}.each do |status, verb|
     define_method status do
       if params[:page_ids]
         @pages = params[:page_ids].map { |id| Page.find(id) }
         raise Cms::Errors::AccessDenied unless @pages.all? { |page| current_user.able_to_edit?(page) }
         @pages.each { |page| page.send(status) }
-        flash[:notice] = "#{params[:page_ids].size} pages #{verb}"
+        flash[:notice] = I18n.t("controllers.pages.multiple_pages_action", :how_many => params[:page_ids].size, :verb => verb)
         redirect_to cms_dashboard_url
       else
         load_page
         if @page.send(status)
-          flash[:notice] = "Page '#{@page.name}' was #{verb}"
+          flash[:notice] = I18n.t("controllers.pages.single_page_action", :page_name => @page.name, :verb => verb)
         end
         redirect_to @page.path
       end
@@ -88,7 +90,7 @@ class Cms::PagesController < Cms::BaseController
  
   def revert_to
     if @page.revert_to(params[:version])
-      flash[:notice] = "Page '#{@page.name}' was reverted to version #{params[:version]}"
+      flash[:notice] = I18n.t("controllers.pages.reverted", :page_name => @page.name, :version => params[:version])
     end
    
     respond_to do |format|
