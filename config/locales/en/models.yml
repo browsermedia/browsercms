@@ -1,12 +1,15 @@
 en:
   models:
+    attachment:
+      must_upload_file: You must upload a file
+    file_block:
+      display_name: File
     html_block:
       display_name: Text
       display_name_plural: Text
     image_block:
       display_name: Image
-    file_block:
-      display_name: File
+
     
   activerecord:
     models:

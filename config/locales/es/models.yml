@@ -1,12 +1,15 @@
 es:
   models:
+    attachment:
+      must_upload_file: Debes agregar un archivo
+    file_block:
+      display_name: Archivo
     html_block:
       display_name: Texto
       display_name_plural: Textos
     image_block:
       display_name: Imagen
-    file_block:
-      display_name: Archivo
+
     
   activerecord:
     errors:
