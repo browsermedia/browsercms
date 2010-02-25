@@ -49,4 +49,9 @@ es:
       created: "{{resource_name}} '{{object_name}}' ha sido creado"
       updated: "{{resource_name}} '{{object_name}}' ha sido actualizado"
       deleted: "{{resource_name}} '{{object_name}}' ha sido eliminado"
+    sections:
+      created: "La sección '{{section_name}}' ha sido creada"      
+      created: "La sección '{{section_name}}' ha sido actualizada"      
+      created: "La sección '{{section_name}}' ha sido eliminada"      
+      created: "La sección '{{section_name}}' no pudo ser eliminada"      
         

@@ -53,6 +53,12 @@ en:
       created: "{{resource_name}} '{{object_name}}' was created"
       updated: "{{resource_name}} '{{object_name}}' was updated"
       deleted: "{{resource_name}} '{{object_name}}' was deleted"
+    sections:
+      created: "Section '{{section_name}}' was created"
+      updated: "Section '{{section_name}}' was updated"
+      deleted: "Section '{{section_name}}' was deleted"
+      failed_delete: "Section '{{section_name}}' could not be deleted"
+      
       
       
       

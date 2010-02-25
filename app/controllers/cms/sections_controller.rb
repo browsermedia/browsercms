@@ -25,7 +25,7 @@ class Cms::SectionsController < Cms::BaseController
     @section.parent = @parent
     @section.groups = @section.parent.groups unless current_user.able_to?(:administrate)
     if @section.save
-      flash[:notice] = "Section '#{@section.name}' was created"
+      flash[:notice] = I18n.t("controllers.sections.created", :section_name => @section.name)
       redirect_to [:cms, @section]
     else
       render :action => 'new'
@@ -39,7 +39,7 @@ class Cms::SectionsController < Cms::BaseController
     params[:section].delete('group_ids') if params[:section] &&  !current_user.able_to?(:administrate)
     @section.attributes = params[:section]
     if @section.save
-      flash[:notice] = "Section '#{@section.name}' was updated"
+      flash[:notice] = I18n.t("controllers.sections.updated", :section_name => @section.name)
       redirect_to [:cms, @section]
     else
       render :action => 'edit'
@@ -49,11 +49,11 @@ class Cms::SectionsController < Cms::BaseController
   def destroy
     respond_to do |format|
       if @section.deletable? && @section.destroy
-        message = "Section '#{@section.name}' was deleted."
+        message = I18n.t("controllers.sections.deleted", :section_name => @section.name)
         format.html { flash[:notice] = message; redirect_to(cms_sitemap_url) }
         format.json { render :json => {:success => true, :message => message } }
       else
-        message = "Section '#{@section.name}' could not be deleted"
+        message = I18n.t("controllers.sections.failed_delete", :section_name => @section.name)
         format.html { flash[:error] = message; redirect_to(cms_sitemap_url) }
         format.json { render :json => {:success => false, :message => message } }
       end
