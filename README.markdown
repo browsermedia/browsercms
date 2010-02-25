@@ -19,7 +19,7 @@ If you run the above commands you should see no difference in BrowserCMS's UI (e
 buttons at the top of the toolbar). If you do, then you found a bug!. 
 
 You can switch between the available locales on your installation by clicking on 
-the locale links at the top of the toolbar. These links are only for development purposes will not be present 
+the locale links at the top of the toolbar. These links are only for development purposes and will not be present 
 on a production site.
 
 To choose a locale for a production site, you need to edit the file config/initializers/i18n.rb and 
@@ -28,21 +28,13 @@ explicitly set the default locale.
     I18n.default_locale = :es
     
 Copy the 12 images located at doc/design/es to public/images/cms replacing the original ones,
-to see the Spanish version of the butons or create your own (see below).
+to see the Spanish version of the butons or create your own (see below). The included Spanish images 
+are a bit sketchy but I'll do better later on.
 
 **NOTE:** These images will not change when you alternate between locales on development. I might fix this
 in the future but for now the purpose is to run the CMS just in one language other than English.
 Quickly swapping locales is just meant for development for the time being.
 
-## Pending transaltions
-
-This is a work in progress. Most of the view files have been prepared for translation (and 
-translated to spanish) but there are a few still pending. Some work still needs to be done, 
-particularly on:
-
-* Javascripts (there are at least a couple of functions that manipulate toolbar buttons)
-* Helpers
-* Models (some models output strings that need translation)
 
 ## Images
 
@@ -64,6 +56,16 @@ Once you have your images, just replace the original ones.
 10. public/images/cms/nav_sitemap.gif
 11. public/images/cms/nav_sitemap_on.gif
 12. public/images/cms/nav_sitemap_h.gif
+
+## Pending transaltions
+
+This is a work in progress. Most of the view files have been prepared for translation (and 
+translated to spanish) but there are a few still pending. Some work still needs to be done, 
+particularly on:
+
+* Javascripts (there are at least a couple of functions that manipulate toolbar buttons)
+* Helpers
+* Models (some models output strings that need translation)
 
 ## Creating your own locale files
 

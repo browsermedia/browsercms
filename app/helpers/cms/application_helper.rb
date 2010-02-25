@@ -73,11 +73,11 @@ module Cms
       time && "#{time.strftime("%b %e, %Y")}"
     end
     
-    def link_to_check_all(selector, name="Check All")
+    def link_to_check_all(selector, name=I18n.t("helpers.application.check_all"))
       link_to_function name, "$('#{selector}').attr('checked', true)"
     end
 
-    def link_to_uncheck_all(selector, name="Uncheck All")
+    def link_to_uncheck_all(selector, name=I18n.t("helpers.application.uncheck_all"))
       link_to_function name, "$('#{selector}').attr('checked', false)"
     end
     

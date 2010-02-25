@@ -4,5 +4,7 @@ en:
       all: All sections
       per_page: per page
       all_groups: Show All Groups
+      check_all: Check All
+      uncheck_all: Uncheck All
       no_content: No Content
       

@@ -4,4 +4,6 @@ es:
       all: Todas las secciones
       per_page: por página
       all_groups: Todos los Grupos
+      check_all: Seleccionar Todos
+      uncheck_all: Limpiar seleccion
       no_content: No hay Contenido

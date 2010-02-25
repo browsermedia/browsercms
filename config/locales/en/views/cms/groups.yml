@@ -13,6 +13,7 @@ en:
       instructions: What sections should group members be allowed to
       view: view
       edit: edit
+      path: Path
     edit:
       page_title: Administration / Add New Group
       toolbar_title: Add New Group
