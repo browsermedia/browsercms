@@ -75,9 +75,9 @@ module Cms
     def render_portlet(name)
       portlets = Portlet.all(:conditions => ["name = ?", name.to_s])
       if portlets.size > 1
-        @mode == "edit" ? "ERROR: Multiple Portlets with name '#{name}'" : nil
+        @mode == "edit" ? I18n.t("helpers.page.multiple_portlets", :name => name) : nil
       elsif portlets.empty?
-        @mode == "edit" ? "ERROR: No Portlet with name '#{name}'" : nil
+        @mode == "edit" ? I18n.t("helpers.page.no_portlet", :name => name) : nil
       else
         render_connectable(portlets.first)
       end

@@ -7,4 +7,7 @@ en:
       check_all: Check All
       uncheck_all: Uncheck All
       no_content: No Content
+    page:
+      multiple_portlets: "ERROR: Multiple Portlets with name '{{name}}'"
+      no_portlet: "ERROR: No Portlet with name '{{name}}'"
       

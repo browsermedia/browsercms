@@ -7,3 +7,6 @@ es:
       check_all: Seleccionar Todos
       uncheck_all: Limpiar seleccion
       no_content: No hay Contenido
+    page:
+      multiple_portlets: "ERROR: Hay más de un Portlet con el nombre '{{name}}'"
+      no_portlet: "ERROR: No existe un Portlet con el nombre '{{name}}'"
