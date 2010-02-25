@@ -64,5 +64,10 @@ es:
       completed_multiple: Tareas marcadas como completadas
       copmleted_single: La tarea fue marcada como completada
       cannot_complete: No puedes completar tareas que no te han sido asignadas
+    users:
+      password_changed: "El password para '{{user}}' ha sido cambiado"
+      disabled: "El usuario '{{user}}' ha sido deshabilitado"
+      created: "El usuario '{{user}}' ha sido creado"
+      updated: "El usuario '{{user}}' ha sido actualizado"
       
         

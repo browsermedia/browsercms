@@ -68,6 +68,12 @@ en:
       completed_multiple: Tasks marked as complete
       copmleted_single: Task was marked as complete
       cannot_complete: You cannot complete tasks that are not assigned to you
+    users:
+      password_changed: "Password for '{{user}}' was changed"
+      disabled: "User '{{user}}' was disabled"
+      created: "User '{{user}}' was created"
+      updated: "User '{{user}}' was updated"
+      
       
       
       

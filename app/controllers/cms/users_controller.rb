@@ -41,7 +41,7 @@ class Cms::UsersController < Cms::ResourceController
 
   def update_password
     if user.update_attributes(params[:user])
-      flash[:notice] = "Password for '#{user.login}' was changed"
+      flash[:notice] = I18n.t("controllers.users.password_changed", :user => user.login)
       redirect_to(current_user.able_to?(:administrate) ? cms_users_path : cms_user_path(user))
     else
       render :action => 'change_password'
@@ -51,7 +51,7 @@ class Cms::UsersController < Cms::ResourceController
   def disable
     begin
       user.disable!
-      flash[:notice] = "User #{user.login} disabled"
+      flash[:notice] =  I18n.t("controllers.users.disabled", :user => user.login)
     rescue Exception => e
       flash[:error] = e.message
     end
@@ -74,11 +74,11 @@ class Cms::UsersController < Cms::ResourceController
 
     def update_flash
       if params[:on_fail_action] == "change_password"
-        flash[:notice] = "Password for '#{@object.login}' changed"
+        flash[:notice] = I18n.t("controllers.users.password_changed", :user => @object.login)
       elsif params[:action] == "create"
-        flash[:notice] = "User '#{@object.login}' was created"
+        flash[:notice] = I18n.t("controllers.users.created", :user => @object.login)
       else
-        flash[:notice] = "User '#{@object.login}' was updated"
+        flash[:notice] =  I18n.t("controllers.users.updated", :user => @object.login)
       end
     end
 
