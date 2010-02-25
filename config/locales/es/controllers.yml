@@ -26,4 +26,8 @@ es:
       updated: "El link '{{name}}' ha sido actualizado"
       deleted: "El link '{{name}}' ha sido eliminado"
       failed_delete: "El link '{{name}}' no pudo ser eliminado"
+    page_route_options:
+      created: "{{object}} agregado"
+      updated: "{{object}} actualizado"
+      deleted: "{{object}} eliminado"
         

@@ -63,5 +63,4 @@ class Cms::LinksController < Cms::BaseController
     def set_toolbar_tab
       @toolbar_tab = :sitemap
     end
-
 end

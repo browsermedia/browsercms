@@ -30,4 +30,9 @@ en:
       updated: "Link '{{name}}' was updated"
       deleted: "Link '{{name}}' was deleted"
       failed_delete: "Link '{{name}}' could not be deleted"
+    page_route_options:
+      created: "{{object}} added"
+      updated: "{{object}} updated"
+      deleted: "{{object}} deleted"
+      
       
