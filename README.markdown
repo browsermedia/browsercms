@@ -29,7 +29,6 @@ This is a work in progress. Most of the view files have been prepared for transl
 translated to spanish) but there are a few still pending. Some work still needs to be done, 
 particularly on:
 
-* Controllers (to translate flash messages)
 * Portlets
 * Javascripts (there are at least a couple of functions that manipulate toolbar buttons)
 * Helpers
