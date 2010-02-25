@@ -9,10 +9,20 @@ es:
       display_name: Archivo
     
   activerecord:
+    errors:
+      template:
+        header: "1 error no permitió guardar este(a) {{model}}"
+        other:  "{{count}} errores no permitieron guardar este(a) {{model}}"
+        body: "Hay problemas con los siguientes campos:"
+      messages:
+        blank: " no puede estar en blanco"
     models:
       category: Categoría
       category_type: Tipo de Categoría
       dynamic_view: Vista Dinámica
+      html_block: Bloque de Texto
+      image_lock: Imagen
+      file_block: Archivo
     attributes:
       category:
         name: Nombre
