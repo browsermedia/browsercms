@@ -17,8 +17,6 @@ en:
       revert: Revert to this Version
       visual_editor: "Visual Editor:"
       visual_editor_title: "You don't have premission to edit this page"
-      status_on: ON
-      status_off: OFF
       turn_off: TURN OFF
       turn_on: TURN ON
       view_current: View Current Version

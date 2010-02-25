@@ -49,7 +49,7 @@ en:
       block_contents: "Block Contents:"
     usages:
       page_title: Content Library / View usage
-      pages_using: Pages using
+      toolbar_title: "Pages Using {{content_type_name}} '{{block_name}}'"
       page_name: Page Name
       path: Path
       page_status: Page Status

@@ -1,7 +1,7 @@
 en:
   categories:
     form:
-      page_title: Please create a Category Type
+      page_title: Please Create A Category Type
       type_prompt: Select a Category Type
       message: |
           Before you can create a category, you must {{link}}.  

@@ -1,7 +1,7 @@
 en:
   connectors:
     new:
-      page_title: Add Existing Content to {{page}} Page
+      page_title: "Add Existing Content to '{{page}}' Page"
       add_to_page: Add to Page
       view_content: View Content
       choose_type: Choose Type of Content

@@ -1,5 +1,5 @@
 <% page_title t("blocks.usages.page_title") %>
-<% @toolbar_title = "#{t "blocks.usages.pages_using"} #{content_type.display_name} '#{ @block.name }'" %>
+<% @toolbar_title = t("blocks.usages.toolbar_title", :content_type_name => content_type.display_name, :block_name => @block.name) %>
 <% content_for :html_head do %>
   <%= stylesheet_link_tag("cms/content_library") %>
   <% javascript_tag do %>

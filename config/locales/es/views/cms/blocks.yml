@@ -49,7 +49,7 @@ es:
       block_contents: "Contenido del bloque:"
     usages:
       page_title: Librería de Contenidos / Ver usos
-      pages_using: Páginas usando
+      toolbar_title: "Pages Using {{content_type_name}} '{{block_name}}'"
       page_name: Nombre de la página
       path: Ruta
       page_status: Estatus de la página
