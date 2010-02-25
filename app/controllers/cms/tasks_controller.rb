@@ -11,7 +11,7 @@ class Cms::TasksController < Cms::BaseController
     @task = @page.tasks.build(params[:task])
     @task.assigned_by = current_user
     if @task.save
-      flash[:notice] = "Page was assigned to '#{@task.assigned_to.login}'"
+      flash[:notice] = I18n.t("controllers.tasks.created", :user => @task.assigned_to.login)
       redirect_to @page.path
     else
       render :action => 'new'
@@ -25,16 +25,16 @@ class Cms::TasksController < Cms::BaseController
           t.mark_as_complete!
         end
       end
-      flash[:notice] = "Tasks marked as complete"
+      flash[:notice] = I18n.t("controllers.tasks.completed_multiple")
       redirect_to cms_dashboard_path
     else
       @task = Task.find(params[:id])
       if @task.assigned_to == current_user
         if @task.mark_as_complete!
-          flash[:notice] = "Task was marked as complete"
+          flash[:notice] = I18n.t("controllers.tasks.completed_multiple")
         end
       else
-        flash[:error] = "You cannot complete tasks that are not assigned to you"
+        flash[:error] = I18n.t("controllers.tasks.cannot_complete")
       end
       redirect_to @task.page.path
     end

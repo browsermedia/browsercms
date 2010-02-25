@@ -63,6 +63,12 @@ en:
       failed_create: Log in failed
       deleted: You have been logged out.
       failed_create_note: "Couldn't log you in as {{login}}"
+    tasks:
+      created: "Page was assigned to {{user}}"
+      completed_multiple: Tasks marked as complete
+      copmleted_single: Task was marked as complete
+      cannot_complete: You cannot complete tasks that are not assigned to you
+      
       
       
       

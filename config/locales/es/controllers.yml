@@ -59,4 +59,10 @@ es:
       failed_create: Ha fallado el intento de iniciar sesión
       deleted: Tu sesión ha terminado
       failed_create_note: "No fue posible iniciar sesión para el usuario {{login}}"      
+    tasks:
+      created: "La página ha sido asignada a {{user}}"
+      completed_multiple: Tareas marcadas como completadas
+      copmleted_single: La tarea fue marcada como completada
+      cannot_complete: No puedes completar tareas que no te han sido asignadas
+      
         
