@@ -10,12 +10,16 @@ anything special.
     cd browsercms
     # make sure you are on the lit branch
     # configure database.yml
-    rake reset
+    rake db:create
+    rake db:migrate
+    rake db:load_demo_data
     script/server
     
-If you run the above commands you should see no difference in BrowserCMS's UI. If you do, then
-you found a bug!. You can switch between the available locales on your installation by clicking on 
-the links at the top of the toolbar. These links are only for development purposes will not be present 
+If you run the above commands you should see no difference in BrowserCMS's UI (except for a couple of new
+buttons at the top of the toolbar). If you do, then you found a bug!. 
+
+You can switch between the available locales on your installation by clicking on 
+the locale links at the top of the toolbar. These links are only for development purposes will not be present 
 on a production site.
 
 To choose a locale for a production site, you need to edit the file config/initializers/i18n.rb and 
@@ -25,6 +29,10 @@ explicitly set the default locale.
     
 Copy the 12 images located at doc/design/es to public/images/cms replacing the original ones,
 to see the Spanish version of the butons or create your own (see below).
+
+**NOTE** These images will not change when you alternate between locales. I might fix this
+in the future but now my purpose is to run the CMS just in one language other than English.
+Quickly swapping locales is just ment for development.
 
 ## Pending transaltions
 
