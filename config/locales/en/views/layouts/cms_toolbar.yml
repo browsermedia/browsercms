@@ -2,8 +2,3 @@ en:
   layouts:
     cms_toolbar:
       logout: Logout
-      #image paths
-      my_dashboard: /images/cms/es/nav_dash
-      sitemap: /images/cms/es/nav_sitemap
-      content_library: /images/cms/es/nav_content_library
-      administration:  /images/cms/es/nav_admin

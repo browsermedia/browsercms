@@ -19,7 +19,8 @@ you found a bug!. Edit the file config/initializers/i18n.rb and change the local
 
     I18n.default_locale = :es
     
-Restart your server and you should see (most) of the UI in Spanish.
+Copy the 12 images located at doc/design/es to public/images/cms replacing the original ones,
+restart your server and you should see (most) of the UI in Spanish.
 
 
 ## Pending transaltions
@@ -38,15 +39,22 @@ particularly on:
 
 The main toolbar has 4 links that use images: My Dashboard, Sitemap, Content  Library and Administration.
 To translate these, you need to create 12 images. 3 for each link (over, up and active states)
-You can use a .psd file that was added to the repository a while back. It's on doc/design.
+You can use a .psd file that was added to the repository a while back. It's on doc/design. 
 
-Once you have your images you can:
+Once you have your images, just replace the original ones.
 
-* Replace the original images on public/images/cms with your own or
-* Place them wherever you want and adjust the paths on the file config/locales/es/views/layouts/cms_toolbar.yml
-
-I have not created these images myself yet but if someone is willing to contribute with the Spanish ones
-that would be awesome! 
+1. public/images/cms/nav_admin.gif
+2. public/images/cms/nav_admin_h.gif
+3. public/images/cms/nav_admin_on.gif
+4. public/images/cms/nav_content_library.gif
+5. public/images/cms/nav_content_library_h.gif
+6. public/images/cms/nav_content_library_on.gif
+7. public/images/cms/nav_dash.gif
+8. public/images/cms/nav_dash_h.gif
+9. public/images/cms/nav_dash_on.gif
+10. public/images/cms/nav_sitemap.gif
+11. public/images/cms/nav_sitemap_on.gif
+12. public/images/cms/nav_sitemap_h.gif
 
 ## Creating your own locale files
 
