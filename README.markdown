@@ -30,9 +30,9 @@ explicitly set the default locale.
 Copy the 12 images located at doc/design/es to public/images/cms replacing the original ones,
 to see the Spanish version of the butons or create your own (see below).
 
-**NOTE** These images will not change when you alternate between locales. I might fix this
-in the future but now my purpose is to run the CMS just in one language other than English.
-Quickly swapping locales is just ment for development.
+**NOTE:** These images will not change when you alternate between locales on development. I might fix this
+in the future but for now the purpose is to run the CMS just in one language other than English.
+Quickly swapping locales is just meant for development for the time being.
 
 ## Pending transaltions
 
