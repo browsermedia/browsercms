@@ -25,3 +25,9 @@ en:
       created: "{{dynamic_view_type}} '{{name}}' was created"
       updated: "{{dynamic_view_type}} '{{name}}' was updated"
       deleted: "{{dynamic_view_type}} '{{name}}' was deleted"
+    links:
+      created: "Link '{{name}}' was created"
+      updated: "Link '{{name}}' was updated"
+      deleted: "Link '{{name}}' was deleted"
+      failed_delete: "Link '{{name}}' could not be deleted"
+      

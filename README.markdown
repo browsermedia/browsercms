@@ -52,7 +52,7 @@ that would be awesome!
 
 ## Contact
 Juan Alvarez
-alce@mac.com
+com{{dot}}mac[[at]]alce
   
 
     

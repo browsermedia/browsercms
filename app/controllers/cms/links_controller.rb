@@ -13,7 +13,7 @@ class Cms::LinksController < Cms::BaseController
     @link = Link.new(params[:link])
     @link.section = @section
     if @link.save
-      flash[:notice] = "Link was '#{@link.name}' created."
+      flash[:notice] = I18n.t("controllers.links.created", :name => @link.name)
       redirect_to [:cms, @section]
     else
       render :action => "new"
@@ -22,7 +22,7 @@ class Cms::LinksController < Cms::BaseController
   
   def update
     if @link.update_attributes(params[:link])
-      flash[:notice] = "Link '#{@link.name}' was updated"
+      flash[:notice] = I18n.t("controllers.links.updated", :name => @link.name)
       redirect_to [:cms, @link.section]
     else
       render :action => 'edit'
@@ -32,11 +32,11 @@ class Cms::LinksController < Cms::BaseController
   def destroy
     respond_to do |format|
       if @link.destroy
-        message = "Link '#{@link.name}' was deleted."
+        message = I18n.t("controllers.links.deleted", :name => @link.name)
         format.html { flash[:notice] = message; redirect_to(cms_sitemap_url) }
         format.json { render :json => {:success => true, :message => message } }
       else
-        message = "Link '#{@link.name}' could not be deleted"
+        message = I18n.t("controllers.links.failed_delete", :name => @link.name)
         format.html { flash[:error] = message; redirect_to(cms_sitemap_url) }
         format.json { render :json => {:success => false, :message => message } }
       end

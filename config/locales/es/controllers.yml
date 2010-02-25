@@ -21,4 +21,9 @@ es:
         command_failure: "El (la) {{content_type_name}} '{{block_name}}' no pudo ser {{result}}"
       created: "{{content_type}} '{{block_name}}' ha sido creado"
       updated: "{{content_type}} '{{block_name}}' ha sido actualizado"
+    links:
+      created: "El link '{{name}}' ha sido creado"
+      updated: "El link '{{name}}' ha sido actualizado"
+      deleted: "El link '{{name}}' ha sido eliminado"
+      failed_delete: "El link '{{name}}' no pudo ser eliminado"
         
