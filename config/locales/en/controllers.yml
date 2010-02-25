@@ -34,5 +34,10 @@ en:
       created: "{{object}} added"
       updated: "{{object}} updated"
       deleted: "{{object}} deleted"
+    page_routes:
+      created: Page Route Created
+      updated: Page Route Updated
+      deleted: Page Route Deleted
+        
       
       

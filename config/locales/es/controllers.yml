@@ -30,4 +30,8 @@ es:
       created: "{{object}} agregado"
       updated: "{{object}} actualizado"
       deleted: "{{object}} eliminado"
+    page_routes:
+      created: La ruta de página ha sido creada
+      updated: La ruta de página ha sido actualizada
+      deleted: La ruta de página ha sido eliminada
         

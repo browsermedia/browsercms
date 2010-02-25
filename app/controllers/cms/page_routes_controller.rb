@@ -14,7 +14,7 @@ class Cms::PageRoutesController < Cms::BaseController
   def create
     @page_route = PageRoute.new(params[:page_route])
     if @page_route.save
-      flash[:notice] = "Page Route Created"
+      flash[:notice] = I18n.t("controllers.page_routes.created")
       redirect_to cms_page_route_url(@page_route)
     else
       render :action => "new"
@@ -23,7 +23,7 @@ class Cms::PageRoutesController < Cms::BaseController
   
   def update
     if @page_route.update_attributes(params[:page_route])
-      flash[:notice] = "Page Route Updated"
+      flash[:notice] = I18n.t("controllers.page_routes.updated")
       redirect_to cms_page_route_url(@page_route)
     else
       render :action => "new"
@@ -33,7 +33,7 @@ class Cms::PageRoutesController < Cms::BaseController
   
   def destroy
     @page_route.destroy
-    flash[:notice] = "Page Route Deleted"
+    flash[:notice] = I18n.t("controllers.page_routes.deleted")
     redirect_to cms_page_routes_url
   end
   
