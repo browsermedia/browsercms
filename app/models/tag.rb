@@ -50,9 +50,9 @@ class Tag < ActiveRecord::Base
   end
   
   def self.columns_for_index
-    [ {:label => "Name", :method => :name, :order => "name" },
-      {:label => "Usages", :method => :tagging_count },
-      {:label => "Updated On", :method => :updated_on_string, :order => "updated_at"}  ]
+    [ {:label => I18n.t("models.tag.name_label"), :method => :name, :order => "name" },
+      {:label => I18n.t("models.tag.usages_label"), :method => :tagging_count },
+      {:label => I18n.t("models.tag.updated_label"), :method => :updated_on_string, :order => "updated_at"}  ]
   end  
   
   def render

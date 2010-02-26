@@ -8,6 +8,8 @@ es:
     index:
       list: Lista de
       delete: Eliminar
+      add: Agregar
+      edit: Editar
       confirm: ¿Estás seguro de que quieres eliminar este(a) {{object}}?
       name: Nombre
       updated_at: Actualizado en

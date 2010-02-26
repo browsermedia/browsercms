@@ -7,6 +7,8 @@ en:
       list_all: List All
     index:
       list: List
+      add: Add
+      edit: Edit
       delete: Delete
       confirm: Are you sure you want to delete this {{object}}?
       name: Name

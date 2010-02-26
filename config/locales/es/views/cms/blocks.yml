@@ -24,6 +24,7 @@ es:
       save: Guardar
     index:
       page_title: Librería de Contenidos / Lista de
+      list: Lista de
       updated: Actualizado
       used: Usado
       status: Estatus

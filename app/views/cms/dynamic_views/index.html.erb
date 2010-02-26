@@ -1,4 +1,4 @@
-<% @page_title = @toolbar_title = "#{t "dynamic_views.index.list"} #{dynamic_view_type.name.titleize.pluralize}" %>
+<% @page_title = @toolbar_title = "#{t "dynamic_views.index.list"} #{dynamic_view_type.human_name.pluralize}" %>
 <% content_for(:html_head) do %>
   <% javascript_tag do %>
     jQuery(function($){
@@ -20,8 +20,8 @@
 <% end %>
 
 <% content_for :functions do %>
-  <%= link_to(span_tag("&nbsp;Add&nbsp;"), cms_new_path_for(dynamic_view_type.name.underscore), :class => "button") %>
-  <%= link_to(span_tag("&nbsp;Edit&nbsp;"), '#', :id => 'edit_button', :class => "button disabled") %>
+  <%= link_to(span_tag("&nbsp;#{t("dynamic_views.index.add")}&nbsp;"), cms_new_path_for(dynamic_view_type.name.underscore), :class => "button") %>
+  <%= link_to(span_tag("&nbsp;#{t("dynamic_views.index.edit")}&nbsp;"), '#', :id => 'edit_button', :class => "button disabled") %>
   <%= link_to span_tag("<span class=\"delete_img\">&nbsp;</span>#{t "dynamic_views.index.delete"}"), "#", 
     :id => "delete_button", 
     :title => t("dynamic_views.index.confirm", :object => dynamic_view_type.name.underscore.titleize),

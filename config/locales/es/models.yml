@@ -53,8 +53,6 @@ es:
     user:
       login_format_error_message: "utiliza sólo letras, números y .-_@ por favor."
       email_format_error_message: "debe ser una dirección de correo, ej. xx@xx.com"
-      
-      
     
   activerecord:
     errors:
@@ -68,9 +66,12 @@ es:
       category: Categoría
       category_type: Tipo de Categoría
       dynamic_view: Vista Dinámica
+      file_block: Archivo
       html_block: Bloque de Texto
       image_lock: Imagen
-      file_block: Archivo
+      page_partial: Página Parcial
+      pgae_route: Ruta de Página
+
     attributes:
       category:
         name: Nombre

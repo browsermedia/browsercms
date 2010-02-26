@@ -24,6 +24,7 @@ en:
       save: Save
     index:
       page_title: Content Library / List
+      list: List
       updated: Updated
       used: Used
       status: Status
@@ -32,6 +33,7 @@ en:
       no_results: No results found for
     new:
       page_title: Content Library / Add New
+      list: List
       add: Add New
       save_and_publish: Save and Publish
       save: Save
