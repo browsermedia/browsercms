@@ -1,4 +1,4 @@
-<%= f.cms_text_field :name %>
-<%= f.cms_text_field :limit, :size => 4 %>
-<%= f.cms_text_field :sizes, :default_value => TagCloudPortlet.default_sizes %>
-<%= f.cms_text_area :template, :default_value => TagCloudPortlet.default_template %>
+<%= f.cms_text_field :name, :label => t("views.portlets.tag_cloud.form.name") %>
+<%= f.cms_text_field :limit, :size => 4, :label => t("views.portlets.tag_cloud.form.limit") %>
+<%= f.cms_text_field :sizes, :default_value => TagCloudPortlet.default_sizes, :label => t("views.portlets.tag_cloud.form.sizes") %>
+<%= f.cms_text_area :template, :default_value => TagCloudPortlet.default_template, :label => t("views.portlets.tag_cloud.form.template") %>

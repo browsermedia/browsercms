@@ -1,6 +1,7 @@
-<%= f.cms_text_field :name %>
-<%= f.cms_text_field :success_url,
+<%= f.cms_text_field :name, :label => t("views.portlets.login.form.name") %>
+<%= f.cms_text_field :success_url, :label => t("views.portlets.login.form.success_url"),
   :instructions => t("views.portlets.login.form.success_url_hint") %>
-<%= f.cms_text_field :failure_url,
+<%= f.cms_text_field :failure_url, :label => t("views.portlets.login.form.failure_url"),
   :instructions => t("views.portlets.login.form.failure_url_hint") %>
-<%= f.cms_text_area :template, :default_value => LoginPortlet.default_template %>
+<%= f.cms_text_area :template, :label => t("views.portlets.login.form.template"),
+  :default_value => LoginPortlet.default_template %>

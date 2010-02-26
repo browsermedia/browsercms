@@ -1,6 +1,7 @@
-<%= f.cms_text_field :name %>
-<%= f.cms_text_field :reset_password_url, :instructions => t("views.portlets.forgot_password.form.reset_password_url_hint") %>
-<%= f.cms_template_editor :template %>
+<%= f.cms_text_field :name, :label => t("views.portlets.forgot_password.form.name") %>
+<%= f.cms_text_field :reset_password_url, :label => t("views.portlets.forgot_password.form.reset_password_url"),
+    :instructions => t("views.portlets.forgot_password.form.reset_password_url_hint") %>
+<%= f.cms_template_editor :template , :label => t("views.portlets.forgot_password.form.template") %>
 
 
 

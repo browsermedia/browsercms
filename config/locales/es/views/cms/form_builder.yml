@@ -1,0 +1,6 @@
+es:
+  form_builder:
+    cms_text_editor:
+      rich_text: Texto Enriquecido
+      simple_text: Texto Simple
+    

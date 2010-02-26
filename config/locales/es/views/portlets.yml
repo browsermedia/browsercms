@@ -1,22 +1,37 @@
 es:
   views:
     portlets:
+      dynamic:
+        name: Nombre
+        code: Código
+        template: Template
       email_page:
         form:
+          name: Nombre
+          subject: Asunto
           default_subject: Un link que te puede interesar
+          success_url: URL final
           success_url_hint: Dejar en blanco para regresar a la misma página
+          template: Template
         render:
           send_mail: Enviar Correo
       forgot_password:
         form: 
+          name: Nombre
+          reset_password_url: URL para cambiar password
           reset_password_url_hint: URL de la página donde el usuario puede cambiar su password. No se permite pasar parámetros.
+          template: Template
         render:
           account_email: "Tu cuenta de correo:"
           request_token: Solicitar token para cambiar password
       login:
         form:
+          name: Nombre
+          success_url: URL final
           success_url_hint: Dejar en blanco para enviar al usuario a la página que estaba tratando de accesar
+          failure_url: URL error
           failure_url_hint: Dejar en blanco para enviar al usuario a la página desde la que estaba tratando de ingresar
+          template: Template
         render:
           welcome: Bienvenido(a)
           logout: Salir
@@ -25,8 +40,18 @@ es:
         form:
           page_title: Librería de Contenidos / Selecciona Tipo de Portlet
       reset_password:
+        form:
+          name: Nombre
+          handler: Handler
+          template: Template
         render:
           new_password: "Nuevo Password:"
           confirm_new_password: "Confirma Nuevo Password:"
           reset_password: Cambiar Password
+      tag_cloud:
+        form:
+          name: Nombre
+          limit: Límite
+          sizes: Tamaños
+          template: Template
       

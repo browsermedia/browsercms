@@ -1,7 +1,7 @@
-<%= f.cms_text_field :name %>
-<%= f.cms_text_field :subject, 
+<%= f.cms_text_field :name , :label => t("views.portlets.email_page.form.name") %>
+<%= f.cms_text_field :subject, :label => t("views.portlets.email_page.form.subject"),
   :default_value => t("views.portlets.email_page.form.default_subject") %>
-<%= f.cms_text_field :success_url, 
+<%= f.cms_text_field :success_url, :label => t("views.portlets.email_page.form.success_url"),
   :instructions => t("views.portlets.email_page.form.success_url_hint") %>
-<%= f.cms_text_area :template, 
+<%= f.cms_text_area :template, :label => t("views.portlets.email_page.form.template"),
   :default_value => EmailPagePortlet.default_template %>

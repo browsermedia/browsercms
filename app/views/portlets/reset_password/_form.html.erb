@@ -1,3 +1,5 @@
-<%= f.cms_text_field :name %>
-<%= f.cms_drop_down :handler, ActionView::Template.template_handler_extensions, :default => "erb" %>
-<%= f.cms_text_area :template, :default_value => @block.class.default_template %>
+<%= f.cms_text_field :name, :label => t("views.portlets.reset_password.form.name") %>
+<%= f.cms_drop_down :handler, ActionView::Template.template_handler_extensions, 
+    :default => "erb", :label => t("views.portlets.reset_password.form.handler") %>
+<%= f.cms_text_area :template, :label => t("views.portlets.reset_password.form.template"),
+  :default_value => @block.class.default_template %>

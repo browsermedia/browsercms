@@ -1,22 +1,37 @@
 en:
   views:
     portlets:
+      dynamic:
+        name: Name
+        code: Code
+        template: Template
       email_page:
         form:
-          subject_default: A link you might be interested in
-          success_url_hint: Leave blank to return the same page    
+          name: Name
+          subject: Subject
+          default_subject: A link you might be interested in
+          success_url: Success Url
+          success_url_hint: Leave blank to return the same page
+          template: Template    
         render:
           send_mail: Send Email
       forgot_password:
         form: 
+          name: Name
+          reset_password_url: Reset password url
           reset_password_url_hint: URL to page where user will reset his or her password.  No get parameters allowed.
+          template: Template
         render:
           account_email: "Your account email address:"
           request_token: Request reset password token
       login:
         form:
+          name: Nombre
+          success_url: Success url
           success_url_hint: Leave blank to send the user to the page they were trying to access
+          failure_url: Failure url
           failure_url_hint: Leave blank to send the user to the page they tried to login from
+          template: Template
         render:
           welcome: Welcome
           logout: Logout
@@ -25,8 +40,18 @@ en:
         form:
           page_title: Content Library / Select Portlet Type
       reset_password:
+        form:
+          name: Name
+          handler: Handler
+          template: Template
         render:
           new_password: "New Password:"
           confirm_new_password: "Confirm New Password:"
           reset_password: Reset Password
+      tag_cloud:
+        form:
+          name: Name
+          limit: Limit
+          sizes: Sizes
+          template: Template
         

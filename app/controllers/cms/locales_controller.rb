@@ -6,7 +6,7 @@ class Cms::LocalesController < Cms::BaseController
   end
   
   def jslocales
-    render :js => "var BCMSLocales = " + I18n.t("js").to_json
+    render :js => "var BCMSLocales = #{I18n.t("js").to_json}; CKEDITOR.config.language = '#{I18n.locale}'"
   end
   
 end
