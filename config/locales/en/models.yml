@@ -53,14 +53,24 @@ en:
     user:
       login_format_error_message: "use only letters, numbers, and .-_@ please."
       email_format_error_message: "should be an email address, ex. xx@xx.com"  
-      
-
     
   activerecord:
+    errors:
+      template:
+      header:
+      other:
+      body:
+    messages:
+      blank:
     models:
-      category: 
+      category:
       category_type:
       dynamic_view:
+      file_block:
+      html_block:
+      image_lock:
+      page_partial:
+      pgae_route:
     attributes:
       category:
         name:

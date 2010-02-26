@@ -33,6 +33,7 @@ es:
       no_results: No se encontraron resultados para
     new:
       page_title: Librería de Contenidos / Agregar
+      list: Lista de
       add: Agregar
       save_and_publish: Guardar y Publicar
       save: Guardar
@@ -64,6 +65,4 @@ es:
       editor: Editor
       live: EN VIVO
       current: ACTUAL
-      
-      
       

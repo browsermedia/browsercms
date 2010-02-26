@@ -1,0 +1,7 @@
+en:
+  cache:
+    toolbar_title: Page Cache Info
+    clear_cache: Clear Page Cache
+    message: |
+      The CMS System caches pages which are frequently accessed by guest users to increase 
+      throughput. If data appears stale, you may manually clear this page cache.    

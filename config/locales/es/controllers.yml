@@ -21,6 +21,10 @@ es:
         command_failure: "El (la) {{content_type_name}} '{{block_name}}' no pudo ser {{result}}"
       created: "{{content_type}} '{{block_name}}' ha sido creado"
       updated: "{{content_type}} '{{block_name}}' ha sido actualizado"
+    dynamic_view:
+      created: "{{dynamic_view_type}} '{{name}}' ha sido creado(a)"
+      updated: "{{dynamic_view_type}} '{{name}}' ha sido actualizado(a)"
+      deleted: "{{dynamic_view_type}} '{{name}}' ha sido eliminado(a)"
     links:
       created: "El link '{{name}}' ha sido creado"
       updated: "El link '{{name}}' ha sido actualizado"
@@ -51,9 +55,9 @@ es:
       deleted: "{{resource_name}} '{{object_name}}' ha sido eliminado"
     sections:
       created: "La sección '{{section_name}}' ha sido creada"      
-      created: "La sección '{{section_name}}' ha sido actualizada"      
-      created: "La sección '{{section_name}}' ha sido eliminada"      
-      created: "La sección '{{section_name}}' no pudo ser eliminada"
+      updated: "La sección '{{section_name}}' ha sido actualizada"      
+      deleted: "La sección '{{section_name}}' ha sido eliminada"      
+      failed_delete: "La sección '{{section_name}}' no pudo ser eliminada"
     sessions:
       created: Inicio de sesión exitoso
       failed_create: Ha fallado el intento de iniciar sesión

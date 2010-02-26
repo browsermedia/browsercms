@@ -31,8 +31,9 @@ en:
       your_version: Your Version
     access_denied:
       page_title: Access Denied
-      message: Sorry, you do not have permission to access this page.
+      message: "Sorry, you do not have permission to access this page."
     error:
       page_title: Error
       message: Message
       stacktrace: Stacktrace
+      

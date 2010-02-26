@@ -71,7 +71,6 @@ es:
       image_lock: Imagen
       page_partial: Página Parcial
       pgae_route: Ruta de Página
-
     attributes:
       category:
         name: Nombre

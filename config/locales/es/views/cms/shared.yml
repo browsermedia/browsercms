@@ -31,10 +31,11 @@ es:
       your_version: Tu versión
     access_denied:
       page_title: Accesso Restringido
-      message: Lo sentimos, no cuentas con autorización para ingresar a esta página.
+      message: "Lo sentimos, no cuentas con autorización para ingresar a esta página."
     error:
       page_title: Error
       message: Mensaje
       stacktrace: Stacktrace
+      
 
         

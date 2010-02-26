@@ -13,7 +13,6 @@ es:
       confirm: ¿Estás seguro de que quieres eliminar este(a) {{object}}?
       name: Nombre
       updated_at: Actualizado en
-        
     new:
       new: Nuevo(a)
       list_all: Mostrar todo

@@ -29,8 +29,4 @@ es:
           new_password: "Nuevo Password:"
           confirm_new_password: "Confirma Nuevo Password:"
           reset_password: Cambiar Password
-      tag_cloud:
-        form:
-        render:
-        
       

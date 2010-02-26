@@ -10,10 +10,10 @@ es:
       global_permissions: Permisos globales
     sections:
       section_permissions: Permisos por sección
-      path: Ruta
       instructions: ¿Qué secciones los miembros de este grupo deben estar permitidos a
       view: ver
       edit: editar
+      path: Ruta
     edit:
       page_title: Administración / Editar grupo
       toolbar_title: Editar Grupo
