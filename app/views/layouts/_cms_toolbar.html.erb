@@ -2,10 +2,10 @@
   <div id="nav">
   	<h1><%= link_to image_tag("cms/browsercms_logo.png"), "/", :target => "_top" %></h1>
     	<ul id="section">
-      	<li><%= link_to image_tag("/images/cms/nav_dash#{'_on' if tab == :dashboard}.gif", :id => 'nav_dash_img'), cms_dashboard_path, :target => "_top" %></li>
-        <% able_to?(:edit_content, :publish_content) do %><li><%= link_to image_tag("/images/cms/nav_sitemap#{'_on' if tab == :sitemap}.gif", :id => 'nav_sitemap_img'), cms_sitemap_path, :target => "_top" %></li><% end %>
-        <% able_to?(:edit_content, :publish_content) do %><li><%= link_to image_tag("/images/cms/nav_content_library#{'_on' if tab == :content_library}.gif", :id => 'nav_content_library_img'), cms_content_library_path, :target => "_top" %></li><% end %>
-        <% able_to?(:administrate) do %><li><%= link_to image_tag("/images/cms/nav_admin#{'_on' if tab == :administration}.gif", :id => 'nav_admin_img'), cms_administration_path, :target => "_top" %></li><% end %>
+      	<li><%= link_to image_tag("/images/cms/locales/#{I18n.locale}/nav_dash#{'_on' if tab == :dashboard}.gif", :id => 'nav_dash_img'), cms_dashboard_path, :target => "_top" %></li>
+        <% able_to?(:edit_content, :publish_content) do %><li><%= link_to image_tag("/images/cms/locales/#{I18n.locale}/nav_sitemap#{'_on' if tab == :sitemap}.gif", :id => 'nav_sitemap_img'), cms_sitemap_path, :target => "_top" %></li><% end %>
+        <% able_to?(:edit_content, :publish_content) do %><li><%= link_to image_tag("/images/cms/locales/#{I18n.locale}/nav_content_library#{'_on' if tab == :content_library}.gif", :id => 'nav_content_library_img'), cms_content_library_path, :target => "_top" %></li><% end %>
+        <% able_to?(:administrate) do %><li><%= link_to image_tag("/images/cms/locales/#{I18n.locale}/nav_admin#{'_on' if tab == :administration}.gif", :id => 'nav_admin_img'), cms_administration_path, :target => "_top" %></li><% end %>
       </ul>
       <ul id="userlinks">
         <% if Rails.env.development? %>
@@ -28,30 +28,30 @@
     jQuery(function($){
 <% unless tab == :dashboard %>
       $('#nav_dash_img').hover(function(){
-        $('#nav_dash_img').attr('src', '/images/cms/nav_dash_h.gif');
+        $('#nav_dash_img').attr('src', '/images/cms/locales/<%=I18n.locale%>/nav_dash_h.gif');
       }, function(){
-        $('#nav_dash_img').attr('src', '/images/cms/nav_dash.gif');
+        $('#nav_dash_img').attr('src', '/images/cms/locales/<%=I18n.locale%>/nav_dash.gif');
     });
 <% end %>
 <% unless tab == :sitemap %>
       $('#nav_sitemap_img').hover(function(){
-        $('#nav_sitemap_img').attr('src', '/images/cms/nav_sitemap_h.gif');
+        $('#nav_sitemap_img').attr('src', '/images/cms/locales/<%=I18n.locale%>/nav_sitemap_h.gif');
       }, function(){
-        $('#nav_sitemap_img').attr('src', '/images/cms/nav_sitemap.gif');
+        $('#nav_sitemap_img').attr('src', '/images/cms/locales/<%=I18n.locale%>/nav_sitemap.gif');
     });
 <% end %>
 <% unless tab == :content_library %>
       $('#nav_content_library_img').hover(function(){
-        $('#nav_content_library_img').attr('src', '/images/cms/nav_content_library_h.gif');
+        $('#nav_content_library_img').attr('src', '/images/cms/locales/<%=I18n.locale%>/nav_content_library_h.gif');
       }, function(){
-        $('#nav_content_library_img').attr('src', '/images/cms/nav_content_library.gif');
+        $('#nav_content_library_img').attr('src', '/images/cms/locales/<%=I18n.locale%>/nav_content_library.gif');
     });
 <% end %>
 <% unless tab == :administration %>
       $('#nav_admin_img').hover(function(){
-        $('#nav_admin_img').attr('src', '/images/cms/nav_admin_h.gif');
+        $('#nav_admin_img').attr('src', '/images/cms/locales/<%=I18n.locale%>/nav_admin_h.gif');
       }, function(){
-        $('#nav_admin_img').attr('src', '/images/cms/nav_admin.gif');
+        $('#nav_admin_img').attr('src', '/images/cms/locales/<%=I18n.locale%>/nav_admin.gif');
     });
 <% end %>
 
