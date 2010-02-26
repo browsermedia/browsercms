@@ -1,0 +1,22 @@
+en:
+  behaviors:
+    archiving:
+      archived: Archived
+      unarchived: Unarchived
+    attaching:
+      file_required: You must upload a file
+      file_name_required: File Name is required for attachment
+      section_required: Section is required for attachment
+    connecting:
+      deleted: Deleted
+      edited: Edited
+      version_comment: "{{class_name}} #{{id}} was {{action}}" 
+    hiding:
+      hidden: Hidden
+      unhidden: unhhiden
+    rendering:
+      deleted: "This {{class_name}} has been deleted.  Please remove this container from the page"
+    versioning:
+      created: Created
+      changed: "Changed {{changes}}"
+        

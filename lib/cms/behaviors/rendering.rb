@@ -108,7 +108,7 @@ module Cms
 
         if self.respond_to?(:deleted) && self.deleted
           logger.error "Attempting to render deleted object: #{self.inspect}"
-          msg = (@mode == 'edit' ?  %Q[<div class="error">This #{self.class.name} has been deleted.  Please remove this container from the page</div>] : '')
+          msg = (@mode == 'edit' ?  %Q[<div class="error">#{I18n.t("behaviors.rendering.deleted", :class_name => self.class.name)}</div>] : '')
           return msg
         end
 

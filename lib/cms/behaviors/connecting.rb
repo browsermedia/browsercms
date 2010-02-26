@@ -80,8 +80,8 @@ module Cms
               # which updates this object, so as not to create a loop
               if p != updated_by_page              
                 #This just creates a new version of the page
-                action = deleted? ? "Deleted" : "Edited"
-                p.update_attributes(:version_comment => "#{self.class.name} ##{id} was #{action}")
+                action = deleted? ? I18n.t("behaviors.connecting.deleted") : I18n.t("behaviors.connecting.edited")
+                p.update_attributes(:version_comment => I18n.t("behaviors.connecting.version_comment", :class_name => self.class.name, :id => id, :action => action))
 
                 #The previous step will copy over a connector pointing to the previous version of this connectable
                 #We need to change that to point at the new version of this connectable

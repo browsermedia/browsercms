@@ -22,22 +22,22 @@ module Cms
       module InstanceMethods
         def hide
           self.hidden = true
-          self.version_comment = "Hidden"         
+          self.version_comment = I18n.t("behaviors.hiding.hidden")         
           self.save
         end
         def hide!
           self.hidden = true
-          self.version_comment = "Hidden"
+          self.version_comment = I18n.t("behaviors.hiding.hidden")    
           self.save!
         end
         def unhide
           self.hidden = false
-          self.version_comment = "Unhidden"          
+          self.version_comment = I18n.t("behaviors.hiding.unhidden")           
           self.save
         end
         def unhide!
           self.hidden = false
-          self.version_comment = "Unhidden"          
+          self.version_comment = I18n.t("behaviors.hiding.unhidden")           
           self.save!
         end
       end

@@ -99,9 +99,9 @@ module Cms
 
         def default_version_comment
           if new_record?
-            "Created"
+            I18n.t("behaviors.versioning.created")
           else
-            "Changed #{(changes.keys - %w[version created_by_id updated_by_id]).sort.join(', ')}"
+            I18n.t("behaviors.versioning.changed", :changes => (changes.keys - %w[version created_by_id updated_by_id]).sort.join(', '))
           end
         end
 

@@ -86,11 +86,11 @@ module Cms
         def process_attachment
           if attachment.nil? && attachment_file.blank?
             unless attachment_file_path.blank?
-              errors.add(:attachment_file, "You must upload a file")
+              errors.add(:attachment_file, I18n.t("behaviors.attaching.file_required"))
               return false
             end
             unless attachment_section_id.blank?
-              errors.add(:attachment_file, "You must upload a file")
+              errors.add(:attachment_file, I18n.t("behaviors.attaching.file_required"))
               return false
             end              
           else
@@ -98,12 +98,12 @@ module Cms
             attachment.temp_file = attachment_file 
             set_attachment_file_path
             if attachment.file_path.blank?
-              errors.add(:attachment_file_path, "File Name is required for attachment")
+              errors.add(:attachment_file_path, I18n.t("behaviors.attaching.file_name_required"))
               return false
             end
             set_attachment_section
             if attachment.section_id.blank?
-              errors.add(:attachment_file, "Section is required for attachment")
+              errors.add(:attachment_file, I18n.t("behaviors.attaching.section_required"))
               return false
             end
           end

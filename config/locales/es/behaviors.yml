@@ -1,0 +1,22 @@
+es:
+  behaviors:
+    archiving:
+      archived: Archivada
+      unarchived: Desarchivada      
+    attaching:
+      file_required: Debes proporcionar un archivo
+      file_name_required: Nombre del archivo es requerido
+      section_required: Sección es requerida
+    connecting:
+      deleted: Eliminado(a)
+      edited: Editado(a)
+      version_comment: "{{class_name}} #{{id}} fue {{action}}"
+    hiding:
+      hidden: Ocultado(a)
+      unhidden: Mostrado(a)
+    rendering:
+      deleted: "Este(a) {{class_name}} ha sido eliminado(a).  Por favor elimina este contenedor de la página"
+    versioning:
+      created: Creado(a)
+      changed: "Modificado {{changes}}"
+          

@@ -64,7 +64,6 @@ translated to spanish) but there are a few still pending. Some work still needs 
 particularly on:
 
 * Javascripts (there are at least a couple of functions that manipulate toolbar buttons)
-* Models (some models output strings that need translation)
 
 ## Creating your own locale files
 
