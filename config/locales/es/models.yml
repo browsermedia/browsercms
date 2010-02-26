@@ -2,6 +2,21 @@ es:
   models:
     attachment:
       must_upload_file: Debes agregar un archivo
+    category:
+      name_label: Nombre
+      type_label: Tipo
+      updated_label: Actualizado en
+    category_type:
+      cannot_be_deleted: 
+        one: "Este tipo no puede ser eliminado porque está en uso en 1 categoría"
+        other: "Este tipo no puede ser eliminado porque está en uso en {{count}} categorías"
+    content_type:
+      name_label: Nombre
+      updated_label: Actualizado en
+    dynamic_view:
+      unique_combination: "Debe tener una combinación única de nombre, formato y handler"
+    forgot_password_mailer:
+      account_management: Administración de cuentas
     file_block:
       display_name: Archivo
     html_block:
@@ -9,7 +24,12 @@ es:
       display_name_plural: Textos
     image_block:
       display_name: Imagen
-
+    page:
+      create_version_comment: "{{connectable}} se ha agregado al contenedor '{{container}}'"
+      # TODO some translations pending  here
+      remove_version_comment: "{{connectable}} ha sido eliminado del contenedor '{{container}}'"
+      path_reserved: "no es válida, la ruta {{path}} es una ruta reservada"
+    
     
   activerecord:
     errors:

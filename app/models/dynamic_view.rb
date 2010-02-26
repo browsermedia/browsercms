@@ -27,7 +27,7 @@ class DynamicView < ActiveRecord::Base
 
       validates_presence_of :name, :format, :handler
       validates_uniqueness_of :name, :scope => [:format, :handler],
-        :message => "Must have a unique combination of name, format and handler"
+        :message => I18n.t("models.dynamic_view.unique_combination")
                   
     end 
   end

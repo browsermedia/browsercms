@@ -2,6 +2,21 @@ en:
   models:
     attachment:
       must_upload_file: You must upload a file
+    category:
+      name_label: Name
+      type_label: Type
+      updated_label: Updated On
+    category_type:
+      cannot_be_deleted: 
+        one: "This cannot be deleted because it is in use in 1 category"
+        other: "This cannot be deleted because it is in use in {{count}} categories"
+    content_type:
+      name_label: Name
+      updated_label: Updated On
+    dynamic_view:
+      unique_combination: "Must have a unique combination of name, format and handler"
+    forgot_password_mailer:
+      account_management: Account Management
     file_block:
       display_name: File
     html_block:
@@ -9,6 +24,11 @@ en:
       display_name_plural: Text
     image_block:
       display_name: Image
+    page:
+      create_version_comment: "{{connectable}} was added to the '{{container}}' container"
+      # TODO some translations pending  here
+      remove_version_comment: "{{connectable}} was removed from the '{{container}}' container"
+      path_reserved: "is invalid, '{{path}}' a reserved path"
 
     
   activerecord:

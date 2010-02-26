@@ -1,7 +1,7 @@
 class ForgotPasswordMailer < ActionMailer::Base
 
   def reset_password(link, email)
-    @subject    = "Account Management"
+    @subject    = I18n.t("models.forgot_password_mailer.account_management")
     @body[:url] = link
     @recipients = email
     @from       = 'do_not_reply@domain.com'

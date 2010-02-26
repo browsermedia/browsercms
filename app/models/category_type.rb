@@ -28,7 +28,7 @@ class CategoryType < ActiveRecord::Base
   end
   
   def cannot_be_deleted_message
-    categories.count.zero? ? nil : "This cannot be deleted because it is in use in #{categories.count} #{"category".pluralize(categories.count)}"
+    categories.count.zero? ? nil : I18n.t("models.category_type.cannot_be_deleted", :count => categories.count)
   end
   
 end

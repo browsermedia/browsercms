@@ -105,7 +105,7 @@ class Page < ActiveRecord::Base
       raise "Connectable is nil" unless connectable
       raise "Container is required" if container.blank?
       update_attributes(
-        :version_comment => "#{connectable} was added to the '#{container}' container",
+        :version_comment => I18n.t("models.page.create_version_comment", :connectable => connectable, :container => container),
         :publish_on_save => (
           published? && 
           connectable.connected_page && 
@@ -118,6 +118,7 @@ class Page < ActiveRecord::Base
     end
   end
 
+  #TODO (Translate)
   def move_connector(connector, direction)
     transaction do
       raise "Connector is nil" unless connector
@@ -137,7 +138,7 @@ class Page < ActiveRecord::Base
   def remove_connector(connector)
     transaction do
       raise "Connector is nil" unless connector
-      update_attributes(:version_comment => "#{connector.connectable} was removed from the '#{connector.container}' container")
+      update_attributes(:version_comment => I18n.t("models.page.remove_version_comment", :connectable => connector.connectable, :container => connector.container))
       
       #The logic of this is to go ahead and let the container get copied forward, then delete the new connector
       if new_connector = connectors.for_page_version(draft.version).like(connector).first
@@ -201,7 +202,7 @@ class Page < ActiveRecord::Base
   
   def path_not_reserved
     if Cms.reserved_paths.include?(path)
-      errors.add(:path, "is invalid, '#{path}' a reserved path")
+      errors.add(:path, I18n.t("models.page.path_reserved", :path => path))
     end
   end
       

@@ -64,8 +64,8 @@ class ContentType < ActiveRecord::Base
         column.respond_to?(:humanize) ? {:label => column.humanize, :method => column} : column
       end
     else
-      [{:label => "Name", :method => :name, :order => "name"},
-       {:label => "Updated On", :method => :updated_on_string, :order => "updated_at"}]
+      [{:label => I18n.t("models.content_type.name_label"), :method => :name, :order => "name"},
+       {:label => I18n.t("models.content_type.updated_label"), :method => :updated_on_string, :order => "updated_at"}]
     end
   end
 
