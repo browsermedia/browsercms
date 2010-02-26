@@ -29,6 +29,31 @@ en:
       # TODO some translations pending  here
       remove_version_comment: "{{connectable}} was removed from the '{{container}}' container"
       path_reserved: "is invalid, '{{path}}' a reserved path"
+    page_partial:
+      name_format_error_message: "can only contain lowercase letters, numbers and underscores and must begin with an underscore"
+    page_template:
+      name_format_error_message: "can only contain lowercase letters, numbers and underscores and must begin with a lowercase letter"
+    portlet:
+      name_label: Name
+      type_label: Type
+      updated_label: Updated On
+    section:
+      name_format_error_message: "cannot contain '/'"
+      path_reserved: "is invalid, '{{path}}' a reserved path"
+    tag:
+      name_label: Name
+      usages_label: Usages
+      updated_label: Updated On
+    task:
+      subject: "Page '{{page}}' has been assigned to you"
+      cannot_assign: cannot assign tasks
+      cannot_be_assigned: cannot be assigned tasks
+    template:
+      main_menu: Main Menu 
+    user:
+      login_format_error_message: "use only letters, numbers, and .-_@ please."
+      email_format_error_message: "should be an email address, ex. xx@xx.com"  
+      
 
     
   activerecord:

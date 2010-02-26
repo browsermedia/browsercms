@@ -28,7 +28,7 @@ class Section < ActiveRecord::Base
   #validates_presence_of :parent_id, :if => Proc.new {root.count > 0}, :message => "section is required"
 
   # Disabling '/' in section name for interoperability with FCKEditor file browser
-  validates_format_of :name, :with => /\A[^\/]*\Z/, :message => "cannot contain '/'"
+  validates_format_of :name, :with => /\A[^\/]*\Z/, :message => I18n.t("models.section.name_format_error_message")
 
   validate :path_not_reserved
 
@@ -140,7 +140,7 @@ class Section < ActiveRecord::Base
 
   def path_not_reserved
     if Cms.reserved_paths.include?(path)
-      errors.add(:path, "is invalid, '#{path}' a reserved path")
+      errors.add(:path, I18n.t("models.section.path_reserved", :path => path))
     end
   end
 

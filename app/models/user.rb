@@ -6,12 +6,12 @@ class User < ActiveRecord::Base
   validates_presence_of     :login
   #validates_length_of       :login,    :within => 3..40
   validates_uniqueness_of   :login,    :case_sensitive => false
-  validates_format_of       :login,    :with => /\A\w[\w\.\-_@]+\z/, :message => "use only letters, numbers, and .-_@ please."
+  validates_format_of       :login,    :with => /\A\w[\w\.\-_@]+\z/, :message => I18n.t("models.user.login_format_error_message")
 
   validates_presence_of     :email
   #validates_length_of       :email,    :within => 6..100 #r@a.wk
   #validates_uniqueness_of   :email,    :case_sensitive => false
-  validates_format_of       :email,    :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => "should be an email address, ex. xx@xx.com"
+  validates_format_of       :email,    :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => I18n.t("models.user.email_format_error_message")
   attr_accessible :login, :email, :name, :first_name, :last_name, :password, :password_confirmation, :expires_at
 
   has_many :user_group_memberships

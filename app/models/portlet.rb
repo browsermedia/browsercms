@@ -118,9 +118,9 @@ class Portlet < ActiveRecord::Base
   end
 
   def self.columns_for_index
-    [ {:label => "Name", :method => :name, :order => "name" },
-      {:label => "Type", :method => :type_name, :order => "type" },
-      {:label => "Updated On", :method => :updated_on_string, :order => "updated_at"} ]
+    [ {:label => I18n.t("models.portlet.name_label"), :method => :name, :order => "name" },
+      {:label => I18n.t("models.portlet.type_label"), :method => :type_name, :order => "type" },
+      {:label => I18n.t("models.portlet.updated_label"), :method => :updated_on_string, :order => "updated_at"} ]
   end
   
   #----- Portlet Action Related Methods ----------------------------------------

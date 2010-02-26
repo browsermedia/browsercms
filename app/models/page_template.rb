@@ -1,7 +1,7 @@
 class PageTemplate < DynamicView
   include Templates
 
-  validates_format_of :name, :with => /\A[a-z]+[a-z0-9_]*\Z/, :message => "can only contain lowercase letters, numbers and underscores and must begin with a lowercase letter"
+  validates_format_of :name, :with => /\A[a-z]+[a-z0-9_]*\Z/, :message => I18n.t("models.page_template.name_format_error_message")
 
   def file_path
     File.join(self.class.file_path, file_name)

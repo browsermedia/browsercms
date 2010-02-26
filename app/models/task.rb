@@ -37,6 +37,9 @@ class Task < ActiveRecord::Base
   def send_email
     #Hmm... what if the assign_by or assign_to don't have email addresses?
     #For now we'll say just don't send an email and log that as a warning
+    
+    #How can assing_by or assign_to do not have email addresses?
+    #isn't it a required attribute of the user model?
     if assigned_by.email.blank?
       logger.warn "Can't send email for task because assigned by user #{assigned_by.login}:#{assigned_by.id} has no email address"
     elsif assigned_to.email.blank?
@@ -50,7 +53,7 @@ class Task < ActiveRecord::Base
       email = EmailMessage.create(
                                   :sender => assigned_by.email,
                                   :recipients => assigned_to.email,
-                                  :subject => "Page '#{page.name}' has been assigned to you",
+                                  :subject => I18n.t("models.task.subject", :page => page.name),
                                   :body => "http://#{host}#{page.path}\n\n#{comment}"
                                   )
     end
@@ -59,13 +62,13 @@ class Task < ActiveRecord::Base
   
   def assigned_by_is_able_to_edit_or_publish_content
     if assigned_by && !assigned_by.able_to_edit_or_publish_content?
-      errors.add(:assigned_by_id, "cannot assign tasks")
+      errors.add(:assigned_by_id, I18n.t("models.task.cannot_assign"))
     end
   end
 
   def assigned_to_is_able_to_edit_or_publish_content
     if assigned_to && !assigned_to.able_to_edit_or_publish_content?
-      errors.add(:assigned_to_id, "cannot be assigned tasks")
+      errors.add(:assigned_to_id, I18n.t("models.task.cannot_be_assigned"))
     end
   end
 

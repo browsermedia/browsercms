@@ -29,7 +29,32 @@ es:
       # TODO some translations pending  here
       remove_version_comment: "{{connectable}} ha sido eliminado del contenedor '{{container}}'"
       path_reserved: "no es válida, la ruta {{path}} es una ruta reservada"
-    
+    page_partial:
+      name_format_error_message: "sólo puede contener letras minúsculas, números y guiones bajos y debe comenzar con un guión bajo '_')"
+    page_template:
+      name_format_error_message: "sólo puede contener letras minúsculas, números y guiones bajos y debe comenzar una letra minúscula)"
+    portlet:
+      name_label: Nombre
+      type_label: Tipo
+      updated_label: Actualizado en
+    section:
+      name_format_error_message: "no puede contener '/'"
+      path_reserved: "es inválida, '{{path}}' es una ruta reservada"
+    tag:
+      name_label: Nombre
+      usages_label: Usos
+      updated_label: Actualizado en
+    task:
+      subject: "La página {{page}} te ha sido asignada"
+      cannot_assign: No puede asignar tareas
+      cannot_be_assigned: No se le pueden asignar tareas
+    template:
+      main_menu: Menú principal 
+    user:
+      login_format_error_message: "utiliza sólo letras, números y .-_@ por favor."
+      email_format_error_message: "debe ser una dirección de correo, ej. xx@xx.com"
+      
+      
     
   activerecord:
     errors:
