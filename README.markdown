@@ -26,23 +26,12 @@ To choose a locale for a production site, you need to edit the file config/initi
 explicitly set the default locale.
 
     I18n.default_locale = :es
-    
-Copy the 12 images located at doc/design/es to public/images/cms replacing the original ones,
-to see the Spanish version of the butons or create your own (see below). The included Spanish images 
-are a bit sketchy but I'll do better later on.
-
-**NOTE:** These images will not change when you alternate between locales on development. I might fix this
-in the future but for now the purpose is to run the CMS just in one language other than English.
-Quickly swapping locales is just meant for development for the time being.
-
 
 ## Images
 
 The main toolbar has 4 links that use images: My Dashboard, Sitemap, Content  Library and Administration.
 To translate these, you need to create 12 images. 3 for each link (over, up and active states)
 You can use a .psd file that was added to the repository a while back. It's on doc/design. 
-
-Once you have your images, just replace the original ones.
 
 1. public/images/cms/nav_admin.gif
 2. public/images/cms/nav_admin_h.gif
