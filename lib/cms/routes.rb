@@ -123,6 +123,8 @@ module Cms::Routes
         cms.content_blocks :content_block
       end
       
+      cms.locale "/locale", :controller => "locales" if Rails.env.development?
+      
     end
 
     if PageRoute.table_exists?
@@ -130,6 +132,8 @@ module Cms::Routes
         send((r.route_name || 'connect').to_sym, r.pattern, r.options_map)
       end
     end
+    
+    connect "/jslocales", :controller => "cms/locales", :action => "jslocales"
 
     connect '*path', :controller => 'cms/content', :action => 'show'    
   end

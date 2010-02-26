@@ -1,0 +1,7 @@
+en:
+  js:
+    confirm_delete_section: Are you sure you want to delete this section?
+    view_page: View Page
+    edit_page: Edit Page
+    confirm_delete_page: Are you sure you want to delete this page?
+    confirm_delete_link: Are you sure you want to delete this link?

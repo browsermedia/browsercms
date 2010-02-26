@@ -10,7 +10,7 @@
       <ul id="userlinks">
         <% if Rails.env.development? %>
           <% I18n.available_locales.each do |locale| %>
-            <li><%=link_to locale.to_s, locale_path(:locale => locale) %></li>
+            <li><%=link_to locale.to_s, cms_locale_path(:locale => locale) %></li>
           <% end %>
         <% end %>
 	<li id="user_info"><a href="<%= current_user.able_to?(:administrate) ? edit_cms_user_path(current_user) : cms_user_path(current_user) %>" target="_top"><%= image_tag "cms/icons/user.png" %> <%= current_user.full_name %></a></li>

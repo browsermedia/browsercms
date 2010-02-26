@@ -59,11 +59,9 @@ Once you have your images, just replace the original ones.
 
 ## Pending transaltions
 
-This is a work in progress. Most of the view files have been prepared for translation (and 
-translated to spanish) but there are a few still pending. Some work still needs to be done, 
-particularly on:
-
-* Javascripts (there are at least a couple of functions that manipulate toolbar buttons)
+This is a work in progress. Most of the application has been prepared for translation (and 
+translated to spanish) but there is still some work to be done, particularly when loading
+seed and sample data.
 
 ## Creating your own locale files
 

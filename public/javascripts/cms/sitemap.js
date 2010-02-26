@@ -198,7 +198,7 @@ jQuery(function($){
 		}  
 	}else if($(node).hasClass('page')) {
 	    $('#edit-button')
-	        .html('<span>View Page</span>')
+	        .html('<span>'+BCMSLocales.view_page+'</span>')
 		.removeClass('disabled')
 		.attr('href','/cms/pages/'+id)
 		.unbind('click')
@@ -239,7 +239,7 @@ jQuery(function($){
             .attr('href','/cms/sections/'+id+'.json')
             .unbind('click')
             .click(function(){
-		if(confirm('Are you sure you want to delete this section?')) {
+		if(confirm(BCMSLocales.confirm_delete_section)) {
 		    var params = { _method: "DELETE" }
 		    if($.cms.authenticity_token && $.cms.authenticity_token != '') {
 			params['authenticity_token'] = $.cms.authenticity_token
@@ -264,7 +264,7 @@ jQuery(function($){
     
     var enableButtonsForPage = function(id) {
 	$('#edit-button')
-	.html('<span>Edit Pages</span>')
+	.html('<span>'+BCMSLocales.edit_page+'</span>')
 	.removeClass('disabled')
 	.attr('href','/cms/pages/'+id)
 	.unbind('click')
@@ -281,7 +281,7 @@ jQuery(function($){
 	.attr('href','/cms/pages/'+id+'.json')
 	.unbind('click')
 	.click(function(){
-            if(confirm('Are you sure you want to delete this page?')) {
+            if(confirm(BCMSLocales.confirm_delete_page)) {
 		var params = { _method: "DELETE" }
 		if($.cms.authenticity_token && $.cms.authenticity_token != '') {
 		    params['authenticity_token'] = $.cms.authenticity_token
@@ -312,7 +312,7 @@ jQuery(function($){
 	.attr('href','/cms/links/'+id+'.json')
 	.unbind('click')
 	.click(function(){
-            if(confirm('Are you sure you want to delete this link?')) {
+            if(confirm(BCMSLocales.confirm_delete_link)) {
 		var params = { _method: "DELETE" }
 		if($.cms.authenticity_token && $.cms.authenticity_token != '') {
 		    params['authenticity_token'] = $.cms.authenticity_token
