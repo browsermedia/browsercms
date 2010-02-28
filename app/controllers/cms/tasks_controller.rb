@@ -38,6 +38,9 @@ class Cms::TasksController < Cms::BaseController
       end
       redirect_to @task.page.path
     end
+  rescue ActiveRecord::RecordNotFound
+    flash[:error] = "No tasks were marked for completion"
+    redirect_to cms_dashboard_path
   end
   
   private
