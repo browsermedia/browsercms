@@ -44,7 +44,7 @@ This guide covers how to create and organize page templates which govern the des
 
 h4. "Building Modules":building_modules.html
 
-This guide covers how to create new modules to be packaged and shared with other BrowserCMS developers. (Incomplete)
+This guide covers how to create new modules to be packaged and shared with other BrowserCMS developers. (In Progress)
 
 h4. "Building on the Edge":build_it_yourself.html
 
