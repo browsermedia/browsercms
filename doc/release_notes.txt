@@ -6,7 +6,7 @@ v3.0.6
 2. You could not publish a changed link without modifying it in some way, and now you can. (LIGHTHOUSE #256)
 3. You can now search for portlets and tags by name in the Content Library. (LIGHTHOUSE #257 and #258)
 4. After creating or updating a category or tag via the Content Library, you are now redirected to the list page (as with Category Types) instead of being shown a blank page. (LIGHTHOUSE #259)
-5. The user list in the Admin area now shows a user's login (instead of nothing) if the user does not ahve a name. (LIGHTHOUSE #260)
+5. The user list in the Admin area now shows a user's login (instead of nothing) if the user does not have a name. (LIGHTHOUSE #260)
 
 ==========
 

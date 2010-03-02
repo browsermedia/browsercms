@@ -12,7 +12,7 @@ h4. "Getting Started with BrowserCMS":getting_started.html
 
 Everything you need to know to install BrowserCMS and create your first website.
 
-h3. Interface Guide
+h3. Using BrowserCMS
 
 h4. "Interface Guide":user_guide.html
 
@@ -30,11 +30,7 @@ How to configure Apache and Passenger to work with BrowserCMS in production mode
 
 h3. Developing on BrowserCMS
 
-h4. "Customizing BrowserCMS":customizing_browsercms_.html
-
-Basic overview of the ways to modify and extend how BrowserCMS works.
-
-h4. "Content Blocks":content_blocks_.html
+h4. "Content Blocks":content_blocks.html
 
 This guide covers how to create, customize and use Content Blocks.
 
@@ -42,7 +38,7 @@ h4. "Portlets":portlets.html
 
 This guide covers how to create and customize Portlets.
 
-h4. "Building Templates":building_templates_.html
+h4. "Building Templates":building_templates.html
 
 This guide covers how to create and organize page templates which govern the design/theme of a website.
 
