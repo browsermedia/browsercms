@@ -1,7 +1,8 @@
 class ForgotPasswordPortlet < Portlet
   require 'digest/sha1'  
 
-  
+  enable_template_editor true
+
   def render
     flash[:forgot_password] = {}
 
