@@ -8,7 +8,6 @@ anything special.
     
     git clone git@github.com:alce/browsercms.git 
     cd browsercms
-    # make sure you are on the lit branch
     # configure database.yml
     rake db:create
     rake db:migrate

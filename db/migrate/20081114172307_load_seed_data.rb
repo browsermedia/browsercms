@@ -6,7 +6,7 @@ class LoadSeedData < ActiveRecord::Migration
     else
       pwd = (0..8).inject(""){|s,i| s << (('a'..'z').to_a + ('A'..'Z').to_a + ('0'..'9').to_a).rand}
     end
-    User.current = create_user(:cmsadmin, :login => "cmsadmin", :first_name => "CMS", :last_name => "Administrator", :email => "cmsadmin@example.com", :password => pwd, :password_confirmation => pwd)
+    User.current = create_user(:cmsadmin, :login => "cmsadmin", :first_name => I18n.t("seed.first_name"), :last_name => I18n.t("seed.last_name"), :email => "cmsadmin@example.com", :password => pwd, :password_confirmation => pwd)
 
     create_permission(:administrate, :name => "administrate", :full_name => I18n.t("seed.administrate_full_name") , :description => I18n.t("seed.administrate_description"))
     create_permission(:edit_content, :name => "edit_content", :full_name => I18n.t("seed.edit_full_name") , :description => I18n.t("seed.edit_description"))
