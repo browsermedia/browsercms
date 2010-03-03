@@ -38,9 +38,9 @@ CODE
 require File.join(template_root, '..', 'app', 'models', 'templates.rb')
 file 'app/views/layouts/templates/default.html.erb', Templates.default_body
 
-if Gem.win_platform?
-  puts "        rake  db:migrate"
-  `rake.cmd db:migrate`
-else
-  rake "db:migrate"
-end
+# if Gem.win_platform?
+#   puts "        rake  db:migrate"
+#   `rake.cmd db:migrate`
+# else
+#   rake "db:migrate"
+# end

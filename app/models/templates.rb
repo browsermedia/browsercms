@@ -18,7 +18,7 @@ module Templates
     <%= cms_toolbar %>
     <div id="wrapper" style="width: 700px; margin: 0 auto; text-align: left; padding: 30px">
       Breadcrumbs: <%= render_breadcrumbs %>
-      #{I18n.t("models.template.main_menu")}: <%= render_menu %>
+      Menu: <%= render_menu %>
       <h1><%= page_title %></h1>
       <%= container :main %>
     </div>
