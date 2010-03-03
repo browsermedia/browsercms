@@ -14,8 +14,8 @@ begin
   Jeweler::Tasks.new do |gem|
     gem.name = "browsercms"
     gem.version = Cms::VERSION
-    gem.summary = %Q{BrowserCMS is a general purpose, open source Web Content Management System (CMS), written in Ruby on Rails.}
-    gem.description = %Q{Web Content Management in Rails.}
+    gem.summary = %Q{BrowserCMS is a general purpose, open source Web Content Management System (CMS) written in Ruby on Rails. Designed for web developers who want to create great looking websites while using standard Rails tools for customizing it. }
+    gem.description = %Q{General purpose Web Content Management in Rails.}
     gem.email = "github@browsermedia.com"
     gem.homepage = "http://www.browsercms.org"
     gem.authors = ["BrowserMedia"]
