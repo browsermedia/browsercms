@@ -1,14 +1,16 @@
 # Remove the file on both *unix and Windows
 if Gem.win_platform?
   run "del public\\index.html"
+  run "del config\\locales\\en.yml"
 else
   run "rm public/index.html"
+  run "rm config/locales/en.yml"
 end
 
 # Loads the version, so we can explicitly set in the generated cms project.
 template_root = File.dirname(File.expand_path(template))
 require File.join(template_root, '..', 'lib', 'cms', 'version.rb')
-gem "browsercms", :version=>Cms::VERSION
+gem "browsercmsi", :lib => "browsercms", :version=>Cms::VERSION
 
 generate :jdbc if defined?(JRUBY_VERSION)
 
@@ -27,6 +29,10 @@ environment 'config.action_view.cache_template_loading = false', :env => "produc
 environment 'config.action_controller.page_cache_directory = RAILS_ROOT + "/public/cache/"', :env => "production"
 initializer 'browsercms.rb', <<-CODE
 Cms.attachment_file_permission = 0640
+CODE
+initializer 'i18n.rb', <<-CODE
+I18n.default_locale = :en
+I18n.load_path << Dir[File.join(RAILS_ROOT, 'config', 'locales', '**', '*.{yml}')] 
 CODE
 
 require File.join(template_root, '..', 'app', 'models', 'templates.rb')

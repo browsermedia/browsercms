@@ -3,4 +3,4 @@
 ##
 # Just a shorter version of 'browsercms' command.
 
-load File.join(File.dirname(__FILE__), 'browsercms')
+load File.join(File.dirname(__FILE__), 'browsercmsi')

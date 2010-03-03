@@ -12,7 +12,7 @@ ARGV << "-h" if ARGV.empty?
 # Using optsparse primarily for help messages, since most options just get passed directly to rails.
 options = {}
 ARGV.clone.options do |opts|
-  opts.banner =    "Usage: browsercms /path/to/your/cms/project [options]"
+  opts.banner =    "Usage: browsercmsi /path/to/your/cms/project [options]"
 
   # While Rails supports more databases, BrowserCMS has really only been tested against the following:
   opts.on("-d", "--database=name", String, "Preconfigure for selected database (options: mysql/postgresql/sqlite3)", "Default: sqlite3")
@@ -39,18 +39,18 @@ ARGV.clone.options do |opts|
 
   opts.separator(" ")
   opts.separator("Description:")
-  opts.separator("    The 'browsercms' command creates a new BrowserCMS application with a default directory structure ")
+  opts.separator("    The 'browsercmsi' command creates a new BrowserCMS application with a default directory structure ")
   opts.separator("    and configuration at the path you specify. It will create and migrate the database with the schema")
   opts.separator("    and seed data.")
   opts.separator(" ")
   opts.separator("Example:")
-  opts.separator("    browsercms ~/projects/website_name")
+  opts.separator("    browsercmsi ~/projects/website_name")
   opts.separator("    This generates a blank BrowserCMS project. Suitable for starting a new website project.")
   opts.separator(" ")
-  opts.separator("    browsercms website_name -m demo")
+  opts.separator("    browsercmsi website_name -m demo")
   opts.separator("    Generates a BrowserCMS application with a sample demo website. Suitable for learning BrowserCMS.")
   opts.separator(" ")
-  opts.separator("    browsercms bcms_my_module -m module")
+  opts.separator("    browsercmsi bcms_my_module -m module")
   opts.separator("    Generates a BrowserCMS module. Used to create code that can be shared between BrowserCMS projects.")
   opts.separator("    (Note: Module name MUST start with 'bcms_'.)")
 

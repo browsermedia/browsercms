@@ -12,17 +12,18 @@ require File.dirname(__FILE__) + "/lib/cms/version.rb"
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "browsercms"
+    gem.name = "browsercmsi"
     gem.version = Cms::VERSION
     gem.summary = %Q{BrowserCMS is a general purpose, open source Web Content Management System (CMS), written in Ruby on Rails.}
     gem.description = %Q{Web Content Management in Rails.}
     gem.email = "github@browsermedia.com"
     gem.homepage = "http://www.browsercms.org"
     gem.authors = ["BrowserMedia"]
-    gem.rubyforge_project = 'browsercms'
-    gem.executables = ['browsercms', 'bcms']
+    # gem.rubyforge_project = 'browsercms'
+    gem.executables = ['browsercmsi', 'bcmsi']
     gem.files = Dir["rails/*.rb"]
-    gem.files += Dir["browsercms.gemspec"]
+    gem.files += Dir["browsercmsi.gemspec"]
+    gem.files += Dir["config/locales/**/*"]
     gem.files += Dir["doc/app/**/*"]
     gem.files += Dir["doc/guides/html/**/*"]
     gem.files += Dir["app/**/*"]
