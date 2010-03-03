@@ -31,4 +31,12 @@ class CategoryType < ActiveRecord::Base
     categories.count.zero? ? nil : I18n.t("models.category_type.cannot_be_deleted", :count => categories.count)
   end
   
+  def self.display_name
+    I18n.t("models.category_type.display_name")
+  end
+  
+  def self.display_name_plural
+     I18n.t("models.category_type.display_name_plural")
+  end
+  
 end

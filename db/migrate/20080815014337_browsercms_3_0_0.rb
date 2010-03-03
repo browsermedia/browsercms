@@ -40,7 +40,7 @@ class Browsercms300 < ActiveRecord::Migration
       t.string :name
       t.timestamps
     end
-    ContentTypeGroup.create!(:name => "Core")
+    ContentTypeGroup.create!(:name => I18n.t("bootstrap.core"))
 
     create_table :content_types do |t|
       t.string :name
@@ -53,7 +53,7 @@ class Browsercms300 < ActiveRecord::Migration
       t.string :name
       t.timestamps
     end
-    ContentType.create!(:name => "CategoryType", :group_name => "Categorization")
+    ContentType.create!(:name => "CategoryType", :group_name => I18n.t("bootstrap.categorization"))
 
     create_table :categories do |t|
       t.belongs_to :category_type
@@ -61,7 +61,7 @@ class Browsercms300 < ActiveRecord::Migration
       t.string :name
       t.timestamps
     end
-    ContentType.create!(:name => "Category", :group_name => "Categorization")
+    ContentType.create!(:name => "Category", :group_name => I18n.t("bootstrap.categorization"))
 
     create_table :connectors do |t|
       t.integer :page_id
@@ -78,7 +78,7 @@ class Browsercms300 < ActiveRecord::Migration
       t.string :name
       t.string :content, :limit => 64.kilobytes + 1
     end
-    ContentType.create!(:name => "HtmlBlock", :group_name => "Core", :priority => 1)
+    ContentType.create!(:name => "HtmlBlock", :group_name => I18n.t("bootstrap.core"), :priority => 1)
 
     create_table :sections do |t|
       t.string :name
@@ -101,7 +101,7 @@ class Browsercms300 < ActiveRecord::Migration
       t.string :name
       t.text :value
     end
-    ContentType.create!(:name => "Portlet", :group_name => "Core", :priority => 1)
+    ContentType.create!(:name => "Portlet", :group_name => I18n.t("bootstrap.core"), :priority => 1)
 
     create_table :redirects do |t|
       t.string :from_path
@@ -124,8 +124,8 @@ class Browsercms300 < ActiveRecord::Migration
       t.integer :attachment_id
       t.integer :attachment_version
     end
-    ContentType.create!(:name => "FileBlock", :group_name => "Core")
-    ContentType.create!(:name => "ImageBlock", :group_name => "Core")
+    ContentType.create!(:name => "FileBlock", :group_name => I18n.t("bootstrap.core"))
+    ContentType.create!(:name => "ImageBlock", :group_name => I18n.t("bootstrap.core"))
 
     create_table :group_types do |t|
       t.string :name
@@ -190,7 +190,7 @@ class Browsercms300 < ActiveRecord::Migration
       t.string :name
       t.timestamps
     end
-    ContentType.create!(:name => "Tag", :group_name => "Categorization")
+    ContentType.create!(:name => "Tag", :group_name => I18n.t("bootstrap.categorization"))
 
     create_table :taggings do |t|
       t.integer :tag_id
@@ -256,7 +256,7 @@ class Browsercms300 < ActiveRecord::Migration
     drop_table :groups
     drop_table :group_types
     drop_versioned_table :file_blocks
-    drop_table :attachments
+    drop_versioned_table :attachments
     drop_table :redirects
     drop_table :portlet_attributes
     drop_table :portlets

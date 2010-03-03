@@ -32,9 +32,18 @@ class Category < ActiveRecord::Base
   def category_type_name
     category_type ? category_type.name : nil
   end
+  
   def self.columns_for_index
     [ {:label => I18n.t("models.category.name_label"), :method => :name, :order => "categories.name" },
       {:label => I18n.t("models.category.type_label"), :method => :category_type_name, :order => "category_types.name" },
       {:label => I18n.t("models.category.updated_label"), :method => :updated_on_string, :order => "categories.updated_at"}  ]
+  end
+  
+  def self.display_name
+    I18n.t("models.category.display_name")
+  end
+  
+  def self.display_name_plural
+    I18n.t("models.category.display_name_plural")
   end
 end

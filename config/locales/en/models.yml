@@ -6,7 +6,11 @@ en:
       name_label: Name
       type_label: Type
       updated_label: Updated On
+      display_name: Category
+      display_name_plural: Categories
     category_type:
+      display_name: Category Type
+      display_name_plural: Category Types
       cannot_be_deleted: 
         one: "This cannot be deleted because it is in use in 1 category"
         other: "This cannot be deleted because it is in use in {{count}} categories"

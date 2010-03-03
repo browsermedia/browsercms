@@ -6,7 +6,11 @@ es:
       name_label: Nombre
       type_label: Tipo
       updated_label: Actualizado en
+      display_name: Subcategoría
+      display_name_plural: Subcategorías
     category_type:
+      display_name: Categoría
+      display_name_plural: Categorías
       cannot_be_deleted: 
         one: "Este tipo no puede ser eliminado porque está en uso en 1 categoría"
         other: "Este tipo no puede ser eliminado porque está en uso en {{count}} categorías"
@@ -66,9 +70,9 @@ es:
       category: Categoría
       category_type: Tipo de Categoría
       dynamic_view: Vista Dinámica
-      file_block: Archivo
+      file_block: Bloque de Archivo
       html_block: Bloque de Texto
-      image_lock: Imagen
+      image_lock: Bloque de Imagen
       page_partial: Página Parcial
       pgae_route: Ruta de Página
     attributes:
