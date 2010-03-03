@@ -45,17 +45,7 @@ rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
 end
 
-# These are new tasks
-begin
-  require 'rake/contrib/sshpublisher'
-  namespace :rubyforge do
+# BrowserCMS gem will only be released to Gemcutter/rubygems. No longer going to RubyForge.
+Jeweler::GemcutterTasks.new
 
-    desc "Release gem to RubyForge"
-    task :release => ["rubyforge:release:gem"]
-
-
-  end
-rescue LoadError
-  puts "Rake SshDirPublisher is unavailable or your rubyforge environment is not configured."
-end
 

@@ -7,6 +7,9 @@ namespace :test do
   Rake::Task['test:all'].comment = "Run all tests at once"
 end
 
+# When Jeweler builds the gem, make sure the guides are also rebuilt.
+task :build => ['cms:guides']
+
 namespace :cms do
   
   desc "Generate guides for the CMS"
@@ -34,17 +37,5 @@ namespace :cms do
 
     CmsGuides::Generator.new.generate
 
-  end    
-
-  desc "Rebuild the browsercms gem locally and install it, Useful for testing releases."
-  task :gem => ["gemspec", :build, :install]
-
-  task :install do
-    puts "installing..."
-    if RUBY_PLATFORM =~ /mswin32/
-      system("cmd /c gem install pkg/browsercms-3.1.0")
-    else
-      sh("sudo gem install pkg/browsercms-3.1.0")
-    end
   end
 end
