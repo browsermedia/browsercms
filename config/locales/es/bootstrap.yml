@@ -1,0 +1,29 @@
+es:
+  bootstrap:
+    core: BCMS 
+    categorization: Categorización 
+  seed: 
+    first_name: Administrador 
+    last_name: CMS 
+    administrate_full_name: Adbinistrar CMS 
+    administrate_description: "Permite a usuarios administrar el CMS, incluyendo agregar usuarios y grupos" 
+    edit_full_name: Editar Contenido 
+    edit_description: "Permite a los usuarios agregar, editar y eliminar páginas y bloques. Pueden guardar (pero no publicar) y asignar páginas y bloques." 
+    publish_full_name: Publicar Contenido 
+    publish_description: "Permite a los usuarios guardor y publicar, ocultar y archivar páginas y bloques." 
+    guest: Visitante 
+    registered_public_user: Usuario público registrado 
+    cms_user: Usuario del CMS 
+    cms_admin: Administradores del CMS 
+    content_editors: Editores de contenido 
+    default: Predeterminado 
+    my_site: Mi Sitio 
+    system: Sistema 
+    home: Inicio 
+    page_not_found: Página No Encontrada 
+    access_denied: Acceso Denegado 
+    server_error: Error en el Servidor 
+    page_not_found_content: La página que estás tratando de accesar no existe en el servidor. 
+    access_denied_content: Has tratado de accesar un recurso o página para el que no cuentas autorización. 
+    server_error_content: El servidor encontró un problema y no fue posible procesar tu solicitud. 
+      
