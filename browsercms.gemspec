@@ -10,7 +10,7 @@ Gem::Specification.new do |s|
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["BrowserMedia"]
   s.date = %q{2010-03-03}
-  s.description = %q{General purpose Web Content Management in Rails.}
+  s.description = %q{BrowserCMS is a general purpose, open source Web Content Management System (CMS) written in Ruby on Rails. Designed for web developers who want to create great looking websites while using standard Rails tools for customizing it.}
   s.email = %q{github@browsermedia.com}
   s.executables = ["browsercms", "bcms"]
   s.extra_rdoc_files = [
