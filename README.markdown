@@ -1,57 +1,51 @@
-# BrowserCMS: Humane Content Management for Rails
+# BrowserCMSI: Humane Content Management for Rails
 
-This is a fork to extract UI strings to make it possible to use BrowserCMS in languages other than English.
+This is a fork to extract UI strings and make it possible to use BrowserCMS in languages other than English.
 I am using the built in I18n module with the simple backend, so there is no need to install or do
 anything special. 
 
-## Try it out
+## Installation
     
-    git clone git@github.com:alce/browsercms.git 
-    cd browsercms
-    # configure database.yml
-    rake db:create
-    rake db:migrate
-    rake db:load_demo_data
-    script/server
+    gem install browsercmsi
     
-If you run the above commands you should see no difference in BrowserCMS's UI (except for a couple of new
-buttons at the top of the toolbar). If you do, then you found a bug!. 
+## Creating a new project
 
-You can switch between the available locales on your installation by clicking on 
-the locale links at the top of the toolbar. These links are only for development purposes and will not be present 
-on a production site.
+* run bcmsi my_project
+* edit the file config/initializers/i18n.rb and set the default locale (at the moment only English and Spanish are available) 
+* run rake db:migrate
+* start your server
 
-To choose a locale for a production site, you need to edit the file config/initializers/i18n.rb and 
-explicitly set the default locale.
+## Translating BrowserCMS
 
-    I18n.default_locale = :es
+If your are not already familiar with Rails Internationalization API, it might be a good idea for you
+to take a quick look at http://guides.rubyonrails.org/i18n.html 
 
-## Images
+To translate BrowserCMS' UI to a new language you need to create your new locale files and 12 images
+for the main toolbar. 
 
-The main toolbar has 4 links that use images: My Dashboard, Sitemap, Content  Library and Administration.
-To translate these, you need to create 12 images. 3 for each link (over, up and active states)
-You can use a .psd file that was added to the repository a while back. It's on doc/design. 
+### Creating locale files
 
-1. public/images/cms/nav_admin.gif
-2. public/images/cms/nav_admin_h.gif
-3. public/images/cms/nav_admin_on.gif
-4. public/images/cms/nav_content_library.gif
-5. public/images/cms/nav_content_library_h.gif
-6. public/images/cms/nav_content_library_on.gif
-7. public/images/cms/nav_dash.gif
-8. public/images/cms/nav_dash_h.gif
-9. public/images/cms/nav_dash_on.gif
-10. public/images/cms/nav_sitemap.gif
-11. public/images/cms/nav_sitemap_on.gif
-12. public/images/cms/nav_sitemap_h.gif
+* Create a new directory under config/locales/bcms and name it after the locale you intend to use.
+  For example, if you are going to translate BCMS to French, you would create a directory named fr.
+* Copy over all the files from one of the available locales to your newly created locale directory and change
+  the locale key.
+* Restart your server and start translating.
 
-## Pending transaltions
+**Note about locale keys**  Although neither Rails or BrowserCMSI really care which locale keys you use,
+if you use the  ISO 639-1 code for your language, BrowserCMSI will set CKEditor locale automatically for you. If you
+use non-standard locale keys, CKEditor will fallback to English. 
 
-This is a work in progress. Most of the application has been prepared for translation (and 
-translated to spanish) but there is still some work to be done, particularly when loading
-seed and sample data.
+### Toolbar images
 
-## Creating your own locale files
+BCMS uses 4 sets of images for the links in the main toolbar: My Dashboard, Sitemap, Content Library and Administration.
+You need to create one image for the up, over and active states of each link. You can use a .psd file
+located in doc/design on this repository.
+
+Once you have your images, you need to place them in a new directory under public/images/cms/locales. Name
+this directory exactly the same as your locale files directory. (fr to continue with the french example).
+
+
+## Locale files organization
 
 ## Contact
 Juan Alvarez
