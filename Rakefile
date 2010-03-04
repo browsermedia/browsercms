@@ -15,7 +15,7 @@ begin
     gem.name = "browsercmsi"
     gem.version = Cms::VERSION
     gem.summary = %Q{BrowserCMSI adds internationalization to BrowserMedia's BrowserCMS}
-    gem.description = %Q{BrowserCMS is a general purpose, open source Web Content Management System (CMS) written in Ruby on Rails. Designed for web developers who want to create great looking websites while using standard Rails tools for customizing it.}
+    gem.description = %Q{BrowserCMSI adds internationalization to BrowserMedia's BrowserCMS}
     gem.email = "alce@mac.com"
     gem.authors = ["Juan Alvarez"]
     gem.executables = ['browsercmsi', 'bcmsi']

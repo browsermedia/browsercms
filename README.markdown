@@ -64,13 +64,13 @@ You'll need to run the migrations again to see these changes.
 ## Locale files organization
 
 There is really no 'correct' way to organize the locale files. As far as the Rails i18n API is
-concerned, you can place all translation strings in a single file so you can move them around
-as you see fit as long as the data structure represented in YAML files does not change.
+concerned, you can place all translation strings in a single file, so you can move them around
+as you see fit as long as the data structure represented in YAML does not change.
 
-When organizing the locale files (and the Hash structure) I tried to find a balance between
+When organizing the locale files (and the hash structure) I tried to find a balance between
 having a logical, easy to follow structure and not having insanely long key paths.
 
-Locale files are organized in a way that 'mostly' resembles BrowserCMS's file structure so it should
+Locale files are organized in a way that 'mostly' resembles BrowserCMS' file structure so it should
 be very easy to follow what goes where. The bulk of the translation work is done in views
 and layouts.
 
@@ -85,7 +85,7 @@ Here's a brief description of the files:
 * **models.yml** contains standard ActiveRecord model, attribute and error messages translation strings 
   plus some custom BCMS' instance and class methods -> app/models/*
 * **portlets.yml** contains translation strings for BCMS' bulit in portlets -> app/portlets/*
-* views/ contains translation strings for BCMS' views -> app/views/**/*
+* **views/** contains translation strings for BCMS' views -> app/views/\*\*/*
 
 ## Versioning
 
