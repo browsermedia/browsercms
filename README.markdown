@@ -92,12 +92,6 @@ Here's a brief description of the files:
 BrowserCMSI's only concern is to localize BrowserCMS' UI. It does not add, remove or modify 
 BrowserCMS's core features in any way. As such, BrowserCMSI's versioning mirrors BrowserCMS'.
 
-When there's need to release a new gem version of browsercmsi (bugfixes mostly I hope) I'll just
-use another digit on the tiny version. For example, at the time of this writing (march 4 2010),
-browsercms' latest gem version is 3.1.0, browsercmsi latest gem version is also 3.1.0. If there is
-need to make a bugfix release of browsercmsi, the gem version will be 3.1.01, 3.1.02 and so on.
-
-
 
 ## Contact
 Juan Alvarez
