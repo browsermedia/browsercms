@@ -17,8 +17,8 @@ anything special.
 
 ## Translating BrowserCMS
 
-If your are not already familiar with Rails Internationalization API, it might be a good idea for you
-to take a quick look at http://guides.rubyonrails.org/i18n.html 
+If your are not already familiar with the [Rails Internationalization API](http://guides.rubyonrails.org/i18n.html), 
+it might be a good idea for you to take a quick look at it first.
 
 To translate BrowserCMS' UI to a new language you need to create your new locale files and 12 images
 for the main toolbar. 
@@ -61,8 +61,43 @@ You'll need to run the migrations again to see these changes.
     rake db:migrate
 
 
-
 ## Locale files organization
+
+There is really no 'correct' way to organize the locale files. As far as the Rails i18n API is
+concerned, you can place all translation strings in a single file so you can move them around
+as you see fit as long as the data structure represented in YAML files does not change.
+
+When organizing the locale files (and the Hash structure) I tried to find a balance between
+having a logical, easy to follow structure and not having insanely long key paths.
+
+Locale files are organized in a way that 'mostly' resembles BrowserCMS's file structure so it should
+be very easy to follow what goes where. The bulk of the translation work is done in views
+and layouts.
+
+Here's a brief description of the files:
+
+* **behaviors.yml** contains translation strings for a few BCMS' modules that add behaviors to
+  models. -> lib/cms/behaviors/*
+* **bootstrap.yml**  contains translation string for BCMS's migrations.  -> db/migrate/*
+* **controllers.yml** contains flash messages translation strings -> app/controllers/cms/*
+* **helpers.yml** contains translation strings for helpers. -> app/helpers/cms/*
+* **js.yml** contains translations strings for javascript functions. -> public/javascripts/cms/sitemap.js
+* **models.yml** contains standard ActiveRecord model, attribute and error messages translation strings 
+  plus some custom BCMS' instance and class methods -> app/models/*
+* **portlets.yml** contains translation strings for BCMS' bulit in portlets -> app/portlets/*
+* views/ contains translation strings for BCMS' views -> app/views/**/*
+
+## Versioning
+
+BrowserCMSI's only concern is to localize BrowserCMS' UI. It does not add, remove or modify 
+BrowserCMS's core features in any way. As such, BrowserCMSI's versioning mirrors BrowserCMS'.
+
+When there's need to release a new gem version of browsercmsi (bugfixes mostly I hope) I'll just
+use another digit on the tiny version. For example, at the time of this writing (march 4 2010),
+browsercms' latest gem version is 3.1.0, browsercmsi latest gem version is also 3.1.0. If there is
+need to make a bugfix release of browsercmsi, the gem version will be 3.1.01, 3.1.02 and so on.
+
+
 
 ## Contact
 Juan Alvarez
