@@ -8,14 +8,10 @@ Gem::Specification.new do |s|
   s.version = "3.1.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["BrowserMedia"]
-  s.date = %q{2010-03-03}
-<<<<<<< HEAD:browsercmsi.gemspec
-  s.description = %q{Web Content Management in Rails.}
-=======
+  s.authors = ["Juan Alvarez"]
+  s.date = %q{2010-03-04}
   s.description = %q{BrowserCMS is a general purpose, open source Web Content Management System (CMS) written in Ruby on Rails. Designed for web developers who want to create great looking websites while using standard Rails tools for customizing it.}
->>>>>>> 82b34d0755c9a81835359df25e8d102fa54aefa2:browsercms.gemspec
-  s.email = %q{github@browsermedia.com}
+  s.email = %q{alce@mac.com}
   s.executables = ["browsercmsi", "bcmsi"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
@@ -1439,17 +1435,10 @@ Gem::Specification.new do |s|
      "templates/demo.rb",
      "templates/module.rb"
   ]
-  s.homepage = %q{http://www.browsercms.org}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-<<<<<<< HEAD:browsercmsi.gemspec
   s.rubygems_version = %q{1.3.6}
-  s.summary = %q{BrowserCMS is a general purpose, open source Web Content Management System (CMS), written in Ruby on Rails.}
-=======
-  s.rubyforge_project = %q{browsercms}
-  s.rubygems_version = %q{1.3.5}
-  s.summary = %q{BrowserCMS is a general purpose, open source Web Content Management System (CMS) written in Ruby on Rails. Designed for web developers who want to create great looking websites while using standard Rails tools for customizing it.}
->>>>>>> 82b34d0755c9a81835359df25e8d102fa54aefa2:browsercms.gemspec
+  s.summary = %q{BrowserCMSI adds internationalization to BrowserMedia's BrowserCMS}
   s.test_files = [
     "test/custom_assertions.rb",
      "test/factories.rb",
