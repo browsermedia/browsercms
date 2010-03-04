@@ -31,6 +31,12 @@ for the main toolbar.
   the locale key.
 * Restart your server and start translating.
 
+You can swap between locales using the buttons at the top of the toolbar. You'll see one button for
+each locale key you have on your installation. You will not see these buttons on a production site
+since their purpose is only to let you swap locales while you are translating the UI to a new language
+during development. Not only you will not see the buttons on production but the route to swap locales
+is not even mapped. 
+
 **Note about locale keys**  Although neither Rails or BrowserCMSI really care which locale keys you use,
 if you use the  ISO 639-1 code for your language, BrowserCMSI will set CKEditor locale automatically for you. If you
 use non-standard locale keys, CKEditor will fallback to English. 
@@ -39,17 +45,28 @@ use non-standard locale keys, CKEditor will fallback to English.
 
 BCMS uses 4 sets of images for the links in the main toolbar: My Dashboard, Sitemap, Content Library and Administration.
 You need to create one image for the up, over and active states of each link. You can use a .psd file
-located in doc/design on this repository.
+located in doc/design on this repository. (Take a look at public/images/cms/locales/en and name your new images accordingly)
 
 Once you have your images, you need to place them in a new directory under public/images/cms/locales. Name
 this directory exactly the same as your locale files directory. (fr to continue with the french example).
+
+## Translating seed data
+
+When you run rake db:migrate after creating a new project, BrowserCMS seeds some data on the database.
+The locale file for these records is bootstrap.yml. Changes made to this locale file will not take
+effect when you change the locale (either with the toolbar buttons or in the initializer i18n.rb).
+You'll need to run the migrations again to see these changes.
+
+    rake db:migrate VERSION=0
+    rake db:migrate
+
 
 
 ## Locale files organization
 
 ## Contact
 Juan Alvarez
-com{{dot}}mac[[at]]alce
+alce{{at}}mac[[dot]]com
   
 
     
