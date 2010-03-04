@@ -19,22 +19,22 @@ module Cms
       module InstanceMethods
         def archive
           self.archived = true
-          self.version_comment = "Archived"
+          self.version_comment = I18n.("behaviors.archiving.archived")
           self.save
         end
         def archive!
           self.archived = true
-          self.version_comment = "Archived"          
+          self.version_comment = I18n.("behaviors.archiving.archived")        
           self.save!
         end
         def unarchive
           self.archived = false
-          self.version_comment = "Unarchived"          
+          self.version_comment = I18n.("behaviors.archiving.unarchived")          
           self.save
         end
         def unarchive!
           self.archived = false
-          self.version_comment = "Unarchived"          
+          self.version_comment = I18n.("behaviors.archiving.unarchived")          
           self.save!
         end
       end
