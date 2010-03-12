@@ -112,8 +112,7 @@ Now each instance of the RecentProducts can have its own unique template. Each t
 the 'render.html.erb' will be copied into the template attribute of the portlet and used to display the portlet. Users can
 update these views as they see fit.
 
-*Gotcha:* It's important to remember that once a portlet has a saved template, it will ignore what's in the render.html.erb. So changes made there won't
-be reflected until the portlet's template has been updated again.
+*Gotcha:* It's important to remember that once a portlet has a saved template, it will ignore what's in the render.html.erb. So changes made there won't be reflected until the portlet's template has been updated again.
 
 h4. Default Template Handlers
 
@@ -121,7 +120,7 @@ By default, templates are treated as erb views. The template editor has a drop d
 to something other than erb, modify the _form.html.erb to the following:
 
 <erb>
-<%= f.template_editor :template, :default_handler=>"builder" %>
+<%= f.cms_template_editor :template, :default_handler=>"builder" %>
 </erb>
 
 h4. Alternative handlers for non-editable templates
@@ -140,6 +139,6 @@ h4. Using HAML templates
 The default list of handlers does not include Haml. To do that, install the HAML gem and set the default_value to 'haml' like so:
 
 <erb>
-<%= f.template_editor :template, :default_handler=>"haml" %>
+<%= f.cms_template_editor :template, :default_handler=>"haml" %>
 </erb>
 
