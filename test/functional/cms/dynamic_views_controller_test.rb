@@ -21,8 +21,8 @@ class DynamicViewsControllerTest < ActionController::TestCase
     
     assert_response :success
     #log @response.body
-    assert_select "#page_template_#{@page_template.id} div", "Test (html/erb)"
-    assert_select "#page_template_#{@deleted_page_template.id} div", 
+    assert_select "#cms_page_template_#{@page_template.id} div", "Test (html/erb)"
+    assert_select "#cms_page_template_#{@deleted_page_template.id} div", 
       :text => "Deleted (html/erb)", :count => 0
   end
   

@@ -1,5 +1,4 @@
-module Cms
-class DynamicViewsController < Cms::BaseController
+class Cms::DynamicViewsController < Cms::BaseController
   
   layout 'cms/administration'
   check_permissions :administrate  
@@ -65,5 +64,4 @@ class DynamicViewsController < Cms::BaseController
       @view = dynamic_view_type.find(params[:id])
     end
   
-end
 end

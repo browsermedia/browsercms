@@ -22,7 +22,7 @@ class PagesControllerTest < ActionController::TestCase
     
     get :edit, :id => @page.id
     assert_response :success
-    assert_select "#page_name[value=?]", "V2"
+    assert_select "#cms_page_name[value=?]", "V2"
   end
 
   def test_unhide
@@ -34,7 +34,7 @@ class PagesControllerTest < ActionController::TestCase
     
     assert @page.draft.hidden?
     
-    put :update, :id => @page.id, :page => {:hidden => false}
+    put :update, :id => @page.id, :cms_page => {:hidden => false}
     assert_redirected_to @page
     
     reset(:page)

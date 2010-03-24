@@ -1,0 +1,238 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Portlets Guide</title>
+    <link rel="stylesheet" type="text/css" href="files/stylesheets/syntax.css" />
+    <script type="text/javascript" src="files/javascripts/code_highlighter.js"></script>
+    <script type="text/javascript" src="files/javascripts/highlighters.js"></script>
+    <style type="text/css">
+      body {
+        background: #FFFFFF url(images/bg.png) repeat-x scroll 0 0;
+        font-family: "Trebuchet MS", Helvetica, Verdana, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+  
+      #page {
+        margin: 0 auto;
+        text-align: left;
+        width: 1000px;
+      }
+  
+      #header {
+        height: 110px;
+      }
+  
+      div.top_cap {
+        background: transparent url(images/top_cap.png) no-repeat scroll 0 0;
+        height: 10px;
+      }    
+  
+      #contentwrap {
+        background: transparent url(images/dot.png) repeat scroll 0 0;
+        float: left;
+        width: 1000px;
+      }
+      
+      div.bottom_cap {
+        background: transparent url(images/bottom_cap.png) no-repeat scroll 0 0;
+        height: 9px;
+      }
+
+      div.top_cap_content {
+        background: transparent url(images/top_cap_content.png) no-repeat scroll 0 0;
+        height: 5px;
+      }
+  
+      #content {
+        background-color: #FFFFFF;
+        margin: 0 5px;
+        padding: 0 10px;
+      }
+  
+      div.title {
+        padding: 20px;
+      }
+  
+      div.title h1 {
+        border-bottom: 3px solid #505358;
+        color: #FFFFFF;
+        font-size: 24pt;
+        font-weight: normal;
+        line-height: 1;
+        margin: 0 0 10px;
+        padding-bottom: 10px;
+      }
+      
+      td.sidebar {
+        font-size: 8pt;
+        width: 165px;
+        padding: 5px;
+      }
+      
+      td.sidebar ol {
+        margin-left: 20px;
+        padding: 0;
+        line-height: 1.5;
+      }
+      
+      td.sidebar ol li {
+        margin: 0;
+        padding: 0;
+      }
+      
+      td.sidebar ol li ul {
+        list-style-type: none;
+        padding-left: 10px;
+      }
+      
+      td.guides {
+        font-size: 10pt;
+        width: 800px;
+        padding: 10px;
+      }
+      
+      .code_container {
+        padding: 10px;
+        background: #eee;
+        border: 1px solid #ccc;
+        overflow: auto;
+        width: 760px;
+      }
+      
+      pre, code {
+        overflow: auto;
+        white-space:pre;        
+      }
+      .note {
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:#FFF9D8 url(../images/tab_note.gif) no-repeat scroll left top;
+	border:medium none;
+	margin:0.25em 0 1.5em;
+	padding:1em 1em 0.25em 48px;
+	}
+    </style>
+  </head>
+  <body>
+    <div id="page">
+      <div id="header">
+        <a href="index.html"><img style="border:0px" src="images/browsercms_logo.png" alt="BrowserCMS"/></a>
+      </div>
+      <div id="main">
+        <div class="top_cap"></div>
+        <div id="contentwrap">
+          <div class="title">
+            <h1>Portlets Guide</h1>
+          </div>
+          <div class="top_cap_content"></div>
+          <div id="content">
+            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr>                
+                <td class="sidebar" valign="top">
+                        <div id="subCol">
+        <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+        <ol class="chapters">
+<li><a href="#creating-a-portlet">Creating A Portlet</a><ul><li><a href="#allowing-template-editing-via-the-ui">Allowing template editing via the UI</a></li><li><a href="#default-template-handlers">Default Template Handlers</a></li><li><a href="#alternative-handlers-for-non-editable-templates">Alternative handlers for non-editable templates</a></li><li><a href="#using-haml-templates">Using <span class="caps">HAML</span> templates</a></li></ul></li></ol></div>
+                </td>
+                <td class="guides">
+                  <h2>Portlets Guide</h2>
+<p>This guide covers how to use the Portlets extend the functionality of your BrowserCMS site.  The target audience for this guide is developers who are familiar with Rails. You should also read the <a href="user_guide.html">Building a Site with BrowserCMS</a> guide first as well, so you know how to create pages and put content on pages.  This guide will cover:</p>
+<ul>
+	<li>How to create custom portlets</li>
+	<li>Allowing portlets views to be editable via the UI.</li>
+</ul>
+<p>This guide is for BrowserCMS <strong>3.1</strong>. Some code shown here may not work with older versions of BrowserCMS.</p>
+                  <h3 id="creating-a-portlet">1 Creating A Portlet</h3>
+<p>Once you have created the product content block and created a few products in the content library, you need a way to
+display them on a page.  To do that, you will want to create a portlet.</p>
+<p>A portlet is a type of content block used to display dynamic data on a page (usually other content blocks). A portlet will typically perform
+some kind of database query in the render method and then render it&#8217;s view.  One difference between a portlet and
+typical content block is that each instance of a portlet can have a view template that is editable via the <span class="caps">CMS</span> admin interface.
+Let&#8217;s generate a portlet to display the most recently created products:</p>
+<div class="code_container"><code class="html">$ script/generate portlet recent_products limit:integer</code></div>
+<p>What you will see created is:</p>
+<ul>
+	<li>A portlet at <tt>app/portlets/recent_products_portlet.rb</tt></li>
+	<li>A form partial at <tt>app/views/portlets/recent_products/_form.html.erb</tt></li>
+	<li>A render template at <tt>app/views/portlets/recent_products/render.html.erb</tt></li>
+</ul>
+<p>What you don&#8217;t see created is a migration.  Portlets use the <a href="/doc/app/classes/Cms/Behaviors/DynamicAttributes.html">DynamicAttributes</a>
+behavior in order to store associated values in the database without having to create custom database tables.  What
+this means is that you can set and then store a value for any attribute for a portlet.</p>
+<p>So if you look at the form partial that was generate for this portlet, you will see this:</p>
+<div class="code_container"><code class="html">&lt;%= f.cms_text_field :name %&gt;
+&lt;%= f.cms_text_field :limit %&gt;
+&lt;%= f.cms_template_editor :template %&gt;</code></div>
+<p>Every portlet instance has to have a name and that is stored in the main <tt>portlets</tt> table, but <tt>limit</tt> is stored in the <tt>portlet_attributes</tt> table.
+You could add anything to this form, such as <tt>&lt;%= f.cms_text_field :foobar %&gt;</tt>, and whatever the user enters for <tt>foobar</tt> would get saved with the portlet.</p>
+<p>If you look at the code for the portlet, you will see:</p>
+<div class="code_container"><code class="ruby">class RecentProducts &lt; Portlet
+
+  enable_template_editor false
+
+  def render
+    # Your Code Goes Here
+  end
+    
+end</code></div>
+<p>As the comment says, you will want to fill in your application logic here.  We&#8217;re going to get the most recent products
+and use the value the user entered for limit when they filled out the form.  So edit the render method to look like:</p>
+<div class="code_container"><code class="ruby">class RecentProducts &lt; Portlet
+    
+  def render
+    @products = Product.all(:order =&gt; &quot;created_at desc&quot;, :limit =&gt; self.limit)
+  end
+    
+end</code></div>
+<p><code>self</code> in this case is the portlet instance, which is also available in the instance variable 
+<code>@portlet</code>.  
+We are setting the <code>@products</code> instance variable so that will be available in the view.  If you look at the render template, you will see this:</p>
+<div class="code_container"><code class="html">&lt;%=h @portlet.name %&gt;</code></div>
+<p>This is simply a place holder, you should override this code with how you want the portlet to display. In this case, let&#8217;s go with:</p>
+<div class="code_container"><code class="html">&lt;ul&gt;
+  &lt;% @products.each do |product| %&gt;
+    &lt;li&gt;&lt;%=h product.name %&gt;&lt;/li&gt;
+  &lt;% end %&gt;
+&lt;/ul&gt;</code></div>
+<h4 id="allowing-template-editing-via-the-ui">1.1 Allowing template editing via the UI</h4>
+<p>By default, each instance of a Portlet will render itself using the contents of it&#8217;s &#8216;render.html.erb&#8217; file, because &#8216;enable_template_editor&#8217; was marked false.
+If you look back at the form partial that was generated, you&#8217;ll see:</p>
+<div class="code_container"><code class="html">&lt;%= f.cms_template_editor :template %&gt;</code></div>
+<p>This is the editing control for the Portlet&#8217;s template, which will not appear on <span class="caps">CMS</span> UI by default. This allows you to quickly
+refine how you want the default view to look. Once you like the layout for a portlet, you can enable the editor like so:</p>
+<div class="code_container"><code class="ruby">class RecentProducts &lt; Portlet
+    enable_template_editor true
+end</code></div>
+<p>Now each instance of the RecentProducts can have its own unique template. Each time a new portlet is created, the contents of
+the &#8216;render.html.erb&#8217; will be copied into the template attribute of the portlet and used to display the portlet. Users can
+update these views as they see fit.</p>
+<p><strong>Gotcha:</strong> It&#8217;s important to remember that once a portlet has a saved template, it will ignore what&#8217;s in the render.html.erb. So changes made there won&#8217;t
+be reflected until the portlet&#8217;s template has been updated again.</p>
+<h4 id="default-template-handlers">1.2 Default Template Handlers</h4>
+<p>By default, templates are treated as erb views. The template editor has a drop down that allows users to choose other types like &#8216;builder&#8217; or &#8216;rhtml&#8217;. To set the default handler
+to something other than erb, modify the _form.html.erb to the following:</p>
+<div class="code_container"><code class="html">&lt;%= f.template_editor :template, :default_handler=&gt;&quot;builder&quot; %&gt;</code></div>
+<h4 id="alternative-handlers-for-non-editable-templates">1.3 Alternative handlers for non-editable templates</h4>
+<p>If the template_editor is disabled, you can also set the handler directly on the portlet like so:</p>
+<div class="code_container"><code class="ruby">class RecentProducts &lt; Portlet
+    enable_template_editor false
+    handler &quot;builder&quot;
+  end</code></div>
+<h4 id="using-haml-templates">1.4 Using <span class="caps">HAML</span> templates</h4>
+<p>The default list of handlers does not include Haml. To do that, install the <span class="caps">HAML</span> gem and set the default_value to &#8216;haml&#8217; like so:</p>
+<div class="code_container"><code class="html">&lt;%= f.template_editor :template, :default_handler=&gt;&quot;haml&quot; %&gt;</code></div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <br clear="all"/>
+        <div class="bottom_cap"></div>
+      </div>
+    </div>
+  </body>
+</html>
+

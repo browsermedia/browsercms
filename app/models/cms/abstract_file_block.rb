@@ -1,5 +1,4 @@
-module Cms
-class AbstractFileBlock < ActiveRecord::Base
+class Cms::AbstractFileBlock < ActiveRecord::Base
   
   set_table_name "file_blocks"
       
@@ -15,5 +14,4 @@ class AbstractFileBlock < ActiveRecord::Base
     true
   end
 
-end
 end

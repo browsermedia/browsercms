@@ -1,4 +1,2 @@
-module Cms
-class HtmlBlocksController < Cms::ContentBlockController
-end
+class Cms::HtmlBlocksController < Cms::ContentBlockController
 end

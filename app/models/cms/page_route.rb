@@ -1,5 +1,4 @@
-module Cms
-class PageRoute < ActiveRecord::Base
+class Cms::PageRoute < ActiveRecord::Base
   belongs_to :page
   has_many :conditions, :class_name => 'Cms::PageRouteCondition'
   has_many :requirements, :class_name => 'Cms::PageRouteRequirement'
@@ -56,5 +55,4 @@ class PageRoute < ActiveRecord::Base
     controller.instance_eval(code) unless code.blank?
   end
   
-end
 end

@@ -1,5 +1,4 @@
-module Cms
-class ToolbarController < Cms::BaseController
+class Cms::ToolbarController < Cms::BaseController
 
   def index
     if params[:page_toolbar] != "0"
@@ -10,5 +9,4 @@ class ToolbarController < Cms::BaseController
     @page = Page.find(params[:page_id]).as_of_version(params[:page_version])
   end  
   
-end
 end

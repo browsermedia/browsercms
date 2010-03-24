@@ -1,4 +1,2 @@
-module Cms
-class PageRouteCondition < Cms::PageRouteOption
-end
+class Cms::PageRouteCondition < Cms::PageRouteOption
 end

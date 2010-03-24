@@ -133,5 +133,32 @@ class SectionTest < ActiveSupport::TestCase
     @section = Cms::Section.new(:name => "FTW", :path => "/whatever")
     assert_valid @section
   end  
-  
+
+  def test_old_syntax_for_marking_group_sections
+    groups = Cms::Group.all(&:id)
+    assert_equal Cms::Group, groups[0].class, "This is previous"
+
+    groups = Cms::Group.all()
+    assert_equal Cms::Group, groups[0].class, "No difference between this and the previous call."
+
+    group_ids = Cms::Group.all.map(&:id)
+    assert_equal Fixnum, group_ids[0].class
+  end
+
+  def test_new_section_with_groups
+    section = Cms::Section.new(:allow_groups=>:all)
+    assert_equal Cms::Group.all, section.groups
+
+  end
+
+  def test_new_section_with_no_groups
+    s = Cms::Section.new(:allow_groups=>:none)
+    assert_equal 0, s.groups.size
+  end
+
+  def test_create_section
+    s = Cms::Section.create!(:name=>"For All", :path=>"/", :allow_groups=>:all)
+
+    assert_equal Cms::Group.count, Cms::Section.with_path("/").first.groups.size
+  end
 end

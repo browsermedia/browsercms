@@ -33,5 +33,8 @@ class PageTemplateTest < ActiveSupport::TestCase
     assert_nil Cms::PageTemplate.find_by_file_name("fail")
     assert_nil Cms::PageTemplate.find_by_file_name(nil)  
   end
-  
+
+  def test_default_body
+    assert_not_nil Cms::PageTemplate.default_body
+  end
 end

@@ -88,7 +88,7 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000615">index</a>&nbsp;&nbsp;
+      <a href="#M000663">index</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -110,27 +110,28 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000615" class="method-detail">
-        <a name="M000615"></a>
+      <div id="method-M000663" class="method-detail">
+        <a name="M000663"></a>
 
         <div class="method-heading">
-          <a href="#M000615" class="method-signature">
+          <a href="#M000663" class="method-signature">
           <span class="method-name">index</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000615-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000615-source">
+            onclick="toggleCode('M000663-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000663-source">
 <pre>
    <span class="ruby-comment cmt"># File app/controllers/cms/dashboard_controller.rb, line 3</span>
 3:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">index</span>
-4:     <span class="ruby-ivar">@unpublished_pages</span> = <span class="ruby-constant">Page</span>.<span class="ruby-identifier">unpublished</span>.<span class="ruby-identifier">all</span>(<span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;updated_at desc&quot;</span>)
-5:     <span class="ruby-ivar">@incomplete_tasks</span> = <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">tasks</span>.<span class="ruby-identifier">incomplete</span>.<span class="ruby-identifier">all</span>(
-6:       <span class="ruby-identifier">:include</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:page</span>, 
-7:       <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;tasks.due_date desc, pages.name&quot;</span>)
-8:   <span class="ruby-keyword kw">end</span>
+4:     <span class="ruby-ivar">@unpublished_pages</span> = <span class="ruby-constant">Page</span>.<span class="ruby-identifier">unpublished</span>.<span class="ruby-identifier">all</span>(<span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;pages.updated_at desc&quot;</span>)
+5:     <span class="ruby-ivar">@unpublished_pages</span> = <span class="ruby-ivar">@unpublished_pages</span>.<span class="ruby-identifier">select</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">page</span><span class="ruby-operator">|</span> <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">able_to_publish?</span>(<span class="ruby-identifier">page</span>) }
+6:     <span class="ruby-ivar">@incomplete_tasks</span> = <span class="ruby-identifier">current_user</span>.<span class="ruby-identifier">tasks</span>.<span class="ruby-identifier">incomplete</span>.<span class="ruby-identifier">all</span>(
+7:       <span class="ruby-identifier">:include</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:page</span>, 
+8:       <span class="ruby-identifier">:order</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;tasks.due_date desc, pages.name&quot;</span>)
+9:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

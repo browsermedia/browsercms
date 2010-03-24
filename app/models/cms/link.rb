@@ -1,6 +1,4 @@
-module Cms
-
-class Link < ActiveRecord::Base
+class Cms::Link < ActiveRecord::Base
   acts_as_content_block :connectable => false
   
   named_scope :named, lambda{|name| {:conditions => ['links.name = ?', name]}}
@@ -33,7 +31,5 @@ class Link < ActiveRecord::Base
   def path
     url
   end
-
-end
 
 end

@@ -1,5 +1,10 @@
 run "rm public/index.html"
-gem "browsercms"
+
+# Loads the version, so we can explicitly set in the generated cms project.
+template_root = File.dirname(File.expand_path(template))
+require File.join(template_root, '..', 'lib', 'cms', 'version.rb')
+gem "browsercms", :version=>Cms::VERSION
+
 rake "db:create"
 route "map.routes_for_browser_cms"
 generate :browser_cms
@@ -47,6 +52,7 @@ SPEC = Gem::Specification.new do |spec|
   spec.files += Dir["lib/#{gem_name}.rb"]
   spec.files += Dir["lib/#{gem_name}/*"]
   spec.files += Dir["rails/init.rb"]
+  spec.files += Dir["public/bcms/#{module_name}/**/*"]
   spec.has_rdoc = true
   spec.extra_rdoc_files = ["README"]
 end
@@ -72,6 +78,7 @@ file "rails/init.rb", <<-CODE
 gem_root = File.expand_path(File.join(File.dirname(__FILE__), ".."))
 Cms.add_to_rails_paths gem_root
 Cms.add_generator_paths gem_root, "db/migrate/[0-9]*_*.rb"
+Cms.add_generator_paths gem_root, "public/bcms/#{module_name}/**/*"
 CODE
 
 file "LICENSE.txt", <<-CODE
@@ -243,7 +250,7 @@ Library.
 CODE
 
 file "COPYRIGHT.txt", <<-CODE
-All BrowserCMS code is Copyright (C) 1998-2009 by BrowserMedia, LLC.
+All BrowserCMS code is Copyright (C) 1998-2010 by BrowserMedia, LLC.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Lesser General Public License as published by
@@ -265,7 +272,7 @@ according to the terms of the GNU Lesser Public License or a compatible
 license, including:
 
 - jQuery - Copyright (C) 2009 John Resig
-- FCKEditor - Copyright (C) 2003-2009 Frederico Caldeira Knabben
+- CKEditor - Copyright (C) 2003-2009 Frederico Caldeira Knabben
 CODE
 
 file "GPL.txt", <<-CODE

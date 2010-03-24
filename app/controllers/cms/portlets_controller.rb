@@ -1,9 +1,8 @@
-module Cms
-class PortletsController < Cms::ContentBlockController
+class Cms::PortletsController < Cms::ContentBlockController
   
   protected
     def load_blocks
-      @blocks = Portlet.paginate(
+      @blocks = Portlet.search(params[:search]).paginate(
         :page => params[:page],
         :order => params[:order] || "name",
         :conditions => ["deleted = ?", false]
@@ -38,5 +37,4 @@ class PortletsController < Cms::ContentBlockController
     def blocks_path
       cms_portlets_path
     end
-end
 end

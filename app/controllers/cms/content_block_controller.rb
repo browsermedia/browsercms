@@ -1,8 +1,7 @@
 require 'cms/category_type'
 # This is not called directly
 # This is the base class for other content blocks
-module Cms
-class ContentBlockController < Cms::BaseController
+class Cms::ContentBlockController < Cms::BaseController
   
   layout :determine_layout
   
@@ -115,7 +114,7 @@ class ContentBlockController < Cms::BaseController
     end
   
     def model_name
-      model_class.name.underscore.to_sym
+      ActionController::RecordIdentifier.singular_class_name(model_class)
     end
   
     # methods for loading one or a collection of blocks
@@ -284,5 +283,4 @@ class ContentBlockController < Cms::BaseController
       "cms/blocks"
     end
 
-end
 end

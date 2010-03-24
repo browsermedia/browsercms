@@ -5,8 +5,8 @@
   <%= link_to(span_tag("&nbsp;Edit&nbsp;"), edit_cms_page_route_path(@page_route), :id => 'edit_button', :class => "button") %>
   <%= link_to span_tag("<span class=\"delete_img\">&nbsp;</span>Delete"), @page_route, 
     :id => "delete_button", 
-    :class => "button http_delete", 
-    :onclick => "return confirm('Are you sure you want to delete this Page Route?')" %>
+    :class => "button http_delete confirm_with_title", 
+    :title => "Are you sure you want to delete this Page Route?" %>
   <%= link_to(span_tag("List All"), cms_page_routes_path, :class => "button") %>    
   <%= link_to(span_tag("View Rails Routes"), cms_routes_path, :class => "button") %>
 <% end %>

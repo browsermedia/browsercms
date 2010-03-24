@@ -1,7 +1,7 @@
 <% able_to? :publish_content do -%>
   <% if @block.respond_to?(:live?) && !@block.live? %>
     <%= link_to span_tag('Publish'), block_path(:publish), 
-      :class => "http_put button left#{' disabled' unless current_user.able_to_publish?(@block)}", 
+      :class => "http_put button left#{' disabled' unless (current_user.able_to_publish?(@block) && @block.publishable?)}", 
       :id => "publish_button" %>
   <% else %>
     <%= link_to span_tag('Publish'), "#", 

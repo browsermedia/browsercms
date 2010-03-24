@@ -105,7 +105,15 @@
         overflow: auto;
         white-space:pre;        
       }
-      
+      .note {
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:#FFF9D8 url(../images/tab_note.gif) no-repeat scroll left top;
+	border:medium none;
+	margin:0.25em 0 1.5em;
+	padding:1em 1em 0.25em 48px;
+	}
     </style>
   </head>
   <body>
@@ -127,7 +135,7 @@
                         <div id="subCol">
         <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
         <ol class="chapters">
-<li><a href="#installation">Installation</a><ul><li><a href="#build-and-install-the-gem-from-source">Build and install the gem from source</a></li><li><a href="#adding-the-module-to-your-project">Adding the Module to your project</a></li></ul></li></ol></div>
+<li><a href="#overview">Overview</a><ul></ul></li><li><a href="#getting-the-module-from-gemcutter">Getting the module from Gemcutter</a><ul></ul></li><li><a href="#adding-the-module-to-your-project">Adding the Module to your project</a><ul><li><a href="#edit-the-configenvironmentrb-file">Edit the config/environment.rb file</a></li><li><a href="#edit-the-routesrb-file">Edit the routes.rb file</a></li><li><a href="#install-the-new-module-code">Install the new module code</a></li><li><a href="#run-migrations-and-start-the-server">Run migrations and start the server</a></li><li><a href="#adding-content">Adding Content</a></li></ul></li></ol></div>
                 </td>
                 <td class="guides">
                   <h2>How to Install a Module</h2>
@@ -139,33 +147,33 @@
 	<li>Running migrations</li>
 </ol>
 <p>Once you have done the above steps, you should have access to the Content blocks and portlets that each module provides, and you can add them to your pages.</p>
-                  <h3 id="installation">1 Installation</h3>
-<p>This module assumes you are going to be building the module from source code, and installing to a project locally to your computer. Let&#8217;s assume you want to install the News module, who&#8217;s project name (and gem name) is &#8216;bcms_news&#8217;. If you want to install other modules, just substitute the name of the module you want for &#8216;bcms_news&#8217;.</p>
-<h4 id="build-and-install-the-gem-from-source">1.1 Build and install the gem from source</h4>
-<p>This assumes you have the latest copy of the code from github on your machine, in a directory <tt>~/my_projects_dir/bcms_news_dir</tt>.</p>
-<div class="code_container"><code class="html">$ cd ~/my_projects_dir/bcms_news
-$ gem build bcms_news.gemspec
-$ sudo gem install bcms_news-1.0.0.gem</code></div>
+<p>This guide is for BrowserCMS <strong>3.1</strong>. Some code shown here may not work with older versions of BrowserCMS.</p>
+                  <h3 id="overview">1 Overview</h3>
+<p>This module assumes you are going to be building installing module as gems. Let&#8217;s assume you want to install the News module, who&#8217;s project name (and gem name) is &#8216;bcms_news&#8217;. If you want to install other modules, just substitute the name of the module you want for &#8216;bcms_news&#8217;.</p>
+<p>Before installing a module, its worth reviewing the <tt>README</tt> file for the module. It may contain some specific instructions on how to install and use the module, in addition to the basic steps outlined here. The <tt>README</tt> file can be found as the landing page on the github repository for a module. For example, the <a href="http://github.com/browsermedia/bcms_page_comments">Page Comments</a> module has an overview of the module and its installation instructions.</p>
+<h3 id="getting-the-module-from-gemcutter">2 Getting the module from Gemcutter</h3>
+<p>For modules released as gems, they should be hosted on <a href="http://gemcutter.org">Gemcutter</a>. If you have a new enough version of <a href="http://docs.rubygems.org">RubyGems</a> you should be able to download gems via:</p>
+<div class="code_container"><code class="html">$ gem install bcms_news</code></div>
 <p>At this point, the News module gem should be installed as a gem on your system, and can be added to your projects.</p>
-<h4 id="adding-the-module-to-your-project">1.2 Adding the Module to your project</h4>
+<h3 id="adding-the-module-to-your-project">3 Adding the Module to your project</h3>
 <p>In your BrowserCMS application, do the following steps.</p>
-<h5 id="edit-the-confingenvironmentrb-file">1.2.1 Edit the confing/environment.rb file</h5>
-<div class="code_container"><code class="ruby">config.gem 'browsercms'
+<h4 id="edit-the-configenvironmentrb-file">3.1 Edit the config/environment.rb file</h4>
+<div class="code_container"><code class="ruby">config.gem 'browsercms', :version=&gt;&quot;3.1.0&quot;
 # Add this next line after the browsercms gem
-config.gem &quot;bcms_news&quot;</code></div>
-<h5 id="edit-the-routesrb-file">1.2.2 Edit the routes.rb file</h5>
+config.gem &quot;bcms_news&quot;, :version=&gt;&quot;1.0.0&quot;</code></div>
+<h4 id="edit-the-routesrb-file">3.2 Edit the routes.rb file</h4>
 <div class="code_container"><code class="ruby"># Add this route. It must be before the core browser_cms route.
 map.routes_for_bcms_news
 map.routes_for_browser_cms</code></div>
-<h5 id="install-the-new-module-code">1.2.3 Install the new module code</h5>
+<h4 id="install-the-new-module-code">3.3 Install the new module code</h4>
 <p>From the root directory of your cms project, run:</p>
 <div class="code_container"><code class="html">$ script/generate browser_cms</code></div>
 <p>This will copy all the necessary views and migrations from the gems into your local project. You should messages checking to see if files already exist or were created.</p>
-<h5 id="run-migrations-and-start-the-server">1.2.4 Run migrations and start the server</h5>
+<h4 id="run-migrations-and-start-the-server">3.4 Run migrations and start the server</h4>
 <p>Modules will often add new data types, like content blocks, so you need to run the migrations to add them to your project.</p>
 <div class="code_container"><code class="html">$ rake db:migrate
 $ script/server</code></div>
-<h5 id="add-new-content-to-your-site">1.2.5 Add New Content to your Site</h5>
+<h4 id="adding-content">3.5 Adding Content</h4>
 <p>Most modules will come with a few new types of content, either a new Content Block and one or more Portlets, which are designed to display those Content Blocks in interesting ways. To discover what new contents have been added, you can look at the Content Library for a new group (like &#8216;News&#8217;) or add a new Portlet, which will list all available portlets in the system.</p>
                 </td>
               </tr>

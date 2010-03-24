@@ -17,3 +17,7 @@ test:
   password:
   socket: /tmp/mysql.sock
 
+
+test_sqlite3:
+  adapter: sqlite3
+  database: db/test.sqlite3

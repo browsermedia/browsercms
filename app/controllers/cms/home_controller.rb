@@ -1,7 +1,5 @@
-module Cms
-class HomeController < Cms::BaseController
+class Cms::HomeController < Cms::BaseController
   def index
     redirect_to '/'
   end
-end
 end

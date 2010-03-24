@@ -105,7 +105,15 @@
         overflow: auto;
         white-space:pre;        
       }
-      
+      .note {
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:#FFF9D8 url(../images/tab_note.gif) no-repeat scroll left top;
+	border:medium none;
+	margin:0.25em 0 1.5em;
+	padding:1em 1em 0.25em 48px;
+	}
     </style>
   </head>
   <body>
@@ -127,32 +135,33 @@
                         <div id="subCol">
         <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
         <ol class="chapters">
-<li><a href="#guides">Guides</a><ul><li><a href="#getting-startedgetting-startedhtml"><a href="getting_started.html">Getting Started</a></a></li><li><a href="#users-guideuser-guidehtml"><a href="user_guide.html">User&#8217;s Guide</a></a></li><li><a href="#installing-a-moduleinstalling-moduleshtml"><a href="installing_modules.html">Installing a Module</a></a></li><li><a href="#developer-guidedeveloper-guidehtml"><a href="developer_guide.html">Developer Guide</a></a></li><li><a href="#designers-guidedesigner-guidehtml"><a href="designer_guide.html">Designer&#8217;s Guide</a></a></li><li><a href="#deployment-guidedeployment-guidehtml"><a href="deployment_guide.html">Deployment Guide</a></a></li><li><a href="#building-on-the-edgebuild-it-yourselfhtml"><a href="build_it_yourself.html">Building on the Edge</a></a></li></ul></li></ol></div>
+<li><a href="#getting-started">Getting Started</a><ul><li><a href="#getting-started-with-browsercmsgetting-startedhtml"><a href="getting_started.html">Getting Started with BrowserCMS</a></a></li></ul></li><li><a href="#using-browsercms">Using BrowserCMS</a><ul><li><a href="#interface-guideuser-guidehtml"><a href="user_guide.html">Interface Guide</a></a></li></ul></li><li><a href="#installation--deployment">Installation / Deployment</a><ul><li><a href="#installing-a-moduleinstalling-moduleshtml"><a href="installing_modules.html">Installing a Module</a></a></li><li><a href="#deployment-guidedeployment-guidehtml"><a href="deployment_guide.html">Deployment Guide</a></a></li></ul></li><li><a href="#developing-on-browsercms">Developing on BrowserCMS</a><ul><li><a href="#content-blockscontent-blockshtml"><a href="content_blocks.html">Content Blocks</a></a></li><li><a href="#portletsportletshtml"><a href="portlets.html">Portlets</a></a></li><li><a href="#building-templatesbuilding-templateshtml"><a href="building_templates.html">Building Templates</a></a></li><li><a href="#building-modulesbuilding-moduleshtml"><a href="building_modules.html">Building Modules</a></a></li><li><a href="#building-on-the-edgebuild-it-yourselfhtml"><a href="build_it_yourself.html">Building on the Edge</a></a></li></ul></li></ol></div>
                 </td>
                 <td class="guides">
                   <h2>BrowserCMS Reference Documentation</h2>
-<p>BrowserCMS is a general purpose, open source Web Content Management System (<span class="caps">CMS</span>), written in Ruby on Rails. It is designed to support three distinct groups of people:</p>
-<ol>
-	<li>Non-technical web editors who want a humane system to manage their site, without needing to understand what <span class="caps">HTML</span> or even Rails is.</li>
-	<li>Designers who want to create large and elegantly designed websites with no artificial constraints by the <span class="caps">CMS</span>.</li>
-	<li>Developers who want to add a <span class="caps">CMS</span> into their Rails projects, or create <span class="caps">CMS</span> driven websites for their clients.</li>
-</ol>
-<p>This guide is for BrowserCMS v3.0.1.</p>
-                  <h3 id="guides">1 Guides</h3>
-<p>Below are a list of guides on how the above groups can use BrowswerCMS, to design, build and maintain websites.</p>
-<h4 id="getting-startedgetting-startedhtml">1.1 <a href="getting_started.html">Getting Started</a></h4>
-<p>The easy way to install BrowserCMS and create a project with it.</p>
-<h4 id="users-guideuser-guidehtml">1.2 <a href="user_guide.html">User&#8217;s Guide</a></h4>
-<p>How to use the basic features of BrowserCMS.</p>
-<h4 id="installing-a-moduleinstalling-moduleshtml">1.3 <a href="installing_modules.html">Installing a Module</a></h4>
+<p>These guides are designed to provide details on how to work with BrowserCMS, and to assist in understanding how different parts of the <span class="caps">CMS</span> work together. As a Web Content Management system, there are two general pieces to understand; how to use the <span class="caps">CMS</span> interface to build websites and how to extend/deploy BrowserCMS websites.</p>
+<p>These guides are for BrowserCMS v3.1.0.</p>
+                  <h3 id="getting-started">1 Getting Started</h3>
+<h4 id="getting-started-with-browsercmsgetting-startedhtml">1.1 <a href="getting_started.html">Getting Started with BrowserCMS</a></h4>
+<p>Everything you need to know to install BrowserCMS and create your first website.</p>
+<h3 id="using-browsercms">2 Using BrowserCMS</h3>
+<h4 id="interface-guideuser-guidehtml">2.1 <a href="user_guide.html">Interface Guide</a></h4>
+<p>Designed as an overview of the BrowserCMS interface for Cms editors and site builders.</p>
+<h3 id="installation--deployment">3 Installation / Deployment</h3>
+<h4 id="installing-a-moduleinstalling-moduleshtml">3.1 <a href="installing_modules.html">Installing a Module</a></h4>
 <p>How to add a module to your BrowserCMS project.</p>
-<h4 id="developer-guidedeveloper-guidehtml">1.4 <a href="developer_guide.html">Developer Guide</a></h4>
-<p>How to customize and extend a BrowserCMS site to add dynamic behavior and content.</p>
-<h4 id="designers-guidedesigner-guidehtml">1.5 <a href="designer_guide.html">Designer&#8217;s Guide</a></h4>
-<p>How to turn a design into a styled website, by building templates. (Incomplete)</p>
-<h4 id="deployment-guidedeployment-guidehtml">1.6 <a href="deployment_guide.html">Deployment Guide</a></h4>
+<h4 id="deployment-guidedeployment-guidehtml">3.2 <a href="deployment_guide.html">Deployment Guide</a></h4>
 <p>How to configure Apache and Passenger to work with BrowserCMS in production mode.</p>
-<h4 id="building-on-the-edgebuild-it-yourselfhtml">1.7 <a href="build_it_yourself.html">Building on the Edge</a></h4>
+<h3 id="developing-on-browsercms">4 Developing on BrowserCMS</h3>
+<h4 id="content-blockscontent-blockshtml">4.1 <a href="content_blocks.html">Content Blocks</a></h4>
+<p>This guide covers how to create, customize and use Content Blocks.</p>
+<h4 id="portletsportletshtml">4.2 <a href="portlets.html">Portlets</a></h4>
+<p>This guide covers how to create and customize Portlets.</p>
+<h4 id="building-templatesbuilding-templateshtml">4.3 <a href="building_templates.html">Building Templates</a></h4>
+<p>This guide covers how to create and organize page templates which govern the design/theme of a website.</p>
+<h4 id="building-modulesbuilding-moduleshtml">4.4 <a href="building_modules.html">Building Modules</a></h4>
+<p>This guide covers how to create new modules to be packaged and shared with other BrowserCMS developers. (In Progress)</p>
+<h4 id="building-on-the-edgebuild-it-yourselfhtml">4.5 <a href="build_it_yourself.html">Building on the Edge</a></h4>
 <p>For developers who want the very latest source code from Github and build the BrowserCMS gem themselves.</p>
                 </td>
               </tr>

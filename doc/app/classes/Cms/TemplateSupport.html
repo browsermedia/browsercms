@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html 
+     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>Module: Cms::TemplateSupport</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Script-Type" content="text/javascript" />
+  <link rel="stylesheet" href="../.././rdoc-style.css" type="text/css" media="screen" />
+  <script type="text/javascript">
+  // <![CDATA[
+
+  function popupCode( url ) {
+    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
+  }
+
+  function toggleCode( id ) {
+    if ( document.getElementById )
+      elem = document.getElementById( id );
+    else if ( document.all )
+      elem = eval( "document.all." + id );
+    else
+      return false;
+
+    elemStyle = elem.style;
+    
+    if ( elemStyle.display != "block" ) {
+      elemStyle.display = "block"
+    } else {
+      elemStyle.display = "none"
+    }
+
+    return true;
+  }
+  
+  // Make codeblocks hidden by default
+  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
+  
+  // ]]>
+  </script>
+
+</head>
+<body>
+
+
+
+    <div id="classHeader">
+        <table class="header-table">
+        <tr class="top-aligned-row">
+          <td><strong>Module</strong></td>
+          <td class="class-name-in-header">Cms::TemplateSupport</td>
+        </tr>
+        <tr class="top-aligned-row">
+            <td><strong>In:</strong></td>
+            <td>
+                <a href="../../files/app/helpers/cms/template_support_rb.html">
+                app/helpers/cms/template_support.rb
+                </a>
+        <br />
+            </td>
+        </tr>
+
+        </table>
+    </div>
+  <!-- banner header -->
+
+  <div id="bodyContent">
+
+
+
+  <div id="contextContent">
+
+
+
+   </div>
+
+    <div id="method-list">
+      <h3 class="section-bar">Methods</h3>
+
+      <div class="name-list">
+      <a href="#M000336">cms_toolbar</a>&nbsp;&nbsp;
+      <a href="#M000335">included</a>&nbsp;&nbsp;
+      </div>
+    </div>
+
+  </div>
+
+
+    <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name"><a href="Authentication/Controller.html">Cms::Authentication::Controller</a></span>
+        <span class="include-name"><a href="ErrorHandling.html">Cms::ErrorHandling</a></span>
+      </div>
+    </div>
+
+    <div id="section">
+
+
+
+
+
+      
+
+
+    <!-- if method_list -->
+    <div id="methods">
+      <h3 class="section-bar">Public Class methods</h3>
+
+      <div id="method-M000335" class="method-detail">
+        <a name="M000335"></a>
+
+        <div class="method-heading">
+          <a href="#M000335" class="method-signature">
+          <span class="method-name">included</span><span class="method-args">(controller)</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000335-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000335-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/helpers/cms/template_support.rb, line 5</span>
+ 5:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">included</span>(<span class="ruby-identifier">controller</span>)
+ 6:       <span class="ruby-identifier">controller</span>.<span class="ruby-identifier">class_eval</span> <span class="ruby-keyword kw">do</span>
+ 7:         <span class="ruby-identifier">include</span> <span class="ruby-constant">Cms</span><span class="ruby-operator">::</span><span class="ruby-constant">Authentication</span><span class="ruby-operator">::</span><span class="ruby-constant">Controller</span>
+ 8:         <span class="ruby-identifier">include</span> <span class="ruby-constant">Cms</span><span class="ruby-operator">::</span><span class="ruby-constant">ErrorHandling</span>
+ 9:         
+10:         <span class="ruby-identifier">helper</span> <span class="ruby-constant">Cms</span><span class="ruby-operator">::</span><span class="ruby-constant">PageHelper</span>
+11:         <span class="ruby-identifier">helper</span> <span class="ruby-constant">Cms</span><span class="ruby-operator">::</span><span class="ruby-constant">MenuHelper</span>
+12:         <span class="ruby-identifier">helper</span> <span class="ruby-keyword kw">do</span>
+13:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cms_toolbar</span>
+14:             <span class="ruby-node">%Q{&lt;iframe src=&quot;#{cms_toolbar_path(:page_toolbar =&gt; 0)}&quot; width=&quot;100%&quot; height=&quot;100px&quot; frameborder=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; scrolling=&quot;no&quot; name=&quot;cms_toolbar&quot;&gt;&lt;/iframe&gt;}</span>
+15:           <span class="ruby-keyword kw">end</span>
+16:         <span class="ruby-keyword kw">end</span>
+17:       <span class="ruby-keyword kw">end</span>
+18:     <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="section-bar">Public Instance methods</h3>
+
+      <div id="method-M000336" class="method-detail">
+        <a name="M000336"></a>
+
+        <div class="method-heading">
+          <a href="#M000336" class="method-signature">
+          <span class="method-name">cms_toolbar</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000336-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000336-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/helpers/cms/template_support.rb, line 13</span>
+13:           <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cms_toolbar</span>
+14:             <span class="ruby-node">%Q{&lt;iframe src=&quot;#{cms_toolbar_path(:page_toolbar =&gt; 0)}&quot; width=&quot;100%&quot; height=&quot;100px&quot; frameborder=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; scrolling=&quot;no&quot; name=&quot;cms_toolbar&quot;&gt;&lt;/iframe&gt;}</span>
+15:           <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+
+  </div>
+
+
+<div id="validator-badges">
+  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+</div>
+
+</body>
+</html>

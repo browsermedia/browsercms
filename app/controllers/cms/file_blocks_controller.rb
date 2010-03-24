@@ -1,4 +1,2 @@
-module Cms
-class FileBlocksController < Cms::ContentBlockController
-end
+class Cms::FileBlocksController < Cms::ContentBlockController
 end

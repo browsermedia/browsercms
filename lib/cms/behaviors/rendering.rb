@@ -60,7 +60,7 @@ module Cms
       end
   
       def helper_path
-        "app/helpers/cms/#{name.underscore}_helper.rb"
+        "app/helpers/#{name.underscore}_helper.rb"
       end
   
       def helper_class
@@ -71,7 +71,7 @@ module Cms
       # of the renderable, so if you have an Article that is renderable, 
       # the template will be "articles/render"
       def template_path
-        "cms/#{name.underscore.pluralize}/render"
+        "#{name.underscore.pluralize}/render"
       end
   
       # Instance variables that will not be copied from the renderable to the view
@@ -98,12 +98,20 @@ module Cms
     
       def perform_render(controller)
         return "Exception: #{@render_exception}" if @render_exception
+
+
         unless @controller
           # We haven't prepared to render. This should only happen when logged in, as we don't want
           # errors to bubble up and prevent the page being edited in that case.
           prepare_to_render(controller)
         end
-        
+
+        if self.respond_to?(:deleted) && self.deleted
+          logger.error "Attempting to render deleted object: #{self.inspect}"
+          msg = (@mode == 'edit' ?  %Q[<div class="error">This #{self.class.name} has been deleted.  Please remove this container from the page</div>] : '')
+          return msg
+        end
+
         # Create, Instantiate and Initialize the view
         view_class  = Class.new(ActionView::Base)      
         action_view = view_class.new(@controller.view_paths, {}, @controller)

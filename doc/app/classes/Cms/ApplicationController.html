@@ -88,17 +88,15 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000628">append_to_query_string</a>&nbsp;&nbsp;
-      <a href="#M000630">check_permissions</a>&nbsp;&nbsp;
-      <a href="#M000629">cms_access_required</a>&nbsp;&nbsp;
-      <a href="#M000631">cms_domain_prefix</a>&nbsp;&nbsp;
-      <a href="#M000632">cms_site?</a>&nbsp;&nbsp;
-      <a href="#M000626">current_site</a>&nbsp;&nbsp;
-      <a href="#M000624">escape_javascript</a>&nbsp;&nbsp;
-      <a href="#M000627">redirect_to_cms_site</a>&nbsp;&nbsp;
-      <a href="#M000625">redirect_to_first</a>&nbsp;&nbsp;
-      <a href="#M000633">url_with_cms_domain_prefix</a>&nbsp;&nbsp;
-      <a href="#M000634">url_without_cms_domain_prefix</a>&nbsp;&nbsp;
+      <a href="#M000676">append_to_query_string</a>&nbsp;&nbsp;
+      <a href="#M000678">check_permissions</a>&nbsp;&nbsp;
+      <a href="#M000677">cms_access_required</a>&nbsp;&nbsp;
+      <a href="#M000674">current_site</a>&nbsp;&nbsp;
+      <a href="#M000672">escape_javascript</a>&nbsp;&nbsp;
+      <a href="#M000675">redirect_to_cms_site</a>&nbsp;&nbsp;
+      <a href="#M000673">redirect_to_first</a>&nbsp;&nbsp;
+      <a href="#M000679">url_with_cms_domain_prefix</a>&nbsp;&nbsp;
+      <a href="#M000680">url_without_cms_domain_prefix</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -112,6 +110,7 @@
       <div id="includes-list">
         <span class="include-name"><a href="Authentication/Controller.html">Cms::Authentication::Controller</a></span>
         <span class="include-name"><a href="ErrorHandling.html">Cms::ErrorHandling</a></span>
+        <span class="include-name"><a href="DomainSupport.html">Cms::DomainSupport</a></span>
         <span class="include-name"><a href="PathHelper.html">Cms::PathHelper</a></span>
         <span class="include-name"><a href="PageHelper.html">Cms::PageHelper</a></span>
       </div>
@@ -130,19 +129,19 @@
     <div id="methods">
       <h3 class="section-bar">Protected Class methods</h3>
 
-      <div id="method-M000630" class="method-detail">
-        <a name="M000630"></a>
+      <div id="method-M000678" class="method-detail">
+        <a name="M000678"></a>
 
         <div class="method-heading">
-          <a href="#M000630" class="method-signature">
+          <a href="#M000678" class="method-signature">
           <span class="method-name">check_permissions</span><span class="method-args">(*perms)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000630-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000630-source">
+            onclick="toggleCode('M000678-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000678-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/cms/application_controller.rb, line 47</span>
 47:     <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">check_permissions</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">perms</span>)
@@ -158,19 +157,19 @@
 
       <h3 class="section-bar">Protected Instance methods</h3>
 
-      <div id="method-M000628" class="method-detail">
-        <a name="M000628"></a>
+      <div id="method-M000676" class="method-detail">
+        <a name="M000676"></a>
 
         <div class="method-heading">
-          <a href="#M000628" class="method-signature">
+          <a href="#M000676" class="method-signature">
           <span class="method-name">append_to_query_string</span><span class="method-args">(url, *params)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000628-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000628-source">
+            onclick="toggleCode('M000676-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000676-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/cms/application_controller.rb, line 38</span>
 38:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">append_to_query_string</span>(<span class="ruby-identifier">url</span>, <span class="ruby-operator">*</span><span class="ruby-identifier">params</span>)
@@ -182,19 +181,19 @@
         </div>
       </div>
 
-      <div id="method-M000629" class="method-detail">
-        <a name="M000629"></a>
+      <div id="method-M000677" class="method-detail">
+        <a name="M000677"></a>
 
         <div class="method-heading">
-          <a href="#M000629" class="method-signature">
+          <a href="#M000677" class="method-signature">
           <span class="method-name">cms_access_required</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000629-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000629-source">
+            onclick="toggleCode('M000677-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000677-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/cms/application_controller.rb, line 43</span>
 43:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cms_access_required</span>
@@ -205,67 +204,19 @@
         </div>
       </div>
 
-      <div id="method-M000631" class="method-detail">
-        <a name="M000631"></a>
+      <div id="method-M000674" class="method-detail">
+        <a name="M000674"></a>
 
         <div class="method-heading">
-          <a href="#M000631" class="method-signature">
-          <span class="method-name">cms_domain_prefix</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000631-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000631-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/application_controller.rb, line 54</span>
-54:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cms_domain_prefix</span>
-55:       <span class="ruby-value str">&quot;cms&quot;</span>
-56:     <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000632" class="method-detail">
-        <a name="M000632"></a>
-
-        <div class="method-heading">
-          <a href="#M000632" class="method-signature">
-          <span class="method-name">cms_site?</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000632-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000632-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/application_controller.rb, line 58</span>
-58:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">cms_site?</span>
-59:       <span class="ruby-identifier">subdomains</span> = <span class="ruby-identifier">request</span>.<span class="ruby-identifier">subdomains</span>
-60:       <span class="ruby-identifier">subdomains</span>.<span class="ruby-identifier">shift</span> <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">subdomains</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;www&quot;</span>
-61:       <span class="ruby-identifier">subdomains</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">==</span> <span class="ruby-identifier">cms_domain_prefix</span>
-62:     <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000626" class="method-detail">
-        <a name="M000626"></a>
-
-        <div class="method-heading">
-          <a href="#M000626" class="method-signature">
+          <a href="#M000674" class="method-signature">
           <span class="method-name">current_site</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000626-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000626-source">
+            onclick="toggleCode('M000674-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000674-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/cms/application_controller.rb, line 28</span>
 28:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">current_site</span>
@@ -276,19 +227,19 @@
         </div>
       </div>
 
-      <div id="method-M000624" class="method-detail">
-        <a name="M000624"></a>
+      <div id="method-M000672" class="method-detail">
+        <a name="M000672"></a>
 
         <div class="method-heading">
-          <a href="#M000624" class="method-signature">
+          <a href="#M000672" class="method-signature">
           <span class="method-name">escape_javascript</span><span class="method-args">(javascript)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000624-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000624-source">
+            onclick="toggleCode('M000672-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000672-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/cms/application_controller.rb, line 16</span>
 16:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">escape_javascript</span>(<span class="ruby-identifier">javascript</span>)
@@ -299,19 +250,19 @@
         </div>
       </div>
 
-      <div id="method-M000627" class="method-detail">
-        <a name="M000627"></a>
+      <div id="method-M000675" class="method-detail">
+        <a name="M000675"></a>
 
         <div class="method-heading">
-          <a href="#M000627" class="method-signature">
+          <a href="#M000675" class="method-signature">
           <span class="method-name">redirect_to_cms_site</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000627-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000627-source">
+            onclick="toggleCode('M000675-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000675-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/cms/application_controller.rb, line 32</span>
 32:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">redirect_to_cms_site</span>
@@ -324,19 +275,19 @@
         </div>
       </div>
 
-      <div id="method-M000625" class="method-detail">
-        <a name="M000625"></a>
+      <div id="method-M000673" class="method-detail">
+        <a name="M000673"></a>
 
         <div class="method-heading">
-          <a href="#M000625" class="method-signature">
+          <a href="#M000673" class="method-signature">
           <span class="method-name">redirect_to_first</span><span class="method-args">(*urls)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000625-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000625-source">
+            onclick="toggleCode('M000673-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000673-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/cms/application_controller.rb, line 20</span>
 20:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">redirect_to_first</span>(<span class="ruby-operator">*</span><span class="ruby-identifier">urls</span>)
@@ -351,53 +302,53 @@
         </div>
       </div>
 
-      <div id="method-M000633" class="method-detail">
-        <a name="M000633"></a>
+      <div id="method-M000679" class="method-detail">
+        <a name="M000679"></a>
 
         <div class="method-heading">
-          <a href="#M000633" class="method-signature">
+          <a href="#M000679" class="method-signature">
           <span class="method-name">url_with_cms_domain_prefix</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000633-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000633-source">
+            onclick="toggleCode('M000679-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000679-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/application_controller.rb, line 64</span>
-64:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">url_with_cms_domain_prefix</span>
-65:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">cms_site?</span>
-66:         <span class="ruby-identifier">request</span>.<span class="ruby-identifier">url</span>
-67:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">request</span>.<span class="ruby-identifier">subdomains</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;www&quot;</span>
-68:         <span class="ruby-identifier">request</span>.<span class="ruby-identifier">url</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp re">/www\./</span>, <span class="ruby-node">&quot;#{cms_domain_prefix}.&quot;</span>)
-69:       <span class="ruby-keyword kw">else</span>
-70:         <span class="ruby-identifier">request</span>.<span class="ruby-identifier">url</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp re">/:\/\//</span>, <span class="ruby-node">&quot;://#{cms_domain_prefix}.&quot;</span>)
-71:       <span class="ruby-keyword kw">end</span>
-72:     <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/application_controller.rb, line 54</span>
+54:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">url_with_cms_domain_prefix</span>
+55:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">cms_site?</span>
+56:         <span class="ruby-identifier">request</span>.<span class="ruby-identifier">url</span>
+57:       <span class="ruby-keyword kw">elsif</span> <span class="ruby-identifier">request</span>.<span class="ruby-identifier">subdomains</span>.<span class="ruby-identifier">first</span> <span class="ruby-operator">==</span> <span class="ruby-value str">&quot;www&quot;</span>
+58:         <span class="ruby-identifier">request</span>.<span class="ruby-identifier">url</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp re">/www\./</span>, <span class="ruby-node">&quot;#{cms_domain_prefix}.&quot;</span>)
+59:       <span class="ruby-keyword kw">else</span>
+60:         <span class="ruby-identifier">request</span>.<span class="ruby-identifier">url</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-regexp re">/:\/\//</span>, <span class="ruby-node">&quot;://#{cms_domain_prefix}.&quot;</span>)
+61:       <span class="ruby-keyword kw">end</span>
+62:     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000634" class="method-detail">
-        <a name="M000634"></a>
+      <div id="method-M000680" class="method-detail">
+        <a name="M000680"></a>
 
         <div class="method-heading">
-          <a href="#M000634" class="method-signature">
+          <a href="#M000680" class="method-signature">
           <span class="method-name">url_without_cms_domain_prefix</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000634-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000634-source">
+            onclick="toggleCode('M000680-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000680-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/application_controller.rb, line 74</span>
-74:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">url_without_cms_domain_prefix</span>
-75:       <span class="ruby-identifier">request</span>.<span class="ruby-identifier">url</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-node">/#{cms_domain_prefix}\./</span>,<span class="ruby-value str">''</span>)
-76:     <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/application_controller.rb, line 64</span>
+64:     <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">url_without_cms_domain_prefix</span>
+65:       <span class="ruby-identifier">request</span>.<span class="ruby-identifier">url</span>.<span class="ruby-identifier">sub</span>(<span class="ruby-node">/#{cms_domain_prefix}\./</span>,<span class="ruby-value str">''</span>)
+66:     <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

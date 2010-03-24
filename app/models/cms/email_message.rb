@@ -1,5 +1,4 @@
-module Cms
-class EmailMessage < ActiveRecord::Base
+class Cms::EmailMessage < ActiveRecord::Base
   
   named_scope :undelivered, :conditions => "delivered_at is null"
   
@@ -29,5 +28,4 @@ class EmailMessage < ActiveRecord::Base
     update_attributes(:delivered_at => Time.now)
   end
   
-end
 end

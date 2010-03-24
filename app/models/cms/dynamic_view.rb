@@ -1,5 +1,4 @@
-module Cms
-class DynamicView < ActiveRecord::Base
+class Cms::DynamicView < ActiveRecord::Base
   
   after_save :write_file_to_disk
   after_destroy :remove_file_from_disk
@@ -45,14 +44,18 @@ class DynamicView < ActiveRecord::Base
     File.join(Rails.root, "tmp", "views")
   end
   
+  def self.form_name
+    ActionController::RecordIdentifier.singular_class_name(self)
+  end
+  
   def file_name
     "#{name}.#{format}.#{handler}"
   end
   
   def display_name
     self.class.display_name(file_name)
-  end  
-  
+  end
+    
   def write_file_to_disk
     if respond_to?(:file_path) && !file_path.blank?
       FileUtils.mkpath(File.dirname(file_path))
@@ -78,5 +81,4 @@ class DynamicView < ActiveRecord::Base
     self.publish_on_save = true
   end
   
-end
 end

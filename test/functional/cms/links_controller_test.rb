@@ -17,7 +17,7 @@ class LinksControllerTest < ActionController::TestCase
 
   def test_create
     link_count = Link.count
-    post :create, :link => { :name => "Test", :url => "http://www.example.com" }, :section_id => root_section.id
+    post :create, :cms_link => { :name => "Test", :url => "http://www.example.com" }, :section_id => root_section.id
     
     assert_redirected_to root_section
     assert_incremented link_count, Link.count
@@ -28,7 +28,7 @@ class LinksControllerTest < ActionController::TestCase
 
     get :edit, :id => @link.id
     assert_response :success
-    assert_select "#link_url[value=?]", "http://v1.example.com"
+    assert_select "#cms_link_url[value=?]", "http://v1.example.com"
   end
 
   def test_edit_draft
@@ -39,13 +39,13 @@ class LinksControllerTest < ActionController::TestCase
 
     get :edit, :id => @link.id
     assert_response :success
-    assert_select "#link_url[value=?]", "http://v2.example.com"
+    assert_select "#cms_link_url[value=?]", "http://v2.example.com"
   end
 
   def test_update
     create_link
     
-    put :update, :link => { :name => "Test Updated", :url => "http://www.updated-example.com" }, :id => @link.id
+    put :update, :cms_link => { :name => "Test Updated", :url => "http://www.updated-example.com" }, :id => @link.id
     reset(:link)
 
     assert_redirected_to @link.section

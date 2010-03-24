@@ -1,7 +1,6 @@
 #This is meant to be extended by other controller
 #Provides basic Restful CRUD
-module Cms
-class ResourceController < Cms::BaseController
+class Cms::ResourceController < Cms::BaseController
 
   def index
     instance_variable_set("@#{variable_name.pluralize}", resource.all(:order => order_by_column))
@@ -12,7 +11,7 @@ class ResourceController < Cms::BaseController
   end
 
   def create
-    @object = build_object(params[variable_name])
+    @object = build_object(params["cms_#{variable_name}"])
     if @object.save
       flash[:notice] = "#{resource_name.singularize.titleize} '#{object_name}' was created"
       redirect_to after_create_url
@@ -36,7 +35,7 @@ class ResourceController < Cms::BaseController
 
   def update
     @object = resource.find(params[:id])
-    if @object.update_attributes(params[variable_name])
+    if @object.update_attributes(params["cms_#{variable_name}"])
       flash[:notice] = "#{resource_name.singularize.titleize} '#{object_name}' was updated"
       redirect_to after_update_url
     else
@@ -108,5 +107,4 @@ class ResourceController < Cms::BaseController
     'cms/blocks/edit'
   end
 
-end
 end

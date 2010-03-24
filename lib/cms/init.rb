@@ -11,9 +11,7 @@ module Cms
     def version
       @version = SPEC.version.version
     end
-    
-    def build_number; 252 end
-    
+
     def load_rake_tasks
       load "#{Cms.root}/lib/tasks/cms.rake"
     end
@@ -26,7 +24,11 @@ module Cms
       ActionController::Base.append_view_path Cms::DynamicView.base_path
       ActionView::Base.default_form_builder = Cms::FormBuilder
       
-      # This is jsut to be safe
+      # ActiveRecord JDBC adapter depends on no database connection having
+      # been established to work properly.
+      require 'jdbc_adapter' if defined?(JRUBY_VERSION)
+      
+      # This is just to be safe
       # dynamic views are stored in a tmp dir
       # so they could be blown away on a server restart or something
       # so this just makes sure they get written out
@@ -47,6 +49,21 @@ module Cms
     
     def add_to_rails_paths(path)
       ActiveSupport::Dependencies.load_paths << File.join(path, "app", "portlets")
+    end
+
+    def add_to_routes(route)
+      routes << route
+    end
+    def routes
+      @routes ||=[]
+    end
+
+    def wysiwig_js
+      @wysiwig_js ||= ['/bcms/ckeditor/ckeditor.js', '/bcms/ckeditor/editor.js']
+    end
+
+    def wysiwig_js=(path_array)
+      @wysiwig_js = path_array
     end
     
     def markdown?

@@ -1,8 +1,7 @@
 require 'digest/sha1'
 require 'fileutils'
 
-module Cms
-class Attachment < ActiveRecord::Base
+class Cms::Attachment < ActiveRecord::Base
 
   #----- Macros ----------------------------------------------------------------
 
@@ -191,5 +190,4 @@ class Attachment < ActiveRecord::Base
     self.updated_at = Time.now
   end
 
-end
 end

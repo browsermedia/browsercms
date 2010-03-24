@@ -11,7 +11,7 @@ class SectionsControllerTest < ActionController::TestCase
   def test_edit
     get :edit, :id => root_section.to_param
     assert_response :success
-    assert_select "input[name=?][value=?]", "section[name]", root_section.name
+    assert_select "input[name=?][value=?]", "cms_section[name]", root_section.name
   end
   
   test "GET new should set the groups to the parent section's groups by default" do
@@ -24,7 +24,7 @@ class SectionsControllerTest < ActionController::TestCase
   def test_update
     @section = Factory(:section, :name => "V1", :parent => root_section, :groups => root_section.groups)
     
-    put :update, :id => @section.to_param, :section => {:name => "V2"}
+    put :update, :id => @section.to_param, :cms_section => {:name => "V2"}
     reset(:section)
     
     assert_redirected_to @section
@@ -193,7 +193,7 @@ class SectionsControllerPermissionsTest < ActionController::TestCase
     expected_groups = @editable_section.groups
     login_as(@user)
     RAILS_DEFAULT_LOGGER.warn("starting...")
-    put :update, :id => @editable_section, :section => {:name => "new name", :group_ids => [@group, @group2]}
+    put :update, :id => @editable_section, :cms_section => {:name => "new name", :group_ids => [@group, @group2]}
     assert_response :redirect
     assert_equal expected_groups, assigns(:section).groups
     assert_equal "new name", assigns(:section).name
@@ -208,7 +208,7 @@ class SectionsControllerPermissionsTest < ActionController::TestCase
     @group2 = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
     expected_groups = [@group, @group2]
     login_as_cms_admin
-    put :update, :id => @editable_subsection, :section => {:name => "new name", :group_ids => [@group, @group2]}
+    put :update, :id => @editable_subsection, :cms_section => {:name => "new name", :group_ids => [@group, @group2]}
     assert_response :redirect
     assert_equal expected_groups, assigns(:section).groups
   end

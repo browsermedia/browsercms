@@ -1,5 +1,4 @@
-module Cms
-class Connector < ActiveRecord::Base
+class Cms::Connector < ActiveRecord::Base
   belongs_to :page, :class_name => 'Cms::Page'
   belongs_to :connectable, :polymorphic => true 
   
@@ -78,5 +77,4 @@ class Connector < ActiveRecord::Base
 
     false
   end
-end
 end

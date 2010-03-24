@@ -1,7 +1,6 @@
 require 'digest/sha1'
 
-module Cms
-class User < ActiveRecord::Base
+class Cms::User < ActiveRecord::Base
   include Cms::Authentication::Model
 
   validates_presence_of     :login
@@ -19,7 +18,7 @@ class User < ActiveRecord::Base
   has_many :groups, :through => :user_group_memberships, :class_name => 'Cms::Group'
   has_many :tasks, :foreign_key => "assigned_to_id", :class_name => 'Cms::Task'
     
-  named_scope :active, :conditions => {:expires_at => nil }
+  named_scope :active, :conditions => ["expires_at IS NULL OR expires_at > ?", Time.now.utc]    
   named_scope :able_to_edit_or_publish_content, 
     :include => {:groups => :permissions}, 
     :conditions => ["permissions.name = ? OR permissions.name = ?", "edit_content", "publish_content"]
@@ -79,6 +78,14 @@ class User < ActiveRecord::Base
 
   def full_name_with_login
     "#{full_name} (#{login})"
+  end
+
+  def full_name_or_login
+    if full_name.strip.blank?
+      login
+    else
+      full_name
+    end
   end
 
   # This is to show a formated date on the input form. I'm unsure that
@@ -159,5 +166,4 @@ class User < ActiveRecord::Base
     able_to?(:edit_content, :publish_content)
   end
   
-end
 end

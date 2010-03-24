@@ -80,8 +80,8 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000364">is_renderable</a>&nbsp;&nbsp;
-      <a href="#M000363">renderable?</a>&nbsp;&nbsp;
+      <a href="#M000406">is_renderable</a>&nbsp;&nbsp;
+      <a href="#M000405">renderable?</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -112,60 +112,60 @@
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000364" class="method-detail">
-        <a name="M000364"></a>
+      <div id="method-M000406" class="method-detail">
+        <a name="M000406"></a>
 
         <div class="method-heading">
-          <a href="#M000364" class="method-signature">
+          <a href="#M000406" class="method-signature">
           <span class="method-name">is_renderable</span><span class="method-args">(options={})</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000364-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000364-source">
+            onclick="toggleCode('M000406-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000406-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/rendering.rb, line 34</span>
-34:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">is_renderable</span>(<span class="ruby-identifier">options</span>={})
-35:       
-36:           <span class="ruby-ivar">@instance_variable_name_for_view</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:instance_variable_name_for_view</span>]
-37:       
-38:           <span class="ruby-identifier">extend</span> <span class="ruby-constant">ClassMethods</span>
-39:           <span class="ruby-identifier">include</span> <span class="ruby-constant">InstanceMethods</span>
-40:       
-41:           <span class="ruby-identifier">include</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">Helpers</span>
-42:           <span class="ruby-identifier">include</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">RequestForgeryProtection</span>
-43: 
-44:           <span class="ruby-identifier">helper</span> <span class="ruby-constant">ApplicationHelper</span>      
-45:       
-46:           <span class="ruby-identifier">attr_accessor</span> <span class="ruby-identifier">:controller</span>
-47:           <span class="ruby-identifier">delegate</span> <span class="ruby-identifier">:params</span>, <span class="ruby-identifier">:session</span>, <span class="ruby-identifier">:request</span>, <span class="ruby-identifier">:flash</span>, <span class="ruby-identifier">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:controller</span>
-48:       
-49:         <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/rendering.rb, line 33</span>
+33:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">is_renderable</span>(<span class="ruby-identifier">options</span>={})
+34:       
+35:           <span class="ruby-ivar">@instance_variable_name_for_view</span> = <span class="ruby-identifier">options</span>[<span class="ruby-identifier">:instance_variable_name_for_view</span>]
+36:       
+37:           <span class="ruby-identifier">extend</span> <span class="ruby-constant">ClassMethods</span>
+38:           <span class="ruby-identifier">include</span> <span class="ruby-constant">InstanceMethods</span>
+39:       
+40:           <span class="ruby-identifier">include</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">Helpers</span>
+41:           <span class="ruby-identifier">include</span> <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">RequestForgeryProtection</span>
+42: 
+43:           <span class="ruby-identifier">helper</span> <span class="ruby-constant">ApplicationHelper</span>      
+44:       
+45:           <span class="ruby-identifier">attr_accessor</span> <span class="ruby-identifier">:controller</span>
+46:           <span class="ruby-identifier">delegate</span> <span class="ruby-identifier">:params</span>, <span class="ruby-identifier">:session</span>, <span class="ruby-identifier">:request</span>, <span class="ruby-identifier">:flash</span>, <span class="ruby-identifier">:to</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">:controller</span>
+47:       
+48:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000363" class="method-detail">
-        <a name="M000363"></a>
+      <div id="method-M000405" class="method-detail">
+        <a name="M000405"></a>
 
         <div class="method-heading">
-          <a href="#M000363" class="method-signature">
+          <a href="#M000405" class="method-signature">
           <span class="method-name">renderable?</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000363-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000363-source">
+            onclick="toggleCode('M000405-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000405-source">
 <pre>
-    <span class="ruby-comment cmt"># File lib/cms/behaviors/rendering.rb, line 31</span>
-31:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">renderable?</span>
-32:           <span class="ruby-keyword kw">false</span>
-33:         <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File lib/cms/behaviors/rendering.rb, line 30</span>
+30:         <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">renderable?</span>
+31:           <span class="ruby-keyword kw">false</span>
+32:         <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

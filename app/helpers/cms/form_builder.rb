@@ -133,8 +133,10 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
   #                                                                               
   def cms_template_editor(method, options={})
     if object.class.render_inline
+
       # Set some defaults
-      @object.send("#{method}=", @object.class.default_template)
+      options[:default_value] = @object.class.default_template
+      set_default_value!(method, options)
       options[:default_handler] = "erb" unless options[:default_handler]
 
       cms_options = options.extract!(:label, :instructions)

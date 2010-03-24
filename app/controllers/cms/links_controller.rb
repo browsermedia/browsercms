@@ -1,17 +1,16 @@
-module Cms
-class LinksController < Cms::BaseController
+class Cms::LinksController < Cms::BaseController
 
   before_filter :set_toolbar_tab
   before_filter :load_section, :only => [:new, :create, :move_to]
-  before_filter :load_link, :only => [:destroy]
-  before_filter :load_draft_link, :only => [:edit, :update]
+  before_filter :load_link, :only => [:destroy, :update]
+  before_filter :load_draft_link, :only => [:edit]
   
   def new
     @link = Link.new(:section => @section)
   end
 
   def create
-    @link = Link.new(params[:link])
+    @link = Link.new(params[:cms_link])
     @link.section = @section
     if @link.save
       flash[:notice] = "Link was '#{@link.name}' created."
@@ -22,7 +21,7 @@ class LinksController < Cms::BaseController
   end
   
   def update
-    if @link.update_attributes(params[:link])
+    if @link.update_attributes(params[:cms_link])
       flash[:notice] = "Link '#{@link.name}' was updated"
       redirect_to @link.section
     else
@@ -65,5 +64,4 @@ class LinksController < Cms::BaseController
       @toolbar_tab = :sitemap
     end
 
-end
 end

@@ -1,5 +1,4 @@
-module Cms
-class PagePartial < Cms::DynamicView
+class Cms::PagePartial < Cms::DynamicView
   
   before_validation :prepend_underscore
   
@@ -20,5 +19,4 @@ class PagePartial < Cms::DynamicView
     end
   end
   
-end
 end

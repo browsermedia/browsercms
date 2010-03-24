@@ -1,0 +1,477 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Understanding Content Blocks</title>
+    <link rel="stylesheet" type="text/css" href="files/stylesheets/syntax.css" />
+    <script type="text/javascript" src="files/javascripts/code_highlighter.js"></script>
+    <script type="text/javascript" src="files/javascripts/highlighters.js"></script>
+    <style type="text/css">
+      body {
+        background: #FFFFFF url(images/bg.png) repeat-x scroll 0 0;
+        font-family: "Trebuchet MS", Helvetica, Verdana, Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+  
+      #page {
+        margin: 0 auto;
+        text-align: left;
+        width: 1000px;
+      }
+  
+      #header {
+        height: 110px;
+      }
+  
+      div.top_cap {
+        background: transparent url(images/top_cap.png) no-repeat scroll 0 0;
+        height: 10px;
+      }    
+  
+      #contentwrap {
+        background: transparent url(images/dot.png) repeat scroll 0 0;
+        float: left;
+        width: 1000px;
+      }
+      
+      div.bottom_cap {
+        background: transparent url(images/bottom_cap.png) no-repeat scroll 0 0;
+        height: 9px;
+      }
+
+      div.top_cap_content {
+        background: transparent url(images/top_cap_content.png) no-repeat scroll 0 0;
+        height: 5px;
+      }
+  
+      #content {
+        background-color: #FFFFFF;
+        margin: 0 5px;
+        padding: 0 10px;
+      }
+  
+      div.title {
+        padding: 20px;
+      }
+  
+      div.title h1 {
+        border-bottom: 3px solid #505358;
+        color: #FFFFFF;
+        font-size: 24pt;
+        font-weight: normal;
+        line-height: 1;
+        margin: 0 0 10px;
+        padding-bottom: 10px;
+      }
+      
+      td.sidebar {
+        font-size: 8pt;
+        width: 165px;
+        padding: 5px;
+      }
+      
+      td.sidebar ol {
+        margin-left: 20px;
+        padding: 0;
+        line-height: 1.5;
+      }
+      
+      td.sidebar ol li {
+        margin: 0;
+        padding: 0;
+      }
+      
+      td.sidebar ol li ul {
+        list-style-type: none;
+        padding-left: 10px;
+      }
+      
+      td.guides {
+        font-size: 10pt;
+        width: 800px;
+        padding: 10px;
+      }
+      
+      .code_container {
+        padding: 10px;
+        background: #eee;
+        border: 1px solid #ccc;
+        overflow: auto;
+        width: 760px;
+      }
+      
+      pre, code {
+        overflow: auto;
+        white-space:pre;        
+      }
+      .note {
+	-moz-background-clip:border;
+	-moz-background-inline-policy:continuous;
+	-moz-background-origin:padding;
+	background:#FFF9D8 url(../images/tab_note.gif) no-repeat scroll left top;
+	border:medium none;
+	margin:0.25em 0 1.5em;
+	padding:1em 1em 0.25em 48px;
+	}
+    </style>
+  </head>
+  <body>
+    <div id="page">
+      <div id="header">
+        <a href="index.html"><img style="border:0px" src="images/browsercms_logo.png" alt="BrowserCMS"/></a>
+      </div>
+      <div id="main">
+        <div class="top_cap"></div>
+        <div id="contentwrap">
+          <div class="title">
+            <h1>Understanding Content Blocks</h1>
+          </div>
+          <div class="top_cap_content"></div>
+          <div id="content">
+            <table width="100%" cellpadding="0" cellspacing="0" border="0">
+              <tr>                
+                <td class="sidebar" valign="top">
+                        <div id="subCol">
+        <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
+        <ol class="chapters">
+<li><a href="#generating-a-new-content-block">Generating a new Content Block</a><ul><li><a href="#generated-files">Generated files</a></li><li><a href="#migrating-the-database">Migrating the database</a></li><li><a href="#viewing-the-user-interface">Viewing the User Interface</a></li></ul></li><li><a href="#available-attributes">Available Attributes</a><ul><li><a href="#examples">Examples</a></li><li><a href="#gotchas">Gotchas</a></li><li><a href="#other-attributes">Other Attributes</a></li></ul></li><li><a href="#validations">Validations</a><ul></ul></li><li><a href="#customizing-the-form">Customizing the Form</a><ul></ul></li><li><a href="#changing-the-view">Changing the View</a><ul></ul></li><li><a href="#adding-more-attributes">Adding more attributes</a><ul><li><a href="#adding-a-content-column-via-migration">Adding a content column via migration</a></li><li><a href="#add-field-to-form">Add Field to Form</a></li></ul></li><li><a href="#renaming-content-types">Renaming Content Types</a><ul></ul></li><li><a href="#grouping-related-blocks">Grouping Related Blocks</a><ul><li><a href="#adding-a-second-block-to-store-group">Adding a Second Block to &#8216;Store&#8217; Group</a></li></ul></li><li><a href="#associations-between-blocks">Associations between Blocks</a><ul></ul></li><li><a href="#field-types">Field Types</a><ul><li><a href="#select--cms-drop-down">Select / <tt>cms_drop_down</tt></a></li><li><a href="#attachments--cms-file-field">Attachments / <tt>cms_file_field</tt></a></li></ul></li><li><a href="#controllers">Controllers</a><ul><li><a href="#public-controllers">Public Controllers</a></li></ul></li></ol></div>
+                </td>
+                <td class="guides">
+                  <h2>Understanding Content Blocks</h2>
+<p>This guide covers how developers can create content blocks. It covers the following concepts:</p>
+<ul>
+	<li>Generating a new Block</li>
+	<li>Attributes</li>
+	<li>Migrations</li>
+	<li>Grouping related Content Blocks</li>
+</ul>
+<p>This guide is for BrowserCMS <strong>3.1</strong>. Some code shown here may not work with older versions of BrowserCMS.</p>
+                  <h3 id="generating-a-new-content-block">1 Generating a new Content Block</h3>
+<p>New blocks can be creating using their own generator. For this guide, we will start by creating a Product block. This
+will represent a single product that users can browse and purchase for. <span class="caps">CMS</span> users will be able create new products via a
+generated user interface. Products can be place on pages as content, or fetched by Portlets based on specific criteria.</p>
+<p>Run the following command:</p>
+<div class="code_container"><code class="html">$ script/generate content_block Product name:string price:integer description:html</code></div>
+<p>This generates the Content Block with several attributes. We will cover a list of available attributes later.</p>
+<h4 id="generated-files">1.1 Generated files</h4>
+<p>The generator creates a number of files, as well as modify the routes.rb file to add the new routes for modifying Products.</p>
+<table>
+	<tr>
+		<th>File </th>
+		<th>Purpose </th>
+	</tr>
+	<tr>
+		<td> app/models/product.rb </td>
+		<td> The Product content block (i.e. the model) </td>
+	</tr>
+	<tr>
+		<td> db/migrate/20100127012201_create_products.rb </td>
+		<td> Migration to create the product tables (The timestamps will vary) </td>
+	</tr>
+	<tr>
+		<td> app/controllers/cms/products_controller.rb </td>
+		<td> Controller to modify products </td>
+	</tr>
+	<tr>
+		<td> app/views/cms/products/_form.html.erb </td>
+		<td> Partial for the form to edit Products </td>
+	</tr>
+	<tr>
+		<td> app/views/cms/products/render.html.erb </td>
+		<td> View for rendering a Product </td>
+	</tr>
+	<tr>
+		<td> test/unit/models/product_test.rb </td>
+		<td> Unit test for the Product model </td>
+	</tr>
+	<tr>
+		<td> test/functional/cms/products_controller_test.rb </td>
+		<td> Functional test for the Product Controller </td>
+	</tr>
+	<tr>
+		<td> config/routes.rb </td>
+		<td> Edited to add routing information for Products </td>
+	</tr>
+</table>
+<h4 id="migrating-the-database">1.2 Migrating the database</h4>
+<p>After generating the content block, you will need to run the migration to add the product tables. Run the following at your terminal:</p>
+<div class="code_container"><code class="html">$ rake db:migrate</code></div>
+<p>This will create several tables and registers the new Product in the UI. You should not need to restart your server if
+its already running to use the admin interface.</p>
+<h4 id="viewing-the-user-interface">1.3 Viewing the User Interface</h4>
+<p>After creating the model, you can review the basic user interface that has been generated to add and edit products. In
+the <span class="caps">CMS</span> UI, you can go directly to <tt>/cms/products</tt>. This is the index page for products, which will list all instances of
+your Product models in the database. As we have just created this block, there should be none in the database.</p>
+<p>Click on the <em>Add New Content</em> button, which will bring up the form to add a new instance of a Product. This form will have three form fields for the three attributes we specified in our generator, name, price and description. The form fields available on this page are determined by what is in the +app/views/cms/products/_form.html.erb, which will cover later.</p>
+<p>Fill in some data for each of these three fields and click the <em>Save and Publish</em> button. You will now be looking at a view of the product you just added. Each product has a default way of showing it&#8217;s data to the world, which is defined in the <tt>app/views/cms/products/render.html.erb</tt> file. When a block is first generated, it will just list it&#8217;s attributes. However, as you will see later, you can edit that file to change how it&#8217;s displayed. On this page (<tt>/cms/products/1</tt>) you are seeing a product by itself, but since any block can be added to a page, the <tt>render.html.erb</tt> determines how it will look.</p>
+<h3 id="available-attributes">2 Available Attributes</h3>
+<p>Blocks are really just ActiveRecord models, and they will support all of the same attribute or column types that Rails model or migrations do. Each attribute will be mapped to a column in the <tt>products</tt> table and will have a form field to allow users to edit it. Here is a list of the commonly used attributes. Not all attributes can be specified via the generator, though they can be added to blocks later. These attribute</p>
+<table>
+	<tr>
+		<th>Generator </th>
+		<th>Migration </th>
+		<th>Field </th>
+		<th>Description </th>
+	</tr>
+	<tr>
+		<td> string </td>
+		<td> string </td>
+		<td> cms_text_field </td>
+		<td> A single line text field allowing for basic text entry. </td>
+	</tr>
+	<tr>
+		<td> text </td>
+		<td> text </td>
+		<td> cms_text_area </td>
+		<td> A multiline text area for basic text. </td>
+	</tr>
+	<tr>
+		<td> integer </td>
+		<td> integer </td>
+		<td> cms_text_field </td>
+		<td> See <tt>string</tt> </td>
+	</tr>
+	<tr>
+		<td> decimal </td>
+		<td> decimal </td>
+		<td> cms_text_field </td>
+		<td> See <tt>string</tt> </td>
+	</tr>
+	<tr>
+		<td> boolean </td>
+		<td> boolean </td>
+		<td> cms_check_box </td>
+		<td> A single check box </td>
+	</tr>
+	<tr>
+		<td> date </td>
+		<td> date </td>
+		<td> cms_date_picker </td>
+		<td> A javascript popup date picker that lets you select date from a mini calendar </td>
+	</tr>
+	<tr>
+		<td> datetime </td>
+		<td> datetime </td>
+		<td> cms_datetime_select </td>
+		<td> A widget to choose month, day, year and time using several select boxes </td>
+	</tr>
+	<tr>
+		<td> category </td>
+		<td> belongs_to :category </td>
+		<td> cms_drop_down </td>
+		<td> A styled select to choose any Category associated with the block </td>
+	</tr>
+	<tr>
+		<td> html </td>
+		<td> text (64.kilobytes + 1) </td>
+		<td> cms_text_editor </td>
+		<td> A <span class="caps">WYSIWYG</span> Html Editor </td>
+	</tr>
+	<tr>
+		<td> attachment </td>
+		<td> belongs_to :attachment </td>
+		<td> cms_file_field </td>
+		<td> A File Browse button to upload files into the repository. </td>
+	</tr>
+	<tr>
+		<td> NA </td>
+		<td> NA </td>
+		<td> cms_tag_list </td>
+		<td> A text area that can be used to associate blocks with Tags (many to many) </td>
+	</tr>
+	<tr>
+		<td> NA </td>
+		<td> integer </td>
+		<td> cms_drop_down </td>
+		<td> A styled select to handle creating belongs_to relationship with other blocks </td>
+	</tr>
+</table>
+<p><strong>Table Key</strong></p>
+<ul>
+	<li>Generator &#8211; What is specified the generator (i.e. name:string)</li>
+	<li>Migration &#8211; The migration column type that Rails will use to generate the table.</li>
+	<li>Field &#8211; The name of the default Form Field method which is generated to allows users to edit that attribute.</li>
+	<li>Description &#8211; The basic purpose of the form field.</li>
+</ul>
+<h4 id="examples">2.1 Examples</h4>
+<p>Here are some examples of potential usages for generating blocks, using the generator.</p>
+<div class="code_container"><code class="html">$ script/generate content_block Meeting name:string active:boolean start_date:date end_time:datetime
+$ script/generate content_block photo attachment:attachment on_shelf:category</code></div>
+<h4 id="gotchas">2.2 Gotchas</h4>
+<ul>
+	<li>Specifying the <tt>name</tt> attribute is optional. It will be included automatically if you don&#8217;t specify it.</li>
+	<li>Any block can only ever have one attribute of type &#8216;Attachment&#8217;. The field name must be &#8216;Attachment&#8217;, though you can change the label shown on the form field.</li>
+</ul>
+<h4 id="other-attributes">2.3 Other Attributes</h4>
+<p>This list of attributes isn&#8217;t comprehensive and any migration attribute supported by Rails may work. The content_block generator will just pass the attribute to the migration and use a <tt>cms_text_field</tt> to edit the attribute.</p>
+<h3 id="validations">3 Validations</h3>
+<p>Since content blocks are just still ActiveRecord objects, you can use any Rails Validations to enforce the data validity. Let&#8217;s add one to our Product. Edit the app/models/product.rb file. It should look like this:</p>
+<div class="code_container"><code class="ruby">class Product &lt; ActiveRecord::Base
+  acts_as_content_block
+end</code></div>
+<p>Let&#8217;s assume we want to require that users will specify a price when they add a new product. Add the following to the block.</p>
+<div class="code_container"><code class="ruby">class Product &lt; ActiveRecord::Base
+   validates_presence_of :price
+end</code></div>
+<p>Then open up <tt>/cms/products</tt> in your browser and click <em>Add New Content</em>. Leave the price empty and try to save the block. The <span class="caps">CMS</span> will check the product has a price, and will display an error message if it&#8217;s not included. It will also highlight the field to indicate where the error is.</p>
+<p>See the <a href="http://guides.rubyonrails.org/activerecord_validations_callbacks.html#validations-overview">ActiveRecord Validation</a> Guide for a more detailed list of supported validations.</p>
+<h3 id="customizing-the-form">4 Customizing the Form</h3>
+<p>The form created for us is good enough, but suppose we want change it up a bit. For example, I would like to add some instructions to our price field to indicated that it&#8217;s a required integer (whole dollars only) and put it last in the order. We can do this by editing the <tt>app/views/cms/_form.html.erb</tt> partial.</p>
+<p>Here&#8217;s what our Form looks like:</p>
+<div class="code_container"><code class="html">&lt;%= f.cms_text_field :name %&gt;
+&lt;%= f.cms_text_field :price %&gt;
+&lt;%= f.cms_text_editor :description %&gt;</code></div>
+<p>Switching the order is easy. Just move the :price line after the :description line. There is also an easy way to add instructions to any given field by adding a :instructions option to it. Change the <tt>_form.html.erb</tt> to the following:</p>
+<div class="code_container"><code class="html">&lt;%= f.cms_text_field :name %&gt;
+&lt;%= f.cms_text_editor :description %&gt;
+&lt;%= f.cms_text_field :price, :instructions=&gt;&quot;Required. Must be an integer (i.e. 1, not 1.0)&quot; %&gt;</code></div>
+<p>Refresh the <tt>/cms/products/new</tt> page to see the changes to the form. The price field show now appear last and will have helpful instructions written out below the text field. All form fields should support an <tt>:instructions</tt> option.</p>
+<h3 id="changing-the-view">5 Changing the View</h3>
+<p>As mentioned before, each content block has a single view that will be used to render the <span class="caps">HTML</span> when this product is placed directly on a page. For our Product block, this file is <tt>app/views/cms/products/render.html.erb</tt>. Open up that file and you should see the following:</p>
+<div class="code_container"><code class="html">&lt;p&gt;&lt;b&gt;Name:&lt;/b&gt; &lt;%= @content_block.name %&gt;&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Price:&lt;/b&gt; &lt;%= @content_block.price %&gt;&lt;/p&gt;
+&lt;p&gt;&lt;b&gt;Description:&lt;/b&gt; &lt;%= @content_block.description %&gt;&lt;/p&gt;</code></div>
+<p>This is a reasonable start, but its likely you will want to change this if you start placing Products onto pages. Let&#8217;s go ahead and alter this file to see how it works. Alter it to match the following:</p>
+<div class="code_container"><code class="html">&lt;p&gt;&lt;b&gt;&lt;%= @content_block.name %&gt;&lt;/b&gt; $&lt;%= @content_block.price %&gt;.00&lt;/p&gt;
+&lt;p&gt;&lt;%= @content_block.description %&gt;&lt;/p&gt;</code></div>
+<p>Then open the <tt>/cms/products/1</tt> <span class="caps">URL</span> in your browser and see what a single product looks like. This isn&#8217;t the only way to alter how a block looks, as Portlets can also find and display blocks using different views. And if you don&#8217;t plan to use Products individually, you can likely skip this step and just build the portlets you need.</p>
+<h3 id="adding-more-attributes">6 Adding more attributes</h3>
+<p>When working with blocks, its easiest if you know all your attributes before you generate the block. However, you can still add additional attributes after you have generated the block. To add a new field to a block, you will need to make the following changes:</p>
+<ul>
+	<li>Add the attribute via a migration.</li>
+	<li>Add the field to the form.</li>
+</ul>
+<p>Let&#8217;s update our Product to add a Size attribute, which will be a drop down where users can choose S, M, L and XL.</p>
+<h4 id="adding-a-content-column-via-migration">6.1 Adding a content column via migration</h4>
+<p>To add a column to an existing block, run the following command:</p>
+<div class="code_container"><code class="html">$ script/generate migration update_products</code></div>
+<p>This will generate a single file <tt>db/migrate/20100129000441_update_products.rb</tt>. Open up that file, alter it to match the following:</p>
+<div class="code_container"><code class="ruby">class UpdateProducts &lt; ActiveRecord::Migration
+  def self.up    
+    add_content_column :products, :size, :string    
+  end
+
+  def self.down
+    remove_column :products, :size
+    remove_column :product_versions, :size
+  end
+end</code></div>
+<p>BrowserCMS adds a new migration method called <tt>add_content_column</tt>, which you can use to add the column to the correct tables. Run <tt>rake db:migrate</tt> to add the column to the database.</p>
+<div class='note'><p>One of the differences between a typical Rails Active Record and a <span class="caps">CMS</span> Content Block is that content blocks are versioned, meaning they keep track of every change made to them. To do this requires an additional table to keep all the older states. For example, there are two tables for our Product, <tt>products</tt> and <tt>product_versions</tt>. So when you add a new column, it must be added to both tables, which <tt>add_content_column</tt> does for you.</p></div>
+<h4 id="add-field-to-form">6.2 Add Field to Form</h4>
+<p>We want to add a selectbox to the form which will allow our user to choose from S, M, L or XL. Open the <tt>app/views/cms/products/_form.html.erb</tt> and add a new field <tt>cms_drop_down</tt> like this:</p>
+<div class="code_container"><code class="html">&lt;%= f.cms_text_field :name %&gt;
+&lt;%= f.cms_drop_down :size, [&quot;S&quot;, &quot;M&quot;, &quot;L&quot;, &quot;XL&quot;] %&gt;
+&lt;%= f.cms_text_editor :description %&gt;
+&lt;%= f.cms_text_field :price, :instructions=&gt;&quot;Required. Must be an integer (i.e. 1, not 1.0)&quot; %&gt;</code></div>
+<p>This will render a styled select box which will present the four choices and store the value as a string. Open <tt>/cms/products/new</tt> and you should see the following:</p>
+<p><img src="images/content_blocks/add_field_to_form.png" alt="" /></p>
+<h3 id="renaming-content-types">7 Renaming Content Types</h3>
+<p>When you generate a content block, by default it will use the name of the class as the &#8216;Display Name&#8217; through out the user interface. In the content library in the content type menu you see &#8216;Products&#8217; and the page says &#8216;View Product&#8217;. In some cases, the name of the class may be different that how you want it displayed, or you might want to relabel it without rewriting your code.</p>
+<p>You can set the display_name of a given content type by defining a new method in your block. Suppose we wanted to rename our <tt>Product</tt> Block from &#8220;Product&#8221; to &#8220;Book&#8221; throughout the UI. Edit the <tt>app/model/product.rb</tt> to add the following method.</p>
+<div class="code_container"><code class="ruby">class Product &lt; ActiveRecord::Base
+  # ...
+  def self.display_name
+    &quot;Book&quot;
+  end
+end</code></div>
+<p>BrowserCMS will use whatever value is returned by <tt>display_name</tt> in the UI for singular labels (i.e. Add New Book). It will automatically pluralize <tt>display_name</tt> as well. If you want to explicitly set the plural form of your block, you can do so by adding the following method to the block.</p>
+<div class="code_container"><code class="ruby">class Product &lt; ActiveRecord::Base
+  # ...
+  def self.display_name_plural
+    &quot;Bookz&quot;
+  end
+end</code></div>
+<div class='note'><p>This will not change the path to manage the block. I.e. even after change from &#8220;Product&#8221; to &#8220;Book&#8221;, the route for viewing a Product will be <tt>/cms/products/1</tt>, not <tt>/cms/books/1</tt>.</p></div>
+<h3 id="grouping-related-blocks">8 Grouping Related Blocks</h3>
+<p>As you define new Content Blocks in your project, you will notice that each new one will appear in its own group on the Content Types menu of the Content Library. By default, each Block will be assigned to its own group. It&#8217;s often a good idea to group several related Content Blocks together into a single group to keep users understand which types belong together. Open the <tt>db/migrate/20100128194303_create_products.rb</tt> migration file, which is where the &#8216;Group&#8217; name is set.</p>
+<div class="code_container"><code class="ruby">class CreateProducts &lt; ActiveRecord::Migration
+  def self.up
+	# ...
+    ContentType.create!(:name =&gt; &quot;Product&quot;, :group_name =&gt; &quot;Product&quot;)
+  end
+	# ...
+end</code></div>
+<p>When a new <tt>ContentType</tt> is created, it determines which group_name is used. By default, the group name will be the same as the block name. Change the <tt>:group_name=>"Product"</tt> to <tt>:group_name=>"Store"</tt>, then run the following command to drop and rebuild the database using the migrations <tt>rake db:drop db:create db:migrate</tt></p>
+<div class='note'><p>This technique is an easy way to just toss out all your development data and start over. Often times, its quicker to just edit an existing migration and rerun them all, rather than create a ton of little migrations just for changes to your local database.</p></div>
+<h4 id="adding-a-second-block-to-store-group">8.1 Adding a Second Block to &#8216;Store&#8217; Group</h4>
+<p>Now that we have renamed our Group from &#8216;Product&#8217; to &#8216;Store&#8217;, lets add another block to the &#8216;Store&#8217;. Run the following:</p>
+<div class="code_container"><code class="html">$ script/generate content_block ShippingMethod name:string insured:boolean</code></div>
+<p>Before running the migration, edit the <tt>db/migrate/20100129154902_create_shipping_methods.rb</tt> file to alter the following line:</p>
+<div class="code_container"><code class="ruby">class CreateShippingMethods &lt; ActiveRecord::Migration
+  def self.up
+    # ...
+    ContentType.create!(:name =&gt; &quot;ShippingMethod&quot;, :group_name =&gt; &quot;Store&quot;)
+  end
+
+  # ...
+end</code></div>
+<p>Now run the migration to add the Shipping Method block. Open your browser to <tt>/cms/products</tt> and your Content Types menu should look like this:</p>
+<p><img src="images/content_blocks/add_second_block.png" alt="" /></p>
+<h3 id="associations-between-blocks">9 Associations between Blocks</h3>
+<p>Since Content Blocks are Active Record objects, they can be associated with each other like any models can. This includes the commonly used <tt>belongs_to</tt> and <tt>has_many</tt> associations. You can see the <a href="http://guides.rubyonrails.org/association_basics.html">Active Record Associations Guide</a> for details on how associations work.</p>
+<p>When you associate Content Blocks, you will need to determine how you allow users to edit content. For instance, if our <tt>Product</tt> had a <tt>belongs_to</tt> relationship with a <tt>Category</tt> object you can use a <tt>cms_drop_down</tt> Field that allows users to select a single category.</p>
+<p>In some cases, you may need to build your own form fields for more complex relationships (Like javascript based controls). You can use the basic Rails <tt>FormBuilder</tt> methods to construct new Fields. To get things to look right (with labels and alignments), you should start with the html used to generate other fields and work backwards from there.</p>
+<div class='note'><p><strong>Understanding Versioning:</strong> It&#8217;s important to recognize how versioning works with respect to related blocks. Versioning will keep track of the state of each block everytime the row is saved, but does not keep track of the relationships between blocks. So if I update our <tt>Product</tt> block, then renamed the <tt>Category</tt> block it&#8217;s related to, reverting that <tt>Product</tt> will not undo the Category name change.</p></div>
+<h3 id="field-types">10 Field Types</h3>
+<p>This section servers as a quick reference of the field types that Content Blocks can have. Fields are the html widgets you use to edit properties on blocks. The complete list of available fields is:</p>
+<ul>
+	<li>Text Fields (<tt>cms_text_field</tt>)</li>
+	<li>Text Areas (<tt>cms_text_area</tt>)</li>
+	<li>Check box (<tt>cms_check_box</tt>)</li>
+	<li>Drop Down / Selects (<tt>cms_drop_down</tt>)</li>
+	<li>Text Editor (<tt>cms_text_editor</tt>)</li>
+	<li>Attachment (<tt>cms_file_field</tt>)</li>
+	<li>Tag List (<tt>cms_tag_list</tt>)</li>
+	<li>Date Picker (<tt>cms_date_picker</tt>)</li>
+	<li>Date Time Select (<tt>cms_datetime_select</tt>)</li>
+</ul>
+<h4 id="select--cms-drop-down">10.1 Select / <tt>cms_drop_down</tt></h4>
+<p>This is similar to the traditional &#8216;select&#8217; helper, it renders a stylized select control which allows users to choose one item from a list.</p>
+<p>In _form.html.erb:</p>
+<div class="code_container"><code class="html">&lt;%= f.cms_drop_down :category_id, Category.all(:order =&gt; &quot;name&quot;).map{|c| [c.name, c.id]},
+                    :prompt =&gt; &quot;Select a Category&quot;, :label =&gt; &quot;Category&quot;,
+                    :instructions=&gt;&quot;Determines which category is used on the homepage.&quot; %&gt;</code></div>
+<p>In product.rb:</p>
+<div class="code_container"><code class="ruby">class Product &lt; ActiveRecord::Base
+    belongs_to :category
+end</code></div>
+<h4 id="attachments--cms-file-field">10.2 Attachments / <tt>cms_file_field</tt></h4>
+<p>Each content block can have a single file attachment, which will allow users to upload files into the content repository. After uploading, the file will be
+stored in a section within the <span class="caps">CMS</span>. Since sections determine permissions, this will allow you to control which users can access the file itself. Attached files
+will have their own versioning history, which will keep track of changes.</p>
+<p>This helper will create a stylized file upload file. An uploaded file will be associated with the content_block to which it is attached.</p>
+<p>In _form.html.erb (View)</p>
+<div class="code_container"><code class="html">&lt;%= f.cms_file_field :attachment_file, :label =&gt; &quot;File&quot; %&gt;</code></div>
+<p>In product.rb (Block)</p>
+<div class="code_container"><code class="ruby">class Product &lt; ActiveRecord::Base
+   acts_as_content_block :belongs_to_attachment =&gt; true
+end</code></div>
+<p>In create_products.rb (Migration)</p>
+<div class="code_container"><code class="ruby">create_content_table :products do |t|
+    t.belongs_to :attachment
+    t.integer :attachment_version
+end</code></div>
+<ol>
+	<li>To Do &#8211; Add additional examples of other Fields (like cms_drop_down with example of relationships)</li>
+</ol>
+<h3 id="controllers">11 Controllers</h3>
+<p>Each block is will also have an associated Controller, which gives it the same <span class="caps">CRUD</span> methods that a typical Rails resource would have, along with a few others (like publishing and reverting). By default, the generated controller inherits all this behavior from <tt>Cms::ContentBlockController</tt> and is therefore pretty empty. Like so:</p>
+<div class="code_container"><code class="ruby">class Cms::ProductsController &lt; Cms::ContentBlockController
+end</code></div>
+<p>If you want to define new methods (or override the existing methods) you can do so by editing this controller.</p>
+<h4 id="public-controllers">11.1 Public Controllers</h4>
+<p>The above controller is intended to handle only admin related actions. If you want to create a controller to use in the front end of your application, create a products controller that is not in the <span class="caps">CMS</span> namespace, so as not to conflict the <span class="caps">CMS</span> functionality.</p>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+        <br clear="all"/>
+        <div class="bottom_cap"></div>
+      </div>
+    </div>
+  </body>
+</html>
+

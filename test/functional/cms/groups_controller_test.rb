@@ -14,7 +14,7 @@ class GroupsControllerTest < ActionController::TestCase
   end
 
   def test_create_cms_group
-    post :create, :group => Factory.attributes_for(:group, :group_type_id => @group_type.id)
+    post :create, :cms_group => Factory.attributes_for(:group, :group_type_id => @group_type.id)
     
     assert_redirected_to :action => "index"    
     
@@ -25,7 +25,7 @@ class GroupsControllerTest < ActionController::TestCase
   end
 
   def test_create_cms_group
-    post :create, :group => Factory.attributes_for(:group, 
+    post :create, :cms_group => Factory.attributes_for(:group, 
       :group_type_id => @group_type.id,
       :permission_ids => [@edit_content.id.to_s, @publish_content.id.to_s])
     
@@ -38,7 +38,7 @@ class GroupsControllerTest < ActionController::TestCase
   end
 
   def test_create_public_group    
-    post :create, :group => Factory.attributes_for(:group, :group_type_id => @public_group_type.id)
+    post :create, :cms_group => Factory.attributes_for(:group, :group_type_id => @public_group_type.id)
     
     assert_redirected_to :action => "index"
     

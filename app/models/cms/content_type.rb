@@ -1,5 +1,4 @@
-module Cms
-class ContentType < ActiveRecord::Base
+class Cms::ContentType < ActiveRecord::Base
 
   attr_accessor :group_name
   belongs_to :content_type_group, :class_name => 'Cms::ContentTypeGroup'
@@ -51,7 +50,7 @@ class ContentType < ActiveRecord::Base
   end
   
   def display_name
-    model_class.respond_to?(:display_name) ? model_class.display_name : model_class.to_s.titleize
+    model_class.respond_to?(:display_name) ? model_class.display_name : model_class.to_s.demodulize.titleize
   end
 
   def display_name_plural
@@ -62,6 +61,10 @@ class ContentType < ActiveRecord::Base
     m = name.tableize.classify.constantize rescue nil
     m = "Cms::#{name.tableize.classify}".constantize if m == nil
     m
+  end
+  
+  def model_class_form_name
+    ActionController::RecordIdentifier.singular_class_name(model_class)
   end
 
   # Allows models to show additional columns when being shown in a list.
@@ -78,7 +81,7 @@ class ContentType < ActiveRecord::Base
 
   # Used in ERB for pathing
   def content_block_type
-    name.pluralize.underscore
+    ActionController::RecordIdentifier.plural_class_name(model_class)
   end
   
   # This is used for situations where you want different to use a type for the list page
@@ -99,5 +102,4 @@ class ContentType < ActiveRecord::Base
     end
   end
   
-end
 end

@@ -6,15 +6,16 @@ require(File.join(File.dirname(__FILE__), 'config', 'boot'))
 require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
-
 require 'tasks/rails'
+require File.dirname(__FILE__) + "/lib/cms/version.rb"
 
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "browsercms"
-    gem.summary = %Q{BrowserCMS is a general purpose, open source Web Content Management System (CMS), written in Ruby on Rails.}
-    gem.description = %Q{Web Content Management in Rails.}
+    gem.version = Cms::VERSION
+    gem.summary = %Q{BrowserCMS is a general purpose, open source Web Content Management System (CMS) written in Ruby on Rails. Designed for web developers who want to create great looking websites while using standard Rails tools for customizing it. }
+    gem.description = %Q{BrowserCMS is a general purpose, open source Web Content Management System (CMS) written in Ruby on Rails. Designed for web developers who want to create great looking websites while using standard Rails tools for customizing it.}
     gem.email = "github@browsermedia.com"
     gem.homepage = "http://www.browsercms.org"
     gem.authors = ["BrowserMedia"]
@@ -32,7 +33,7 @@ begin
     gem.files += Dir["public/stylesheets/cms/**/*"]
     gem.files += Dir["public/javascripts/jquery*"]
     gem.files += Dir["public/javascripts/cms/**/*"]
-    gem.files += Dir["public/fckeditor/**/*"]
+    gem.files += Dir["public/bcms/**/*"]
     gem.files += Dir["public/site/**/*"]
     gem.files += Dir["public/images/cms/**/*"]
     gem.files += Dir["public/themes/**/*"]
@@ -44,17 +45,7 @@ rescue LoadError
   puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
 end
 
-# These are new tasks
-begin
-  require 'rake/contrib/sshpublisher'
-  namespace :rubyforge do
+# BrowserCMS gem will only be released to Gemcutter/rubygems. No longer going to RubyForge.
+Jeweler::GemcutterTasks.new
 
-    desc "Release gem to RubyForge"
-    task :release => ["rubyforge:release:gem"]
-
-
-  end
-rescue LoadError
-  puts "Rake SshDirPublisher is unavailable or your rubyforge environment is not configured."
-end
 

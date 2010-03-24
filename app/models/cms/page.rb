@@ -1,5 +1,4 @@
-module Cms
-class Page < ActiveRecord::Base
+class Cms::Page < ActiveRecord::Base
   
   is_archivable
   flush_cache_on_change
@@ -272,5 +271,4 @@ class Page < ActiveRecord::Base
     assigned_to == user
   end
   
-end
 end

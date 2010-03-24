@@ -88,12 +88,11 @@
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000014">default_body</a>&nbsp;&nbsp;
-      <a href="#M000015">display_name</a>&nbsp;&nbsp;
-      <a href="#M000011">file_path</a>&nbsp;&nbsp;
-      <a href="#M000013">file_path</a>&nbsp;&nbsp;
-      <a href="#M000016">options</a>&nbsp;&nbsp;
-      <a href="#M000012">relative_path</a>&nbsp;&nbsp;
+      <a href="#M000017">display_name</a>&nbsp;&nbsp;
+      <a href="#M000014">file_path</a>&nbsp;&nbsp;
+      <a href="#M000016">file_path</a>&nbsp;&nbsp;
+      <a href="#M000018">options</a>&nbsp;&nbsp;
+      <a href="#M000015">relative_path</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -101,6 +100,13 @@
 
 
     <!-- if includes -->
+    <div id="includes">
+      <h3 class="section-bar">Included Modules</h3>
+
+      <div id="includes-list">
+        <span class="include-name"><a href="Templates.html">Templates</a></span>
+      </div>
+    </div>
 
     <div id="section">
 
@@ -115,72 +121,25 @@
     <div id="methods">
       <h3 class="section-bar">Public Class methods</h3>
 
-      <div id="method-M000014" class="method-detail">
-        <a name="M000014"></a>
+      <div id="method-M000017" class="method-detail">
+        <a name="M000017"></a>
 
         <div class="method-heading">
-          <a href="#M000014" class="method-signature">
-          <span class="method-name">default_body</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000014-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000014-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/models/page_template.rb, line 17</span>
-17:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">default_body</span>
-18:     <span class="ruby-identifier">html</span> = <span class="ruby-value str">&quot;&lt;!DOCTYPE html PUBLIC \&quot;-//W3C//DTD XHTML 1.0 Transitional//EN\&quot; \&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\&quot;&gt;\n&lt;html xmlns=\&quot;http://www.w3.org/1999/xhtml\&quot; xml:lang=\&quot;en\&quot; lang=\&quot;en\&quot;&gt;\n  &lt;head&gt;\n    &lt;meta http-equiv=\&quot;Content-Type\&quot; content=\&quot;text/html;charset=utf-8\&quot; /&gt;\n    &lt;title&gt;&lt;%= page_title %&gt;&lt;/title&gt;\n    &lt;%= yield :html_head %&gt;\n  &lt;/head&gt;\n  &lt;body&gt;\n    &lt;%= cms_toolbar %&gt;\n    &lt;%= container :main %&gt;\n  &lt;/body&gt;\n&lt;/html&gt;\n&quot;</span>
-19:     <span class="ruby-identifier">html</span>
-20:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000015" class="method-detail">
-        <a name="M000015"></a>
-
-        <div class="method-heading">
-          <a href="#M000015" class="method-signature">
+          <a href="#M000017" class="method-signature">
           <span class="method-name">display_name</span><span class="method-args">(file_name)</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000015-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000015-source">
+            onclick="toggleCode('M000017-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000017-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/page_template.rb, line 36</span>
-36:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">display_name</span>(<span class="ruby-identifier">file_name</span>)
-37:     <span class="ruby-identifier">name</span>, <span class="ruby-identifier">format</span>, <span class="ruby-identifier">handler</span> = <span class="ruby-identifier">file_name</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'.'</span>)
-38:     <span class="ruby-node">&quot;#{name.titleize} (#{format}/#{handler})&quot;</span>
-39:   <span class="ruby-keyword kw">end</span>
-</pre>
-          </div>
-        </div>
-      </div>
-
-      <div id="method-M000013" class="method-detail">
-        <a name="M000013"></a>
-
-        <div class="method-heading">
-          <a href="#M000013" class="method-signature">
-          <span class="method-name">file_path</span><span class="method-args">()</span>
-          </a>
-        </div>
-      
-        <div class="method-description">
-          <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000013-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000013-source">
-<pre>
-    <span class="ruby-comment cmt"># File app/models/page_template.rb, line 13</span>
-13:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_path</span>
-14:     <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">base_path</span>, <span class="ruby-identifier">relative_path</span>)
-15:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/page_template.rb, line 18</span>
+18:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">display_name</span>(<span class="ruby-identifier">file_name</span>)
+19:     <span class="ruby-identifier">name</span>, <span class="ruby-identifier">format</span>, <span class="ruby-identifier">handler</span> = <span class="ruby-identifier">file_name</span>.<span class="ruby-identifier">split</span>(<span class="ruby-value str">'.'</span>)
+20:     <span class="ruby-node">&quot;#{name.titleize} (#{format}/#{handler})&quot;</span>
+21:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -191,6 +150,29 @@
 
         <div class="method-heading">
           <a href="#M000016" class="method-signature">
+          <span class="method-name">file_path</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000016-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000016-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/models/page_template.rb, line 14</span>
+14:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">file_path</span>
+15:     <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">base_path</span>, <span class="ruby-identifier">relative_path</span>)
+16:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000018" class="method-detail">
+        <a name="M000018"></a>
+
+        <div class="method-heading">
+          <a href="#M000018" class="method-signature">
           <span class="method-name">options</span><span class="method-args">()</span>
           </a>
         </div>
@@ -201,38 +183,38 @@ This is a combination of file system page templates and database page
 templates
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000016-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000016-source">
+            onclick="toggleCode('M000018-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000018-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/page_template.rb, line 43</span>
-43:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">options</span>
-44:     <span class="ruby-identifier">file_system_templates</span> = <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">view_paths</span>.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span> <span class="ruby-constant">Dir</span>[<span class="ruby-node">&quot;#{p}/#{relative_path}/*&quot;</span>]}.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">f</span>)}
-45:     <span class="ruby-identifier">page_templates</span> = <span class="ruby-identifier">file_system_templates</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">all</span>.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span> <span class="ruby-identifier">t</span>.<span class="ruby-identifier">file_name</span> }
-46:     <span class="ruby-identifier">page_templates</span>.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> [<span class="ruby-identifier">display_name</span>(<span class="ruby-identifier">f</span>), <span class="ruby-identifier">f</span>] }.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">uniq</span>
-47:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/page_template.rb, line 25</span>
+25:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">options</span>
+26:     <span class="ruby-identifier">file_system_templates</span> = <span class="ruby-constant">ActionController</span><span class="ruby-operator">::</span><span class="ruby-constant">Base</span>.<span class="ruby-identifier">view_paths</span>.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">p</span><span class="ruby-operator">|</span> <span class="ruby-constant">Dir</span>[<span class="ruby-node">&quot;#{p}/#{relative_path}/*&quot;</span>]}.<span class="ruby-identifier">flatten</span>.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">basename</span>(<span class="ruby-identifier">f</span>)}
+27:     <span class="ruby-identifier">page_templates</span> = <span class="ruby-identifier">file_system_templates</span> <span class="ruby-operator">+</span> <span class="ruby-identifier">all</span>.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">t</span><span class="ruby-operator">|</span> <span class="ruby-identifier">t</span>.<span class="ruby-identifier">file_name</span> }
+28:     <span class="ruby-identifier">page_templates</span>.<span class="ruby-identifier">map</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> [<span class="ruby-identifier">display_name</span>(<span class="ruby-identifier">f</span>), <span class="ruby-identifier">f</span>] }.<span class="ruby-identifier">sort</span>.<span class="ruby-identifier">uniq</span>
+29:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000012" class="method-detail">
-        <a name="M000012"></a>
+      <div id="method-M000015" class="method-detail">
+        <a name="M000015"></a>
 
         <div class="method-heading">
-          <a href="#M000012" class="method-signature">
+          <a href="#M000015" class="method-signature">
           <span class="method-name">relative_path</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000012-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000012-source">
+            onclick="toggleCode('M000015-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000015-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/models/page_template.rb, line 9</span>
- 9:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">relative_path</span>
-10:     <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;layouts&quot;</span>, <span class="ruby-value str">&quot;templates&quot;</span>)
-11:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/models/page_template.rb, line 10</span>
+10:   <span class="ruby-keyword kw">def</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">relative_path</span>
+11:     <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-value str">&quot;layouts&quot;</span>, <span class="ruby-value str">&quot;templates&quot;</span>)
+12:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
@@ -240,24 +222,24 @@ templates
 
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000011" class="method-detail">
-        <a name="M000011"></a>
+      <div id="method-M000014" class="method-detail">
+        <a name="M000014"></a>
 
         <div class="method-heading">
-          <a href="#M000011" class="method-signature">
+          <a href="#M000014" class="method-signature">
           <span class="method-name">file_path</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000011-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000011-source">
+            onclick="toggleCode('M000014-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000014-source">
 <pre>
-   <span class="ruby-comment cmt"># File app/models/page_template.rb, line 5</span>
-5:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_path</span>
-6:     <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">file_path</span>, <span class="ruby-identifier">file_name</span>)
-7:   <span class="ruby-keyword kw">end</span>
+   <span class="ruby-comment cmt"># File app/models/page_template.rb, line 6</span>
+6:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">file_path</span>
+7:     <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">file_path</span>, <span class="ruby-identifier">file_name</span>)
+8:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

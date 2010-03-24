@@ -13,6 +13,9 @@
 <%= content_for :functions,  render(:partial => 'cms/blocks/toolbar') %>
 
 <div id="block_content">
+  <% if @block.respond_to?(:deleted) && @block.deleted %>
+  <div class="header">This <%= @block.class.name %> has been deleted.</div>
+  <% end %>
   <% if @block.class.publishable? %>
     <% block_published_status = (@block.live? ? 'published' : 'draft') %>
     <div class="status">

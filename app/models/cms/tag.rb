@@ -1,12 +1,11 @@
-module Cms
-class Tag < ActiveRecord::Base
+class Cms::Tag < ActiveRecord::Base
   
   has_many :taggings, :class_name => 'Cms::Tagging'
   
   validates_uniqueness_of :name
   
   attr_accessor :size
-  
+  is_searchable  
   named_scope :named, lambda{|tag| {:conditions => ["tags.name = ? ", tag]} }
   
   # Returns an array of tags with a count attribute
@@ -60,5 +59,4 @@ class Tag < ActiveRecord::Base
     @taggings = @content_block.taggings.paginate(:page => params[:page])
   end  
   
-end
 end

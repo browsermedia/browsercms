@@ -3,17 +3,6 @@ class PermissionsForContentBlockControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
   tests Cms::ContentBlockController
 
-class Cms::ContentBlock
-  def ContentBlock.find(options = {})
-    return @block
-  end
-  def ContentBlock.new(options = {})
-    return @block
-  end
-  def ContentBlock.paginate(options = {})
-  end
-end
-  
   # We're stubbing a lot because we *just* want to isolate the behaviour for checking permissions
   def setup
     login_as_cms_admin
@@ -30,9 +19,9 @@ end
     @block.stubs(:as_of_version).returns(@block)
     @block.stubs(:connected_pages).returns(stub(:all => stub))
     
-#    Cms::ContentBlock.stubs(:find).returns(@block)
-#    Cms::ContentBlock.stubs(:new).returns(@block)
-#    Cms::ContentBlock.stubs(:paginate)
+    ContentBlock.stubs(:find).returns(@block)
+    ContentBlock.stubs(:new).returns(@block)
+    ContentBlock.stubs(:paginate)
   end
   
   def expect_access_denied

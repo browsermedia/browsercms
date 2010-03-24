@@ -1,5 +1,4 @@
-module Cms
-class PageRoutesController < Cms::BaseController
+class Cms::PageRoutesController < Cms::BaseController
   
   before_filter :load_page_route, :only => [:show, :edit, :update, :destroy]
   layout 'cms/administration'
@@ -13,7 +12,7 @@ class PageRoutesController < Cms::BaseController
   end
   
   def create
-    @page_route = PageRoute.new(params[:page_route])
+    @page_route = PageRoute.new(params[:cms_page_route])
     if @page_route.save
       flash[:notice] = "Page Route Created"
       redirect_to cms_page_route_url(@page_route)
@@ -23,7 +22,7 @@ class PageRoutesController < Cms::BaseController
   end
   
   def update
-    if @page_route.update_attributes(params[:page_route])
+    if @page_route.update_attributes(params[:cms_page_route])
       flash[:notice] = "Page Route Updated"
       redirect_to cms_page_route_url(@page_route)
     else
@@ -43,5 +42,4 @@ class PageRoutesController < Cms::BaseController
       @page_route = PageRoute.find(params[:id])
     end
   
-end
 end

@@ -1,9 +1,9 @@
 <% content_for :html_head do %>
 <script type="text/javascript">
 jQuery(function($){
-  $("#section_name").keyup(function(){
+  $("#cms_section_name").keyup(function(){
     var section_path = "<%= @parent.path %>".replace(/\/$/, '')
-    $("#section_path").val(section_path + "/" + $.cms.slug($(this).val()))
+    $("#cms_section_path").val(section_path + "/" + $.cms.slug($(this).val()))
   })
 })
 </script>

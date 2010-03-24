@@ -97,13 +97,13 @@ class UsersControllerTest < ActionController::TestCase
 
     assert_response :success
 
-    assert_select "input#user_login"
-    assert_select "input#user_first_name"
-    assert_select "input#user_last_name"
-    assert_select "input#user_email"
-    assert_select "input#user_password"
-    assert_select "input#user_expires_at"
-    assert_select "input#user_password_confirmation"
+    assert_select "input#cms_user_login"
+    assert_select "input#cms_user_first_name"
+    assert_select "input#cms_user_last_name"
+    assert_select "input#cms_user_email"
+    assert_select "input#cms_user_password"
+    assert_select "input#cms_user_expires_at"
+    assert_select "input#cms_user_password_confirmation"
     assert_select "input[type=?][value=?]", "checkbox", @group.id
   end
   
@@ -112,7 +112,7 @@ class UsersControllerTest < ActionController::TestCase
     @group = Factory(:group)
     user_params = Factory.attributes_for(:user, :password=>"123456", :password_confirmation=>"123456")
     
-    post :create, :user => user_params, :group_ids => [@group.id]
+    post :create, :cms_user => user_params, :group_ids => [@group.id]
     user = User.find_by_login(user_params[:login])
     
     assert_redirected_to cms_users_path
@@ -125,11 +125,11 @@ class UsersControllerTest < ActionController::TestCase
     get :edit, :id => @user.id
     assert_response :success
 
-    assert_select "input#user_login[value=?]", @user.login
-    assert_select "input#user_first_name[value=?]", @user.first_name
-    assert_select "input#user_last_name[value=?]", @user.last_name
-    assert_select "input#user_email[value=?]", @user.email
-    assert_select "input#user_expires_at"
+    assert_select "input#cms_user_login[value=?]", @user.login
+    assert_select "input#cms_user_first_name[value=?]", @user.first_name
+    assert_select "input#cms_user_last_name[value=?]", @user.last_name
+    assert_select "input#cms_user_email[value=?]", @user.email
+    assert_select "input#cms_user_expires_at"
   end
   
   def test_show
@@ -138,7 +138,7 @@ class UsersControllerTest < ActionController::TestCase
   end
   
   def test_update
-    put :update, :id => @user.id, :user => { :first_name => "First"}
+    put :update, :id => @user.id, :cms_user => { :first_name => "First"}
     reset(:user)
     
     assert_redirected_to cms_users_path
@@ -150,13 +150,13 @@ class UsersControllerTest < ActionController::TestCase
     get :change_password, :id => @user.id
 
     assert_response :success
-    assert_select "input#user_password"
-    assert_select "input#user_password_confirmation"
+    assert_select "input#cms_user_password"
+    assert_select "input#cms_user_password_confirmation"
   end
   
   def test_update_password_failure
     put :update_password, :id => @user.id,
-      :user => {:password => "will_fail_validation", :password_confirmation => "something_else"}
+      :cms_user => {:password => "will_fail_validation", :password_confirmation => "something_else"}
       
     assert_response :success
     assert_select "h1", "Set New Password"
@@ -165,7 +165,7 @@ class UsersControllerTest < ActionController::TestCase
   
   def test_update_password_success
     put :update_password, :id => @user.id,
-      :user => {:password => "something_else", :password_confirmation => "something_else"}
+      :cms_user => {:password => "something_else", :password_confirmation => "something_else"}
       
     assert_redirected_to cms_users_path
   end
@@ -221,7 +221,7 @@ class UsersControllerNonAdminTest < ActionController::TestCase
   
   def test_update_password_self
     put :update_password, :id => @user.id,
-        :user => {:password => "something_else", :password_confirmation => "something_else"}
+        :cms_user => {:password => "something_else", :password_confirmation => "something_else"}
     assert_redirected_to cms_user_path(@user)
   end
   

@@ -27,7 +27,7 @@ module Cms
       end
       module ClassMethods
         def content_block_type
-          to_s.underscore
+          ActionController::RecordIdentifier.singular_class_name(self)
         end
         def display_name
           to_s.titleize

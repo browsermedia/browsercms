@@ -1,4 +1,2 @@
-module Cms
-class ImageBlocksController < Cms::ContentBlockController
-end
+class Cms::ImageBlocksController < Cms::ContentBlockController
 end

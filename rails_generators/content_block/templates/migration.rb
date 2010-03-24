@@ -23,7 +23,7 @@ class <%= migration_name %> < ActiveRecord::Migration
       CategoryType.create!(:name => "<%= @category_type %>")
     end<% end %>
     <% if @attachment_section %>unless Section.with_path('/<%= file_name.pluralize %>').exists?
-      Section.create!(:name => "<%= @attachment_section %>", :parent => Section.system.first, :path => '/<%= file_name.pluralize %>', :group_ids => Group.all(&:id))
+      Section.create!(:name => "<%= @attachment_section %>", :parent => Section.system.first, :path => '/<%= file_name.pluralize %>', :allow_groups=>:all)
     end<% end %>
     ContentType.create!(:name => "<%= class_name %>", :group_name => "<%= class_name %>")
   end

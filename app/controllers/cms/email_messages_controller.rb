@@ -1,5 +1,4 @@
-module Cms
-class EmailMessagesController < Cms::BaseController
+class Cms::EmailMessagesController < Cms::BaseController
   layout 'cms/administration'
   
   check_permissions :administrate
@@ -12,5 +11,4 @@ class EmailMessagesController < Cms::BaseController
     @message = EmailMessage.find(params[:id])
   end
   
-end
 end

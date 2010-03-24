@@ -1,5 +1,4 @@
-module Cms
-class CategoryType < ActiveRecord::Base
+class Cms::CategoryType < ActiveRecord::Base
   has_many :categories, :class_name => 'Cms::Category'
   validates_presence_of :name
   validates_uniqueness_of :name
@@ -32,5 +31,4 @@ class CategoryType < ActiveRecord::Base
     categories.count.zero? ? nil : "This cannot be deleted because it is in use in #{categories.count} #{"category".pluralize(categories.count)}"
   end
   
-end
 end

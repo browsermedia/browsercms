@@ -1,5 +1,4 @@
-module Cms
-class UsersController < Cms::ResourceController
+class Cms::UsersController < Cms::ResourceController
   layout 'cms/administration'
 
   check_permissions :administrate, :except => [:show, :change_password, :update_password]
@@ -41,7 +40,7 @@ class UsersController < Cms::ResourceController
   end
 
   def update_password
-    if user.update_attributes(params[:user])
+    if user.update_attributes(params[:cms_user])
       flash[:notice] = "Password for '#{user.login}' was changed"
       redirect_to(current_user.able_to?(:administrate) ? cms_users_path : cms_user_path(user))
     else
@@ -98,5 +97,4 @@ class UsersController < Cms::ResourceController
     def only_self_or_administrator
       raise Cms::Errors::AccessDenied if !current_user.able_to?(:administrate) && params[:id].to_i != current_user.id
     end
-end
 end

@@ -1,3 +1,67 @@
+v3.1.0
+
+BrowserCMS 3.1 is done! The release has a few exciting new features/refinements as well as its share of bug fixes. As always, you can get it by running 'gem install browsercms', and follow the upgrade guide on the wiki. Please report any errors found to our bug tracking system: https://browsermedia.lighthouseapp.com/projects/28481-browsercms-30
+
+Notable Features:
+=================
+
+1. New Html Editor: (LH #150) The default editor packaged with BrowserCMS is now CKEditor, which is the upgraded version of FCKEditor. CKEditor supports new features, polish and performance. For developers that still want to use FCKEditor any reason, we have made available a bcms_fckeditor module for continuity purposes. Installing the bcms_fckeditor module will switch the default editor back.
+2. Easier project creation: (LH #234) You can now create a new BrowserCMS project by typing 'bcms name_of_project' or 'browsercms name_of_project'. The command line tool is really just thin wrappers around 'rails' that invoke the application templates from within the gem itself. Run 'bcms' for more complete help tips, or http://patrickpeak.com/wordpress/2010/01/incoming-browsercms-commandline-script/ for a more indepth write up.
+3. Improved Portlet Workflow: (LH #180) Portlets now default to having their templates not be editable via the UI. There is an easy on/off option on the portlet to turn editing back on. This will allow for developers to more rapidly refine their views, with the option to easily make them editable when complete.
+4. Improved Documentation:  We have updated the guides to match 3.1 features (especially 'Getting Started' - LH #272). There is also several new guides, including a more detailed exploration of Content Blocks and creating Templates (LH #287). All guides can now be found at http://guides.browsercms.org. API docs can be found at http://api.browsercms.org.
+5. Controllers that act like Pages: (LH #202) - Added a more refined way for developers to create their own controllers that can behave like CMS content pages, including using CMS templates as layouts, being able to throw exceptions like 404s to route to the standard CMS error page, etc. Also added more hooks for securing controllers as though they were in a particular section. Developers can 'include Cms::Acts::ContentPage' in their controllers to get access to this behavior.
+
+Upgrade Notes:
+=============
+When upgrading from 3.0.6 to 3.1, there are several things to keep in mind mostly related to how the new editor works.
+
+1. You can safely delete the public/fckeditor directory from your project. We have moved the default location that modules (like bcms_fckeditor) store public files to public/bcms/module_name (so public/bcms/fckeditor or public/bcms/ckeditor).
+2. FCKEditor styles: If you customized your fckeditor styles (by editing the fckstyles.xml), install the bcms_fckeditor module and it will create a public/bcms_config/fckeditor directory. The fckstyles.xml can be edited there, which will keep it separate from the 'stock' files that fckeditor comes with.
+
+More Features/Enhancements:
+===========================
+Lighthouse ticket #s are included:
+* #199 - Developers should be able to manually set the display_name of content blocks. (See http://guides.browsercms.org/content_blocks.html for details).
+* #234 - Added a cms_check_box field so content blocks can have single boolean values.
+* #123 - Release the bcms_google_mini module as a gem. Allows for easy integration with the Google Mini Search tool for searching BrowserCMS sites.
+* #190 - Changed cms_file_field helper so it uses a standard file browse button by default.
+* #233 - When new modules are generated, there is now a public directory created by default (public/bcms/name_of_module). Developers can put files they need copied into projects into that directory when the module is installed.
+* #198 - Added portlets that allow public users to reset their password if they have forgotten it.
+* #295 - When creating a new project, it will explicitly set the version # of the browsercms gem. This should reduce the need to vendor the gem for servers that have multiple BrowserCMS sites.
+* #299 - When generating a portlet, a portlet_helper will be created. All methods on this helper will be available in the portlet template view.
+* #300 - For new projects, the 'default' template is now stored on the file system. This should make it more obvious to new developers that both file and database managed templates are possible.
+* #301 - Created a generator for templates. ./script/generate template name_of_template will create a new erb template in the proper directory with some reasonable defaults.
+* #205 - Developers can check if Users can view a particular section path (User.able_to_view?("/about-us").
+
+Bug Fixes:
+==========
+* #208 - Fixed an issue where an error on the dashboard that was preventing BrowserCMS projects from using SQLlite.
+* #161 - Fixed a typo on the Edit Group Permissions page. (Thanks to Dmytro Samodurov)
+* #197 - Fixed an issue where an editor could not cancel deleting of a template.
+* #204 - Fixed an error where pages/sections would not appear in menus when pages were moved or deleted.
+* #206 - Fixed an error where sections should be marked with an 'on' state, even if the first page in the section is hidden. (Thanks to Kimmy/3months.com)
+* #240 - Fixed an issue where users could publish blocks via the content library that were embedded into pages. This resulted in a counter intuitive state where users would think they were publishing pages when they were not.
+* #221 - Updated render_breadcrumbs helpers so it will return an empty string if there is no current_page. This should make breadcrumbs behaves better if using Cms::Acts::ContentPage and page templates.
+* #265 - Fixed an issue where users could only have a single task assignment. (Thanks to 3months.com)
+* #278 - Fixed an issue where users with expiry dates would not appear in the task list (Thanks to kimmy/3months.com)
+* #284 - Eliminated warnings about Version constants while running tests (Thanks to czarneckid)
+* #294 - Fixed an issue where generating blocks with attachment fields would fail during migrations.
+* #275 = Fixed an issue where admin users were sent links to public pages when they were assigned tasks. This made it hard for them to follow links to pages to make corrections to them.
+* #263 - Fixed an issue where portlets embedded in pages would break pages if they were deleted.
+
+=========
+v3.0.6
+
+3.0.6 is a small bug fix release which should correct the big issues that were preventing use of 3.0.5. Here's the rundown:
+
+1. The 'require_javacript_include' and 'require_stylesheet_link' methods were not working properly, and now they do.
+2. You could not publish a changed link without modifying it in some way, and now you can. (LIGHTHOUSE #256)
+3. You can now search for portlets and tags by name in the Content Library. (LIGHTHOUSE #257 and #258)
+4. After creating or updating a category or tag via the Content Library, you are now redirected to the list page (as with Category Types) instead of being shown a blank page. (LIGHTHOUSE #259)
+5. The user list in the Admin area now shows a user's login (instead of nothing) if the user does not have a name. (LIGHTHOUSE #260)
+
+==========
+
 v3.0.5
 
 BrowserCMS 3.0.5 has been released to gemcutter. This is primarily a bug fix release, correcting some IE support issues as well as some problems with reverting. We also made some subtle changes to how JS gets loaded on page templates in the CMS admin UI. If your project had been using its own javascript (like jquery/prototype) in the page templates, you should double check to make sure its working correctly.  See item #2 below for more details.

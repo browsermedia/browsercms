@@ -1,6 +1,4 @@
-module Cms
-class UserGroupMembership < ActiveRecord::Base
+class Cms::UserGroupMembership < ActiveRecord::Base
   belongs_to :group
   belongs_to :user
-end
 end

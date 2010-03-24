@@ -94,10 +94,11 @@ This controller handles the login/logout function of the site.
       <h3 class="section-bar">Methods</h3>
 
       <div class="name-list">
-      <a href="#M000583">create</a>&nbsp;&nbsp;
-      <a href="#M000584">destroy</a>&nbsp;&nbsp;
-      <a href="#M000582">new</a>&nbsp;&nbsp;
-      <a href="#M000585">note_failed_signin</a>&nbsp;&nbsp;
+      <a href="#M000634">create</a>&nbsp;&nbsp;
+      <a href="#M000635">destroy</a>&nbsp;&nbsp;
+      <a href="#M000636">logout_user</a>&nbsp;&nbsp;
+      <a href="#M000633">new</a>&nbsp;&nbsp;
+      <a href="#M000637">note_failed_signin</a>&nbsp;&nbsp;
       </div>
     </div>
 
@@ -119,19 +120,19 @@ This controller handles the login/logout function of the site.
     <div id="methods">
       <h3 class="section-bar">Public Instance methods</h3>
 
-      <div id="method-M000583" class="method-detail">
-        <a name="M000583"></a>
+      <div id="method-M000634" class="method-detail">
+        <a name="M000634"></a>
 
         <div class="method-heading">
-          <a href="#M000583" class="method-signature">
+          <a href="#M000634" class="method-signature">
           <span class="method-name">create</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000583-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000583-source">
+            onclick="toggleCode('M000634-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000634-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/cms/sessions_controller.rb, line 11</span>
 11:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">create</span>
@@ -147,7 +148,7 @@ This controller handles the login/logout function of the site.
 21:       <span class="ruby-identifier">handle_remember_cookie!</span> <span class="ruby-identifier">new_cookie_flag</span>
 22:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-value str">&quot;Logged in successfully&quot;</span>
 23:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:success_url</span>] <span class="ruby-comment cmt"># Coming from login portlet</span>
-24:         <span class="ruby-identifier">redirect_to</span>(<span class="ruby-identifier">session</span>[<span class="ruby-identifier">:return_to</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:success_url</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;/&quot;</span>)          
+24:         <span class="ruby-identifier">redirect_to</span>((<span class="ruby-operator">!</span><span class="ruby-identifier">params</span>[<span class="ruby-identifier">:success_url</span>].<span class="ruby-identifier">blank?</span> <span class="ruby-operator">&amp;&amp;</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:success_url</span>]) <span class="ruby-operator">||</span> <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:return_to</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;/&quot;</span>)
 25:         <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:return_to</span>] = <span class="ruby-keyword kw">nil</span>
 26:       <span class="ruby-keyword kw">else</span>
 27:         <span class="ruby-identifier">redirect_back_or_default</span>(<span class="ruby-identifier">cms_home_url</span>)
@@ -156,7 +157,7 @@ This controller handles the login/logout function of the site.
 30:       <span class="ruby-identifier">note_failed_signin</span>
 31:       <span class="ruby-ivar">@login</span>       = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:login</span>]
 32:       <span class="ruby-ivar">@remember_me</span> = <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:remember_me</span>]
-33:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:login_error</span>] = <span class="ruby-value str">&quot;Log in failed&quot;</span>  
+33:       <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:login_error</span>] = <span class="ruby-value str">&quot;Log in failed&quot;</span>
 34:       <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:success_url</span>] <span class="ruby-comment cmt"># Coming from login portlet</span>
 35:         <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">params</span>[<span class="ruby-identifier">:success_url</span>].<span class="ruby-identifier">blank?</span>
 36:           <span class="ruby-identifier">success_url</span> = <span class="ruby-identifier">session</span>[<span class="ruby-identifier">:return_to</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;/&quot;</span>
@@ -168,8 +169,8 @@ This controller handles the login/logout function of the site.
 42:         <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:success_url</span>] = <span class="ruby-identifier">success_url</span>
 43:         <span class="ruby-identifier">redirect_to</span> <span class="ruby-identifier">request</span>.<span class="ruby-identifier">referrer</span>
 44:       <span class="ruby-keyword kw">else</span>
-45:         <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;new&quot;</span> 
-46:       <span class="ruby-keyword kw">end</span> 
+45:         <span class="ruby-identifier">render</span> <span class="ruby-identifier">:action</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-value str">&quot;new&quot;</span>
+46:       <span class="ruby-keyword kw">end</span>
 47:     <span class="ruby-keyword kw">end</span>
 48:   <span class="ruby-keyword kw">end</span>
 </pre>
@@ -177,49 +178,47 @@ This controller handles the login/logout function of the site.
         </div>
       </div>
 
-      <div id="method-M000584" class="method-detail">
-        <a name="M000584"></a>
+      <div id="method-M000635" class="method-detail">
+        <a name="M000635"></a>
 
         <div class="method-heading">
-          <a href="#M000584" class="method-signature">
+          <a href="#M000635" class="method-signature">
           <span class="method-name">destroy</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000584-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000584-source">
+            onclick="toggleCode('M000635-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000635-source">
 <pre>
     <span class="ruby-comment cmt"># File app/controllers/cms/sessions_controller.rb, line 50</span>
 50:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">destroy</span>
-51:     <span class="ruby-identifier">logout_killing_session!</span>
-52:     <span class="ruby-identifier">cookies</span>.<span class="ruby-identifier">delete</span> <span class="ruby-identifier">:openSectionNodes</span>
-53:     <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-value str">&quot;You have been logged out.&quot;</span>
-54:     <span class="ruby-identifier">redirect_back_or_default</span>(<span class="ruby-value str">&quot;/&quot;</span>)
-55:   <span class="ruby-keyword kw">end</span>
+51:     <span class="ruby-identifier">logout_user</span>
+52:     <span class="ruby-identifier">redirect_back_or_default</span>(<span class="ruby-value str">&quot;/&quot;</span>)
+53:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>
       </div>
 
-      <div id="method-M000582" class="method-detail">
-        <a name="M000582"></a>
+      <div id="method-M000633" class="method-detail">
+        <a name="M000633"></a>
 
         <div class="method-heading">
-          <a href="#M000582" class="method-signature">
+          <a href="#M000633" class="method-signature">
           <span class="method-name">new</span><span class="method-args">()</span>
           </a>
         </div>
       
         <div class="method-description">
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000582-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000582-source">
+            onclick="toggleCode('M000633-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000633-source">
 <pre>
    <span class="ruby-comment cmt"># File app/controllers/cms/sessions_controller.rb, line 7</span>
 7:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">new</span>
-8:     
+8: 
 9:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
@@ -228,11 +227,41 @@ This controller handles the login/logout function of the site.
 
       <h3 class="section-bar">Protected Instance methods</h3>
 
-      <div id="method-M000585" class="method-detail">
-        <a name="M000585"></a>
+      <div id="method-M000636" class="method-detail">
+        <a name="M000636"></a>
 
         <div class="method-heading">
-          <a href="#M000585" class="method-signature">
+          <a href="#M000636" class="method-signature">
+          <span class="method-name">logout_user</span><span class="method-args">()</span>
+          </a>
+        </div>
+      
+        <div class="method-description">
+          <p>
+Pulled this out as a separate method so that modules (like bcms_cas) can
+override/alias <a href="SessionsController.html#M000635">destroy</a> and
+not have a redirect happen as a side effect.
+</p>
+          <p><a class="source-toggle" href="#"
+            onclick="toggleCode('M000636-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000636-source">
+<pre>
+    <span class="ruby-comment cmt"># File app/controllers/cms/sessions_controller.rb, line 59</span>
+59:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">logout_user</span>
+60:     <span class="ruby-identifier">logout_killing_session!</span>
+61:     <span class="ruby-identifier">cookies</span>.<span class="ruby-identifier">delete</span> <span class="ruby-identifier">:openSectionNodes</span>
+62:     <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:notice</span>] = <span class="ruby-value str">&quot;You have been logged out.&quot;</span>
+63:   <span class="ruby-keyword kw">end</span>
+</pre>
+          </div>
+        </div>
+      </div>
+
+      <div id="method-M000637" class="method-detail">
+        <a name="M000637"></a>
+
+        <div class="method-heading">
+          <a href="#M000637" class="method-signature">
           <span class="method-name">note_failed_signin</span><span class="method-args">()</span>
           </a>
         </div>
@@ -242,14 +271,14 @@ This controller handles the login/logout function of the site.
 Track failed login attempts
 </p>
           <p><a class="source-toggle" href="#"
-            onclick="toggleCode('M000585-source');return false;">[Source]</a></p>
-          <div class="method-source-code" id="M000585-source">
+            onclick="toggleCode('M000637-source');return false;">[Source]</a></p>
+          <div class="method-source-code" id="M000637-source">
 <pre>
-    <span class="ruby-comment cmt"># File app/controllers/cms/sessions_controller.rb, line 59</span>
-59:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">note_failed_signin</span>
-60:     <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:error</span>] = <span class="ruby-node">&quot;Couldn't log you in as '#{params[:login]}'&quot;</span>
-61:     <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;Failed login for '#{params[:login]}' from #{request.remote_ip} at #{Time.now.utc}&quot;</span>
-62:   <span class="ruby-keyword kw">end</span>
+    <span class="ruby-comment cmt"># File app/controllers/cms/sessions_controller.rb, line 66</span>
+66:   <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">note_failed_signin</span>
+67:     <span class="ruby-identifier">flash</span>[<span class="ruby-identifier">:error</span>] = <span class="ruby-node">&quot;Couldn't log you in as '#{params[:login]}'&quot;</span>
+68:     <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">warn</span> <span class="ruby-node">&quot;Failed login for '#{params[:login]}' from #{request.remote_ip} at #{Time.now.utc}&quot;</span>
+69:   <span class="ruby-keyword kw">end</span>
 </pre>
           </div>
         </div>

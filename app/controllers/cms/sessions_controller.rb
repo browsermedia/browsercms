@@ -1,6 +1,5 @@
 # This controller handles the login/logout function of the site.  
-module Cms
-class SessionsController < Cms::ApplicationController
+class Cms::SessionsController < Cms::ApplicationController
 
   before_filter :redirect_to_cms_site, :only => [:new]
   layout "cms/login"
@@ -69,5 +68,4 @@ class SessionsController < Cms::ApplicationController
     logger.warn "Failed login for '#{params[:login]}' from #{request.remote_ip} at #{Time.now.utc}"
   end
 
-end
 end

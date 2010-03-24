@@ -1,5 +1,4 @@
-module Cms
-class CacheController < Cms::BaseController
+class Cms::CacheController < Cms::BaseController
   layout 'cms/administration'
   
   check_permissions :administrate  
@@ -20,5 +19,4 @@ class CacheController < Cms::BaseController
       @menu_section = 'caching'
     end
 
-end
 end

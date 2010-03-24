@@ -39,7 +39,8 @@ function loadEditor(id) {
   if(typeof(CKEDITOR) != "undefined") {
     if (CKEDITOR.instances[id] == null) {
       CKEDITOR.replace(id, {
-        filebrowserImageBrowseUrl : '/ckfinder/ckfinder.html?Type=Image&Connector=/cms/sections/file_browser.xml'
+//  Commented out as do not have image search available
+//        filebrowserImageBrowseUrl : '/ckfinder/ckfinder.html?Type=Image&Connector=/cms/sections/file_browser.xml'
       });
     }
     $.cookie('editorEnabled', true, { expires: 90, path: '/' })

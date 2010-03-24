@@ -1,5 +1,4 @@
-module Cms
-class RedirectsController < Cms::ResourceController 
+class Cms::RedirectsController < Cms::ResourceController 
   layout 'cms/administration'
   check_permissions :administrate  
   before_filter :set_menu_section
@@ -17,5 +16,4 @@ class RedirectsController < Cms::ResourceController
       @menu_section = 'redirects'
     end
 
-end
 end

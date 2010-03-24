@@ -20,7 +20,7 @@ module Cms
       if Portlet === connectable
         cms_portlet_path(connectable)
       else
-        [:cms, connectable]
+        connectable
       end
     end
     

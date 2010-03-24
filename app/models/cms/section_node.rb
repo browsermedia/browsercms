@@ -1,5 +1,4 @@
-module Cms
-class SectionNode < ActiveRecord::Base
+class Cms::SectionNode < ActiveRecord::Base
   belongs_to :section, :class_name => 'Cms::Section'
   belongs_to :node, :polymorphic => :true, :class_name => 'Cms::SectionNode', :foreign_type => 'node_type'
 
@@ -91,5 +90,4 @@ class SectionNode < ActiveRecord::Base
     ancestors.reverse
   end
   
-end
 end

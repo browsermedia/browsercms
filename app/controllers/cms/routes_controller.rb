@@ -1,5 +1,4 @@
-module Cms
-class RoutesController < Cms::BaseController
+class Cms::RoutesController < Cms::BaseController
   
   
   def index
@@ -21,5 +20,4 @@ class RoutesController < Cms::BaseController
     end
     
   end
-end
 end

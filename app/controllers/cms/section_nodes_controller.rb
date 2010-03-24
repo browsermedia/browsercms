@@ -1,5 +1,4 @@
-module Cms
-class SectionNodesController < Cms::BaseController
+class Cms::SectionNodesController < Cms::BaseController
   check_permissions :publish_content, :except => [:index]
   
   def index
@@ -38,5 +37,4 @@ class SectionNodesController < Cms::BaseController
     @section_node.send("move_to_#{place}", @other_node.node)
     render :json => {:success => true, :message => "'#{@section_node.node.name}' was moved to the #{place} of '#{@other_node.node.name}'"}            
   end
-end
 end

@@ -24,3 +24,7 @@ production:
   username: devcms
   password: RUzwPU4e
   socket: /var/lib/mysql/mysql.sock
+
+test_sqlite3:
+  adapter: sqlite3
+  database: db/test.sqlite3

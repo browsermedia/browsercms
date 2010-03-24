@@ -13,8 +13,15 @@ class CkeditorTest < ActionController::IntegrationTest
     
     assert_tag :tag => "select",
                :attributes => { :id => "dhtml_selector", 
-                                :onchange =>  "toggleEditor('html_block_content', this)"}, 
+                                :onchange =>  "toggleEditor('cms_html_block_content', this)"}, 
                :child => { :tag => "option", :content =>  "Rich Text" }
+  end
+  def test_ckeditor_js_added
+    get new_cms_html_block_url
+    assert_response :success
+    
+    assert_tag :tag => "script",
+               :attributes => { :src => /^\/bcms\/ckeditor\/ckeditor.js.*/} 
   end
 
 end
