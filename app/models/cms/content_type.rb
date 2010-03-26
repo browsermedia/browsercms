@@ -20,7 +20,7 @@ class Cms::ContentType < ActiveRecord::Base
   # Raises exception if nothing was found.
   def self.find_by_key(key)
     class_name = key.tableize.classify
-    content_type = find_by_name(class_name)
+    content_type = find(:first, :conditions => ["name like ?", "%#{class_name}"])
     if content_type.nil?
       if class_name.constantize.ancestors.include?(Cms::Portlet)
         content_type = Cms::ContentType.new(:name => class_name)
@@ -38,15 +38,11 @@ class Cms::ContentType < ActiveRecord::Base
   end
   
   def is_child_of?(content_type)
-    if Object.const_defined?(name.tableize.classify)
-      name.constantize.ancestors.map{|c| c.name}.include?(content_type.name)  
-    else
-      "Cms::#{name}".constantize.ancestors.map{|c| c.name}.include?(content_type.name)  
-    end
+    model_class.ancestors.map{|c| c.name}.include?(content_type.model_class)  
   end
   
   def form
-    model_class.respond_to?(:form) ? model_class.form : "cms/#{name.underscore.pluralize}/form"
+    model_class.respond_to?(:form) ? model_class.form : "#{name.underscore.pluralize}/form"
   end
   
   def display_name
@@ -56,11 +52,9 @@ class Cms::ContentType < ActiveRecord::Base
   def display_name_plural
     model_class.respond_to?(:display_name_plural) ? model_class.display_name_plural : display_name.pluralize
   end
-
+  
   def model_class
-    m = name.tableize.classify.constantize rescue nil
-    m = "Cms::#{name.tableize.classify}".constantize if m == nil
-    m
+    name.constantize
   end
   
   def model_class_form_name
@@ -81,7 +75,7 @@ class Cms::ContentType < ActiveRecord::Base
 
   # Used in ERB for pathing
   def content_block_type
-    ActionController::RecordIdentifier.plural_class_name(model_class)
+    name.demodulize.pluralize.underscore
   end
   
   # This is used for situations where you want different to use a type for the list page

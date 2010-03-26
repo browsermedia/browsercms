@@ -102,7 +102,7 @@ class Cms::ContentBlockController < Cms::BaseController
     # methods that are used to detemine what content block type we are dealing with
 
     def content_type_name
-      self.class.name.sub(/Controller/,'').demodulize.singularize
+      self.class.name.sub(/Controller/,'').singularize
     end
 
     def content_type
@@ -210,7 +210,7 @@ class Cms::ContentBlockController < Cms::BaseController
     end
 
     def after_update_on_success
-      flash[:notice] = "#{content_type_name.titleize} '#{@block.name}' was updated"
+      flash[:notice] = "#{content_type_name.demodulize.titleize} '#{@block.name}' was updated"
       redirect_to_first params[:_redirect_to], block_path
     end
 
@@ -236,9 +236,9 @@ class Cms::ContentBlockController < Cms::BaseController
     def do_command(result)
       load_block
       if yield
-        flash[:notice] = "#{content_type_name.titleize} '#{@block.name}' was #{result}"
+        flash[:notice] = "#{content_type_name.demodulize.titleize} '#{@block.name}' was #{result}"
       else
-        flash[:error] = "#{content_type_name.titleize} '#{@block.name}' could not be #{result}"
+        flash[:error] = "#{content_type_name.demodulize.titleize} '#{@block.name}' could not be #{result}"
       end
     end
 

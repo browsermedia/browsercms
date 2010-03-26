@@ -17,7 +17,7 @@ class Cms::DynamicViewsController < Cms::BaseController
   end
   
   def create
-    @view = dynamic_view_type.new(params[dynamic_view_type.name.underscore])
+    @view = dynamic_view_type.new(params[ActionController::RecordIdentifier.singular_class_name(dynamic_view_type)])
     if @view.save
       flash[:notice] = "#{dynamic_view_type} '#{@view.name}' was created"
       redirect_to cms_index_path_for(dynamic_view_type.name.underscore.pluralize)
@@ -31,7 +31,7 @@ class Cms::DynamicViewsController < Cms::BaseController
   end
   
   def update
-    if @view.update_attributes(params[dynamic_view_type.name.underscore])
+    if @view.update_attributes(params[ActionController::RecordIdentifier.singular_class_name(dynamic_view_type)])
       flash[:notice] = "#{dynamic_view_type} '#{@view.name}' was updated"
       redirect_to cms_index_path_for(dynamic_view_type.name.underscore.pluralize)
     else

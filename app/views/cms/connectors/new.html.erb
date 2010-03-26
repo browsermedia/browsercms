@@ -62,7 +62,7 @@
     </tr>
   </thead>
   <% @blocks.each do |block| %>
-    <tr id="<%= block.class.name.underscore %>_<%= block.id %>">
+    <tr id="<%= @block_type.content_block_type.singularize %>_<%= block.id %>">
       <td class="name"><%= block.name %></td>
       <td class="updated"><%= block.updated_at.to_formatted_s(:date) %></td>
       <td class="used"><%= link_to_usages(block) %></td>

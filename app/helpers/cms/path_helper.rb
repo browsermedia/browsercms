@@ -38,8 +38,8 @@ module Cms
       # or just a string or symbol
       def resource_collection_name(resource)
         collection_name = case resource
-          when ContentType then "cms_#{resource.name.underscore}"
-          when ActiveRecord::Base then resource.class.name.underscore.gsub('/','_')
+          when ContentType then resource.model_class_form_name
+          when ActiveRecord::Base then ActionController::RecordIdentifier.singular_class_name(resource)
           else resource.to_s
         end
       end

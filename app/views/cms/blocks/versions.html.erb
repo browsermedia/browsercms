@@ -4,7 +4,7 @@
 <%= stylesheet_link_tag("cms/content_library") %>
   <% javascript_tag do %>
     jQuery(function($){
-      var collectionName = '<%= @block.class.name.underscore.pluralize %>'
+      var collectionName = '<%= content_type.content_block_type %>'
       
       $('table.data tbody tr').hover(function(){
         $(this).addClass('hover')
@@ -54,7 +54,7 @@
     </thead>
     <tbody>
       <% @block.versions.all(:order => "version desc").each_with_index do |r, i| %>
-        <tr id="<%= @block.class.name.underscore %>_<%= r.version %>">
+        <tr id="<%= content_type.content_block_type.singularize %>_<%= r.version %>">
           <td class="first"></td>
           <td>
             <div class="dividers">

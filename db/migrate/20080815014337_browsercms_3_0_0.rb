@@ -53,7 +53,7 @@ class Browsercms300 < ActiveRecord::Migration
       t.string :name
       t.timestamps
     end
-    Cms::ContentType.create!(:name => "CategoryType", :group_name => "Categorization")
+    Cms::ContentType.create!(:name => "Cms::CategoryType", :group_name => "Categorization")
 
     create_table :categories do |t|
       t.belongs_to :category_type
@@ -61,7 +61,7 @@ class Browsercms300 < ActiveRecord::Migration
       t.string :name
       t.timestamps
     end
-    Cms::ContentType.create!(:name => "Category", :group_name => "Categorization")
+    Cms::ContentType.create!(:name => "Cms::Category", :group_name => "Categorization")
 
     create_table :connectors do |t|
       t.integer :page_id
@@ -78,7 +78,7 @@ class Browsercms300 < ActiveRecord::Migration
       t.string :name
       t.string :content, :limit => 64.kilobytes + 1
     end
-    Cms::ContentType.create!(:name => "HtmlBlock", :group_name => "Core", :priority => 1)
+    Cms::ContentType.create!(:name => "Cms::HtmlBlock", :group_name => "Core", :priority => 1)
 
     create_table :sections do |t|
       t.string :name
@@ -101,7 +101,7 @@ class Browsercms300 < ActiveRecord::Migration
       t.string :name
       t.text :value
     end
-    Cms::ContentType.create!(:name => "Portlet", :group_name => "Core", :priority => 1)
+    Cms::ContentType.create!(:name => "Cms::Portlet", :group_name => "Core", :priority => 1)
 
     create_table :redirects do |t|
       t.string :from_path
@@ -124,8 +124,8 @@ class Browsercms300 < ActiveRecord::Migration
       t.integer :attachment_id
       t.integer :attachment_version
     end
-    Cms::ContentType.create!(:name => "FileBlock", :group_name => "Core")
-    Cms::ContentType.create!(:name => "ImageBlock", :group_name => "Core")
+    Cms::ContentType.create!(:name => "Cms::FileBlock", :group_name => "Core")
+    Cms::ContentType.create!(:name => "Cms::ImageBlock", :group_name => "Core")
 
     create_table :group_types do |t|
       t.string :name
@@ -190,7 +190,7 @@ class Browsercms300 < ActiveRecord::Migration
       t.string :name
       t.timestamps
     end
-    Cms::ContentType.create!(:name => "Tag", :group_name => "Categorization")
+    Cms::ContentType.create!(:name => "Cms::Tag", :group_name => "Categorization")
 
     create_table :taggings do |t|
       t.integer :tag_id

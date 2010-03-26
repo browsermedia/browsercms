@@ -81,7 +81,7 @@
 
     create_dynamic_portlet(:recently_updated_pages,
       :name => 'Recently Updated Pages',  
-      :code => "@pages = Page.all(:order => 'updated_at desc', :limit => 3)",
+      :code => "@pages = Cms::Page.all(:order => 'updated_at desc', :limit => 3)",
       :template => <<-TEMPLATE
 <h2>Recent Updates</h2>
 <ul>
