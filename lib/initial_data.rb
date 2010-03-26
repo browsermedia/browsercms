@@ -9,7 +9,7 @@ class InitialData
   #to the model constructor.  By calling the create_ method, you can then refer to the record later
   #in the same way you would with fixtures, by saying whatevers(:something)
   def self.load_demo
-    eval open("#{Rails.root}/db/demo/data.rb"){|f| f.read}
+    eval open("#{Rails.root}/db/demo/data.rb"){|f| f.read}, binding, __FILE__, __LINE__
     
     Dir["#{Rails.root}/db/demo/page_partials/*.erb"].map do |f|
       name, format, handler = File.basename(f).split('.')
