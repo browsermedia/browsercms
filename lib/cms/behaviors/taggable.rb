@@ -13,9 +13,9 @@ module Cms
           @tag_separator = options[:separator] || " "
           
           has_many :taggings, :as => :taggable, :class_name => 'Cms::Tagging'
-          has_many :tags, :through => :taggings, :order => "tags.name", :class_name => 'Cms::Tag'          
+          has_many :tags, :through => :taggings, :order => "#{Tag.table_name}.name", :class_name => 'Cms::Tag'          
           
-          named_scope :tagged_with, lambda{|t| {:include => {:taggings => :tag}, :conditions => ["tags.name = ?", t]} }          
+          named_scope :tagged_with, lambda{|t| {:include => {:taggings => :tag}, :conditions => ["#{Tag.table_name}.name = ?", t]} }          
                     
           after_save :save_tags          
                     

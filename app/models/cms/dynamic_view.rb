@@ -23,8 +23,7 @@ class Cms::DynamicView < ActiveRecord::Base
       is_publishable
       uses_soft_delete
       is_userstamped
-      namespaces_table
-      is_versioned :version_foreign_key => "dynamic_view_id"
+      is_versioned
 
       before_validation :set_publish_on_save
 

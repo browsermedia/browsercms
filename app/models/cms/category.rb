@@ -9,8 +9,8 @@ class Cms::Category < ActiveRecord::Base
   
   named_scope :named, lambda{|name| {:conditions => ['categories.name = ?', name]}}
   
-  named_scope :of_type, lambda{|type_name| {:include => :category_type, :conditions => ['category_types.name = ?', type_name], :order => 'categories.name'}}
-  named_scope :top_level, :conditions => ['categories.parent_id is null']
+  named_scope :of_type, lambda{|type_name| {:include => :category_type, :conditions => ["#{CategoryType.table_name}.name = ?", type_name], :order => "#{Category.table_name}.name"}}
+  named_scope :top_level, :conditions => ["#{Category.table_name}.parent_id is null"]
   
   named_scope :list, :include => :category_type
   
@@ -34,8 +34,8 @@ class Cms::Category < ActiveRecord::Base
     category_type ? category_type.name : nil
   end
   def self.columns_for_index
-    [ {:label => "Name", :method => :name, :order => "categories.name" },
-      {:label => "Type", :method => :category_type_name, :order => "category_types.name" },
-      {:label => "Updated On", :method => :updated_on_string, :order => "categories.updated_at"}  ]
+    [ {:label => "Name", :method => :name, :order => "#{Category.table_name}.name" },
+      {:label => "Type", :method => :category_type_name, :order => "#{CategoryType.table_name}.name" },
+      {:label => "Updated On", :method => :updated_on_string, :order => "#{Category.table_name}.updated_at"}  ]
   end
 end

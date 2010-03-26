@@ -200,11 +200,11 @@ class ExistingFileBlocksTest < ActiveSupport::TestCase
   end
   
   def test_find_blocks_in_root_section
-    assert_equal [@one, @two], Cms::FileBlock.by_section(root_section).all(:order => "file_blocks.id")
+    assert_equal [@one, @two], Cms::FileBlock.by_section(root_section).all(:order => "#{Cms::FileBlock.table_name}.id")
   end
   
   def test_find_blocks_in_sub_section
-    assert_equal [@a1, @a2], Cms::FileBlock.by_section(@section).all(:order => "file_blocks.id")
+    assert_equal [@a1, @a2], Cms::FileBlock.by_section(@section).all(:order => "#{Cms::FileBlock.table_name}.id")
   end
 end
 

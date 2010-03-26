@@ -30,7 +30,7 @@
 	      <td><div class="dividers"><%= link_to user.email, "mailto:#{user.email}" %></div></td>
         <td>
             <div class="dividers">
-            <% user.groups.all(:order => "groups.name").each do |g| %>
+            <% user.groups.all(:order => "#{Cms::Group.table_name}.name").each do |g| %>
 	            <%= g.name %><br/>
 	          <% end %>
 	          </div>

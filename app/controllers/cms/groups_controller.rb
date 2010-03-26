@@ -8,7 +8,7 @@ class Cms::GroupsController < Cms::ResourceController
     @groups = Group.paginate(
       :include => :group_type,
       :page => params[:page], 
-      :order => params[:order] || "groups.name")
+      :order => params[:order] || "#{Group.table_name}.name")
   end
   
   protected

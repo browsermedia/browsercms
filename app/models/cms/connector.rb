@@ -3,7 +3,7 @@ class Cms::Connector < ActiveRecord::Base
   belongs_to :connectable, :polymorphic => true 
   
   namespaces_table
-  acts_as_list :scope => 'connectors.page_id = #{page_id} and connectors.page_version = #{page_version} and connectors.container = \'#{container}\''
+  acts_as_list :scope => '#{Connector.table_name}.page_id = #{page_id} and #{Connector.table_name}.page_version = #{page_version} and #{Connector.table_name}.container = \'#{container}\''
   alias :move_up :move_higher 
   alias :move_down :move_lower  
   

@@ -134,7 +134,7 @@ module Cms::Routes
     end
 
     if Cms::PageRoute.table_exists?
-      Cms::PageRoute.all(:order => "page_routes.name").each do |r|
+      Cms::PageRoute.all(:order => "#{Cms::PageRoute.table_name}.name").each do |r|
         send((r.route_name || 'connect').to_sym, r.pattern, r.options_map)
       end
     end

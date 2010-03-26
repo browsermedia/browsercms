@@ -18,7 +18,10 @@ class Cms::Portlet < ActiveRecord::Base
   ensure
     subclass.class_eval do
       
-      has_dynamic_attributes
+      has_dynamic_attributes :class_name => "CmsPortletAttribute", 
+        :foreign_key => "portlet_id", 
+        :table_name => Cms::Portlet.table_name, 
+        :relationship_name => :portlet_attributes
       
       acts_as_content_block(
         :versioned => false, 

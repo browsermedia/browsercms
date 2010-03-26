@@ -1,6 +1,6 @@
 class Cms::Page < ActiveRecord::Base
   
-  namespaces_table  
+  namespaces_table
   is_archivable
   flush_cache_on_change
   is_hideable
@@ -9,11 +9,11 @@ class Cms::Page < ActiveRecord::Base
   is_userstamped
   is_versioned
   
-  has_many :connectors, :class_name => 'Cms::Connector', :order => "connectors.container, connectors.position"
+  has_many :connectors, :class_name => 'Cms::Connector', :order => "#{Connector.table_name}.container, #{Connector.table_name}.position"
   has_many :page_routes, :class_name => 'Cms::PageRoute'
   
-  named_scope :named, lambda{|name| {:conditions => ['pages.name = ?', name]}}
-  named_scope :with_path, lambda{|path| {:conditions => ['pages.path = ?', path]}}
+  named_scope :named, lambda{|name| {:conditions => ["#{table_name}.name = ?", name]}}
+  named_scope :with_path, lambda{|path| {:conditions => ["#{table_name}.path = ?", path]}}
   
   # This scope will accept a connectable object or a Hash.  The Hash is expect to have
   # a value for the key :connectable, which is the connectable object, and possibly
@@ -36,10 +36,10 @@ class Cms::Page < ActiveRecord::Base
     
     if ver
       { :include => :connectors, 
-        :conditions => ['connectors.connectable_id = ? and connectors.connectable_type = ? and connectors.connectable_version = ?', obj.id, obj.class.base_class.name, ver] }
+        :conditions => ["#{Connector.table_name}.connectable_id = ? and #{Connector.table_name}.connectable_type = ? and #{Connector.table_name}.connectable_version = ?", obj.id, obj.class.base_class.name, ver] }
     else
       { :include => :connectors, 
-        :conditions => ['connectors.connectable_id = ? and connectors.connectable_type = ?', obj.id, obj.class.base_class.name] }    
+        :conditions => ["#{Connector.table_name}.connectable_id = ? and #{Connector.table_name}.connectable_type = ?", obj.id, obj.class.base_class.name] }    
     end 
   }  
   
@@ -74,7 +74,7 @@ class Cms::Page < ActiveRecord::Base
   end
   
   def copy_connectors(options={})
-    connectors.for_page_version(options[:from_version_number]).all(:order => "connectors.container, connectors.position").each do |c|
+    connectors.for_page_version(options[:from_version_number]).all(:order => "#{Connector.table_name}.container, #{Connector.table_name}.position").each do |c|
       # The connector won't have a connectable if it has been deleted
       # Also need to see if the draft has been deleted,
       # in which case we are in the process of deleting it

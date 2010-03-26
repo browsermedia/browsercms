@@ -11,10 +11,10 @@ class Cms::Tag < ActiveRecord::Base
   # Returns an array of tags with a count attribute
   def self.counts(options={})
     with_scope(:find => { 
-        :select => "tags.id, tags.name, count(*) as count", 
+        :select => "#{Tag.table_name}.id, #{Tag.table_name}.name, count(*) as count", 
         :joins => :taggings, 
-        :group => "tags.id, tags.name", 
-        :order => "count desc, tags.name" }) do
+        :group => "#{Tag.table_name}.id, #{Tag.table_name}.name", 
+        :order => "count desc, #{Tag.table_name}.name" }) do
       all(options)
     end
   end

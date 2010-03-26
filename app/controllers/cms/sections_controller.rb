@@ -117,11 +117,11 @@ class Cms::SectionsController < Cms::BaseController
     end
 
     def public_groups
-      @public_groups ||= Group.public.all(:order => "groups.name")
+      @public_groups ||= Group.public.all(:order => "#{Group.table_name}.name")
     end
 
     def cms_groups
-      @cms_groups ||= Group.cms_access.all(:order => "groups.name")
+      @cms_groups ||= Group.cms_access.all(:order => "#{Group.table_name}.name")
     end
 
     def set_toolbar_tab

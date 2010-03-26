@@ -480,7 +480,7 @@ class PageWithTwoBlocksTest < ActiveRecord::TestCase
     
     assert_equal connector_count + 2, Cms::Connector.count
         
-    foo, bar = @page.reload.connectors.for_page_version(@page.draft.version).find(:all, :order => "connectors.position")
+    foo, bar = @page.reload.connectors.for_page_version(@page.draft.version).find(:all, :order => "#{Cms::Connector.table_name}.position")
     assert_properties foo, {
       :page => @page, 
       :page_version => 6, 
@@ -513,8 +513,8 @@ class PageWithTwoBlocksTest < ActiveRecord::TestCase
 
   protected
     def remove_both_connectors!
-      @page.remove_connector(@page.connectors.for_page_version(@page.draft.version).first(:order => "connectors.position"))
-      @page.remove_connector(@page.connectors.for_page_version(@page.draft.version).first(:order => "connectors.position"))
+      @page.remove_connector(@page.connectors.for_page_version(@page.draft.version).first(:order => "#{Cms::Connector.table_name}.position"))
+      @page.remove_connector(@page.connectors.for_page_version(@page.draft.version).first(:order => "#{Cms::Connector.table_name}.position"))
     end
 
 end
