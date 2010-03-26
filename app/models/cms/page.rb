@@ -1,5 +1,6 @@
 class Cms::Page < ActiveRecord::Base
   
+  namespaces_table  
   is_archivable
   flush_cache_on_change
   is_hideable

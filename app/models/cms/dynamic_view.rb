@@ -1,5 +1,7 @@
 class Cms::DynamicView < ActiveRecord::Base
   
+  namespaces_table
+  
   after_save :write_file_to_disk
   after_destroy :remove_file_from_disk
 
@@ -21,6 +23,7 @@ class Cms::DynamicView < ActiveRecord::Base
       is_publishable
       uses_soft_delete
       is_userstamped
+      namespaces_table
       is_versioned :version_foreign_key => "dynamic_view_id"
 
       before_validation :set_publish_on_save

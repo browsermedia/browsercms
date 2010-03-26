@@ -11,7 +11,7 @@ module Cms
         def is_versioned(options={})
           @is_versioned = true
 
-          @version_foreign_key = (options[:version_foreign_key] || "#{name.demodulize.underscore}_id").to_s
+          @version_foreign_key = (options[:version_foreign_key] || "#{table_name.singularize}_id").to_s
           @version_table_name = (options[:version_table_name] || "#{table_name.singularize}_versions").to_s
 
           extend ClassMethods

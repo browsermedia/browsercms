@@ -10,6 +10,7 @@ class Cms::Attachment < ActiveRecord::Base
   uses_soft_delete
   is_userstamped
   is_versioned
+  namespaces_table
   attr_accessor :temp_file
 
   #----- Callbacks -------------------------------------------------------------

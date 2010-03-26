@@ -1,6 +1,7 @@
 require 'digest/sha1'
 
 class Cms::User < ActiveRecord::Base
+  namespaces_table
   include Cms::Authentication::Model
 
   validates_presence_of     :login

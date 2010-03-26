@@ -1,6 +1,6 @@
 class Cms::AbstractFileBlock < ActiveRecord::Base
   
-  set_table_name "file_blocks"
+  set_table_name "cms_file_blocks"
       
   validates_presence_of :name  
   

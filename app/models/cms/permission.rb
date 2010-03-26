@@ -1,4 +1,5 @@
 class Cms::Permission < ActiveRecord::Base
+  namespaces_table
   has_many :group_permissions, :class_name => 'Cms::GroupPermission'
   has_many :groups, :through => :group_permissions, :class_name => 'Cms::Group'
   

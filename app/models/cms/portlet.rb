@@ -1,5 +1,5 @@
 class Cms::Portlet < ActiveRecord::Base
-
+  namespaces_table
   validates_presence_of :name
   is_searchable
 

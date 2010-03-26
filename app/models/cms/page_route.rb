@@ -1,4 +1,5 @@
 class Cms::PageRoute < ActiveRecord::Base
+  namespaces_table
   belongs_to :page
   has_many :conditions, :class_name => 'Cms::PageRouteCondition'
   has_many :requirements, :class_name => 'Cms::PageRouteRequirement'

@@ -3,7 +3,8 @@
 # their permissions from all groups combined represents what they can do.
 #
 class Cms::Group < ActiveRecord::Base
-
+  namespaces_table
+  
   GUEST_CODE = "guest"
 
   has_many :user_group_memberships, :class_name => 'Cms::UserGroupMembership'

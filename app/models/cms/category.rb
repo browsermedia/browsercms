@@ -3,6 +3,7 @@ class Cms::Category < ActiveRecord::Base
   belongs_to :parent, :class_name => 'Cms::Category'
   has_many :children, :class_name => 'Cms::Category', :foreign_key => "parent_id"
   is_searchable
+  namespaces_table
   validates_presence_of :category_type_id, :name
   validates_uniqueness_of :name, :scope => :category_type_id
   

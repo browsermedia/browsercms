@@ -1,5 +1,5 @@
 class Cms::Site < ActiveRecord::Base
-  
+  namespaces_table
   validates_uniqueness_of :domain
   
   before_validation :remove_www
