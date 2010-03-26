@@ -19,6 +19,7 @@ module NamespacingSupport
     def namespace
       namespaces * "::"
     end
+    
   end
   
   # This is a rather tortuous way of allowing an ActiveRecord::Base subclass to
@@ -37,9 +38,31 @@ module NamespacingSupport
       end
     end
   end
+  
+  module Inflector
+    def namespaced_underscore(camel_cased_word)
+      camel_cased_word.to_s.split("::").map(&:underscore).join("-")
+    end
+    
+    def namespaced_constantize(underscored_string)
+      underscored_string.split("-").map(&:camelize).join("::").constantize
+    end
+  end
+  
+  module Inflections
+    def namespaced_underscore
+      ActiveSupport::Inflector::Inflections.namespaced_underscore(self)
+    end
+    
+    def namespaced_constantize
+      ActiveSupport::Inflector::Inflections.namespaced_constantize(self)
+    end
+  end
+    
 end
 
 class Module
   include NamespacingSupport::Module
 end
+
 
