@@ -8,7 +8,7 @@ class Cms::HtmlBlock < ActiveRecord::Base
   # Override of search scope from searching behavior to deal with include_body 
   named_scope :search, lambda{|search_params|
     term = search_params.is_a?(Hash) ? search_params[:term] : search_params  
-    order = search_params.is_a?(Hash) && search_params[:order] ? search_params[:order] : ContentType.table_name.to_s + ".name"
+    order = search_params.is_a?(Hash) && search_params[:order] ? search_params[:order] : table_name.to_s + ".name"
     include_body = search_params.is_a?(Hash) ? search_params[:include_body] : false
     conditions = []
     columns = ["name"]

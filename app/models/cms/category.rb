@@ -7,7 +7,7 @@ class Cms::Category < ActiveRecord::Base
   validates_presence_of :category_type_id, :name
   validates_uniqueness_of :name, :scope => :category_type_id
   
-  named_scope :named, lambda{|name| {:conditions => ['categories.name = ?', name]}}
+  named_scope :named, lambda{|name| {:conditions => ["#{table_name}.name = ?", name]}}
   
   named_scope :of_type, lambda{|type_name| {:include => :category_type, :conditions => ["#{CategoryType.table_name}.name = ?", type_name], :order => "#{Category.table_name}.name"}}
   named_scope :top_level, :conditions => ["#{Category.table_name}.parent_id is null"]

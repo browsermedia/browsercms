@@ -123,7 +123,7 @@ class Cms::ContentBlockController < Cms::BaseController
       options = {}
       if params[:section_id] && params[:section_id] != 'all'
         options[:include] = { :attachment => { :section_node => :section }} 
-        options[:conditions] = ["sections.id = ?", params[:section_id]]
+        options[:conditions] = ["#{Section.table_name}.id = ?", params[:section_id]]
       end
       options[:page] = params[:page]    
       options[:order] = model_class.default_order if model_class.respond_to?(:default_order)

@@ -24,7 +24,7 @@ class Cms::UsersController < Cms::ResourceController
     end
     
     unless params[:group_id].to_i == 0
-      query << "user_group_memberships.group_id = ?"
+      query << "#{UserGroupMembership.table_name}.group_id = ?"
       conditions << params[:group_id]
     end
     

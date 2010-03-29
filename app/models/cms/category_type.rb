@@ -2,9 +2,9 @@ class Cms::CategoryType < ActiveRecord::Base
   has_many :categories, :class_name => 'Cms::Category'
   validates_presence_of :name
   validates_uniqueness_of :name
-  is_searchable
   namespaces_table
-  named_scope :named, lambda {|name| {:conditions => ['category_types.name = ?', name] } }
+  is_searchable
+  named_scope :named, lambda {|name| {:conditions => ['#{table_name}.name = ?', name] } }
   
   # Return a map when the key is category type id as a string
   # and the value is an array of arrays, each entry having 

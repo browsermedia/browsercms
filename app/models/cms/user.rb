@@ -22,7 +22,7 @@ class Cms::User < ActiveRecord::Base
   named_scope :active, :conditions => ["expires_at IS NULL OR expires_at > ?", Time.now.utc]    
   named_scope :able_to_edit_or_publish_content, 
     :include => {:groups => :permissions}, 
-    :conditions => ["permissions.name = ? OR permissions.name = ?", "edit_content", "publish_content"]
+    :conditions => ["#{Permission.table_name}.name = ? OR #{Permission.table_name}.name = ?", "edit_content", "publish_content"]
 
   def self.current
     Thread.current[:cms_user]
@@ -47,7 +47,7 @@ class Cms::User < ActiveRecord::Base
   
   def disable
     if self.class.count(:conditions => ["expires_at is null and id != ?", id]) > 0
-      self.expires_at = Time.now - 1.minutes
+      self.expires_at = Time.now - 2.minutes
     else
       false
     end
@@ -96,15 +96,15 @@ class Cms::User < ActiveRecord::Base
   end
 
   def permissions
-    @permissions ||= Cms::Permission.find(:all, :include => {:groups => :users}, :conditions => ["users.id = ?", id])
+    @permissions ||= Cms::Permission.find(:all, :include => {:groups => :users}, :conditions => ["#{User.table_name}.id = ?", id])
   end
 
   def viewable_sections
-    @viewable_sections ||= Cms::Section.find(:all, :include => {:groups => :users}, :conditions => ["users.id = ?", id])
+    @viewable_sections ||= Cms::Section.find(:all, :include => {:groups => :users}, :conditions => ["#{User.table_name}.id = ?", id])
   end
 
   def modifiable_sections
-    @modifiable_sections ||= Cms::Section.find(:all, :include => {:groups => [:group_type, :users]}, :conditions => ["users.id = ? and group_types.cms_access = ?", id, true])
+    @modifiable_sections ||= Cms::Section.find(:all, :include => {:groups => [:group_type, :users]}, :conditions => ["#{Cms::User.table_name}.id = ? and #{GroupType.table_name}.cms_access = ?", id, true])
   end
 
   # Expects a list of names of Permissions

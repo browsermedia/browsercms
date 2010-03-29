@@ -20,8 +20,8 @@ class Cms::Section < ActiveRecord::Base
   named_scope :hidden, :conditions => {:hidden => true}
   named_scope :not_hidden, :conditions => {:hidden => false}
 
-  named_scope :named, lambda{|name| {:conditions => ['sections.name = ?', name]}}
-  named_scope :with_path, lambda{|path| {:conditions => ['sections.path = ?', path]}}
+  named_scope :named, lambda{|name| {:conditions => ["#{Section.table_name}.name = ?", name]}}
+  named_scope :with_path, lambda{|path| {:conditions => ["#{Section.table_name}.path = ?", path]}}
 
   validates_presence_of :name, :path
   #validates_presence_of :parent_id, :if => Proc.new {root.count > 0}, :message => "section is required"
