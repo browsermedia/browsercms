@@ -28,7 +28,7 @@ environment 'config.action_controller.page_cache_directory = RAILS_ROOT + "/publ
 generate :browser_cms_demo_site
 
 require File.join(template_root, '..', 'app', 'models', 'templates.rb')
-file 'app/views/layouts/templates/default.html.erb', Templates.default_body
+file 'app/views/layouts/templates/default.html.erb', Cms::Templates.default_body
 
 if Gem.win_platform?
   puts "        rake  db:migrate"

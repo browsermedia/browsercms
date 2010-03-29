@@ -1,6 +1,6 @@
 ##
 # Separated into its own file so it can be required in Application Templates and Generators easier.
-module Templates
+module Cms::Templates
 
   ##
   # Generates a basic empty template for a page.
