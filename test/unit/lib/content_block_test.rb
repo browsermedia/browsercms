@@ -59,7 +59,7 @@ class ContentBlockTest < ActiveSupport::TestCase
     assert_equal 2, deleted_block.versions.size
     assert_equal 2, deleted_block.version
     assert_equal 1, deleted_block.versions.first.version
-    assert_equal 2, Cms::HtmlBlock::Version.count(:conditions => {:html_block_id => @block.id})
+    assert_equal 2, Cms::HtmlBlock::Version.count(:conditions => {:cms_html_block_id => @block.id})
   end  
   
   def test_delete_all

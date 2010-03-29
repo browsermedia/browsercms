@@ -1,6 +1,6 @@
 class Cms::ImageBlock < Cms::AbstractFileBlock
 
-  acts_as_content_block :versioned => { :version_foreign_key => :file_block_id },
+  acts_as_content_block :versioned => { :version_foreign_key => :cms_file_block_id },
     :belongs_to_attachment => true, :taggable => true
 
   def set_attachment_file_path

@@ -5,10 +5,19 @@ module Cms
         model_class.extend(MacroMethods)
       end
       module MacroMethods
+        
+        def namespaced_table?
+          !!@namespaced_table
+        end
+        
         def namespaces_table
           extend ClassMethods
           include InstanceMethods
-          set_table_name "#{namespace.underscore}_#{base_class.table_name}"
+
+          unless @namespaced_table
+            set_table_name "#{namespace.underscore}_#{base_class.table_name}"
+          end
+          @namespaced_table = true
         end
       end
       module ClassMethods

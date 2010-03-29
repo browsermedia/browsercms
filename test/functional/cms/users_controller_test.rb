@@ -194,7 +194,7 @@ class UsersControllerNonAdminTest < ActionController::TestCase
 
   def setup
     @user = Factory.build(:user)
-    @user.groups = [groups(:group_3)]
+    @user.groups = [cms_groups(:group_3)]
     @user.save!
     login_as(@user)
   end

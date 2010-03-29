@@ -4,13 +4,12 @@ require 'fileutils'
 class Cms::Attachment < ActiveRecord::Base
 
   #----- Macros ----------------------------------------------------------------
-
+  namespaces_table
   is_archivable
   is_publishable
   uses_soft_delete
   is_userstamped
   is_versioned
-  namespaces_table
   attr_accessor :temp_file
 
   #----- Callbacks -------------------------------------------------------------

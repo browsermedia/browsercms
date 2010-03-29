@@ -30,6 +30,8 @@ class ActiveSupport::TestCase
   # instantiated fixtures translates to a database query per test method),
   # then set this back to true.
   self.use_instantiated_fixtures  = false
+  
+  self.fixture_path = File.join(RAILS_ROOT, 'test', 'fixtures', 'cms')
 
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
   #
@@ -37,26 +39,26 @@ class ActiveSupport::TestCase
   # -- they do not yet inherit this setting
   fixtures :all
 
-  set_fixture_class :sections => Cms::Section
-  set_fixture_class :section_nodes => Cms::SectionNode
-  set_fixture_class :connectors => Cms::Connector
-  set_fixture_class :content_type_groups => Cms::ContentTypeGroup
-  set_fixture_class :content_types => Cms::ContentType
+  set_fixture_class :cms_sections => Cms::Section
+  set_fixture_class :cms_section_nodes => Cms::SectionNode
+  set_fixture_class :cms_connectors => Cms::Connector
+  set_fixture_class :cms_content_type_groups => Cms::ContentTypeGroup
+  set_fixture_class :cms_content_types => Cms::ContentType
 
-  set_fixture_class :dynamic_views => Cms::DynamicView
-  set_fixture_class :group_permissions => Cms::GroupPermission
-  set_fixture_class :group_sections => Cms::GroupSection
-  set_fixture_class :group_type_permissions => Cms::GroupTypePermission
-  set_fixture_class :group_types => Cms::GroupType
-  set_fixture_class :groups => Cms::Group
-  set_fixture_class :html_blocks => Cms::HtmlBlock
-  set_fixture_class :pages => Cms::Page
-  set_fixture_class :permissions => Cms::Permission
-  set_fixture_class :section_nodes => Cms::SectionNode
-  set_fixture_class :sections => Cms::Section
-  set_fixture_class :sites => Cms::Site
-  set_fixture_class :user_group_memberships => Cms::UserGroupMembership
-  set_fixture_class :users => Cms::User
+  set_fixture_class :cms_dynamic_views => Cms::DynamicView
+  set_fixture_class :cms_group_permissions => Cms::GroupPermission
+  set_fixture_class :cms_group_sections => Cms::GroupSection
+  set_fixture_class :cms_group_type_permissions => Cms::GroupTypePermission
+  set_fixture_class :cms_group_types => Cms::GroupType
+  set_fixture_class :cms_groups => Cms::Group
+  set_fixture_class :cms_html_blocks => Cms::HtmlBlock
+  set_fixture_class :cms_pages => Cms::Page
+  set_fixture_class :cms_permissions => Cms::Permission
+  set_fixture_class :cms_section_nodes => Cms::SectionNode
+  set_fixture_class :cms_sections => Cms::Section
+  set_fixture_class :cms_sites => Cms::Site
+  set_fixture_class :cms_user_group_memberships => Cms::UserGroupMembership
+  set_fixture_class :cms_users => Cms::User
 
   # Add more helper methods to be used by all tests here...
 
@@ -94,7 +96,7 @@ class ActiveSupport::TestCase
   #----- Fixture/Data related helpers ------------------------------------------
 
   def admin_user
-    users(:user_1)
+    cms_users(:user_1)
   end
 
   def create_or_find_permission_named(name)
@@ -148,10 +150,12 @@ class ActiveSupport::TestCase
   end
 
   def root_section
-    sections(:section_1)
+    cms_sections(:section_1)
   end
   
 end
+
+ActionController::IntegrationTest.fixture_path = ActiveSupport::TestCase.fixture_path
 
 module Cms::ControllerTestHelper
   def self.included(test_case)
