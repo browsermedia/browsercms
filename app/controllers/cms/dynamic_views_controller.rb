@@ -48,7 +48,8 @@ class Cms::DynamicViewsController < Cms::BaseController
   protected
     def dynamic_view_type
       @dynamic_view_type ||= begin
-        type = request.request_uri.split('/')[2].classify.constantize
+        uri = request.request_uri.sub(/\?.*/, '')
+        type = uri.split('/')[2].classify.constantize
         raise "Invalid Type" unless type.ancestors.include?(DynamicView)
         type
       end
