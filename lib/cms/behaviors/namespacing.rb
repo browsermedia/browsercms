@@ -15,7 +15,7 @@ module Cms
           include InstanceMethods
 
           unless @namespaced_table
-            set_table_name "#{ self.to_s.split("::")[0...-1].join("_").downcase}_#{base_class.table_name}"
+            set_table_name "#{ self.to_s.split("::")[0...-1].map(&:underscore).join("_").downcase}_#{base_class.table_name}"
           end
           @namespaced_table = true
         end
