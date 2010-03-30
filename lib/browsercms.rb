@@ -10,7 +10,3 @@ ActiveRecord::Base.send(:include, ActsAsList)
 #Include CMS Behaviors
 ActiveRecord::Base.send(:include, Cms::Acts::ContentBlock)
 require 'cms/behaviors'
-
-require 'namespacing_support'
-ActiveSupport::Inflector::Inflections.send(:extend, NamespacingSupport::Inflector)
-String.send(:include, NamespacingSupport::Inflections )
