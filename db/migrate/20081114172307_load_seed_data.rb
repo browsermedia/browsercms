@@ -34,6 +34,22 @@ class LoadSeedData < ActiveRecord::Migration
         
     Cms::Group.all.each{|g| g.sections = Cms::Section.all }    
     
+    create_page_template(:default, 
+      :name => 'default', :format => 'html', :handler => 'erb',
+      :body => "<html>
+        <head>
+          <title>
+            <%= @page_title %>
+          </title>
+          <%= yield :html_head %>
+        </head>
+        <body>
+          <%= cms_toolbar %>
+          <%= container :main %>
+        </body>
+      </html>"
+      )
+    
     create_page(:home, :name => "Home", :path => "/", :section => sections(:root), :template_file_name => "default.html.erb", :cacheable => true)
     create_page(:not_found, :name => "Page Not Found", :path => "/system/not_found", :section => sections(:system), :template_file_name => "default.html.erb", :publish_on_save => true, :hidden => true, :cacheable => true)
     create_page(:access_denied, :name => "Access Denied", :path => "/system/access_denied", :section => sections(:system), :template_file_name => "default.html.erb", :publish_on_save => true, :hidden => true, :cacheable => true)

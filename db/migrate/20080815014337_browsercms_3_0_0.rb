@@ -256,7 +256,7 @@ class Browsercms300 < ActiveRecord::Migration
     drop_table :cms_groups
     drop_table :cms_group_types
     drop_versioned_table :cms_file_blocks
-    drop_table :cms_attachments
+    drop_versioned_table :cms_attachments
     drop_table :cms_redirects
     drop_table :cms_portlet_attributes
     drop_table :cms_portlets
