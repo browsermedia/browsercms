@@ -1,4 +1,5 @@
-class Cms::LinksController < Cms::BaseController
+module Cms
+class LinksController < Cms::BaseController
 
   before_filter :set_toolbar_tab
   before_filter :load_section, :only => [:new, :create, :move_to]
@@ -64,4 +65,5 @@ class Cms::LinksController < Cms::BaseController
       @toolbar_tab = :sitemap
     end
 
+end
 end

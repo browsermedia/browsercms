@@ -1,4 +1,5 @@
-class Cms::Section < ActiveRecord::Base
+module Cms
+class Section < ActiveRecord::Base
   namespaces_table
   flush_cache_on_change
 
@@ -151,4 +152,5 @@ class Cms::Section < ActiveRecord::Base
       self.groups = Group.all
     end
   end
+end
 end

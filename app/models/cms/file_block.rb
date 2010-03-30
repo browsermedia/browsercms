@@ -1,4 +1,5 @@
-class Cms::FileBlock < Cms::AbstractFileBlock
+module Cms
+class FileBlock < Cms::AbstractFileBlock
 
   acts_as_content_block :belongs_to_attachment => true, :taggable => true
 
@@ -18,4 +19,5 @@ class Cms::FileBlock < Cms::AbstractFileBlock
     "File"
   end
 
+end
 end

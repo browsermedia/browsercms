@@ -1,4 +1,5 @@
-class Cms::PagesController < Cms::BaseController
+module Cms
+class PagesController < Cms::BaseController
  
   before_filter :set_toolbar_tab
   before_filter :load_section, :only => [:new, :create]
@@ -132,4 +133,5 @@ class Cms::PagesController < Cms::BaseController
       @templates = PageTemplate.options
     end
    
+end
 end

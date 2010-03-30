@@ -1,4 +1,5 @@
-class Cms::TagsController < Cms::ContentBlockController
+module Cms
+class TagsController < Cms::ContentBlockController
   def index
     load_blocks
     respond_to do |format| 
@@ -11,4 +12,5 @@ class Cms::TagsController < Cms::ContentBlockController
     redirect_to cms_tags_url
   end
   
+end
 end

@@ -1,4 +1,5 @@
-class Cms::Task < ActiveRecord::Base
+module Cms
+class Task < ActiveRecord::Base
   namespaces_table
   include Cms::DomainSupport
   belongs_to :assigned_by, :class_name => 'Cms::User'
@@ -71,4 +72,5 @@ class Cms::Task < ActiveRecord::Base
   end
 
   
+end
 end

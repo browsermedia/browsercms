@@ -1,4 +1,5 @@
-class Cms::ContentController < Cms::ApplicationController
+module Cms
+class ContentController < Cms::ApplicationController
   include Cms::ContentRenderingSupport
 
   skip_before_filter :redirect_to_cms_site
@@ -173,4 +174,5 @@ class Cms::ContentController < Cms::ApplicationController
   
   
   
+end
 end

@@ -1,6 +1,7 @@
 require 'digest/sha1'
 
-class Cms::User < ActiveRecord::Base
+module Cms
+class User < ActiveRecord::Base
   namespaces_table
   include Cms::Authentication::Model
 
@@ -167,4 +168,5 @@ class Cms::User < ActiveRecord::Base
     able_to?(:edit_content, :publish_content)
   end
   
+end
 end

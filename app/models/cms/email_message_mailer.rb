@@ -1,4 +1,5 @@
-class Cms::EmailMessageMailer < ActionMailer::Base
+module Cms
+class EmailMessageMailer < ActionMailer::Base
   
   def email_message(message)
     @recipients = message.recipients
@@ -8,4 +9,5 @@ class Cms::EmailMessageMailer < ActionMailer::Base
     @content_type = message.content_type if message.content_type
   end
 
+end
 end

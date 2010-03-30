@@ -1,4 +1,5 @@
-class Cms::PortletController < Cms::ApplicationController
+module Cms
+class PortletController < Cms::ApplicationController
   
   skip_before_filter :redirect_to_cms_site
   skip_before_filter :login_required
@@ -9,4 +10,5 @@ class Cms::PortletController < Cms::ApplicationController
     redirect_to @portlet.send(params[:handler])
   end
     
+end
 end

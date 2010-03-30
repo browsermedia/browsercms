@@ -1,4 +1,5 @@
-class Cms::GroupsController < Cms::ResourceController
+module Cms
+class GroupsController < Cms::ResourceController
   layout 'cms/administration'
   
   check_permissions :administrate
@@ -23,4 +24,5 @@ class Cms::GroupsController < Cms::ResourceController
       @menu_section = 'groups'
     end
     
+end
 end

@@ -5,10 +5,10 @@ module Cms::Routes
   #
   def content_blocks(content_block_name, options={}, &block)
     content_name = content_block_name.to_s.classify
-    if Object.const_defined?(content_name.intern)
+    begin
+      content_block = "Cms::#{content_name}".constantize
+    rescue NameError
       content_block = content_name.constantize
-    else
-      content_block = ('Cms::' + content_name).constantize
     end
     resources(*[content_block_name, default_routes_for_content_block(content_block).deep_merge(options)], &block)
     if content_block.versioned?

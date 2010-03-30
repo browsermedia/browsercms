@@ -1,4 +1,5 @@
-class Cms::GroupType < ActiveRecord::Base
+module Cms
+class GroupType < ActiveRecord::Base
   namespaces_table
   has_many :groups, :class_name => 'Cms::Group'
   has_many :group_type_permissions, :class_name => 'Cms::GroupTypePermission'
@@ -10,4 +11,5 @@ class Cms::GroupType < ActiveRecord::Base
   named_scope :cms_access, :conditions => ["#{GroupType.table_name}.cms_access = ?", true]
   named_scope :non_cms_access, :conditions => ["#{GroupType.table_name}.cms_access = ?", false]
   
+end
 end

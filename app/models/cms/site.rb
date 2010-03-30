@@ -1,4 +1,5 @@
-class Cms::Site < ActiveRecord::Base
+module Cms
+class Site < ActiveRecord::Base
   namespaces_table
   validates_uniqueness_of :domain
   
@@ -38,4 +39,5 @@ class Cms::Site < ActiveRecord::Base
     end
   end
   
+end
 end

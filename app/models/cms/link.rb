@@ -1,4 +1,5 @@
-class Cms::Link < ActiveRecord::Base
+module Cms
+class Link < ActiveRecord::Base
   namespaces_table
   acts_as_content_block :connectable => false
   
@@ -33,4 +34,5 @@ class Cms::Link < ActiveRecord::Base
     url
   end
 
+end
 end

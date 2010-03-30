@@ -1,6 +1,7 @@
 #This is meant to be extended by other controller
 #Provides basic Restful CRUD
-class Cms::ResourceController < Cms::BaseController
+module Cms
+class ResourceController < Cms::BaseController
 
   def index
     instance_variable_set("@#{variable_name.pluralize}", resource.all(:order => order_by_column))
@@ -66,9 +67,11 @@ class Cms::ResourceController < Cms::BaseController
   end
 
   def resource
-    r = resource_name.classify.constantize rescue nil
-    r = "Cms::#{resource_name.classify}".constantize if r == nil
-    r
+    begin
+      "Cms::#{resource_name.classify}".constantize
+    rescue NameError
+      resource_name.classify.constantize
+    end
   end
 
   def build_object(params={})
@@ -107,4 +110,5 @@ class Cms::ResourceController < Cms::BaseController
     'cms/blocks/edit'
   end
 
+end
 end

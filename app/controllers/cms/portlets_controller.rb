@@ -1,4 +1,5 @@
-class Cms::PortletsController < Cms::ContentBlockController
+module Cms
+class PortletsController < Cms::ContentBlockController
   
   protected
     def load_blocks
@@ -37,4 +38,5 @@ class Cms::PortletsController < Cms::ContentBlockController
     def blocks_path
       cms_portlets_path
     end
+end
 end

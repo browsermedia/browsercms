@@ -1,4 +1,5 @@
-class Cms::Page < ActiveRecord::Base
+module Cms
+class Page < ActiveRecord::Base
   
   namespaces_table
   is_archivable
@@ -272,4 +273,5 @@ class Cms::Page < ActiveRecord::Base
     assigned_to == user
   end
   
+end
 end

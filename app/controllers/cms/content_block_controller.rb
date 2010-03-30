@@ -1,7 +1,8 @@
 require 'cms/category_type'
 # This is not called directly
 # This is the base class for other content blocks
-class Cms::ContentBlockController < Cms::BaseController
+module Cms
+class ContentBlockController < Cms::BaseController
   
   layout :determine_layout
   
@@ -283,4 +284,5 @@ class Cms::ContentBlockController < Cms::BaseController
       "cms/blocks"
     end
 
+end
 end

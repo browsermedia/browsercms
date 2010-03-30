@@ -67,6 +67,8 @@ class ActiveSupport::TestCase
   require File.dirname(__FILE__) + '/custom_assertions'  
   include CustomAssertions
   
+    
+  
   #----- Test Macros -----------------------------------------------------------
   class << self
     def should_validate_presence_of(*fields)
@@ -90,8 +92,31 @@ class ActiveSupport::TestCase
         end
       end
     end
-
   end
+  
+  def self.subclasses_from_module(module_name)
+    subclasses = []
+    mod = module_name.constantize
+    if mod.class == Module
+      mod.constants.each do |module_const_name|
+        begin
+          klass_name = "#{module_name}::#{module_const_name}"
+          klass = klass_name.constantize
+          if klass.class == Class
+            subclasses << klass
+            subclasses += klass.send(:subclasses).collect{|x| x.respond_to?(:constantize) ? x.constantize : x}
+          else
+            subclasses += subclasses_from_module(klass_name)
+          end
+        rescue NameError
+          raise $!
+          puts $!.inspect
+        end
+      end
+    end
+    return subclasses
+  end
+  
   
   #----- Fixture/Data related helpers ------------------------------------------
 
@@ -151,6 +176,19 @@ class ActiveSupport::TestCase
 
   def root_section
     cms_sections(:section_1)
+  end
+  
+  
+  #  Define everything that is in our namespace outside of the namespace.
+  #  This way, if anything improperly references an object it'll raise an error and
+  #  we can be sure that Cms namespace isn't accidentally reaching something outside
+  #  of the CMS namespace
+  subclasses_from_module("Cms").each do |klass|
+    Object.const_set(klass.to_s.split('::').last, Class.new).class_eval do
+      def initialize
+        raise "Non-namespaced class initialized"
+      end
+    end unless Object.const_defined?(klass.to_s.split('::').last)
   end
   
 end

@@ -1,4 +1,5 @@
-class Cms::DynamicView < ActiveRecord::Base
+module Cms
+class DynamicView < ActiveRecord::Base
   
   namespaces_table
   
@@ -83,4 +84,5 @@ class Cms::DynamicView < ActiveRecord::Base
     self.publish_on_save = true
   end
   
+end
 end

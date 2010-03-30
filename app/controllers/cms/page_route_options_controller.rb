@@ -1,4 +1,5 @@
-class Cms::PageRouteOptionsController < Cms::BaseController
+module Cms
+class PageRouteOptionsController < Cms::BaseController
 
   before_filter :load_page_route
   before_filter :load_model, :only => [:edit, :update, :destroy]
@@ -53,4 +54,5 @@ class Cms::PageRouteOptionsController < Cms::BaseController
       "page_route_#{resource_name}"
     end
     
+end
 end

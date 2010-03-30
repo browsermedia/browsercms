@@ -1,4 +1,5 @@
-class Cms::SectionsController < Cms::BaseController
+module Cms
+class SectionsController < Cms::BaseController
 
   before_filter :load_parent, :only => [:new, :create]
   before_filter :load_section, :only => [:edit, :update, :destroy, :move]
@@ -127,4 +128,5 @@ class Cms::SectionsController < Cms::BaseController
     def set_toolbar_tab
       @toolbar_tab = :sitemap
     end
+end
 end
