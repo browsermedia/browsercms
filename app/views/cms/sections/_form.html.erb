@@ -14,11 +14,11 @@
 <% able_to?(:administrate) do %>
   <div class="checkbox_group fields" style="float: left; width: 100%">
     <label>Public Permissions</label>
-    <%= hidden_field_tag "section[group_ids][]", "", :id => nil %>
+    <%= hidden_field_tag "cms_section[group_ids][]", "", :id => nil %>
     <div class="checkboxes">
       <% for group in public_groups %>
       <div class="checkbox_fields">
-        <%= check_box_tag "section[group_ids][]", group.id,
+        <%= check_box_tag "cms_section[group_ids][]", group.id,
               @section.groups.include?(group), :class => "public_group_ids", :id => "public_group_ids_#{group.id}", :tabindex => next_tabindex %>
           <label for="public_group_ids_<%= group.id %>"><%= group.name %></label>
       </div>
@@ -35,11 +35,11 @@
 
   <div class="checkbox_group fields" style="float: left; width: 100%">
     <label>CMS Permissions</label>
-    <%= hidden_field_tag "section[group_ids][]", "", :id => nil %>
+    <%= hidden_field_tag "cms_section[group_ids][]", "", :id => nil %>
     <div class="checkboxes">
       <% for group in cms_groups %>
       <div class="checkbox_fields">
-          <%= check_box_tag "section[group_ids][]", group.id,
+          <%= check_box_tag "cms_section[group_ids][]", group.id,
               @section.groups.include?(group), :class => "cms_group_ids", :id => "cms_group_ids_#{group.id}", :tabindex => next_tabindex %>
           <label for="cms_group_ids_<%= group.id %>"><%= group.name %></label>
       </div>
