@@ -9,6 +9,7 @@ module Cms
         
         helper Cms::PageHelper
         helper Cms::MenuHelper
+        helper Cms::RenderingHelper
         helper do
           def cms_toolbar
             if current_user.able_to?(:administrate, :edit_content, :publish_content)
