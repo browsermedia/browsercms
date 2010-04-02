@@ -1,0 +1,146 @@
+de:
+  models:
+    attachment:
+      must_upload_file: Sie müssen eine Datei hochladen
+    category:
+      name_label: Name
+      type_label: Typ
+      updated_label: aktualisiert am
+      display_name: Kategorie
+      display_name_plural: Kategorien
+    category_type:
+      display_name: Kategorie-Art
+      display_name_plural: Kategorie-Arten
+      cannot_be_deleted: 
+        one: "Kann nicht gelöscht werden wegen Benutzung in 1 Kategorie."
+        other: "Kann nicht gelöscht werden wegen Benutzung in {{count}} Kategorien."
+    content_type:
+      name_label: Name
+      updated_label: aktualisiert am
+    dynamic_view:
+      unique_combination: "Brauche eine einmalige Kombination aus Name, Format und Handler."
+    forgot_password_mailer:
+      account_management: Konto-Management
+    file_block:
+      display_name: Datei
+    html_block:
+      display_name: Text
+      display_name_plural: Text
+    image_block:
+      display_name: Bild
+    page:
+      create_version_comment: "{{connectable}} wurde dem Container '{{container}}' hinzugefügt."
+      # TODO some translations pending  here
+      remove_version_comment: "{{connectable}} wurde aus dem Container '{{container}}' entfernt."
+      path_reserved: "ist ungültig, '{{path}}' ist ein reservierter Pfad."
+    page_partial:
+      name_format_error_message: "kann nur Kleinbuchstaben, Nummern und Underscores enthalten, und muss mit einem Underscore beginnen."
+    page_template:
+      name_format_error_message: "kann nur Kleinbuchstaben, Nummern und Underscores enthalten, und muss mit einem Kleinbuchstaben beginnen."
+    portlet:
+      name_label: Name
+      type_label: Typ
+      updated_label: aktualisiert am
+    section:
+      name_format_error_message: "darf nicht '/' enthalten"
+      path_reserved: "ist ungültig, '{{path}}' ist ein reservierter Pfad."
+    tag:
+      name_label: Name
+      usages_label: Benutzungen
+      updated_label: aktualisiert am
+    task:
+      subject: "Ihnen wurde Seite '{{page}}' zugewiesen."
+      cannot_assign: kann nicht zuweisen
+      cannot_be_assigned: kann nichts zugewiesen werden
+    template:
+      main_menu: Hauptmenü
+    user:
+      login_format_error_message: "Bitte nur Buchstaben, Nummern und .-_@ verwenden."
+      email_format_error_message: "sollte eine E-Mail Adresse sein, z.B. xx@xx.com"  
+    
+  activerecord:
+    errors:
+      template:
+      header:
+      other:
+      body:
+    messages:
+      blank:
+    models:
+      category:
+      category_type:
+      dynamic_view:
+      file_block:
+      html_block:
+      image_lock:
+      page_partial:
+      pgae_route:
+    attributes:
+      category:
+        name:
+        type:
+      category_type:
+        name:
+      dynamic_view:
+        name:
+        format:
+        body:
+      file_block:
+        name:
+        tags:
+        attachment_file: Datei
+        attachment_file_section: Sektion
+        attachment_file_path: Pfad
+      group:
+        name:
+      html_block:
+        name:
+        content:
+        tags:
+      image_block:
+        name:
+        tags:
+        attachment_file: Datei
+        attachment_section: Sektion
+        attachment_file_path: Pfad
+      link:
+        name:
+        url:
+      page:
+        name:
+        title:
+        path:
+        template_file_name: Vorlage
+        cacheable: Zwischenspeicher aktiviert?
+        hidden: In Menüs ausblenden?
+        archived: archiviert?
+        description:
+        keywords:
+        language:
+      page_route:
+        page:
+        name:
+        pattern:
+        code:
+      redirect:
+        from_path:
+        to_path:
+      section:
+        name:
+        path:
+        hidden: In Menüs ausblenden?
+      tag:
+        name:
+      task:
+        assigned_to:
+        due_date:
+        comment:
+      user:
+        login: Benutzername
+        email:
+        first_name:
+        last_name:
+        expires_at: läuft aus am
+        password:
+        confirm_password:
+        

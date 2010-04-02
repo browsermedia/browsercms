@@ -1,0 +1,28 @@
+de:
+  page_routes:
+    form:
+      save: Speichern
+    edit:
+      page_title: Seitenpfad bearbeiten
+      list_all: Alle auflisten
+    index:
+      page_title: Seitenpfade auflisten
+      add: Hinzufügen
+      edit: Bearbeiten
+      delete: Löschen
+      confirm: Diesen Seitenpfad sicher löschen?
+      view: Anzeigen
+      view_rails_routes: Rails Pfade anzeigen
+      name: Name
+      pattern: Muster
+    new:
+      page_title: Neuen Seitenpfad
+      list_all: Alle auflisten
+    show:
+      page_title: "'{{route}}' Seitenroute"
+      add: Hinzufügen
+      edit: Bearbeiten
+      delete: Löschen
+      confirm: Diesen Seitenpfad sicher löschen?
+      list_all: Alle auflisten?
+      view_rails_routes: Rails Pfade anzeigen

@@ -1,0 +1,19 @@
+de:
+  redirects:
+    form:
+      save: Speichern
+    edit:
+      page_title: Umleitung bearbeiten
+      list_all: Alle auflisten
+    index:
+      page_title: Umleitungen auflisten
+      add: Hinzufügen
+      edit: Bearbeiten
+      delete: Löschen
+      confirm: Diese Umleitung sicher löschen?
+      from: Von
+      to: Nach
+    new:
+      page_title: Neue Umleitunge
+      list_all: Alle auflisten
+    

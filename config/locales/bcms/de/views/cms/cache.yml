@@ -1,0 +1,5 @@
+de:
+  cache:
+    toolbar_title: Seiten-Zwischenspeicher Info
+    clear_cache: Seiten-Zwischenspeicher bereinigen
+    message: Dieses CMS System speichert oft aufgerufene Seiten zwischen. Falls Daten alt erscheinen, können Sie hier den Zwischenspeicher manuell löschen.

@@ -1,0 +1,23 @@
+de:
+  layouts:
+    page_toolbar:
+      status: "Status:"
+      section: "Sektion:"
+      page: "Seite:"
+      template: "Vorlage:"
+      version: "Version:"
+      live: Öffentlich
+      publish: veröffentlichen
+      assign: zuweisen
+      complete_task: Aufgabe abschließen
+      edit_properties: Eigenschaften Bearbeiten
+      list_versions: Versionsliste
+      delete: Löschen
+      confirm: "'{{page_name}}' sicher löschen?"
+      revert: Auf diese Version zurückstellen
+      visual_editor: "Visueller Editor:"
+      visual_editor_title: "Sie dürfen diese Seite nicht bearbeiten"
+      turn_off: Aus
+      turn_on: Ein
+      view_current: Aktuelle Version anzeigen
+      

@@ -1,0 +1,10 @@
+de:
+  routes:
+    index:
+      page_title: Rails Routen
+      path_to_test: Pfad Test
+      name: Name
+      verb: Verb
+      pattern: Muster
+      result: Resultat
+      

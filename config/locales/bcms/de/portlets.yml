@@ -1,0 +1,10 @@
+de:
+  portlets:
+    forgot_password: 
+      unable_to_verify: Ihr Konto konnte nicht verifiziert werden. Bitte stellen Sie sicher, dass Ihre E-Mail Adresse richtig ist.
+      password_sent: "Ihr Passwort wurde an {{email}} gesendet"
+    reset_password:
+      no_token: Passwort Token fehlt
+      invalid_token: Ungültiges Passwort Token
+      reset: Das Passwort wurde zurückgesetzt
+    

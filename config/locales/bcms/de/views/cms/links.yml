@@ -1,0 +1,14 @@
+de:
+  links:
+    form:
+      new_window: In neuem Fenster öffnen?
+    edit:
+      page_title: Link {{link}} bearbeiten
+      list_all: Alle auflisten
+      save_and_publish: Speischern und veröffentlichen
+      save: Speichern
+    new:
+      page_title: Neuen Link zur Seite hinzufügen
+      list_all: Alle auflisten
+      save_and_publish: Speichern und veröffentlichen
+      save: Speichern

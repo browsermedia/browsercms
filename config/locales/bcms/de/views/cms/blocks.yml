@@ -1,0 +1,68 @@
+de:
+  blocks:
+    toolbar_for_collection:
+      publish: Veröffentlichen
+      view_content: Inhalt anzeigen
+      edit_content: Inhalt bearbeiten
+      add_content: Inhalt hinzufügen
+      list_versions: Versionen anzeigen
+      delete: Löschen
+      confirm: 'Diesen Eintrag sicher löschen?'
+    toolbar_for_member:
+      publish: veröffentlichen
+      view_content: Inhalt anzeigen
+      edit_content: Inhalt bearbeiten
+      add_content: Neuen Inhalt hinzufügen 
+      list_versions: Versionen auflisten
+      delete: Löschen
+      confirm: 'Diesen Eintrag sicher löschen?'
+    edit:
+      page_title: Inhaltsbibliothek / Löschen
+      edit: Bearbeiten
+      deleted_message: "{{class_name}} wurde gelöscht"
+      save_and_publish: Speichern und veröffentlichen
+      save: Speichern
+    index:
+      page_title: Inhaltsbibliothek / Auflisten
+      list: Liste
+      updated: aktualisiert
+      used: bentutzt
+      status: Status
+      draft: Entwurf
+      published: Veröffentlicht
+      no_results: Keine Resultate gefunden für
+    new:
+      page_title: Inhaltsbibliothek / Neue Seite
+      list: Liste
+      add: Neu
+      save_and_publish: Speichern und veröffentlichen
+      save: Speichern
+    show:
+      page_title: Inhaltsbibliothek / Anzeigen
+      view: Anzeigen
+      deleted_message: "{{class_name}} wurde gelöscht"
+      status: Status
+      used_on: "benutzt auf:"
+      page:
+        one: Seite
+        other: Seiten
+      version: Version
+      current: Aktuell
+      block_contents: "Block Contents:"
+    usages:
+      page_title: Inhaltsbibliothek / Benutzung ansehen
+      toolbar_title: "Seiten, die {{content_type_name}} '{{block_name}}' benutzen"
+      page_name: Seitenname
+      path: Pfad
+      page_status: Seitenstatus
+    versions:
+      page_title: Inhaltsbibliothek / Versionsliste
+      list_versions: Versionen auflisten
+      revert: Zurücksetzen
+      version: Version
+      comment: Kommentar
+      date: Datum
+      editor: Editor
+      live: Öffentlich
+      current: Aktuell
+      

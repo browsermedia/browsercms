@@ -1,0 +1,18 @@
+de:
+  email_messages:
+    index:
+      page_title: Administration / E-Mail Nachrichten
+      toolbar_title: E-Mail Nachrichten
+      to: Von
+      subject: An
+      delivered: Gesendet
+      no_mail: Keine E-Mail Nachrichten
+    show: 
+      page_title: E-Mail Nachricht {{subject}}
+      delivered_at: "Gesendet am:"
+      content_type: "Inhaltstyp:"
+      from: "Von:"
+      to: "An:"
+      cc: "CC:"
+      bcc: "BCC:"
+      subject: "Betreff:"

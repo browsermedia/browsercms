@@ -1,0 +1,5 @@
+de:
+  content:
+    no_page: 
+      page_not_found: Seite nicht gefunden
+      no_page: Es gibt keine Seite unter {{path}}

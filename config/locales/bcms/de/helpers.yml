@@ -1,0 +1,13 @@
+de:
+  helpers:
+    application:
+      all: Alle Sektionen
+      per_page: pro Seite
+      all_groups: Zeige alle Gruppen
+      check_all: Alle markieren
+      uncheck_all: Alle abmarkieren
+      no_content: Keine Inhalte
+    page:
+      multiple_portlets: "Fehler: Mehrere Portlets mit dem Namen '{{name}}'"
+      no_portlet: "Fehler: Kein Portlet mit dem Namen '{{name}}'"
+      

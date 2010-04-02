@@ -1,0 +1,30 @@
+de:
+  bootstrap:
+    core: Kern
+    categorization: Kategorisierung
+  seed:
+    first_name: CMS
+    last_name: Administrator
+    administrate_full_name: Administer CMS
+    administrate_description: "Erlaubt Benutzern, das CMS zu administrieren, inklusive Benutzer und Gruppen"
+    edit_full_name: "Inhalt bearbeiten"
+    edit_description: "Erlaubt Benutzern, Seiten und Blöcke hinzuzufügen, zu bearbeiten und zu löschen. Benutzer können speichern (aber nicht veröffentlichen)"
+    publish_full_name: Inhalt veröffentlichen
+    publish_description: "Erlaubt Benutzern, sowohl Seiten und Blöcke zu speichern, zu veröffentlichen, zu verstecken und zu archivieren."
+    guest: Gast
+    registered_public_user: Registrierter öffentlicher Benutzer
+    cms_user: CMS Benutzer
+    cms_admin: CMS Administratoren
+    content_editors: Redakteure
+    default: Standard
+    my_site: Meine Internetseite
+    system: System
+    home: Frontpage
+    page_not_found: Seite nicht gefunden
+    access_denied: Zugriff verweigert
+    server_error: Serverfehler
+    page_not_found_content: Die angefordete Seite wurde nicht gefunden.
+    access_denied_content: Sie haben keine Berechtigung, auf diese Seite oder Ressource zuzugreifen.
+    server_error_content: Es ist unerwarteter Zustand aufgetreten. Die Anfrage kann nicht vervollständigt werden.
+      
+    

@@ -1,0 +1,39 @@
+de:
+  pages:
+    edit_connector:
+      show: Diesen Inhalt ({{connectable_name}}) anzeigen
+      edit: Diesen Inhalt ({{connectable_name}}) bearbeiten
+      up: Diesen Inhalt ({{connectable_name}}) hinaufbewegen
+      down: Diesen Inhalt ({{connectable_name}}) hinunterbewegen
+      delete: Diesen Inhalt ({{connectable_name}}) von der Seite löschen. Er bleibt in der Bibliothek gepeichert.
+      live: Dieser Inhalt ist veröffentlicht und kann von Seitenbesuchern gesehen werden.
+      draft: Dieser Inhalt ist ein Entwurf und kann von Seitenbesuchern nicht gesehen werden, bis er veröffentlicht wird.
+    edit_container:
+      add: Neuen Inhalt zum Container ({{container_name}}) hinzufügen.
+      insert: Insert existing content into this container ({{container_name}})
+      live: Dieser Inhalt ist veröffentlicht und kann von Seitenbesuchern gesehen werden.
+      draft: Dieser Inhalt ist ein Entwurf und kann von Seitenbesuchern nicht gesehen werden, bis er veröffentlicht wird.
+    form:
+      title_hint: (Freilassen wenn gleichlautend wie Name)
+    edit:
+      page_title: Eigenschaften bearbeiten / Seite "{{page_name}}"
+      list_all: Alle auflisten
+      edit_content: Inhalt bearbeiten
+      save: Speichern
+    new:
+      page_title: Neue Seite
+      list_all: Alle auflisten
+      save: Speichern
+    versions: 
+      page_title: "Versionsliste / '{{page_name}}' Seite"
+      view: anzeigen
+      edit_content: Inhalt bearbeiten
+      edit_properties: Eigenschaften bearbeiten
+      revert: Zurücksetzen
+      version: Version
+      comment: Kommentar
+      date: Datum
+      editor: Bearbeiter
+      live: (ÖFFENTLICH)
+      current: (AKTUELL)
+      

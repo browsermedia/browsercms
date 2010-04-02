@@ -1,0 +1,18 @@
+de:
+  dashboard:
+    page_drafts:
+        page_drafts: Seitenentwürfe
+        name: Name
+        user: Benutzer
+        all_published: Alle Seiten sind veröffentlicht.
+        date: Datum
+        publish_selected: Ausgewählte veröffentlichen
+    tasks:
+        tasks: Aufgaben
+        name: Name
+        assigned_by: zugeordnet von
+        due_date: Fälligkeitsdatum
+        no_tasks: Sie haben im Moment keine Zuweisungen.
+        complete_selected: Ausgewählte abschließen.
+  
+  

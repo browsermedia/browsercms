@@ -1,0 +1,15 @@
+de:
+  section_nodes:
+    link:
+      published: Veröffenlicht
+      draft: Entwurf
+    node:
+      hidden: Versteckt
+    index:
+        page_title: Seitenübersicht
+        edit_page: Seite bearbeiten
+        edit_properties: Eigenschaften bearbeiten
+        add_page: Seite hinzufügen
+        add_section: Sektion hinzufügen
+        add_link: Link hinzufügen
+        delete: Löschen

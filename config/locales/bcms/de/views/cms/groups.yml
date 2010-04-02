@@ -1,0 +1,34 @@
+de:
+  groups:
+    form:
+      list_all: Alle auflisten
+      group_name: Gruppenname
+      type_of_user: Benutzertyp
+      instructions: Welchen Typ von Benutzer repräsentiert diese Gruppe?
+      save: Speichern
+    permissions:
+      global_permissions: Globale Berechtigungen
+    sections:
+      section_permissions: Sektion-Berechtigungen
+      instructions: Welche Sektionen dürfen Gruppenmitglieder
+      view: sehen
+      edit: bearbeiten
+      path: Pfad
+    edit:
+      page_title: Administration / Neue Gruppe
+      toolbar_title: Neue Gruppe hinzufügen
+    index:
+      page_title: Administration / Gruppen
+      toolbar_title: Gruppen auflisten
+      add_group: Gruppen hinzufügen
+      name: Name
+      type: Art
+      permissions: Berechtigungen
+      edit: Bearbeiten
+      view: Zeigen
+      of: von
+      sections: Sektionen
+      all_sections: Alle Sektionen
+    new:
+      page_title: Administration / Neue Gruppe hinzufügen
+      toolbar_title: Neue Gruppe hinzufügen

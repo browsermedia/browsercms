@@ -1,0 +1,38 @@
+de:
+  shared:
+    admin_sidebar:
+      users_title: Benutzer
+      users: Benutzer
+      groups: Gruppen
+      templates: Vorlagen
+      page_partials: Seitenelemente
+      page_templates: Seitenvorlagen
+      page_routes: Seitenumleitungen
+      tools: Werkzeuge
+      page_caching: Seiten Zwischenspeicher
+      redirects: Umleitungen
+      email_messages: E-Mail Nachrichten
+    exception:
+      error: Es ist ein Fehler aufgetreten
+    pagination:
+      displaying: Zeige
+      of: von
+    version_confilct:
+      their_version: Ihre Version
+      field: Feld
+      value: Wert
+    version_conflict_error:
+      version_conflict: "Versionskonflikt!"
+      message: |
+        Sie arbeiten gerade mit einer abgelaufenen Version dieses Inhalts.
+        Ihre Arbeit basiert auf <b>Version {{base_version}}</b>, während der Benutzer
+        <b>{{other_user}}</b> bereits <b>Version {{other_version}}</b> gespeichert hat. 
+        Vergleichen Sie Ihre Änderungen und übersenden Sie eine letztgültige Kopie.
+      your_version: Ihre Version
+    access_denied:
+      page_title: Zugriff verweigert
+      message: "Sie haben keine Berechtigung, auf diese Seite zuzugreifen."
+    error:
+      page_title: Fehler
+      message: Meldung
+      stacktrace: Fehlermeldungs-Stapel

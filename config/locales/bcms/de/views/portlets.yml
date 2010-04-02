@@ -1,0 +1,57 @@
+de:
+  views:
+    portlets:
+      dynamic:
+        name: Name
+        code: Code
+        template: Vorlage
+      email_page:
+        form:
+          name: Name
+          subject: Betreff
+          default_subject: Interessanter Link
+          success_url: URL bei Erfolg
+          success_url_hint: Leer lassen, um zur selben Seite zurückzukehren.
+          template: Vorlage    
+        render:
+          send_mail: E-Mail senden
+      forgot_password:
+        form: 
+          name: Name
+          reset_password_url: Passwort-URL zurücksetzen
+          reset_password_url_hint: URL auf jene Seite, wo die Benutzer ihr Passwort zurücksetzen. Keine Parameter erlaubt.
+          template: Vorlage
+        render:
+          account_email: "Die E-Mail Adresse Ihres Kontos:"
+          request_token: Anfrage zum Zurücksetzen des Passworts entgegengenommen.
+      login:
+        form:
+          name: Namen
+          success_url: URL bei Erfolg
+          success_url_hint: Leer lassen, um Benutzer an jene Seite zu senden, die sie angefragt haben.
+          failure_url: URL bei Fehler
+          failure_url_hint: Leer lassen, um Benutzer an jene Seite zu senden, von denen sie sich einzuloggen versuchten.
+          template: Vorlage
+        render:
+          welcome: Willkommen
+          logout: Abmelden
+          login: Anmelden
+      portlets:
+        form:
+          page_title: Inhaltsbibliothek / Portlet Art aussichen
+      reset_password:
+        form:
+          name: Name
+          handler: Handler
+          template: Vorlage
+        render:
+          new_password: "Neues Passwort:"
+          confirm_new_password: "Neues Passwort bestätigen:"
+          reset_password: Passwort zurücksetzen
+      tag_cloud:
+        form:
+          name: Name
+          limit: Limit
+          sizes: Größen
+          template: Vorlage
+        

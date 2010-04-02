@@ -1,0 +1,8 @@
+de:
+  tasks:
+    new:
+      page_title: "Seite '{{page_name}}' zuweisen"
+      back_to_page: Zurück zur Seite
+      due_date_hint: Leer lassen, falls kein Fälligkeitsdatum
+      save: Speichern
+      

@@ -1,0 +1,48 @@
+de:
+  users:
+    form:
+      save: Speichern
+    groups:
+      groups: Gruppen
+    toolbar:
+      show_inactive: Inaktive zeigen?
+    change_password:
+      page_title: Neues Passwort setzen?
+      list_all: Alle auflisten
+      edit_user: Benutzer bearbeiten
+      save: Speichern
+    edit:
+      page_title: "Benutzerdetails für '{{user_login}}' bearbeiten"
+      list_all: Alle auflisten
+      change_password: Passwort ändern
+    index:
+      page_title: Administration / Benutzer
+      toolbar_title: Benutzer auflisten
+      add_user: Benutzer hinzufügen
+      name: Name
+      email: E-Mail
+      groups: Gruppen
+      expiration: Ablaufdatum
+      activation: Aktivierung
+      never: Niemals
+      active: Aktiv
+      disable: Deaktivieren
+      inactive: Inakiv
+      enable: Aktivieren
+      no_results: "Keine Resultate gefunden für '{{keyword}}'"
+    new:
+      page_title: Neuer Benutzer
+      list_all: Alle auflisten
+    show:
+      list_all: Alle auflisten
+      change_password: Change Password
+      username: Username
+      email: Email
+      first_name: First Name
+      last_name: Last Name
+      groups: Groups
+      
+      
+      
+      
+      

@@ -1,0 +1,10 @@
+de:
+  connectors:
+    new:
+      page_title: "Existierenden Inhalt zur Seite '{{page}}' hinzufügen"
+      add_to_page: Zur Seite hinzufügen
+      view_content: Inhalt ansehen
+      choose_type: Die Inhaltsart auswählen
+      name: Name
+      updated: aktualisiert
+      uses: Benutzungen

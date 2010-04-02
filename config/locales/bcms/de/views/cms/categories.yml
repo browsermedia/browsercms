@@ -1,0 +1,9 @@
+de:
+  categories:
+    form:
+      page_title: Bitte erstellen Sie einen Kategorie-Typ
+      type_prompt: Wählen Sie einen Kategorie-Typ aus
+      message: |
+          Bevor Sie eine Kategorie erstellen können, müssen Sie {{link}}.  
+          Jede Kategorie braucht einen Kategorie-Typ. Zum Beispiel, wenn Sie planen, Nachrichtenartikel zu kategorisieren, sollten Sie einen "Nachrichten" Kategorie-Typ erstellen.
+      create_category_type: einen Kategorie-Typ erstellen

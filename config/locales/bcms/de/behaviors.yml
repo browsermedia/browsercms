@@ -1,0 +1,22 @@
+de:
+  behaviors:
+    archiving:
+      archived: Archiviert
+      unarchived: Nicht Archiviert
+    attaching:
+      file_required: Sie müssen eine Datei hochladen
+      file_name_required: Für den Anhang wird ein Dateiname benötigt
+      section_required: Für den Anhang wird eine Sektion benötigt
+    connecting:
+      deleted: gelöscht
+      edited: bearbeitet
+      version_comment: "{{class_name}} #{{id}} wurde {{action}}" 
+    hiding:
+      hidden: versteckt
+      unhidden: nicht versteckt
+    rendering:
+      deleted: "{{class_name}} wurde gelöscht.  Bitte entfernen Sie diesen Container von der Seite."
+    versioning:
+      created: Erzeugt
+      changed: "{{changes}} verändert"
+      

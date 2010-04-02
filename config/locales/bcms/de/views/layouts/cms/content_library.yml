@@ -1,0 +1,8 @@
+de:
+  layouts:
+    cms:
+      content_library:
+        search: Suche
+        include_body: Textkörper miteinschließen?
+        content_types: Inhaltsarten
+        

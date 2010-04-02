@@ -1,0 +1,76 @@
+#flash messages
+de:
+  controllers:
+    cache:
+      flushed: Zwischenspeicher bereinigt.
+    connectors:
+      removed: "'{{connectable_name}}' wurde aus dem Behälter '{{container}}' gelöscht"
+      failed_to_remove: "Konnte '{{connectable_name}}' nicht aus dem Container '{{container}}' entfernen"    
+      up_in: hinauf in
+      down_in: hinunter in
+      to_top: an die Spitze des
+      to_bottom: an das Ende des
+      moved: "'{{connectable_name}}' wurde {{where}} Containers '{{container}}' verschoben"
+      failed_to_move: "Konnte '{{connectable_name}}' nicht {{where}} Containers '{{container}}' verschieben"
+    content_block:
+      commands:
+        deleted: gelöscht
+        published: veröffentlicht
+        reverted: zurückgesetzt zur Version {{version}}
+        command_success: "{{content_type_name}} '{{block_name}}' wurde {{result}}"
+        command_failure: "{{content_type_name}} '{{block_name}}' konnte nicht {{result}} werden"
+      created: "{{content_type}} '{{block_name}}' wurde erzeugt"
+      updated: "{{content_type}} '{{block_name}}' wurde aktualisiert"
+    dynamic_view:
+      created: "{{dynamic_view_type}} '{{name}}' wurde erzeugt"
+      updated: "{{dynamic_view_type}} '{{name}}' wurde aktualisiert"
+      deleted: "{{dynamic_view_type}} '{{name}}' wurde gelöscht"
+    links:
+      created: "Link '{{name}}' wurde erzeugt"
+      updated: "Link '{{name}}' wurde aktualisiert"
+      deleted: "Link '{{name}}' was deleted"
+      failed_delete: "Link '{{name}}' konnte nicht gelöscht werden"
+    page_route_options:
+      created: "{{object}} hinzugefügt"
+      updated: "{{object}} aktualisiert"
+      deleted: "{{object}} gelöscht"
+    page_routes:
+      created: Seitenumleitung erzeugt
+      updated: Seitenumleitung aktualisiert
+      deleted: Seitenumleitung gelöscht
+    pages:
+      created: "Seite '{{page_name}}' wurde erzeugt"
+      updated: "Seite '{{page_name}}' wurde aktualisiert"
+      deleted: "Seite '{{page_name}}' wurde gelöscht"
+      failed_delete: "Seite '{{page_name}}' konnte nicht gelöscht werden"
+      published: veröffentlicht
+      hidden: versteckt
+      archived: archiviert
+      multiple_pages_action: "{{how_many}} Seiten wurden {{verb}}"
+      single_page_action: "Seite '{{page_name}}' wurde {{verb}}"
+      reverted: "Seite '{{page_name}}' wurde auf die Version {{version}} zurückgesetzt"
+    resource:
+      created: "{{resource_name}} '{{object_name}}' wurde erzeugt"
+      updated: "{{resource_name}} '{{object_name}}' wurde aktualisiert"
+      deleted: "{{resource_name}} '{{object_name}}' wurde gelöscht"
+    sections:
+      created: "Sektion '{{section_name}}' wurde erzeugt"
+      updated: "Sektion '{{section_name}}' wurde aktualisiert"
+      deleted: "Sektion '{{section_name}}' wurde gelöscht"
+      failed_delete: "Sektion '{{section_name}}' konnte nicht gelöscht werden"
+    sessions:
+      created: Erfolgreich angemeldet
+      failed_create: Anmeldung ist fehlgeschlagen
+      deleted: Sie haben sich erfolgreich abgemeldet.
+      failed_create_note: "Konnte Sie nicht als {{login}} anmelden."
+    tasks:
+      created: "Diese Seite wurde dem Benutzer {{user}} zugewiesen"
+      completed_multiple: Aufgaben wurden als vollständig markiert.
+      copmleted_single: Aufgabe wurde als vollständig markiert.
+      cannot_complete: Sie können nicht Aufgaben vervollständigen, die nicht an Sie zugewiesen sind. you
+    users:
+      password_changed: "Das Passwort von Benutzer '{{user}}' wurde verändert."
+      disabled: "Benutzer '{{user}}' wurde deaktiviert."
+      created: "Benutzer '{{user}}' wurde erzeugt"
+      updated: "Benutzer '{{user}}' wurde aktualisiert"
+      

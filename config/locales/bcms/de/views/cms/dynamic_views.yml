@@ -1,0 +1,18 @@
+de:
+  dynamic_views:
+    form:
+      save: Speichern
+    edit:
+      edit: Bearbeiten
+      list_all: Alle auflisten
+    index:
+      list: Auflisten
+      add: Hinzufügen
+      edit: Bearbeiten
+      delete: Löschen
+      confirm: "{{object}} sicher löschen?"
+      name: Name
+      updated_at: aktualisiert
+    new:
+      new: Neu
+      list_all: alle auflisten

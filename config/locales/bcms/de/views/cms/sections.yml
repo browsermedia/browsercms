@@ -1,0 +1,23 @@
+de:
+  sections:
+    form:
+      public_permissions: Öffentliche Berechtigungen
+      public_permissions_hint: "Welche 'öffentlichen' Gruppen können Seiten in dieser Sektion ansehen?"
+      cms_permissions: CMS Berechtigungen
+      cms_permissions_hint: "Welche 'CMS' Gruppen können Seite und Inhalte in dieser Sektion bearbeiten?"
+      save: Speichern
+    edit:
+      page_title: "Eigenschaften bearbeiten / Sektion '{{section_name}}'"
+      list_all: Alle auflisten
+    index:
+      title: Seitenübersicht
+      edit: Bearbeiten
+      properties: Eigenschaften
+      delete: Löschen
+      add_page: Seite hinzufügen
+      add_section: Sektion hinzufügen
+      add_link: Link hinzufügen
+    new:
+      page_title: Neue Sektion
+      list_all: Alle auflisten
+      
