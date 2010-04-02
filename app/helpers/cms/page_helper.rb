@@ -2,7 +2,7 @@ module Cms
   module PageHelper
     def page_title(*args)
       if args.first
-        # Removed unneeded indirection
+        # Removed unneeded indirection/fixed issue where @template is frozen in r1.9.1
         @page_title = args.first
       else
         @controller.instance_variable_get("@template").instance_variable_get("@page_title")
