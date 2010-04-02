@@ -96,8 +96,7 @@ module Cms
     <img src="/images/cms/lt_button_r.gif" alt="" style="margin-right: 10px;" />
   </div>
 LBW
-      # For now, return the original content unsanitized. TODO: Figure out how to unsanitize this output.
-      content
+    button.html_safe
     end
 
     def dk_button_wrapper(content)
