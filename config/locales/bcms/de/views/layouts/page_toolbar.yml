@@ -8,6 +8,8 @@ de:
       version: "Version:"
       live: Öffentlich
       publish: veröffentlichen
+      published: öffentlich
+      draft: Entwurf
       assign: zuweisen
       complete_task: Aufgabe abschließen
       edit_properties: Eigenschaften Bearbeiten

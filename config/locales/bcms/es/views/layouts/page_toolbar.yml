@@ -8,6 +8,8 @@ es:
       version: "Versión:"
       live: EN VIVO
       publish: Publicar
+      published: Published
+      draft: Draft
       assign: Asignar
       complete_task: Completar Tarea
       edit_properties: Editar Propiedades

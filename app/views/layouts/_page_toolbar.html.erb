@@ -1,5 +1,6 @@
 <% if(logged_in? && @page && !@hide_page_toolbar) %>
 <% status = @page.live? ? 'published' : 'draft' %>
+<% status_text = @page.live? ? t('layouts.page_toolbar.published') : t('layouts.page_toolbar.draft') %>
 <%= image_tag "cms/page_toolbar/page_toolbar_l.gif", :style => "float: left;" %>
 <%= image_tag "cms/page_toolbar/status_#{status}_l.gif", :style => "float: left;" %>
 <%= image_tag "cms/page_toolbar/page_toolbar_r.gif", :style => "float: right;" %>
@@ -8,7 +9,7 @@
     <div class="page_attribute_label"><%= t "layouts.page_toolbar.status" %></div>
     <div id="<%= status %>_page_status_container" class="page_attribute_value_container">
       <%= image_tag "cms/page_toolbar/page_toolbar_inset_#{ status }_l.gif", :style => "float: left;" %>
-      <div id="page_status" class="page_attribute_value"><%= status %></div>
+      <div id="page_status" class="page_attribute_value"><%= status_text %></div>
       <%= image_tag "cms/page_toolbar/page_toolbar_inset_#{ status }_r.gif", :style => "float: left;" %>
     </div>
   </div>
