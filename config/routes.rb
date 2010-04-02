@@ -23,6 +23,8 @@ end
     map.connect "/tests/error", :controller => "tests/pretend", :action => "error"
     map.connect "/tests/not-found", :controller => "tests/pretend", :action => "not_found"
 
+#    root :to => "home#index"
+#    match "/" => "home#index"
     # Core CMS routes
     map.routes_for_browser_cms
   end

@@ -74,11 +74,12 @@ module Cms
     end
     
     def link_to_check_all(selector, name="Check All")
-      link_to_function name, "$('#{selector}').attr('checked', true)"
+      #TODO: Rails 3 - Make this work again with unobtrusive javascript
+#      link_to_function name, "$('#{selector}').attr('checked', true)"
     end
 
     def link_to_uncheck_all(selector, name="Uncheck All")
-      link_to_function name, "$('#{selector}').attr('checked', false)"
+#      link_to_function name, "$('#{selector}').attr('checked', false)"
     end
     
     

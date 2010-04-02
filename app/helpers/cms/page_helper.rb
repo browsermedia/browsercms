@@ -2,7 +2,8 @@ module Cms
   module PageHelper
     def page_title(*args)
       if args.first
-        @controller.instance_variable_get("@template").instance_variable_set("@page_title", args.first)
+        # Removed unneeded indirection
+        @page_title = args.first
       else
         @controller.instance_variable_get("@template").instance_variable_get("@page_title")
       end

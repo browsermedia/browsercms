@@ -8,6 +8,6 @@ gem "mysql"
 group :test do
   gem "mocha"
   gem "redgreen"
-  gem "thoughtbot-factory_girl", :lib => "factory_girl", :source => "http://gems.github.com"
+  gem 'factory_girl', :git => 'git://github.com/szimek/factory_girl.git', :branch => 'rails3'
 end
 
