@@ -10,7 +10,7 @@ end
 # Loads the version, so we can explicitly set in the generated cms project.
 template_root = File.dirname(File.expand_path(template))
 require File.join(template_root, '..', 'lib', 'cms', 'version.rb')
-gem "browsercmsi", :lib => "browsercms", :version=>Cms::VERSION
+gem "browsercmsi", :lib => "browsercmsi", :version=>Cms::VERSION
 
 generate :jdbc if defined?(JRUBY_VERSION)
 

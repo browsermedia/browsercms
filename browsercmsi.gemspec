@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Juan Alvarez"]
-  s.date = %q{2010-03-04}
-  s.description = %q{BrowserCMS is a general purpose, open source Web Content Management System (CMS) written in Ruby on Rails. Designed for web developers who want to create great looking websites while using standard Rails tools for customizing it.}
+  s.date = %q{2010-04-04}
+  s.description = %q{BrowserCMSI adds internationalization to BrowserMedia's BrowserCMS}
   s.email = %q{alce@mac.com}
   s.executables = ["browsercmsi", "bcmsi"]
   s.extra_rdoc_files = [
@@ -723,7 +723,7 @@ Gem::Specification.new do |s|
      "doc/guides/html/user_guide.html",
      "doc/guides/html/writing_guides.html",
      "lib/acts_as_list.rb",
-     "lib/browsercms.rb",
+     "lib/browsercmsi.rb",
      "lib/cms/acts/content_block.rb",
      "lib/cms/acts/content_page.rb",
      "lib/cms/authentication/controller.rb",
