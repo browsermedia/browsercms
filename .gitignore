@@ -16,4 +16,5 @@ tmp/restart.txt
 public/cache
 patches
 browsercmsi-*.gem
+*.gemspec
 *.*~

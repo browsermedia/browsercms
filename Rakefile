@@ -22,6 +22,7 @@ begin
     gem.files = Dir["rails/*.rb"]
     gem.files += Dir["browsercmsi.gemspec"]
     gem.files += Dir["config/locales/**/*"]
+    gem.files += Dir["config/initializers/i18n.rb"]
     gem.files += Dir["doc/app/**/*"]
     gem.files += Dir["doc/guides/html/**/*"]
     gem.files += Dir["app/**/*"]

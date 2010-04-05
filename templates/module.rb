@@ -3,7 +3,7 @@ run "rm public/index.html"
 # Loads the version, so we can explicitly set in the generated cms project.
 template_root = File.dirname(File.expand_path(template))
 require File.join(template_root, '..', 'lib', 'cms', 'version.rb')
-gem "browsercmsi", :lib => "browsercms", :version=>Cms::VERSION
+gem "browsercmsi", :lib => "browsercmsi", :version=>Cms::VERSION
 
 rake "db:create"
 route "map.routes_for_browser_cms"

@@ -1,2 +1,2 @@
-require 'browsercms'
+require 'browsercmsi'
 Cms.init

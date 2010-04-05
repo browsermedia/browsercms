@@ -115,4 +115,5 @@ Cms.add_generator_paths(Cms.root,
   "public/stylesheets/cms/**/*",
   "public/images/cms/**/*",
   "db/migrate/[0-9]*_*.rb",
-  "config/locales/bcms/**/*")
+  "config/locales/bcms/**/*",
+  "config/initializers/i18n.rb")
