@@ -178,7 +178,8 @@ module Cms
             unless private_method_defined? :method_missing_without_dynamic_attributes
 
               # Carry out delayed actions before save
-              after_validation_on_update :save_modified_dynamic_attributes
+              after_validation :save_modified_dynamic_attributes
+#              after_validation_on_update :save_modified_dynamic_attributes
 
               # Make attributes seem real
               alias_method :method_missing_without_dynamic_attributes, :method_missing
@@ -222,6 +223,7 @@ module Cms
         # like normal attributes in the fact that the database is not touched
         # until save is called.
         def save_modified_dynamic_attributes
+          return if new_record?
           return if @save_dynamic_attr.nil?
           @save_dynamic_attr.each do |s|
             model, attr_name = s

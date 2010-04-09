@@ -23,9 +23,13 @@ end
     map.connect "/tests/error", :controller => "tests/pretend", :action => "error"
     map.connect "/tests/not-found", :controller => "tests/pretend", :action => "not_found"
 
-#    root :to => "home#index"
-#    match "/" => "home#index"
     # Core CMS routes
     map.routes_for_browser_cms
+
+    # Both of these work. Figure out why its not working from within a method call (routes_for_browser_cms).
+    # Might need to get access to a specific object.
+#    match "/", :to=>"cms/content#show"
+#    match "*path", :to=>"cms/content#show"
+
   end
 #end

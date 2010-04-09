@@ -131,6 +131,9 @@ module Cms::Routes
       end
     end
 
-    connect '*path', :controller => 'cms/content', :action => 'show'    
+    # The problem here is that there is no explicit reference to
+    # the routes object, so 'match' or 'connect' isn't valid.
+#    connect '*path', :controller => 'cms/content', :action => 'show'
+    self.connect '/:path', :controller => 'cms/content', :action => 'show'
   end
 end
