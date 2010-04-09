@@ -21,6 +21,18 @@ module Cms
       end
     end
     
+    # Determine if a given container has any blocks within it. Useful for determine if markup should be conditionally included
+    # when a block is present, but not shown if no block was added. For example:
+    #
+    # <% unless container_has_block? :sidebar %>
+    #   <div id="sidebar">
+    #   <%= container :sidebar %>
+    #   </div>
+    # <% end %>
+    #
+    # @param [Symbol] name The name of the container to check
+    # @param [Proc] block
+    # @return [Boolean] True if the container has one or more blocks, or if we are in edit mode. False otherwise. 
     def container_has_block?(name, &block)
       has_block = (@mode == "edit") || current_page.connectable_count_for_container(name) > 0
       logger.info "mode = #{@mode}, has_block = #{has_block}"
