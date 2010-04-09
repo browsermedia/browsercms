@@ -126,6 +126,7 @@ This section covers a reference for all the tags (aka Helper Methods) that can b
 
 ._ Name |_. Purpose | Required? |
 | +container+ | A named area that allows users to add/edit content | Yes |
+| +container_has_block+ | To hide markup if a container is empty | No |
 | +cms_toolbar+ | Renders the CMS toolbar controller required for editing and navigation. Should be very first element in +body+ | Yes |
 | +yield :html_head | This allows the CMS to insert javascript and other information into the page. Should be last element in +head+ | Yes | 
 | +page_title+ | Inserts the 'Name' of the page (or 'Title' if it exists) | No |
@@ -157,6 +158,18 @@ This tag is used to allow areas of the page to be editted and render through the
 Container names are just labels. So if you defined 5 containers on a template (header, footer, left, main, right), you could swap between any two templates which defined all those containers. 
 
 NOTE. Be aware that if you add content to a page in a container (like +:sidebar+) then change a pages template to one which does not have that container, the content will be 'orphaned'. To remove that content, you would need to swap back to the previous template, remove the content, then change back to the new template again.
+
+h4. +container_has_block?+ Tag
+
+This tag can be used to hide or show containers based on whether a user has placed content in them. While an empty +container+ tag won't show anything, very frequently template builders will create 'wrapper' markup around containers that shouldn't appear when nothing is placed there. For example, suppose we have a sidebar container that we want to have a styled border on, but we only want it to appear when something is in that container. Here's how you would do that:
+
+<erb>
+	<% unless container_has_block? :sidebar %>
+	<div id="sidebar"><%= container :sidebar %></div>
+	<% end %>
+</erb>
+
+This tag returns true if the user is in edit mode as well, regardless of whether there is content within the container. This is important, because otherwise, an editor would never be able to select the container to add content to!
 
 h4. +cms_toolbar+ Tag
 
