@@ -8,8 +8,8 @@ en:
       version: "Version:"
       live: LIVE
       publish: Publish
-      published: Published
-      draft: Draft
+      published: published
+      draft: draft
       assign: Assign
       complete_task: Complete Task
       edit_properties: Edit Properties

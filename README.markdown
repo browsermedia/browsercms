@@ -11,7 +11,7 @@ anything special.
 ## Creating a new project
 
 * run bcmsi my_project
-* edit the file config/initializers/i18n.rb and set the default locale (at the moment only English and Spanish are available) 
+* edit the file config/initializers/i18n.rb and set the default locale (at the moment only English, Spanish and German are available) 
 * run rake db:migrate
 * start your server
 
@@ -87,10 +87,9 @@ Here's a brief description of the files:
 * **portlets.yml** contains translation strings for BCMS' bulit in portlets -> app/portlets/*
 * **views/** contains translation strings for BCMS' views -> app/views/\*\*/*
 
-## Versioning
 
-BrowserCMSI's only concern is to localize BrowserCMS' UI. It does not add, remove or modify 
-BrowserCMS's core features in any way. As such, BrowserCMSI's versioning mirrors BrowserCMS'.
+## Contributors
+Michael Franzl (German translation and bugfixes)
 
 
 ## Contact
