@@ -99,9 +99,9 @@
         <div class="visual_editor_label"><%= t "layouts.page_toolbar.visual_editor" %></div>
         <div class="visual_editor_value_container">
           <% if @mode == "edit" %>
-	    <div><span id="visual_editor_state"<%= ' title="You don\'t have permission to edit this page"' unless current_user.able_to_edit?(@page) %>><%= t 'layouts.page_toolbar.turn_on' %><%= '*' unless current_user.able_to_edit?(@page) %></span></div>
+	    <div><span id="visual_editor_state"<%= ' title="You don\'t have permission to edit this page"' unless current_user.able_to_edit?(@page) %>><%= t 'layouts.page_toolbar.editor_on' %><%= '*' unless current_user.able_to_edit?(@page) %></span></div>
           <% else %>
-	    <div><span id="visual_editor_state"><%= t 'layouts.page_toolbar.turn_off' %></span></div>
+	    <div><span id="visual_editor_state"><%= t 'layouts.page_toolbar.editor_off' %></span></div>
           <% end %>
         </div>
         <div class="visual_editor_toggle_container">

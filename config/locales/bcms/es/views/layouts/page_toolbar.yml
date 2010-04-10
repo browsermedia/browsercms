@@ -8,8 +8,8 @@ es:
       version: "Versión:"
       live: EN VIVO
       publish: Publicar
-      published: Published
-      draft: Draft
+      published: Publicado
+      draft: Borrador
       assign: Asignar
       complete_task: Completar Tarea
       edit_properties: Editar Propiedades
@@ -21,5 +21,7 @@ es:
       visual_editor_title: "No tienes autorización para editar esta página"
       turn_off: OCULTAR
       turn_on: MOSTRAR
-      view_current: View Current Version
+      editor_on: "ON"
+      editor_off: "OFF"
+      view_current: Ver Versión Actual
       

@@ -21,5 +21,7 @@ en:
       visual_editor_title: "You don't have premission to edit this page"
       turn_off: TURN OFF
       turn_on: TURN ON
+      editor_on: "ON"
+      editor_off: "OFF"
       view_current: View Current Version
       

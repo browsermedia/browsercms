@@ -21,5 +21,7 @@ de:
       visual_editor_title: "Sie dürfen diese Seite nicht bearbeiten"
       turn_off: Aus
       turn_on: Ein
+      editor_on: Ein
+      edior_off: Aus
       view_current: Aktuelle Version anzeigen
       
