@@ -15,7 +15,7 @@ fr:
       hidden: Caché(e)
       unhidden: Visible
     rendering:
-      deleted: "Ce(tte) {{class_name}} à été supprimé(e).  S.v.p enlevez ce contenant de la page"
+      deleted: "Ce(tte) {{class_name}} à été supprimé(e).  S.v.p. enlevez ce contenant de la page"
     versioning:
       created: Créé(e)
       changed: "Changé {{changes}}"

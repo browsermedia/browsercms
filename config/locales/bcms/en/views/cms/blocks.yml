@@ -28,7 +28,7 @@ en:
       updated: Updated
       used: Used
       status: Status
-      draft: Borrador
+      draft: Draft
       published: Published
       no_results: No results found for
     new:
