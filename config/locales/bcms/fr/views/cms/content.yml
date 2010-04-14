@@ -1,0 +1,5 @@
+fr:
+  content:
+    no_page: 
+      page_not_found: Page pas trouvée
+      no_page: Il n'y a aucune page à {{path}}

@@ -1,0 +1,6 @@
+fr:
+  cache:
+    toolbar_title: Informations sur le cache des pages
+    clear_cache: Supprimer le cache de la page
+    message: |
+      Le système de gestion de contenu crée un cache des pages qui sont fréquemment accédés par les visiteurs pour augmenter le rendement du site. Si vous avez effectué des changements de contenu qui ne paraissent pas sur le site public, vous pouvez supprimer ce cache manuellement.
