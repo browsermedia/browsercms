@@ -4,7 +4,7 @@ es:
       public_permissions: Permisos Públicos
       public_permissions_hint: "¿Que grupos 'Publicos' pueden ver páginas en esta sección?"
       cms_permissions: Permisos del CMS
-      cms_permissions_hint: "¿Qué grupos'CMS' pueden editar contenido en esta sección?"
+      cms_permissions_hint: "¿Qué grupos 'CMS' pueden editar contenido en esta sección?"
       save: Guardar
     edit:
       page_title: "Editar Propiedades / Sección '{{section_name}}'"
