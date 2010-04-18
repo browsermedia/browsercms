@@ -1,0 +1,43 @@
+fr:
+  users:
+    form:
+      save: Enregistrer
+    groups:
+      groups: Groupes
+    toolbar:
+      show_inactive: Montrer inactifs?
+    change_password:
+      page_title: Assigner nouveau mot de passe
+      list_all: Afficher tous
+      edit_user: Réviser utilisateur
+      save: Enregistre
+    edit:
+      page_title: "Réviser utilisateur '{{user_login}}'"
+      list_all: Afficher tous
+      change_password: Changer mot de passe
+    index:
+      page_title: Administration / Liste d'utilisateurs
+      toolbar_title: Liste d'utilisateurs
+      add_user: AJOUTER UTILISATEUR
+      name: Nom
+      email: Courriel
+      groups: Groupes
+      expiration: Expiration
+      activation: Activation
+      never: Jamais
+      active: Actif
+      disable: Désactiver
+      inactive: Inactif
+      enable: Activer
+      no_results: "Aucune résultat pour '{{keyword}}'"
+    new:
+      page_title: Nouveau utilisateur
+      list_all: Afficher tous
+    show:
+      list_all: Afficher tous
+      change_password: Changer mot de passe
+      username: Nom d'utilisateur
+      email: Courriel
+      first_name: Prénom
+      last_name: Nom de famille
+      groups: Groupes

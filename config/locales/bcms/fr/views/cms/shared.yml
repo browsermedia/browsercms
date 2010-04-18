@@ -1,0 +1,38 @@
+fr:
+  shared:
+    admin_sidebar:
+      users_title: Utilisateurs
+      users: Utilisateurs
+      groups: Groupes
+      templates: Gabarits
+      page_partials: Partielles (page)
+      page_templates: Gabarits (page)
+      page_routes: Chemins (page)
+      tools: Outils
+      page_caching: Cache de pages
+      redirects: Redirections
+      email_messages: Courriels
+    exception:
+      error: Il y a eu une erreur
+    pagination:
+      displaying: Affichant
+      of: de
+    version_confilct:
+      their_version: Leur version
+      field: Champs
+      value: Valeur
+    version_conflict_error:
+      version_conflict: "Conflit de versions!"
+      message: |
+        Vous travaillez présentement avec une version périmée de ce contenu.
+        Votre travail a été basé sur la <b>version {{base_version}}</b>, pendant qu'un
+        autre utilisateur <b>{{other_user}}</b> a déjà eregistré la <b>version {{other_version}}</b>.
+        Comparer vos changements ci-dessous avec leurs changements en bas et soumettre une copie finale.
+      your_version: Votre version
+    access_denied:
+      page_title: Accès refusé
+      message: "Désolé, vous n'avez pas l'autorisation d'accéder à cette page."
+    error:
+      page_title: Erreur
+      message: Message
+      stacktrace: Stacktrace

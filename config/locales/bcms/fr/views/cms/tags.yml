@@ -1,0 +1,5 @@
+en:
+  tags:
+    render:
+      name: Nom
+      type: Type

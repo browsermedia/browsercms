@@ -1,0 +1,14 @@
+fr:
+  links:
+    form:
+      new_window: Ouvrir dans un nouveau fenêtre ?
+    edit: 
+      page_title: Réviser lien {{link}}
+      list_all: Afficher tous
+      save_and_publish: Enregistrer et publier
+      save: Enregister
+    new:
+      page_title: Ajouter nouveau lien à la carte de site
+      list_all: Afficher tous
+      save_and_publish: Enregister et publier
+      save: Enregister

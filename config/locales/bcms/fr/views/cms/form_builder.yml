@@ -1,0 +1,5 @@
+fr:
+  form_builder:
+    cms_text_editor:
+      rich_text: Texte enrichi
+      simple_text: Texte brut
