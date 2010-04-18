@@ -74,7 +74,7 @@ en:
       html_block:
       image_lock:
       page_partial:
-      pgae_route:
+      page_route:
     attributes:
       category:
         name:

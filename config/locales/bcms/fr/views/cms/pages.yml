@@ -1,7 +1,7 @@
 fr:
   pages:
     edit_connector:
-      show: Vissioner ce contenu ({{connectable_name}})
+      show: Visionner ce contenu ({{connectable_name}})
       edit: Réviser ce contenu ({{connectable_name}})
       up: Déplacer ce contenu plus haut ({{connectable_name}})
       down: Déplacer ce contenu plus bas ({{connectable_name}})
@@ -17,16 +17,16 @@ fr:
       title_hint: (Laisser vierge si c'est la même que le nom)
     edit:
       page_title: "Réviser les caractéristiques / Page '{{page_name}}'"
-      list_all: Lister tous
+      list_all: Afficher tous
       edit_content: Réviser le contenu
       save: Enregistrer
     new:
       page_title: Nouveau page
-      list_all: Lister tous
+      list_all: Afficher tous
       save: Enregistrer
     versions: 
       page_title: "Lister les versions / Page '{{page_name}}'"
-      view: Vissioner
+      view: Visionner
       edit_content: Réviser le contenu
       edit_properties: Réviser les caractéristiques
       revert: Régresser

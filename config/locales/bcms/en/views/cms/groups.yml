@@ -3,7 +3,7 @@ en:
     form:
       list_all: List All
       group_name: Group Name
-      type_of_user: Tipo de usuario
+      type_of_user: Type of User
       instructions: What kind of user does this group represent?
       save: Save
     permissions:
