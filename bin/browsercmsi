@@ -68,7 +68,7 @@ if (success)
   puts "\nCreated new BrowserCMS project '#{project_name}'."
   puts "    To get started: "
   puts "      1. Edit config/initializers/i18n.rb and set your desired locale."
-  puts "         Currently only English (en) and Spanish (es) are available"
+  puts "         Currently only English (en), Spanish (es) and German (de) are available"
   puts "      2. run rake db:migrate"
   puts "      3. run ruby script/server and open your browser to 'http://localhost:3000'" 
 else
