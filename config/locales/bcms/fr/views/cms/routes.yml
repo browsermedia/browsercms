@@ -1,0 +1,9 @@
+fr:
+  routes:
+    index:
+      page_title: Chemins de Rails
+      path_to_test: Chemin à tester
+      name: Nom
+      verb: Verbe
+      pattern: Forme
+      result: Résultat

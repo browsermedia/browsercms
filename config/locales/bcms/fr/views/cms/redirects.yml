@@ -1,0 +1,18 @@
+fr:
+  redirects:
+    form:
+      save: Enregistrer
+    edit:
+      page_title: Réviser redirection
+      list_all: Afficher tous
+    index:
+      page_title: Liste des redirections
+      add: Ajouter
+      edit: Réviser
+      delete: Supprimer
+      confirm: Êtes-vous certaines que vous voulez supprimer cette redirection ?
+      from: De
+      to: À
+    new:
+      page_title: Nouveau redirection
+      list_all: Afficher tous
