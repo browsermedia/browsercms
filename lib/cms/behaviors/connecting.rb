@@ -39,11 +39,11 @@ module Cms
       module InstanceMethods
 
         def connected_pages
-          Page.connected_to(self)
+          Page.currently_connected_to(self)
         end
 
         def connected_page_count
-          Page.connected_to(self).count
+          Page.currently_connected_to(self).count
         end
 
         def content_block_type

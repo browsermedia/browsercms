@@ -50,6 +50,7 @@ class Cms::PortletsControllerTest < ActionController::TestCase
     @page = Factory(:page, :section => root_section, :name => "Test Page", :path => "test")
     @page.create_connector(@block, "main")
     @page.reload
+    @page.publish!  # usages are only relevant when page is published
     
     get :usages, :id => @block.id
     

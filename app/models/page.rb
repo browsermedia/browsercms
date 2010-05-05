@@ -41,6 +41,21 @@ class Page < ActiveRecord::Base
         :conditions => ['connectors.connectable_id = ? and connectors.connectable_type = ?', obj.id, obj.class.base_class.name] }    
     end 
   }  
+
+  # currently_connected_to tightens the scope of connected_to by restricting to the 
+  # results to matches on current versions of pages only.  This renders obj versions
+  # useless, as the older objects will very likely have older versions of pages and
+  # thus return no results.
+  named_scope :currently_connected_to, lambda { |obj|
+    ver = obj.class.versioned? ? obj.version : nil
+    if ver
+      { :include => :connectors, 
+        :conditions => ['connectors.connectable_id = ? and connectors.connectable_type = ? and connectors.connectable_version = ? and connectors.page_version = pages.version', obj.id, obj.class.base_class.name, ver] }
+    else
+      { :include => :connectors, 
+        :conditions => ['connectors.connectable_id = ? and connectors.connectable_type = ? and connectors.page_version = pages.version', obj.id, obj.class.base_class.name] }    
+    end
+  }
   
   has_one :section_node, :as => :node, :dependent => :destroy
   
