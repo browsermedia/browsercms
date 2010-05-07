@@ -13,10 +13,33 @@ To Do List
 2. Verify it works in 1.8.7
 3. Determine if both Rails 2 and 3 can be supported in the same gem.
 
-Current Task
+Fixing Default Routes
 ===========
 The 'catchall' route seems to split the path into an array. The content controller reassembles it. I have reversed this procedure.
 Need to review the routing code/Yehuta's articles on this, as I think I'm making a mess of it.
+
+Making save work
+================
+Reworked save to use normal callback behavior, rather than overriding save_with_validations.
+
+Known Issues:
+- Updating with the same attributes shouldn't be creating new versions (I think)
+- Destroying is throwing errors.
+
+The callback method has been removed. Versioning#save used it to trigger normal callback behavior. Relevant classes include:
+ActiveRecord::Callbacks, ActiveModel::Callbacks, ActiveSupport::Callbacks
+
+How Versioning works now (It might be necessary to rewrite)
+--
+
+How ActiveRecord works:
+--
+AR::Base - Defines a 'save' method with no params
+AR::Validations - alias save to a save_with_validations (which takes params) 
+ActiveRecord Object has:
+- save_with_validations(options)
+- save_without_validation() - (Original save)
+
 
 Items Completed
 ===============

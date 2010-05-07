@@ -2,9 +2,9 @@ require File.join(File.dirname(__FILE__), '/../../test_helper')
 
 class ContentBlockTest < ActiveSupport::TestCase
   def setup
-    @block = Factory(:html_block, :name => "Test")   
+    @block = Factory(:html_block, :name => "Test")
   end
-  
+
   def test_publishing
     assert_equal "Draft", @block.status_name
     assert !@block.published?
@@ -14,13 +14,13 @@ class ContentBlockTest < ActiveSupport::TestCase
 
     @block.publish_on_save = true
     @block.save
-    
+
     assert @block.published?
 
     assert @block.update_attributes(:name => "Whatever")
-    
+
     assert !@block.live?
-    
+
   end
 
   def test_revision_comment_on_create
@@ -32,21 +32,24 @@ class ContentBlockTest < ActiveSupport::TestCase
     assert_equal 'Changed content, name', @block.draft.version_comment
   end
 
-  def test_revision_comment_without_changes
-    assert @block.update_attributes(:name => @block.name)
+  test "Updating a block without changing attributes shouldn't cause new save" do
+    result = @block.update_attributes(:name => @block.name)
     assert_equal 'Created', @block.draft.version_comment
+    assert_equal 1, @block.version, "Block should keep itself at version 1"
+    assert_equal 1, @block.versions.size, "Should only have a single version"
+    assert result , "Update with same attributes should still return true" 
   end
 
   def test_custom_revision_comment
     assert @block.update_attributes(:name => "Something Else", :version_comment => "Something Changed")
     assert_equal "Something Changed", @block.draft.version_comment
   end
-  
+
   def test_destroy
     html_block_count = HtmlBlock.count
     assert_equal 1, @block.versions.size
     assert !@block.deleted?
-    
+
     @block.destroy
 
     assert !HtmlBlock.exists?(@block.id)
@@ -60,20 +63,20 @@ class ContentBlockTest < ActiveSupport::TestCase
     assert_equal 2, deleted_block.version
     assert_equal 1, deleted_block.versions.first.version
     assert_equal 2, HtmlBlock::Version.count(:conditions => {:html_block_id => @block.id})
-  end  
-  
+  end
+
   def test_delete_all
     HtmlBlock.delete_all(["name = ?", @block.name])
     assert_raise(ActiveRecord::RecordNotFound) { HtmlBlock.find(@block.id) }
     assert HtmlBlock.find_with_deleted(@block.id).deleted?
   end
-  
+
 end
 
 class VersionedContentBlock < ActiveSupport::TestCase
   def setup
     @block = Factory(:html_block, :name => "Versioned Content Block")
-  end  
+  end
 
   def test_edit
     old_name = "Versioned Content Block"
@@ -88,7 +91,7 @@ class VersionedContentBlock < ActiveSupport::TestCase
     @block.name = old_name
     @block.save
     @block.reload
-    assert_equal @block.draft.name, old_name    
+    assert_equal @block.draft.name, old_name
   end
 
   def test_revert
@@ -114,16 +117,16 @@ class VersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
     @page = Factory(:page, :section => root_section)
     @block = Factory(:html_block, :name => "Versioned Content Block")
     @page.create_connector(@block, "main")
-    reset(:page, :block)    
-  end  
-  
+    reset(:page, :block)
+  end
+
   def test_editing_connected_to_an_unpublished_page
     page_version_count = Page::Version.count
     assert !@page.published?
-    
+
     assert @block.update_attributes(:name => "something different")
     reset(:page)
-    
+
     assert !@page.published?
     assert_equal 3, @page.draft.version
     assert_incremented page_version_count, Page::Version.count
@@ -134,18 +137,18 @@ class VersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
     assert_properties conns[0], :page => @page, :page_version => 2, :connectable => @block, :connectable_version => 1, :container => "main"
     assert_properties conns[1], :page => @page, :page_version => 3, :connectable => @block, :connectable_version => 2, :container => "main"
   end
-  
+
   def test_editing_connected_to_a_published_page
     @page.publish!
     reset(:page, :block)
-    
+
     assert @page.published?
     assert @block.update_attributes(:name => "something different", :publish_on_save => true)
     reset(:page)
-    
+
     assert @page.published?
-  end  
-  
+  end
+
   def test_deleting_when_connected_to_page
     @page.publish!
     reset(:page, :block)
@@ -160,8 +163,8 @@ class VersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
     assert_decremented page_connector_count, @page.connectors.for_page_version(@page.draft.version).count
     assert_incremented page_version, @page.draft.version
     assert_match /^HtmlBlock #\d+ was Deleted/, @page.draft.version_comment
-  end  
-  
+  end
+
 end
 
 class NonVersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
@@ -169,7 +172,7 @@ class NonVersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
     @page = Factory(:page, :section => root_section)
     @block = DynamicPortlet.create!(:name => "Non-Versioned Content Block")
     @page.create_connector(@block, "main")
-    reset(:page, :block)    
+    reset(:page, :block)
   end
 
   def test_editing_connected_to_an_unpublished_page
@@ -180,24 +183,24 @@ class NonVersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
 
     assert @block.update_attributes(:name => "something different", :publish_on_save => true)
     reset(:page)
-    
+
     assert 2, @page.version
     assert_equal page_version_count, Page::Version.count
     assert !@page.published?
-    
+
     conns = Connector.for_connectable(@block).all(:order => 'id')
     assert_equal 1, conns.size
     assert_properties conns[0], :page => @page, :page_version => 2, :connectable => @block, :connectable_version => nil, :container => "main"
   end
-    
+
   def test_editing_connected_to_a_published_page
     @page.publish!
     reset(:page)
-    
+
     assert @page.published?
     assert @block.update_attributes(:name => "something different", :publish_on_save => true)
     reset(:page)
-    
+
     assert @page.published?
-  end  
+  end
 end
