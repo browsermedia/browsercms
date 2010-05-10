@@ -10,3 +10,5 @@ ActiveRecord::Base.send(:include, ActsAsList)
 #Include CMS Behaviors
 ActiveRecord::Base.send(:include, Cms::Acts::ContentBlock)
 require 'cms/behaviors'
+
+ActiveRecord::Base.send(:include, Cms::Acts::CmsUser)
