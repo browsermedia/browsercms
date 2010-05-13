@@ -9,7 +9,7 @@
   
   <%= render :partial => 'form', :locals => {:f => f} %>
   <div class="buttons">
-    <%= lt_button_wrapper(%Q{<button type="submit" name="link[publish_on_save]" value="true" class="submit" tabindex="#{next_tabindex}"><span>Save And Publish</span></button>}) %>
+    <%= lt_button_wrapper(%Q{<button type="submit" name="cms_link[publish_on_save]" value="true" class="submit" tabindex="#{next_tabindex}"><span>Save And Publish</span></button>}) %>
     <%= lt_button_wrapper(f.submit("Save", :class => "submit", :tabindex => next_tabindex )) %>
   </div>
 <% end %>
