@@ -80,18 +80,23 @@ class Page < ActiveRecord::Base
       if c.should_be_copied?
         connectable = c.connectable_type.constantize.versioned? ? c.connectable.as_of_version(c.connectable_version) : c.connectable
       
+        version = connectable.class.versioned? ? connectable.version : nil
+
         #If we are copying connectors from a previous version, that means we are reverting this page,
-        #in which case we should create a new version of the block, and connect this page to that block
+        #in which case we should create a new version of the block, and connect this page to that block.
+        #If the connectable is versioned, the connector needs to reference the newly drafted connector
+        #that is created during the revert_to method
         if @copy_connectors_from_version && connectable.class.versioned? && (connectable.version != connectable.draft.version)
           connectable = connectable.class.find(connectable.id)
           connectable.updated_by_page = self
           connectable.revert_to(c.connectable_version)
+          version = connectable.class.versioned? ? connectable.draft.version : nil
         end      
       
         new_connector = connectors.build(
           :page_version => options[:to_version_number], 
           :connectable => connectable, 
-          :connectable_version => connectable.class.versioned? ? connectable.version : nil,         
+          :connectable_version => version,         
           :container => c.container, 
           :position => c.position
         )
