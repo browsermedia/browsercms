@@ -12,17 +12,17 @@ require File.dirname(__FILE__) + "/lib/cms/version.rb"
 begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
-    gem.name = "browsercms"
+    gem.name = "browsercms-namespaced"
     gem.version = Cms::VERSION
     gem.summary = %Q{BrowserCMS is a general purpose, open source Web Content Management System (CMS) written in Ruby on Rails. Designed for web developers who want to create great looking websites while using standard Rails tools for customizing it. }
     gem.description = %Q{BrowserCMS is a general purpose, open source Web Content Management System (CMS) written in Ruby on Rails. Designed for web developers who want to create great looking websites while using standard Rails tools for customizing it.}
     gem.email = "github@browsermedia.com"
     gem.homepage = "http://www.browsercms.org"
     gem.authors = ["BrowserMedia"]
-    gem.rubyforge_project = 'browsercms'
+    gem.rubyforge_project = 'browsercms-namespaced'
     gem.executables = ['browsercms', 'bcms']
     gem.files = Dir["rails/*.rb"]
-    gem.files += Dir["browsercms.gemspec"]
+    gem.files += Dir["browsercms-namespaced.gemspec"]
     gem.files += Dir["doc/app/**/*"]
     gem.files += Dir["doc/guides/html/**/*"]
     gem.files += Dir["app/**/*"]
@@ -31,8 +31,10 @@ begin
     gem.files += Dir["lib/**/*"]
     gem.files += Dir["rails_generators/**/*"]
     gem.files += Dir["public/stylesheets/cms/**/*"]
+    gem.files += Dir["public/stylesheets/bespin_area/**/*"]
     gem.files += Dir["public/javascripts/jquery*"]
     gem.files += Dir["public/javascripts/cms/**/*"]
+    gem.files += Dir["public/javascripts/bespin_area/**/*"]
     gem.files += Dir["public/bcms/**/*"]
     gem.files += Dir["public/site/**/*"]
     gem.files += Dir["public/images/cms/**/*"]

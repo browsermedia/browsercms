@@ -13,4 +13,5 @@ require 'cms/behaviors'
 
 ActiveRecord::Base.send(:include, Cms::Acts::CmsUser)
 
+require 'bespin_area/init'
 ActionView::bespin_default_options = {:settings => { :tabstop => 2 }, :syntax => 'html'}
