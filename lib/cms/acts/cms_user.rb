@@ -29,7 +29,7 @@ module Cms
               end
             end
             
-            @groups ||= begin
+            @cms_groups ||= begin
               specified = Array(fetch_group_list.call).select{|x| x.kind_of? Cms::Group }
               specified << Cms::Group.guest if specified.empty?
               specified
