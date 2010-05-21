@@ -4,6 +4,9 @@
   <% else %>
     <%= f.label method %>
   <% end %>
+  <% if options[:bespin].present? %>
+    (<%= link_to_function "toggle editor", "bespinArea.toggle()"%>)
+  <% end %>
   <br />
   <%= f.text_area method, options %>
   <% if cms_options[:instructions] %>

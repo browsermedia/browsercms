@@ -12,3 +12,5 @@ ActiveRecord::Base.send(:include, Cms::Acts::ContentBlock)
 require 'cms/behaviors'
 
 ActiveRecord::Base.send(:include, Cms::Acts::CmsUser)
+
+ActionView::bespin_default_options = {:settings => { :tabstop => 2 }, :syntax => 'html'}
