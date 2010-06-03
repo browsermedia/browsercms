@@ -26,7 +26,6 @@ module Cms
           # New items to test behavior
           before_save :save_new_record
           after_save :publish_if_needed
-          around_save :save_only_if_object_changed
 
           attr_accessor :revert_to_version
 
@@ -135,12 +134,6 @@ module Cms
           end
         end
 
-        def save_only_if_object_changed
-          if different_from_last_draft?
-            yield
-          end
-          true
-        end
         ##
         # This overrides the 'save' method from activerecord
         # Things happening here:

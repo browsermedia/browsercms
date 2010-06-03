@@ -12,7 +12,7 @@ class FileBlockTest < ActiveSupport::TestCase
   def test_attachment_is_required
     @file_block.attachment_file = nil
     assert !@file_block.valid?
-    assert_equal "You must upload a file", @file_block.errors.on(:attachment_file)
+    assert_equal "You must upload a file", @file_block.errors[:attachment_file]
   end
   
   def test_attachment_file_path_is_required

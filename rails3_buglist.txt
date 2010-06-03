@@ -1,14 +1,24 @@
+Start with:
+
+Figure out how temp file is handled in Rails 3.
+The Rack::Test::UploadedFile isn't a temp file and needs to exist or throws an error.
+
 Open Issues
 ===========
+* Lots of tests fail due to 'uninitialized constant ActionController::UploadedTempfile'
 * No route found for /  (Neither root nor match "/" seem to work)
 * It appears no CMS pages work. (The 'catchall' route doesn't work)
 * Pages do not render their status icon in the sitemap.
 * link_to_function has been removed. Check All and uncheck all are currently broken (See ApplicationHelper)
 * No such method 'callback' for blocks during saving. (Versioning.save line #121)
+* Attachments throw errors (uninitialized constant ActionController::UploadedTempfile)
+* Saving a block with unchanged value shouldn't create additional versions (rake test:units TEST=unit/lib/content_block_test.rb)
+* Deleting blocks doesn't work. (Might actually be problems with queries)
+* Altering the uploaded file may not change the name of the file. (Broken test or broken feature?)
 
 To Do List
 ==========
-0. Install jeweler for 1.9.1 to get rid of warnings.
+0. Install jeweler for 1.9.1 to get rid of warnings. (I commented out Jeweler for now)
 1. Build the gem and test it against a new rails 3 project.
 2. Verify it works in 1.8.7
 3. Determine if both Rails 2 and 3 can be supported in the same gem.

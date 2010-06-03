@@ -34,9 +34,9 @@ class ContentBlockTest < ActiveSupport::TestCase
 
   test "Updating a block without changing attributes shouldn't cause new save" do
     result = @block.update_attributes(:name => @block.name)
-    assert_equal 'Created', @block.draft.version_comment
     assert_equal 1, @block.version, "Block should keep itself at version 1"
-    assert_equal 1, @block.versions.size, "Should only have a single version"
+    assert_equal 1, @block.versions.size, "Should only have a single version of this block"
+    assert_equal 'Created', @block.draft.version_comment
     assert result , "Update with same attributes should still return true" 
   end
 

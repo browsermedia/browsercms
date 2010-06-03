@@ -130,9 +130,10 @@ class AttachingTest < ActiveSupport::TestCase
 end
 
 class AttachableTest < ActiveSupport::TestCase
+
   def setup
     #file is a mock of the object that Rails wraps file uploads in
-    @file = file_upload_object(:original_filename => "foo.jpg",
+    @file = file_upload_object(:original_filename => "sample_upload.txt",
       :content_type => "image/jpeg", :rewind => true,
       :size => "99", :read => "01010010101010101")
 
@@ -233,7 +234,7 @@ class AttachableTest < ActiveSupport::TestCase
 
     reset(:attachable)
 
-    @file2 = file_upload_object(:original_filename => "foo.txt",
+    @file2 = file_upload_object(:original_filename => "second_upload.txt",
       :content_type => "image/jpeg", :rewind => true,
       :size => "99", :read => "Foo v2")        
 
@@ -329,7 +330,7 @@ class VersionedAttachableTest < ActiveSupport::TestCase
   end  
   
   def test_updating_the_versioned_attachable_attachment_file
-    @file2 = file_upload_object(:original_filename => "foo.txt",
+    @file2 = file_upload_object(:original_filename => "second_upload.txt",
       :content_type => "image/jpeg", :rewind => true,
       :size => "99", :read => "Foo v2")
 

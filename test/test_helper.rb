@@ -1,4 +1,6 @@
+
 ENV["RAILS_ENV"] = "test"
+
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'rails/test_help'
 
@@ -8,6 +10,7 @@ require 'action_view/test_case'
 #require 'factory_girl'
 
 class ActiveSupport::TestCase
+
   # Transactional fixtures accelerate your tests by wrapping each test method
   # in a transaction that's rolled back on completion.  This ensures that the
   # test database remains unchanged so your fixtures don't have to be reloaded
@@ -92,12 +95,11 @@ class ActiveSupport::TestCase
     user  
   end
 
+  FILES_DIR = File.dirname(__FILE__) + '/fixtures/multipart'
+
+  # Creates a TempFile attached to an uploaded file. Used to test attachments
   def file_upload_object(options)
-    file = ActionController::UploadedTempfile.new(options[:original_filename])
-    open(file.path, 'w') {|f| f << options[:read]}
-    file.original_path = options[:original_filename]
-    file.content_type = options[:content_type]
-    file
+    Rack::Test::UploadedFile.new("#{FILES_DIR}/#{options[:original_filename]}", options[:content_type], false)
   end
 
   def guest_group
@@ -113,7 +115,7 @@ class ActiveSupport::TestCase
   end
 
   def mock_file(options = {})
-    file_upload_object({:original_filename => "test.jpg", 
+    file_upload_object({:original_filename => "foo.jpg", 
       :content_type => "image/jpeg", :rewind => true,
       :size => "99", :read => "01010010101010101"}.merge(options))
   end
