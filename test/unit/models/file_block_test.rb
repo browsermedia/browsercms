@@ -12,13 +12,13 @@ class FileBlockTest < ActiveSupport::TestCase
   def test_attachment_is_required
     @file_block.attachment_file = nil
     assert !@file_block.valid?
-    assert_equal "You must upload a file", @file_block.errors[:attachment_file]
+    assert_equal "You must upload a file", @file_block.errors[:attachment_file].first
   end
   
   def test_attachment_file_path_is_required
     @file_block.attachment_file_path = nil
     assert !@file_block.valid?
-    assert_equal "File Name is required for attachment", @file_block.errors.on(:attachment_file_path)
+    assert_equal "File Name is required for attachment", @file_block.errors[:attachment_file_path].first
   end
   
   def test_no_leading_slash_in_file_path
