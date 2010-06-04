@@ -1,11 +1,9 @@
 Start with:
 
-Figure out how temp file is handled in Rails 3.
-The Rack::Test::UploadedFile isn't a temp file and needs to exist or throws an error.
-
 Open Issues
 ===========
-* Lots of tests fail due to 'uninitialized constant ActionController::UploadedTempfile'
+* SITE_DOMAIN as a constant can't be found since there is no more global namespace. (Read up on how to add new configuration to Rails apps via configuration)
+* (SITE_DOMAIN is fixed, but might not work correctly when new BrowserCMS projects are generated)
 * No route found for /  (Neither root nor match "/" seem to work)
 * It appears no CMS pages work. (The 'catchall' route doesn't work)
 * Pages do not render their status icon in the sitemap.
@@ -15,6 +13,7 @@ Open Issues
 * Saving a block with unchanged value shouldn't create additional versions (rake test:units TEST=unit/lib/content_block_test.rb)
 * Deleting blocks doesn't work. (Might actually be problems with queries)
 * Altering the uploaded file may not change the name of the file. (Broken test or broken feature?)
+* require_javascript_include - Tests are broken (probably due to changes to rails internals) 
 
 To Do List
 ==========

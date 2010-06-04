@@ -5,9 +5,6 @@ require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
 require 'rails/test_help'
 
 require 'action_view/test_case'
-#require 'mocha'
-#require 'redgreen'
-#require 'factory_girl'
 
 class ActiveSupport::TestCase
 
