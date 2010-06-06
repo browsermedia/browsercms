@@ -107,18 +107,13 @@ end
 
 class UserAbleToViewTest < ActiveSupport::TestCase
 
-  test "User able_to_view? with String path" do
-    non_admin = GroupType.create!(:cms_access=>false)
-    group = Factory(:group, :group_type=>non_admin)
-    public_user = Factory(:user)
-    public_user.groups<< group
-    public_user.save!
+  test "Registered User able_to_view? with String path" do
+    registered_user = User.new
+    viewable_section = Section.new
+    Section.expects(:find_by_path).with("/members").returns(viewable_section)
+    registered_user.expects(:viewable_sections).returns([viewable_section])
 
-    section = Factory(:section, :path=>"/members", :name=>"Members")
-    section.groups << group
-    section.save!
-
-    assert public_user.able_to_view?("/members")
+    assert registered_user.able_to_view?("/members")
   end
 
   test "User can't view a nil section" do
@@ -291,7 +286,7 @@ end
 
 class GuestUserTest < ActiveSupport::TestCase
   def setup
-    @user = User.guest
+    @guest_user = User.guest
     @guest_group = Group.guest
     @public_page = Factory(:page, :section => root_section)
     @protected_section = Factory(:section, :parent => root_section)
@@ -299,20 +294,20 @@ class GuestUserTest < ActiveSupport::TestCase
   end
 
   def test_guest
-    assert @user.guest?
-    assert_equal @guest_group, @user.group
-    assert @user.groups.include?(@guest_group)
-    assert !@user.able_to?("do anything global")
-    assert @user.able_to_view?(@public_page)
-    assert !@user.able_to_view?(@protected_page)
-    assert !@user.cms_access?
+    assert @guest_user.guest?
+    assert_equal @guest_group, @guest_user.group
+    assert @guest_user.groups.include?(@guest_group)
+    assert !@guest_user.able_to?("do anything global")
+    assert @guest_user.able_to_view?(@public_page)
+    assert !@guest_user.able_to_view?(@protected_page)
+    assert !@guest_user.cms_access?
   end
 
   test "override viewable sections for the guest group" do
-    @user.expects(:viewable_sections).returns([@protected_section])
+    @guest_user.expects(:viewable_sections).returns([@protected_section])
     assert_equal Section, @protected_section.class
     assert(@protected_section.is_a?(Section), "")
-    assert @user.able_to_view?(@protected_section)
+    assert @guest_user.able_to_view?(@protected_section)
   end
 
   test "GuestUser can't view a nil section" do
@@ -327,11 +322,15 @@ class GuestUserTest < ActiveSupport::TestCase
   end
 
   test "Guest User able_to_view? with String path" do
-    section = Factory(:section, :path=>"/members", :name=>"Members")
-    section.groups << @guest_group
-    section.save!
+    expected_section = Section.new
 
-    assert @user.able_to_view?("/members")
+#    section = Factory(:section, :path=>"/members", :name=>"Members")
+#    section.groups << @guest_group
+#    section.save!
+    Section.expects(:find_by_path).with("/members").returns(expected_section)
+    @guest_user.expects(:viewable_sections).returns([expected_section])
+
+    assert @guest_user.able_to_view?("/members")
 
   end
 
