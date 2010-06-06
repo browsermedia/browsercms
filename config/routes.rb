@@ -26,10 +26,10 @@ end
     # Core CMS routes
     map.routes_for_browser_cms
 
-    # Both of these work. Figure out why its not working from within a method call (routes_for_browser_cms).
-    # Might need to get access to a specific object.
-#    match "/", :to=>"cms/content#show"
-#    match "*path", :to=>"cms/content#show"
+    # Both of these work for testin purposes. Figure out why its not working from within a method call (routes_for_browser_cms).
+    # This isn't a long term solution 
+    match "/", :to=>"cms/content#show"
+    match "*path", :to=>"cms/content#show"
 
   end
 #end

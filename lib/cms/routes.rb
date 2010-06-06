@@ -131,9 +131,9 @@ module Cms::Routes
       end
     end
 
-    # The problem here is that there is no explicit reference to
-    # the routes object, so 'match' or 'connect' isn't valid.
+    # The problem here is that we are using the 'DeprecatedMapper', so
+    # 'match' method doesn't work.
+    # This means this won't work when BCMS is embedded as a gem.
 #    connect '*path', :controller => 'cms/content', :action => 'show'
-    self.connect '/:path', :controller => 'cms/content', :action => 'show'
   end
 end
