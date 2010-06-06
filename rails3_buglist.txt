@@ -1,9 +1,9 @@
 Start with:
 
+
+
 Open Issues
 ===========
-* SITE_DOMAIN as a constant can't be found since there is no more global namespace. (Read up on how to add new configuration to Rails apps via configuration)
-* (SITE_DOMAIN is fixed, but might not work correctly when new BrowserCMS projects are generated)
 * No route found for /  (Neither root nor match "/" seem to work)
 * It appears no CMS pages work. (The 'catchall' route doesn't work)
 * Pages do not render their status icon in the sitemap.
@@ -58,6 +58,8 @@ Items Completed
 4. Added bundler configuration (this will need to be documented).
 5. Sitemap folders now render correctly (fixed raw/h strings issue). Buttons too.
 6. Removed calls to 'after_validation_on_update' in favor of 'after_validation' with a check for new_record?
+7. SITE_DOMAIN was a constant can't be found since there is no more global namespace. (Read up on how to add new configuration to Rails apps via configuration)
+  (SITE_DOMAIN is fixed, but might not work correctly when new BrowserCMS projects are generated)
 
 Other Notes
 ==========
