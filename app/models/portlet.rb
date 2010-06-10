@@ -24,7 +24,12 @@ class Portlet < ActiveRecord::Base
         :versioned => false, 
         :publishable => false,
         :renderable => {:instance_variable_name_for_view => "@portlet"})
-      
+
+      # Used to skip the 'after_save' callbacks that connect blocks to pages.
+      # Portlets aren't verisonable but are connectable, so this will prevent the saving of portlets.  
+      attr_accessor :skip_callbacks
+
+
       def self.template_path
         default_template_path
       end      

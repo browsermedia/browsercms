@@ -9,7 +9,7 @@ class ConnectingTest < ActiveSupport::TestCase
     reset(:page, :block)
   end
 
-  test "Connecting blocks should check which pages are connected to the last draft" do
+  test "Update connected pages should return true if there is a valid version." do
     block = HtmlBlock.new
     mock_draft = mock()
     mock_draft.expects(:version).returns(1)

@@ -22,7 +22,6 @@ module Cms
           has_many :versions, :class_name  => version_class_name, :foreign_key => version_foreign_key
 
           before_validation :initialize_version
-#          alias_method_chain :save_without_validation, :versioning
           alias_method_chain :create_or_update_without_callbacks, :versioning
           attr_accessor :skip_callbacks
 

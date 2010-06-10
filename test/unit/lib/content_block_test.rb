@@ -132,7 +132,7 @@ class VersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
 
     assert @block.update_attributes(:name => "something different")
     assert_equal false, @block.skip_callbacks
-    assert_equal 2, @block.versions.size
+    assert_equal 2, @block.versions.size, "should be two versions of this block"
     reset(:page)
 
 

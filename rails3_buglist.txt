@@ -1,16 +1,9 @@
 Start with:
-
- Check in code
  rake test:units TEST=unit/lib/content_block_test.rb
 
+    A new connector is not being created when a block is updated.
 
-Things in progress:
-1. Working on the versioning.save_without_validation_with_versioning method
-2. Goal is to make it behave like the original 'def save(perform_validation=true) method
-3. Old method was happening as part of callbacks. We might need to alter which callbacks happen, especially if nothing gets changed. 
-4. save! is broken
-
-38 Failures
+38 Failures in Unit
 
 Open Issues
 ===========
@@ -25,6 +18,7 @@ Open Issues
 * Deleting blocks doesn't work. (Might actually be problems with queries)
 * Altering the uploaded file may not change the name of the file. (Broken test or broken feature?)
 * require_javascript_include - Tests are broken (probably due to changes to rails internals) 
+* save! is broken (Maybe)
 
 CMS Behavior Dependencies
 ================
