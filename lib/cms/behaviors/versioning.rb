@@ -22,10 +22,9 @@ module Cms
           has_many :versions, :class_name  => version_class_name, :foreign_key => version_foreign_key
 
           before_validation :initialize_version
-
-          # New items to test behavior
-          before_save :save_new_record
-          after_save :publish_if_needed
+#          alias_method_chain :save_without_validation, :versioning
+          alias_method_chain :create_or_update_without_callbacks, :versioning
+          attr_accessor :skip_callbacks
 
           attr_accessor :revert_to_version
 
@@ -75,7 +74,7 @@ module Cms
 
         def versioned_columns
           @versioned_columns ||= (version_class.new.attributes.keys -
-                  (%w[id lock_version position version_comment created_at updated_at created_by_id updated_by_id type] + [version_foreign_key]))
+                  (%w[ id lock_version position version_comment created_at updated_at created_by_id updated_by_id type ] + [version_foreign_key]))
         end
       end
       module InstanceMethods
@@ -88,7 +87,7 @@ module Cms
           attrs = draft_attributes
 
           # Now overwrite all values
-          (self.class.versioned_columns - %w(version)).each do |col|
+          (self.class.versioned_columns - %w( version )).each do |col|
             attrs[col] = send(col)
           end
 
@@ -104,27 +103,15 @@ module Cms
           # When there is no draft, we'll just copy the attibutes from this object
           # Otherwise we need to use the draft
           d = new_record? ? self : draft
-          self.class.versioned_columns.inject({}){|attrs, col| attrs[col] = d.send(col); attrs }
+          self.class.versioned_columns.inject({}) { |attrs, col| attrs[col] = d.send(col); attrs }
         end
 
         def default_version_comment
           if new_record?
             "Created"
           else
-            "Changed #{(changes.keys - %w[version created_by_id updated_by_id]).sort.join(', ')}"
+            "Changed #{(changes.keys - %w[ version created_by_id updated_by_id ]).sort.join(', ')}"
           end
-        end
-
-
-        def save_new_record
-          logger.warn "save_new_record"
-          @new_version = build_new_version
-          if new_record?
-            self.version = 1
-          else
-            @new_version.save
-          end
-          # This may not work. I think I need to prevent saving of the original record, but still return true to complete the save operation.
         end
 
         def publish_if_needed
@@ -132,6 +119,30 @@ module Cms
             publish
             @publish_on_save = nil
           end
+        end
+
+        # This aliases the original ActiveRecord::Base.save method, in order to change
+        # how calling save works. It should do the following things:
+        #
+        # 1. If the record is unchanged, no save is performed, but true is returned. (Skipping after_save callbacks)
+        # 2. If its an update, a new version is created and that is saved.
+        # 3. If new record, its version is set to 1, and its published if needed.
+        def create_or_update_without_callbacks_with_versioning
+          self.skip_callbacks = false
+          unless different_from_last_draft?
+            self.skip_callbacks = true
+            return true
+          end
+          @new_version = build_new_version
+          if new_record?
+            self.version = 1
+            saved_correctly = create_or_update_without_callbacks_without_versioning
+            publish_if_needed
+            changed_attributes.clear
+          else
+            saved_correctly = @new_version.save
+          end
+          return saved_correctly
         end
 
         ##
@@ -231,7 +242,7 @@ module Cms
         end
 
         def find_version(number)
-          versions.first(:conditions => { :version => number })
+          versions.first(:conditions => {:version => number})
         end
 
         def as_of_draft_version
@@ -297,7 +308,7 @@ module Cms
           return true if self.changed?
           last_draft = self.draft
           return true unless last_draft
-          (self.class.versioned_columns - %w(version)).each do |col|
+          (self.class.versioned_columns - %w( version )).each do |col|
             return true if self.send(col) != last_draft.send(col)
           end
           return false

@@ -32,7 +32,7 @@ class Page < ActiveRecord::Base
       obj = b
       ver = obj.class.versioned? ? obj.version : nil
     end
-    
+
     if ver
       { :include => :connectors, 
         :conditions => ['connectors.connectable_id = ? and connectors.connectable_type = ? and connectors.connectable_version = ?', obj.id, obj.class.base_class.name, ver] }

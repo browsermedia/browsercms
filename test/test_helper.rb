@@ -6,6 +6,8 @@ require 'rails/test_help'
 
 require 'action_view/test_case'
 
+require 'mocha'
+
 class ActiveSupport::TestCase
 
   # Transactional fixtures accelerate your tests by wrapping each test method

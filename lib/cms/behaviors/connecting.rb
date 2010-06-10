@@ -22,7 +22,9 @@ module Cms
           attr_accessor :updated_by_page
 
           after_create :connect_to_page
+#          after_save :update_connected_pages, :unless=>:skip_callbacks
           after_save :update_connected_pages
+
         end
       end
       module ClassMethods
@@ -66,19 +68,22 @@ module Cms
             connected_page.create_connector(self, connect_to_container)
           end
           true
-        end        
-      
+        end
+
         def update_connected_pages
+          return false if (respond_to?(:skip_callbacks) && skip_callbacks)
+
           # If this is versioned, then we need make new versions of all the pages this is connected to
-          if self.class.versioned? 
+          if self.class.versioned?
             #logger.info "..... Updating connected pages for #{self.class} #{id} v#{version}"
 
             #Get all the pages the previous version of this connectable was connected to
-            draft_version = draft.version            
-            Page.connected_to(:connectable => self, :version => (draft_version - 1)).all.each do |p|
+            draft_version = draft.version
+            connected_pages = Page.connected_to(:connectable => self, :version => (draft_version - 1)).all
+            connected_pages.each do |p|
               # This is needed in the case of updating page,
               # which updates this object, so as not to create a loop
-              if p != updated_by_page              
+              if p != updated_by_page
                 #This just creates a new version of the page
                 action = deleted? ? "Deleted" : "Edited"
                 p.update_attributes(:version_comment => "#{self.class.name} ##{id} was #{action}")
@@ -92,7 +97,7 @@ module Cms
             end
           end
           true
-        end        
+        end
       end
     end
   end

@@ -2,7 +2,7 @@ require File.join(File.dirname(__FILE__), '/../../test_helper')
 
 class CreatingPageTest < ActiveRecord::TestCase
   
-  def test_it
+  def test_creating_a_page_and_updating_the_attributes
     
     @page = Page.new(
       :name => "Test", 
@@ -16,7 +16,7 @@ class CreatingPageTest < ActiveRecord::TestCase
     @page.update_attributes(:name => "Test v2")
     
     page = Page.find_live_by_path("/test")
-    assert_equal page.name, "Test"
+    assert_equal "Test", page.name
     assert_equal 1, page.version
     
   end
@@ -270,7 +270,9 @@ class PageVersioningTest < ActiveRecord::TestCase
     assert_equal @new_guy, page.versions.last.updated_by
     assert_equal 2, page.versions.count
   end
-        
+
+  
+
 end
 
 class PageInSectionTest < ActiveRecord::TestCase

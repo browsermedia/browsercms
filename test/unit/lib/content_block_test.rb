@@ -18,6 +18,7 @@ class ContentBlockTest < ActiveSupport::TestCase
     assert @block.published?
 
     assert @block.update_attributes(:name => "Whatever")
+    
 
     assert !@block.live?
 
@@ -35,7 +36,7 @@ class ContentBlockTest < ActiveSupport::TestCase
   test "Updating a block without changing attributes shouldn't cause new save" do
     result = @block.update_attributes(:name => @block.name)
     assert_equal 1, @block.version, "Block should keep itself at version 1"
-    assert_equal 1, @block.versions.size, "Should only have a single version of this block"
+    assert_equal 1, @block.versions.size, "Should only have the one original version of the block"
     assert_equal 'Created', @block.draft.version_comment
     assert result , "Update with same attributes should still return true" 
   end
@@ -122,13 +123,22 @@ class VersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
 
   def test_editing_connected_to_an_unpublished_page
     page_version_count = Page::Version.count
+    assert_equal 2, @page.versions.size, "Should be two versions of the page"
     assert !@page.published?
+
+    pages = Page.connected_to(:connectable => @block, :version => @block.version).all
+    assert_equal [@page], pages, "block should be connected to page"
+
 
     assert @block.update_attributes(:name => "something different")
+    assert_equal false, @block.skip_callbacks
+    assert_equal 2, @block.versions.size
     reset(:page)
 
+
     assert !@page.published?
-    assert_equal 3, @page.draft.version
+    assert_equal 3, @page.versions.size, "Should be three versions of the page."
+    assert_equal 3, @page.draft.version, "Draft version of page should be updated to v3 since its connected to the updated block."
     assert_incremented page_version_count, Page::Version.count
     assert_match /^HtmlBlock #\d+ was Edited/, @page.draft.version_comment
 

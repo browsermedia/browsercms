@@ -1,10 +1,20 @@
 Start with:
 
+ Check in code
+ rake test:units TEST=unit/lib/content_block_test.rb
 
+
+Things in progress:
+1. Working on the versioning.save_without_validation_with_versioning method
+2. Goal is to make it behave like the original 'def save(perform_validation=true) method
+3. Old method was happening as part of callbacks. We might need to alter which callbacks happen, especially if nothing gets changed. 
+4. save! is broken
+
+38 Failures
 
 Open Issues
 ===========
-* Mocha methods stub and mock don't seem to work. Need to look at newer versions of Mocha and check syntax
+* Not sure Publishing and Versioning should be split up. They are really intertwined in practice.
 * No route found for /  (Neither root nor match "/" seem to work)
 * Need to figure out how routes from gems can be embedded (The content router doesn't work via a gem right now)
 * Pages do not render their status icon in the sitemap.
@@ -16,6 +26,11 @@ Open Issues
 * Altering the uploaded file may not change the name of the file. (Broken test or broken feature?)
 * require_javascript_include - Tests are broken (probably due to changes to rails internals) 
 
+CMS Behavior Dependencies
+================
+* Connecting -> Versioning (.draft)
+* Versioning -> Publishing (.publish)
+
 To Do List
 ==========
 0. Install jeweler for 1.9.1 to get rid of warnings. (I commented out Jeweler for now)
@@ -23,27 +38,25 @@ To Do List
 2. Verify it works in 1.8.7
 3. Determine if both Rails 2 and 3 can be supported in the same gem.
 
-Fixing Default Routes
-===========
-The 'catchall' route seems to split the path into an array. The content controller reassembles it. I have reversed this procedure.
-Need to review the routing code/Yehuta's articles on this, as I think I'm making a mess of it.
 
 Making save work
 ================
 Reworked save to use normal callback behavior, rather than overriding save_with_validations.
 
 Known Issues:
-- Updating with the same attributes shouldn't be creating new versions (I think)
 - Destroying is throwing errors.
 
-The callback method has been removed. Versioning#save used it to trigger normal callback behavior. Relevant classes include:
-ActiveRecord::Callbacks, ActiveModel::Callbacks, ActiveSupport::Callbacks
 
-How Versioning works now (It might be necessary to rewrite)
+ActiveRecord alias chain- Here is the order that methods get called.
 --
+save
+  save_with_transactions
+  save_with_dirty
+  save_with_validations
+  AR::Base.save (save_without_validations)
+  AR::Base.create_or_update_with_callbacks
 
-How ActiveRecord works:
---
+  
 AR::Base - Defines a 'save' method with no params
 AR::Validations - alias save to a save_with_validations (which takes params) 
 ActiveRecord Object has:
@@ -61,6 +74,8 @@ Items Completed
 6. Removed calls to 'after_validation_on_update' in favor of 'after_validation' with a check for new_record?
 7. SITE_DOMAIN was a constant can't be found since there is no more global namespace. (Read up on how to add new configuration to Rails apps via configuration)
   (SITE_DOMAIN is fixed, but might not work correctly when new BrowserCMS projects are generated)
+8. Rewrote versioning to override the correct method for handling callbacks.
+9. Catchall route used to split path into an array, then the content controller would reassemble it. I have reversed this procedure.
 
 Other Notes
 ==========
