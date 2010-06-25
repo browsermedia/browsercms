@@ -6,7 +6,14 @@ class Cms::PortletController < Cms::ApplicationController
   def execute_handler
     @portlet = Portlet.find(params[:id])
     @portlet.controller = self
-    redirect_to @portlet.send(params[:handler])
+
+     method = params[:handler]
+     if @portlet.class.superclass.method_defined?(method) or @portlet.class.private_method_defined?(method) or @portlet.class.protected_method_defined?(method)
+       raise Cms::Errors::AccessDenied
+     else
+       redirect_to @portlet.send(method)
+     end
+
   end
     
 end
