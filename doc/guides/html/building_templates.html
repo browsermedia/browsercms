@@ -229,14 +229,14 @@
 <p>This section covers a reference for all the tags (aka Helper Methods) that can be used in Page Templates to render various elements. Here is a quick list of the available tags, their purpose and whether they are required or not.</p>
 <p>._ Name |<em>. Purpose | Required? |
 | <tt>container</tt> | A named area that allows users to add/edit content | Yes |
-| <tt>cms</em>toolbar</tt></notextile> | Renders the <span class="caps">CMS</span> toolbar controller required for editing and navigation. Should be very first element in <tt>body</tt> | Yes |
+| <tt>cms_toolbar</tt> | Renders the <span class="caps">CMS</span> toolbar controller required for editing and navigation. Should be very first element in <tt>body</tt> | Yes |
 | <tt>yield :html_head | This allows the CMS to insert javascript and other information into the page. Should be last element in </tt>head+ | Yes | 
 | <tt>page_title</tt> | Inserts the &#8216;Name&#8217; of the page (or &#8216;Title&#8217; if it exists) | No |
 | <tt>current_page</tt> | Returns a reference to the <tt>Page</tt> object that is currently being rendered | No |
 | <tt>render_breadcrumbs</tt> | Generates breadcrumbs based on the current page and its location in the sitemap | No |
 | <tt>render_menu</tt> | Generates a menu based on the current page and its location in the sitemap | No |
 | <tt>render_portlet</tt> | Renders a specific portlet by name | No |
-| <tt>render_connectable</tt> | Renders a specific content block | No |</p>
+| <tt>render</em>connectable</tt></notextile> | Renders a specific content block | No |</p>
 <p>In addition, since Page Templates are Rails layouts, you can make use of any of the Asset Tags&quot;:http://guides.rubyonrails.org/layouts_and_rendering.html#structuring-layouts like <tt>stylesheet_link_tag</tt> or <tt>image_tag</tt>.</p>
 <h4 id="required-tags">3.1 Required Tags</h4>
 <p>While most of the tags are optional, there are several tags which must be included or page template just won&#8217;t work correctly. Here&#8217;s the minimum necessary tags required.</p>
