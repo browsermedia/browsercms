@@ -5,12 +5,12 @@
 
 Gem::Specification.new do |s|
   s.name = %q{browsercms}
-  s.version = "3.2.0"
+  s.version = "3.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["BrowserMedia"]
   s.date = %q{2010-06-28}
-  s.description = %q{BrowserCMS is a general purpose, open source Web Content Management System (CMS) written in Ruby on Rails. Designed for web developers who want to create great looking websites while using standard Rails tools for customizing it.}
+  s.description = %q{General purpose Web Content Management in Rails.}
   s.email = %q{github@browsermedia.com}
   s.executables = ["browsercms", "bcms"]
   s.extra_rdoc_files = [
@@ -1369,7 +1369,6 @@ Gem::Specification.new do |s|
      "test/functional/cms/connectors_controller_test.rb",
      "test/functional/cms/dynamic_views_controller_test.rb",
      "test/functional/cms/sections_controller_test.rb",
-     "test/functional/cms/tasks_controller_test.rb",
      "test/functional/cms/groups_controller_test.rb",
      "test/unit/behaviors/searching_test.rb",
      "test/unit/behaviors/attaching_test.rb",
