@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{browsercms}
-  s.version = "3.1.1"
+  s.version = "3.1.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["BrowserMedia"]
-  s.date = %q{2010-06-28}
+  s.date = %q{2010-06-30}
   s.description = %q{General purpose Web Content Management in Rails.}
   s.email = %q{github@browsermedia.com}
   s.executables = ["browsercms", "bcms"]
@@ -1342,88 +1342,88 @@ Gem::Specification.new do |s|
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{browsercms}
-  s.rubygems_version = %q{1.3.5}
+  s.rubygems_version = %q{1.3.7}
   s.summary = %q{BrowserCMS is a general purpose, open source Web Content Management System (CMS) written in Ruby on Rails. Designed for web developers who want to create great looking websites while using standard Rails tools for customizing it.}
   s.test_files = [
-    "test/integration/login_test.rb",
-     "test/integration/cms/password_management_test.rb",
-     "test/integration/cms/ckeditor_test.rb",
-     "test/functional/tests/pretend_controller_test.rb",
-     "test/functional/cms/links_controller_test.rb",
-     "test/functional/cms/image_blocks_controller_test.rb",
+    "test/custom_assertions.rb",
+     "test/factories.rb",
      "test/functional/cms/cache_controller_test.rb",
-     "test/functional/cms/home_controller_test.rb",
-     "test/functional/cms/pages_controller_test.rb",
-     "test/functional/cms/content_block_controller_test.rb",
-     "test/functional/cms/dashboard_controller_test.rb",
-     "test/functional/cms/content_types_controller_test.rb",
-     "test/functional/cms/portlets_controller_test.rb",
-     "test/functional/cms/html_blocks_controller_test.rb",
-     "test/functional/cms/section_nodes_controller_test.rb",
-     "test/functional/cms/toolbar_controller_test.rb",
-     "test/functional/cms/sessions_controller_test.rb",
-     "test/functional/cms/users_controller_test.rb",
      "test/functional/cms/categories_controller_test.rb",
-     "test/functional/cms/file_blocks_controller_test.rb",
-     "test/functional/cms/content_controller_test.rb",
      "test/functional/cms/connectors_controller_test.rb",
+     "test/functional/cms/content_block_controller_test.rb",
+     "test/functional/cms/content_controller_test.rb",
+     "test/functional/cms/content_types_controller_test.rb",
+     "test/functional/cms/dashboard_controller_test.rb",
      "test/functional/cms/dynamic_views_controller_test.rb",
-     "test/functional/cms/sections_controller_test.rb",
+     "test/functional/cms/file_blocks_controller_test.rb",
      "test/functional/cms/groups_controller_test.rb",
-     "test/unit/behaviors/searching_test.rb",
+     "test/functional/cms/home_controller_test.rb",
+     "test/functional/cms/html_blocks_controller_test.rb",
+     "test/functional/cms/image_blocks_controller_test.rb",
+     "test/functional/cms/links_controller_test.rb",
+     "test/functional/cms/pages_controller_test.rb",
+     "test/functional/cms/portlets_controller_test.rb",
+     "test/functional/cms/section_nodes_controller_test.rb",
+     "test/functional/cms/sections_controller_test.rb",
+     "test/functional/cms/sessions_controller_test.rb",
+     "test/functional/cms/toolbar_controller_test.rb",
+     "test/functional/cms/users_controller_test.rb",
+     "test/functional/tests/pretend_controller_test.rb",
+     "test/integration/cms/ckeditor_test.rb",
+     "test/integration/cms/password_management_test.rb",
+     "test/integration/login_test.rb",
+     "test/test_helper.rb",
+     "test/test_logging.rb",
      "test/unit/behaviors/attaching_test.rb",
      "test/unit/behaviors/dynamic_attributes_test.rb",
-     "test/unit/behaviors/taggable_test.rb",
      "test/unit/behaviors/publishable_test.rb",
+     "test/unit/behaviors/searching_test.rb",
+     "test/unit/behaviors/taggable_test.rb",
+     "test/unit/extensions/active_record/base_test.rb",
      "test/unit/extensions/hash_test.rb",
      "test/unit/extensions/integer_test.rb",
-     "test/unit/extensions/active_record/base_test.rb",
-     "test/unit/models/page_test.rb",
-     "test/unit/models/email_page_portlet_test.rb",
-     "test/unit/models/attachment_test.rb",
-     "test/unit/models/connector_test.rb",
-     "test/unit/models/html_block_test.rb",
-     "test/unit/models/portlet_test.rb",
-     "test/unit/models/section_node_test.rb",
-     "test/unit/models/content_type_test.rb",
-     "test/unit/models/group_test.rb",
-     "test/unit/models/page_template_test.rb",
-     "test/unit/models/site_test.rb",
-     "test/unit/models/permission_test.rb",
-     "test/unit/models/link_test.rb",
-     "test/unit/models/task_test.rb",
-     "test/unit/models/page_partial_test.rb",
-     "test/unit/models/user_test.rb",
-     "test/unit/models/file_block_test.rb",
-     "test/unit/models/category_type_test.rb",
-     "test/unit/models/page_route_test.rb",
-     "test/unit/models/sections_test.rb",
-     "test/unit/models/category_test.rb",
-     "test/unit/schema_statements_test.rb",
+     "test/unit/helpers/application_helper_test.rb",
+     "test/unit/helpers/form_builder_test.rb",
+     "test/unit/helpers/menu_helper_test.rb",
+     "test/unit/helpers/page_helper_test.rb",
+     "test/unit/helpers/path_helper_test.rb",
      "test/unit/lib/acts_as_content_page_test.rb",
-     "test/unit/lib/generators_test.rb",
-     "test/unit/lib/routes_test.rb",
-     "test/unit/lib/cms_domain_support_test.rb",
      "test/unit/lib/cms/authentication/controller_test.rb",
-     "test/unit/lib/content_rendering_support_test.rb",
+     "test/unit/lib/cms_domain_support_test.rb",
      "test/unit/lib/command_line_test.rb",
      "test/unit/lib/content_block_test.rb",
-     "test/unit/helpers/menu_helper_test.rb",
-     "test/unit/helpers/application_helper_test.rb",
-     "test/unit/helpers/page_helper_test.rb",
-     "test/unit/helpers/form_builder_test.rb",
-     "test/unit/helpers/path_helper_test.rb",
-     "test/custom_assertions.rb",
-     "test/test_logging.rb",
-     "test/factories.rb",
-     "test/test_helper.rb"
+     "test/unit/lib/content_rendering_support_test.rb",
+     "test/unit/lib/generators_test.rb",
+     "test/unit/lib/routes_test.rb",
+     "test/unit/models/attachment_test.rb",
+     "test/unit/models/category_test.rb",
+     "test/unit/models/category_type_test.rb",
+     "test/unit/models/connector_test.rb",
+     "test/unit/models/content_type_test.rb",
+     "test/unit/models/email_page_portlet_test.rb",
+     "test/unit/models/file_block_test.rb",
+     "test/unit/models/group_test.rb",
+     "test/unit/models/html_block_test.rb",
+     "test/unit/models/link_test.rb",
+     "test/unit/models/page_partial_test.rb",
+     "test/unit/models/page_route_test.rb",
+     "test/unit/models/page_template_test.rb",
+     "test/unit/models/page_test.rb",
+     "test/unit/models/permission_test.rb",
+     "test/unit/models/portlet_test.rb",
+     "test/unit/models/section_node_test.rb",
+     "test/unit/models/sections_test.rb",
+     "test/unit/models/site_test.rb",
+     "test/unit/models/task_test.rb",
+     "test/unit/models/user_test.rb",
+     "test/unit/schema_statements_test.rb"
   ]
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 3
 
-    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
+    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
     else
     end
   else
