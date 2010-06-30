@@ -150,7 +150,8 @@ class Cms::HtmlBlocksControllerTest < ActionController::TestCase
     @page = Factory(:page, :section => root_section, :name => "Included")
     @page2 = Factory(:page, :section => root_section, :path => "/other_path", :name => "Excluded")
     @block = Factory(:html_block, :connect_to_page_id => @page.id, :connect_to_container => "main")
-    
+    @page.publish!  # usages are only relevant when page is published
+
     get :usages, :id => @block.id
 
     assert_response :success
