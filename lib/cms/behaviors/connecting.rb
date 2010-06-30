@@ -94,7 +94,12 @@ module Cms
 
                 #The previous step will copy over a connector pointing to the previous version of this connectable
                 #We need to change that to point at the new version of this connectable
-                connectors = p.connectors.for_page_version(p.draft.version).for_connectable(self)
+                connectors_for_page = p.connectors
+                puts "cfp #{connectors_for_page}"
+                page_draft_version = p.draft.version
+                cnn = connectors_for_page.for_page_version(page_draft_version)
+                puts "Connectors for page version #{page_draft_version} are #{cnn.all}"
+                connectors = cnn.for_connectable(self)
                 puts "Found connectors #{connectors.all}"
                 connectors.each do |con|
                   con.update_attribute(:connectable_version, draft_version)

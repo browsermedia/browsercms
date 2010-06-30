@@ -1,7 +1,12 @@
 Start with:
  rake test:units TEST=unit/lib/content_block_test.rb
 
-    A new connector is not being created when a block is updated.
+    A new connector is being created when a block is updated, but it's id is nil.
+    No connectors are being found when it gets filtered down to the page and block version.
+
+    
+    Look at ActiveSupport.on_load for things that went missing.
+    Learn how to use the ruby debugger from the command line (or get RubyMine 2.5)
 
 38 Failures in Unit
 
@@ -19,6 +24,11 @@ Open Issues
 * Altering the uploaded file may not change the name of the file. (Broken test or broken feature?)
 * require_javascript_include - Tests are broken (probably due to changes to rails internals) 
 * save! is broken (Maybe)
+* Will need to rewrite generators to use Thor (Will require new fork)
+* Look at how ActionSupport works with providing hooks
+
+Good Ideas
+* Rewrite Behaviors to use ActiveSupport::Concern (at least look at it to see what is useful)
 
 CMS Behavior Dependencies
 ================
