@@ -6,23 +6,24 @@ class Cms::DynamicViewsControllerTest < ActionController::TestCase
   def setup
     login_as_cms_admin
   end
-  
+
   def test_index
     @deleted_page_template = Factory(:page_template, :name => "deleted")
 
     @deleted_page_template.destroy
     @page_template = Factory(:page_template, :name => "test")
-    
+
     def @request.request_uri
       "/cms/page_templates"
     end
+
     get :index
-    
+
     assert_response :success
     #log @response.body
     assert_select "#page_template_#{@page_template.id} div", "Test (html/erb)"
-    assert_select "#page_template_#{@deleted_page_template.id} div", 
-      :text => "Deleted (html/erb)", :count => 0
+    assert_select "#page_template_#{@deleted_page_template.id} div",
+                  :text => "Deleted (html/erb)", :count => 0
   end
 
   def test_index_paging
@@ -50,5 +51,5 @@ class Cms::DynamicViewsControllerTest < ActionController::TestCase
     should_have = PageTemplate.all.length - 15
     assert_equal should_have, assigns['views'].length
   end
-  
+
 end
