@@ -1,0 +1,67 @@
+fr:
+  blocks:
+    toolbar_for_collection:
+      publish: Publier
+      view_content: Vissioner le contenu
+      edit_content: Réviser le contenu
+      add_content: Ajouter du nouveau contenu
+      list_versions: Lister les versions
+      delete: Supprimer
+      confirm: Êtes-vous certain(e)s que vous voulez supprimer cet enregistrement ?
+    toolbar_for_member:
+      publish: Publier
+      view_content: Vissioner le contenu
+      edit_content: Réviser le contenu
+      add_content: Ajouter du nouveau contenu
+      list_versions: Lister les versions
+      delete: Supprimer
+      confirm: Êtes-vous certain(e)s que vous voulez supprimer cet enregistrement ?
+    edit:
+      page_title: Bibliothèque de contenu / Réviser
+      edit: Réviser
+      deleted_message: Ce(ette) {{class_name}} à été supprimer
+      save_and_publish: Enregister et publier
+      save: Enregistrer
+    index:
+      page_title: Bibliothèque de contenu / Lister
+      list: Lister
+      updated: Mise à jour
+      used: Utilisé(e)
+      status: Statut
+      draft: Brouillon
+      published: Publié
+      no_results: Aucuns résultats trouvés pour
+    new:
+      page_title: Bibliothèque de contenu / Ajouter nouveau
+      list: Lister
+      add: Ajouter nouveau
+      save_and_publish: Enregister et publier
+      save: Enregister
+    show:
+      page_title: Bibliothèque de contenu / Vissioner
+      view: Vissioner
+      deleted_message: Ce(tte) {{class_name}} à été supprimer
+      status: Statut
+      used_on: "Utilisé sur:"
+      page:
+        one: Page
+        other: Pages
+      version: Version
+      current: Courant
+      block_contents: "Contenu du bloc:"
+    usages:
+      page_title: Bibliothèque de contenu / Vissioner utilisations
+      toolbar_title: "Pages utilisants {{content_type_name}} '{{block_name}}'"
+      page_name: Nom de la page
+      path: Chemin
+      page_status: Statut de la page
+    versions:
+      page_title: Bibliothèque de contenu / Liste des versions
+      list_versions: Liste des versions
+      revert: Régresser
+      version: Version
+      comment: Commentaire
+      date: Date
+      editor: Rédacteur
+      live: ACTVE
+      current: COURANT

@@ -1,0 +1,18 @@
+fr:
+  dynamic_views:
+    form:
+      save: Enregister
+    edit:
+      edit: Réviser
+      list_all: Lister tout
+    index:
+      list: Lister
+      add: Ajouter
+      edit: Réviser
+      delete: Supprimer
+      confirm: Êtes-vous certain(e)s que vous voulez supprimer ce(tte) {{object}}?
+      name: Nom
+      updated_at: Mise à jour
+    new:
+      new: Nouveau
+      list_all: Lister tout

@@ -1,0 +1,56 @@
+fr:
+  views:
+    portlets:
+      dynamic:
+        name: Nom
+        code: Code
+        template: Gabarit
+      email_page:
+        form:
+          name: Nom
+          subject: Sujet
+          default_subject: Un lien qui pourrait vous intéresser
+          success_url: URL final
+          success_url_hint: Laisser vierge pour retourner à la même page
+          template: Gabarit
+        render:
+          send_mail: Envoyer courriel
+      forgot_password:
+        form: 
+          name: Nom
+          reset_password_url: URL de réinitialisation de mot de passe
+          reset_password_url_hint: URL de la page où l'utilisateur réinitialiserait son mot de pass. Aucune paramètre 'GET' permis.
+          template: Gabarit
+        render:
+          account_email: "L'addresse courriel de votre compte:"
+          request_token: Demander jeton de réinitialisation de mot de passe
+      login:
+        form:
+          name: Nom
+          success_url: URL final
+          success_url_hint: Laisser vierge pour envoyer l'utilisateur à la page qu'il(elle) essayait d'accèder
+          failure_url: URL de défaillance
+          failure_url_hint: Laisser vierge pour envoyer l'utilisateur à la page de laquelle il/elle à essayé d'ouvrir une session
+          template: Gabarit
+        render:
+          welcome: Bienvenue
+          logout: Fermer la session
+          login: Ouvrir une session
+      portlets:
+        form:
+          page_title: Bibliothèque de contenu / Sélectioner type de portlet
+      reset_password:
+        form:
+          name: Nom
+          handler: Gestionnaire
+          template: Gabarit
+        render:
+          new_password: "Nouveau mot de passe:"
+          confirm_new_password: "Confirmer mot de passe:"
+          reset_password: Réinitialiser mot de passe
+      tag_cloud:
+        form:
+          name: Nom
+          limit: Limite
+          sizes: Tailles
+          template: Gabarit

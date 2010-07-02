@@ -1,0 +1,7 @@
+fr:
+  tasks:
+    new:
+      page_title: "Assigner la page '{{page_name}}'"
+      back_to_page: Regresser à la page
+      due_date_hint: Laisser vierge pour ne pas assigner aucune date de limite
+      save: Enregistrer

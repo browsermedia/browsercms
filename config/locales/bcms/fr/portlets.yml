@@ -1,0 +1,9 @@
+fr:
+  portlets:
+    forgot_password: 
+      unable_to_verify: Nous n'avons pas pu vérifer votre compte. Veuillez assurer que votre addresse courriel est correcte.
+      password_sent: "Votre mot de passe à été envoyé à {{email}}"
+    reset_password:
+      no_token: Le jeton pour changer le mot de passe n'a pas été fourni
+      invalid_token: Jeton de mot de pass invalide
+      reset: Le mot de passe a été réinitialisé

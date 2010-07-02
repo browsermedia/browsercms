@@ -1,0 +1,11 @@
+fr:
+  categories:
+    form:
+      page_title: S.v.p. créez un catégorie
+      type_prompt: Séléctioner un type de catégorie
+      message: |
+        Avant que vous puissiez créer une catégorie, vous devez {{link}}.
+        Chaque catégorie doit avoir un type de catégorie. Par exemple, si 
+        vous avez l'intention de catégoriser vos articles de nouvelles, vous 
+        pouvez créer un type de catégorie appeler "Article de nouvelles".
+      create_category_type: créer une type de catégorie

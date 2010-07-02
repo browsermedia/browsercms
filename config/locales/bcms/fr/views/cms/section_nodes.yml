@@ -1,0 +1,15 @@
+fr:
+  section_nodes:
+    link:
+      published: Publié
+      draft: Brouillon
+    node:
+      hidden: Caché
+    index:
+        page_title: Carte de site
+        edit_page: Réviser la page
+        edit_properties: Réviser les caractéristiques
+        add_page: Ajouter une page
+        add_section: Ajouter une section
+        add_link: Ajouter un lien
+        delete: Supprimer

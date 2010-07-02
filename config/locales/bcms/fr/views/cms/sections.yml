@@ -1,0 +1,22 @@
+fr:
+  sections:
+    form:
+      public_permissions: Droits d'accès publics 
+      public_permissions_hint: "Quels groupes 'publics' peuvent voir les pages en cette section ?"
+      cms_permissions: Droits d'accès CMS
+      cms_permissions_hint: "Quels groupes 'CMS' peuvent réviser les pages et le contenu en cette section ?"
+      save: Enregistrer
+    edit:
+      page_title: "Réviser les caractéristiques / Section '{{section_name}}'"
+      list_all: Afficher tous
+    index:
+      title: Carte de site
+      edit: Réviser
+      properties: Caractéristiques
+      delete: Supprimer
+      add_page: Ajouter une page
+      add_section: Ajouter une section
+      add_link: Ajouter un lien
+    new:
+      page_title: Nouveau section
+      list_all: Afficher tous

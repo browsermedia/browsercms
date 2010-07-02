@@ -1,0 +1,34 @@
+fr:
+  groups:
+    form:
+      list_all: Afficher tous
+      group_name: Nom du groupe
+      type_of_user: Type d'utilisateur
+      instructions: Quelle genre d'utilisateur est représenté par ce groupe?
+      save: Enregistrer
+    permissions:
+      global_permissions: Droits d'accès globales
+    sections:
+      section_permissions: Droits d'accès de section
+      instructions: Quelles sections est-ce que les membres de cet groupe devraient être permis de
+      view: voir
+      edit: réviser
+      path: Chemin
+    edit:
+      page_title: Administration / Réviser groupe
+      toolbar_title: Réviser groupe
+    index:
+      page_title: Administration / Liste des groupes
+      toolbar_title: List des groupes
+      add_group: Ajouter un groupe
+      name: Nom
+      type: Type
+      permissions: Droits d'accès
+      edit: Réviser
+      view: Voir
+      of: de
+      sections: Sections
+      all_sections: Tous les sections
+    new:
+      page_title: Administration / Ajouter un group
+      toolbar_title: Ajouter un nouveau group

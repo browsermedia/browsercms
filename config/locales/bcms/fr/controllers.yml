@@ -1,0 +1,76 @@
+#flash messages
+fr:
+  controllers:
+    cache:
+      flushed: Le cache des pages a été vidé.
+    connectors:
+      removed: "A enlevé '{{connectable_name}}' du contenant '{{container}}'"
+      failed_to_remove: "N'a pas pu elever '{{connectable_name}}' du contenant '{{container}}'"    
+      up_in: plus haut dans
+      down_in: plus bas dans
+      to_top: jusqu'à la tête
+      to_bottom: jusqu'au fond
+      moved: "A déplacé '{{connectable_name}}' {{where}} dans le contenant '{{container}}'"
+      failed_to_move: "N'a pas réussi à déplacer '{{connectable_name}}' {{where}} dans le contenant '{{container}}'"
+    content_block:
+      commands:
+        deleted: supprimé(e)
+        published: publié(e)
+        reverted: regressé à la version {{version}}
+        command_success: "Le (la) {{content_type_name}} '{{block_name}}' à été {{result}}"
+        command_failure: "Le (la) {{content_type_name}} '{{block_name}}' n'a pas pu être {{result}}"
+      created: "{{content_type}} '{{block_name}}' was created"
+      updated: "{{content_type}} '{{block_name}}' was updated"
+    dynamic_view:
+      created: "{{dynamic_view_type}} '{{name}}' a été créé"
+      updated: "{{dynamic_view_type}} '{{name}}' a été mise à jour"
+      deleted: "{{dynamic_view_type}} '{{name}}' a été supprimé"
+    links:
+      created: "Le lien '{{name}}' a été créé"
+      updated: "Le lien '{{name}}' a été mise à jour"
+      deleted: "Le lien '{{name}}' à été supprimé"
+      failed_delete: "Le lien '{{name}}' n'a pas pu être eliminé"
+    page_route_options:
+      created: "{{object}} ajouté"
+      updated: "{{object}} mise à jour"
+      deleted: "{{object}} supprimé"
+    page_routes:
+      created: Le chemin de page a été créé
+      updated: Le chemin de page a été mise à jour
+      deleted: Le chemin de page a été supprimé
+    pages:
+      created: "La page '{{page_name}}' a été créée"
+      updated: "La page '{{page_name}}' a été mise à jour"
+      deleted: "La page '{{page_name}}' a été supprimée"
+      failed_delete: "La page '{{page_name}}' n'a pas pu être supprimée"
+      published: publiée
+      hidden: cachée
+      archived: archivée
+      multiple_pages_action: "{{how_many}} pages {{verb}}"
+      single_page_action: "La page '{{page_name}}' a été {{verb}}"
+      reverted: "La page '{{page_name}}' a été regressé à la version {{version}}"
+    resource:
+      created: "{{resource_name}} '{{object_name}}' a été créé"
+      updated: "{{resource_name}} '{{object_name}}' a été mise à jour"
+      deleted: "{{resource_name}} '{{object_name}}' a été supprimé"
+    sections:
+      created: "La section '{{section_name}}' a été créée"
+      updated: "La section '{{section_name}}' a été mise à jour"
+      deleted: "La section '{{section_name}}' a été supprimé"
+      failed_delete: "La section '{{section_name}}' n'a pas pu être supprimé"
+    sessions:
+      created: A connecté avec du succès
+      failed_create: Ouverture de session manqué
+      deleted: Session fermé.
+      failed_create_note: "N'a pas pu ouvrir une session sous le nom {{login}}"
+    tasks:
+      created: "La page a été assigné à {{user}}"
+      completed_multiple: Tâches marqués comme achevées
+      copmleted_single: La tâche a été marqué comme achevée 
+      cannot_complete: Vous ne pouvez pas compléter des tâches qui ne vous ont pas été assignées
+      
+    users:
+      password_changed: "Le mot de passe pour '{{user}}' a été changé"
+      disabled: "L'utilisateur '{{user}}' a été désactivé"
+      created: "L'utilisateur '{{user}}' a été créé"
+      updated: "L'utilisateur '{{user}}' a été créé"

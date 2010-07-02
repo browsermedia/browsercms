@@ -1,0 +1,38 @@
+fr:
+  pages:
+    edit_connector:
+      show: Visionner ce contenu ({{connectable_name}})
+      edit: Réviser ce contenu ({{connectable_name}})
+      up: Déplacer ce contenu plus haut ({{connectable_name}})
+      down: Déplacer ce contenu plus bas ({{connectable_name}})
+      delete: Enlever ce contenu de la page ({{connectable_name}}). Il restera disponible dans la bibliothèque de contenu.
+      live: Ce contenu est publié et peut être vu par les visiteurs.
+      draft: Ce contenu est un brouillon et ne sera pas vu par les visiteurs avant d'être publié.
+    edit_container:
+      add: Ajouter du nouveau contenu à ce contenant ({{container_name}})
+      insert: Insérer du contenu existant à ce contenant ({{container_name}})
+      live: Ce contenu est publié et peut être vu par les visiteurs.
+      draft: Ce contenu est un brouillon et ne sera pas vu par les visiteurs avant d'être publié.
+    form:
+      title_hint: (Laisser vierge si c'est la même que le nom)
+    edit:
+      page_title: "Réviser les caractéristiques / Page '{{page_name}}'"
+      list_all: Afficher tous
+      edit_content: Réviser le contenu
+      save: Enregistrer
+    new:
+      page_title: Nouveau page
+      list_all: Afficher tous
+      save: Enregistrer
+    versions: 
+      page_title: "Lister les versions / Page '{{page_name}}'"
+      view: Visionner
+      edit_content: Réviser le contenu
+      edit_properties: Réviser les caractéristiques
+      revert: Régresser
+      version: Version
+      comment: Commentaire
+      date: Date
+      editor: Éditeur
+      live: (ACTIVE)
+      current: (COURANT)

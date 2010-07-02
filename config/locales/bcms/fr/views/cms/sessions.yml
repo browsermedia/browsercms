@@ -1,0 +1,7 @@
+fr:
+  sessions:
+    new:
+      page_title: Ouvrir une session CMS
+      username: Nom d'utilisateur
+      login: Connecter
+      remember_me: Me souvenir

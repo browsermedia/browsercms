@@ -1,0 +1,21 @@
+fr:
+  behaviors:
+    archiving:
+      archived: Archivé
+      unarchived: Désarchivé
+    attaching:
+      file_required: Vous devez téléverser un fichier
+      file_name_required: Nom du fichier est requis
+      section_required: Section est requise pour fichier joint
+    connecting:
+      deleted: Supprimé(e)
+      edited: Edité(e)
+      version_comment: "{{class_name}} #{{id}} a été {{action}}" 
+    hiding:
+      hidden: Caché(e)
+      unhidden: Visible
+    rendering:
+      deleted: "Ce(tte) {{class_name}} à été supprimé(e).  S.v.p. enlevez ce contenant de la page"
+    versioning:
+      created: Créé(e)
+      changed: "Changé {{changes}}"

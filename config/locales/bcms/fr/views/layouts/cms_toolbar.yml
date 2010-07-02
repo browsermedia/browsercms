@@ -1,0 +1,4 @@
+fr:
+  layouts:
+    cms_toolbar:
+      logout: Fermer la session

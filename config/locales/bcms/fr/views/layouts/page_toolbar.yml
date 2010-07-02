@@ -1,0 +1,26 @@
+fr:
+  layouts:
+    page_toolbar:
+      status: "Statut:"
+      section: "Section:"
+      page: "Page:"
+      template: "Gabarit:"
+      version: "Version:"
+      live: ACTIVE
+      publish: Publier
+      published: publié(e)
+      draft: brouillon
+      assign: Assigner
+      complete_task: Terminer la tâche
+      edit_properties: Réviser les caractéristiques
+      list_versions: Lister les versions
+      delete: Supprimer
+      confirm: "Est-ce que vous êtes certain(e)s que vous voulez supprimer '{{page_name}}'?"
+      revert: Régresser à cette version
+      visual_editor: "Éditeur visuel:"
+      visual_editor_title: "Vous n'avez pas permission à réviser cette page"
+      turn_off: FERMER
+      turn_on: OUVRIR
+      editor_on: "OUVERT"
+      editor_off: "FERMÉ"
+      view_current: Voir version courante

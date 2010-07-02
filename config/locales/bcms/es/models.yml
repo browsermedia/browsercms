@@ -74,7 +74,7 @@ es:
       html_block: Bloque de Texto
       image_lock: Bloque de Imagen
       page_partial: Página Parcial
-      pgae_route: Ruta de Página
+      page_route: Ruta de Página
     attributes:
       category:
         name: Nombre

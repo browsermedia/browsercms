@@ -1,0 +1,16 @@
+fr:
+  dashboard:
+    page_drafts:
+        page_drafts: Brouillons de page
+        name: Nom
+        user: Utilisateur
+        all_published: Toutes les pages sont publiées.
+        date: Date
+        publish_selected: Publier selectioné(e)s
+    tasks:
+        tasks: Tâches
+        name: Nom
+        assigned_by: Assigné(e) par
+        due_date: Date limite
+        no_tasks: Vous n'avez présentement aucune tâche assignée.
+        complete_selected: Compléter sélectionné(e)s

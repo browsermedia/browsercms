@@ -1,0 +1,28 @@
+fr:
+  page_routes:
+    form:
+      save: Eregistrer
+    edit:
+      page_title: Réviser chemin de page
+      list_all: Afficher tous
+    index:
+      page_title: Liste de chemins de page
+      add: Ajouter
+      edit: Réviser
+      delete: Supprimer
+      confirm: Êtes-vous certain(e)s que vous voulez supprimer ce chemin de page ?
+      view: Visionner
+      view_rails_routes: Visionner chemins de 'Rails'
+      name: Nom
+      pattern: Forme
+    new:
+      page_title: Nouveau chemin de page
+      list_all: Afficher tous
+    show:
+      page_title: "Chemin de page '{{route}}'"
+      add: Ajouter
+      edit: Réviser
+      delete: Supprimer
+      confirm:  Are you sure you want to delete this Page Route?
+      list_all: Êtes-vous certain(e)s que vous voulez supprimer ce chemin de page ?
+      view_rails_routes: Visionner chemins de 'Rails'

@@ -1,0 +1,12 @@
+fr:
+  helpers:
+    application:
+      all: Toutes les sections
+      per_page: la page
+      all_groups: Tous les groupes
+      check_all: Cocher tous
+      uncheck_all: Décocher tous
+      no_content: Pas de contenu
+    page:
+      multiple_portlets: "ERREUR : Il y a plus qu'un portlet avec le nom '{{name}}'"
+      no_portlet: "ERROR: Aucune portlet avec le nom '{{name}}'"

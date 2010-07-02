@@ -1,0 +1,7 @@
+fr:
+  layouts:
+    cms:
+      content_library:
+        search: Recherche
+        include_body: Incluer corps?
+        content_types: Types de contenu

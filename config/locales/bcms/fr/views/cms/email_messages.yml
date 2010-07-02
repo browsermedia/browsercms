@@ -1,0 +1,18 @@
+fr:
+  email_messages:
+    index:
+      page_title: Administration / Courriels
+      toolbar_title: Courriels
+      to: À
+      subject: Objet
+      delivered: Livré
+      no_mail: Aucun courriel.
+    show: 
+      page_title: Courriel {{subject}}
+      delivered_at: "Livré à:"
+      content_type: "Type de contenu:"
+      from: "De :"
+      to: "À :"
+      cc: "CC :"
+      bcc: "BCC :"
+      subject: "Objet :"

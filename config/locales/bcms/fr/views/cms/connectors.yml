@@ -1,0 +1,10 @@
+fr:
+  connectors:
+    new:
+      page_title: "Ajouter du contenu existant à la page '{{page}}'"
+      add_to_page: Ajouter à la page
+      view_content: Vissioner contenu
+      choose_type: Choisir type de contenu
+      name: Nom
+      updated: Mise à jour
+      uses: Utilisations

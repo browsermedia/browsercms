@@ -1,0 +1,30 @@
+fr:
+  bootstrap:
+    core: Noyau
+    categorization: Catégorisation
+  seed:
+    first_name: Administrateur
+    last_name: CMS
+    administrate_full_name: Administrateur CMS
+    administrate_description: "Permet aux utilisateurs d’administrer le CMS, y compris d’ajouter de nouveaux utilisateurs et groupess"
+    edit_full_name: "Réviser contenu"
+    edit_description: "Permet aux utilisateurs d'ajouter, de réviser et de supprimer les pages et les blocs. Ils peuvent les enregister (mais pas les publier) et les assigner aussi."
+    publish_full_name: Publier contenu
+    publish_description: "Permet aux utlisateurs d'enregistre et de publier, cacher et archiver les pages et les blocs"
+    guest: Visiteur
+    registered_public_user: Utilisateur public inscrit
+    cms_user: Utilisateur du CMS
+    cms_admin: Administrateurs du Cms
+    content_editors: Éditeurs de contenu
+    default: Défaut
+    my_site: Mon site
+    system: systèmm
+    home: Accueil
+    page_not_found: Page pas trouvée
+    access_denied: Accès refusé
+    server_error: Erreur de serveur
+    page_not_found_content: La page que vous avez demandée n'existe pas ou n'existe plus.
+    access_denied_content: Vous avez essayé d'accéder une ressource auquel vous n'avez pas les droits d'accès
+    server_error_content: Le serveur a rencontré une erreur inattendue qui l'a empêché d'accomplir la demande.
+    
+      

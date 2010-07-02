@@ -1,0 +1,146 @@
+fr:
+  models:
+    attachment:
+      must_upload_file: Vous devez téléverser un fichier
+    category:
+      name_label: Nom
+      type_label: Type
+      updated_label: Mise à jour
+      display_name: Category
+      display_name_plural: Categories
+    category_type:
+      display_name: Type de catégorie
+      display_name_plural: Types de catégorie
+      cannot_be_deleted: 
+        one: "Ceci ne peut pas être supprimé parce qu'il est utilisé dans 1 catégorie"
+        other: "Ceci ne peut pas être supprimé parce qu'il est utilisé dans  {{count}} catégories"
+    content_type:
+      name_label: Nom
+      updated_label: Mise à jour
+    dynamic_view:
+      unique_combination: "Doit avoir une combinaison unique de nom, format et gestionnaire"
+    forgot_password_mailer:
+      account_management: Gestion de compte
+    file_block:
+      display_name: Fichier
+    html_block:
+      display_name: Texte
+      display_name_plural: Textes
+    image_block:
+      display_name: Image
+    page:
+      create_version_comment: "{{connectable}} a été ajouté au contenant '{{container}}'"
+      # TODO some translations pending  here
+      remove_version_comment: "{{connectable}} a été enlevé du contenant '{{container}}'"
+      path_reserved: "is invalid, '{{path}}' a reserved path"
+    page_partial:
+      name_format_error_message: "doit être compris seulement de lettres minuscules, nombres et soulignements et doit commencer avec un soulignement"
+    page_template:
+      name_format_error_message: "doit être compris seulement de lettres minuscules, nombres et soulignements et doit commencer avec une lettre minuscule"
+    portlet:
+      name_label: Nome
+      type_label: Type
+      updated_label: Mise à jour
+    section:
+      name_format_error_message: "ne peut être compris de '/'"
+      path_reserved: "n'est pas valide, '{{path}}' est un chemin réservé"
+    tag:
+      name_label: Nom
+      usages_label: Utilisations
+      updated_label: Mise à jour
+    task:
+      subject: "La page '{{page}}' vous a été assignée"
+      cannot_assign: Vous ne pouvez pas assigner des tâches.
+      cannot_be_assigned: ne peut pas lui avoir des tâches assignées.
+    template:
+      main_menu: Menu principal
+    user:
+      login_format_error_message: "Utiliser seulement les letter, les nombres et .-_@ s.v.p."
+      email_format_error_message: "devrait être une addresse de courriel, e.g. xx@xx.com"  
+    
+  activerecord:
+    errors:
+      template:
+        header: "Une erreur a empêché ce(tte) {{model}} d’être enregistré(e)"
+        other: "{{count}} erreurs ont empêché ce(tte) {{model}} d’être enregistré(e)"
+        body: "Il y des problèmes avec les champs suivants :"
+      messages:
+        blank: " ne peut pas être vierge"
+    models:
+      category: Catégorie
+      category_type: Type de catégorie
+      dynamic_view: Vue dynamique
+      file_block: Bloc de fichier
+      html_block: Bloc de texte
+      image_lock: Bloc d'image
+      page_partial: Page partielle
+      page_route: Chemin de page
+    attributes:
+      category:
+        name: Nome
+        type: Type
+      category_type:
+        name: Nom
+      dynamic_view:
+        name: Nom
+        format: Format
+        body: Contenu
+      file_block:
+        name: Nom
+        tags: Étiquettes
+        attachment_file: Fichier
+        attachment_file_section: Section
+        attachment_file_path: Chemin
+      group:
+        name: Nom
+      html_block:
+        name: Nome
+        content: Contenu
+        tags: Étiquettes
+      image_block:
+        name: Nom
+        tags: Étiquettes
+        attachment_file: Fichier
+        attachment_section: Section
+        attachment_file_path: Chemin
+      link:
+        name: Nom
+        url: URL
+      page:
+        name: Nom
+        title: Titre
+        path: Chemin
+        template_file_name: Gabarit
+        cacheable: Cache actif?
+        hidden: Cachée des menus?
+        archived: Archivée?
+        description: Déscription
+        keywords: Mots de clé
+        language: Language
+      page_route:
+        page: Page
+        name: Nom
+        Visionner: Forme
+        code: Code
+      redirect:
+        from_path: De
+        to_path: A
+      section:
+        name: Nom
+        path: Chemin
+        hidden: Cachée des menus?
+      tag:
+        name: Nom
+      task:
+        assigned_to: Assignée à
+        due_date: Date limite
+        comment: Commentaire
+      user:
+        login: Nom d'utilisateur
+        email: Courriel
+        first_name: Prénom
+        last_name: Nom de famille
+        expires_at: Date limite d'utilisation
+        password: Mot de passe
+        confirm_password: Confirmer mot de passe
+          
