@@ -1,0 +1,73 @@
+h2. How to Install a Module
+
+This guide covers how to download and install a module for BrowserCMS. With BrowserCMS, modules are packaged as Ruby Gems, which contain the code to add new behavior to a BrowserCMS project. Installing a module consists of several steps, including:
+
+# Getting the Gem installed
+# Telling BrowserCMS to use that Gem
+# Pulling the module specific code into your project (like migrations)
+# Running migrations
+
+Once you have done the above steps, you should have access to the Content blocks and portlets that each module provides, and you can add them to your pages.
+
+This guide is for BrowserCMS *3.1*. Some code shown here may not work with older versions of BrowserCMS.
+
+endprologue.
+
+h3. Overview
+
+This module assumes you are going to be building installing module as gems. Let's assume you want to install the News module, who's project name (and gem name) is 'bcms_news'. If you want to install other modules, just substitute the name of the module you want for 'bcms_news'. 
+
+Before installing a module, its worth reviewing the +README+ file for the module. It may contain some specific instructions on how to install and use the module, in addition to the basic steps outlined here. The +README+ file can be found as the landing page on the github repository for a module. For example, the "Page Comments":http://github.com/browsermedia/bcms_page_comments module has an overview of the module and its installation instructions.
+
+h3. Getting the module from Gemcutter
+
+For modules released as gems, they should be hosted on "Gemcutter":http://gemcutter.org. If you have a new enough version of "RubyGems":http://docs.rubygems.org you should be able to download gems via:
+
+<shell>
+$ gem install bcms_news
+</shell>
+
+At this point, the News module gem should be installed as a gem on your system, and can be added to your projects.
+
+h3. Adding the Module to your project
+
+In your BrowserCMS application, do the following steps.
+
+h4. Edit the config/environment.rb file
+
+<ruby>
+config.gem 'browsercms', :version=>"3.1.0"
+# Add this next line after the browsercms gem
+config.gem "bcms_news", :version=>"1.0.0"
+</ruby>
+
+h4. Edit the routes.rb file
+
+<ruby>
+# Add this route. It must be before the core browser_cms route.
+map.routes_for_bcms_news
+map.routes_for_browser_cms
+</ruby>
+
+h4. Install the new module code
+
+From the root directory of your cms project, run:
+
+<shell>
+$ script/generate browser_cms
+</shell>
+
+This will copy all the necessary views and migrations from the gems into your local project. You should messages checking to see if files already exist or were created.
+
+h4. Run migrations and start the server
+
+Modules will often add new data types, like content blocks, so you need to run the migrations to add them to your project.
+
+<shell>
+$ rake db:migrate
+$ script/server
+</shell>
+
+h4. Adding Content
+
+Most modules will come with a few new types of content, either a new Content Block and one or more Portlets, which are designed to display those Content Blocks in interesting ways. To discover what new contents have been added, you can look at the Content Library for a new group (like 'News') or add a new Portlet, which will list all available portlets in the system.

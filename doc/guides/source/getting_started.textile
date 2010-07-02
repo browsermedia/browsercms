@@ -1,0 +1,111 @@
+h2. Getting Started
+
+The purpose of this guide is help new developers get up and running with BrowserCMS. It covers how to:
+
+* Install the BrowserCMS gem
+* Create a demo project to explore BrowserCMS
+* Create a blank project for building a website from scratch    
+
+This guide is for BrowserCMS *3.1*. Some code shown here may not work with older versions of BrowserCMS.
+
+endprologue.
+
+h3. This Guide Assumes
+
+Before you can create a project using BrowserCMS, you will need to have the following installed.
+
+# The "Ruby":http://www.ruby-lang.org/en/downloads Language
+# The "RubyGems":http://rubyforge.org/frs/?group_id=126 packaging system
+# The "Rails":http://rubyonrails.org/download framework (2.3 or later - But not 3.0 yet) 
+# A working installation of "SQLite":http://www.sqlite.org/ or "MySQL":http://www.mysql.com/ as well as the gems for your database of choice.
+
+h3. Starting a demo project
+
+This section of the guide will cover creating a sample website with BrowserCMS, using a demo website layout and content.
+ The goal is to give you some content and templates to play with to explore the CMS. Later sections of this guide will
+ cover the more common cases where you are creating a new website from scratch and want only the bare minimums.
+
+h4. Installing BrowserCMS
+
+BrowserCMS is packaged as a gem which can be included in any Rails project. To install the gem, do the following:
+
+<shell>
+$ gem install browsercms
+</shell>
+
+h4. Creating a Demo Website
+
+Run the following from your terminal window.
+
+<shell>
+$ browsercms project_name -m demo
+$ cd project_name
+$ script/server
+</shell>
+
+This will create a BrowserCMS project which used SQLite as the data storage. You need to have the sqlite3-ruby gem installed for this to work.
+
+h4. Using your Site
+
+Open your browser to "http://localhost:3000/cms":http://localhost:3000/cms to log into the admin for the CMS. Enter the default username/password (in development mode) is username=cmsadmin, password=cmsadmin. You should be now be logged in, viewing the home page of the site. You can now edit or add new content via the admin interface.
+
+To learn more about the types of things you can do with BrowserCMS, see the "User's Guide":user_guide.html.
+
+h3. Starting a 'Real' project
+
+Demo sites are fine for learning the ropes, but when its time to start working on a 'real' project, you don't want a lot
+of dummy data that needs to be cleaned out. To start a typical, 'blank' project, you can run the following command. Here
+we will specify the -d flag, which will use MySQL as the database.
+
+Run the following:
+
+<shell>
+$ browsercms project_name -d mysql
+$ cd project_name
+$ script/server
+</shell>
+
+You need to have the mysql gem installed for this to work. This is going to create the development and testing copies of
+the database, migrate the db, populate it with the bare minimum content it needs, and copy all of the necessary files
+from the gem into the rails project. Open your browser to "http://localhost:3000/cms":http://localhost:3000/cms to log in,
+using cmsadmin/cmsadmin as the username/password.
+
+h3. The short command
+
+There is a shorter version of the command line script, which works identically to the longer form detailed above.
+
+<shell>
+$ bcms project_name -d mysql
+</shell>
+
+No difference in functionality, just less to type.
+
+h3. Getting Command line Help
+
+You can get assistance from the commandline tool by running +browsercms+ with no arguments, like so:
+
+<shell>
+$ browsercms
+</shell>
+
+This will show common usages, as well as all the help options available. The +browsercms+ command piggybacks on top of the
++rails+ command, so many of the options available are the same as +rails+, including +-f+ or +--force+.
+
+h3. Trouble Shooting
+
+This section covers some potential problems you might run into when trying to create a BrowserCMS project.
+
+h4. Creation fails to create MySQL Database
+
+BrowserCMS will attempt to create and populate the database. When running against mysql, Rails will assume you have a username called +root+ with an empty password.
+The database create/migrations will fail if you don't have that username/password set. If this occurs, you can update the config/database.yml with correct username/password
+ and rerun the +bcms+ command which will regenerate the entire project.
+
+ Choose 'n' (No) when it prompts you to overwrite the config/database.yml and then 'a' (Overwrite all) for all files after that.
+ This should complete the project generation using the new username/password.
+
+
+h3. Deploying to production
+
+Once you get ready to start deploying your application into production environments, be sure to review the "Deployment Guide":deployment_guide.html.
+There are several 'gotchas' to be aware of that may differ from deploying other Rails applications. 

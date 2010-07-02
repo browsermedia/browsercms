@@ -1,0 +1,52 @@
+h2. BrowserCMS Reference Documentation
+
+These guides are designed to provide details on how to work with BrowserCMS, and to assist in understanding how different parts of the CMS work together. As a Web Content Management system, there are two general pieces to understand; how to use the CMS interface to build websites and how to extend/deploy BrowserCMS websites.
+
+These guides are for BrowserCMS v3.1.0.
+
+endprologue.
+
+h3. Getting Started
+
+h4. "Getting Started with BrowserCMS":getting_started.html
+
+Everything you need to know to install BrowserCMS and create your first website.
+
+h3. Using BrowserCMS
+
+h4. "Interface Guide":user_guide.html
+
+Designed as an overview of the BrowserCMS interface for Cms editors and site builders.
+
+h3. Installation / Deployment
+
+h4. "Installing a Module":installing_modules.html
+
+How to add a module to your BrowserCMS project.
+
+h4. "Deployment Guide":deployment_guide.html
+
+How to configure Apache and Passenger to work with BrowserCMS in production mode.
+
+h3. Developing on BrowserCMS
+
+h4. "Content Blocks":content_blocks.html
+
+This guide covers how to create, customize and use Content Blocks.
+
+h4. "Portlets":portlets.html
+
+This guide covers how to create and customize Portlets.
+
+h4. "Building Templates":building_templates.html
+
+This guide covers how to create and organize page templates which govern the design/theme of a website.
+
+h4. "Building Modules":building_modules.html
+
+This guide covers how to create new modules to be packaged and shared with other BrowserCMS developers. (In Progress)
+
+h4. "Building on the Edge":build_it_yourself.html
+
+For developers who want the very latest source code from Github and build the BrowserCMS gem themselves.
+
