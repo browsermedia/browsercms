@@ -31,10 +31,10 @@ class Browsercms320 < ActiveRecord::Migration
 
     to_fix.each do |fix_page|
       # using sql updates to prevent unwanted callbacks
-      new_path = fix_path.path.to_s.sub(/(.+)\/+$/, '\1')
+      new_path = fix_page.path.to_s.sub(/(.+)\/+$/, '\1')
       execute "UPDATE pages SET path = '#{new_path}' WHERE id = #{fix_page.id};"
       # update the current version record to
-      execute "UPDATE page_versions SET path = '#{new_path}' WHERE page_id = #{fix_page.id}} AND version = #{fix_page.version};"
+      execute "UPDATE page_versions SET path = '#{new_path}' WHERE page_id = #{fix_page.id} AND version = #{fix_page.version};"
 
       # now update any newer versions whose paths are currupted. For each currupt path, set it 
       # to the most recent earlier valid path, or the new stripped path
