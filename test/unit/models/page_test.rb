@@ -45,6 +45,16 @@ class PageTest < ActiveRecord::TestCase
     assert_valid @page
   end
 
+  def test_creating_page_with_trailing_slash
+    @page = Factory.build(:page, :path => "/slashed/")
+    @page.save
+    assert_equal @page.path, "/slashed"
+
+    @page = Factory.build(:page, :path => "/slashed/loooong/path/")
+    @page.save
+    assert_equal @page.path, "/slashed/loooong/path"
+  end
+
   def test_find_live_by_path
     @page = Factory.build(:page, :path => '/foo')
     assert_nil Page.find_live_by_path('/foo')
