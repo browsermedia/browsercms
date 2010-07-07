@@ -1,0 +1,190 @@
+/* must have this - do not remove */
+@import url('/stylesheets/clearfix.css');
+
+/* @global styles */
+body{margin:0;padding:0;background-color:#FFF;color:#8a8a8a;font-family:'Helvetica Neue','Trebuchet MS',Arial,sans-serif}
+a{color:#3463b1;text-decoration:none}
+a:visited{color:#3463b1}
+a:hover{text-decoration:underline;color:#8bb000}
+p{margin:8px 0}
+img{vertical-align:top}
+ul.list{list-style-type:none;padding:0;margin:8px 0}
+ul.list li{background:url('/images/libull.gif') no-repeat left 3px;padding:0 0 0 12px;float:none;width:auto;min-height:0;height:auto}
+ul.flat-list{list-style-type:none;padding:0;margin:8px 0}
+ul.flat-list li{background:url('/images/dashbg.gif') repeat-x bottom left;padding:0 0 5px 0;margin-bottom:3px;float:none;width:auto;min-height:0;height:auto}
+ul.flat-list li:last-child{border:none}
+ul.flat-list li.last-child{border:none}
+ul.disc {list-style-type:disc;line-height:25px;padding:2px;}
+ul.disc li{list-style-position:inside;border-bottom:1px dashed #d3d3d3}
+ul.disc li:last-child{border:none}
+ul.disc li.last-child{border:none}
+code{display:block;font:"Courier New", Courier, monospace;color:#4f739e;padding:15px; border:1px solid #8fadd1;background-color:#f1f6fc;}
+code.mono{background:#f8f8f8;color:#828993;border-color:#d3d3d3}
+div.warn{margin:8px 0;border:1px solid #f1ab9f;color:#da9083;background:#fff7ee url('/images/warnbg.gif') no-repeat top left;padding:15px 15px 15px 40px;font:normal 12px/16px 'Helvetica Neue','Trebuchet MS',Arial,sans-serif;}
+div.info{margin:8px 0;border:1px solid #ecd28e;color:#ddb767;background:#fdfae1 url('/images/infobg.gif') no-repeat top left;padding:15px 15px 15px 40px;font:normal 12px/16px 'Helvetica Neue','Trebuchet MS',Arial,sans-serif;}
+
+h1{font:bold 26px/40px 'Helvetica Neue Condensed Bold','Trebuchet MS',Arial,sans-serif;color:#3463b2;margin:0}
+h2{font:bold 23px/40px 'Helvetica Neue Condensed Bold','Trebuchet MS',Arial,sans-serif;color:#3463b2;margin:0}
+h3{font:bold 16px/26px 'Helvetica Neue Condensed Bold','Trebuchet MS',Arial,sans-serif;color:#3463b2;margin:0}
+h4{font:bold 14px/18px 'Helvetica Neue Condensed Bold','Trebuchet MS',Arial,sans-serif;color:#3463b2;margin:0}
+h5{font:bold 11px/15px 'Helvetica Neue Condensed Bold','Trebuchet MS',Arial,sans-serif;color:#3463b2;margin:0}
+	.alt{color:#8bb000}
+	.brdr{border-bottom:1px solid #d3d3d3;padding-bottom:3px}
+/* @end */
+
+/* required when logged into cms, keeps <body> bg images in place */
+#container{background:#FFF url('/images/bodybg.gif') repeat-x;}
+
+/* @group header */
+#header{height:155px;width:960px;margin:0 auto;background:url('/images/artbg.jpg') no-repeat top right;}
+#header #logo{float:left;width:282px;height:115px;margin:0;background:url('/images/browsercms.gif') no-repeat;}
+#header #logo a{display:block;width:282px;height:115px;text-indent:-666em;}
+#header #topnav{float:left;height:37px;padding-top:3px;width:960px;}
+#header #topnav ul{height:37px;width:960px;list-style-type:none;margin:0;padding:0;}
+#header #topnav ul li{float:left;height:37px;background:none;padding:0;}
+#header #topnav ul li:last-child{float:right;width:315px;}
+#header #topnav ul li.last-child{float:right;width:315px;}
+#header #topnav ul li a, #header #topnav ul li a:visited{float:left;text-align:center;text-transform:uppercase;outline:none;display:block;padding:0 23px 0 20px;height:37px;color:#FFF;text-decoration:none;font:normal 17px/34px 'Helvetica Neue','Trebuchet MS',Arial,sans-serif}
+#header #topnav ul li a:hover, 
+	#header #topnav ul li a.active, 
+		#header #topnav ul li a.active:hover{border-left:2px solid #70920c;padding:0 23px 0 18px;background:url('/images/navbgwide.png') no-repeat bottom right;}
+#header #topnav ul li:last-child a{width:271px;background-image:url('/images/navbgfixed.png');}
+#header #topnav ul li.last-child a{width:271px;background-image:url('/images/navbgfixed.png');}
+#header #topnav ul li:last-child a:hover, 
+	#header #topnav ul li:last-child a.active, 
+		#header #topnav ul li.last-child a.active:hover{background-image:url('/images/navbgwide.png')}
+#header #topnav ul li.last-child a:hover, 
+	#header #topnav ul li.last-child a.active, 
+		#header #topnav ul li.last-child a.active:hover{background-image:url('/images/navbgwide.png')}
+/* @end */
+
+/* @group content */
+#content{clear:both;width:960px;font:normal 12px/16px 'Helvetica Neue','Trebuchet MS',Arial,sans-serif;padding:0 0 20px 0;margin:10px auto 0 auto;background:url('/images/diag.gif') repeat-x;}
+#content.home{width:100%;background:none;margin:0 auto}
+/* @end */
+
+/* @group browsercms home callout */
+#browsercms{background:#33363a url('/images/calloutbg.png') no-repeat top center;padding-bottom:10px}
+#browsercms blockquote{padding:0;margin:0;width:960px;margin:0 auto;}
+#browsercms blockquote p{margin:0;}
+#browsercms blockquote p.message{float:left;width:645px;height:147px;text-indent:-666em;background:url('/images/power.png') no-repeat;}
+#browsercms blockquote p.download{float:left;width:315px;height:147px;background:url('/images/download.gif') no-repeat;-moz-opacity:0.19;opacity:0.19;filter:alpha(opacity=19);}
+#browsercms blockquote p.download a{display:block;width:315px;height:147px;text-indent:-666em;outline:none}
+/* @end */
+
+/* @group benefits */
+#benefits{clear:left;}
+#benefits blockquote{margin:10px auto;width:960px;padding-top:18px;background:#FFF url('/images/diag.gif') repeat-x}
+#benefits blockquote ul.items{list-style-type:none;width:960px;margin:0;padding:0}
+#benefits blockquote ul.items li{float:left;position:relative;width:270px;min-height:250px;padding:12px 25px;background:url('/images/benefitdivider.png') no-repeat top left}
+#benefits blockquote ul.items li:first-child{background:none}
+#benefits blockquote ul.items li.first-child{background:none}
+#benefits blockquote ul.items li h2{border-bottom:1px solid #d3d3d3}
+#benefits blockquote ul.items li h3{}
+#benefits blockquote ul.items li a.view{position:absolute;top:15px;right:25px;font:bold 12px/40px 'Helvetica Neue','Trebuchet MS',Arial,sans-serif;padding-right:10px;background:url('/images/viewbg.gif') no-repeat right center;}
+#benefits blockquote ul.items li a.view:hover{background-image:url('/images/viewbg-on.gif');text-decoration:none}
+
+	/* features inline list reset */
+	#benefits blockquote ul.items li.features ul li{background:url('/images/libull.gif') no-repeat left 3px;padding:0 0 0 12px;margin:0 0 5px 0;float:none;width:auto;min-height:0;height:auto}
+	#benefits blockquote ul.items li.features ul li:first-child{background:url('/images/libull.gif') no-repeat left 3px;padding:0 0 0 12px;float:none;width:auto;min-height:0;height:auto}
+	#benefits blockquote ul.items li.features ul li.first-child{background:url('/images/libull.gif') no-repeat left 3px;padding:0 0 0 12px;float:none;width:auto;min-height:0;height:auto}
+
+	/* samples */
+	#benefits blockquote ul.items li.samples h3{border-bottom:1px solid #d3d3d3;line-height:14px;padding:0 0 5px 0;}
+	#benefits blockquote ul.items li.samples img{margin-right:15px}
+	#benefits blockquote ul.items li.samples table{border-collapse:collapse;width:100%}
+	#benefits blockquote ul.items li.samples table td{border-collapse:collapse;vertical-align:top}
+	
+	/* why rails */
+	#benefits blockquote ul.items li.whyrails img{float:left;margin:0 15px 0 0}
+	#benefits blockquote ul.items li.whyrails ul li{background:url('/images/libull.gif') no-repeat left 3px;padding:0 0 0 12px;margin:0 0 5px 0;float:none;width:auto;min-height:0;height:auto}
+	#benefits blockquote ul.items li.whyrails ul li:first-child{background:url('/images/libull.gif') no-repeat left 3px;padding:0 0 0 12px;float:none;width:auto;min-height:0;height:auto}
+	#benefits blockquote ul.items li.whyrails ul li.first-child{background:url('/images/libull.gif') no-repeat left 3px;padding:0 0 0 12px;float:none;width:auto;min-height:0;height:auto}
+	
+* html #benefits ul.items li{height:250px} /* IE6 equivalent of min-height */
+/* @end */
+
+/* @group slides */
+#slides{clear:left;width:960px;border-top:11px solid #323436;}
+#slides .controls{float:right;width:315px;height:279px;overflow:hidden}
+#slides .controls {list-style-type:none;margin:0;padding:0}
+#slides .controls li{float:left;width:315px;min-height:40px}
+#slides .controls li a{display:block;width:291px;height:40px;outline:none;padding-left:24px;text-decoration:none;color:#4a4a4a;font:bold 23px/38px 'Helvetica Neue','Trebuchet MS',Arial,sans-serif;background:url('/images/slidenavbg.png') no-repeat}
+#slides .controls li a:hover, #slides .controls li.on a{background-image:url('/images/slidenavbg-on.png');}
+#slides .controls li .info{display:none;background:#343538;color:#FFF;padding:10px 24px;height:139px;width:267px;overflow-x:hidden;overflow-y:auto}
+#slides .controls li .info h2,
+	#slides .controls li .info h3,
+		#slides .controls li .info h4,
+			#slides .controls li .info h5{color:#a2ca02;line-height:28px;margin-bottom:5px}
+#slides .controls li .info ul{list-style-type:none;margin:10px 0 0 0;padding:0}
+#slides .controls li .info ul li{background:url('/images/whlidot.gif') no-repeat left 5px;padding:0 0 0 12px;margin-bottom:3px;min-height:0}
+#slides .slide-group{float:left;width:645px;height:279px;}
+#slides .slide{float:left;width:645px;height:279px;background:#4a4a4a}
+
+* html #slides .controls li {height:40px} /* IE6 equivalent of min-height */
+* html #slides .controls li .info ul li{height:auto} /* IE6 equivalent of min-height reset */
+/* @end */
+
+/* @subnav */
+#subnav{height:25px;width:960px;padding:18px 0 0 0;background:url('/images/dashbg.gif') repeat-x bottom left}
+#subnav .breadcrumbs{list-style-type:none;margin:0;padding:0}
+#subnav .breadcrumbs a:hover{text-decoration:none}
+#subnav .breadcrumbs li{display:inline;border-right:1px solid #d3d3d3;padding:0 8px}
+#subnav .breadcrumbs li:last-child{border:none}
+#subnav .breadcrumbs li.last-child{border:none}
+/* @end */
+
+/* @group sidenav */
+#sidenav{float:left;margin-top:50px;width:210px;padding-right:15px;min-height:200px}
+#sidenav h2{padding-left:25px;background:url('/images/dashbg.gif') repeat-x bottom left;margin-bottom:20px}
+#sidenav ul{list-style-type:none;margin:0;padding:0}
+#sidenav ul li{background:url('/images/dashbg.gif') repeat-x bottom left;line-height:25px;height:25px}
+#sidenav ul li a{display:block;height:25px;padding:0 0 0 25px;}
+#sidenav ul li a:hover{color:#7f9e03;background:url('/images/lidot.gif') no-repeat 12px center;text-decoration:none}
+#sidenav ul li.on{background-color:#edf5ce;color:#7f9e03}
+#sidenav ul li.on a,#sidenav ul li.on a:visited{color:#7f9e03}
+#sidenav ul li ul li a{padding:0 0 0 40px;}
+#sidenav ul li ul li a:hover{background-position:27px center}
+#sidenav ul li ul li ul li a{padding:0 0 0 60px;}
+#sidenav ul li ul li ul li a:hover{background-position:42px center}
+/* @end */
+
+/* @group sidenav_doc */
+#sidenav_doc{float:left;margin-top:50px;width:280px;padding-right:15px;min-height:200px}
+#sidenav_doc h2{padding-left:25px;margin-bottom:20px}
+#sidenav_doc ul{list-style-type:decimal;color:#3463b1;margin:0;padding:0;}
+#sidenav_doc ul li{padding-left:25px;list-style-position:inside;background:url('/images/dashbg.gif') repeat-x bottom left;line-height:25px;}
+#sidenav_doc ul li a{height:25px;padding:0;}
+#sidenav_doc ul li a:hover{color:#7f9e03;text-decoration:none}
+#sidenav_doc ul li ul{list-style-type:none;list-style-position:inside;margin:0;padding:0;}
+#sidenav_doc ul li ul li{padding-left:15px;}
+#sidenav_doc ul li ul li a{display:block;padding-left:12px;background:url('/images/libull.gif') no-repeat left;}
+#sidenav_doc ul li ul li a:hover{color:#7f9e03;text-decoration:none;background:url('/images/lidot.gif') no-repeat left;}
+#sidenav_doc ul li ul li.on a {color:#7f9e03;background:url('/images/lidot.gif') no-repeat left;text-decoration:none}
+#sidenav_doc ul li ul li ul li a{padding:0 0 0 60px;}
+#sidenav_doc * li.final{background:none}
+/* @end */
+
+/* @ TODO */
+#main{float:left;margin-top:50px;width:443px;padding:0 25px;border-left:1px solid #d3d3d3;border-right:1px solid #d3d3d3;min-height:200px}
+
+/* @group main_doc */
+#main_doc{float:left;margin-top:50px;width:634px;padding:0 0 0 30px;border-left:1px solid #d3d3d3;min-height:200px}
+/* @end */
+
+#gutter{float:left;margin-top:50px;width:215px;padding-left:25px;min-height:200px}
+* html #sidenav, * html #main, * html #gutter{height:200px} /* IE6 equivalent of min-height */
+/* @end */
+
+/* @group footer */
+#footer{clear:both;font:normal 12px/16px 'Helvetica Neue','Trebuchet MS',Arial,sans-serif;width:960px;border-top:1px solid #d3d3d3;margin:0 auto 0 auto;padding:24px 0 100px 0;}
+#footer a:hover{text-decoration:none}
+#footer ul{list-style-type:none;padding:0;margin:0 auto;width:450px}
+#footer ul li{display:inline;border-right:1px solid #d3d3d3;padding:0 10px 0 8px;}
+#footer ul li:first-child{padding-left:0}
+#footer ul li.first-child{padding-left:0}
+#footer ul li:last-child{border:none}
+#footer ul li.last-child{border:none}
+#footer p.copynotice{padding:0;margin:10px auto 0 auto;width:450px}
+/* @end */
+

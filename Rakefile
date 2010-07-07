@@ -42,7 +42,8 @@ begin
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
 rescue LoadError
-  puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
+  puts $!
+  puts "Jeweler might not available. Install it with: sudo gem install jeweler"
 end
 
 # BrowserCMS gem will only be released to Gemcutter/rubygems. No longer going to RubyForge.

@@ -1,164 +1,457 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title></title>
-    <link rel="stylesheet" type="text/css" href="files/stylesheets/syntax.css" />
-    <script type="text/javascript" src="files/javascripts/code_highlighter.js"></script>
-    <script type="text/javascript" src="files/javascripts/highlighters.js"></script>
-    <style type="text/css">
-      body {
-        background: #FFFFFF url(images/bg.png) repeat-x scroll 0 0;
-        font-family: "Trebuchet MS", Helvetica, Verdana, Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-      }
-  
-      #page {
-        margin: 0 auto;
-        text-align: left;
-        width: 1000px;
-      }
-  
-      #header {
-        height: 110px;
-      }
-  
-      div.top_cap {
-        background: transparent url(images/top_cap.png) no-repeat scroll 0 0;
-        height: 10px;
-      }    
-  
-      #contentwrap {
-        background: transparent url(images/dot.png) repeat scroll 0 0;
-        float: left;
-        width: 1000px;
-      }
-      
-      div.bottom_cap {
-        background: transparent url(images/bottom_cap.png) no-repeat scroll 0 0;
-        height: 9px;
-      }
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html class="cufon-active cufon-ready" xml:lang="en"
+      xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="files/clearfix.css" media="screen,projection" rel="stylesheet" type="text/css">
+    <link href="files/global.css" media="screen,projection" rel="stylesheet" type="text/css">
+    <script src="files/jquery.js" type="text/javascript"></script>
+    <script src="files/cufon.js" type="text/javascript"></script>
+    <style type="text/css">cufon {
+        text-indent: 0 !important;
+    }
 
-      div.top_cap_content {
-        background: transparent url(images/top_cap_content.png) no-repeat scroll 0 0;
-        height: 5px;
-      }
-  
-      #content {
-        background-color: #FFFFFF;
-        margin: 0 5px;
-        padding: 0 10px;
-      }
-  
-      div.title {
-        padding: 20px;
-      }
-  
-      div.title h1 {
-        border-bottom: 3px solid #505358;
-        color: #FFFFFF;
-        font-size: 24pt;
-        font-weight: normal;
-        line-height: 1;
-        margin: 0 0 10px;
-        padding-bottom: 10px;
-      }
-      
-      td.sidebar {
-        font-size: 8pt;
-        width: 165px;
-        padding: 5px;
-      }
-      
-      td.sidebar ol {
-        margin-left: 20px;
-        padding: 0;
-        line-height: 1.5;
-      }
-      
-      td.sidebar ol li {
-        margin: 0;
-        padding: 0;
-      }
-      
-      td.sidebar ol li ul {
-        list-style-type: none;
-        padding-left: 10px;
-      }
-      
-      td.guides {
-        font-size: 10pt;
-        width: 800px;
-        padding: 10px;
-      }
-      
-      .code_container {
-        padding: 10px;
-        background: #eee;
-        border: 1px solid #ccc;
-        overflow: auto;
-        width: 760px;
-      }
-      
-      pre, code {
-        overflow: auto;
-        white-space:pre;        
-      }
-      .note {
-	-moz-background-clip:border;
-	-moz-background-inline-policy:continuous;
-	-moz-background-origin:padding;
-	background:#FFF9D8 url(../images/tab_note.gif) no-repeat scroll left top;
-	border:medium none;
-	margin:0.25em 0 1.5em;
-	padding:1em 1em 0.25em 48px;
-	}
-    </style>
-  </head>
-  <body>
-    <div id="page">
-      <div id="header">
-        <a href="index.html"><img style="border:0px" src="images/browsercms_logo.png" alt="BrowserCMS"/></a>
-      </div>
-      <div id="main">
-        <div class="top_cap"></div>
-        <div id="contentwrap">
-          <div class="title">
-            <h1></h1>
-          </div>
-          <div class="top_cap_content"></div>
-          <div id="content">
-            <table width="100%" cellpadding="0" cellspacing="0" border="0">
-              <tr>                
-                <td class="sidebar" valign="top">
-                        <div id="subCol">
-        <h3 class="chapter"><img src="images/chapters_icon.gif" alt="" />Chapters</h3>
-        <ol class="chapters">
-</ol></div>
-                </td>
-                <td class="guides">
-                  
-                  <h2>Writing Guides</h2>
-<p>Things to keep in mind:</p>
-<ul>
-	<li>Use a text editor that supports word wrapping (like Textmate) to avoid having line breaks in paragraphs.</li>
-	<li>We are using the same textile extensions that Rails Guides uses. See http://github.com/lifo/docrails/raw/master/railties/guides/source/ for examples of their documentation.</li>
-	<li>From within browsercms, run <tt>rake cms:guides</tt> to generate all the docs.</li>
-	<li>To generate only one guide (like <tt>writing_guides.textile</tt>), run <tt>rake cms:guides ONLY=writing_guides</tt></li>
-</ul>
-<h3>Textile Extensions:</h3>
-<div class='info'><p>Adds a tip.</p></div>
-<div class='note'><p>Adds a note.</p></div>
-                </td>
-              </tr>
-            </table>
-          </div>
-        </div>
-        <br clear="all"/>
-        <div class="bottom_cap"></div>
-      </div>
+    @media screen, projection {
+        cufon {
+            display: inline !important;
+            display: inline-block !important;
+            position: relative !important;
+            vertical-align: middle !important;
+            font-size: 1px !important;
+            line-height: 1px !important;
+        }
+
+        cufon cufontext {
+            display: -moz-inline-box !important;
+            display: inline-block !important;
+            width: 0 !important;
+            height: 0 !important;
+            overflow: hidden !important;
+            text-indent: -10000in !important;
+        }
+
+        cufon canvas {
+            position: relative !important;
+        }
+    }
+
+    @media print {
+        cufon {
+            padding: 0 !important;
+        }
+
+        cufon canvas {
+            display: none !important;
+        }
+    }</style>
+    <script src="files/helvetica.js" type="text/javascript"></script>
+    <script src="files/bcmsorg.js" type="text/javascript"></script>
+    <title>Table of Contents</title>
+</head>
+<body>
+
+<div id="container">
+<div id="header">
+    <h1 id="logo"><a href="http://www.staging.browsercms.org/"
+                     title="Return to Home Page">Table of Contents</a></h1>
+
+    <div id="topnav">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/demo">Demo</a></li>
+            <li><a href="/documentation" class="active">Documentation</a></li>
+            <li><a href="/extending">Extending</a></li>
+            <li><a href="/support">Support</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="/download">Download</a></li>
+        </ul>
+
     </div>
-  </body>
-</html>
+</div>
+<div id="content" class="clearfix">
+<div id="subnav">
+    <ul class="breadcrumbs">
+        <li class="first first-child"><a
+                href="http://www.staging.browsercms.org/documentation">Documentation</a></li>
+        <li><a href="http://www.staging.browsercms.org/documentation/guides">Guides</a></li>
+        <li class="last-child">Table of Contents</li>
+    </ul>
+</div>
+<div id="sidenav_doc">
+    <h2 class="alt">
+        <cufon style="width: 58px; height: 23px;" alt="Table "
+               class="cufon cufon-canvas">
+            <canvas style="width: 77px; height: 23px;
+top: 1px; left: -1px;" height="23" width="77"></canvas>
+            <cufontext>Table</cufontext>
+        </cufon>
+        <cufon
+                style="width: 25px; height: 23px;" alt="of " class="cufon cufon-canvas">
+            <canvas
+                    style="width: 43px; height: 23px; top: 1px; left: -1px;" height="23"
+                    width="43"></canvas>
+            <cufontext>of</cufontext>
+        </cufon>
+        <cufon
+                style="width: 84px; height: 23px;" alt="Contents" class="cufon
+cufon-canvas">
+            <canvas style="width: 98px; height: 23px; top: 1px; left:
+-1px;" height="23" width="98"></canvas>
+            <cufontext>Contents</cufontext>
+        </cufon>
+    </h2>
+    <div id="menu" class="menu">
+        <ul>
+            <li id="section_6" class="depth-1 first open first-child">
+                <a
+                        href="http://www.staging.browsercms.org/documentation/guides/table-of-contents/installing-browsercms">Installing
+                    BrowserCMS</a>
+                <ul>
+                    <li id="page_11" class="depth-2 first last last-child
+first-child">
+                        <a
+                                href="http://www.staging.browsercms.org/documentation/guides/table-of-contents/installing-browsercms/things-you-need-first">Things
+                            you need first</a>
+                    </li>
+                </ul>
+            </li>
+            <li id="section_7" class="depth-1 last open final">
+                <a
+                        href="http://www.staging.browsercms.org/documentation/guides/table-of-contents/trying-out-browsercms">Trying
+                    Out BrowserCMS</a>
+                <ul>
+                    <li id="page_14" class="depth-2 first first-child">
+                        <a
+                                href="http://www.staging.browsercms.org/documentation/guides/table-of-contents/trying-out-browsercms/with-sqlite3">With
+                            SQLite3</a>
+                    </li>
+                    <li id="page_15" class="depth-2">
+                        <a
+                                href="http://www.staging.browsercms.org/documentation/guides/table-of-contents/trying-out-browsercms/with-mysql">With
+                            MySQL</a>
+                    </li>
+                    <li id="page_16" class="depth-2 last last-child final">
+                        <a
+                                href="http://www.staging.browsercms.org/documentation/guides/table-of-contents/trying-out-browsercms/using-your-site">Using
+                            your Site</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
 
+</div>
+<div id="main_doc">
+
+<h2>
+    <cufon style="width: 73px; height: 23px;" alt="Header "
+           class="cufon cufon-canvas">
+        <canvas style="width: 92px; height: 23px;
+top: 1px; left: -1px;" height="23" width="92"></canvas>
+        <cufontext>Header
+        </cufontext>
+    </cufon>
+    <cufon style="width: 12px; height: 23px;" alt="2"
+           class="cufon cufon-canvas">
+        <canvas style="width: 25px; height: 23px;
+top: 1px; left: -1px;" height="23" width="25"></canvas>
+        <cufontext>2</cufontext>
+    </cufon>
+</h2>
+<h2 class="alt">
+    <cufon style="width: 73px; height: 23px;" alt="Header "
+           class="cufon cufon-canvas">
+        <canvas style="width: 92px; height: 23px;
+top: 1px; left: -1px;" height="23" width="92"></canvas>
+        <cufontext>Header
+        </cufontext>
+    </cufon>
+    <cufon style="width: 18px; height: 23px;" alt="2 "
+           class="cufon cufon-canvas">
+        <canvas style="width: 36px; height: 23px;
+top: 1px; left: -1px;" height="23" width="36"></canvas>
+        <cufontext>2</cufontext>
+    </cufon>
+    <cufon
+            style="width: 27px; height: 23px;" alt="Alt" class="cufon cufon-canvas">
+        <canvas
+                style="width: 44px; height: 23px; top: 1px; left: -1px;" height="23"
+                width="44"></canvas>
+        <cufontext>Alt</cufontext>
+    </cufon>
+</h2>
+<h2 class="brdr">
+    <cufon style="width: 73px; height: 23px;" alt="Header "
+           class="cufon cufon-canvas">
+        <canvas style="width: 92px; height: 23px;
+top: 1px; left: -1px;" height="23" width="92"></canvas>
+        <cufontext>Header
+        </cufontext>
+    </cufon>
+    <cufon style="width: 18px; height: 23px;" alt="2 "
+           class="cufon cufon-canvas">
+        <canvas style="width: 36px; height: 23px;
+top: 1px; left: -1px;" height="23" width="36"></canvas>
+        <cufontext>2</cufontext>
+    </cufon>
+    <cufon
+            style="width: 91px; height: 23px;" alt="Underline" class="cufon
+cufon-canvas">
+        <canvas style="width: 104px; height: 23px; top: 1px; left:
+ -1px;" height="23" width="104"></canvas>
+        <cufontext>Underline</cufontext>
+    </cufon>
+</h2>
+<h3>
+    <cufon style="width: 51px; height: 16px;" alt="Header " class="cufon
+ cufon-canvas">
+        <canvas style="width: 64px; height: 16px; top: 0px; left:
+ 0px;" height="16" width="64"></canvas>
+        <cufontext>Header</cufontext>
+    </cufon>
+    <cufon
+            style="width: 8px; height: 16px;" alt="3" class="cufon cufon-canvas">
+        <canvas
+                style="width: 18px; height: 16px; top: 0px; left: 0px;" height="16"
+                width="18"></canvas>
+        <cufontext>3</cufontext>
+    </cufon>
+</h3>
+<h3 class="alt">
+    <cufon style="width: 51px; height: 16px;" alt="Header "
+           class="cufon cufon-canvas">
+        <canvas style="width: 64px; height: 16px;
+top: 0px; left: 0px;" height="16" width="64"></canvas>
+        <cufontext>Header</cufontext>
+    </cufon>
+    <cufon
+            style="width: 12px; height: 16px;" alt="3 " class="cufon cufon-canvas">
+        <canvas
+                style="width: 25px; height: 16px; top: 0px; left: 0px;" height="16"
+                width="25"></canvas>
+        <cufontext>3</cufontext>
+    </cufon>
+    <cufon
+            style="width: 19px; height: 16px;" alt="Alt" class="cufon cufon-canvas">
+        <canvas
+                style="width: 31px; height: 16px; top: 0px; left: 0px;" height="16"
+                width="31"></canvas>
+        <cufontext>Alt</cufontext>
+    </cufon>
+</h3>
+<h3 class="brdr">
+    <cufon style="width: 51px; height: 16px;" alt="Header "
+           class="cufon cufon-canvas">
+        <canvas style="width: 64px; height: 16px;
+top: 0px; left: 0px;" height="16" width="64"></canvas>
+        <cufontext>Header</cufontext>
+    </cufon>
+    <cufon
+            style="width: 12px; height: 16px;" alt="3 " class="cufon cufon-canvas">
+        <canvas
+                style="width: 25px; height: 16px; top: 0px; left: 0px;" height="16"
+                width="25"></canvas>
+        <cufontext>3</cufontext>
+    </cufon>
+    <cufon
+            style="width: 63px; height: 16px;" alt="Underline" class="cufon
+cufon-canvas">
+        <canvas style="width: 73px; height: 16px; top: 0px; left:
+0px;" height="16" width="73"></canvas>
+        <cufontext>Underline</cufontext>
+    </cufon>
+</h3>
+<h4>
+    <cufon style="width: 45px; height: 14px;" alt="Header " class="cufon
+ cufon-canvas">
+        <canvas style="width: 56px; height: 14px; top: 0px; left:
+ 0px;" height="14" width="56"></canvas>
+        <cufontext>Header</cufontext>
+    </cufon>
+    <cufon
+            style="width: 7px; height: 14px;" alt="4" class="cufon cufon-canvas">
+        <canvas
+                style="width: 15px; height: 14px; top: 0px; left: 0px;" height="14"
+                width="15"></canvas>
+        <cufontext>4</cufontext>
+    </cufon>
+</h4>
+<h4 class="alt">
+    <cufon style="width: 45px; height: 14px;" alt="Header "
+           class="cufon cufon-canvas">
+        <canvas style="width: 56px; height: 14px;
+top: 0px; left: 0px;" height="14" width="56"></canvas>
+        <cufontext>Header</cufontext>
+    </cufon>
+    <cufon
+            style="width: 11px; height: 14px;" alt="4 " class="cufon cufon-canvas">
+        <canvas
+                style="width: 22px; height: 14px; top: 0px; left: 0px;" height="14"
+                width="22"></canvas>
+        <cufontext>4</cufontext>
+    </cufon>
+    <cufon
+            style="width: 16px; height: 14px;" alt="Alt" class="cufon cufon-canvas">
+        <canvas
+                style="width: 27px; height: 14px; top: 0px; left: 0px;" height="14"
+                width="27"></canvas>
+        <cufontext>Alt</cufontext>
+    </cufon>
+</h4>
+<h4 class="brdr">
+    <cufon style="width: 45px; height: 14px;" alt="Header "
+           class="cufon cufon-canvas">
+        <canvas style="width: 56px; height: 14px;
+top: 0px; left: 0px;" height="14" width="56"></canvas>
+        <cufontext>Header</cufontext>
+    </cufon>
+    <cufon
+            style="width: 11px; height: 14px;" alt="4 " class="cufon cufon-canvas">
+        <canvas
+                style="width: 22px; height: 14px; top: 0px; left: 0px;" height="14"
+                width="22"></canvas>
+        <cufontext>4</cufontext>
+    </cufon>
+    <cufon
+            style="width: 55px; height: 14px;" alt="Underline" class="cufon
+cufon-canvas">
+        <canvas style="width: 64px; height: 14px; top: 0px; left:
+0px;" height="14" width="64"></canvas>
+        <cufontext>Underline</cufontext>
+    </cufon>
+</h4>
+<h5>
+    <cufon style="width: 35px; height: 11px;" alt="Header " class="cufon
+ cufon-canvas">
+        <canvas style="width: 44px; height: 11px; top: 0px; left:
+ 0px;" height="11" width="44"></canvas>
+        <cufontext>Header</cufontext>
+    </cufon>
+    <cufon
+            style="width: 6px; height: 11px;" alt="5" class="cufon cufon-canvas">
+        <canvas
+                style="width: 12px; height: 11px; top: 0px; left: 0px;" height="11"
+                width="12"></canvas>
+        <cufontext>5</cufontext>
+    </cufon>
+</h5>
+<h5 class="alt">
+    <cufon style="width: 35px; height: 11px;" alt="Header "
+           class="cufon cufon-canvas">
+        <canvas style="width: 44px; height: 11px;
+top: 0px; left: 0px;" height="11" width="44"></canvas>
+        <cufontext>Header</cufontext>
+    </cufon>
+    <cufon
+            style="width: 9px; height: 11px;" alt="5 " class="cufon cufon-canvas">
+        <canvas
+                style="width: 18px; height: 11px; top: 0px; left: 0px;" height="11"
+                width="18"></canvas>
+        <cufontext>5</cufontext>
+    </cufon>
+    <cufon
+            style="width: 13px; height: 11px;" alt="Alt" class="cufon cufon-canvas">
+        <canvas
+                style="width: 21px; height: 11px; top: 0px; left: 0px;" height="11"
+                width="21"></canvas>
+        <cufontext>Alt</cufontext>
+    </cufon>
+</h5>
+<h5 class="brdr">
+    <cufon style="width: 35px; height: 11px;" alt="Header "
+           class="cufon cufon-canvas">
+        <canvas style="width: 44px; height: 11px;
+top: 0px; left: 0px;" height="11" width="44"></canvas>
+        <cufontext>Header</cufontext>
+    </cufon>
+    <cufon
+            style="width: 9px; height: 11px;" alt="5 " class="cufon cufon-canvas">
+        <canvas
+                style="width: 18px; height: 11px; top: 0px; left: 0px;" height="11"
+                width="18"></canvas>
+        <cufontext>5</cufontext>
+    </cufon>
+    <cufon
+            style="width: 44px; height: 11px;" alt="Underline" class="cufon
+cufon-canvas">
+        <canvas style="width: 50px; height: 11px; top: 0px; left:
+0px;" height="11" width="50"></canvas>
+        <cufontext>Underline</cufontext>
+    </cufon>
+</h5>
+<p>
+    <code>I am code<br>
+        I can expand as needed<br>
+        with my content<br>
+    </code></p>
+
+<p>
+    <code class="mono">I am monotone code<br>
+        I can expand too<br>
+    </code></p>
+
+<div class="info">
+    I am info<br>
+    again, can expand with content<br>
+    as I grow
+</div>
+<div class="warn">
+    I am warning<br>
+    repetition is nice when it <br>
+    comes to demonstrating expansion<br>
+    of elements
+</div>
+<ul class="list">
+    <li class="first-child">
+        list item 1
+    </li>
+    <li class="last-child">
+        list item 2
+    </li>
+</ul>
+<ul class="disc">
+    <li class="first-child">
+        disc list item 1
+    </li>
+    <li class="last-child">
+        disc list item 2
+    </li>
+</ul>
+<ul class="flat-list">
+    <li class="first-child">
+        flat-list item 1
+    </li>
+    <li class="last-child">
+        flat-list item 2
+    </li>
+</ul>
+<p class="clearfix">
+    clearing paragraph block (has margins)</p>
+
+<div class="clearfix">
+    cleearing regular block (no margins)
+</div>
+
+
+</div>
+</div>
+<div id="footer">
+    <ul>
+        <li class="first-child"><a href="">BrowserMedia Home</a></li>
+        <li><a href="">BrowserCMS Home</a></li>
+        <li><a href="">Sitemap</a></li>
+        <li class="last-child"><a href="">Contact Us</a></li>
+    </ul>
+    <p class="copynotice">© 1998-2010 BrowserMedia, LLC. All Rights
+        Reserved.</p>
+</div>
+</div>
+<script type="text/javascript">
+    //<![CDATA[
+    bcmsOrg.init();
+    //]]>
+</script>
+</body>
+</html>
