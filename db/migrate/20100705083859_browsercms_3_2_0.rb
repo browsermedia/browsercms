@@ -4,53 +4,45 @@ class Browsercms320 < ActiveRecord::Migration
     # patch required for LH345
     cant_fix = []
     to_fix = []
-    Page.find(:all, :order => 'id asc').each do |pt_page|
-      if pt_page.path.to_s.match(/.+\/+$/)
-        if Page.find(:first, :conditions => ["path = ?", pt_page.path.sub(/(.+)\/+$/, '\1')])
+    # find all pages whose path ends in slash and is not root
+    Page.find(:all, :conditions => "path LIKE '/%/'").each do |pt_page|
+      # make sure no extant page has this path
+      if Page.count(:conditions => ["path = ?", pt_page.path.sub(/(.+)\/+$/, '\1')]) > 0
           cant_fix << pt_page
         else
           to_fix << pt_page
         end
-        next
-      end
-      
-      vs_no = pt_page.draft.version
-      while vs_no > pt_page.version
-        version = pt_page.find_version(vs_no)
-        if version && version.path.to_s.match(/.+\/+$/)
-          to_fix << pt_page
-          break
+    end
+    version_cant_fix = []
+    version_to_fix = []
+    # find all page versions whose path ends in slash and is not root
+    Page::Version.find(:all, :conditions => "path LIKE '/%/'").each do |pt_page|
+      # make sure no extant page has this path
+      if Page.count(:conditions => ["path = ?", pt_page.path.sub(/(.+)\/+$/, '\1')]) > 0
+          version_cant_fix << pt_page
+        else
+          version_to_fix << pt_page
         end
-        vs_no -= 1
-      end
     end
 
+    # raise an error if there are pages (*not* page versions) that will duplicate an extant path if the ending slash is dropped
     if cant_fix.length > 0
-      raise ActiveRecordError, "Cannot remove trailing slashes from pages with IDs (#{cant_fix.map(&:id).join(', ')}). Other pages already exist with their correct path. The offending path may be in an unpublished page version, newer than the current public version. These needed to be corrected manually in your DBMS before running this migration"
+      raise "Cannot remove trailing slashes from pages with ID(s) (#{cant_fix.map(&:id).join(', ')}). Other pages already exist with their correct path. The offending path may be in an unpublished page version, newer than the current public version. These needed to be corrected manually in your DBMS before running this migration"
     end
 
     to_fix.each do |fix_page|
+      # change the path of all pages with a trailing slash to not have one
       # using sql updates to prevent unwanted callbacks
       new_path = fix_page.path.to_s.sub(/(.+)\/+$/, '\1')
       execute "UPDATE pages SET path = '#{new_path}' WHERE id = #{fix_page.id};"
-      # update the current version record to
-      execute "UPDATE page_versions SET path = '#{new_path}' WHERE page_id = #{fix_page.id} AND version = #{fix_page.version};"
-
-      # now update any newer versions whose paths are currupted. For each currupt path, set it 
-      # to the most recent earlier valid path, or the new stripped path
-      max_no = fix_page.draft.version
-      current_vs_no = fix_page.version
-      while current_vs_no < max_no
-        current_vs_no += 1
-        version = fix_page.find_version(current_vs_no)
-        if version && version.path.match(/.+\/+$/)
-          execute "UPDATE page_versions SET path = '#{new_path}' WHERE id = #{version.id}"
-        else 
-          new_path = version.path.to_s
-        end
-      end
     end
-    # end patch for lh345
+    version_to_fix.each do |fix_page|
+      # change the path of all fixable page versions with a trailing slash to not have one
+      # using sql updates to prevent unwanted callbacks
+      new_path = fix_page.path.to_s.sub(/(.+)\/+$/, '\1')
+      execute "UPDATE page_versions SET path = '#{new_path}' WHERE id = #{fix_page.id};"
+    end
+    # end patch for LH345
   end
 
   def self.down
