@@ -7,7 +7,7 @@ class Section < ActiveRecord::Base
   has_one :node, :class_name => 'Cms::SectionNode', :as => :node, :dependent => :destroy
   #The nodes that link this section to its children
   has_many :child_nodes, :class_name => 'Cms::SectionNode'
-  has_many :child_sections, :class_name => 'Cms::SectionNode', :conditions => ["node_type = ?", "Section"], :order => "#{SectionNode.table_name}.position"
+  has_many :child_sections, :class_name => 'Cms::SectionNode', :conditions => ["node_type = ?", "Cms::Section"], :order => "#{SectionNode.table_name}.position"
 
   has_many :pages, :through => :child_nodes, :source => :node, :source_type => 'Cms::Page', :order => "#{SectionNode.table_name}.position"
   has_many :sections, :through => :child_nodes, :source => :node, :source_type => 'Cms::Section', :order => "#{SectionNode.table_name}.position"
