@@ -21,7 +21,8 @@ module Cms
     # This is called after the environment is ready
     def init
       # ToDo: This is how we are adding new methods to the routes.rb file. Rails 3 might provide more direct way.
-      ActionDispatch::Routing::DeprecatedMapper.send :include, Cms::Routes
+#      ActionDispatch::Routing::DeprecatedMapper.send :include, Cms::Routes
+      ActionDispatch::Routing::Mapper.send :include, Cms::Routes
 # This next line should add the methods to the 'new' router.
 #      ActionController::Routing::Mapper::Base.send :include, Cms::Routes
       ActiveSupport::Dependencies.load_paths += %W( #{Rails.root}/app/portlets )

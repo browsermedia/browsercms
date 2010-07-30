@@ -1,6 +1,10 @@
 Current Issue: Get pages to display, with toolbar, when logged in, without using a 'hack' for routes.
 Currently, its impossible to manually test the UI.
 
+Start with: rails s - See if pages are being rendered
+    * Convert from deprecated mapper to new mapper.
+    * Write cucumber tests to call pages and make sure they render (Very basic)
+
 Previous Issue: When saving blocks attached to a page, an incorrect number of connectors are being created (content_block_test.rb)
 
 Start with:
