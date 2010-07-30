@@ -124,10 +124,10 @@ class VersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
   def test_editing_connected_to_an_unpublished_page
     page_version_count = Page::Version.count
     assert_equal 2, @page.versions.size, "Should be two versions of the page"
-    assert !@page.published?
+    assert !@page.published?, "The page should not be published yet."
 
     pages = Page.connected_to(:connectable => @block, :version => @block.version).all
-    assert_equal [@page], pages, "block should be connected to page"
+    assert_equal [@page], pages, "The block should be connected to page"
 
 
     assert @block.update_attributes(:name => "something different")

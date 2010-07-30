@@ -43,7 +43,7 @@ begin
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
 rescue LoadError
-#  puts "Jeweler not available. Install it with: sudo gem install technicalpickles-jeweler -s http://gems.github.com"
+#  puts "Jeweler not available. Install it with: gem install jeweler"
 end
 
 # These are new tasks

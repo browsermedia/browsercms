@@ -9,7 +9,7 @@ class Connector < ActiveRecord::Base
   scope :for_page_version, lambda{|pv| {:conditions => {:page_version => pv}}}
   scope :for_connectable_version, lambda{|cv| {:conditions => {:connectable_version => cv}}}
   scope :for_connectable, lambda{|c|
-    puts "Finding for_connectable for #{c.id} and #{c.class.base_class.name}"
+#    puts "Finding for_connectable for #{c.id} and #{c.class.base_class.name}"
     {:conditions => { :connectable_id => c.id, :connectable_type => c.class.base_class.name }}
   }  
   scope :in_container, lambda{|container| {:conditions => {:container => container}}}

@@ -83,7 +83,7 @@ module Cms
             #Get all the pages the previous version of this connectable was connected to
             draft_version = draft.version
             connected_pages = Page.connected_to(:connectable => self, :version => (draft_version - 1)).all
-            puts "Found #{connected_pages}"
+#            puts "Found #{connected_pages}"
             connected_pages.each do |p|
               # This is needed in the case of updating page,
               # which updates this object, so as not to create a loop
@@ -95,12 +95,12 @@ module Cms
                 #The previous step will copy over a connector pointing to the previous version of this connectable
                 #We need to change that to point at the new version of this connectable
                 connectors_for_page = p.connectors
-                puts "cfp #{connectors_for_page}"
+#                puts "cfp #{connectors_for_page}"
                 page_draft_version = p.draft.version
                 cnn = connectors_for_page.for_page_version(page_draft_version)
-                puts "Connectors for page version #{page_draft_version} are #{cnn.all}"
+#                puts "Connectors for page version #{page_draft_version} are #{cnn.all}"
                 connectors = cnn.for_connectable(self)
-                puts "Found connectors #{connectors.all}"
+#                puts "Found connectors #{connectors.all}"
                 connectors.each do |con|
                   con.update_attribute(:connectable_version, draft_version)
                 end
