@@ -25,5 +25,6 @@ class PageRouteTest < ActiveSupport::TestCase
       }
     }, route.options_map)
   end
-  
+
+
 end

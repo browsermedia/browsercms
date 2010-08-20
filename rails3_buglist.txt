@@ -18,10 +18,10 @@ Start with:
     Learn how to use the ruby debugger from the command line (or get RubyMine 2.5)
 
 
-State of Test Cases (As of July 30, 2010)
+State of Test Cases (As of Aug 20, 2010)
 ====================
-Unit - 19 Failures, 19 Errors
-Functional - 38 Failures, 14 Errors
+Unit - 19 Failures, 21 Errors
+Functional - 37 Failures, 23 Errors
 Integration - All Pass
 
 
@@ -37,6 +37,8 @@ Open Issues
 8. The toolbar is not appearing on pages (might be side effect of workaround for #2/3
 9. Auto path suggestion doesn't work.
 10. Cannot add blocks to pages
+11. Building page routers from database is disabled (Needs reworking: See routes.rb for details).
+12. Permissions Tests for SampleBlock is broken. (Potentially result of overly brittle tests. Might be better rewritten)
 * Deleting blocks doesn't work. (Might actually be problems with queries)
 * Altering the uploaded file may not change the name of the file. (Broken test or broken feature?)
 * require_javascript_include - Tests are broken (probably due to changes to rails internals) 
