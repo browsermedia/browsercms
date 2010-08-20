@@ -1,20 +1,9 @@
 if Rails.env == "test"
   class SampleBlock
-    def self.versioned?;
-      true;
-    end
-
-    def self.publishable?;
-      true;
-    end
-
-    def self.connectable?;
-      true;
-    end
-
-    def self.searchable?;
-      false;
-    end
+    def self.versioned?; true; end
+    def self.publishable?; true; end
+    def self.connectable?; true; end
+    def self.searchable?; false; end
   end
 
   class Cms::SampleBlocksController < Cms::ContentBlockController

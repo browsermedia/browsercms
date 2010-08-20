@@ -1,8 +1,7 @@
-Current Issue: Get pages to display, with toolbar, when logged in, without using a 'hack' for routes.
-Currently, its impossible to manually test the UI.
+Current Issue: Test which routes are broken (page_templates, page_partials, routes are all known to be broken)
+Start with:  rake test:functionals TEST=functional/cms/content_block_controller_test.rb
 
 Start with: rails s - See if pages are being rendered
-    * Convert from deprecated mapper to new mapper.
     * Write cucumber tests to call pages and make sure they render (Very basic)
 
 Previous Issue: When saving blocks attached to a page, an incorrect number of connectors are being created (content_block_test.rb)
@@ -20,8 +19,8 @@ Start with:
 
 State of Test Cases (As of Aug 20, 2010)
 ====================
-Unit - 19 Failures, 21 Errors
-Functional - 37 Failures, 23 Errors
+Unit - 21 Failures, 19 Errors
+Functional - 37 Failures, 17 Errors
 Integration - All Pass
 
 
@@ -35,7 +34,7 @@ Open Issues
 6. Attachments throw errors (uninitialized constant ActionController::UploadedTempfile)
 7. Saving a block with unchanged value shouldn't create additional versions (rake test:units TEST=unit/lib/content_block_test.rb)
 8. The toolbar is not appearing on pages (might be side effect of workaround for #2/3
-9. Auto path suggestion doesn't work.
+9. Auto path suggestion doesn't work for pages
 10. Cannot add blocks to pages
 11. Building page routers from database is disabled (Needs reworking: See routes.rb for details).
 12. Permissions Tests for SampleBlock is broken. (Potentially result of overly brittle tests. Might be better rewritten)

@@ -1,25 +1,32 @@
 module Cms::Routes
 
+
+  # Adds all necessary routes to manage a new content type. Works very similar to the Rails _resources_ method, adding basic CRUD routes, as well as additional ones
+  #   for CMS specific routes (like versioning)
   #
-  # content_block_name - Should be a plural symbol matching the name of the content_block, like :dogs or :donation_statuses
-  #
+  # @params [Symbol] content_block_name - The plural name of a new Content Type. Should match the name of the content_block, like :dogs or :donation_statuses
   def content_blocks(content_block_name, options={}, & block)
     content_block = content_block_name.to_s.classify.constantize
-    resources(* [content_block_name, default_routes_for_content_block(content_block).deep_merge(options)], & block)
+    resources content_block_name do
+      member do
+        put :publish if content_block.publishable?
+        get :versions if content_block.versioned?
+        get :usages if content_block.connectable?
+      end
+    end
     if content_block.versioned?
-      send("get", "/cms/#{content_block_name}/:id/version/:version", :to=>"cms/#{content_block_name}#version", :as=>"version_cms_#{content_block_name}".to_sym)
-      send("put", "/cms/#{content_block_name}/:id/revert_to/:version", :to=>"cms/#{content_block_name}#revert_to", :as=>"revert_to_cms_#{content_block_name}".to_sym)
+      send("get", "/#{content_block_name}/:id/version/:version", :to=>"cms/#{content_block_name}#version", :as=>"version_cms_#{content_block_name}".to_sym)
+      send("put", "/#{content_block_name}/:id/revert_to/:version", :to=>"cms/#{content_block_name}#revert_to", :as=>"revert_to_cms_#{content_block_name}".to_sym)
     end
   end
 
-  def default_routes_for_content_block(content_block)
-    member_routes = {}
-    member_routes[:publish] = :put if content_block.publishable?
-    member_routes[:versions] = :get if content_block.versioned?
-    member_routes[:usages] = :get if content_block.connectable?
-    {:member => member_routes}
-  end
-
+  # Adds the routes required for BrowserCMS to function to a routes.rb file. Should be the last route in the file, as
+  # all following routes will be ignored.
+  #
+  # Usage:
+  #   YourApp::Application.routes.draw do |map|
+  #      routes_for_browser_cms
+  #   end
   #
   def routes_for_browser_cms
 
