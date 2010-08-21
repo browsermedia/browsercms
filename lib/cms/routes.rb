@@ -31,7 +31,7 @@ module Cms::Routes
   def routes_for_browser_cms
 
     namespace :cms do
-      # Namespaces don't seem to 'prefix' controller names for non-resource methods
+      # Namespaces don't seem to 'prefix' controller names for non-resources methods
       # The Rails 3 release may avoid the need for explicitly prefixing cms/ to all these methods
       match '/dashboard', :to=>"cms/dashboard#index", :as=>'dashboard'
       # I want to do the following instead
@@ -70,8 +70,8 @@ module Cms::Routes
         end
         resources :tasks
       end
-      get '/cms/pages/:id/version/:version', :to=>'cms/pages#version', :as=>'version_cms_page'
-      put '/cms/pages/:id/revert_to/:version', :to=>'cms/pages#revert_to', :as=>'revert_to_cms_page'
+      get '/pages/:id/version/:version', :to=>'cms/pages#version', :as=>'version_cms_page'
+      put '/pages/:id/revert_to/:version', :to=>'cms/pages#revert_to', :as=>'revert_to_cms_page'
       resources :tasks do
         member do
           put :complete
@@ -124,11 +124,11 @@ module Cms::Routes
       resources :email_messages
       resources :groups
       resources :redirects
-      resources :page_partials, :controller => 'cms/dynamic_views'
-      resources :page_templates, :controller => 'cms/dynamic_views'
+      resources :page_partials, :controller => 'dynamic_views'
+      resources :page_templates, :controller => 'dynamic_views'
       resources :page_routes do
-        resources :conditions, :controller => "cms/page_route_conditions"
-        resources :requirements, :controller => "cms/page_route_requirements"
+        resources :conditions, :controller => "page_route_conditions"
+        resources :requirements, :controller => "page_route_requirements"
       end
       get 'cache', :to=>'cms/cache#show', :as=>'cache'
       delete 'cache', :to=>'cms/cache#destroy'
