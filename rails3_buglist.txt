@@ -1,8 +1,5 @@
-Current Issue: Run all tests and pick something to work on.
-Start with:
-
-Start with: rails s - See if pages are being rendered
-    * Write cucumber tests to call pages and make sure they render (Very basic)
+Current Issue: Content blocks are not being displayed.
+Start With: content/show.html.erb. Connectors may not be found.    
 
 Previous Issue: When saving blocks attached to a page, an incorrect number of connectors are being created (content_block_test.rb)
 
@@ -27,13 +24,12 @@ Integration - All Pass
 Open Issues
 ===========
 1. When saving blocks attached to a page, an incorrect number of connectors are being created (content_block_test.rb)
-2. Content pages are not being found. This might require abandoning the Deprecated Router. (Need to figure out how routes from gems can be embedded)
-3. No route found for /  (Neither root nor match "/" seem to work)    [Currently #2/3 are being solved locally via a workaround]
+2. Content blocks are not being displayed within their containers (Seems likely our assumptions about 'attribute' names from Rails 2 has changed)
+3. content/show.html.erb is not rendering anything for the 'body' of the page. I.e. content explicitly added to the main area rather than content_for calls. (Likely related to #2)
 4. Pages do not render their status icon in the sitemap.
 5. link_to_function has been removed. Check All and uncheck all are currently broken (See ApplicationHelper)
 6. Attachments throw errors (uninitialized constant ActionController::UploadedTempfile)
 7. Saving a block with unchanged value shouldn't create additional versions (rake test:units TEST=unit/lib/content_block_test.rb)
-8. The toolbar is not appearing on pages (might be side effect of workaround for #2/3
 9. Auto path suggestion doesn't work for pages
 10. Cannot add blocks to pages
 11. Building page routers from database is disabled (Needs reworking: See routes.rb for details).

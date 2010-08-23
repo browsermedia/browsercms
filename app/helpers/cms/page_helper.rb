@@ -31,10 +31,15 @@ module Cms
         has_block
       end
     end
-    
+
+    # Add the code to render the CMStoo
     def cms_toolbar
-      instance_variable_get("@content_for_layout")
+      toolbar = <<HTML
+<iframe src="#{cms_toolbar_path(:page_id => @page.id, :page_version => @page.version, :mode => @mode, :page_toolbar => @show_page_toolbar ? 1 : 0) }" width="100%" height="#{@show_page_toolbar ? 159 : 100 }px" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" name="cms_toolbar"></iframe>
+HTML
+      toolbar.html_safe if @show_toolbar
     end
+
 
 
     # Renders breadcrumbs based on the current_page. This will generate an unordered list representing the
