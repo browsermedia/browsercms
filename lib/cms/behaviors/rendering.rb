@@ -89,11 +89,11 @@ module Cms
 
         # This gives the view a reference to this object
         instance_variable_set(self.class.instance_variable_name_for_view, self)
-    
+
         # This is like a controller action
         # We will call it if you have defined a render method
         # but if you haven't we won't
-        render if respond_to?(:render)
+        render if should_render_self?
       end
     
       def perform_render(controller)
@@ -142,6 +142,13 @@ module Cms
         @render_exception = exception
       end
 
+      # Determines if a block should have its 'render' method called when it's rendered within a page.
+      def should_render_self?
+        # Reason to exist: This was added to work around the fact that Rails 3 AbstractController::Helpers defines its own
+        # render method, which was conflicted with block's render methods.
+        public_methods(false).include?(:render)
+      end
+      
       protected
         def copy_instance_variables_from_controller!
           if @controller.respond_to?(:instance_variables_for_rendering)

@@ -1,5 +1,13 @@
 Current Issue: Content blocks are not being displayed.
-Start With: content/show.html.erb. Connectors may not be found.    
+    
+Start With:  (master_helper_module has gone apparently been removed.)
+    rake test:units TEST=unit/behaviors/rendering_test.rb
+- Error with view_paths being called on controller (See stack trace)
+- Blocks are getting all the Helpers, including Rendering, which defines its own 'render' method.
+- It appears an exception for 'action_name' not being a valid method on blocks is being thrown.
+- HtmlBlock (and presumably other blocks) are extending AbstractController::Rendering, for reasons I haven't yet determined.
+- This is causing the wrong 'render' method to be called.
+- Blocks that implement 'render' (Portlets, Tags) should have their 'render' method called.
 
 Previous Issue: When saving blocks attached to a page, an incorrect number of connectors are being created (content_block_test.rb)
 
