@@ -1,10 +1,3 @@
-GIT
-  remote: git://github.com/szimek/factory_girl.git
-  revision: b4b7d25018a14e781796ed651518ec79f2d0e52d
-  branch: rails3
-  specs:
-    factory_girl (1.2.3)
-
 GEM
   remote: http://rubygems.org/
   specs:
@@ -40,6 +33,10 @@ GEM
     builder (2.1.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
+    factory_girl (1.3.2)
+    factory_girl_rails (1.0)
+      factory_girl (~> 1.3)
+      rails (>= 3.0.0.beta4)
     i18n (0.4.1)
     mail (2.2.7)
       activesupport (>= 2.3.6)
@@ -78,7 +75,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  factory_girl!
+  factory_girl_rails
   mocha (= 0.9.8)
   mysql
   rails (= 3.0.0)

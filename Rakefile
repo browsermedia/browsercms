@@ -7,7 +7,7 @@ require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
 
-Rails::Application.load_tasks
+Browsercms::Application.load_tasks
 
 require File.dirname(__FILE__) + "/lib/cms/version.rb"
 begin

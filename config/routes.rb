@@ -9,7 +9,7 @@ if Rails.env == "test"
   class Cms::SampleBlocksController < Cms::ContentBlockController
   end
 end
-Browsercms::Application.routes.draw do |map|
+Browsercms::Application.routes.draw do
 
   match "/__test__", :to => "cms/content#show_page_route"
 

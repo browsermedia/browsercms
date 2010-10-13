@@ -8,8 +8,8 @@ gem "mysql"
 # Gem Environments
 group :test do
 #  gem "redgreen"
-#  gem 'factory_girl'
-  gem 'factory_girl', :git => 'git://github.com/szimek/factory_girl.git', :branch => 'rails3'
+  gem 'factory_girl_rails'
+#  gem 'factory_girl', :git => 'git://github.com/szimek/factory_girl.git', :branch => 'rails3'
 
   # :require=>false allows mocha to correctly modify the test:unit code to add mock() and stub()
   gem "mocha", '=0.9.8', :require=>false
