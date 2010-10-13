@@ -81,15 +81,10 @@ module Cms
                   d.update_attributes(:published => true)
 
                   # copy values from the draft to the main record
-                  quoted_attributes = d.send(:attributes_with_quotes, false, false, self.class.versioned_columns)
+                  quoted_attributes = d.send(:arel_attributes_values, false, false, self.class.versioned_columns)
 
                   # Doing the SQL ourselves to avoid callbacks
-                  connection.update(
-                    "UPDATE #{self.class.quoted_table_name} " +
-                    "SET #{quoted_comma_pair_list(connection, quoted_attributes)} " +
-                    "WHERE #{connection.quote_column_name(self.class.primary_key)} = #{quote_value(id)}",
-                    "#{self.class.name} Publish"
-                  )
+                  self.class.unscoped.where(self.class.arel_table[self.class.primary_key].eq(id)).arel.update(quoted_attributes)
                 end
               else
                 connection.update(
