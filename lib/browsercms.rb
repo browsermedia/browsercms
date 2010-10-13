@@ -7,6 +7,8 @@ require 'cms/caching'
 require 'acts_as_list'
 ActiveRecord::Base.send(:include, ActsAsList)
 
-#Include CMS Behaviors
-ActiveRecord::Base.send(:include, Cms::Acts::ContentBlock)
+require 'cms/acts'
+require 'cms/authentication'
 require 'cms/behaviors'
+require 'cms/domain_support'
+require 'cms/content_rendering_support'

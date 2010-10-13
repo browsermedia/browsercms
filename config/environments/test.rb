@@ -14,6 +14,9 @@ Browsercms::Application.configure do
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
 
+  # Raise exceptions instead of rendering exception templates
+  config.action_dispatch.show_exceptions = false
+
   # Disable request forgery protection in test environment
   config.action_controller.allow_forgery_protection    = false
 
@@ -22,11 +25,11 @@ Browsercms::Application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
 
-  SITE_DOMAIN = "localhost:3000"
   # Use SQL instead of Active Record's schema dumper when creating the test database.
   # This is necessary if your schema can't be completely dumped by the schema dumper,
   # like if you have constraints or database-specific column types
   # config.active_record.schema_format = :sql
 
-
+  # Print deprecation notices to the stderr
+  config.active_support.deprecation = :stderr
 end
