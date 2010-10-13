@@ -341,7 +341,8 @@ module Cms
           kls
         end
         
-        # This overrides the attributes= defined in ActiveRecord::Base
+        # Overrides the attributes= defined in ActiveRecord::Base
+        #
         # The only difference is that this doesn't check to see if the
         # model responds_to the method before sending it
         # This is needed for Rails 2.2
@@ -351,7 +352,7 @@ module Cms
           attributes.stringify_keys!
 
           multi_parameter_attributes = []
-          attributes = remove_attributes_protected_from_mass_assignment(attributes) if guard_protected_attributes
+          attributes = sanitize_for_mass_assignment(attributes) if guard_protected_attributes
 
           attributes.each do |k, v|
             if k.include?("(")

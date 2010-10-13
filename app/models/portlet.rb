@@ -18,7 +18,7 @@ class Portlet < ActiveRecord::Base
   ensure
     subclass.class_eval do
       
-      has_dynamic_attributes
+      has_dynamic_attributes(:class_name=>'PortletAttribute', :foreign_key=>'portlet_id')
       
       acts_as_content_block(
         :versioned => false, 
