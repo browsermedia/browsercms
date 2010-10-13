@@ -9,7 +9,7 @@ class PageRoute < ActiveRecord::Base
   after_save :reload_routes
 
   def reload_routes
-    Rails.application.routes.load!
+    Rails.application.reload_routes!
   end
 
   def add_condition(name, value)
