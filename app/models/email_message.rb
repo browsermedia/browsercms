@@ -24,7 +24,7 @@ class EmailMessage < ActiveRecord::Base
   
   def deliver!
     return false if delivered?
-    EmailMessageMailer.deliver_email_message(self)
+    EmailMessageMailer.email_message(self).deliver
     update_attributes(:delivered_at => Time.now)
   end
   
