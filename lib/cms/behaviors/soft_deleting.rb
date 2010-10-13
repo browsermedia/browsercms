@@ -17,10 +17,12 @@ module Cms
             alias_method :count_with_deleted, :count
             alias_method :delete_all!, :delete_all
           end
-          alias_method :destroy_without_callbacks!, :destroy_without_callbacks
-        
+
           extend ClassMethods
           include InstanceMethods
+
+          alias_method :destroy_without_callbacks!, :destroy_without_callbacks
+          
         end
       end
       module ClassMethods

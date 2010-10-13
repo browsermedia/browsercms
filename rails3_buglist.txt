@@ -1,4 +1,12 @@
-Current Issue: Content blocks are not being displayed.
+Current Issue: `alias_method': undefined method `create_without_callbacks' for class `HtmlBlock' (NameError)
+    Reason: The ActiveRecord::Base.save callback 'stack' has changed again since 3.0.0 beta
+    Task: Figure out what method I need to override to change the persistence
+    Subtask: I don't see alias method chaining? How does ActiveRecord::Base#save get overrriden by say, validations#save?
+
+* It appears that basic inheritence is used. The order in which ActiveRecord::Base includes methods (at the bottom of activerecord) repeatedly overrides save/save! with
+chains of 'super'
+
+Issue: Content blocks are not being displayed.
     
 Start With:  (master_helper_module has gone apparently been removed.)
     rake test:units TEST=unit/behaviors/rendering_test.rb
@@ -83,8 +91,8 @@ save
   save_with_transactions
   save_with_dirty
   save_with_validations
-  AR::Base.save (save_without_validations)
-  AR::Base.create_or_update_with_callbacks
+  AR::Base#save (save_without_validations)
+  AR::Base#create_or_update_with_callbacks
 
   
 AR::Base - Defines a 'save' method with no params

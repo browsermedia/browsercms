@@ -21,12 +21,9 @@ module Cms
     # This is called after the environment is ready
     def init
       # ToDo: This is how we are adding new methods to the routes.rb file. Rails 3 might provide more direct way.
-#      ActionDispatch::Routing::DeprecatedMapper.send :include, Cms::Routes
       ActionDispatch::Routing::Mapper.send :include, Cms::Routes
-# This next line should add the methods to the 'new' router.
-#      ActionController::Routing::Mapper::Base.send :include, Cms::Routes
-      ActiveSupport::Dependencies.load_paths += %W( #{Rails.root}/app/portlets )
-      ActiveSupport::Dependencies.load_paths += %W( #{Rails.root}/app/portlets/helpers )      
+      ActiveSupport::Dependencies.autoload_paths += %W( #{Rails.root}/app/portlets )
+      ActiveSupport::Dependencies.autoload_paths += %W( #{Rails.root}/app/portlets/helpers )      
       ActionController::Base.append_view_path DynamicView.base_path
       ActionView::Base.default_form_builder = Cms::FormBuilder
       
@@ -38,7 +35,11 @@ module Cms
       # dynamic views are stored in a tmp dir
       # so they could be blown away on a server restart or something
       # so this just makes sure they get written out
-      DynamicView.write_all_to_disk! if DynamicView.table_exists?
+
+      # Commenting out, as the app/model files don't seem to have been loaded yet at this point, so
+      # we are getting class errors w/ STI.
+
+#      DynamicView.write_all_to_disk! if DynamicView.table_exists?
     end
     
     # This is used by CMS modules to register with the CMS generator
@@ -54,7 +55,7 @@ module Cms
     end   
     
     def add_to_rails_paths(path)
-      ActiveSupport::Dependencies.load_paths << File.join(path, "app", "portlets")
+      ActiveSupport::Dependencies.autoload_paths << File.join(path, "app", "portlets")
     end
 
     def add_to_routes(route)

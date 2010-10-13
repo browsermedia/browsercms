@@ -36,7 +36,15 @@ module Cms
       
           extend ClassMethods
           include InstanceMethods
-      
+
+          # I'm not pleased with the need to include all of the these rails helpers onto every 'renderable' content item
+          # It's likely to lead to unfortunate side effects.
+          # Need to determine how this can be simplified.
+
+          # Required to make the calls to add Rails Core controllers work
+          include ActiveSupport::Configurable
+
+          # Include all the core rails helpers
           include ActionController::Helpers
           include ActionController::RequestForgeryProtection
 

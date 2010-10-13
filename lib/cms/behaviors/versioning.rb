@@ -22,7 +22,7 @@ module Cms
           has_many :versions, :class_name  => version_class_name, :foreign_key => version_foreign_key
 
           before_validation :initialize_version
-          alias_method_chain :create_or_update_without_callbacks, :versioning
+#          alias_method_chain :create_or_update_without_callbacks, :versioning
           attr_accessor :skip_callbacks
 
           attr_accessor :revert_to_version
@@ -120,13 +120,28 @@ module Cms
           end
         end
 
+
+        #  
+        #ActiveRecord 3.0.0 call chain
+        #
+        # 1. ActiveRecord::Base#save - The original method called by client
+          #
+          #  AR::Transactions#save
+          #  AR::Dirty#save
+          #  AR::Validations#save
+          #  ActiveRecord::Persistence#save
+          #  ActiveRecord::Persistence#create_or_update
+          #  AR::Callbacks#create_or_update (runs :save callbacks)
+        #
+        #
+        #
         # This aliases the original ActiveRecord::Base.save method, in order to change
         # how calling save works. It should do the following things:
         #
         # 1. If the record is unchanged, no save is performed, but true is returned. (Skipping after_save callbacks)
         # 2. If its an update, a new version is created and that is saved.
         # 3. If new record, its version is set to 1, and its published if needed.
-        def create_or_update_without_callbacks_with_versioning
+        def create_or_update
           self.skip_callbacks = false
           unless different_from_last_draft?
             self.skip_callbacks = true
@@ -135,7 +150,7 @@ module Cms
           @new_version = build_new_version
           if new_record?
             self.version = 1
-            saved_correctly = create_or_update_without_callbacks_without_versioning
+            saved_correctly = super
             publish_if_needed
             changed_attributes.clear
           else
