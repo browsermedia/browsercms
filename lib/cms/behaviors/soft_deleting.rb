@@ -13,7 +13,6 @@ module Cms
         
           scope :not_deleted, :conditions => ["#{table_name}.deleted = ?", false]
           class << self
-#            alias_method :find_with_deleted, :find
             alias_method :count_with_deleted, :count
             alias_method :delete_all!, :delete_all
           end
@@ -21,22 +20,25 @@ module Cms
           extend ClassMethods
           include InstanceMethods
 
-#          alias_method :destroy_without_callbacks!, :destroy_without_callbacks
-
           # By default, all queries for blocks should filter out deleted rows.
           default_scope where(:deleted => false)
 
         end
       end
+
+      # TODO: Refactor this class to remove need for overriding count, delete_all, etc.
+      # Should not be necessary due to introduction of 'default_scope'.
       module ClassMethods
 
+        # Returns all records, including those which are marked as deleted.
+        #
+        # Basically 'find' exactly how ActiveRecord originally defines it.
+        #
+        # @param args Same params as ActiveRecord.find
         def find_with_deleted(*args)
           self.with_exclusive_scope { find(*args) }
         end
 
-#        def find(*args)
-#          not_deleted.find_with_deleted(*args)
-#        end
         def count(*args)
           not_deleted.count_with_deleted(*args)
         end

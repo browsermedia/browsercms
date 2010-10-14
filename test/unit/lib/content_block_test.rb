@@ -55,6 +55,11 @@ class SoftPublishingTest < ActiveSupport::TestCase
     @block = Factory(:html_block, :name => "Test")
   end
 
+  test "deleted? should return true for deleted records, false otherwise" do
+    assert_equal false, @block.deleted?
+    @block.destroy  
+    assert_equal true, @block.deleted?
+  end
 
   test "Destroying a block should mark it as deleted, rather than remove it from the database" do
     @block.destroy
@@ -106,20 +111,6 @@ class SoftPublishingTest < ActiveSupport::TestCase
     assert_decremented html_block_count, HtmlBlock.count
 
   end
-
-#  def test_destroy
-#    assert_equal 1, @block.versions.size
-#    assert !@block.deleted?
-#
-#    @block.destroy
-#
-#
-#    deleted_block = HtmlBlock.find_with_deleted(@block.id)
-#    assert_equal 2, deleted_block.versions.size
-#    assert_equal 2, deleted_block.version
-#    assert_equal 1, deleted_block.versions.first.version
-#    assert_equal 2, HtmlBlock::Version.count(:conditions => {:html_block_id => @block.id})
-#  end
 
   def test_delete_all
     HtmlBlock.delete_all(["name = ?", @block.name])
