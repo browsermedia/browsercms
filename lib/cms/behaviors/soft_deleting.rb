@@ -13,7 +13,6 @@ module Cms
         
           scope :not_deleted, :conditions => ["#{table_name}.deleted = ?", false]
           class << self
-            alias_method :count_with_deleted, :count
             alias_method :delete_all!, :delete_all
           end
 
@@ -28,20 +27,29 @@ module Cms
 
       # TODO: Refactor this class to remove need for overriding count, delete_all, etc.
       # Should not be necessary due to introduction of 'default_scope'.
+      #
+      # 2. TODO: Allow a record to define its own default_scope that doesn't 'override' this one.
+      # See http://github.com/fernandoluizao/acts_as_active for an implementation of this
       module ClassMethods
 
         # Returns all records, including those which are marked as deleted.
         #
-        # Basically 'find' exactly how ActiveRecord originally defines it.
+        # Basically 'find' exactly how ActiveRecord originally implements it.
         #
         # @param args Same params as ActiveRecord.find
         def find_with_deleted(*args)
           self.with_exclusive_scope { find(*args) }
         end
 
-        def count(*args)
-          not_deleted.count_with_deleted(*args)
+        # Returns a count of all records of this type, including those marked as deleted.
+        #
+        # Behaves like ActiveRecord.count is originally implemented.
+        #
+        # @param args Same params as ActiveRecord.count
+        def count_with_deleted(*args)
+          self.with_exclusive_scope { count(*args) }             
         end
+
         def delete_all(conditions=nil)
           update_all(["deleted = ?", true], conditions)
         end

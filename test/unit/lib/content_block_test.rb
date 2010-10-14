@@ -112,6 +112,12 @@ class SoftPublishingTest < ActiveSupport::TestCase
 
   end
 
+  test "count_with_deleted should return all records, even those marked as deleted" do
+    original_count = HtmlBlock.count
+    @block.destroy
+    assert_equal original_count, HtmlBlock.count_with_deleted
+  end
+
   def test_delete_all
     HtmlBlock.delete_all(["name = ?", @block.name])
     assert_raise(ActiveRecord::RecordNotFound) { HtmlBlock.find(@block.id) }
