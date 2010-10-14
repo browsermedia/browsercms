@@ -13,7 +13,7 @@ module Cms
         
           scope :not_deleted, :conditions => ["#{table_name}.deleted = ?", false]
           class << self
-            alias_method :find_with_deleted, :find
+#            alias_method :find_with_deleted, :find
             alias_method :count_with_deleted, :count
             alias_method :delete_all!, :delete_all
           end
@@ -21,14 +21,22 @@ module Cms
           extend ClassMethods
           include InstanceMethods
 
-          alias_method :destroy_without_callbacks!, :destroy_without_callbacks
-          
+#          alias_method :destroy_without_callbacks!, :destroy_without_callbacks
+
+          # By default, all queries for blocks should filter out deleted rows.
+          default_scope where(:deleted => false)
+
         end
       end
       module ClassMethods
-        def find(*args)
-          not_deleted.find_with_deleted(*args)
+
+        def find_with_deleted(*args)
+          self.with_exclusive_scope { find(*args) }
         end
+
+#        def find(*args)
+#          not_deleted.find_with_deleted(*args)
+#        end
         def count(*args)
           not_deleted.count_with_deleted(*args)
         end
@@ -42,11 +50,14 @@ module Cms
             conditions = {:conditions => {:id => id_or_conditions}}
           end
           count(conditions) > 0
-        end      
+        end
       end
       module InstanceMethods
-        #Overrides original destroy method
-        def destroy_without_callbacks
+
+        # Destroying a soft deletable model should mark the record as deleted, and not actually remove it from the database.
+        #
+        # Overrides original destroy method
+        def destroy
           if self.class.publishable?
             update_attributes(:deleted => true, :publish_on_save => true)
           else
@@ -55,7 +66,7 @@ module Cms
         end
 
         def mark_as_deleted!
-          destroy_without_callbacks
+          destroy
         end
 
         def destroy_with_callbacks!
@@ -67,7 +78,7 @@ module Cms
         end
 
         def destroy!
-          transaction { destroy_with_callbacks! }
+          transaction { super.destroy }
         end
 
         def destroyed?

@@ -34,5 +34,7 @@ Browsercms::Application.configure do
   config.active_support.deprecation = :stderr
 
   SITE_DOMAIN = "localhost:3000"
-  
+
+#  config.log_level = Logger::WARN
+
 end

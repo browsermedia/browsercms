@@ -64,12 +64,23 @@ module Cms
           logger.warn("Could not publish, #{e.class}: #{e.message}\n#{e.backtrace.join("\n")}")
           false
         end
-        
+
+        # Force the publishing of this block.
+        #
+        # Warning: The behavior of calling the following on an existing block:
+        #   block.save_on_publish
+        #   block.save!
+        #
+        # Is different than calling:
+        #   block.publish!
+        #
+        # And it probably shouldn't be. Try to merge the 'else' with the 'Versioning#create_or_update' method to eliminate duplication 
         def publish!
           if new_record?
             self.publish_on_save = true
             save!
           else
+            # Do this for publishing existing blocks.
             transaction do
               if self.class.versioned?
                 d = draft

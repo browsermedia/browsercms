@@ -114,6 +114,8 @@ module Cms
         end
 
         def publish_if_needed
+          logger.warn "Checking if publishing should occur. publish='#{@publish_on_save}'"
+
           if @publish_on_save
             publish
             @publish_on_save = nil
@@ -142,20 +144,23 @@ module Cms
         # 2. If its an update, a new version is created and that is saved.
         # 3. If new record, its version is set to 1, and its published if needed.
         def create_or_update
+          logger.warn "create_or_update called. Publishing? = #{publish_on_save}"
           self.skip_callbacks = false
           unless different_from_last_draft?
+            logger.warn "No difference between this version and last. Skipping save"
             self.skip_callbacks = true
             return true
           end
           @new_version = build_new_version
           if new_record?
             self.version = 1
-            saved_correctly = super
-            publish_if_needed
+            saved_correctly = super            
             changed_attributes.clear
           else
+            logger.warn "Not a new record"
             saved_correctly = @new_version.save
           end
+          publish_if_needed
           return saved_correctly
         end
 

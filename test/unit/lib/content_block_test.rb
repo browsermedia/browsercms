@@ -46,18 +46,52 @@ class ContentBlockTest < ActiveSupport::TestCase
     assert_equal "Something Changed", @block.draft.version_comment
   end
 
-  def test_destroy
-    html_block_count = HtmlBlock.count
-    assert_equal 1, @block.versions.size
-    assert !@block.deleted?
 
+end
+
+class SoftPublishingTest < ActiveSupport::TestCase
+
+  def setup
+    @block = Factory(:html_block, :name => "Test")
+  end
+
+
+  test "Destroying a block should mark it as deleted, rather than remove it from the database" do
     @block.destroy
 
-    assert !HtmlBlock.exists?(@block.id)
-    assert !HtmlBlock.exists?(["name = ?", @block.name])
-    assert_decremented html_block_count, HtmlBlock.count
+    found = HtmlBlock.find_by_sql("SELECT * FROM html_blocks where id = #{@block.id}")
+    assert_equal 1, found.size, "Should find one record"
+    assert_not_nil found[0], "A block should still exist in the database"
+    assert_equal true, found[0].deleted, "It's published flag should be true"
+
+  end
+
+  test "exists? should not return blocks marked as deleted" do
+    @block.destroy
+
+    assert_equal false, HtmlBlock.exists?(@block.id)
+    assert_equal false, HtmlBlock.exists?(["name = ?", @block.name])
+  end
+
+  test "find by id should throw an exception for records marked as deleted" do
+    @block.destroy
     assert_raise(ActiveRecord::RecordNotFound) { HtmlBlock.find(@b) }
+
+  end
+
+  test "dynamic finders (i.e. find_by_name) should not find deleted records" do
+    @block.destroy
     assert_nil HtmlBlock.find_by_name(@block.name)
+  end
+
+
+  test "find with deleted returns all records even marked as deleted" do
+    @block.destroy
+    assert_not_nil HtmlBlock.find_with_deleted(@block.id)
+  end
+
+  test "Marking as deleted should create a new record in the versions table" do
+    @block.destroy
 
     deleted_block = HtmlBlock.find_with_deleted(@block.id)
     assert_equal 2, deleted_block.versions.size
@@ -66,17 +100,61 @@ class ContentBlockTest < ActiveSupport::TestCase
     assert_equal 2, HtmlBlock::Version.count(:conditions => {:html_block_id => @block.id})
   end
 
+  test "Count should exclude deleted records" do
+    html_block_count = HtmlBlock.count
+    @block.destroy
+    assert_decremented html_block_count, HtmlBlock.count
+
+  end
+
+#  def test_destroy
+#    assert_equal 1, @block.versions.size
+#    assert !@block.deleted?
+#
+#    @block.destroy
+#
+#
+#    deleted_block = HtmlBlock.find_with_deleted(@block.id)
+#    assert_equal 2, deleted_block.versions.size
+#    assert_equal 2, deleted_block.version
+#    assert_equal 1, deleted_block.versions.first.version
+#    assert_equal 2, HtmlBlock::Version.count(:conditions => {:html_block_id => @block.id})
+#  end
+
   def test_delete_all
     HtmlBlock.delete_all(["name = ?", @block.name])
     assert_raise(ActiveRecord::RecordNotFound) { HtmlBlock.find(@block.id) }
     assert HtmlBlock.find_with_deleted(@block.id).deleted?
   end
-
 end
 
 class VersionedContentBlock < ActiveSupport::TestCase
   def setup
     @block = Factory(:html_block, :name => "Versioned Content Block")
+  end
+
+  test "Calling publish! on a block should save it, and mark that block as published." do
+    @block.publish!
+
+    found = HtmlBlock.find(@block)
+    assert_equal true, found.published?
+  end
+
+  test 'Calling publish_on_save should not be sufficent to publish the block'do
+    @block.publish_on_save = true
+    @block.save
+
+    found = HtmlBlock.find(@block)
+    assert_equal 1, found.version 
+  end
+
+  test "Setting the 'publish' flag on a block, along with any other change, and saving it should mark that block as published." do
+    @block.publish_on_save = true
+    @block.name = "Anything else"
+    @block.save
+
+    found = HtmlBlock.find(@block)
+    assert_equal true, found.published?
   end
 
   def test_edit
