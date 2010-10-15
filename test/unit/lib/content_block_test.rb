@@ -46,7 +46,7 @@ class ContentBlockTest < ActiveSupport::TestCase
     assert_equal "Something Changed", @block.draft.version_comment
   end
 
-
+  
 end
 
 class SoftPublishingTest < ActiveSupport::TestCase

@@ -54,6 +54,7 @@ class Page < ActiveRecord::Base
   validate :path_not_reserved
           
   def after_build_new_version(new_version)
+    logger.warn "Page#after_build_new_version"
     copy_connectors(
       :from_version_number => @copy_connectors_from_version || (new_version.version - 1),
       :to_version_number => new_version.version
@@ -73,11 +74,16 @@ class Page < ActiveRecord::Base
   end
   
   def copy_connectors(options={})
-    connectors.for_page_version(options[:from_version_number]).all(:order => "connectors.container, connectors.position").each do |c|
+    logger.warn "Copying connectors from v#{options[:from_version_number]} to v#{options[:to_version_number]}."
+
+    c_found = connectors.for_page_version(options[:from_version_number]).all(:order => "connectors.container, connectors.position")
+    logger.warn "Found connectors #{c_found}"
+    c_found.each do |c|
       # The connector won't have a connectable if it has been deleted
       # Also need to see if the draft has been deleted,
       # in which case we are in the process of deleting it
       if c.should_be_copied?
+        logger.warn "Connector id=>#{c.id} should be copied."
         connectable = c.connectable_type.constantize.versioned? ? c.connectable.as_of_version(c.connectable_version) : c.connectable
       
         #If we are copying connectors from a previous version, that means we are reverting this page,
@@ -88,13 +94,14 @@ class Page < ActiveRecord::Base
           connectable.revert_to(c.connectable_version)
         end      
       
-        new_connector = connectors.build(
+        new_connector = connectors.create(
           :page_version => options[:to_version_number], 
           :connectable => connectable, 
           :connectable_version => connectable.class.versioned? ? connectable.version : nil,         
           :container => c.container, 
           :position => c.position
         )
+        logger.warn "Built new connector #{new_connector}."
       end
     end
     true

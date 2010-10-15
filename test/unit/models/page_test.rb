@@ -359,7 +359,56 @@ class PageWithAssociatedBlocksTest < ActiveRecord::TestCase
   end
 end
 
+class AddingBlocksTest < ActiveRecord::TestCase
+
+  def setup
+    @page = Factory(:page)
+    @block = Factory(:html_block)
+    @original_versions_count = @page.versions.count
+    @connector_count = Connector.count
+
+    @connector = @page.create_connector(@block, "main")
+    reset(:page, :block)
+  end
+
+  test "Adding a block to a page without publishing" do
+    assert_equal 1, @page.version, "The unpublished page should still be version 1"
+    assert_equal 2, @connector.page_version, "The connector should point to version 2 of the page"
+    assert_equal 1, @connector.connectable_version, "Connector should point to version 1 of the block"
+    assert_incremented @original_versions_count, @page.versions.count # "There should be a new version of the page"
+    assert_equal 1, @page.connectors.for_page_version(@page.draft.version).count
+    assert_equal @connector_count + 1, Connector.count
+  end
+
+  test "Adding additional blocks to a page" do
+    block2 = Factory(:html_block)
+    conn = @page.create_connector(block2, "main")
+
+    assert_equal 1, @page.version
+    assert_equal 1, conn.connectable_version
+    assert_equal 3, @page.versions.count, "Should be three versions of the page now"
+    assert_equal 3, @page.draft.version, "Latest draft of a page should be 3"
+    assert_equal 2, @page.connectors.for_page_version(@page.draft.version).count
+    assert_equal @connector_count + 2, Connector.count
+  end
+
+  test "Creating a new block to a page should update all existing connectors to the new page version." do
+    Rails.logger.warn "Creating a new connector"
+    @page.create_connector(Factory(:html_block), "main")
+    expected_version = 3
+    Rails.logger.warn "Done"
+    connectors = @page.connectors.for_page_version(expected_version)
+    assert_equal expected_version, connectors[0].page_version, "There should be two connectors with the same version as the page"
+    assert_equal expected_version, connectors[1].page_version
+    assert_equal 2, connectors.count, "There should be two connectors total for the page for this version (3) of the page."
+
+  end
+end
+
 class AddingBlocksToPageTest < ActiveRecord::TestCase
+
+
+
   def test_that_it_works
     @page = Factory(:page, :section => root_section)
     @block = Factory(:html_block)

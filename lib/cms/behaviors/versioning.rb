@@ -22,7 +22,6 @@ module Cms
           has_many :versions, :class_name  => version_class_name, :foreign_key => version_foreign_key
 
           before_validation :initialize_version
-#          alias_method_chain :create_or_update_without_callbacks, :versioning
           attr_accessor :skip_callbacks
 
           attr_accessor :revert_to_version
@@ -73,7 +72,7 @@ module Cms
 
         def versioned_columns
           @versioned_columns ||= (version_class.new.attributes.keys -
-                  (%w[ id lock_version position version_comment created_at updated_at created_by_id updated_by_id type ] + [version_foreign_key]))
+                  (%w[  id lock_version position version_comment created_at updated_at created_by_id updated_by_id type  ] + [version_foreign_key]))
         end
       end
       module InstanceMethods
@@ -86,7 +85,7 @@ module Cms
           attrs = draft_attributes
 
           # Now overwrite all values
-          (self.class.versioned_columns - %w( version )).each do |col|
+          (self.class.versioned_columns - %w(  version  )).each do |col|
             attrs[col] = send(col)
           end
 
@@ -109,7 +108,7 @@ module Cms
           if new_record?
             "Created"
           else
-            "Changed #{(changes.keys - %w[ version created_by_id updated_by_id ]).sort.join(', ')}"
+            "Changed #{(changes.keys - %w[  version created_by_id updated_by_id  ]).sort.join(', ')}"
           end
         end
 
@@ -125,15 +124,18 @@ module Cms
 
         #  
         #ActiveRecord 3.0.0 call chain
+        # ActiveRecord 3 now uses basic inheritence rather than alias_method_chain.  The order in which ActiveRecord::Base
+        # includes methods (at the bottom of activerecord) repeatedly overrides save/save! with chains of 'super'
         #
+        # Callstack order as observed
         # 1. ActiveRecord::Base#save - The original method called by client
-          #
-          #  AR::Transactions#save
-          #  AR::Dirty#save
-          #  AR::Validations#save
-          #  ActiveRecord::Persistence#save
-          #  ActiveRecord::Persistence#create_or_update
-          #  AR::Callbacks#create_or_update (runs :save callbacks)
+        #
+        #  AR::Transactions#save
+        #  AR::Dirty#save
+        #  AR::Validations#save
+        #  ActiveRecord::Persistence#save
+        #  ActiveRecord::Persistence#create_or_update
+        #  AR::Callbacks#create_or_update (runs :save callbacks)
         #
         #
         #
@@ -144,27 +146,33 @@ module Cms
         # 2. If its an update, a new version is created and that is saved.
         # 3. If new record, its version is set to 1, and its published if needed.
         def create_or_update
-          logger.warn "create_or_update called. Publishing? = #{publish_on_save}"
+          logger.debug {"create_or_update called. Publishing? = #{publish_on_save}"}
           self.skip_callbacks = false
           unless different_from_last_draft?
-            logger.warn "No difference between this version and last. Skipping save"
+            logger.debug {"No difference between this version and last. Skipping save"}
             self.skip_callbacks = true
             return true
           end
           @new_version = build_new_version
           if new_record?
             self.version = 1
-            saved_correctly = super            
+            # This should call ActiveRecord::Callbacks#create_or_update, which will correctly trigger the :save callback_chain
+            saved_correctly = super
             changed_attributes.clear
           else
-            logger.warn "Not a new record"
-            saved_correctly = @new_version.save
+            logger.debug {"Updating"}               
+            # Because we are 'skipping' the normal ActiveRecord update here, we must manually call the save callback chain.
+            run_callbacks :save do
+              saved_correctly = @new_version.save
+            end
           end
           publish_if_needed
           return saved_correctly
         end
 
-        ##
+        # Implementation from BrowserCMS 3.1. Left for reference while tests are being fixed for Rails 3 upgrade.
+        #
+        #
         # This overrides the 'save' method from activerecord
         # Things happening here:
         # 1. If the record is unchanged, no save is performed, but true is returned (Make a separete call back)
@@ -327,7 +335,7 @@ module Cms
           return true if self.changed?
           last_draft = self.draft
           return true unless last_draft
-          (self.class.versioned_columns - %w( version )).each do |col|
+          (self.class.versioned_columns - %w(  version  )).each do |col|
             return true if self.send(col) != last_draft.send(col)
           end
           return false

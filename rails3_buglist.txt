@@ -1,22 +1,13 @@
-Thrus: rake test:units TEST=unit/lib/content_block_test.rb
+Start with: rake test:units TEST=unit/models/page_test.rb
 
-Current Issue: `alias_method': undefined method `create_without_callbacks' for class `HtmlBlock' (NameError)
-    Reason: The ActiveRecord::Base.save callback 'stack' has changed again since 3.0.0 beta
-    Task: Figure out what method I need to override to change the persistence
-    Subtask: I don't see alias method chaining? How does ActiveRecord::Base#save get overrriden by say, validations#save?
+Current Issue: Connectors are not being created/copied as a side effect of adding blocks to pages.
+    I believe it should be leaving the original connectors, but creating new conns with pointers to the 'latest' version of the page.
+    This would allow for previous 'states' of a page to remain intact when viewed as page versions.
 
-* It appears that basic inheritence is used. The order in which ActiveRecord::Base includes methods (at the bottom of activerecord) repeatedly overrides save/save! with
-chains of 'super'
+How to adding ActiveRecord SQL logging to the console:
+    ActiveRecord::Base.logger = Logger.new(STDOUT)
 
-
-
-Add to Console:
-ActiveRecord::Base.logger = Logger.new(STDOUT)
-
-
-Issue: Content blocks are not being displayed.
-    
-Start With:  (master_helper_module has gone apparently been removed.)
+Issue #2: (master_helper_module has gone apparently been removed.)
     rake test:units TEST=unit/behaviors/rendering_test.rb
 - Error with view_paths being called on controller (See stack trace)
 - Blocks are getting all the Helpers, including Rendering, which defines its own 'render' method.
@@ -25,9 +16,7 @@ Start With:  (master_helper_module has gone apparently been removed.)
 - This is causing the wrong 'render' method to be called.
 - Blocks that implement 'render' (Portlets, Tags) should have their 'render' method called.
 
-Previous Issue: When saving blocks attached to a page, an incorrect number of connectors are being created (content_block_test.rb)
-
-Start with:
+Issue #3
  rake test:units TEST=unit/lib/content_block_test.rb
 
     A new connector is being created when a block is updated, but it's id is nil.
@@ -38,10 +27,10 @@ Start with:
     Learn how to use the ruby debugger from the command line (or get RubyMine 2.5)
 
 
-State of Test Cases (As of Aug 20, 2010)
+State of Test Cases (As of Oct 14, 2010)
 ====================
-Unit - 21 Failures, 19 Errors
-Functional - 37 Failures, 17 Errors
+Unit - 28 Failures, 16 Errors
+Functional - ?
 Integration - All Pass
 
 
@@ -61,7 +50,6 @@ Open Issues
 13. Test that file browser.xml works (for WYSIWYG editor)
 14. Deleting Page Templates doesn't work. (UI silently fails)
 15. Add/Edit/Delete/Load page_routes doesn't work.
-* Deleting blocks doesn't work. (Might actually be problems with queries)
 * Altering the uploaded file may not change the name of the file. (Broken test or broken feature?)
 * require_javascript_include - Tests are broken (probably due to changes to rails internals) 
 * save! is broken (Maybe)
