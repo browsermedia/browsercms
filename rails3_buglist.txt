@@ -1,9 +1,3 @@
-Start with: rake test:units TEST=unit/models/page_test.rb
-
-Current Issue: Connectors are not being created/copied as a side effect of adding blocks to pages.
-    I believe it should be leaving the original connectors, but creating new conns with pointers to the 'latest' version of the page.
-    This would allow for previous 'states' of a page to remain intact when viewed as page versions.
-
 How to adding ActiveRecord SQL logging to the console:
     ActiveRecord::Base.logger = Logger.new(STDOUT)
 

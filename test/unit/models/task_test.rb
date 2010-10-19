@@ -113,9 +113,13 @@ class ExistingIncompleteTaskTest < TaskTest
     @existing_task = Factory(:task, :assigned_by => @editor_a, :assigned_to => @editor_b, :page => @page)
   end
 
-  def test_create_task_for_a_page_with_existing_incomplete_tasks
+  test "Existing task is incomplete, and assigned to Editor B's task list" do
     assert !@existing_task.completed?
+    assert_equal @editor_b, @page.assigned_to
+    assert @editor_b.tasks.incomplete.all.include?(@existing_task)
+  end
 
+  def test_create_task_for_a_page_with_existing_incomplete_tasks
     @new_task = Factory(:task, :assigned_by => @editor_b, :assigned_to => @editor_a, :page => @page)
     @existing_task = Task.find(@existing_task.id)
 
@@ -127,11 +131,7 @@ class ExistingIncompleteTaskTest < TaskTest
     assert !@editor_b.tasks.incomplete.all.include?(@existing_task)
   end
 
-  def test_completing_a_task
-    assert !@existing_task.completed?
-    assert_equal @editor_b, @page.assigned_to
-    assert @editor_b.tasks.incomplete.all.include?(@existing_task)
-
+  test "Marking a task complete should mark it as unassigned" do
     @existing_task.mark_as_complete!
 
     assert @existing_task.completed?

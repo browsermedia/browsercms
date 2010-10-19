@@ -84,14 +84,6 @@ module Cms
           destroy
         end
 
-#        def destroy_with_callbacks!
-#          return false if callback(:before_destroy) == false
-#          result = destroy_without_callbacks!
-#          @destroyed = true
-#          callback(:after_destroy)
-#          result
-#        end
-
         def destroy!
           transaction { super.destroy }
         end
