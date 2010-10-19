@@ -377,11 +377,14 @@ class AddingBlocksTest < ActiveRecord::TestCase
     assert_equal 1, @connector.connectable_version, "Connector should point to version 1 of the block"
     assert_incremented @original_versions_count, @page.versions.count # "There should be a new version of the page"
     assert_equal 1, @page.connectors.for_page_version(@page.draft.version).count
-    assert_equal @connector_count + 1, Connector.count
+
+    assert_equal @connector_count + 1, Connector.count, "Adding the first block to a page should add exactly one connector"
   end
 
   test "Adding additional blocks to a page" do
     block2 = Factory(:html_block)
+
+
     conn = @page.create_connector(block2, "main")
 
     assert_equal 1, @page.version
@@ -389,7 +392,7 @@ class AddingBlocksTest < ActiveRecord::TestCase
     assert_equal 3, @page.versions.count, "Should be three versions of the page now"
     assert_equal 3, @page.draft.version, "Latest draft of a page should be 3"
     assert_equal 2, @page.connectors.for_page_version(@page.draft.version).count
-    assert_equal @connector_count + 2, Connector.count
+    assert_equal @connector_count + 3, Connector.count, "Adding a second block to an existing page should add 3 total connectors."
   end
 
   test "Creating a new block to a page should update all existing connectors to the new page version." do
