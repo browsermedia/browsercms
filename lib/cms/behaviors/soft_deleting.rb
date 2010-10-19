@@ -4,13 +4,15 @@ module Cms
       def self.included(model_class)
         model_class.extend(MacroMethods)
       end
-      module MacroMethods      
+
+      module MacroMethods
         def uses_soft_delete?
           !!@uses_soft_delete
         end
+
         def uses_soft_delete(options={})
           @uses_soft_delete = true
-        
+
           scope :not_deleted, :conditions => ["#{table_name}.deleted = ?", false]
           class << self
             alias_method :delete_all!, :delete_all
@@ -37,8 +39,8 @@ module Cms
         # Basically 'find' exactly how ActiveRecord originally implements it.
         #
         # @param args Same params as ActiveRecord.find
-        def find_with_deleted(*args)
-          self.with_exclusive_scope { find(*args) }
+        def find_with_deleted(* args)
+          self.with_exclusive_scope { find(* args) }
         end
 
         # Returns a count of all records of this type, including those marked as deleted.
@@ -46,13 +48,14 @@ module Cms
         # Behaves like ActiveRecord.count is originally implemented.
         #
         # @param args Same params as ActiveRecord.count
-        def count_with_deleted(*args)
-          self.with_exclusive_scope { count(*args) }             
+        def count_with_deleted(* args)
+          self.with_exclusive_scope { count(* args) }
         end
 
         def delete_all(conditions=nil)
           update_all(["deleted = ?", true], conditions)
         end
+
         def exists?(id_or_conditions)
           if id_or_conditions.is_a?(Hash) || id_or_conditions.is_a?(Array)
             conditions = {:conditions => id_or_conditions}
@@ -68,10 +71,12 @@ module Cms
         #
         # Overrides original destroy method
         def destroy
-          if self.class.publishable?
-            update_attributes(:deleted => true, :publish_on_save => true)
-          else
-            update_attributes(:deleted => true)
+          run_callbacks :destroy do
+            if self.class.publishable?
+              update_attributes(:deleted => true, :publish_on_save => true)
+            else
+              update_attributes(:deleted => true)
+            end
           end
         end
 
@@ -79,13 +84,13 @@ module Cms
           destroy
         end
 
-        def destroy_with_callbacks!
-          return false if callback(:before_destroy) == false
-          result = destroy_without_callbacks!
-          @destroyed = true
-          callback(:after_destroy)
-          result
-        end
+#        def destroy_with_callbacks!
+#          return false if callback(:before_destroy) == false
+#          result = destroy_without_callbacks!
+#          @destroyed = true
+#          callback(:after_destroy)
+#          result
+#        end
 
         def destroy!
           transaction { super.destroy }
@@ -93,7 +98,7 @@ module Cms
 
         def destroyed?
           @destroyed
-        end        
+        end
       end
     end
   end

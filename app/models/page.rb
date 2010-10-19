@@ -74,16 +74,16 @@ class Page < ActiveRecord::Base
   end
   
   def copy_connectors(options={})
-    logger.warn "Copying connectors from v#{options[:from_version_number]} to v#{options[:to_version_number]}."
+    logger.debug {"Copying connectors from v#{options[:from_version_number]} to v#{options[:to_version_number]}." }
 
     c_found = connectors.for_page_version(options[:from_version_number]).all(:order => "connectors.container, connectors.position")
-    logger.warn "Found connectors #{c_found}"
+    logger.debug {"Found connectors #{c_found}" }
     c_found.each do |c|
       # The connector won't have a connectable if it has been deleted
       # Also need to see if the draft has been deleted,
       # in which case we are in the process of deleting it
       if c.should_be_copied?
-        logger.warn "Connector id=>#{c.id} should be copied."
+        logger.debug { "Connector id=>#{c.id} should be copied." }
         connectable = c.connectable_type.constantize.versioned? ? c.connectable.as_of_version(c.connectable_version) : c.connectable
       
         #If we are copying connectors from a previous version, that means we are reverting this page,
@@ -101,7 +101,7 @@ class Page < ActiveRecord::Base
           :container => c.container, 
           :position => c.position
         )
-        logger.warn "Built new connector #{new_connector}."
+        logger.debug {"Built new connector #{new_connector}."}
       end
     end
     true
@@ -154,7 +154,8 @@ class Page < ActiveRecord::Base
       end
     end
   end          
-          
+
+  # Pages that get deleted should be 'disconnected' from any blocks they were associated with.
   def delete_connectors
     connectors.for_page_version(version).all.each{|c| c.destroy }
   end

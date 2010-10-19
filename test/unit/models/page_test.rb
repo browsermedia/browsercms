@@ -344,11 +344,14 @@ class PageWithAssociatedBlocksTest < ActiveRecord::TestCase
     assert_equal page_version, @page.version
   end
 
-  def test_deleting_a_page
+  # Verifies that 'after_destroy' callbacks happen on Page/SoftDeleting objects, such that
+  # a deleted page is disassociated with any blocks it was connected to.
+  test "Destroying a page with a block should remove its connectors from the database completely." do   
+
     connector_count = Connector.count
     assert Connector.exists?(@page_connector.id)
     assert Connector.exists?(@other_connector.id)
-    
+
     @page.destroy
     
     assert_decremented connector_count, Connector.count
@@ -357,6 +360,8 @@ class PageWithAssociatedBlocksTest < ActiveRecord::TestCase
     assert HtmlBlock.exists?(@block.id)
     assert !@block.deleted?
   end
+
+
 end
 
 class AddingBlocksTest < ActiveRecord::TestCase
