@@ -50,11 +50,12 @@ class Page < ActiveRecord::Base
   before_destroy :delete_connectors
   
   validates_presence_of :name, :path
-  validates_uniqueness_of :path
+
+  # Paths must be unique among undeleted records
+  validates_uniqueness_of :path, :scope=>:deleted
   validate :path_not_reserved
           
   def after_build_new_version(new_version)
-    logger.warn "Page#after_build_new_version"
     copy_connectors(
       :from_version_number => @copy_connectors_from_version || (new_version.version - 1),
       :to_version_number => new_version.version

@@ -63,7 +63,15 @@ class PageTest < ActiveRecord::TestCase
     assert_equal @page, Page.find_live_by_path('/bar')
   end
 
-  def test_find_live_by_path_after_delete
+  test "It should be possible to create a new page, using the same path as a previously deleted page" do
+    @page = Factory(:published_page, :path=>"/foo")
+    @page.destroy
+
+    @page2 = Factory(:published_page, :path=>"/foo")
+    assert_not_equal(@page, @page2)
+  end
+
+  test "Find by live path should not located deleted blocks, even if they share paths with live ones" do
     @page = Factory.build(:page, :path => '/foo')
     @page.publish!
     reset(:page)
