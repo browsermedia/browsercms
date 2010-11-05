@@ -94,11 +94,10 @@ class ActiveSupport::TestCase
     user  
   end
 
-  FILES_DIR = File.dirname(__FILE__) + '/fixtures/multipart'
-
+  require 'test_file'
   # Creates a TempFile attached to an uploaded file. Used to test attachments
   def file_upload_object(options)
-    Rack::Test::UploadedFile.new("#{FILES_DIR}/#{options[:original_filename]}", options[:content_type], false)
+    Cms::TestFile.new_file(options[:original_filename], options[:content_type])
   end
 
   def guest_group

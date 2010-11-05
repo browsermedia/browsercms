@@ -22,6 +22,7 @@ module Cms
           has_many :versions, :class_name  => version_class_name, :foreign_key => version_foreign_key
 
           before_validation :initialize_version
+          before_create :build_new_version
           attr_accessor :skip_callbacks
 
           attr_accessor :revert_to_version
@@ -80,7 +81,8 @@ module Cms
           self.version = 1 if new_record?
         end
 
-        def build_new_version
+
+        def build_new_version_and_add_to_versions_list_for_saving
           # First get the values from the draft
           attrs = draft_attributes
 
@@ -98,7 +100,7 @@ module Cms
         end
 
         def draft_attributes
-          # When there is no draft, we'll just copy the attibutes from this object
+          # When there is no draft, we'll just copy the attributes from this object
           # Otherwise we need to use the draft
           d = new_record? ? self : draft
           self.class.versioned_columns.inject({}) { |attrs, col| attrs[col] = d.send(col); attrs }
@@ -113,7 +115,7 @@ module Cms
         end
 
         def publish_if_needed
-          logger.warn "Checking if publishing should occur. publish='#{@publish_on_save}'"
+          logger.debug { "#{self.class}#publish_if_needed. publish? = '#{!!@publish_on_save}'"}
 
           if @publish_on_save
             publish
@@ -146,21 +148,22 @@ module Cms
         # 2. If its an update, a new version is created and that is saved.
         # 3. If new record, its version is set to 1, and its published if needed.
         def create_or_update
-          logger.debug {"create_or_update called. Publishing? = #{publish_on_save}"}
+          logger.debug {"#{self.class}#create_or_update called. Published = #{!!publish_on_save}"}
           self.skip_callbacks = false
           unless different_from_last_draft?
             logger.debug {"No difference between this version and last. Skipping save"}
             self.skip_callbacks = true
             return true
           end
-          @new_version = build_new_version
+          logger.debug {"Saving #{self.class} #{self.attributes}"}
           if new_record?
             self.version = 1
             # This should call ActiveRecord::Callbacks#create_or_update, which will correctly trigger the :save callback_chain
             saved_correctly = super
             changed_attributes.clear
           else
-            logger.debug {"Updating"}               
+            logger.debug {"#{self.class}#update"}
+            build_new_version
             # Because we are 'skipping' the normal ActiveRecord update here, we must manually call the save callback chain.
             run_callbacks :save do
               saved_correctly = @new_version.save
@@ -170,6 +173,14 @@ module Cms
           return saved_correctly
         end
 
+        # Build a new version of this record and associate it with this record.
+        #
+        # Called as a before_create in order to correctly allow any other associations to be saved correctly.
+        # Called explicitly during update, where it will just define the new_version to be saved.
+        def build_new_version
+          @new_version = build_new_version_and_add_to_versions_list_for_saving
+          logger.debug {"New version of #{self.class}::Version is #{@new_version.attributes}"}
+        end
         # Implementation from BrowserCMS 3.1. Left for reference while tests are being fixed for Rails 3 upgrade.
         #
         #

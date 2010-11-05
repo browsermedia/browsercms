@@ -31,8 +31,7 @@ class Attachment < ActiveRecord::Base
 
   #----- Validations -----------------------------------------------------------
 
-  validates_presence_of :temp_file, 
-    :message => "You must upload a file", :on => :create
+  validates_presence_of :temp_file, :message => "You must upload a file", :on => :create
   validates_presence_of :file_path
   validates_uniqueness_of :file_path
   validates_presence_of :section_id
@@ -55,6 +54,7 @@ class Attachment < ActiveRecord::Base
   end
 
   def section=(section)
+    logger.debug {"Attachment#section=(#{section})"}
     if @section != section
       dirty!
       @section_id = section ? section.id : nil

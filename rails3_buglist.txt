@@ -1,5 +1,12 @@
-How to adding ActiveRecord SQL logging to the console:
-    ActiveRecord::Base.logger = Logger.new(STDOUT)
+Start with: rake test:units TEST=unit/behaviors/attaching_test.rb
+Issue #1: Creating blocks with attachments is not correctly saving the default section.
+    A SectionNode is being created. However, it may be the case that Attachment#section is not correctly returning the appropriate object.
+
+    * Probably appears to be that attachmentable objects are not being saved.
+    * Default attachable is doing insert correctly, but the versions table is not being updated.
+
+    How to adding ActiveRecord SQL logging to the console:
+    require 'test/console_helper'
 
 Issue #2: (master_helper_module has gone apparently been removed.)
     rake test:units TEST=unit/behaviors/rendering_test.rb

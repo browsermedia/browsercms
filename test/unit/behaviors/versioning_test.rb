@@ -38,7 +38,7 @@ class VersioningTest < ActiveSupport::TestCase
   test "Build new version should create a new version with an incremented version from the primary object" do
     block = HtmlBlock.new(:name=>"ABC")
     assert block.save
-    assert_equal 2, block.build_new_version.version
+    assert_equal 2, block.build_new_version_and_add_to_versions_list_for_saving.version
   end
 
   test "Updating an object should perform after_save callbacks" do
@@ -48,7 +48,4 @@ class VersioningTest < ActiveSupport::TestCase
 
     block.save
   end
-
-
-
 end

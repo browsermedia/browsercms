@@ -8,7 +8,22 @@ class FileBlockTest < ActiveSupport::TestCase
       :size => "99", :read => "01010010101010101")
     @file_block = Factory.build(:file_block, :attachment_file => @file, :attachment_section => root_section, :attachment_file_path => "/test.jpg", :publish_on_save => true)
   end
-  
+
+  test "Saving should also save attachment." do
+    @file_block.save!
+    assert_not_nil @file_block.attachment
+
+    found = FileBlock.find(@file_block)
+    assert_not_nil found.attachment
+  end
+
+  test "Saving should save a version with the correct pointer to its attachment" do
+    @file_block.save!
+    attachment = @file_block.attachment
+    assert_equal attachment.id, @file_block.versions[0].attachment_id      
+    assert_equal attachment.version, @file_block.versions[0].attachment_version
+  end
+
   def test_attachment_is_required
     @file_block.attachment_file = nil
     assert !@file_block.valid?
@@ -83,7 +98,7 @@ class UpdatingFileBlockTest < ActiveSupport::TestCase
     reset(:file_block)
     @attachment = @file_block.attachment
   end
-  
+
   def test_change_attachment_file_name
     attachment_version = @attachment.version
     file_attachment_version = @file_block.attachment_version
@@ -118,7 +133,6 @@ class UpdatingFileBlockTest < ActiveSupport::TestCase
     attachment_version_count = Attachment::Version.count
     file_block_version = @file_block.draft.version
 
-    @section = Factory(:section, :parent => root_section, :name => "New")
     @file_block.update_attributes!(:attachment_file => mock_file(:read => "new"))
     
     assert_equal attachment_count, Attachment.count

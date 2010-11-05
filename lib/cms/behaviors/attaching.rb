@@ -94,7 +94,7 @@ module Cms
               return false
             end              
           else
-            build_attachment if attachment.nil?  
+            build_attachment if attachment.nil?
             attachment.temp_file = attachment_file 
             set_attachment_file_path
             if attachment.file_path.blank?
@@ -137,6 +137,7 @@ module Cms
         end
 
         def update_attachment_if_changed
+          logger.debug {"UPDATE ATTACHMENT if changed" }
           if attachment
             attachment.archived = archived if self.class.archivable?
             if respond_to?(:revert_to_version) && revert_to_version
