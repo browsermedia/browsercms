@@ -27,10 +27,18 @@ Unit - 28 Failures, 16 Errors
 Functional - ?
 Integration - All Pass
 
+Todo List
+===============
+* Clean up logging messages that are filling up the production logs unnecesarily
+** 'Caching enabled'
+** 'Not the CMS site'
+** 'Rendering content block X'
+** 'Not caching, user logged in'
+** Rendering template X'
+* Have at most one line per request for any diagnositic result.
 
 Open Issues
 ===========
-1. When saving blocks attached to a page, an incorrect number of connectors are being created (content_block_test.rb)
 2. Content blocks are not being displayed within their containers (Seems likely our assumptions about 'attribute' names from Rails 2 has changed)
 3. content/show.html.erb is not rendering anything for the 'body' of the page. I.e. content explicitly added to the main area rather than content_for calls. (Likely related to #2)
 4. Pages do not render their status icon in the sitemap.
