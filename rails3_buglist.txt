@@ -1,5 +1,12 @@
-Start with: rake test:units TEST=unit/models/file_block_test.rb
-   Version comments don't appear to be correct for saving fileblocks.
+Start with:
+rake test:units 
+
+Issue #4
+rake test:units TEST=unit/models/file_block_test.rb
+   Reading of content from temporary files isn't occuring.
+   Old tests actually stored data in temp files. That is no longer occuring. Can Rack::Test::UploadedFiled even handle that?
+   This is a case of a broken test that's actually not a real bug.
+
 
 Issue #2: (master_helper_module has gone apparently been removed.)
     rake test:units TEST=unit/behaviors/rendering_test.rb
@@ -21,11 +28,11 @@ Issue #3
     Learn how to use the ruby debugger from the command line (or get RubyMine 2.5)
 
 
-State of Test Cases (As of Oct 14, 2010)
+State of Test Cases (As of Nov 24, 2010)
 ====================
-Unit - 28 Failures, 16 Errors
-Functional - ?
-Integration - All Pass
+Unit - 4 Failures, 2 Errors
+Functional - 41 Failures, 37
+Integration - 2F, 2E
 
 Todo List
 ===============

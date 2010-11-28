@@ -142,7 +142,7 @@ class UpdatingFileBlockTest < ActiveSupport::TestCase
     assert !@file_block.live?
     assert !@file_block.attachment.live?
   end
-  
+
   def test_change_attachment_data_with_save_and_publish
     attachment_count = Attachment.count
     attachment_version_count = Attachment::Version.count

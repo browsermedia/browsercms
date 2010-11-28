@@ -22,7 +22,8 @@ module Cms
           has_many :versions, :class_name  => version_class_name, :foreign_key => version_foreign_key
 
           before_validation :initialize_version
-          before_create :build_new_version
+#          before_create :build_new_version
+          before_save :build_new_version
           attr_accessor :skip_callbacks
 
           attr_accessor :revert_to_version
@@ -163,7 +164,6 @@ module Cms
             changed_attributes.clear
           else
             logger.debug {"#{self.class}#update"}
-            build_new_version
             # Because we are 'skipping' the normal ActiveRecord update here, we must manually call the save callback chain.
             run_callbacks :save do
               saved_correctly = @new_version.save

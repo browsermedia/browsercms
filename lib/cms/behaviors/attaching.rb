@@ -143,7 +143,8 @@ module Cms
             if respond_to?(:revert_to_version) && revert_to_version
               attachment.revert_to(revert_to_version.attachment_version)
             elsif new_record? || attachment.changed? || attachment.temp_file
-              attachment.save
+              saved_attach = attachment.save
+              logger.warn "Attachment was saved = #{saved_attach}"
             end
             self.attachment_version = attachment.draft.version
           end

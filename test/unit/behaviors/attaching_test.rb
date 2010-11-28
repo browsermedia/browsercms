@@ -82,7 +82,7 @@ class DefaultAttachableTest < ActiveSupport::TestCase
 
     @attachable = DefaultAttachable.find(@attachable.id)
 
-    assert_not_nil @attachable.attachment, "Should have an attachment" # This is failing
+    assert_not_nil @attachable.attachment, "Should have an attachment"
     assert_equal @section, @attachable.attachment_section
 
   end
@@ -119,16 +119,21 @@ class DefaultAttachableTest < ActiveSupport::TestCase
     end
 
     assert_nil @attachable.attachment_file_path
+    assert_nil @attachable.attachment, "There should be no attachment saved."
 
     reset(:attachable)
 
     @attachable.attachment_file = @file
-    @attachable.save
-    @attachable.publish
+    assert_equal true, @attachable.save!
+    assert_equal true, @attachable.publish!
+
     assert_equal "/attachments/foo.jpg", @attachable.attachment_file_path
+
+    assert_not_nil @attachable.attachment, "After attaching a file, the Attachment should exist"
 
     reset(:attachable)
 
+    assert_not_nil @attachable.attachment, "The attachment should have been saved and reloaded."
     assert_equal @section, @attachable.attachment_section
     assert_equal @section.id, @attachable.attachment_section_id
     assert_equal "/attachments/foo.jpg", @attachable.attachment_file_path
