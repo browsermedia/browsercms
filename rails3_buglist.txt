@@ -1,31 +1,7 @@
 Start with:
-rake test:units 
+rake test
 
-Issue #4
-rake test:units TEST=unit/models/file_block_test.rb
-   Reading of content from temporary files isn't occuring.
-   Old tests actually stored data in temp files. That is no longer occuring. Can Rack::Test::UploadedFiled even handle that?
-   This is a case of a broken test that's actually not a real bug.
-
-
-Issue #2: (master_helper_module has gone apparently been removed.)
-    rake test:units TEST=unit/behaviors/rendering_test.rb
-- Error with view_paths being called on controller (See stack trace)
-- Blocks are getting all the Helpers, including Rendering, which defines its own 'render' method.
-- It appears an exception for 'action_name' not being a valid method on blocks is being thrown.
-- HtmlBlock (and presumably other blocks) are extending AbstractController::Rendering, for reasons I haven't yet determined.
-- This is causing the wrong 'render' method to be called.
-- Blocks that implement 'render' (Portlets, Tags) should have their 'render' method called.
-
-Issue #3
- rake test:units TEST=unit/lib/content_block_test.rb
-
-    A new connector is being created when a block is updated, but it's id is nil.
-    No connectors are being found when it gets filtered down to the page and block version.
-    See comments/logging in connecting.rb for update_connected_pages and connector.rb for find_connectable
-    
-    Look at ActiveSupport.on_load for things that went missing.
-    Learn how to use the ruby debugger from the command line (or get RubyMine 2.5)
+Make controller tests pass.
 
 
 State of Test Cases (As of Dec 7, 2010)
