@@ -94,10 +94,10 @@ class ActiveSupport::TestCase
     user  
   end
 
-  require 'test_file'
+  require 'mock_file'
   # Creates a TempFile attached to an uploaded file. Used to test attachments
   def file_upload_object(options)
-    Cms::TestFile.new_file(options[:original_filename], options[:content_type])
+    Cms::MockFile.new_file(options[:original_filename], options[:content_type])
   end
 
   def guest_group
@@ -112,10 +112,10 @@ class ActiveSupport::TestCase
     login_as(User.first)
   end
 
+  # Creates a sample uploaded JPG file with binary data.
   def mock_file(options = {})
     file_upload_object({:original_filename => "foo.jpg", 
-      :content_type => "image/jpeg", :rewind => true,
-      :size => "99", :read => "01010010101010101"}.merge(options))
+      :content_type => "image/jpeg"}.merge(options))
   end
 
   # Takes a list of the names of instance variables to "reset"

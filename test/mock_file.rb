@@ -1,7 +1,7 @@
 module Cms
 
   # Simplified handling for creating files for writing tests around multipart uploads.
-  module TestFile
+  module MockFile
     FILES_DIR = File.dirname(__FILE__) + '/fixtures/multipart'
 
     # Creates a file to test uploading to a sample file.

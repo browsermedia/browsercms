@@ -44,9 +44,7 @@ end
 class AttachableBehaviorTest < ActiveSupport::TestCase
 
   def setup
-    @file = file_upload_object(:original_filename => "foo.jpg",
-                               :content_type => "image/jpeg", :rewind => true,
-                               :size => "99", :read => "01010010101010101")
+    @file = mock_file
 
     @attachable = DefaultAttachable.create!(:name => "File Name", :attachment_file => @file, :publish_on_save => true)
 
@@ -68,9 +66,7 @@ end
 class DefaultAttachableTest < ActiveSupport::TestCase
   def setup
     #file is a mock of the object that Rails wraps file uploads in
-    @file = file_upload_object(:original_filename => "foo.jpg",
-                               :content_type => "image/jpeg", :rewind => true,
-                               :size => "99", :read => "01010010101010101")
+    @file = mock_file
 
     @section = root_section
   end
@@ -165,9 +161,7 @@ class AttachableTest < ActiveSupport::TestCase
 
   def setup
     #file is a mock of the object that Rails wraps file uploads in
-    @file = file_upload_object(:original_filename => "sample_upload.txt",
-                               :content_type => "image/jpeg", :rewind => true,
-                               :size => "99", :read => "01010010101010101")
+    @file = mock_file(:original_filename => "sample_upload.txt")
 
     @section = Factory(:section, :name => "attachables", :parent => root_section)
   end
@@ -266,9 +260,7 @@ class AttachableTest < ActiveSupport::TestCase
 
     reset(:attachable)
 
-    @file2 = file_upload_object(:original_filename => "second_upload.txt",
-                                :content_type => "image/jpeg", :rewind => true,
-                                :size => "99", :read => "Foo v2")
+    @file2 = mock_file(:original_filename => "second_upload.txt")
 
     attachment_count = Attachment.count
     attachment_version = @attachable.attachment_version
@@ -314,9 +306,7 @@ end
 class VersionedAttachableTest < ActiveSupport::TestCase
   def setup
     #file is a mock of the object that Rails wraps file uploads in
-    @file = file_upload_object(:original_filename => "foo.jpg",
-                               :content_type => "image/jpeg", :rewind => true,
-                               :size => "99", :read => "01010010101010101")
+    @file = mock_file
 
     @section = Factory(:section, :name => "attachables", :parent => root_section)
 
@@ -362,9 +352,7 @@ class VersionedAttachableTest < ActiveSupport::TestCase
   end
 
   def test_updating_the_versioned_attachable_attachment_file
-    @file2 = file_upload_object(:original_filename => "second_upload.txt",
-                                :content_type => "image/jpeg", :rewind => true,
-                                :size => "99", :read => "Foo v2")
+    @file2 = mock_file(:original_filename => "second_upload.txt")
 
     attachable_count = VersionedAttachable.count
     attachment_count = Attachment.count

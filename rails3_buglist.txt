@@ -28,9 +28,9 @@ Issue #3
     Learn how to use the ruby debugger from the command line (or get RubyMine 2.5)
 
 
-State of Test Cases (As of Nov 24, 2010)
+State of Test Cases (As of Dec 7, 2010)
 ====================
-Unit - 4 Failures, 2 Errors
+Unit - ALL PASS!!!!!!
 Functional - 41 Failures, 37
 Integration - 2F, 2E
 

@@ -3,9 +3,8 @@ require File.join(File.dirname(__FILE__), '/../../test_helper')
 class FileBlockTest < ActiveSupport::TestCase
   def setup
     #@file is a mock of the object that Rails wraps file uploads in
-    @file = file_upload_object(:original_filename => "foo.jpg",
-      :content_type => "image/jpeg", :rewind => true,
-      :size => "99", :read => "01010010101010101")
+    @file = file_upload_object(:original_filename => "version1.txt",
+      :content_type => "text/plain")
     @file_block = Factory.build(:file_block, :attachment_file => @file, :attachment_section => root_section, :attachment_file_path => "/test.jpg", :publish_on_save => true)
   end
 
@@ -54,34 +53,32 @@ class FileBlockTest < ActiveSupport::TestCase
   def test_reverting
     assert @file_block.save
     assert "/test.jpg", @file_block.attachment_file_path
-    assert "01010010101010101", File.read(@file_block.attachment.full_file_location)
+    assert_equal "v1", File.read(@file_block.attachment.full_file_location)
     
     attachment_id = @file_block.attachment_id
-    new_file = file_upload_object(:original_filename => "foo.jpg",
-      :content_type => "image/jpeg", :rewind => true,
-      :size => "99", :read => "10100101010101010")
+    new_file = file_upload_object(:original_filename => "version2.txt")
     
     @file_block.update_attributes(:attachment_file => new_file, :publish_on_save => true)
     reset(:file_block)
     
     assert @file_block.save
-    assert 2, @file_block.version
-    assert attachment_id, @file_block.attachment_id
-    assert 2, @file_block.attachment_version    
-    assert "/test.jpg", @file_block.attachment_file_path
-    assert "10100101010101010", File.read(@file_block.attachment.full_file_location)
+    assert_equal 2, @file_block.version
+    assert_equal attachment_id, @file_block.attachment_id
+    assert_equal 2, @file_block.attachment_version
+    assert_equal "/test.jpg", @file_block.attachment_file_path
+    assert_equal "v2", File.read(@file_block.attachment.full_file_location)
     
     @file_block.revert_to(1)
     reset(:file_block)
 
-    assert 2, @file_block.version
-    assert 3, @file_block.draft.version
-    assert attachment_id, @file_block.attachment_id
-    assert 2, @file_block.attachment_version
-    assert 3, @file_block.draft.attachment_version
-    assert "/test.jpg", @file_block.attachment_file_path
-    assert "01010010101010101", File.read(@file_block.attachment.full_file_location)
-    assert "10100101010101010", File.read(@file_block.as_of_draft_version.attachment.full_file_location)
+    assert_equal 2, @file_block.version
+    assert_equal 3, @file_block.draft.version
+    assert_equal attachment_id, @file_block.attachment_id
+    assert_equal 2, @file_block.attachment_version
+    assert_equal 3, @file_block.draft.attachment_version
+    assert_equal "/test.jpg", @file_block.attachment_file_path
+    assert "v1", File.read(@file_block.attachment.full_file_location)
+    assert "v1", File.read(@file_block.as_of_draft_version.attachment.full_file_location)
     
   end
   
@@ -92,7 +89,7 @@ class UpdatingFileBlockTest < ActiveSupport::TestCase
     @file_block = Factory(:file_block,
       :attachment_section => root_section,
       :attachment_file_path => "/test.jpg",
-      :attachment_file => mock_file(:read => "original"),
+      :attachment_file => mock_file(),
       :name => "Test",
       :publish_on_save => true)
     reset(:file_block)
@@ -133,12 +130,12 @@ class UpdatingFileBlockTest < ActiveSupport::TestCase
     attachment_version_count = Attachment::Version.count
     file_block_version = @file_block.draft.version
 
-    @file_block.update_attributes!(:attachment_file => mock_file(:read => "new"))
+    @file_block.update_attributes!(:attachment_file => mock_file(:original_filename=>"version2.txt"))
     
     assert_equal attachment_count, Attachment.count
     assert_incremented attachment_version_count, Attachment::Version.count
     assert_incremented file_block_version, @file_block.draft.version
-    assert_equal "new", open(@file_block.as_of_draft_version.attachment.full_file_location){|f| f.read}
+    assert_equal "v2", open(@file_block.as_of_draft_version.attachment.full_file_location){|f| f.read}
     assert !@file_block.live?
     assert !@file_block.attachment.live?
   end
@@ -149,12 +146,12 @@ class UpdatingFileBlockTest < ActiveSupport::TestCase
     file_block_version = @file_block.version
 
     @section = Factory(:section, :parent => root_section, :name => "New")
-    @file_block.update_attributes!(:attachment_file => mock_file(:read => "new"), :publish_on_save => true)
+    @file_block.update_attributes!(:attachment_file => mock_file(:original_filename=>"version2.txt"), :publish_on_save => true)
     
     assert_equal attachment_count, Attachment.count
     assert_incremented attachment_version_count, Attachment::Version.count
     assert_incremented file_block_version, @file_block.reload.version
-    assert_equal "new", open(@file_block.attachment.full_file_location){|f| f.read}
+    assert_equal "v2", open(@file_block.attachment.full_file_location){|f| f.read}
     assert @file_block.published?
     assert @file_block.attachment.published?
   end
@@ -177,8 +174,8 @@ end
 class ViewingOlderVersionOfFileTest < ActiveSupport::TestCase
   
   def test_that_it_shows_the_correct_content
-    @file1 = mock_file(:content_type => "text/plain", :read => "v1")      
-    @file2 = mock_file(:content_type => "text/plain", :read => "v2")
+    @file1 = mock_file(:original_filename=>"version1.txt")
+    @file2 = mock_file(:original_filename=>"version2.txt")
     @file_block = Factory(:file_block, :attachment_file => @file1, :attachment_file_path => "/test.txt", :attachment_section => root_section)
     @file_block.update_attributes(:attachment_file => @file2)
     #reset(:file_block)            
