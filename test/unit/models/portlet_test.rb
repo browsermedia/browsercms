@@ -66,4 +66,6 @@ class PortletTest < ActiveSupport::TestCase
     p.template = ""
     assert_equal({}, p.inline_options)
   end
+
+
 end

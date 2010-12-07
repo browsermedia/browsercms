@@ -49,7 +49,7 @@ class Portlet < ActiveRecord::Base
   end
   
   def self.types
-    @types ||= ActiveSupport::Dependencies.load_paths.map do |d| 
+    @types ||= ActiveSupport::Dependencies.autoload_paths.map do |d|
       if d =~ /app\/portlets/
         Dir["#{d}/*_portlet.rb"].map do |p| 
           File.basename(p, ".rb").classify
