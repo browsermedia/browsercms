@@ -53,12 +53,16 @@ class RenderingTest < ActiveSupport::TestCase
     self_rendering.expects(:render)
     self_rendering.prepare_to_render(stub())
   end
-  
-  test "perform render" do
-    controller = stub()
+
+  test "perform render doesn't throw missing methods errors" do
+    controller = ActionController::Base.new
     controller.expects(:view_paths).returns([])
 
     block = HtmlBlock.new
-    block.perform_render(controller)
+
+    # This isn't really what should happen, but its at least testing that render isn't using missing methods
+    assert_raise ActionView::MissingTemplate do
+      block.perform_render(controller)
+    end
   end
 end

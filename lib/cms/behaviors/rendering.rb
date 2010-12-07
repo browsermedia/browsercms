@@ -123,9 +123,12 @@ module Cms
         # Create, Instantiate and Initialize the view
         view_class  = Class.new(ActionView::Base)      
         action_view = view_class.new(@controller.view_paths, {}, @controller)
-    
+
+        logger.warn("View Class: #{view_class}")
+        logger.warn("View : #{action_view}")
+
         # Make helpers and instance vars available
-        view_class.send(:include, @controller.class.master_helper_module)
+        view_class.send(:include, @controller.class._helpers)
         if $:.detect{|d| File.exists?(File.join(d, self.class.helper_path))}
           view_class.send(:include, self.class.helper_class)
         end
