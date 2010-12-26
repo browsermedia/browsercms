@@ -22,8 +22,12 @@ module Cms
           include InstanceMethods
 
           # By default, all queries for blocks should filter out deleted rows.
+          begin
           default_scope where(:deleted => false)
-
+          rescue Mysql::Error => e
+            puts e.inspect
+            Rails.logger.info e.inspect
+          end 
         end
       end
 
