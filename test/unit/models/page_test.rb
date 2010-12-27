@@ -64,10 +64,13 @@ class PageTest < ActiveRecord::TestCase
   end
 
   test "It should be possible to create a new page, using the same path as a previously deleted page" do
-    @page = Factory(:published_page, :path=>"/foo")
+    Page.delete_all
+    p = Time.now.to_f.to_s#use a unique, but consistent path
+    
+    @page = Factory(:published_page, :path=>"/#{p}")
     @page.destroy
 
-    @page2 = Factory(:published_page, :path=>"/foo")
+    @page2 = Factory(:published_page, :path=>"/#{p}")
     assert_not_equal(@page, @page2)
   end
 
@@ -323,7 +326,7 @@ end
 class PageWithAssociatedBlocksTest < ActiveRecord::TestCase
   def setup   
     super 
-    @page = Factory(:page, :section => root_section, :name => "Bar")
+    @page = Factory(:page, :section => root_section, :name => "Bar", :path => "/#{Time.now.to_f.to_s}")
     @block = Factory(:html_block)
     @other_connector = Factory(:connector, :connectable => @block, :connectable_version => @block.version)
     @page_connector = Factory(:connector, :page => @page, :page_version => @page.version, :connectable => @block, :connectable_version => @block.version)
@@ -331,6 +334,7 @@ class PageWithAssociatedBlocksTest < ActiveRecord::TestCase
   
   # It should create a new page version and a new connector
   def test_updating_the_page_with_changes
+    Page.delete_all
     connector_count = Connector.count
     page_version = @page.version
     
@@ -696,6 +700,7 @@ end
 
 class RevertingABlockThatIsOnMultiplePagesTest < ActiveRecord::TestCase
   def test_that_it_reverts_both_pages
+    Page.delete_all
     
     # 1. Create a new page (Page 1, v1)    
     @page1 = Factory(:page, :name => "Page 1")
