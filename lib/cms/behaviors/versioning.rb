@@ -299,7 +299,7 @@ module Cms
           obj.lock_version = lock_version
 
           # Need to do this so associations can be loaded
-          obj.instance_variable_set("@new_record", false)
+          obj.instance_variable_set("@persisted", true)
 
           # Callback to allow us to load other data when an older version is loaded
           obj.after_as_of_version if obj.respond_to?(:after_as_of_version)
