@@ -60,7 +60,7 @@ end
 # Replace short hand versions of the templates with the absolute path on the local machine.
 CommandLine.set_template(ARGV)
 command = (RUBY_PLATFORM =~ /mswin32/ ? "cmd /c " : "")
-command += "rails #{ARGV.join(" ")}"
+command += "rails new #{ARGV.join(" ")}"
 success = system(command)
 
 project_name = ARGV[0]
