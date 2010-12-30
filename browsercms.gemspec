@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{browsercms}
-  s.version = "3.1.0"
+  s.version = "3.5.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["BrowserMedia"]
-  s.date = %q{2010-01-30}
+  s.authors = ["BrowserMedia", "Pete Philips"]
+  s.date = %q{2010-12-27}
   s.description = %q{Web Content Management in Rails.}
   s.email = %q{github@browsermedia.com}
   s.executables = ["browsercms", "bcms"]
@@ -256,8 +256,8 @@ Gem::Specification.new do |s|
      "db/demo/page_templates/home_page.html.erb",
      "db/demo/page_templates/sub_page.html.erb",
      "db/migrate/20080815014337_browsercms_3_0_0.rb",
-     "db/migrate/20081114172307_load_seed_data.rb",
      "db/migrate/20091109175123_browsercms_3_0_5.rb",
+     "db/seeds.rb",
      "doc/app/classes/AbstractFileBlock.html",
      "doc/app/classes/ActiveRecord.html",
      "doc/app/classes/ActiveRecord/ConnectionAdapters/SchemaStatements.html",
@@ -575,7 +575,7 @@ Gem::Specification.new do |s|
      "doc/guides/html/content_blocks.html",
      "doc/guides/html/customizing_browsercms.html",
      "doc/guides/html/deployment_guide.html",
-     "doc/guides/html/designer_guide.html",
+#     "doc/guides/html/designer_guide.html",
      "doc/guides/html/files/javascripts/code_highlighter.js",
      "doc/guides/html/files/javascripts/guides.js",
      "doc/guides/html/files/javascripts/highlighters.js",
@@ -625,8 +625,10 @@ Gem::Specification.new do |s|
      "doc/guides/html/writing_guides.html",
      "lib/acts_as_list.rb",
      "lib/browsercms.rb",
+     "lib/cms/acts.rb",
      "lib/cms/acts/content_block.rb",
      "lib/cms/acts/content_page.rb",
+     "lib/cms/authentication.rb",
      "lib/cms/authentication/controller.rb",
      "lib/cms/authentication/model.rb",
      "lib/cms/behaviors.rb",
