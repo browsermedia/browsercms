@@ -6,7 +6,7 @@ else
 end
 
 # Loads the version, so we can explicitly set in the generated cms project.
-template_root = File.dirname(File.expand_path(template))
+template_root = File.dirname(__FILE__)
 require File.join(template_root, '..', 'lib', 'cms', 'version.rb')
 gem "browsercms", :version=>Cms::VERSION
 
