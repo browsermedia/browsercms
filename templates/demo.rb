@@ -18,14 +18,14 @@ if Gem.win_platform?
 else
   rake "db:create"
 end
-route "map.routes_for_browser_cms"
-generate :browser_cms
+# route "routes_for_browser_cms"
+generate "browser_cms:cms"
 environment 'SITE_DOMAIN="localhost:3000"', :env => "development"
 environment 'SITE_DOMAIN="localhost:3000"', :env => "test"
 environment 'SITE_DOMAIN="localhost:3000"', :env => "production"
 environment 'config.action_view.cache_template_loading = false', :env => "production"
 environment 'config.action_controller.page_cache_directory = Rails.root + "/public/cache/"', :env => "production"
-generate :browser_cms_demo_site
+generate "browser_cms:demo_site"
 
 require File.join(template_root, '..', 'app', 'models', 'templates.rb')
 file 'app/views/layouts/templates/default.html.erb', Templates.default_body
