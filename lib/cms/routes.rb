@@ -33,20 +33,20 @@ module Cms::Routes
     namespace :cms do
       # Namespaces don't seem to 'prefix' controller names for non-resources methods
       # The Rails 3 release may avoid the need for explicitly prefixing cms/ to all these methods
-      match '/dashboard', :to=>"cms/dashboard#index", :as=>'dashboard'
+      match '/dashboard', :to=>"dashboard#index", :as=>'dashboard'
       # I want to do the following instead
       # match '/dashboard', :to=>"dashboard#index", :as=>'dashboard'
 
-      match '/', :to => 'cms/home#index', :as=>'home'
-      match '/sitemap', :to=>"cms/section_nodes#index", :as=>'sitemap'
-      match '/content_library', :to=>"cms/html_blocks#index", :as=>'content_library'
-      match '/administration', :to=>"cms/users#index", :as=>'administration'
-      match '/logout', :to=>"cms/sessions#destroy", :as=>'logout'
-      get '/login', :to=>"cms/sessions#new", :as=>'login'
-      post '/login', :to=>"cms/sessions#create"
+      match '/', :to => 'home#index', :as=>'home'
+      match '/sitemap', :to=>"section_nodes#index", :as=>'sitemap'
+      match '/content_library', :to=>"html_blocks#index", :as=>'content_library'
+      match '/administration', :to=>"users#index", :as=>'administration'
+      match '/logout', :to=>"sessions#destroy", :as=>'logout'
+      get '/login', :to=>"sessions#new", :as=>'login'
+      post '/login', :to=>"sessions#create"
 
-      match '/toolbar', :to=>"cms/toolbar#index", :as=>'toolbar'
-      match '/content_types', :to=>"cms/content_types#index", :as=>'content_types'
+      match '/toolbar', :to=>"toolbar#index", :as=>'toolbar'
+      match '/content_types', :to=>"content_types#index", :as=>'content_types'
 
       resources :connectors do
         member do
