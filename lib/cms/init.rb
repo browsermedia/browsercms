@@ -26,7 +26,7 @@ module Cms
       #need to add gem's app directories to the load path - 
       #the list is taken from what rails has automagically added to $: for the Rails.root dirs
       ActiveSupport::Dependencies.autoload_paths += %W( #{self.root}/vendor #{self.root}/app/mailers #{self.root}/app/helpers)
-      ActiveSupport::Dependencies.autoload_paths += %W( #{self.root}/app/controllers #{self.root}/app/models)
+      ActiveSupport::Dependencies.autoload_paths += %W( #{self.root}/app/controllers #{self.root}/app/models #{self.root}/app/portlets)
       ActiveSupport::Dependencies.autoload_paths += %W( #{Rails.root}/app/portlets )
       ActiveSupport::Dependencies.autoload_paths += %W( #{Rails.root}/app/portlets/helpers )      
       ActionController::Base.append_view_path DynamicView.base_path
@@ -121,6 +121,8 @@ Time::DATE_FORMATS.merge!(
 	:date => '%m/%d/%Y'	
 )
 
+#TODO: why is this here?
+#      shouldn't this be in the generator file?
 Cms.add_generator_paths(Cms.root, 
   "config/initializers/cms.rb",
   "public/javascripts/jquery*",
@@ -129,5 +131,4 @@ Cms.add_generator_paths(Cms.root,
   "public/site/**/*",   
   "public/stylesheets/cms/**/*",
   "public/images/cms/**/*",
-  "db/seeds.rb",
   "db/migrate/[0-9]*_*.rb")

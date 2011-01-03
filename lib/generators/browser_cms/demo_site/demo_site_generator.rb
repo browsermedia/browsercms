@@ -14,12 +14,17 @@ module BrowserCms
             copy_file Cms.scrub_path(f), file_name
           end
         end
-      
-        migration_template templates_dir('migration.rb'), 'db/migrate', :assigns => {
+
+        %W( lib/tasks/demo_site.rake db/seeds.rb).each{|f| 
+          copy_file Cms.scrub_path("#{Cms.root}/#{f}"), f
+        }
+
+        template templates_dir('migration.rb'), 'db/demo_site_seeds.rb', :assigns => {
           :data => data,
           :page_templates => page_templates,
           :page_partials => page_partials
-        }, :migration_file_name => "load_demo_site_data"
+        } 
+               
       end
 
       private

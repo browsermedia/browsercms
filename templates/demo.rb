@@ -34,10 +34,12 @@ file 'app/views/layouts/templates/default.html.erb', Templates.default_body
 if Gem.win_platform?
   puts "        rake  db:migrate"
   `rake.cmd db:migrate`
-  `rake.cmd db:seed`#i don't know if this works - sigh - windows...
+  `rake.cmd db:seed`
+  `rake.cmd db:seed_demo_site`
 else
   rake "db:migrate"
   rake "db:seed"
+  rake "db:seed_demo_site"
 end
 
 #add routes after demo generation - otherwise there are weird errors

@@ -694,6 +694,7 @@ Gem::Specification.new do |s|
      "lib/generators/browser_cms/template/template_generator.rb",
      "lib/generators/browser_cms/template/templates/template.erb",     
      "lib/sequence.rb",
+     "lib/tasks/demo_site.rake",
      "lib/tasks/cms.rake",
      "lib/tasks/db.rake",
      "lib/tasks/dev.rake",

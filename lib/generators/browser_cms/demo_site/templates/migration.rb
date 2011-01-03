@@ -1,7 +1,6 @@
-class LoadDemoSiteData < ActiveRecord::Migration
-  extend Cms::DataLoader
+require 'cms/data_loader'
+include Cms::DataLoader
   
-  def self.up
 <%= data %>
 
     # Create templates
@@ -13,9 +12,4 @@ class LoadDemoSiteData < ActiveRecord::Migration
     <% page_partials.each do |pp| %>
 <%= pp %>
     <% end %>
-  end
   
-  def self.down
-  end
-  
-end
