@@ -31,8 +31,7 @@ module Cms::Routes
   def routes_for_browser_cms
 
     namespace :cms do
-      # Namespaces don't seem to 'prefix' controller names for non-resources methods
-      # The Rails 3 release may avoid the need for explicitly prefixing cms/ to all these methods
+
       match '/dashboard', :to=>"dashboard#index", :as=>'dashboard'
       # I want to do the following instead
       # match '/dashboard', :to=>"dashboard#index", :as=>'dashboard'
