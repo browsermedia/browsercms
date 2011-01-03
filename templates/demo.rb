@@ -18,8 +18,9 @@ if Gem.win_platform?
 else
   rake "db:create"
 end
-# route "routes_for_browser_cms"
+
 generate "browser_cms:cms"
+
 environment 'SITE_DOMAIN="localhost:3000"', :env => "development"
 environment 'SITE_DOMAIN="localhost:3000"', :env => "test"
 environment 'SITE_DOMAIN="localhost:3000"', :env => "production"
@@ -33,6 +34,11 @@ file 'app/views/layouts/templates/default.html.erb', Templates.default_body
 if Gem.win_platform?
   puts "        rake  db:migrate"
   `rake.cmd db:migrate`
+  `rake.cmd db:seed`#i don't know if this works - sigh - windows...
 else
   rake "db:migrate"
+  rake "db:seed"
 end
+
+#add routes after demo generation - otherwise there are weird errors
+route "routes_for_browser_cms"

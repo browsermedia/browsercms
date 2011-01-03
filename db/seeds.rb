@@ -1,5 +1,3 @@
-require 'ruby-debug'
-Debugger.start
 require 'cms/data_loader'
 extend Cms::DataLoader
 
