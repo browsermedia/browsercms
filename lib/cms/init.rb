@@ -22,6 +22,9 @@ module Cms
     def init
       # ToDo: This is how we are adding new methods to the routes.rb file. Rails 3 might provide more direct way.
       ActionDispatch::Routing::Mapper.send :include, Cms::Routes
+
+      #need to load models and helpers for DynamicView and FormBuilder, as well as migrations
+      ActiveSupport::Dependencies.autoload_paths += %W( #{self.root}/app/models #{self.root}/app/helpers)
       ActiveSupport::Dependencies.autoload_paths += %W( #{Rails.root}/app/portlets )
       ActiveSupport::Dependencies.autoload_paths += %W( #{Rails.root}/app/portlets/helpers )      
       ActionController::Base.append_view_path DynamicView.base_path
@@ -115,6 +118,7 @@ Time::DATE_FORMATS.merge!(
 )
 
 Cms.add_generator_paths(Cms.root, 
+  "config/initializers/cms.rb",
   "public/javascripts/jquery*",
   "public/javascripts/cms/**/*",
   "public/bcms/ckeditor/**/*",
