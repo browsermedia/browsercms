@@ -7,8 +7,8 @@
    @sections.each {|s| s.full_path = "/" + s.full_path unless s == root }
   @block.attachment_file_path = @block.attachment.file_path if @block.attachment_file_path.blank? && !@block.new_record?
 %>
-<% content_for :html_head do %>
-  <% javascript_tag do %>
+<%= content_for :html_head do %>
+  <%= javascript_tag do %>
     var regex = <%= Cms::Behaviors::Attaching::SANITIZATION_REGEXES.to_json %>
     jQuery(function($) {
       <% if @block.new_record? %>

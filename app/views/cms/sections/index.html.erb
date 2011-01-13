@@ -1,7 +1,7 @@
-<% content_for :html_head do %>
+<%= content_for :html_head do %>
   <%= javascript_include_tag 'cms/sitemap' %>
 <% end %>
-<% content_for :title do %>Sitemap<% end %>
+<%= content_for :title do %>Sitemap<% end %>
 
 <div class="buttons">
   <%= link_to "Edit", '#', :id => 'edit-button', :disabled => "disabled" %>

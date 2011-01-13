@@ -1,8 +1,8 @@
 <% page_title "Content Library / List of Versions" %>
 <% @toolbar_title = "List Versions / '#{@block.name}' #{content_type.display_name}" %>
-<% content_for :html_head do %>
+<%= content_for :html_head do %>
 <%= stylesheet_link_tag("cms/content_library") %>
-  <% javascript_tag do %>
+  <%= javascript_tag do %>
     jQuery(function($){
       var collectionName = '<%= @block.class.name.underscore.pluralize %>'
       
@@ -31,7 +31,7 @@
 
 <% end %>
 
-<% content_for :functions do %>
+<%= content_for :functions do %>
   <%= render :partial => 'cms/blocks/toolbar' %>
   <%= link_to span_tag("Revert"), "#", :id => "revert_button", :class => "http_put button disabled"  %>
 <% end %>

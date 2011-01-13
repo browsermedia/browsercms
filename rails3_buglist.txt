@@ -1,5 +1,12 @@
 Start with:
 
+Get rid of deprecation warnings for <%= form_for %>
+run rake:upgrade:check to get complete list.
+
+Tags to change:
+* content_for
+* javascript_tag
+
 Goal: Make controller tests pass.
 
 State of Test Cases (As of Jan 13, 2011)

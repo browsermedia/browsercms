@@ -1,6 +1,6 @@
-<% content_for(:html_head) do %>
+<%= content_for(:html_head) do %>
 <%= javascript_include_tag "cms/content_library" %>
-  <% javascript_tag do %>
+  <%= javascript_tag do %>
     jQuery(function($){
       var collectionName = '<%= content_type.model_class.name.underscore.pluralize %>'
       

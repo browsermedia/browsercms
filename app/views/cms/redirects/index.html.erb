@@ -1,6 +1,6 @@
 <% @page_title = @toolbar_title = "List Redirects" %>
-<% content_for(:html_head) do %>
-  <% javascript_tag do %>
+<%= content_for(:html_head) do %>
+  <%= javascript_tag do %>
     jQuery(function($){
       $('table.data tbody tr').hover(function(){
         $(this).addClass('hover')
@@ -18,7 +18,7 @@
     })
   <% end %>
 <% end %>
-<% content_for :functions do %>
+<%= content_for :functions do %>
 <%= link_to(span_tag("&nbsp;Add&nbsp;"), new_cms_redirect_path, :class => "button") %>
 <%= link_to(span_tag("&nbsp;Edit&nbsp;"), '#', :id => 'edit_button', :class => "button disabled") %>
 <%= link_to span_tag("<span class=\"delete_img\">&nbsp;</span>Delete"), "#", :id => "delete_button", :class => "button disabled http_delete confirm_with_title", :title => "Are you sure you want to delete this redirect?" %>

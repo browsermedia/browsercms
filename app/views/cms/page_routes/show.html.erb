@@ -1,6 +1,6 @@
 <% @toolbar_title = page_title "'#{@page_route.name}' Page Route" %>
 
-<% content_for :functions do %>
+<%= content_for :functions do %>
   <%= link_to(span_tag("&nbsp;Add&nbsp;"), new_cms_page_route_path, :class => "button") %>
   <%= link_to(span_tag("&nbsp;Edit&nbsp;"), edit_cms_page_route_path(@page_route), :id => 'edit_button', :class => "button") %>
   <%= link_to span_tag("<span class=\"delete_img\">&nbsp;</span>Delete"), [:cms, @page_route], 

@@ -1,8 +1,8 @@
 <% @toolbar_title = @page_title = "Add Existing Content to '#{@page.page_title}' Page" %>
 
-<% content_for :html_head do %>
+<%= content_for :html_head do %>
   <%= stylesheet_link_tag("cms/content_library") %>
-  <% javascript_tag do %>
+  <%= javascript_tag do %>
     jQuery(function($){
       var collectionName = '<%= @block_type.content_block_type %>'
       $('table.data tbody tr').hover(function(){
@@ -27,11 +27,11 @@
   <% end %>
 <% end %>
 
-<% content_for :functions do %>
+<%= content_for :functions do %>
   <h1><%=h @toolbar_title %></h1>
   <%= link_to span_tag("Add to Page"), "#", :id => "add_button", :class => "button disabled" %>
   <%= link_to span_tag("View Content"), "#", :id => "view_button", :class => "button disabled" %>
-  <% form_tag cms_connectors_path, :id => 'connect_form' do %>
+  <%= form_tag cms_connectors_path, :id => 'connect_form' do %>
     <%= hidden_field_tag :page_id, @page.to_param %>
     <%= hidden_field_tag :container,  @container %>
     <%= hidden_field_tag :connectable_type, '' %>
@@ -40,7 +40,7 @@
   <br clear="all" />
 <% end %>
 
-<% form_tag new_cms_connector_path, :method => :get do %>
+<%= form_tag new_cms_connector_path, :method => :get do %>
   <%= hidden_field_tag :page_id, @page.to_param %>
   <%= hidden_field_tag :container, @container %>
   <div style="margin: 20px 2px;">

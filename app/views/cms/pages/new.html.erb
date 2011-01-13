@@ -1,4 +1,4 @@
-<% content_for :html_head do %>
+<%= content_for :html_head do %>
 <script type="text/javascript">
 jQuery(function($){
   $("#page_name").keyup(function(){
@@ -17,12 +17,12 @@ jQuery(function($){
 <% end %>
 
 <% page_title "New Page" %>
-<% content_for :functions do %>
+<%= content_for :functions do %>
 <%= "<h1>#{ @page_title }</h1>" %> 
 <%= link_to(span_tag("list all"), cms_sitemap_path, :class => "button") %>
 <br clear="all"/>
 <% end %>
-<% form_for([:cms, @page]) do |f| %>
+<%= form_for([:cms, @page]) do |f| %>
   <%= hidden_field_tag :section_id, @page.section_id %>
   
   <%= render :partial => 'form', :locals => {:f => f} %>

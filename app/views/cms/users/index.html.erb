@@ -1,13 +1,13 @@
 <% page_title "Administration / User Browser" %>
 <% @toolbar_title = "List Users" %>
 
-<% content_for :toolbar_links do %>
+<%= content_for :toolbar_links do %>
   <%= link_to(span_tag("ADD USER"), new_cms_user_path, 
     :id => "add_user_button", 
     :class => "button") %>
 <% end %>
 
-<% content_for :functions do %>
+<%= content_for :functions do %>
   <%= render(:partial => "toolbar") %>
 <% end %>
 

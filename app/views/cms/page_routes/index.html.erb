@@ -1,6 +1,6 @@
 <% @toolbar_title = page_title "List Page Routes" %>
-<% content_for(:html_head) do %>
-  <% javascript_tag do %>
+<%= content_for(:html_head) do %>
+  <%= javascript_tag do %>
     jQuery(function($){
       $('table.data tbody tr').hover(function(){
         $(this).addClass('hover')
@@ -19,7 +19,7 @@
   <% end %>
 <% end %>
 
-<% content_for :functions do %>
+<%= content_for :functions do %>
   <%= link_to(span_tag("&nbsp;Add&nbsp;"), new_cms_page_route_path, :class => "button") %>
   <%= link_to(span_tag("&nbsp;Edit&nbsp;"), '#', :id => 'edit_button', :class => "button disabled") %>
   <%= link_to span_tag("<span class=\"delete_img\">&nbsp;</span>Delete"), "#", 

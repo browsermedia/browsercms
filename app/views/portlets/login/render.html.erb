@@ -4,7 +4,7 @@
     <p><%= link_to "Logout", cms_logout_path %></p>
   <% else %>
     <div class="error"><%= flash[:login_error] %></div>
-    <% form_tag cms_login_path do %>
+    <%= form_tag cms_login_path do %>
       <%= hidden_field_tag :success_url, @success_url %>
       <%= hidden_field_tag :failure_url, @failure_url %>    
       <p>

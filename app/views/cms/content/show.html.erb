@@ -1,6 +1,6 @@
 <% page_title @page.page_title %>
 
-<% content_for :html_head do %>
+<%= content_for :html_head do %>
   <meta name="generator" content="BrowserCMS <%= Cms.version %>"/>
 <% end %>
 <% if @show_toolbar %>
@@ -8,7 +8,7 @@
 <% end %>
 
 <% @_connectors.each_with_index do |connector, i| %>
-  <% content_for(connector.container.to_sym) do %>
+  <%= content_for(connector.container.to_sym) do %>
     <%= render_connector_and_connectable(connector, @_connectables[i]) %>
   <% end %>
 <% end %> 

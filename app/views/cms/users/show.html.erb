@@ -1,6 +1,6 @@
 <% @page_title = @toolbar_title = h(@user.login) %>
 
-<% content_for :toolbar_links do %>
+<%= content_for :toolbar_links do %>
   <%= link_to(span_tag("List All"), cms_users_path, 
     :id => "list_all_button", 
     :class => "button") if current_user.able_to?(:administrate) %>
@@ -9,11 +9,11 @@
     :class => "button") %>
 <% end %>
 
-<% content_for :functions do %> 
+<%= content_for :functions do %>
   <%= render(:partial => "toolbar") %>
 <% end %>
 
-<% content_for :html_head do %>
+<%= content_for :html_head do %>
   <%= stylesheet_link_tag('cms/form_layout') %>
 <% end %>
 

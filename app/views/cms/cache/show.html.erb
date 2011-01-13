@@ -1,10 +1,10 @@
 <% page_title @toolbar_title = "Page Cache Info" %>
 
-<% content_for :html_head do %>
+<%= content_for :html_head do %>
   <%= stylesheet_link_tag("cms/form_layout") %>
 <% end %>
 
-<% content_for :functions do %>
+<%= content_for :functions do %>
   <%= link_to(span_tag("Clear Page Cache"), cms_cache_path, 
     :class => "button http_delete") %>
 <% end %>

@@ -1,5 +1,5 @@
-<% content_for :html_head do %>
-  <% javascript_tag do %>
+<%= content_for :html_head do %>
+  <%= javascript_tag do %>
     jQuery(function($){
       var cms_access_group_ids = <%= GroupType.cms_access.all.map{|e| e.id.to_s}.to_json %>
       $('#group_group_type_id').change(function() {

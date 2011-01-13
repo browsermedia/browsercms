@@ -1,8 +1,8 @@
 <% page_title "Content Library / View Usages" %>
 <% @toolbar_title = "Pages Using #{content_type.display_name} '#{ @block.name }'" %>
-<% content_for :html_head do %>
+<%= content_for :html_head do %>
   <%= stylesheet_link_tag("cms/content_library") %>
-  <% javascript_tag do %>
+  <%= javascript_tag do %>
     jQuery(function($) {
       $('#functions .button').addClass('disabled').attr('href','#');
       $('#view_button').removeClass('disabled')

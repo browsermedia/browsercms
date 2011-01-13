@@ -1,6 +1,6 @@
 <% page_title "CMS Login" %>
-<% content_for :html_head do %>
-  <% javascript_tag do %>
+<%= content_for :html_head do %>
+  <%= javascript_tag do %>
       jQuery(function($){
         $('#login_button').hover(function(){
           $('#login_button').css('background-image', 'url(/images/cms/buttons/button_cap_h.png)');
@@ -14,7 +14,7 @@
 
 <% @login ||= "Username" %>
 <% @password ||= "Password" %>
-<% form_tag cms_login_path, :id => 'login_form' do %>
+<%= form_tag cms_login_path, :id => 'login_form' do %>
   <div class="field">
     <%= text_field_tag 'login', @login, :onfocus => "if(this.value == 'Username') this.value = '';", :onblur => "if(this.value == '') this.value = 'Username';", :tabindex => 1 %>
   </div>

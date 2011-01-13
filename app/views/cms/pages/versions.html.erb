@@ -1,6 +1,6 @@
 <% @page_title = @toolbar_title = "List Versions / '#{@page.name}' Page" %>
-<% content_for(:html_head) do %>
-  <% javascript_tag do %>
+<%= content_for(:html_head) do %>
+  <%= javascript_tag do %>
     jQuery(function($){
       $('table.data tbody tr').hover(function(){
         $(this).addClass('hover')
@@ -32,13 +32,13 @@
   <%= stylesheet_link_tag("cms/content_library") %>
   <%= stylesheet_link_tag("cms/form_layout") %>
 <% end %>
-<% content_for :functions do %>
+<%= content_for :functions do %>
   <%=  "<h1>#{ @toolbar_title }</h1>" %>
   <%= link_to span_tag("view"), "#", :id => "view_button", :class => "button disabled" %>
   <%= link_to span_tag("edit content"), "#", :id => "edit_content_button", :class => "button disabled" %>
   <%= link_to span_tag("edit properties"), "#", :id => "edit_properties_button", :class => "button disabled" %>
   <%= link_to span_tag("revert"), "#", :id => "revert_button", :class => "button disabled", :onclick => "$('#revert_form').submit(); return false;" %>
-  <% form_tag '', :method => 'put', :id => "revert_form" do %>
+  <%= form_tag '', :method => 'put', :id => "revert_form" do %>
   <%= hidden_field_tag :version, '', :id => 'revert_form_version'  %>
   <% end %>
   <br clear="all" />

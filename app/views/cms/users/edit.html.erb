@@ -1,6 +1,6 @@
 <% @page_title = @toolbar_title = "Edit User '#{h(@user.login)}'" %>
 
-<% content_for :toolbar_links do %>
+<%= content_for :toolbar_links do %>
   <%= link_to(span_tag("List All"), cms_users_path, 
     :id => "list_all_button", 
     :class => "button") %>
@@ -9,7 +9,7 @@
     :class => "button") %>
 <% end %>
 
-<% content_for :functions do %> 
+<%= content_for :functions do %>
   <%= render(:partial => "toolbar") %>
 <% end %>
 
