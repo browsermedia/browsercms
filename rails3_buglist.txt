@@ -9,9 +9,9 @@ Goal: Make controller tests pass.
 
 State of Test Cases (As of Jan 13, 2011)
 ====================
-Unit - ALL PASS!!!!!!
-Functional - 41 Failures, 37
-Integration - 2F, 2E
+Unit - 1F! (Boo!!!! Might be rails 3.0.3 or Ruby 1.9.2 upgrade)
+Functional - 41 Failures, 18 errors
+Integration - 2F, 0E
 
 Todo List
 ===============
