@@ -1,11 +1,13 @@
 Start with:
 
-rake test
+Integrating synth's r3 branch fixes to tests.
 
-Make controller tests pass.
+* http://www.viget.com/extend/i-have-a-pull-request-on-github-now-what/
+
+Goal: Make controller tests pass.
 
 
-State of Test Cases (As of Dec 7, 2010)
+State of Test Cases (As of Jan 13, 2011)
 ====================
 Unit - ALL PASS!!!!!!
 Functional - 41 Failures, 37
@@ -13,7 +15,7 @@ Integration - 2F, 2E
 
 Todo List
 ===============
-* Clean up logging messages that are filling up the production logs unnecesarily
+* Clean up logging messages that are filling up the production logs unnecessarily
 ** 'Caching enabled'
 ** 'Not the CMS site'
 ** 'Rendering content block X'
