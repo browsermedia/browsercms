@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), '/../../test_helper')
+require_relative '../../test_helper'
 
 ActiveRecord::Base.connection.instance_eval do
   drop_table(:default_attachables) if table_exists?(:default_attachables)

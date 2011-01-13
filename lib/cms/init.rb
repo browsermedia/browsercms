@@ -22,9 +22,16 @@ module Cms
     def init
       # ToDo: This is how we are adding new methods to the routes.rb file. Rails 3 might provide more direct way.
       ActionDispatch::Routing::Mapper.send :include, Cms::Routes
+
+      #need to add gem's app directories to the load path - 
+      #the list is taken from what rails has automagically added to $: for the Rails.root dirs
+      ActiveSupport::Dependencies.autoload_paths += %W( #{self.root}/vendor #{self.root}/app/mailers #{self.root}/app/helpers)
+      ActiveSupport::Dependencies.autoload_paths += %W( #{self.root}/app/controllers #{self.root}/app/models #{self.root}/app/portlets)
       ActiveSupport::Dependencies.autoload_paths += %W( #{Rails.root}/app/portlets )
       ActiveSupport::Dependencies.autoload_paths += %W( #{Rails.root}/app/portlets/helpers )      
       ActionController::Base.append_view_path DynamicView.base_path
+      ActionController::Base.append_view_path %W( #{self.root}/app/views)
+
       ActionView::Base.default_form_builder = Cms::FormBuilder
       
       # ActiveRecord JDBC adapter depends on no database connection having
@@ -114,7 +121,10 @@ Time::DATE_FORMATS.merge!(
 	:date => '%m/%d/%Y'	
 )
 
+#TODO: why is this here?
+#      shouldn't this be in the generator file?
 Cms.add_generator_paths(Cms.root, 
+  "config/initializers/cms.rb",
   "public/javascripts/jquery*",
   "public/javascripts/cms/**/*",
   "public/bcms/ckeditor/**/*",

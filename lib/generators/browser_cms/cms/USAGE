@@ -1,0 +1,2 @@
+Description:
+    Copies CMS assets, rake tasks and migrations from the gem into the app

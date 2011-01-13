@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), '/../../test_helper')
+require_relative '../../test_helper'
 
 # Sample Model for testing naming/model classes
 class Kindness < ActiveRecord::Base

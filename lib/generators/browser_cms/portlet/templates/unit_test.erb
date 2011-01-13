@@ -1,0 +1,9 @@
+require File.join(File.dirname(__FILE__), '/../../test_helper')
+
+class <%= class_name %>Test < ActiveSupport::TestCase
+
+  test "Should be able to create new instance of a portlet" do
+    assert <%= class_name %>Portlet.create!(:name => "New Portlet")
+  end
+  
+end

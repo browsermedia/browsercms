@@ -1,0 +1,5 @@
+<%%= f.cms_text_field :name %>
+<% for attribute in attributes -%>
+<%%= f.cms_text_field :<%= attribute.name %> %>
+<% end -%>
+<%%= f.cms_template_editor :template %>

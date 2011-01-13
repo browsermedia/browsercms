@@ -37,7 +37,7 @@ namespace :cms do
   end    
 
   desc "Rebuild the browsercms gem locally and install it, Useful for testing releases."
-  task :gem => ["gemspec", :build, :install]
+  task :gem => ["browsercms.gemspec", :build, :install]
 
   task :install do
     puts "installing..."

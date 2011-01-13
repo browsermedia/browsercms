@@ -94,6 +94,16 @@ module Cms
                   # copy values from the draft to the main record
                   quoted_attributes = d.send(:arel_attributes_values, false, false, self.class.versioned_columns)
 
+                  #the values from the draft MAY have a relation of the versioned module
+                  #as opposed to the actual class itself
+                  #eg Page::Version, and not Page
+                  #so remap to the actual arel_table´
+                  #I haven't figured out why this is, but I know it happens when you call save! on Page
+                  #during seeding of data
+                  if self.class.arel_table.name != quoted_attributes.keys[0].relation.name
+                    quoted_attributes = quoted_attributes.inject({}){|hash, pair| hash[self.class.arel_table[pair[0].name]] = pair[1]; hash}
+                  end
+
                   # Doing the SQL ourselves to avoid callbacks
                   self.class.unscoped.where(self.class.arel_table[self.class.primary_key].eq(id)).arel.update(quoted_attributes)
                 end

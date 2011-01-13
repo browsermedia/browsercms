@@ -1,9 +1,8 @@
-require File.join(File.dirname(__FILE__), '../../test_helper')
+require_relative '../../test_helper'
 
 class Cms::RenderingHelperTest < ActionView::TestCase
 
-  tests "nothing" do
-
+  def test_nothing
   end
 
 end

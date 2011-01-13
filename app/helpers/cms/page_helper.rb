@@ -90,7 +90,8 @@ HTML
 
     # Determines if the current_user is able to do specific permissions.
     def able_to?(*perms, &block)
-      yield if current_user.able_to?(*perms)
+      block.call if current_user.able_to?(*perms)
+      return ''
     end
 
   end

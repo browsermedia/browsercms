@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), '/../../test_helper')
+require_relative '../../test_helper'
 
 ActiveRecord::Base.connection.instance_eval do
   drop_table(:taggable_articles) if table_exists?(:taggable_articles)
