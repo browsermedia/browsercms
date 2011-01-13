@@ -1,11 +1,6 @@
 Start with:
 
-Integrating synth's r3 branch fixes to tests.
-
-* http://www.viget.com/extend/i-have-a-pull-request-on-github-now-what/
-
 Goal: Make controller tests pass.
-
 
 State of Test Cases (As of Jan 13, 2011)
 ====================
