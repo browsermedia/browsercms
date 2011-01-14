@@ -27,7 +27,7 @@
   <% if @block.class.connectable? %>
     <div class="nv_pair">
       <div class="header">Used on:</div> 
-      <div><%= link_to_usages(@block) %> <%= "page".pluralize(@block.connected_pages.count)%></div>
+      <div><%= link_to_usages(@block) %> <%= "page".pluralize_unless_one(@block.connected_pages.count)%></div>
     </div>
   <% end -%>
   <% if @block.respond_to?(:draft_version?) && !@block.draft_version? %>

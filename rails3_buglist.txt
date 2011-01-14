@@ -9,10 +9,10 @@ Tags to change:
 
 Goal: Make controller tests pass.
 
-State of Test Cases (As of Jan 13, 2011)
+State of Test Cases (As of Jan 14, 2011)
 ====================
 Unit - 1F! (Boo!!!! Might be rails 3.0.3 or Ruby 1.9.2 upgrade)
-Functional - 41 Failures, 18 errors
+Functional - 45 Failures, 5 errors
 Integration - 2F, 0E
 
 Todo List
