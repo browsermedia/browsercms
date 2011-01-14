@@ -49,7 +49,7 @@ class Cms::SectionFileBrowserControllerTest < ActionController::TestCase
     get :file_browser, :format => "xml", "CurrentFolder" => "/", "Command" => "GetFilesAndFolders", "Type" => "Page"
 
     assert_response :success
-    assert_equal "text/xml", @response.content_type
+    assert_equal "application/xml", @response.content_type
     assert_select "Connector[command=?][resourceType=?]", "GetFilesAndFolders", "Page" do
       assert_select "CurrentFolder[path=?][url=?]", "/", "/"
       assert_select "Folders" do
@@ -70,7 +70,7 @@ class Cms::SectionFileBrowserControllerTest < ActionController::TestCase
     get :file_browser, :format => "xml", "CurrentFolder" => "/Foo/", "Command" => "GetFilesAndFolders", "Type" => "Page"
 
     assert_response :success
-    assert_equal "text/xml", @response.content_type
+    assert_equal "application/xml", @response.content_type
     assert_select "Connector[command=?][resourceType=?]", "GetFilesAndFolders", "Page" do
       assert_select "CurrentFolder[path=?][url=?]", "/Foo/", "/Foo/"
       assert_select "Folders" do

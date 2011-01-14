@@ -104,7 +104,6 @@ class Cms::SectionsController < Cms::BaseController
     end
     
     def render_file_browser
-      headers['Content-Type'] = "text/xml"
       @files = case params[:Type].downcase
                when "file"
                  FileBlock.by_section(@section)
