@@ -15,8 +15,8 @@ module Cms::Routes
       end
     end
     if content_block.versioned?
-      send("get", "/#{content_block_name}/:id/version/:version", :to=>"cms/#{content_block_name}#version", :as=>"version_cms_#{content_block_name}".to_sym)
-      send("put", "/#{content_block_name}/:id/revert_to/:version", :to=>"cms/#{content_block_name}#revert_to", :as=>"revert_to_cms_#{content_block_name}".to_sym)
+      send("get", "/#{content_block_name}/:id/version/:version", :to=>"#{content_block_name}#version", :as=>"version_cms_#{content_block_name}".to_sym)
+      send("put", "/#{content_block_name}/:id/revert_to/:version", :to=>"#{content_block_name}#revert_to", :as=>"revert_to_cms_#{content_block_name}".to_sym)
     end
   end
 
@@ -33,9 +33,6 @@ module Cms::Routes
     namespace :cms do
 
       match '/dashboard', :to=>"dashboard#index", :as=>'dashboard'
-      # I want to do the following instead
-      # match '/dashboard', :to=>"dashboard#index", :as=>'dashboard'
-
       match '/', :to => 'home#index', :as=>'home'
       match '/sitemap', :to=>"section_nodes#index", :as=>'sitemap'
       match '/content_library', :to=>"html_blocks#index", :as=>'content_library'
@@ -69,8 +66,8 @@ module Cms::Routes
         end
         resources :tasks
       end
-      get '/pages/:id/version/:version', :to=>'cms/pages#version', :as=>'version_cms_page'
-      put '/pages/:id/revert_to/:version', :to=>'cms/pages#revert_to', :as=>'revert_to_cms_page'
+      get '/pages/:id/version/:version', :to=>'pages#version', :as=>'version_cms_page'
+      put '/pages/:id/revert_to/:version', :to=>'pages#revert_to', :as=>'revert_to_cms_page'
       resources :tasks do
         member do
           put :complete
@@ -79,7 +76,7 @@ module Cms::Routes
           put :complete
         end
       end
-      match '/sections/file_browser.xml', :to => 'cms/sections#file_browser', :format => "xml", :as=>'file_browser'
+      match '/sections/file_browser.xml', :to => 'sections#file_browser', :format => "xml", :as=>'file_browser'
       resources :sections do
         resources :links, :pages
       end
@@ -93,16 +90,16 @@ module Cms::Routes
           put :move_to_root
         end
       end
-      match '/attachments/:id', :to => 'cms/attachments#show', :as=>'attachment'
+      match '/attachments/:id', :to => 'attachments#show', :as=>'attachment'
 
-      match '/content_library', :to=>'cms/html_blocks#index', :as=>'content_library'
+      match '/content_library', :to=>'html_blocks#index', :as=>'content_library'
       content_blocks :html_blocks
       content_blocks :portlets do
         member do
           get :usages
         end
       end
-      post '/portlet/:id/:handler', :to=>"cms/portlet#execute_handler"
+      post '/portlet/:id/:handler', :to=>"portlet#execute_handler"
 
       content_blocks :file_blocks
       content_blocks :image_blocks
@@ -110,7 +107,7 @@ module Cms::Routes
       content_blocks :categories
       content_blocks :tags
 
-      match '/administration', :to => 'cms/users#index', :as=>'administration'
+      match '/administration', :to => 'users#index', :as=>'administration'
 
       resources :users do
         member do
@@ -129,13 +126,13 @@ module Cms::Routes
         resources :conditions, :controller => "page_route_conditions"
         resources :requirements, :controller => "page_route_requirements"
       end
-      get 'cache', :to=>'cms/cache#show', :as=>'cache'
-      delete 'cache', :to=>'cms/cache#destroy'
+      get 'cache', :to=>'cache#show', :as=>'cache'
+      delete 'cache', :to=>'cache#destroy'
 
       # This is only for testing, and should be moved to the config/routes.rb file eventually.
 #      content_blocks :sample_blocks
 
-      match  "/routes", :to => "cms/routes#index", :as=>'routes'
+      match  "/routes", :to => "routes#index", :as=>'routes'
 
     end
 
