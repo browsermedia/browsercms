@@ -11,7 +11,7 @@
   </div>
 </div>
 
-<% able_to?(:administrate) do %>
+<%= able_to?(:administrate) do %>
   <div class="checkbox_group fields" style="float: left; width: 100%">
     <label>Public Permissions</label>
     <%= hidden_field_tag "section[group_ids][]", "", :id => nil %>

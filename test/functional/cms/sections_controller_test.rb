@@ -191,7 +191,6 @@ class Cms::SectionsControllerPermissionsTest < ActionController::TestCase
     @group2 = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
     expected_groups = @editable_section.groups
     login_as(@user)
-    RAILS_DEFAULT_LOGGER.warn("starting...")
     put :update, :id => @editable_section, :section => {:name => "new name", :group_ids => [@group, @group2]}
     assert_response :redirect
     assert_equal expected_groups, assigns(:section).groups
