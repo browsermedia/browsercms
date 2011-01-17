@@ -1,18 +1,13 @@
-Start with:
+Start with:  Why aren't content blocks rendering?
 
-Get rid of deprecation warnings for <%= form_for %>
-run rake:upgrade:check to get complete list.
+rake test:functionals TEST=functional/cms/content_controller_test.rb
 
-Tags to change:
-* content_for
-* javascript_tag
-
-Goal: Make controller tests pass.
+Content blocks added to pages are not being rendered. This is fairly serious, likely a root cause for many broken tests, and needs to be figured out.
 
 State of Test Cases (As of Jan 14, 2011)
 ====================
 Unit - 1F! (Boo!!!! Might be rails 3.0.3 or Ruby 1.9.2 upgrade)
-Functional - 45 Failures, 3 errors
+Functional - 25 Failures, 3 errors
 Integration - 2F, 0E
 
 Todo List
