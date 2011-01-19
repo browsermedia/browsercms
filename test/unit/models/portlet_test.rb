@@ -67,5 +67,7 @@ class PortletTest < ActiveSupport::TestCase
     assert_equal({}, p.inline_options)
   end
 
-
+  test "Portlets should be considered 'connectable?, and therefore can have a /usages route.'" do
+    assert Portlet.connectable?
+  end
 end

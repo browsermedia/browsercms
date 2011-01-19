@@ -127,7 +127,12 @@ class Portlet < ActiveRecord::Base
       {:label => "Type", :method => :type_name, :order => "type" },
       {:label => "Updated On", :method => :updated_on_string, :order => "updated_at"} ]
   end
-  
+
+  # Duck typing (like a ContentBlock) for determining if this block should have a usages link or not.
+  def self.connectable?
+    true
+  end
+
   #----- Portlet Action Related Methods ----------------------------------------
   def instance_name
     "#{self.class.name.demodulize.underscore}_#{id}"

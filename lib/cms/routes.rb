@@ -94,11 +94,7 @@ module Cms::Routes
 
       match '/content_library', :to=>'html_blocks#index', :as=>'content_library'
       content_blocks :html_blocks
-      content_blocks :portlets do
-        member do
-          get :usages
-        end
-      end
+      content_blocks :portlets
       post '/portlet/:id/:handler', :to=>"portlet#execute_handler"
 
       content_blocks :file_blocks
