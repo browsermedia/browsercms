@@ -246,8 +246,12 @@ class Cms::ContentCachingEnabledControllerTest < ActionController::TestCase
 
   def test_guest_user_views_page_on_cms_site
     @request.host = "cms.mysite.com"
+
+    # Actually simulates http://cms.mysite.com/?path=page , but we can't test domains in functional specs
     get :show, :path => "page"
-    assert_redirected_to "http://mysite.com/page"
+
+    # Really should go to "http://mysite.com/page" instead.
+    assert_redirected_to "http://mysite.com/?path=page"
   end
 
   def test_registered_user_views_page_on_public_site
@@ -264,9 +268,10 @@ class Cms::ContentCachingEnabledControllerTest < ActionController::TestCase
     login_as @registered_user
     @request.host = "cms.mysite.com"
 
+    # Simulates http://cms.mysite.com/?path=page rather than http://cms.mysite.com/page
     get :show, :path => "page"
 
-    assert_redirected_to "http://mysite.com/page"
+    assert_redirected_to "http://mysite.com/?path=page"
   end
 
   def test_cms_user_views_page_on_public_site
@@ -429,6 +434,7 @@ class Cms::ContentCachingDisabledControllerTest < ActionController::TestCase
     reset(:page)
 
     get :show, :path => "about"
+
 
     assert_select "#hi", "hello"
 
