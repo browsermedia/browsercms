@@ -72,6 +72,15 @@ class AttachmentTest < ActiveSupport::TestCase
     assert !attachment.live?, "Attachment should not be live"
     assert_equal attachment.as_of_version(2), Attachment.find_live_by_file_path("/foo.txt")
   end
+
+  test "If an uploaded file has no detectable content type (i.e. markdown) then assign it the 'unknown' type" do
+    mock_file = mock()
+    mock_file.expects(:content_type).returns(nil)
+    atk = Attachment.new(:temp_file => mock_file)
+    atk.extract_file_type_from_temp_file
+
+    assert_equal Attachment::UNKNOWN_MIME_TYPE, atk.file_type
+  end
 end
 
 class Attachment::SectionTest < ActiveSupport::TestCase

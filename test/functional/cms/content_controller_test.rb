@@ -71,6 +71,7 @@ class Cms::ContentControllerTest < ActionController::TestCase
     get :show, :path => "test.txt"
 
     assert_response :success
+    puts @response.body 
     assert_equal "text/plain", @response.content_type
     assert_equal "This is a test", streaming_file_contents
   end

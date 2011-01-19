@@ -3,6 +3,9 @@ require 'fileutils'
 
 class Attachment < ActiveRecord::Base
 
+  #----- Constants ----------------------------------------------------------------
+  UNKNOWN_MIME_TYPE = 'application/octet-stream'
+
   #----- Macros ----------------------------------------------------------------
 
   is_archivable
@@ -10,10 +13,15 @@ class Attachment < ActiveRecord::Base
   uses_soft_delete
   is_userstamped
   is_versioned
-  attr_accessor :temp_file
+
+  # Rails 3 uses a new ActionDispatch::Http::UploadedFile. This holds that during the file processing.
+  attr_accessor :uploaded_file
+
+  # This exists for backwards compatibility
+  alias_method :temp_file, :uploaded_file
+  alias_method :temp_file=, :uploaded_file=
 
   #----- Callbacks -------------------------------------------------------------
-
   before_validation :make_dirty_if_temp_file
   before_validation :prepend_file_path_with_slash
   before_validation :extract_file_extension_from_file_name
@@ -24,7 +32,8 @@ class Attachment < ActiveRecord::Base
 
   after_save :write_temp_file_to_storage_location
   after_save :clear_ivars  
-  
+
+
   #----- Associations ----------------------------------------------------------
 
   has_one :section_node, :as => :node
@@ -83,6 +92,11 @@ class Attachment < ActiveRecord::Base
   def extract_file_type_from_temp_file
     unless temp_file.blank?
       self.file_type = temp_file.content_type
+
+      # Some
+      if self.file_type == nil
+        self.file_type = UNKNOWN_MIME_TYPE
+      end
     end    
   end
   
@@ -114,11 +128,14 @@ class Attachment < ActiveRecord::Base
     
   def write_temp_file_to_storage_location
     unless temp_file.blank?
+      actual_temp_file = temp_file.tempfile
+
+      Rails.logger.warn "I want to write out #{temp_file.tempfile}"
       FileUtils.mkdir_p File.dirname(full_file_location)
-      if temp_file.local_path
-        FileUtils.copy temp_file.local_path, full_file_location
+      if actual_temp_file.path
+        FileUtils.copy actual_temp_file.path, full_file_location
       else
-        open(full_file_location, 'w') {|f| f << temp_file.read }
+        open(full_file_location, 'w') {|f| f << actual_temp_file.read }
       end
       
       if Cms.attachment_file_permission

@@ -3,9 +3,8 @@ require_relative '../../test_helper'
 class FileBlockTest < ActiveSupport::TestCase
   def setup
     #@file is a mock of the object that Rails wraps file uploads in
-    @file = file_upload_object(:original_filename => "version1.txt",
-      :content_type => "text/plain")
-    @file_block = Factory.build(:file_block, :attachment_file => @file, :attachment_section => root_section, :attachment_file_path => "/test.jpg", :publish_on_save => true)
+    @uploaded_file = file_upload_object(:original_filename => "version1.txt", :content_type => "text/plain")
+    @file_block = Factory.build(:file_block, :attachment_file => @uploaded_file, :attachment_section => root_section, :attachment_file_path => "/test.jpg", :publish_on_save => true)
   end
 
   test "Saving should also save attachment." do

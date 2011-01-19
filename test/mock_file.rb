@@ -15,3 +15,19 @@ module Cms
     ActiveRecord::Base.logger = Logger.new(STDOUT)
   end
 end
+
+module Extensions
+  module Rack
+    module Test
+      # Extensions to make Rack::Test::UploadedFile function like ActionDispatch::Http::UploadedFile during unit/functional tests.
+      module UploadedFile
+
+        # Attachment relies on this being there
+        def tempfile
+          @tempfile
+        end
+      end
+    end
+  end
+end
+Rack::Test::UploadedFile.send(:include, Extensions::Rack::Test::UploadedFile)
