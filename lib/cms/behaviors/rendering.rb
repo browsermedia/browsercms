@@ -143,10 +143,12 @@ module Cms
         
         # Copy instance variables from this renderable object to it's view
 #        action_view.assigns = assigns_for_view
-          
+
+        # Determine if this content should render from a file system template or inline (i.e. database based template)
         if respond_to?(:inline_options) && self.inline_options && self.inline_options.has_key?(:inline)
-          options = {:locals => {}}.merge(self.inline_options)
-          ActionView::InlineTemplate.new(options[:inline], options[:type]).render(action_view, options[:locals])
+          options = self.inline_options
+          locals = {}
+          action_view.render(options, locals)
         else
           action_view.render(:file => self.class.template_path)
         end
