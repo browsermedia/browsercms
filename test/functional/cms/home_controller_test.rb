@@ -2,7 +2,12 @@ require_relative "../../test_helper"
 
 class Cms::HomeControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
-  
+
+  test "behavior of request" do
+    @request.host = "www.browsercms.org"
+    @request.path = "/something"
+    assert_equal @request.url, "http://www.browsercms.org/something"
+  end
   def test_cms_site_with_public_site
     @request.host = "foo.com"
     assert !@controller.send(:cms_site?)
@@ -25,30 +30,28 @@ class Cms::HomeControllerTest < ActionController::TestCase
   
   def test_url_with_cms_domain_prefix_with_public_site
     @request.host = "foo.com"
-    @request.request_uri = "/cms"
+    @request.path = "/cms"
     assert_equal "http://cms.foo.com/cms", 
       @controller.send(:url_with_cms_domain_prefix)
   end
   
   def test_url_with_cms_domain_prefix_with_public_site_www
     @request.host = "www.foo.com"
-    @request.request_uri = "/cms"
-    assert_equal "http://cms.foo.com/cms", 
-      @controller.send(:url_with_cms_domain_prefix)
+    @request.path = "/cms"
+    assert_equal "http://cms.foo.com/cms", @controller.send(:url_with_cms_domain_prefix)
   end
 
   def test_url_with_cms_domain_prefix_with_cms_site
     @request.host = "cms.foo.com"
-    @request.request_uri = "/cms"
-    assert_equal "http://cms.foo.com/cms", 
-      @controller.send(:url_with_cms_domain_prefix)
+    @request.path = "/cms"
+
+    assert_equal "http://cms.foo.com/cms", @controller.send(:url_with_cms_domain_prefix)
   end
 
   def test_url_with_cms_domain_prefix_with_cms_site_www
     @request.host = "www.cms.foo.com"
-    @request.request_uri = "/cms"
-    assert_equal "http://www.cms.foo.com/cms", 
-      @controller.send(:url_with_cms_domain_prefix)
+    @request.path = "/cms"
+    assert_equal "http://www.cms.foo.com/cms", @controller.send(:url_with_cms_domain_prefix)
   end
   
   def test_redirected_to_cms_site_if_public_site
@@ -107,28 +110,27 @@ class Cms::HomeControllerCachingEnabledTest < ActionController::TestCase
   
   def test_url_with_cms_domain_prefix_with_public_site
     @request.host = "foo.com"
-    @request.request_uri = "/cms"
+    @request.path = "/cms"
     assert_equal "http://cms.foo.com/cms", 
       @controller.send(:url_with_cms_domain_prefix)
   end
   
-  def test_url_with_cms_domain_prefix_with_public_site_www
+  test "url_with_cms_domain_prefix_with_public_site_www" do
     @request.host = "www.foo.com"
-    @request.request_uri = "/cms"
-    assert_equal "http://cms.foo.com/cms", 
-      @controller.send(:url_with_cms_domain_prefix)
+    @request.path = "/cms"
+    assert_equal "http://cms.foo.com/cms",  @controller.send(:url_with_cms_domain_prefix)
   end
 
   def test_url_with_cms_domain_prefix_with_cms_site
     @request.host = "cms.foo.com"
-    @request.request_uri = "/cms"
+    @request.path = "/cms"
     assert_equal "http://cms.foo.com/cms", 
       @controller.send(:url_with_cms_domain_prefix)
   end
 
   def test_url_with_cms_domain_prefix_with_cms_site_www
     @request.host = "www.cms.foo.com"
-    @request.request_uri = "/cms"
+    @request.path = "/cms"
     assert_equal "http://www.cms.foo.com/cms", 
       @controller.send(:url_with_cms_domain_prefix)
   end
