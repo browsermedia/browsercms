@@ -12,9 +12,18 @@ module Cms
     def current_page
       @page
     end
-    
+
+
+    # Outputs the content of a particular container. If the user is in 'edit' mode the container and block controls will
+    # be rendered.
+    #
+    # Note: As of Jan 19, 2010, all render.html.erb templates must handle marking their content as 'html_safe'. This is
+    # bit of a pain, but I can't figure out how (or if) i can globally do that or not.
+    #
+    # @returns [String] The HTML content for the container.
     def container(name)
-      content = instance_variable_get("@content_for_#{name}")
+      page_content = instance_variable_get("@_content_for")
+      content = page_content[name]
       if logged_in? && @page && @mode == "edit" && current_user.able_to_edit?(@page)
         render :partial => 'cms/pages/edit_container', :locals => {:name => name, :content => content}
       else
@@ -32,7 +41,7 @@ module Cms
       end
     end
 
-    # Add the code to render the CMStoo
+    # Add the code to render the CMS toolbar.
     def cms_toolbar
       toolbar = <<HTML
 <iframe src="#{cms_toolbar_path(:page_id => @page.id, :page_version => @page.version, :mode => @mode, :page_toolbar => @show_page_toolbar ? 1 : 0) }" width="100%" height="#{@show_page_toolbar ? 159 : 100 }px" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" name="cms_toolbar"></iframe>

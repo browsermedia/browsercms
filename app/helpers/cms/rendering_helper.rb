@@ -15,7 +15,7 @@ module Cms
     def render_connectable(content_block)
       if content_block
         if content_block.class.renderable?
-          logger.info "..... Rendering connectable #{content_block.class} ##{content_block.id} #{"v#{content_block.version}" if content_block.respond_to?(:version)}"
+          logger.debug "Rendering connectable #{content_block.class} ##{content_block.id} #{"v#{content_block.version}" if content_block.respond_to?(:version)}"
           content_block.perform_render(controller)
         else
           logger.warn "Connectable #{content_block.class} ##{content_block.id} is not renderable"

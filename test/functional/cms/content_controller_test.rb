@@ -430,7 +430,6 @@ class Cms::ContentCachingDisabledControllerTest < ActionController::TestCase
 
     get :show, :path => "about"
 
-    assert_equal "", @response.body
     assert_select "#hi", "hello"
 
   end

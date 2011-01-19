@@ -126,7 +126,7 @@ class Cms::ContentController < Cms::ApplicationController
   def check_access_to_page
     set_page_mode
     if current_user.able_to?(:edit_content, :publish_content, :administrate)
-      logger.info "..... Displaying draft version of page"
+      logger.debug "Displaying draft version of page"
       if page = Page.first(:conditions => {:path => @path})
         @page = page.as_of_draft_version
       else

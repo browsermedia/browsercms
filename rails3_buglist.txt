@@ -1,13 +1,13 @@
-Start with:  Why aren't content blocks rendering?
+Start with:
 
 rake test:functionals TEST=functional/cms/content_controller_test.rb
 
-Content blocks added to pages are not being rendered. This is fairly serious, likely a root cause for many broken tests, and needs to be figured out.
+Need to make sure all helpers are correctly available for portlets and blocks.
 
 State of Test Cases (As of Jan 14, 2011)
 ====================
-Unit - 1F! (Boo!!!! Might be rails 3.0.3 or Ruby 1.9.2 upgrade)
-Functional - 25 Failures, 3 errors
+Unit - 3F
+Functional - 16 Failures, 3 errors
 Integration - 2F, 0E
 
 Todo List
@@ -40,6 +40,11 @@ Open Issues
 * save! is broken (Maybe)
 * Will need to rewrite generators to use Thor (Will require new fork)
 * Look at how ActionSupport works with providing hooks
+
+html_safe = A pain
+=========
+As of Jan 2011, pretty much every content_block's render.html.erb needs to stick html_safe on everything, which is both tedious and annoying.
+Need to figure out a better way to globally handle this.
 
 Good Ideas
 * Rewrite Behaviors to use ActiveSupport::Concern (at least look at it to see what is useful)
