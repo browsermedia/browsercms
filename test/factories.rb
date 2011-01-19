@@ -25,9 +25,20 @@ Factory.define :group do |m|
   m.sequence(:name) {|n| "TestGroup#{n}" }
 end
 
+Factory.define :cms_user_group, :class=>:group do |m|
+  m.sequence(:name) {|n| "TestGroup#{n}" }
+  m.association :group_type, :factory=>:cms_group_type
+end
+
 Factory.define :group_type do |m|
   m.sequence(:name) {|n| "TestGroupType#{n}" }
 end
+
+Factory.define :cms_group_type, :class=>:group_type do |m|
+  m.name "CMS User"
+  m.cms_access true
+end
+
 
 Factory.define :html_block do |m|
   m.name "About Us"

@@ -191,7 +191,7 @@ class Cms::SectionsControllerPermissionsTest < ActionController::TestCase
     @group2 = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
     expected_groups = @editable_section.groups
     login_as(@user)
-    put :update, :id => @editable_section, :section => {:name => "new name", :group_ids => [@group, @group2]}
+    put :update, :id => @editable_section, :section => {:name => "new name", :group_ids => [@group.id, @group2.id]}
     assert_response :redirect
     assert_equal expected_groups, assigns(:section).groups
     assert_equal "new name", assigns(:section).name
@@ -201,12 +201,12 @@ class Cms::SectionsControllerPermissionsTest < ActionController::TestCase
 
 
   test "PUT update should add groups for admin user" do
-# This step is unnecessary in the actual cms, as you can't stop the admin from doing anything
+    # This step is unnecessary in the actual cms, as you can't stop the admin from doing anything
     Group.find(:first, :conditions => "code = 'cms-admin'").sections << @editable_subsection
-    @group2 = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
+    @group2 = Factory(:cms_user_group)
     expected_groups = [@group, @group2]
     login_as_cms_admin
-    put :update, :id => @editable_subsection, :section => {:name => "new name", :group_ids => [@group, @group2]}
+    put :update, :id => @editable_subsection, :section => {:name => "new name", :group_ids => [@group.id, @group2.id]}
     assert_response :redirect
     assert_equal expected_groups, assigns(:section).groups
   end

@@ -7,7 +7,7 @@ Need to make sure all helpers are correctly available for portlets and blocks.
 State of Test Cases (As of Jan 14, 2011)
 ====================
 Unit - 3F
-Functional - 3 Failures, 3 errors
+Functional - 2 Failures, 1 errors
 Integration - 2F, 0E
 
 Todo List
