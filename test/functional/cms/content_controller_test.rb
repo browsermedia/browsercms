@@ -68,12 +68,9 @@ class Cms::ContentControllerTest < ActionController::TestCase
   def test_show_file
     create_file
 
-    get :show, :path => "test.txt"
+    @controller.expects(:send_file).with(@file_block.attachment.full_file_location, :filename => 'test.txt', :type => 'text/plain',:disposition => "inline")
 
-    assert_response :success
-    puts @response.body 
-    assert_equal "text/plain", @response.content_type
-    assert_equal "This is a test", streaming_file_contents
+    get :show, :path => "test.txt"
   end
 
   def test_show_archived_file
@@ -102,12 +99,10 @@ class Cms::ContentControllerTest < ActionController::TestCase
   def test_show_protected_file_to_privileged_user
     create_protected_file
     login_as @privileged_user
+    @controller.expects(:send_file).with(@file_block.attachment.full_file_location, :filename => 'test.txt', :type => 'text/plain',:disposition => "inline")
 
     get :show, :path => "test.txt"
 
-    assert_response :success
-    assert_equal "text/plain", @response.content_type
-    assert_equal "This is a test", streaming_file_contents
   end
 
   def test_show_page_route
@@ -169,7 +164,7 @@ class Cms::ContentControllerTest < ActionController::TestCase
     end
 
     def create_file
-      @file = mock_file(:read => "This is a test", :content_type => "text/plain")
+      @file = mock_file(:content_type => "text/plain")
       @file_block = Factory(:file_block, :attachment_section => root_section, :attachment_file => @file, :attachment_file_path => "/test.txt", :publish_on_save => true)
     end
 

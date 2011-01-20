@@ -112,6 +112,7 @@ class Cms::ContentController < Cms::ApplicationController
 
         #Stream the file if it exists
         if @path != "/" && File.exists?(@file)
+          logger.warn "Sending file #{@file}"
           send_file(@file, 
             :filename => @attachment.file_name,
             :type => @attachment.file_type,
