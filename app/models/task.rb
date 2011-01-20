@@ -42,9 +42,7 @@ class Task < ActiveRecord::Base
     elsif assigned_to.email.blank?
       logger.warn "Can't send email for task because assigned to user #{assigned_to.login}:#{assigned_to.id} has no email address"
     else
-      # application_config = Rails.application.config
-      # domain = application_config.site_domain
-      domain = Browsercms::Application::SITE_DOMAIN
+      domain = SITE_DOMAIN
       if domain =~ /^www/
         host = domain.sub(/^www\./, "#{cms_domain_prefix}.")
       else

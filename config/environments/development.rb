@@ -23,6 +23,10 @@ Browsercms::Application.configure do
   # Only use best-standards-support built into browsers
   config.action_dispatch.best_standards_support = :builtin
 
-  SITE_DOMAIN = "localhost:3000"
+
 end
+
+# Used by anything that needs to send email from the site.
+# Not ideal that this is a global constant, but it works.
+SITE_DOMAIN = "localhost:3000"
 

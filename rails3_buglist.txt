@@ -7,7 +7,7 @@ Need to make sure all helpers are correctly available for portlets and blocks.
 State of Test Cases (As of Jan 14, 2011)
 ====================
 Unit - 3F
-Functional - 2 Failures, 1 errors
+Functional - 0 Failures, 1 errors
 Integration - 2F, 0E
 
 Todo List
@@ -92,15 +92,11 @@ Items Completed
 ===============
 1. Hacked some helpers to not return unsafe strings. This needs to be really fixed.
 2. Upgraded the 'stock' Rails files of BrowserCMS to use Rails 3.
-3. Upgraded factory_girl to use a Rails 3/git based version
 4. Added bundler configuration (this will need to be documented).
 5. Sitemap folders now render correctly (fixed raw/h strings issue). Buttons too.
 6. Removed calls to 'after_validation_on_update' in favor of 'after_validation' with a check for new_record?
-7. SITE_DOMAIN was a constant can't be found since there is no more global namespace. (Read up on how to add new configuration to Rails apps via configuration)
-  (SITE_DOMAIN is fixed, but might not work correctly when new BrowserCMS projects are generated)
 8. Rewrote versioning to override the correct method for handling callbacks.
 9. Catchall route used to split path into an array, then the content controller would reassemble it. I have reversed this procedure.
-10. Hard coded two paths into the browsercms config/routes.rb to allow routes to work.
 
 Other Notes
 ==========

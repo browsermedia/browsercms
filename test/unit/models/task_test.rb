@@ -86,7 +86,7 @@ class CreateTaskTest < TaskTest
       assert_equal @editor_a.email, email.sender
       assert_equal @editor_b.email, email.recipients
       assert_equal "Page '#{@page.name}' has been assigned to you", email.subject
-      assert_equal "http://cms.#{Browsercms::Application::SITE_DOMAIN}#{@page.path}\n\n#{@task.comment}", email.body
+      assert_equal "http://cms.#{SITE_DOMAIN}#{@page.path}\n\n#{@task.comment}", email.body
     end
 
     def assert_that_the_page_is_assigned_to_the_assigned_to_user

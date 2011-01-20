@@ -33,8 +33,12 @@ Browsercms::Application.configure do
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
 
-  SITE_DOMAIN = "localhost:3000"
 
 #  config.log_level = Logger::WARN
 
 end
+
+# Used by anything that needs to send email from the site.
+# Not ideal that this is a global constant, but it works.
+SITE_DOMAIN = "localhost:3000"
+
