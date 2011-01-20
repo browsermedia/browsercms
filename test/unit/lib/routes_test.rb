@@ -37,7 +37,7 @@ class RoutesTest < ActiveSupport::TestCase
 
     # Expect
     rb.expects(:resources).with(:bears)
-    rb.expects(:get).with('/bears/:id/version/:version', {:to => 'cms/bears#version', :as => :version_cms_bears})
+    rb.expects(:get).with('/bears/:id/version/:version', {:to => 'bears#version', :as => :version_cms_bears})
     rb.expects(:put)
     rb.content_blocks :bears
 
@@ -48,7 +48,7 @@ class RoutesTest < ActiveSupport::TestCase
   test "model names with s at the end behave identically (since content_blocks expects plural symbols)" do
     rb = RouteBuilder.new
     rb.expects(:resources).with(:kindnesses)
-    rb.expects(:get).with('/kindnesses/:id/version/:version', {:to => 'cms/kindnesses#version', :as => :version_cms_kindnesses})
+    rb.expects(:get).with('/kindnesses/:id/version/:version', {:to => 'kindnesses#version', :as => :version_cms_kindnesses})
     rb.expects(:put)
 
     rb.content_blocks :kindnesses
