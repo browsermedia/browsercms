@@ -5,6 +5,15 @@ module Cms
   # Things that need to happen:
   # 1. Need to add all helpers from that the Cms::ContentController has access to:
   # 2. Add helpers for the portlet or content block
+  #
+  # Understanding how Cms::ContentController renders a template:
+  # 1. It starts with a layout, which is a CMS template.
+  # 2. show.html.erb is called, which iterates over the connectables, adding content_for for each of the yields.
+  #
+  # TODOS
+  # There are currently way to many values getting copied into this view, including:
+  #   content_block (desired) - From ContentController
+  #   content - An attribute of the block itself.
   class ViewContext < ActionView::Base
 
     # @param [ActionController::Base] controller The CMS controller rendering the overall page
@@ -13,10 +22,12 @@ module Cms
       @controller = controller
       super(@controller.view_paths, attributes_to_assign, @controller)
 
-      # Issues: There are currently way to many values getting copied into this view, including:
-      # content_block (desired) - From ContentController
-      # content - An attribute of the block itself.
+
+      self.class.send(:include, controller.class._helpers)
+
+      # See what values are getting copied into template
 #      Rails.logger.warn "Assigned these variables: #{attributes_to_assign}"
+
     end
 
     # We want content_for to be called on the controller's view, not this inner view
@@ -27,7 +38,5 @@ module Cms
 
   end
 
-  # Understanding how Cms::ContentController renders a template:
-  # 1. It starts with a layout, which is a CMS template.
-  # 2. show.html.erb is called, which iterates over the connectables, adding content_for for each of the yields.
+
 end

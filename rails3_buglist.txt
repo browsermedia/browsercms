@@ -8,7 +8,7 @@ State of Test Cases (As of Jan 14, 2011)
 ====================
 Unit - 3F
 Functional - 0 Failures, 1 errors
-Integration - 2F, 0E
+Integration - 0F, 0E
 
 Todo List
 ===============

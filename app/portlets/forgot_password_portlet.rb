@@ -3,11 +3,15 @@ class ForgotPasswordPortlet < Portlet
 
   
   def render
+    logger.warn "Handling Class #{request.class}"
+    logger.warn "Handling FORGOT as #{request.method}"
+    logger.warn "Am I a POST? #{request.post?}"
     flash[:forgot_password] = {}
 
-    return unless request.method == :post
+    return unless request.post?
     user = User.find_by_email(params[:email])
-    
+
+    logger.warn "Send email "
     unless user
       flash[:forgot_password][:error] = "We were unable to verify your account. Please make sure your email address is accurate."
       return
