@@ -641,11 +641,10 @@ class PageWithBlockTest < ActiveRecord::TestCase
     
     assert_incremented page_version_count, Page::Version.count
     assert_incremented page_version, @page.draft.version
-    assert_decremented page_connector_count, 
-      @page.connectors.for_page_version(@page.draft.version).count
+    assert_decremented page_connector_count, @page.connectors.for_page_version(@page.draft.version).count
       
-    conns = @page.connectors.all(:order => "id")
-    
+    conns = Connector.where("page_id = ?", @page.id).order("id")
+
     #log_array conns, :id, :page_id, :page_version, :connectable_id, :connectable_type, :connectable_version, :container, :position
 
     assert_equal 9, conns.size

@@ -1,13 +1,10 @@
 Start with:
-
-rake test:functionals TEST=functional/cms/content_controller_test.rb
-
-Need to make sure all helpers are correctly available for portlets and blocks.
+    Adhoc testing of UI.
 
 State of Test Cases (As of Jan 14, 2011)
 ====================
-Unit - 3F
-Functional - 0 Failures, 1 errors
+Unit - 1F
+Functional - 0 Failures, 0 errors
 Integration - 0F, 0E
 
 Todo List
