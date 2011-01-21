@@ -2,16 +2,6 @@ class FileBlock < AbstractFileBlock
 
   acts_as_content_block :belongs_to_attachment => true, :taggable => true
 
-  before_validation :report!
-
-  def report!
-    logger.warn "attachment_file = #{attachment_file}"
-    logger.warn "attachment_file.class = #{attachment_file.class}"
-#    logger.warn "temp_file = #{temp_file}"
-#    logger.warn "temp_file.class = #{temp_file.class}"
-  end
-
-
   def set_attachment_file_path
     if @attachment_file_path && @attachment_file_path != attachment.file_path
       attachment.file_path = @attachment_file_path

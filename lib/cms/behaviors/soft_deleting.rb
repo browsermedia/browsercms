@@ -10,6 +10,11 @@ module Cms
           !!@uses_soft_delete
         end
 
+        def handle_missing_table_error_during_startup(e)
+          puts e.inspect
+          Rails.logger.info e.inspect
+        end
+
         def uses_soft_delete(options={})
           @uses_soft_delete = true
 
@@ -23,11 +28,11 @@ module Cms
 
           # By default, all queries for blocks should filter out deleted rows.
           begin
-          default_scope where(:deleted => false)
-          rescue Mysql::Error => e
-            puts e.inspect
-            Rails.logger.info e.inspect
-          end 
+            default_scope where(:deleted => false)
+          # This may fail during gem loading, if no DB exists. Log it and move on.
+          rescue StandardError => e
+            handle_missing_table_error_during_startup(e)
+          end
         end
       end
 
