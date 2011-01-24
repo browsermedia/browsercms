@@ -60,7 +60,7 @@
             <div class="dividers">
               <%= "v. #{r.version}" %>
               <%= '(LIVE)' if @block.version == r.version %>
-              <%= '<span class="current">(CURRENT)</span>' if i == 0 %>
+              <%= '<span class="current">(CURRENT)</span>'.html_safe if i == 0 %>
             </div>
           </td>
           <td>

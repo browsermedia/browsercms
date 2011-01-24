@@ -17,18 +17,12 @@ Open Issues
 ===========
 * /cms/routes is broken (throws errors)
 5. link_to_function has been removed. Check All and uncheck all are currently broken (See ApplicationHelper)
-7. Saving a block with unchanged value shouldn't create additional versions (rake test:units TEST=unit/lib/content_block_test.rb)
+7. Saving a block with unchanged value shouldn't create additional versions. Currently saving an HtmlBlock results in 'changed_tags'.
 9. Auto path suggestion doesn't work for pages
-10. Cannot add blocks to pages
 11. Building page routers from database is disabled (Needs reworking: See routes.rb for details).
-12. Permissions Tests for SampleBlock is broken. (Potentially result of overly brittle tests. Might be better rewritten)
 13. Test that file browser.xml works (for WYSIWYG editor)
-14. Deleting Page Templates doesn't work. (UI silently fails)
 * Altering the uploaded file may not change the name of the file. (Broken test or broken feature?)
-* require_javascript_include - Tests are broken (probably due to changes to rails internals) 
-* save! is broken (Maybe)
 * Will need to rewrite generators to use Thor (Will require new fork)
-* Look at how ActionSupport works with providing hooks
 
 html_safe = A pain
 =========
@@ -39,6 +33,7 @@ Good Ideas
 * Rewrite Behaviors to use ActiveSupport::Concern (at least look at it to see what is useful)
 * Not sure Publishing and Versioning should be split up. They are really intertwined in practice.
 * Start introducing cucumber tests
+* Look at how ActionSupport works with providing hooks
 
 CMS Behavior Dependencies
 ================
