@@ -15,6 +15,7 @@ Todo List
 
 Open Issues
 ===========
+* /cms/routes is broken (throws errors)
 5. link_to_function has been removed. Check All and uncheck all are currently broken (See ApplicationHelper)
 7. Saving a block with unchanged value shouldn't create additional versions (rake test:units TEST=unit/lib/content_block_test.rb)
 9. Auto path suggestion doesn't work for pages
