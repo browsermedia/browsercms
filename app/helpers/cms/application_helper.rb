@@ -4,7 +4,7 @@ module Cms
 
     def require_stylesheet_link(sources=(), content_area=:html_head)
       @required_stylesheet_links ||= []
-      new_links = Array(sources) - @required_stylesheet_links
+      new_links                  = Array(sources) - @required_stylesheet_links
       if !new_links.empty?
         @required_stylesheet_links |= new_links
         content_for(content_area, stylesheet_link_tag(new_links))
@@ -13,17 +13,17 @@ module Cms
 
     def require_javascript_include(sources=(), content_area=:html_head)
       @required_javascript_includes ||= []
-      new_links = Array(sources) - @required_javascript_includes
+      new_links                     = Array(sources) - @required_javascript_includes
       if !new_links.empty?
         @required_javascript_includes |= new_links
         content_for(content_area, javascript_include_tag(new_links))
       end
     end
-    
+
     def searchable_sections(selected = nil)
-      root = Section.root.first
+      root    = Section.root.first
       options = [['All sections', 'all'], [root.name, root.id]]
-      root.all_children_with_name.each { |s|  options << [s.full_path, s.id] }
+      root.all_children_with_name.each { |s| options << [s.full_path, s.id] }
       options_for_select(options, selected.to_i)
     end
 
@@ -33,10 +33,10 @@ module Cms
     end
 
     def page_versions(page)
-      text = select_tag(:version, 
-                        options_for_select(page.versions.all(:order => "version desc").map { |r| 
-                                             ["v#{r.version}: #{r.version_comment} by #{r.updated_by.login} at #{time_on_date(r.updated_at)}", r.version] 
-                                           }, page.version), 
+      text = select_tag(:version,
+                        options_for_select(page.versions.all(:order => "version desc").map { |r|
+                          ["v#{r.version}: #{r.version_comment} by #{r.updated_by.login} at #{time_on_date(r.updated_at)}", r.version]
+                        },                 page.version),
                         :onchange => 'this.form.submit(); return false')
       text << javascript_tag("$('version').selectedIndex = 0") if page.live?
       text
@@ -45,7 +45,7 @@ module Cms
     def action_icon_src(name)
       "cms/icons/actions/#{name}.png"
     end
-    
+
     def action_icon(name, options={})
       image_tag action_icon_src(name), {:alt => name.to_s.titleize}.merge(options)
     end
@@ -53,7 +53,7 @@ module Cms
     def status_icon(status, options={})
       image_tag "cms/icons/status/#{status.to_s.underscore}.gif", {:alt => status.to_s.titleize}.merge(options)
     end
-    
+
     def link_to_usages(block)
       count = block.connected_pages.count
       if count > 0
@@ -64,7 +64,7 @@ module Cms
         count
       end
     end
-    
+
     def time_on_date(time)
       time && "#{time.strftime("%l:%M %p")} on #{time.strftime("%b %e, %Y")}"
     end
@@ -72,7 +72,7 @@ module Cms
     def format_date(time)
       time && "#{time.strftime("%b %e, %Y")}"
     end
-    
+
     def link_to_check_all(selector, name="Check All")
       #TODO: Rails 3 - Make this work again with unobtrusive javascript
       link_to name, '#', :id=>selector
@@ -81,11 +81,12 @@ module Cms
     def link_to_uncheck_all(selector, name="Uncheck All")
 #      link_to_function name, "$('#{selector}').attr('checked', false)"
     end
-    
-    
+
+
     def span_tag(content)
       content_tag :span, content
     end
+
     def lt_button_wrapper(content)
       button = <<LBW
   <div class="lt_button">
@@ -96,51 +97,52 @@ module Cms
     <img src="/images/cms/lt_button_r.gif" alt="" style="margin-right: 10px;" />
   </div>
 LBW
-    button.html_safe
+      button.html_safe
     end
 
     def dk_button_wrapper(content)
-      lt_button_wrapper(content).gsub("lt_button_","dk_button_")
+      lt_button_wrapper(content).gsub("lt_button_", "dk_button_")
     end
+
     def group_ids
       (params[:group_ids] || @user.group_ids).collect { |g| g.to_i }
     end
 
     def group_filter
       select_tag("group_id", options_from_collection_for_select(Group.all.insert(0, Group.new(:id => nil, :name => "Show All Groups")), "id", "name", params[:group_id].to_i))
-    end	  	  
-    
+    end
+
     def categories_for(category_type_name, order="name")
       cat_type = CategoryType.named(category_type_name).first
       cat_type ? cat_type.category_list(order) : []
-    end	  
-    
+    end
+
     def render_pagination(collection, collection_name, options={})
       if collection.blank?
         content_tag(:div, "No Content", :class => "pagination")
       else
         render :partial => "cms/shared/pagination", :locals => {
-          :collection => collection,
-          :first_page_path => send("cms_#{collection_name}_path", {:page => 1}.merge(options)),
-          :previous_page_path => send("cms_#{collection_name}_path", {:page => collection.previous_page ? collection.previous_page : 1}.merge(options)),
-          :current_page_path => send("cms_#{collection_name}_path", options),
-          :next_page_path => send("cms_#{collection_name}_path", {:page => collection.next_page ? collection.next_page : collection.current_page}.merge(options)),
-          :last_page_path => send("cms_#{collection_name}_path", {:page => collection.total_pages}.merge(options))
+            :collection         => collection,
+            :first_page_path    => send("cms_#{collection_name}_path", {:page => 1}.merge(options)),
+            :previous_page_path => send("cms_#{collection_name}_path", {:page => collection.previous_page ? collection.previous_page : 1}.merge(options)),
+            :current_page_path  => send("cms_#{collection_name}_path", options),
+            :next_page_path     => send("cms_#{collection_name}_path", {:page => collection.next_page ? collection.next_page : collection.current_page}.merge(options)),
+            :last_page_path     => send("cms_#{collection_name}_path", {:page => collection.total_pages}.merge(options))
         }
       end
-    end	  
+    end
 
     def url_with_mode(url, mode)
       uri = URI.parse(url)
       if uri.query =~ /mode=[^&]*/
-        "#{uri.path}?#{uri.query.gsub(/((^|&)mode=)[^&]*/) {|s| "#{$1}#{mode}" }}"
+        "#{uri.path}?#{uri.query.gsub(/((^|&)mode=)[^&]*/) { |s| "#{$1}#{mode}" }}"
       elsif uri.query
         "#{uri.path}?#{uri.query}&mode=#{mode}"
       else
         "#{uri.path}?mode=#{mode}"
       end
     end
-    
+
     def determine_order(current_order, order)
       if current_order == order
         if order =~ / desc$/i
@@ -150,8 +152,21 @@ LBW
         end
       else
         order
-      end 
+      end
     end
-    
+
+    # Render a CMS styled 'Delete X' button. This button will appear on tool bars, typically set apart visually from other buttons.
+    # Has a 'confirm?' popup attached to it as well.
+    # Assumes that javascript code to handle the 'confirm' has already been included in the page.
+    #
+    # @param [Hash] options The options for this tag
+    # @option options [Boolean] :title Whether or not a standard 'confirm yes/no' window should be used. (Title is set by javascript.
+    def delete_button(options={})
+      classes = "button disabled delete_button"
+      classes << " http_delete confirm_with_title" if options[:title]
+
+      span_options = {:id => 'delete_button', :class => classes}
+      link_to span_tag("<span class=\"delete_img\">&nbsp;</span>Delete".html_safe), '#', span_options
+    end
   end
 end

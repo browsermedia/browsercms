@@ -74,4 +74,16 @@ class Cms::ApplicationHelperTest < ActionView::TestCase
     require_javascript_include(js)
     assert_equal javascript_include_tag('site2'), require_javascript_include(js2)[1]    
   end
+  
+  
+  test "delete button generates button without an explicit title by default" do
+    expected_html = '<a href="#" class="button disabled delete_button" id="delete_button"><span><span class="delete_img">&nbsp;</span>Delete</span></a>'
+    assert_equal expected_html, delete_button
+  end
+
+  test "delete button uses a standard Confirm link if :title option is specified" do
+    expected_html = '<a href="#" class="button disabled delete_button http_delete confirm_with_title" id="delete_button"><span><span class="delete_img">&nbsp;</span>Delete</span></a>'
+    assert_equal expected_html, delete_button(:title=>true)
+
+  end
 end

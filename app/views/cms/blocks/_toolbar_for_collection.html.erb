@@ -19,8 +19,5 @@
 <%= link_to span_tag("List Versions"), "#", 
   :id => "revisions_button", 
   :class => "button #{ action_name == 'revisions' ? ' off' : ' disabled'}" %>
-  
-<%= link_to span_tag("<span class=\"delete_img\">&nbsp;</span>Delete"), "#", 
-  :id => "delete_button", 
-  :class => "spacer button disabled http_delete confirm_with_title", 
-  :title => "Are you sure you want to delete this record?" %>
+
+<%= delete_button :title=>true %>

@@ -1,11 +1,7 @@
 Start with:
     Adhoc testing of UI.
 
-State of Test Cases (As of Jan 14, 2011)
-====================
-Unit - 1F
-Functional - 0 Failures, 0 errors
-Integration - 0F, 0E
+State of Test Cases - All Pass (As of Jan 21, 2011)
 
 Todo List
 ===============
@@ -19,11 +15,7 @@ Todo List
 
 Open Issues
 ===========
-2. Content blocks are not being displayed within their containers (Seems likely our assumptions about 'attribute' names from Rails 2 has changed)
-3. content/show.html.erb is not rendering anything for the 'body' of the page. I.e. content explicitly added to the main area rather than content_for calls. (Likely related to #2)
-4. Pages do not render their status icon in the sitemap.
 5. link_to_function has been removed. Check All and uncheck all are currently broken (See ApplicationHelper)
-6. Attachments throw errors (uninitialized constant ActionController::UploadedTempfile)
 7. Saving a block with unchanged value shouldn't create additional versions (rake test:units TEST=unit/lib/content_block_test.rb)
 9. Auto path suggestion doesn't work for pages
 10. Cannot add blocks to pages
@@ -31,7 +23,6 @@ Open Issues
 12. Permissions Tests for SampleBlock is broken. (Potentially result of overly brittle tests. Might be better rewritten)
 13. Test that file browser.xml works (for WYSIWYG editor)
 14. Deleting Page Templates doesn't work. (UI silently fails)
-15. Add/Edit/Delete/Load page_routes doesn't work.
 * Altering the uploaded file may not change the name of the file. (Broken test or broken feature?)
 * require_javascript_include - Tests are broken (probably due to changes to rails internals) 
 * save! is broken (Maybe)

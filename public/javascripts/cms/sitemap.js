@@ -234,7 +234,7 @@ jQuery(function($){
 	.click(function(){return true}) 
 	
 	if(isSectionEmpty(id)) {
-	    $('#delete-button')
+	    $('#delete_button')
             .removeClass('disabled')
             .attr('href','/cms/sections/'+id+'.json')
             .unbind('click')
@@ -257,7 +257,7 @@ jQuery(function($){
 		return false;
             })            
 	} else {
-	    $('#delete-button').addClass('disabled').unbind('click').click(function(){ return false})      
+	    $('#delete_button').addClass('disabled').unbind('click').click(function(){ return false})
 	}
         
     }
@@ -276,7 +276,7 @@ jQuery(function($){
 	.unbind('click')
 	.click(function(){return true})
 
-	$('#delete-button')
+	$('#delete_button')
 	.removeClass('disabled')
 	.attr('href','/cms/pages/'+id+'.json')
 	.unbind('click')
@@ -307,7 +307,7 @@ jQuery(function($){
 	.unbind('click')
 	.click(function(){return true})   
 	
-	$('#delete-button')
+	$('#delete_button')
 	.removeClass('disabled')
 	.attr('href','/cms/links/'+id+'.json')
 	.unbind('click')
