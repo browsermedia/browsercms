@@ -155,7 +155,7 @@ LBW
       end
     end
 
-    # Render a CMS styled 'Delete X' button. This button will appear on tool bars, typically set apart visually from other buttons.
+    # Render a CMS styled 'X Delete' button. This button will appear on tool bars, typically set apart visually from other buttons.
     # Has a 'confirm?' popup attached to it as well.
     # Assumes that javascript code to handle the 'confirm' has already been included in the page.
     #
@@ -176,6 +176,11 @@ LBW
       link_to span_tag("<span class=\"delete_img\">&nbsp;</span>Delete".html_safe), link_to_path, span_options
     end
 
+    # Render a CMS styled 'Edit' button. This button will appear on tool bars, typically set apart visually from other buttons.
+    #
+    # @param [Hash] options The options for this tag
+    # @option options [Path] :path The path or URL to link_to. Takes same types at url_for or link_to. Defaults to '#' if not specified.
+    # @option options [Boolean] :enabled If false, the button will be marked disabled. Default to false.
     def edit_button(options={})
       classes = "button"
       classes << " disabled" if !options[:enabled]
@@ -186,6 +191,9 @@ LBW
 
     end
 
+    # Render a CMS styled 'Add' button. This button will appear on tool bars, typically set apart visually from other buttons.
+    #
+    # @param [Path] The path or URL to link_to. Takes same types at url_for or link_to.
     def add_button(path, options={})
       classes = "button"
       span_options = {:class => classes}
