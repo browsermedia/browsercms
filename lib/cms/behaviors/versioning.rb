@@ -1,5 +1,25 @@
 module Cms
   module Behaviors
+
+    # This behavior adds Versioning to an ActiveRecord object. It seriously monkeys with how objects are saved or updated.
+    #
+    # This implementation is pretty tied to Rails 3 ActiveRecord. Here's how I understand it works:
+    # ActiveRecord alias chain- Here is the order that methods get called.
+    #
+    # save
+    #   save_with_transactions
+    #   save_with_dirty
+    #   save_with_validations
+    #   AR::Base#save (save_without_validations)
+    #   AR::Base#create_or_update_with_callbacks
+    #
+    #
+    #  AR::Base - Defines a 'save' method with no params
+    #  AR::Validations - alias save to a save_with_validations (which takes params)
+    #  ActiveRecord Object has:
+    #  - save_with_validations(options)
+    #  - save_without_validation() - (Original save)
+    #
     module Versioning
       def self.included(model_class)
         model_class.extend(MacroMethods)
@@ -22,7 +42,6 @@ module Cms
           has_many :versions, :class_name  => version_class_name, :foreign_key => version_foreign_key
 
           before_validation :initialize_version
-#          before_create :build_new_version
           before_save :build_new_version
           attr_accessor :skip_callbacks
 
@@ -181,7 +200,8 @@ module Cms
           @new_version = build_new_version_and_add_to_versions_list_for_saving
           logger.debug {"New version of #{self.class}::Version is #{@new_version.attributes}"}
         end
-        # Implementation from BrowserCMS 3.1. Left for reference while tests are being fixed for Rails 3 upgrade.
+
+        # Implementation from BrowserCMS 3.1 (Rails 2 API). Left for reference while tests are being fixed for Rails 3 upgrade.
         #
         #
         # This overrides the 'save' method from activerecord

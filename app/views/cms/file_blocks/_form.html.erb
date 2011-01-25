@@ -11,7 +11,7 @@
   <%= javascript_tag do %>
     jQuery(function($) {
       <% if @block.new_record? %>
-        var sectionIdPathMap = <%= @sections.inject({}){|map, sec| map[sec.id.to_s] = sec.path.sub(/\/$/,''); map}.to_json %>
+        var sectionIdPathMap = <%= @sections.inject({}){|map, sec| map[sec.id.to_s] = sec.path.sub(/\/$/,''); map}.to_json.html_safe %>
         $('#file_block_attachment_file, #file_block_attachment_section_id').change(function(){ 
             $('#file_block_attachment_file_path').val(sectionIdPathMap[$('#file_block_attachment_section_id').val()]+'/'+$.cms.sanitizeFileName($('#file_block_attachment_file').val())) 
         })
