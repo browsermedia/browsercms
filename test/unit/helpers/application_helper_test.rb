@@ -76,7 +76,13 @@ class Cms::ApplicationHelperTest < ActionView::TestCase
   end
   
   
-  
+  test "Convert jquery selector to dashs" do
+    s = "input.something"
+    assert_equal "input_something", s.gsub(".", "_")
+
+    assert_equal "input_something", send(:to_id, s)
+    assert_equal "input_something_uncheck", send(:to_id, s, "uncheck")
+  end
 end
 
 class Cms::ApplicationHelper::DeleteButtonTest < ActionView::TestCase

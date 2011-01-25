@@ -10,8 +10,7 @@
   <% end %>
   <div class="instructions">What sections should group members be allowed to <span id="section-action"><%= @group.cms_access? ? 'edit' : 'view' %></span>?</div>
   <div class="check_uncheck">
-    <%= link_to_check_all 'input.section_ids' %>, 
-    <%= link_to_uncheck_all 'input.section_ids' %>
+    <%= check_uncheck_tag 'input.section_ids' %>
   </div>
   </div>
   <br clear="all" />

@@ -73,15 +73,61 @@ module Cms
       time && "#{time.strftime("%b %e, %Y")}"
     end
 
+    # Renders two links that will check/uncheck a set of checkboxes.
+    #
+    # @param [String] selector The CSS selector for the checkboxes that should be mass checked/unchecked.
+    def check_uncheck_tag(selector)
+      check_id   = to_id(selector, "check")
+      uncheck_id = to_id(selector, "uncheck")
+      content_for :html_head do
+        html = <<HTML
+jQuery(function($) {
+  $('a##{check_id}').click(function() {
+    $('#{selector}').attr('checked', true);
+  });
+
+  $('a##{uncheck_id}').click(function() {
+    $('#{selector}').attr('checked', false);
+  });
+})
+HTML
+        javascript_tag html
+      end
+
+      "#{link_to "Check All", '#', :id=>check_id}, #{link_to "Uncheck All", '#', :id=>uncheck_id}".html_safe
+    end
+
+    # @deprecated Use check_uncheck_tag instead. Retained for backwards compatibility w/ CMS implementations.
     def link_to_check_all(selector, name="Check All")
-      #TODO: Rails 3 - Make this work again with unobtrusive javascript
-      link_to name, '#', :id=>selector
+      id = to_id(selector, "check")
+      content_for :html_head do
+        html = <<HTML
+jQuery(function($) {
+  $('a##{id}').click(function() {
+    $('#{selector}').attr('checked', true);
+  });
+})
+HTML
+        javascript_tag html
+      end
+      link_to name, '#', :id=>id
     end
 
+    # @deprecated Use check_uncheck_tag instead. Retained for backwards compatibility w/ CMS implementations.
     def link_to_uncheck_all(selector, name="Uncheck All")
-#      link_to_function name, "$('#{selector}').attr('checked', false)"
+      id = to_id(selector, "uncheck")
+      content_for :html_head do
+        html = <<HTML
+jQuery(function($) {
+  $('a##{id}').click(function() {
+    $('#{selector}').attr('checked', false);
+  });
+})
+HTML
+        javascript_tag html
+      end
+      link_to name, '#', :id=>id
     end
-
 
     def span_tag(content)
       content_tag :span, content
@@ -195,9 +241,18 @@ LBW
     #
     # @param [Path] The path or URL to link_to. Takes same types at url_for or link_to.
     def add_button(path, options={})
-      classes = "button"
+      classes      = "button"
       span_options = {:class => classes}
       link_to span_tag("&nbsp;Add&nbsp;".html_safe), path, span_options
+    end
+
+    private
+
+    # Converts a CSS jQuery selector into something that can be suitably used as a CSS id element.
+    def to_id(selector, suffix=nil)
+      id = selector.gsub(".", "_")
+      id = id + "_#{suffix}" if suffix
+      id
     end
   end
 end
