@@ -24,7 +24,8 @@ module Cms::Routes
   # all following routes will be ignored.
   #
   # Usage:
-  #   YourApp::Application.routes.draw do |map|
+  #   YourAppName::Application.routes.draw do
+  #      match '/some/path/in/your/app' :to=>"controller#action''
   #      routes_for_browser_cms
   #   end
   #
@@ -132,15 +133,13 @@ module Cms::Routes
 
     end
 
-#    # Loads all page routes from the database (Currently disabled since Rails 3 routing syntax for options is different
-#    if PageRoute.table_exists?
-#      PageRoute.all(:order => "page_routes.name").each do |r|
-#        # This next line should ideally work
-#        send('match', r.pattern, :to=>r.options_map, :as=>r.route_name)
-#        # This was the Rails 2 version of this
-#        send((r.route_name || 'connect').to_sym, r.pattern, r.options_map)
-#      end
-#    end
+    # Loads all Cms PageRoutes from the database
+    # TODO: Needs a integration/functional level test to verify that a page route w/ constraints will be correctly mapped.
+    if PageRoute.table_exists?
+      PageRoute.all(:order => "page_routes.name").each do |r|
+        match r.pattern, :to=>r.to, :as=>r.route_name, :_page_route_id=>r.page_route_id, :via=>r.via, :constraints=>r.constraints
+      end
+    end
 
     match "/", :to=>"cms/content#show"
     match "*path", :to=>"cms/content#show"

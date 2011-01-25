@@ -51,7 +51,6 @@ class Cms::ContentController < Cms::ApplicationController
   
   # ----- Before Filters -------------------------------------------------------
   def construct_path
-#    @paths = params[:page_path] || params[:path] || []
     @path = "/#{params[:path]}"
     @paths = @path.split("/")
   end
