@@ -16,7 +16,6 @@ Todo List
 Open Issues
 ===========
 7. Saving a block with unchanged value shouldn't create additional versions. Currently saving an HtmlBlock results in 'changed_tags'.
-9. Auto path suggestion doesn't work for pages
 11. Building page routers from database is disabled (Needs reworking: See routes.rb for details).
 13. Test that file browser.xml works (for WYSIWYG editor)
 * Altering the uploaded file may not change the name of the file. (Broken test or broken feature?)

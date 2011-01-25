@@ -2,7 +2,7 @@
 <script type="text/javascript">
 jQuery(function($){
   $("#page_name").keyup(function(){
-    var section = { name: <%= @page.section.name.to_json %>, path: <%= @page.section.path.to_json %> }
+    var section = { name: <%= @page.section.name.to_json.html_safe %>, path: <%= @page.section.path.to_json.html_safe %> }
     var page_name = $.trim($("#page_name").val())
     if (page_name == section.name || page_name == 'Overview') {
       $("#page_path").val(section.path)
@@ -11,8 +11,8 @@ jQuery(function($){
         section.path.replace(/\/$/, '') + "/" + $.cms.slug(page_name)
       )
     }
-  })
-})
+  });
+});
 </script>
 <% end %>
 
