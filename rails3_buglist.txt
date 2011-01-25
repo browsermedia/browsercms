@@ -1,25 +1,26 @@
-Start with:
+Start with: Package as a gem and try to create a blank browserCMS project with it.
 
 State of Test Cases - All Pass (As of Jan 21, 2011)
 
-Todo List
-===============
-* Clean up logging messages that are filling up the production logs unnecessarily
-** 'Caching enabled'
-** 'Not the CMS site'
-** 'Rendering content block X'
-** 'Not caching, user logged in'
-** Rendering template X'
-* Have at most one line per request for any diagnostic result.
-
 Open Issues
 ===========
-* Saving a block with unchanged value shouldn't create additional versions. Currently saving an HtmlBlock results in 'changed_tags'.
 * Will need to rewrite generators to use Thor (Will require new fork)
+* Make into an engine
+* Merge all existing migrations into core as well as seeds.rb. Rework how seeds gets run as part of the project. (Future proof this).
+* Make this release be 3.3
+* Support modules as engines (as well as current behavior - to cut down on cost of upgrade)
+* Package all public assets into CMS gem. (Cut down on duplication for projects)
+* Reduce need to developers to modify content-like files on server (CSS, JS, Images, Templates)
+** Confirm w/ developers on what is commonly touched.
+** Step 1: Make templates start on file system, appear in UI and then be 'forked' in UI. Avoids need to 'copy' into CMS and delete.
+** Look at WebDAV / HTTPS protocol.
+* Introduce cucumber to start testing new functionality.
+* Test blank, module and demo scripts for new projects.
 
 Known Bugs
 ==========
 * Deleting routes does not appear to reload them (Does not appear to be Rails 3 related)
+* Saving a block with unchanged value shouldn't create additional versions. Currently saving an HtmlBlock results in 'changed_tags'.
 
 Module Testing
 ==============
@@ -36,11 +37,19 @@ Good Ideas
 * Start introducing cucumber tests
 * Look at how ActionSupport works with providing hooks
 
-To Do List
-==========
-1. Build the gem and test it against a new rails 3 project.
-2. Verify it works in 1.8.7
-3. Determine if both Rails 2 and 3 can be supported in the same gem.
+Wish List
+===============
+* Namespace core files (especially users) to better support dropping in as project.
+* Allow Content Blocks to be namespaced.
+* Clean up logging messages that are filling up the production logs unnecessarily
+** 'Caching enabled'
+** 'Not the CMS site'
+** 'Rendering content block X'
+** 'Not caching, user logged in'
+** Rendering template X'
+* Have at most one line per request for any diagnostic result.
+* Verify it works in 1.8.7
+* Determine if both Rails 2 and 3 can be supported in the same gem.  (Probably not)
 
 Other Notes
 ==========
