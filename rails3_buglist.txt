@@ -6,6 +6,10 @@ State of Test Cases - All Pass (As of Jan 21, 2011)
 
 Open Issues
 ===========
+* f.error_messages is deprecated
+* portlets don't have access to helpers (LoginPortlet fails on cms_logout_path)
+
+
 * Core CMS generator may be running things twice (there are lots of duplicates)
 * Make other generators (content_block, portlet, template) work.
 * Merge all existing migrations into core as well as seeds.rb. Rework how seeds gets run as part of the project. (Future proof this).

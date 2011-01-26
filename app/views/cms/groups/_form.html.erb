@@ -20,7 +20,7 @@
 
 <%= form_for [:cms, @group] do |f| %>
 
-  <%= f.error_messages %>
+  <%= f.cms_error_messages %>
   <div class="fields text_fields">
     <%= f.label :name, "Group Name" %>
     <%= f.text_field :name %>

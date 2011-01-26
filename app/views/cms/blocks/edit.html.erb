@@ -10,7 +10,7 @@
   <div class="header">This <%= @block.class.name %> has been deleted.</div>
 <% else %>
 <%= form_for(@block, :url => block_path, :html => {:multipart => true}) do |f| %>
-  <%= f.error_messages %>
+  <%= f.cms_error_messages %>
   <%= render :partial => 'cms/shared/exception', :object => @exception if @exception %>  
   <% if @other_version %>
     <%= render :partial => 'cms/shared/version_conflict_error', :locals => {:other_version => @other_version, :your_version => @block} %>

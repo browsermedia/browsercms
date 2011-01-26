@@ -1,6 +1,6 @@
 <%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
 <%= form_for([:cms, @view]) do |f| %>
-  <%= f.error_messages %>
+  <%= f.cms_error_messages %>
   <%= f.cms_text_field :name %>
   <%= f.cms_text_field :format %>
   <%= f.cms_drop_down :handler, ActionView::Template.template_handler_extensions, :default => "erb" %>
