@@ -29,6 +29,7 @@ begin
     gem.files += Dir["app/**/*"]
     gem.files += Dir["db/migrate/[0-9]*_*.rb"]
     gem.files += Dir["db/demo/**/*"]
+    gem.files += Dir["db/seeds.rb"]
     gem.files += Dir["lib/**/*"]
     gem.files += Dir["rails_generators/**/*"]
     gem.files += Dir["public/stylesheets/cms/**/*"]

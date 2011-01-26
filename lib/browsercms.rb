@@ -1,4 +1,3 @@
-puts "Loading gem 'browsercms'"
 require 'cms/engine'
 require 'cms/extensions'
 require 'cms/init'

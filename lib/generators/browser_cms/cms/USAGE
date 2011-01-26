@@ -1,2 +1,2 @@
 Description:
-    Copies CMS assets, rake tasks and migrations from the gem into the app
+    Copies CMS assets, rake tasks and migrations from the browsercms gem into the application.

@@ -8,7 +8,6 @@ State of Test Cases - All Pass (As of Jan 21, 2011)
 Open Issues
 ===========
 * Will need to rewrite generators to use Thor (Will require new fork)
-* Make into an engine
 * Merge all existing migrations into core as well as seeds.rb. Rework how seeds gets run as part of the project. (Future proof this).
 * Make this release be 3.3
 * Support modules as engines (as well as current behavior - to cut down on cost of upgrade)

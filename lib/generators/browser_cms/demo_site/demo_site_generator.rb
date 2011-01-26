@@ -15,7 +15,7 @@ module BrowserCms
           end
         end
 
-        %W( lib/tasks/demo_site.rake db/seeds.rb).each{|f| 
+        %W( lib/tasks/demo_site.rake ).each{|f|
           copy_file Cms.scrub_path("#{Cms.root}/#{f}"), f
         }
 

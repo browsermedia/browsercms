@@ -124,14 +124,4 @@ Time::DATE_FORMATS.merge!(
 	:date => '%m/%d/%Y'	
 )
 
-#TODO: why is this here?
-#      shouldn't this be in the generator file?
-Cms.add_generator_paths(Cms.root, 
-  "config/initializers/cms.rb",
-  "public/javascripts/jquery*",
-  "public/javascripts/cms/**/*",
-  "public/bcms/ckeditor/**/*",
-  "public/site/**/*",   
-  "public/stylesheets/cms/**/*",
-  "public/images/cms/**/*",
-  "db/migrate/[0-9]*_*.rb")
+

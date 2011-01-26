@@ -1,8 +1,10 @@
 # Remove the file on both *unix and Windows
 if Gem.win_platform?
   run "del public\\index.html"
+  run "db/seeds.rb"
 else
   run "rm public/index.html"
+  run 'rm db/seeds.rb'
 end
 
 # Loads the version, so we can explicitly set in the generated cms project.
