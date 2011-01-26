@@ -1,5 +1,4 @@
 Start with:
-    Created a test/dummy rails application that boots from core.
     * Has all the duplication of a typical CMS project (public, db)
     * Can't run any of the tests from root directory (uses the wrong config dir).
 
@@ -7,9 +6,9 @@ State of Test Cases - All Pass (As of Jan 21, 2011)
 
 Open Issues
 ===========
-* Will need to rewrite generators to use Thor (Will require new fork)
+* Core CMS generator may be running things twice (there are lots of duplicates)
+* Make other generators (content_block, portlet, template) work.
 * Merge all existing migrations into core as well as seeds.rb. Rework how seeds gets run as part of the project. (Future proof this).
-* Make this release be 3.3
 * Support modules as engines (as well as current behavior - to cut down on cost of upgrade)
 * Package all public assets into CMS gem. (Cut down on duplication for projects)
 * Reduce need to developers to modify content-like files on server (CSS, JS, Images, Templates)
@@ -17,7 +16,8 @@ Open Issues
 ** Step 1: Make templates start on file system, appear in UI and then be 'forked' in UI. Avoids need to 'copy' into CMS and delete.
 ** Look at WebDAV / HTTPS protocol.
 * Introduce cucumber to start testing new functionality.
-* Test blank, module and demo scripts for new projects.
+* Test module scripts for new projects.
+* test/dummy has lots of duplicate (public, migrations, seed.rb)
 
 Known Bugs
 ==========
