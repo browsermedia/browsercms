@@ -1,0 +1,116 @@
+div.top_cap_menu {
+height: 10px;
+background: transparent url(/images/cms/menu/top_cap.png) no-repeat 0 0;
+}
+
+#menu { 
+float: left;
+/* background: #747D87; */
+width: 174px;
+}
+
+#menu h3 {
+background: url(/images/cms/menu/top_cap_menu_header.png) no-repeat 0 0;
+padding: 1px 6px 6px 15px;
+text-shadow: #FFF 1px 1px 1px;
+font-weight: bold;
+text-transform: uppercase;
+}
+#menu div {
+padding-left: 5px;
+background: url(/images/cms/dot.png) repeat 0 0;
+}
+#menu .searchbox {
+padding-left: 0px;
+background: #FFF url(/images/cms/searchbox_gradient.gif) repeat-x 100% 100%;
+}
+#menu .searchbox form {
+padding-left: 6px;
+background: transparent;
+}
+#menu .searchbox form div {
+padding-left: 0px;
+background: transparent;
+}
+
+#menu div h3 {
+padding: 0 6px 6px 15px;
+background: url(/images/cms/menu/menu_header_first_bg.gif) repeat-x 0 0;
+}
+#menu ul {
+* padding-bottom: 1px;
+}
+#menu ul li ul {
+padding-bottom: 0;
+}
+#menu .top_cap {
+height: 10px;
+background: transparent url(/images/cms/top_cap_menu_header.png) no-repeat 0 0;
+}
+#menu .bottom_cap {
+height: 5px;
+background: transparent url(/images/cms/menu/bottom_cap_menu.png) no-repeat 0 0;
+}
+#menu .bottom_cap_search {
+height: 7px;
+background: transparent url(/images/cms/menu/bottom_cap_menu_first.png) no-repeat 0 0;
+}
+#menu ul li {
+
+margin-top: 2px;
+}
+
+#menu ul li a {
+background: url(/images/cms/menu.png) no-repeat 0 0;
+color: #36659D;
+font-weight: bold;
+text-decoration: none;
+display: block;
+padding: 8px 0 8px 15px;
+text-shadow: #FFF 0px 1px 1px;
+* padding-bottom: 9px;
+}
+#menu ul li a:hover {
+background: url(/images/cms/menu_h.gif) no-repeat 0 0;
+color: #0549B8;
+}
+#menu ul li.open a{
+background: url(/images/cms/menu_open.png) no-repeat 0 0;
+color: #36659D;
+}
+
+#menu ul li ul li {
+display: none;
+}
+#menu ul li.open ul {
+padding: 2px 0 7px 0;
+background: #FFF url(/images/cms/menu_open_bg.gif) no-repeat 0 100%;
+}
+#menu ul li.open ul li {
+display: block;
+margin: 0;
+padding: 0px 0 0px 11px;
+}
+#menu ul li.open ul li.on {
+padding: 0 0 0 11px;
+}
+#menu ul li.open ul li a{
+background-image: none;
+padding: 5px 8px 6px 9px;
+* padding-top: 6px;
+}
+#menu ul li.open ul li a:hover{
+background: #d0d0d0 url(/images/cms/menu/block_cap_h.gif) no-repeat 0 0;
+color: #36659D;
+}
+
+#menu ul li.open ul li.on a {
+background: #CADCF4 url(/images/cms/menu/selected_block_cap.gif) no-repeat 0 0;
+padding: 5px 8px 6px 9px;
+* padding-top: 6px;
+}
+
+#menu .bottom_pad {
+  margin-bottom: 10px; 
+
+}

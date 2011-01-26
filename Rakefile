@@ -39,6 +39,7 @@ begin
     gem.files += Dir["public/images/cms/**/*"]
     gem.files += Dir["public/themes/**/*"]
     gem.files += Dir["templates/*.rb"]
+    gem.files -= Dir['test/dummy/*']
 
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end

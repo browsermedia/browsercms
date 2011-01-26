@@ -1,0 +1,257 @@
+html, body, div, span, applet, object, iframe,
+  h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+  a, abbr, acronym, address, big, cite, code,
+  del, dfn, em, font, img, ins, kbd, q, s, samp,
+  small, strike, strong, sub, sup, tt, var,
+  dl, dt, dd, ol, ul, li,
+  fieldset, form, label, legend,
+  table, caption, tbody, tfoot, thead, tr, th, td {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-weight: inherit;
+  font-style: inherit;
+  font-size: 100%;
+  font-family: inherit;
+  vertical-align: baseline;
+  }
+  /* remember to define focus styles! */
+  :focus {
+  outline: 0;
+  }
+  body {
+  line-height: 1;
+  color: black;
+  background: white;
+  }
+  .menu ol, .menu ul, ul.breadcrumbs {
+  list-style: none;
+  }
+  /* tables still need 'cellspacing="0"' in the markup */
+  table {
+  border-collapse: separate;
+  border-spacing: 0;
+  }
+  caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  }
+  blockquote:before, blockquote:after,
+  q:before, q:after {
+  content: "";
+  }
+  blockquote, q {
+  quotes: "" "";
+  }
+
+  body {
+  font-family: Arial, sans-serif;
+  color: #838383;
+  }
+  a {
+  color: #0597fe;
+  }
+  h1 {
+  font-size: 24pt;
+  font-weight: bold;
+  }
+  p {
+  font-size: 13px;
+  }
+  #content {
+  width: 961px;
+  margin-left: auto;
+  margin-right: auto;
+  }
+  .nav a{
+  display: block;
+  float: left;
+  padding: 1px 7px;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 12px;
+  font-weight: bold;
+  }
+  .nav span{
+  display: block;
+  float: left;
+  }
+  #upper_nav {
+  float: right;
+  height: 33px;
+  margin-right: 8px;
+  }
+  #upper_nav div {
+  margin-top: 1px;
+  padding: 5px 6px;
+  }
+  #upper_nav a {
+  padding: 4px 7px;
+  }
+
+  .wrapper {
+  background-color: #E5E5E5;
+  }
+  #header {
+  height: 150px;
+  }
+  #header div{
+  position: absolute;
+  margin: 9px 0 0 191px;
+  #margin-left: 7px;
+  border: 1px solid #CCCCCC;
+  height: 131px;
+  width: 756px;
+  
+  }
+  #header h1 {
+  padding-top: 30px;
+  padding-bottom: 11px;
+  padding-left: 30px;
+  letter-spacing: -1px;
+  }
+  #header p {
+  padding-left: 27px;
+  line-height: 1.8;
+  font-weight: bold;
+  }
+  #header img {
+  padding: 5px;
+  display: block;
+  float: left;
+  }
+  #mid_nav {
+  margin-top: 10px;
+  height: 49px;
+  }
+  #mid_nav div {
+  position: absolute;
+  margin: 10px;
+  border: 1px solid #CCCCCC;
+  padding: 5px 6px;
+  width: 926px;
+  }
+  #mid_nav li {
+  float: left;
+  border-right: 1px solid #CCCCCC;
+  }
+  #mid_nav li.last {
+  border-right: none;
+  }
+  #mid_nav a {
+  padding: 4px 14px;
+  }
+
+  .breadcrumbs li {
+	float: left;
+	border-right: 1px solid #CCCCCC;
+  }
+  #main {
+  margin-top: 10px;
+  }
+  #broad {
+  float: left;
+  width: 772px;
+  # height: 515px;
+  }
+  #broad h2 {
+  font-size: 18pt;
+  font-weignt: bold;
+  padding: 15px;
+  }
+  #broad p{
+  padding: 15px;
+  padding-top: 0;
+  line-height: 1.5;
+  }
+  #broad div.main_wrapper {
+  margin: 10px;
+  border: 1px solid #CCCCCC;
+  height: 493px;
+  #width: 750px;
+  }
+  #splash{
+  margin: 6px 4px 0 7px;
+  }
+  #narrow {
+  float: left;
+  width: 316px;
+  height: 515px;
+  # height: 520px;
+  }
+  #narrow h3 {
+  font-size: 14pt;
+  font-weignt: bold;
+  padding: 15px;
+  }
+  #narrow p{
+  padding: 15px;
+  padding-top: 0;
+  line-height: 1.5;
+  # width: 264px;
+  }
+  #narrow div.main_wrapper {
+  margin: 10px;
+  margin-bottom: 0;
+  border: 1px solid #CCCCCC;
+  height: 241px;
+  #height: 243px;
+  }
+  #sub_nav {
+  float: left;
+  height: 515px;
+  margin-right: 10px;
+  }
+  #sub_nav div {
+  margin: 10px;
+  margin-bottom: 0;
+  padding-left: 15px;
+  padding-top: 10px;
+  border: 1px solid #CCCCCC;
+  height: 484px;
+  #height: 483px;
+  }
+  #sub_nav div a{
+  float: none;
+  width: 137px;
+  padding: 10px 5px 10px 0;
+  }
+  #sub_nav div span{
+  float: none;
+  width: 125px;
+  border-bottom: 1px solid #CCCCCC;
+  }
+  #sub_nav li {
+  width: 126px;
+  margin-right: 15px;
+  border-bottom: 1px solid #CCCCCC;  
+  }
+  #sub_nav li.last {
+  border-bottom: none;
+  }
+  #footer {
+  margin-top: 10px;
+  height: 49px;
+  }
+  #footer div {
+  position: absolute;
+  margin: 10px;
+  border: 1px solid #CCCCCC;
+  padding: 5px 6px;
+  }
+  #footer a {
+  padding: 4px 14px;
+  }
+  #footer p {
+  float: left;
+  padding: 4px 0 0 15px;
+  margin-right: 165px;
+  }
+#narrow ul {
+  padding-left: 25px;
+}
+#narrow li {
+  font-size: 12px;
+}

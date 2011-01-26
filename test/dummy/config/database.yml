@@ -1,0 +1,12 @@
+# Only working against development for now.
+development:
+  adapter: mysql
+  encoding: utf8
+  reconnect: false
+  pool: 5
+  database: browsercms_development
+  username: root
+  password:
+  socket: /tmp/mysql.sock
+
+

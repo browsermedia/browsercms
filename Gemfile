@@ -8,6 +8,7 @@ gem "mysql"
 # Gem Environments
 group :development do 
   gem 'ruby-debug19'
+  gem 'jeweler'
 end
 
 group :test do

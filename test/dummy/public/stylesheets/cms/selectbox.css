@@ -1,0 +1,56 @@
+div.selectbox-wrapper {
+  position:absolute;
+  background-color:white;
+  padding:0px;
+  font-family: inherit;
+  line-height: 1.2;
+  font-size: 10pt;
+  text-align:left;
+  overflow:auto;
+  color: #000;
+  margin: -11px 0 0 140px;
+* margin: 35px 0 0 -257px;
+  border: 1px solid #C6C6C6;
+  font-family: Verdana;
+  z-index: 100;
+}
+
+#per_page_input {
+  font-family: Verdana;
+  text-transform: capitalize;
+}
+div.selectbox-wrapper ul {
+  background: url(/images/cms/searchbox_gradient.gif) repeat-x 100% 100%;
+  list-style-type:none;
+  margin:0px;
+  padding:0px;
+}
+div.selectbox-wrapper ul li.selected, #menu div.selectbox-wrapper ul li.selected { 
+  background-color: #EAF2FB;
+}
+div.selectbox-wrapper ul li {
+  font-size: 11px;
+  list-style-type:none;
+  margin:0;
+  padding: 8px 11px;
+  cursor:pointer;
+  background: #FFF url(/images/cms/dashed.gif) repeat-x 100% 100%;
+}
+
+div.selectbox-wrapper ul li.current, #menu div.selectbox-wrapper ul li.current { 
+  background-color: #BBD3EF;
+}
+
+.selectbox /* look&fell of  select box*/
+{
+  margin: 0px 5px 10px 0px;
+  padding: 4px 0 3px 4px;
+  background: #FFF url(/images/cms/select_bg.gif) no-repeat 100% 0;
+  cursor: pointer;
+  border: none;
+}
+
+.searchbox .selectbox, .box .selectbox, .text_editor_fields .selectbox /* look&fell of  select box*/
+{
+  background: #FFF url(/images/cms/select_bg.gif) no-repeat 100% 0;
+}

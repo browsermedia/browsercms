@@ -19,24 +19,27 @@ module Cms
     end
 
     # This is called after the environment is ready
+    # This all needs to be moved to the Engine
     def init
+      puts "BrowserCMS init has been called!!!!!!!"
+
       # ToDo: This is how we are adding new methods to the routes.rb file. Rails 3 might provide more direct way.
-      ActionDispatch::Routing::Mapper.send :include, Cms::Routes
+     # ActionDispatch::Routing::Mapper.send :include, Cms::Routes
 
       #need to add gem's app directories to the load path - 
       #the list is taken from what rails has automagically added to $: for the Rails.root dirs
-      ActiveSupport::Dependencies.autoload_paths += %W( #{self.root}/vendor #{self.root}/app/mailers #{self.root}/app/helpers)
-      ActiveSupport::Dependencies.autoload_paths += %W( #{self.root}/app/controllers #{self.root}/app/models #{self.root}/app/portlets)
-      ActiveSupport::Dependencies.autoload_paths += %W( #{Rails.root}/app/portlets )
-      ActiveSupport::Dependencies.autoload_paths += %W( #{Rails.root}/app/portlets/helpers )      
-      ActionController::Base.append_view_path DynamicView.base_path
-      ActionController::Base.append_view_path %W( #{self.root}/app/views)
+#      ActiveSupport::Dependencies.autoload_paths += %W( #{self.root}/vendor #{self.root}/app/mailers #{self.root}/app/helpers)
+#      ActiveSupport::Dependencies.autoload_paths += %W( #{self.root}/app/controllers #{self.root}/app/models #{self.root}/app/portlets)
+#      ActiveSupport::Dependencies.autoload_paths += %W( #{Rails.root}/app/portlets )
+#      ActiveSupport::Dependencies.autoload_paths += %W( #{Rails.root}/app/portlets/helpers )
+#      ActionController::Base.append_view_path DynamicView.base_path
+#      ActionController::Base.append_view_path %W( #{self.root}/app/views)
 
-      ActionView::Base.default_form_builder = Cms::FormBuilder
+#      ActionView::Base.default_form_builder = Cms::FormBuilder
       
       # ActiveRecord JDBC adapter depends on no database connection having
       # been established to work properly.
-      require 'jdbc_adapter' if defined?(JRUBY_VERSION)
+#      require 'jdbc_adapter' if defined?(JRUBY_VERSION)
       
       # This is just to be safe
       # dynamic views are stored in a tmp dir

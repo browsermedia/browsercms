@@ -1,4 +1,7 @@
-Start with: Package as a gem and try to create a blank browserCMS project with it.
+Start with:
+    Created a test/dummy rails application that boots from core.
+    * Has all the duplication of a typical CMS project (public, db)
+    * Can't run any of the tests from root directory (uses the wrong config dir).
 
 State of Test Cases - All Pass (As of Jan 21, 2011)
 
