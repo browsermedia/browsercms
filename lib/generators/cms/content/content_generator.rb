@@ -1,11 +1,11 @@
-require 'generators/cms_generators'
 require 'rails/generators/active_record/migration'
 
 module Cms
   module Generators
     # Allows developers to create new Content Blocks for their projects.
     #
-    class ContentGenerator < Cms::Generators::Base
+    class ContentGenerator < Rails::Generators::NamedBase
+
       source_root File.expand_path('../templates', __FILE__)
       argument :attributes, :type => :array, :default => [], :banner => "field:type field:type"
       class_option :migration, :type => :boolean, :default=>true

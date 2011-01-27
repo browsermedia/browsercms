@@ -2,7 +2,7 @@ Description:
     Generates a basic page template in the project.
 
 Example:
-    `./script/generate template subpage`
+    `rails generate template subpage`
 
         A page template in html format using erb.
             Template:            app/views/layouts/templates/subpage.html.erb

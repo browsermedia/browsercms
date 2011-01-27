@@ -2,7 +2,7 @@ Description:
     Create a new content block, along with controller, tests and migrations.
 
 Examples:
-    `rails g cms:content article`
+    `rails generate cms:content article`
 
         Creates an Article model, controller, views, tests, and migration:
             Model:              app/models/article.rb
@@ -16,7 +16,7 @@ Examples:
         This block will have a single attribute, name:string and a form with text_field
         to edit the name.
 
-    `rails g content Article name:string body:text published:boolean`
+    `rails generate content Article name:string body:text published:boolean`
 
         Creates an Article model with a string name, text body, and published flag.
         It will create form fields for these attributes in _form.html.erb.
