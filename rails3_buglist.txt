@@ -1,6 +1,5 @@
 Start with:
-    * Has all the duplication of a typical CMS project (public, db)
-    * Can't run any of the tests from root directory (uses the wrong config dir).
+    portlets not having access to helpers
 
 State of Test Cases - All Pass (As of Jan 21, 2011)
 
@@ -8,8 +7,8 @@ Open Issues
 ===========
 * portlets don't have access to helpers (LoginPortlet fails on cms_logout_path)
 
-
-* Core CMS generator may be running things twice (there are lots of duplicates)
+* Verify the v3.1 to v3.3 migration path.
+* Core CMS generator may be running things twice (there are lots of duplicates). Rename to cms:upgrade rather than browser_cms:cms
 * Merge all existing migrations into core as well as seeds.rb. Rework how seeds gets run as part of the project. (Future proof this).
 * Support modules as engines (as well as current behavior - to cut down on cost of upgrade)
 * Package all public assets into CMS gem. (Cut down on duplication for projects)
