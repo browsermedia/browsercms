@@ -23,7 +23,14 @@ module Cms
       super(@controller.view_paths, attributes_to_assign, @controller)
 
 
-      self.class.send(:include, controller.class._helpers)
+      helpers = controller.class._helpers
+      puts "******************************"
+      puts "#{helpers}"
+      puts "#{helpers.methods.sort}"
+      self.class.send(:include, helpers)
+
+      # Make all Route helpers available in the view, i.e. cms_xyz_path and cms_xyz_url
+      self.class.send(:include, Rails.application.routes.url_helpers)
 
       # See what values are getting copied into template
 #      Rails.logger.warn "Assigned these variables: #{attributes_to_assign}"

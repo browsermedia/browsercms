@@ -1,11 +1,11 @@
 Start with:
-    portlets not having access to helpers
+    Move browser_cms:cms generator to cms:update generator.
+    Make sure its not copying files multiple times (causes screen buffer to overflow)
 
 State of Test Cases - All Pass (As of Jan 21, 2011)
 
 Open Issues
 ===========
-* portlets don't have access to helpers (LoginPortlet fails on cms_logout_path)
 
 * Verify the v3.1 to v3.3 migration path.
 * Core CMS generator may be running things twice (there are lots of duplicates). Rename to cms:upgrade rather than browser_cms:cms
@@ -16,7 +16,6 @@ Open Issues
 ** Confirm w/ developers on what is commonly touched.
 ** Step 1: Make templates start on file system, appear in UI and then be 'forked' in UI. Avoids need to 'copy' into CMS and delete.
 ** Look at WebDAV / HTTPS protocol.
-* Introduce cucumber to start testing new functionality.
 * Test module scripts for new projects.
 * test/dummy has lots of duplicate (public, migrations, seed.rb)
 
@@ -37,7 +36,6 @@ Need to figure out a better way to globally handle this.
 Good Ideas
 * Rewrite Behaviors to use ActiveSupport::Concern (at least look at it to see what is useful)
 * Not sure Publishing and Versioning should be split up. They are really intertwined in practice.
-* Start introducing cucumber tests
 * Look at how ActionSupport works with providing hooks
 
 Wish List

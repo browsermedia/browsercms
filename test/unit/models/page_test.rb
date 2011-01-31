@@ -1,7 +1,11 @@
 require_relative '../../test_helper'
 
 class CreatingPageTest < ActiveRecord::TestCase
-  
+
+  test "Homepage should exist by default" do
+    assert_not_nil Page.with_path("/").first
+  end
+
   def test_creating_a_page_and_updating_the_attributes
     
     @page = Page.new(

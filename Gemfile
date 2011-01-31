@@ -1,12 +1,12 @@
 #source 'http://rubygems.org'
 source :gemcutter
 
-gem "rails", "3.0.3"     
+gem "rails", "3.0.3"
 
 gem "mysql"
 
 # Gem Environments
-group :development do 
+group :development do
   gem 'ruby-debug19'
   gem 'jeweler'
 end
@@ -18,5 +18,13 @@ group :test do
   # :require=>false allows mocha to correctly modify the test:unit code to add mock() and stub()
   gem "mocha", '=0.9.8', :require=>false
   gem "sqlite3-ruby", :require => "sqlite3"
+
+  gem 'capybara'
+  gem 'database_cleaner'
+  gem 'cucumber-rails'
+  gem 'cucumber'
+  gem 'rspec-rails'
+  gem 'spork'
+  gem 'launchy'
 end
 

@@ -107,8 +107,11 @@ class Page < ActiveRecord::Base
     end
     true
   end  
-  
-  def create_connector(connectable, container)
+
+  # Adds a Content block to this page.
+  #
+  #
+  def create_connector(connectable, container=:main)
     transaction do
       raise "Connectable is nil" unless connectable
       raise "Container is required" if container.blank?
@@ -125,6 +128,7 @@ class Page < ActiveRecord::Base
         :container => container)      
     end
   end
+  alias_method :add_content, :create_connector
 
   def move_connector(connector, direction)
     transaction do
