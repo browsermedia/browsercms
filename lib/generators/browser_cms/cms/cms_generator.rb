@@ -25,7 +25,6 @@ module BrowserCms
         #and the array of "files" as the second element
         #Each element in files is actually a Dir.glob pattern string
 
-        puts "Here are the files to be generated: #{Cms.generator_paths}"
         Cms.generator_paths.each do |src_root, files|
           copy_files src_root, files
         end

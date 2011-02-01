@@ -1,9 +1,4 @@
 Start with:
-    Make BrowserCMS serve assets from Gem in production
-    Determine a way to cache these files so they can be handled by Apache.
-
-http://jonswope.com/2010/07/25/rails-3-engines-plugins-and-static-assets/ - How to enable static assets from Gem
-http://stackoverflow.com/questions/4266232/rails-3-engine-static-assets - Setting config flag in gem
 
 
 State of Test Cases - All Pass (As of Jan 21, 2011)
@@ -12,7 +7,7 @@ Open Issues
 ===========
 
 * Verify the v3.1 to v3.3 migration path.
-* Core CMS generator may be running things twice (there are lots of duplicates). Rename to cms:upgrade rather than browser_cms:cms
+* Rename to cms:upgrade rather than browser_cms:cms
 * Merge all existing migrations into core as well as seeds.rb. Rework how seeds gets run as part of the project. (Future proof this).
 * Support modules as engines (as well as current behavior - to cut down on cost of upgrade)
 * Package all public assets into CMS gem. (Cut down on duplication for projects)
@@ -21,7 +16,7 @@ Open Issues
 ** Step 1: Make templates start on file system, appear in UI and then be 'forked' in UI. Avoids need to 'copy' into CMS and delete.
 ** Look at WebDAV / HTTPS protocol.
 * Test module scripts for new projects.
-* test/dummy has lots of duplicate (public, migrations, seed.rb)
+* test/dummy has some duplication ( migrations, seed.rb)
 
 Known Bugs
 ==========
