@@ -24,9 +24,6 @@ module Cms
 
 
       helpers = controller.class._helpers
-      puts "******************************"
-      puts "#{helpers}"
-      puts "#{helpers.methods.sort}"
       self.class.send(:include, helpers)
 
       # Make all Route helpers available in the view, i.e. cms_xyz_path and cms_xyz_url

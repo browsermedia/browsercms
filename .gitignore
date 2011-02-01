@@ -16,3 +16,4 @@ tmp/restart.txt
 public/cache
 patches
 rerun.txt
+test/dummy/log/*

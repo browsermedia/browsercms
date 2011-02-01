@@ -1,6 +1,10 @@
 Start with:
-    Move browser_cms:cms generator to cms:update generator.
-    Make sure its not copying files multiple times (causes screen buffer to overflow)
+    Make BrowserCMS serve assets from Gem in production
+    Determine a way to cache these files so they can be handled by Apache.
+
+http://jonswope.com/2010/07/25/rails-3-engines-plugins-and-static-assets/ - How to enable static assets from Gem
+http://stackoverflow.com/questions/4266232/rails-3-engine-static-assets - Setting config flag in gem
+
 
 State of Test Cases - All Pass (As of Jan 21, 2011)
 

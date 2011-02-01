@@ -3,14 +3,18 @@ module BrowserCms
   module Generators
     class CmsGenerator < Base
 
+
+      def enable_static_asset_serving
+        puts "marking static asset"
+
+        application do
+          code = "# BrowserCMS must serve static CMS assets (js, css, images) from the Gem\n"
+          code = code + "config.serve_static_assets = true"
+        end
+      end
+
       Cms.add_generator_paths(Cms.root,
-                              "config/initializers/cms.rb",
-                              "public/javascripts/jquery*",
-                              "public/javascripts/cms/**/*",
-                              "public/bcms/ckeditor/**/*",
                               "public/site/**/*",
-                              "public/stylesheets/cms/**/*",
-                              "public/images/cms/**/*",
                               "db/migrate/[0-9]*_*.rb",
                               "db/seeds.rb")
 

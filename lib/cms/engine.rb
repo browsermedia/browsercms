@@ -14,9 +14,11 @@ module Cms
 
     initializer 'browsercms.add_load_paths', :after=>'action_controller.deprecated_routes' do |app|
       Rails.logger.debug "Add Cms::Dependencies and other load_path configurations."
-
       ::Cms::Engine.add_cms_load_paths
+    end
 
+    initializer "browsercms.enable_serving_static_assets" do |app|
+      app.middleware.use ::ActionDispatch::Static, "#{root}/public"
     end
 
     # Make sure class in app/portlets are in the load_path
