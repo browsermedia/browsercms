@@ -5,19 +5,11 @@ module BrowserCms
 
 
       def enable_static_asset_serving
-        puts "marking static asset"
-
         application do
           code = "# BrowserCMS must serve static CMS assets (js, css, images) from the Gem\n"
           code = code + "config.serve_static_assets = true"
         end
       end
-
-      Cms.add_generator_paths(Cms.root,
-                              "public/site/**/*",
-                              "db/migrate/[0-9]*_*.rb",
-                              "db/seeds.rb")
-
 
       def create_cms
         #Cms.generator_paths is an Array of Arrays
@@ -32,16 +24,21 @@ module BrowserCms
 
       private
       def copy_files(src_root, files)
+        puts "Copying from src_root '#{src_root}'"
         dirs = []
         files.each do |d|
+          puts "reviewing '#{d}'"
           Dir[File.join(src_root, d)].each do |f|
+            puts "Looking at file '#{f}'"
             if File.file?(f)
               dir = File.dirname(f.gsub("#{src_root}/", ''))
+              puts "Directory '#{dir}"
               unless dirs.include?(dir)
                 directory dir
                 dirs << dir
               end
               relative_dest_file_name = f.gsub("#{src_root}/", "")
+              puts "Finally: '#{relative_dest_file_name}'"
               copy_file Cms.scrub_path(f), relative_dest_file_name
             end
           end

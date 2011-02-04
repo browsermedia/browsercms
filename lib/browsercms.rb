@@ -1,6 +1,7 @@
+puts "init browsercms.rb"
+
 require 'cms/engine'
 require 'cms/extensions'
-require 'cms/init'
 require 'cms/routes'
 require 'cms/caching'
 

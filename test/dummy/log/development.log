@@ -5149,3 +5149,23 @@ Rendered /Users/peakpg/projects/browsercms/app/views/layouts/_cms_toolbar.html.e
 Rendered /Users/peakpg/projects/browsercms/app/views/layouts/_page_toolbar.html.erb (270.3ms)
 Rendered /Users/peakpg/projects/browsercms/app/views/cms/toolbar/index.html.erb within layouts/cms/toolbar (281.5ms)
 Completed 200 OK in 554ms (Views: 285.9ms | ActiveRecord: 4.7ms)
+Adding Cms::Routes to ActionDispatch
+Add Cms::Dependencies and other load_path configurations.
+  [1m[36mSQL (0.5ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (0.5ms)[0m  SHOW TABLES
+  [1m[36mPageRoute Load (0.2ms)[0m  [1mSELECT `page_routes`.* FROM `page_routes` ORDER BY page_routes.name[0m
+Adding Cms::Routes to ActionDispatch
+Add Cms::Dependencies and other load_path configurations.
+  [1m[36mSQL (0.5ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (0.6ms)[0m  SHOW TABLES
+  [1m[36mPageRoute Load (0.2ms)[0m  [1mSELECT `page_routes`.* FROM `page_routes` ORDER BY page_routes.name[0m
+Adding Cms::Routes to ActionDispatch
+Add Cms::Dependencies and other load_path configurations.
+  [1m[36mSQL (0.5ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (0.6ms)[0m  SHOW TABLES
+  [1m[36mPageRoute Load (0.2ms)[0m  [1mSELECT `page_routes`.* FROM `page_routes` ORDER BY page_routes.name[0m
+Adding Cms::Routes to ActionDispatch
+Add Cms::Dependencies and other load_path configurations.
+  [1m[36mSQL (0.5ms)[0m  [1mSHOW TABLES[0m
+  [1m[35mSQL (0.5ms)[0m  SHOW TABLES
+  [1m[36mPageRoute Load (0.2ms)[0m  [1mSELECT `page_routes`.* FROM `page_routes` ORDER BY page_routes.name[0m

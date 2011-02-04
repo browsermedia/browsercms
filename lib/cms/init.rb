@@ -56,10 +56,15 @@ module Cms
     # which files should be copied over to the app when the CMS generator is run.
     # src_root is the absolute path to the root of the files,
     # then each argument after that is a Dir.glob pattern string.
+    #
+    # @param [String] src_root The root directory of the gem
+    # @param [Array of String] files A list of all file names to be copied
     def add_generator_paths(src_root, *files)
       generator_paths << [src_root, files]
     end
-    
+
+    alias_method :add_paths_to_copied_into_project, :add_generator_paths
+
     def generator_paths
       @generator_paths ||= []
     end   

@@ -1,11 +1,46 @@
 Start with:
+    browser_cms:cms does not copy files from other gems.
 
+    Gems (bcms_news) were responsible for addind their own paths to the Cms. This means they need to be updated,
+    since rails is no longering loading them.
+
+    bcms_news
+    =========
+    gem_root = File.expand_path(File.join(File.dirname(__FILE__), ".."))
+    Cms.add_to_rails_paths gem_root # Add portlets to load path
+    Cms.add_generator_paths gem_root, "db/migrate/[0-9]*_*.rb"
+
+    bcms_fckeditor
+    gem_root = File.expand_path(File.join(File.dirname(__FILE__), ".."))
+    Cms.add_to_rails_paths gem_root
+    Cms.add_generator_paths gem_root, "db/migrate/[0-9]*_*.rb"
+    Cms.add_generator_paths gem_root, "public/bcms/fckeditor/**/*"
+    if (!File.exists?("#{RAILS_ROOT}/public/bcms_config/fckeditor/fckstyles.xml"))
+      Cms.add_generator_paths gem_root, "public/bcms_config/fckeditor/fckstyles.xml"
+    end
+
+    Problem:
+        When running the browser_cms:cms generator, the bcms_news gem is never loaded.
+        Let's try adding a cms:install:module generator, which would take the name of the module to install, and
+        do everything required to make it work.
+
+    Goal:
+        - Upgrading a CMS module should be very simple (ideally a generator)
+        - Public assets can stay in gems now (i.e. fckeditor)
+    Options:
+        - Create module that will add portlets to load path automatically
+        - Create a generator to help upgrade gems to latest version.
+
+    Further Help:
+        - Add deprecation warnings to add_to_rails_path
+        - Add deprecation warnings to add_generator_paths
 
 State of Test Cases - All Pass (As of Jan 21, 2011)
 
 Open Issues
 ===========
 
+* Entire 'db' directory is getting copied from core project, including .sqlite dbs. Need to tightend up or change generator
 * Verify the v3.1 to v3.3 migration path.
 * Rename to cms:upgrade rather than browser_cms:cms
 * Merge all existing migrations into core as well as seeds.rb. Rework how seeds gets run as part of the project. (Future proof this).

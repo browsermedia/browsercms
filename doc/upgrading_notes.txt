@@ -1,0 +1,6 @@
+New Project using 3.3
+===============
+gem install browsercms
+bcms name_of_project
+
+

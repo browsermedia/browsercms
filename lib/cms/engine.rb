@@ -1,4 +1,7 @@
+puts 'load engine'
 require 'rails'
+require 'cms/module'
+require 'cms/init'
 require 'browsercms'
 
 module Cms
@@ -6,6 +9,14 @@ module Cms
   # Configuring BrowserCMS as an engine. This seems to work, but could probably be cleaned up.
   #
   class Engine < Rails::Engine
+    include Cms::Module
+
+    puts "Adding Generator paths to the CMS"
+    puts "Before #{Cms.generator_paths}"
+    Cms.add_generator_paths(Cms.root,
+                              "public/site/**/*",
+                              "db/seeds.rb")
+    puts "After #{Cms.generator_paths}"
 
     initializer 'browsercms.add_core_routes', :after=>'action_dispatch.prepare_dispatcher' do |app|
       Rails.logger.debug "Adding Cms::Routes to ActionDispatch"
@@ -20,10 +31,6 @@ module Cms
     initializer "browsercms.enable_serving_static_assets" do |app|
       app.middleware.use ::ActionDispatch::Static, "#{root}/public"
     end
-
-    # Make sure class in app/portlets are in the load_path
-    portlets_dir = File.join("..", "..", "app", "portlets")
-    config.autoload_paths << portlets_dir
 
     def self.add_cms_routes_method
       ActionDispatch::Routing::Mapper.send :include, Cms::Routes
