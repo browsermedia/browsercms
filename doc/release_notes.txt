@@ -5,7 +5,7 @@ The long awaited Rails 3 release.
 
 * BrowserCMS now uses and requires Rails 3 (3.0.3 or later).
 * Installing modules has been streamlined. After you download a module (i.e. gem install bcms_new) you can now install that modules easily
-    via rails generate cms:install_module bcms_news . This take care of adding the gem to your project, copying migrations and adding routes.
+    via rails generate cms:install bcms_news . This take care of adding the gem to your project, copying migrations and adding routes.
     It should no longer be necessary to call 'script/generate browser_cms' everytime you add a new module.
 * All CMS static assets (js, images, html, etc) are now served directly from the browsercms.gem file. They are no longer
   copied into projects, and should make it much easier to keep track of whether a file has been altered/overridden.
