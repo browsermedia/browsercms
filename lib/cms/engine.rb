@@ -1,4 +1,4 @@
-puts 'load engine'
+#puts 'load engine'
 require 'rails'
 require 'cms/module'
 require 'cms/init'
@@ -11,12 +11,11 @@ module Cms
   class Engine < Rails::Engine
     include Cms::Module
 
-    puts "Adding Generator paths to the CMS"
-    puts "Before #{Cms.generator_paths}"
+#    puts "Before #{Cms.generator_paths}"
     Cms.add_generator_paths(Cms.root,
                               "public/site/**/*",
                               "db/seeds.rb")
-    puts "After #{Cms.generator_paths}"
+#    puts "After #{Cms.generator_paths}"
 
     initializer 'browsercms.add_core_routes', :after=>'action_dispatch.prepare_dispatcher' do |app|
       Rails.logger.debug "Adding Cms::Routes to ActionDispatch"

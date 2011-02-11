@@ -31,7 +31,6 @@ begin
     gem.files += Dir["db/demo/**/*"]
     gem.files += Dir["db/seeds.rb"]
     gem.files += Dir["lib/**/*"]
-    gem.files += Dir["rails_generators/**/*"]
     gem.files += Dir["public/stylesheets/cms/**/*"]
     gem.files += Dir["public/javascripts/jquery*"]
     gem.files += Dir["public/javascripts/cms/**/*"]

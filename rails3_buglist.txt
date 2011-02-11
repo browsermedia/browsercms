@@ -1,14 +1,6 @@
 Start with:
-    browser_cms:cms does not copy files from other gems.
-
-    Gems (bcms_news) were responsible for addind their own paths to the Cms. This means they need to be updated,
-    since rails is no longering loading them.
-
-    bcms_news
-    =========
-    gem_root = File.expand_path(File.join(File.dirname(__FILE__), ".."))
-    Cms.add_to_rails_paths gem_root # Add portlets to load path
-    Cms.add_generator_paths gem_root, "db/migrate/[0-9]*_*.rb"
+    - Writing cms:upgrade_module generator, which will handle upgrading to rails 3/bcms 3.3
+    - Test with fck_editor
 
     bcms_fckeditor
     gem_root = File.expand_path(File.join(File.dirname(__FILE__), ".."))
@@ -18,11 +10,6 @@ Start with:
     if (!File.exists?("#{RAILS_ROOT}/public/bcms_config/fckeditor/fckstyles.xml"))
       Cms.add_generator_paths gem_root, "public/bcms_config/fckeditor/fckstyles.xml"
     end
-
-    Problem:
-        When running the browser_cms:cms generator, the bcms_news gem is never loaded.
-        Let's try adding a cms:install:module generator, which would take the name of the module to install, and
-        do everything required to make it work.
 
     Goal:
         - Upgrading a CMS module should be very simple (ideally a generator)
@@ -35,23 +22,31 @@ Start with:
         - Add deprecation warnings to add_to_rails_path
         - Add deprecation warnings to add_generator_paths
 
-State of Test Cases - All Pass (As of Jan 21, 2011)
 
 Open Issues
 ===========
-
+* Write a generator that handles upgrading a CMS module to Rails 3/BrowserCMS 3.3.
+* Generators: These appear to be almost identical to how application templates worked. We should probably rewrite app templates to use new generators instead.
+* BUG: Jeweler seems to explictly add dependencies on MySQL just because the project is using them. Need to remove those.
+* BUG: Core CMS is packaging too many generators under improper names
+* BUG: Date formating isn't working (with BcmsNews). Date formating is going in at MM/dd/yyyy but being stored as YYYY-dd-MM (i.e. 2/7/2011 gets stored as 2011-7-2). Might be core bug.
+* BUG: Date formatting for date_picker prints the full time stamp rather than m/d/yyyy
+* Make a generator that just copies files from CMS gems into project. (cms:extract_gems). Then run that generator from cms:blank_site and cms:demo_site
 * Entire 'db' directory is getting copied from core project, including .sqlite dbs. Need to tightend up or change generator
+* BUG: demo_site data is getting copied into the project as well by the generator.
 * Verify the v3.1 to v3.3 migration path.
 * Rename to cms:upgrade rather than browser_cms:cms
 * Merge all existing migrations into core as well as seeds.rb. Rework how seeds gets run as part of the project. (Future proof this).
 * Support modules as engines (as well as current behavior - to cut down on cost of upgrade)
-* Package all public assets into CMS gem. (Cut down on duplication for projects)
+* Test module scripts for new projects.
+* test/dummy has some duplication ( migrations, seed.rb)
+
+Future Features
 * Reduce need to developers to modify content-like files on server (CSS, JS, Images, Templates)
 ** Confirm w/ developers on what is commonly touched.
 ** Step 1: Make templates start on file system, appear in UI and then be 'forked' in UI. Avoids need to 'copy' into CMS and delete.
 ** Look at WebDAV / HTTPS protocol.
-* Test module scripts for new projects.
-* test/dummy has some duplication ( migrations, seed.rb)
+
 
 Known Bugs
 ==========

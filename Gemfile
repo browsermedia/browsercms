@@ -27,4 +27,3 @@ group :test do
   gem 'spork'
   gem 'launchy'
 end
-

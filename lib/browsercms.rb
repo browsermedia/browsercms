@@ -1,4 +1,4 @@
-puts "init browsercms.rb"
+#puts "init browsercms.rb"
 
 require 'cms/engine'
 require 'cms/extensions'
