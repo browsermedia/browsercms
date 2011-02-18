@@ -28,8 +28,10 @@ class Cms::ModuleInstallation < Rails::Generators::Base
   end
 
   def copy_migrations_to_project
-    self.class.migration_files.each do |file_name|
-      copy_file file_name, "db/migrate/#{file_name}"
+    if self.class.migration_files
+      self.class.migration_files.each do |file_name|
+        copy_file file_name, "db/migrate/#{file_name}"
+      end
     end
   end
 

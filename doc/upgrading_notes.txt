@@ -44,52 +44,53 @@ Steps:
 * Run rake rails:update:gems ; Create a Gemfile with that code in it.
 * Run rake rails:update:routes ; Create a file config/routes.rails3.rb with that code in it. This will be used to merge the routes later.
 
-* Create a file called lib/tasks/build_gem.rake. Copy all Jeweler code from Rakefile to this file. Test and check this in.
-* From outside the project, run rails new bcms_name_of_module. This will generate a new Rails3 project on top of the existing module. Enter a to overwrite all files.
+* [D] Create a file called lib/tasks/build_gem.rake. Copy all Jeweler code from Rakefile to this file. Test and check this in.
+* [D] From inside the project, run rails new . This will generate a new Rails3 project on top of the existing module. Enter a to overwrite all files.
 
 Files to Delete (after rails new)
 =====
-* Remove the rails/init.rb (No longer needed. Uses Engine instead)
-* Remove the db/migrate/browsercms_3_0_0.rb from the project
-* Remove the db/migrate/browsercms_3_0_5.rb from the project
-* Remove the db/migrate/load_seed_data.rb from the project
-* Remove public/index.html
-* Remove the app/views/layouts/application.html.erb (Use core CMS layouts)
+* [D] Remove the rails/init.rb (No longer needed. Uses Engine instead)
+* [D] Remove the db/migrate/browsercms_3_0_0.rb from the project
+* [D] Remove the db/migrate/browsercms_3_0_5.rb from the project
+* [D] Remove the db/migrate/load_seed_data.rb from the project
+* [D] Remove public/index.html
+* [D] Remove the app/views/layouts/application.html.erb (Use core CMS layouts)
 
 Files to rollback
 ====
-* doc/README_FOR_APP
-* README (either delete or rollback depending on if you have a README.md or not)
-* .gitignore
-* database.yml - Unlikely you want this to change
+* [D] doc/README_FOR_APP
+* [D] README (either delete or rollback depending on if you have a README.md or not)
+* [D].gitignore
+* [D] database.yml - Unlikely you want this to change
 
 File to merge (diff new vs old)
 ===
-* test/test_helper (If you added anything custom)
-* Rakefile (compare, especially if you used Jeweler. If Jeweler, make sure you moved those tasks to lib/tasks/build_gem.rake)
+* [D] test/test_helper (If you added anything custom)
+* [D] Rakefile (compare, especially if you used Jeweler. If Jeweler, make sure you moved those tasks to lib/tasks/build_gem.rake)
 
 More Steps:
 ==========
-* Edit config/routes.rb file. Make sure you have these routes:
+* [D] Edit config/routes.rb file. Make sure you have these routes:
 
 BcmsNameOfModule::Application.routes.draw do
   routes_for_bcms_name_of_module
   routes_for_browser_cms
 end
 
-* Add Jeweler to the Gemfile (if you use it)
+* [D] Add Jeweler to the Gemfile (if you use it)
 
 group :development do
   gem "jeweler"
 end
 
-* Add mysql to the Gemfile (if you use it)
+* [D] Add mysql to the Gemfile (if you use it)
 
 gem "mysql"
 
-* Create an Engine for the module
-* Create a generator that will handle installing any migrations from your gem.
-* Run 'rails g browser_cms:cms' to write the migrations out from the core CMS gem.
+* [D] Create an Engine for the module
+* [D] Create a generator that will handle installing any migrations from your gem.
+* [D] Remove all public CMS files
+* [D] Run 'rails g browser_cms:cms' to write the migrations out from the core CMS gem.
 * Run 'rake db:drop db:create db:migrate db:seed' to rebuild the database.
 * Run tests (may have to update require 'test_helper' in _test.rbs)
 

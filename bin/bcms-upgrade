@@ -1,0 +1,163 @@
+#!/usr/bin/env ruby
+
+require 'rubygems'
+require 'thor'
+require 'rails/generators/actions'
+
+class App < Thor
+  include Thor::Actions
+  include Rails::Generators::Actions
+
+  source_root(File.join(__FILE__, '../../lib/generators/cms/upgrade_module/templates'))
+
+  desc "jeweler", "Creates a new task file for Jeweler (so Rakefile can be overwritten by rails new)"
+
+  def jeweler
+    copy_file 'build_gem.rake', 'lib/tasks/build_gem.rake'
+
+    instructions = <<TEXT
+  Instructions:
+  ============
+  1. Copy any Jeweler related files from your Rakefile into lib/tasks/build_gem.rake.
+  2. Run rake -T and make sure all Jeweler tasks are still there.
+  3. Check in changes.
+  4. Run 'bcms-upgrade upgrade' to generate all files"
+TEXT
+    puts instructions
+  end
+
+  desc 'rails', "Upgrade this project from Rails 2 to Rails 3. (Make sure its backed up, or in source control first!)"
+
+  def rails
+    puts "Overwriting with Rails 3 code."
+    run "rails new . -f"
+  end
+
+  desc 'cleanup', "Clean up/revert unneeded files"
+
+  def cleanup
+    remove_file "rails/init.rb"
+    remove_file "rails"
+    remove_file "db/migrate/20080815014337_browsercms_3_0_0.rb"
+    remove_file "db/migrate/20081114172307_load_seed_data.rb"
+    remove_file "db/migrate/20091109175123_browsercms_3_0_5.rb"
+    remove_file "public/index.html"
+    remove_file "app/views/layouts/application.html.erb"
+    remove_file "config/initializers/new_rails_defaults.rb"
+
+    %w{about console dbconsole destroy generate performance plugin runner server}.each do |script_name|
+      remove_file "script/#{script_name}"
+    end
+
+    puts "Reverting files via git."
+    git :checkout => '.gitignore'
+    git :checkout => 'doc/README_FOR_APP'
+    git :checkout => 'config/database.yml'
+
+    instructions = <<TEXT
+Next Steps:
+===========
+There are several other files you should review that were likely overwritten by rails.
+
+1. README - [Revert | Delete] Either revert this, or delete it. (If you had a README.markdown for instance)
+2. test/test_helper [Merge | Keep] If you added anything custom to your test_helper, merge the changes into the new file.
+TEXT
+  end
+
+  desc "bcms_prep", "Writes note about writing lib/routes.rb"
+
+  def bcms_prep
+    instructions = <<TEXT
+Edit lib/#{name_of_module}/routes.rb
+=====
+Edit your module's routes file to make sure its compliant with Rails 3.
+
+# Rails 2 style
+module Cms::Routes
+  def routes_for_#{name_of_module}
+    namespace(:cms) do |cms|
+      cms.content_blocks :news_articles
+    end
+  end
+end
+
+should be written as:
+
+# Rails 3 style
+module Cms::Routes
+  def routes_for_#{name_of_module}
+    namespace(:cms) do
+      content_blocks :news_articles
+    end
+  end
+end
+
+
+TEXT
+    puts instructions
+  end
+
+  desc "bcms", "Upgrades BrowserCMS to the latest version"
+
+  def bcms
+    puts gem_name
+    puts "Configuring to use bcms, mysql and jeweler (edit the gem file if that's not true)"
+
+    # I.e. bcms_whatever
+
+    gem 'browsercms'
+    gem 'mysql'
+    gem 'jeweler', :group=>:development
+
+    # Allows gem to be loaded as a engine for testing.
+    gem "#{name_of_module}", :path=>"."
+    remove_file "config/initializers/init_module.rb"
+
+    template 'engine.erb', "lib/#{name_of_module}/engine.rb"
+    prepend_to_file "lib/#{name_of_module}.rb" do
+      "require '#{name_of_module}/engine'\n"
+    end
+    route "routes_for_browser_cms"
+    route "routes_for_#{name_of_module}"
+
+    template 'install.erb', "lib/generators/#{name_of_module}/install/install_generator.rb"
+    template 'USAGE.erb', "lib/generators/#{name_of_module}/install/USAGE"
+    empty_directory "lib/generators/#{name_of_module}/install/templates"
+
+    # Remove public files where are now served from CMS core.
+    remove_file 'public/bcms/ckeditor'
+    remove_file 'public/images/cms'
+    remove_file 'public/javascripts/cms'
+    remove_file 'public/stylesheets/cms'
+    %w{jquery jquery.-ui jquery.contextMenu jquery.cookie jquery.dimensions jquery.selectbox-0.5 jquery.taglist jquery.thickbox}.each do |js|
+      remove_file "public/javascripts/#{js}.js"
+    end
+    run "rails g browser_cms:cms -f"
+    run 'rails g cms:template default'
+
+    instructions = <<TEXT
+Instrutions:
+============
+This module has been upgraded to BrowserCMS 3.3 and Rails 3! Now just do the following to test:
+
+1. rake db:drop db:create db:migrate db:seed - Rebuilds the database
+2. rake test - Check that your tests still pass
+3. rails server - Start the app and test
+4. Make sure the gemspec includes the correct files (lib/tasks/build_gem.rake should not be included)
+5. Release the gem (rake release)
+
+TEXT
+  end
+
+  private
+
+  def name_of_module
+    File.basename(Dir.pwd)
+  end
+
+  def gem_name
+    name_of_module.camelize
+  end
+end
+
+App.start

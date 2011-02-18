@@ -11,11 +11,11 @@ module Cms
   class Engine < Rails::Engine
     include Cms::Module
 
-#    puts "Before #{Cms.generator_paths}"
+#    puts "Loading Cms::Engine"
+
     Cms.add_generator_paths(Cms.root,
                               "public/site/**/*",
                               "db/seeds.rb")
-#    puts "After #{Cms.generator_paths}"
 
     initializer 'browsercms.add_core_routes', :after=>'action_dispatch.prepare_dispatcher' do |app|
       Rails.logger.debug "Adding Cms::Routes to ActionDispatch"
@@ -25,10 +25,6 @@ module Cms
     initializer 'browsercms.add_load_paths', :after=>'action_controller.deprecated_routes' do |app|
       Rails.logger.debug "Add Cms::Dependencies and other load_path configurations."
       ::Cms::Engine.add_cms_load_paths
-    end
-
-    initializer "browsercms.enable_serving_static_assets" do |app|
-      app.middleware.use ::ActionDispatch::Static, "#{root}/public"
     end
 
     def self.add_cms_routes_method
