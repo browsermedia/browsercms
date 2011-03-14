@@ -24,21 +24,21 @@ module BrowserCms
 
       private
       def copy_files(src_root, files)
-        puts "Copying from src_root '#{src_root}'"
+#        puts "Copying from src_root '#{src_root}'"
         dirs = []
         files.each do |d|
-          puts "reviewing '#{d}'"
+#          puts "reviewing '#{d}'"
           Dir[File.join(src_root, d)].each do |f|
-            puts "Looking at file '#{f}'"
+#            puts "Looking at file '#{f}'"
             if File.file?(f)
               dir = File.dirname(f.gsub("#{src_root}/", ''))
-              puts "Directory '#{dir}"
+#              puts "Directory '#{dir}"
               unless dirs.include?(dir)
                 directory dir
                 dirs << dir
               end
               relative_dest_file_name = f.gsub("#{src_root}/", "")
-              puts "Finally: '#{relative_dest_file_name}'"
+#              puts "Finally: '#{relative_dest_file_name}'"
               copy_file Cms.scrub_path(f), relative_dest_file_name
             end
           end

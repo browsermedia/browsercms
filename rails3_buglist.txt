@@ -1,23 +1,8 @@
 Start with:
-    - Writing cms:upgrade_module generator, which will handle upgrading to rails 3/bcms 3.3
-    - Test with fck_editor
 
-    bcms_fckeditor
-    =================
-    gem_root = File.expand_path(File.join(File.dirname(__FILE__), ".."))
-    Cms.add_to_rails_paths gem_root
-    Cms.add_generator_paths gem_root, "db/migrate/[0-9]*_*.rb"
-    Cms.add_generator_paths gem_root, "public/bcms/fckeditor/**/*"
-    if (!File.exists?("#{RAILS_ROOT}/public/bcms_config/fckeditor/fckstyles.xml"))
-      Cms.add_generator_paths gem_root, "public/bcms_config/fckeditor/fckstyles.xml"
-    end
-
-    Goal:
-        - Upgrading a CMS module should be very simple (ideally a generator)
-        - Public assets can stay in gems now (i.e. fckeditor)
-    Options:
-        - Create module that will add portlets to load path automatically
-        - Create a generator to help upgrade gems to latest version.
+    Fix the core browserCMS generator so it doesn't add demo files into the project.
+    JQuery upgrade
+    Clean up unneeded upgrade_module generator
 
     Further Help:
         - Add deprecation warnings to add_to_rails_path
@@ -42,11 +27,19 @@ Open Issues
 * Test module scripts for new projects.
 * test/dummy has some duplication ( migrations, seed.rb)
 
+Gems to Publish (once its live)
+=====
+bcms_fckeditor  - 1.1.0 is pushed to github. Gem needs to be pushed as well.
+bcms_news - 1.2 pushed to github. Gem not released yet.
+bcms_google_mini_search - 1.2 pushed to github. Gem not released.
+
 Future Features
+===============
 * Reduce need to developers to modify content-like files on server (CSS, JS, Images, Templates)
 ** Confirm w/ developers on what is commonly touched.
 ** Step 1: Make templates start on file system, appear in UI and then be 'forked' in UI. Avoids need to 'copy' into CMS and delete.
 ** Look at WebDAV / HTTPS protocol.
+* What is the difference between application template and profiles.
 
 
 Known Bugs

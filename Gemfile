@@ -4,6 +4,7 @@ source :gemcutter
 gem "rails", "3.0.3"
 
 gem "mysql"
+gem 'term-ansicolor'
 
 # Gem Environments
 group :development do

@@ -167,4 +167,5 @@ DEPENDENCIES
   ruby-debug19
   spork
   sqlite3-ruby
+  term-ansicolor
   test-unit

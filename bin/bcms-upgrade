@@ -2,7 +2,12 @@
 
 require 'rubygems'
 require 'thor'
+require 'term/ansicolor'
 require 'rails/generators/actions'
+
+class String
+  include Term::ANSIColor
+end
 
 class App < Thor
   include Thor::Actions
@@ -10,30 +15,84 @@ class App < Thor
 
   source_root(File.join(__FILE__, '../../lib/generators/cms/upgrade_module/templates'))
 
-  desc "jeweler", "Creates a new task file for Jeweler (so Rakefile can be overwritten by rails new)"
+  desc "check", "Checks the existing module to determine what needs to done."
 
-  def jeweler
-    copy_file 'build_gem.rake', 'lib/tasks/build_gem.rake'
+  def check
+    puts "The following issues are preventing a BrowserCMS/Rails 3 upgrade.\n".red.bold
+
+    # check for Jeweler usage
+    if File.exists?("Rakefile")
+      contents = ""
+      File.open("Rakefile", "rb") { |f| contents = f.read }
+
+      using_jeweler = contents.include?('jeweler')
+      if using_jeweler
+        migrate_jeweler
+      end
+    end
+
+    # Check for routes usage
+    if File.exists?("lib/#{name_of_module}/routes.rb")
+      contents = ""
+      File.open("lib/#{name_of_module}/routes.rb", "rb") { |f| contents = f.read }
+
+      using_rails2_routes = contents.include?('cms.')
+      if using_rails2_routes
+        migrate_routes
+      end
+    end
 
     instructions = <<TEXT
-  Instructions:
-  ============
-  1. Copy any Jeweler related files from your Rakefile into lib/tasks/build_gem.rake.
-  2. Run rake -T and make sure all Jeweler tasks are still there.
-  3. Check in changes.
-  4. Run 'bcms-upgrade upgrade' to generate all files"
+Once there are no remaing changes have been made:
+  1. Check in into source control
+  2. Run bcms-upgrade rails cleanup bcms
 TEXT
     puts instructions
   end
 
-  desc 'rails', "Upgrade this project from Rails 2 to Rails 3. (Make sure its backed up, or in source control first!)"
+  desc 'upgrade', "Upgrade this module from Rails 2 to Rails 3. (Make sure its backed up, or in source control first!)"
+  def upgrade
+    rails
+    cleanup
+    bcms
+    next_steps
+  end
+
+  desc 'next_steps', "Reprints instructions on final steps (Use after 'upgrade')"
+  def next_steps
+    header = <<TEXT
+Next Steps:
+============
+TEXT
+    puts header.red
+
+    instructions = <<TEXT
+This module has been upgraded to BrowserCMS 3.3 and Rails 3! Now just do the following to test:
+
+1. Verify the Gemfile is correct (it may be using MySQL and/or Jeweler, which your project won't need)
+2. There are several other files you should review that were likely overwritten by rails.
+  a. README - [Revert | Delete] Either revert this, or delete it. (If you had a README.markdown for instance)
+  b. test/test_helper [Merge | Keep] If you added anything custom to your test_helper, merge the changes into the new file.
+  c. config/routes.rb - Any non-standard routes in this file should probably be in your lib/#{name_of_module}/routes.rb so they get packaged with the gem
+3. rake db:drop db:create db:migrate db:seed - Rebuilds the database
+4. rake test - Check that your tests still pass
+  a. You may get test failure if your tests that don't use 'require 'test_helper' may need it. Just replace existing requires.
+5. rails server - Start the app and test
+6. Make sure the gemspec includes the correct files (lib/tasks/build_gem.rake should not be included)
+7. If you have migrations that need to be in the gem, edit lib/generators/#{name_of_module}/install/install_generators.
+8. Portlets/blocks may need to update their render.html.erb to include .html_safe for any content being output as HTML.
+9. Release the gem (rake release)
+
+TEXT
+    puts instructions
+  end
+
+  private
 
   def rails
     puts "Overwriting with Rails 3 code."
     run "rails new . -f"
   end
-
-  desc 'cleanup', "Clean up/revert unneeded files"
 
   def cleanup
     remove_file "rails/init.rb"
@@ -49,62 +108,13 @@ TEXT
       remove_file "script/#{script_name}"
     end
 
-    puts "Reverting files via git."
+    puts "Reverting some files using git.".red
     git :checkout => '.gitignore'
     git :checkout => 'doc/README_FOR_APP'
     git :checkout => 'config/database.yml'
-
-    instructions = <<TEXT
-Next Steps:
-===========
-There are several other files you should review that were likely overwritten by rails.
-
-1. README - [Revert | Delete] Either revert this, or delete it. (If you had a README.markdown for instance)
-2. test/test_helper [Merge | Keep] If you added anything custom to your test_helper, merge the changes into the new file.
-TEXT
   end
-
-  desc "bcms_prep", "Writes note about writing lib/routes.rb"
-
-  def bcms_prep
-    instructions = <<TEXT
-Edit lib/#{name_of_module}/routes.rb
-=====
-Edit your module's routes file to make sure its compliant with Rails 3.
-
-# Rails 2 style
-module Cms::Routes
-  def routes_for_#{name_of_module}
-    namespace(:cms) do |cms|
-      cms.content_blocks :news_articles
-    end
-  end
-end
-
-should be written as:
-
-# Rails 3 style
-module Cms::Routes
-  def routes_for_#{name_of_module}
-    namespace(:cms) do
-      content_blocks :news_articles
-    end
-  end
-end
-
-
-TEXT
-    puts instructions
-  end
-
-  desc "bcms", "Upgrades BrowserCMS to the latest version"
 
   def bcms
-    puts gem_name
-    puts "Configuring to use bcms, mysql and jeweler (edit the gem file if that's not true)"
-
-    # I.e. bcms_whatever
-
     gem 'browsercms'
     gem 'mysql'
     gem 'jeweler', :group=>:development
@@ -135,21 +145,40 @@ TEXT
     run "rails g browser_cms:cms -f"
     run 'rails g cms:template default'
 
-    instructions = <<TEXT
-Instrutions:
-============
-This module has been upgraded to BrowserCMS 3.3 and Rails 3! Now just do the following to test:
 
-1. rake db:drop db:create db:migrate db:seed - Rebuilds the database
-2. rake test - Check that your tests still pass
-3. rails server - Start the app and test
-4. Make sure the gemspec includes the correct files (lib/tasks/build_gem.rake should not be included)
-5. Release the gem (rake release)
-
-TEXT
   end
 
-  private
+
+  def migrate_jeweler
+
+    instructions = <<TEXT
+    Move Jeweler Code
+    ============
+    1. Copy any Jeweler related files from your Rakefile into lib/tasks/build_gem.rake.
+    2. Run rake -T and make sure all Jeweler tasks are still there.
+TEXT
+    alert("Using Jeweler", instructions, "https://github.com/browsermedia/browsercms/wiki/Upgrading-Jeweler-with-Rails-3", ["Rakefile"])
+    copy_file 'build_gem.rake', 'lib/tasks/build_gem.rake'
+
+  end
+
+
+  def migrate_routes
+    instructions = <<TEXT
+Edit lib/#{name_of_module}/routes.rb
+=====
+# Make it Rails 3 style
+module Cms::Routes
+  def routes_for_#{name_of_module}
+    namespace(:cms) do
+      content_blocks :name_of_blocks
+    end
+  end
+end
+TEXT
+    alert("Obsolete Routing API", instructions, 'https://github.com/browsermedia/browsercms/wiki/Upgrading-Routes-to-Rails-3', ["lib/#{name_of_module}/routes.rb"])
+
+  end
 
   def name_of_module
     File.basename(Dir.pwd)
@@ -157,6 +186,20 @@ TEXT
 
   def gem_name
     name_of_module.camelize
+  end
+
+  # Borrowed from https://github.com/jm/rails-upgrade/blob/master/lib/rails-upgrade/upgraders/check.rb
+  def alert(title, text, more_info_url, culprits)
+    puts title.red.bold
+    puts text.white
+    puts "More information: ".white.bold + more_info_url.blue
+    puts
+    puts "The culprits: ".white
+    culprits.each do |c|
+      puts "\t- #{c}".yellow
+    end
+  ensure
+    puts "".reset
   end
 end
 

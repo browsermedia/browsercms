@@ -10,7 +10,7 @@ The long awaited Rails 3 release.
 * All CMS static assets (js, images, html, etc) are now served directly from the browsercms.gem file. They are no longer
   copied into projects, and should make it much easier to keep track of whether a file has been altered/overridden.
   Any unaltered copied file can be safely deleted from any projects that upgrade to 3.3.
-*
+* Module upgrade script: Since all existing modules will require updating, we have provided a commandline script 'bcms-upgrade' to help manage it. Works similarly to how Rails Upgrade does: (https://github.com/jm/rails-upgrade/). Run 'bcms-upgrade check' in your project to get started.
 
 v3.0.6
 ======

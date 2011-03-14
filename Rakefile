@@ -21,7 +21,7 @@ begin
     gem.homepage = "http://www.browsercms.org"
     gem.authors = ["BrowserMedia"]
     gem.rubyforge_project = 'browsercms'
-    gem.executables = ['browsercms', 'bcms']
+    gem.executables = ['browsercms', 'bcms', 'bcms-upgrade']
     gem.files = Dir["rails/*.rb"]
     gem.files += Dir["browsercms.gemspec"]
     gem.files += Dir["doc/app/**/*"]

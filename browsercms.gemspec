@@ -9,10 +9,10 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["BrowserMedia"]
-  s.date = %q{2011-02-11}
+  s.date = %q{2011-03-14}
   s.description = %q{Web Content Management in Rails.}
   s.email = %q{github@browsermedia.com}
-  s.executables = ["browsercms", "bcms"]
+  s.executables = ["browsercms", "bcms", "bcms-upgrade"]
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README.markdown"
@@ -723,8 +723,15 @@ Gem::Specification.new do |s|
     "lib/generators/cms/template/USAGE",
     "lib/generators/cms/template/template_generator.rb",
     "lib/generators/cms/template/templates/template.erb",
+    "lib/generators/cms/upgrade_module/USAGE",
+    "lib/generators/cms/upgrade_module/templates/USAGE.erb",
+    "lib/generators/cms/upgrade_module/templates/build_gem.rake",
+    "lib/generators/cms/upgrade_module/templates/engine.erb",
+    "lib/generators/cms/upgrade_module/templates/install.erb",
+    "lib/generators/cms/upgrade_module/upgrade_module_generator.rb",
     "lib/initial_data.rb",
     "lib/sequence.rb",
+    "lib/tasks/build_gem.rake",
     "lib/tasks/cms.rake",
     "lib/tasks/cucumber.rake",
     "lib/tasks/db.rake",
