@@ -1,6 +1,5 @@
 Start with:
 
-    Errors bug
     Date Formatting
     JQuery upgrade
 
@@ -24,13 +23,6 @@ Open Issues
 * Test module scripts for new projects.
 * test/dummy has some duplication ( migrations, seed.rb)
 * Generators: These appear to be almost identical to how application templates worked. We should probably rewrite app templates to use new generators instead.
-
-Errors Bug
-=========
-On http://localhost:3000/cms/connectors/new?container=main&page_id=1
-
-DEPRECATION WARNING: error_messages_for was removed from Rails and is now available as a plugin. Please install it with `rails plugin install git://github.com/rails/dynamic_form.git`. (called from realtime at /Users/peakpg/.rvm/rubies/ruby-1.9.2-p136/lib/ruby/1.9.1/benchmark.rb:309)
-
 
 Gems to Publish (once its live)
 =====
