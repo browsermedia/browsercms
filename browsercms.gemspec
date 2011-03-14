@@ -701,6 +701,7 @@ Gem::Specification.new do |s|
     "lib/generators/browser_cms/cms/templates/README",
     "lib/generators/browser_cms/demo_site/USAGE",
     "lib/generators/browser_cms/demo_site/demo_site_generator.rb",
+    "lib/generators/browser_cms/demo_site/templates/demo_site.rake",
     "lib/generators/browser_cms/demo_site/templates/migration.rb",
     "lib/generators/cms/content/USAGE",
     "lib/generators/cms/content/content_generator.rb",
@@ -735,7 +736,6 @@ Gem::Specification.new do |s|
     "lib/tasks/cms.rake",
     "lib/tasks/cucumber.rake",
     "lib/tasks/db.rake",
-    "lib/tasks/demo_site.rake",
     "lib/tasks/dev.rake",
     "public/bcms/ckeditor/ckeditor.js",
     "public/bcms/ckeditor/config.js",
@@ -1470,17 +1470,20 @@ Gem::Specification.new do |s|
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
       s.add_runtime_dependency(%q<rails>, ["= 3.0.3"])
       s.add_runtime_dependency(%q<mysql>, [">= 0"])
+      s.add_runtime_dependency(%q<term-ansicolor>, [">= 0"])
       s.add_development_dependency(%q<ruby-debug19>, [">= 0"])
       s.add_development_dependency(%q<jeweler>, [">= 0"])
     else
       s.add_dependency(%q<rails>, ["= 3.0.3"])
       s.add_dependency(%q<mysql>, [">= 0"])
+      s.add_dependency(%q<term-ansicolor>, [">= 0"])
       s.add_dependency(%q<ruby-debug19>, [">= 0"])
       s.add_dependency(%q<jeweler>, [">= 0"])
     end
   else
     s.add_dependency(%q<rails>, ["= 3.0.3"])
     s.add_dependency(%q<mysql>, [">= 0"])
+    s.add_dependency(%q<term-ansicolor>, [">= 0"])
     s.add_dependency(%q<ruby-debug19>, [">= 0"])
     s.add_dependency(%q<jeweler>, [">= 0"])
   end

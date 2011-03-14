@@ -15,11 +15,9 @@ module BrowserCms
           end
         end
 
-        %W( lib/tasks/demo_site.rake ).each{|f|
-          copy_file Cms.scrub_path("#{Cms.root}/#{f}"), f
-        }
+        copy_file 'lib/generators/browser_cms/demo_site/templates/demo_site.rake', 'db/migrate/demo_site.rake'
 
-        template templates_dir('migration.rb'), 'db/demo_site_seeds.rb', :assigns => {
+        template templates_dir('migration.erb'), 'db/demo_site_seeds.rb', :assigns => {
           :data => data,
           :page_templates => page_templates,
           :page_partials => page_partials

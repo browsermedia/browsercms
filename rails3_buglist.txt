@@ -1,6 +1,5 @@
 Start with:
 
-    Fix the core browserCMS generator so it doesn't add demo files into the project.
     JQuery upgrade
     Clean up unneeded upgrade_module generator
 
@@ -11,21 +10,26 @@ Start with:
 
 Open Issues
 ===========
-* Write a generator that handles upgrading a CMS module to Rails 3/BrowserCMS 3.3.
-* Generators: These appear to be almost identical to how application templates worked. We should probably rewrite app templates to use new generators instead.
+* Errors Bug: See below
 * BUG: Jeweler seems to explictly add dependencies on MySQL just because the project is using them. Need to remove those.
 * BUG: Core CMS is packaging too many generators under improper names
 * BUG: Date formating isn't working (with BcmsNews). Date formating is going in at MM/dd/yyyy but being stored as YYYY-dd-MM (i.e. 2/7/2011 gets stored as 2011-7-2). Might be core bug.
 * BUG: Date formatting for date_picker prints the full time stamp rather than m/d/yyyy
 * Make a generator that just copies files from CMS gems into project. (cms:extract_gems). Then run that generator from cms:blank_site and cms:demo_site
 * Entire 'db' directory is getting copied from core project, including .sqlite dbs. Need to tightend up or change generator
-* BUG: demo_site data is getting copied into the project as well by the generator.
 * Verify the v3.1 to v3.3 migration path.
 * Rename to cms:upgrade rather than browser_cms:cms
 * Merge all existing migrations into core as well as seeds.rb. Rework how seeds gets run as part of the project. (Future proof this).
-* Support modules as engines (as well as current behavior - to cut down on cost of upgrade)
 * Test module scripts for new projects.
 * test/dummy has some duplication ( migrations, seed.rb)
+* Generators: These appear to be almost identical to how application templates worked. We should probably rewrite app templates to use new generators instead.
+
+Errors Bug
+=========
+On http://localhost:3000/cms/connectors/new?container=main&page_id=1
+
+DEPRECATION WARNING: error_messages_for was removed from Rails and is now available as a plugin. Please install it with `rails plugin install git://github.com/rails/dynamic_form.git`. (called from realtime at /Users/peakpg/.rvm/rubies/ruby-1.9.2-p136/lib/ruby/1.9.1/benchmark.rb:309)
+
 
 Gems to Publish (once its live)
 =====
@@ -39,7 +43,7 @@ Future Features
 ** Confirm w/ developers on what is commonly touched.
 ** Step 1: Make templates start on file system, appear in UI and then be 'forked' in UI. Avoids need to 'copy' into CMS and delete.
 ** Look at WebDAV / HTTPS protocol.
-* What is the difference between application template and profiles.
+* What is the difference between application template and profiles?
 
 
 Known Bugs
