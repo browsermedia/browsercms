@@ -1,5 +1,8 @@
 module Cms
   module Behaviors
+
+    # Allows content to be marked as publishable or not. In practice, this has a direct dependency on
+    # Versioning, so it may not make sense to be separated out this way.
     module Publishing
       def self.included(model_class)
         model_class.extend(MacroMethods)

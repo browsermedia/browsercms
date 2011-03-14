@@ -1,60 +1,37 @@
 Start with:
 
+    Jeweler BUG (Can't release gem with invalid dependencies)
+
     JQuery upgrade
-
-    Further Help:
-        - Add deprecation warnings to add_to_rails_path
-        - Add deprecation warnings to add_generator_paths
-
 
 Open Issues
 ===========
-* BUG: On /cms/users - The 'Active/Disable' buttons are not escaping using html_safe.
 * BUG: Jeweler seems to explictly add dependencies on MySQL just because the project is using them. Need to remove those.
-* Verify the v3.1 to v3.3 migration path.
-* Rename to cms:upgrade rather than browser_cms:cms
-* Merge all existing migrations into core as well as seeds.rb. Rework how seeds gets run as part of the project. (Future proof this).
+** Need to rework according to http://yehudakatz.com/2010/12/16/clarifying-the-roles-of-the-gemspec-and-gemfile/
+** This may require reworking modules so that dependencies are correctly expressed.
+* Verify the v3.1 to v3.3 migration path. [Writing upgrade scripts will be a fair bit of work]
 * Test module scripts for new projects.
 * test/dummy has some duplication ( migrations, seed.rb)
-* Generators: These appear to be almost identical to how application templates worked. We should probably rewrite app templates to use new generators instead.
 * BUG: bcms_news - Recent Archive portlet is throwing errors.
 
 Gems to Publish (once its live)
 =====
-bcms_fckeditor  - 1.1.0 is pushed to github. Gem needs to be pushed as well.
+bcms_fckeditor  - 1.1.0 is pushed to github. Gem needs to be pushed as well. Need to test file upload (browser.xml) from within the browser
 bcms_news - 1.2 pushed to github. Gem not released yet. (Has bugs)
 bcms_google_mini_search - 1.2 pushed to github. Gem not released.
 
-Future Features
+Future Things to do
 ===============
 * Reduce need to developers to modify content-like files on server (CSS, JS, Images, Templates)
 ** Confirm w/ developers on what is commonly touched.
 ** Step 1: Make templates start on file system, appear in UI and then be 'forked' in UI. Avoids need to 'copy' into CMS and delete.
 ** Look at WebDAV / HTTPS protocol.
 * What is the difference between application template and profiles?
-
-
-Known Bugs
-==========
-* Deleting routes does not appear to reload them (Does not appear to be Rails 3 related)
-* Saving a block with unchanged value shouldn't create additional versions. Currently saving an HtmlBlock results in 'changed_tags'.
-
-Module Testing
-==============
-* Test that FckEditor module works with file browser.xml works (WYSIWYG editor)
-
-html_safe = A pain
-=========
-As of Jan 2011, pretty much every content_block's render.html.erb needs to stick html_safe on everything, which is both tedious and annoying.
-Need to figure out a better way to globally handle this.
-
-Good Ideas
-* Rewrite Behaviors to use ActiveSupport::Concern (at least look at it to see what is useful)
-* Not sure Publishing and Versioning should be split up. They are really intertwined in practice.
-* Look at how ActionSupport works with providing hooks
-
-Wish List
-===============
+* Make CMS run itself from gem, like modules do (:path=>'.'). Gets rid of need for test/dummy as well.
+** Clean up all 'old' initialization code (add_cms_routes_method, add to rails path, etc)
+* Merge all existing migrations into core as well as seeds.rb. Rework how seeds gets run as part of the project. (Future proof this).
+* Rename to cms:new rather than browser_cms:cms
+* Generators: These appear to be almost identical to how application templates worked. We should probably rewrite app templates to use new generators instead.
 * Namespace core files (especially users) to better support dropping in as project.
 * Allow Content Blocks to be namespaced.
 * Clean up logging messages that are filling up the production logs unnecessarily
@@ -65,3 +42,15 @@ Wish List
 ** Rendering template X'
 * Have at most one line per request for any diagnostic result.
 * Verify it works in 1.8.7
+
+ Known Bugs
+==========
+* Deleting routes does not appear to reload them (Does not appear to be Rails 3 related)
+* Saving a block with unchanged value shouldn't create additional versions. Currently saving an HtmlBlock results in 'changed_tags'.
+
+html_safe = A pain
+=========
+As of Jan 2011, pretty much every content_block's render.html.erb needs to stick html_safe on everything, which is both tedious and annoying.
+Need to figure out a better way to globally handle this.
+
+
