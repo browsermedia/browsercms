@@ -1,7 +1,8 @@
 Start with:
 
+    Errors bug
+    Date Formatting
     JQuery upgrade
-    Clean up unneeded upgrade_module generator
 
     Further Help:
         - Add deprecation warnings to add_to_rails_path

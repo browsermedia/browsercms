@@ -1,0 +1,1 @@
+This directory is used by the bcms-upgrade script for upgrading a BrowserCMS module. There is no direct generator for this purpose.
