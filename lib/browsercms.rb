@@ -13,6 +13,7 @@ require 'cms/acts'
 require 'cms/authentication'
 require 'cms/behaviors'
 require 'cms/domain_support'
+require 'cms/date_picker'
 require 'cms/content_rendering_support'
 
 # This shouldn't be necessary, except for the need to get into the loadpath for testing.

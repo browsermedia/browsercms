@@ -12,7 +12,10 @@ The long awaited Rails 3 release.
   Any unaltered copied file can be safely deleted from any projects that upgrade to 3.3.
 * Module upgrade script: Since all existing modules will require updating, we have provided a commandline script 'bcms-upgrade' to help manage it. Works similarly to how Rails Upgrade does: (https://github.com/jm/rails-upgrade/). Run 'bcms-upgrade check' in your project to get started.
 
-v3.0.6
+Bug Fixes:
+* Date Picker - Fixed inconsistent formatting where sometimes dates would appear with timestamps. In order to be both 1.8.7 and 1.9.2 compatible, all datepicker dates are now formatted as YYYY-mm-dd.
+
+ v3.0.6
 ======
 
 3.0.6 is a small bug fix release which should correct the big issues that were preventing use of 3.0.5. Here's the rundown:

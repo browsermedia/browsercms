@@ -1,6 +1,5 @@
 Start with:
 
-    Date Formatting
     JQuery upgrade
 
     Further Help:
@@ -10,24 +9,20 @@ Start with:
 
 Open Issues
 ===========
-* Errors Bug: See below
+* BUG: On /cms/users - The 'Active/Disable' buttons are not escaping using html_safe.
 * BUG: Jeweler seems to explictly add dependencies on MySQL just because the project is using them. Need to remove those.
-* BUG: Core CMS is packaging too many generators under improper names
-* BUG: Date formating isn't working (with BcmsNews). Date formating is going in at MM/dd/yyyy but being stored as YYYY-dd-MM (i.e. 2/7/2011 gets stored as 2011-7-2). Might be core bug.
-* BUG: Date formatting for date_picker prints the full time stamp rather than m/d/yyyy
-* Make a generator that just copies files from CMS gems into project. (cms:extract_gems). Then run that generator from cms:blank_site and cms:demo_site
-* Entire 'db' directory is getting copied from core project, including .sqlite dbs. Need to tightend up or change generator
 * Verify the v3.1 to v3.3 migration path.
 * Rename to cms:upgrade rather than browser_cms:cms
 * Merge all existing migrations into core as well as seeds.rb. Rework how seeds gets run as part of the project. (Future proof this).
 * Test module scripts for new projects.
 * test/dummy has some duplication ( migrations, seed.rb)
 * Generators: These appear to be almost identical to how application templates worked. We should probably rewrite app templates to use new generators instead.
+* BUG: bcms_news - Recent Archive portlet is throwing errors.
 
 Gems to Publish (once its live)
 =====
 bcms_fckeditor  - 1.1.0 is pushed to github. Gem needs to be pushed as well.
-bcms_news - 1.2 pushed to github. Gem not released yet.
+bcms_news - 1.2 pushed to github. Gem not released yet. (Has bugs)
 bcms_google_mini_search - 1.2 pushed to github. Gem not released.
 
 Future Features
@@ -70,10 +65,3 @@ Wish List
 ** Rendering template X'
 * Have at most one line per request for any diagnostic result.
 * Verify it works in 1.8.7
-* Determine if both Rails 2 and 3 can be supported in the same gem.  (Probably not)
-
-Other Notes
-==========
-1. Some versions of 1.8.7-p248 and later have random Segmentation Fault/Bus issues with databases. See
-    * http://busyprogrammer.wordpress.com/tag/bus-error/
-    * Segmentation Fault - http://busyprogrammer.wordpress.com/tag/bus-error/ Only 1.8.7 p249

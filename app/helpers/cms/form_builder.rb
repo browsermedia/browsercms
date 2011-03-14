@@ -26,7 +26,7 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def date_picker(method, options={})
-    text_field(method, {:size => 10, :class => "date_picker"}.merge(options))
+    text_field(method, {:size => 10, :class => "date_picker", :value=>Cms::DatePicker.format_for_ui(@object.send(method))}.merge(options))
   end
 
   def tag_list(options={})
