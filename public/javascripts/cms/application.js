@@ -97,7 +97,7 @@ jQuery(function($) {
     $('#message.notice').parent().show().animate({opacity: 1.0}, 3000).fadeOut("normal")
     $('#message.error').parent().show().animate({opacity: 1.0}, 3000).fadeOut("normal")
 
-})
+});
 
 //CookieSet allows us to treat one cookie value as a set of values
 jQuery(function($) {
@@ -154,9 +154,4 @@ jQuery(function($) {
         }
     }
 
-})
-
-// Convert all text_fields classed as 'datepicker' into datepicker widgets.
-//$(function() {
-//    $('input.date_picker').datepicker({ changeFirstDay: false, dateFormat: '<%= Cms::DatePicker.jquery_format %>' })
-//});
+});
