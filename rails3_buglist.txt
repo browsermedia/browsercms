@@ -14,6 +14,15 @@ Open Issues
 * test/dummy has some duplication ( migrations, seed.rb)
 * BUG: bcms_news - Recent Archive portlet is throwing errors.
 
+Rework gemspec/Gemfile
+----------------------
+Based on http://yehudakatz.com/2010/12/16/clarifying-the-roles-of-the-gemspec-and-gemfile/ we are currently using Gemfiles in appropriately for gems.
+
+* Gemfile should just use 'gemspec'. Gemspecs should express dependencies.
+* Need to rework 'new' and 'upgrade' modules so they use correct format.
+* Can we get away from Jeweler and depend only on Bundler? This would allow use to generate the gemspec for modules, which would be quite helpful.
+* What are we getting from Jeweler other than build/release?
+
 Gems to Publish (once its live)
 =====
 bcms_fckeditor  - 1.1.0 is pushed to github. Gem needs to be pushed as well. Need to test file upload (browser.xml) from within the browser
