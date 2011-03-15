@@ -11,8 +11,6 @@ module Cms
   class Engine < Rails::Engine
     include Cms::Module
 
-#    puts "Loading Cms::Engine"
-
     Cms.add_generator_paths(Cms.root,
                               "public/site/**/*",
                               "db/seeds.rb")

@@ -2,9 +2,6 @@ Start with:
 
     Jeweler BUG (Can't release gem with invalid dependencies)
 
-    Move 'datepicker' into application.js
-    Create a :bcms_core rails javascript expansion to avoid need for scattered js includes.
-    Find and remove references to /cms/tags.js (its no longer existing)
 
 Open Issues
 ===========
@@ -33,6 +30,7 @@ bcms_google_mini_search - 1.2 pushed to github. Gem not released.
 
 Future Things to do
 ===============
+* Move 'datepicker' initialization into application.js
 * Upgrade jquery.selectbox-0.5 to jquery.sb.js (https://github.com/revsystems/jQuery-SelectBox). This will likely improve the usability of the selectbox.
 * Reduce need to developers to modify content-like files on server (CSS, JS, Images, Templates)
 ** Confirm w/ developers on what is commonly touched.

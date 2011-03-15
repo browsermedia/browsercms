@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["BrowserMedia"]
-  s.date = %q{2011-03-14}
+  s.date = %q{2011-03-15}
   s.description = %q{Web Content Management in Rails.}
   s.email = %q{github@browsermedia.com}
   s.executables = ["browsercms", "bcms", "bcms-upgrade"]
@@ -235,7 +235,6 @@ Gem::Specification.new do |s|
     "app/views/layouts/cms/dashboard.html.erb",
     "app/views/layouts/cms/login.html.erb",
     "app/views/layouts/cms/section_nodes.html.erb",
-    "app/views/layouts/cms/thickbox.html.erb",
     "app/views/layouts/cms/toolbar.html.erb",
     "app/views/portlets/dynamic/_form.html.erb",
     "app/views/portlets/email_page/_form.html.erb",
@@ -1307,8 +1306,6 @@ Gem::Specification.new do |s|
     "public/images/cms/table/tl.gif",
     "public/images/cms/table/tr.gif",
     "public/images/cms/table/tr_bg.gif",
-    "public/images/cms/thickbox/loadingAnimation.gif",
-    "public/images/cms/thickbox/macFFBgHack.png",
     "public/images/cms/toolbar_bg.png",
     "public/images/cms/top_cap.png",
     "public/images/cms/top_cap_content.png",
@@ -1320,13 +1317,10 @@ Gem::Specification.new do |s|
     "public/javascripts/cms/content_library.js",
     "public/javascripts/cms/sitemap.js",
     "public/javascripts/jquery-ui.js",
-    "public/javascripts/jquery.contextMenu.js",
     "public/javascripts/jquery.cookie.js",
-    "public/javascripts/jquery.dimensions.js",
     "public/javascripts/jquery.js",
     "public/javascripts/jquery.selectbox-0.5.js",
     "public/javascripts/jquery.taglist.js",
-    "public/javascripts/jquery.thickbox.js",
     "public/site/customconfig.js",
     "public/stylesheets/cms/administration.css",
     "public/stylesheets/cms/application.css",
@@ -1338,7 +1332,6 @@ Gem::Specification.new do |s|
     "public/stylesheets/cms/data_table.css",
     "public/stylesheets/cms/date_picker.css",
     "public/stylesheets/cms/form_layout.css",
-    "public/stylesheets/cms/jquery.contextMenu.css",
     "public/stylesheets/cms/login.css",
     "public/stylesheets/cms/menu.css",
     "public/stylesheets/cms/nav.css",
@@ -1347,7 +1340,6 @@ Gem::Specification.new do |s|
     "public/stylesheets/cms/selectbox.css",
     "public/stylesheets/cms/sitemap.css",
     "public/stylesheets/cms/taglist.css",
-    "public/stylesheets/cms/thickbox.css",
     "public/themes/blue_steel/images/logo.jpg",
     "public/themes/blue_steel/images/splash.jpg",
     "public/themes/blue_steel/stylesheets/style.css",
