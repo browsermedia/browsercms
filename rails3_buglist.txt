@@ -6,6 +6,7 @@ Start with:
 
 Open Issues
 ===========
+* Upgrade to Rails 3.0.5 and test.
 * BUG: Jeweler seems to explictly add dependencies on MySQL just because the project is using them. Need to remove those.
 ** Need to rework according to http://yehudakatz.com/2010/12/16/clarifying-the-roles-of-the-gemspec-and-gemfile/
 ** This may require reworking modules so that dependencies are correctly expressed.
@@ -31,6 +32,7 @@ bcms_google_mini_search - 1.2 pushed to github. Gem not released.
 
 Future Things to do
 ===============
+* Upgrade jquery.selectbox-0.5 to jquery.sb.js (https://github.com/revsystems/jQuery-SelectBox). This will likely improve the usability of the selectbox.
 * Reduce need to developers to modify content-like files on server (CSS, JS, Images, Templates)
 ** Confirm w/ developers on what is commonly touched.
 ** Step 1: Make templates start on file system, appear in UI and then be 'forked' in UI. Avoids need to 'copy' into CMS and delete.

@@ -1,3 +1,10 @@
+/*
+  jQuery-taglist
+
+  Defines a widget for allowing users to selecting tags in BrowserCMS.
+
+  Please see the accompanying LICENSE.txt for licensing information.
+*/
 (function($){
   $.fn.tagList = function(tags) {
     var tagListInput = this;

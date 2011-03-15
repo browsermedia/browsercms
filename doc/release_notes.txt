@@ -11,6 +11,7 @@ The long awaited Rails 3 release.
   copied into projects, and should make it much easier to keep track of whether a file has been altered/overridden.
   Any unaltered copied file can be safely deleted from any projects that upgrade to 3.3.
 * Module upgrade script: Since all existing modules will require updating, we have provided a commandline script 'bcms-upgrade' to help manage it. Works similarly to how Rails Upgrade does: (https://github.com/jm/rails-upgrade/). Run 'bcms-upgrade check' in your project to get started.
+* Core JQuery libraries packaged with BrowserCMS are updated to v1.5.1. As part of this, several libraries have been removed as obsolete or unused, including jquery.dimensions, jquery.contextMenu and jquery.thickbox.
 
 Bug Fixes:
 * Date Picker - Fixed inconsistent formatting where sometimes dates would appear with timestamps. In order to be both 1.8.7 and 1.9.2 compatible, all datepicker dates are now formatted as YYYY-mm-dd.
