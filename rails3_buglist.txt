@@ -1,12 +1,14 @@
 Start with:
 
-    Jeweler BUG (Can't release gem with invalid dependencies)
+    Remove dependency on Jeweler in favor of bundler for the core project.
+    Update 'module' template, having it also rely on Bundler   (create a gemspec)
+    Update 'bcms-upgrade' so it puts bundler tasks into build_gem.rake.
+
 
 
 Open Issues
 ===========
-* Upgrade to Rails 3.0.5 and test.
-* BUG: Jeweler seems to explictly add dependencies on MySQL just because the project is using them. Need to remove those.
+* Upgrade to Rails 3.0.5 and test. (There is a problem with page.section_node.ancestors)
 * Verify the v3.1 to v3.3 migration path. [Writing upgrade scripts will be a fair bit of work]
 * Test module scripts for new projects.
 * test/dummy has some duplication ( migrations, seed.rb)

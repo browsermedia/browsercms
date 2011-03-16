@@ -17,3 +17,4 @@ public/cache
 patches
 rerun.txt
 test/dummy/log/*
+Gemfile.lock

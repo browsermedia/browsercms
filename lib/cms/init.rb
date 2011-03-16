@@ -1,15 +1,15 @@
+require 'cms/version'
+
 module Cms
   class << self
     __root__ = File.expand_path(File.join(File.dirname(__FILE__), "..", ".."))
 
     define_method(:root) { __root__ }
 
-    ::SPEC = eval(File.read(__root__ + '/browsercms.gemspec'))
-
     attr_accessor :attachment_file_permission
 
     def version
-      @version = SPEC.version.version
+      @version = Cms::VERSION
     end
     
     def build_number; 252 end

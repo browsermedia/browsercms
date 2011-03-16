@@ -1,30 +1,28 @@
- #source 'http://rubygems.org'
-source :gemcutter
+source 'http://rubygems.org'
 
-gem "rails", "3.0.3"
+# Load this project as a gem.
+gemspec
 
 gem "mysql"
-gem 'term-ansicolor'
 
 # Gem Environments
 group :development do
   gem 'ruby-debug19'
-  gem 'jeweler'
 end
 
 group :test do
-#  gem "redgreen"
-  gem 'factory_girl_rails'
-  gem 'test-unit'
+  gem 'factory_girl_rails', '1.0'
+  gem 'test-unit', '2.1.1'
   # :require=>false allows mocha to correctly modify the test:unit code to add mock() and stub()
   gem "mocha", '=0.9.8', :require=>false
   gem "sqlite3-ruby", :require => "sqlite3"
 
-  gem 'capybara'
+  gem 'capybara', '0.4.1.1'
   gem 'database_cleaner'
   gem 'cucumber-rails'
-  gem 'cucumber'
-  gem 'rspec-rails'
+  gem 'cucumber', '0.10.0'
+  gem 'rspec-rails', '2.4.1'
   gem 'spork'
-  gem 'launchy'
+  gem 'launchy', '0.3.7'
+
 end
