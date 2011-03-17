@@ -1,25 +1,13 @@
 Start with:
 
-    Rename cms:content back to cms:content_block for consistency.
-    Cucumber features are failing, likely due to duplicate data entry.
-
+    Test with Rails 3.0.5 and make sure it works.
+    Upgrading an existing browsercms project to 3.3
 
 Open Issues
 ===========
 * Upgrade to Rails 3.0.5 and test. (There is a problem with page.section_node.ancestors)
 * Verify the v3.1 to v3.3 migration path. [Writing upgrade scripts will be a fair bit of work]
-* test/dummy has some duplication ( migrations, seed.rb)
 * BUG: bcms_news - Recent Archive portlet is throwing errors.
-
-Rework gemspec/Gemfile
-----------------------
-Based on http://yehudakatz.com/2010/12/16/clarifying-the-roles-of-the-gemspec-and-gemfile/ we are currently using Gemfiles in appropriately for gems.
-
-* Gemfile should just use 'gemspec'. Gemspecs should express dependencies.
-* Need to rework 'new' and 'upgrade' modules so they use correct format.
-* Can we get away from Jeweler and depend only on Bundler? This would allow use to generate the gemspec for modules, which would be quite helpful.
-* What are we getting from Jeweler other than build/release?
-* Will require reworking modules so that dependencies are correctly expressed.
 
 Gems to Publish (once its live)
 =====
@@ -51,6 +39,8 @@ Future Things to do
 ** Rendering template X'
 * Have at most one line per request for any diagnostic result.
 * Verify it works in 1.8.7
+* test/dummy has some duplication ( migrations, seed.rb). This can probably be removed now anyway, due to how Gemfile->gemspec works.
+
 
  Known Bugs
 ==========

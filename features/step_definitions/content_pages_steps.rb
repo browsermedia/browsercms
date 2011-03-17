@@ -29,8 +29,14 @@ Then /^the homepage should exist$/ do
 end
 
 Given /^there is a homepage$/ do
-  @homepage = Factory(:page, :path=>"/", :name=>"Home Page")
+  page = Page.with_path("/").first
+  if page
+    @homepage = page
+  else
+    @homepage = Factory(:page, :path=>"/", :name=>"Home Page")
+  end
 end
+
 Then /^I should see Welcome, cmsadmin$/ do
   page.has_content? 'Welcome, cmsadmin'
 end
