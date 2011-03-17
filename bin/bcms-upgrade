@@ -43,7 +43,7 @@ class App < Thor
     end
 
     instructions = <<TEXT
-Once there are no remaing changes have been made:
+Once there are no remaining changes have been made:
   1. Check in into source control
   2. Run bcms-upgrade rails cleanup bcms
 TEXT
@@ -120,7 +120,8 @@ TEXT
     gem 'jeweler', :group=>:development
 
     # Allows gem to be loaded as a engine for testing.
-    gem "#{name_of_module}", :path=>"."
+    append_to_file 'Gemfile', 'gemspec'
+
     remove_file "config/initializers/init_module.rb"
 
     template 'engine.erb', "lib/#{name_of_module}/engine.rb"
@@ -156,6 +157,8 @@ TEXT
     ============
     1. Copy any Jeweler related files from your Rakefile into lib/tasks/build_gem.rake.
     2. Run rake -T and make sure all Jeweler tasks are still there.
+
+    Alternatively, you may use bundler to handle the packaging.
 TEXT
     alert("Using Jeweler", instructions, "https://github.com/browsermedia/browsercms/wiki/Upgrading-Jeweler-with-Rails-3", ["Rakefile"])
     copy_file 'build_gem.rake', 'lib/tasks/build_gem.rake'
