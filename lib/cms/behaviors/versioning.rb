@@ -307,6 +307,10 @@ module Cms
           as_of_version(draft.version)
         end
 
+        # Find a Content Block as of a specific version.
+        #
+        # @param [Integer] version The specific version of the block to look up
+        # @return [ContentBlock] The block as of the state it existed at 'version'.
         def as_of_version(version)
           v = find_version(version)
           raise ActiveRecord::RecordNotFound.new("version #{version.inspect} does not exist for <#{self.class}:#{id}>") unless v
@@ -320,6 +324,7 @@ module Cms
 
           # Need to do this so associations can be loaded
           obj.instance_variable_set("@persisted", true)
+          obj.instance_variable_set("@new_record", false)
 
           # Callback to allow us to load other data when an older version is loaded
           obj.after_as_of_version if obj.respond_to?(:after_as_of_version)

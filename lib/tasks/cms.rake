@@ -1,10 +1,7 @@
 namespace :test do
-  Rake::TestTask.new(:all => "db:test:prepare") do |t|
-    t.libs << "test"
-    t.pattern = 'test/**/*_test.rb'
-    t.verbose = true
-  end
-  Rake::Task['test:all'].comment = "Run all tests at once"
+
+  desc 'Runs all Tests (Test::Unit) and Features (cucumber)'
+  task :all => ["test", "cucumber"]
 
   # Could be improved somewhat to get rid of unneeded warnings.
   desc "run tests against sqlite database"

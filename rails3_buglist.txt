@@ -1,7 +1,8 @@
 Start with:
 
-    Test with Rails 3.0.5 and make sure it works.
     Upgrading an existing browsercms project to 3.3
+    Test against 1.8.7/REE
+    Add Block.publish and publish! for easier coding.
 
 Open Issues
 ===========
@@ -24,8 +25,7 @@ Future Things to do
 ** Step 1: Make templates start on file system, appear in UI and then be 'forked' in UI. Avoids need to 'copy' into CMS and delete.
 ** Look at WebDAV / HTTPS protocol.
 * What is the difference between application template and profiles?
-* Make CMS run itself from gem, like modules do (:path=>'.'). Gets rid of need for test/dummy as well.
-** Clean up all 'old' initialization code (add_cms_routes_method, add to rails path, etc)
+* Clean up all 'old' initialization code (add_cms_routes_method, add to rails path, etc)
 * Merge all existing migrations into core as well as seeds.rb. Rework how seeds gets run as part of the project. (Future proof this).
 * Rename to cms:new rather than browser_cms:cms
 * Generators: These appear to be almost identical to how application templates worked. We should probably rewrite app templates to use new generators instead.

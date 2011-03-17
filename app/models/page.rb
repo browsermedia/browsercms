@@ -73,9 +73,11 @@ class Page < ActiveRecord::Base
       end
     end
   end
-  
+
+  # Each time a page is updated, we need to copy all connectors associated with it forward, and save
+  # them.
   def copy_connectors(options={})
-    logger.debug {"Copying connectors from v#{options[:from_version_number]} to v#{options[:to_version_number]}." }
+    logger.debug {"Copying connectors from Page #{id} v#{options[:from_version_number]} to v#{options[:to_version_number]}." }
 
     c_found = connectors.for_page_version(options[:from_version_number]).all(:order => "connectors.container, connectors.position")
     logger.debug {"Found connectors #{c_found}" }
@@ -85,8 +87,9 @@ class Page < ActiveRecord::Base
       # in which case we are in the process of deleting it
       if c.should_be_copied?
         logger.debug { "Connector id=>#{c.id} should be copied." }
-        connectable = c.connectable_type.constantize.versioned? ? c.connectable.as_of_version(c.connectable_version) : c.connectable
-      
+        is_versionable = c.connectable_type.constantize.versioned?
+        connectable = is_versionable ? c.connectable.as_of_version(c.connectable_version) : c.connectable
+
         #If we are copying connectors from a previous version, that means we are reverting this page,
         #in which case we should create a new version of the block, and connect this page to that block
         if @copy_connectors_from_version && connectable.class.versioned? && (connectable.version != connectable.draft.version)
@@ -94,7 +97,8 @@ class Page < ActiveRecord::Base
           connectable.updated_by_page = self
           connectable.revert_to(c.connectable_version)
         end      
-      
+
+
         new_connector = connectors.create(
           :page_version => options[:to_version_number], 
           :connectable => connectable, 

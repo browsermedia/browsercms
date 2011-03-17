@@ -137,6 +137,15 @@ class VersionedContentBlock < ActiveSupport::TestCase
     assert_equal true, found.published?
   end
 
+  test "Getting a block as of a particular version shouldn't be considered a 'new record'." do
+    @block.update_attributes(:name=>"Changed", :publish_on_save=>true)
+    @block.reload
+
+    @v1 = @block.as_of_version(1)
+    assert_equal false, @v1.new_record?, "Old versions of blocks aren't 'new' and shouldn't ever be resaved."
+
+  end
+
   test 'Calling publish_on_save should not be sufficent to publish the block'do
     @block.publish_on_save = true
     @block.save
@@ -223,6 +232,7 @@ class VersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
     assert_properties conns[1], :page => @page, :page_version => 3, :connectable => @block, :connectable_version => 2, :container => "main"
   end
 
+  # Verify that when we have a block connected to a published page, the page should remain published.
   def test_editing_connected_to_a_published_page
     @page.publish!
     reset(:page, :block)
@@ -277,6 +287,7 @@ class NonVersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
     assert_equal 1, conns.size
     assert_properties conns[0], :page => @page, :page_version => 2, :connectable => @block, :connectable_version => nil, :container => "main"
   end
+
 
   def test_editing_connected_to_a_published_page
     @page.publish!
