@@ -1,9 +1,8 @@
 Start with:
 
-    Remove dependency on Jeweler in favor of bundler for the core project.
-    Update 'module' template, having it also rely on Bundler   (create a gemspec)
     Update 'bcms-upgrade' so it puts bundler tasks into build_gem.rake.
-
+    Rename cms:content back to cms:content_block for consistency.
+    Cucumber features are failing, likely due to duplicate data entry.
 
 
 Open Issues

@@ -59,7 +59,7 @@ Build your module as if you were building a rails application that does whatever
 
 That said, there are some conventions that tend to make things easier.
 
-First, place any files that are used as configuration files for public assects (for example, the fckeditor) in the @public/bcms_config/[module_name]@ directory and have the gem only copy them if they are not already there.  For example you can add code like the following to the @rails/init.rb@ file.
+First, place any files that are used as configuration files for public assets (for example, the fckeditor) in the @public/bcms_config/[module_name]@ directory and have the gem only copy them if they are not already there.  For example you can add code like the following to the @rails/init.rb@ file.
 
 <ruby>
 unless File.exists?("#{Rails.root}/public/bcms_config/fckeditor/fckstyles.xml")
@@ -69,13 +69,20 @@ end
 
 This will make the required configuration file available to the fckeditor, but it won't overwrite it (or even ask you if you want to overwrite it) every time you run @script/generate browser_cms@ for your application.
 
+Make sure when you add routes (typically as a side effect of generating content_blocks), that you move them from the config/routes.rb to lib/bcms_module_name/routes.rb. Otherwise, they won't be included in the project.
+
+Also, if you add migrations, uncomment the following line in lib/generators/bcms_module_name/install/install_generator.rb
+
+    # Edit this to add the name of the migration to be copied into the project.
+    copy_migration_file 'DATESTAMP_create_name_of_content_block.rb'
+
 h3. Testing Your Gem
 
 We strongly encourage the creation of unit, functional, and integration tests as part of your module.
 
 We also suggest that you test your gem against a BrowserCMS application.  To do this, first run 
 
-@bcms module_tester -m demo@ 
+@bcms module_tester -m demo@
 
 wherever (I use @/var/tmp@).  Edit the @config/environment.rb@ file to include the line 
 
