@@ -24,8 +24,13 @@ class PageRoute < ActiveRecord::Base
 
   after_save :reload_routes
 
-  def reload_routes
+  # Force Rails to reload the routes. Allows modules to call this without concern that the Rails classes are going to change again.
+  def self.reload_routes
     Rails.application.reload_routes!
+  end
+
+  def reload_routes
+    PageRoute.reload_routes
   end
 
   def add_condition(name, value)
