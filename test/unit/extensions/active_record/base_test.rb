@@ -1,4 +1,4 @@
-require_relative '../../../test_helper'
+require 'test_helper'
 
 class ActiveRecord::BaseTest < ActiveSupport::TestCase
   def test_updated_on_string

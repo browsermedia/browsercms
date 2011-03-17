@@ -1,4 +1,4 @@
-require_relative "../../test_helper"
+require 'test_helper'
 
 # Tests the BrowserCMS extentions to the String class
 class StringTest < ActiveSupport::TestCase

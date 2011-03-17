@@ -1,4 +1,4 @@
-require_relative '../../test_helper'
+require 'test_helper'
 
 # Sample Model for testing naming/model classes
 class Kindness < ActiveRecord::Base

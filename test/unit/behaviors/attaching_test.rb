@@ -1,4 +1,4 @@
-require_relative '../../test_helper'
+require 'test_helper'
 
 ActiveRecord::Base.connection.instance_eval do
   drop_table(:default_attachables) if table_exists?(:default_attachables)

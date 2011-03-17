@@ -1,4 +1,4 @@
-require_relative "../../test_helper"
+require 'test_helper'
 
 class Cms::SectionNodesControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper

@@ -1,4 +1,4 @@
-require_relative '../../test_helper'
+require 'test_helper'
 
 # These Portlet classes cannot be defined within the PortletTest class. Something
 # related to the dynamic attributes causes other tests to fail otherwise.

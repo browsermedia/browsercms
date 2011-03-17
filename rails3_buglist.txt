@@ -1,12 +1,12 @@
 Start with:
 
     Upgrading an existing browsercms project to 3.3
-    Test against 1.8.7/REE
     Add Block.publish and publish! for easier coding.
+    Write a 'browsercms upgrade' wiki page.
+    Update lighthouse tickets to reflect what is going in 3.3.
 
 Open Issues
 ===========
-* Upgrade to Rails 3.0.5 and test. (There is a problem with page.section_node.ancestors)
 * Verify the v3.1 to v3.3 migration path. [Writing upgrade scripts will be a fair bit of work]
 * BUG: bcms_news - Recent Archive portlet is throwing errors.
 
@@ -38,7 +38,7 @@ Future Things to do
 ** 'Not caching, user logged in'
 ** Rendering template X'
 * Have at most one line per request for any diagnostic result.
-* Verify it works in 1.8.7
+* Fix broken tests to make it work under 1.8.7/RubyEE
 * test/dummy has some duplication ( migrations, seed.rb). This can probably be removed now anyway, due to how Gemfile->gemspec works.
 
 

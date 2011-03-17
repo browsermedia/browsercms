@@ -18,7 +18,7 @@ Gem::Specification.new do |s|
       "LICENSE.txt",
       "README.markdown"
   ]
-  s.required_ruby_version = '>= 1.8.7'
+  s.required_ruby_version = '>= 1.9.2'
 
   s.files = Dir["rails/*.rb"]
   s.files += Dir["browsercms.gemspec"]

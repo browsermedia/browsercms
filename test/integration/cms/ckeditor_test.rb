@@ -1,4 +1,4 @@
-require_relative "../../test_helper"
+require 'test_helper'
 
 class CkeditorTest < ActionController::IntegrationTest
   include Cms::IntegrationTestHelper

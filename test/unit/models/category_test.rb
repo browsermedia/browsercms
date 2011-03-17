@@ -1,4 +1,4 @@
-require_relative '../../test_helper'
+require 'test_helper'
 
 class CategoryTest < ActiveSupport::TestCase
   def test_creating_categories

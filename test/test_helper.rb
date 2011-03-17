@@ -94,7 +94,7 @@ class ActiveSupport::TestCase
     user  
   end
 
-  require_relative 'mock_file'
+  require 'mock_file'
   # Creates a TempFile attached to an uploaded file. Used to test attachments
   def file_upload_object(options)
     Cms::MockFile.new_file(options[:original_filename], options[:content_type])
