@@ -1,0 +1,12 @@
+This file contains a manual test plan of areas of BrowserCMS that use Jquery/javascript and need to be tested manually (currently) when stuff is updated.
+Could be better done as a features file, with some additional investment time to automate it.
+
+Features:
+* Check all/Check none - Edit a section, verify the group's can be checked/unchecked using a single button.
+* Drag/Drop - On the sitemap, verify that Pages, Links, Sections can be moved via drag/drop. Refresh page to make sure they 'stick'.
+* Expanding Folders - On the sitemap, verify that sections can be opened/closed.
+* Hover over - On the sitemap, verify that 'hidden' sections can be hovered over and have a popup.
+* Remove Block - On a page, use the [-] to remove a block from the page. Refresh to verify it 'sticks'
+* Path Generator - Add a page, type in name. Verify the 'path' field is being generated based on value.
+* Dropdowns - Edit a page. Verify the 'section' selector works correctly.
+* Taglist - Add an Html Block. Add tags. Verify that it correctly autolooks up tags that exist already.
