@@ -4,7 +4,7 @@ module Cms
   module Generators
     # Allows developers to create new Content Blocks for their projects.
     #
-    class ContentGenerator < Rails::Generators::NamedBase
+    class ContentBlockGenerator < Rails::Generators::NamedBase
 
       source_root File.expand_path('../templates', __FILE__)
       argument :attributes, :type => :array, :default => [], :banner => "field:type field:type"
