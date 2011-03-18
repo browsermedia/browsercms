@@ -1,5 +1,5 @@
-<% content_for :html_head do %>
-  <% javascript_tag do %>
+<%= content_for :html_head do %>
+  <%= javascript_tag do %>
     jQuery(function($){
       var cms_access_group_ids = <%= GroupType.cms_access.all.map{|e| e.id.to_s}.to_json %>
       $('#group_group_type_id').change(function() {
@@ -13,6 +13,7 @@
       }).change()      
     });
   <% end %>
+  
 <% end %>
 <div id="permissions">
   <div class="checkbox_group">
@@ -27,8 +28,7 @@
       <div class="instructions"><%=h p.description %></div>
     <% end %>
     <div class="check_uncheck">
-  	  <%= link_to_check_all 'input.permission_ids' %>, 
-  	  <%= link_to_uncheck_all 'input.permission_ids' %>
+      <%= check_uncheck_tag 'input.permission_ids' %>
     </div>
   </div>
     <br clear="all" />

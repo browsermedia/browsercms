@@ -1,5 +1,8 @@
 module Cms
   module Behaviors
+
+    # Allows content to be marked as publishable or not. In practice, this has a direct dependency on
+    # Versioning, so it may not make sense to be separated out this way.
     module Publishing
       def self.included(model_class)
         model_class.extend(MacroMethods)
@@ -22,8 +25,8 @@ module Cms
         
           after_save :publish_for_non_versioned
         
-          named_scope :published, :conditions => {:published => true}
-          named_scope :unpublished, lambda {
+          scope :published, :conditions => {:published => true}
+          scope :unpublished, lambda {
             if versioned?
               { :joins => :versions,
                 :conditions =>
@@ -64,12 +67,23 @@ module Cms
           logger.warn("Could not publish, #{e.class}: #{e.message}\n#{e.backtrace.join("\n")}")
           false
         end
-        
+
+        # Force the publishing of this block.
+        #
+        # Warning: The behavior of calling the following on an existing block:
+        #   block.save_on_publish
+        #   block.save!
+        #
+        # Is different than calling:
+        #   block.publish!
+        #
+        # And it probably shouldn't be. Try to merge the 'else' with the 'Versioning#create_or_update' method to eliminate duplication 
         def publish!
           if new_record?
             self.publish_on_save = true
             save!
           else
+            # Do this for publishing existing blocks.
             transaction do
               if self.class.versioned?
                 d = draft
@@ -81,15 +95,20 @@ module Cms
                   d.update_attributes(:published => true)
 
                   # copy values from the draft to the main record
-                  quoted_attributes = d.send(:attributes_with_quotes, false, false, self.class.versioned_columns)
+                  quoted_attributes = d.send(:arel_attributes_values, false, false, self.class.versioned_columns)
+
+                  #the values from the draft MAY have a relation of the versioned module
+                  #as opposed to the actual class itself
+                  #eg Page::Version, and not Page
+                  #so remap to the actual arel_table´
+                  #I haven't figured out why this is, but I know it happens when you call save! on Page
+                  #during seeding of data
+                  if self.class.arel_table.name != quoted_attributes.keys[0].relation.name
+                    quoted_attributes = quoted_attributes.inject({}){|hash, pair| hash[self.class.arel_table[pair[0].name]] = pair[1]; hash}
+                  end
 
                   # Doing the SQL ourselves to avoid callbacks
-                  connection.update(
-                    "UPDATE #{self.class.quoted_table_name} " +
-                    "SET #{quoted_comma_pair_list(connection, quoted_attributes)} " +
-                    "WHERE #{connection.quote_column_name(self.class.primary_key)} = #{quote_value(id)}",
-                    "#{self.class.name} Publish"
-                  )
+                  self.class.unscoped.where(self.class.arel_table[self.class.primary_key].eq(id)).arel.update(quoted_attributes)
                 end
               else
                 connection.update(

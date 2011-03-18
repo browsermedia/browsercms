@@ -21,7 +21,7 @@ module CustomAssertions
   end
 
   def assert_has_error_on(object, field, error_message=nil, message=nil)
-    e = object.errors.on(field.to_sym)
+    e = object.errors[field.to_sym]
     if e.is_a?(String)
       e = [e]
     elsif e.nil?

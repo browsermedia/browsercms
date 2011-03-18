@@ -15,14 +15,14 @@ class Section < ActiveRecord::Base
   has_many :group_sections
   has_many :groups, :through => :group_sections
 
-  named_scope :root, :conditions => ['root = ?', true]
-  named_scope :system, :conditions => {:name => 'system'}
+  scope :root, :conditions => ['root = ?', true]
+  scope :system_section, :conditions => {:name => 'system'}
 
-  named_scope :hidden, :conditions => {:hidden => true}
-  named_scope :not_hidden, :conditions => {:hidden => false}
+  scope :hidden, :conditions => {:hidden => true}
+  scope :not_hidden, :conditions => {:hidden => false}
 
-  named_scope :named, lambda{|name| {:conditions => ['sections.name = ?', name]}}
-  named_scope :with_path, lambda{|path| {:conditions => ['sections.path = ?', path]}}
+  scope :named, lambda{|name| {:conditions => ['sections.name = ?', name]}}
+  scope :with_path, lambda{|path| {:conditions => ['sections.path = ?', path]}}
 
   validates_presence_of :name, :path
   #validates_presence_of :parent_id, :if => Proc.new {root.count > 0}, :message => "section is required"

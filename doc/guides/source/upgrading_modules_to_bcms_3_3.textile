@@ -1,0 +1,46 @@
+h2. Upgrading Modules to BrowserCMS 3.3
+
+BrowserCMS 3.3 is the first version to be released using Rails 3. In order to use existing modules with this version of browsercms, they also need to be upgraded to work against browsercms 3.3 (and rails 3). To help simplify this process, we have added a new commandline tool to the BrowserCMS gem, called +bcms-upgrade+. This tool can be run on an existing Rails 2/BrowserCMS project to upgrade it.
+
+h3. Changes
+
+First, let's take a look at some of the changes in BrowserCMS 3.3 as they related to modules.
+
+* All Modules are now Rails Engines. We have provide a helper module +Cms::Module+ that will be included each the Engine for each module.
+* Both Modules and BrowserCMS now serve static assets from the gem. This means less clutter in individual projects, especially for gems (like bcms_fckeditor) that had a ton of javascript/css being copied to projects. This should make it much easier to tell what's specific to a project, and what's part of BrowserCMS or its Modules.
+* Modules now provide an 'install' generator that can be used to copy migrations and other files into the project. Module developers can now update these Rails 3 generators to do whatever special cases might need to be done during module installation.
+
+h3. How to Upgrade
+
+First things first: *Back up or Check in* your module code. Upgrading a module is going to delete and alter a large number of files. It's far easier if you have a clean working directory that you can easily start over from if something goes wrong. And you are using source control, *right*?
+
+This upgrade script assumes that the project is managed in Git, and will use Git to revert some files during the script.
+
+Here's what you need to do:
+
+* Install BrowserCMS 3.3 gem
+* Run bcms-upgrade check - This will analyze the project and determine what needs to be done next.
+* Take the corrective action listed in 'check'. Rerun 'check' until there are no more errors.
+* Check in those 'pre-upgrade' changes.
+* Run 'bcms-upgrade upgrade'. This will upgrade the project to Rails 3.
+* Follow the instructions printed to test. You can run 'bcms-upgrade next_steps' to reprint the instructions.
+
+h3. FAQs
+
+Upgrades can be tricky things, so here is a potential set of things you might need encounter while upgrading to make things work.
+
+h4. While running tests, I get NoMethodError: undefined method `mock' for ...
+
+This may happen if you are using mocha for your tests. Mocha needs to be loaded after the testing library. Make sure the following is in your Gemfile.
+
+# Gemfile
+# Delays loading of mocha until later
+gem "mocha", :group => :test, :require=>false
+
+Then edit your test_helper.rb like so:
+
+# test/test_helper.rb
+# Must be the last statement in the file.
+require 'mocha'
+
+

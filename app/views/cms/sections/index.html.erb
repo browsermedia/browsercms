@@ -1,14 +1,14 @@
-<% content_for :html_head do %>
+<%= content_for :html_head do %>
   <%= javascript_include_tag 'cms/sitemap' %>
 <% end %>
-<% content_for :title do %>Sitemap<% end %>
+<%= content_for :title do %>Sitemap<% end %>
 
 <div class="buttons">
   <%= link_to "Edit", '#', :id => 'edit-button', :disabled => "disabled" %>
   |
   <%= link_to "Properties", '#', :id => 'properties-button', :disabled => "disabled" %>
   |
-  <%= link_to "Delete", '#', :id => 'delete-button', :disabled => "disabled" %>
+  <%= link_to "Delete", '#', :id => 'delete_button', :disabled => "disabled" %>
   |
   <%= link_to "Add Page", '#', :id => 'add-page-button', :disabled => "disabled" %>
   |

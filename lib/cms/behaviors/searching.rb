@@ -14,7 +14,7 @@ module Cms
           extend ClassMethods
         
           #This is in a method to allow classes to override it
-          named_scope :search, lambda{|search_params| 
+          scope :search, lambda{|search_params| 
             term = search_params.is_a?(Hash) ? search_params[:term] : search_params  
             order = search_params.is_a?(Hash) && search_params[:order] ? search_params[:order] : default_order_for_search
             conditions = []

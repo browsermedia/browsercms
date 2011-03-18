@@ -1,15 +1,15 @@
+require 'cms/version'
+
 module Cms
   class << self
     __root__ = File.expand_path(File.join(File.dirname(__FILE__), "..", ".."))
 
     define_method(:root) { __root__ }
 
-    ::SPEC = eval(File.read(__root__ + '/browsercms.gemspec'))
-
     attr_accessor :attachment_file_permission
 
     def version
-      @version = SPEC.version.version
+      @version = Cms::VERSION
     end
 
     def load_rake_tasks
@@ -17,38 +17,58 @@ module Cms
     end
 
     # This is called after the environment is ready
+    # This all needs to be moved to the Engine
     def init
-      ActionController::Routing::RouteSet::Mapper.send :include, Cms::Routes
-      ActiveSupport::Dependencies.load_paths += %W( #{RAILS_ROOT}/app/portlets )
-      ActiveSupport::Dependencies.load_paths += %W( #{RAILS_ROOT}/app/portlets/helpers )      
-      ActionController::Base.append_view_path DynamicView.base_path
-      ActionView::Base.default_form_builder = Cms::FormBuilder
+      puts "BrowserCMS init has been called!!!!!!!"
+
+      # ToDo: This is how we are adding new methods to the routes.rb file. Rails 3 might provide more direct way.
+     # ActionDispatch::Routing::Mapper.send :include, Cms::Routes
+
+      #need to add gem's app directories to the load path - 
+      #the list is taken from what rails has automagically added to $: for the Rails.root dirs
+#      ActiveSupport::Dependencies.autoload_paths += %W( #{self.root}/vendor #{self.root}/app/mailers #{self.root}/app/helpers)
+#      ActiveSupport::Dependencies.autoload_paths += %W( #{self.root}/app/controllers #{self.root}/app/models #{self.root}/app/portlets)
+#      ActiveSupport::Dependencies.autoload_paths += %W( #{Rails.root}/app/portlets )
+#      ActiveSupport::Dependencies.autoload_paths += %W( #{Rails.root}/app/portlets/helpers )
+#      ActionController::Base.append_view_path DynamicView.base_path
+#      ActionController::Base.append_view_path %W( #{self.root}/app/views)
+
+#      ActionView::Base.default_form_builder = Cms::FormBuilder
       
       # ActiveRecord JDBC adapter depends on no database connection having
       # been established to work properly.
-      require 'jdbc_adapter' if defined?(JRUBY_VERSION)
+#      require 'jdbc_adapter' if defined?(JRUBY_VERSION)
       
       # This is just to be safe
       # dynamic views are stored in a tmp dir
       # so they could be blown away on a server restart or something
       # so this just makes sure they get written out
-      DynamicView.write_all_to_disk! if DynamicView.table_exists?
+
+      # Commenting out, as the app/model files don't seem to have been loaded yet at this point, so
+      # we are getting class errors w/ STI.
+
+#      DynamicView.write_all_to_disk! if DynamicView.table_exists?
     end
     
     # This is used by CMS modules to register with the CMS generator
     # which files should be copied over to the app when the CMS generator is run.
     # src_root is the absolute path to the root of the files,
     # then each argument after that is a Dir.glob pattern string.
+    #
+    # @param [String] src_root The root directory of the gem
+    # @param [Array of String] files A list of all file names to be copied
     def add_generator_paths(src_root, *files)
       generator_paths << [src_root, files]
     end
-    
+
+    alias_method :add_paths_to_copied_into_project, :add_generator_paths
+
     def generator_paths
       @generator_paths ||= []
     end   
     
     def add_to_rails_paths(path)
-      ActiveSupport::Dependencies.load_paths << File.join(path, "app", "portlets")
+      ActiveSupport::Dependencies.autoload_paths << File.join(path, "app", "portlets")
     end
 
     def add_to_routes(route)
@@ -102,16 +122,9 @@ module Cms
   end
 end
 
-ActiveSupport::CoreExtensions::Time::Conversions::DATE_FORMATS.merge!(
+Time::DATE_FORMATS.merge!(
 	:year_month_day => '%Y/%m/%d',
 	:date => '%m/%d/%Y'	
 )
 
-Cms.add_generator_paths(Cms.root, 
-  "public/javascripts/jquery*",
-  "public/javascripts/cms/**/*",
-  "public/bcms/ckeditor/**/*",
-  "public/site/**/*",   
-  "public/stylesheets/cms/**/*",
-  "public/images/cms/**/*",
-  "db/migrate/[0-9]*_*.rb")
+

@@ -1,5 +1,5 @@
-<% content_for :html_head do %>
-  <% javascript_tag do %>
+<%= content_for :html_head do %>
+  <%= javascript_tag do %>
   <% if %w[FileBlock ImageBlock].include?(content_type.name) &&  request.user_agent !~ /MSIE 6/ %>
     jQuery(function($) {
       $('#section_id').selectbox({width: '129px'});
@@ -25,7 +25,7 @@
               <div class="first">
                 <h3>Search</h3>
                 <div class="searchbox">
-                  <% form_tag cms_index_path_for(content_type), :method => :get do -%>
+                  <%= form_tag cms_index_path_for(content_type), :method => :get do -%>
                     <div id="search_term_container">
                       <%= text_field_tag "search[term]", (params[:search] ? params[:search][:term] : nil) %>
                     </div>
@@ -53,14 +53,14 @@
                 <h3>Content Types</h3>
                 <ul>
                   <% ContentTypeGroup.all(:order => "content_type_groups.id").each do |group| %>
-                    <li<%= ' class="open"' if (group == content_type.content_type_group) %>>
+                    <li<%= ' class="open"'.html_safe if (group == content_type.content_type_group) %>>
                       <% if group.content_types.blank? %>
                         <%= link_to h(group.name), "#" %>
                       <% else %>
                         <%= link_to h(group.name), cms_index_path_for(group.content_types.first) %>
                         <ul>
                           <% group.content_types.find(:all, :order => 'priority, name').each do |type| %>
-                            <li<%= ' class="on"' if content_type.is_child_of?(type) %>><%= link_to h(type.display_name), cms_index_path_for(type) %></li>
+                            <li<%= ' class="on"'.html_safe if content_type.is_child_of?(type) %>><%= link_to h(type.display_name), cms_index_path_for(type) %></li>
                           <% end -%>
                         </ul>
                       <% end -%>

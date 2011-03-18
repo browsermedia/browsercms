@@ -36,7 +36,15 @@ module Cms
       
           extend ClassMethods
           include InstanceMethods
-      
+
+          # I'm not pleased with the need to include all of the these rails helpers onto every 'renderable' content item
+          # It's likely to lead to unfortunate side effects.
+          # Need to determine how this can be simplified.
+
+          # Required to make the calls to add Rails Core controllers work
+          include ActiveSupport::Configurable
+
+          # Include all the core rails helpers
           include ActionController::Helpers
           include ActionController::RequestForgeryProtection
 
@@ -89,11 +97,11 @@ module Cms
 
         # This gives the view a reference to this object
         instance_variable_set(self.class.instance_variable_name_for_view, self)
-    
+
         # This is like a controller action
         # We will call it if you have defined a render method
         # but if you haven't we won't
-        render if respond_to?(:render)
+        render if should_render_self?
       end
     
       def perform_render(controller)
@@ -113,26 +121,34 @@ module Cms
         end
 
         # Create, Instantiate and Initialize the view
-        view_class  = Class.new(ActionView::Base)      
-        action_view = view_class.new(@controller.view_paths, {}, @controller)
-    
+        action_view = Cms::ViewContext.new(@controller, assigns_for_view)
+#        view_class  = Class.new(ActionView::Base)
+#        action_view = view_class.new(@controller.view_paths, {}, @controller)
+
+#        logger.warn("View Class: #{view_class}")
+#        logger.warn("View : #{action_view}")
+
         # Make helpers and instance vars available
-        view_class.send(:include, @controller.class.master_helper_module)
-        if $:.detect{|d| File.exists?(File.join(d, self.class.helper_path))}
-          view_class.send(:include, self.class.helper_class)
-        end
-        
+#       view_class.send(:include, @controller.class._helpers)
+
+        # Add helpers for the portlet or content block
+#        if $:.detect{|d| File.exists?(File.join(d, self.class.helper_path))}
+#          view_class.send(:include, self.class.helper_class)
+#        end
+#
         # We want content_for to be called on the controller's view, not this inner view
-        def action_view.content_for(name, content=nil, &block)
-          @controller.instance_variable_get("@template").content_for(name, content, &block)
-        end
+#        def action_view.content_for(name, content=nil, &block)
+#          @controller.instance_variable_get("@template").content_for(name, content, &block)
+#        end
         
         # Copy instance variables from this renderable object to it's view
-        action_view.assigns = assigns_for_view
-          
+#        action_view.assigns = assigns_for_view
+
+        # Determine if this content should render from a file system template or inline (i.e. database based template)
         if respond_to?(:inline_options) && self.inline_options && self.inline_options.has_key?(:inline)
-          options = {:locals => {}}.merge(self.inline_options)
-          ActionView::InlineTemplate.new(options[:inline], options[:type]).render(action_view, options[:locals])
+          options = self.inline_options
+          locals = {}
+          action_view.render(options, locals)
         else
           action_view.render(:file => self.class.template_path)
         end
@@ -142,6 +158,13 @@ module Cms
         @render_exception = exception
       end
 
+      # Determines if a block should have its 'render' method called when it's rendered within a page.
+      def should_render_self?
+        # Reason to exist: This was added to work around the fact that Rails 3 AbstractController::Helpers defines its own
+        # render method, which was conflicted with block's render methods.
+        public_methods(false).include?(:render)
+      end
+      
       protected
         def copy_instance_variables_from_controller!
           if @controller.respond_to?(:instance_variables_for_rendering)

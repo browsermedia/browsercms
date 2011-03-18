@@ -5,9 +5,9 @@ class ContentType < ActiveRecord::Base
   validates_presence_of :content_type_group
   before_validation :set_content_type_group
   
-  named_scope :named, lambda{|name| {:conditions => ['content_types.name = ?', name]}}
+  scope :named, lambda{|name| {:conditions => ['content_types.name = ?', name]}}
   
-  named_scope :connectable, 
+  scope :connectable,
     :include => :content_type_group,
     :conditions => ['content_type_groups.name != ?', 'Categorization'],
     :order => 'content_types.priority, content_types.name'

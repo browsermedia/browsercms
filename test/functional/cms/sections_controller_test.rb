@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), '/../../test_helper')
+require 'test_helper'
 
 class Cms::SectionsControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
@@ -49,7 +49,7 @@ class Cms::SectionFileBrowserControllerTest < ActionController::TestCase
     get :file_browser, :format => "xml", "CurrentFolder" => "/", "Command" => "GetFilesAndFolders", "Type" => "Page"
 
     assert_response :success
-    assert_equal "text/xml", @response.content_type
+    assert_equal "application/xml", @response.content_type
     assert_select "Connector[command=?][resourceType=?]", "GetFilesAndFolders", "Page" do
       assert_select "CurrentFolder[path=?][url=?]", "/", "/"
       assert_select "Folders" do
@@ -70,7 +70,7 @@ class Cms::SectionFileBrowserControllerTest < ActionController::TestCase
     get :file_browser, :format => "xml", "CurrentFolder" => "/Foo/", "Command" => "GetFilesAndFolders", "Type" => "Page"
 
     assert_response :success
-    assert_equal "text/xml", @response.content_type
+    assert_equal "application/xml", @response.content_type
     assert_select "Connector[command=?][resourceType=?]", "GetFilesAndFolders", "Page" do
       assert_select "CurrentFolder[path=?][url=?]", "/Foo/", "/Foo/"
       assert_select "Folders" do
@@ -191,8 +191,7 @@ class Cms::SectionsControllerPermissionsTest < ActionController::TestCase
     @group2 = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
     expected_groups = @editable_section.groups
     login_as(@user)
-    RAILS_DEFAULT_LOGGER.warn("starting...")
-    put :update, :id => @editable_section, :section => {:name => "new name", :group_ids => [@group, @group2]}
+    put :update, :id => @editable_section, :section => {:name => "new name", :group_ids => [@group.id, @group2.id]}
     assert_response :redirect
     assert_equal expected_groups, assigns(:section).groups
     assert_equal "new name", assigns(:section).name
@@ -202,12 +201,12 @@ class Cms::SectionsControllerPermissionsTest < ActionController::TestCase
 
 
   test "PUT update should add groups for admin user" do
-# This step is unnecessary in the actual cms, as you can't stop the admin from doing anything
+    # This step is unnecessary in the actual cms, as you can't stop the admin from doing anything
     Group.find(:first, :conditions => "code = 'cms-admin'").sections << @editable_subsection
-    @group2 = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
+    @group2 = Factory(:cms_user_group)
     expected_groups = [@group, @group2]
     login_as_cms_admin
-    put :update, :id => @editable_subsection, :section => {:name => "new name", :group_ids => [@group, @group2]}
+    put :update, :id => @editable_subsection, :section => {:name => "new name", :group_ids => [@group.id, @group2.id]}
     assert_response :redirect
     assert_equal expected_groups, assigns(:section).groups
   end

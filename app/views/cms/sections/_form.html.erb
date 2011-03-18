@@ -1,5 +1,5 @@
 <%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
-<%= f.error_messages %>
+<%= f.cms_error_messages %>
 
 <%= f.cms_text_field :name %>
 <%= f.cms_text_field :path %>
@@ -11,7 +11,7 @@
   </div>
 </div>
 
-<% able_to?(:administrate) do %>
+<%= able_to?(:administrate) do %>
   <div class="checkbox_group fields" style="float: left; width: 100%">
     <label>Public Permissions</label>
     <%= hidden_field_tag "section[group_ids][]", "", :id => nil %>
@@ -25,8 +25,7 @@
       <% end %>
       <div class="instructions">Which &ldquo;Public&rdquo; groups can view pages in this section?</div>
       <div class="check_uncheck">
-        <%= link_to_check_all 'input.public_group_ids' %>, 
-        <%= link_to_uncheck_all 'input.public_group_ids' %>
+        <%= check_uncheck_tag 'input.public_group_ids' %>
       </div>
     </div>
   </div>
@@ -46,8 +45,7 @@
       <% end %>
       <div class="instructions">Which &ldquo;CMS&rdquo; groups can edit pages and content in this section?</div>
       <div class="check_uncheck">
-        <%= link_to_check_all 'input.cms_group_ids' %>, 
-        <%= link_to_uncheck_all 'input.cms_group_ids' %>
+        <%= check_uncheck_tag 'input.cms_group_ids' %>
       </div>
     </div>
   </div>

@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), '/../../test_helper')
+require 'test_helper'
 
 class Cms::PageHelperTest < ActionView::TestCase
 
@@ -61,5 +61,7 @@ HTML
 
     assert_equal "", render_breadcrumbs
   end
+
+
   
 end

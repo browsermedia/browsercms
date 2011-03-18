@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), '/../../test_helper')
+require 'test_helper'
 
 ActiveRecord::Base.connection.instance_eval do
   drop_table(:searchable_content_block_parents) if table_exists?(:searchable_content_block_parents)  
@@ -29,7 +29,7 @@ end
 class SearchableContentBlock < ActiveRecord::Base
   acts_as_content_block
   belongs_to :parent, :class_name => "SearchableContentBlockParent"
-  named_scope :created_after, lambda{|time| {:conditions => ["created_at > ?", time]}}
+  scope :created_after, lambda{|time| {:conditions => ["created_at > ?", time]}}
 end
 
 class SearchableContentBlockTest < ActiveSupport::TestCase

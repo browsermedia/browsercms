@@ -4,35 +4,67 @@ module Cms
       def self.included(model_class)
         model_class.extend(MacroMethods)
       end
-      module MacroMethods      
+
+      module MacroMethods
         def uses_soft_delete?
           !!@uses_soft_delete
         end
+
+        def handle_missing_table_error_during_startup(e)
+          puts e.inspect
+          Rails.logger.info e.inspect
+        end
+
         def uses_soft_delete(options={})
           @uses_soft_delete = true
-        
-          named_scope :not_deleted, :conditions => ["#{table_name}.deleted = ?", false]
+
+          scope :not_deleted, :conditions => ["#{table_name}.deleted = ?", false]
           class << self
-            alias_method :find_with_deleted, :find
-            alias_method :count_with_deleted, :count
             alias_method :delete_all!, :delete_all
           end
-          alias_method :destroy_without_callbacks!, :destroy_without_callbacks
-        
+
           extend ClassMethods
           include InstanceMethods
+
+          # By default, all queries for blocks should filter out deleted rows.
+          begin
+            default_scope where(:deleted => false)
+          # This may fail during gem loading, if no DB exists. Log it and move on.
+          rescue StandardError => e
+            handle_missing_table_error_during_startup(e)
+          end
         end
       end
+
+      # TODO: Refactor this class to remove need for overriding count, delete_all, etc.
+      # Should not be necessary due to introduction of 'default_scope'.
+      #
+      # 2. TODO: Allow a record to define its own default_scope that doesn't 'override' this one.
+      # See http://github.com/fernandoluizao/acts_as_active for an implementation of this
       module ClassMethods
-        def find(*args)
-          not_deleted.find_with_deleted(*args)
+
+        # Returns all records, including those which are marked as deleted.
+        #
+        # Basically 'find' exactly how ActiveRecord originally implements it.
+        #
+        # @param args Same params as ActiveRecord.find
+        def find_with_deleted(* args)
+          self.with_exclusive_scope { find(* args) }
         end
-        def count(*args)
-          not_deleted.count_with_deleted(*args)
+
+        # Returns a count of all records of this type, including those marked as deleted.
+        #
+        # Behaves like ActiveRecord.count is originally implemented.
+        #
+        # @param args Same params as ActiveRecord.count
+        def count_with_deleted(* args)
+          self.with_exclusive_scope { count(* args) }
         end
+
         def delete_all(conditions=nil)
           update_all(["deleted = ?", true], conditions)
         end
+
         def exists?(id_or_conditions)
           if id_or_conditions.is_a?(Hash) || id_or_conditions.is_a?(Array)
             conditions = {:conditions => id_or_conditions}
@@ -40,37 +72,34 @@ module Cms
             conditions = {:conditions => {:id => id_or_conditions}}
           end
           count(conditions) > 0
-        end      
+        end
       end
       module InstanceMethods
-        #Overrides original destroy method
-        def destroy_without_callbacks
-          if self.class.publishable?
-            update_attributes(:deleted => true, :publish_on_save => true)
-          else
-            update_attributes(:deleted => true)
+
+        # Destroying a soft deletable model should mark the record as deleted, and not actually remove it from the database.
+        #
+        # Overrides original destroy method
+        def destroy
+          run_callbacks :destroy do
+            if self.class.publishable?
+              update_attributes(:deleted => true, :publish_on_save => true)
+            else
+              update_attributes(:deleted => true)
+            end
           end
         end
 
         def mark_as_deleted!
-          destroy_without_callbacks
-        end
-
-        def destroy_with_callbacks!
-          return false if callback(:before_destroy) == false
-          result = destroy_without_callbacks!
-          @destroyed = true
-          callback(:after_destroy)
-          result
+          destroy
         end
 
         def destroy!
-          transaction { destroy_with_callbacks! }
+          transaction { super.destroy }
         end
 
         def destroyed?
           @destroyed
-        end        
+        end
       end
     end
   end

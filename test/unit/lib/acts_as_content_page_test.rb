@@ -24,7 +24,7 @@ class CmsActsAsContentPageTest < ActiveSupport::TestCase
   end
 
   test "check_access_to_section_filter" do
-    mock_user = mock()
+    mock_user = User.new
     mock_user.expects(:able_to_view?).with(EXPECTED_SECTION).returns(true)
     mock_user.expects(:login).returns("mock_user_name")
     c = MyController.new

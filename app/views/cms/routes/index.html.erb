@@ -1,10 +1,10 @@
 <% page_title "Rails Routes" %>
-<% content_for :functions do %>
+<%= content_for :functions do %>
   <h1><%=h page_title %></h1>
 <% end %>
 
 <div style="margin: 10px 0">
-  <% form_tag cms_routes_path, :method => :get do %>
+  <%= form_tag cms_routes_path, :method => :get do %>
     <label>
       Path to Test: <%= text_field_tag :path, @path, :size => 50 %>
     </label>

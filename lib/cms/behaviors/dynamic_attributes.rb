@@ -127,10 +127,10 @@ module Cms
           include InstanceMethods
 
           # Provide default options
-          options[:class_name] ||= self.class_name + 'Attribute'
+          options[:class_name] ||= self.model_name + 'Attribute'
           options[:table_name] ||= options[:class_name].tableize
           options[:relationship_name] ||= options[:class_name].tableize.to_sym
-          options[:foreign_key] ||= self.class_name.foreign_key
+          options[:foreign_key] ||= self.model_name.foreign_key
           options[:base_foreign_key] ||= self.name.underscore.foreign_key
           options[:name_field] ||= 'name'
           options[:value_field] ||= 'value'
@@ -178,7 +178,8 @@ module Cms
             unless private_method_defined? :method_missing_without_dynamic_attributes
 
               # Carry out delayed actions before save
-              after_validation_on_update :save_modified_dynamic_attributes
+              after_validation :save_modified_dynamic_attributes
+#              after_validation_on_update :save_modified_dynamic_attributes
 
               # Make attributes seem real
               alias_method :method_missing_without_dynamic_attributes, :method_missing
@@ -222,6 +223,7 @@ module Cms
         # like normal attributes in the fact that the database is not touched
         # until save is called.
         def save_modified_dynamic_attributes
+          return if new_record?
           return if @save_dynamic_attr.nil?
           @save_dynamic_attr.each do |s|
             model, attr_name = s
@@ -339,7 +341,8 @@ module Cms
           kls
         end
         
-        # This overrides the attributes= defined in ActiveRecord::Base
+        # Overrides the attributes= defined in ActiveRecord::Base
+        #
         # The only difference is that this doesn't check to see if the
         # model responds_to the method before sending it
         # This is needed for Rails 2.2
@@ -349,7 +352,7 @@ module Cms
           attributes.stringify_keys!
 
           multi_parameter_attributes = []
-          attributes = remove_attributes_protected_from_mass_assignment(attributes) if guard_protected_attributes
+          attributes = sanitize_for_mass_assignment(attributes) if guard_protected_attributes
 
           attributes.each do |k, v|
             if k.include?("(")

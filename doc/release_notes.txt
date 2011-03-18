@@ -1,3 +1,24 @@
+v3.3.0
+=====
+
+The long awaited Rails 3 release.
+
+Features:
+* Rails 3!!! : BrowserCMS now uses and requires Rails 3 (3.0.5 or later). We are also requiring Ruby 1.9.2, though 1.8.7 is 'close' to working.
+* Engines: Both BrowserCMS and Module are now full blown Rails engines, and we have updated the 'module' template so its correctly generates engines.
+* Module Upgrade script: Since all existing modules will require updating, we have provided a commandline script 'bcms-upgrade' to help manage it. Works similarly to how Rails Upgrade does: (https://github.com/jm/rails-upgrade/). Run 'bcms-upgrade check' in your project to get started.
+* Better Module Installer: After you download a module which is bcms-3.3 compatible (i.e. gem install bcms_new) you can now install that modules easily via rails generate cms:install bcms_news . This take care of adding the gem to your project, copying migrations and adding routes. It should no longer be necessary to call 'script/generate browser_cms' everytime you add a new module.
+* Asset Packaging: All CMS static assets (js, images, html, etc) are now served directly from the BrowserCMS gem, as well as Modules. They are no longer copied into projects, and should make it much easier to keep track of whether a file has been altered/overridden. Any unaltered copied file can be safely deleted from any projects that upgrade to 3.3.
+* JQuery Updates: Core JQuery libraries packaged with BrowserCMS are updated to v1.5.1. As part of this, several libraries have been removed as obsolete or unused, including jquery.dimensions, jquery.contextMenu and jquery.thickbox.
+
+Bug Fixes:
+* #386 - Date Picker - Fixed inconsistent formatting where sometimes dates would appear with timestamps. In order to be both 1.8.7 and 1.9.2 compatible, all datepicker dates are now formatted as YYYY-mm-dd.
+* #357 - Page path generator should not replace apostrophes with hyphens enhancement
+* #298 - Dashboard errors when clicking complete tasks without selecting any tasks
+* #346 - Connected pages returning historic results
+* #345 - Pages with trailing slashs can cause issues.
+* #352 - Revert to old Page Version Bug versioning
+
 v3.1.2
 
 This is a small release which fixes a serious security patch. It is highly recommended that users update to this version.
@@ -57,8 +78,8 @@ Bug Fixes:
 * #275 = Fixed an issue where admin users were sent links to public pages when they were assigned tasks. This made it hard for them to follow links to pages to make corrections to them.
 * #263 - Fixed an issue where portlets embedded in pages would break pages if they were deleted.
 
-=========
 v3.0.6
+======
 
 3.0.6 is a small bug fix release which should correct the big issues that were preventing use of 3.0.5. Here's the rundown:
 

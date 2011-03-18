@@ -18,18 +18,19 @@ module Cms
         
           before_save :set_userstamps
         
-          named_scope :created_by, lambda{|user| {:conditions => {:created_by => user}}}        
-          named_scope :updated_by, lambda{|user| {:conditions => {:updated_by => user}}}        
+          scope :created_by, lambda{|user| {:conditions => {:created_by => user}}}
+          scope :updated_by, lambda{|user| {:conditions => {:updated_by => user}}}        
         end
       end
       module ClassMethods
       end
       module InstanceMethods
         def set_userstamps
+          current_user = User.current ? User.current : nil
           if new_record?
-            self.created_by = User.current 
+            self.created_by = current_user
           end
-          self.updated_by = User.current
+          self.updated_by = current_user
         end
       end
     end

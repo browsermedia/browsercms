@@ -1,8 +1,12 @@
-require File.join(File.dirname(__FILE__), '/../../test_helper')
+require 'test_helper'
 
 class CreatingPageTest < ActiveRecord::TestCase
-  
-  def test_it
+
+  test "Homepage should exist by default" do
+    assert_not_nil Page.with_path("/").first
+  end
+
+  def test_creating_a_page_and_updating_the_attributes
     
     @page = Page.new(
       :name => "Test", 
@@ -16,7 +20,7 @@ class CreatingPageTest < ActiveRecord::TestCase
     @page.update_attributes(:name => "Test v2")
     
     page = Page.find_live_by_path("/test")
-    assert_equal page.name, "Test"
+    assert_equal "Test", page.name
     assert_equal 1, page.version
     
   end
@@ -73,7 +77,18 @@ class PageTest < ActiveRecord::TestCase
     assert_equal @page, Page.find_live_by_path('/bar')
   end
 
-  def test_find_live_by_path_after_delete
+  test "It should be possible to create a new page, using the same path as a previously deleted page" do
+    Page.delete_all
+    p = Time.now.to_f.to_s#use a unique, but consistent path
+    
+    @page = Factory(:published_page, :path=>"/#{p}")
+    @page.destroy
+
+    @page2 = Factory(:published_page, :path=>"/#{p}")
+    assert_not_equal(@page, @page2)
+  end
+
+  test "Find by live path should not located deleted blocks, even if they share paths with live ones" do
     @page = Factory.build(:page, :path => '/foo')
     @page.publish!
     reset(:page)
@@ -280,7 +295,9 @@ class PageVersioningTest < ActiveRecord::TestCase
     assert_equal @new_guy, page.versions.last.updated_by
     assert_equal 2, page.versions.count
   end
-        
+
+  
+
 end
 
 class PageInSectionTest < ActiveRecord::TestCase
@@ -323,7 +340,7 @@ end
 class PageWithAssociatedBlocksTest < ActiveRecord::TestCase
   def setup   
     super 
-    @page = Factory(:page, :section => root_section, :name => "Bar")
+    @page = Factory(:page, :section => root_section, :name => "Bar", :path => "/#{Time.now.to_f.to_s}")
     @block = Factory(:html_block)
     @other_connector = Factory(:connector, :connectable => @block, :connectable_version => @block.version)
     @page_connector = Factory(:connector, :page => @page, :page_version => @page.version, :connectable => @block, :connectable_version => @block.version)
@@ -331,6 +348,7 @@ class PageWithAssociatedBlocksTest < ActiveRecord::TestCase
   
   # It should create a new page version and a new connector
   def test_updating_the_page_with_changes
+    Page.delete_all
     connector_count = Connector.count
     page_version = @page.version
     
@@ -352,11 +370,14 @@ class PageWithAssociatedBlocksTest < ActiveRecord::TestCase
     assert_equal page_version, @page.version
   end
 
-  def test_deleting_a_page
+  # Verifies that 'after_destroy' callbacks happen on Page/SoftDeleting objects, such that
+  # a deleted page is disassociated with any blocks it was connected to.
+  test "Destroying a page with a block should remove its connectors from the database completely." do   
+
     connector_count = Connector.count
     assert Connector.exists?(@page_connector.id)
     assert Connector.exists?(@other_connector.id)
-    
+
     @page.destroy
     
     assert_decremented connector_count, Connector.count
@@ -365,9 +386,63 @@ class PageWithAssociatedBlocksTest < ActiveRecord::TestCase
     assert HtmlBlock.exists?(@block.id)
     assert !@block.deleted?
   end
+
+
+end
+
+class AddingBlocksTest < ActiveRecord::TestCase
+
+  def setup
+    @page = Factory(:page)
+    @block = Factory(:html_block)
+    @original_versions_count = @page.versions.count
+    @connector_count = Connector.count
+
+    @connector = @page.create_connector(@block, "main")
+    reset(:page, :block)
+  end
+
+  test "Adding a block to a page without publishing" do
+    assert_equal 1, @page.version, "The unpublished page should still be version 1"
+    assert_equal 2, @connector.page_version, "The connector should point to version 2 of the page"
+    assert_equal 1, @connector.connectable_version, "Connector should point to version 1 of the block"
+    assert_incremented @original_versions_count, @page.versions.count # "There should be a new version of the page"
+    assert_equal 1, @page.connectors.for_page_version(@page.draft.version).count
+
+    assert_equal @connector_count + 1, Connector.count, "Adding the first block to a page should add exactly one connector"
+  end
+
+  test "Adding additional blocks to a page" do
+    block2 = Factory(:html_block)
+
+
+    conn = @page.create_connector(block2, "main")
+
+    assert_equal 1, @page.version
+    assert_equal 1, conn.connectable_version
+    assert_equal 3, @page.versions.count, "Should be three versions of the page now"
+    assert_equal 3, @page.draft.version, "Latest draft of a page should be 3"
+    assert_equal 2, @page.connectors.for_page_version(@page.draft.version).count
+    assert_equal @connector_count + 3, Connector.count, "Adding a second block to an existing page should add 3 total connectors."
+  end
+
+  test "Creating a new block to a page should update all existing connectors to the new page version." do
+    Rails.logger.warn "Creating a new connector"
+    @page.create_connector(Factory(:html_block), "main")
+    expected_version = 3
+    Rails.logger.warn "Done"
+    connectors = @page.connectors.for_page_version(expected_version)
+    assert_equal expected_version, connectors[0].page_version, "There should be two connectors with the same version as the page"
+    assert_equal expected_version, connectors[1].page_version
+    assert_equal 2, connectors.count, "There should be two connectors total for the page for this version (3) of the page."
+
+  end
 end
 
 class AddingBlocksToPageTest < ActiveRecord::TestCase
+
+
+
   def test_that_it_works
     @page = Factory(:page, :section => root_section)
     @block = Factory(:html_block)
@@ -580,11 +655,10 @@ class PageWithBlockTest < ActiveRecord::TestCase
     
     assert_incremented page_version_count, Page::Version.count
     assert_incremented page_version, @page.draft.version
-    assert_decremented page_connector_count, 
-      @page.connectors.for_page_version(@page.draft.version).count
+    assert_decremented page_connector_count, @page.connectors.for_page_version(@page.draft.version).count
       
-    conns = @page.connectors.all(:order => "id")
-    
+    conns = Connector.where("page_id = ?", @page.id).order("id")
+
     #log_array conns, :id, :page_id, :page_version, :connectable_id, :connectable_type, :connectable_version, :container, :position
 
     assert_equal 9, conns.size
@@ -639,6 +713,7 @@ end
 
 class RevertingABlockThatIsOnMultiplePagesTest < ActiveRecord::TestCase
   def test_that_it_reverts_both_pages
+    Page.delete_all
     
     # 1. Create a new page (Page 1, v1)    
     @page1 = Factory(:page, :name => "Page 1")

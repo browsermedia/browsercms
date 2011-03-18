@@ -15,3 +15,6 @@ vendor/plugins/selenium-on-rails/log/*.yml
 tmp/restart.txt
 public/cache
 patches
+rerun.txt
+test/dummy/log/*
+Gemfile.lock

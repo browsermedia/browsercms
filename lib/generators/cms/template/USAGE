@@ -1,0 +1,10 @@
+Description:
+    Generates a basic page template in the project.
+
+Example:
+    `rails generate template subpage`
+
+        A page template in html format using erb.
+            Template:            app/views/layouts/templates/subpage.html.erb
+
+

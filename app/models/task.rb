@@ -7,11 +7,11 @@ class Task < ActiveRecord::Base
   after_create :mark_other_tasks_for_the_same_page_as_complete
   after_create :send_email
   
-  named_scope :complete, :conditions => ["completed_at is not null"]
-  named_scope :incomplete, :conditions => ["completed_at is null"]
+  scope :complete, :conditions => ["completed_at is not null"]
+  scope :incomplete, :conditions => ["completed_at is null"]
   
-  named_scope :for_page, lambda{|p| {:conditions => ["page_id = ?", p]}}
-  named_scope :other_than, lambda{|t| {:conditions => ["id != ?", t.id]}}
+  scope :for_page, lambda{|p| {:conditions => ["page_id = ?", p]}}
+  scope :other_than, lambda{|t| {:conditions => ["id != ?", t.id]}}
   
   validates_presence_of :assigned_by_id, :message => "is required"
   validates_presence_of :assigned_to_id, :message => "is required"
@@ -42,10 +42,11 @@ class Task < ActiveRecord::Base
     elsif assigned_to.email.blank?
       logger.warn "Can't send email for task because assigned to user #{assigned_to.login}:#{assigned_to.id} has no email address"
     else
-      if SITE_DOMAIN =~ /^www/
-        host = SITE_DOMAIN.sub(/^www\./, "#{cms_domain_prefix}.")
+      domain = SITE_DOMAIN
+      if domain =~ /^www/
+        host = domain.sub(/^www\./, "#{cms_domain_prefix}.")
       else
-        host = "#{cms_domain_prefix}.#{SITE_DOMAIN}"
+        host = "#{cms_domain_prefix}.#{domain}"
       end
       email = EmailMessage.create(
                                   :sender => assigned_by.email,

@@ -1,6 +1,6 @@
 <% @page_title = @toolbar_title = "List #{dynamic_view_type.name.titleize.pluralize}" %>
-<% content_for(:html_head) do %>
-  <% javascript_tag do %>
+<%= content_for(:html_head) do %>
+  <%= javascript_tag do %>
     jQuery(function($){
       $('table.data tbody tr').hover(function(){
         $(this).addClass('hover')
@@ -19,14 +19,10 @@
   <% end %>
 <% end %>
 
-<% content_for :functions do %>
-  <%= link_to(span_tag("&nbsp;Add&nbsp;"), cms_new_path_for(dynamic_view_type.name.underscore), :class => "button") %>
-  <%= link_to(span_tag("&nbsp;Edit&nbsp;"), '#', :id => 'edit_button', :class => "button disabled") %>
-  <%= link_to span_tag("<span class=\"delete_img\">&nbsp;</span>Delete"), "#", 
-    :id => "delete_button", 
-    :title => "Are you sure you want to delete this #{dynamic_view_type.name.underscore.titleize}?",
-    :class => "button disabled http_delete confirm_with_title"
-    %>
+<%= content_for :functions do %>
+    <%= add_button cms_new_path_for(dynamic_view_type.name.underscore) %>
+    <%= edit_button  %>
+    <%= delete_button :title => "Are you sure you want to delete this #{dynamic_view_type.name.underscore.titleize}?" %>
 <% end %>
 
 <div class="roundedcorners">

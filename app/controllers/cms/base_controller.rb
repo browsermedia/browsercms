@@ -6,8 +6,8 @@ class Cms::BaseController < Cms::ApplicationController
 
   layout 'cms/application'
     
-  verify :method => :post, :only => [:create]
-  verify :method => :put, :only => [:update]
-  verify :method => :delete, :only => [:destroy]
+#  verify :method => :post, :only => [:create]
+#  verify :method => :put, :only => [:update]
+#  verify :method => :delete, :only => [:destroy]
     
 end

@@ -4,17 +4,13 @@
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   <title><%= @page_title %></title>
   <%= stylesheet_link_tag 'cms/application', 'cms/date_picker', 'cms/sitemap', 'cms/taglist' %>
-  <%= javascript_include_tag 'jquery', 'jquery-ui', 'jquery.dimensions' %>
-  <%= javascript_include_tag 'jquery.cookie.js', 'jquery.selectbox-0.5.js' %>
-  <%= javascript_include_tag 'jquery.taglist', '/cms/tags' %>
-  <%= javascript_include_tag Cms.wysiwig_js %>
-  <%= javascript_include_tag 'cms/application' %>
+  <%= javascript_include_tag :bcms_core %>
   <script type="text/javascript">
     jQuery(function($){
       <% if protect_against_forgery? %>      
         $.cms.authenticity_token = '<%= form_authenticity_token %>'
       <% end %>
-      $('input.date_picker').datepicker({ changeFirstDay: false })
+      $('input.date_picker').datepicker({ changeFirstDay: false, changeMonth:true, changeYear:true, closeText:'', showButtonPanel: true, dateFormat: '<%= Cms::DatePicker.jquery_format %>' })
     })
   </script>
   <%= yield :html_head %>

@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), '/../../test_helper')
+require 'test_helper'
 
 class Cms::ImageBlocksControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
@@ -47,16 +47,16 @@ class Cms::ImageBlocksControllerTest < ActionController::TestCase
   def test_revert_to
     @image = Factory(:image_block, 
       :attachment_section => root_section,
-      :attachment_file => mock_file(:read => "11111"), 
+      :attachment_file => mock_file(:original_filename=>"version1.txt"),
       :attachment_file_path => "test.jpg",
       :publish_on_save => true)
-    @image.update_attributes(:attachment_file => mock_file(:read => "22222"), :publish_on_save => true)
+    @image.update_attributes(:attachment_file => mock_file(:original_filename=>"version2.txt"), :publish_on_save => true)
     reset(:image)
 
     assert @image.live?    
     assert_equal 2, @image.version
     assert_equal 2, @image.attachment_version
-    assert_equal "22222", File.read(@image.attachment.full_file_location)
+    assert_equal "v2", File.read(@image.attachment.full_file_location)
     
     put :revert_to, :id => @image.id, :version => "1"
     reset(:image)
@@ -68,8 +68,8 @@ class Cms::ImageBlocksControllerTest < ActionController::TestCase
     assert_equal 2, @image.attachment_version
     assert_equal 3, @draft_image.version
     assert_equal 3, @draft_image.attachment_version
-    assert_equal "22222", File.read(@image.attachment.full_file_location)
-    assert_equal "11111", File.read(@draft_image.attachment.full_file_location)
+    assert_equal "v2", File.read(@image.attachment.full_file_location)
+    assert_equal "v1", File.read(@draft_image.attachment.full_file_location)
   end
   
 end

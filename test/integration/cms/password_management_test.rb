@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__) + '/../../test_helper')
+require 'test_helper'
 
 class PasswordManagementTest < ActionController::IntegrationTest
 
@@ -32,24 +32,28 @@ class PasswordManagementTest < ActionController::IntegrationTest
     ActionMailer::Base.deliveries = []
   end
 
-  def test_forgot_password
-    get "/passwords"
-    assert_response :success
-    
+  def test_forgot_password_will_send_email
     post "/passwords", :email => User.last.email
     assert_response :success    
     assert flash[:forgot_password][:notice]
     assert ActionMailer::Base.deliveries.empty?
   end
 
+  def forgot_password_should_render_a_form_with_an_email_address_to_enter
+    get "/passwords"
+    puts @response.body
+    assert_select 'input#email'
+    assert_response :success
+  end
+
   def test_reset_password
-    test_forgot_password
+    test_forgot_password_will_send_email
     token = User.last.reset_token    
     get "/passwords/reset?token=#{token}"
     assert_response :success
     
     post "/passwords/reset", :token => token
-    assert_response :success    
+    assert_response :success
     assert flash[:reset_password][:notice]
   end
 

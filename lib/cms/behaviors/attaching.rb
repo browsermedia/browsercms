@@ -84,6 +84,7 @@ module Cms
         end
 
         def process_attachment
+          Rails.logger.warn "Processing attachment (#{attachment_file})"
           if attachment.nil? && attachment_file.blank?
             unless attachment_file_path.blank?
               errors.add(:attachment_file, "You must upload a file")
@@ -94,8 +95,10 @@ module Cms
               return false
             end              
           else
-            build_attachment if attachment.nil?  
-            attachment.temp_file = attachment_file 
+            build_attachment if attachment.nil?
+            attachment.temp_file = attachment_file
+            Rails.logger.warn "After attachment (#{attachment.temp_file})"
+
             set_attachment_file_path
             if attachment.file_path.blank?
               errors.add(:attachment_file_path, "File Name is required for attachment")
@@ -137,12 +140,14 @@ module Cms
         end
 
         def update_attachment_if_changed
+          logger.debug {"UPDATE ATTACHMENT if changed" }
           if attachment
             attachment.archived = archived if self.class.archivable?
             if respond_to?(:revert_to_version) && revert_to_version
               attachment.revert_to(revert_to_version.attachment_version)
             elsif new_record? || attachment.changed? || attachment.temp_file
-              attachment.save
+              saved_attach = attachment.save
+              logger.warn "Attachment was saved = #{saved_attach}"
             end
             self.attachment_version = attachment.draft.version
           end

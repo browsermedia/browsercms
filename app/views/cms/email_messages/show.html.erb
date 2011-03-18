@@ -1,4 +1,4 @@
-<% content_for :html_head do %>
+<%= content_for :html_head do %>
   <style type="text/css">
     div.field {
       margin: 10px 0;
@@ -13,7 +13,7 @@
   </style>
 <% end %>
 
-<% content_for :functions do %>
+<%= content_for :functions do %>
   <%= link_to span_tag("List All"), cms_email_messages_path, :class => "button" %>
 <% end %>
 

@@ -22,7 +22,9 @@ module Cms
           attr_accessor :updated_by_page
 
           after_create :connect_to_page
-          after_save :update_connected_pages
+          after_save :update_connected_pages, :unless=>:skip_callbacks
+
+
         end
       end
       module ClassMethods
@@ -66,33 +68,47 @@ module Cms
             connected_page.create_connector(self, connect_to_container)
           end
           true
-        end        
-      
+        end
+
+        #
+        # After blocks are updated, all pages they are connected to should also be updated,
+        # connecting the page to the new version of the block, as well as putting the pages into
+        # draft status if necessary.
+        #
         def update_connected_pages
           # If this is versioned, then we need make new versions of all the pages this is connected to
-          if self.class.versioned? 
+          if self.class.versioned?
             #logger.info "..... Updating connected pages for #{self.class} #{id} v#{version}"
 
             #Get all the pages the previous version of this connectable was connected to
-            draft_version = draft.version            
-            Page.connected_to(:connectable => self, :version => (draft_version - 1)).all.each do |p|
+            draft_version = draft.version
+            connected_pages = Page.connected_to(:connectable => self, :version => (draft_version - 1)).all
+#            puts "Found #{connected_pages}"
+            connected_pages.each do |p|
               # This is needed in the case of updating page,
               # which updates this object, so as not to create a loop
-              if p != updated_by_page              
+              if p != updated_by_page
                 #This just creates a new version of the page
                 action = deleted? ? "Deleted" : "Edited"
                 p.update_attributes(:version_comment => "#{self.class.name} ##{id} was #{action}")
 
                 #The previous step will copy over a connector pointing to the previous version of this connectable
                 #We need to change that to point at the new version of this connectable
-                p.connectors.for_page_version(p.draft.version).for_connectable(self).each do |con|
+                connectors_for_page = p.connectors
+#                puts "cfp #{connectors_for_page}"
+                page_draft_version = p.draft.version
+                cnn = connectors_for_page.for_page_version(page_draft_version)
+#                puts "Connectors for page version #{page_draft_version} are #{cnn.all}"
+                connectors = cnn.for_connectable(self)
+#                puts "Found connectors #{connectors.all}"
+                connectors.each do |con|
                   con.update_attribute(:connectable_version, draft_version)
                 end
               end
             end
           end
           true
-        end        
+        end
       end
     end
   end

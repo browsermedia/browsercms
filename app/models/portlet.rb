@@ -18,13 +18,18 @@ class Portlet < ActiveRecord::Base
   ensure
     subclass.class_eval do
       
-      has_dynamic_attributes
+      has_dynamic_attributes(:class_name=>'PortletAttribute', :foreign_key=>'portlet_id')
       
       acts_as_content_block(
         :versioned => false, 
         :publishable => false,
         :renderable => {:instance_variable_name_for_view => "@portlet"})
-      
+
+      # Used to skip the 'after_save' callbacks that connect blocks to pages.
+      # Portlets aren't verisonable but are connectable, so this will prevent the saving of portlets.  
+      attr_accessor :skip_callbacks
+
+
       def self.template_path
         default_template_path
       end      
@@ -44,7 +49,7 @@ class Portlet < ActiveRecord::Base
   end
   
   def self.types
-    @types ||= ActiveSupport::Dependencies.load_paths.map do |d| 
+    @types ||= ActiveSupport::Dependencies.autoload_paths.map do |d|
       if d =~ /app\/portlets/
         Dir["#{d}/*_portlet.rb"].map do |p| 
           File.basename(p, ".rb").classify
@@ -122,7 +127,12 @@ class Portlet < ActiveRecord::Base
       {:label => "Type", :method => :type_name, :order => "type" },
       {:label => "Updated On", :method => :updated_on_string, :order => "updated_at"} ]
   end
-  
+
+  # Duck typing (like a ContentBlock) for determining if this block should have a usages link or not.
+  def self.connectable?
+    true
+  end
+
   #----- Portlet Action Related Methods ----------------------------------------
   def instance_name
     "#{self.class.name.demodulize.underscore}_#{id}"

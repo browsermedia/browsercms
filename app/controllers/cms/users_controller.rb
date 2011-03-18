@@ -8,7 +8,7 @@ class Cms::UsersController < Cms::ResourceController
   after_filter :update_group_membership, :only => [:update, :create]
   after_filter :update_flash, :only => [ :update, :create ]
   
-  verify :method => :put, :only => [ :enable, :disable, :update_password ]
+#  verify :method => :put, :only => [ :enable, :disable, :update_password ]
   
   def index
     query, conditions = [], []

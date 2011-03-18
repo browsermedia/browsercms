@@ -1,7 +1,7 @@
-require File.join(File.dirname(__FILE__), '/../../test_helper')
+require 'test_helper'
 
-# For some reason, these Portlet classes cannot be defined within the PortletTest class. Something
-# related to the dynamic attributes causes other tests to fail.
+# These Portlet classes cannot be defined within the PortletTest class. Something
+# related to the dynamic attributes causes other tests to fail otherwise.
 class NoInlinePortlet < Portlet
   render_inline false
 end
@@ -65,5 +65,9 @@ class PortletTest < ActiveSupport::TestCase
 
     p.template = ""
     assert_equal({}, p.inline_options)
+  end
+
+  test "Portlets should be considered 'connectable?, and therefore can have a /usages route.'" do
+    assert Portlet.connectable?
   end
 end

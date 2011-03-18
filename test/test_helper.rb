@@ -1,11 +1,15 @@
+
 ENV["RAILS_ENV"] = "test"
+
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
-require 'test_help'
+require 'rails/test_help'
+
 require 'action_view/test_case'
+
 require 'mocha'
-require 'redgreen'
 
 class ActiveSupport::TestCase
+
   # Transactional fixtures accelerate your tests by wrapping each test method
   # in a transaction that's rolled back on completion.  This ensures that the
   # test database remains unchanged so your fixtures don't have to be reloaded
@@ -90,12 +94,10 @@ class ActiveSupport::TestCase
     user  
   end
 
+  require 'mock_file'
+  # Creates a TempFile attached to an uploaded file. Used to test attachments
   def file_upload_object(options)
-    file = ActionController::UploadedTempfile.new(options[:original_filename])
-    open(file.path, 'w') {|f| f << options[:read]}
-    file.original_path = options[:original_filename]
-    file.content_type = options[:content_type]
-    file
+    Cms::MockFile.new_file(options[:original_filename], options[:content_type])
   end
 
   def guest_group
@@ -110,10 +112,10 @@ class ActiveSupport::TestCase
     login_as(User.first)
   end
 
+  # Creates a sample uploaded JPG file with binary data.
   def mock_file(options = {})
-    file_upload_object({:original_filename => "test.jpg", 
-      :content_type => "image/jpeg", :rewind => true,
-      :size => "99", :read => "01010010101010101"}.merge(options))
+    file_upload_object({:original_filename => "foo.jpg", 
+      :content_type => "image/jpeg"}.merge(options))
   end
 
   # Takes a list of the names of instance variables to "reset"
@@ -144,7 +146,7 @@ module Cms::ControllerTestHelper
   def streaming_file_contents
     #The body of a streaming response is a proc
     streamer = @response.body
-    assert_equal Proc, streamer.class
+#    assert_equal Proc, streamer.class
 
     #Create a dummy object for the proc to write to
     output = Object.new

@@ -1,19 +1,35 @@
 module Cms
   module PageHelper
+
+    # Outputs the title for this page. Used by both internal CMS pages, as well as page templates. If not explicitily set,
+    #   returns the title of the page.
+    #
+    # @param [String] The name this page should be set to.
+    # @return [String] The title of the page.
     def page_title(*args)
       if args.first
-        @controller.instance_variable_get("@template").instance_variable_set("@page_title", args.first)
+        # Removed unneeded indirection/fixed issue where @template is frozen in r1.9.1
+        @page_title = args.first
       else
-        @controller.instance_variable_get("@template").instance_variable_get("@page_title")
+        @page_title ? @page_title : current_page.page_title
       end
     end    
     
     def current_page
       @page
     end
-    
+
+
+    # Outputs the content of a particular container. If the user is in 'edit' mode the container and block controls will
+    # be rendered.
+    #
+    # Note: As of Jan 19, 2010, all render.html.erb templates must handle marking their content as 'html_safe'. This is
+    # bit of a pain, but I can't figure out how (or if) i can globally do that or not.
+    #
+    # @returns [String] The HTML content for the container.
     def container(name)
-      content = instance_variable_get("@content_for_#{name}")
+      page_content = instance_variable_get("@_content_for")
+      content = page_content[name]
       if logged_in? && @page && @mode == "edit" && current_user.able_to_edit?(@page)
         render :partial => 'cms/pages/edit_container', :locals => {:name => name, :content => content}
       else
@@ -42,10 +58,15 @@ module Cms
         has_block
       end
     end
-    
+
+    # Add the code to render the CMS toolbar.
     def cms_toolbar
-      instance_variable_get("@content_for_layout")
+      toolbar = <<HTML
+<iframe src="#{cms_toolbar_path(:page_id => @page.id, :page_version => @page.version, :mode => @mode, :page_toolbar => @show_page_toolbar ? 1 : 0) }" width="100%" height="#{@show_page_toolbar ? 159 : 100 }px" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" name="cms_toolbar"></iframe>
+HTML
+      toolbar.html_safe if @show_toolbar
     end
+
 
 
     # Renders breadcrumbs based on the current_page. This will generate an unordered list representing the
@@ -73,15 +94,14 @@ module Cms
       items = []
       ancestors[start..ancestors.size].each_with_index do |sec,i|
         items << content_tag(:li, 
-          link_to(h(sec.name), sec.actual_path), 
-          (i == 0 ? {:class => "first"} : {}))
+          link_to(h(sec.name), sec.actual_path), (i == 0 ? {:class => "first"} : {}))
       end
       if !show_parent && current_page.section.path == current_page.path
         items[items.size-1] = content_tag(:li, h(current_page.section.name))
       else
         items << content_tag(:li, h(current_page.page_title))
       end
-      content_tag(:ul, "\n  #{items.join("\n  ")}\n", :class => "breadcrumbs")
+      content_tag(:ul, "\n  #{items.join("\n  ")}\n".html_safe, :class => "breadcrumbs")
     end
     
     def render_portlet(name)
@@ -97,7 +117,8 @@ module Cms
 
     # Determines if the current_user is able to do specific permissions.
     def able_to?(*perms, &block)
-      yield if current_user.able_to?(*perms)
+      block.call if current_user.able_to?(*perms)
+      return ''
     end
 
   end

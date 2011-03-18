@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), '/../../test_helper')
+require 'test_helper'
 
 class Cms::ContentControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
@@ -11,12 +11,12 @@ class Cms::ContentControllerTest < ActionController::TestCase
 
   def test_show_another_page
     @page = Factory(:page, :section => root_section, :path => "/about", :name => "Test About", :template_file_name => "default.html.erb", :publish_on_save => true)
-    get :show, :path => ["about"]
+    get :show, :path => "about"
     assert_select "title", "Test About"
   end
 
   def test_page_not_found_to_guest
-    get :show, :path => ["foo"]
+    get :show, :path => "foo"
     assert_response :not_found
     assert_select "title", "Not Found"
     assert_select "h1", "Page Not Found"
@@ -24,7 +24,7 @@ class Cms::ContentControllerTest < ActionController::TestCase
 
   def test_page_not_found_to_cms_admin
     login_as_cms_admin
-    get :show, :path => ["foo"]
+    get :show, :path => "foo"
     assert_response :not_found
     assert_select "title", "Page Not Found"
     assert_select "h2", "There is no page at /foo"
@@ -33,7 +33,7 @@ class Cms::ContentControllerTest < ActionController::TestCase
   def test_show_protected_page_to_guest
     create_protected_page
 
-    get :show, :path => ["secret"]
+    get :show, :path => "secret"
     assert_response :forbidden
     assert_select "title", "Access Denied"
   end
@@ -43,7 +43,7 @@ class Cms::ContentControllerTest < ActionController::TestCase
 
     login_as @privileged_user
 
-    get :show, :path => ["secret"]
+    get :show, :path => "secret"
     assert_response :success
     assert_select "title", "Shhh... It's a Secret"
   end
@@ -51,7 +51,7 @@ class Cms::ContentControllerTest < ActionController::TestCase
   def test_show_archived_page_to_guest
     create_archived_page
 
-    get :show, :path => ["archived"]
+    get :show, :path => "archived"
     assert_response :not_found
     assert_select "title", "Not Found"
   end
@@ -60,7 +60,7 @@ class Cms::ContentControllerTest < ActionController::TestCase
     create_archived_page
     login_as_cms_admin
 
-    get :show, :path => ["archived"]
+    get :show, :path => "archived"
     assert_response :success
     assert_select "title", "Archived"
   end
@@ -68,11 +68,9 @@ class Cms::ContentControllerTest < ActionController::TestCase
   def test_show_file
     create_file
 
-    get :show, :path => ["test.txt"]
+    @controller.expects(:send_file).with(@file_block.attachment.full_file_location, :filename => 'test.txt', :type => 'text/plain',:disposition => "inline")
 
-    assert_response :success
-    assert_equal "text/plain", @response.content_type
-    assert_equal "This is a test", streaming_file_contents
+    get :show, :path => "test.txt"
   end
 
   def test_show_archived_file
@@ -83,7 +81,7 @@ class Cms::ContentControllerTest < ActionController::TestCase
     reset(:file_block)
     assert @file_block.attachment.archived?
 
-    get :show, :path => ["test.txt"]
+    get :show, :path => "test.txt"
 
     assert_response :not_found
     assert_select "title", "Not Found"
@@ -92,7 +90,7 @@ class Cms::ContentControllerTest < ActionController::TestCase
   def test_show_protected_file_to_guest
     create_protected_file
 
-    get :show, :path => ["test.txt"]
+    get :show, :path => "test.txt"
 
     assert_response :forbidden
     assert_select "title", "Access Denied"
@@ -101,12 +99,10 @@ class Cms::ContentControllerTest < ActionController::TestCase
   def test_show_protected_file_to_privileged_user
     create_protected_file
     login_as @privileged_user
+    @controller.expects(:send_file).with(@file_block.attachment.full_file_location, :filename => 'test.txt', :type => 'text/plain',:disposition => "inline")
 
-    get :show, :path => ["test.txt"]
+    get :show, :path => "test.txt"
 
-    assert_response :success
-    assert_equal "text/plain", @response.content_type
-    assert_equal "This is a test", streaming_file_contents
   end
 
   def test_show_page_route
@@ -129,7 +125,7 @@ class Cms::ContentControllerTest < ActionController::TestCase
 
   def test_show_page_with_content
     create_page_with_content
-    get :show, :path => ["page_with_content"]
+    get :show, :path => "page_with_content"
     assert_response :success
     assert_select "h3", "TEST"
   end
@@ -141,7 +137,7 @@ class Cms::ContentControllerTest < ActionController::TestCase
     @block.update_attributes(:content => "<h3>I've been edited</h3>")
     reset(:page, :block)
 
-    get :show, :path => ["page_with_content"]
+    get :show, :path => "page_with_content"
     assert_response :success
     assert_select "h3", "I've been edited"
   end
@@ -168,7 +164,7 @@ class Cms::ContentControllerTest < ActionController::TestCase
     end
 
     def create_file
-      @file = mock_file(:read => "This is a test", :content_type => "text/plain")
+      @file = mock_file(:content_type => "text/plain")
       @file_block = Factory(:file_block, :attachment_section => root_section, :attachment_file => @file, :attachment_file_path => "/test.txt", :publish_on_save => true)
     end
 
@@ -239,22 +235,26 @@ class Cms::ContentCachingEnabledControllerTest < ActionController::TestCase
 
   def test_guest_user_views_page_on_public_site
     @request.host = "mysite.com"
-    get :show, :path => ["page"]
+    get :show, :path => "page"
     assert_response :success
     assert_select "title", "Test Page"
   end
 
   def test_guest_user_views_page_on_cms_site
     @request.host = "cms.mysite.com"
-    get :show, :path => ["page"]
-    assert_redirected_to "http://mysite.com/page"
+
+    # Actually simulates http://cms.mysite.com/?path=page , but we can't test domains in functional specs
+    get :show, :path => "page"
+
+    # Really should go to "http://mysite.com/page" instead.
+    assert_redirected_to "http://mysite.com/?path=page"
   end
 
   def test_registered_user_views_page_on_public_site
     login_as @registered_user
     @request.host = "mysite.com"
 
-    get :show, :path => ["page"]
+    get :show, :path => "page"
 
     assert_response :success
     assert_select "title", "Test Page"
@@ -264,9 +264,10 @@ class Cms::ContentCachingEnabledControllerTest < ActionController::TestCase
     login_as @registered_user
     @request.host = "cms.mysite.com"
 
-    get :show, :path => ["page"]
+    # Simulates http://cms.mysite.com/?path=page rather than http://cms.mysite.com/page
+    get :show, :path => "page"
 
-    assert_redirected_to "http://mysite.com/page"
+    assert_redirected_to "http://mysite.com/?path=page"
   end
 
   def test_cms_user_views_page_on_public_site
@@ -274,7 +275,7 @@ class Cms::ContentCachingEnabledControllerTest < ActionController::TestCase
     @request.session[:page_mode] = "edit"
     @request.host = "mysite.com"
 
-    get :show, :path => ["page"]
+    get :show, :path => "page"
 
     assert_response :success
     assert_select "title", "Test Page"
@@ -286,7 +287,7 @@ class Cms::ContentCachingEnabledControllerTest < ActionController::TestCase
     @request.session[:page_mode] = "edit"
     @request.host = "cms.mysite.com"
 
-    get :show, :path => ["page"]
+    get :show, :path => "page"
 
     assert_response :success
     assert_select "title", "Test Page"
@@ -320,14 +321,14 @@ class Cms::ContentCachingDisabledControllerTest < ActionController::TestCase
 
   def test_guest_user_views_page_on_public_site
     @request.host = "mysite.com"
-    get :show, :path => ["page"]
+    get :show, :path => "page"
     assert_response :success
     assert_select "title", "Test Page"
   end
 
   def test_guest_user_views_page_on_cms_site
     @request.host = "mysite.com"
-    get :show, :path => ["page"]
+    get :show, :path => "page"
     assert_response :success
     assert_select "title", "Test Page"
   end
@@ -336,7 +337,7 @@ class Cms::ContentCachingDisabledControllerTest < ActionController::TestCase
     login_as @registered_user
     @request.host = "mysite.com"
 
-    get :show, :path => ["page"]
+    get :show, :path => "page"
 
     assert_response :success
     assert_select "title", "Test Page"
@@ -346,7 +347,7 @@ class Cms::ContentCachingDisabledControllerTest < ActionController::TestCase
     login_as @registered_user
     @request.host = "mysite.com"
 
-    get :show, :path => ["page"]
+    get :show, :path => "page"
 
     assert_response :success
     assert_select "title", "Test Page"
@@ -357,7 +358,7 @@ class Cms::ContentCachingDisabledControllerTest < ActionController::TestCase
     @request.session[:page_mode] = "edit"
     @request.host = "mysite.com"
 
-    get :show, :path => ["page"]
+    get :show, :path => "page"
 
     assert_response :success
     assert_select "title", "Test Page"
@@ -369,7 +370,7 @@ class Cms::ContentCachingDisabledControllerTest < ActionController::TestCase
     @request.session[:page_mode] = "edit"
     @request.host = "cms.mysite.com"
 
-    get :show, :path => ["page"]
+    get :show, :path => "page"
 
     assert_response :success
     assert_select "title", "Test Page"
@@ -382,7 +383,7 @@ class Cms::ContentCachingDisabledControllerTest < ActionController::TestCase
     @portlet_raise_access_denied = DynamicPortlet.create!(:name => "Test", :connect_to_page_id => @page.id, :connect_to_container => "main", :code => 'raise Cms::Errors::AccessDenied')
     reset(:page)
 
-    get :show, :path => ["about"]
+    get :show, :path => "about"
     assert_response :forbidden
     assert_select "title", "Access Denied"
   end
@@ -392,7 +393,7 @@ class Cms::ContentCachingDisabledControllerTest < ActionController::TestCase
     @portlet_raise_not_found = DynamicPortlet.create!(:name => "Test", :connect_to_page_id => @page.id, :connect_to_container => "main", :code => 'raise ActiveRecord::RecordNotFound')
     reset(:page)
 
-    get :show, :path => ["about"]
+    get :show, :path => "about"
     assert_response :not_found
     assert_select "title", "Not Found"
   end
@@ -405,7 +406,7 @@ class Cms::ContentCachingDisabledControllerTest < ActionController::TestCase
     @portlet_raise_generic = DynamicPortlet.create!(:name => "Test", :connect_to_page_id => @page.id, :connect_to_container => "main", :code => 'raise')
     reset(:page)
 
-    get :show, :path => ["about"]
+    get :show, :path => "about"
     assert_response :not_found
     assert_select "title", "Not Found"
   end
@@ -417,17 +418,20 @@ class Cms::ContentCachingDisabledControllerTest < ActionController::TestCase
     @portlet_raise_generic = DynamicPortlet.create!(:name => "Test", :connect_to_page_id => @page.id, :connect_to_container => "main", :code => 'raise')
     reset(:page)
 
-    get :show, :path => ["about"]
+    get :show, :path => "about"
     assert_response :forbidden
     assert_select "title", "Access Denied"
   end
-  def test_portlet_throw_generic_exception_still_render_page
+
+  test "When portlets throw a generic error, the page should still render the other content." do
     @page = Factory(:page, :section => root_section, :path => "/about", :name => "Test About", :template_file_name => "default.html.erb", :publish_on_save => true)
     @portlet_render = DynamicPortlet.create!(:name => "Test", :connect_to_page_id => @page.id, :connect_to_container => "main", :template => '<p id="hi">hello</p>')
     @portlet_raise_generic = DynamicPortlet.create!(:name => "Test", :connect_to_page_id => @page.id, :connect_to_container => "main", :code => 'raise')
     reset(:page)
 
-    get :show, :path => ["about"]
+    get :show, :path => "about"
+
+
     assert_select "#hi", "hello"
 
   end

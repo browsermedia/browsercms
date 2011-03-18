@@ -51,8 +51,8 @@ class Cms::ContentController < Cms::ApplicationController
   
   # ----- Before Filters -------------------------------------------------------
   def construct_path
-    @paths = params[:page_path] || params[:path] || []
-    @path = "/#{@paths.join("/")}"
+    @path = "/#{params[:path]}"
+    @paths = @path.split("/")
   end
   
   def construct_path_from_route
@@ -111,6 +111,7 @@ class Cms::ContentController < Cms::ApplicationController
 
         #Stream the file if it exists
         if @path != "/" && File.exists?(@file)
+          logger.warn "Sending file #{@file}"
           send_file(@file, 
             :filename => @attachment.file_name,
             :type => @attachment.file_type,
@@ -125,7 +126,7 @@ class Cms::ContentController < Cms::ApplicationController
   def check_access_to_page
     set_page_mode
     if current_user.able_to?(:edit_content, :publish_content, :administrate)
-      logger.info "..... Displaying draft version of page"
+      logger.debug "Displaying draft version of page"
       if page = Page.first(:conditions => {:path => @path})
         @page = page.as_of_draft_version
       else

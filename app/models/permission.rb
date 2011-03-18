@@ -5,6 +5,6 @@ class Permission < ActiveRecord::Base
   validates_presence_of :name
   validates_uniqueness_of :name
   
-  named_scope :named, lambda{|name| {:conditions => {:name => name}}}
+  scope :named, lambda{|name| {:conditions => {:name => name}}}
   
 end

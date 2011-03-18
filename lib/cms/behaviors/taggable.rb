@@ -15,7 +15,7 @@ module Cms
           has_many :taggings, :as => :taggable
           has_many :tags, :through => :taggings, :order => "tags.name"                    
           
-          named_scope :tagged_with, lambda{|t| {:include => {:taggings => :tag}, :conditions => ["tags.name = ?", t]} }          
+          scope :tagged_with, lambda{|t| {:include => {:taggings => :tag}, :conditions => ["tags.name = ?", t]} }          
                     
           after_save :save_tags          
                     

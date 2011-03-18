@@ -6,8 +6,7 @@ module Cms
   module RenderingHelper
     def render_connector_and_connectable(connector, connectable)
       if logged_in? && @mode == "edit" && current_user.able_to_edit?(connector.page)
-        render :partial => 'cms/pages/edit_connector',
-               :locals => { :connector => connector, :connectable => connectable}
+        render(:partial => 'cms/pages/edit_connector', :locals => { :connector => connector, :connectable => connectable})
       else
         render_connectable(connectable)
       end
@@ -16,8 +15,8 @@ module Cms
     def render_connectable(content_block)
       if content_block
         if content_block.class.renderable?
-          logger.info "..... Rendering connectable #{content_block.class} ##{content_block.id} #{"v#{content_block.version}" if content_block.respond_to?(:version)}"
-          content_block.perform_render(@controller)
+          logger.debug "Rendering connectable #{content_block.class} ##{content_block.id} #{"v#{content_block.version}" if content_block.respond_to?(:version)}"
+          content_block.perform_render(controller)
         else
           logger.warn "Connectable #{content_block.class} ##{content_block.id} is not renderable"
         end

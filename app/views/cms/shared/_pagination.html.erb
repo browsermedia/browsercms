@@ -12,7 +12,7 @@
     <%= link_to "&nbsp;", previous_page_path, :id => "previous_page_link" %>
     <span>
       <% url = URI.parse(current_page_path) %>
-      <% form_tag url.path, :method => :get, :class => "current_page" do %>
+      <%= form_tag url.path, :method => :get, :class => "current_page" do %>
         <% url.query.to_s.split('&').each do |p|; k, v = p.split('=') %>
           <%= hidden_field_tag(k, CGI::unescape(v.to_s), :id => "pagination_hidden_#{k}") unless k == "page" %>
         <% end %>

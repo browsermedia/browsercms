@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), '/../../test_helper')
+require 'test_helper'
 
 class Cms::ContentTypesControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
@@ -12,7 +12,7 @@ class Cms::ContentTypesControllerTest < ActionController::TestCase
     get :index, :connect_to_page_id => @page.to_param, :connect_to_container => "test"
     
     assert_response :success
-    assert_select "a[href=?]", /.*html_block%5Bconnect_to_page_id%5D=#{@page.id}.*/, @html_block.display_name
+    assert_select "a[href=?]", /.*html_block\[connect_to_page_id\]=#{@page.id}.*/, @html_block.display_name
   end  
   
 end

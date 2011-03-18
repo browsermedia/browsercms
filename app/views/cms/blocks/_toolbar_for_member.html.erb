@@ -1,4 +1,4 @@
-<% able_to? :publish_content do -%>
+<%= able_to? :publish_content do -%>
   <% if @block.respond_to?(:live?) && !@block.live? %>
     <%= link_to span_tag('Publish'), block_path(:publish), 
       :class => "http_put button left#{' disabled' unless (current_user.able_to_publish?(@block) && @block.publishable?)}", 
@@ -32,7 +32,5 @@
     :id => "list_versions" %>
 <% end %>
 
-<%= link_to span_tag("<span class=\"delete_img\">&nbsp;</span>Delete"), block_path, 
-  :class => "http_delete confirm_with_title button#{' disabled' unless current_user.able_to_publish?(@block)}", 
-  :title => "Are you sure you want to delete '#{@block.name}'?", 
-  :id => "delete_button" %>
+<%= delete_button :path=>block_path, :title=>"Are you sure you want to delete '#{@block.name}'?", :enabled=>current_user.able_to_publish?(@block) %>
+

@@ -1,27 +1,46 @@
-if RAILS_ENV == "test"
-  class ContentBlock
-    def self.versioned?; true; end
-    def self.publishable?; true; end
-    def self.connectable?; true; end
-    def self.searchable?; false; end
-  end
-end      
+if defined?(Browsercms)
 
-# For BrowserCMS Core testing. These routes should not be used by projects that use BrowserCMS as a gem.
-# Only load these routes if this is the "root" application
-#
-if RAILS_ROOT == File.expand_path(File.dirname(__FILE__) + "/..")
-  ActionController::Routing::Routes.draw do |map|
-    map.connect "/__test__", :controller => "cms/content", :action => "show_page_route"
+  if Rails.env == "test"
+    class SampleBlock
+      def self.versioned?;
+        true;
+      end
+
+      def self.publishable?;
+        true;
+      end
+
+      def self.connectable?;
+        true;
+      end
+
+      def self.searchable?;
+        false;
+      end
+    end
+
+    class Cms::SampleBlocksController < Cms::ContentBlockController
+    end
+  end
+
+  Browsercms::Application.routes.draw do
+
+    match "/__test__", :to => "cms/content#show_page_route"
 
     # These are for testing and might need to be stripped out.
-    map.connect "/tests/restricted", :controller => "tests/pretend", :action => "restricted"
-    map.connect "/tests/open", :controller => "tests/pretend", :action => "open"
-    map.connect "/tests/open_with_layout", :controller => "tests/pretend", :action => "open_with_layout"
-    map.connect "/tests/error", :controller => "tests/pretend", :action => "error"
-    map.connect "/tests/not-found", :controller => "tests/pretend", :action => "not_found"
+    match "/tests/restricted", :to => "tests/pretend#restricted"
+    match "/tests/open", :to => "tests/pretend#open"
+    match "/tests/open_with_layout", :to => "tests/pretend#open_with_layout"
+    match "/tests/error", :to => "tests/pretend#error"
+    match "/tests/not-found", :to => "tests/pretend#not_found"
 
-    # Core CMS routes
-    map.routes_for_browser_cms
+    if Rails.env == "test"
+      namespace :cms do
+        content_blocks :sample_blocks
+      end
+    end
+    routes_for_browser_cms
+
+
   end
 end

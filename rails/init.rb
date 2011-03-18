@@ -1,3 +1,2 @@
-require 'browsercms'
-Cms.add_to_rails_paths(Cms.root)
-Cms.init
+# This should no longer be necessary for Engines.
+#require 'browsercms'

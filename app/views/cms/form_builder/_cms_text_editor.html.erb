@@ -1,5 +1,5 @@
-<% content_for :html_head do %>
-  <% javascript_tag do %>
+<%= content_for :html_head do %>
+  <%= javascript_tag do %>
   jQuery(function($) {
     $('select.<%= object_name %>_<%= method %>_dhtml_selector').selectbox({width: '96px', dhtml_selector: '<%= object_name %>_<%= method %>'});
   })

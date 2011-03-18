@@ -10,11 +10,10 @@ class Cms::RoutesController < Cms::BaseController
       @route = ActionController::Routing::Routes.recognize_path(@path)
     end
     
-    @routes = ActionController::Routing::Routes.routes.collect do |route|
-      name = ActionController::Routing::Routes.named_routes.routes.index(route).to_s
-      verb = route.conditions[:method].to_s.upcase
-      segs = route.segments.inject("") { |str,s| str << s.to_s }
-      segs.chop! if segs.length > 1
+    @routes = Rails.application.routes.routes.collect do |route|
+      name = route.name.to_s
+      verb = route.verb
+      segs = route.path
       reqs = route.requirements.empty? ? "" : route.requirements.inspect
       {:name => name, :verb => verb, :segs => segs, :reqs => reqs}
     end

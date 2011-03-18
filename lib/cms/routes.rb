@@ -1,136 +1,148 @@
 module Cms::Routes
 
+
+  # Adds all necessary routes to manage a new content type. Works very similar to the Rails _resources_ method, adding basic CRUD routes, as well as additional ones
+  #   for CMS specific routes (like versioning)
   #
-  # content_block_name - Should be a plural symbol matching the name of the content_block, like :dogs or donation_statuses
-  #
-  def content_blocks(content_block_name, options={}, &block)
+  # @params [Symbol] content_block_name - The plural name of a new Content Type. Should match the name of the content_block, like :dogs or :donation_statuses
+  def content_blocks(content_block_name, options={}, & block)
     content_block = content_block_name.to_s.classify.constantize
-    resources(*[content_block_name, default_routes_for_content_block(content_block).deep_merge(options)], &block)
+    resources content_block_name do
+      member do
+        put :publish if content_block.publishable?
+        get :versions if content_block.versioned?
+        get :usages if content_block.connectable?
+      end
+    end
     if content_block.versioned?
-      # I'm not sure why, but these named routes 
-      # don't end up getting nested in the CMS namepace.
-      # So for now I'm just hard-coding the stuff related to the CMS namespace
-      send("version_cms_#{content_block_name}".to_sym, 
-        "/cms/#{content_block_name}/:id/version/:version",
-        :controller => "cms/#{content_block_name}",
-        :action => "version",
-        :conditions => {:method => :get})
-      send("revert_to_cms_#{content_block_name}".to_sym, 
-        "/cms/#{content_block_name}/:id/revert_to/:version",
-        :controller => "cms/#{content_block_name}",
-        :action => "revert_to",
-        :conditions => {:method => :put})
+      send("get", "/#{content_block_name}/:id/version/:version", :to=>"#{content_block_name}#version", :as=>"version_cms_#{content_block_name}".to_sym)
+      send("put", "/#{content_block_name}/:id/revert_to/:version", :to=>"#{content_block_name}#revert_to", :as=>"revert_to_cms_#{content_block_name}".to_sym)
     end
   end
-  
-  def default_routes_for_content_block(content_block)
-    member_routes = {}
-    member_routes[:publish] = :put if content_block.publishable?
-    member_routes[:versions] = :get if content_block.versioned?
-    member_routes[:usages] = :get if content_block.connectable?    
-    {:member => member_routes}
-  end
-  
+
+  # Adds the routes required for BrowserCMS to function to a routes.rb file. Should be the last route in the file, as
+  # all following routes will be ignored.
+  #
+  # Usage:
+  #   YourAppName::Application.routes.draw do
+  #      match '/some/path/in/your/app' :to=>"controller#action''
+  #      routes_for_browser_cms
+  #   end
+  #
   def routes_for_browser_cms
 
-    namespace(:cms) do |cms|
-      
-      cms.home '/', :controller => 'home'
-      
-      cms.logout '/logout', :controller => 'sessions', :action => 'destroy'
-      cms.login '/login', :controller => 'sessions', :action => 'new', :conditions => { :method => :get }
-      cms.connect '/login', :controller => 'sessions', :action => 'create', :conditions => { :method => :post }      
-      cms.dashboard '/dashboard', :controller => 'dashboard'
-      cms.sitemap '/sitemap', :controller => 'section_nodes'
+    namespace :cms do
 
-      cms.content_types '/content_types', :controller => 'content_types'
-      cms.resources :connectors, :member => {
-        :move_up => :put,
-        :move_down => :put,
-        :move_to_bottom => :put,
-        :move_to_top => :put
-      }
-      cms.resources :links
+      match '/dashboard', :to=>"dashboard#index", :as=>'dashboard'
+      match '/', :to => 'home#index', :as=>'home'
+      match '/sitemap', :to=>"section_nodes#index", :as=>'sitemap'
+      match '/content_library', :to=>"html_blocks#index", :as=>'content_library'
+      match '/administration', :to=>"users#index", :as=>'administration'
+      match '/logout', :to=>"sessions#destroy", :as=>'logout'
+      get '/login', :to=>"sessions#new", :as=>'login'
+      post '/login', :to=>"sessions#create"
 
-      cms.resources :pages, :member => {
-        :archive => :put,
-        :hide => :put,
-        :publish => :put,
-        :versions => :get
-      }, :collection => {
-        :publish => :put
-      }, :has_many => [:tasks]
-      version_cms_page '/cms/pages/:id/version/:version', :controller => 'cms/pages', :action => 'version', :conditions => {:method => :get}
-      revert_to_cms_page '/cms/pages/:id/revert_to/:version', :controller => 'cms/pages', :action => 'revert_to', :conditions => {:method => :put}
+      match '/toolbar', :to=>"toolbar#index", :as=>'toolbar'
+      match '/content_types', :to=>"content_types#index", :as=>'content_types'
 
-      cms.file_browser '/sections/file_browser.xml', :controller => 'sections', :action => 'file_browser', :format => "xml"
-      cms.resources :sections, :has_many => [:links, :pages]
-
-      cms.resources :section_nodes, :member => {
-        :move_before => :put,
-        :move_after => :put,
-        :move_to_beginning => :put,
-        :move_to_end => :put,
-        :move_to_root => :put
-      }
-      cms.attachment '/attachments/:id', :controller => 'attachments', :action => 'show'
-
-      cms.resources :tasks, :member => {:complete => :put}, :collection => {:complete => :put}
-      cms.toolbar '/toolbar', :controller => 'toolbar'
-      
-      # TODO: Make an actual content library controller 
-      # that redirects to the last content type you were working on
-      cms.content_library '/content_library', :controller => 'html_blocks' 
-      
-      cms.content_blocks :html_blocks
-      cms.content_blocks :portlets, :member => {:usages => :get}
-      cms.handler "/portlet/:id/:handler", 
-        :controller => "portlet", 
-        :action => "execute_handler", 
-        :conditions => {:method => :post}
-      
-      cms.content_blocks :file_blocks
-      cms.content_blocks :image_blocks
-      cms.content_blocks :category_types
-      cms.content_blocks :categories
-      cms.content_blocks :tags
-      
-      cms.administration '/administration', :controller => 'users'
-      
-      cms.with_options :controller => "cache" do |cache|
-          cache.cache "/cache", :action => "show", :conditions => {:method => :get}
-        cache.connect "/cache", :action => "destroy", :conditions => {:method => :delete}
+      resources :connectors do
+        member do
+          put :move_up
+          put :move_down
+          put :move_to_bottom
+          put :move_to_top
+        end
       end
-            
-      cms.resources :email_messages
-      cms.resources :groups
-      cms.resources :redirects
-      cms.resources :page_partials, :controller => 'dynamic_views'
-      cms.resources :page_templates, :controller => 'dynamic_views'
-      cms.resources :page_routes do |pr|
-        pr.resources :conditions, :controller => "page_route_conditions"
-        pr.resources :requirements, :controller => "page_route_requirements"
+      resources :links
+
+      resources :pages do
+        member do
+          put :archive
+          put :hide
+          put :publish
+          get :versions
+        end
+        collection do
+          put :publish
+        end
+        resources :tasks
       end
-      cms.routes "/routes", :controller => "routes"
-      cms.resources :users, :member => {
-        :change_password => :get, 
-        :update_password => :put,
-        :disable => :put, 
-        :enable => :put
-      }
-      
-      if RAILS_ENV == "test" && File.expand_path(RAILS_ROOT) == File.expand_path(File.dirname(__FILE__) + "/../..")
-        cms.content_blocks :content_block
+      get '/pages/:id/version/:version', :to=>'pages#version', :as=>'version_cms_page'
+      put '/pages/:id/revert_to/:version', :to=>'pages#revert_to', :as=>'revert_to_cms_page'
+      resources :tasks do
+        member do
+          put :complete
+        end
+        collection do
+          put :complete
+        end
       end
-      
+      match '/sections/file_browser.xml', :to => 'sections#file_browser', :format => "xml", :as=>'file_browser'
+      resources :sections do
+        resources :links, :pages
+      end
+
+      resources :section_nodes do
+        member do
+          put :move_before
+          put :move_after
+          put :move_to_beginning
+          put :move_to_end
+          put :move_to_root
+        end
+      end
+      match '/attachments/:id', :to => 'attachments#show', :as=>'attachment'
+
+      match '/content_library', :to=>'html_blocks#index', :as=>'content_library'
+      content_blocks :html_blocks
+      content_blocks :portlets
+      post '/portlet/:id/:handler', :to=>"portlet#execute_handler"
+
+      content_blocks :file_blocks
+      content_blocks :image_blocks
+      content_blocks :category_types
+      content_blocks :categories
+      content_blocks :tags
+
+      match '/administration', :to => 'users#index', :as=>'administration'
+
+      resources :users do
+        member do
+          get :change_password
+          put :update_password
+          put :disable
+          put :enable
+        end
+      end
+      resources :email_messages
+      resources :groups
+      resources :redirects
+      resources :page_partials, :controller => 'dynamic_views'
+      resources :page_templates, :controller => 'dynamic_views'
+      resources :page_routes do
+        resources :conditions, :controller => "page_route_conditions"
+        resources :requirements, :controller => "page_route_requirements"
+      end
+      get 'cache', :to=>'cache#show', :as=>'cache'
+      delete 'cache', :to=>'cache#destroy'
+
+      # This is only for testing, and should be moved to the config/routes.rb file eventually.
+#      content_blocks :sample_blocks
+
+      match  "/routes", :to => "routes#index", :as=>'routes'
+
     end
 
+    # Loads all Cms PageRoutes from the database
+    # TODO: Needs a integration/functional level test to verify that a page route w/ constraints will be correctly mapped.
     if PageRoute.table_exists?
       PageRoute.all(:order => "page_routes.name").each do |r|
-        send((r.route_name || 'connect').to_sym, r.pattern, r.options_map)
+        match r.pattern, :to=>r.to, :as=>r.route_name, :_page_route_id=>r.page_route_id, :via=>r.via, :constraints=>r.constraints
       end
     end
 
-    connect '*path', :controller => 'cms/content', :action => 'show'    
+    match "/", :to=>"cms/content#show"
+    match "*path", :to=>"cms/content#show"
   end
+
 end

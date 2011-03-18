@@ -33,7 +33,7 @@ module Cms
     end
     
     private
-      # Returns the name of the collection that this resouce belongs to
+      # Returns the name of the collection that this resource belongs to
       # the resource can be a ContentType, ActiveRecord::Base instance
       # or just a string or symbol
       def resource_collection_name(resource)

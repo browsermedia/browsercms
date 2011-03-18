@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), '/../../test_helper')
+require 'test_helper'
 
 class Cms::ApplicationHelperTest < ActionView::TestCase
   
@@ -74,4 +74,76 @@ class Cms::ApplicationHelperTest < ActionView::TestCase
     require_javascript_include(js)
     assert_equal javascript_include_tag('site2'), require_javascript_include(js2)[1]    
   end
+  
+  
+  test "Convert jquery selector to dashs" do
+    s = "input.something"
+    assert_equal "input_something", s.gsub(".", "_")
+
+    assert_equal "input_something", send(:to_id, s)
+    assert_equal "input_something_uncheck", send(:to_id, s, "uncheck")
+  end
+end
+
+class Cms::ApplicationHelper::DeleteButtonTest < ActionView::TestCase
+  include Cms::ApplicationHelper
+
+  # Scenario: Delete Buttons should:
+
+  test "generate a button without an explicit title by default" do
+    expected_html = '<a href="#" class="button disabled delete_button" id="delete_button"><span><span class="delete_img">&nbsp;</span>Delete</span></a>'
+    assert_equal expected_html, delete_button
+  end
+
+  test "use a standard Confirm link if :title option is specified" do
+    expected_html = '<a href="#" class="button disabled delete_button http_delete confirm_with_title" id="delete_button"><span><span class="delete_img">&nbsp;</span>Delete</span></a>'
+    assert_equal expected_html, delete_button(:title=>true)
+  end  
+  
+  test "take :path attribute if specified" do
+    expected_html = '<a href="/cms/html_blocks/3" class="button disabled delete_button" id="delete_button"><span><span class="delete_img">&nbsp;</span>Delete</span></a>'
+    assert_equal expected_html, delete_button(:path=>"/cms/html_blocks/3")
+  end
+
+  test "Writes out title if specified as a string" do
+    expected_html = '<a href="#" class="button disabled delete_button http_delete confirm_with_title" id="delete_button" title="Really delete \'Server Error\'?"><span><span class="delete_img">&nbsp;</span>Delete</span></a>'
+    assert_equal expected_html, delete_button(:title=>"Really delete \'Server Error\'?")
+  end
+
+  test "default to disabled, but have an :enabled option" do
+    expected_html = '<a href="#" class="button disabled delete_button" id="delete_button"><span><span class="delete_img">&nbsp;</span>Delete</span></a>'
+    assert_equal expected_html, delete_button
+
+    expected_html = '<a href="#" class="button disabled delete_button" id="delete_button"><span><span class="delete_img">&nbsp;</span>Delete</span></a>'
+    assert_equal expected_html, delete_button(:enabled=>false)
+
+    expected_html = '<a href="#" class="button delete_button" id="delete_button"><span><span class="delete_img">&nbsp;</span>Delete</span></a>'
+    assert_equal expected_html, delete_button(:enabled=>true)
+  end
+end
+
+class Cms::ApplicationHelper::EditButtonTest < ActionView::TestCase
+  include Cms::ApplicationHelper
+
+  # Scenario: Edit Buttons should:
+
+  test "generate a button without an explicit title by default" do
+    expected_html = '<a href="#" class="button disabled" id="edit_button"><span>&nbsp;Edit&nbsp;</span></a>'
+    assert_equal expected_html, edit_button
+  end
+
+
+end
+
+class Cms::ApplicationHelper::AddButtonTest < ActionView::TestCase
+  include Cms::ApplicationHelper
+
+  # Scenario: Add Buttons should:
+
+  test "generate a button without an explicit title by default" do
+    expected_html = '<a href="/cms/page_routes/new" class="button"><span>&nbsp;Add&nbsp;</span></a>'
+    assert_equal expected_html, add_button("/cms/page_routes/new")
+  end
+
+
 end

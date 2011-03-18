@@ -1,6 +1,11 @@
+# Do not edit the database.yml file directory. BrowserCMS test suites run against multiple databases, so
+# make changes to the correct 'source' db file. In this case, edit: config/database.mysql.yml instead.
+
 development:
   adapter: mysql
   encoding: utf8
+  reconnect: false
+  pool: 5
   database: browsercms_development
   username: root
   password:
@@ -9,7 +14,7 @@ development:
 # Warning: The database defined as 'test' will be erased and
 # re-generated from your development database when you run 'rake'.
 # Do not set this db to the same as development or production.
-test:
+test: &test
   adapter: mysql
   encoding: utf8
   database: browsercms_test
@@ -18,6 +23,5 @@ test:
   socket: /tmp/mysql.sock
 
 
-test_sqlite3:
-  adapter: sqlite3
-  database: db/test.sqlite3
+cucumber:
+  <<: *test

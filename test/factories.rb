@@ -25,9 +25,20 @@ Factory.define :group do |m|
   m.sequence(:name) {|n| "TestGroup#{n}" }
 end
 
+Factory.define :cms_user_group, :class=>:group do |m|
+  m.sequence(:name) {|n| "TestGroup#{n}" }
+  m.association :group_type, :factory=>:cms_group_type
+end
+
 Factory.define :group_type do |m|
   m.sequence(:name) {|n| "TestGroupType#{n}" }
 end
+
+Factory.define :cms_group_type, :class=>:group_type do |m|
+  m.name "CMS User"
+  m.cms_access true
+end
+
 
 Factory.define :html_block do |m|
   m.name "About Us"
@@ -47,6 +58,15 @@ Factory.define :page do |m|
   m.path {|a| "/#{a.name.gsub(/\s/,'_').downcase}" }
   m.template_file_name "default.html.erb"
   m.association :section
+end
+
+# TODO: Remove duplication between this and the :page factory.
+Factory.define :published_page, :class=>Page do |m|
+  m.sequence(:name) {|n| "Page #{n}" }
+  m.path {|a| "/#{a.name.gsub(/\s/,'_').downcase}" }
+  m.template_file_name "default.html.erb"
+  m.association :section
+  m.publish_on_save true
 end
 
 Factory.define :page_partial do |m|

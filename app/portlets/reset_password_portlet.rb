@@ -15,7 +15,7 @@ class ResetPasswordPortlet < Portlet
       return
     end
 
-    if request.method == :post
+    if request.post?
       @user.password = params[:password]
       @user.password_confirmation = params[:password_confirmation]
       

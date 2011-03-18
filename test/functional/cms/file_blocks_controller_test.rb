@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), '/../../test_helper')
+require 'test_helper'
 
 class Cms::FileBlocksControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
@@ -8,7 +8,7 @@ class Cms::FileBlocksControllerTest < ActionController::TestCase
   end
   
   def test_file_block_search
-    @file = mock_file(:read => "This is a test")
+    @file = mock_file()
     @file_block = Factory(:file_block, :attachment_section => root_section, 
       :attachment_file => @file, 
       :attachment_file_path => "/test.txt", 
@@ -33,7 +33,7 @@ class Cms::FileBlocksControllerTest < ActionController::TestCase
   # Fix for #33
   #
   def test_view_file_block_doesnt_have_view_error
-    @file = mock_file(:read => "Testing 123")
+    @file = mock_file()
     @file_block = Factory(:file_block, :attachment_section => root_section,
       :attachment_file => @file,
       :attachment_file_path => "/test.txt",

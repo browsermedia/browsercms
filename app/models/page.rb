@@ -11,8 +11,8 @@ class Page < ActiveRecord::Base
   has_many :connectors, :order => "connectors.container, connectors.position"
   has_many :page_routes
   
-  named_scope :named, lambda{|name| {:conditions => ['pages.name = ?', name]}}
-  named_scope :with_path, lambda{|path| {:conditions => ['pages.path = ?', path]}}
+  scope :named, lambda{|name| {:conditions => ['pages.name = ?', name]}}
+  scope :with_path, lambda{|path| {:conditions => ['pages.path = ?', path]}}
   
   # This scope will accept a connectable object or a Hash.  The Hash is expect to have
   # a value for the key :connectable, which is the connectable object, and possibly
@@ -20,7 +20,7 @@ class Page < ActiveRecord::Base
   # it will use the value in :version if present, otherwise it will use the version 
   # of the object.  In either case of a connectable object or a Hash, if the object
   # is not versioned, no version will be used
-  named_scope :connected_to, lambda { |b| 
+  scope :connected_to, lambda { |b|
     if b.is_a?(Hash)
       obj = b[:connectable]
       if obj.class.versioned?
@@ -32,7 +32,7 @@ class Page < ActiveRecord::Base
       obj = b
       ver = obj.class.versioned? ? obj.version : nil
     end
-    
+
     if ver
       { :include => :connectors, 
         :conditions => ['connectors.connectable_id = ? and connectors.connectable_type = ? and connectors.connectable_version = ?', obj.id, obj.class.base_class.name, ver] }
@@ -46,7 +46,7 @@ class Page < ActiveRecord::Base
   # results to matches on current versions of pages only.  This renders obj versions
   # useless, as the older objects will very likely have older versions of pages and
   # thus return no results.
-  named_scope :currently_connected_to, lambda { |obj|
+  scope :currently_connected_to, lambda { |obj|
     ver = obj.class.versioned? ? obj.version : nil
     if ver
       { :include => :connectors, 
@@ -65,7 +65,9 @@ class Page < ActiveRecord::Base
   before_destroy :delete_connectors
   
   validates_presence_of :name, :path
-  validates_uniqueness_of :path
+
+  # Paths must be unique among undeleted records
+  validates_uniqueness_of :path, :scope=>:deleted
   validate :path_not_reserved
           
   def after_build_new_version(new_version)
@@ -86,15 +88,22 @@ class Page < ActiveRecord::Base
       end
     end
   end
-  
+
+  # Each time a page is updated, we need to copy all connectors associated with it forward, and save
+  # them.
   def copy_connectors(options={})
-    connectors.for_page_version(options[:from_version_number]).all(:order => "connectors.container, connectors.position").each do |c|
+    logger.debug {"Copying connectors from Page #{id} v#{options[:from_version_number]} to v#{options[:to_version_number]}." }
+
+    c_found = connectors.for_page_version(options[:from_version_number]).all(:order => "connectors.container, connectors.position")
+    logger.debug {"Found connectors #{c_found}" }
+    c_found.each do |c|
       # The connector won't have a connectable if it has been deleted
       # Also need to see if the draft has been deleted,
       # in which case we are in the process of deleting it
       if c.should_be_copied?
+        logger.debug { "Connector id=>#{c.id} should be copied." }
         connectable = c.connectable_type.constantize.versioned? ? c.connectable.as_of_version(c.connectable_version) : c.connectable
-      
+
         version = connectable.class.versioned? ? connectable.version : nil
 
         #If we are copying connectors from a previous version, that means we are reverting this page,
@@ -107,20 +116,26 @@ class Page < ActiveRecord::Base
           connectable.revert_to(c.connectable_version)
           version = connectable.class.versioned? ? connectable.draft.version : nil
         end      
-      
-        new_connector = connectors.build(
+
+        logger.debug "When copying block #{connectable.inspect} version is '#{version}'"
+
+        new_connector = connectors.create(
           :page_version => options[:to_version_number], 
           :connectable => connectable, 
-          :connectable_version => version,         
+          :connectable_version => version,
           :container => c.container, 
           :position => c.position
         )
+        logger.debug {"Built new connector #{new_connector}."}
       end
     end
     true
   end  
-  
-  def create_connector(connectable, container)
+
+  # Adds a Content block to this page.
+  #
+  #
+  def create_connector(connectable, container=:main)
     transaction do
       raise "Connectable is nil" unless connectable
       raise "Container is required" if container.blank?
@@ -137,6 +152,7 @@ class Page < ActiveRecord::Base
         :container => container)      
     end
   end
+  alias_method :add_content, :create_connector
 
   def move_connector(connector, direction)
     transaction do
@@ -167,7 +183,8 @@ class Page < ActiveRecord::Base
       end
     end
   end          
-          
+
+  # Pages that get deleted should be 'disconnected' from any blocks they were associated with.
   def delete_connectors
     connectors.for_page_version(version).all.each{|c| c.destroy }
   end

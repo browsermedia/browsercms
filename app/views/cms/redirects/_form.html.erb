@@ -1,6 +1,6 @@
 <%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
-<% form_for([:cms, @redirect]) do |f| %>
-  <%= f.error_messages %>
+<%= form_for([:cms, @redirect]) do |f| %>
+  <%= f.cms_error_messages %>
   <div class="fields text_fields">
     <%= f.label :from_path, "From" %>
     <%= f.text_field :from_path, :size => 50 %>

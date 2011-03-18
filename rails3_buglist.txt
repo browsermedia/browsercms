@@ -1,0 +1,50 @@
+Start with:
+
+    Upgrading an existing browsercms project to 3.3
+    [BUG] page_title is not working. Returns nil.
+    Merge into master
+
+    Write a 'browsercms upgrade' wiki page.
+    Update lighthouse tickets to reflect what is going in 3.3.
+
+    Guides don't build. (Look @ Rails 3)
+
+Open Issues
+===========
+* Verify the v3.1 to v3.3 migration path. [Writing upgrade scripts will be a fair bit of work]
+* BUG: bcms_news - Recent Archive portlet is throwing errors.
+
+Gems to Publish (once its live)
+=====
+bcms_fckeditor  - 1.1.0 is pushed to github. Gem needs to be pushed as well. Need to test file upload (browser.xml) from within the browser
+bcms_news - 1.2 pushed to github. Gem not released yet. (Has bugs)
+bcms_google_mini_search - 1.2 pushed to github. Gem not released.
+
+Future Things to do
+===============
+* Add Block.publish and publish! for easier coding.
+* Move 'datepicker' initialization into application.js
+* Upgrade jquery.selectbox-0.5 to jquery.sb.js (https://github.com/revsystems/jQuery-SelectBox). This will likely improve the usability of the selectbox.
+* Reduce need to developers to modify content-like files on server (CSS, JS, Images, Templates)
+** Confirm w/ developers on what is commonly touched.
+** Step 1: Make templates start on file system, appear in UI and then be 'forked' in UI. Avoids need to 'copy' into CMS and delete.
+** Look at WebDAV / HTTPS protocol.
+* What is the difference between application template and profiles?
+* Clean up all 'old' initialization code (add_cms_routes_method, add to rails path, etc)
+* Merge all existing migrations into core as well as seeds.rb. Rework how seeds gets run as part of the project. (Future proof this).
+* Rename to cms:new rather than browser_cms:cms
+* Generators: These appear to be almost identical to how application templates worked. We should probably rewrite app templates to use new generators instead.
+* Namespace core files (especially users) to better support dropping in as project.
+* Allow Content Blocks to be namespaced.
+* Clean up logging messages that are filling up the production logs unnecessarily
+** 'Caching enabled'
+** 'Not the CMS site'
+** 'Rendering content block X'
+** 'Not caching, user logged in'
+** Rendering template X'
+* Have at most one line per request for any diagnostic result.
+* Fix broken tests to make it work under 1.8.7/RubyEE
+* test/dummy has some duplication ( migrations, seed.rb). This can probably be removed now anyway, due to how Gemfile->gemspec works.
+* html_safe = duplication:  Every content_block's render.html.erb needs to stick html_safe on everything, which is both tedious and annoying. Need to figure out a better way to globally handle this.
+
+

@@ -1,0 +1,22 @@
+Description:
+    Create a new content block, along with controller, tests and migrations.
+
+Examples:
+    `rails generate cms:content article`
+
+        Creates an Article model, controller, views, tests, and migration:
+            Model:              app/models/article.rb
+            Unit Test:          test/unit/models/article_test.rb
+            Migration:          db/migrate/XXX_create_article.rb
+            Controller:         app/controllers/cms/article_controller.rb
+            Functional Test:    test/functional/cms/article_controler_test.rb
+            Form Partials:      app/views/cms/articles/_form.html.erb
+                                app/views/cms/articles/render.html.erb
+
+        This block will have a single attribute, name:string and a form with text_field
+        to edit the name.
+
+    `rails generate content Article name:string body:text published:boolean`
+
+        Creates an Article model with a string name, text body, and published flag.
+        It will create form fields for these attributes in _form.html.erb.

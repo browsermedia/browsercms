@@ -12,8 +12,8 @@ module Cms
           @is_archivable = true
           include InstanceMethods
 
-          named_scope :archived, :conditions => {:archived => true}
-          named_scope :not_archived, :conditions => {:archived => false}        
+          scope :archived, :conditions => {:archived => true}
+          scope :not_archived, :conditions => {:archived => false}        
         end
       end
       module InstanceMethods

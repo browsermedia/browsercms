@@ -1,51 +1,51 @@
-<% content_for :html_head do %>
-<%= stylesheet_link_tag("cms/administration.css") %>
-<%= stylesheet_link_tag("cms/content_library.css") %>
+<%= content_for :html_head do %>
+    <%= stylesheet_link_tag("cms/administration.css") %>
+    <%= stylesheet_link_tag("cms/content_library.css") %>
 <% end %>
 <%= render :partial => 'layouts/cms/head' %>
 <body>
-  <div id="wrapper">
-    <%= render_cms_toolbar(:administration) %>
-    <div id="main">
-    
+<div id="wrapper">
+  <%= render_cms_toolbar(:administration) %>
+  <div id="main">
+
     <% if current_user.able_to?(:administrate) %>
-      <div class="top_cap_menu"></div>
+        <div class="top_cap_menu"></div>
         <div id="menu">
-          <%= render :partial => 'cms/shared/admin_sidebar' %>                      
+          <%= render :partial => 'cms/shared/admin_sidebar' %>
         </div>
         <div id="contentwrap">
     <% else %>
-      <div class="top_cap"></div>
-      <div id="contentwrapbig">
+        <div class="top_cap"></div>
+        <div id="contentwrapbig">
     <% end %>
-    
-	<div id="functions">
-	  <h1><%= @toolbar_title %></h1>
-	  <%= yield :functions %>
 
-	</div>
-	<br clear="all" />
-	
-	<% able_to?(:administrate) do %>
-	  <div class="top_cap_content"></div>
-	<% end %>
-	
-      <div id="content">
-	<div class="pad">
-          <%= yield %>
-	</div>
+    <div id="functions">
+      <h1><%= @toolbar_title %></h1>
+      <%= yield :functions %>
+
+    </div>
+    <br clear="all"/>
+
+    <%= able_to?(:administrate) do %>
+        <div class="top_cap_content"></div>
+    <% end %>
+
+    <div id="content">
+      <div class="pad">
+        <%= yield %>
       </div>
     </div>
-    <br clear="all" />
-    
+    </div>
+    <br clear="all"/>
+
     <% if current_user.able_to?(:administrate) %>
-      <div class="bottom_cap_content"></div>
+        <div class="bottom_cap_content"></div>
     <% else %>
-      <div class="bottom_cap"></div>
+        <div class="bottom_cap"></div>
     <% end %>
-    
+
     <%= render :partial => 'layouts/cms/footer' %>
+    </div>
   </div>
-</div>
 </body>
 </html>

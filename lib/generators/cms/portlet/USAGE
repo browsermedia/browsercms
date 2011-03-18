@@ -1,0 +1,26 @@
+Description:
+    Stubs out a new portlet and its views. Pass the portlet name, either CamelCased or
+    under_scored, and an optional list of attribute pairs as arguments.
+
+    Attribute pairs are column_name:sql_type arguments specifying the
+    model's attributes. By default, portlets includes a Name (String) and template (Template Editor)
+    attributes, so do not specify them.
+
+    This generates a portlet class in app/portlets, a form in app/view/portlets and
+    a default view to render the portlet in app/view/portlets, and a unit test in
+    test/unit/portlets.
+    
+    The name you supply will have "portlet" added to it, much the same way controllers work.
+
+Example:
+    `rails generate cms:portlet find_top_x_articles number_to_show:integer description:string`
+
+        A portlet to display a specific number of articles, as specified in the admin UI.
+            Portlet:            app/portlets/find_top_x_articles_portlet.rb
+            Helper:             app/portlets/helpers/find_top_x_articles_portlet_helper.rb
+            Form View:          app/views/portlets/find_top_x_articles/_form.html.erb
+            Default Template:   app/views/portlets/find_top_x_articles/render.html.erb
+            Unit Test:          test/unit/portlets/find_top_x_articles_portlet_test.rb
+
+        The _form.html.erb will have text_fields for name, number_to_show and description, as
+        well as a template_editor for template.
