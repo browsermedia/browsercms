@@ -51,9 +51,9 @@ TEXT
     puts instructions
   end
 
-  desc 'cleanup_public', "Deletes all files from public that BCMS no longer needs there. (Backup before running this)"
-  def cleanup_public
-    cleanup_bcms_3_1_x
+  desc 'v3_3_0', "Upgrades BrowserCMS files from 3.1.x to 3.3.0 (Back up first)"
+  def v3_3_0
+    upgrade_to_3_3_0
   end
 
   desc 'module', "Upgrade a module from Rails 2 to Rails 3. (Backup before running this)"
@@ -62,7 +62,7 @@ TEXT
     cleanup_rails2_files
     cleanup_rails_3
     cleanup_module
-    cleanup_bcms_3_1_x
+    upgrade_to_3_3_0
     generate_bcms_module
     next_steps
   end
@@ -132,7 +132,7 @@ TEXT
     git :checkout => 'config/database.yml'
   end
 
-  def cleanup_bcms_3_1_x
+  def upgrade_to_3_3_0
     # Remove public files where are now served from CMS core.
     remove_file 'public/bcms/ckeditor'
     remove_file 'public/images/cms'
@@ -141,6 +141,8 @@ TEXT
     %w{jquery jquery.-ui jquery.contextMenu jquery.cookie jquery.dimensions jquery.selectbox-0.5 jquery.taglist jquery.thickbox}.each do |js|
       remove_file "public/javascripts/#{js}.js"
     end
+
+    copy_file '20100705083859_browsercms_3_3_0.rb', 'db/migrate/20100705083859_browsercms_3_3_0.rb'
   end
 
   def generate_bcms_module
