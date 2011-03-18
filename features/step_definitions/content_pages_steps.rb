@@ -1,6 +1,7 @@
 # ex: Then I should see a page titled "Home"
 Then /^I should see a page titled "([^"]*)"$/ do |page_title|
-  page.has_css? "title", :text=>page_title
+  page.has_css?("title", :text=>page_title)
+  page.has_content?(page_title)
 end
 
 Given /^I am logged in as a Content Editor$/ do

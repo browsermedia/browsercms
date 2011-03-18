@@ -1,11 +1,17 @@
 module Cms
   module PageHelper
+
+    # Outputs the title for this page. Used by both internal CMS pages, as well as page templates. If not explicitily set,
+    #   returns the title of the page.
+    #
+    # @param [String] The name this page should be set to.
+    # @return [String] The title of the page.
     def page_title(*args)
       if args.first
         # Removed unneeded indirection/fixed issue where @template is frozen in r1.9.1
         @page_title = args.first
       else
-        controller.instance_variable_get("@template").instance_variable_get("@page_title")
+        @page_title ? @page_title : current_page.page_title
       end
     end    
     

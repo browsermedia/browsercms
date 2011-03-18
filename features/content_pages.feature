@@ -8,7 +8,7 @@ Background: Blank CMS Install
 
 Scenario: Homepage
   Given I am on the homepage
-  Then I should see a page titled "Home Page"
+  Then I should see a page titled "THIS TEST IS PASSING WHEN IT SHOULDN'T"
 
 Scenario: Homepage exists
   Given I am on the homepage
