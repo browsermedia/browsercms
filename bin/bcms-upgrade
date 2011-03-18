@@ -51,11 +51,19 @@ TEXT
     puts instructions
   end
 
-  desc 'upgrade', "Upgrade this module from Rails 2 to Rails 3. (Make sure its backed up, or in source control first!)"
-  def upgrade
-    rails
-    cleanup
-    bcms
+  desc 'cleanup_public', "Deletes all files from public that BCMS no longer needs there. (Backup before running this)"
+  def cleanup_public
+    cleanup_bcms_3_1_x
+  end
+
+  desc 'module', "Upgrade a module from Rails 2 to Rails 3. (Backup before running this)"
+  def module
+    new_rails
+    cleanup_rails2_files
+    cleanup_rails_3
+    cleanup_module
+    cleanup_bcms_3_1_x
+    generate_bcms_module
     next_steps
   end
 
@@ -90,24 +98,33 @@ TEXT
 
   private
 
-  def rails
+  def new_rails
     puts "Overwriting with Rails 3 code."
     run "rails new . -f"
   end
 
-  def cleanup
+  # Removes any files which are Rails 2 specific
+  def cleanup_rails2_files
+    %w{about console dbconsole destroy generate performance plugin runner server}.each do |script_name|
+      remove_file "script/#{script_name}"
+    end
+    remove_file "config/initializers/new_rails_defaults.rb"
+
+  end
+
+  # Clean up or revert all files associated with Rails 3 that should be rolled back or removed.
+  def cleanup_rails_3
+    remove_file "public/index.html"
+  end
+
+  def cleanup_module
     remove_file "rails/init.rb"
     remove_file "rails"
     remove_file "db/migrate/20080815014337_browsercms_3_0_0.rb"
     remove_file "db/migrate/20081114172307_load_seed_data.rb"
     remove_file "db/migrate/20091109175123_browsercms_3_0_5.rb"
-    remove_file "public/index.html"
     remove_file "app/views/layouts/application.html.erb"
-    remove_file "config/initializers/new_rails_defaults.rb"
-
-    %w{about console dbconsole destroy generate performance plugin runner server}.each do |script_name|
-      remove_file "script/#{script_name}"
-    end
+    remove_file "config/initializers/init_module.rb"
 
     puts "Reverting some files using git.".red
     git :checkout => '.gitignore'
@@ -115,7 +132,18 @@ TEXT
     git :checkout => 'config/database.yml'
   end
 
-  def bcms
+  def cleanup_bcms_3_1_x
+    # Remove public files where are now served from CMS core.
+    remove_file 'public/bcms/ckeditor'
+    remove_file 'public/images/cms'
+    remove_file 'public/javascripts/cms'
+    remove_file 'public/stylesheets/cms'
+    %w{jquery jquery.-ui jquery.contextMenu jquery.cookie jquery.dimensions jquery.selectbox-0.5 jquery.taglist jquery.thickbox}.each do |js|
+      remove_file "public/javascripts/#{js}.js"
+    end
+  end
+
+  def generate_bcms_module
     gem 'browsercms'
     gem 'mysql'
     gem 'jeweler', :group=>:development
@@ -123,7 +151,6 @@ TEXT
     # Allows gem to be loaded as a engine for testing.
     append_to_file 'Gemfile', 'gemspec'
 
-    remove_file "config/initializers/init_module.rb"
 
     template 'engine.erb', "lib/#{name_of_module}/engine.rb"
     prepend_to_file "lib/#{name_of_module}.rb" do
@@ -136,14 +163,7 @@ TEXT
     template 'USAGE.erb', "lib/generators/#{name_of_module}/install/USAGE"
     empty_directory "lib/generators/#{name_of_module}/install/templates"
 
-    # Remove public files where are now served from CMS core.
-    remove_file 'public/bcms/ckeditor'
-    remove_file 'public/images/cms'
-    remove_file 'public/javascripts/cms'
-    remove_file 'public/stylesheets/cms'
-    %w{jquery jquery.-ui jquery.contextMenu jquery.cookie jquery.dimensions jquery.selectbox-0.5 jquery.taglist jquery.thickbox}.each do |js|
-      remove_file "public/javascripts/#{js}.js"
-    end
+
     run "rails g browser_cms:cms -f"
     run 'rails g cms:template default'
 

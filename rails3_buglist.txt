@@ -1,6 +1,7 @@
 Start with:
 
     Upgrading an existing browsercms project to 3.3
+    [BUG] page_title is not working. Returns nil.
     Merge into master
 
     Write a 'browsercms upgrade' wiki page.
