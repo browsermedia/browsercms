@@ -1,4 +1,4 @@
-class Browsercms320 < ActiveRecord::Migration
+class Browsercms330 < ActiveRecord::Migration
   def self.up
 
     # patch required for LH345
