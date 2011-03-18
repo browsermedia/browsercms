@@ -1,23 +1,48 @@
-v3.3.0
+v3.3.0.beta
 =====
 
-The long awaited Rails 3 release.
+The long awaited Rails 3 release. We have completely reworked BrowserCMS to work with Rails 3 and Ruby 1.9.2. This release is a 'beta', so that folks can start testing against it. This is especially important for module authors, as any modules need to be upgraded to work with Rails 3 as well. Our next steps will be to collect feedback for a final 3.3.0 release/release candidate. If we can get most of the 'core' modules (News, Blog, etc) updated and working, that will likely mean a final 3.3.0 release.
+
+To get this do:
+
+	gem install browsercms --pre
+
+Then generate a new project using the same command as before:
+
+	bcms my_bcms_project
+	cd my_bcms_project
+	rails s
 
 Features:
+--------
 * Rails 3!!! : BrowserCMS now uses and requires Rails 3 (3.0.5 or later). We are also requiring Ruby 1.9.2, though 1.8.7 is 'close' to working.
 * Engines: Both BrowserCMS and Module are now full blown Rails engines, and we have updated the 'module' template so its correctly generates engines.
 * Module Upgrade script: Since all existing modules will require updating, we have provided a commandline script 'bcms-upgrade' to help manage it. Works similarly to how Rails Upgrade does: (https://github.com/jm/rails-upgrade/). Run 'bcms-upgrade check' in your project to get started.
-* Better Module Installer: After you download a module which is bcms-3.3 compatible (i.e. gem install bcms_new) you can now install that modules easily via rails generate cms:install bcms_news . This take care of adding the gem to your project, copying migrations and adding routes. It should no longer be necessary to call 'script/generate browser_cms' everytime you add a new module.
+* Project Upgrades: The 'bcms-upgrade' tool also has some support for handling upgrades, however its less comprehensive than the module support. See https://github.com/browsermedia/browsercms/wiki/Upgrading-a-BrowserCMS-project for details on what's involved in upgrading a project to BrowserCMS 3.3/Rails 3.
+* Module Installer: After you download a module (i.e. gem install) which is bcms-3.3 compatible, you can now install that modules easily via rails generate cms:install bcms_news . This take care of adding the gem to your project, copying migrations and adding routes. It should no longer be necessary to call 'script/generate browser_cms' everytime you add a new module.
 * Asset Packaging: All CMS static assets (js, images, html, etc) are now served directly from the BrowserCMS gem, as well as Modules. They are no longer copied into projects, and should make it much easier to keep track of whether a file has been altered/overridden. Any unaltered copied file can be safely deleted from any projects that upgrade to 3.3.
 * JQuery Updates: Core JQuery libraries packaged with BrowserCMS are updated to v1.5.1. As part of this, several libraries have been removed as obsolete or unused, including jquery.dimensions, jquery.contextMenu and jquery.thickbox.
-
+* New Generators: In addition to the new module installer, to fit with the Rails 3 way of 'namespacing' generators, the existing generators have been slightly renamed, specifically:
+	* rails generate cms:content_block  	(Was script/generate content_block)
+	* rails generate cms:portlet  			(Was script/generate portlet)
+	* rails generate cms:template			(Was script/generate template)
+	
 Bug Fixes:
+---------
 * #386 - Date Picker - Fixed inconsistent formatting where sometimes dates would appear with timestamps. In order to be both 1.8.7 and 1.9.2 compatible, all datepicker dates are now formatted as YYYY-mm-dd.
 * #357 - Page path generator should not replace apostrophes with hyphens enhancement
 * #298 - Dashboard errors when clicking complete tasks without selecting any tasks
 * #346 - Connected pages returning historic results
 * #345 - Pages with trailing slashs can cause issues.
 * #352 - Revert to old Page Version Bug versioning
+
+This release essentially merged the changes from 3.2.0 into 3.3.0 for a single release, so thanks to the folks that contributed bug patches for that.
+
+Issues?
+------
+
+If you encounter issues with this build, please report them for the 3.3.0.rc1 here: https://browsermedia.lighthouseapp.com/projects/28481/milestones/105840-330rc1
+
 
 v3.1.2
 

@@ -1,18 +1,12 @@
 Start with:
 
-    Test upgrading an existing browsercms project to 3.3
-
-    Write a 'browsercms upgrade' wiki page.
-    Update lighthouse tickets to reflect what is going in 3.3.
-
     Guides don't build. (Look @ Rails 3)
 
 Open Issues
 ===========
-* Verify the v3.1 to v3.3 migration path. [Writing upgrade scripts will be a fair bit of work]
 
 Gems to Publish (once its live)
-=====
+============
 bcms_fckeditor  - 1.1.0 is pushed to github. Gem needs to be pushed as well. Need to test file upload (browser.xml) from within the browser
 bcms_news - 1.2 pushed to github. Gem not released yet. (Has bugs)
 * BUG - Recent Archive portlet is throwing errors.
