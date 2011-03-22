@@ -1,3 +1,10 @@
+v3.1.3
+
+Small fix to get rid of a troublesome bug with reverting.
+
+Bug Fixes
+* #352 - Reverting pages with connected blocks should now work.
+
 v3.1.0
 
 BrowserCMS 3.1 is done! The release has a few exciting new features/refinements as well as its share of bug fixes. As always, you can get it by running 'gem install browsercms', and follow the upgrade guide on the wiki. Please report any errors found to our bug tracking system: https://browsermedia.lighthouseapp.com/projects/28481-browsercms-30
