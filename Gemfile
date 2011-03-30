@@ -5,8 +5,6 @@ gemspec
 
 gem "mysql"
 
-gem "dynamic_form"
-
 # Gem Environments
 group :development do
 #  gem 'ruby-debug19'
