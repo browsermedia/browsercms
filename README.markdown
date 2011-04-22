@@ -34,7 +34,7 @@ The next releases will be aimed at tightening up the admin for both Safari and I
 Before you can use BrowserCMS, you will need to install the gem. See the Getting Started guide at http://guides.browsercms.org/getting_started.html, or packaged with this source code (under doc/guides/html/getting_started.html)
 
 ## License
-BrowserCMS is released under a LGPL license, and is copyright 1998-2009 BrowserMedia. The complete copyright can be found in COPYRIGHT.txt, and copy of the license can be found in LICENSE.txt.
+BrowserCMS is released under a LGPL license, and is copyright 1998-2011 BrowserMedia. The complete copyright can be found in COPYRIGHT.txt, and copy of the license can be found in LICENSE.txt.
 
 
 ## Documentation

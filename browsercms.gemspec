@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir["rails/*.rb"]
   s.files += Dir["browsercms.gemspec"]
+  s.files += Dir[".yardopts"]
   s.files += Dir["doc/app/**/*"]
   s.files += Dir["doc/guides/html/**/*"]
   s.files += Dir["app/**/*"]
