@@ -4,6 +4,8 @@ Start with:
 
 Open Issues
 ===========
+* Make bcms a thor gem. Convert from application templates to CLI.
+* Can we/should we convert the guides to Github wiki pages? Might be less work to maintain, along with more flexibility. Keep old URLs/redirect them.
 
 Gems to Publish (once its live)
 ============
