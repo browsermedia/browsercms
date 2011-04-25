@@ -42,7 +42,7 @@ Gem::Specification.new do |s|
   s.files += Dir["templates/*.rb"]
   s.files -= Dir['test/dummy/*']
 
-  s.add_dependency('rails', "~> 3.0.5")
+  s.add_dependency('rails', "~> 3.0.7")
 
   # Required only for bcms-upgrade
   s.add_dependency('term-ansicolor')
