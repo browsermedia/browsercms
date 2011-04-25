@@ -146,7 +146,7 @@ class Section < ActiveRecord::Base
 
   ##
   # Set which groups are allowed to access this section.
-  # @params [Symbol] code Set of groups to allow (Options :all, :none) Defaults to :none
+  # @param [Symbol] code Set of groups to allow (Options :all, :none) Defaults to :none
   def allow_groups=(code=:none)
     if code == :all
       self.groups = Group.all

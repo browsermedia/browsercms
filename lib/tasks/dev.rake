@@ -18,3 +18,7 @@ namespace :db do
   desc "Wipes database, and reinstalls the demo data."
   task :reload_demo_data => ["db:migrate:reset", "db:load_demo_data"]
 end
+
+YARD::Rake::YardocTask.new do |t|
+  t.options = ['--output-dir', 'doc/api/']
+end

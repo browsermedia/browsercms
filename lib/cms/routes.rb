@@ -4,7 +4,7 @@ module Cms::Routes
   # Adds all necessary routes to manage a new content type. Works very similar to the Rails _resources_ method, adding basic CRUD routes, as well as additional ones
   #   for CMS specific routes (like versioning)
   #
-  # @params [Symbol] content_block_name - The plural name of a new Content Type. Should match the name of the content_block, like :dogs or :donation_statuses
+  # @param [Symbol] content_block_name - The plural name of a new Content Type. Should match the name of the content_block, like :dogs or :donation_statuses
   def content_blocks(content_block_name, options={}, & block)
     content_block = content_block_name.to_s.classify.constantize
     resources content_block_name do

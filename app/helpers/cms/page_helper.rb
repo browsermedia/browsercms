@@ -26,7 +26,7 @@ module Cms
     # Note: As of Jan 19, 2010, all render.html.erb templates must handle marking their content as 'html_safe'. This is
     # bit of a pain, but I can't figure out how (or if) i can globally do that or not.
     #
-    # @returns [String] The HTML content for the container.
+    # @return [String] The HTML content for the container.
     def container(name)
       page_content = instance_variable_get("@_content_for")
       content = page_content[name]
