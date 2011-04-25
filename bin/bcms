@@ -15,6 +15,7 @@ end
 class App < Thor
   include Thor::Actions
   include Rails::Generators::Actions
+  source_root File.expand_path('../../lib/generators/cms/upgrade_module/templates', __FILE__)
 
   def self.common_options
     method_option :database, :aliases => "-d", :desc => "Preconfigure for selected database (options: mysql/oracle/postgresql/sqlite3/frontbase/ibm_db) [Default: sqlite3]"
@@ -34,6 +35,18 @@ class App < Thor
   def demo(name)
     create_blank_cms_project(name)
     generate "browser_cms:demo_site"
+    echo_next_steps(name)
+  end
+
+
+  desc 'module', "Generates a BrowserCMS module for sharing code between BrowserCMS projects. (Name must start with bcms_)"
+  common_options
+  def module(name)
+    create_blank_cms_project(name)
+    generate 'cms:upgrade_module', name
+    template 'COPYRIGHT.txt'
+    template 'LICENSE.txt'
+    template 'GPL.txt'
     echo_next_steps(name)
   end
 
