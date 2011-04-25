@@ -16,8 +16,13 @@ class App < Thor
   include Thor::Actions
   include Rails::Generators::Actions
 
+  def self.common_options
+    method_option :database, :aliases => "-d", :desc => "Preconfigure for selected database (options: mysql/oracle/postgresql/sqlite3/frontbase/ibm_db) [Default: sqlite3]"
+    method_option :template, :aliases => "-m", :desc => "Path to an application template (can be a filesystem path or URL)"
+  end
 
   desc "new", "Creates a blank BrowserCMS project with a single default template. Suitable for starting a new website project."
+  common_options
   def new(name)
     create_blank_cms_project(name)
     echo_next_steps(name)
@@ -25,12 +30,12 @@ class App < Thor
 
 
   desc 'demo', "Generates a BrowserCMS application with a sample demo website. Suitable for learning BrowserCMS."
+  common_options
   def demo(name)
     create_blank_cms_project(name)
     generate "browser_cms:demo_site"
     echo_next_steps(name)
   end
-
 
   desc 'version', 'Show BrowserCMS version'
   map "-v" => :version, "--version" => :version
@@ -40,12 +45,21 @@ class App < Thor
 
   private
 
+
+
   def start_working_in_rails_directory(name)
     self.destination_root = (File.join(destination_root, name))
   end
 
   def create_rails_app(name)
-    run("rails new #{name}")
+    rails_cmd = "rails new #{name}"
+    if options[:template]
+      rails_cmd += " -m #{options[:template]}"
+    end
+    if options[:database]
+      rails_cmd += " -d #{options[:database]}"
+    end
+    run(rails_cmd)
   end
 
 
