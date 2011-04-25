@@ -5,10 +5,12 @@ require 'thor'
 require 'term/ansicolor'
 require 'rails/generators/actions'
 require 'active_support/core_ext/string/inflections'
+require 'cms/version'
 
 class String
   include Term::ANSIColor
 end
+
 
 class App < Thor
   include Thor::Actions
@@ -26,6 +28,12 @@ class App < Thor
     create_blank_cms_project(name)
     generate "browser_cms:demo_site"
     echo_next_steps(name)
+  end
+
+
+  desc 'version', 'Show BrowserCMS version'
+  def version
+    puts "BrowserCMS #{Cms::VERSION}"
   end
 
   private
@@ -54,7 +62,6 @@ class App < Thor
     remove_file("public/index.html")
     remove_file("db/seeds.rb")
 
-    require 'cms/version'
     gem 'browsercms', :version=>::Cms::VERSION
 
     generate :jdbc if defined?(JRUBY_VERSION)
