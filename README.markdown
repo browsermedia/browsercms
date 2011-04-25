@@ -44,14 +44,14 @@ The user documentation and guides for this version of the application can be fou
 2. http://api.browsercms.org/index.html - The RDoc API documenation (locally at doc/app/index.html)
 3. http://wiki.github.com/browsermedia/browsercms - The project wiki
 
-## Modifying the source
+## Working on the core project source
 If you want to experiment with the source code, the BrowserCMS project can bootstrap itself as a web application. This allows developers who want to contribute to the project to easily alter and test changes. To run the application itself, do the following:
 
-    cd /path/to/browsercms_source_code
-    rake reset
+    cd /path/to/browsercms
+    rake db:setup
     rails server
 
-This will drop the 'browsercms_development' database, loads the same sample data from the demo.rb template. By default, the core project is setup to use mysql as the database, but you can change that via the database.yml files.
+This will create and populate the BrowserCMS database with the minimal seed data for testing. By default, the core project is setup to use mysql as the database, but you can change that via the database.yml files.
 
 ## Support
 The homepage for the BrowserCMS project is http://browsercms.org. From there you can find links to the discussion groups and our twitter account. If you have questions about the project or want to get involved, the Google group is the best way to do so. If you would like to report a bug, please do so at https://browsermedia.lighthouseapp.com/projects/28481-browsercms-30

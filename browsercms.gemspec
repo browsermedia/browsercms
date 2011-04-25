@@ -30,6 +30,8 @@ Gem::Specification.new do |s|
   s.files += Dir["db/demo/**/*"]
   s.files += Dir["db/seeds.rb"]
   s.files += Dir["lib/**/*"]
+  s.files -= Dir["lib/tasks/cucumber.rake"]
+  s.files -= Dir["lib/tasks/cms.rake"]
   s.files += Dir["public/stylesheets/cms/**/*"]
   s.files += Dir["public/javascripts/jquery*"]
   s.files += Dir["public/javascripts/cms/**/*"]
