@@ -1,6 +1,83 @@
 #!/usr/bin/env ruby
 
-##
-# Just a shorter version of 'browsercms' command.
+require 'rubygems'
+require 'thor'
+require 'term/ansicolor'
+require 'rails/generators/actions'
+require 'active_support/core_ext/string/inflections'
 
-load File.join(File.dirname(__FILE__), 'browsercms')
+class String
+  include Term::ANSIColor
+end
+
+class App < Thor
+  include Thor::Actions
+  include Rails::Generators::Actions
+
+  desc "new", "Creates a blank BrowserCMS project with a single default template. Suitable for starting a new website project."
+  def new(name)
+    create_blank_cms_project(name)
+    echo_next_steps(name)
+  end
+
+
+  desc 'demo', "Generates a BrowserCMS application with a sample demo website. Suitable for learning BrowserCMS."
+  def demo(name)
+    create_blank_cms_project(name)
+    generate "browser_cms:demo_site"
+    echo_next_steps(name)
+  end
+
+  private
+
+  def start_working_in_rails_directory(name)
+    self.destination_root = (File.join(destination_root, name))
+  end
+
+  def create_rails_app(name)
+    run("rails new #{name}")
+  end
+
+
+  def echo_next_steps(name)
+    puts "\nCreated new BrowserCMS project '#{name}'."
+    puts "    To get started, type 'cd #{name}'"
+    puts "    then type 'rake db:install'"
+    puts "    then type 'rails server' and open your browser to 'http://localhost:3000'."
+  end
+
+  def create_blank_cms_project(name)
+    create_rails_app(name)
+    start_working_in_rails_directory(name)
+
+    # Unsure if this handles windows specific removal of files
+    remove_file("public/index.html")
+    remove_file("db/seeds.rb")
+
+    require 'cms/version'
+    gem 'browsercms', :version=>::Cms::VERSION
+
+    generate :jdbc if defined?(JRUBY_VERSION)
+    route "routes_for_browser_cms"
+
+    generate "browser_cms:cms"
+    environment 'SITE_DOMAIN="localhost:3000"', :env => "development"
+    environment 'SITE_DOMAIN="localhost:3000"', :env => "test"
+    environment 'SITE_DOMAIN="localhost:3000"', :env => "production"
+
+    insert_into_file "config/environments/production.rb", :after => "Application.configure do\n" do
+      <<-CODE
+  config.action_view.cache_template_loading = false
+  config.action_controller.page_cache_directory = Rails.root + '/public/cache/'
+      CODE
+    end
+    initializer 'browsercms.rb', <<-CODE
+Cms.attachment_file_permission = 0640
+    CODE
+
+    generate "cms:template", "default"
+  end
+end
+
+App.start
+

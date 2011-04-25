@@ -15,7 +15,7 @@ module BrowserCms
           end
         end
 
-        copy_file 'lib/generators/browser_cms/demo_site/templates/demo_site.rake', 'db/migrate/demo_site.rake'
+        copy_file 'lib/generators/browser_cms/demo_site/templates/demo_site.rake', 'lib/tasks/demo_site.rake'
 
         template templates_dir('migration.erb'), 'db/demo_site_seeds.rb', :assigns => {
           :data => data,
