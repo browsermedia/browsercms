@@ -16,6 +16,7 @@ class App < Thor
   include Thor::Actions
   include Rails::Generators::Actions
 
+
   desc "new", "Creates a blank BrowserCMS project with a single default template. Suitable for starting a new website project."
   def new(name)
     create_blank_cms_project(name)
@@ -32,6 +33,7 @@ class App < Thor
 
 
   desc 'version', 'Show BrowserCMS version'
+  map "-v" => :version, "--version" => :version
   def version
     puts "BrowserCMS #{Cms::VERSION}"
   end
