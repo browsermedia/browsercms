@@ -39,7 +39,6 @@ Gem::Specification.new do |s|
   s.files += Dir["public/site/**/*"]
   s.files += Dir["public/images/cms/**/*"]
   s.files += Dir["public/themes/**/*"]
-  s.files += Dir["templates/*.rb"]
   s.files -= Dir['test/dummy/*']
 
   s.add_dependency('rails', "~> 3.0.7")
