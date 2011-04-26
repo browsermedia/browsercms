@@ -1,5 +1,12 @@
-v3.3.0.beta
-=====
+v3.3.0
+======
+
+* New commandline syntax described here: https://github.com/browsermedia/browsercms/wiki/Getting-Started
+* Removed guides from core project in favor of moving to Github's wiki
+* Updated API docs so YARD is being used, and hosted at http://rubydoc.info/gems/browsercms/
+
+ v3.3.0.beta
+===========
 
 The long awaited Rails 3 release. We have completely reworked BrowserCMS to work with Rails 3 and Ruby 1.9.2. This release is a 'beta', so that folks can start testing against it. This is especially important for module authors, as any modules need to be upgraded to work with Rails 3 as well. Our next steps will be to collect feedback for a final 3.3.0 release/release candidate. If we can get most of the 'core' modules (News, Blog, etc) updated and working, that will likely mean a final 3.3.0 release.
 

@@ -31,7 +31,7 @@ BrowserCMS can create websites that can work in any browser, depending on how de
 The next releases will be aimed at tightening up the admin for both Safari and IE7+. We will not be supporting the admin UI for IE6, or other browsers not explicitly listed above.
 
 ## Getting Started
-Before you can use BrowserCMS, you will need to install the gem. See the Getting Started guide at http://guides.browsercms.org/getting_started.html, or packaged with this source code (under doc/guides/html/getting_started.html)
+Before you can use BrowserCMS, you will need to install the gem. See the [Getting Started](https://github.com/browsermedia/browsercms/wiki/Getting-Started) guide.
 
 ## License
 BrowserCMS is released under a LGPL license, and is copyright 1998-2011 BrowserMedia. The complete copyright can be found in COPYRIGHT.txt, and copy of the license can be found in LICENSE.txt.
@@ -40,9 +40,9 @@ BrowserCMS is released under a LGPL license, and is copyright 1998-2011 BrowserM
 ## Documentation
 The user documentation and guides for this version of the application can be found at:
 
-1. http://guides.browsercms.org/index.html - User guides and manuals that cover the features and general functionality of the project. (Found locally at doc/guides/html/index.html)
-2. http://api.browsercms.org/index.html - The RDoc API documenation (locally at doc/app/index.html)
-3. http://wiki.github.com/browsermedia/browsercms - The project wiki
+1. [Guides and Wiki](http://wiki.github.com/browsermedia/browsercms)
+2. [API Docs](http://rubydoc.info/gems/browsercms/)
+
 
 ## Working on the core project source
 If you want to experiment with the source code, the BrowserCMS project can bootstrap itself as a web application. This allows developers who want to contribute to the project to easily alter and test changes. To run the application itself, do the following:

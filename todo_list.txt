@@ -1,13 +1,11 @@
 Start with:
 
-    Guides don't build. (Look @ Rails 3)
 
 Open Issues
 ===========
 * SQLite3 #<ActiveRecord::StatementInvalid: Could not find table 'file_blocks'> warnings
 * Mysql2 throws exceptions during generators (similar reason to previous)
 * rake db:install - Get warnings about db already existing (with SQLite3)
-* Can we/should we convert the guides to Github wiki pages? Might be less work to maintain, along with more flexibility. Keep old URLs/redirect them.
 
 Gems to Publish (once its live)
 ============
