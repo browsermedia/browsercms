@@ -58,8 +58,6 @@ class App < Thor
 
   private
 
-
-
   def start_working_in_rails_directory(name)
     self.destination_root = (File.join(destination_root, name))
   end
