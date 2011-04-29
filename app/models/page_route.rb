@@ -24,6 +24,15 @@ class PageRoute < ActiveRecord::Base
 
   after_save :reload_routes
 
+
+  # Determines if its safe to call any persistent methods on PageRoutes. This can be false if either the database doesn't exist,
+  # or the page_routes table doesn't yet exist.
+  #
+  # @return [Boolean] Whether its safe to call any ActiveRecord persistent method or not.
+  def self.can_be_loaded?
+    database_exists? && table_exists?
+  end
+
   # Force Rails to reload the routes. Allows modules to call this without concern that the Rails classes are going to change again.
   def self.reload_routes
     Rails.application.reload_routes!

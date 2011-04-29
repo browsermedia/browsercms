@@ -126,16 +126,13 @@ module Cms::Routes
       get 'cache', :to=>'cache#show', :as=>'cache'
       delete 'cache', :to=>'cache#destroy'
 
-      # This is only for testing, and should be moved to the config/routes.rb file eventually.
-#      content_blocks :sample_blocks
-
       match  "/routes", :to => "routes#index", :as=>'routes'
 
     end
 
     # Loads all Cms PageRoutes from the database
     # TODO: Needs a integration/functional level test to verify that a page route w/ constraints will be correctly mapped.
-    if PageRoute.table_exists?
+    if PageRoute.can_be_loaded?
       PageRoute.all(:order => "page_routes.name").each do |r|
         match r.pattern, :to=>r.to, :as=>r.route_name, :_page_route_id=>r.page_route_id, :via=>r.via, :constraints=>r.constraints
       end

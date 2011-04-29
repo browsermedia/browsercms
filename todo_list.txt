@@ -4,7 +4,6 @@ Start with:
 Open Issues
 ===========
 * SQLite3 #<ActiveRecord::StatementInvalid: Could not find table 'file_blocks'> warnings
-* Mysql2 throws exceptions during generators (similar reason to previous)
 * rake db:install - Get warnings about db already existing (with SQLite3)
 
 Gems to Publish (once its live)
@@ -21,10 +20,6 @@ Future Things to do
 * Add Block.publish and publish! for easier coding.
 * Move 'datepicker' initialization into application.js
 * Upgrade jquery.selectbox-0.5 to jquery.sb.js (https://github.com/revsystems/jQuery-SelectBox). This will likely improve the usability of the selectbox.
-* Reduce need to developers to modify content-like files on server (CSS, JS, Images, Templates)
-** Confirm w/ developers on what is commonly touched.
-** Step 1: Make templates start on file system, appear in UI and then be 'forked' in UI. Avoids need to 'copy' into CMS and delete.
-** Look at WebDAV / HTTPS protocol.
 * What is the difference between application template and profiles?
 * Clean up all 'old' initialization code (add_cms_routes_method, add to rails path, etc)
 * Merge all existing migrations into core as well as seeds.rb. Rework how seeds gets run as part of the project. (Future proof this).
