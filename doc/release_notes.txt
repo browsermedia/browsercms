@@ -1,9 +1,18 @@
 v3.3.0
 ======
 
+Final release is ready. Includes all the Rails 3 goodness, as well as an improve command line tool.
+
+   bcms new cool_new_project
+   bcms demo i_want_my_own_app_template -m http://example.com/app_template.rb
+   bcms module bcms_pet_store -d mysql
+
+Details
+-------
 * New commandline syntax described here: https://github.com/browsermedia/browsercms/wiki/Getting-Started
 * Removed guides from core project in favor of moving to Github's wiki
 * Updated API docs so YARD is being used, and hosted at http://rubydoc.info/gems/browsercms/
+
 
  v3.3.0.beta
 ===========

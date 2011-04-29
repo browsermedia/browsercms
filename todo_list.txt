@@ -1,10 +1,7 @@
-Start with:
+Status
+=====
 
-
-Open Issues
-===========
-* SQLite3 #<ActiveRecord::StatementInvalid: Could not find table 'file_blocks'> warnings
-* rake db:install - Get warnings about db already existing (with SQLite3)
+BrowserCMS 3.3.0 is complete.
 
 Gems to Publish (once its live)
 ============
