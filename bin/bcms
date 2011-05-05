@@ -1,6 +1,117 @@
 #!/usr/bin/env ruby
 
-##
-# Just a shorter version of 'browsercms' command.
+require 'rubygems'
+require 'thor'
+require 'term/ansicolor'
+require 'rails/generators/actions'
+require 'active_support/core_ext/string/inflections'
+require 'cms/version'
 
-load File.join(File.dirname(__FILE__), 'browsercms')
+class String
+  include Term::ANSIColor
+end
+
+
+class App < Thor
+  include Thor::Actions
+  include Rails::Generators::Actions
+  source_root File.expand_path('../../lib/generators/cms/upgrade_module/templates', __FILE__)
+
+  def self.common_options
+    method_option :database, :aliases => "-d", :desc => "Preconfigure for selected database (options: mysql/oracle/postgresql/sqlite3/frontbase/ibm_db) [Default: sqlite3]"
+    method_option :template, :aliases => "-m", :desc => "Path to an application template (can be a filesystem path or URL)"
+  end
+
+  desc "new", "Creates a blank BrowserCMS project with a single default template. Suitable for starting a new website project."
+  common_options
+  def new(name)
+    create_blank_cms_project(name)
+    echo_next_steps(name)
+  end
+
+
+  desc 'demo', "Generates a BrowserCMS application with a sample demo website. Suitable for learning BrowserCMS."
+  common_options
+  def demo(name)
+    create_blank_cms_project(name)
+    generate "browser_cms:demo_site"
+    echo_next_steps(name)
+  end
+
+
+  desc 'module', "Generates a BrowserCMS module for sharing code between BrowserCMS projects. (Name must start with bcms_)"
+  common_options
+  def module(name)
+    create_blank_cms_project(name)
+    generate 'cms:upgrade_module', name
+    template 'COPYRIGHT.txt'
+    template 'LICENSE.txt'
+    template 'GPL.txt'
+    echo_next_steps(name)
+  end
+
+  desc 'version', 'Show BrowserCMS version'
+  map "-v" => :version, "--version" => :version
+  def version
+    puts "BrowserCMS #{Cms::VERSION}"
+  end
+
+  private
+
+  def start_working_in_rails_directory(name)
+    self.destination_root = (File.join(destination_root, name))
+  end
+
+  def create_rails_app(name)
+    rails_cmd = "rails new #{name}"
+    if options[:template]
+      rails_cmd += " -m #{options[:template]}"
+    end
+    if options[:database]
+      rails_cmd += " -d #{options[:database]}"
+    end
+    run(rails_cmd)
+  end
+
+
+  def echo_next_steps(name)
+    puts "\nCreated new BrowserCMS project '#{name}'."
+    puts "    To get started, type 'cd #{name}'"
+    puts "    then type 'rake db:install'"
+    puts "    then type 'rails server' and open your browser to 'http://localhost:3000'."
+  end
+
+  def create_blank_cms_project(name)
+    create_rails_app(name)
+    start_working_in_rails_directory(name)
+
+    # Unsure if this handles windows specific removal of files
+    remove_file("public/index.html")
+    remove_file("db/seeds.rb")
+
+    gem 'browsercms', :version=>::Cms::VERSION
+
+    generate :jdbc if defined?(JRUBY_VERSION)
+    route "routes_for_browser_cms"
+
+    generate "browser_cms:cms"
+    environment 'SITE_DOMAIN="localhost:3000"', :env => "development"
+    environment 'SITE_DOMAIN="localhost:3000"', :env => "test"
+    environment 'SITE_DOMAIN="localhost:3000"', :env => "production"
+
+    insert_into_file "config/environments/production.rb", :after => "Application.configure do\n" do
+      <<-CODE
+  config.action_view.cache_template_loading = false
+  config.action_controller.page_cache_directory = Rails.root + '/public/cache/'
+      CODE
+    end
+    initializer 'browsercms.rb', <<-CODE
+Cms.attachment_file_permission = 0640
+    CODE
+
+    generate "cms:template", "default"
+  end
+end
+
+App.start
+

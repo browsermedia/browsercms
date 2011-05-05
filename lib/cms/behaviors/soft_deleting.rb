@@ -10,9 +10,8 @@ module Cms
           !!@uses_soft_delete
         end
 
-        def handle_missing_table_error_during_startup(e)
-          puts e.inspect
-          Rails.logger.info e.inspect
+        def handle_missing_table_error_during_startup(message, e)
+          Rails.logger.debug "#{message}: #{e.inspect}"
         end
 
         def uses_soft_delete(options={})
@@ -29,9 +28,9 @@ module Cms
           # By default, all queries for blocks should filter out deleted rows.
           begin
             default_scope where(:deleted => false)
-          # This may fail during gem loading, if no DB exists. Log it and move on.
+          # This may fail during gem loading, if no DB or the table does not exist. Log it and move on.
           rescue StandardError => e
-            handle_missing_table_error_during_startup(e)
+            handle_missing_table_error_during_startup("Can't set a default_scope for soft_deleting", e)
           end
         end
       end

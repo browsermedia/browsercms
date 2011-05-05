@@ -18,3 +18,5 @@ patches
 rerun.txt
 test/dummy/log/*
 Gemfile.lock
+doc/api
+.yardoc/*

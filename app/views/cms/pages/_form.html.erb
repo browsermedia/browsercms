@@ -33,14 +33,6 @@
   </div>
 </div>
 
-<div class="fields textarea_fields">
-  <%= f.label :description %>
-  <%= f.text_area :description, :size => "80x5", :tabindex => next_tabindex %>
-</div>
-
-<div class="fields textarea_fields">
-  <%= f.label :keywords %>
-  <%= f.text_area :keywords, :size => "80x3", :tabindex => next_tabindex %>
-</div>
-
+<%= f.cms_text_area :description, :size=>"80x5", :instructions=>"(Optional) Often used for the meta-description element of the page." %>
+<%= f.cms_text_area :keywords, :size=>"80x3", :instructions=>"(Optional) Often used for the meta-keyword meta element of the page. Most search engine will ignore this however." %>
 <%= f.cms_text_field :language %>

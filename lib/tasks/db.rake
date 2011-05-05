@@ -2,6 +2,9 @@ require 'find'
 
 namespace :db do
 
+  desc "Creates and populates the initial BrowserCMS database for a new project."
+  task :install => ["db:create", "db:migrate", "db:seed"]
+
   desc "Drop, create and migrate the database"
   task :redo => ["db:drop", "db:create", "db:migrate"]
   

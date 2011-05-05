@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
 
   s.files = Dir["rails/*.rb"]
   s.files += Dir["browsercms.gemspec"]
+  s.files += Dir[".yardopts"]
   s.files += Dir["doc/app/**/*"]
   s.files += Dir["doc/guides/html/**/*"]
   s.files += Dir["app/**/*"]
@@ -29,6 +30,8 @@ Gem::Specification.new do |s|
   s.files += Dir["db/demo/**/*"]
   s.files += Dir["db/seeds.rb"]
   s.files += Dir["lib/**/*"]
+  s.files -= Dir["lib/tasks/cucumber.rake"]
+  s.files -= Dir["lib/tasks/cms.rake"]
   s.files += Dir["public/stylesheets/cms/**/*"]
   s.files += Dir["public/javascripts/jquery*"]
   s.files += Dir["public/javascripts/cms/**/*"]
@@ -36,10 +39,9 @@ Gem::Specification.new do |s|
   s.files += Dir["public/site/**/*"]
   s.files += Dir["public/images/cms/**/*"]
   s.files += Dir["public/themes/**/*"]
-  s.files += Dir["templates/*.rb"]
   s.files -= Dir['test/dummy/*']
 
-  s.add_dependency('rails', "~> 3.0.5")
+  s.add_dependency('rails', "~> 3.0.7")
 
   # Required only for bcms-upgrade
   s.add_dependency('term-ansicolor')

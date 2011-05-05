@@ -7,8 +7,8 @@ gem "mysql"
 
 # Gem Environments
 group :development do
-#  gem 'ruby-debug19'
-  gem 'RedCloth' # For guides
+  gem 'yard'
+  gem 'bluecloth' # For YARD
 end
 
 group :test do

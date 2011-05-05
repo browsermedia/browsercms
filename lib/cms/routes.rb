@@ -4,7 +4,7 @@ module Cms::Routes
   # Adds all necessary routes to manage a new content type. Works very similar to the Rails _resources_ method, adding basic CRUD routes, as well as additional ones
   #   for CMS specific routes (like versioning)
   #
-  # @params [Symbol] content_block_name - The plural name of a new Content Type. Should match the name of the content_block, like :dogs or :donation_statuses
+  # @param [Symbol] content_block_name - The plural name of a new Content Type. Should match the name of the content_block, like :dogs or :donation_statuses
   def content_blocks(content_block_name, options={}, & block)
     content_block = content_block_name.to_s.classify.constantize
     resources content_block_name do
@@ -126,16 +126,13 @@ module Cms::Routes
       get 'cache', :to=>'cache#show', :as=>'cache'
       delete 'cache', :to=>'cache#destroy'
 
-      # This is only for testing, and should be moved to the config/routes.rb file eventually.
-#      content_blocks :sample_blocks
-
       match  "/routes", :to => "routes#index", :as=>'routes'
 
     end
 
     # Loads all Cms PageRoutes from the database
     # TODO: Needs a integration/functional level test to verify that a page route w/ constraints will be correctly mapped.
-    if PageRoute.table_exists?
+    if PageRoute.can_be_loaded?
       PageRoute.all(:order => "page_routes.name").each do |r|
         match r.pattern, :to=>r.to, :as=>r.route_name, :_page_route_id=>r.page_route_id, :via=>r.via, :constraints=>r.constraints
       end

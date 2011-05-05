@@ -1,0 +1,5 @@
+--no-private
+--exclude lib/generators/cms/portlet/templates/*
+--exclude lib/generators/cms/content_block/templates/*
+app/**/*.rb
+lib/**/*.rb

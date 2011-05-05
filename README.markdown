@@ -31,27 +31,27 @@ BrowserCMS can create websites that can work in any browser, depending on how de
 The next releases will be aimed at tightening up the admin for both Safari and IE7+. We will not be supporting the admin UI for IE6, or other browsers not explicitly listed above.
 
 ## Getting Started
-Before you can use BrowserCMS, you will need to install the gem. See the Getting Started guide at http://guides.browsercms.org/getting_started.html, or packaged with this source code (under doc/guides/html/getting_started.html)
+Before you can use BrowserCMS, you will need to install the gem. See the [Getting Started](https://github.com/browsermedia/browsercms/wiki/Getting-Started) guide.
 
 ## License
-BrowserCMS is released under a LGPL license, and is copyright 1998-2009 BrowserMedia. The complete copyright can be found in COPYRIGHT.txt, and copy of the license can be found in LICENSE.txt.
+BrowserCMS is released under a LGPL license, and is copyright 1998-2011 BrowserMedia. The complete copyright can be found in COPYRIGHT.txt, and copy of the license can be found in LICENSE.txt.
 
 
 ## Documentation
 The user documentation and guides for this version of the application can be found at:
 
-1. http://guides.browsercms.org/index.html - User guides and manuals that cover the features and general functionality of the project. (Found locally at doc/guides/html/index.html)
-2. http://api.browsercms.org/index.html - The RDoc API documenation (locally at doc/app/index.html)
-3. http://wiki.github.com/browsermedia/browsercms - The project wiki
+1. [Guides and Wiki](http://wiki.github.com/browsermedia/browsercms)
+2. [API Docs](http://rubydoc.info/gems/browsercms/)
 
-## Modifying the source
+
+## Working on the core project source
 If you want to experiment with the source code, the BrowserCMS project can bootstrap itself as a web application. This allows developers who want to contribute to the project to easily alter and test changes. To run the application itself, do the following:
 
-    cd /path/to/browsercms_source_code
-    rake reset
+    cd /path/to/browsercms
+    rake db:setup
     rails server
 
-This will drop the 'browsercms_development' database, loads the same sample data from the demo.rb template. By default, the core project is setup to use mysql as the database, but you can change that via the database.yml files.
+This will create and populate the BrowserCMS database with the minimal seed data for testing. By default, the core project is setup to use mysql as the database, but you can change that via the database.yml files.
 
 ## Support
 The homepage for the BrowserCMS project is http://browsercms.org. From there you can find links to the discussion groups and our twitter account. If you have questions about the project or want to get involved, the Google group is the best way to do so. If you would like to report a bug, please do so at https://browsermedia.lighthouseapp.com/projects/28481-browsercms-30

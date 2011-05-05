@@ -8,6 +8,9 @@ require 'action_view/test_case'
 
 require 'mocha'
 
+# Allows Generators to be unit tested
+require "rails/generators/test_case"
+
 class ActiveSupport::TestCase
 
   # Transactional fixtures accelerate your tests by wrapping each test method
