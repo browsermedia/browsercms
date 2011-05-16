@@ -4,15 +4,17 @@ class Cms::TasksControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
 
   def setup
-    login_as_cms_admin
+    @admin = login_as_cms_admin
+
+    @task = Factory(:task, :assigned_to=>@admin)
   end
 
   def test_complete_task
-    task = Task.find_by_id_and_assigned_to_id(2, admin_user.id)
+    task = Task.find_by_id_and_assigned_to_id(@task.id, @admin.id)
     assert_instance_of Task, task, "This test depends on there being a task to complete"
     assert !task.completed?
 
-    put :complete, :id => 2
+    put :complete, :id => @task.id
     assert_response :redirect
     assert_redirected_to task.page.path
     assert_equal "Task was marked as complete", flash[:notice]
@@ -21,9 +23,11 @@ class Cms::TasksControllerTest < ActionController::TestCase
     assert task.completed?
   end
 
+
   def test_complete_multiple_tasks
-    ids = [3, 4]
-    tasks = Task.find(:all, :conditions => ["id IN (?) AND assigned_to_id = ?", ids, admin_user.id])
+    @task2 = Factory(:task, :assigned_to=>@admin)
+    ids = [@task.id, @task2.id]
+    tasks = Task.find(:all, :conditions => ["assigned_to_id = ?", @admin.id])
     assert_equal 2, tasks.length, "This test depends on there being 2 tasks to complete"
     assert !tasks.detect {|t| t.completed?}
 

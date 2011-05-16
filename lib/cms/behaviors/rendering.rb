@@ -68,7 +68,7 @@ module Cms
       end
   
       def helper_path
-        "app/helpers/cms/#{name.underscore}_helper.rb"
+        "app/helpers/#{name.underscore}_helper.rb"
       end
   
       def helper_class
@@ -79,7 +79,7 @@ module Cms
       # of the renderable, so if you have an Article that is renderable, 
       # the template will be "articles/render"
       def template_path
-        "cms/#{name.underscore.pluralize}/render"
+        "#{name.underscore.pluralize}/render"
       end
   
       # Instance variables that will not be copied from the renderable to the view

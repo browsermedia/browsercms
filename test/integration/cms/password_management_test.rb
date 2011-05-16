@@ -33,8 +33,11 @@ class PasswordManagementTest < ActionController::IntegrationTest
   end
 
   def test_forgot_password_will_send_email
-    post "/passwords", :email => User.last.email
-    assert_response :success    
+    get "/passwords"
+    assert_response :success
+    
+    post "/passwords", :email => Cms::User.last.email
+    assert_response :success
     assert flash[:forgot_password][:notice]
     assert ActionMailer::Base.deliveries.empty?
   end
@@ -48,7 +51,7 @@ class PasswordManagementTest < ActionController::IntegrationTest
 
   def test_reset_password
     test_forgot_password_will_send_email
-    token = User.last.reset_token    
+    token = Cms::User.last.reset_token
     get "/passwords/reset?token=#{token}"
     assert_response :success
     

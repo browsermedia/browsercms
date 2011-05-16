@@ -1,6 +1,7 @@
 require 'test_helper'
 
-class Cms::ConnectorsControllerTest < ActionController::TestCase
+module Cms
+class ConnectorsControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
   
   def setup
@@ -19,7 +20,7 @@ class Cms::ConnectorsControllerTest < ActionController::TestCase
   
   def test_new_portlet
     @page = Factory(:page, :section => root_section, :name => "Test Page")
-    @portlet = DynamicPortlet.create!(:name => "Test", :connect_to_page_id => @page.id, :connect_to_container => "main")    
+    @portlet = Factory(:portlet, :connect_to_page_id => @page.id, :connect_to_container => "main")
     reset(:page)
     
     get :new, :page_id => @page, :container => "main", :block_type => "portlets"
@@ -30,7 +31,7 @@ class Cms::ConnectorsControllerTest < ActionController::TestCase
   
   def test_new_with_deleted_portlet
     @page = Factory(:page, :section => root_section, :name => "Test Page")
-    @portlet = DynamicPortlet.create!(:name => "Test Portlet")
+    @portlet = Factory(:portlet)
     @portlet.destroy
     
     get :new, :page_id => @page, :container => "main", :block_type => "portlets"
@@ -57,4 +58,5 @@ class Cms::ConnectorsControllerTest < ActionController::TestCase
     assert @page.connectors.for_page_version(@page.draft.version).empty?
   end
     
+end
 end

@@ -19,7 +19,7 @@ end
 
 class ContentTypeTest < ActiveSupport::TestCase
   def setup
-    @c = ContentType.new(:name => "ReallyLongNameClass")
+    @c = Cms::ContentType.new(:name => "ReallyLongNameClass")
   end
 
   def test_model_class
@@ -39,15 +39,15 @@ class ContentTypeTest < ActiveSupport::TestCase
   end
 
   test "find_by_key handles names that end with s correctly" do
-    ContentType.create!(:name => "Kindness", :group_name => "Anything")
+    Cms::ContentType.create!(:name => "Kindness", :group_name => "Anything")
 
-    ct = ContentType.find_by_key("kindness")
+    ct = Cms::ContentType.find_by_key("kindness")
     assert_not_nil ct
     assert_equal "Kindness", ct.display_name
   end
 
   test "calculate the model_class name with s" do
-    ct = ContentType.new(:name=>"Kindness")
+    ct = Cms::ContentType.new(:name=>"Kindness")
     assert_equal Kindness, ct.model_class
   end
 

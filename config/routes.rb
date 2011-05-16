@@ -2,6 +2,8 @@ if defined?(Browsercms)
 
   if Rails.env == "test"
     class SampleBlock
+      extend ActiveModel::Naming
+
       def self.versioned?;
         true;
       end
@@ -17,6 +19,8 @@ if defined?(Browsercms)
       def self.searchable?;
         false;
       end
+
+
     end
 
     class Cms::SampleBlocksController < Cms::ContentBlockController

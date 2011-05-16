@@ -42,7 +42,7 @@ module Cms
 
       # We must be showing the page outside of the CMS
       # So we will show the error page
-      if @page = Page.find_live_by_path(error_page_path)
+      if @page = Cms::Page.find_live_by_path(error_page_path)
         logger.info "Rendering Error Page: #{@page.inspect}"
         @mode = "view"
         @show_page_toolbar = false

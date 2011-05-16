@@ -3,4 +3,4 @@
   :instructions => "Leave blank to send the user to the page they were trying to access" %>
 <%= f.cms_text_field :failure_url,
   :instructions => "Leave blank to send the user to the page they tried to login from" %>
-<%= f.cms_text_area :template, :default_value => LoginPortlet.default_template %>
+<%= f.cms_text_area :template, :default_value => LoginPortlet.default_template, :bespin => true %>

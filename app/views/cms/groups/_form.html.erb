@@ -18,8 +18,7 @@
     :class => "button") %>
 <% end %>
 
-<%= form_for [:cms, @group] do |f| %>
-
+<%= form_for @group do |f| %>
   <%= f.cms_error_messages %>
   <div class="fields text_fields">
     <%= f.label :name, "Group Name" %>
@@ -29,7 +28,7 @@
   <% unless @group.guest? %>
     <div class="fields select_fields">
     	<%= f.label :group_type_id, "Type of User" %>
-    	<div><%= f.select :group_type_id, GroupType.non_guest.map { |g| [g.name, g.id] } %></div>
+    	<div><%= f.select :group_type_id, Cms::GroupType.non_guest.map { |g| [g.name, g.id] } %></div>
     	<div class="instructions">What kind of user does this group represent?</div>
   	<br clear="all" />
     </div>

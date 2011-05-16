@@ -1,7 +1,7 @@
 require "test_helper"
 
 class LoginTest < ActionController::IntegrationTest
-  fixtures :all
+  #fixtures :all
   
   def test_login
     # get "/cms/login", {}, {"User-Agent" => "Test"}

@@ -1,6 +1,7 @@
 require 'test_helper'
 
-class Cms::GroupsControllerTest < ActionController::TestCase
+module Cms
+class GroupsControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
 
   def setup
@@ -13,7 +14,7 @@ class Cms::GroupsControllerTest < ActionController::TestCase
   end
 
   def test_create_cms_group
-    post :create, :group => Factory.attributes_for(:group, :group_type_id => @group_type.id)
+    post :create, :cms_group => Factory.attributes_for(:group, :group_type_id => @group_type.id)
     
     assert_redirected_to :action => "index"    
     
@@ -24,7 +25,7 @@ class Cms::GroupsControllerTest < ActionController::TestCase
   end
 
   def test_create_cms_group
-    post :create, :group => Factory.attributes_for(:group, 
+    post :create, :cms_group => Factory.attributes_for(:group, 
       :group_type_id => @group_type.id,
       :permission_ids => [@edit_content.id.to_s, @publish_content.id.to_s])
     
@@ -37,7 +38,7 @@ class Cms::GroupsControllerTest < ActionController::TestCase
   end
 
   def test_create_public_group    
-    post :create, :group => Factory.attributes_for(:group, :group_type_id => @public_group_type.id)
+    post :create, :cms_group => Factory.attributes_for(:group, :group_type_id => @public_group_type.id)
     
     assert_redirected_to :action => "index"
     
@@ -47,4 +48,5 @@ class Cms::GroupsControllerTest < ActionController::TestCase
     assert !group.permission_ids.include?(@publish_content.id)
   end
 
+end
 end

@@ -37,6 +37,8 @@ class ActiveSupport::TestCase
   # instantiated fixtures translates to a database query per test method),
   # then set this back to true.
   self.use_instantiated_fixtures  = false
+  
+  self.fixture_path = File.join(Rails.root, 'test', 'fixtures', 'cms')
 
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
   #
@@ -44,12 +46,35 @@ class ActiveSupport::TestCase
   # -- they do not yet inherit this setting
   fixtures :all
 
+  set_fixture_class :cms_sections => Cms::Section
+  set_fixture_class :cms_section_nodes => Cms::SectionNode
+  set_fixture_class :cms_connectors => Cms::Connector
+  set_fixture_class :cms_content_type_groups => Cms::ContentTypeGroup
+  set_fixture_class :cms_content_types => Cms::ContentType
+
+  set_fixture_class :cms_dynamic_views => Cms::DynamicView
+  set_fixture_class :cms_group_permissions => Cms::GroupPermission
+  set_fixture_class :cms_group_sections => Cms::GroupSection
+  set_fixture_class :cms_group_type_permissions => Cms::GroupTypePermission
+  set_fixture_class :cms_group_types => Cms::GroupType
+  set_fixture_class :cms_groups => Cms::Group
+  set_fixture_class :cms_html_blocks => Cms::HtmlBlock
+  set_fixture_class :cms_pages => Cms::Page
+  set_fixture_class :cms_permissions => Cms::Permission
+  set_fixture_class :cms_section_nodes => Cms::SectionNode
+  set_fixture_class :cms_sections => Cms::Section
+  set_fixture_class :cms_sites => Cms::Site
+  set_fixture_class :cms_user_group_memberships => Cms::UserGroupMembership
+  set_fixture_class :cms_users => Cms::User
+
   # Add more helper methods to be used by all tests here...
 
   require File.dirname(__FILE__) + '/test_logging'
   include TestLogging
   require File.dirname(__FILE__) + '/custom_assertions'  
   include CustomAssertions
+  
+    
   
   #----- Test Macros -----------------------------------------------------------
   class << self
@@ -74,27 +99,51 @@ class ActiveSupport::TestCase
         end
       end
     end
-
   end
+  
+  def self.subclasses_from_module(module_name)
+    subclasses = []
+    mod = module_name.constantize
+    if mod.class == Module
+      mod.constants.each do |module_const_name|
+        begin
+          klass_name = "#{module_name}::#{module_const_name}"
+          klass = klass_name.constantize
+          if klass.class == Class
+            subclasses << klass
+            subclasses += klass.send(:descendants).collect{|x| x.respond_to?(:constantize) ? x.constantize : x}
+          else
+            subclasses += subclasses_from_module(klass_name)
+          end
+        rescue NameError
+          raise $!
+          puts $!.inspect
+        end
+      end
+    end
+    return subclasses
+  end
+  
   
   #----- Fixture/Data related helpers ------------------------------------------
 
   def admin_user
-    users(:user_1)
+    cms_users(:user_1)
   end
 
   def create_or_find_permission_named(name)
-    Permission.named(name).first || Factory(:permission, :name => name)
+    Cms::Permission.named(name).first || Factory(:permission, :name => name)
   end
 
   def create_admin_user(attrs={})
-    user = Factory(:user, {:login => "cmsadmin"}.merge(attrs))
-    group = Factory(:group, :group_type => Factory(:group_type, :cms_access => true))
-    group.permissions << create_or_find_permission_named("administrate")
-    group.permissions << create_or_find_permission_named("edit_content")
-    group.permissions << create_or_find_permission_named("publish_content")
-    user.groups << group
-    user  
+    Factory(:cms_admin, {:login=>"cmsadmin"}.merge(attrs))
+#    user = Factory(:user, {:login => "cmsadmin"}.merge(attrs))
+#    group = Factory(:group, :group_type => Factory(:group_type, :cms_access => true))
+#    group.permissions << create_or_find_permission_named("administrate")
+#    group.permissions << create_or_find_permission_named("edit_content")
+#    group.permissions << create_or_find_permission_named("publish_content")
+#    user.groups << group
+#    user
   end
 
   require 'mock_file'
@@ -104,7 +153,7 @@ class ActiveSupport::TestCase
   end
 
   def guest_group
-    Group.guest || Factory(:group, :code => Group::GUEST_CODE)
+    Cms::Group.guest || Factory(:group, :code => Group::GUEST_CODE)
   end  
 
   def login_as(user)
@@ -112,7 +161,9 @@ class ActiveSupport::TestCase
   end
 
   def login_as_cms_admin
-    login_as(User.first)
+    admin = Cms::User.first
+    login_as(admin)
+    admin
   end
 
   # Creates a sample uploaded JPG file with binary data.
@@ -132,10 +183,26 @@ class ActiveSupport::TestCase
   end
 
   def root_section
-    sections(:section_1)
+    cms_sections(:section_1)
   end
   
+  
+  #  Define everything that is in our namespace outside of the namespace.
+  #  This way, if anything improperly references an object it'll raise an error and
+  #  we can be sure that Cms namespace isn't accidentally reaching something outside
+  #  of the CMS namespace
+#  subclasses_from_module("Cms").each do |klass|
+#    Object.const_set(klass.to_s.split('::').last, Class.new).class_eval do
+#      def initialize
+#        raise "Non-namespaced class initialized"
+#      end
+#    end unless Object.const_defined?(klass.to_s.split('::').last)
+#  end
+#
+  # Patrick - This was generating additional errors during initialization, and it seems unnecessary.
 end
+
+ActionController::IntegrationTest.fixture_path = ActiveSupport::TestCase.fixture_path
 
 module Cms::ControllerTestHelper
   def self.included(test_case)
@@ -175,6 +242,6 @@ module Cms::IntegrationTestHelper
   end
 
   def login_as_cms_admin
-    login_as(User.first, "cmsadmin")
+    login_as(Cms::User.first, "cmsadmin")
   end
 end

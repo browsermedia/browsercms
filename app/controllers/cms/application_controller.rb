@@ -1,4 +1,5 @@
-class Cms::ApplicationController < ApplicationController
+module Cms
+class ApplicationController < ::ApplicationController
   include Cms::Authentication::Controller
   include Cms::ErrorHandling
   include Cms::DomainSupport
@@ -65,4 +66,5 @@ class Cms::ApplicationController < ApplicationController
       request.url.sub(/#{cms_domain_prefix}\./,'')
     end
   
+end
 end

@@ -5,11 +5,9 @@ gemspec
 
 gem "mysql"
 
-# Gem Environments
-group :development do
-  gem 'yard'
-  gem 'bluecloth' # For YARD
-end
+
+gem 'yard', :groups=>[:development, :test]
+gem 'bluecloth', :groups=>[:development, :test] # For YARD
 
 group :test do
   gem 'factory_girl_rails', '1.0'

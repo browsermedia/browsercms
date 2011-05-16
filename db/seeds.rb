@@ -6,7 +6,7 @@ if %w[development test dev local].include?(Rails.env)
 else
   pwd = (0..8).inject(""){|s,i| s << (('a'..'z').to_a + ('A'..'Z').to_a + ('0'..'9').to_a).rand}
 end
-User.current = create_user(:cmsadmin, :login => "cmsadmin", :first_name => "CMS", :last_name => "Administrator", :email => "cmsadmin@example.com", :password => pwd, :password_confirmation => pwd)
+Cms::User.current = create_user(:cmsadmin, :login => "cmsadmin", :first_name => "CMS", :last_name => "Administrator", :email => "cmsadmin@example.com", :password => pwd, :password_confirmation => pwd)
 
 create_permission(:administrate, :name => "administrate", :full_name => "Administer CMS" , :description => "Allows users to administer the CMS, including adding users and groups.")
 create_permission(:edit_content, :name => "edit_content", :full_name => "Edit Content" , :description => "Allows users to Add, Edit and Delete both Pages and Blocks. Can Save (but not Publish) and Assign them as well.")
@@ -32,7 +32,7 @@ create_site(:default, :name => "Default", :domain => "example.com")
 create_section(:root, :name => "My Site", :path => "/", :root => true)
 create_section(:system, :name => "system", :parent => sections(:root), :path => "/system", :hidden => true)
     
-Group.all.each{|g| g.sections = Section.all }    
+Cms::Group.all.each{|g| g.sections = Cms::Section.all }
 
 create_page(:home, :name => "Home", :path => "/", :section => sections(:root), :template_file_name => "default.html.erb", :cacheable => true)
 create_page(:not_found, :name => "Page Not Found", :path => "/system/not_found", :section => sections(:system), :template_file_name => "default.html.erb", :publish_on_save => true, :hidden => true, :cacheable => true)

@@ -54,7 +54,7 @@ class AttachableBehaviorTest < ActiveSupport::TestCase
     content = DefaultAttachable.find(@attachable.id)
 
     log "All default attachables #{DefaultAttachable.all}"
-    log "All attachments #{Attachment.all}"
+    log "All attachments #{Cms::Attachment.all}"
 
     assert_not_nil content.attachment 
 
@@ -142,7 +142,7 @@ end
 class AttachingTest < ActiveSupport::TestCase
 
   def test_block_without_attaching_behavior
-    assert !HtmlBlock.belongs_to_attachment?
+    assert !Cms::HtmlBlock.belongs_to_attachment?
   end
 
   def test_file_path_sanitization
@@ -233,22 +233,23 @@ class AttachableTest < ActiveSupport::TestCase
                                               :attachment_file_path => "test.jpg")
     reset(:attachable)
 
-    attachment_count = Attachment.count
+    attachment_count = Cms::Attachment.count
     attachment_version = @attachable.attachment_version
-    attachment_version_count = Attachment::Version.count
+    attachment_version_count = Cms::Attachment::Version.count
 
     assert @attachable.update_attributes(:attachment_file_path => "test2.jpg", :publish_on_save => true)
 
-    assert_equal attachment_count, Attachment.count
+    assert_equal attachment_count, Cms::Attachment.count
+
     assert_incremented attachment_version, @attachable.attachment_version
-    assert_incremented attachment_version_count, Attachment::Version.count
+    assert_incremented attachment_version_count, Cms::Attachment::Version.count
     assert_equal "/test2.jpg", @attachable.attachment_file_path
 
     reset(:attachable)
 
-    assert_equal attachment_count, Attachment.count
+    assert_equal attachment_count, Cms::Attachment.count
     assert_incremented attachment_version, @attachable.attachment_version
-    assert_incremented attachment_version_count, Attachment::Version.count
+    assert_incremented attachment_version_count, Cms::Attachment::Version.count
     assert_equal "/test2.jpg", @attachable.attachment_file_path
   end
 
@@ -262,15 +263,15 @@ class AttachableTest < ActiveSupport::TestCase
 
     @file2 = mock_file(:original_filename => "second_upload.txt")
 
-    attachment_count = Attachment.count
+    attachment_count = Cms::Attachment.count
     attachment_version = @attachable.attachment_version
-    attachment_version_count = Attachment::Version.count
+    attachment_version_count = Cms::Attachment::Version.count
 
     assert @attachable.update_attributes(:attachment_file => @file2)
 
-    assert_equal attachment_count, Attachment.count
+    assert_equal attachment_count, Cms::Attachment.count
     assert_equal attachment_version, @attachable.reload.attachment_version
-    assert_incremented attachment_version_count, Attachment::Version.count
+    assert_incremented attachment_version_count, Cms::Attachment::Version.count
     @file.rewind
     assert_equal @file.read, open(@attachable.attachment.full_file_location) { |f| f.read }
 
@@ -318,31 +319,31 @@ class VersionedAttachableTest < ActiveSupport::TestCase
   end
 
   def test_updating_the_versioned_attachable
-    attachment_count = Attachment.count
+    attachment_count = Cms::Attachment.count
     attachment_version = @attachable.attachment_version
-    attachment_version_count = Attachment::Version.count
+    attachment_version_count = Cms::Attachment::Version.count
 
     assert @attachable.update_attributes(:name => "Foo v2")
 
-    assert_equal attachment_count, Attachment.count
+    assert_equal attachment_count, Cms::Attachment.count
     assert_equal attachment_version, @attachable.attachment_version
-    assert_equal attachment_version_count, Attachment::Version.count
+    assert_equal attachment_version_count, Cms::Attachment::Version.count
     assert_equal "Foo v2", @attachable.name
     assert_equal @attachable.as_of_version(1).attachment, @attachable.as_of_version(2).attachment
   end
 
   def test_updating_the_versioned_attachable_attachment_file_path
     attachable_count = VersionedAttachable.count
-    attachment_count = Attachment.count
+    attachment_count = Cms::Attachment.count
     attachment_version = @attachable.attachment_version
-    attachment_version_count = Attachment::Version.count
+    attachment_version_count = Cms::Attachment::Version.count
 
     assert @attachable.update_attributes(:attachment_file_path => "test2.jpg")
 
     assert_equal attachable_count, VersionedAttachable.count
-    assert_equal attachment_count, Attachment.count
+    assert_equal attachment_count, Cms::Attachment.count
     assert_incremented attachment_version, @attachable.attachment_version
-    assert_incremented attachment_version_count, Attachment::Version.count
+    assert_incremented attachment_version_count, Cms::Attachment::Version.count
     assert_equal "/test2.jpg", @attachable.attachment_file_path
 
     assert_equal @attachable.as_of_version(1).attachment, @attachable.as_of_version(2).attachment
@@ -355,16 +356,16 @@ class VersionedAttachableTest < ActiveSupport::TestCase
     @file2 = mock_file(:original_filename => "second_upload.txt")
 
     attachable_count = VersionedAttachable.count
-    attachment_count = Attachment.count
+    attachment_count = Cms::Attachment.count
     attachment_version = @attachable.attachment_version
-    attachment_version_count = Attachment::Version.count
+    attachment_version_count = Cms::Attachment::Version.count
 
     assert @attachable.update_attributes(:attachment_file => @file2)
 
     assert_equal attachable_count, VersionedAttachable.count
-    assert_equal attachment_count, Attachment.count
+    assert_equal attachment_count, Cms::Attachment.count
     assert_incremented attachment_version, @attachable.attachment_version
-    assert_incremented attachment_version_count, Attachment::Version.count
+    assert_incremented attachment_version_count, Cms::Attachment::Version.count
 
     @file2.rewind
     assert_equal @file2.read, open(@attachable.attachment.full_file_location) { |f| f.read }

@@ -1,7 +1,9 @@
-Status
-=====
+For 3.4, currently working on namespacing
 
-BrowserCMS 3.3.0 is complete.
+
+* Make cms_ an optional prefix for tables.
+* Associations from versions_tables have cms_block_name_id
+* Portlets need to be namespaced under cms_ as well
 
 Gems to Publish (once its live)
 ============

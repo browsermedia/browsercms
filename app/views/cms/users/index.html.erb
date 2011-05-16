@@ -30,7 +30,7 @@
 	      <td><div class="dividers"><%= link_to user.email, "mailto:#{user.email}" %></div></td>
         <td>
             <div class="dividers">
-            <% user.groups.all(:order => "groups.name").each do |g| %>
+            <% user.groups.all(:order => "#{Cms::Group.table_name}.name").each do |g| %>
 	            <%= g.name %><br/>
 	          <% end %>
 	          </div>
@@ -39,10 +39,10 @@
         <td>
 	  <% unless user.expired? %>
 	  <span class="user_state">Active</span>
-            <%= link_to("<span>Disable</span>".html_safe, [:disable, :cms, user], :class => "http_put sm_button") if @users.size > 1 %>
+            <%= link_to("<span>Disable</span>".html_safe, [:disable, user], :class => "http_put sm_button") if @users.size > 1 %>
 	    <% else %>
 	  <span class="user_state">Inactive</span>
-            <%= link_to("<span>Enable</span>".html_safe, [:enable, :cms, user], :class => "http_put sm_button") %>
+            <%= link_to("<span>Enable</span>".html_safe, [:enable, user], :class => "http_put sm_button") %>
 	  <% end %>
         </td>
         <td class="last"></td>

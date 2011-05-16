@@ -1,6 +1,7 @@
 require 'test_helper'
 
-class Cms::SectionsControllerTest < ActionController::TestCase
+module Cms
+class SectionsControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
   
   def setup
@@ -10,7 +11,7 @@ class Cms::SectionsControllerTest < ActionController::TestCase
   def test_edit
     get :edit, :id => root_section.to_param
     assert_response :success
-    assert_select "input[name=?][value=?]", "section[name]", root_section.name
+    assert_select "input[name=?][value=?]", "cms_section[name]", root_section.name
   end
   
   test "GET new should set the groups to the parent section's groups by default" do
@@ -23,17 +24,17 @@ class Cms::SectionsControllerTest < ActionController::TestCase
   def test_update
     @section = Factory(:section, :name => "V1", :parent => root_section, :groups => root_section.groups)
     
-    put :update, :id => @section.to_param, :section => {:name => "V2"}
+    put :update, :id => @section.to_param, :cms_section => {:name => "V2"}
     reset(:section)
     
-    assert_redirected_to [:cms, @section]
+    assert_redirected_to @section
     assert_equal "V2", @section.name
     assert_equal "Section 'V2' was updated", flash[:notice]
   end  
   
 end
 
-class Cms::SectionFileBrowserControllerTest < ActionController::TestCase
+class SectionFileBrowserControllerTest < ActionController::TestCase
   tests Cms::SectionsController
   include Cms::ControllerTestHelper
   
@@ -84,7 +85,7 @@ class Cms::SectionFileBrowserControllerTest < ActionController::TestCase
   
 end
 
-class Cms::SectionsControllerPermissionsTest < ActionController::TestCase
+class SectionsControllerPermissionsTest < ActionController::TestCase
   tests Cms::SectionsController
   include Cms::ControllerTestHelper
   
@@ -191,7 +192,8 @@ class Cms::SectionsControllerPermissionsTest < ActionController::TestCase
     @group2 = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
     expected_groups = @editable_section.groups
     login_as(@user)
-    put :update, :id => @editable_section, :section => {:name => "new name", :group_ids => [@group.id, @group2.id]}
+    put :update, :id => @editable_section, :cms_section => {:name => "new name", :group_ids => [@group.id, @group2.id]}
+
     assert_response :redirect
     assert_equal expected_groups, assigns(:section).groups
     assert_equal "new name", assigns(:section).name
@@ -202,11 +204,11 @@ class Cms::SectionsControllerPermissionsTest < ActionController::TestCase
 
   test "PUT update should add groups for admin user" do
     # This step is unnecessary in the actual cms, as you can't stop the admin from doing anything
-    Group.find(:first, :conditions => "code = 'cms-admin'").sections << @editable_subsection
+    Cms::Group.find(:first, :conditions => "code = 'cms-admin'").sections << @editable_subsection
     @group2 = Factory(:cms_user_group)
     expected_groups = [@group, @group2]
     login_as_cms_admin
-    put :update, :id => @editable_subsection, :section => {:name => "new name", :group_ids => [@group.id, @group2.id]}
+    put :update, :id => @editable_subsection, :cms_section => {:name => "new name", :group_ids => [@group.id, @group2.id]}
     assert_response :redirect
     assert_equal expected_groups, assigns(:section).groups
   end
@@ -221,4 +223,5 @@ class Cms::SectionsControllerPermissionsTest < ActionController::TestCase
     assert_response 403
     assert_template "cms/shared/access_denied"
   end
+end
 end

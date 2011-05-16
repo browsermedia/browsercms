@@ -1,4 +1,4 @@
-<% @page_title = @toolbar_title = "List #{dynamic_view_type.name.titleize.pluralize}" %>
+<% @page_title = @toolbar_title = "List #{dynamic_view_type.name.demodulize.titleize.pluralize}" %>
 <%= content_for(:html_head) do %>
   <%= javascript_tag do %>
     jQuery(function($){
@@ -12,8 +12,8 @@
         var id = match[2];
         $('table.data tbody tr').removeClass('selected');
         $(this).addClass('selected');
-        $('#edit_button').removeClass('disabled').attr('href', '/cms/<%= dynamic_view_type.name.underscore.pluralize %>/'+id+'/edit');
-        $('#delete_button').removeClass('disabled').attr('href', '/cms/<%= dynamic_view_type.name.underscore.pluralize %>/'+id)
+        $('#edit_button').removeClass('disabled').attr('href', '/cms/<%= dynamic_view_type.name.demodulize.underscore.pluralize %>/'+id+'/edit');
+        $('#delete_button').removeClass('disabled').attr('href', '/cms/<%= dynamic_view_type.name.demodulize.underscore.pluralize %>/'+id)
       })
     })
   <% end %>
@@ -22,7 +22,7 @@
 <%= content_for :functions do %>
     <%= add_button cms_new_path_for(dynamic_view_type.name.underscore) %>
     <%= edit_button  %>
-    <%= delete_button :title => "Are you sure you want to delete this #{dynamic_view_type.name.underscore.titleize}?" %>
+    <%= delete_button :title => "Are you sure you want to delete this #{dynamic_view_type.name.demodulize.underscore.titleize}?" %>
 <% end %>
 
 <div class="roundedcorners">
@@ -34,7 +34,7 @@
       <th class="last"></th>
     </tr>
     <% @views.each do |view| %>
-      <tr id="<%= dynamic_view_type.name.underscore %>_<%= view.id %>">
+      <tr id="<%= dynamic_view_type.form_name %>_<%= view.id %>">
         <td class="first"></td>
         <td><div class="dividers" title="<%=h view.file_path %>"><%=h view.display_name %></div></td>
         <td><div><%= view.updated_at && view.updated_at.to_s(:date) %></div></td>
@@ -50,6 +50,6 @@
 <% if @views.size == 0 && params[:key_word]%>
   <div class="pagination">No results found for '<%= params[:key_word] %>'</div>
 <% elsif @views.total_pages > 1 %>
-  <%= render_pagination @views, dynamic_view_type.name.pluralize.underscore.to_sym %>
+  <%= render_pagination @views, dynamic_view_type.resource_name %>
 <% end %>
 

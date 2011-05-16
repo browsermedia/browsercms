@@ -1,6 +1,7 @@
 require 'test_helper'
 
-class Cms::FileBlocksControllerTest < ActionController::TestCase
+module Cms
+class FileBlocksControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
 
   def setup
@@ -48,4 +49,5 @@ class Cms::FileBlocksControllerTest < ActionController::TestCase
 
   end
 
+end
 end

@@ -130,7 +130,7 @@ module Cms
           node = section_node.node
           
           item = {}
-          item[:id] = "#{section_node.node_type.underscore}_#{section_node.node_id}"
+          item[:id] = "#{section_node.node_type.gsub("::","_").underscore}_#{section_node.node_id}"
           
           # If we are showing a section item, we want to use the path for the first page
           page = section_node.section? ? node.first_page_or_link : node

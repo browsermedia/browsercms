@@ -7,7 +7,7 @@ class PermissionsForContentBlockControllerTest < ActionController::TestCase
   # We're stubbing a lot because we *just* want to isolate the behaviour for checking permissions
   def setup
     login_as_cms_admin
-    @user = User.first
+    @user = Cms::User.first
     @controller.stubs(:current_user).returns(@user)
     @controller.stubs(:render)
     @controller.stubs(:model_class).returns(SampleBlock)

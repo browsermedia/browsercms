@@ -10,7 +10,7 @@ class ConnectingTest < ActiveSupport::TestCase
   end
 
   test "Update connected pages should return true if there is a valid version." do
-    block = HtmlBlock.new
+    block = Cms::HtmlBlock.new
     mock_draft = mock()
     mock_draft.expects(:version).returns(1)
     block.expects(:draft).returns(mock_draft)
@@ -20,7 +20,20 @@ class ConnectingTest < ActiveSupport::TestCase
 
   test "Connected_to" do
     assert_equal 1, @block.version
-    pages = Page.connected_to(:connectable => @block, :version => @block.version).all
+    pages = Cms::Page.connected_to(:connectable => @block, :version => @block.version).all
     assert_equal @page, pages.first
+  end
+
+  test "connected_pages should return all pages connected to a versioned block " do
+    @page.publish!
+    assert_equal [@page], @block.connected_pages
+  end
+
+
+  test "connected_pages should return all pages connected to a nonversioned block " do
+    @portlet = Factory(:portlet)
+    @page.create_connector(@portlet, "main")
+    @page.publish!
+    assert_equal [@page], @portlet.connected_pages
   end
 end

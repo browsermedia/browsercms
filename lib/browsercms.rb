@@ -9,10 +9,16 @@ ActiveRecord::Base.send(:include, ActsAsList)
 
 require 'cms/acts'
 require 'cms/authentication'
-require 'cms/behaviors'
 require 'cms/domain_support'
+require 'cms/authoring'
 require 'cms/date_picker'
 require 'cms/content_rendering_support'
 
 # This shouldn't be necessary, except for the need to get into the loadpath for testing.
 require 'command_line'
+#Include CMS Behaviors
+ActiveRecord::Base.send(:include, Cms::Acts::ContentBlock)
+require 'cms/behaviors'
+
+ActiveRecord::Base.send(:include, Cms::Acts::CmsUser)
+

@@ -2,7 +2,7 @@ dynamic_view_version_1:
   id: 1
   dynamic_view_id: 1
   version: 1
-  type: PageTemplate
+  type: Cms::PageTemplate
   name: default
   format: html
   handler: erb

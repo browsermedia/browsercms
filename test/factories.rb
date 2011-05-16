@@ -1,15 +1,15 @@
 # m is for model, I felt the need to document that for some reason
 
-Factory.define :category do |m|
+Factory.define :category, :class => Cms::Category do |m|
   m.association :category_type
-  m.sequence(:name) {|n| "TestCategory#{n}"}
+  m.sequence(:name) { |n| "TestCategory#{n}" }
 end
 
-Factory.define :category_type do |m|
-  m.sequence(:name) {|n| "TestCategoryType#{n}"}
+Factory.define :category_type, :class => Cms::CategoryType do |m|
+  m.sequence(:name) { |n| "TestCategoryType#{n}" }
 end
 
-Factory.define :connector do |m|
+Factory.define :connector, :class => Cms::Connector do |m|
   m.association :page
   m.page_version 1
   m.container "main"
@@ -17,71 +17,83 @@ Factory.define :connector do |m|
   m.connectable_version 1
 end
 
-Factory.define :file_block do |m|
-  m.sequence(:name) {|n| "TestFileBlock#{n}"}
+Factory.define :file_block, :class => Cms::FileBlock do |m|
+  m.sequence(:name) { |n| "TestFileBlock#{n}" }
 end
 
-Factory.define :group do |m|
-  m.sequence(:name) {|n| "TestGroup#{n}" }
+
+Factory.define :group, :class => Cms::Group do |m|
+  m.sequence(:name) { |n| "TestGroup#{n}" }
 end
 
-Factory.define :cms_user_group, :class=>:group do |m|
-  m.sequence(:name) {|n| "TestGroup#{n}" }
+Factory.define :cms_user_group, :class=>Cms::Group do |m|
+  m.sequence(:name) { |n| "TestGroup#{n}" }
   m.association :group_type, :factory=>:cms_group_type
 end
 
-Factory.define :group_type do |m|
-  m.sequence(:name) {|n| "TestGroupType#{n}" }
+Factory.define :content_editor_group, :parent=>:group do |g|
+  g.after_create { |group|
+    group.permissions << create_or_find_permission_named("administrate")
+    group.permissions << create_or_find_permission_named("edit_content")
+    group.permissions << create_or_find_permission_named("publish_content")
+  }
 end
 
-Factory.define :cms_group_type, :class=>:group_type do |m|
+Factory.define :group_type, :class => Cms::GroupType do |m|
+  m.sequence(:name) { |n| "TestGroupType#{n}" }
+end
+
+Factory.define :cms_group_type, :class=>Cms::GroupType do |m|
   m.name "CMS User"
   m.cms_access true
 end
 
+Factory.define :portlet, :class => DynamicPortlet do |m|
+  m.name "Sample Portlet"
+end
 
-Factory.define :html_block do |m|
+Factory.define :html_block, :class => Cms::HtmlBlock do |m|
   m.name "About Us"
   m.content "<h1>About Us</h1>\n<p>Lorem ipsum dolor sit amet...</p>"
 end
 
-Factory.define :image_block do |m|
-  m.sequence(:name) {|n| "TestImageBlock#{n}"}
+Factory.define :image_block, :class => Cms::ImageBlock do |m|
+  m.sequence(:name) { |n| "TestImageBlock#{n}" }
 end
 
-Factory.define :link do |m|
-  m.sequence(:name) {|n| "Link #{n}"}
+Factory.define :link, :class => Cms::Link do |m|
+  m.sequence(:name) { |n| "Link #{n}" }
 end
 
-Factory.define :page do |m|
-  m.sequence(:name) {|n| "Page #{n}" }
-  m.path {|a| "/#{a.name.gsub(/\s/,'_').downcase}" }
+Factory.define :page, :class => Cms::Page do |m|
+  m.sequence(:name) { |n| "Page #{n}" }
+  m.path { |a| "/#{a.name.gsub(/\s/, '_').downcase}" }
   m.template_file_name "default.html.erb"
   m.association :section
 end
 
 # TODO: Remove duplication between this and the :page factory.
-Factory.define :published_page, :class=>Page do |m|
-  m.sequence(:name) {|n| "Page #{n}" }
-  m.path {|a| "/#{a.name.gsub(/\s/,'_').downcase}" }
+Factory.define :published_page, :class=>Cms::Page do |m|
+  m.sequence(:name) { |n| "Page #{n}" }
+  m.path { |a| "/#{a.name.gsub(/\s/, '_').downcase}" }
   m.template_file_name "default.html.erb"
   m.association :section
   m.publish_on_save true
 end
 
-Factory.define :page_partial do |m|
-  m.sequence(:name) {|n| "_page_partial_#{n}" }
+Factory.define :page_partial, :class => Cms::PagePartial do |m|
+  m.sequence(:name) { |n| "_page_partial_#{n}" }
   m.format "html"
   m.handler "erb"
 end
 
-Factory.define :page_routes do |m|
-  m.sequence(:pattern) {|n| "/page_route_#{n}"}
+Factory.define :page_routes, :class => Cms::PageRoute do |m|
+  m.sequence(:pattern) { |n| "/page_route_#{n}" }
   m.association :page
 end
 
-Factory.define :page_template do |m|
-  m.sequence(:name) {|n| "page_template_#{n}" }
+Factory.define :page_template, :class => Cms::PageTemplate do |m|
+  m.sequence(:name) { |n| "page_template_#{n}" }
   m.format "html"
   m.handler "erb"
   m.body %q{<html>
@@ -98,32 +110,53 @@ Factory.define :page_template do |m|
 </html>}
 end
 
-Factory.define :permission do |m|
-  m.sequence(:name) {|n| "TestPermission#{n}" }
+Cms::Authoring::PERMISSIONS.each do |p|
+  perm_name = "#{p.to_s}_permission".to_sym
+  Factory.define perm_name, :class => Cms::Permission do |m|
+    m.name p
+  end
 end
 
-Factory.define :section do |m|
+Factory.define :permission, :class => Cms::Permission do |m|
+  m.sequence(:name) { |n| "TestPermission#{n}" }
+end
+
+Factory.define :section, :class => Cms::Section do |m|
   m.name "Test"
   m.path "/"
-  m.parent { Section.root.first }
+  m.parent { Cms::Section.root.first }
 end
 
-Factory.define :site do |m|
-  m.sequence(:name) {|n| "Test #{n}"}
-  m.domain {|a| "#{a.name.gsub(/\s/,"_").downcase}.com" }
+Factory.define :site, :class => Cms::Site do |m|
+  m.sequence(:name) { |n| "Test #{n}" }
+  m.domain { |a| "#{a.name.gsub(/\s/, "_").downcase}.com" }
 end
 
-Factory.define :task do |m|
-  m.association :assigned_by, :factory => :user
-  m.association :assigned_to, :factory => :user
+Factory.define :task, :class => Cms::Task do |m|
+  m.association :assigned_by, :factory => :cms_admin
+  m.association :assigned_to, :factory => :cms_admin
   m.association :page
 end
 
-Factory.define :user do |m|
+Factory.define :user, :class => Cms::User do |m|
   m.first_name "Test"
   m.last_name "User"
-  m.sequence(:login) {|n| "test_#{n}" }
-  m.email {|a| "#{a.login}@example.com" }
+  m.sequence(:login) { |n| "test_#{n}" }
+  m.email { |a| "#{a.login}@example.com" }
   m.password "password"
-  m.password_confirmation {|a| a.password }
+  m.password_confirmation { |a| a.password }
+end
+
+def create_or_find_permission_named(name)
+  Cms::Permission.named(name).first || Factory(:permission, :name => name)
+end
+
+Factory.define :cms_admin, :parent=>:user do |m|
+  m.after_create { |user|
+    group = Factory(:group, :group_type => Factory(:group_type, :cms_access => true))
+    Cms::Authoring::PERMISSIONS.each do |p|
+      group.permissions << create_or_find_permission_named(p)
+    end
+    user.groups << group
+  }
 end

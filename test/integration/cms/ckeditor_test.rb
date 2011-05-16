@@ -13,7 +13,7 @@ class CkeditorTest < ActionController::IntegrationTest
     
     assert_tag :tag => "select",
                :attributes => { :id => "dhtml_selector", 
-                                :onchange =>  "toggleEditor('html_block_content', this)"}, 
+                                :onchange =>  "toggleEditor('cms_html_block_content', this)"}, 
                :child => { :tag => "option", :content =>  "Rich Text" }
   end
   def test_ckeditor_js_added

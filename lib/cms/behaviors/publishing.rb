@@ -115,7 +115,7 @@ module Cms
                   "UPDATE #{self.class.quoted_table_name} " +
                   "SET published = #{connection.quote(true, self.class.columns_hash["published"])} " +
                   "WHERE #{connection.quote_column_name(self.class.primary_key)} = #{quote_value(id)}",
-                  "#{self.class.name} Publish"
+                  "#{self.class.name.demodulize} Publish"
                 )
               end
               after_publish if respond_to?(:after_publish)

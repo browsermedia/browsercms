@@ -1,4 +1,4 @@
-class EmailPagePortlet < Portlet
+class EmailPagePortlet < Cms::Portlet
   
   def render
     pmap = flash[instance_name] || params
@@ -9,7 +9,7 @@ class EmailPagePortlet < Portlet
   
   #----- Handlers --------------------------------------------------------------
   def deliver
-    message = EmailMessage.new(params[:email_message])
+    message = EmailMessage.new(params[:cms_email_message])
     message.subject = self.subject
     message.body = "#{params[:email_page_portlet_url]}\n\n#{message.body}"    
     if message.save

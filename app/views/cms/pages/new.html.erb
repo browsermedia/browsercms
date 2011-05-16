@@ -1,13 +1,13 @@
 <%= content_for :html_head do %>
 <script type="text/javascript">
 jQuery(function($){
-  $("#page_name").keyup(function(){
+  $("#cms_page_name").keyup(function(){
     var section = { name: <%= @page.section.name.to_json.html_safe %>, path: <%= @page.section.path.to_json.html_safe %> };
-    var page_name = $.trim($("#page_name").val());
+    var page_name = $.trim($("#cms_page_name").val())
     if (page_name == section.name || page_name == 'Overview') {
-      $("#page_path").val(section.path)
+      $("#cms_page_path").val(section.path)
     } else {
-      $("#page_path").val(
+      $("#cms_page_path").val(
         section.path.replace(/\/$/, '') + "/" + $.cms.slug(page_name)
       )
     }
@@ -22,7 +22,7 @@ jQuery(function($){
 <%= link_to(span_tag("list all"), cms_sitemap_path, :class => "button") %>
 <br clear="all"/>
 <% end %>
-<%= form_for([:cms, @page]) do |f| %>
+<%= form_for(@page) do |f| %>
   <%= hidden_field_tag :section_id, @page.section_id %>
   
   <%= render :partial => 'form', :locals => {:f => f} %>

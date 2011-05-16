@@ -12,24 +12,24 @@
       <tr>
         <th colspan="2" class="first">
           <div class="dividers">
-            <%= link_to "Name", cms_groups_path(:order => determine_order(params[:order], "groups.name")) %>
+            <%= link_to "Name", cms_groups_path(:order => determine_order(params[:order], "#{Cms::Group.table_name}.name")) %>
           </div>
         </th>
         <th>
           <div class="dividers">
-            <%= link_to "Type", cms_groups_path(:order => determine_order(params[:order], "group_types.name")) %>
+            <%= link_to "Type", cms_groups_path(:order => determine_order(params[:order], "#{Cms::GroupType.table_name}.name")) %>
           </div>
         </th>
         <th colspan="2" class="last"><div class="dividers">Permissions</div></th>
       </tr>
     </thead>
-    <% section_count = Section.count %>
+    <% section_count = Cms::Section.count %>
     <% @groups.each do |g| %>
       <tr>
         <td class="first"></td>
         <td>
           <div class="dividers">
-            <%= link_to h(g.name), [:edit, :cms, g] %>
+            <%= link_to h(g.name), [:edit, g] %>
           </div>
         </td>
         <td>

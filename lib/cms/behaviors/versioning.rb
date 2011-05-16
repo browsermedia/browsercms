@@ -33,7 +33,7 @@ module Cms
         def is_versioned(options={})
           @is_versioned = true
 
-          @version_foreign_key = (options[:version_foreign_key] || "#{name.underscore}_id").to_s
+          @version_foreign_key = (options[:version_foreign_key] || "#{table_name.singularize}_id").to_s
           @version_table_name = (options[:version_table_name] || "#{table_name.singularize}_versions").to_s
 
           extend ClassMethods
@@ -59,6 +59,7 @@ module Cms
 
             def versioned_object_id
               send("#{versioned_class.name.underscore}_id")
+#              send("#{versioned_class.table_name}_id")
             end
 
             def versioned_object
@@ -68,7 +69,7 @@ module Cms
 
           version_class.versioned_class = self
 
-          version_class.belongs_to(name.underscore.to_sym, :foreign_key => version_foreign_key)
+          version_class.belongs_to(name.demodulize.underscore.to_sym, :foreign_key => version_foreign_key, :class_name => name)
 
           version_class.is_userstamped if userstamped?
 

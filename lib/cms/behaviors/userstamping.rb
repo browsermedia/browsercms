@@ -13,8 +13,8 @@ module Cms
           extend ClassMethods
           include InstanceMethods
         
-          belongs_to :created_by, :class_name => "User"
-          belongs_to :updated_by, :class_name => "User"
+          belongs_to :created_by, :class_name => "Cms::User"
+          belongs_to :updated_by, :class_name => "Cms::User"
         
           before_save :set_userstamps
         
@@ -26,11 +26,12 @@ module Cms
       end
       module InstanceMethods
         def set_userstamps
-          current_user = User.current ? User.current : nil
+          current_user = Cms::User.current ? Cms::User.current : nil
           if new_record?
             self.created_by = current_user
           end
           self.updated_by = current_user
+
         end
       end
     end

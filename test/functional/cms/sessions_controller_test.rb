@@ -1,6 +1,7 @@
 require 'test_helper'
 
-class Cms::SessionsControllerTest < ActionController::TestCase
+module Cms
+class SessionsControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
   def teardown
     User.current = nil
@@ -40,7 +41,7 @@ class Cms::SessionsControllerTest < ActionController::TestCase
   
 end
 
-class Cms::SessionsControllerCacheEnabledTest < ActionController::TestCase
+class SessionsControllerCacheEnabledTest < ActionController::TestCase
   include Cms::ControllerTestHelper
   tests Cms::SessionsController
   
@@ -73,4 +74,5 @@ class Cms::SessionsControllerCacheEnabledTest < ActionController::TestCase
     delete :destroy
     assert_redirected_to "/" 
   end
+end
 end

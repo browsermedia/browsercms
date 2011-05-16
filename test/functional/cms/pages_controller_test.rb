@@ -1,6 +1,7 @@
 require 'test_helper'
 
-class Cms::PagesControllerTest < ActionController::TestCase
+module Cms
+class PagesControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
 
   def setup
@@ -21,7 +22,7 @@ class Cms::PagesControllerTest < ActionController::TestCase
     
     get :edit, :id => @page.id
     assert_response :success
-    assert_select "#page_name[value=?]", "V2"
+    assert_select "#cms_page_name[value=?]", "V2"
   end
 
   def test_unhide
@@ -33,8 +34,8 @@ class Cms::PagesControllerTest < ActionController::TestCase
     
     assert @page.draft.hidden?
     
-    put :update, :id => @page.id, :page => {:hidden => false}
-    assert_redirected_to [:cms, @page]
+    put :update, :id => @page.id, :cms_page => {:hidden => false}
+    assert_redirected_to @page
     
     reset(:page)
     assert !@page.draft.hidden?
@@ -95,7 +96,7 @@ class Cms::PagesControllerTest < ActionController::TestCase
 
 end
 
-class Cms::PagesControllerPermissionsTest < ActionController::TestCase
+class PagesControllerPermissionsTest < ActionController::TestCase
   tests Cms::PagesController
   include Cms::ControllerTestHelper
   
@@ -225,3 +226,4 @@ class Cms::PagesControllerPermissionsTest < ActionController::TestCase
 end
 
 
+end

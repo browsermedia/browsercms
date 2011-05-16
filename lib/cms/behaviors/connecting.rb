@@ -17,7 +17,7 @@ module Cms
           attr_accessor :connect_to_container
           attr_accessor :connected_page
         
-          has_many :connectors, :as => :connectable    
+          has_many :connectors, :as => :connectable, :class_name => 'Cms::Connector'
 
           attr_accessor :updated_by_page
 
@@ -28,8 +28,9 @@ module Cms
         end
       end
       module ClassMethods
+
         def content_block_type
-          to_s.underscore
+          ActiveModel::Naming.singular(self)
         end
         def display_name
           to_s.titleize
@@ -90,7 +91,7 @@ module Cms
               if p != updated_by_page
                 #This just creates a new version of the page
                 action = deleted? ? "Deleted" : "Edited"
-                p.update_attributes(:version_comment => "#{self.class.name} ##{id} was #{action}")
+                p.update_attributes(:version_comment => "#{self.class.name.demodulize} ##{id} was #{action}")
 
                 #The previous step will copy over a connector pointing to the previous version of this connectable
                 #We need to change that to point at the new version of this connectable

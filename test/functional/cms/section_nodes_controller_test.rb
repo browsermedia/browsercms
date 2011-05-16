@@ -1,6 +1,7 @@
 require 'test_helper'
 
-class Cms::SectionNodesControllerTest < ActionController::TestCase
+module Cms
+class SectionNodesControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
   
   def test_index_as_admin
@@ -38,7 +39,7 @@ class Cms::SectionNodesControllerTest < ActionController::TestCase
   
 end
 
-class Cms::SectionNodesControllerPermissionsTest < ActionController::TestCase
+class SectionNodesControllerPermissionsTest < ActionController::TestCase
   tests Cms::SectionNodesController
   include Cms::ControllerTestHelper
   
@@ -76,9 +77,10 @@ class Cms::SectionNodesControllerPermissionsTest < ActionController::TestCase
       assert_select "td.node.non-editable div", ne.name
     end
     @editables.each do |e|
-      td = css_select("td##{e.class.to_s.underscore}_#{e.id}", e.name).first
+      td = css_select("td##{e.class.to_s.demodulize.underscore}_#{e.id}", e.name).first
       assert !td.attributes["class"].include?("non-editable")
     end
   end
 end
 
+end

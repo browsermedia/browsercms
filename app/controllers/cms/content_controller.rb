@@ -1,4 +1,5 @@
-class Cms::ContentController < Cms::ApplicationController
+module Cms
+class ContentController < Cms::ApplicationController
   include Cms::ContentRenderingSupport
 
   skip_before_filter :redirect_to_cms_site
@@ -51,6 +52,7 @@ class Cms::ContentController < Cms::ApplicationController
   
   # ----- Before Filters -------------------------------------------------------
   def construct_path
+  # @paths = params[:cms_page_path] || params[:path] || []
     @path = "/#{params[:path]}"
     @paths = @path.split("/")
   end
@@ -174,4 +176,5 @@ class Cms::ContentController < Cms::ApplicationController
   
   
   
+end
 end

@@ -2,7 +2,7 @@
 <%= javascript_include_tag "cms/content_library" %>
   <%= javascript_tag do %>
     jQuery(function($){
-      var collectionName = '<%= content_type.model_class.name.underscore.pluralize %>'
+      var collectionName = '<%= content_type.content_block_type %>'
       
       $('table.data tbody tr').hover(function(){
         $(this).addClass('hover')
