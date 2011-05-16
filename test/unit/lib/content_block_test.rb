@@ -267,7 +267,7 @@ end
 class NonVersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
   def setup
     @page = Factory(:page, :section => root_section)
-    @block = DynamicPortlet.create!(:name => "Non-Versioned Content Block")
+    @block = Factory(:non_versioned_block, :name => "Non-Versioned Content Block")
     @page.create_connector(@block, "main")
     reset(:page, :block)
   end

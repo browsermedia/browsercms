@@ -1,9 +1,11 @@
 For 3.4, currently working on namespacing
 
 
+* Portlets need to be namespaced under cms_ as well (This seems to cause issues with DynamicAttribute saving, so might pass on this one.)
+
+
 * Make cms_ an optional prefix for tables.
 * Associations from versions_tables have cms_block_name_id
-* Portlets need to be namespaced under cms_ as well
 
 Gems to Publish (once its live)
 ============

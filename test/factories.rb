@@ -52,6 +52,10 @@ Factory.define :portlet, :class => DynamicPortlet do |m|
   m.name "Sample Portlet"
 end
 
+# Portlets happen to be Non-versioned right now, but this abstracts that in case it changes later.
+Factory.define :non_versioned_block, :parent=>:portlet do |m|
+end
+
 Factory.define :html_block, :class => Cms::HtmlBlock do |m|
   m.name "About Us"
   m.content "<h1>About Us</h1>\n<p>Lorem ipsum dolor sit amet...</p>"
