@@ -1,11 +1,10 @@
 For 3.4, currently working on namespacing
 
 
+* Add bcms install method that will add BrowserCMS to the Gemfile and install it in other CMS projects.
 * Portlets need to be namespaced under cms_ as well (This seems to cause issues with DynamicAttribute saving, so might pass on this one.)
-** Need to update create_content_table to handle automatically generating the prefix
 
-
-* Make cms_ an optional prefix for tables.
+Issue or not?
 * Associations from versions_tables have cms_block_name_id
 
 Gems to Publish (once its live)
