@@ -6,7 +6,7 @@ ActiveRecord::Base.connection.instance_eval do
 
   drop_table(:versioned_taggable_articles) if table_exists?(:versioned_taggable_articles)
   drop_table(:versioned_taggable_article_versions) if table_exists?(:versioned_taggable_article_versions)
-  create_versioned_table(:versioned_taggable_articles) do |t| 
+  create_versioned_table(:versioned_taggable_articles, :prefix=>false) do |t|
     t.string :name
   end
 end

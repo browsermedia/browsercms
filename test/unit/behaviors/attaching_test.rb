@@ -1,18 +1,19 @@
 require 'test_helper'
 
+
 ActiveRecord::Base.connection.instance_eval do
-  drop_table(:default_attachables) if table_exists?(:default_attachables)
-  drop_table(:default_attachable_versions) if table_exists?(:default_attachable_versions)
-  create_versioned_table(:default_attachables) do |t|
+  drop_content_table(:default_attachables) rescue nil
+#  drop_table(:default_attachable_versions) if table_exists?(:default_attachable_versions)
+  create_versioned_table(:default_attachables, :prefix=>false) do |t|
     t.string :name
     t.integer :attachment_id
     t.integer :attachment_version
     t.timestamps
   end
 
-  drop_table(:versioned_attachables) if table_exists?(:versioned_attachables)
-  drop_table(:versioned_attachable_versions) if table_exists?(:versioned_attachable_versions)
-  create_versioned_table(:versioned_attachables) do |t|
+  drop_content_table(:versioned_attachables) rescue nil
+#  drop_table(:versioned_attachable_versions) if table_exists?(:versioned_attachable_versions)
+  create_versioned_table(:versioned_attachables, :prefix=>false) do |t|
     t.string :name
     t.integer :attachment_id
     t.integer :attachment_version
@@ -56,7 +57,7 @@ class AttachableBehaviorTest < ActiveSupport::TestCase
     log "All default attachables #{DefaultAttachable.all}"
     log "All attachments #{Cms::Attachment.all}"
 
-    assert_not_nil content.attachment 
+    assert_not_nil content.attachment
 
 
   end

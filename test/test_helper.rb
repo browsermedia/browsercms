@@ -1,4 +1,3 @@
-
 ENV["RAILS_ENV"] = "test"
 
 require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
@@ -36,8 +35,8 @@ class ActiveSupport::TestCase
   # test cases which use the @david style and don't mind the speed hit (each
   # instantiated fixtures translates to a database query per test method),
   # then set this back to true.
-  self.use_instantiated_fixtures  = false
-  
+  self.use_instantiated_fixtures = false
+
   self.fixture_path = File.join(Rails.root, 'test', 'fixtures', 'cms')
 
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
@@ -71,16 +70,15 @@ class ActiveSupport::TestCase
 
   require File.dirname(__FILE__) + '/test_logging'
   include TestLogging
-  require File.dirname(__FILE__) + '/custom_assertions'  
+  require File.dirname(__FILE__) + '/custom_assertions'
   include CustomAssertions
-  
-    
-  
+
+
   #----- Test Macros -----------------------------------------------------------
   class << self
     def should_validate_presence_of(*fields)
       fields.each do |f|
-        class_name = name.sub(/Test$/,'')
+        class_name = name.sub(/Test$/, '')
         define_method("test_validates_presence_of_#{f}") do
           model = Factory.build(class_name.underscore.to_sym, f => nil)
           assert !model.valid?
@@ -88,9 +86,10 @@ class ActiveSupport::TestCase
         end
       end
     end
+
     def should_validate_uniqueness_of(*fields)
       fields.each do |f|
-        class_name = name.sub(/Test$/,'')
+        class_name = name.sub(/Test$/, '')
         define_method("test_validates_uniqueness_of_#{f}") do
           existing_model = Factory(class_name.underscore.to_sym)
           model = Factory.build(class_name.underscore.to_sym, f => existing_model.send(f))
@@ -100,7 +99,7 @@ class ActiveSupport::TestCase
       end
     end
   end
-  
+
   def self.subclasses_from_module(module_name)
     subclasses = []
     mod = module_name.constantize
@@ -111,7 +110,7 @@ class ActiveSupport::TestCase
           klass = klass_name.constantize
           if klass.class == Class
             subclasses << klass
-            subclasses += klass.send(:descendants).collect{|x| x.respond_to?(:constantize) ? x.constantize : x}
+            subclasses += klass.send(:descendants).collect { |x| x.respond_to?(:constantize) ? x.constantize : x }
           else
             subclasses += subclasses_from_module(klass_name)
           end
@@ -123,8 +122,8 @@ class ActiveSupport::TestCase
     end
     return subclasses
   end
-  
-  
+
+
   #----- Fixture/Data related helpers ------------------------------------------
 
   def admin_user
@@ -154,7 +153,7 @@ class ActiveSupport::TestCase
 
   def guest_group
     Cms::Group.guest || Factory(:group, :code => Group::GUEST_CODE)
-  end  
+  end
 
   def login_as(user)
     @request.session[:user_id] = user ? user.id : nil
@@ -168,8 +167,8 @@ class ActiveSupport::TestCase
 
   # Creates a sample uploaded JPG file with binary data.
   def mock_file(options = {})
-    file_upload_object({:original_filename => "foo.jpg", 
-      :content_type => "image/jpeg"}.merge(options))
+    file_upload_object({:original_filename => "foo.jpg",
+                        :content_type => "image/jpeg"}.merge(options))
   end
 
   # Takes a list of the names of instance variables to "reset"
@@ -185,8 +184,9 @@ class ActiveSupport::TestCase
   def root_section
     cms_sections(:section_1)
   end
-  
-  
+
+
+
   #  Define everything that is in our namespace outside of the namespace.
   #  This way, if anything improperly references an object it'll raise an error and
   #  we can be sure that Cms namespace isn't accidentally reaching something outside
@@ -208,11 +208,11 @@ module Cms::ControllerTestHelper
   def self.included(test_case)
     test_case.send(:include, Cms::PathHelper)
   end
-  
+
   def request
     @request
   end
-  
+
   def streaming_file_contents
     #The body of a streaming response is a proc
     streamer = @response.body
@@ -220,12 +220,13 @@ module Cms::ControllerTestHelper
 
     #Create a dummy object for the proc to write to
     output = Object.new
+
     def output.write(contents)
-      (@contents ||= "") << contents 
+      (@contents ||= "") << contents
     end
 
     #run the proc
-    streamer.call(@response, output)  
+    streamer.call(@response, output)
 
     #return what it wrote to the dummy object
     output.instance_variable_get("@contents")
@@ -245,3 +246,11 @@ module Cms::IntegrationTestHelper
     login_as(Cms::User.first, "cmsadmin")
   end
 end
+
+def create_testing_table(name)
+    ActiveRecord::Base.connection.instance_eval do
+      drop_table(name) if table_exists?(name)
+      create_table(name)
+    end
+end
+

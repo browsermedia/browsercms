@@ -34,13 +34,13 @@ class Browsercms330 < ActiveRecord::Migration
       # change the path of all pages with a trailing slash to not have one
       # using sql updates to prevent unwanted callbacks
       new_path = fix_page.path.to_s.sub(/(.+)\/+$/, '\1')
-      execute "UPDATE pages SET path = '#{new_path}' WHERE id = #{fix_page.id};"
+      execute "UPDATE #{prefix('pages')} SET path = '#{new_path}' WHERE id = #{fix_page.id};"
     end
     version_to_fix.each do |fix_page|
       # change the path of all fixable page versions with a trailing slash to not have one
       # using sql updates to prevent unwanted callbacks
       new_path = fix_page.path.to_s.sub(/(.+)\/+$/, '\1')
-      execute "UPDATE page_versions SET path = '#{new_path}' WHERE id = #{fix_page.id};"
+      execute "UPDATE #{prefix('page_versions')} SET path = '#{new_path}' WHERE id = #{fix_page.id};"
     end
     # end patch for LH345
   end
