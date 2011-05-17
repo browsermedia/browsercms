@@ -15,7 +15,7 @@
 # Saving a new PageRoute will reload the Rails routes.
 #
 class Cms::PageRoute < ActiveRecord::Base
-  namespaces_table
+  uses_namespaced_table
   belongs_to :page, :class_name => 'Cms::Page'
   has_many :conditions, :class_name => 'Cms::PageRouteCondition'
   has_many :requirements, :class_name => 'Cms::PageRouteRequirement'

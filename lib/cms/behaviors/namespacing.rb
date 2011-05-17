@@ -30,7 +30,7 @@ module Cms
       module ClassMethods
 
         # Make this Model use a namespaced table.
-        def namespaces_table
+        def uses_namespaced_table
           include NameSpaced
           unless @namespaced_table
             set_table_name ::Cms::Namespacing.prefixed_table_name(base_class.table_name)

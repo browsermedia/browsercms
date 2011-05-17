@@ -1,6 +1,6 @@
 module Cms
 class ContentType < ActiveRecord::Base
-  namespaces_table
+  uses_namespaced_table
   attr_accessor :group_name
   belongs_to :content_type_group, :class_name => 'Cms::ContentTypeGroup'
   validates_presence_of :content_type_group

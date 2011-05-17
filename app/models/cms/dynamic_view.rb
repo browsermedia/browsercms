@@ -1,7 +1,7 @@
 module Cms
 class DynamicView < ActiveRecord::Base
   
-  namespaces_table
+  uses_namespaced_table
   
   after_save :write_file_to_disk
   after_destroy :remove_file_from_disk

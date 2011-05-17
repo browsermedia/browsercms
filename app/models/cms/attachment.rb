@@ -8,7 +8,7 @@ class Attachment < ActiveRecord::Base
   UNKNOWN_MIME_TYPE = 'application/octet-stream'
 
   #----- Macros ----------------------------------------------------------------
-  namespaces_table
+  uses_namespaced_table
   is_archivable
   is_publishable
   uses_soft_delete

@@ -27,7 +27,7 @@ module Cms
           is_taggable(options[:taggable].is_a?(Hash) ? options[:taggable] : {}) if options[:taggable]
           is_userstamped(options[:userstamped].is_a?(Hash) ? options[:userstamped] : {}) unless options[:userstamped] == false  
           is_versioned(options[:versioned].is_a?(Hash) ? options[:versioned] : {}) unless options[:versioned] == false
-          namespaces_table if options[:namespace_table]
+          uses_namespaced_table if options[:namespace_table]
 
           include InstanceMethods
         end

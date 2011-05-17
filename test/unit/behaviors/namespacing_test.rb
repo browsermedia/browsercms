@@ -2,7 +2,7 @@ require "test_helper"
 
 create_testing_table :cms_my_blocks
 class Cms::MyBlock < ActiveRecord::Base
-  namespaces_table
+  uses_namespaced_table
 end
 
 create_testing_table :cms_namespaced_blocks
@@ -39,7 +39,7 @@ class Cms::Behaviors::NamespacingTest < ActiveSupport::TestCase
   test "set a table namespace" do
     Cms.expects(:table_prefix).returns('abc_')
     class ::CustomBlock < ActiveRecord::Base
-      namespaces_table
+      uses_namespaced_table
     end
     create_testing_table :abc_custom_blocks
     assert_equal "abc_custom_blocks", CustomBlock.new.table_name
