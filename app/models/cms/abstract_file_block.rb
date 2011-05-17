@@ -1,7 +1,8 @@
 module Cms
 class AbstractFileBlock < ActiveRecord::Base
-  
-  set_table_name "cms_file_blocks"
+
+  # Base table name. Will be namespaced if appropriate.
+  set_table_name "file_blocks"
       
   validates_presence_of :name  
   

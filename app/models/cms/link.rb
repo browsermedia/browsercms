@@ -1,5 +1,4 @@
 class Cms::Link < ActiveRecord::Base
-  namespaces_table
   acts_as_content_block :connectable => false
   
   scope :named, lambda{|name| {:conditions => ["#{table_name}.name = ?", name]}}

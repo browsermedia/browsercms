@@ -1,7 +1,6 @@
 module Cms
 class HtmlBlock < ActiveRecord::Base
 
-  namespaces_table
   acts_as_content_block :taggable => true
   
   validates_presence_of :name

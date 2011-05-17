@@ -1,6 +1,11 @@
 require 'test_helper'
 
 class HtmlBlockTest < ActiveSupport::TestCase
+
+  test "should use namespaced_table" do
+    assert_equal true, Cms::HtmlBlock.namespaced_table?
+  end
+
   def test_create    
     @page = Factory(:page)
     @html_block = Factory(:html_block, :connect_to_page_id => @page.id, :connect_to_container => "test")

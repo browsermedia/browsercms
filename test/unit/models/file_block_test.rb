@@ -7,6 +7,14 @@ class FileBlockTest < ActiveSupport::TestCase
     @file_block = Factory.build(:file_block, :attachment_file => @uploaded_file, :attachment_section => root_section, :attachment_file_path => "/test.jpg", :publish_on_save => true)
   end
 
+  test "FileBlock should use namespaced_table" do
+    assert_equal true, Cms::FileBlock.namespaced_table?
+  end
+
+  test "ImageBlock should use namespaced_table" do
+    assert_equal true, Cms::ImageBlock.namespaced_table?
+  end
+
   test "Saving should also save attachment." do
     @file_block.save!
     assert_not_nil @file_block.attachment

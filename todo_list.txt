@@ -1,6 +1,7 @@
 For 3.4, currently working on namespacing
 
-
+* There is an issue with cms_original_table_name_keys. Should just point back to parent table, since the exact table name won't matter.
+* Get rid of need to explicitly call namespaced_table.
 * Add bcms install method that will add BrowserCMS to the Gemfile and install it in other CMS projects.
 * Portlets need to be namespaced under cms_ as well (This seems to cause issues with DynamicAttribute saving, so might pass on this one.)
 

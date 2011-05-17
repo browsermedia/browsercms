@@ -5,7 +5,17 @@ module Cms
         model_class.extend(MacroMethods)
       end
       module MacroMethods
+
+        # Adds Content Block behavior to this class
+        #
+        # @param [Hash] options
+        # @options [Symbol] :namespace_table If this block's table should be automatically namespaced or not. (Default: true)
         def acts_as_content_block(options={})
+          defaults = {
+              namespace_table: true
+          }
+          options = defaults.merge(options)
+
           belongs_to_attachment(options[:belongs_to_attachment].is_a?(Hash) ? options[:belongs_to_attachment] : {}) if options[:belongs_to_attachment]
           is_archivable(options[:archiveable].is_a?(Hash) ? options[:archiveable] : {}) unless options[:archiveable] == false
           is_connectable(options[:connectable].is_a?(Hash) ? options[:connectable] : {}) unless options[:connectable] == false
@@ -17,7 +27,8 @@ module Cms
           is_taggable(options[:taggable].is_a?(Hash) ? options[:taggable] : {}) if options[:taggable]
           is_userstamped(options[:userstamped].is_a?(Hash) ? options[:userstamped] : {}) unless options[:userstamped] == false  
           is_versioned(options[:versioned].is_a?(Hash) ? options[:versioned] : {}) unless options[:versioned] == false
-        
+          namespaces_table if options[:namespace_table]
+
           include InstanceMethods
         end
         module InstanceMethods
