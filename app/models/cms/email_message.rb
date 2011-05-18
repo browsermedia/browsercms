@@ -2,11 +2,7 @@ module Cms
   class EmailMessage < ActiveRecord::Base
 
     scope :undelivered, :conditions => "delivered_at is null"
-    uses_namespaced_table
-
-
     validates_presence_of :recipients
-
     after_create :deliver_now
 
     def delivered?

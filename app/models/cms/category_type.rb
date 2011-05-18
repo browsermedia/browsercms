@@ -3,7 +3,6 @@ module Cms
     has_many :categories, :class_name => 'Cms::Category'
     validates_presence_of :name
     validates_uniqueness_of :name
-    uses_namespaced_table
     is_searchable
 
     scope :named, lambda { |name| {:conditions => ["#{table_name}.name = ?", name]} }

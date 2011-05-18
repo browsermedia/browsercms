@@ -3,7 +3,6 @@
 # their permissions from all groups combined represents what they can do.
 #
 class Cms::Group < ActiveRecord::Base
-  uses_namespaced_table
 
   GUEST_CODE = "guest"
 

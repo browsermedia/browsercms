@@ -1,5 +1,4 @@
 class Cms::Section < ActiveRecord::Base
-  uses_namespaced_table
   flush_cache_on_change
 
   #The node that links this section to its parent

@@ -1,5 +1,4 @@
 class Cms::SectionNode < ActiveRecord::Base
-  uses_namespaced_table
   belongs_to :section, :class_name => 'Cms::Section'
   belongs_to :node, :polymorphic => :true, :class_name => 'Cms::SectionNode', :foreign_type => 'node_type'
 

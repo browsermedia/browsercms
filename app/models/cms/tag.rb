@@ -1,6 +1,5 @@
 module Cms
   class Tag < ActiveRecord::Base
-    uses_namespaced_table
     has_many :taggings, :class_name => 'Cms::Tagging'
 
     validates_uniqueness_of :name

@@ -1,6 +1,5 @@
 module Cms
   class Tagging < ActiveRecord::Base
-    uses_namespaced_table
     belongs_to :tag, :class_name => 'Cms::Tag'
     belongs_to :taggable, :polymorphic => true, :class_name => 'Cms::Taggable', :foreign_type => 'taggable_type'
 

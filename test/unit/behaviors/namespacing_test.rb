@@ -41,7 +41,6 @@ end
 class Cms::Behaviors::NamespacingTest < ActiveSupport::TestCase
   create_testing_table :cms_my_blocks
   class ::Cms::MyBlock < ActiveRecord::Base
-    uses_namespaced_table
   end
 
   def setup

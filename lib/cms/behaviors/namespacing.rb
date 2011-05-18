@@ -31,20 +31,9 @@ module Cms
   end
 
   module Behaviors
+    # Noop - This will be automatically included on all ActiveRecord classes. I don't want to move this, so
+    # I'm leaving it as a harmless NOOP for now.
     module Namespacing
-      extend ActiveSupport::Concern
-
-      module ClassMethods
-
-        # Make this Model use a namespaced table.
-        def uses_namespaced_table
-
-        end
-      end
-
-
-
-
     end
   end
 end

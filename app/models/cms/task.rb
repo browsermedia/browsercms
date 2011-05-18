@@ -2,7 +2,6 @@ module Cms
   class Task < ActiveRecord::Base
     CANT_ASSIGN_MESSAGE = "must have permission to assign tasks"
     CANT_BE_ASSIGNED_MESSAGE = "must have permission to be assigned tasks"
-    uses_namespaced_table
     include Cms::DomainSupport
     belongs_to :assigned_by, :class_name => 'Cms::User'
     belongs_to :assigned_to, :class_name => 'Cms::User'

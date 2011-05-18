@@ -8,7 +8,6 @@ module Cms
     UNKNOWN_MIME_TYPE = 'application/octet-stream'
 
     #----- Macros ----------------------------------------------------------------
-    uses_namespaced_table
     is_archivable
     is_publishable
     uses_soft_delete

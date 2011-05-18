@@ -1,6 +1,5 @@
 module Cms
   class Site < ActiveRecord::Base
-    uses_namespaced_table
     validates_uniqueness_of :domain
 
     before_validation :remove_www

@@ -8,9 +8,6 @@ Start with: rake db:drop db:create db:migrate test:units
 
 Rack::Cache plus Rack::ESI?
 
-Issue or not?
-* Associations from versions_tables have cms_block_name_id
-
 Gems to Publish (once its live)
 ============
 bcms_fckeditor  - 1.1.0 is pushed to github. Gem needs to be pushed as well. Need to test file upload (browser.xml) from within the browser
