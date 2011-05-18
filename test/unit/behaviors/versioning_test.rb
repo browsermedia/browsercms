@@ -1,10 +1,25 @@
 require 'test_helper'
 
 class VersioningTest < ActiveSupport::TestCase
+  test "default versioning column" do
+    Cms.expects(:table_prefix).returns("cms_")
+    assert_equal "html_block_id", Cms::Behaviors::Versioning.default_foreign_key(:cms_html_block)
+  end
 
+  test "non_versioned_columns should be made into string" do
+    class ::Cms::SpecialBlock < ActiveRecord::Base
+      is_versioned :version_foreign_key => :something_id
+    end
+
+    assert_equal :something_id, Cms::SpecialBlock.version_foreign_key
+    Cms::SpecialBlock.non_versioned_columns.each do |c|
+      assert_equal String, c.class, "Expected #{c} to be a String, but wasn't."
+    end
+
+  end
   test "Saving a new record should create two rows, one in html_blocks, one in html_block_versions" do
     block = Cms::HtmlBlock.new(:name=>"Name is required.")
-    assert_equal true,  block.save!
+    assert_equal true, block.save!
     assert_equal 1, block.versions.size
   end
 

@@ -10,12 +10,35 @@ class Cms::NamespacedBlock < ActiveRecord::Base
   acts_as_content_block
 end
 
+
 class Cms::NonNamespacedBlock < ActiveRecord::Base
 
   # Avoids need to create another table
   set_table_name "cms_namespaced_blocks"
 
   acts_as_content_block namespace_table: false
+end
+
+
+class Cms::NamespacingCoreRailsTest < ActiveSupport::TestCase
+
+  module ::Foo
+    def self.table_name_prefix
+      "foobar_"
+    end
+  end
+
+  class ::Foo::TestBlock < ActiveRecord::Base ; end
+
+  test "table_name should be automatically prefixed" do
+    assert_equal "foobar_test_blocks", Foo::TestBlock.table_name
+  end
+
+
+  test "model tables are not automatically prefixed" do
+    create_testing_table :test_blocks
+    assert_equal false, ActiveRecord::Base.connection.table_exists?("foobar_test_blocks")
+  end
 end
 
 class Cms::Behaviors::NamespacingTest < ActiveSupport::TestCase
@@ -38,11 +61,11 @@ class Cms::Behaviors::NamespacingTest < ActiveSupport::TestCase
 
   test "set a table namespace" do
     Cms.expects(:table_prefix).returns('abc_')
-    class ::CustomBlock < ActiveRecord::Base
+    class ::Cms::CustomBlock < ActiveRecord::Base
       uses_namespaced_table
     end
     create_testing_table :abc_custom_blocks
-    assert_equal "abc_custom_blocks", CustomBlock.new.table_name
+    assert_equal "abc_custom_blocks", ::Cms::CustomBlock.new.table_name
   end
 
   test "Get prefixed name" do

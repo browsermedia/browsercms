@@ -1,4 +1,10 @@
 module CustomAssertions
+
+  def assert_column_exists(table_name, column_name)
+    results = ActiveRecord::Base.connection.column_exists?(table_name, column_name)
+    assert results, "#{table_name}.#{column_name} does not exist."
+
+  end
   def assert_file_exists(file_name, message=nil)
     assert File.exists?(file_name), 
       (message || "Expected File '#{file_name}' to exist, but it does not")

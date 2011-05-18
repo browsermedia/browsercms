@@ -1,9 +1,16 @@
 For 3.4, currently working on namespacing
 
+Start with: rake db:drop db:create db:migrate test:units
+
+What is going on? Problem is ActiveRecord is asking for 'describe html_blocks' when it should be asking for cms_html_blocks.
+Look for where activerecord asks that.
+
+* pages and dynamic_views seem to still use cms_table_name_id as FK.
 * There is an issue with cms_original_table_name_keys. Should just point back to parent table, since the exact table name won't matter.
-* Get rid of need to explicitly call namespaced_table.
 * Add bcms install method that will add BrowserCMS to the Gemfile and install it in other CMS projects.
 * Portlets need to be namespaced under cms_ as well (This seems to cause issues with DynamicAttribute saving, so might pass on this one.)
+
+Rack::Cache plus Rack::ESI?
 
 Issue or not?
 * Associations from versions_tables have cms_block_name_id

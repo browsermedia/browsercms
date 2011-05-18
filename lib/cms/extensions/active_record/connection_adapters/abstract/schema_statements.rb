@@ -15,9 +15,11 @@ module ActiveRecord
       # @param options
       # @option :prefix [Boolean]
       def create_content_table(table_name, options={}, &block)
-        if options[:prefix] == nil
-          options[:prefix] = true
-        end
+        defaults = {
+            versioned: true,
+            prefix: true
+        }
+        options = defaults.merge(options)
 
         if options[:prefix]
           table_name = Cms::Namespacing.prefixed_table_name(table_name)
@@ -52,7 +54,10 @@ module ActiveRecord
           vt = TableDefinition.new(self)
           vt.primary_key(options[:primary_key] || Base.get_primary_key(table_name)) unless options[:id] == false
 
-          vt.integer "#{table_name.to_s.singularize}_id".to_sym
+          # This is duplicating effort between NilModel and here.
+          model = Cms::Acts::ContentBlock.model_for(table_name)
+          version_column = model.respond_to?(:version_foreign_key) ? model.version_foreign_key : Cms::Behaviors::Versioning.default_foreign_key(table_name)
+          vt.integer version_column
           vt.integer :version
           yield vt
 

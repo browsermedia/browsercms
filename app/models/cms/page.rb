@@ -1,5 +1,5 @@
 class Cms::Page < ActiveRecord::Base
-  
+
   uses_namespaced_table
   is_archivable
   flush_cache_on_change
@@ -8,13 +8,13 @@ class Cms::Page < ActiveRecord::Base
   uses_soft_delete
   is_userstamped
   is_versioned
-  
+
   has_many :connectors, :class_name => 'Cms::Connector', :order => "#{Connector.table_name}.container, #{Connector.table_name}.position"
   has_many :page_routes, :class_name => 'Cms::PageRoute'
-  
 
-  scope :named, lambda{|name| {:conditions => ["#{table_name}.name = ?", name]}}
-  scope :with_path, lambda{|path| {:conditions => ["#{table_name}.path = ?", path]}}
+
+  scope :named, lambda { |name| {:conditions => ["#{table_name}.name = ?", name]} }
+  scope :with_path, lambda { |path| {:conditions => ["#{table_name}.path = ?", path]} }
 
   # This scope will accept a connectable object or a Hash.  The Hash is expect to have
   # a value for the key :connectable, which is the connectable object, and possibly
@@ -36,13 +36,13 @@ class Cms::Page < ActiveRecord::Base
     end
 
     if ver
-      { :include => :connectors, 
-        :conditions => ["#{Cms::Connector.table_name}.connectable_id = ? and #{Cms::Connector.table_name}.connectable_type = ? and #{Cms::Connector.table_name}.connectable_version = ?", obj.id, obj.class.base_class.name, ver] }
+      {:include => :connectors,
+       :conditions => ["#{Cms::Connector.table_name}.connectable_id = ? and #{Cms::Connector.table_name}.connectable_type = ? and #{Cms::Connector.table_name}.connectable_version = ?", obj.id, obj.class.base_class.name, ver]}
     else
-      { :include => :connectors, 
-        :conditions => ["#{Cms::Connector.table_name}.connectable_id = ? and #{Cms::Connector.table_name}.connectable_type = ?", obj.id, obj.class.base_class.name] }
-    end 
-  }  
+      {:include => :connectors,
+       :conditions => ["#{Cms::Connector.table_name}.connectable_id = ? and #{Cms::Connector.table_name}.connectable_type = ?", obj.id, obj.class.base_class.name]}
+    end
+  }
 
   # currently_connected_to tightens the scope of connected_to by restricting to the 
   # results to matches on current versions of pages only.  This renders obj versions
@@ -53,40 +53,40 @@ class Cms::Page < ActiveRecord::Base
 
     ver = obj.class.versioned? ? obj.version : nil
     if ver
-      { :include => :connectors, 
-        :conditions => ["#{connectors_table}.connectable_id = ? and #{connectors_table}.connectable_type = ? and #{connectors_table}.connectable_version = ? and #{connectors_table}.page_version = #{Cms::Page.table_name}.version", obj.id, obj.class.base_class.name, ver] }
+      {:include => :connectors,
+       :conditions => ["#{connectors_table}.connectable_id = ? and #{connectors_table}.connectable_type = ? and #{connectors_table}.connectable_version = ? and #{connectors_table}.page_version = #{Cms::Page.table_name}.version", obj.id, obj.class.base_class.name, ver]}
     else
-      { :include => :connectors, 
-        :conditions => ["#{connectors_table}.connectable_id = ? and #{connectors_table}.connectable_type = ? and #{connectors_table}.page_version = #{Cms::Page.table_name}.version", obj.id, obj.class.base_class.name] }
+      {:include => :connectors,
+       :conditions => ["#{connectors_table}.connectable_id = ? and #{connectors_table}.connectable_type = ? and #{connectors_table}.page_version = #{Cms::Page.table_name}.version", obj.id, obj.class.base_class.name]}
     end
   }
-  
+
   has_one :section_node, :as => :node, :dependent => :destroy, :class_name => 'Cms::SectionNode'
-  
+
   has_many :tasks, :class_name => 'Cms::Task'
-  
+
   before_validation :append_leading_slash_to_path, :remove_trailing_slash_from_path
   before_destroy :delete_connectors
-  
+
   validates_presence_of :name, :path
 
   # Paths must be unique among undeleted records
   validates_uniqueness_of :path, :scope=>:deleted
   validate :path_not_reserved
-          
+
   def after_build_new_version(new_version)
     copy_connectors(
-      :from_version_number => @copy_connectors_from_version || (new_version.version - 1),
-      :to_version_number => new_version.version
+        :from_version_number => @copy_connectors_from_version || (new_version.version - 1),
+        :to_version_number => new_version.version
     )
     @copy_connectors_from_version = nil
     true
   end
-  
+
   # Publish all
   def after_publish
     self.reload # Get's the correct version number loaded
-    self.connectors.for_page_version(self.version).all(:order => "position").each do |c| 
+    self.connectors.for_page_version(self.version).all(:order => "position").each do |c|
       if c.connectable_type.constantize.publishable? && con = c.connectable
         con.publish
       end
@@ -96,10 +96,10 @@ class Cms::Page < ActiveRecord::Base
   # Each time a page is updated, we need to copy all connectors associated with it forward, and save
   # them.
   def copy_connectors(options={})
-    logger.debug {"Copying connectors from Page #{id} v#{options[:from_version_number]} to v#{options[:to_version_number]}." }
+    logger.debug { "Copying connectors from Page #{id} v#{options[:from_version_number]} to v#{options[:to_version_number]}." }
 
     c_found = connectors.for_page_version(options[:from_version_number]).all(:order => "#{Cms::Connector.table_name}.container, #{Cms::Connector.table_name}.position")
-    logger.debug {"Found connectors #{c_found}" }
+    logger.debug { "Found connectors #{c_found}" }
     c_found.each do |c|
 
       # The connector won't have a connectable if it has been deleted
@@ -120,22 +120,22 @@ class Cms::Page < ActiveRecord::Base
           connectable.updated_by_page = self
           connectable.revert_to(c.connectable_version)
           version = connectable.class.versioned? ? connectable.draft.version : nil
-        end      
+        end
 
         logger.debug "When copying block #{connectable.inspect} version is '#{version}'"
 
         new_connector = connectors.create(
-          :page_version => options[:to_version_number], 
-          :connectable => connectable, 
-          :connectable_version => version,
-          :container => c.container, 
-          :position => c.position
+            :page_version => options[:to_version_number],
+            :connectable => connectable,
+            :connectable_version => version,
+            :container => c.container,
+            :position => c.position
         )
-        logger.debug {"Built new connector #{new_connector}."}
+        logger.debug { "Built new connector #{new_connector}." }
       end
     end
     true
-  end  
+  end
 
   # Adds a Content block to this page.
   #
@@ -145,18 +145,19 @@ class Cms::Page < ActiveRecord::Base
       raise "Connectable is nil" unless connectable
       raise "Container is required" if container.blank?
       update_attributes(
-        :version_comment => "#{connectable} was added to the '#{container}' container",
-        :publish_on_save => (
-          published? && 
-          connectable.connected_page && 
-          (connectable.class.publishable? ? connectable.published? : true)))
+          :version_comment => "#{connectable} was added to the '#{container}' container",
+          :publish_on_save => (
+          published? &&
+              connectable.connected_page &&
+              (connectable.class.publishable? ? connectable.published? : true)))
       connectors.create(
-        :page_version => draft.version,
-        :connectable => connectable,
-        :connectable_version => connectable.class.versioned? ? connectable.version : nil, 
-        :container => container)      
+          :page_version => draft.version,
+          :connectable => connectable,
+          :connectable_version => connectable.class.versioned? ? connectable.version : nil,
+          :container => container)
     end
   end
+
   alias_method :add_content, :create_connector
 
   def move_connector(connector, direction)
@@ -166,20 +167,20 @@ class Cms::Page < ActiveRecord::Base
       orientation = direction[/_/] ? "#{direction.sub('_', ' the ')} of" : "#{direction} within"
       update_attributes(:version_comment => "#{connector.connectable} was moved #{orientation} the '#{connector.container}' container")
       connectors.for_page_version(draft.version).like(connector).first.send("move_#{direction}")
-    end    
+    end
   end
-    
+
   %w(up down to_top to_bottom).each do |d|
     define_method("move_connector_#{d}") do |connector|
       move_connector(connector, d)
     end
   end
-  
+
   def remove_connector(connector)
     transaction do
       raise "Connector is nil" unless connector
       update_attributes(:version_comment => "#{connector.connectable} was removed from the '#{connector.container}' container")
-      
+
       #The logic of this is to go ahead and let the container get copied forward, then delete the new connector
       if new_connector = connectors.for_page_version(draft.version).like(connector).first
         new_connector.destroy
@@ -187,56 +188,56 @@ class Cms::Page < ActiveRecord::Base
         raise "Error occurred while trying to remove connector #{connector.id}"
       end
     end
-  end          
+  end
 
   # Pages that get deleted should be 'disconnected' from any blocks they were associated with.
   def delete_connectors
-    connectors.for_page_version(version).all.each{|c| c.destroy }
+    connectors.for_page_version(version).all.each { |c| c.destroy }
   end
-         
+
   #This is done to let copy_connectors know which version to pull from
   #copy_connectors will get called later as an after_update callback
   def revert_to(version)
     @copy_connectors_from_version = version
     super(version)
-  end         
-          
+  end
+
   def file_size
     "?"
   end
-  
+
   def section_id
     section ? section.id : nil
   end
-  
+
   def section
     section_node ? section_node.section : nil
   end
-  
+
   def section_id=(sec_id)
     self.section = Section.find(sec_id)
   end
-  
+
   def section=(sec)
     if section_node
       section_node.move_to_end(sec)
     else
       build_section_node(:node => self, :section => sec)
-    end      
+    end
   end
-  
+
   def public?
     section ? section.public? : false
   end
-  
+
   def page_title
     title.blank? ? name : title
   end
-      
+
   def append_leading_slash_to_path
     if path.blank?
       self.path = "/"
-    elsif path[0,1] != "/"
+    elsif path[0, 1] != "/"
       self.path = "/#{path}"
     end
   end
@@ -244,24 +245,24 @@ class Cms::Page < ActiveRecord::Base
   # remove trailing slash, unless the path is only a slash.  uses capture and
   # substition because ruby regex engine does not support lookbehind
   def remove_trailing_slash_from_path
-    self.path.sub!(/(.+)\/+$/, '\1') 
+    self.path.sub!(/(.+)\/+$/, '\1')
   end
-  
+
   def path_not_reserved
     if Cms.reserved_paths.include?(path)
       errors.add(:path, "is invalid, '#{path}' a reserved path")
     end
   end
-      
+
   def layout
     template_file_name && "templates/#{template_file_name.split('.').first}"
   end
-  
+
   # This will be nil if it is a file system based template
   def template
     PageTemplate.find_by_file_name(template_file_name)
   end
-  
+
   def template_name
     template_file_name && PageTemplate.display_name(template_file_name)
   end
@@ -269,36 +270,36 @@ class Cms::Page < ActiveRecord::Base
   def ancestors
     section_node.ancestors
   end
-  
+
   def in_section?(section_or_section_name)
-    sec = section_or_section_name.is_a?(String) ? 
-      Section.first(:conditions => {:name => section_or_section_name}) : 
-      section_or_section_name
-    fn = lambda{|s| s ? (s == sec || fn.call(s.parent)) : false}
+    sec = section_or_section_name.is_a?(String) ?
+        Section.first(:conditions => {:name => section_or_section_name}) :
+        section_or_section_name
+    fn = lambda { |s| s ? (s == sec || fn.call(s.parent)) : false }
     fn.call(section)
   end
-    
+
   #Returns true if the block attached to each connector in the given container are published
   def container_published?(container)
-    connectors.for_page_version(draft.version).in_container(container.to_s).all? do |c| 
+    connectors.for_page_version(draft.version).in_container(container.to_s).all? do |c|
       c.connectable_type.constantize.publishable? ? c.connectable.live? : true
     end
   end
-  
+
   # Returns the number of connectables in the given container for this version of this page
   def connectable_count_for_container(container)
     connectors.for_page_version(version).in_container(container.to_s).count
   end
-    
+
   def self.find_live_by_path(path)
     published.not_archived.first(:conditions => {:path => path})
   end
-  
+
   def name_with_section_path
     a = ancestors
-    (a[1..a.size].map{|a| a.name} + [name]).join(" / ")
+    (a[1..a.size].map { |a| a.name } + [name]).join(" / ")
   end
-  
+
   # This will return the "top level section" for a page, which is the section directly
   # below the root (a.k.a My Site) that this page is in.  If this page is in root,
   # then this will return root.
@@ -306,17 +307,17 @@ class Cms::Page < ActiveRecord::Base
     a = ancestors
     (a.size > 0 && ancestors[1]) ? ancestors[1] : Section.root.first
   end
-  
+
   def current_task
     tasks.incomplete.first
   end
-  
+
   def assigned_to
     current_task ? current_task.assigned_to : nil
   end
-  
+
   def assigned_to?(user)
     assigned_to == user
   end
-  
+
 end

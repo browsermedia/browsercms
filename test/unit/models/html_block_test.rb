@@ -6,6 +6,19 @@ class HtmlBlockTest < ActiveSupport::TestCase
     assert_equal true, Cms::HtmlBlock.namespaced_table?
   end
 
+  test "versioned_foreign_key" do
+    assert_equal "html_block_id", Cms::HtmlBlock.version_foreign_key
+  end
+
+  test "table_name" do
+    assert_equal "cms_html_blocks", Cms::HtmlBlock.table_name
+  end
+
+  test "save" do
+
+    @block = Cms::HtmlBlock.create!(:name=>"Test")
+  end
+
   def test_create    
     @page = Factory(:page)
     @html_block = Factory(:html_block, :connect_to_page_id => @page.id, :connect_to_container => "test")

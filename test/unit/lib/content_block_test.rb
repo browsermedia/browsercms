@@ -1,9 +1,38 @@
 require 'test_helper'
 
+
+
+class Cms::ApiTest < ActiveSupport::TestCase
+  test "Find block from tablename without namespace" do
+    assert_equal HtmlBlock, Cms::Acts::ContentBlock.model_for(:html_block)
+  end
+
+  test "Find block from tablename with namespace" do
+    Cms.expects(:table_prefix).returns("cms_")
+    assert_equal HtmlBlock, Cms::Acts::ContentBlock.model_for(:cms_html_block)
+  end
+
+
+  test "Find model for non-namespaced classes" do
+    class ::Unscoped ;  end
+    model = Cms::Acts::ContentBlock.model_for(:unscoped)
+    assert_equal ::Unscoped, model
+  end
+
+  test "Nonexistant class returns NilModel that still responds to defaults" do
+    model = Cms::Acts::ContentBlock.model_for(:table_not_likely_to_exist)
+    assert_equal Cms::Acts::ContentBlock::NilModel, model.class
+    assert_equal "table_not_likely_to_exist_id", model.version_foreign_key
+  end
+
+end
+
 class ContentBlockTest < ActiveSupport::TestCase
   def setup
     @block = Factory(:html_block, :name => "Test")
   end
+
+
 
   def test_publishing
     assert_equal "Draft", @block.status_name
@@ -103,7 +132,7 @@ class SoftPublishingTest < ActiveSupport::TestCase
     assert_equal 2, deleted_block.versions.size
     assert_equal 2, deleted_block.version
     assert_equal 1, deleted_block.versions.first.version
-    assert_equal 2, Cms::HtmlBlock::Version.count(:conditions => {:cms_html_block_id => @block.id})
+    assert_equal 2, Cms::HtmlBlock::Version.count(:conditions => {:html_block_id => @block.id})
   end
 
   test "Count should exclude deleted records" do

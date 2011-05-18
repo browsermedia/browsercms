@@ -13,13 +13,13 @@ class Cms::Section < ActiveRecord::Base
 
   has_many :group_sections, :class_name => 'Cms::GroupSection'
   has_many :groups, :through => :group_sections, :class_name => 'Cms::Group'
-  
+
   scope :root, :conditions => ['root = ?', true]
   scope :system, :conditions => {:name => 'system'}
   scope :hidden, :conditions => {:hidden => true}
   scope :not_hidden, :conditions => {:hidden => false}
-  scope :named, lambda{|name| {:conditions => ["#{Section.table_name}.name = ?", name]}}
-  scope :with_path, lambda{|path| {:conditions => ["#{Section.table_name}.path = ?", path]}}
+  scope :named, lambda { |name| {:conditions => ["#{Section.table_name}.name = ?", name]} }
+  scope :with_path, lambda { |path| {:conditions => ["#{Section.table_name}.path = ?", path]} }
 
   validates_presence_of :name, :path
   #validates_presence_of :parent_id, :if => Proc.new {root.count > 0}, :message => "section is required"
@@ -35,7 +35,7 @@ class Cms::Section < ActiveRecord::Base
 
   def visible_child_nodes(options={})
     children = child_nodes.of_type(["Cms::Section", "Cms::Page", "Cms::Link"]).all(:order => "#{SectionNode.table_name}.position")
-    visible_children = children.select{|sn| sn.visible?}
+    visible_children = children.select { |sn| sn.visible? }
     options[:limit] ? visible_children[0...options[:limit]] : visible_children
   end
 
@@ -91,7 +91,7 @@ class Cms::Section < ActiveRecord::Base
   end
 
   def empty?
-    child_nodes.reject{|n| n.orphaned?}.empty?
+    child_nodes.reject { |n| n.orphaned? }.empty?
   end
 
   def deletable?
@@ -117,7 +117,7 @@ class Cms::Section < ActiveRecord::Base
 
   #The first page that is a decendent of this section
   def first_page_or_link
-    section_node = child_nodes.of_type(['Cms::Link','Cms::Page']).first(:order => "#{SectionNode.table_name}.position")
+    section_node = child_nodes.of_type(['Cms::Link', 'Cms::Page']).first(:order => "#{SectionNode.table_name}.position")
     return section_node.node if section_node
     sections.each do |s|
       node = s.first_page_or_link

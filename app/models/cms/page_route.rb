@@ -19,7 +19,7 @@ class Cms::PageRoute < ActiveRecord::Base
   belongs_to :page, :class_name => 'Cms::Page'
   has_many :conditions, :class_name => 'Cms::PageRouteCondition'
   has_many :requirements, :class_name => 'Cms::PageRouteRequirement'
-  
+
   validates_presence_of :pattern, :page_id
   validates_uniqueness_of :pattern
 
@@ -45,7 +45,7 @@ class Cms::PageRoute < ActiveRecord::Base
 
   def add_condition(name, value)
     conditions.build(:name => name.to_s, :value => value.to_s)
-  end  
+  end
 
   # @deprecated Use add_constraint instead (matches Rails 3 syntax)
   def add_requirement(name, value)
@@ -56,16 +56,16 @@ class Cms::PageRoute < ActiveRecord::Base
 
   # @deprecated Rails 3 no longer uses a 'conditions' element in its syntax for routing.
   def conditions_map
-    conditions.inject({}){|acc, e| acc[e.name.to_sym] = e.value.to_sym; acc}
+    conditions.inject({}) { |acc, e| acc[e.name.to_sym] = e.value.to_sym; acc }
   end
 
 
   def requirements_map
-    requirements.inject({}){|acc, e| acc[e.name.to_sym] = Regexp.new(e.value); acc}
+    requirements.inject({}) { |acc, e| acc[e.name.to_sym] = Regexp.new(e.value); acc }
   end
-  
+
   def route_name
-    name ? name.to_slug.gsub('-','_') : nil
+    name ? name.to_slug.gsub('-', '_') : nil
   end
 
   alias_method :as, :route_name
@@ -76,7 +76,10 @@ class Cms::PageRoute < ActiveRecord::Base
 
   # Returns which methods this route can be via. Defaults to [:get, :post] if not specified.
   def via
-    found = conditions.collect(){|condition| if condition.name.to_sym == :method; condition.value.to_sym end}
+    found = conditions.collect() { |condition|
+      if condition.name.to_sym == :method;
+        condition.value.to_sym
+      end }
     methods = found.compact
     if methods.empty?
       methods << :get << :post
@@ -96,12 +99,12 @@ class Cms::PageRoute < ActiveRecord::Base
   # @deprecated
   def options_map
     m = {:controller => "cms/content", :action => "show_page_route"}
-    
+
     m[:_page_route_id] = self.id.to_s
-    
+
     m[:requirements] = requirements_map
     m[:conditions] = conditions_map
-    
+
     m
   end
 
@@ -119,5 +122,5 @@ class Cms::PageRoute < ActiveRecord::Base
   def execute(controller)
     controller.instance_eval(code) unless code.blank?
   end
-  
+
 end

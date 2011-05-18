@@ -1,11 +1,20 @@
 require 'test_helper'
 
+class FilesTest < Test::Unit::TestCase
+# test "Table name" do
+  def test_table_name
+    assert_equal "cms_file_blocks", Cms::FileBlock.table_name
+  end
+end
+
 class FileBlockTest < ActiveSupport::TestCase
   def setup
     #@file is a mock of the object that Rails wraps file uploads in
     @uploaded_file = file_upload_object(:original_filename => "version1.txt", :content_type => "text/plain")
     @file_block = Factory.build(:file_block, :attachment_file => @uploaded_file, :attachment_section => root_section, :attachment_file_path => "/test.jpg", :publish_on_save => true)
   end
+
+
 
   test "FileBlock should use namespaced_table" do
     assert_equal true, Cms::FileBlock.namespaced_table?

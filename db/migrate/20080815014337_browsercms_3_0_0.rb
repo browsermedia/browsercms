@@ -15,7 +15,7 @@ class Browsercms300 < ActiveRecord::Migration
     end
     add_index prefix(:users), :login, :unique => true
 
-    create_versioned_table :dynamic_views do |t|
+    create_content_table :dynamic_views do |t|
       t.string :type
       t.string :name
       t.string :format

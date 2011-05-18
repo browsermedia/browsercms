@@ -2,211 +2,211 @@ require 'digest/sha1'
 require 'fileutils'
 
 module Cms
-class Attachment < ActiveRecord::Base
+  class Attachment < ActiveRecord::Base
 
-  #----- Constants ----------------------------------------------------------------
-  UNKNOWN_MIME_TYPE = 'application/octet-stream'
+    #----- Constants ----------------------------------------------------------------
+    UNKNOWN_MIME_TYPE = 'application/octet-stream'
 
-  #----- Macros ----------------------------------------------------------------
-  uses_namespaced_table
-  is_archivable
-  is_publishable
-  uses_soft_delete
-  is_userstamped
-  is_versioned
+    #----- Macros ----------------------------------------------------------------
+    uses_namespaced_table
+    is_archivable
+    is_publishable
+    uses_soft_delete
+    is_userstamped
+    is_versioned
 
-  # Rails 3 uses a new ActionDispatch::Http::UploadedFile. This holds that during the file processing.
-  attr_accessor :uploaded_file
+    # Rails 3 uses a new ActionDispatch::Http::UploadedFile. This holds that during the file processing.
+    attr_accessor :uploaded_file
 
-  # This exists for backwards compatibility
-  alias_method :temp_file, :uploaded_file
-  alias_method :temp_file=, :uploaded_file=
+    # This exists for backwards compatibility
+    alias_method :temp_file, :uploaded_file
+    alias_method :temp_file=, :uploaded_file=
 
-  #----- Callbacks -------------------------------------------------------------
-  before_validation :make_dirty_if_temp_file
-  before_validation :prepend_file_path_with_slash
-  before_validation :extract_file_extension_from_file_name
-  before_validation :extract_file_type_from_temp_file
-  before_validation :extract_file_size_from_temp_file
-  before_validation :set_file_location
-  before_save :process_section
+    #----- Callbacks -------------------------------------------------------------
+    before_validation :make_dirty_if_temp_file
+    before_validation :prepend_file_path_with_slash
+    before_validation :extract_file_extension_from_file_name
+    before_validation :extract_file_type_from_temp_file
+    before_validation :extract_file_size_from_temp_file
+    before_validation :set_file_location
+    before_save :process_section
 
-  after_save :write_temp_file_to_storage_location
-  after_save :clear_ivars  
+    after_save :write_temp_file_to_storage_location
+    after_save :clear_ivars
 
 
-  #----- Associations ----------------------------------------------------------
+    #----- Associations ----------------------------------------------------------
 
-  has_one :section_node, :as => :node, :class_name => 'Cms::SectionNode'
+    has_one :section_node, :as => :node, :class_name => 'Cms::SectionNode'
 
-  #----- Validations -----------------------------------------------------------
+    #----- Validations -----------------------------------------------------------
 
-  validates_presence_of :temp_file, :message => "You must upload a file", :on => :create
-  validates_presence_of :file_path
-  validates_uniqueness_of :file_path
-  validates_presence_of :section_id
-    
-  #----- Virtual Attributes ----------------------------------------------------
-  
-  def section_id
-    @section_id ||= section_node ? section_node.section_id : nil
-  end
+    validates_presence_of :temp_file, :message => "You must upload a file", :on => :create
+    validates_presence_of :file_path
+    validates_uniqueness_of :file_path
+    validates_presence_of :section_id
 
-  def section_id=(section_id)
-    if @section_id != section_id 
-      dirty!
-      @section_id = section_id
+    #----- Virtual Attributes ----------------------------------------------------
+
+    def section_id
+      @section_id ||= section_node ? section_node.section_id : nil
     end
-  end
 
-  def section
-    @section ||= section_node ? section_node.section : nil
-  end
-
-  def section=(section)
-    logger.debug {"Attachment#section=(#{section})"}
-    if @section != section
-      dirty!
-      @section_id = section ? section.id : nil
-      @section = section
-    end
-  end
-  
-  #----- Callbacks Methods -----------------------------------------------------
-  
-  def make_dirty_if_temp_file
-    dirty! if temp_file
-  end
-  
-  def prepend_file_path_with_slash    
-    unless file_path.blank?
-      self.file_path = "/#{file_path}" unless file_path =~ /^\//
-    end
-  end
-  
-  def extract_file_extension_from_file_name
-    if file_name && file_name['.']
-      self.file_extension = file_name.split('.').last.to_s.downcase
-    end    
-  end
-  
-  def extract_file_type_from_temp_file
-    unless temp_file.blank?
-      self.file_type = temp_file.content_type
-
-      # Some
-      if self.file_type == nil
-        self.file_type = UNKNOWN_MIME_TYPE
+    def section_id=(section_id)
+      if @section_id != section_id
+        dirty!
+        @section_id = section_id
       end
-    end    
-  end
-  
-  def extract_file_size_from_temp_file  
-    unless temp_file.blank?
-      self.file_size = temp_file.size
-    end    
-  end
-
-  # The file will be stored on disk at 
-  # Attachment.storage_location/year/month/day/sha1
-  # The sha1 is a 40 character hash based on the original_filename
-  # of the file uploaded and the current time
-  def set_file_location
-    unless temp_file.blank?
-      sha1 = Digest::SHA1.hexdigest("#{temp_file.original_filename}#{Time.now.to_f}")
-      self.file_location = "#{Time.now.strftime("%Y/%m/%d")}/#{sha1}"
     end
-  end
 
-  def process_section
-    #logger.info "processing section, section_id => #{section_id}, section_node => #{section_node.inspect}"
-    if section_node && !section_node.new_record? && section_node.section_id != section_id
-      section_node.move_to_end(Cms::Section.find(section_id))
-    else
-      build_section_node(:node => self, :section_id => section_id)
-    end    
-  end
-    
-  def write_temp_file_to_storage_location
-    unless temp_file.blank?
-      actual_temp_file = temp_file.tempfile
+    def section
+      @section ||= section_node ? section_node.section : nil
+    end
 
-      Rails.logger.warn "I want to write out #{temp_file.tempfile}"
-      FileUtils.mkdir_p File.dirname(full_file_location)
-      if actual_temp_file.path
-        FileUtils.copy actual_temp_file.path, full_file_location
+    def section=(section)
+      logger.debug { "Attachment#section=(#{section})" }
+      if @section != section
+        dirty!
+        @section_id = section ? section.id : nil
+        @section = section
+      end
+    end
+
+    #----- Callbacks Methods -----------------------------------------------------
+
+    def make_dirty_if_temp_file
+      dirty! if temp_file
+    end
+
+    def prepend_file_path_with_slash
+      unless file_path.blank?
+        self.file_path = "/#{file_path}" unless file_path =~ /^\//
+      end
+    end
+
+    def extract_file_extension_from_file_name
+      if file_name && file_name['.']
+        self.file_extension = file_name.split('.').last.to_s.downcase
+      end
+    end
+
+    def extract_file_type_from_temp_file
+      unless temp_file.blank?
+        self.file_type = temp_file.content_type
+
+        # Some
+        if self.file_type == nil
+          self.file_type = UNKNOWN_MIME_TYPE
+        end
+      end
+    end
+
+    def extract_file_size_from_temp_file
+      unless temp_file.blank?
+        self.file_size = temp_file.size
+      end
+    end
+
+    # The file will be stored on disk at
+    # Attachment.storage_location/year/month/day/sha1
+    # The sha1 is a 40 character hash based on the original_filename
+    # of the file uploaded and the current time
+    def set_file_location
+      unless temp_file.blank?
+        sha1 = Digest::SHA1.hexdigest("#{temp_file.original_filename}#{Time.now.to_f}")
+        self.file_location = "#{Time.now.strftime("%Y/%m/%d")}/#{sha1}"
+      end
+    end
+
+    def process_section
+      #logger.info "processing section, section_id => #{section_id}, section_node => #{section_node.inspect}"
+      if section_node && !section_node.new_record? && section_node.section_id != section_id
+        section_node.move_to_end(Cms::Section.find(section_id))
       else
-        open(full_file_location, 'w') {|f| f << actual_temp_file.read }
-      end
-      
-      if Cms.attachment_file_permission
-        FileUtils.chmod Cms.attachment_file_permission, full_file_location
+        build_section_node(:node => self, :section_id => section_id)
       end
     end
-  end  
-  
-  def clear_ivars
-    @temp_file = nil
-    @section = nil
-    @section_id = nil
-  end
-  
-  #----- Class Methods ---------------------------------------------------------
-  
-  def self.storage_location
-    @storage_location ||= File.join(Rails.root, "/tmp/uploads")
-  end
-  
-  def self.storage_location=(storage_location)
-    @storage_location = storage_location
-  end  
-  
-  def self.find_live_by_file_path(file_path)
-    Cms::Attachment.published.not_archived.first(:conditions => {:file_path => file_path})
-  end  
-  
-  #----- Instance Methods ------------------------------------------------------
 
-  def file_name
-    file_path ? file_path.split('/').last : nil
-  end
+    def write_temp_file_to_storage_location
+      unless temp_file.blank?
+        actual_temp_file = temp_file.tempfile
 
-  def name
-    file_name
-  end
-  
-  def icon
-    {
-        :doc => %w[doc],
-        :gif => %w[gif jpg jpeg png tiff bmp],
-        :htm => %w[htm html],
-        :pdf => %w[pdf],
-        :ppt => %w[ppt],
-        :swf => %w[swf],
-        :txt => %w[txt],
-        :xls => %w[xls],
-        :xml => %w[xml],
-        :zip => %w[zip rar tar gz tgz]
-    }.each do |icon, extensions|
-      return icon if extensions.include?(file_extension.to_s)
+        Rails.logger.warn "I want to write out #{temp_file.tempfile}"
+        FileUtils.mkdir_p File.dirname(full_file_location)
+        if actual_temp_file.path
+          FileUtils.copy actual_temp_file.path, full_file_location
+        else
+          open(full_file_location, 'w') { |f| f << actual_temp_file.read }
+        end
+
+        if Cms.attachment_file_permission
+          FileUtils.chmod Cms.attachment_file_permission, full_file_location
+        end
+      end
     end
-    :file
-  end
 
-  def public?
-    section ? section.public? : false
-  end
-  
-  def full_file_location
-    File.join(Cms::Attachment.storage_location, file_location)
-  end
+    def clear_ivars
+      @temp_file = nil
+      @section = nil
+      @section_id = nil
+    end
 
-  # Forces this record to be changed, even if nothing has changed
-  # This is necessary if just the section.id has changed, for example
-  def dirty!
-    # Seems like a hack, is there a better way?
-    self.updated_at = Time.now
-  end
+    #----- Class Methods ---------------------------------------------------------
 
-end
+    def self.storage_location
+      @storage_location ||= File.join(Rails.root, "/tmp/uploads")
+    end
+
+    def self.storage_location=(storage_location)
+      @storage_location = storage_location
+    end
+
+    def self.find_live_by_file_path(file_path)
+      Cms::Attachment.published.not_archived.first(:conditions => {:file_path => file_path})
+    end
+
+    #----- Instance Methods ------------------------------------------------------
+
+    def file_name
+      file_path ? file_path.split('/').last : nil
+    end
+
+    def name
+      file_name
+    end
+
+    def icon
+      {
+          :doc => %w[doc],
+          :gif => %w[gif jpg jpeg png tiff bmp],
+          :htm => %w[htm html],
+          :pdf => %w[pdf],
+          :ppt => %w[ppt],
+          :swf => %w[swf],
+          :txt => %w[txt],
+          :xls => %w[xls],
+          :xml => %w[xml],
+          :zip => %w[zip rar tar gz tgz]
+      }.each do |icon, extensions|
+        return icon if extensions.include?(file_extension.to_s)
+      end
+      :file
+    end
+
+    def public?
+      section ? section.public? : false
+    end
+
+    def full_file_location
+      File.join(Cms::Attachment.storage_location, file_location)
+    end
+
+    # Forces this record to be changed, even if nothing has changed
+    # This is necessary if just the section.id has changed, for example
+    def dirty!
+      # Seems like a hack, is there a better way?
+      self.updated_at = Time.now
+    end
+
+  end
 end
