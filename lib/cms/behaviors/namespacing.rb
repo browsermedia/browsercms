@@ -15,15 +15,12 @@ module Cms
     @table_prefix
   end
 
-  # Matches Rails convention
+  # By setting this, ActiveRecord will automatically prefix all tables in the Cms:: module to start with the value of prefix_
   def self.table_name_prefix
     self.table_prefix
   end
 
-
-
   module Namespacing
-
 
     def self.prefixed_table_name(unprefixed_name)
       "#{Cms.table_prefix}#{unprefixed_name}"
@@ -33,7 +30,6 @@ module Cms
     end
   end
 
-  # All behaviors are
   module Behaviors
     module Namespacing
       extend ActiveSupport::Concern
@@ -42,28 +38,12 @@ module Cms
 
         # Make this Model use a namespaced table.
         def uses_namespaced_table
-          include NameSpaced
-#          unless @namespaced_table
-#            set_table_name ::Cms::Namespacing.prefixed_table_name(base_class.table_name)
-#          end
-          @namespaced_table = true
+
         end
       end
 
 
-      module NameSpaced
-        extend ActiveSupport::Concern
 
-        def table_name
-          self.class.table_name
-        end
-
-        module ClassMethods
-          def namespaced_table?
-            !!@namespaced_table
-          end
-        end
-      end
 
     end
   end

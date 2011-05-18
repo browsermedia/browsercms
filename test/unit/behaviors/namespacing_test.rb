@@ -1,9 +1,5 @@
 require "test_helper"
 
-create_testing_table :cms_my_blocks
-class Cms::MyBlock < ActiveRecord::Base
-  uses_namespaced_table
-end
 
 create_testing_table :cms_namespaced_blocks
 class Cms::NamespacedBlock < ActiveRecord::Base
@@ -28,7 +24,8 @@ class Cms::NamespacingCoreRailsTest < ActiveSupport::TestCase
     end
   end
 
-  class ::Foo::TestBlock < ActiveRecord::Base ; end
+  class ::Foo::TestBlock < ActiveRecord::Base;
+  end
 
   test "table_name should be automatically prefixed" do
     assert_equal "foobar_test_blocks", Foo::TestBlock.table_name
@@ -42,30 +39,29 @@ class Cms::NamespacingCoreRailsTest < ActiveSupport::TestCase
 end
 
 class Cms::Behaviors::NamespacingTest < ActiveSupport::TestCase
-
-  def setup
+  create_testing_table :cms_my_blocks
+  class ::Cms::MyBlock < ActiveRecord::Base
+    uses_namespaced_table
   end
 
+  def setup
+
+  end
 
   test "All blocks automatically get namespacing" do
     Cms::MyBlock.respond_to?(:namespaced_table?)
   end
 
-  test "Should be namespaced" do
-    assert_equal true, MyBlock.namespaced_table?
-  end
-
   test "default table namespace " do
-    assert_equal "cms_my_blocks", MyBlock.new.table_name
+    assert_equal "cms_my_blocks", MyBlock.table_name
   end
 
   test "set a table namespace" do
     Cms.expects(:table_prefix).returns('abc_')
     class ::Cms::CustomBlock < ActiveRecord::Base
-      uses_namespaced_table
     end
     create_testing_table :abc_custom_blocks
-    assert_equal "abc_custom_blocks", ::Cms::CustomBlock.new.table_name
+    assert_equal "abc_custom_blocks", ::Cms::CustomBlock.table_name
   end
 
   test "Get prefixed name" do
@@ -73,11 +69,4 @@ class Cms::Behaviors::NamespacingTest < ActiveSupport::TestCase
     assert_equal "abc_name", Cms::Namespacing.prefixed_table_name("name")
   end
 
-  test "content_blocks should be namespaced by default" do
-    assert_equal true, Cms::NamespacedBlock.namespaced_table?
-  end
-
-  test "can opt out of namespacing too" do
-    assert_equal false, Cms::NonNamespacedBlock.respond_to?(:namespaced_table?)
-  end
 end

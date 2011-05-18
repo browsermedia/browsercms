@@ -2,10 +2,6 @@ require 'test_helper'
 
 class HtmlBlockTest < ActiveSupport::TestCase
 
-  test "should use namespaced_table" do
-    assert_equal true, Cms::HtmlBlock.namespaced_table?
-  end
-
   test "versioned_foreign_key" do
     assert_equal "html_block_id", Cms::HtmlBlock.version_foreign_key
   end
