@@ -47,6 +47,11 @@ class Cms::Behaviors::NamespacingTest < ActiveSupport::TestCase
 
   end
 
+  test "Default for new projects is blank." do
+    Cms.table_prefix = nil
+    assert_equal "", Cms.table_prefix
+  end
+
   test "All blocks automatically get namespacing" do
     Cms::MyBlock.respond_to?(:namespaced_table?)
   end
