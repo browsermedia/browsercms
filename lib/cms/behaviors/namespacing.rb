@@ -13,13 +13,15 @@ module Cms
 
 
   # Returns the table name prefix for models in the Cms:: Namespace
+  # Defaults to blank if no namespace is set.
   def self.table_prefix
-    @table_prefix ? @table_prefix : ""
+    @table_prefix
   end
 
   # By setting this, ActiveRecord will automatically prefix all tables in the Cms:: module to start with the value of prefix_
+  # Defaults to "" if not specified.
   def self.table_name_prefix
-    self.table_prefix
+    self.table_prefix ? self.table_prefix : ""
   end
 
   module Namespacing

@@ -1,6 +1,6 @@
 For 3.4, currently working on namespacing
 
-Start with: rake db:drop db:create db:migrate test:units
+Start with: rake db:drop db:install test:units
 
 * Review and possibly remove cms_user depending on what it does.
 * Add bcms install method that will add BrowserCMS to the Gemfile and install it in other CMS projects.

@@ -26,7 +26,7 @@ Gem::Specification.new do |s|
   s.files += Dir["app/**/*"]
   s.files += Dir["db/migrate/[0-9]*_*.rb"]
   s.files += Dir["db/demo/**/*"]
-  s.files += Dir["db/seeds.rb"]
+  s.files += Dir["db/browsercms.seeds.rb"]
   s.files += Dir["lib/**/*"]
   s.files -= Dir["lib/tasks/cucumber.rake"]
   s.files -= Dir["lib/tasks/cms.rake"]

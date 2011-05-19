@@ -12,7 +12,7 @@ class String
 end
 
 
-class App < Thor
+class Cms::Install < Thor
   include Thor::Actions
   include Rails::Generators::Actions
   source_root File.expand_path('../../lib/generators/cms/upgrade_module/templates', __FILE__)
@@ -56,6 +56,18 @@ class App < Thor
     puts "BrowserCMS #{Cms::VERSION}"
   end
 
+  desc 'install', "Adds BrowserCMS to an existing rails application."
+  def install
+
+    common_setup
+    initializer 'browsercms.rb', <<-CODE
+#{standard_file_permissions}
+Cms.table_prefix = "cms_"
+CODE
+    default_template
+    puts "BrowserCMS has been installed. Run rake db:install to add the tables then restart your server."
+  end
+
   private
 
   def start_working_in_rails_directory(name)
@@ -81,14 +93,8 @@ class App < Thor
     puts "    then type 'rails server' and open your browser to 'http://localhost:3000'."
   end
 
-  def create_blank_cms_project(name)
-    create_rails_app(name)
-    start_working_in_rails_directory(name)
-
-    # Unsure if this handles windows specific removal of files
-    remove_file("public/index.html")
-    remove_file("db/seeds.rb")
-
+  # For both new and existing projects.
+  def common_setup
     gem 'browsercms', :version=>::Cms::VERSION
 
     generate :jdbc if defined?(JRUBY_VERSION)
@@ -105,13 +111,33 @@ class App < Thor
   config.action_controller.page_cache_directory = Rails.root + '/public/cache/'
       CODE
     end
+  end
+
+  def default_template
+    generate "cms:template", "default"
+  end
+
+  def standard_file_permissions
+    "Cms.attachment_file_permission = 0640"
+  end
+
+  def create_blank_cms_project(name)
+    create_rails_app(name)
+    start_working_in_rails_directory(name)
+
+    # Unsure if this handles windows specific removal of files
+    remove_file("public/index.html")
+
+    common_setup()
+
+
     initializer 'browsercms.rb', <<-CODE
-Cms.attachment_file_permission = 0640
+    #{standard_file_permissions}
     CODE
 
-    generate "cms:template", "default"
+    default_template()
   end
 end
 
-App.start
+Cms::Install.start
 

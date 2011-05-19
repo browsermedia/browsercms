@@ -18,16 +18,31 @@ class CmsGeneratorTest < Rails::Generators::TestCase
     assert_file "db/migrate/20080815014337_browsercms_3_0_0.rb"
     assert_file "db/migrate/20091109175123_browsercms_3_0_5.rb"
     assert_file "db/migrate/20100705083859_browsercms_3_3_0.rb"
-    assert_file "db/seeds.rb"
+    assert_file "db/browsercms.seeds.rb"
+    assert_file "db/seeds.rb" do |file|
+      assert_match "require File.expand_path('../browsercms.seeds.rb', __FILE__)", file
+    end
 
   end
 
   private
-  def generate_rails_app
-    Dir.mkdir(File.join(destination_root, "config"))
+  def create_file(file_name)
+    File.new(File.join(destination_root, file_name), 'w')
+  end
 
-    file_name = File.join(destination_root, "config/application.rb")
-    f = File.new(file_name, 'w')
+  def create_directory(create_directory)
+    Dir.mkdir(File.join(destination_root, create_directory))
+  end
+
+  def generate_rails_app
+    create_directory("config")
+    create_file("config/application.rb")
+
+    create_directory("db")
+    create_file("db/seeds.rb")
+
+
+
  end
 
 end

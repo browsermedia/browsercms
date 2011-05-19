@@ -48,8 +48,8 @@ class Cms::Behaviors::NamespacingTest < ActiveSupport::TestCase
   end
 
   test "Default for new projects is blank." do
-    Cms.table_prefix = nil
-    assert_equal "", Cms.table_prefix
+    Cms.expects("table_prefix").returns(nil)
+    assert_equal "", Cms.table_name_prefix
   end
 
   test "All blocks automatically get namespacing" do
@@ -57,11 +57,11 @@ class Cms::Behaviors::NamespacingTest < ActiveSupport::TestCase
   end
 
   test "default table namespace " do
-    assert_equal "cms_my_blocks", MyBlock.table_name
+    assert_equal "cms_my_blocks", Cms::MyBlock.table_name
   end
 
   test "set a table namespace" do
-    Cms.expects(:table_prefix).returns('abc_')
+    Cms.expects(:table_prefix).returns('abc_').at_least_once
     class ::Cms::CustomBlock < ActiveRecord::Base
     end
     create_testing_table :abc_custom_blocks

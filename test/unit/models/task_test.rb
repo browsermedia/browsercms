@@ -4,9 +4,7 @@ class TaskTest < ActiveSupport::TestCase
   def setup
     super
     @editor_a = Factory(:cms_admin)
-#        create_admin_user(:login => "editor_a", :email => "editor_a@example.com")
     @editor_b = Factory(:cms_admin)
-#        create_admin_user(:login => "editor_b", :email => "editor_b@example.com")
     @non_editor = Factory(:user, :login => "non_editor", :email => "non_editor@example.com")
     @page = Factory(:page, :name => "Task Test", :path => "/task_test")
     @page2 = Factory(:page, :name => "Task Test 2", :path => "/task_test_2")
