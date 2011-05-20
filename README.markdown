@@ -37,11 +37,14 @@ Before you can use BrowserCMS, you will need to install the gem. See the [Gettin
 BrowserCMS is released under a LGPL license, and is copyright 1998-2011 BrowserMedia. The complete copyright can be found in COPYRIGHT.txt, and copy of the license can be found in LICENSE.txt.
 
 
-## Documentation
+## Documentation / Support
 The user documentation and guides for this version of the application can be found at:
 
 1. [Guides and Wiki](http://wiki.github.com/browsermedia/browsercms)
 2. [API Docs](http://rubydoc.info/gems/browsercms/)
+3. [Report a Bug!](https://github.com/browsermedia/browsercms/issues)
+4. [Discuss the Project](http://groups.google.com/group/browsercms)
+5. [BrowserCMS Site](http://browsercms.org)
 
 
 ## Working on the core project source
@@ -53,5 +56,3 @@ If you want to experiment with the source code, the BrowserCMS project can boots
 
 This will create and populate the BrowserCMS database with the minimal seed data for testing. By default, the core project is setup to use mysql as the database, but you can change that via the database.yml files.
 
-## Support
-The homepage for the BrowserCMS project is http://browsercms.org. From there you can find links to the discussion groups and our twitter account. If you have questions about the project or want to get involved, the Google group is the best way to do so. If you would like to report a bug, please do so at https://browsermedia.lighthouseapp.com/projects/28481-browsercms-30
