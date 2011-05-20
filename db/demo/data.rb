@@ -1,7 +1,7 @@
     # Load up data that was created in load seed data migration
-    User.current = User.first(:conditions => {:login => 'cmsadmin'})
-    root_section = Section.root.first
-    home_page = Page.first(:conditions => {:name => "Home"})
+    Cms::User.current = Cms::User.first(:conditions => {:login => 'cmsadmin'})
+    root_section = Cms::Section.root.first
+    home_page = Cms::Page.first(:conditions => {:name => "Home"})
 
     # Apply new templates to core pages
     home_page.template_file_name = "home_page.html.erb"
@@ -41,7 +41,7 @@
     create_page(:our_office, :name => "Our Office", :path => "/footer_nav/our_office", :section => sections(:footer), :template_file_name => "sub_page.html.erb")
 
     # Marks sections as visiable to everyone
-    Group.all.each{|g| g.sections = Section.all }
+    Cms::Group.all.each{|g| g.sections = Cms::Section.all }
 
     # Populate the pages with some content.
 
@@ -81,7 +81,7 @@
 
     create_dynamic_portlet(:recently_updated_pages,
       :name => 'Recently Updated Pages',  
-      :code => "@pages = Page.all(:order => 'updated_at desc', :limit => 3)",
+      :code => "@pages = Cms::Page.all(:order => 'updated_at desc', :limit => 3)",
       :template => <<-TEMPLATE
 <h2>Recent Updates</h2>
 <ul>
@@ -93,5 +93,5 @@ TEMPLATE
     )
 
     # Publish all Pages
-    Page.all.each{|p| p.publish! }
-    Link.all.each{|l| l.publish! }
+    Cms::Page.all.each{|p| p.publish! }
+    Cms::Link.all.each{|l| l.publish! }

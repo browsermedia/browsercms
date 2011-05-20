@@ -1,4 +1,4 @@
-class ResetPasswordPortlet < Portlet
+class ResetPasswordPortlet < Cms::Portlet
 
   def render
     flash[:reset_password] = {}
@@ -8,7 +8,7 @@ class ResetPasswordPortlet < Portlet
       return
     end
 
-    @user = User.find_by_reset_token(params[:token])
+    @user = Cms::User.find_by_reset_token(params[:token])
 
     unless @user
       flash[:reset_password][:notice] = "Invalid password token"    

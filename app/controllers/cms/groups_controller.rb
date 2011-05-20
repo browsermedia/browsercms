@@ -1,4 +1,5 @@
-class Cms::GroupsController < Cms::ResourceController
+module Cms
+class GroupsController < Cms::ResourceController
   layout 'cms/administration'
   
   check_permissions :administrate
@@ -8,7 +9,7 @@ class Cms::GroupsController < Cms::ResourceController
     @groups = Group.paginate(
       :include => :group_type,
       :page => params[:page], 
-      :order => params[:order] || "groups.name")
+      :order => params[:order] || "#{Group.table_name}.name")
   end
   
   protected
@@ -23,4 +24,5 @@ class Cms::GroupsController < Cms::ResourceController
       @menu_section = 'groups'
     end
     
+end
 end

@@ -2,17 +2,18 @@ require 'test_helper'
 
 # These Portlet classes cannot be defined within the PortletTest class. Something
 # related to the dynamic attributes causes other tests to fail otherwise.
-class NoInlinePortlet < Portlet
+class NoInlinePortlet < Cms::Portlet
   render_inline false
 end
-class InlinePortlet < Portlet
+
+class InlinePortlet < Cms::Portlet
 end
 
-class NonEditablePortlet < Portlet
+class NonEditablePortlet < Cms::Portlet
   enable_template_editor false
 end
 
-class EditablePortlet < Portlet
+class EditablePortlet < Cms::Portlet
   enable_template_editor true
 end
 
@@ -21,19 +22,19 @@ class PortletTest < ActiveSupport::TestCase
 
   def test_dynamic_attributes
     portlet = DynamicPortlet.create(:name => "Test", :foo => "FOO")
-    assert_equal "FOO", Portlet.find(portlet.id).foo
+    assert_equal "FOO", Cms::Portlet.find(portlet.id).foo
     assert_equal "Dynamic Portlet", portlet.portlet_type_name
   end
 
   def test_portlets_consistently_load_the_same_number_of_types
 
-    list = Portlet.types
+    list = Cms::Portlet.types
     assert list.size > 0
 
     DynamicPortlet.create!(:name=>"test 1")
     DynamicPortlet.create!(:name=>"test 2")
 
-    assert_equal list.size, Portlet.types.size
+    assert_equal list.size, Cms::Portlet.types.size
   end
 
 
@@ -68,6 +69,6 @@ class PortletTest < ActiveSupport::TestCase
   end
 
   test "Portlets should be considered 'connectable?, and therefore can have a /usages route.'" do
-    assert Portlet.connectable?
+    assert Cms::Portlet.connectable?
   end
 end

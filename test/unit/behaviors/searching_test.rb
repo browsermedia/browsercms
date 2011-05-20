@@ -5,7 +5,7 @@ ActiveRecord::Base.connection.instance_eval do
   create_table(:searchable_content_block_parents) {|t| t.string :name }
   drop_table(:searchable_content_blocks) if table_exists?(:searchable_content_blocks)
   drop_table(:searchable_content_block_versions) if table_exists?(:searchable_content_block_versions)
-  create_versioned_table(:searchable_content_blocks) do |t| 
+  create_versioned_table(:searchable_content_blocks, :prefix=>false) do |t|
     t.integer :parent_id
     t.string :name 
     t.boolean :deleted, :default => 0
@@ -17,7 +17,7 @@ ActiveRecord::Base.connection.instance_eval do
   # Verifies that blocks are created with a :name column if one is not specified.
   drop_table(:searchable_block_without_names) if table_exists?(:searchable_block_without_names)
   drop_table(:searchable_block_without_name_versions) if table_exists?(:searchable_block_without_name_versions)
-  create_versioned_table(:searchable_block_without_names) do |t|
+  create_versioned_table(:searchable_block_without_names, :prefix=>false) do |t|
     t.string :title
   end
 end
@@ -55,11 +55,11 @@ class SearchableHtmlBlockTest < ActiveSupport::TestCase
     @b1 = Factory(:html_block, :name => "b1", :content => "b one")
     @b2 = Factory(:html_block, :name => "b2", :content => "b two")
 
-    assert HtmlBlock.searchable?
-    assert_equal [@a2, @b2], HtmlBlock.search("2").all
-    assert HtmlBlock.search(:term => "one").all.empty?
-    assert_equal [@a1, @b1], HtmlBlock.search(:term => "one", :include_body => true).all
-    assert HtmlBlock.search(nil).include?(@b2)
+    assert Cms::HtmlBlock.searchable?
+    assert_equal [@a2, @b2], Cms::HtmlBlock.search("2").all
+    assert Cms::HtmlBlock.search(:term => "one").all.empty?
+    assert_equal [@a1, @b1], Cms::HtmlBlock.search(:term => "one", :include_body => true).all
+    assert Cms::HtmlBlock.search(nil).include?(@b2)
   end
 end
 

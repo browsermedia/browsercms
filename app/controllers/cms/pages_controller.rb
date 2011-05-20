@@ -1,4 +1,5 @@
-class Cms::PagesController < Cms::BaseController
+module Cms
+class PagesController < Cms::BaseController
  
   before_filter :set_toolbar_tab
   before_filter :load_section, :only => [:new, :create]
@@ -22,20 +23,20 @@ class Cms::PagesController < Cms::BaseController
   end
  
   def create
-    @page = Page.new(params[:page])
+    @page = Page.new(params[:cms_page])
     @page.section = @section
     if @page.save
       flash[:notice] = "Page was '#{@page.name}' created."
-      redirect_to [:cms, @page]
+      redirect_to @page
     else
       render :action => "new"
     end
   end
 
   def update
-    if @page.update_attributes(params[:page])
+    if @page.update_attributes(params[:cms_page])
       flash[:notice] = "Page was '#{@page.name}' updated."
-      redirect_to [:cms, @page]
+      redirect_to @page
     else
       render :action => "edit"
     end
@@ -100,8 +101,8 @@ class Cms::PagesController < Cms::BaseController
   private
     def strip_publish_params
       unless current_user.able_to?(:publish_content)
-        params[:page].delete :hidden
-        params[:page].delete :archived
+        params[:cms_page].delete :hidden
+        params[:cms_page].delete :archived
       end
     end
 
@@ -132,4 +133,5 @@ class Cms::PagesController < Cms::BaseController
       @templates = PageTemplate.options
     end
    
+end
 end

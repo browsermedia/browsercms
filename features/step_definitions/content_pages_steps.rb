@@ -12,7 +12,7 @@ Given /^I am logged in as a Content Editor$/ do
 end
 
 Given /^there is a LoginPortlet on the homepage$/ do
-  cms_page = Page.with_path("/").first
+  cms_page = Cms::Page.with_path("/").first
   portlet = LoginPortlet.new(:name=>"Login Portlet")
   cms_page.add_content(portlet)
 end
@@ -25,12 +25,12 @@ Then /^I should see a Login Form$/ do
 end
 
 Then /^the homepage should exist$/ do
-  cms_page = Page.with_path("/").first
+  cms_page = Cms::Page.with_path("/").first
   cms_page.should_not be_nil
 end
 
 Given /^there is a homepage$/ do
-  @homepage = Page.with_path("/").first
+  @homepage = Cms::Page.with_path("/").first
 end
 
 Then /^I should see Welcome, cmsadmin$/ do

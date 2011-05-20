@@ -1,7 +1,11 @@
-Status
-=====
+For 3.4, currently working on namespacing
 
-BrowserCMS 3.3.0 is complete.
+Start with: rake db:drop db:install test:units
+
+* Review and possibly remove cms_user depending on what it does.
+* Portlets need to be namespaced under cms_ as well (This seems to cause issues with DynamicAttribute saving, so might pass on this one.)
+
+Rack::Cache plus Rack::ESI?
 
 Cucumber Recommendations
 * Avoid using selectors unless it really matters.

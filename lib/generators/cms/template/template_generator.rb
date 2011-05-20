@@ -5,7 +5,9 @@ module Cms
       source_root File.expand_path('../templates', __FILE__)
 
       def create_template
-       template 'template.erb', File.join('app/views/layouts/templates', "#{template_name}.html.erb")
+        template_dir = 'app/views/layouts/templates'
+#        empty_directory template_dir
+        template 'template.erb', File.join(template_dir, "#{template_name}.html.erb")
       end
 
       private

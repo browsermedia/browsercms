@@ -33,7 +33,7 @@ class RenderingTest < ActiveSupport::TestCase
   end
 
   test "The proper render method should be called" do
-    assert_equal false, HtmlBlock.new.should_render_self?, "HtmlBlocks should not be considered 'self renderable'"
+    assert_equal false, Cms::HtmlBlock.new.should_render_self?, "HtmlBlocks should not be considered 'self renderable'"
   end
 
   test "Blocks which define their own render method should have that one called" do
@@ -58,7 +58,7 @@ class RenderingTest < ActiveSupport::TestCase
     controller = ActionController::Base.new
     controller.expects(:view_paths).returns([])
 
-    block = HtmlBlock.new
+    block = Cms::HtmlBlock.new
 
     # This isn't really what should happen, but its at least testing that render isn't using missing methods
     assert_raise ActionView::MissingTemplate do

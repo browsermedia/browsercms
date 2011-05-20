@@ -1,4 +1,4 @@
-class TagCloudPortlet < Portlet
+class TagCloudPortlet < Cms::Portlet
   
   def self.default_sizes
     (0..4).map{|n| "size-#{n}" }.join(" ")

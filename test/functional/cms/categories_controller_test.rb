@@ -1,6 +1,7 @@
 require 'test_helper'
 
-class Cms::CategoriesControllerTest < ActionController::TestCase
+module Cms
+class CategoriesControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
   
   def setup
@@ -22,4 +23,5 @@ class Cms::CategoriesControllerTest < ActionController::TestCase
     assert_select "option", "FooCategoryType"
   end
   
+end
 end

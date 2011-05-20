@@ -58,7 +58,7 @@ module Cms
       count = block.connected_pages.count
       if count > 0
         # Would love a cleaner solution to this problem, see http://stackoverflow.com/questions/702728
-        path = Portlet === block ? usages_cms_portlet_path(block) : [:usages, :cms, block]
+        path = Portlet === block ? usages_cms_portlet_path(block) : [:usages, block]
         link_to count, path, :id => block.id, :block_type => block.content_block_type
       else
         count
@@ -167,13 +167,14 @@ LBW
       if collection.blank?
         content_tag(:div, "No Content", :class => "pagination")
       else
+        collection_path = "#{collection_name}_path"
         render :partial => "cms/shared/pagination", :locals => {
             :collection         => collection,
-            :first_page_path    => send("cms_#{collection_name}_path", {:page => 1}.merge(options)),
-            :previous_page_path => send("cms_#{collection_name}_path", {:page => collection.previous_page ? collection.previous_page : 1}.merge(options)),
-            :current_page_path  => send("cms_#{collection_name}_path", options),
-            :next_page_path     => send("cms_#{collection_name}_path", {:page => collection.next_page ? collection.next_page : collection.current_page}.merge(options)),
-            :last_page_path     => send("cms_#{collection_name}_path", {:page => collection.total_pages}.merge(options))
+            :first_page_path    => send(collection_path, {:page => 1}.merge(options)),
+            :previous_page_path => send(collection_path, {:page => collection.previous_page ? collection.previous_page : 1}.merge(options)),
+            :current_page_path  => send(collection_path, options),
+            :next_page_path     => send(collection_path, {:page => collection.next_page ? collection.next_page : collection.current_page}.merge(options)),
+            :last_page_path     => send(collection_path, {:page => collection.total_pages}.merge(options))
         }
       end
     end

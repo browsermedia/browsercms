@@ -6,7 +6,7 @@ ActiveRecord::Base.connection.instance_eval do
 
   drop_table(:versioned_taggable_articles) if table_exists?(:versioned_taggable_articles)
   drop_table(:versioned_taggable_article_versions) if table_exists?(:versioned_taggable_article_versions)
-  create_versioned_table(:versioned_taggable_articles) do |t| 
+  create_versioned_table(:versioned_taggable_articles, :prefix=>false) do |t|
     t.string :name
   end
 end
@@ -24,15 +24,15 @@ class TaggableBlockTest < ActiveSupport::TestCase
     article = TaggableArticle.create!(:name => "foo")
     assert_equal 0, article.taggings.count
     assert_equal 0, article.tags.count
-    assert_equal 0, Tag.count
-    assert_equal 0, Tagging.count
+    assert_equal 0, Cms::Tag.count
+    assert_equal 0, Cms::Tagging.count
 
     article.tag_list = "foo bar"
     assert article.save
     assert_equal 2, article.taggings.count
     assert_equal 2, article.tags.count
-    assert_equal 2, Tag.count
-    assert_equal 2, Tagging.count
+    assert_equal 2, Cms::Tag.count
+    assert_equal 2, Cms::Tagging.count
     
     assert_equal [article], TaggableArticle.tagged_with("foo").all
     assert_equal [article], TaggableArticle.tagged_with("bar").all
@@ -42,8 +42,8 @@ class TaggableBlockTest < ActiveSupport::TestCase
     assert article.save
     assert_equal 2, article.taggings.count
     assert_equal 2, article.tags.count
-    assert_equal 3, Tag.count
-    assert_equal 2, Tagging.count
+    assert_equal 3, Cms::Tag.count
+    assert_equal 2, Cms::Tagging.count
 
     assert_equal [article], TaggableArticle.tagged_with("foo").all
     assert_equal [article], TaggableArticle.tagged_with("bang").all
@@ -62,28 +62,28 @@ class TaggableBlockTest < ActiveSupport::TestCase
       TaggableArticle.create!(:name => "Article ##{n}", :tag_list => tag_list.join(" ") )
     end
     
-    tag_counts = Tag.counts(:limit => 4)
+    tag_counts = Cms::Tag.counts(:limit => 4)
     assert_equal 4, tag_counts.size
-    assert_equal Tag.find_by_name("article"), tag_counts[0]
+    assert_equal Cms::Tag.find_by_name("article"), tag_counts[0]
     assert_equal "25", tag_counts[0].count
-    assert_equal Tag.find_by_name("even"), tag_counts[1]
+    assert_equal Cms::Tag.find_by_name("even"), tag_counts[1]
     assert_equal "13", tag_counts[1].count
-    assert_equal Tag.find_by_name("five"), tag_counts[2]
+    assert_equal Cms::Tag.find_by_name("five"), tag_counts[2]
     assert_equal "5", tag_counts[2].count
-    assert_equal Tag.find_by_name("first"), tag_counts[3]
+    assert_equal Cms::Tag.find_by_name("first"), tag_counts[3]
     assert_equal "1", tag_counts[3].count
     
-    tag_cloud = Tag.cloud(:sizes => 9)
+    tag_cloud = Cms::Tag.cloud(:sizes => 9)
     assert_equal 5, tag_cloud.size
-    assert_equal Tag.find_by_name("article"), tag_cloud[0]
+    assert_equal Cms::Tag.find_by_name("article"), tag_cloud[0]
     assert_equal 6, tag_cloud[0].size
-    assert_equal Tag.find_by_name("even"), tag_cloud[1]
+    assert_equal Cms::Tag.find_by_name("even"), tag_cloud[1]
     assert_equal 3, tag_cloud[1].size
-    assert_equal Tag.find_by_name("five"), tag_cloud[2]
+    assert_equal Cms::Tag.find_by_name("five"), tag_cloud[2]
     assert_equal 1, tag_cloud[2].size
-    assert_equal Tag.find_by_name("first"), tag_cloud[3]
+    assert_equal Cms::Tag.find_by_name("first"), tag_cloud[3]
     assert_equal 0, tag_cloud[3].size
-    assert_equal Tag.find_by_name("last"), tag_cloud[4]
+    assert_equal Cms::Tag.find_by_name("last"), tag_cloud[4]
     assert_equal 0, tag_cloud[4].size
   end
   
@@ -94,15 +94,15 @@ class VersionedTaggableBlockTest < ActiveSupport::TestCase
     article = VersionedTaggableArticle.create!(:name => "foo")
     assert_equal 0, article.taggings.count
     assert_equal 0, article.tags.count
-    assert_equal 0, Tag.count
-    assert_equal 0, Tagging.count
+    assert_equal 0, Cms::Tag.count
+    assert_equal 0, Cms::Tagging.count
 
     article.tag_list = "foo bar"
     assert article.save
     assert_equal 2, article.taggings.count
     assert_equal 2, article.tags.count
-    assert_equal 2, Tag.count
-    assert_equal 2, Tagging.count
+    assert_equal 2, Cms::Tag.count
+    assert_equal 2, Cms::Tagging.count
   end
 
   

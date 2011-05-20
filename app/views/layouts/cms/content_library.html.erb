@@ -52,7 +52,7 @@
                 <%= yield :sidebar %>
                 <h3>Content Types</h3>
                 <ul>
-                  <% ContentTypeGroup.all(:order => "content_type_groups.id").each do |group| %>
+                  <% Cms::ContentTypeGroup.all(:order => "#{Cms::ContentTypeGroup.table_name}.id").each do |group| %>
                     <li<%= ' class="open"'.html_safe if (group == content_type.content_type_group) %>>
                       <% if group.content_types.blank? %>
                         <%= link_to h(group.name), "#" %>

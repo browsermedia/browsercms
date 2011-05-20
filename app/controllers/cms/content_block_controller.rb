@@ -1,6 +1,8 @@
+require 'cms/category_type'
 # This is not called directly
 # This is the base class for other content blocks
-class Cms::ContentBlockController < Cms::BaseController
+module Cms
+class ContentBlockController < Cms::BaseController
   
   layout :determine_layout
   
@@ -101,7 +103,7 @@ class Cms::ContentBlockController < Cms::BaseController
     # methods that are used to detemine what content block type we are dealing with
 
     def content_type_name
-      self.class.name.sub(/Controller/,'').demodulize.singularize
+      self.class.name.sub(/Controller/,'').singularize
     end
 
     def content_type
@@ -113,7 +115,7 @@ class Cms::ContentBlockController < Cms::BaseController
     end
   
     def model_name
-      model_class.name.underscore.to_sym
+      ActiveModel::Naming.singular(model_class)
     end
   
     # methods for loading one or a collection of blocks
@@ -122,7 +124,7 @@ class Cms::ContentBlockController < Cms::BaseController
       options = {}
       if params[:section_id] && params[:section_id] != 'all'
         options[:include] = { :attachment => { :section_node => :section }} 
-        options[:conditions] = ["sections.id = ?", params[:section_id]]
+        options[:conditions] = ["#{Section.table_name}.id = ?", params[:section_id]]
       end
       options[:page] = params[:page]    
       options[:order] = model_class.default_order if model_class.respond_to?(:default_order)
@@ -150,7 +152,7 @@ class Cms::ContentBlockController < Cms::BaseController
     end
   
     def block_path(action=nil)
-      path = [:cms, @block]
+      path = [@block]
       action ? path.unshift(action) : path
     end
   
@@ -209,7 +211,7 @@ class Cms::ContentBlockController < Cms::BaseController
     end
 
     def after_update_on_success
-      flash[:notice] = "#{content_type_name.titleize} '#{@block.name}' was updated"
+      flash[:notice] = "#{content_type_name.demodulize.titleize} '#{@block.name}' was updated"
       redirect_to_first params[:_redirect_to], block_path
     end
 
@@ -235,9 +237,9 @@ class Cms::ContentBlockController < Cms::BaseController
     def do_command(result)
       load_block
       if yield
-        flash[:notice] = "#{content_type_name.titleize} '#{@block.name}' was #{result}"
+        flash[:notice] = "#{content_type_name.demodulize.titleize} '#{@block.name}' was #{result}"
       else
-        flash[:error] = "#{content_type_name.titleize} '#{@block.name}' could not be #{result}"
+        flash[:error] = "#{content_type_name.demodulize.titleize} '#{@block.name}' could not be #{result}"
       end
     end
 
@@ -282,4 +284,5 @@ class Cms::ContentBlockController < Cms::BaseController
       "cms/blocks"
     end
 
+end
 end

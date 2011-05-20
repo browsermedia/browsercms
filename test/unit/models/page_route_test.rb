@@ -2,7 +2,7 @@ require 'test_helper'
 
 class PageRouteTest < ActiveSupport::TestCase
   def setup
-    @route = PageRoute.new(:pattern=>"/:some/:pattern", :name=>"My Name")
+    @route = Cms::PageRoute.new(:pattern=>"/:some/:pattern", :name=>"My Name")
   end
 
 
@@ -77,22 +77,22 @@ class LoadingPageRoutesTest < ActiveSupport::TestCase
   end
 
   test "can_be_loaded?" do
-    PageRoute.expects(:database_exists?).returns(true)
-    PageRoute.expects(:table_exists?).returns(true)
+    Cms::PageRoute.expects(:database_exists?).returns(true)
+    Cms::PageRoute.expects(:table_exists?).returns(true)
 
-    assert_equal true, PageRoute.can_be_loaded?
+    assert_equal true, Cms::PageRoute.can_be_loaded?
   end
 
   test "Routes cannot be loaded if the table doesn't exist" do
-    PageRoute.expects(:database_exists?).returns(true)
-    PageRoute.expects(:table_exists?).returns(false)
+    Cms::PageRoute.expects(:database_exists?).returns(true)
+    Cms::PageRoute.expects(:table_exists?).returns(false)
 
-    assert_equal false, PageRoute.can_be_loaded?
+    assert_equal false, Cms::PageRoute.can_be_loaded?
   end
 
   test "Routes cannot be loaded if the database doesn't exist" do
-    PageRoute.expects(:database_exists?).returns(false)
+    Cms::PageRoute.expects(:database_exists?).returns(false)
 
-    assert_equal false, PageRoute.can_be_loaded?
+    assert_equal false, Cms::PageRoute.can_be_loaded?
   end
 end

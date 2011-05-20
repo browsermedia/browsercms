@@ -1,6 +1,20 @@
 require 'test_helper'
 
 class HtmlBlockTest < ActiveSupport::TestCase
+
+  test "versioned_foreign_key" do
+    assert_equal "html_block_id", Cms::HtmlBlock.version_foreign_key
+  end
+
+  test "table_name" do
+    assert_equal "cms_html_blocks", Cms::HtmlBlock.table_name
+  end
+
+  test "save" do
+
+    @block = Cms::HtmlBlock.create!(:name=>"Test")
+  end
+
   def test_create    
     @page = Factory(:page)
     @html_block = Factory(:html_block, :connect_to_page_id => @page.id, :connect_to_container => "test")
@@ -11,7 +25,7 @@ class HtmlBlockTest < ActiveSupport::TestCase
   end
   
   def test_versioning
-    assert HtmlBlock.versioned?
+    assert Cms::HtmlBlock.versioned?
     
     @html_block = Factory(:html_block, :name => "Original Value")
     assert_equal @html_block, @html_block.versions.last.html_block
@@ -29,13 +43,13 @@ class HtmlBlockTest < ActiveSupport::TestCase
     assert_equal html_block_version_count, @html_block.versions.count
     
     # deleting should create a new version
-    html_block_count = HtmlBlock.count_with_deleted
+    html_block_count = Cms::HtmlBlock.count_with_deleted
     html_block_version_count = @html_block.versions.count
     assert !@html_block.deleted?
     
     @html_block.destroy    
     
-    assert_equal html_block_count, HtmlBlock.count_with_deleted
+    assert_equal html_block_count, Cms::HtmlBlock.count_with_deleted
     assert_incremented html_block_version_count, @html_block.versions.count
     assert @html_block.deleted?
     
@@ -70,17 +84,17 @@ class HtmlBlockTest < ActiveSupport::TestCase
     assert @v1_created_at.to_i, @html_block.created_at.to_i
     
     # version is required for revert_to
-    html_block_version_count = HtmlBlock::Version.count
+    html_block_version_count = Cms::HtmlBlock::Version.count
     assert_raise "Version parameter missing" do
       @html_block.revert_to nil
     end
-    assert_equal html_block_version_count, HtmlBlock::Version.count
+    assert_equal html_block_version_count, Cms::HtmlBlock::Version.count
      
-    html_block_version_count = HtmlBlock::Version.count
+    html_block_version_count = Cms::HtmlBlock::Version.count
     assert_raise "Could not find version 42" do
       @html_block.revert_to 42
     end
-    assert_equal html_block_version_count, HtmlBlock::Version.count 
+    assert_equal html_block_version_count, Cms::HtmlBlock::Version.count 
   end
   
   def test_previous_version
@@ -88,7 +102,7 @@ class HtmlBlockTest < ActiveSupport::TestCase
     @html_block.update_attributes(:name => "V2")
     @version = @html_block.as_of_version 1
     
-    assert_equal HtmlBlock, @version.class
+    assert_equal Cms::HtmlBlock, @version.class
     assert_equal "V1", @version.name
     assert_equal 1, @version.version
     assert_equal @html_block.id, @version.id

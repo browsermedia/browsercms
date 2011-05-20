@@ -1,3 +1,21 @@
+v3.4.0
+======
+
+Add the ability to add BrowserCMS to Rails projects.
+* Add bcms install method that will add browsercms to an existing Rails project.
+* Most core files in the CMS are namespaced under Cms:: . This should reduce the chance of conflicting classes (i.e. what was User is now Cms::User)
+* Table names can optionally be namespaced. By default, there is no namespace for new projects. You can set: Cms.table_prefix = "cms_" to change this.
+* Prefixing tables will be reflected in cms migrations (like create_content_table) automatically. Passing :prefix=>false will add no prefix.
+* For creating tables (using create_table), you can use prefix() to apply the current prefix. i.e.
+
+    create_table prefix(:users)
+
+* Added some basic support for making other 'user' objects act like CMS users via Cms::Acts::User. For example, the following would make a custom non-CMS user gain permission to act like an admin.
+
+ class MyCustomUser < ActiveRecord::Base
+    acts_as_cms_user :groups => [Cms::Group.find_by_code('admin')]
+ end
+
 v3.3.0
 ======
 

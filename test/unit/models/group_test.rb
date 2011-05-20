@@ -6,8 +6,8 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   test "Find guest group via method" do
-    expected = Group.find_by_code(Group::GUEST_CODE)
+    expected = Cms::Group.find_by_code(Cms::Group::GUEST_CODE)
     assert_not_nil expected, "Validates that our fixture code is loading a guest user into the database."
-    assert_equal expected, Group.guest
+    assert_equal expected, Cms::Group.guest
   end
 end

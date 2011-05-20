@@ -1,4 +1,4 @@
-class LoginPortlet < Portlet
+class LoginPortlet < Cms::Portlet
   
   def render
     @success_url = (flash[:success_url] || self.success_url)

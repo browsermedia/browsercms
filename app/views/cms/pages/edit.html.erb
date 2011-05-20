@@ -5,7 +5,7 @@
 <%= link_to(span_tag("edit content"), @page.path, :class => "button") %>
 <br clear="all" />
 <% end %>
-<%= form_for([:cms, @page]) do |f| %>
+<%= form_for(@page) do |f| %>
   <% if @other_version %>
     <%= render :partial => 'cms/shared/version_conflict_error', :locals => {:other_version => @other_version, :your_version => @page} %>
     <%= f.hidden_field :lock_version, :value => @other_version.lock_version %>

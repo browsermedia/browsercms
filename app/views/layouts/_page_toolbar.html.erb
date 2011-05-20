@@ -66,7 +66,7 @@
     :target => "_top" %>
 
   <%= link_to "<span>Edit Properties</span>".html_safe,
-    [:edit, :cms, @page], 
+    [:edit, @page],
     :id => "edit_properties_button",
     :class => "spacer button#{ ' disabled' unless current_user.able_to_edit?(@page) }", 
     :target => "_top" %>
@@ -79,7 +79,7 @@
   <%= able_to? :publish_content do %>
     <% if @page.draft_version? %>  
       <%= link_to "<span><span class=\"delete_img\">&nbsp;</span>Delete</span>".html_safe,
-        [:cms, @page], 
+        [@page],
         :id => "delete_button",
         :title => "Are you sure you want to delete '#{@page.name}'?", 
         :target => "_top", 

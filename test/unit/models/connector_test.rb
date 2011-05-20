@@ -12,7 +12,7 @@ class ConnectorTest < ActiveSupport::TestCase
     foo = Factory(:html_block, :name => "foo")
     bar = Factory(:html_block, :name => "bar")
     Factory(:connector, :connectable => foo, :connectable_version => foo.version)
-    blocks = Connector.for_connectable(foo).map(&:connectable)
+    blocks = Cms::Connector.for_connectable(foo).map(&:connectable)
     assert blocks.include?(foo)
     assert !blocks.include?(bar)
   end
@@ -37,10 +37,10 @@ class ConnectorTest < ActiveSupport::TestCase
   def test_blocks_not_deleted_when_connector_is_not_deleted
     b = Factory(:html_block)
     c = Factory(:connector, :connectable => b)
-    connector_count = Connector.count
+    connector_count = Cms::Connector.count
     c.destroy
-    assert_decremented connector_count, Connector.count
-    assert !HtmlBlock.find_by_id(b.id).nil?
+    assert_decremented connector_count, Cms::Connector.count
+    assert !Cms::HtmlBlock.find_by_id(b.id).nil?
   end
   
   def test_re_order_blocks_within_a_container
@@ -78,7 +78,7 @@ class ConnectorTest < ActiveSupport::TestCase
     
     reset(:page)
 
-    log_table_without_stamps Connector
+    log_table_without_stamps Cms::Connector
     
     assert_nil @page.connectors.for_page_version(2).first.connectable
     
@@ -93,7 +93,7 @@ class ConnectorTest < ActiveSupport::TestCase
     @page = Factory(:page)
     @block = Factory(:html_block, :connect_to_page_id => @page.id, :connect_to_container => "main")
 
-    conn = Connector.new
+    conn = Cms::Connector.new
     conn.connectable = @block
     assert(conn.connectable, "Check the assumption there is connectable.")
     assert_equal(false, conn.connectable.draft.deleted?, "Check the assumption that the draft is not-deleted.")
@@ -102,7 +102,7 @@ class ConnectorTest < ActiveSupport::TestCase
   end
 
   def test_connector_shouldnt_copy_when_its_connectable_is_nil
-    conn = Connector.new
+    conn = Cms::Connector.new
     assert_nil(conn.connectable, "Check assumption that connectable is nil.")
 
     assert_equal false, conn.should_be_copied?, "Shouldn't copy when a connector isn't connected to anything."
@@ -114,7 +114,7 @@ class ConnectorTest < ActiveSupport::TestCase
 
     @block.destroy
 
-    conn = Connector.new
+    conn = Cms::Connector.new
     conn.connectable = @block
 
     assert_equal true, @block.draft.deleted?, "Check assumption that latest draft of this block is 'deleted'."
@@ -124,9 +124,9 @@ class ConnectorTest < ActiveSupport::TestCase
 
   def test_connector_should_copy_even_if_connectable_doesnt_have_drafts
     @page = Factory(:page)
-    @block = Portlet.create!(:name => "Stuff")
+    @block = Cms::Portlet.create!(:name => "Stuff")
 
-    conn = Connector.new
+    conn = Cms::Connector.new
     conn.connectable = @block
 
     assert_equal false, @block.respond_to?(:draft), "Check assumption that portlets do not respond to draft method."

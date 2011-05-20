@@ -21,12 +21,12 @@ class Cms::SectionsController < Cms::BaseController
   end
   
   def create
-    @section = Section.new(params[:section])
+    @section = Section.new(params[:cms_section])
     @section.parent = @parent
     @section.groups = @section.parent.groups unless current_user.able_to?(:administrate)
     if @section.save
       flash[:notice] = "Section '#{@section.name}' was created"
-      redirect_to [:cms, @section]
+      redirect_to @section
     else
       render :action => 'new'
     end    
@@ -36,11 +36,11 @@ class Cms::SectionsController < Cms::BaseController
   end
   
   def update
-    params[:section].delete('group_ids') if params[:section] &&  !current_user.able_to?(:administrate)
-    @section.attributes = params[:section]
+    params[:cms_section].delete('group_ids') if params[:cms_section] &&  !current_user.able_to?(:administrate)
+    @section.attributes = params[:cms_section]
     if @section.save
       flash[:notice] = "Section '#{@section.name}' was updated"
-      redirect_to [:cms, @section]
+      redirect_to @section
     else
       render :action => 'edit'
     end      
@@ -116,11 +116,11 @@ class Cms::SectionsController < Cms::BaseController
     end
 
     def public_groups
-      @public_groups ||= Group.public_groups.all(:order => "groups.name")
+      @public_groups ||= Group.public.all(:order => "#{Group.table_name}.name")
     end
 
     def cms_groups
-      @cms_groups ||= Group.cms_access.all(:order => "groups.name")
+      @cms_groups ||= Group.cms_access.all(:order => "#{Group.table_name}.name")
     end
 
     def set_toolbar_tab

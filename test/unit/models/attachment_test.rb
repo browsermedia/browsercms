@@ -8,14 +8,15 @@ class AttachmentTest < ActiveSupport::TestCase
   end
 
   def test_creating_an_attachment_with_no_file
-    attachment = Attachment.new
+    attachment = Cms::Attachment.new
     assert_not_valid attachment
     assert_has_error_on attachment, :temp_file, "You must upload a file"
   end
 
   def test_creating_an_attachment_with_a_StringIO_file
     file = @file
-    attachment = Attachment.new(:temp_file => file, :file_path => "/sample_upload.txt", :section => root_section)
+    attachment = Cms::Attachment.new(:temp_file => file, :file_path => "/sample_upload.txt", :section => root_section)
+
     attachment.save!
     assert_equal "sample_upload.txt", attachment.file_name
     assert_equal "text/plain", attachment.file_type
@@ -26,7 +27,7 @@ class AttachmentTest < ActiveSupport::TestCase
 
   def test_creating_an_attachment_with_a_Tempfile_file
     file = @file
-    attachment = Attachment.new(:temp_file => file, :file_path => "/foo.txt", :section => root_section)
+    attachment = Cms::Attachment.new(:temp_file => file, :file_path => "/foo.txt", :section => root_section)
     attachment.save!
 
     assert_equal "foo.txt", attachment.file_name
@@ -36,7 +37,7 @@ class AttachmentTest < ActiveSupport::TestCase
     # If you change the attributes of the attachment, but don't change the file
     # the file_location should not change
     original_file_location = attachment.file_location
-    attachment = Attachment.find(attachment.id)
+    attachment = Cms::Attachment.find(attachment.id)
     attachment.update_attributes(:file_path => "bar.txt")
     assert_equal 2, attachment.draft.version
     assert_equal "/bar.txt", attachment.file_path
@@ -44,7 +45,7 @@ class AttachmentTest < ActiveSupport::TestCase
     assert_equal original_file_location, attachment.file_location
 
     # If you change the file of the attachment, the file_location should change
-    attachment = Attachment.find(attachment.id)
+    attachment = Cms::Attachment.find(attachment.id)
 
     file = file_upload_object(:original_filename=>"second_upload.txt", :content_type=>"text/plain")
     attachment.update_attributes(:temp_file => file)
@@ -59,36 +60,37 @@ class AttachmentTest < ActiveSupport::TestCase
 
   def test_find_live_by_file_path
     file = @file
-    attachment = Attachment.new(:temp_file => file, :file_path => "/foo.txt", :section => root_section)
+    attachment = Cms::Attachment.new(:temp_file => file, :file_path => "/foo.txt", :section => root_section)
     attachment.save!
     assert !attachment.published?, "Attachment should not be published"
-    assert_nil Attachment.find_live_by_file_path("/foo.txt")
+    assert_nil Cms::Attachment.find_live_by_file_path("/foo.txt")
 
     attachment.publish
     assert attachment.reload.published?, "Attachment should be published"
-    assert_equal attachment, Attachment.find_live_by_file_path("/foo.txt")
+    assert_equal attachment, Cms::Attachment.find_live_by_file_path("/foo.txt")
 
     attachment.update_attributes(:file_type => "text/html")
     assert !attachment.live?, "Attachment should not be live"
-    assert_equal attachment.as_of_version(2), Attachment.find_live_by_file_path("/foo.txt")
+    assert_equal attachment.as_of_version(2), Cms::Attachment.find_live_by_file_path("/foo.txt")
   end
+
 
   test "If an uploaded file has no detectable content type (i.e. markdown) then assign it the 'unknown' type" do
     mock_file = mock()
     mock_file.expects(:content_type).returns(nil)
-    atk = Attachment.new(:temp_file => mock_file)
+    atk = Cms::Attachment.new(:temp_file => mock_file)
     atk.extract_file_type_from_temp_file
 
-    assert_equal Attachment::UNKNOWN_MIME_TYPE, atk.file_type
+    assert_equal Cms::Attachment::UNKNOWN_MIME_TYPE, atk.file_type
   end
 end
 
-class Attachment::SectionTest < ActiveSupport::TestCase
+class Cms::Attachment::SectionTest < ActiveSupport::TestCase
 
   def setup
     @file = file_upload_object({:original_filename=>"sample_upload.txt", :content_type=>"text/plain"})
-    @attachment = Attachment.create!(:temp_file => @file, :file_path => "/foo.txt", :section => root_section)
-    @attachment = Attachment.find(@attachment.id) # Force reload
+    @attachment = Cms::Attachment.create!(:temp_file => @file, :file_path => "/foo.txt", :section => root_section)
+    @attachment = Cms::Attachment.find(@attachment.id) # Force reload
   end
 
   test "Setting the section on an attachment persists that section" do
@@ -99,7 +101,7 @@ class Attachment::SectionTest < ActiveSupport::TestCase
     new_section = Factory(:section)
     @attachment.section = new_section
     @attachment.save!
-    @attachment = Attachment.find(@attachment.id) # Force reload
+    @attachment = Cms::Attachment.find(@attachment.id) # Force reload
     assert_equal new_section, @attachment.section
   end
 end

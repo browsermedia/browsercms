@@ -2,10 +2,30 @@ module ActiveRecord
   module ConnectionAdapters # :nodoc:
     module SchemaStatements
 
-      # Pass in ":versioned => false" in the options hash to create a non-versioned table.
-      def create_content_table(table_name, options={}, &block)
+      # Applies the current CMS prefix to the given table name.
+      # Useful for where you need CMS related migrations using stock rails migrations (like add_index or create_table)
+      # but still want to dynamically apply the CMS prefixes.
+      def prefix(table_name)
+        Cms::Namespacing.prefixed_table_name(table_name)
+      end
 
-        #Do the primary table
+      # Pass in ":versioned => false" in the options hash to create a non-versioned table.
+      #
+      # @param table_name
+      # @param options
+      # @option :prefix [Boolean]
+      def create_content_table(table_name, options={}, &block)
+        defaults = {
+            versioned: true,
+            prefix: true
+        }
+        options = defaults.merge(options)
+
+        if options[:prefix]
+          table_name = Cms::Namespacing.prefixed_table_name(table_name)
+        end
+
+        #Create the primary table
         t = TableDefinition.new(self)
         t.primary_key(options[:primary_key] || Base.get_primary_key(table_name)) unless options[:id] == false
 
@@ -26,7 +46,7 @@ module ActiveRecord
         t.integer :created_by_id
         t.integer :updated_by_id
         t.timestamps
-        
+
         create_table_from_definition(table_name, options, t)
 
         unless options[:versioned] == false
@@ -34,7 +54,10 @@ module ActiveRecord
           vt = TableDefinition.new(self)
           vt.primary_key(options[:primary_key] || Base.get_primary_key(table_name)) unless options[:id] == false
 
-          vt.integer "#{table_name.to_s.singularize}_id".to_sym
+          # This is duplicating effort between NilModel and here.
+          model = Cms::Acts::ContentBlock.model_for(table_name)
+          version_column = model.respond_to?(:version_foreign_key) ? model.version_foreign_key : Cms::Behaviors::Versioning.default_foreign_key(table_name)
+          vt.integer version_column
           vt.integer :version
           yield vt
 
@@ -43,7 +66,7 @@ module ActiveRecord
 
           vt.boolean :published, :default => false
           vt.boolean :deleted, :default => false
-          vt.boolean :archived, :default => false        
+          vt.boolean :archived, :default => false
           vt.string :version_comment
           vt.integer :created_by_id
           vt.integer :updated_by_id
@@ -51,8 +74,8 @@ module ActiveRecord
 
           create_table_from_definition("#{table_name.to_s.singularize}_versions".to_sym, options, vt)
         end
-        
-      end   
+
+      end
 
       #
       # @deprecated - create_versioned_table should be considered deprecated and may be removed in a future version.
@@ -62,26 +85,34 @@ module ActiveRecord
 
       def create_table_from_definition(table_name, options, table_definition)
         if options[:force] && table_exists?(table_name)
-         drop_table(table_name, options)
+          drop_table(table_name, options)
         end
 
         create_sql = "CREATE#{' TEMPORARY' if options[:temporary]} TABLE "
         create_sql << "#{quote_table_name(table_name)} ("
         create_sql << table_definition.to_sql
         create_sql << ") #{options[:options]}"
-        execute create_sql            
+        execute create_sql
       end
-      
+
       def drop_versioned_table(table_name)
+        table_name = Cms::Namespacing.prefixed_table_name(table_name)
         drop_table "#{table_name.singularize}_versions".to_sym
         drop_table table_name
       end
+
+      alias :drop_content_table :drop_versioned_table
 
       # Adds a column to both the primary and versioned table. Save needing two calls.
       # This is only needed if your content block is versioned, otherwise add_column will work just fine.
       def add_content_column(table_name, column_name, type, options={})
         add_column table_name, column_name, type, options
         add_column "#{table_name.to_s.singularize}_versions".to_sym, column_name, type, options
+      end
+
+      # Will namespace the content table
+      def content_table_exists?(table_name)
+        table_exists?(Cms::Namespacing.prefixed_table_name(table_name))
       end
     end
   end

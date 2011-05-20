@@ -5,7 +5,7 @@ class Browsercms330 < ActiveRecord::Migration
     cant_fix = []
     to_fix = []
     # find all pages whose path ends in slash and is not root
-    Page.find(:all, :conditions => "path LIKE '/%/'").each do |pt_page|
+    Cms::Page.find(:all, :conditions => "path LIKE '/%/'").each do |pt_page|
       # make sure no extant page has this path
       if Page.count(:conditions => ["path = ?", pt_page.path.sub(/(.+)\/+$/, '\1')]) > 0
           cant_fix << pt_page
@@ -16,9 +16,9 @@ class Browsercms330 < ActiveRecord::Migration
     version_cant_fix = []
     version_to_fix = []
     # find all page versions whose path ends in slash and is not root
-    Page::Version.find(:all, :conditions => "path LIKE '/%/'").each do |pt_page|
+    Cms::Page::Version.find(:all, :conditions => "path LIKE '/%/'").each do |pt_page|
       # make sure no extant page has this path
-      if Page.count(:conditions => ["path = ?", pt_page.path.sub(/(.+)\/+$/, '\1')]) > 0
+      if Cms::Page.count(:conditions => ["path = ?", pt_page.path.sub(/(.+)\/+$/, '\1')]) > 0
           version_cant_fix << pt_page
         else
           version_to_fix << pt_page
@@ -34,13 +34,13 @@ class Browsercms330 < ActiveRecord::Migration
       # change the path of all pages with a trailing slash to not have one
       # using sql updates to prevent unwanted callbacks
       new_path = fix_page.path.to_s.sub(/(.+)\/+$/, '\1')
-      execute "UPDATE pages SET path = '#{new_path}' WHERE id = #{fix_page.id};"
+      execute "UPDATE #{prefix('pages')} SET path = '#{new_path}' WHERE id = #{fix_page.id};"
     end
     version_to_fix.each do |fix_page|
       # change the path of all fixable page versions with a trailing slash to not have one
       # using sql updates to prevent unwanted callbacks
       new_path = fix_page.path.to_s.sub(/(.+)\/+$/, '\1')
-      execute "UPDATE page_versions SET path = '#{new_path}' WHERE id = #{fix_page.id};"
+      execute "UPDATE #{prefix('page_versions')} SET path = '#{new_path}' WHERE id = #{fix_page.id};"
     end
     # end patch for LH345
   end

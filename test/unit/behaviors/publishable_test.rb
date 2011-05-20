@@ -47,7 +47,7 @@ class PublishableTestCase < ActiveSupport::TestCase
   end
   
   def test_not_publishable_if_connect_to_page_id_is_blank
-    assert HtmlBlock.new(:connect_to_page_id => "").publishable?
+    assert Cms::HtmlBlock.new(:connect_to_page_id => "").publishable?
   end
   
 end

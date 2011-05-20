@@ -3,23 +3,23 @@ require 'test_helper'
 class Cms::MenuHelperTest < ActionView::TestCase
 
   def test_menu_items
-    Page.first.update_attributes(:hidden => true, :publish_on_save => true)
+    Cms::Page.first.update_attributes(:hidden => true, :publish_on_save => true)
     create_nfl_data
 
     expected = [
-            { :id => "section_#{@afc.id}", :url => "/buf", :name => "AFC", :children => [
-                    { :id => "section_#{@afc_east.id}", :url => "/buf", :name => "East" },
-                    { :id => "section_#{@afc_north.id}", :url => "/bal", :name => "North", :children => [
-                            { :id => "page_#{@bal.id}", :selected => true, :url => "/bal", :name => "Baltimore Ravens" },
-                            { :id => "page_#{@cin.id}", :url => "/cin", :name => "Cincinnati Bengals" },
-                            { :id => "page_#{@cle.id}", :url => "/cle", :name => "Cleveland Browns" },
-                            { :id => "page_#{@pit.id}", :url => "/pit", :name => "Pittsburgh Steelers" }
+            { :id => "cms_section_#{@afc.id}", :url => "/buf", :name => "AFC", :children => [
+                    { :id => "cms_section_#{@afc_east.id}", :url => "/buf", :name => "East" },
+                    { :id => "cms_section_#{@afc_north.id}", :url => "/bal", :name => "North", :children => [
+                            { :id => "cms_page_#{@bal.id}", :selected => true, :url => "/bal", :name => "Baltimore Ravens" },
+                            { :id => "cms_page_#{@cin.id}", :url => "/cin", :name => "Cincinnati Bengals" },
+                            { :id => "cms_page_#{@cle.id}", :url => "/cle", :name => "Cleveland Browns" },
+                            { :id => "cms_page_#{@pit.id}", :url => "/pit", :name => "Pittsburgh Steelers" }
                     ] },
-                    { :id => "section_#{@afc_south.id}", :url => "/hou", :name => "South" },
-                    { :id => "section_#{@afc_west.id}", :url => "/den", :name => "West" }
+                    { :id => "cms_section_#{@afc_south.id}", :url => "/hou", :name => "South" },
+                    { :id => "cms_section_#{@afc_west.id}", :url => "/den", :name => "West" }
             ] },
-            { :id => "section_#{@nfc.id}", :url => "/dal", :name => "NFC" },
-            { :id => "section_#{@int.id}", :url => "/international", :name => "International" }
+            { :id => "cms_section_#{@nfc.id}", :url => "/dal", :name => "NFC" },
+            { :id => "cms_section_#{@int.id}", :url => "/international", :name => "International" }
     ]
 
     assert_equal expected, menu_items(:page => @bal)
@@ -28,79 +28,79 @@ class Cms::MenuHelperTest < ActionView::TestCase
     assert_equal expected, menu_items
 
     expected = [
-            { :id => "section_#{@afc.id}", :url => "/buf", :name => "AFC", :children => [
-                    { :id => "section_#{@afc_east.id}", :url => "/buf", :name => "East" },
-                    { :id => "section_#{@afc_north.id}", :url => "/bal", :name => "North" },
-                    { :id => "section_#{@afc_south.id}", :url => "/hou", :name => "South" },
-                    { :id => "section_#{@afc_west.id}", :url => "/den", :name => "West" }
+            { :id => "cms_section_#{@afc.id}", :url => "/buf", :name => "AFC", :children => [
+                    { :id => "cms_section_#{@afc_east.id}", :url => "/buf", :name => "East" },
+                    { :id => "cms_section_#{@afc_north.id}", :url => "/bal", :name => "North" },
+                    { :id => "cms_section_#{@afc_south.id}", :url => "/hou", :name => "South" },
+                    { :id => "cms_section_#{@afc_west.id}", :url => "/den", :name => "West" }
             ] },
-            { :id => "section_#{@nfc.id}", :url => "/dal", :name => "NFC" },
-            { :id => "section_#{@int.id}", :url => "/international", :name => "International" }
+            { :id => "cms_section_#{@nfc.id}", :url => "/dal", :name => "NFC" },
+            { :id => "cms_section_#{@int.id}", :url => "/international", :name => "International" }
     ]
 
     assert_equal expected, menu_items(:depth => 2)
 
     expected = [
-            { :id => "section_#{@afc_east.id}", :url => "/buf", :name => "East" },
-            { :id => "section_#{@afc_north.id}", :url => "/bal", :name => "North", :children => [
-                    { :id => "page_#{@bal.id}", :selected => true, :url => "/bal", :name => "Baltimore Ravens" },
-                    { :id => "page_#{@cin.id}", :url => "/cin", :name => "Cincinnati Bengals" },
-                    { :id => "page_#{@cle.id}", :url => "/cle", :name => "Cleveland Browns" },
-                    { :id => "page_#{@pit.id}", :url => "/pit", :name => "Pittsburgh Steelers" }
+            { :id => "cms_section_#{@afc_east.id}", :url => "/buf", :name => "East" },
+            { :id => "cms_section_#{@afc_north.id}", :url => "/bal", :name => "North", :children => [
+                    { :id => "cms_page_#{@bal.id}", :selected => true, :url => "/bal", :name => "Baltimore Ravens" },
+                    { :id => "cms_page_#{@cin.id}", :url => "/cin", :name => "Cincinnati Bengals" },
+                    { :id => "cms_page_#{@cle.id}", :url => "/cle", :name => "Cleveland Browns" },
+                    { :id => "cms_page_#{@pit.id}", :url => "/pit", :name => "Pittsburgh Steelers" }
             ] },
-            { :id => "section_#{@afc_south.id}", :url => "/hou", :name => "South" },
-            { :id => "section_#{@afc_west.id}", :url => "/den", :name => "West" }
+            { :id => "cms_section_#{@afc_south.id}", :url => "/hou", :name => "South" },
+            { :id => "cms_section_#{@afc_west.id}", :url => "/den", :name => "West" }
     ]
 
     assert_equal expected, menu_items(:from_top => 1, :depth => 2)
 
     expected = [
-            { :id => "section_#{@afc.id}", :url => "/buf", :name => "AFC", :children => [
-                    { :id => "section_#{@afc_east.id}", :url => "/buf", :name => "East" },
-                    { :id => "section_#{@afc_north.id}", :url => "/bal", :name => "North" },
-                    { :id => "section_#{@afc_south.id}", :url => "/hou", :name => "South" },
-                    { :id => "section_#{@afc_west.id}", :url => "/den", :name => "West" }
+            { :id => "cms_section_#{@afc.id}", :url => "/buf", :name => "AFC", :children => [
+                    { :id => "cms_section_#{@afc_east.id}", :url => "/buf", :name => "East" },
+                    { :id => "cms_section_#{@afc_north.id}", :url => "/bal", :name => "North" },
+                    { :id => "cms_section_#{@afc_south.id}", :url => "/hou", :name => "South" },
+                    { :id => "cms_section_#{@afc_west.id}", :url => "/den", :name => "West" }
             ] },
-            { :id => "section_#{@nfc.id}", :url => "/dal", :name => "NFC", :children => [
-                    { :id => "section_#{@nfc_east.id}", :url => "/dal", :name => "East" },
-                    { :id => "section_#{@nfc_north.id}", :url => "/chi", :name => "North" },
-                    { :id => "section_#{@nfc_south.id}", :url => "/atl", :name => "South" },
-                    { :id => "section_#{@nfc_west.id}", :url => "/ari", :name => "West" }
+            { :id => "cms_section_#{@nfc.id}", :url => "/dal", :name => "NFC", :children => [
+                    { :id => "cms_section_#{@nfc_east.id}", :url => "/dal", :name => "East" },
+                    { :id => "cms_section_#{@nfc_north.id}", :url => "/chi", :name => "North" },
+                    { :id => "cms_section_#{@nfc_south.id}", :url => "/atl", :name => "South" },
+                    { :id => "cms_section_#{@nfc_west.id}", :url => "/ari", :name => "West" }
             ] },
-            { :id => "section_#{@int.id}", :url => "/international", :name => "International" }
+            { :id => "cms_section_#{@int.id}", :url => "/international", :name => "International" }
     ]
 
     assert_equal expected, menu_items(:depth => 2, :show_all_siblings => true)
 
     expected = [
-            { :id => "section_#{@afc.id}", :url => "/buf", :name => "AFC" },
-            { :id => "section_#{@nfc.id}", :url => "/dal", :name => "NFC" },
-            { :id => "section_#{@int.id}", :url => "/international", :name => "International" }
+            { :id => "cms_section_#{@afc.id}", :url => "/buf", :name => "AFC" },
+            { :id => "cms_section_#{@nfc.id}", :url => "/dal", :name => "NFC" },
+            { :id => "cms_section_#{@int.id}", :url => "/international", :name => "International" }
     ]
 
     assert_equal expected, menu_items(:depth => 1)
 
     expected = [
-            { :id => "section_#{@afc_east.id}", :url => "/buf", :name => "East" },
-            { :id => "section_#{@afc_north.id}", :url => "/bal", :name => "North" },
-            { :id => "section_#{@afc_south.id}", :url => "/hou", :name => "South" },
-            { :id => "section_#{@afc_west.id}", :url => "/den", :name => "West" }
+            { :id => "cms_section_#{@afc_east.id}", :url => "/buf", :name => "East" },
+            { :id => "cms_section_#{@afc_north.id}", :url => "/bal", :name => "North" },
+            { :id => "cms_section_#{@afc_south.id}", :url => "/hou", :name => "South" },
+            { :id => "cms_section_#{@afc_west.id}", :url => "/den", :name => "West" }
     ]
 
     assert_equal expected, menu_items(:from_top => 1, :depth => 1)
 
     expected = [
-            { :id => "section_#{@afc_east.id}", :url => "/buf", :name => "East" },
-            { :id => "section_#{@afc_north.id}", :url => "/bal", :name => "North" },
-            { :id => "section_#{@afc_south.id}", :url => "/hou", :name => "South" }
+            { :id => "cms_section_#{@afc_east.id}", :url => "/buf", :name => "East" },
+            { :id => "cms_section_#{@afc_north.id}", :url => "/bal", :name => "North" },
+            { :id => "cms_section_#{@afc_south.id}", :url => "/hou", :name => "South" }
     ]
 
     assert_equal expected, menu_items(:from_top => 1, :depth => 1, :limit => 3)
 
     expected = [
-            { :id => "section_#{@afc.id}", :url => "/buf", :name => "AFC" },
-            { :id => "section_#{@nfc.id}", :url => "/dal", :name => "NFC" },
-            { :id => "section_#{@int.id}", :selected => true, :url => "/international", :name => "International" }
+            { :id => "cms_section_#{@afc.id}", :url => "/buf", :name => "AFC" },
+            { :id => "cms_section_#{@nfc.id}", :url => "/dal", :name => "NFC" },
+            { :id => "cms_section_#{@int.id}", :selected => true, :url => "/international", :name => "International" }
     ]
 
     assert_equal expected, menu_items(:page => @overview)
@@ -108,7 +108,7 @@ class Cms::MenuHelperTest < ActionView::TestCase
   end
 
   def test_menu_with_links
-    Page.first.update_attributes(:hidden => true, :publish_on_save => true)
+    Cms::Page.first.update_attributes(:hidden => true, :publish_on_save => true)
 
     @news = Factory(:section, :parent => root_section, :name => "News", :path => "/whatever")
     @press_releases = Factory(:page, :section => @news, :name => "Press Releases", :path => "/press_releases", :publish_on_save => true)
@@ -116,10 +116,10 @@ class Cms::MenuHelperTest < ActionView::TestCase
     @cnn = Factory(:link, :section => @news, :name => "CNN", :url => "http://www.cnn.com", :new_window => true, :publish_on_save => true)
 
     expected = [
-            { :id => "section_#{@news.id}", :url => "/press_releases", :name => "News", :children => [
-                    { :id => "page_#{@press_releases.id}", :selected => true, :url => "/press_releases", :name => "Press Releases" },
-                    { :id => "link_#{@corporate_news.id}", :url => "/news", :name => "Corporate News" },
-                    { :id => "link_#{@cnn.id}", :url => "http://www.cnn.com", :target => "_blank", :name => "CNN" }
+            { :id => "cms_section_#{@news.id}", :url => "/press_releases", :name => "News", :children => [
+                    { :id => "cms_page_#{@press_releases.id}", :selected => true, :url => "/press_releases", :name => "Press Releases" },
+                    { :id => "cms_link_#{@corporate_news.id}", :url => "/news", :name => "Corporate News" },
+                    { :id => "cms_link_#{@cnn.id}", :url => "http://www.cnn.com", :target => "_blank", :name => "CNN" }
             ] }
     ]
 
@@ -137,8 +137,8 @@ class Cms::MenuHelperTest < ActionView::TestCase
     @never_published = Factory(:page, :section => @section, :name => "Never Published", :path => "/never_published")
 
     expected = [
-            { :id => "page_#{@page.id}", :name => "Overview", :url => "/test", :selected => true },
-            { :id => "page_#{@draft_page.id}", :name => "Draft v1", :url => "/draft" }
+            { :id => "cms_page_#{@page.id}", :name => "Overview", :url => "/test", :selected => true },
+            { :id => "cms_page_#{@draft_page.id}", :name => "Draft v1", :url => "/draft" }
     ]
 
     assert_equal expected, menu_items(:from_top => 1)
@@ -152,18 +152,18 @@ class Cms::MenuHelperTest < ActionView::TestCase
     @privacy_policy = Factory(:page, :section => @footer, :name => "Privacy Policy", :path => "/privacy_policy", :publish_on_save => true)
 
     expected = [
-            { :id => "page_#{@about_us.id}", :url => "/about_us", :name => "About Us" },
-            { :id => "page_#{@contact_us.id}", :url => "/contact_us", :name => "Contact Us" },
-            { :id => "page_#{@privacy_policy.id}", :url => "/privacy_policy", :name => "Privacy Policy" }
+            { :id => "cms_page_#{@about_us.id}", :url => "/about_us", :name => "About Us" },
+            { :id => "cms_page_#{@contact_us.id}", :url => "/contact_us", :name => "Contact Us" },
+            { :id => "cms_page_#{@privacy_policy.id}", :url => "/privacy_policy", :name => "Privacy Policy" }
     ]
 
     actual = menu_items(:page => @test, :path => "/footer", :from_top => 1)
     assert_equal expected, actual
 
     expected = [
-            { :id => "page_#{@about_us.id}", :url => "/about_us", :name => "About Us" },
-            { :id => "page_#{@contact_us.id}", :url => "/contact_us", :name => "Contact Us", :selected => true },
-            { :id => "page_#{@privacy_policy.id}", :url => "/privacy_policy", :name => "Privacy Policy" }
+            { :id => "cms_page_#{@about_us.id}", :url => "/about_us", :name => "About Us" },
+            { :id => "cms_page_#{@contact_us.id}", :url => "/contact_us", :name => "Contact Us", :selected => true },
+            { :id => "cms_page_#{@privacy_policy.id}", :url => "/privacy_policy", :name => "Privacy Policy" }
     ]
 
     actual = menu_items(:page => @contact_us, :path => "/footer", :from_top => 1)

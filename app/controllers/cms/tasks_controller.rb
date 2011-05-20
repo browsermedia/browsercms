@@ -1,4 +1,5 @@
-class Cms::TasksController < Cms::BaseController
+module Cms
+class TasksController < Cms::BaseController
   
   before_filter :set_toolbar_tab
   before_filter :load_page, :only => [:new, :create]
@@ -8,7 +9,7 @@ class Cms::TasksController < Cms::BaseController
   end
   
   def create
-    @task = @page.tasks.build(params[:task])
+    @task = @page.tasks.build(params[:cms_task])
     @task.assigned_by = current_user
     if @task.save
       flash[:notice] = "Page was assigned to '#{@task.assigned_to.login}'"
@@ -52,4 +53,5 @@ class Cms::TasksController < Cms::BaseController
       @toolbar_tab = :sitemap
     end  
   
+end
 end

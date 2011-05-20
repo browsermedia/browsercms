@@ -1,9 +1,38 @@
 require 'test_helper'
 
+
+
+class Cms::ApiTest < ActiveSupport::TestCase
+  test "Find block from tablename without namespace" do
+    assert_equal HtmlBlock, Cms::Acts::ContentBlock.model_for(:html_block)
+  end
+
+  test "Find block from tablename with namespace" do
+    Cms.expects(:table_prefix).returns("cms_")
+    assert_equal HtmlBlock, Cms::Acts::ContentBlock.model_for(:cms_html_block)
+  end
+
+
+  test "Find model for non-namespaced classes" do
+    class ::Unscoped ;  end
+    model = Cms::Acts::ContentBlock.model_for(:unscoped)
+    assert_equal ::Unscoped, model
+  end
+
+  test "Nonexistant class returns NilModel that still responds to defaults" do
+    model = Cms::Acts::ContentBlock.model_for(:table_not_likely_to_exist)
+    assert_equal Cms::Acts::ContentBlock::NilModel, model.class
+    assert_equal "table_not_likely_to_exist_id", model.version_foreign_key
+  end
+
+end
+
 class ContentBlockTest < ActiveSupport::TestCase
   def setup
     @block = Factory(:html_block, :name => "Test")
   end
+
+
 
   def test_publishing
     assert_equal "Draft", @block.status_name
@@ -64,7 +93,7 @@ class SoftPublishingTest < ActiveSupport::TestCase
   test "Destroying a block should mark it as deleted, rather than remove it from the database" do
     @block.destroy
 
-    found = HtmlBlock.find_by_sql("SELECT * FROM html_blocks where id = #{@block.id}")
+    found = Cms::HtmlBlock.find_by_sql("SELECT * FROM #{Cms::HtmlBlock.table_name} where id = #{@block.id}")
     assert_equal 1, found.size, "Should find one record"
     assert_not_nil found[0], "A block should still exist in the database"
     assert_equal true, found[0].deleted, "It's published flag should be true"
@@ -74,54 +103,56 @@ class SoftPublishingTest < ActiveSupport::TestCase
   test "exists? should not return blocks marked as deleted" do
     @block.destroy
 
-    assert_equal false, HtmlBlock.exists?(@block.id)
-    assert_equal false, HtmlBlock.exists?(["name = ?", @block.name])
+    assert_equal false, Cms::HtmlBlock.exists?(@block.id)
+    assert_equal false, Cms::HtmlBlock.exists?(["name = ?", @block.name])
   end
 
   test "find by id should throw an exception for records marked as deleted" do
     @block.destroy
-    assert_raise(ActiveRecord::RecordNotFound) { HtmlBlock.find(@b) }
+    assert_raise(ActiveRecord::RecordNotFound) { Cms::HtmlBlock.find(@b) }
 
   end
 
   test "dynamic finders (i.e. find_by_name) should not find deleted records" do
     @block.destroy
-    assert_nil HtmlBlock.find_by_name(@block.name)
+    assert_nil Cms::HtmlBlock.find_by_name(@block.name)
   end
 
 
   test "find with deleted returns all records even marked as deleted" do
     @block.destroy
-    assert_not_nil HtmlBlock.find_with_deleted(@block.id)
+    assert_not_nil Cms::HtmlBlock.find_with_deleted(@block.id)
   end
 
   test "Marking as deleted should create a new record in the versions table" do
     @block.destroy
 
-    deleted_block = HtmlBlock.find_with_deleted(@block.id)
+
+    deleted_block = Cms::HtmlBlock.find_with_deleted(@block.id)
     assert_equal 2, deleted_block.versions.size
     assert_equal 2, deleted_block.version
     assert_equal 1, deleted_block.versions.first.version
-    assert_equal 2, HtmlBlock::Version.count(:conditions => {:html_block_id => @block.id})
+    assert_equal 2, Cms::HtmlBlock::Version.count(:conditions => {:html_block_id => @block.id})
   end
 
   test "Count should exclude deleted records" do
-    html_block_count = HtmlBlock.count
+    html_block_count = Cms::HtmlBlock.count
     @block.destroy
-    assert_decremented html_block_count, HtmlBlock.count
+    assert_decremented html_block_count, Cms::HtmlBlock.count
 
   end
 
   test "count_with_deleted should return all records, even those marked as deleted" do
-    original_count = HtmlBlock.count
+    original_count = Cms::HtmlBlock.count
     @block.destroy
-    assert_equal original_count, HtmlBlock.count_with_deleted
+    assert_equal original_count, Cms::HtmlBlock.count_with_deleted
   end
 
+
   def test_delete_all
-    HtmlBlock.delete_all(["name = ?", @block.name])
-    assert_raise(ActiveRecord::RecordNotFound) { HtmlBlock.find(@block.id) }
-    assert HtmlBlock.find_with_deleted(@block.id).deleted?
+    Cms::HtmlBlock.delete_all(["name = ?", @block.name])
+    assert_raise(ActiveRecord::RecordNotFound) { Cms::HtmlBlock.find(@block.id) }
+    assert Cms::HtmlBlock.find_with_deleted(@block.id).deleted?
   end
 end
 
@@ -133,7 +164,7 @@ class VersionedContentBlock < ActiveSupport::TestCase
   test "Calling publish! on a block should save it, and mark that block as published." do
     @block.publish!
 
-    found = HtmlBlock.find(@block)
+    found = Cms::HtmlBlock.find(@block)
     assert_equal true, found.published?
   end
 
@@ -150,7 +181,7 @@ class VersionedContentBlock < ActiveSupport::TestCase
     @block.publish_on_save = true
     @block.save
 
-    found = HtmlBlock.find(@block)
+    found = Cms::HtmlBlock.find(@block)
     assert_equal 1, found.version 
   end
 
@@ -159,7 +190,7 @@ class VersionedContentBlock < ActiveSupport::TestCase
     @block.name = "Anything else"
     @block.save
 
-    found = HtmlBlock.find(@block)
+    found = Cms::HtmlBlock.find(@block)
     assert_equal true, found.published?
   end
 
@@ -206,11 +237,11 @@ class VersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
   end
 
   def test_editing_connected_to_an_unpublished_page
-    page_version_count = Page::Version.count
+    page_version_count = Cms::Page::Version.count
     assert_equal 2, @page.versions.size, "Should be two versions of the page"
     assert !@page.published?, "The page should not be published yet."
 
-    pages = Page.connected_to(:connectable => @block, :version => @block.version).all
+    pages = Cms::Page.connected_to(:connectable => @block, :version => @block.version).all
     assert_equal [@page], pages, "The block should be connected to page"
 
 
@@ -223,7 +254,7 @@ class VersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
     assert !@page.published?
     assert_equal 3, @page.versions.size, "Should be three versions of the page."
     assert_equal 3, @page.draft.version, "Draft version of page should be updated to v3 since its connected to the updated block."
-    assert_incremented page_version_count, Page::Version.count
+    assert_incremented page_version_count, Cms::Page::Version.count
     assert_match /^HtmlBlock #\d+ was Edited/, @page.draft.version_comment
 
     conns = @block.connectors.all(:order => 'id')
@@ -265,13 +296,13 @@ end
 class NonVersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
   def setup
     @page = Factory(:page, :section => root_section)
-    @block = DynamicPortlet.create!(:name => "Non-Versioned Content Block")
+    @block = Factory(:non_versioned_block, :name => "Non-Versioned Content Block")
     @page.create_connector(@block, "main")
     reset(:page, :block)
   end
 
   def test_editing_connected_to_an_unpublished_page
-    page_version_count = Page::Version.count
+    page_version_count = Cms::Page::Version.count
 
     assert_equal "Dynamic Portlet 'Non-Versioned Content Block' was added to the 'main' container", @page.draft.version_comment
     assert !@page.published?
@@ -280,10 +311,10 @@ class NonVersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
     reset(:page)
 
     assert 2, @page.version
-    assert_equal page_version_count, Page::Version.count
+    assert_equal page_version_count, Cms::Page::Version.count
     assert !@page.published?
 
-    conns = Connector.for_connectable(@block).all(:order => 'id')
+    conns = Cms::Connector.for_connectable(@block).all(:order => 'id')
     assert_equal 1, conns.size
     assert_properties conns[0], :page => @page, :page_version => 2, :connectable => @block, :connectable_version => nil, :container => "main"
   end

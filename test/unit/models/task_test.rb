@@ -3,8 +3,8 @@ require 'test_helper'
 class TaskTest < ActiveSupport::TestCase
   def setup
     super
-    @editor_a = create_admin_user(:login => "editor_a", :email => "editor_a@example.com")
-    @editor_b = create_admin_user(:login => "editor_b", :email => "editor_b@example.com")
+    @editor_a = Factory(:cms_admin)
+    @editor_b = Factory(:cms_admin)
     @non_editor = Factory(:user, :login => "non_editor", :email => "non_editor@example.com")
     @page = Factory(:page, :name => "Task Test", :path => "/task_test")
     @page2 = Factory(:page, :name => "Task Test 2", :path => "/task_test_2")
@@ -44,7 +44,7 @@ class CreateTaskTest < TaskTest
 
       task = Factory.build(:task, :assigned_by => @non_editor, :assigned_to => @editor_a)
       assert_not_valid task
-      assert_has_error_on task, :assigned_by_id, "cannot assign tasks"
+      assert_has_error_on task, :assigned_by_id, Cms::Task::CANT_ASSIGN_MESSAGE
     end
 
     def assert_that_an_assigned_to_user_that_is_an_editor_is_required
@@ -54,7 +54,7 @@ class CreateTaskTest < TaskTest
 
       task = Factory.build(:task, :assigned_by => @editor_a, :assigned_to => @non_editor)
       assert_not_valid task
-      assert_has_error_on task, :assigned_to_id, "cannot be assigned tasks"
+      assert_has_error_on task, :assigned_to_id, Cms::Task::CANT_BE_ASSIGNED_MESSAGE
     end
 
     def assert_that_a_page_is_required
@@ -64,8 +64,8 @@ class CreateTaskTest < TaskTest
     end
 
     def create_the_task!
-      @task = Task.create!(
-        :assigned_by => @editor_a,
+      @task = Cms::Task.create!(
+        :assigned_by => @editor_a, 
         :assigned_to => @editor_b,
         :due_date => 5.minutes.ago,
         :comment => "Howdy!",
@@ -73,7 +73,7 @@ class CreateTaskTest < TaskTest
     end
 
     def create_the_second_task!
-      @task2 = Task.create!(
+      @task2 = Cms::Task.create!(
         :assigned_by => @editor_a,
         :assigned_to => @editor_b,
         :due_date => 1.minutes.ago,
@@ -82,7 +82,7 @@ class CreateTaskTest < TaskTest
     end
 
     def assert_that_an_email_is_sent_to_the_user_the_task_was_assigned_to
-      email = EmailMessage.first(:order => "id asc")
+      email = Cms::EmailMessage.first(:order => "id asc")
       assert_equal @editor_a.email, email.sender
       assert_equal @editor_b.email, email.recipients
       assert_equal "Page '#{@page.name}' has been assigned to you", email.subject
@@ -113,6 +113,7 @@ class ExistingIncompleteTaskTest < TaskTest
     @existing_task = Factory(:task, :assigned_by => @editor_a, :assigned_to => @editor_b, :page => @page)
   end
 
+
   test "Existing task is incomplete, and assigned to Editor B's task list" do
     assert !@existing_task.completed?
     assert_equal @editor_b, @page.assigned_to
@@ -121,7 +122,7 @@ class ExistingIncompleteTaskTest < TaskTest
 
   def test_create_task_for_a_page_with_existing_incomplete_tasks
     @new_task = Factory(:task, :assigned_by => @editor_b, :assigned_to => @editor_a, :page => @page)
-    @existing_task = Task.find(@existing_task.id)
+    @existing_task = Cms::Task.find(@existing_task.id)
 
     assert @existing_task.completed?
     assert !@new_task.completed?

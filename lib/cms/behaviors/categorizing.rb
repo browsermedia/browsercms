@@ -13,7 +13,7 @@ module Cms
           extend ClassMethods
           include InstanceMethods
           
-          belongs_to :category
+          belongs_to :category, :class_name => 'Cms::Category'
           
           scope :in_category, lambda{|cat| {:conditions => ["category_id = ?", cat.id]}}
           

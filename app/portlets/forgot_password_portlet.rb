@@ -1,4 +1,4 @@
-class ForgotPasswordPortlet < Portlet
+class ForgotPasswordPortlet < Cms::Portlet
   require 'digest/sha1'  
 
   enable_template_editor true
@@ -10,9 +10,10 @@ class ForgotPasswordPortlet < Portlet
     flash[:forgot_password] = {}
 
     return unless request.post?
-    user = User.find_by_email(params[:email])
+    user = Cms::User.find_by_email(params[:email])
 
     logger.warn "Send email "
+
     unless user
       flash[:forgot_password][:error] = "We were unable to verify your account. Please make sure your email address is accurate."
       return
@@ -21,7 +22,7 @@ class ForgotPasswordPortlet < Portlet
     user.reset_token = generate_reset_token
     if user.save
       flash[:forgot_password][:notice] = "Your password has been sent to #{params[:email]}"
-      ForgotPasswordMailer.deliver_reset_password(self.reset_password_url + '?token=' + user.reset_token, user.email)
+      Cms::ForgotPasswordMailer.deliver_reset_password(self.reset_password_url + '?token=' + user.reset_token, user.email)
     end
   end
 

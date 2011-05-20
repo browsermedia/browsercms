@@ -1,6 +1,7 @@
 require 'test_helper'
 
-class Cms::HomeControllerTest < ActionController::TestCase
+module Cms
+class HomeControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
 
   test "behavior of request" do
@@ -76,7 +77,7 @@ class Cms::HomeControllerTest < ActionController::TestCase
   
 end
 
-class Cms::HomeControllerCachingEnabledTest < ActionController::TestCase
+class HomeControllerCachingEnabledTest < ActionController::TestCase
   include Cms::ControllerTestHelper
   tests Cms::HomeController
   
@@ -155,4 +156,5 @@ class Cms::HomeControllerCachingEnabledTest < ActionController::TestCase
     assert_redirected_to "http://cms.foo.com/"
   end  
   
+end
 end

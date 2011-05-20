@@ -1,6 +1,7 @@
 require 'test_helper'
 
-class Cms::HtmlBlocksControllerTest < ActionController::TestCase
+module Cms
+class HtmlBlocksControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
   
   def setup
@@ -16,10 +17,10 @@ class Cms::HtmlBlocksControllerTest < ActionController::TestCase
 
   def test_add_to_page
     @page = Factory(:page, :path => "/test", :section => root_section)
-    get :new, :html_block => {:connect_to_page_id => @page.id, :connect_to_container => "test"}
+    get :new, :cms_html_block => {:connect_to_page_id => @page.id, :connect_to_container => "test"}
     assert_response :success
-    assert_select "input[name=?][value=?]", "html_block[connect_to_page_id]", @page.id.to_s
-    assert_select "input[name=?][value=?]", "html_block[connect_to_container]", "test"
+    assert_select "input[name=?][value=?]", "cms_html_block[connect_to_page_id]", @page.id.to_s
+    assert_select "input[name=?][value=?]", "cms_html_block[connect_to_container]", "test"
   end
   
   def test_show
@@ -49,7 +50,7 @@ class Cms::HtmlBlocksControllerTest < ActionController::TestCase
     @page = Factory(:page, :path => "/test", :section => root_section)
     html_block_count = HtmlBlock.count
 
-    post :create, :html_block => Factory.attributes_for(:html_block).merge(
+    post :create, :cms_html_block => Factory.attributes_for(:html_block).merge(
       :connect_to_page_id => @page.id, :connect_to_container => "test")
       
     assert_incremented html_block_count, HtmlBlock.count
@@ -83,7 +84,7 @@ class Cms::HtmlBlocksControllerTest < ActionController::TestCase
   def test_edit
     get :edit, :id => @block.id
     assert_response :success
-    assert_select "input[id=?][value=?]", "html_block_name", "Test"
+    assert_select "input[id=?][value=?]", "cms_html_block_name", "Test"
   end  
   
   
@@ -91,10 +92,10 @@ class Cms::HtmlBlocksControllerTest < ActionController::TestCase
     html_block_count = HtmlBlock.count
     html_block_version_count = HtmlBlock::Version.count
     
-    put :update, :id => @block.id, :html_block => {:name => "Test V2"}
+    put :update, :id => @block.id, :cms_html_block => {:name => "Test V2"}
     reset(:block)
 
-    assert_redirected_to [:cms, @block]
+    assert_redirected_to @block
     assert_equal html_block_count, HtmlBlock.count
     assert_incremented html_block_version_count, HtmlBlock::Version.count
     assert_equal "Test V2",  @block.draft.name
@@ -109,7 +110,7 @@ class Cms::HtmlBlocksControllerTest < ActionController::TestCase
     put :publish, :id => @block.id
     reset(:block)
 
-    assert_redirected_to [:cms, @block]
+    assert_redirected_to @block
     assert @block.reload.live?
   end  
   
@@ -129,7 +130,7 @@ class Cms::HtmlBlocksControllerTest < ActionController::TestCase
     assert_equal 3, @block.draft.version
     assert_equal "Test", @block.reload.name
     assert_equal "Html Block 'Test' was reverted to version 1", flash[:notice]
-    assert_redirected_to [:cms, @block]
+    assert_redirected_to @block
   end
   
   def test_revert_to_with_invalid_version_parameter
@@ -143,7 +144,7 @@ class Cms::HtmlBlocksControllerTest < ActionController::TestCase
     
     assert_equal html_block_version_count, HtmlBlock::Version.count
     assert_equal "Html Block 'Test V2' could not be reverted to version 99", flash[:error]
-    assert_redirected_to [:cms, @block]
+    assert_redirected_to  @block
   end
   
   def test_usages
@@ -161,4 +162,5 @@ class Cms::HtmlBlocksControllerTest < ActionController::TestCase
     assert_select "h3", "Content Types"
   end
   
+end
 end

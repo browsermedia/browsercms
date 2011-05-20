@@ -1,9 +1,9 @@
 <%= content_for :html_head do %>
 <script type="text/javascript">
 jQuery(function($){
-  $("#section_name").keyup(function(){
+  $("#cms_section_name").keyup(function(){
     var section_path = "<%= @parent.path %>".replace(/\/$/, '')
-    $("#section_path").val(section_path + "/" + $.cms.slug($(this).val()))
+    $("#cms_section_path").val(section_path + "/" + $.cms.slug($(this).val()))
   })
 })
 </script>
@@ -14,7 +14,7 @@ jQuery(function($){
 <%= link_to(span_tag("list all"), cms_sitemap_path, :class => "button") %>
 <br clear="all"/>
 <% end %>
-<%= form_for([:cms, @section], :id => 'section_form') do |f| %>
+<%= form_for(@section, :id => 'section_form') do |f| %>
   <%= hidden_field_tag :section_id, @parent.id %>
   
   <%= render :partial => 'form', :locals => {:f => f} %>

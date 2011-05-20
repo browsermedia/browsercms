@@ -25,6 +25,18 @@ module Cms
         model_class.extend(MacroMethods)
       end
 
+      # By default, each _versions table should have a column pointing back to the 'original' table. This
+      # column should alwasy be unprefixed (i.e. html_block_id even if cms_html_block_id is the table name.
+      # @param [Symbol] table_name
+      def self.default_foreign_key(table_name)
+        table_name = table_name.to_s
+        prefix = Cms.table_prefix
+        if table_name.starts_with?(prefix)
+          table_name = table_name.gsub(prefix, "")
+        end
+        "#{table_name.singularize}_id".to_s
+      end
+
       module MacroMethods
         def versioned?
           !!@is_versioned
@@ -33,7 +45,7 @@ module Cms
         def is_versioned(options={})
           @is_versioned = true
 
-          @version_foreign_key = (options[:version_foreign_key] || "#{name.underscore}_id").to_s
+          @version_foreign_key = (options[:version_foreign_key] || Cms::Behaviors::Versioning.default_foreign_key(table_name))
           @version_table_name = (options[:version_table_name] || "#{table_name.singularize}_versions").to_s
 
           extend ClassMethods
@@ -68,7 +80,7 @@ module Cms
 
           version_class.versioned_class = self
 
-          version_class.belongs_to(name.underscore.to_sym, :foreign_key => version_foreign_key)
+          version_class.belongs_to(name.demodulize.underscore.to_sym, :foreign_key => version_foreign_key, :class_name => name)
 
           version_class.is_userstamped if userstamped?
 
@@ -92,8 +104,11 @@ module Cms
         end
 
         def versioned_columns
-          @versioned_columns ||= (version_class.new.attributes.keys -
-                  (%w[  id lock_version position version_comment created_at updated_at created_by_id updated_by_id type  ] + [version_foreign_key]))
+          @versioned_columns ||= (version_class.new.attributes.keys - non_versioned_columns)
+        end
+
+        def non_versioned_columns
+          (%w[  id lock_version position version_comment created_at updated_at created_by_id updated_by_id type  ] + [version_foreign_key.to_s])
         end
       end
       module InstanceMethods
@@ -144,7 +159,7 @@ module Cms
         end
 
 
-        #  
+        #
         #ActiveRecord 3.0.0 call chain
         # ActiveRecord 3 now uses basic inheritence rather than alias_method_chain.  The order in which ActiveRecord::Base
         # includes methods (at the bottom of activerecord) repeatedly overrides save/save! with chains of 'super'

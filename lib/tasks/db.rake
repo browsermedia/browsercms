@@ -7,7 +7,7 @@ namespace :db do
 
   desc "Drop, create and migrate the database"
   task :redo => ["db:drop", "db:create", "db:migrate"]
-  
+
   namespace :fixtures do
     desc 'Dumps all models into fixtures.'
     task :dump => :environment do
