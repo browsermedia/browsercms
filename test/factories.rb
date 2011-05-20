@@ -102,11 +102,21 @@ Factory.define :permission do |m|
   m.sequence(:name) {|n| "TestPermission#{n}" }
 end
 
+def create_or_find_root_section
+  root = Section.root.first
+  unless root
+    root = Section.create!(:name=>"Root", :root=>true, :path=>"/")
+  end
+  root
+end
+
 Factory.define :section do |m|
   m.name "Test"
   m.path "/"
-  m.parent { Section.root.first }
+  m.parent { create_or_find_root_section }
 end
+
+
 
 Factory.define :site do |m|
   m.sequence(:name) {|n| "Test #{n}"}

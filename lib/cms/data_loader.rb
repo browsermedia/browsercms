@@ -1,5 +1,8 @@
 module Cms
   module DataLoader
+
+    mattr_accessor :silent_mode
+
     def method_missing(method_name, *args)
       if md = method_name.to_s.match(/^create_(.+)$/)
         begin
@@ -17,7 +20,7 @@ module Cms
       end
     end
     def create(model_name, record_name, data={})
-      puts "-- create_#{model_name}(:#{record_name})"
+      puts "-- create_#{model_name}(:#{record_name})" unless Cms::DataLoader.silent_mode
       @data ||= {}
       @data[model_name.pluralize.to_sym] ||= {}
       model = model_name.classify.constantize.new(data)

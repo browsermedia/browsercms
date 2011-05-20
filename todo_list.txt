@@ -3,7 +3,12 @@ Status
 
 BrowserCMS 3.3.0 is complete.
 
-Gems to Publish (once its live)
+Cucumber Recommendations
+* Avoid using selectors unless it really matters.
+* Express intent in scenarios
+* Can group multiple steps into a single step
+
+  Gems to Publish (once its live)
 ============
 bcms_fckeditor  - 1.1.0 is pushed to github. Gem needs to be pushed as well. Need to test file upload (browser.xml) from within the browser
 bcms_news - 1.2 pushed to github. Gem not released yet. (Has bugs)
