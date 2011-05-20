@@ -10,6 +10,12 @@ Add the ability to add BrowserCMS to Rails projects.
 
     create_table prefix(:users)
 
+* Added some basic support for making other 'user' objects act like CMS users via Cms::Acts::User. For example, the following would make a custom non-CMS user gain permission to act like an admin.
+
+ class MyCustomUser < ActiveRecord::Base
+    acts_as_cms_user :groups => [Cms::Group.find_by_code('admin')]
+ end
+
 v3.3.0
 ======
 
