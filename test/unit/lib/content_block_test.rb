@@ -296,22 +296,18 @@ end
 class NonVersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
   def setup
     @page = Factory(:page, :section => root_section)
-    @block = Factory(:non_versioned_block, :name => "Non-Versioned Content Block")
+    @block = Factory(:non_versioned_block, :name => "Non-Versioned Non-Publishable Content Block")
     @page.create_connector(@block, "main")
     reset(:page, :block)
-  end
-
-  test "Nonversionable blocks should still be publishable" do
-    @block.publish_on_save = true
   end
 
   def test_editing_connected_to_an_unpublished_page
     page_version_count = Cms::Page::Version.count
 
-    assert_equal "Dynamic Portlet 'Non-Versioned Content Block' was added to the 'main' container", @page.draft.version_comment
+    assert_equal "Dynamic Portlet '#{@block.name}' was added to the 'main' container", @page.draft.version_comment
     assert !@page.published?
 
-    assert @block.update_attributes(:name => "something different", :publish_on_save => true)
+    assert @block.update_attributes(:name => "something different")
     reset(:page)
 
     assert 2, @page.version
@@ -329,7 +325,7 @@ class NonVersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
     reset(:page)
 
     assert @page.published?
-    assert @block.update_attributes(:name => "something different", :publish_on_save => true)
+    assert @block.update_attributes(:name => "something different")
     reset(:page)
 
     assert @page.published?
