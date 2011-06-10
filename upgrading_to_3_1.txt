@@ -1,3 +1,4 @@
 Currently fixing unit tests.
 * Need to install developer tools to get mysql working.
-* 
+* Dynamic Attributes may be broken. (Portlets)
+* Transient attributes may not be passed to update_attributes (publish_on_save)

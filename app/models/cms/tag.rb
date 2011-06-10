@@ -9,6 +9,8 @@ module Cms
     scope :named, lambda { |tag| {:conditions => ["#{table_name}.name = ? ", tag]} }
 
     # Returns an array of tags with a count attribute
+    #
+    # @return [Array] Each element of the area contains [Id (Integer), Name (String), count (Integer)] (with Sqlite3 anyway)
     def self.counts(options={})
       with_scope(:find => {
           :select => "#{Tag.table_name}.id, #{Tag.table_name}.name, count(*) as count",
