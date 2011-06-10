@@ -49,8 +49,8 @@ class AttachmentTest < ActiveSupport::TestCase
 
     file = file_upload_object(:original_filename=>"second_upload.txt", :content_type=>"text/plain")
     attachment.update_attributes(:temp_file => file)
-    # log_table_with Attachment, :id, :name, :version, :file_path
-    # log_table_with Attachment::Version, :id, :name, :version, :file_path, :attachment_id
+    log_table_with Cms::Attachment, :id, :name, :version, :file_path
+    log_table_with Cms::Attachment::Version, :id, :name, :version, :file_path, :attachment_id
     assert_equal 3, attachment.draft.version
     assert_equal "/foo.txt", attachment.as_of_draft_version.file_path, "Updating the file itself should also update the name of the file. (Note:This might just be an invalid test)"
     assert_equal "foo.txt", attachment.as_of_draft_version.file_name
