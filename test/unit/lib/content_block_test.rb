@@ -4,12 +4,12 @@ require 'test_helper'
 
 class Cms::ApiTest < ActiveSupport::TestCase
   test "Find block from tablename without namespace" do
-    assert_equal HtmlBlock, Cms::Acts::ContentBlock.model_for(:html_block)
+    assert_equal Cms::HtmlBlock, Cms::Acts::ContentBlock.model_for(:html_block)
   end
 
   test "Find block from tablename with namespace" do
     Cms.expects(:table_prefix).returns("cms_")
-    assert_equal HtmlBlock, Cms::Acts::ContentBlock.model_for(:cms_html_block)
+    assert_equal Cms::HtmlBlock, Cms::Acts::ContentBlock.model_for(:cms_html_block)
   end
 
 
@@ -299,6 +299,10 @@ class NonVersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
     @block = Factory(:non_versioned_block, :name => "Non-Versioned Content Block")
     @page.create_connector(@block, "main")
     reset(:page, :block)
+  end
+
+  test "Nonversionable blocks should still be publishable" do
+    @block.publish_on_save = true
   end
 
   def test_editing_connected_to_an_unpublished_page

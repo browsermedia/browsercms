@@ -4,7 +4,7 @@ class Cms::SectionNode < ActiveRecord::Base
 
   acts_as_list :scope => :section
 
-  scope :of_type, lambda { |types| {:conditions => ["#{SectionNode.table_name}.node_type IN (?)", types]} }
+  scope :of_type, lambda { |types| {:conditions => ["#{table_name}.node_type IN (?)", types]} }
 
   def visible?
     return false unless node

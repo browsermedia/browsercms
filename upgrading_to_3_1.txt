@@ -1,0 +1,3 @@
+Currently fixing unit tests.
+* Need to install developer tools to get mysql working.
+* 

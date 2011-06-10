@@ -1,8 +1,12 @@
-For 3.4, currently working on namespacing
+3.4 Working List
+* Add Block.publish and publish! for easier coding.
+* Upgrade to Rails 3.1
+Options
+* Make content blocks the same as pages.
+* Make templating through the UI better.
 
 Start with: rake db:drop db:install test:units
 
-* Review and possibly remove cms_user depending on what it does.
 * Portlets need to be namespaced under cms_ as well (This seems to cause issues with DynamicAttribute saving, so might pass on this one.)
 
 Rack::Cache plus Rack::ESI?
@@ -15,23 +19,18 @@ Cucumber Recommendations
   Gems to Publish (once its live)
 ============
 bcms_fckeditor  - 1.1.0 is pushed to github. Gem needs to be pushed as well. Need to test file upload (browser.xml) from within the browser
-bcms_news - 1.2 pushed to github. Gem not released yet. (Has bugs)
-* BUG - Recent Archive portlet is throwing errors.
+* BUG - bcms_news - Recent Archive portlet is throwing errors.
 bcms_google_mini_search - 1.2 pushed to github. Gem not released.
 
 Future Things to do
 ===============
 * Review integration tests to determine where 'error_messages_on' deprecation is coming from.
 * Having to explicitly add migrations files to module installers is somewhat tedious and error prone. (Might not be a big deal though)
-* Add Block.publish and publish! for easier coding.
 * Move 'datepicker' initialization into application.js
 * Upgrade jquery.selectbox-0.5 to jquery.sb.js (https://github.com/revsystems/jQuery-SelectBox). This will likely improve the usability of the selectbox.
 * What is the difference between application template and profiles?
 * Clean up all 'old' initialization code (add_cms_routes_method, add to rails path, etc)
-* Merge all existing migrations into core as well as seeds.rb. Rework how seeds gets run as part of the project. (Future proof this).
 * Rename to cms:new rather than browser_cms:cms
-* Generators: These appear to be almost identical to how application templates worked. We should probably rewrite app templates to use new generators instead.
-* Namespace core files (especially users) to better support dropping in as project.
 * Allow Content Blocks to be namespaced.
 * Clean up logging messages that are filling up the production logs unnecessarily
 ** 'Caching enabled'
@@ -40,7 +39,6 @@ Future Things to do
 ** 'Not caching, user logged in'
 ** Rendering template X'
 * Have at most one line per request for any diagnostic result.
-* Fix broken tests to make it work under 1.8.7/RubyEE
 * test/dummy has some duplication ( migrations, seed.rb). This can probably be removed now anyway, due to how Gemfile->gemspec works.
 * html_safe = duplication:  Every content_block's render.html.erb needs to stick html_safe on everything, which is both tedious and annoying. Need to figure out a better way to globally handle this.
 

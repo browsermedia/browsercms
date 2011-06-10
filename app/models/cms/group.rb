@@ -23,8 +23,8 @@ class Cms::Group < ActiveRecord::Base
   scope :with_code, lambda { |c| {:conditions => {:code => c}} }
 
 
-  scope :public, :include => :group_type, :conditions => ["#{GroupType.table_name}.cms_access = ?", false]
-  scope :cms_access, :include => :group_type, :conditions => ["#{GroupType.table_name}.cms_access = ?", true]
+  scope :public, :include => :group_type, :conditions => ["#{Cms::GroupType.table_name}.cms_access = ?", false]
+  scope :cms_access, :include => :group_type, :conditions => ["#{Cms::GroupType.table_name}.cms_access = ?", true]
 
   def guest?
     group_type && group_type.guest?

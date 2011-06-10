@@ -39,7 +39,7 @@ class Cms::PageRoute < ActiveRecord::Base
   end
 
   def reload_routes
-    PageRoute.reload_routes
+    Cms::PageRoute.reload_routes
   end
 
   def add_condition(name, value)

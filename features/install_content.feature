@@ -1,14 +1,17 @@
 Feature: Install blank site
-  In order to have a reasonable starting point
-  a web developer
-  wants a a blank site to be created with seed content.
+  	As a developer installing BrowserCMS
+	there should be an initial set of starting data
+	so that there is a starting point for creating content.
 
-  Scenario: A homepage exists
+  Scenario: A homepage should exist
     Given I am on the homepage
     Then I should see a page titled "Home"
 
-  Scenario: An error page exists
+  Scenario: An error page should exist
     Given I am at /system/server_error
     Then I should see a page titled "Server Error"
+
+
+
 
 
