@@ -1,6 +1,6 @@
 class Cms::SectionNode < ActiveRecord::Base
-  belongs_to :section, :class_name => 'Cms::Section'
-  belongs_to :node, :polymorphic => :true, :class_name => 'Cms::SectionNode', :foreign_type => 'node_type'
+  belongs_to :section, :class_name => '::Cms::Section'
+  belongs_to :node, :polymorphic => :true, :class_name => '::Cms::SectionNode', :foreign_type => 'node_type'
 
   acts_as_list :scope => :section
 
