@@ -4,8 +4,8 @@ source 'http://rubygems.org'
 gemspec
 
 
-# gem "mysql"
-gem 'sqlite3'
+gem "mysql2"
+# gem 'sqlite3'
 gem 'rake', '0.8.7'
 
 gem 'yard', :groups=>[:development, :test]

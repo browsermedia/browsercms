@@ -28,14 +28,18 @@ module Cms
     #
     # @return [String] The HTML content for the container.
     def container(name)
-      page_content = instance_variable_get("@_content_for")
-      content = page_content[name]
-      if logged_in? && @page && @mode == "edit" && current_user.able_to_edit?(@page)
-        render :partial => 'cms/pages/edit_container', :locals => {:name => name, :content => content}
-      else
-        content
-      end
+      self.instance_variable_names
     end
+        # 
+        # def container(name)
+        #   page_content = instance_variable_get("@_content_for")
+        #   content = page_content[name]
+        #   if logged_in? && @page && @mode == "edit" && current_user.able_to_edit?(@page)
+        #     render :partial => 'cms/pages/edit_container', :locals => {:name => name, :content => content}
+        #   else
+        #     content
+        #   end
+        # end
     
     # Determine if a given container has any blocks within it. Useful for determine if markup should be conditionally included
     # when a block is present, but not shown if no block was added. For example:
