@@ -3,4 +3,4 @@ Currently fixing unit tests.
 * Dynamic Attributes are broken. (Portlets)
 ** May be because of overriding attributes= or some other internal ActiveRecord::Base API.
 ** Can we completely get rid of the need for this? It's a consistent source of problems.
-* Functional tests are all broken due a problem with the container. It's caused by instance_variable_get failing to find the hash of content.
+* CK editor is broken

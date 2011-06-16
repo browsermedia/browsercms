@@ -122,27 +122,6 @@ module Cms
 
         # Create, Instantiate and Initialize the view
         action_view = Cms::ViewContext.new(@controller, assigns_for_view)
-#        view_class  = Class.new(ActionView::Base)
-#        action_view = view_class.new(@controller.view_paths, {}, @controller)
-
-#        logger.warn("View Class: #{view_class}")
-#        logger.warn("View : #{action_view}")
-
-        # Make helpers and instance vars available
-#       view_class.send(:include, @controller.class._helpers)
-
-        # Add helpers for the portlet or content block
-#        if $:.detect{|d| File.exists?(File.join(d, self.class.helper_path))}
-#          view_class.send(:include, self.class.helper_class)
-#        end
-#
-        # We want content_for to be called on the controller's view, not this inner view
-#        def action_view.content_for(name, content=nil, &block)
-#          @controller.instance_variable_get("@template").content_for(name, content, &block)
-#        end
-        
-        # Copy instance variables from this renderable object to it's view
-#        action_view.assigns = assigns_for_view
 
         # Determine if this content should render from a file system template or inline (i.e. database based template)
         if respond_to?(:inline_options) && self.inline_options && self.inline_options.has_key?(:inline)

@@ -19,28 +19,18 @@ module Cms
       @page
     end
 
-
     # Outputs the content of a particular container. If the user is in 'edit' mode the container and block controls will
     # be rendered.
     #
-    # Note: As of Jan 19, 2010, all render.html.erb templates must handle marking their content as 'html_safe'. This is
-    # bit of a pain, but I can't figure out how (or if) i can globally do that or not.
-    #
     # @return [String] The HTML content for the container.
     def container(name)
-      self.instance_variable_names
-    end
-        # 
-        # def container(name)
-        #   page_content = instance_variable_get("@_content_for")
-        #   content = page_content[name]
-        #   if logged_in? && @page && @mode == "edit" && current_user.able_to_edit?(@page)
-        #     render :partial => 'cms/pages/edit_container', :locals => {:name => name, :content => content}
-        #   else
-        #     content
-        #   end
-        # end
-    
+      content = content_for(name)
+      if logged_in? && @page && @mode == "edit" && current_user.able_to_edit?(@page)
+        render :partial => 'cms/pages/edit_container', :locals => {:name => name, :content => content}
+      else
+        content
+      end
+    end    
     # Determine if a given container has any blocks within it. Useful for determine if markup should be conditionally included
     # when a block is present, but not shown if no block was added. For example:
     #

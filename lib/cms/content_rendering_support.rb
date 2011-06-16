@@ -68,9 +68,9 @@ module Cms
     # If any of the page's connectables (portlets, etc) are renderable, they may have a render method
     # which does "controller" stuff, so we need to get that run before rendering the page.
     def prepare_connectables_for_render
-
       @_connectors = @page.connectors.for_page_version(@page.version)
       @_connectables = @_connectors.map(&:connectable_with_deleted)
+    
       unless (logged_in? && current_user.able_to?(:administrate, :edit_content, :publish_content))
         worst_exception = nil
         @_connectables.each do |c|
