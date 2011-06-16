@@ -11,7 +11,7 @@ class Cms::TasksControllerTest < ActionController::TestCase
 
   def test_complete_task
     task = Cms::Task.find_by_id_and_assigned_to_id(@task.id, @admin.id)
-    assert_instance_of Task, task, "This test depends on there being a task to complete"
+    assert_instance_of Cms::Task, task, "This test depends on there being a task to complete"
     assert !task.completed?
 
     put :complete, :id => @task.id

@@ -4,3 +4,4 @@ Currently fixing unit tests.
 ** May be because of overriding attributes= or some other internal ActiveRecord::Base API.
 ** Can we completely get rid of the need for this? It's a consistent source of problems.
 * CK editor is broken
+* Need to get Nokogiri/Cucumber tests working correctly.
