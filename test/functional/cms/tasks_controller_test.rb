@@ -10,8 +10,8 @@ class Cms::TasksControllerTest < ActionController::TestCase
   end
 
   def test_complete_task
-    task = Task.find_by_id_and_assigned_to_id(@task.id, @admin.id)
-    assert_instance_of Task, task, "This test depends on there being a task to complete"
+    task = Cms::Task.find_by_id_and_assigned_to_id(@task.id, @admin.id)
+    assert_instance_of Cms::Task, task, "This test depends on there being a task to complete"
     assert !task.completed?
 
     put :complete, :id => @task.id
@@ -27,7 +27,7 @@ class Cms::TasksControllerTest < ActionController::TestCase
   def test_complete_multiple_tasks
     @task2 = Factory(:task, :assigned_to=>@admin)
     ids = [@task.id, @task2.id]
-    tasks = Task.find(:all, :conditions => ["assigned_to_id = ?", @admin.id])
+    tasks = Cms::Task.find(:all, :conditions => ["assigned_to_id = ?", @admin.id])
     assert_equal 2, tasks.length, "This test depends on there being 2 tasks to complete"
     assert !tasks.detect {|t| t.completed?}
 

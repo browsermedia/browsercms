@@ -75,7 +75,7 @@ CODE
   end
 
   def create_rails_app(name)
-    rails_cmd = "rails new #{name}"
+    rails_cmd = "rails _#{Cms::RAILS_VERSION}_ new #{name}"
     if options[:template]
       rails_cmd += " -m #{options[:template]}"
     end

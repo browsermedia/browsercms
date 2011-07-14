@@ -18,7 +18,7 @@ module Cms
       end
 
       def self.model_for(table_name)
-        unscoped_table_name = table_name.to_s.gsub(Cms.table_prefix, "")
+        unscoped_table_name = table_name.to_s.gsub(Cms.table_prefix || "", "")
         class_name = unscoped_table_name.to_s.classify
         return "Cms::#{class_name}".constantize
       rescue NameError
