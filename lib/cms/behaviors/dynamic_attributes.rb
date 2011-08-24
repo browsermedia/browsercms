@@ -116,17 +116,18 @@ module Cms
       def self.included(model_class)
         model_class.extend(MacroMethods)
       end
+
       module MacroMethods
         def has_dynamic_attributes?
           !!@has_dynamic_attributes
         end
-        
-        # Will make the current class have dynamic attributes.
+
+          # Will make the current class have dynamic attributes.
         def has_dynamic_attributes(options={})
           @has_dynamic_attributes = true
           include InstanceMethods
 
-          # Provide default options
+            # Provide default options
           options[:class_name] ||= self.model_name + 'Attribute'
           options[:table_name] ||= options[:class_name].tableize
           options[:relationship_name] ||= options[:class_name].tableize.to_sym
@@ -134,31 +135,31 @@ module Cms
           options[:base_foreign_key] ||= self.name.underscore.foreign_key
           options[:name_field] ||= 'name'
           options[:value_field] ||= 'value'
-          options[:fields].collect! {|f| f.to_s} unless options[:fields].nil?
+          options[:fields].collect! { |f| f.to_s } unless options[:fields].nil?
 
-          # Init option storage if necessary
+            # Init option storage if necessary
           cattr_accessor :dynamic_options
           self.dynamic_options ||= Hash.new
 
-          # Return if already processed.
+            # Return if already processed.
           return if self.dynamic_options.keys.include? options[:class_name]
 
-          # Attempt to load related class. If not create it
+            # Attempt to load related class. If not create it
           begin
             options[:class_name].constantize
           rescue
             Object.const_set(options[:class_name],
-              Class.new(ActiveRecord::Base)).class_eval do
+                             Class.new(ActiveRecord::Base)).class_eval do
               def self.reloadable? #:nodoc:
                 false
               end
             end
           end
 
-          # Store options
+            # Store options
           self.dynamic_options[options[:class_name]] = options
 
-          # Modify attribute class
+            # Modify attribute class
           attribute_class = options[:class_name].constantize
           base_class = self.name.underscore.to_sym
           attribute_class.class_eval do
@@ -166,22 +167,22 @@ module Cms
             alias_method :base, base_class # For generic access
           end
 
-          # Modify main class
+            # Modify main class
           class_eval do
             has_many options[:relationship_name],
-              :class_name => options[:class_name],
-              :table_name => options[:table_name],
-              :foreign_key => options[:foreign_key],
-              :dependent => :destroy
+                     :class_name => options[:class_name],
+                     :table_name => options[:table_name],
+                     :foreign_key => options[:foreign_key],
+                     :dependent => :destroy
 
-            # The following is only setup once
+              # The following is only setup once
             unless private_method_defined? :method_missing_without_dynamic_attributes
 
               # Carry out delayed actions before save
               after_validation :save_modified_dynamic_attributes
 #              after_validation_on_update :save_modified_dynamic_attributes
 
-              # Make attributes seem real
+# Make attributes seem real
               alias_method :method_missing_without_dynamic_attributes, :method_missing
               alias_method :method_missing, :method_missing_with_dynamic_attributes
 
@@ -194,6 +195,8 @@ module Cms
 
             end
           end
+
+
         end
       end
       module InstanceMethods
@@ -204,24 +207,24 @@ module Cms
         # not apply at all unless you implement them yourself.
         def is_dynamic_attribute?(attr, model)
           attr = attr.to_s
-          return dynamic_options[model.name][:fields].include?(attr) unless
-            dynamic_options[model.name][:fields].nil?
-          return dynamic_attributes(model).collect {|f| f.to_s}.include?(attr) unless
-            dynamic_attributes(model).nil?
+          return dynamic_options[model.name][:fields].include?(attr) unless dynamic_options[model.name][:fields].nil?
+          return dynamic_attributes(model).collect { |f| f.to_s }.include?(attr) unless dynamic_attributes(model).nil?
           true
         end
 
-        # Return a list of valid dynamic attributes for the given model. Return
-        # nil if any field is allowed. If you want to say no field is allowed
-        # then return an empty array. If you just have a static list the :fields
-        # option is most likely easier.
-        def dynamic_attributes(model); nil end
+          # Return a list of valid dynamic attributes for the given model. Return
+          # nil if any field is allowed. If you want to say no field is allowed
+          # then return an empty array. If you just have a static list the :fields
+          # option is most likely easier.
+        def dynamic_attributes(model)
+          ; nil
+        end
 
         private
 
-        # Called after validation on update so that dynamic attributes behave
-        # like normal attributes in the fact that the database is not touched
-        # until save is called.
+          # Called after validation on update so that dynamic attributes behave
+          # like normal attributes in the fact that the database is not touched
+          # until save is called.
         def save_modified_dynamic_attributes
           return if new_record?
           return if @save_dynamic_attr.nil?
@@ -239,7 +242,7 @@ module Cms
           @save_dynamic_attr = []
         end
 
-        # Overrides ActiveRecord::Base#read_attribute
+          # Overrides ActiveRecord::Base#read_attribute
         def read_attribute_with_dynamic_attributes(attr_name)
           attr_name = attr_name.to_s
           exec_if_related attr_name do |model|
@@ -254,7 +257,7 @@ module Cms
           read_attribute_without_dynamic_attributes(attr_name)
         end
 
-        # Overrides ActiveRecord::Base#write_attribute
+          # Overrides ActiveRecord::Base#write_attribute
         def write_attribute_with_dynamic_attributes(attr_name, value)
           attr_name = attr_name.to_s
           exec_if_related attr_name do |model|
@@ -270,7 +273,7 @@ module Cms
                 name_field = dynamic_options[model.name][:name_field]
                 foreign_key = dynamic_options[model.name][:foreign_key]
                 dynamic_related(model).build name_field => attr_name,
-                  value_field => value, foreign_key => self.id
+                                             value_field => value, foreign_key => self.id
               end
               return value
             else
@@ -281,8 +284,8 @@ module Cms
           write_attribute_without_dynamic_attributes(attr_name, value)
         end
 
-        # Implements dynamic-attributes as if real getter/setter methods
-        # were defined.
+          # Implements dynamic-attributes as if real getter/setter methods
+          # were defined.
         def method_missing_with_dynamic_attributes(method_id, *args, &block)
           begin
             method_missing_without_dynamic_attributes method_id, *args, &block
@@ -299,19 +302,19 @@ module Cms
           end
         end
 
-        # Retrieve the related dynamic attribute object
+          # Retrieve the related dynamic attribute object
         def dynamic_related_attr(model, attr)
-            name_field = dynamic_options[model.name][:name_field]
-            dynamic_related(model).to_a.find {|r| r.send(name_field) == attr}
+          name_field = dynamic_options[model.name][:name_field]
+          dynamic_related(model).to_a.find { |r| r.send(name_field) == attr }
         end
 
-        # Retrieve the collection of related dynamic attributes
+          # Retrieve the collection of related dynamic attributes
         def dynamic_related(model)
           relationship = dynamic_options[model.name][:relationship_name]
           send relationship
         end
 
-        # Yield only if attr_name is a dynamic_attribute
+          # Yield only if attr_name is a dynamic_attribute
         def exec_if_related(attr_name)
           return false if self.class.column_names.include? attr_name
           each_dynamic_relation do |model|
@@ -321,17 +324,17 @@ module Cms
           end
         end
 
-        # Yields for each dynamic relation.
+          # Yields for each dynamic relation.
         def each_dynamic_relation
-          dynamic_options.keys.each {|kls| yield kls.constantize}
+          dynamic_options.keys.each { |kls| yield kls.constantize }
         end
 
-        # Returns the options for the dynamic attributes
+          # Returns the options for the dynamic attributes
         def dynamic_options
           nonversioned_class(self.class).dynamic_options
         end
 
-        # Will return the parent model if kls is a versioned class
+          # Will return the parent model if kls is a versioned class
         def nonversioned_class(kls)
           if kls.name =~ /\:\:Version$/
             base_class = kls.name
@@ -340,30 +343,36 @@ module Cms
           end
           kls
         end
-        
-        # Overrides the attributes= defined in ActiveRecord::Base
+
+        # Overrides the assign_attributes= defined in ActiveRecord::Base(active_record/base.rb)
         #
         # The only difference is that this doesn't check to see if the
         # model responds_to the method before sending it
-        # This is needed for Rails 2.2
-        def attributes=(new_attributes, guard_protected_attributes = true)
-          return if new_attributes.nil?
-          attributes = new_attributes.dup
-          attributes.stringify_keys!
+        #
+        # Not happy with this copy/paste duplication, but its merely an update to the previous Rails 2/3 behavior
+        def assign_attributes(new_attributes, options = {})
+          return unless new_attributes
+
+          attributes = new_attributes.stringify_keys
+          role = options[:as] || :default
 
           multi_parameter_attributes = []
-          attributes = sanitize_for_mass_assignment(attributes) if guard_protected_attributes
+
+          unless options[:without_protection]
+            attributes = sanitize_for_mass_assignment(attributes, role)
+          end
 
           attributes.each do |k, v|
             if k.include?("(")
-              multi_parameter_attributes << [ k, v ]
+              multi_parameter_attributes << [k, v]
             else
-              send(:"#{k}=", v)
+              # Dynamic Attributes will take ALL setters (unlike ActiveRecord)
+              send("#{k}=", v)
             end
           end
 
           assign_multiparameter_attributes(multi_parameter_attributes)
-        end                         
+        end
       end
     end
   end

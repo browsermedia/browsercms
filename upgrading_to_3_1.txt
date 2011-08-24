@@ -1,7 +1,12 @@
 Currently fixing unit tests.
-* Need to install developer tools to get mysql working.
-* Dynamic Attributes are broken. (Portlets)
-** May be because of overriding attributes= or some other internal ActiveRecord::Base API.
-** Can we completely get rid of the need for this? It's a consistent source of problems.
 * CK editor is broken
 * Need to get Nokogiri/Cucumber tests working correctly.
+
+
+Start HERE
+---------
+
+Fix SQLite errors (bundle exec rake test:units)
+
+
+
