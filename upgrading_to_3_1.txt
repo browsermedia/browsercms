@@ -1,9 +1,13 @@
 Needs
 -----
-Currently fixing unit tests.
+* Currently fixing unit tests.
+** AttachmentTest is broken
+** Make Turn gem work
+* Remove warnings for directory creation during `rake test:units`
 * CK editor is broken
 * Need to get Nokogiri/Cucumber tests working correctly.
 * Add turn gem for better testunit output.
+* Add better messaging for `browsercms demo [NAME]`
 
 Wants (Taking advantage of 3.1)
 -----
@@ -26,7 +30,7 @@ Wants (Taking advantage of 3.1)
 Start HERE
 ---------
 
-Fix SQLite errors (bundle exec rake test:units)
-
+* run `bundle exec rake test:units` and fix broken AttachmentTest
+*
 
 

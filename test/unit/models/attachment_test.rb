@@ -26,8 +26,7 @@ class AttachmentTest < ActiveSupport::TestCase
   end
 
   def test_creating_an_attachment_with_a_Tempfile_file
-    file = @file
-    attachment = Cms::Attachment.new(:temp_file => file, :file_path => "/foo.txt", :section => root_section)
+    attachment = Cms::Attachment.new(:temp_file => @file, :file_path => "/foo.txt", :section => root_section)
     attachment.save!
 
     assert_equal "foo.txt", attachment.file_name
