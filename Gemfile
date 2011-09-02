@@ -12,7 +12,7 @@ gem 'yard', :groups=>[:development, :test]
 gem 'bluecloth', :groups=>[:development, :test] # For YARD
 
 group :test do
-
+  gem 'turn', :require=>false
   # Test unit and dependencies
   gem 'factory_girl_rails', '1.0.1'
   gem 'test-unit', '2.1.1'
