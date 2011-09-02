@@ -42,19 +42,20 @@ class AttachmentTest < ActiveSupport::TestCase
     assert_equal "/bar.txt", attachment.file_path
     assert_equal "bar.txt", attachment.file_name
     assert_equal original_file_location, attachment.file_location
+  end
 
-    # If you change the file of the attachment, the file_location should change
-    attachment = Cms::Attachment.find(attachment.id)
+  def test_updating_a_new_file_should_change_the_file_location
+    attachment = Cms::Attachment.create!(:temp_file => @file, :file_path => "/foo.txt", :section => root_section)
 
+    reloaded_attachment = Cms::Attachment.find(attachment.id)
+    original_file_location = attachment.file_location
     file = file_upload_object(:original_filename=>"second_upload.txt", :content_type=>"text/plain")
-    attachment.update_attributes(:temp_file => file)
-    log_table_with Cms::Attachment, :id, :name, :version, :file_path
-    log_table_with Cms::Attachment::Version, :id, :name, :version, :file_path, :attachment_id
-    assert_equal 3, attachment.draft.version
-    assert_equal "/foo.txt", attachment.as_of_draft_version.file_path, "Updating the file itself should also update the name of the file. (Note:This might just be an invalid test)"
-    assert_equal "foo.txt", attachment.as_of_draft_version.file_name
-    assert_not_equal original_file_location, attachment.as_of_draft_version.file_location
-    assert_equal "This is a second file.", open(attachment.as_of_draft_version.full_file_location) { |f| f.read }
+    reloaded_attachment.update_attributes(:temp_file => file)
+    assert_equal 2, reloaded_attachment.draft.version
+    assert_equal "/foo.txt", reloaded_attachment.as_of_draft_version.file_path, "Updating the file itself should also update the name of the file. (Note:This might just be an invalid test)"
+    assert_equal "foo.txt", reloaded_attachment.as_of_draft_version.file_name
+    assert_not_equal original_file_location, reloaded_attachment.as_of_draft_version.file_location
+    assert_equal "This is a second file.", open(reloaded_attachment.as_of_draft_version.full_file_location) { |f| f.read }
   end
 
   def test_find_live_by_file_path

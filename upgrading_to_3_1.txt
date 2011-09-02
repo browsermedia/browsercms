@@ -1,8 +1,5 @@
 Needs
 -----
-* Currently fixing unit tests.
-** AttachmentTest is broken
-** Make Turn gem work
 * Remove warnings for directory creation during `rake test:units`
 * CK editor is broken
 * Need to get Nokogiri/Cucumber tests working correctly.
@@ -30,7 +27,7 @@ Wants (Taking advantage of 3.1)
 Start HERE
 ---------
 
-* run `bundle exec rake test:units` and fix broken AttachmentTest
-*
+bundle exec rake test:functionals
 
+Start working on functional tests.
 
