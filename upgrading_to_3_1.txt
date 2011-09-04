@@ -2,9 +2,8 @@ Needs
 -----
 * Remove warnings for directory creation during `rake test:units`
 * CK editor is broken
-* Need to get Nokogiri/Cucumber tests working correctly.
-* Add turn gem for better testunit output.
 * Add better messaging for `browsercms demo [NAME]`
+* Create and add a portlet to a page doesn't work
 
 Wants (Taking advantage of 3.1)
 -----
@@ -29,5 +28,13 @@ Start HERE
 
 bundle exec rake test:functionals
 
-Start working on functional tests.
+Start working on functional tests. There are several broken file upload based on things which are likely brittle tests
+
+Finishing tests:
+
+2. Replace any broken functional tests with a cucumber test.
+
+First Test: Streaming file
+test_show_file(Cms::ContentControllerTest) [test/functional/cms/content_controller_test.rb:72]:
+
 

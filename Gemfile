@@ -6,7 +6,7 @@ gemspec
 
 gem "mysql2"
 # gem 'sqlite3'
-gem 'rake', '0.8.7'
+#gem 'rake', '0.8.7'
 
 gem 'yard', :groups=>[:development, :test]
 gem 'bluecloth', :groups=>[:development, :test] # For YARD
@@ -21,12 +21,12 @@ group :test do
   gem "sqlite3-ruby", :require => "sqlite3"
 
   # Cucumber and dependencies
-  # gem 'capybara', '0.4.1.1'
-  # gem 'database_cleaner'
-  # gem 'cucumber-rails'
-  # gem 'cucumber', '0.10.0'
+  gem 'capybara'
+  gem 'database_cleaner'
+  gem 'cucumber-rails'
+  gem 'cucumber'
   # gem 'rspec-rails', '2.4.1'
   # gem 'spork'
-  # gem 'launchy', '0.3.7'
+  gem 'launchy'
 
 end

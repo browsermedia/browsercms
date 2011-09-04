@@ -3,16 +3,19 @@ Feature: Portlets
   As a content editor
   I want to be able to dynamically display content.
 
-Background: A Homepage
-  Given there is a homepage
+  Background: A Homepage
+    Given the cms database is populated
 
-Scenario: When logged in
-  Given I am logged in as a Content Editor
-  And there is a LoginPortlet on the homepage
-  And I am on the homepage
-  Then I should see Welcome, cmsadmin
+  Scenario: When logged in
+    Given I am logged in as a Content Editor
+    And there is a LoginPortlet on the homepage
+    And I am on the homepage
+    Then I should see Welcome, cmsadmin
 
-Scenario: When logged out
-  Given there is a LoginPortlet on the homepage
-  And I am on the homepage
-  Then I should see a Login Form
+  Scenario: When logged out
+    Given there is a LoginPortlet on the homepage
+    And I am on the homepage
+    Then I should see the following content:
+      | Login       |
+      | Password    |
+      | Remember me |

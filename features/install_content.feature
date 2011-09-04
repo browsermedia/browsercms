@@ -3,6 +3,9 @@ Feature: Install blank site
 	there should be an initial set of starting data
 	so that there is a starting point for creating content.
 
+  Background:
+    Given the cms database is populated
+
   Scenario: A homepage should exist
     Given I am on the homepage
     Then I should see a page titled "Home"
@@ -10,6 +13,11 @@ Feature: Install blank site
   Scenario: An error page should exist
     Given I am at /system/server_error
     Then I should see a page titled "Server Error"
+
+  Scenario: A 404 page should exist
+    Given I am at /system/not_found
+    Then I should see a page titled "Page Not Found"
+
 
 
 
