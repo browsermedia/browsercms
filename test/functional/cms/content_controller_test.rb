@@ -66,14 +66,6 @@ module Cms
       assert_select "title", "Archived"
     end
 
-    def test_show_file
-      create_file
-
-      @controller.expects(:send_file).with(@file_block.attachment.full_file_location, :filename => 'test.txt', :type => 'text/plain', :disposition => "inline")
-
-      get :show, :path => "test.txt"
-    end
-
     def test_show_archived_file
       create_file
 

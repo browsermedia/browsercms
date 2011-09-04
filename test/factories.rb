@@ -19,6 +19,8 @@ end
 
 Factory.define :file_block, :class => Cms::FileBlock do |m|
   m.sequence(:name) { |n| "TestFileBlock#{n}" }
+  m.attachment_section { find_or_create_root_section }
+  m.publish_on_save true
 end
 
 
@@ -121,7 +123,7 @@ Cms::Authoring::PERMISSIONS.each do |p|
   end
 end
 
-def create_or_find_root_section
+def find_or_create_root_section
   root = Cms::Section.root.first
   unless root
     root = Cms::Section.create!(:name=>"Root", :root=>true, :path=>"/")
@@ -132,7 +134,7 @@ end
 Factory.define :section, :class=>Cms::Section do |m|
   m.name "Test"
   m.path "/test"
-  m.parent { create_or_find_root_section }
+  m.parent { find_or_create_root_section }
 end
 
 Factory.define :permission, :class => Cms::Permission do |m|
