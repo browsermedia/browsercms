@@ -33,7 +33,6 @@ Finishing tests:
 
 2. Replace any broken functional tests with a cucumber test.
 
-bundle exec rake test:functionals
-
-
+rake test:functionals
+test_show_protected_file_to_privileged_user(Cms::ContentControllerTest) [test/functional/cms/content_controller_test.rb:95]:
 

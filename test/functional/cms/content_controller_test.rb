@@ -80,15 +80,6 @@ module Cms
       assert_select "title", "Not Found"
     end
 
-    def test_show_protected_file_to_guest
-      create_protected_file
-
-      get :show, :path => "test.txt"
-
-      assert_response :forbidden
-      assert_select "title", "Access Denied"
-    end
-
     def test_show_protected_file_to_privileged_user
       create_protected_file
       login_as @privileged_user

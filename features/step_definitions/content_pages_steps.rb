@@ -31,3 +31,7 @@ end
 Given /^I am at (.+)/ do |path|
   visit path
 end
+
+Then /^the response should be (.*)$/ do |response_code|
+  assert_equal response_code.to_i, page.status_code
+end

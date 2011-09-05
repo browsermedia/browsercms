@@ -6,15 +6,13 @@ end
 
 # Creates a CMS::FileBlock
 Given /^a text file named "([^"]*)" exists with:$/ do |file_name, text|
-  tempfile = Tempfile.new file_name do |f|
-    f << text
-  end
-  tempfile << text
-  tempfile.flush
-  tempfile.close
+  create_file(file_name, text)
+end
 
-  upload_file = Rack::Test::UploadedFile.new(tempfile.path, "text/plain", false)
-  Factory(:file_block, :attachment_file => upload_file, :attachment_file_path => file_name)
+Given /^a protected text file named "([^"]*)" exists with:$/ do |file_name, text|
+  file = create_file(file_name, text)
+  section = Factory(:protected_section)
+  file.update_attributes(:attachment_section => section)
 end
 
 When /^I request (.*)$/ do |path|
