@@ -101,7 +101,6 @@ class App < Thor
 
     insert_into_file "config/environments/production.rb", :after => "Application.configure do\n" do
       <<-CODE
-  config.action_view.cache_template_loading = false
   config.action_controller.page_cache_directory = Rails.root + '/public/cache/'
       CODE
     end
