@@ -101,10 +101,34 @@ class App < Thor
 
     insert_into_file "config/environments/production.rb", :after => "Application.configure do\n" do
       <<-CODE
-  config.action_view.cache_template_loading = false
-  config.action_controller.page_cache_directory = Rails.root + '/public/cache/'
+  config.action_controller.page_cache_directory = File.join(Rails.root, 'public', 'cache')
       CODE
     end
+
+    insert_into_file "config/environments/production.rb", :before => 'config.action_dispatch.x_sendfile_header = "X-Sendfile"' do
+      <<-CODE
+# If you want to enable webservers to send binary files, you will need to uncomment X-Sendfile line below and configure Apache mod_sendfile
+  # See http://codequest.eu/articles/rails3-apache-passenger-and-empty-file-using-send-file for details
+      CODE
+    end
+
+    gsub_file "config/environments/production.rb", /(config\.action_dispatch\.x_sendfile_header = "X-Sendfile")/, '  # \1'
+
+    insert_into_file "config/environments/production.rb", :before => 'config.serve_static_assets = false' do
+      <<-COMMENT
+# This allows bcms to serve static assets (like admin css files) from the gem
+      COMMENT
+    end
+
+    gsub_file "config/environments/production.rb", /(config\.serve_static_assets =) false/, '  \1 true'
+
+    insert_into_file "config/environments/production.rb", :after => "config.active_support.deprecation = :notify" do
+      %q{
+
+  # Configure your mail server's address below
+  config.action_mailer.smtp_settings = {:address => 'mail.yourmailserver.com', :domain => "#{SITE_DOMAIN}"}}
+    end
+
     initializer 'browsercms.rb', <<-CODE
 Cms.attachment_file_permission = 0640
     CODE
@@ -114,4 +138,3 @@ Cms.attachment_file_permission = 0640
 end
 
 App.start
-
