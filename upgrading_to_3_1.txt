@@ -1,5 +1,6 @@
 Needs
 -----
+
 * Remove warnings for directory creation during `rake test:units`
 * CK editor is broken
 * Add better messaging for `browsercms demo [NAME]`
@@ -7,6 +8,7 @@ Needs
 
 Wants (Taking advantage of 3.1)
 -----
+http://freelancing-gods.com/posts/combustion_better_rails_engine_testing
 * Remove jquery and use jquery-rails gem which loads jquery via the assets pipeline.
 ** Add it as a dependency in gemspec
 ** Add rake precompile assets
@@ -34,5 +36,7 @@ Finishing tests:
 2. Replace any broken functional tests with a cucumber test.
 
 rake test:functionals
-test_show_protected_file_to_privileged_user(Cms::ContentControllerTest) [test/functional/cms/content_controller_test.rb:95]:
+test_select(Cms::ContentTypesControllerTest) [test/functional/cms/content_types_controller_test.rb:16]:
+
+Unit tests leave seed data in DB.
 

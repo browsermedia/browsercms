@@ -35,3 +35,10 @@ end
 Then /^the response should be (.*)$/ do |response_code|
   assert_equal response_code.to_i, page.status_code
 end
+
+When /^login as an authorized user$/ do
+  visit cms_login_path
+  fill_in 'login', :with=>"privileged"
+  fill_in 'password', :with=>"password"
+  click_button 'LOGIN'
+end

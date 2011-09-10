@@ -1,7 +1,10 @@
 require 'cms/data_loader'
 
 After do |scenario|
-  #save_and_open_page if scenario.failed?
+  if scenario.failed?
+    save_and_open_page unless @failed_at_least_once
+    @failed_at_least_once = true
+  end
 end
 
 require "#{Rails.root}/test/mock_file"

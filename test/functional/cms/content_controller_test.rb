@@ -80,15 +80,6 @@ module Cms
       assert_select "title", "Not Found"
     end
 
-    def test_show_protected_file_to_privileged_user
-      create_protected_file
-      login_as @privileged_user
-      @controller.expects(:send_file).with(@file_block.attachment.full_file_location, :filename => 'test.txt', :type => 'text/plain', :disposition => "inline")
-
-      get :show, :path => "test.txt"
-
-    end
-
     def test_show_page_route
       @page_template = Factory(:page_template, :name => "test_show_page_route")
       @page = Factory(:page,
