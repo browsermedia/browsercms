@@ -51,3 +51,11 @@ When /^I turn on edit mode for (.*)$/ do |path|
   goto = path + "?mode=edit"
   visit(goto)
 end
+
+When /^I add new content to the page$/ do
+  container = "main"
+  click_link "Add new content to this container (#{container})"
+end
+Then /^I should see a list of selectable content types$/ do
+  pending
+end
