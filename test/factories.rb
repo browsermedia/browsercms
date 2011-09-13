@@ -135,6 +135,23 @@ Factory.define :section, :class=>Cms::Section do |m|
   m.name "Test"
   m.path "/test"
   m.parent { find_or_create_root_section }
+
+end
+
+Factory.define :public_page, :class => Cms::Page do |m|
+  m.sequence(:name) { |n| "Page #{n}" }
+  m.path { |a| "/#{a.name.gsub(/\s/, '_').downcase}" }
+  m.template_file_name "default.html.erb"
+  m.association :section, :factory=>:public_section
+end
+
+Factory.define :public_section, :class=>Cms::Section do |m|
+  m.name "Test"
+  m.path "/test"
+  m.parent { find_or_create_root_section }
+  m.after_create { |section|
+    section.allow_groups = :all
+  }
 end
 
 Factory.define :protected_section, :class=>Cms::Section do |m|

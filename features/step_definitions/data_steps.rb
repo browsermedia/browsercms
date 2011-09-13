@@ -18,3 +18,11 @@ end
 When /^I request (.*)$/ do |path|
   visit path
 end
+
+Given /^there is an Html Block with:$/ do |table|
+  Factory(:html_block, table.hashes.first)
+end
+
+When /^there is a Page with:$/ do |table|
+  Factory(:public_page, { :publish_on_save=>true }.merge(table.hashes.first))
+end

@@ -42,3 +42,12 @@ When /^login as an authorized user$/ do
   fill_in 'password', :with=>"password"
   click_button 'LOGIN'
 end
+When /^I click the Select Existing Content button$/ do
+  container = "main"
+  click_link "insert_existing_content_#{container}"
+end
+
+When /^I turn on edit mode for (.*)$/ do |path|
+  goto = path + "?mode=edit"
+  visit(goto)
+end
