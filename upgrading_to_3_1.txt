@@ -36,7 +36,6 @@ Finishing tests:
 2. Replace any broken functional tests with a cucumber test.
 
 rake test:functionals
-test_select(Cms::ContentTypesControllerTest) [test/functional/cms/content_types_controller_test.rb:16]:
-
+     test/functional/cms/portlets_controller_test.rb:47:in `test_destroy']:
 Unit tests leave seed data in DB.
 

@@ -19,3 +19,13 @@ Feature: Portlets
       | Login       |
       | Password    |
       | Remember me |
+
+  Scenario: Viewing a portlet
+    Given I am logged in as a Content Editor
+    And there is a "Portlet" with:
+      | name          | template    |
+      | A new portlet | Hello World |
+    When I go to the content library
+    And follow "Portlet"
+    Then I should see the following content:
+      | A new portlet |

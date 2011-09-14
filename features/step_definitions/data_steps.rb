@@ -4,6 +4,9 @@ Then /^I should see the following content:$/ do |table|
   end
 end
 
+
+
+
 # Creates a CMS::FileBlock
 Given /^a text file named "([^"]*)" exists with:$/ do |file_name, text|
   create_file(file_name, text)
@@ -21,6 +24,13 @@ end
 
 Given /^there is an Html Block with:$/ do |table|
   Factory(:html_block, table.hashes.first)
+end
+
+# When there is a 'Portlet' with:
+# | name | content |
+# | A    |    B    |
+When /^there is a "([^"]*)" with:$/ do |model_class, table|
+  Factory(model_class.underscore.to_sym, table.hashes.first)
 end
 
 When /^there is a page with:$/ do |table|
