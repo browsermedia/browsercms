@@ -4,6 +4,7 @@ Then /^I should see a page titled "([^"]*)"$/ do |page_title|
   assert page.has_content?(page_title)
 end
 
+
 Given /^I am logged in as a Content Editor$/ do
   visit '/cms'
   fill_in 'login', :with => 'cmsadmin'
@@ -58,4 +59,8 @@ When /^I add new content to the page$/ do
 end
 Then /^I should see a list of selectable content types$/ do
   pending
+end
+
+When /^I click on "([^"]*)"$/ do |name|
+  click_on name
 end

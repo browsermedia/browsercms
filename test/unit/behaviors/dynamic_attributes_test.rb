@@ -65,14 +65,6 @@ class DynamicAttributesTest < ActiveSupport::TestCase
     assert_equal("Paper", @thing.description)
   end
   
-  #test "Always respond_to something=" do
-  #  assert_equal(true, Thing.respond_to?(:price=))
-  #  assert_equal true, @thing.respond_to?(:price=)
-  #  assert(Thing.respond_to?(:a=))
-  #  assert_equal(false, @thing.respond_to?(:price))
-  #  assert_equal(false, @thing.respond_to?("=".to_sym))
-  #end
-  
   test "can bulk set persistent properties during construction" do
     mineral = Thing.new(:description=>"Rock")
     mineral.save!

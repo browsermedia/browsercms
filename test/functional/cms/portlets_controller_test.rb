@@ -15,13 +15,6 @@ module Cms
       assert_select "#dynamic_portlet_#{@block.id}"
     end
 
-    def test_index_does_not_show_deleted_portlets
-      @block.destroy
-      get :index
-      assert_response :success
-      assert_select "#dynamic_portlet_#{@block.id}", 0
-    end
-
     def test_show
       get :show, :id => @block.id
       assert_response :success
@@ -39,12 +32,6 @@ module Cms
       assert_response :success
       assert_select "title", "Content Library / Edit Portlet"
       assert_select "h1", "Edit Portlet 'V1'"
-    end
-
-    def test_destroy
-      delete :destroy, :id => @block.id
-      assert_redirected_to cms_portlets_path
-      assert_raise(ActiveRecord::RecordNotFound) { DynamicPortlet.find(@block.id) }
     end
 
     def test_usages

@@ -29,3 +29,33 @@ Feature: Portlets
     And follow "Portlet"
     Then I should see the following content:
       | A new portlet |
+
+  # Portlets aren't deleting or updating due to errors with dynamic attributes.
+  Scenario: Deleting a portlet
+    Given I am logged in as a Content Editor
+    And there is a "Portlet" with:
+      | name          | template    |
+      | A new portlet | Hello World |
+    When I delete that portlet
+    And I go to the content library
+    And I click on "Portlet"
+    And I should not see "A new portlet"
+    When I view that portlet
+    Then the response should be 500
+
+  # Portlets aren't deleting or updating due to errors with dynamic attributes.
+  Scenario: Editing a portlet
+    Given I am logged in as a Content Editor
+    And there is a "Portlet" with:
+      | name          | template    |
+      | A new portlet | Hello World |
+    When I edit that portlet
+    And fill in "Name" with "New Name"
+    And fill in "Template" with "New World"
+    And I click on "Save"
+    Then I should see the following content:
+      | View Portlet 'New Name' |
+      | New World               |
+    And I should not see the following content:
+    | A new portlet |
+    | Hello World   |

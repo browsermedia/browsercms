@@ -4,7 +4,11 @@ Then /^I should see the following content:$/ do |table|
   end
 end
 
-
+When /^I should not see the following content:$/ do |table|
+  table.raw.each do |row|
+    refute page.has_content?(row[0]), "Found #{row[0]}' on the page when it was not expected to be there."
+  end
+end
 
 
 # Creates a CMS::FileBlock
@@ -30,7 +34,7 @@ end
 # | name | content |
 # | A    |    B    |
 When /^there is a "([^"]*)" with:$/ do |model_class, table|
-  Factory(model_class.underscore.to_sym, table.hashes.first)
+  @subject = Factory(model_class.underscore.to_sym, table.hashes.first)
 end
 
 When /^there is a page with:$/ do |table|

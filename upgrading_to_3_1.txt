@@ -28,14 +28,13 @@ http://freelancing-gods.com/posts/combustion_better_rails_engine_testing
 Start HERE
 ---------
 
+Replace integration tests with cucumber features.
 
-Start working on functional tests. There are several broken file upload based on things which are likely brittle tests
 
-Finishing tests:
+# Problem: Portlets cannot be deleted or updated
+Why: update_attributes is calling assign_attributes, which doesn't appear to be present on instances of a portlet for reasons I don't understand. Dynamic attributes
+    are complicating matters again.
 
-2. Replace any broken functional tests with a cucumber test.
-
-rake test:functionals
-     test/functional/cms/portlets_controller_test.rb:47:in `test_destroy']:
-Unit tests leave seed data in DB.
-
+Other alternatives:
+1. Continue to patch dynamic attributes
+2. Rip it out, replace with something like 'json_record' (https://github.com/bdurand/json_record) which would allow us to store in a single column.
