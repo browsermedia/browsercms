@@ -3,7 +3,7 @@ namespace :test do
   desc 'Runs all Tests (Test::Unit) and Features (cucumber)'
   task :all => ["test", "cucumber"]
 
-  # Could be improved somewhat to get rid of unneeded warnings.
+    # Could be improved somewhat to get rid of unneeded warnings.
   desc "run tests against sqlite database"
   task :sqlite3 do
     cp(File.join('config', 'database.sqlite3.yml'), File.join('config', 'database.yml'), :verbose => true)
@@ -12,7 +12,7 @@ namespace :test do
     system "rake db:migrate test"
   end
 
-  # Could be improved somewhat to get rid of unneeded warnings.
+    # Could be improved somewhat to get rid of unneeded warnings.
   desc "run tests against mysql database"
   task :mysql do
     cp(File.join('config', 'database.mysql.yml'), File.join('config', 'database.yml'), :verbose => true)
@@ -40,4 +40,16 @@ end
 
 YARD::Rake::YardocTask.new do |t|
   t.options = ['--output-dir', 'doc/api/']
+end
+
+
+begin
+  require 'cucumber/rake/task'
+  namespace :cucumber do
+    Cucumber::Rake::Task.new({:launch => 'db:test:prepare'}, 'Run features opening failures in the browser') do |t|
+      t.fork = true # You may get faster startup if you set this to false
+      t.profile = 'default'
+      t.cucumber_opts = ["-f", "Debug::Formatter"]
+    end
+  end
 end

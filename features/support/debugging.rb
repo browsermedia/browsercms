@@ -1,14 +1,28 @@
 require 'cms/data_loader'
 
+
+module LaunchBrokenTests
+  LAUNCH = false
+  def launch_broken_tests
+    LAUNCH
+  end
+end
+World(LaunchBrokenTests)
+
 After do |scenario|
-  if scenario.failed?
-    save_and_open_page unless @failed_at_least_once
-    @failed_at_least_once = true
+  if scenario.failed? && launch_broken_tests
+    save_and_open_page
   end
 end
 
-require "#{Rails.root}/test/mock_file"
+AfterConfiguration do |config|
+  if config.formats[0].include?("Debug::Formatter")
+    LaunchBrokenTests::LAUNCH = true
+  end
+end
 
+
+require "#{Rails.root}/test/mock_file"
 module FileOperations
 
   def create_file(file_name, text)
