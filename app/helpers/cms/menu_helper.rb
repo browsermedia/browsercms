@@ -133,16 +133,16 @@ module Cms
           item[:id] = "#{section_node.node_type.underscore}_#{section_node.node_id}"
           
           # If we are showing a section item, we want to use the path for the first page
-          page = section_node.section? ? node.first_page_or_link : node
-          if section_node.section? && page
-            item[:selected] = true if page.hidden? && selected_page == page
+          page_or_link = section_node.section? ? node.first_page_or_link : node
+          if section_node.section? && page_or_link
+            item[:selected] = true if page_or_link.respond_to?(:hidden?) && page_or_link.hidden? && selected_page == page_or_link
           else
-            item[:selected] = true if selected_page == page
+            item[:selected] = true if selected_page == page_or_link
           end
          
-          item[:url] = page && page.path || '#'
+          item[:url] = page_or_link.try(:path) || '#'
           item[:name] = node.name
-          item[:target] = "_blank" if page.respond_to?(:new_window?) && page.new_window?
+          item[:target] = "_blank" if page_or_link.respond_to?(:new_window?) && page_or_link.new_window?
           
           # Now if this is a section, we do the child nodes, 
           # but only if the show_all_siblings parameter is true, 
