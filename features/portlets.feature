@@ -30,7 +30,6 @@ Feature: Portlets
     Then I should see the following content:
       | A new portlet |
 
-  # Portlets aren't deleting or updating due to errors with dynamic attributes.
   Scenario: Deleting a portlet
     Given I am logged in as a Content Editor
     And there is a "Portlet" with:
@@ -41,9 +40,9 @@ Feature: Portlets
     And I click on "Portlet"
     And I should not see "A new portlet"
     When I view that portlet
-    Then the response should be 500
+    Then I should see the following content:
+    | has been deleted |
 
-  # Portlets aren't deleting or updating due to errors with dynamic attributes.
   Scenario: Editing a portlet
     Given I am logged in as a Content Editor
     And there is a "Portlet" with:

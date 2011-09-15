@@ -220,6 +220,39 @@ module Cms
           ; nil
         end
 
+
+        # Overrides the assign_attributes= defined in ActiveRecord::Base(active_record/base.rb)
+        #
+        # The only difference is that this doesn't check to see if the
+        # model responds_to the method before sending it
+        #
+        # Not happy with this copy/paste duplication, but its merely an update to the previous Rails 2/3 behavior
+        # Must remain PUBLIC so other rails methods can call it (like ActiveRecord::Persistence#update_attributes)
+        def assign_attributes(new_attributes, options = {})
+          return unless new_attributes
+
+          attributes = new_attributes.stringify_keys
+          role = options[:as] || :default
+
+          multi_parameter_attributes = []
+
+          unless options[:without_protection]
+            attributes = sanitize_for_mass_assignment(attributes, role)
+          end
+
+          attributes.each do |k, v|
+            if k.include?("(")
+              multi_parameter_attributes << [k, v]
+            else
+              # Dynamic Attributes will take ALL setters (unlike ActiveRecord)
+              send("#{k}=", v)
+            end
+          end
+
+          assign_multiparameter_attributes(multi_parameter_attributes)
+        end
+      end
+
         private
 
           # Called after validation on update so that dynamic attributes behave
@@ -344,36 +377,6 @@ module Cms
           kls
         end
 
-        # Overrides the assign_attributes= defined in ActiveRecord::Base(active_record/base.rb)
-        #
-        # The only difference is that this doesn't check to see if the
-        # model responds_to the method before sending it
-        #
-        # Not happy with this copy/paste duplication, but its merely an update to the previous Rails 2/3 behavior
-        def assign_attributes(new_attributes, options = {})
-          return unless new_attributes
-
-          attributes = new_attributes.stringify_keys
-          role = options[:as] || :default
-
-          multi_parameter_attributes = []
-
-          unless options[:without_protection]
-            attributes = sanitize_for_mass_assignment(attributes, role)
-          end
-
-          attributes.each do |k, v|
-            if k.include?("(")
-              multi_parameter_attributes << [k, v]
-            else
-              # Dynamic Attributes will take ALL setters (unlike ActiveRecord)
-              send("#{k}=", v)
-            end
-          end
-
-          assign_multiparameter_attributes(multi_parameter_attributes)
-        end
-      end
     end
   end
 end

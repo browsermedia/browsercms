@@ -1,12 +1,21 @@
+Bugs
+----
+
+* Adding a portlet to a page: User ends up on the View Portlet rather than the View Page. Portlet does not get added to the page
+* Portlet templates are not loading the ckeditor
+
 Needs
 -----
 
 * Remove warnings for directory creation during `rake test:units`
-* CK editor is broken
 * Add better messaging for `browsercms demo [NAME]`
-* Create and add a portlet to a page doesn't work
 * Remove bespin
 
+Big Goals
+---------
+
+* Get Asset Pipeline hooked up
+* Revamp to use Mountable Engines
 
 Wants (Taking advantage of 3.1)
 -----
@@ -28,15 +37,5 @@ http://freelancing-gods.com/posts/combustion_better_rails_engine_testing
 
 
 Start HERE
----------
+----------
 
-Replace integration tests with cucumber features.
-
-
-# Problem: Portlets cannot be deleted or updated
-Why: update_attributes is calling assign_attributes, which doesn't appear to be present on instances of a portlet for reasons I don't understand. Dynamic attributes
-    are complicating matters again.
-
-Other alternatives:
-1. Continue to patch dynamic attributes
-2. Rip it out, replace with something like 'json_record' (https://github.com/bdurand/json_record) which would allow us to store in a single column.

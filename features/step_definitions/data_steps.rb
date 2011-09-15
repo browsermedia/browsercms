@@ -6,7 +6,7 @@ end
 
 When /^I should not see the following content:$/ do |table|
   table.raw.each do |row|
-    refute page.has_content?(row[0]), "Found #{row[0]}' on the page when it was not expected to be there."
+    assert !page.has_content?(row[0]), "Found #{row[0]}' on the page when it was not expected to be there."
   end
 end
 
