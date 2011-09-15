@@ -96,15 +96,19 @@ class ContentController < Cms::ApplicationController
     end    
   end
 
-  def try_to_stream_file
-    split = @paths.last.to_s.split('.')
+  # Determines if the current request is file that needs to be streamed.
+  # Any URL with a . in it is considered a file.
+  def is_file?
+    split = request.url.split('.')
     ext = split.size > 1 ? split.last.to_s.downcase : nil
-    
-    #Only try to stream cache file if it has an extension
-    unless ext.blank?
+    !ext.blank?
+  end
+
+  def try_to_stream_file
+    if is_file?
       
       #Check access to file
-      @attachment = Attachment.find_live_by_file_path(@path)
+      @attachment = Attachment.find_live_by_file_path(request.fullpath)
       if @attachment
         raise Cms::Errors::AccessDenied unless current_user.able_to_view?(@attachment)
 

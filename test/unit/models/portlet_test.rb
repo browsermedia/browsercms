@@ -20,6 +20,30 @@ end
 
 class PortletTest < ActiveSupport::TestCase
 
+  def setup
+    @portlet = Factory(:portlet)
+
+  end
+  test "destroy should mark a portlet as deleted" do
+    @portlet.destroy
+    @portlet.reload!
+    assert_equal true, @portlet.deleted?
+    #Cms::Portlet.find(@portlet.id)
+    #assert_raise(ActiveRecord::RecordNotFound){
+    #  Cms::Portlet.find(@portlet.id)
+    #}
+  end
+
+  test "update_attributes" do
+    @portlet.update_attributes(:b => "whatever")
+    assert_equal "whatever", @portlet.b
+  end
+
+  test "attributes=" do
+    @portlet.attributes=({:b => "b"})
+    assert_equal "b", @portlet.b
+  end
+
   def test_dynamic_attributes
     portlet = DynamicPortlet.create(:name => "Test", :foo => "FOO")
     assert_equal "FOO", Cms::Portlet.find(portlet.id).foo

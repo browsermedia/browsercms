@@ -39,7 +39,7 @@ Gem::Specification.new do |s|
   s.files += Dir["public/themes/**/*"]
   s.files -= Dir['test/dummy/*']
 
-  s.add_dependency('rails', "~> 3.0.7")
+  s.add_dependency('rails', "~> 3.1")
 
   # Required only for bcms-upgrade
   s.add_dependency('term-ansicolor')

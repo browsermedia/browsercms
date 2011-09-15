@@ -2,7 +2,7 @@
 # make changes to the correct 'source' db file. In this case, edit: config/database.mysql.yml instead.
 
 development:
-  adapter: mysql
+  adapter: mysql2
   encoding: utf8
   reconnect: false
   pool: 5
@@ -15,7 +15,7 @@ development:
 # re-generated from your development database when you run 'rake'.
 # Do not set this db to the same as development or production.
 test: &test
-  adapter: mysql
+  adapter: mysql2
   encoding: utf8
   database: browsercms_test
   username: root

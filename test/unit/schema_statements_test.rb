@@ -104,9 +104,7 @@ class SchemaStatementsTest < ActiveSupport::TestCase
       create_content_table 'add_prefix' do |t|  ;  end
     end
 
-    result = connection.execute("show tables like 'abc_add_prefix'")
-    assert_equal 1, result.num_rows, "Might fail on non-mysql"
-
+    assert_table_was_created('abc_add_prefix')
   end
 
   test "Can optionally not create prefixed table" do
@@ -120,13 +118,18 @@ class SchemaStatementsTest < ActiveSupport::TestCase
       end
     end
 
-    result = connection.execute("show tables like 'stuff'")
-    assert_equal 1, result.num_rows, "Might fail on non-mysql"
+    assert_table_was_created('stuff')
   end
 
   private
+
   def connection
     ActiveRecord::Base.connection
+  end
+
+  def assert_table_was_created(table_name)
+    result = connection.execute("show tables like '#{table_name}'")
+    assert_equal 1, result.count, "Ensure the table was crated. (Might fail when running unit tests with drivers other than mysql2)"
   end
 end
 

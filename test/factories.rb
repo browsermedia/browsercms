@@ -19,6 +19,8 @@ end
 
 Factory.define :file_block, :class => Cms::FileBlock do |m|
   m.sequence(:name) { |n| "TestFileBlock#{n}" }
+  m.attachment_section { find_or_create_root_section }
+  m.publish_on_save true
 end
 
 
@@ -121,7 +123,7 @@ Cms::Authoring::PERMISSIONS.each do |p|
   end
 end
 
-def create_or_find_root_section
+def find_or_create_root_section
   root = Cms::Section.root.first
   unless root
     root = Cms::Section.create!(:name=>"Root", :root=>true, :path=>"/")
@@ -132,7 +134,37 @@ end
 Factory.define :section, :class=>Cms::Section do |m|
   m.name "Test"
   m.path "/test"
-  m.parent { create_or_find_root_section }
+  m.parent { find_or_create_root_section }
+
+end
+
+Factory.define :public_page, :class => Cms::Page do |m|
+  m.sequence(:name) { |n| "Page #{n}" }
+  m.path { |a| "/#{a.name.gsub(/\s/, '_').downcase}" }
+  m.template_file_name "default.html.erb"
+  m.association :section, :factory=>:public_section
+end
+
+Factory.define :public_section, :class=>Cms::Section do |m|
+  m.name "Test"
+  m.path "/test"
+  m.parent { find_or_create_root_section }
+  m.after_create { |section|
+    section.allow_groups = :all
+  }
+end
+
+Factory.define :protected_section, :class=>Cms::Section do |m|
+  m.name "Protected Section"
+  m.path "/protected-section"
+  m.parent { find_or_create_root_section }
+  m.after_create { |protected_section|
+    secret_group = Factory(:group, :name => "Secret")
+    secret_group.sections << protected_section
+    privileged_user = Factory(:user, :login => "privileged")
+    privileged_user.groups << secret_group
+  }
+
 end
 
 Factory.define :permission, :class => Cms::Permission do |m|

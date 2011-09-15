@@ -19,3 +19,4 @@ rerun.txt
 test/dummy/log/*
 doc/api
 .yardoc/*
+.rvmrc

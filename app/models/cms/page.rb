@@ -8,7 +8,7 @@ class Cms::Page < ActiveRecord::Base
   is_userstamped
   is_versioned
 
-  has_many :connectors, :class_name => 'Cms::Connector', :order => "#{Connector.table_name}.container, #{Connector.table_name}.position"
+  has_many :connectors, :class_name => 'Cms::Connector', :order => "#{Cms::Connector.table_name}.container, #{Cms::Connector.table_name}.position"
   has_many :page_routes, :class_name => 'Cms::PageRoute'
 
 
@@ -214,7 +214,7 @@ class Cms::Page < ActiveRecord::Base
   end
 
   def section_id=(sec_id)
-    self.section = Section.find(sec_id)
+    self.section = Cms::Section.find(sec_id)
   end
 
   def section=(sec)
@@ -259,11 +259,11 @@ class Cms::Page < ActiveRecord::Base
 
   # This will be nil if it is a file system based template
   def template
-    PageTemplate.find_by_file_name(template_file_name)
+    Cms::PageTemplate.find_by_file_name(template_file_name)
   end
 
   def template_name
-    template_file_name && PageTemplate.display_name(template_file_name)
+    template_file_name && Cms::PageTemplate.display_name(template_file_name)
   end
 
   def ancestors
@@ -272,7 +272,7 @@ class Cms::Page < ActiveRecord::Base
 
   def in_section?(section_or_section_name)
     sec = section_or_section_name.is_a?(String) ?
-        Section.first(:conditions => {:name => section_or_section_name}) :
+        Cms::Section.first(:conditions => {:name => section_or_section_name}) :
         section_or_section_name
     fn = lambda { |s| s ? (s == sec || fn.call(s.parent)) : false }
     fn.call(section)

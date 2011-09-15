@@ -21,7 +21,7 @@ class Cms::SectionsController < Cms::BaseController
   end
   
   def create
-    @section = Section.new(params[:cms_section])
+    @section = Cms::Section.new(params[:cms_section])
     @section.parent = @parent
     @section.groups = @section.parent.groups unless current_user.able_to?(:administrate)
     if @section.save
@@ -69,7 +69,7 @@ class Cms::SectionsController < Cms::BaseController
   end
   
   def file_browser              
-    @section = Section.find_by_name_path(params[:CurrentFolder])
+    @section = Cms::Section.find_by_name_path(params[:CurrentFolder])
     if request.post? && params[:NewFile]
       handle_file_browser_upload
     else
@@ -79,12 +79,12 @@ class Cms::SectionsController < Cms::BaseController
   
   protected
     def load_parent
-      @parent = Section.find(params[:section_id])
+      @parent = Cms::Section.find(params[:section_id])
       raise Cms::Errors::AccessDenied unless current_user.able_to_edit?(@parent)
     end
 
     def load_section
-      @section = Section.find(params[:id])
+      @section = Cms::Section.find(params[:id])
       raise Cms::Errors::AccessDenied unless current_user.able_to_edit?(@section)
     end
 
@@ -116,11 +116,11 @@ class Cms::SectionsController < Cms::BaseController
     end
 
     def public_groups
-      @public_groups ||= Group.public.all(:order => "#{Group.table_name}.name")
+      @public_groups ||= Cms::Group.public.all(:order => "#{Cms::Group.table_name}.name")
     end
 
     def cms_groups
-      @cms_groups ||= Group.cms_access.all(:order => "#{Group.table_name}.name")
+      @cms_groups ||= Cms::Group.cms_access.all(:order => "#{Cms::Group.table_name}.name")
     end
 
     def set_toolbar_tab

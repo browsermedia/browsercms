@@ -5,7 +5,7 @@ class PasswordManagementTest < ActionController::IntegrationTest
   def setup  
     @group = Factory(:group, :name => "Member")
 
-    @section = Factory(:section, :parent => root_section, :name => "Passwords", :path => "/passwords", :allow_groups=>:all)
+    @section = Factory(:public_section, :parent => root_section, :name => "Passwords", :path => "/passwords")
     @section.save
 
     @user = Factory(:user, :email => "dexter@miamidade.gov")

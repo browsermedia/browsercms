@@ -17,6 +17,11 @@ class Cms::ApplicationHelperTest < ActionView::TestCase
     end
   end
   
+  test "url_with_mode should handle 'blank' referers as empty" do
+    assert_equal("?mode=edit", url_with_mode("", "edit"))
+    assert_equal("?mode=edit", url_with_mode(nil, "edit"))
+  end
+  
   def test_determine_order
     assert_equal "foo", determine_order("foo desc", "foo desc")
     assert_equal "foo", determine_order("foo desc", "foo")

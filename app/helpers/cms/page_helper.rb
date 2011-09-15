@@ -19,24 +19,18 @@ module Cms
       @page
     end
 
-
     # Outputs the content of a particular container. If the user is in 'edit' mode the container and block controls will
     # be rendered.
     #
-    # Note: As of Jan 19, 2010, all render.html.erb templates must handle marking their content as 'html_safe'. This is
-    # bit of a pain, but I can't figure out how (or if) i can globally do that or not.
-    #
     # @return [String] The HTML content for the container.
     def container(name)
-      page_content = instance_variable_get("@_content_for")
-      content = page_content[name]
+      content = content_for(name)
       if logged_in? && @page && @mode == "edit" && current_user.able_to_edit?(@page)
         render :partial => 'cms/pages/edit_container', :locals => {:name => name, :content => content}
       else
         content
       end
-    end
-    
+    end    
     # Determine if a given container has any blocks within it. Useful for determine if markup should be conditionally included
     # when a block is present, but not shown if no block was added. For example:
     #
@@ -94,12 +88,12 @@ HTML
       items = []
       ancestors[start..ancestors.size].each_with_index do |sec,i|
         items << content_tag(:li, 
-          link_to(h(sec.name), sec.actual_path), (i == 0 ? {:class => "first"} : {}))
+          link_to(sec.name, sec.actual_path), (i == 0 ? {:class => "first"} : {}))
       end
       if !show_parent && current_page.section.path == current_page.path
-        items[items.size-1] = content_tag(:li, h(current_page.section.name))
+        items[items.size-1] = content_tag(:li, current_page.section.name)
       else
-        items << content_tag(:li, h(current_page.page_title))
+        items << content_tag(:li, current_page.page_title)
       end
       content_tag(:ul, "\n  #{items.join("\n  ")}\n".html_safe, :class => "breadcrumbs")
     end

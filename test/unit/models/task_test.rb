@@ -30,6 +30,12 @@ class CreateTaskTest < TaskTest
     assert_that_the_page_is_assigned_to_the_assigned_to_user
     assert_that_the_task_is_added_to_the_users_incomplete_tasks
   end
+  
+  test "An email is sent when a task is created" do
+    create_the_task!
+
+    assert_equal 1, ActionMailer::Base.deliveries.size
+  end
 
   protected
 

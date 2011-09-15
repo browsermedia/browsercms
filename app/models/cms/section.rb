@@ -5,10 +5,10 @@ class Cms::Section < ActiveRecord::Base
   has_one :node, :class_name => 'Cms::SectionNode', :as => :node, :dependent => :destroy
   #The nodes that link this section to its children
   has_many :child_nodes, :class_name => 'Cms::SectionNode'
-  has_many :child_sections, :class_name => 'Cms::SectionNode', :conditions => ["node_type = ?", "Cms::Section"], :order => "#{SectionNode.table_name}.position"
+  has_many :child_sections, :class_name => 'Cms::SectionNode', :conditions => ["node_type = ?", "Cms::Section"], :order => "#{Cms::SectionNode.table_name}.position"
 
-  has_many :pages, :through => :child_nodes, :source => :node, :source_type => 'Cms::Page', :order => "#{SectionNode.table_name}.position"
-  has_many :sections, :through => :child_nodes, :source => :node, :source_type => 'Cms::Section', :order => "#{SectionNode.table_name}.position"
+  has_many :pages, :through => :child_nodes, :source => :node, :source_type => 'Cms::Page', :order => "#{Cms::SectionNode.table_name}.position"
+  has_many :sections, :through => :child_nodes, :source => :node, :source_type => 'Cms::Section', :order => "#{Cms::SectionNode.table_name}.position"
 
   has_many :group_sections, :class_name => 'Cms::GroupSection'
   has_many :groups, :through => :group_sections, :class_name => 'Cms::Group'
@@ -17,8 +17,8 @@ class Cms::Section < ActiveRecord::Base
   scope :system, :conditions => {:name => 'system'}
   scope :hidden, :conditions => {:hidden => true}
   scope :not_hidden, :conditions => {:hidden => false}
-  scope :named, lambda { |name| {:conditions => ["#{Section.table_name}.name = ?", name]} }
-  scope :with_path, lambda { |path| {:conditions => ["#{Section.table_name}.path = ?", path]} }
+  scope :named, lambda { |name| {:conditions => ["#{table_name}.name = ?", name]} }
+  scope :with_path, lambda { |path| {:conditions => ["#{table_name}.path = ?", path]} }
 
   validates_presence_of :name, :path
   #validates_presence_of :parent_id, :if => Proc.new {root.count > 0}, :message => "section is required"
@@ -33,7 +33,7 @@ class Cms::Section < ActiveRecord::Base
   attr_accessor :full_path
 
   def visible_child_nodes(options={})
-    children = child_nodes.of_type(["Cms::Section", "Cms::Page", "Cms::Link"]).all(:order => "#{SectionNode.table_name}.position")
+    children = child_nodes.of_type(["Cms::Section", "Cms::Page", "Cms::Link"]).all(:order => "#{Cms::SectionNode.table_name}.position")
     visible_children = children.select { |sn| sn.visible? }
     options[:limit] ? visible_children[0...options[:limit]] : visible_children
   end
@@ -116,7 +116,7 @@ class Cms::Section < ActiveRecord::Base
 
   #The first page that is a decendent of this section
   def first_page_or_link
-    section_node = child_nodes.of_type(['Cms::Link', 'Cms::Page']).first(:order => "#{SectionNode.table_name}.position")
+    section_node = child_nodes.of_type(['Cms::Link', 'Cms::Page']).first(:order => "#{Cms::SectionNode.table_name}.position")
     return section_node.node if section_node
     sections.each do |s|
       node = s.first_page_or_link
@@ -145,7 +145,7 @@ class Cms::Section < ActiveRecord::Base
   # @param [Symbol] code Set of groups to allow (Options :all, :none) Defaults to :none
   def allow_groups=(code=:none)
     if code == :all
-      self.groups = Group.all
+      self.groups = Cms::Group.all
     end
   end
 end
