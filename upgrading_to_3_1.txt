@@ -5,6 +5,8 @@ Needs
 * CK editor is broken
 * Add better messaging for `browsercms demo [NAME]`
 * Create and add a portlet to a page doesn't work
+* Remove bespin
+
 
 Wants (Taking advantage of 3.1)
 -----
