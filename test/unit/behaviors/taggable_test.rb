@@ -65,13 +65,13 @@ class TaggableBlockTest < ActiveSupport::TestCase
     tag_counts = Tag.counts(:limit => 4)
     assert_equal 4, tag_counts.size
     assert_equal Tag.find_by_name("article"), tag_counts[0]
-    assert_equal "25", tag_counts[0].count
+    assert_equal 25, tag_counts[0].count
     assert_equal Tag.find_by_name("even"), tag_counts[1]
-    assert_equal "13", tag_counts[1].count
+    assert_equal 13, tag_counts[1].count
     assert_equal Tag.find_by_name("five"), tag_counts[2]
-    assert_equal "5", tag_counts[2].count
+    assert_equal 5, tag_counts[2].count
     assert_equal Tag.find_by_name("first"), tag_counts[3]
-    assert_equal "1", tag_counts[3].count
+    assert_equal 1, tag_counts[3].count
     
     tag_cloud = Tag.cloud(:sizes => 9)
     assert_equal 5, tag_cloud.size
