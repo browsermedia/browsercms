@@ -32,6 +32,10 @@ http://freelancing-gods.com/posts/combustion_better_rails_engine_testing
 * Migrations have a single 'def change' method now, rather than self.up and self.down
 * Use Ancestry gem - It handles automatically turning models into tree via a single column. Would be very very performant in comparison to current behavior.
 
+Ideas
+-----
+* Allow for multiple view templates for blocks.
+
 3.1 Misc
 * Rspec Request Tests = Integration/acceptance tests using capabara
 
