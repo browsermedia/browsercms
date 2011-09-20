@@ -95,9 +95,14 @@ class App < Thor
     route "routes_for_browser_cms"
 
     generate "browser_cms:cms"
-    environment 'SITE_DOMAIN="localhost:3000"', :env => "development"
-    environment 'SITE_DOMAIN="localhost:3000"', :env => "test"
-    environment 'SITE_DOMAIN="localhost:3000"', :env => "production"
+
+    %w{development test production}.each do |env|
+      prepend_to_file "config/environments/#{env}.rb" do
+        <<-CODE
+SITE_DOMAIN="localhost:3000"
+        CODE
+      end
+    end
 
     insert_into_file "config/environments/production.rb", :after => "Application.configure do\n" do
       <<-CODE
