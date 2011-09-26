@@ -13,7 +13,9 @@ module Cms
 
 
   # Returns the table name prefix for models in the Cms:: Namespace
-  # Defaults to blank if no namespace is set.
+  # Prefer calling table_name_prefix to this methods
+  # @return [String] nil if no namespace has been set.
+  #
   def self.table_prefix
     @table_prefix
   end

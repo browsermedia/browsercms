@@ -1,5 +1,5 @@
 body {
-background: #FFF url(/images/cms/bg.png) repeat-x 0 0;
+background: #FFF url(<%= asset_path "cms/bg.png" %>) repeat-x 0 0;
 text-align: center;
 font: 62.5%/100% "Trebuchet MS", Helvetica, Verdana, Arial, sans-serif;
 color: #727171;
@@ -18,7 +18,7 @@ color: white;
 }
 
 #form_panel {
-background: #888 url(/images/cms/login_bg.jpg) repeat-x 0 0;
+background: #888 url(<%= asset_path "cms/login_bg.jpg" %>) repeat-x 0 0;
 margin: 0 1px;
 height: 164px;
 padding: 10px;
@@ -46,10 +46,10 @@ margin-top: 8px;
 }
 #login_button {
 float: left;
-background: url(/images/cms/buttons/button_cap.png) no-repeat top right;
+background: url(<%= asset_path "cms/buttons/button_cap.png" %>) no-repeat top right;
 }
 #login_button input {
-background: #888888 url(/images/cms/buttons/button.png) no-repeat 0 0;
+background: #888888 url(<%= asset_path "cms/buttons/button.png" %>) no-repeat 0 0;
 border-width: 0;
 height: 27px;
 width: 76px;

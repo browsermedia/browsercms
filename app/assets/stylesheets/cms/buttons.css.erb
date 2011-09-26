@@ -1,0 +1,120 @@
+
+a.button { 
+	display: block;
+	line-height: 27px;
+	padding-right: 10px;
+	background: url(<%= asset_path "cms/buttons/button_cap.png" %>) no-repeat top right;
+	float: left;
+	color: #FFF;
+	text-decoration: none;
+	margin-right: 5px;
+}
+
+  a.button.middle, a.button.middle.disabled:hover {
+    background: url(<%= asset_path "cms/buttons/button_bg.png" %>) no-repeat 100% 0;
+    margin-right: 0;
+  }
+  a.button.middle.off, a.button.middle.off:hover {
+    background: url(<%= asset_path "cms/buttons/button_cap_off_middle.gif" %>) no-repeat 100% 0;
+  }
+  
+    a.button.middle:hover {
+      background: url(<%= asset_path "cms/buttons/button_bg.png" %>) no-repeat 100% -27px;
+    }
+
+  a.button.left, a.button.left.disabled:hover {
+    background: url(<%= asset_path "cms/buttons/button_left_bg.png" %>) no-repeat 100% 0px;
+    margin-right: 0;
+  }
+  
+    a.button.left:hover {
+      background: url(<%= asset_path "cms/buttons/button_left_bg.png" %>) no-repeat 100% -27px;
+    }
+
+  a.button.right, a.button.right.disabled:hover {
+    background: url(<%= asset_path "cms/buttons/button_cap.png" %>) no-repeat top right;
+  }
+  
+    a.button.right:hover {
+      background: url(<%= asset_path "cms/buttons/button_cap_h.png" %>) no-repeat top right;
+    }
+
+a.button span {
+	display: block;
+	background: url(<%= asset_path "cms/buttons/button.png" %>) no-repeat 0 0;
+	padding: 0 0 0 10px;
+	font-weight: bold;
+	text-transform: uppercase
+}
+
+  a.button.left span, a.button.left.disabled:hover span {
+    background: url(<%= asset_path "cms/buttons/button.png" %>) no-repeat 0 0;
+  }
+  
+    a.button.left:hover span {
+      background: url(<%= asset_path "cms/buttons/button_h.png" %>) 0 0;
+    }
+  
+  a.button.middle span, a.button.middle.disabled:hover span {
+    background: url(<%= asset_path "cms/buttons/button_bg.png" %>) no-repeat 0 0;
+  }
+  a.button.middle.off span, a.button.middle.off:hover span {
+    background: url(<%= asset_path "cms/buttons/button_off_middle.png" %>) no-repeat 0 0;
+  }
+    
+    a.button.middle:hover span {
+      background: url(<%= asset_path "cms/buttons/button_bg.png" %>) no-repeat 0 -27px;
+    }
+  
+  a.button.right span, a.button.right.disabled:hover span {
+    background: url(<%= asset_path "cms/buttons/button_bg.png" %>) no-repeat 0 0;
+  }
+  a.button.right.off span, a.button.right.off:hover span {
+    background: url(<%= asset_path "cms/buttons/button_off_middle.png" %>) no-repeat 0 0;
+  }
+  
+    a.button.right:hover span {
+      background: url(<%= asset_path "cms/buttons/button_bg.png" %>) no-repeat 0 -27px;
+    }
+
+a.button.off, a.button.off:hover {
+  background: url(<%= asset_path "cms/buttons/button_cap_off.gif" %>) no-repeat top right;
+}
+
+a.button.off span, a.button.off:hover span {
+  background: url(<%= asset_path "cms/buttons/button_off.png" %>) no-repeat 0 0;
+}
+
+a.button:hover {
+	background: url(<%= asset_path "cms/buttons/button_cap_h.png" %>) no-repeat 100% 0;
+	text-decoration: none;
+}
+
+a.button:hover span {
+	background: url(<%= asset_path "cms/buttons/button_h.png" %>) no-repeat 0 0;
+}
+
+a.button.disabled {
+	color: #88A8D2;
+	cursor: default;
+}
+a.button span span.delete_img{
+		  float:left;
+		  padding: 0 0 0 14px;
+	background: url(<%= asset_path "cms/buttons/delete_x.png" %>) no-repeat 0 0;
+}
+a.button:hover span span.delete_img{
+	background: url(<%= asset_path "cms/buttons/delete_x_h.png" %>) no-repeat 0 0;
+}
+a.button.disabled span span.delete_img{
+	background: url(<%= asset_path "cms/buttons/delete_x_disabled.png" %>) no-repeat 0 0;
+}
+a.disabled:hover, a.disabled:hover {
+	background: url(<%= asset_path "cms/buttons/button_cap.png" %>) no-repeat top right;
+}
+a.disabled:hover span {
+	background: url(<%= asset_path "cms/buttons/button.png" %>) no-repeat 0 0;
+}
+a.disabled:hover span span.delete_img {
+	background: url(<%= asset_path "cms/buttons/delete_x_disabled.png" %>) no-repeat 0 0;
+}

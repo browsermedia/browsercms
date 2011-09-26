@@ -1,4 +1,6 @@
-@import url(/stylesheets/cms/selectbox.css);
+/**
+*= require cms/selectbox
+*/
 
 form, .faux_form {
 font-size: 10pt;
@@ -18,7 +20,7 @@ font-size: 100%;
 
 .fields {
 padding: 10px 0;
-background: url(/images/cms/dashed.gif) repeat-x 100% 100%;
+background: url(<%= asset_path "cms/dashed.gif" %>) repeat-x 100% 100%;
 }
 
 /* Fake forms */
@@ -220,7 +222,7 @@ margin-left: 140px;
 div.lt_button input.submit,
 button {
 border-width: 0;
-background: #4C82C0 url(/images/cms/lt_button_bg.gif) repeat 0 0;
+background: #4C82C0 url(<%= asset_path "cms/lt_button_bg.gif" %>) repeat 0 0;
 height: 25px;
 color: white;
 font-weight: bold;
@@ -233,7 +235,7 @@ text-transform: uppercase;
 }
 
 div.lt_button div{
-background: #4C82C0 url(/images/cms/lt_button_bg.gif) repeat 0 0;
+background: #4C82C0 url(<%= asset_path "cms/lt_button_bg.gif" %>) repeat 0 0;
 float: left;
 }
 

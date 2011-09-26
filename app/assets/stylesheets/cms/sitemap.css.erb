@@ -44,7 +44,7 @@ float: left;
 
 /* Root Node */
 #sitemap ul.root {
-background: url(/images/cms/sitemap/site_root_cap.png) no-repeat 0 0;
+background: url(<%= asset_path "cms/sitemap/site_root_cap.png" %>) no-repeat 0 0;
 padding-top: 4px;
 }
 
@@ -64,7 +64,7 @@ margin: -5px 0 -7px 0;
 
 /* Rootlets */
 #sitemap ul.rootlet {
-background: url(/images/cms/sitemap/buffer_caps.png) no-repeat 0 0;
+background: url(<%= asset_path "cms/sitemap/buffer_caps.png" %>) no-repeat 0 0;
 padding-top: 12px;
 }
 
@@ -133,23 +133,23 @@ margin-top: -1px;
 margin-bottom: 0px;
 }
 #sitemap ul.rootlet ul td.drop-after, #sitemap ul.rootlet ul ul table.section td.drop-after {
-background: url(/images/cms/dashed.gif) repeat-x 100% 100%;
+background: url(<%= asset_path "cms/dashed.gif" %>) repeat-x 100% 100%;
 }
 
 #sitemap ul.rootlet ul table.section td.drop-after {
-background: url(/images/cms/solid.gif) repeat-x 100% 100%;
+background: url(<%= asset_path "cms/solid.gif" %>) repeat-x 100% 100%;
 }
 
 #sitemap ul.rootlet td.divided {
-background: url(/images/cms/sitemap/divider.gif) no-repeat 23px 1px;
-* background: url(/images/cms/sitemap/divider.gif) no-repeat 23px 6px;
+background: url(<%= asset_path "cms/sitemap/divider.gif" %>) no-repeat 23px 1px;
+* background: url(<%= asset_path "cms/sitemap/divider.gif" %>) no-repeat 23px 6px;
 }
 #sitemap ul.rootlet ul td.divided {
-background: url(/images/cms/sitemap/divider.gif) no-repeat 23px 0;
+background: url(<%= asset_path "cms/sitemap/divider.gif" %>) no-repeat 23px 0;
 }
 
 #sitemap ul.rootlet li, #sitemap ul.root li {
-  background: #FFF url(/images/cms/sitemap/gradient.gif) no-repeat 0 100%;
+  background: #FFF url(<%= asset_path "cms/sitemap/gradient.gif" %>) no-repeat 0 100%;
 }
 
 #sitemap ul.rootlet li li{
@@ -286,7 +286,7 @@ a.hidden:hover span {
   right: -12px;
   width: 57px;
   height: 18px;
-  background: url(/images/cms/sitemap/tooltip.gif) no-repeat 0 0;
+  background: url(<%= asset_path "cms/sitemap/tooltip.gif" %>) no-repeat 0 0;
   color:#FFF;
   font-size: 90%;
   line-height: 14px;
@@ -297,11 +297,11 @@ a.hidden:hover span {
 
 div.bottom_cap {
 height: 9px;
-background: transparent url(/images/cms/sitemap/bottom_cap.png) no-repeat 0 0;
+background: transparent url(<%= asset_path "cms/sitemap/bottom_cap.png" %>) no-repeat 0 0;
 }
 div.top_cap_sitemap_content {
 height: 5px;
-background: transparent url(/images/cms/sitemap/top_cap_content.png) no-repeat 0 0;
+background: transparent url(<%= asset_path "cms/sitemap/top_cap_content.png" %>) no-repeat 0 0;
 }
 
 div.on .sbl { 
@@ -310,7 +310,7 @@ div.on .sbl {
   left: 0;
   height: 2px; 
   width: 2px; 
-  background: url(/images/cms/sitemap/corners.gif) no-repeat 0 -1px
+  background: url(<%= asset_path "cms/sitemap/corners.gif" %>) no-repeat 0 -1px
 }
 #sitemap ul ul div.on .sbl {
   left: 58px; 
@@ -322,7 +322,7 @@ div.on .sbr {
   right: 20px; 
   height: 2px; 
   width: 2px; 
-  background: url(/images/cms/sitemap/corners.gif) no-repeat -1px -1px
+  background: url(<%= asset_path "cms/sitemap/corners.gif" %>) no-repeat -1px -1px
 }
 
 div.on .stl { 
@@ -331,7 +331,7 @@ div.on .stl {
   left: 0px; 
   height: 2px; 
   width: 2px; 
-  background: url(/images/cms/sitemap/corners.gif) no-repeat 0 0
+  background: url(<%= asset_path "cms/sitemap/corners.gif" %>) no-repeat 0 0
 }
 #sitemap ul ul div.on .stl {
   left: 58px; 
@@ -343,7 +343,7 @@ div.on .str {
   right: 20px; 
   height: 2px; 
   width: 2px; 
-  background: url(/images/cms/sitemap/corners.gif) no-repeat -1px 0px
+  background: url(<%= asset_path "cms/sitemap/corners.gif" %>) no-repeat -1px 0px
 }
 
 div.over .sbl { 
@@ -352,7 +352,7 @@ div.over .sbl {
   left: 0px; 
   height: 2px; 
   width: 2px; 
-  background: url(/images/cms/sitemap/corners_hover.gif) no-repeat 0 -1px
+  background: url(<%= asset_path "cms/sitemap/corners_hover.gif" %>) no-repeat 0 -1px
 }
 #sitemap ul ul div.over .sbl {
   left: 58px; 
@@ -365,7 +365,7 @@ div.over .sbr {
   right: 20px; 
   height: 2px; 
   width: 2px; 
-  background: url(/images/cms/sitemap/corners_hover.gif) no-repeat -1px -1px
+  background: url(<%= asset_path "cms/sitemap/corners_hover.gif" %>) no-repeat -1px -1px
 }
 
 div.over .stl { 
@@ -374,7 +374,7 @@ div.over .stl {
   left: 0px; 
   height: 2px; 
   width: 2px; 
-  background: url(/images/cms/sitemap/corners_hover.gif) no-repeat 0 0
+  background: url(<%= asset_path "cms/sitemap/corners_hover.gif" %>) no-repeat 0 0
 }
 #sitemap ul ul div.over .stl {
   left: 58px; 
@@ -386,5 +386,5 @@ div.over .str {
   right: 20px; 
   height: 2px; 
   width: 2px; 
-  background: url(/images/cms/sitemap/corners_hover.gif) no-repeat -1px 0px
+  background: url(<%= asset_path "cms/sitemap/corners_hover.gif" %>) no-repeat -1px 0px
 }

@@ -1,5 +1,5 @@
 #functions .box {
-background: url(/images/cms/administration/user_browser_bg.gif) repeat-x 0 0;
+background: url(<%= asset_path "cms/administration/user_browser_bg.gif" %>) repeat-x 0 0;
 text-transform: capitalize;
 margin-top: -5px;
 border: 1px solid #4E5359;
@@ -79,7 +79,7 @@ table.data td a.sm_button {
 	   height: 15px;
 	   width: 38px;
 	display: block;
-	background: url(/images/cms/buttons/sm_button_2.gif) no-repeat top right;
+	background: url(<%= asset_path "cms/buttons/sm_button_2.gif" %>) no-repeat top right;
 	color: #FFFFFF;
 }
 table.data td a.sm_button span{
@@ -87,5 +87,5 @@ table.data td a.sm_button span{
 	   display: block;
 }
 table.data td a.sm_button:hover {
-	background: url(/images/cms/buttons/sm_button_2_h.gif) no-repeat top right;
+	background: url(<%= asset_path "cms/buttons/sm_button_2_h.gif" %>) no-repeat top right;
 }

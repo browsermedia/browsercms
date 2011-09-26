@@ -4,11 +4,12 @@ require 'test_helper'
 
 class Cms::ApiTest < ActiveSupport::TestCase
   test "Find block from tablename without namespace" do
+    Cms.expects(:table_prefix).returns(nil)
     assert_equal Cms::HtmlBlock, Cms::Acts::ContentBlock.model_for(:html_block)
   end
 
   test "Find block from tablename with namespace" do
-    Cms.expects(:table_prefix).returns("cms_")
+    Cms.expects(:table_prefix).returns("cms_").at_least_once
     assert_equal Cms::HtmlBlock, Cms::Acts::ContentBlock.model_for(:cms_html_block)
   end
 

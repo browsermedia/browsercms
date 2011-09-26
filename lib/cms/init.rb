@@ -50,14 +50,17 @@ module Cms
       @routes ||=[]
     end
 
-    def wysiwig_js
-      @wysiwig_js ||= ['/bcms/ckeditor/ckeditor.js', '/bcms/ckeditor/editor.js']
+    # Determines which WYSIWYG editor is the 'default' for a BrowserCMS project
+    #
+    # bcms modules can changes this by overriding it in their configuration.
+    def content_editor
+      @wysiwig_editor ||= "ckeditor"
     end
 
-    def wysiwig_js=(path_array)
-      @wysiwig_js = path_array
+    def content_editor=(editor)
+      @wysiwig_editor = editor
     end
-    
+
     def markdown?
       Object.const_defined?("Markdown")
     end

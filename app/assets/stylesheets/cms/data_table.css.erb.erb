@@ -3,12 +3,12 @@ padding: 6px 0;
 }
 
 table.data td div.dividers {
-  background: url(/images/cms/table/divider.gif) repeat-y 100% 100%;
+  background: url(<%= asset_path "cms/table/divider.gif" %>) repeat-y 100% 100%;
   padding: 4px 22px 4px 0;
 }
 
 table.data th div.dividers {
-  background: url(/images/cms/table/th_divider.gif) repeat-y 100% 100%;
+  background: url(<%= asset_path "cms/table/th_divider.gif" %>) repeat-y 100% 100%;
   padding: 8px;
   position: relative;
 }
@@ -52,10 +52,10 @@ text-transform: capitalize;
 border: 1px solid white;
 }
 .data th.first {
-background: #B6B6B6 url(/images/cms/table/tr_bg.gif) no-repeat 0 0;
+background: #B6B6B6 url(<%= asset_path "cms/table/tr_bg.gif" %>) no-repeat 0 0;
 }
 .data th {
-background: #B6B6B6 url(/images/cms/table/th_bg.gif) repeat-x 0 0;
+background: #B6B6B6 url(<%= asset_path "cms/table/th_bg.gif" %>) repeat-x 0 0;
 /* border-right: 1px solid #8E8E8E; */
 border-bottom: 1px solid #8E8E8E;
 color: #686868;
@@ -64,7 +64,7 @@ font-size: 8pt;
 letter-spacing: 1px;
 }
 .data th.last {
-background: #B6B6B6 url(/images/cms/table/th_last_bg.gif) no-repeat 100% 0;
+background: #B6B6B6 url(<%= asset_path "cms/table/th_last_bg.gif" %>) no-repeat 100% 0;
 border-right: none;
 }
 .data td {
@@ -97,18 +97,18 @@ border-bottom: none;
 }
 
 table.data tr.hover td.first {
-background: #FFFFFF url(/images/cms/table/td_cap_first_h.gif) no-repeat 100% 0;
+background: #FFFFFF url(<%= asset_path "cms/table/td_cap_first_h.gif" %>) no-repeat 100% 0;
 }
 
 table.data tr.hover td.last {
-background: #FFFFFF url(/images/cms/table/td_cap_last_h.gif) no-repeat 0 0;
+background: #FFFFFF url(<%= asset_path "cms/table/td_cap_last_h.gif" %>) no-repeat 0 0;
 }
 
 table.data tr.selected td.first {
-background: #FFFFFF url(/images/cms/table/td_cap_first_s.gif) no-repeat 100% 0;
+background: #FFFFFF url(<%= asset_path "cms/table/td_cap_first_s.gif" %>) no-repeat 100% 0;
 }
 table.data tr.selected td.last {
-background: #FFFFFF url(/images/cms/table/td_cap_last_s.gif) no-repeat 0 0;
+background: #FFFFFF url(<%= asset_path "cms/table/td_cap_last_s.gif" %>) no-repeat 0 0;
 }
 table.data tr.hover td.buffer {
 background: #FFFFFF;
@@ -125,7 +125,7 @@ cursor: default;
   left: -1px; 
   height: 5px; 
   width: 5px; 
-  background: url(/images/cms/table/bl.gif) no-repeat 0 0
+  background: url(<%= asset_path "cms/table/bl.gif" %>) no-repeat 0 0
 }
 
 .br { 
@@ -134,7 +134,7 @@ cursor: default;
   right: 0; 
   height: 5px; 
   width: 5px; 
-  background: url(/images/cms/table/br.gif) no-repeat 0 0
+  background: url(<%= asset_path "cms/table/br.gif" %>) no-repeat 0 0
 }
 
 .tl { 
@@ -143,7 +143,7 @@ cursor: default;
   left: -1px; 
   height: 5px; 
   width: 5px; 
-  background: url(/images/cms/table/tl.gif) no-repeat 0 0
+  background: url(<%= asset_path "cms/table/tl.gif" %>) no-repeat 0 0
 }
 
 .tr { 
@@ -152,5 +152,5 @@ cursor: default;
   right: 0px; 
   height: 5px; 
   width: 5px; 
-  background: url(/images/cms/table/tr.gif) no-repeat 0 0
+  background: url(<%= asset_path "cms/table/tr.gif" %>) no-repeat 0 0
 }

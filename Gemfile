@@ -3,10 +3,10 @@ source 'http://rubygems.org'
 # Load this project as a gem.
 gemspec
 
+gem 'jquery-rails'
 
 gem "mysql2"
-# gem 'sqlite3'
-#gem 'rake', '0.8.7'
+
 
 gem 'yard', :groups=>[:development, :test]
 gem 'bluecloth', :groups=>[:development, :test] # For YARD
@@ -23,8 +23,6 @@ group :test do
   gem 'database_cleaner'
   gem 'cucumber-rails'
   gem 'cucumber'
-  # gem 'rspec-rails', '2.4.1'
-  # gem 'spork'
   gem 'launchy'
 
 end

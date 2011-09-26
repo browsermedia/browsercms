@@ -2,22 +2,11 @@
 module Cms
   module ApplicationHelper
 
-    def require_stylesheet_link(sources=(), content_area=:html_head)
-      @required_stylesheet_links ||= []
-      new_links                  = Array(sources) - @required_stylesheet_links
-      if !new_links.empty?
-        @required_stylesheet_links |= new_links
-        content_for(content_area, stylesheet_link_tag(new_links))
-      end
-    end
-
-    def require_javascript_include(sources=(), content_area=:html_head)
-      @required_javascript_includes ||= []
-      new_links                     = Array(sources) - @required_javascript_includes
-      if !new_links.empty?
-        @required_javascript_includes |= new_links
-        content_for(content_area, javascript_include_tag(new_links))
-      end
+    # Return the JS file to load the configured default WYSIWYG editor
+    #
+    # Ideally, this could be improved if sprockets allows for dynamically determining which js library to use.
+    def cms_content_editor
+      "bcms/#{Cms.content_editor}"
     end
 
     def searchable_sections(selected = nil)
@@ -136,11 +125,11 @@ HTML
     def lt_button_wrapper(content)
       button = <<LBW
   <div class="lt_button">
-    <img src="/images/cms/lt_button_l.gif" alt="" />
+    #{image_tag "cms/lt_button_l.gif"}
     <div class="lt_button_content">
       <span>#{ content }</span>
     </div>
-    <img src="/images/cms/lt_button_r.gif" alt="" style="margin-right: 10px;" />
+    #{image_tag "cms/lt_button_r.gif", :style=>"margin-right: 10px;"}
   </div>
 LBW
       button.html_safe

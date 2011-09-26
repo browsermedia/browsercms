@@ -37,12 +37,15 @@ Gem::Specification.new do |s|
   s.files += Dir["public/site/**/*"]
   s.files += Dir["public/images/cms/**/*"]
   s.files += Dir["public/themes/**/*"]
+  s.files += Dir["public/themes/**/*"]
+  s.files += Dir["vendor/assets/**/*"]
   s.files -= Dir['test/dummy/*']
 
   s.add_dependency('rails', "~> 3.1")
 
   # Required only for bcms-upgrade
   s.add_dependency('term-ansicolor')
+  s.add_dependency("jquery-rails")
 
 end
 

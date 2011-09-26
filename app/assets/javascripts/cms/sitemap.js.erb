@@ -135,9 +135,9 @@ jQuery(function($) {
         dest_toggle.addClass('folder_toggle');
         dest_toggle.click(toggleSectionOnClick);
         if (dest_toggle.hasClass('large')) {
-            dest_toggle.attr('src', '/images/cms/sitemap/gray_contract.png');
+            dest_toggle.attr('src', '<%= asset_path "cms/sitemap/gray_contract.png" %>');
         } else {
-            dest_toggle.attr('src', '/images/cms/sitemap/contract.png');
+            dest_toggle.attr('src', '<%= asset_path "cms/sitemap/contract.png" %>');
         }
     }
 
@@ -368,9 +368,9 @@ jQuery(function($) {
         $(sectionNode).find('li:first > ul').show();
         var img = $(sectionNode).find('li:first table:first img.folder_toggle');
         if (img.hasClass('large')) {
-            img.attr('src', '/images/cms/sitemap/gray_contract.png').addClass("folder-open")
+            img.attr('src', '<%= asset_path "cms/sitemap/gray_contract.png" %>').addClass("folder-open")
         } else {
-            img.attr('src', '/images/cms/sitemap/contract.png').addClass("folder-open")
+            img.attr('src', '<%= asset_path "cms/sitemap/contract.png" %>').addClass("folder-open")
         }
     }
 
@@ -385,9 +385,9 @@ jQuery(function($) {
         $(sectionNode).find('li:first > ul').hide()
         var img = $(sectionNode).find('li:first table:first img.folder_toggle');
         if (img.hasClass('large')) {
-            img.attr('src', '/images/cms/sitemap/gray_expand.png').removeClass("folder-open")
+            img.attr('src', '<%= asset_path "cms/sitemap/gray_expand.png" %>').removeClass("folder-open")
         } else {
-            img.attr('src', '/images/cms/sitemap/expand.png').removeClass("folder-open")
+            img.attr('src', '<%= asset_path "cms/sitemap/expand.png" %>').removeClass("folder-open")
         }
     }
 

@@ -1,6 +1,7 @@
 //
-// Defines BrowserCMS functions used throughout the application.
+// Defines Core BrowserCMS functions used throughout the application.
 //
+//= require jquery
 //
 jQuery(function($) {
 
@@ -9,7 +10,7 @@ jQuery(function($) {
     //createElement('p') => "<p/>"
     //createElement('p','hi') => "<p>hi</p>"
     //createElement('p', {align: 'center'}) => "<p align="center"/>"
-    //createElement('p','hi',{align: 'center'}) => "<p align="center">hi</p>"    
+    //createElement('p','hi',{align: 'center'}) => "<p align="center">hi</p>"
     $.createElement = function(tag_name, tag_value, tag_attrs) {
         var name = tag_name
         if (typeof tag_value == "object") {

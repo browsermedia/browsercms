@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     browsercms (3.4.0)
+      jquery-rails
       rails (~> 3.1)
       term-ansicolor
 
@@ -73,6 +74,9 @@ GEM
       json (>= 1.4.6)
     hike (1.2.1)
     i18n (0.6.0)
+    jquery-rails (1.0.14)
+      railties (~> 3.0)
+      thor (~> 0.14)
     json (1.6.0)
     json_pure (1.6.0)
     launchy (2.0.5)
@@ -150,6 +154,7 @@ DEPENDENCIES
   cucumber-rails
   database_cleaner
   factory_girl_rails (= 1.0.1)
+  jquery-rails
   launchy
   mocha (= 0.9.8)
   mysql2

@@ -7,9 +7,9 @@
   <% end %>
     jQuery(function($){
       $('#search_submit').hover(function(){
-        $('#search_submit').attr('src', '/images/cms/search_submit_h.gif');
+        $('#search_submit').attr('src', '<%= asset_path "cms/search_submit_h.gif"%>');
       }, function(){
-        $('#search_submit').attr('src', '/images/cms/search_submit.gif');
+        $('#search_submit').attr('src', '<%= asset_path "cms/search_submit.gif"%>');
     })});
   <% end %>
 <% end %>
@@ -30,7 +30,7 @@
                       <%= text_field_tag "search[term]", (params[:search] ? params[:search][:term] : nil) %>
                     </div>
                     <div id="search_submit_container">
-                      <input id="search_submit" type="image" src="/images/cms/search_submit.gif" alt="submit" />
+                      <%= image_submit_tag "cms/search_submit.gif", :alt=>"submit", :id=>"search_submit" %>
                     </div>
                     <div style="clear: both;"></div>
 

@@ -15,8 +15,6 @@ module Cms
                               "public/site/**/*",
                               "db/seeds.rb")
 
-    config.action_view.javascript_expansions[:bcms_core] = ['jquery', 'jquery-ui', 'jquery.cookie.js', 'jquery.selectbox-0.5.js', 'jquery.taglist.js', *Cms.wysiwig_js, 'cms/application']
-
     initializer 'browsercms.add_core_routes', :after=>'action_dispatch.prepare_dispatcher' do |app|
       Rails.logger.debug "Adding Cms::Routes to ActionDispatch"
       ::Cms::Engine.add_cms_routes_method

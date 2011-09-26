@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   <title><%= @page_title %></title>
   <%= stylesheet_link_tag 'cms/application', 'cms/date_picker', 'cms/sitemap', 'cms/taglist' %>
-  <%= javascript_include_tag :bcms_core %>
+  <%= javascript_include_tag "cms/application", cms_content_editor %>
   <script type="text/javascript">
     jQuery(function($){
       <% if protect_against_forgery? %>      

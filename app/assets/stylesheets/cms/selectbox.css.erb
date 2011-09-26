@@ -20,7 +20,7 @@ div.selectbox-wrapper {
   text-transform: capitalize;
 }
 div.selectbox-wrapper ul {
-  background: url(/images/cms/searchbox_gradient.gif) repeat-x 100% 100%;
+  background: url(<%= asset_path "cms/searchbox_gradient.gif" %>) repeat-x 100% 100%;
   list-style-type:none;
   margin:0px;
   padding:0px;
@@ -34,7 +34,7 @@ div.selectbox-wrapper ul li {
   margin:0;
   padding: 8px 11px;
   cursor:pointer;
-  background: #FFF url(/images/cms/dashed.gif) repeat-x 100% 100%;
+  background: #FFF url(<%= asset_path "cms/dashed.gif" %>) repeat-x 100% 100%;
 }
 
 div.selectbox-wrapper ul li.current, #menu div.selectbox-wrapper ul li.current { 
@@ -45,12 +45,12 @@ div.selectbox-wrapper ul li.current, #menu div.selectbox-wrapper ul li.current {
 {
   margin: 0px 5px 10px 0px;
   padding: 4px 0 3px 4px;
-  background: #FFF url(/images/cms/select_bg.gif) no-repeat 100% 0;
+  background: #FFF url(<%= asset_path "cms/select_bg.gif" %>) no-repeat 100% 0;
   cursor: pointer;
   border: none;
 }
 
 .searchbox .selectbox, .box .selectbox, .text_editor_fields .selectbox /* look&fell of  select box*/
 {
-  background: #FFF url(/images/cms/select_bg.gif) no-repeat 100% 0;
+  background: #FFF url(<%= asset_path "cms/select_bg.gif" %>) no-repeat 100% 0;
 }

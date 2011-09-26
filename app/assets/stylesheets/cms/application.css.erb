@@ -1,11 +1,15 @@
-@import url(/stylesheets/cms/reset.css);
-@import url(/stylesheets/cms/nav.css);
-@import url(/stylesheets/cms/menu.css);
-@import url(/stylesheets/cms/buttons.css);
-@import url(/stylesheets/cms/data_table.css);
+/**
+*
+*= require cms/reset
+*= require cms/nav
+*= require cms/menu
+*= require cms/buttons
+*= require cms/data_table
+*= require_self
+*/
 
 body {
-background: #FFF url(/images/cms/bg.png) repeat-x 0 0;
+background: #FFF url(<%= asset_path "cms/bg.png" %>) repeat-x 0 0;
 text-align: center;
 font: 62.5%/100% "Trebuchet MS", Helvetica, Verdana, Arial, sans-serif;
 color: #727171;
@@ -42,22 +46,22 @@ margin-top: 30px;
 
 
 #contentwrap {
-background: transparent url(/images/cms/dot.png) repeat 0 0;
+    background: transparent url(<%= asset_path "cms/dot.png" %>) repeat 0 0;
 float: left;
 width: 826px;
 }
 div.bottom_cap_content {
 height: 10px;
-background: transparent url(/images/cms/bottom_cap_content.png) no-repeat 100% 0;
+background: transparent url(<%= asset_path "cms/bottom_cap_content.png" %>) no-repeat 100% 0;
 }
 div.top_cap_content {
 height: 5px;
-background: transparent url(/images/cms/top_cap_content.png) no-repeat 100% 0;
+background: transparent url(<%= asset_path "cms/top_cap_content.png" %>) no-repeat 100% 0;
 }
 
   #contentwrapbig {
   width: 1000px;
-  background: transparent url(/images/cms/dot.png) repeat 0 0;
+  background: transparent url(<%= asset_path "cms/dot.png" %>) repeat 0 0;
   float: left;
   }
   
@@ -162,5 +166,5 @@ text-transform: uppercase;
 }
 div.top_cap {
 height: 9px;
-background: transparent url(/images/cms/top_cap.png) no-repeat 0 0;
+background: transparent url(<%= asset_path "cms/top_cap.png" %>) no-repeat 0 0;
 }

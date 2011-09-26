@@ -14,7 +14,7 @@ text-transform: uppercase;
 letter-spacing: 1px;
 }
 .dashboard_unit h2.left {
-background: #4679B8 url(/images/cms/dashboard/header_left_bg.gif) no-repeat 0 0;
+background: #4679B8 url(<%= asset_path "cms/dashboard/header_left_bg.gif" %>) no-repeat 0 0;
 }
 
 .dashboard_unit form {
@@ -23,12 +23,12 @@ padding: 6px;
 
 .dashboard_unit {
   width: 485px;
-  background: #FFF url(/images/cms/content_bg.gif) repeat-x 100% 100%;
+  background: #FFF url(<%= asset_path "cms/content_bg.gif" %>) repeat-x 100% 100%;
   padding-bottom: 20px;
 }
 
 .dashboard_wrap {
-  background: transparent url(/images/cms/dot.png) repeat scroll 0 0;
+  background: transparent url(<%= asset_path "cms/dot.png" %>) repeat scroll 0 0;
   float: left;
   position: relative;
 }
@@ -93,7 +93,7 @@ height: 5px;
 
 div.bottom_cap {
 height: 9px;
-background: transparent url(/images/cms/dashboard/bottom_cap_content.png) no-repeat 0 0;
+background: transparent url(<%= asset_path "cms/dashboard/bottom_cap_content.png" %>) no-repeat 0 0;
 }
 
 #page_drafts {
@@ -111,7 +111,7 @@ background: transparent url(/images/cms/dashboard/bottom_cap_content.png) no-rep
 }
 
 div.top_cap {
-  background: url(/images/cms/dashboard/top_cap.png) no-repeat 0 0;
+  background: url(<%= asset_path "cms/dashboard/top_cap.png" %>) no-repeat 0 0;
 }
 #contentwrapbig {
   background: none;

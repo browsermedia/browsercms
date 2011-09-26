@@ -1,3 +1,6 @@
+//
+// Generic functions for loading WYSIWYG editors for BrowserCMS
+//
 jQuery(function($){
   $('textarea.editor').each(function(e){
     if(editorEnabled()) {

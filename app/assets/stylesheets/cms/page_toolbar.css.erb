@@ -1,8 +1,8 @@
 body {
-background: #FFF url(/images/cms/toolbar_bg.png) repeat-x 0 0;
+background: #FFF url(<%= asset_path "cms/toolbar_bg.png" %>) repeat-x 0 0;
 }
 #page_toolbar {
-background: #FFF url(/images/cms/page_toolbar/page_toolbar_bg.gif) repeat-x 0 0;
+background: #FFF url(<%= asset_path "cms/page_toolbar/page_toolbar_bg.gif" %>) repeat-x 0 0;
 height: 24px;
 text-transform: uppercase;
 }
@@ -16,10 +16,10 @@ padding-right: 8px;
 }
 
 #status_div.draft {
-background: #F00 url(/images/cms/page_toolbar/status_draft_bg.gif) repeat-x 0 0;
+background: #F00 url(<%= asset_path "cms/page_toolbar/status_draft_bg.gif" %>) repeat-x 0 0;
 }
 #status_div.published {
-background: #888 url(/images/cms/page_toolbar/status_published_bg.gif) repeat-x 0 0;
+background: #888 url(<%= asset_path "cms/page_toolbar/status_published_bg.gif" %>) repeat-x 0 0;
 }
 .page_attribute_div div {
 padding: 0;
@@ -42,7 +42,7 @@ margin-left: 4px;
 margin-top: 4px;
 margin-left: 4px;
 float: left;
-background: #FFF url(/images/cms/page_toolbar/page_toolbar_inset_bg.gif) repeat-x 0 0;
+background: #FFF url(<%= asset_path "cms/page_toolbar/page_toolbar_inset_bg.gif" %>) repeat-x 0 0;
 }
 .page_attribute_value_container a {
 color: #EEE;
@@ -55,12 +55,12 @@ text-decoration: underline;
 
 
 #draft_page_status_container {
-background: #FFF url(/images/cms/page_toolbar/page_toolbar_inset_draft_bg.gif) repeat-x 0 0;
+background: #FFF url(<%= asset_path "cms/page_toolbar/page_toolbar_inset_draft_bg.gif" %>) repeat-x 0 0;
 }
 #published_page_status_container {
 margin-top: 4px;
 float: left;
-background: #FFF url(/images/cms/page_toolbar/page_toolbar_inset_published_bg.gif) repeat-x 0 0;
+background: #FFF url(<%= asset_path "cms/page_toolbar/page_toolbar_inset_published_bg.gif" %>) repeat-x 0 0;
 }
 .buttons a {
 * font-size: 8pt;
@@ -85,7 +85,7 @@ margin-right: 5px;
 margin-top: 6px;
 }
 .visual_editor_value_container {
-background: url(/images/cms/page_toolbar/visual_editor_state_bg.gif) no-repeat 0 0;
+background: url(<%= asset_path "cms/page_toolbar/visual_editor_state_bg.gif" %>) no-repeat 0 0;
 width: 35px;
 height: 23px;
 padding: 0;
@@ -113,7 +113,7 @@ margin: 1px 0 0 0;
 margin: 0;
 width: 62px;
 	padding: 5px 0 0 0;
-	background: url(/images/cms/buttons/sm_button.gif) no-repeat top right;
+	background: url(<%= asset_path "cms/buttons/sm_button.gif" %>) no-repeat top right;
 	color: #FFF;
 	text-decoration: none;
 	margin-right: 0px;
@@ -124,7 +124,7 @@ padding-left: 2px;
 
 
 .visual_editor_toggle_container a.sm_button:hover {
-	background: url(/images/cms/buttons/sm_button_h.gif) no-repeat top right;
+	background: url(<%= asset_path "cms/buttons/sm_button_h.gif" %>) no-repeat top right;
 }
 
 .buttons .publish_button {

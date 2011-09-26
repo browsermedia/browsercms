@@ -7,6 +7,12 @@ require 'rails/generators/actions'
 require 'active_support/core_ext/string/inflections'
 require 'cms/version'
 
+# This seems to be required only due to a bug in Thor documented here:
+#   https://rails.lighthouseapp.com/projects/8994/tickets/4692-error-when-creating-app-from-template-undefined-method-wrap-for-arrayclass
+# If this bug is fixed the following line can probably be removed.
+require 'active_support/core_ext/array/wrap'
+
+
 class String
   include Term::ANSIColor
 end

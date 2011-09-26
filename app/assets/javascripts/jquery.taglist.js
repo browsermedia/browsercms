@@ -1,7 +1,7 @@
 /*
-  jQuery-taglist
+  jQuery taglist plugin
 
-  Defines a widget for allowing users to selecting tags in BrowserCMS.
+  Defines a widget for allowing users to selecting tags in BrowserCMS. This is part of the BrowserCMS core project.
 
   Please see the accompanying LICENSE.txt for licensing information.
 */
