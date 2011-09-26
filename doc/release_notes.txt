@@ -15,6 +15,7 @@ Add the ability to add BrowserCMS to Rails projects.
  class MyCustomUser < ActiveRecord::Base
     acts_as_cms_user :groups => [Cms::Group.find_by_code('admin')]
  end
+* [#3] Asset Pipeline: All bcms assets are now served using the assets pipeline.
 * [#443] Removed two primative javascript and stylesheets in favor of asset pipeline (where needed).
 
 v3.3.0

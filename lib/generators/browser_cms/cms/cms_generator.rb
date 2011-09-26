@@ -5,14 +5,6 @@ module BrowserCms
     # For creating a new BrowserCMS project (Used in conjunction with the blank, demo and module templates.
     class CmsGenerator < Base
 
-
-      def enable_static_asset_serving
-        application do
-          code = "# BrowserCMS should serve static CMS assets (js, css, images) from the Gem\n"
-          code = code + "config.serve_static_assets = true"
-        end
-      end
-
       def copy_migrations_and_custom_js_files
 
         files_to_copy = [

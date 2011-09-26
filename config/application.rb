@@ -8,8 +8,6 @@ Bundler.require(:default, Rails.env) if defined?(Bundler)
 
 module Browsercms
   class Application < Rails::Application
-    # BrowserCMS must serve static CMS assets (js, css, images) from the Gem
-    config.serve_static_assets = true
 
     config.assets.enabled = true
     # Settings in config/environments/* take precedence over those specified here.
