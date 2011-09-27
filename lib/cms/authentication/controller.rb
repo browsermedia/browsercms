@@ -96,7 +96,7 @@ module Cms
           respond_to do |format|
             format.html do
               store_location
-              redirect_to cms_login_path
+              redirect_to cms.login_path
             end
           end
         end

@@ -102,7 +102,6 @@ class SectionTest < ActiveSupport::TestCase
   def test_root_section
     @section = root_section
 
-    assert !@section.empty?
     assert !@section.deletable?
     
     section_count = Cms::Section.count
@@ -135,6 +134,8 @@ class SectionTest < ActiveSupport::TestCase
   end  
 
   def test_old_syntax_for_marking_group_sections
+    given_there_is_a_group = Factory(:group)
+
     groups = Cms::Group.all(&:id)
     assert_equal Cms::Group, groups[0].class, "This is previous"
 

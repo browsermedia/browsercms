@@ -6,6 +6,8 @@ class ImageBlocksControllerTest < ActionController::TestCase
 
   def setup
     login_as_cms_admin
+    given_there_is_a_sitemap
+    given_there_is_a_content_type(Cms::ImageBlock)
   end
   
   def test_new
@@ -26,7 +28,7 @@ class ImageBlocksControllerTest < ActionController::TestCase
     assert_equal root_section.id, assigns(:block).attachment_section_id
     assert_select "title", "Content Library / Edit Image"
     assert_select "h1", "Edit Image '#{@image.name}'"
-    assert_select "select[name=?]", "cms_image_block[attachment_section_id]" do
+    assert_select "select[name=?]", "image_block[attachment_section_id]" do
       assert_select "option[value=?][selected=?]", root_section.id, "selected"
     end
   end
@@ -38,7 +40,7 @@ class ImageBlocksControllerTest < ActionController::TestCase
       :attachment_file_path => "test.jpg")
     @other_section = Factory(:section, :parent => root_section, :name => "Other")
     
-    put :update, :id => @image.id, :cms_image_block => {:attachment_section_id => @other_section.id}
+    put :update, :id => @image.id, :image_block => {:attachment_section_id => @other_section.id}
     reset(:image)
 
     assert_redirected_to @image

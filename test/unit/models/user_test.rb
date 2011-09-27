@@ -2,23 +2,25 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
 
+  def setup
+    @need_at_least_one_enabled_user = Factory(:user)
+    @user = Factory(:user)
+  end
+
   should_validate_presence_of :login, :password, :password_confirmation
   should_validate_uniqueness_of :login
 
   def test_authenticate
-    @user = Factory(:user)
     assert_equal @user, Cms::User.authenticate(@user.login, @user.password)
     assert_nil Cms::User.authenticate(@user.login, 'FAIL')
   end
 
   def test_authenticate_expired_user
-    @user = Factory(:user)
     @user.disable!
     assert_nil Cms::User.authenticate(@user.login, @user.password)
   end
 
   def test_expiration
-    @user = Factory.build(:user)
     assert_nil @user.expires_at
     assert_nil @user.expires_at_formatted
     assert !@user.expired?
@@ -34,7 +36,6 @@ class UserTest < ActiveSupport::TestCase
   end
 
   def test_active
-    @user = Factory(:user)
     assert Cms::User.active.all.include?(@user)
 
     @user.update_attribute(:expires_at, 1.year.from_now)
@@ -42,8 +43,6 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "Disable should work regardless of time zone" do
-    @user = Factory(:user)
-
     Time.zone = "UTC"
     @user.disable!
     assert !Cms::User.active.all.include?(@user)
@@ -56,8 +55,6 @@ class UserTest < ActiveSupport::TestCase
   end
 
   def test_disable_enable
-    @user = Factory(:user)
-
     assert_nil @user.expires_at
     assert !@user.expired?
 
@@ -77,7 +74,6 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "email validation" do
-    @user = Factory(:user)
     assert @user.valid?
 
     valid_emails = ['t@test.com', 'T@test.com', 'test@somewhere.mobi', 'test@somewhere.tv', 'joe_blow@somewhere.co.nz', 'joe_blow@somewhere.com.au', 't@t-t.co']
@@ -92,11 +88,12 @@ class UserTest < ActiveSupport::TestCase
       assert !@user.valid?
     end
   end
+
   test "full name or login" do
     login = 'robbo'
     fn = 'Bob'
     ln = 'Smith'
-    u = Cms::User.new(:login => 'robbo')
+    u = Factory.build(:user, :login => 'robbo', :first_name => nil, :last_name=>nil)
     assert_equal login, u.full_name_or_login
     u.first_name = fn
     assert_equal fn, u.full_name_or_login
@@ -287,8 +284,8 @@ end
 
 class GuestUserTest < ActiveSupport::TestCase
   def setup
+    @guest_group = given_there_is_a_guest_group
     @guest_user = Cms::User.guest
-    @guest_group = Cms::Group.guest
     @public_page = Factory(:page, :section => root_section)
     @protected_section = Factory(:section, :parent => root_section)
     @protected_page = Factory(:page, :section => @protected_section)
@@ -299,9 +296,13 @@ class GuestUserTest < ActiveSupport::TestCase
     assert_equal @guest_group, @guest_user.group
     assert @guest_user.groups.include?(@guest_group)
     assert !@guest_user.able_to?("do anything global")
-    assert @guest_user.able_to_view?(@public_page)
     assert !@guest_user.able_to_view?(@protected_page)
     assert !@guest_user.cms_access?
+  end
+
+  test "guest users should be able to see pages in public sections" do
+    root_section.allow_groups = :all
+    assert @guest_user.able_to_view?(@public_page)
   end
 
   test "override viewable sections for the guest group" do
@@ -325,9 +326,6 @@ class GuestUserTest < ActiveSupport::TestCase
   test "Guest User able_to_view? with String path" do
     expected_section = Cms::Section.new
 
-#    section = Factory(:section, :path=>"/members", :name=>"Members")
-#    section.groups << @guest_group
-#    section.save!
     Cms::Section.expects(:find_by_path).with("/members").returns(expected_section)
     @guest_user.expects(:viewable_sections).returns([expected_section])
 
@@ -335,8 +333,8 @@ class GuestUserTest < ActiveSupport::TestCase
 
   end
 
-  test "Group.guest is in fixtures." do
-    assert_not_nil Cms::Group.guest, "Expected to be in the database for tests."
+  test "Group.guest should be created during setup." do
+    assert_not_nil Cms::Group.guest, "Expected to be in the database for tests in this class."
   end
 
 end

@@ -104,7 +104,7 @@ CODE
     gem 'browsercms', :version=>::Cms::VERSION
 
     generate :jdbc if defined?(JRUBY_VERSION)
-    route "routes_for_browser_cms"
+    route "mount_browsercms"
 
     generate "browser_cms:cms"
     environment 'SITE_DOMAIN="localhost:3000"', :env => "development"

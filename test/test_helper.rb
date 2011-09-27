@@ -1,73 +1,29 @@
 ENV["RAILS_ENV"] = "test"
 
-require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
-require 'rails/test_help'
+require File.expand_path("../dummy/config/environment.rb", __FILE__)
+require "rails/test_help"
+
+Rails.backtrace_cleaner.remove_silencers!
+
+# Load support files
+Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 require 'action_view/test_case'
-
-require 'mocha'
+#require 'mocha'
 
 # Allows Generators to be unit tested
 require "rails/generators/test_case"
 
+require 'factory_girl'
+require 'factories'
+require 'support/factory_helpers'
+require 'support/engine_controller_hacks'
+
 class ActiveSupport::TestCase
 
-  # Transactional fixtures accelerate your tests by wrapping each test method
-  # in a transaction that's rolled back on completion.  This ensures that the
-  # test database remains unchanged so your fixtures don't have to be reloaded
-  # between every test method.  Fewer database queries means faster tests.
-  #
-  # Read Mike Clark's excellent walkthrough at
-  #   http://clarkware.com/cgi/blosxom/2005/10/24#Rails10FastTesting
-  #
-  # Every Active Record database supports transactions except MyISAM tables
-  # in MySQL.  Turn off transactional fixtures in this case; however, if you
-  # don't care one way or the other, switching from MyISAM to InnoDB tables
-  # is recommended.
-  #
-  # The only drawback to using transactional fixtures is when you actually 
-  # need to test transactions.  Since your test is bracketed by a transaction,
-  # any transactions started in your code will be automatically rolled back.
-  self.use_transactional_fixtures = true
-
-  # Instantiated fixtures are slow, but give you @david where otherwise you
-  # would need people(:david).  If you don't want to migrate your existing
-  # test cases which use the @david style and don't mind the speed hit (each
-  # instantiated fixtures translates to a database query per test method),
-  # then set this back to true.
-  self.use_instantiated_fixtures = false
-
-  self.fixture_path = File.join(Rails.root, 'test', 'fixtures', 'cms')
-
-  # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
-  #
-  # Note: You'll currently still have to declare fixtures explicitly in integration tests
-  # -- they do not yet inherit this setting
-  fixtures :all
-
-  set_fixture_class :cms_sections => Cms::Section
-  set_fixture_class :cms_section_nodes => Cms::SectionNode
-  set_fixture_class :cms_connectors => Cms::Connector
-  set_fixture_class :cms_content_type_groups => Cms::ContentTypeGroup
-  set_fixture_class :cms_content_types => Cms::ContentType
-
-  set_fixture_class :cms_dynamic_views => Cms::DynamicView
-  set_fixture_class :cms_group_permissions => Cms::GroupPermission
-  set_fixture_class :cms_group_sections => Cms::GroupSection
-  set_fixture_class :cms_group_type_permissions => Cms::GroupTypePermission
-  set_fixture_class :cms_group_types => Cms::GroupType
-  set_fixture_class :cms_groups => Cms::Group
-  set_fixture_class :cms_html_blocks => Cms::HtmlBlock
-  set_fixture_class :cms_pages => Cms::Page
-  set_fixture_class :cms_permissions => Cms::Permission
-  set_fixture_class :cms_section_nodes => Cms::SectionNode
-  set_fixture_class :cms_sections => Cms::Section
-  set_fixture_class :cms_sites => Cms::Site
-  set_fixture_class :cms_user_group_memberships => Cms::UserGroupMembership
-  set_fixture_class :cms_users => Cms::User
+  include FactoryHelpers
 
   # Add more helper methods to be used by all tests here...
-
   require File.dirname(__FILE__) + '/test_logging'
   include TestLogging
   require File.dirname(__FILE__) + '/custom_assertions'
@@ -134,17 +90,6 @@ class ActiveSupport::TestCase
     Cms::Permission.named(name).first || Factory(:permission, :name => name)
   end
 
-  def create_admin_user(attrs={})
-    Factory(:cms_admin, {:login=>"cmsadmin"}.merge(attrs))
-#    user = Factory(:user, {:login => "cmsadmin"}.merge(attrs))
-#    group = Factory(:group, :group_type => Factory(:group_type, :cms_access => true))
-#    group.permissions << create_or_find_permission_named("administrate")
-#    group.permissions << create_or_find_permission_named("edit_content")
-#    group.permissions << create_or_find_permission_named("publish_content")
-#    user.groups << group
-#    user
-  end
-
   require 'mock_file'
   # Creates a TempFile attached to an uploaded file. Used to test attachments
   def file_upload_object(options)
@@ -160,10 +105,12 @@ class ActiveSupport::TestCase
   end
 
   def login_as_cms_admin
+    given_there_is_a_cmsadmin if Cms::User.count == 0
     admin = Cms::User.first
     login_as(admin)
     admin
   end
+
 
   # Creates a sample uploaded JPG file with binary data.
   def mock_file(options = {})
@@ -181,28 +128,13 @@ class ActiveSupport::TestCase
     end
   end
 
-  def root_section
-    cms_sections(:section_1)
-  end
-
-
-
-  #  Define everything that is in our namespace outside of the namespace.
-  #  This way, if anything improperly references an object it'll raise an error and
-  #  we can be sure that Cms namespace isn't accidentally reaching something outside
-  #  of the CMS namespace
-#  subclasses_from_module("Cms").each do |klass|
-#    Object.const_set(klass.to_s.split('::').last, Class.new).class_eval do
-#      def initialize
-#        raise "Non-namespaced class initialized"
-#      end
-#    end unless Object.const_defined?(klass.to_s.split('::').last)
-#  end
-#
-  # Patrick - This was generating additional errors during initialization, and it seems unnecessary.
 end
 
 ActionController::IntegrationTest.fixture_path = ActiveSupport::TestCase.fixture_path
+
+# This might be removable in later versions of Rails 3.1.x which correctly add the routes to functional controllers
+require 'support/rails_3_1_routes_hack'
+Cms::Engine.load_engine_routes
 
 module Cms::ControllerTestHelper
   def self.included(test_case)
@@ -218,7 +150,7 @@ module Cms::ControllerTestHelper
     streamer = @response.body
 #    assert_equal Proc, streamer.class
 
-    #Create a dummy object for the proc to write to
+#Create a dummy object for the proc to write to
     output = Object.new
 
     def output.write(contents)
@@ -235,9 +167,9 @@ end
 
 module Cms::IntegrationTestHelper
   def login_as(user, password = "password")
-    get cms_login_url
+    get login_url
     assert_response :success
-    post cms_login_url, :login => user.login, :password => password
+    post login_url, :login => user.login, :password => password
     assert_response :redirect
     assert flash[:notice]
   end
@@ -248,9 +180,9 @@ module Cms::IntegrationTestHelper
 end
 
 def create_testing_table(name)
-    ActiveRecord::Base.connection.instance_eval do
-      drop_table(name) if table_exists?(name)
-      create_table(name)
-    end
+  ActiveRecord::Base.connection.instance_eval do
+    drop_table(name) if table_exists?(name)
+    create_table(name)
+  end
 end
 

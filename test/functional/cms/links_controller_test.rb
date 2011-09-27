@@ -6,6 +6,7 @@ class LinksControllerTest < ActionController::TestCase
 
   def setup
     login_as_cms_admin
+    given_there_is_a_sitemap
   end
 
   def test_new
@@ -28,7 +29,7 @@ class LinksControllerTest < ActionController::TestCase
 
     get :edit, :id => @link.id
     assert_response :success
-    assert_select "#cms_link_url[value=?]", "http://v1.example.com"
+    assert_select "#link_url[value=?]", "http://v1.example.com"
   end
 
   def test_edit_draft
@@ -39,7 +40,7 @@ class LinksControllerTest < ActionController::TestCase
 
     get :edit, :id => @link.id
     assert_response :success
-    assert_select "#cms_link_url[value=?]", "http://v2.example.com"
+    assert_select "#link_url[value=?]", "http://v2.example.com"
   end
 
   def test_update

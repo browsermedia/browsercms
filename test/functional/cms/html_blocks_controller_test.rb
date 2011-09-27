@@ -6,6 +6,7 @@ class HtmlBlocksControllerTest < ActionController::TestCase
   
   def setup
     login_as_cms_admin
+    given_there_is_a_content_type(Cms::HtmlBlock)
     @block = Factory(:html_block, :name => "Test", :content => "I worked.", :publish_on_save => true)
   end
   
@@ -17,10 +18,10 @@ class HtmlBlocksControllerTest < ActionController::TestCase
 
   def test_add_to_page
     @page = Factory(:page, :path => "/test", :section => root_section)
-    get :new, :cms_html_block => {:connect_to_page_id => @page.id, :connect_to_container => "test"}
+    get :new, :html_block => {:connect_to_page_id => @page.id, :connect_to_container => "test"}
     assert_response :success
-    assert_select "input[name=?][value=?]", "cms_html_block[connect_to_page_id]", @page.id.to_s
-    assert_select "input[name=?][value=?]", "cms_html_block[connect_to_container]", "test"
+    assert_select "input[name=?][value=?]", "html_block[connect_to_page_id]", @page.id.to_s
+    assert_select "input[name=?][value=?]", "html_block[connect_to_container]", "test"
   end
   
   def test_show
@@ -50,7 +51,7 @@ class HtmlBlocksControllerTest < ActionController::TestCase
     @page = Factory(:page, :path => "/test", :section => root_section)
     html_block_count = HtmlBlock.count
 
-    post :create, :cms_html_block => Factory.attributes_for(:html_block).merge(
+    post :create, :html_block => Factory.attributes_for(:html_block).merge(
       :connect_to_page_id => @page.id, :connect_to_container => "test")
       
     assert_incremented html_block_count, HtmlBlock.count
@@ -84,7 +85,7 @@ class HtmlBlocksControllerTest < ActionController::TestCase
   def test_edit
     get :edit, :id => @block.id
     assert_response :success
-    assert_select "input[id=?][value=?]", "cms_html_block_name", "Test"
+    assert_select "input[id=?][value=?]", "html_block_name", "Test"
   end  
   
   
@@ -92,7 +93,7 @@ class HtmlBlocksControllerTest < ActionController::TestCase
     html_block_count = HtmlBlock.count
     html_block_version_count = HtmlBlock::Version.count
     
-    put :update, :id => @block.id, :cms_html_block => {:name => "Test V2"}
+    put :update, :id => @block.id, :html_block => {:name => "Test V2"}
     reset(:block)
 
     assert_redirected_to @block

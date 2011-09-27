@@ -1,9 +1,19 @@
+module PageDiagnosticSteps
+  def should_see_a_page_titled(page_title)
+    assert page.has_css?("title", :text=>page_title), "Expected a page with a title '#{page_title}'."
+    assert page.has_content?(page_title)
+  end
+end
+World(PageDiagnosticSteps)
+
 # ex: Then I should see a page titled "Home"
 Then /^I should see a page titled "([^"]*)"$/ do |page_title|
-  assert page.has_css?("title", :text=>page_title)
-  assert page.has_content?(page_title)
+  should_see_a_page_titled(page_title)
 end
 
+When /^I am not logged in$/ do
+  visit '/cms/logout'
+end
 
 Given /^I am logged in as a Content Editor$/ do
   visit '/cms'
@@ -29,6 +39,7 @@ Then /^I should see Welcome, cmsadmin$/ do
   assert page.has_content? 'Welcome, cmsadmin'
 end
 
+# Duplicates 'I request /path'
 Given /^I am at (.+)/ do |path|
   visit path
 end
@@ -38,7 +49,7 @@ Then /^the response should be (.*)$/ do |response_code|
 end
 
 When /^login as an authorized user$/ do
-  visit cms_login_path
+  visit "/cms/login"
   fill_in 'login', :with=>"privileged"
   fill_in 'password', :with=>"password"
   click_button 'LOGIN'
@@ -63,4 +74,63 @@ end
 
 When /^I click on "([^"]*)"$/ do |name|
   click_on name
+end
+
+When /^I am a guest$/ do
+  visit '/cms/logout'
+end
+
+
+module PageNotFoundSteps
+  def should_see_cms_404_page
+    should_see_a_page_titled "Page Not Found"
+    assert_equal 404, page.status_code
+    assert page.has_content?("Page Not Found")
+  end
+end
+World(PageNotFoundSteps)
+
+Then /^I should see the CMS 404 page$/ do
+  should_see_cms_404_page
+end
+
+Given /^an archived page at "([^"]*)" exists$/ do |path|
+  page = Factory(:page, :archived=>true, :path=>path)
+  assert page.archived?
+end
+
+module ProtectedContentSteps
+  def create_protected_user_section_group
+    @protected_section = Factory(:section, :parent => root_section)
+    @secret_group = Factory(:group, :name => "Secret")
+    @secret_group.sections << @protected_section
+    @privileged_user = Factory(:user, :login => "privileged")
+    @privileged_user.groups << @secret_group
+  end
+
+  def create_protected_page(path="/secret")
+    create_protected_user_section_group
+    @page = Factory(:page,
+                    :section => @protected_section,
+                    :path => path,
+                    :name => "Shhh... It's a Secret",
+                    :template_file_name => "default.html.erb",
+                    :publish_on_save => true)
+  end
+
+end
+World(ProtectedContentSteps)
+
+Given /^a protected page at "([^"]*)" exists$/ do |path|
+  create_protected_page(path)
+end
+
+Then /^I should see the CMS :forbidden page$/ do
+  assert_equal 403, page.status_code
+  should_see_a_page_titled("Access Denied")
+end
+
+Given /^I am adding a page to the root section$/ do
+  section = Cms::Section.root.first
+  visit "/cms/sections/#{section.id}/pages/new"
 end

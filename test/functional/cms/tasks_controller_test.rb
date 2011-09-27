@@ -34,7 +34,7 @@ class Cms::TasksControllerTest < ActionController::TestCase
     # should update all tasks in the ids list
     put :complete, :task_ids => ids
     assert_response :redirect
-    assert_redirected_to cms_dashboard_path
+    assert_redirected_to dashboard_path
     assert_equal "Tasks marked as complete", flash[:notice]
 
     tasks.each do |t|
@@ -45,15 +45,20 @@ class Cms::TasksControllerTest < ActionController::TestCase
     # if empty list is passed, should gracefully claim to have completed them all
     put :complete, :task_ids => []
     assert_response :redirect
-    assert_redirected_to cms_dashboard_path
+    assert_redirected_to dashboard_path
     assert_equal "Tasks marked as complete", flash[:notice]
   end
 
   def test_complete_no_tasks
     put :complete, :task_ids => nil
     assert_response :redirect
-    assert_redirected_to cms_dashboard_path
+    assert_redirected_to dashboard_path
     assert_equal "No tasks were marked for completion", flash[:error]
   end
 
+  private
+  # Rails engine paths still don't seem to want to load.
+  def dashboard_path
+    "/cms/dashboard"
+  end
 end

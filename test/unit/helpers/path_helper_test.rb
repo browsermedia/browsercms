@@ -1,57 +1,58 @@
 require 'test_helper'
 
-class Cms::PathHelperTest < ActionView::TestCase
+class Cms::PathHelperTest < ActionController::TestCase
+
+  include Cms::PathHelper
+  include ActionDispatch::Routing::UrlFor
+  #include Rails.application.routes.url_helpers
+  #default_url_options[:host] = 'www.example.com'
+
   def setup
   end
 
   def teardown
   end
 
-
   def test_edit_cms_connectable_path_for_html
     block = Cms::HtmlBlock.create!(:name=>"Testing")
+    expected_path = "/cms/html_blocks/#{block.id}/edit"
+    self.expects(:polymorphic_path).with([:edit, block], {}).returns(expected_path)
+
     path = edit_cms_connectable_path(block)
 
-    assert_equal "/cms/html_blocks/#{block.id}/edit", path
+    assert_equal expected_path, path
   end
 
 
   def test_edit_cms_connectable_path_for_portlets
     portlet = DynamicPortlet.create(:name => "Testing Route generation")
+    expected_path = "/cms/portlets/#{portlet.id}/edit"
+    self.expects(:edit_portlet_path).with(portlet, {}).returns(expected_path)
+
     path = edit_cms_connectable_path(portlet)
 
-    assert_equal( edit_cms_portlet_path(portlet), path )
+    assert_equal(expected_path, path)
   end
 
   def test_edit_cms_connectable_path_includes_options_for_html
     block = Cms::HtmlBlock.create!(:name=>"Testing")
+    expected_path = "/cms/html_blocks/#{block.id}/edit?_redirect_to=some_path"
+    self.expects(:polymorphic_path).with([:edit, block], {:_redirect_to => "some_path"}).returns(expected_path)
+
     path = edit_cms_connectable_path(block, :_redirect_to => "some_path")
 
-    assert_equal "/cms/html_blocks/#{block.id}/edit?_redirect_to=some_path", path
+    assert_equal expected_path, path
 
   end
 
   def test_edit_cms_connectable_path_includes_options_for_portlets
     portlet = DynamicPortlet.create(:name => "Testing Route generation")
+    expected_path = "/cms/portlets/#{portlet.id}/edit?_redirect_to=some_path"
+    self.expects(:edit_portlet_path).with(portlet, {:_redirect_to => "/some_path"}).returns(expected_path)
+
     path = edit_cms_connectable_path(portlet, :_redirect_to => "/some_path")
 
-    assert_equal( edit_cms_portlet_path(portlet, :_redirect_to => "/some_path"), path )
+    assert_equal(expected_path, path)
   end
-
-
-  #
-  #   This is a test to confirm in my head how polymorphic path building works in rails.
-  #   It also confirms that it still works as expected in the future, as these don't seem
-  #   like common methods to be used, and may be subject to breakage.
-  #
-  def test_how_rails_path_building_works
-    block = Cms::HtmlBlock.create!(:name=>"Name")
-    assert_equal "/cms/html_blocks/#{block.id}/edit", url_for([:edit, block])
-    assert_equal "/cms/html_blocks/#{block.id}/edit", polymorphic_path([:edit, block])
-    assert_equal "/cms/html_blocks/#{block.id}/edit?redirect_to=go_here", polymorphic_path([:edit, block], :redirect_to=>"go_here")
-  end
-
-
-
 
 end

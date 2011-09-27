@@ -1,9 +1,9 @@
 <%= content_for :html_head do %>
   <%= javascript_tag do %>
     jQuery(function($){
-      var cms_access_group_ids = <%= Cms::GroupType.cms_access.all.map{|e| e.id.to_s}.to_json %>
-      $('#cms_group_group_type_id').change(function() {
-        if ($.inArray($('#cms_group_group_type_id')[0].value, cms_access_group_ids) < 0) {
+      var cms_access_group_ids = <%= Cms::GroupType.cms_access.all.map{|e| e.id.to_s}.to_json.html_safe %>
+      $('#group_group_type_id').change(function() {
+        if ($.inArray($('#group_group_type_id')[0].value, cms_access_group_ids) < 0) {
           $('#permissions').hide()
           $('#section-action').text('view')
         } else {
@@ -22,7 +22,7 @@
     <div class="checkboxes">
     <% Cms::Permission.all(:order => "name").each do |p| %>
       <div class="checkbox_fields">
-          <%= check_box_tag "cms_group[permission_ids][]", p.id, @group.permissions.include?(p), :id => "permission_ids_#{p.id}", :class => "permission_ids" %>
+          <%= check_box_tag "group[permission_ids][]", p.id, @group.permissions.include?(p), :id => "permission_ids_#{p.id}", :class => "permission_ids" %>
           <label for="permission_ids_<%= p.id %>" style="width: 400px;#padding-top: 6px;"><%=h p.full_name %></label>
       </div>
       <div class="instructions"><%=h p.description %></div>

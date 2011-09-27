@@ -12,7 +12,7 @@ class ResourceController < Cms::BaseController
   end
 
   def create
-    @object = build_object(params["cms_#{variable_name}"])
+    @object = build_object(params[variable_name])
     if @object.save
       flash[:notice] = "#{resource_name.singularize.titleize} '#{object_name}' was created"
       redirect_to after_create_url
@@ -84,7 +84,7 @@ class ResourceController < Cms::BaseController
   end
 
   def index_url
-    cms_index_url_for("cms_#{resource_name}")
+    cms_index_url_for(resource_name)
   end
 
   def after_create_url

@@ -27,7 +27,7 @@ class TasksController < Cms::BaseController
         end
       end
       flash[:notice] = "Tasks marked as complete"
-      redirect_to cms_dashboard_path
+      redirect_to dashboard_path
     else
       @task = Task.find(params[:id])
       if @task.assigned_to == current_user
@@ -41,7 +41,7 @@ class TasksController < Cms::BaseController
     end
   rescue ActiveRecord::RecordNotFound
     flash[:error] = "No tasks were marked for completion"
-    redirect_to cms_dashboard_path
+    redirect_to dashboard_path
   end
   
   private

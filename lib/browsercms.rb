@@ -1,6 +1,6 @@
 require 'cms/engine'
 require 'cms/extensions'
-require 'cms/routes'
+require 'cms/route_extensions'
 require 'cms/caching'
 
 #Load libraries that are included with CMS

@@ -158,7 +158,7 @@ TEXT
     prepend_to_file "lib/#{name_of_module}.rb" do
       "require '#{name_of_module}/engine'\n"
     end
-    route "routes_for_browser_cms"
+    route "mount_browsercms"
     route "routes_for_#{name_of_module}"
 
     template 'install.erb', "lib/generators/#{name_of_module}/install/install_generator.rb"

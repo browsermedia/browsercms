@@ -2,7 +2,10 @@ require 'test_helper'
 
 class PasswordManagementTest < ActionController::IntegrationTest
 
-  def setup  
+  def setup
+    given_there_is_a_cmsadmin
+    given_there_is_a_guest_group
+    given_there_is_a_sitemap
     @group = Factory(:group, :name => "Member")
 
     @section = Factory(:public_section, :parent => root_section, :name => "Passwords", :path => "/passwords")

@@ -1,10 +1,10 @@
 <% @toolbar_title = page_title "'#{@page_route.name}' Page Route" %>
 <%= content_for :functions do %>
-  <%= add_button new_cms_page_route_path %>
-  <%= edit_button :path=>edit_cms_page_route_path(@page_route), :enabled=>true %>
+  <%= add_button new_page_route_path %>
+  <%= edit_button :path=>edit_page_route_path(@page_route), :enabled=>true %>
   <%= delete_button :path=>@page_route, :title => "Are you sure you want to delete this Page Route?", :enabled=>true %>
-  <%= link_to(span_tag("List All"), cms_page_routes_path, :class => "button") %>
-  <%= link_to(span_tag("View Rails Routes"), cms_routes_path, :class => "button") %>
+  <%= link_to(span_tag("List All"), page_routes_path, :class => "button") %>
+  <%= link_to(span_tag("View Rails Routes"), routes_path, :class => "button") %>
 <% end %>
 
 <%= @page_route.name %>

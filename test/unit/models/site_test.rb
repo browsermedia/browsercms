@@ -25,14 +25,14 @@ class SiteTest < ActiveSupport::TestCase
   end
   
   def test_should_make_the_first_the_default
-    @first = Cms::Site.default.first
+    @first = Factory(:site)
     @second = Factory(:site)
     assert @first.the_default?
     assert !@second.the_default?
   end
   
   def test_change_the_default
-    @first = Factory(:site)
+    @first = Factory(:site, :the_default=>false)
     @second = Factory(:site, :the_default => true)
     reset(:first, :second)
     assert !@first.the_default?
@@ -40,7 +40,7 @@ class SiteTest < ActiveSupport::TestCase
   end
   
   def test_find_by_domain
-    @default = Cms::Site.default.first
+    @default =     @first = Factory(:site, :the_default=>true)
     @example = Factory(:site, :domain => "test.com")
     assert_equal @example, Cms::Site.find_by_domain("test.com")
     assert_equal @example, Cms::Site.find_by_domain("www.test.com")

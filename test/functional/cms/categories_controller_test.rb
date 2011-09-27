@@ -5,6 +5,7 @@ class CategoriesControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
   
   def setup
+    given_there_is_a_content_type Cms::Category
     login_as_cms_admin
   end
   

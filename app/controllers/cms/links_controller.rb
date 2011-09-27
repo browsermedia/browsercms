@@ -34,11 +34,11 @@ class LinksController < Cms::BaseController
     respond_to do |format|
       if @link.destroy
         message = "Link '#{@link.name}' was deleted."
-        format.html { flash[:notice] = message; redirect_to(cms_sitemap_url) }
+        format.html { flash[:notice] = message; redirect_to(sitemap_url) }
         format.json { render :json => {:success => true, :message => message } }
       else
         message = "Link '#{@link.name}' could not be deleted"
-        format.html { flash[:error] = message; redirect_to(cms_sitemap_url) }
+        format.html { flash[:error] = message; redirect_to(sitemap_url) }
         format.json { render :json => {:success => false, :message => message } }
       end
     end    

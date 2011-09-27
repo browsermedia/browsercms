@@ -28,15 +28,15 @@ class PortletsController < Cms::ContentBlockController
     end
     
     def new_block_path
-      new_cms_portlet_path
+      new_portlet_path
     end
   
     def block_path(action=nil)
-      send("#{action ? "#{action}_" : ""}cms_portlet_path", @block)
+      send("#{action ? "#{action}_" : ""}portlet_path", @block)
     end
 
     def blocks_path
-      cms_portlets_path
+      portlets_path
     end
 end
 end

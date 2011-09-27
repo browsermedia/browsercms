@@ -17,7 +17,9 @@ public/cache
 patches
 rerun.txt
 test/dummy/log/*
+test/dummy/tmp/*
 doc/api
 .yardoc/*
 .rvmrc
+
 

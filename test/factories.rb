@@ -1,5 +1,8 @@
 # m is for model, I felt the need to document that for some reason
 
+require File.join(File.dirname(__FILE__), 'support/factory_helpers')
+include FactoryHelpers
+
 Factory.define :category, :class => Cms::Category do |m|
   m.association :category_type
   m.sequence(:name) { |n| "TestCategory#{n}" }
@@ -80,7 +83,7 @@ end
 
 # TODO: Remove duplication between this and the :page factory.
 Factory.define :published_page, :class=>Cms::Page do |m|
-  m.sequence(:name) { |n| "Page #{n}" }
+  m.sequence(:name) { |n| "Published Page #{n}" }
   m.path { |a| "/#{a.name.gsub(/\s/, '_').downcase}" }
   m.template_file_name "default.html.erb"
   m.association :section
@@ -93,7 +96,8 @@ Factory.define :page_partial, :class => Cms::PagePartial do |m|
   m.handler "erb"
 end
 
-Factory.define :page_routes, :class => Cms::PageRoute do |m|
+Factory.define :page_route, :class => Cms::PageRoute do |m|
+  m.sequence(:name) { |n| "Test Route #{n}" }
   m.sequence(:pattern) { |n| "/page_route_#{n}" }
   m.association :page
 end
@@ -123,26 +127,19 @@ Cms::Authoring::PERMISSIONS.each do |p|
   end
 end
 
-def find_or_create_root_section
-  root = Cms::Section.root.first
-  unless root
-    root = Cms::Section.create!(:name=>"Root", :root=>true, :path=>"/")
-  end
-  root
-end
-
 Factory.define :section, :class=>Cms::Section do |m|
   m.name "Test"
   m.path "/test"
   m.parent { find_or_create_root_section }
-
 end
 
+# A publicly accessible (published) page
 Factory.define :public_page, :class => Cms::Page do |m|
   m.sequence(:name) { |n| "Page #{n}" }
   m.path { |a| "/#{a.name.gsub(/\s/, '_').downcase}" }
   m.template_file_name "default.html.erb"
   m.association :section, :factory=>:public_section
+  m.publish_on_save true
 end
 
 Factory.define :public_section, :class=>Cms::Section do |m|
@@ -204,3 +201,22 @@ Factory.define :cms_admin, :parent=>:user do |m|
     user.groups << group
   }
 end
+
+Factory.define :content_editor, :parent=>:user do |m|
+  m.after_create { |user|
+    group = Factory(:group, :group_type => Factory(:group_type, :cms_access => true))
+    Cms::Authoring::EDITOR_PERMISSIONS.each do |p|
+      group.permissions << create_or_find_permission_named(:edit_content)
+    end
+    user.groups << group
+  }
+end
+
+Factory.define :content_type_group, :class=>Cms::ContentTypeGroup do |ctg|
+  ctg.sequence(:name) { |n| "Group #{n}" }
+end
+
+Factory.define :content_type, :class=>Cms::ContentType do |ct|
+  ct.association :content_type_group
+end
+

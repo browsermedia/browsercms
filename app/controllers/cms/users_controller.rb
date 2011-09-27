@@ -43,7 +43,7 @@ class UsersController < Cms::ResourceController
   def update_password
     if user.update_attributes(params[:cms_user])
       flash[:notice] = "Password for '#{user.login}' was changed"
-      redirect_to(current_user.able_to?(:administrate) ? cms_users_path : cms_user_path(user))
+      redirect_to(current_user.able_to?(:administrate) ? users_path : user_path(user))
     else
       render :action => 'change_password'
     end
@@ -56,12 +56,12 @@ class UsersController < Cms::ResourceController
     rescue Exception => e
       flash[:error] = e.message
     end
-    redirect_to cms_users_path
+    redirect_to users_path
   end
   
   def enable
     user.enable!
-    redirect_to cms_users_path
+    redirect_to users_path
   end
 
   protected

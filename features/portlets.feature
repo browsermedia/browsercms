@@ -3,17 +3,18 @@ Feature: Portlets
   As a content editor
   I want to be able to dynamically display content.
 
-  Background: A Homepage
+  Background:
     Given the cms database is populated
+    And I am logged in as a Content Editor
 
-  Scenario: When logged in
-    Given I am logged in as a Content Editor
+  Scenario: Login portlet when logged in
     And there is a LoginPortlet on the homepage
     And I am on the homepage
     Then I should see Welcome, cmsadmin
 
-  Scenario: When logged out
+  Scenario: Login portlet when logged out
     Given there is a LoginPortlet on the homepage
+    And I am not logged in
     And I am on the homepage
     Then I should see the following content:
       | Login       |
@@ -21,31 +22,28 @@ Feature: Portlets
       | Remember me |
 
   Scenario: Viewing a portlet
-    Given I am logged in as a Content Editor
-    And there is a "Portlet" with:
+    Given there is a "Portlet" with:
       | name          | template    |
       | A new portlet | Hello World |
-    When I go to the content library
+    When I request /cms/content_library
     And follow "Portlet"
     Then I should see the following content:
       | A new portlet |
 
   Scenario: Deleting a portlet
-    Given I am logged in as a Content Editor
-    And there is a "Portlet" with:
+    Given there is a "Portlet" with:
       | name          | template    |
       | A new portlet | Hello World |
     When I delete that portlet
-    And I go to the content library
+    And I request /cms/content_library
     And I click on "Portlet"
     And I should not see "A new portlet"
     When I view that portlet
     Then I should see the following content:
-    | has been deleted |
+      | has been deleted |
 
   Scenario: Editing a portlet
-    Given I am logged in as a Content Editor
-    And there is a "Portlet" with:
+    Given there is a "Portlet" with:
       | name          | template    |
       | A new portlet | Hello World |
     When I edit that portlet
@@ -56,5 +54,36 @@ Feature: Portlets
       | View Portlet 'New Name' |
       | New World               |
     And I should not see the following content:
-    | A new portlet |
-    | Hello World   |
+      | A new portlet |
+      | Hello World   |
+
+  Scenario: Page with portlet on it
+    Given I am not logged in
+    And a page with a portlet that display "Hello World" exists
+    When I visit that page
+    Then I should see the following content:
+      | Hello World |
+
+  Scenario: Portlet throws a 404 Error
+    Given I am not logged in
+    And a page with a portlet that raises a Not Found exception exists
+    When I visit that page
+    Then I should see the CMS 404 page
+
+  Scenario: Portlet throws an 403 Error
+    Given I am not logged in
+    And a page with a portlet that raises an Access Denied exception exists
+    When I visit that page
+    Then I should see the CMS :forbidden page
+
+  Scenario: Portlet throws 404 and 403 errors
+    Given I am not logged in
+    And a page with a portlet that raises both a 404 and 403 error exists
+    When I visit that page
+    Then I should see the CMS 404 page
+
+  Scenario: Portlet throws 403 and any other error
+    Given I am not logged in
+    And a page with a portlet that raises both a 403 and any other error exists
+    When I visit that page
+    Then I should see the CMS :forbidden page

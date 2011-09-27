@@ -2,11 +2,11 @@
   <% if logged_in? %>
     <p>Welcome, <%= current_user.login %></p>
     <p><%= link_to "Logout", '' %></p>
-    <p><%#= link_to "Logout", cms_logout_path %></p>
+    <p><%#= link_to "Logout", cms.logout_path %></p>
   <% else %>
     <div class="error"><%= flash[:login_error] %></div>
     <%= form_tag '' do %>
-    <%#= form_tag cms_login_path do %>
+    <%#= form_tag cms.login_path do %>
       <%= hidden_field_tag :success_url, @success_url %>
       <%= hidden_field_tag :failure_url, @failure_url %>    
       <p>

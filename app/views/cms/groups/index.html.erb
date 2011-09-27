@@ -2,7 +2,7 @@
 <% @toolbar_title = "List Groups" %>
 
 <%= content_for :functions do %>
-  <%= link_to(span_tag("Add Group"), new_cms_group_path, 
+  <%= link_to(span_tag("Add Group"), new_group_path,
     :id => "new_group_button", :class => "button") %>
 <% end %>
 
@@ -12,12 +12,12 @@
       <tr>
         <th colspan="2" class="first">
           <div class="dividers">
-            <%= link_to "Name", cms_groups_path(:order => determine_order(params[:order], "#{Cms::Group.table_name}.name")) %>
+            <%= link_to "Name", groups_path(:order => determine_order(params[:order], "#{Cms::Group.table_name}.name")) %>
           </div>
         </th>
         <th>
           <div class="dividers">
-            <%= link_to "Type", cms_groups_path(:order => determine_order(params[:order], "#{Cms::GroupType.table_name}.name")) %>
+            <%= link_to "Type", groups_path(:order => determine_order(params[:order], "#{Cms::GroupType.table_name}.name")) %>
           </div>
         </th>
         <th colspan="2" class="last"><div class="dividers">Permissions</div></th>

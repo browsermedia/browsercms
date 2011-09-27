@@ -25,7 +25,7 @@ class SessionsController < Cms::ApplicationController
         redirect_to((!params[:success_url].blank? && params[:success_url]) || session[:return_to] || "/")
         session[:return_to] = nil
       else
-        redirect_back_or_default(cms_home_url)
+        redirect_back_or_default(cms.home_url)
       end
     else
       note_failed_signin

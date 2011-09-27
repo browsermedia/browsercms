@@ -2,7 +2,7 @@
 <% @toolbar_title = "List Users" %>
 
 <%= content_for :toolbar_links do %>
-  <%= link_to(span_tag("ADD USER"), new_cms_user_path, 
+  <%= link_to(span_tag("ADD USER"), new_user_path,
     :id => "add_user_button", 
     :class => "button") %>
 <% end %>
@@ -26,7 +26,7 @@
     <% @users.each do |user|%>
     <tr>
         <td class="first"></td>
-        <td><div class="dividers"><%= link_to "#{user.full_name_or_login}", edit_cms_user_path(user) %></div></td>
+        <td><div class="dividers"><%= link_to "#{user.full_name_or_login}", edit_user_path(user) %></div></td>
 	      <td><div class="dividers"><%= link_to user.email, "mailto:#{user.email}" %></div></td>
         <td>
             <div class="dividers">

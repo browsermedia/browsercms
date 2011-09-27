@@ -38,6 +38,7 @@ namespace :cms do
   end
 end
 
+require 'yard'
 YARD::Rake::YardocTask.new do |t|
   t.options = ['--output-dir', 'doc/api/']
 end

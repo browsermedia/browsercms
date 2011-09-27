@@ -2,9 +2,10 @@ require 'test_helper'
 
 class Cms::MenuHelperTest < ActionView::TestCase
 
+
+
   def test_menu_items
-    Cms::Page.first.update_attributes(:hidden => true, :publish_on_save => true)
-    create_nfl_data
+    given_a_sitemap_of_nfl_teams_exists
 
     expected = [
             { :id => "cms_section_#{@afc.id}", :url => "/buf", :name => "AFC", :children => [
@@ -108,7 +109,6 @@ class Cms::MenuHelperTest < ActionView::TestCase
   end
 
   def test_menu_with_links
-    Cms::Page.first.update_attributes(:hidden => true, :publish_on_save => true)
 
     @news = Factory(:section, :parent => root_section, :name => "News", :path => "/whatever")
     @press_releases = Factory(:page, :section => @news, :name => "Press Releases", :path => "/press_releases", :publish_on_save => true)
@@ -178,7 +178,7 @@ class Cms::MenuHelperTest < ActionView::TestCase
   end
 
   protected
-  def create_nfl_data
+  def given_a_sitemap_of_nfl_teams_exists
     @afc = Factory(:section, :parent => root_section, :name => "AFC")
 
     @afc_east = Factory(:section, :parent => @afc, :name => "East")

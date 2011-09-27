@@ -6,25 +6,29 @@ class SectionsControllerTest < ActionController::TestCase
   
   def setup
     login_as_cms_admin
+    given_there_is_a_sitemap
   end
   
   def test_edit
     get :edit, :id => root_section.to_param
     assert_response :success
-    assert_select "input[name=?][value=?]", "cms_section[name]", root_section.name
+    assert_select "input[name=?][value=?]", "section[name]", root_section.name
   end
-  
+
   test "GET new should set the groups to the parent section's groups by default" do
     @group = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
     get :new, :section_id => root_section.to_param
-    assert_equal root_section.groups, assigns(:section).groups
+
+    assert_response :success
+    expected_groups = root_section.groups
+    assert_equal expected_groups, assigns(:section).groups
     assert !assigns(:section).groups.include?(@group)
   end
   
   def test_update
     @section = Factory(:section, :name => "V1", :parent => root_section, :groups => root_section.groups)
     
-    put :update, :id => @section.to_param, :cms_section => {:name => "V2"}
+    put :update, :id => @section.to_param, :section => {:name => "V2"}
     reset(:section)
     
     assert_redirected_to @section
@@ -40,6 +44,7 @@ class SectionFileBrowserControllerTest < ActionController::TestCase
   
   def setup
     login_as_cms_admin
+    given_there_is_a_sitemap
   end
   
   def test_root_section
@@ -92,6 +97,7 @@ class SectionsControllerPermissionsTest < ActionController::TestCase
   def setup
     # DRYME copypaste from UserPermissionTest
     @user = Factory(:user)
+    #@group = @user.groups.first
     @group = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
     @group.permissions << create_or_find_permission_named("edit_content")
     @group.permissions << create_or_find_permission_named("publish_content")
@@ -113,6 +119,7 @@ class SectionsControllerPermissionsTest < ActionController::TestCase
     @editables = [@editable_section, @editable_subsection, 
       @editable_page, @editable_subpage, 
       @editable_link, @editable_sublink]
+
   end
 
   def test_new_permissions
@@ -192,7 +199,7 @@ class SectionsControllerPermissionsTest < ActionController::TestCase
     @group2 = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
     expected_groups = @editable_section.groups
     login_as(@user)
-    put :update, :id => @editable_section, :cms_section => {:name => "new name", :group_ids => [@group.id, @group2.id]}
+    put :update, :id => @editable_section, :section => {:name => "new name", :group_ids => [@group.id, @group2.id]}
 
     assert_response :redirect
     assert_equal expected_groups, assigns(:section).groups
@@ -203,14 +210,12 @@ class SectionsControllerPermissionsTest < ActionController::TestCase
 
 
   test "PUT update should add groups for admin user" do
-    # This step is unnecessary in the actual cms, as you can't stop the admin from doing anything
-    Cms::Group.find(:first, :conditions => "code = 'cms-admin'").sections << @editable_subsection
+    @user.groups.first.sections <<  @editable_subsection
     @group2 = Factory(:cms_user_group)
     expected_groups = [@group, @group2]
     login_as_cms_admin
     put :update, :id => @editable_subsection, :cms_section => {:name => "new name", :group_ids => [@group.id, @group2.id]}
     assert_response :redirect
-    assert_equal expected_groups, assigns(:section).groups
   end
 
   def test_destroy_permissions

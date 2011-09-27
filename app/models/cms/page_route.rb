@@ -73,6 +73,17 @@ class Cms::PageRoute < ActiveRecord::Base
     "cms/content#show_page_route"
   end
 
+  # @param [Symbol | Array] method A method name (like :get) or array of names (ie. [:get :post]) to constraint this route.
+  def via=(method)
+    if method.respond_to?(:each)
+      method.each do |m|
+        add_condition(:method, m)
+      end
+    else
+      add_condition(:method, method)
+    end
+  end
+
   # Returns which methods this route can be via. Defaults to [:get, :post] if not specified.
   def via
     found = conditions.collect() { |condition|

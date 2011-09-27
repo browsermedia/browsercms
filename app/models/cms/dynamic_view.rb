@@ -83,9 +83,14 @@ module Cms
     end
 
     # Get the plural symbol for a particular resource.
-    # i.e. Cms::PageTemplate -> :cms_page_templates
+    # i.e. Cms::PageTemplate -> :page_templates
     def self.resource_name
-      ActiveModel::Naming.plural(self).to_sym
+      resource_collection_name.pluralize
+    end
+
+    # Default implementation
+    def self.resource_collection_name
+      model_name.underscore
     end
   end
 end

@@ -9,7 +9,7 @@
           link_params["#{portlet_type.underscore}[connect_to_container]"] = params[:portlet][:connect_to_container]
         end
       %>
-      <%= link_to h(portlet_type.titleize), new_cms_portlet_path(link_params) %>
+      <%= link_to h(portlet_type.titleize), new_portlet_path(link_params) %>
     </div>
   <% end %>
   <% @hide_buttons = true %>

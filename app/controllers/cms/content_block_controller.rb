@@ -114,8 +114,8 @@ class ContentBlockController < Cms::BaseController
       content_type.model_class
     end
   
-    def model_name
-      ActiveModel::Naming.singular(model_class)
+    def model_form_name
+      content_type.model_class_form_name
     end
   
     # methods for loading one or a collection of blocks
@@ -168,7 +168,7 @@ class ContentBlockController < Cms::BaseController
     # new related methods
   
     def build_block
-      @block = model_class.new(params[model_name])
+      @block = model_class.new(params[model_form_name])
       check_permissions
     end
 
@@ -207,7 +207,7 @@ class ContentBlockController < Cms::BaseController
     # update related methods
     def update_block
       load_block
-      @block.update_attributes(params[model_name])
+      @block.update_attributes(params[model_form_name])
     end
 
     def after_update_on_success

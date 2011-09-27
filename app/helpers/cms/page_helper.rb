@@ -1,6 +1,13 @@
 module Cms
   module PageHelper
 
+    # Return the JS file to load the configured default WYSIWYG editor
+    #
+    # Ideally, this could be improved if sprockets allows for dynamically determining which js library to use.
+    def cms_content_editor
+      "bcms/#{Cms.content_editor}"
+    end
+
     # Outputs the title for this page. Used by both internal CMS pages, as well as page templates. If not explicitily set,
     #   returns the title of the page.
     #
@@ -56,7 +63,7 @@ module Cms
     # Add the code to render the CMS toolbar.
     def cms_toolbar
       toolbar = <<HTML
-<iframe src="#{cms_toolbar_path(:page_id => @page.id, :page_version => @page.version, :mode => @mode, :page_toolbar => @show_page_toolbar ? 1 : 0) }" width="100%" height="#{@show_page_toolbar ? 159 : 100 }px" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" name="cms_toolbar"></iframe>
+<iframe src="#{cms.toolbar_path(:page_id => @page.id, :page_version => @page.version, :mode => @mode, :page_toolbar => @show_page_toolbar ? 1 : 0) }" width="100%" height="#{@show_page_toolbar ? 159 : 100 }px" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" name="cms_toolbar"></iframe>
 HTML
       toolbar.html_safe if @show_toolbar
     end

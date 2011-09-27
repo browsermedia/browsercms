@@ -1,7 +1,7 @@
 <% page_title "Edit Properties / '#{h(@page.name)}' Page" %>
 <%= content_for :functions  do%>
 <h1><%= @page_title %></h1>
-<%= link_to(span_tag("list all"), cms_sitemap_path, :class => "button") %>
+<%= link_to(span_tag("list all"), cms.sitemap_path, :class => "button") %>
 <%= link_to(span_tag("edit content"), @page.path, :class => "button") %>
 <br clear="all" />
 <% end %>

@@ -1,8 +1,8 @@
-Bugs
-----
+# Cleanup
 
-* Adding a portlet to a page: User ends up on the View Portlet rather than the View Page. Portlet does not get added to the page
-* Can't view or edit Page Templates/Partials (Write cukes)
+Remove Bespin - Page Templates/Partials are using it.
+Remove selenium (way out of date and not working)
+Make migrate generation use 3.1 style
 
 Needs
 -----
@@ -13,12 +13,6 @@ Needs
 * Remove bespin
 * Run in production mode locally. Try POW to see if that adds subdomains easily.
 * Differ `bundle install` from happening until Gemfile is updated to include bcms
-
-Big Goals
----------
-
-* Get Asset Pipeline hooked up
-* Revamp to use Mountable Engines
 
 Wants (Taking advantage of 3.1)
 -----
@@ -39,14 +33,13 @@ Ideas
 * Allow for multiple view templates for blocks.
 * Look at Papertrail and see how they structure versions. Their API seems every simple for single blocks.
 
-
-Start HERE
-----------
-
-* Wrap up Asset pipeline
-* Build gem, generate project, see if it works.
-
-Modules to be updated:
-======================
-
+## Modules to be updated:
 * bcms_fckEditor will need to be updated to use the new JS inclusion
+
+### How to upgrade to a Rails Engine
+
+* cd into your project
+* Run `rails plugin new . --mountable`
+* All the available rake tasks in the App are prefixed as 'app'. So `rake app:db:install`
+* Need to copy the migrations from the engine into the application.
+

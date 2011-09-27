@@ -8,7 +8,7 @@ class RoutesController < Cms::BaseController
     
     unless params[:path].blank?
       @path = params[:path]
-      @route = ActionController::Routing::Routes.recognize_path(@path)
+      @route = Rails.application.routes.recognize_path(@path)
     end
     
     @routes = Rails.application.routes.routes.collect do |route|

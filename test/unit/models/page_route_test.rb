@@ -51,14 +51,29 @@ class PageRouteTest < ActiveSupport::TestCase
 
   end
 
+  test "Using :via to constraint the callable methods" do
+    @route.via = :get
+    assert_equal [:get], @route.via
+  end
+
+  test "Specify multiple methods using :via to constraint the callable methods" do
+    @route.via = [:get, :propfind]
+    assert_equal [:get, :propfind], @route.via
+  end
+
+  test "constraints converts string key to symbol since routes requires it" do
+    @route.add_requirement("year", 'd{4}')
+    assert_equal(true, @route.constraints.include?(:year))
+
+  end
   test "constraints allows for regular expressions to be set for pattern elements in a route" do
     @route.add_requirement(:year, '\d{4,}')
     assert_equal({:year => /\d{4,}/}, @route.constraints)
   end
 
   test "add_constraint is replacement method for add_requirement " do
-    @route.add_requirement(:year, '\d{4,}')
-    assert_equal({:year => /\d{4,}/}, @route.constraints)
+    @route.add_requirement(:year, 'd{4}')
+    assert_equal({:year => /d{4}/}, @route.constraints)
   end
 
   test "constraints handles more than one pattern" do

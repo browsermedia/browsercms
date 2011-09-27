@@ -2,18 +2,18 @@ require 'test_helper'
 
 
 ActiveRecord::Base.connection.instance_eval do
-  drop_content_table(:default_attachables) rescue nil
-#  drop_table(:default_attachable_versions) if table_exists?(:default_attachable_versions)
-  create_versioned_table(:default_attachables, :prefix=>false) do |t|
+  drop_table(:default_attachables) rescue nil
+  drop_table(:default_attachable_versions) rescue nil
+  create_content_table(:default_attachables, :prefix=>false) do |t|
     t.string :name
     t.integer :attachment_id
     t.integer :attachment_version
     t.timestamps
   end
 
-  drop_content_table(:versioned_attachables) rescue nil
-#  drop_table(:versioned_attachable_versions) if table_exists?(:versioned_attachable_versions)
-  create_versioned_table(:versioned_attachables, :prefix=>false) do |t|
+  drop_table(:versioned_attachables) rescue nil
+  drop_table(:versioned_attachable_versions) rescue nil
+  create_content_table(:versioned_attachables, :prefix=>false) do |t|
     t.string :name
     t.integer :attachment_id
     t.integer :attachment_version
@@ -46,20 +46,12 @@ class AttachableBehaviorTest < ActiveSupport::TestCase
 
   def setup
     @file = mock_file
-
-    @attachable = DefaultAttachable.create!(:name => "File Name", :attachment_file => @file, :publish_on_save => true)
-
+    @attachable = DefaultAttachable.create!(:name => "File Name", :attachment_section_id=>root_section, :attachment_file => @file, :publish_on_save => true)
   end
 
   test "Saving a block which an attachment should save both and associate it" do
     content = DefaultAttachable.find(@attachable.id)
-
-    log "All default attachables #{DefaultAttachable.all}"
-    log "All attachments #{Cms::Attachment.all}"
-
     assert_not_nil content.attachment
-
-
   end
 end
 
@@ -148,8 +140,8 @@ class AttachingTest < ActiveSupport::TestCase
 
   def test_file_path_sanitization
     {
-            "Draft #1.txt" => "Draft_1.txt",
-            "Copy of 100% of Paul's Time(1).txt" => "Copy_of_100_of_Pauls_Time-1-.txt"
+        "Draft #1.txt" => "Draft_1.txt",
+        "Copy of 100% of Paul's Time(1).txt" => "Copy_of_100_of_Pauls_Time-1-.txt"
     }.each do |example, expected|
       assert_equal expected,
                    VersionedAttachable.new.sanitize_file_path(example)

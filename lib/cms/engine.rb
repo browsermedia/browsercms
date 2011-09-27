@@ -10,6 +10,7 @@ module Cms
   #
   class Engine < Rails::Engine
     include Cms::Module
+    isolate_namespace Cms
 
     Cms.add_generator_paths(Cms.root,
                               "public/site/**/*",
@@ -26,7 +27,7 @@ module Cms
     end
 
     def self.add_cms_routes_method
-      ActionDispatch::Routing::Mapper.send :include, Cms::Routes
+      ActionDispatch::Routing::Mapper.send :include, Cms::RouteExtensions
     end
 
     def self.add_cms_load_paths

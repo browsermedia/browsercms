@@ -1,8 +1,8 @@
 <div class="first">
   <h3>Users</h3>
   <ul>
-    <li<%= ' class="open"' if @menu_section == 'users' %>><%= link_to "Users", cms_users_path %></li>
-    <li<%= ' class="open"' if @menu_section == 'groups' %>><%= link_to "Groups", cms_groups_path %></li>
+    <li<%= ' class="open"' if @menu_section == 'users' %>><%= link_to "Users", users_path %></li>
+    <li<%= ' class="open"' if @menu_section == 'groups' %>><%= link_to "Groups", groups_path %></li>
   </ul>
 </div>
 <div class="bottom_cap bottom_pad"></div>
@@ -11,9 +11,9 @@
 <div>
   <h3>Templates</h3>
   <ul>  
-    <li<%= ' class="open"' if @menu_section == 'page_partials' %>><%= link_to "Page Partials", cms_page_partials_path %></li>
-    <li<%= ' class="open"' if @menu_section == 'page_templates' %>><%= link_to "Page Templates", cms_page_templates_path %></li>
-    <li<%= ' class="open"' if @menu_section == 'page_routes' %>><%= link_to "Page Routes", cms_page_routes_path %></li>
+    <li<%= ' class="open"' if @menu_section == 'page_partials' %>><%= link_to "Page Partials", page_partials_path %></li>
+    <li<%= ' class="open"' if @menu_section == 'page_templates' %>><%= link_to "Page Templates", page_templates_path %></li>
+    <li<%= ' class="open"' if @menu_section == 'page_routes' %>><%= link_to "Page Routes", page_routes_path %></li>
   </ul>
 </div>
 <div class="bottom_cap bottom_pad"></div>
@@ -22,9 +22,9 @@
 <div>
   <h3>Tools</h3>
   <ul>  
-    <li<%= ' class="open"' if @menu_section == 'caching' %>><%= link_to "Page Caching", cms_cache_path %></li>
-    <li<%= ' class="open"' if @menu_section == 'redirects' %>><%= link_to "Redirects", cms_redirects_path %></li>
-    <li<%= ' class="open"' if @menu_section == 'email_messages' %>><%= link_to "Email Messages", cms_email_messages_path %></li>
+    <li<%= ' class="open"' if @menu_section == 'caching' %>><%= link_to "Page Caching", cache_path %></li>
+    <li<%= ' class="open"' if @menu_section == 'redirects' %>><%= link_to "Redirects", redirects_path %></li>
+    <li<%= ' class="open"' if @menu_section == 'email_messages' %>><%= link_to "Email Messages", email_messages_path %></li>
   </ul>
 </div>
 <div class="bottom_cap"></div>

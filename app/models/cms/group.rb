@@ -39,4 +39,11 @@ class Cms::Group < ActiveRecord::Base
     with_code(GUEST_CODE).first
   end
 
+
+  def has_permission?(permission)
+    permissions.any? do |p|
+      return true if permission.to_sym == p.name.to_sym
+    end
+    false
+  end
 end

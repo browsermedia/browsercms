@@ -1,3 +1,4 @@
+# encoding: UTF-8
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -10,9 +11,9 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20091109175123) do
+ActiveRecord::Schema.define(:version => 20100705083859) do
 
-  create_table "attachment_versions", :force => true do |t|
+  create_table "cms_attachment_versions", :force => true do |t|
     t.integer  "attachment_id"
     t.integer  "version"
     t.string   "file_path"
@@ -31,7 +32,7 @@ ActiveRecord::Schema.define(:version => 20091109175123) do
     t.integer  "updated_by_id"
   end
 
-  create_table "attachments", :force => true do |t|
+  create_table "cms_attachments", :force => true do |t|
     t.integer  "version"
     t.integer  "lock_version",   :default => 0
     t.string   "file_path"
@@ -49,7 +50,7 @@ ActiveRecord::Schema.define(:version => 20091109175123) do
     t.integer  "updated_by_id"
   end
 
-  create_table "categories", :force => true do |t|
+  create_table "cms_categories", :force => true do |t|
     t.integer  "category_type_id"
     t.integer  "parent_id"
     t.string   "name"
@@ -57,13 +58,13 @@ ActiveRecord::Schema.define(:version => 20091109175123) do
     t.datetime "updated_at"
   end
 
-  create_table "category_types", :force => true do |t|
+  create_table "cms_category_types", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "connectors", :force => true do |t|
+  create_table "cms_connectors", :force => true do |t|
     t.integer  "page_id"
     t.integer  "page_version"
     t.integer  "connectable_id"
@@ -75,13 +76,13 @@ ActiveRecord::Schema.define(:version => 20091109175123) do
     t.datetime "updated_at"
   end
 
-  create_table "content_type_groups", :force => true do |t|
+  create_table "cms_content_type_groups", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "content_types", :force => true do |t|
+  create_table "cms_content_types", :force => true do |t|
     t.string   "name"
     t.integer  "content_type_group_id"
     t.integer  "priority",              :default => 2
@@ -89,7 +90,7 @@ ActiveRecord::Schema.define(:version => 20091109175123) do
     t.datetime "updated_at"
   end
 
-  create_table "dynamic_view_versions", :force => true do |t|
+  create_table "cms_dynamic_view_versions", :force => true do |t|
     t.integer  "dynamic_view_id"
     t.integer  "version"
     t.string   "type"
@@ -107,7 +108,7 @@ ActiveRecord::Schema.define(:version => 20091109175123) do
     t.integer  "updated_by_id"
   end
 
-  create_table "dynamic_views", :force => true do |t|
+  create_table "cms_dynamic_views", :force => true do |t|
     t.integer  "version"
     t.integer  "lock_version",  :default => 0
     t.string   "type"
@@ -124,7 +125,7 @@ ActiveRecord::Schema.define(:version => 20091109175123) do
     t.integer  "updated_by_id"
   end
 
-  create_table "email_messages", :force => true do |t|
+  create_table "cms_email_messages", :force => true do |t|
     t.string   "sender"
     t.text     "recipients"
     t.text     "subject"
@@ -137,7 +138,7 @@ ActiveRecord::Schema.define(:version => 20091109175123) do
     t.datetime "updated_at"
   end
 
-  create_table "file_block_versions", :force => true do |t|
+  create_table "cms_file_block_versions", :force => true do |t|
     t.integer  "file_block_id"
     t.integer  "version"
     t.string   "type"
@@ -154,7 +155,7 @@ ActiveRecord::Schema.define(:version => 20091109175123) do
     t.datetime "updated_at"
   end
 
-  create_table "file_blocks", :force => true do |t|
+  create_table "cms_file_blocks", :force => true do |t|
     t.integer  "version"
     t.integer  "lock_version",       :default => 0
     t.string   "type"
@@ -170,22 +171,22 @@ ActiveRecord::Schema.define(:version => 20091109175123) do
     t.datetime "updated_at"
   end
 
-  create_table "group_permissions", :force => true do |t|
+  create_table "cms_group_permissions", :force => true do |t|
     t.integer "group_id"
     t.integer "permission_id"
   end
 
-  create_table "group_sections", :force => true do |t|
+  create_table "cms_group_sections", :force => true do |t|
     t.integer "group_id"
     t.integer "section_id"
   end
 
-  create_table "group_type_permissions", :force => true do |t|
+  create_table "cms_group_type_permissions", :force => true do |t|
     t.integer "group_type_id"
     t.integer "permission_id"
   end
 
-  create_table "group_types", :force => true do |t|
+  create_table "cms_group_types", :force => true do |t|
     t.string   "name"
     t.boolean  "guest",      :default => false
     t.boolean  "cms_access", :default => false
@@ -193,7 +194,7 @@ ActiveRecord::Schema.define(:version => 20091109175123) do
     t.datetime "updated_at"
   end
 
-  create_table "groups", :force => true do |t|
+  create_table "cms_groups", :force => true do |t|
     t.string   "name"
     t.string   "code"
     t.integer  "group_type_id"
@@ -201,7 +202,7 @@ ActiveRecord::Schema.define(:version => 20091109175123) do
     t.datetime "updated_at"
   end
 
-  create_table "html_block_versions", :force => true do |t|
+  create_table "cms_html_block_versions", :force => true do |t|
     t.integer  "html_block_id"
     t.integer  "version"
     t.string   "name"
@@ -216,7 +217,7 @@ ActiveRecord::Schema.define(:version => 20091109175123) do
     t.datetime "updated_at"
   end
 
-  create_table "html_blocks", :force => true do |t|
+  create_table "cms_html_blocks", :force => true do |t|
     t.integer  "version"
     t.integer  "lock_version",                      :default => 0
     t.string   "name"
@@ -230,7 +231,7 @@ ActiveRecord::Schema.define(:version => 20091109175123) do
     t.datetime "updated_at"
   end
 
-  create_table "link_versions", :force => true do |t|
+  create_table "cms_link_versions", :force => true do |t|
     t.integer  "link_id"
     t.integer  "version"
     t.string   "name"
@@ -246,7 +247,7 @@ ActiveRecord::Schema.define(:version => 20091109175123) do
     t.integer  "updated_by_id"
   end
 
-  create_table "links", :force => true do |t|
+  create_table "cms_links", :force => true do |t|
     t.integer  "version"
     t.integer  "lock_version",  :default => 0
     t.string   "name"
@@ -261,7 +262,7 @@ ActiveRecord::Schema.define(:version => 20091109175123) do
     t.integer  "updated_by_id"
   end
 
-  create_table "page_route_options", :force => true do |t|
+  create_table "cms_page_route_options", :force => true do |t|
     t.integer  "page_route_id"
     t.string   "type"
     t.string   "name"
@@ -270,7 +271,7 @@ ActiveRecord::Schema.define(:version => 20091109175123) do
     t.datetime "updated_at"
   end
 
-  create_table "page_routes", :force => true do |t|
+  create_table "cms_page_routes", :force => true do |t|
     t.string   "name"
     t.string   "pattern"
     t.integer  "page_id"
@@ -279,7 +280,7 @@ ActiveRecord::Schema.define(:version => 20091109175123) do
     t.datetime "updated_at"
   end
 
-  create_table "page_versions", :force => true do |t|
+  create_table "cms_page_versions", :force => true do |t|
     t.integer  "page_id"
     t.integer  "version"
     t.string   "name"
@@ -301,7 +302,7 @@ ActiveRecord::Schema.define(:version => 20091109175123) do
     t.datetime "updated_at"
   end
 
-  create_table "pages", :force => true do |t|
+  create_table "cms_pages", :force => true do |t|
     t.integer  "version"
     t.integer  "lock_version",       :default => 0
     t.string   "name"
@@ -322,7 +323,7 @@ ActiveRecord::Schema.define(:version => 20091109175123) do
     t.datetime "updated_at"
   end
 
-  create_table "permissions", :force => true do |t|
+  create_table "cms_permissions", :force => true do |t|
     t.string   "name"
     t.string   "full_name"
     t.string   "description"
@@ -331,13 +332,13 @@ ActiveRecord::Schema.define(:version => 20091109175123) do
     t.datetime "updated_at"
   end
 
-  create_table "portlet_attributes", :force => true do |t|
+  create_table "cms_portlet_attributes", :force => true do |t|
     t.integer "portlet_id"
     t.string  "name"
     t.text    "value"
   end
 
-  create_table "portlets", :force => true do |t|
+  create_table "cms_portlets", :force => true do |t|
     t.string   "type"
     t.string   "name"
     t.boolean  "archived",      :default => false
@@ -348,14 +349,14 @@ ActiveRecord::Schema.define(:version => 20091109175123) do
     t.datetime "updated_at"
   end
 
-  create_table "redirects", :force => true do |t|
+  create_table "cms_redirects", :force => true do |t|
     t.string   "from_path"
     t.string   "to_path"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "section_nodes", :force => true do |t|
+  create_table "cms_section_nodes", :force => true do |t|
     t.integer  "section_id"
     t.string   "node_type"
     t.integer  "node_id"
@@ -364,7 +365,7 @@ ActiveRecord::Schema.define(:version => 20091109175123) do
     t.datetime "updated_at"
   end
 
-  create_table "sections", :force => true do |t|
+  create_table "cms_sections", :force => true do |t|
     t.string   "name"
     t.string   "path"
     t.boolean  "root",       :default => false
@@ -373,7 +374,7 @@ ActiveRecord::Schema.define(:version => 20091109175123) do
     t.datetime "updated_at"
   end
 
-  create_table "sites", :force => true do |t|
+  create_table "cms_sites", :force => true do |t|
     t.string   "name"
     t.string   "domain"
     t.boolean  "the_default"
@@ -381,7 +382,7 @@ ActiveRecord::Schema.define(:version => 20091109175123) do
     t.datetime "updated_at"
   end
 
-  create_table "taggings", :force => true do |t|
+  create_table "cms_taggings", :force => true do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"
     t.string   "taggable_type"
@@ -390,13 +391,13 @@ ActiveRecord::Schema.define(:version => 20091109175123) do
     t.datetime "updated_at"
   end
 
-  create_table "tags", :force => true do |t|
+  create_table "cms_tags", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "tasks", :force => true do |t|
+  create_table "cms_tasks", :force => true do |t|
     t.integer  "assigned_by_id"
     t.integer  "assigned_to_id"
     t.integer  "page_id"
@@ -407,12 +408,12 @@ ActiveRecord::Schema.define(:version => 20091109175123) do
     t.datetime "updated_at"
   end
 
-  create_table "user_group_memberships", :force => true do |t|
+  create_table "cms_user_group_memberships", :force => true do |t|
     t.integer "user_id"
     t.integer "group_id"
   end
 
-  create_table "users", :force => true do |t|
+  create_table "cms_users", :force => true do |t|
     t.string   "login",                     :limit => 40
     t.string   "first_name",                :limit => 40
     t.string   "last_name",                 :limit => 40
@@ -427,6 +428,6 @@ ActiveRecord::Schema.define(:version => 20091109175123) do
     t.string   "reset_token"
   end
 
-  add_index "users", ["login"], :name => "index_users_on_login", :unique => true
+  add_index "cms_users", ["login"], :name => "index_cms_users_on_login", :unique => true
 
 end

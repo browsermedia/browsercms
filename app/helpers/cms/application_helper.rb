@@ -2,13 +2,6 @@
 module Cms
   module ApplicationHelper
 
-    # Return the JS file to load the configured default WYSIWYG editor
-    #
-    # Ideally, this could be improved if sprockets allows for dynamically determining which js library to use.
-    def cms_content_editor
-      "bcms/#{Cms.content_editor}"
-    end
-
     def searchable_sections(selected = nil)
       root    = Section.root.first
       options = [['All sections', 'all'], [root.name, root.id]]
@@ -47,7 +40,7 @@ module Cms
       count = block.connected_pages.count
       if count > 0
         # Would love a cleaner solution to this problem, see http://stackoverflow.com/questions/702728
-        path = Portlet === block ? usages_cms_portlet_path(block) : [:usages, block]
+        path = Portlet === block ? usages_portlet_path(block) : [:usages, block]
         link_to count, path, :id => block.id, :block_type => block.content_block_type
       else
         count

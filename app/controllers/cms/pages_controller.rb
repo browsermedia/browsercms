@@ -23,7 +23,7 @@ class PagesController < Cms::BaseController
   end
  
   def create
-    @page = Page.new(params[:cms_page])
+    @page = Page.new(params[:page])
     @page.section = @section
     if @page.save
       flash[:notice] = "Page was '#{@page.name}' created."
@@ -34,7 +34,7 @@ class PagesController < Cms::BaseController
   end
 
   def update
-    if @page.update_attributes(params[:cms_page])
+    if @page.update_attributes(params[:page])
       flash[:notice] = "Page was '#{@page.name}' updated."
       redirect_to @page
     else
@@ -49,11 +49,11 @@ class PagesController < Cms::BaseController
     respond_to do |format|
       if @page.destroy
         message = "Page '#{@page.name}' was deleted."
-        format.html { flash[:notice] = message; redirect_to(cms_sitemap_url) }
+        format.html { flash[:notice] = message; redirect_to(sitemap_url) }
         format.json { render :json => {:success => true, :message => message } }
       else
         message = "Page '#{@page.name}' could not be deleted"
-        format.html { flash[:error] = message; redirect_to(cms_sitemap_url) }
+        format.html { flash[:error] = message; redirect_to(sitemap_url) }
         format.json { render :json => {:success => false, :message => message } }
       end
     end
@@ -67,7 +67,7 @@ class PagesController < Cms::BaseController
         raise Cms::Errors::AccessDenied unless @pages.all? { |page| current_user.able_to_edit?(page) }
         @pages.each { |page| page.send(status) }
         flash[:notice] = "#{params[:page_ids].size} pages #{verb}"
-        redirect_to cms_dashboard_url
+        redirect_to dashboard_url
       else
         load_page
         if @page.send(status)
@@ -101,8 +101,8 @@ class PagesController < Cms::BaseController
   private
     def strip_publish_params
       unless current_user.able_to?(:publish_content)
-        params[:cms_page].delete :hidden
-        params[:cms_page].delete :archived
+        params[:page].delete :hidden
+        params[:page].delete :archived
       end
     end
 

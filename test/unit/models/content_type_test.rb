@@ -17,9 +17,23 @@ class ReallyLongNameClass < ActiveRecord::Base
   end
 end
 
+module Cms
+  class NamespacedBlock < ActiveRecord::Base
+    acts_as_content_block
+  end
+end
 class ContentTypeTest < ActiveSupport::TestCase
   def setup
     @c = Cms::ContentType.new(:name => "ReallyLongNameClass")
+  end
+
+  test "model_resource_name" do
+    assert_equal "really_long_name_class", @c.model_class_form_name
+  end
+
+  test "model_resource_name_for removes cms_ as prefix (no longer needed for engines)" do
+    content_type = Cms::ContentType.new(:name=>"Cms::NamespacedBlock")
+    assert_equal "namespaced_block", content_type.model_class_form_name
   end
 
   def test_model_class

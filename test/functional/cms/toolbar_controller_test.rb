@@ -6,6 +6,7 @@ class ToolbarControllerTest < ActionController::TestCase
 
   def setup
     login_as_cms_admin
+    given_there_is_a_sitemap
   end
   
   def test_index_for_published_page
@@ -25,7 +26,7 @@ class ToolbarControllerTest < ActionController::TestCase
     assert_select ".buttons .disabled span", "Publish"
     
     assert_select ".buttons .disabled span", :text => "Edit Properties", :count => 0
-    assert_select "#edit_properties_button[href=?]", edit_cms_page_path(@page)
+    assert_select "#edit_properties_button[href=?]", edit_page_path(@page)
     
     assert_select "#visual_editor_state", "ON"
     assert_select "#visual_editor_action", "TURN OFF"
@@ -45,10 +46,10 @@ class ToolbarControllerTest < ActionController::TestCase
     end
     
     assert_select ".buttons .disabled span", :text => "Publish", :count => 0
-    assert_select "#publish_button[href=?]", publish_cms_page_path(@page)
+    assert_select "#publish_button[href=?]", publish_page_path(@page)
     
     assert_select ".buttons .disabled span", :text => "Edit Properties", :count => 0
-    assert_select "#edit_properties_button[href=?]", edit_cms_page_path(@page)
+    assert_select "#edit_properties_button[href=?]", edit_page_path(@page)
     
     assert_select ".buttons span", :text => "Revert to this Version", :count => 0
     assert_select "#delete_button", 1
@@ -61,6 +62,15 @@ class ToolbarControllerTest < ActionController::TestCase
     def create_page
       @page = Factory(:page, :section => root_section, :name => "Test", :path => "test")      
     end  
-  
+
+  # More hacky overriding path for Rail 3.1/Engines problems.
+  private
+  def publish_page_path(page)
+    "/cms/pages/#{page.id}/publish"
+  end
+
+  def edit_page_path(page)
+    "/cms/pages/#{page.id}/edit"
+  end
 end
 end

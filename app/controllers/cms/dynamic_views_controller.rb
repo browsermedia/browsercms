@@ -18,10 +18,10 @@ module Cms
     end
 
     def create
-      @view = dynamic_view_type.new(params[ActionController::RecordIdentifier.singular_class_name(dynamic_view_type)])
+      @view = dynamic_view_type.new(params[dynamic_view_type.resource_collection_name])
       if @view.save
         flash[:notice] = "#{dynamic_view_type} '#{@view.name}' was created"
-        redirect_to cms_index_path_for(dynamic_view_type.name.underscore.pluralize)
+        redirect_to cms_index_path_for(dynamic_view_type)
       else
         render :action => "new"
       end
@@ -49,8 +49,8 @@ module Cms
     protected
     def dynamic_view_type
       @dynamic_view_type ||= begin
-        uri = request.request_uri.sub(/\?.*/, '')
-        type_name = uri.split('/')[2].classify
+        url = request.path.sub(/\?.*/, '')
+        type_name = url.split('/')[2].classify
         begin
           type = "Cms::#{type_name}".constantize
         rescue NameError

@@ -1,13 +1,72 @@
-# Add your own tasks in files placed in lib/tasks ending in .rake,
-# for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
+#!/usr/bin/env rake
+begin
+  require 'bundler/setup'
+rescue LoadError
+  puts 'You must `gem install bundler` and `bundle install` to run rake tasks'
+end
+begin
+  require 'rdoc/task'
+rescue LoadError
+  require 'rdoc/rdoc'
+  require 'rake/rdoctask'
+  RDoc::Task = Rake::RDocTask
+end
 
-require File.expand_path('../config/application', __FILE__)
+APP_RAKEFILE = File.expand_path("../test/dummy/Rakefile", __FILE__)
+load 'rails/tasks/engine.rake'
 
-require 'rake'
-require 'rake/testtask'
 
-Browsercms::Application.load_tasks
-
-require 'bundler'
 Bundler::GemHelper.install_tasks
 
+require 'rake/testtask'
+
+Rake::TestTask.new('test:units') do |t|
+  t.libs << 'lib'
+  t.libs << 'test'
+  t.pattern = 'test/unit/**/*_test.rb'
+  t.verbose = false
+end
+
+Rake::TestTask.new('test:functionals') do |t|
+  t.libs << 'lib'
+  t.libs << 'test'
+  t.pattern = 'test/functional/**/*_test.rb'
+  t.verbose = false
+
+end
+
+Rake::TestTask.new('test:integration') do |t|
+  t.libs << 'lib'
+  t.libs << 'test'
+  t.pattern = 'test/integration/**/*_test.rb'
+  t.verbose = false
+end
+
+require 'cucumber'
+require 'cucumber/rake/task'
+
+Cucumber::Rake::Task.new(:features) do |t|
+  t.cucumber_opts = "features --format progress"
+end
+
+desc 'Runs all the tests'
+task :test do
+  tests_to_run = ENV['TEST'] ? ["test:single"] : %w(test:units test:functionals test:integration features)
+  errors = tests_to_run.collect do |task|
+    begin
+      Rake::Task[task].invoke
+      nil
+    rescue => e
+      { :task => task, :exception => e }
+    end
+  end.compact
+
+  if errors.any?
+    puts errors.map { |e| "Errors running #{e[:task]}! #{e[:exception].inspect}" }.join("\n")
+    abort
+  end
+end
+
+#task :test => ['test:units', 'test:functionals', 'test:integration', 'features']
+
+task :default => :test

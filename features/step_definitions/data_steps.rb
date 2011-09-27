@@ -22,6 +22,12 @@ Given /^a protected text file named "([^"]*)" exists with:$/ do |file_name, text
   file.update_attributes(:attachment_section => section)
 end
 
+Given /^an archived file named "([^"]*)" exists$/ do  |file_name|
+  file = create_file(file_name)
+  file.update_attributes(:archived => true, :publish_on_save => true)
+  assert file.attachment.archived?, "File should be archived"
+end
+
 When /^I request (.*)$/ do |path|
   visit path
 end

@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class RouteBuilder
-  include Cms::Routes
+  include Cms::RouteExtensions
 end
 
 class Bear < ActiveRecord::Base

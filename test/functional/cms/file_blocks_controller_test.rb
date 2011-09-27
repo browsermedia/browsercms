@@ -6,6 +6,7 @@ class FileBlocksControllerTest < ActionController::TestCase
 
   def setup
     login_as_cms_admin
+    given_there_is_a_content_type(Cms::FileBlock)
   end
   
   def test_file_block_search

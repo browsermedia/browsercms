@@ -5,6 +5,7 @@ Feature: CKEditor
   Scenario: Editing an Html Block
     Given the cms database is populated
     And I am logged in as a Content Editor
-    When I go to the content library
+    When I request /cms/content_library
     And I click on "add new content"
-    Then I should see the CKEditor
+    Then I should see a widget to select which editor to use
+    And  I should see the CKEditor

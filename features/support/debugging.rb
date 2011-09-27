@@ -22,10 +22,10 @@ AfterConfiguration do |config|
 end
 
 
-require "#{Rails.root}/test/mock_file"
+require File.expand_path(File.join(__FILE__, "..", "..", "..","test", "mock_file"))
 module FileOperations
 
-  def create_file(file_name, text)
+  def create_file(file_name, text="Test Content")
     tempfile = Tempfile.new file_name do |f|
       f << text
     end

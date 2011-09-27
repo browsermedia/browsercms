@@ -4,7 +4,7 @@ source 'http://rubygems.org'
 gemspec
 
 gem 'jquery-rails'
-
+gem 'rack', '1.3.3' # At least until 1.3.5 is out. Avoids warnings about already defined constants.
 gem "mysql2"
 
 
@@ -24,5 +24,5 @@ group :test do
   gem 'cucumber-rails'
   gem 'cucumber'
   gem 'launchy'
-
+  gem 'ruby-prof'
 end

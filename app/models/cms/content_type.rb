@@ -57,8 +57,10 @@ module Cms
       name.constantize
     end
 
+    # Cms::HtmlBlock -> html_block
+    # ThingBlock -> thing_block
     def model_class_form_name
-      ActiveModel::Naming.singular(model_class)
+      model_class.model_name.element
     end
 
     # Allows models to show additional columns when being shown in a list.
