@@ -1,14 +1,14 @@
 # Cleanup
 
-Remove Bespin - Page Templates/Partials are using it.
 Remove selenium (way out of date and not working)
 Make migrate generation use 3.1 style
 
 Needs
 -----
 
+* Email a page portlet doesn't work (throws error when you create one) - Add scenarios
+* Tag Cloud portlet doesn't work (throws error when you create one) - Add scenarios
 * Differ `bundle install` from happening until Gemfile is updated to include bcms
-* Remove bespin
 * Improve Performance - Sitemap and serving pages is particularly slow
 ** Use Ancestry gem - It handles automatically turning models into tree via a single column. Would be very very performant in comparison to current behavior.
 * Update a few modules (like bcms_news) to test module generation
