@@ -1,10 +1,4 @@
-# Cleanup
-
-Remove selenium (way out of date and not working)
-Make migrate generation use 3.1 style
-
-Needs
------
+# Needs
 
 * Email a page portlet doesn't work (throws error when you create one) - Add scenarios
 * Tag Cloud portlet doesn't work (throws error when you create one) - Add scenarios
@@ -12,7 +6,7 @@ Needs
 * Improve Performance - Sitemap and serving pages is particularly slow
 ** Use Ancestry gem - It handles automatically turning models into tree via a single column. Would be very very performant in comparison to current behavior.
 * Update a few modules (like bcms_news) to test module generation
-* Test this on a production enviroment prior to releasing (things like assets and/or config options might be wonky)
+* Test this on a production environment prior to releasing (things like assets and/or config options might be wonky)
 
 Wants (Taking advantage of 3.1)
 -----
@@ -20,7 +14,7 @@ Wants (Taking advantage of 3.1)
 * Internal CMS layouts (like _head.html.erb) do not take advantage of the asset pipeline to join all css or js files (most are compiled into cms/application.css though)
 * Improve generators for assets from engines (Review http://bibwild.wordpress.com/2011/09/20/design-for-including-rails-engine-assets-into-pipeline-manifest/)
 * Remove the styled_file_field (no longer maintained)
-* Migrations have a single 'def change' method now, rather than self.up and self.down
+* Use 3.1 Migration style: Migrations have a single 'def change' method now, rather than self.up and self.down
 * Themes can be packaged as assets as well (I think?). Rework bluesteel so its part of the asset pipeline.
 * Run in production mode locally (for better error testing). Try POW to see if that adds subdomains easily.
 * Design how a portlet can include a single jquery based library by just declaring it in the render.html.erb.

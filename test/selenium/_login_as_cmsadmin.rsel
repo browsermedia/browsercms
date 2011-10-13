@@ -1,4 +1,0 @@
-open '/cms/login'
-type 'login', 'cmsadmin'
-type 'password', 'cmsadmin'
-click_and_wait 'commit'

@@ -1,6 +1,0 @@
-setup :fixtures => :all
-include_partial 'login_as_cmsadmin'
-open '/cms/sitemap'
-assert_not_visible "//span[@class='page' and text()='About Us']"
-click "//span[@class='section' and text()='About']/../a"
-assert_visible "//span[@class='page' and text()='About Us']"

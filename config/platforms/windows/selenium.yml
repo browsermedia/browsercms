@@ -1,8 +1,0 @@
-environments:
-  - test
-  
-browsers:
-  firefox: '"c:\Program Files\Mozilla Firefox\firefox.exe"'
-  ie: '"c:\Program Files\Internet Explorer\iexplore.exe"'
-  
-selenium_path: <%= File.join(Rails.root, "test", "selenium-core") %>  

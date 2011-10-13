@@ -8,7 +8,6 @@ config/database.yml
 public/images/tuneup
 public/javascripts/tuneup
 public/stylesheets/tuneup
-vendor/plugins/selenium-on-rails/log/*.yml
 *.gem
 .dotest
 .idea

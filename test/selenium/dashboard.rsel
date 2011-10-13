@@ -1,5 +1,0 @@
-setup :fixtures => :all
-include_partial 'login_as_cmsadmin'
-open '/cms'
-assert_title 'Dashboard'
-verify_text_present "Welcome"

@@ -1,9 +1,0 @@
-setup :fixtures => :all
-open '/cms'
-assert_title 'Log In'
-verify_text_present 'Log In'
-type 'login', 'cmsadmin'
-type 'password', 'cmsadmin'
-click_and_wait 'commit'
-assert_title 'Dashboard'
-verify_text_present 'Logged in successfully'
