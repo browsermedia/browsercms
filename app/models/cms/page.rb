@@ -107,7 +107,6 @@ class Cms::Page < ActiveRecord::Base
       if c.should_be_copied?
         logger.debug { "Connector id=>#{c.id} should be copied." }
         connectable = c.connectable_type.constantize.versioned? ? c.connectable.as_of_version(c.connectable_version) : c.connectable
-
         version = connectable.class.versioned? ? connectable.version : nil
 
         #If we are copying connectors from a previous version, that means we are reverting this page,
@@ -129,6 +128,7 @@ class Cms::Page < ActiveRecord::Base
             :connectable_version => version,
             :container => c.container,
             :position => c.position
+
         )
         logger.debug { "Built new connector #{new_connector}." }
       end

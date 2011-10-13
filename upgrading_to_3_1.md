@@ -7,7 +7,6 @@ Make migrate generation use 3.1 style
 Needs
 -----
 
-* Merge 3.1.x into project (:move_permantly)
 * Merge 3.3.x into project (misc fixes)
 * Differ `bundle install` from happening until Gemfile is updated to include bcms
 * Remove bespin
