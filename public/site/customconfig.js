@@ -1,1 +1,0 @@
-//Put your customizations to FCKEditor here

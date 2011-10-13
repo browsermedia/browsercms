@@ -8,9 +8,6 @@ module BrowserCms
       def copy_migrations_and_custom_js_files
 
         files_to_copy = [
-        # For FCKEditor customization. Not sure this is even necessary anymore
-        'public/site/customconfig.js',
-
         # Migrations/seed data
         'db/migrate/20080815014337_browsercms_3_0_0.rb',
         'db/migrate/20091109175123_browsercms_3_0_5.rb',

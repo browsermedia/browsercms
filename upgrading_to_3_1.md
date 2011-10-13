@@ -28,7 +28,7 @@ Wants (Taking advantage of 3.1)
 bcms_news (first one)
 bcms_polling
 bcms_event
-bcms_fckeditor (Needs to correctly use new JS inclusion)
+bcms_fckeditor (Needs to correctly use new JS inclusion and may need to generate a customconfig.js)
 bcms_content_rotator
 bcms_webdav
 bcms_cas

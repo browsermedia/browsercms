@@ -14,7 +14,6 @@ class CmsGeneratorTest < Rails::Generators::TestCase
 
   test "Assert new files are correctly generated" do
     run_generator
-    assert_file "public/site/customconfig.js"
     assert_file "db/migrate/20080815014337_browsercms_3_0_0.rb"
     assert_file "db/migrate/20091109175123_browsercms_3_0_5.rb"
     assert_file "db/migrate/20100705083859_browsercms_3_3_0.rb"
