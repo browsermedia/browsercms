@@ -1,3 +1,4 @@
+# These are tasks for the core browsercms project, and shouldn't be bundled into the distributable gem
 namespace :test do
 
   desc 'Runs all Tests (Test::Unit) and Features (cucumber)'

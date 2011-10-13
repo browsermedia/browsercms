@@ -11,35 +11,19 @@ Gem::Specification.new do |s|
   s.summary = %q{BrowserCMS is a a general purpose, open source Web Content Management System (CMS), written using Ruby on Rails.}
   s.description = %q{Web Content Management in Rails.}
   s.email = %q{github@browsermedia.com}
-  s.executables = ["browsercms", "bcms", "bcms-upgrade"]
   s.extra_rdoc_files = [
       "LICENSE.txt",
       "README.markdown"
   ]
   s.required_ruby_version = '>= 1.9.2'
 
-  s.files = Dir["rails/*.rb"]
-  s.files += Dir["browsercms.gemspec"]
-  s.files += Dir[".yardopts"]
-  s.files += Dir["doc/app/**/*"]
-  s.files += Dir["doc/guides/html/**/*"]
-  s.files += Dir["app/**/*"]
-  s.files += Dir["db/migrate/[0-9]*_*.rb"]
-  s.files += Dir["db/demo/**/*"]
-  s.files += Dir["db/browsercms.seeds.rb"]
-  s.files += Dir["lib/**/*"]
+  s.files         = `git ls-files`.split("\n")
+  s.files         -= Dir['test/dummy/*']
   s.files -= Dir["lib/tasks/cucumber.rake"]
   s.files -= Dir["lib/tasks/cms.rake"]
-  s.files += Dir["public/stylesheets/cms/**/*"]
-  s.files += Dir["public/javascripts/jquery*"]
-  s.files += Dir["public/javascripts/cms/**/*"]
-  s.files += Dir["public/bcms/**/*"]
-  s.files += Dir["public/site/**/*"]
-  s.files += Dir["public/images/cms/**/*"]
-  s.files += Dir["public/themes/**/*"]
-  s.files += Dir["public/themes/**/*"]
-  s.files += Dir["vendor/assets/**/*"]
-  s.files -= Dir['test/dummy/*']
+  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
+
 
   s.add_dependency('rails', "~> 3.1")
 

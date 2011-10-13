@@ -17,6 +17,7 @@ Add the ability to add BrowserCMS to Rails projects.
  end
 * [#3] Asset Pipeline: All bcms assets are now served using the assets pipeline.
 * [#443] Removed two primative javascript and stylesheets in favor of asset pipeline (where needed).
+* [#448] Mountable Engines - BrowserCMS is now a mountable engine, which should make integrating it with other projects easier.
 
 v3.3.0
 ======
