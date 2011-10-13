@@ -8,9 +8,10 @@
 * Update a few modules (like bcms_news) to test module generation
 * Test this on a production environment prior to releasing (things like assets and/or config options might be wonky)
 
-Wants (Taking advantage of 3.1)
------
+# Wants (Taking advantage of 3.1)
 
+* Verify that instances of Acts::As::ContentPage in projects can correctly load CMS templates
+* Get Aruba working to test the bcms and other functions
 * Internal CMS layouts (like _head.html.erb) do not take advantage of the asset pipeline to join all css or js files (most are compiled into cms/application.css though)
 * Improve generators for assets from engines (Review http://bibwild.wordpress.com/2011/09/20/design-for-including-rails-engine-assets-into-pipeline-manifest/)
 * Remove the styled_file_field (no longer maintained)
