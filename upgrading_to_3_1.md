@@ -7,13 +7,12 @@ Make migrate generation use 3.1 style
 Needs
 -----
 
-* Merge 3.3.x into project (misc fixes)
 * Differ `bundle install` from happening until Gemfile is updated to include bcms
 * Remove bespin
 * Improve Performance - Sitemap and serving pages is particularly slow
 ** Use Ancestry gem - It handles automatically turning models into tree via a single column. Would be very very performant in comparison to current behavior.
 * Update a few modules (like bcms_news) to test module generation
-* Test this on a production enviroment prior to releasing (things like assets might be wonky)
+* Test this on a production enviroment prior to releasing (things like assets and/or config options might be wonky)
 
 Wants (Taking advantage of 3.1)
 -----
