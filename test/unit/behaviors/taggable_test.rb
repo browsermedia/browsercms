@@ -72,6 +72,7 @@ class TaggableBlockTest < ActiveSupport::TestCase
     assert_equal 5, tag_counts[2].count.to_i
     assert_equal Cms::Tag.find_by_name("first"), tag_counts[3]
     assert_equal 1, tag_counts[3].count.to_i
+
     
     tag_cloud = Cms::Tag.cloud(:sizes => 9)
     assert_equal 5, tag_cloud.size

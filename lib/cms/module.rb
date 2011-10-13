@@ -12,7 +12,8 @@ module Cms
       base.config.autoload_paths << portlets_dir
 
       base.initializer "browsercms.enable_serving_static_assets" do |app|
-        app.middleware.use ::ActionDispatch::Static, "#{root}/public"
+        # Ensures it is loaded earlier, to avoid blank assets problem listed here: http://jonswope.com/2010/07/25/rails-3-engines-plugins-and-static-assets/
+        app.middleware.insert_before ::Rack::Lock, ::ActionDispatch::Static, "#{root}/public"
       end
 
     end

@@ -20,6 +20,23 @@ Add the ability to add BrowserCMS to Rails projects.
 * [#448] Mountable Engines - BrowserCMS is now a mountable engine, which should make integrating it with other projects easier.
 * [#416] BrowserCMS can be added to Gemfiles using :git or :path, which should make testing gems or projects easier.
 
+v3.3.2
+======
+
+This is a maintenance release for the Rails 3.0 branch of BrowserCMS. It should simplify starting new projects and deploying them into production. In bcms-3.3.1, there were a number of configuration changes that were required before sites could be deployed. The 'correct' settings should now be generated when new BrowserCMS projects are created.
+
+If developers still have issues deploying projects into production with this release, please report them on the mailing list. Note that deploying to Heroku is still going to require additional steps.
+
+Details
+-------
+See https://github.com/browsermedia/browsercms/issues?sort=created&direction=desc&state=closed&page=1&milestone=5 for complete details, but here are highlights.
+
+* [#425] db:install should now correctly setup the database in production mode (without needing to edit seeds.rb)
+* [#412] Page caching directory should work on more hosting setups.
+* [#409] [#427] Added the correct defaults to production.rb so manually editing it before deploying shouldn't be necessary
+* [#406] Fixed a bug where having a Link as the first item in a section would throw errors.
+* [#428] Updated the Deployment Guide (https://github.com/browsermedia/browsercms/wiki/Deployment-Guide) to reflect the necessary steps.
+
 v3.3.0
 ======
 

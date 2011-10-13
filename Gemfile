@@ -8,6 +8,7 @@ gem 'rack', '1.3.3' # At least until 1.3.5 is out. Avoids warnings about already
 gem "mysql2"
 
 
+
 gem 'yard', :groups=>[:development, :test]
 gem 'bluecloth', :groups=>[:development, :test] # For YARD
 

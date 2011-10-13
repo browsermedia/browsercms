@@ -21,5 +21,4 @@ test/dummy/tmp/*
 doc/api
 .yardoc/*
 .rvmrc
-
-
+.bundle/*

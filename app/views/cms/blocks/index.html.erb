@@ -60,9 +60,9 @@
                       !content_type.model_class.connectable? && 
                       !content_type.model_class.publishable? && 
                       content_type.columns_for_index.size == i + 1
-             %Q{ colspan="2" class="last"}
+             %Q{ colspan='2' class='last'}
            elsif i == 0
-             %Q{ colspan="2" class="name first"}
+             %Q{ colspan='2' class='name first'}
           end %>
         <th<%= attrs %>>
           <div class="dividers">
