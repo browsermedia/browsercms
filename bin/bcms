@@ -30,6 +30,7 @@ class Cms::Install < Thor
 
   desc "new", "Creates a blank BrowserCMS project with a single default template. Suitable for starting a new website project."
   common_options
+
   def new(name)
     create_blank_cms_project(name)
     echo_next_steps(name)
@@ -38,6 +39,7 @@ class Cms::Install < Thor
 
   desc 'demo', "Generates a BrowserCMS application with a sample demo website. Suitable for learning BrowserCMS."
   common_options
+
   def demo(name)
     create_blank_cms_project(name)
     generate "browser_cms:demo_site"
@@ -47,6 +49,7 @@ class Cms::Install < Thor
 
   desc 'module', "Generates a BrowserCMS module for sharing code between BrowserCMS projects. (Name must start with bcms_)"
   common_options
+
   def module(name)
     create_blank_cms_project(name)
     generate 'cms:upgrade_module', name
@@ -58,18 +61,20 @@ class Cms::Install < Thor
 
   desc 'version', 'Show BrowserCMS version'
   map "-v" => :version, "--version" => :version
+
   def version
     puts "BrowserCMS #{Cms::VERSION}"
   end
 
   desc 'install', "Adds BrowserCMS to an existing rails application."
+
   def install
 
-    common_setup
+    common_setup('.')
     initializer 'browsercms.rb', <<-CODE
 #{standard_file_permissions}
 Cms.table_prefix = "cms_"
-CODE
+    CODE
     default_template
     puts "BrowserCMS has been installed. Run rake db:install to add the tables then restart your server."
   end
@@ -81,7 +86,7 @@ CODE
   end
 
   def create_rails_app(name)
-    rails_cmd = "rails new #{name}"
+    rails_cmd = "rails new #{name} --skip-bundle"
     if options[:template]
       rails_cmd += " -m #{options[:template]}"
     end
@@ -155,15 +160,22 @@ SITE_DOMAIN="localhost:3000"
     end
   end
 
-  # For both new and existing projects.
-  def common_setup
+  # For both creating new bcms project and adding bcms to existing rails projects.
+  def common_setup(name)
     gem 'browsercms', :version=>::Cms::VERSION
+    run_bundle_install(name)
     generate :jdbc if defined?(JRUBY_VERSION)
     route "mount_browsercms"
     generate "browser_cms:cms"
     add_sitedomain_constant_to_environment_files
     configure_default_cache_directory
     configure_mail_server
+  end
+
+  def run_bundle_install(name)
+    inside name do
+      run "bundle install"
+    end
   end
 
   def default_template
@@ -181,13 +193,14 @@ SITE_DOMAIN="localhost:3000"
     # Unsure if this handles windows specific removal of files
     remove_file("public/index.html")
 
-    common_setup()
+    common_setup(name)
 
     initializer 'browsercms.rb', <<-CODE
-    #{standard_file_permissions}
+#{standard_file_permissions}
     CODE
 
-    default_template()
+    default_template
+
   end
 
 

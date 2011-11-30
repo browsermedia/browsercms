@@ -5,7 +5,7 @@ Working on bcms 3.4
 * Get 3.4 ready for release
 * Test upgrading from Rails 3.1 project
 * Use new migration behavior for engines
-* Differ `bundle install` from happening until Gemfile is updated to include bcms
+* Write upgrade instructions from 3.1.x/3.3.x to 3.4
 
 # Needs
 
