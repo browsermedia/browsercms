@@ -3,6 +3,7 @@ require 'cms/data_loader'
 
 module LaunchBrokenTests
   LAUNCH = false
+
   def launch_broken_tests
     LAUNCH
   end
@@ -22,10 +23,14 @@ AfterConfiguration do |config|
 end
 
 
-require File.expand_path(File.join(__FILE__, "..", "..", "..","test", "mock_file"))
+require File.expand_path(File.join(__FILE__, "..", "..", "..", "test", "mock_file"))
 module FileOperations
 
-  def create_file(file_name, text="Test Content")
+  # Creates an 'uploaded' file block at a given relative path
+  # @param [String] relative_file_path A relative file path (i.e. /test.txt) for the uploaded block.
+  def create_file(relative_file_path, text="Test Content")
+    # We are creating a temp file with no path, so strip leading slash
+    file_name = relative_file_path.gsub(/^\//, "")
     tempfile = Tempfile.new file_name do |f|
       f << text
     end

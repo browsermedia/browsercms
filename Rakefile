@@ -50,7 +50,7 @@ Cucumber::Rake::Task.new(:features) do |t|
 end
 
 desc 'Runs all the tests'
-task :test do
+task :test => 'app:test:prepare' do
   tests_to_run = ENV['TEST'] ? ["test:single"] : %w(test:units test:functionals test:integration features)
   errors = tests_to_run.collect do |task|
     begin

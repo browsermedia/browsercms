@@ -1,18 +1,22 @@
 Working on bcms 3.4
 
+# Short Term
+
+* Get 3.4 ready for release
+* Test upgrading from Rails 3.1 project
+* Use new migration behavior for engines
+* Differ `bundle install` from happening until Gemfile is updated to include bcms
+
 # Needs
 
 * Email a page portlet doesn't work (throws error when you create one) - Add scenarios
 * Tag Cloud portlet doesn't work (throws error when you create one) - Add scenarios
-* Differ `bundle install` from happening until Gemfile is updated to include bcms
-* Improve Performance - Sitemap and serving pages is particularly slow
-** Use Ancestry gem - It handles automatically turning models into tree via a single column. Would be very very performant in comparison to current behavior.
 * Update a few modules (like bcms_news) to test module generation
 * Test this on a production environment prior to releasing (things like assets and/or config options might be wonky)
 * Rework a few modules to work with Rails 3.1
 * Review the README for accuracy in light of engines and asset pipeline
 
-# Wants (Taking advantage of 3.1)
+# Wants (Taking advantage of Rails 3.1)
 
 * Add Block.publish and publish! for easier coding. (or just make default for blocks to be published via code and not via UI)
 * Verify that instances of Acts::As::ContentPage in projects can correctly load CMS templates
@@ -37,6 +41,11 @@ Working on bcms 3.4
 ** Have at most one line per request for any diagnostic result.
 * Move 'datepicker' initialization into application.js
 * Upgrade jquery.selectbox-0.5 to jquery.sb.js (https://github.com/revsystems/jQuery-SelectBox). This will likely improve the usability of the selectbox.
+
+# 3.5 Planned Features
+
+* Improve Performance - Sitemap and serving pages is particularly slow
+** Use Ancestry gem - It handles automatically turning models into tree via a single column. Would be very very performant in comparison to current behavior.
 
 ## New Features
 

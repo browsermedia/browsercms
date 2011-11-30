@@ -1,6 +1,8 @@
 v3.4.0
 ======
 
+Recommend using Ruby 1.9.3 with this release.
+
 Add the ability to add BrowserCMS to Rails projects.
 * Add bcms install method that will add browsercms to an existing Rails project.
 * Most core files in the CMS are namespaced under Cms:: . This should reduce the chance of conflicting classes (i.e. what was User is now Cms::User)
