@@ -21,3 +21,4 @@ doc/api
 .yardoc/*
 .rvmrc
 .bundle/*
+test/dummy/db/backups/*

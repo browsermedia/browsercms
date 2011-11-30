@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100705083859) do
+ActiveRecord::Schema.define(:version => 20111130221145) do
 
   create_table "cms_attachment_versions", :force => true do |t|
     t.integer  "attachment_id"

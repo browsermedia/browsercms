@@ -24,6 +24,7 @@ class PortletTest < ActiveSupport::TestCase
     @portlet = Factory(:portlet)
 
   end
+
   test "destroy should mark a portlet as deleted" do
     @portlet.destroy
     @portlet.reload!
@@ -63,7 +64,7 @@ class PortletTest < ActiveSupport::TestCase
 
 
   test "render_inline" do
-      assert_equal false, NoInlinePortlet.render_inline
+    assert_equal false, NoInlinePortlet.render_inline
   end
 
   test "Portlets should default to render_inline is true" do

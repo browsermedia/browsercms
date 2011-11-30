@@ -57,7 +57,7 @@ class Cms::Behaviors::NamespacingTest < ActiveSupport::TestCase
   end
 
   test "default table namespace " do
-    assert_equal "cms_my_blocks", Cms::MyBlock.table_name
+    assert_equal Cms::Namespacing.prefix("my_blocks"), Cms::MyBlock.table_name
   end
 
   test "set a table namespace" do

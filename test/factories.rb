@@ -206,7 +206,7 @@ Factory.define :content_editor, :parent=>:user do |m|
   m.after_create { |user|
     group = Factory(:group, :group_type => Factory(:group_type, :cms_access => true))
     Cms::Authoring::EDITOR_PERMISSIONS.each do |p|
-      group.permissions << create_or_find_permission_named(:edit_content)
+      group.permissions << create_or_find_permission_named(p)
     end
     user.groups << group
   }

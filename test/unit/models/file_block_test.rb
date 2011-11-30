@@ -8,7 +8,7 @@ class FileBlockTest < ActiveSupport::TestCase
   end
 
   def test_table_name
-    assert_equal "cms_file_blocks", Cms::FileBlock.table_name
+    assert_equal Cms::Namespacing.prefix("file_blocks"), Cms::FileBlock.table_name
   end
 
   test "Saving should also save attachment." do

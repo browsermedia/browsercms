@@ -1,16 +1,42 @@
-Working on bcms 3.4
+# Working on release of bcms 3.4
+
+## Goal
+Making upgrade of bcms 3.1 and 3.3 -> 3.4 work
+* Added migration to namespace classes in the database.
+* Need a way to write tests for checking upgrade scripts
+
+# Next
+
+ Determine if there is a more conventional pattern for applying seed data as part of an engine.
+
+  http://www.stubbleblog.com/index.php/2011/04/writing-rails-engines-getting-started/
+
+* Determine if I can automatically load seed data as part of each module/engine
+  From Docs...
+
+  # If your engine has migrations, you may also want to prepare data for the database in
+  # the <tt>seeds.rb</tt> file. You can load that data using the <tt>load_seed</tt> method, e.g.
+  #
+  #   MyEngine::Engine.load_seed
 
 # Short Term
 
 * Get 3.4 ready for release
-* Test upgrading from Rails 3.1 project
-* Use new migration behavior for engines
+* Test upgrading a browsercms v3.1.x/3.3.x to 3.4.x
 * Write upgrade instructions from 3.1.x/3.3.x to 3.4
+* Find a more conventional pattern for configuring Engines/Modules for individual projects.
+** Look at the more popular gems
+
+# Bugs
+
+* If a content type can be found in code, the entire /cms/content_library will throw an error. This could be made more robust by just not showing the content type. This probably only happens when we upgrade databases for testing, but its still annoying.
+* [DynamicPortlets] If you leave fields blank, they throw errors (and/or grab other default templates)
 
 # Needs
 
-* Email a page portlet doesn't work (throws error when you create one) - Add scenarios
-* Tag Cloud portlet doesn't work (throws error when you create one) - Add scenarios
+* Can't create some portlets - Add scenarios
+** Email a page portlet  - ERROR: uninitialized constant EmailPagePortlet::EmailMessage
+** Tag Cloud portlet - ERROR: uninitialized constant TagCloudPortlet::Tag
 * Update a few modules (like bcms_news) to test module generation
 * Test this on a production environment prior to releasing (things like assets and/or config options might be wonky)
 * Rework a few modules to work with Rails 3.1
@@ -46,6 +72,7 @@ Working on bcms 3.4
 
 * Improve Performance - Sitemap and serving pages is particularly slow
 ** Use Ancestry gem - It handles automatically turning models into tree via a single column. Would be very very performant in comparison to current behavior.
+** Call it 'Addressable' (Pages, Links, Sections, etc)
 
 ## New Features
 

@@ -166,6 +166,7 @@ SITE_DOMAIN="localhost:3000"
     run_bundle_install(name)
     generate :jdbc if defined?(JRUBY_VERSION)
     route "mount_browsercms"
+    rake 'cms:install:migrations'
     generate "browser_cms:cms"
     add_sitedomain_constant_to_environment_files
     configure_default_cache_directory

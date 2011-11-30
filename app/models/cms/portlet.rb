@@ -18,9 +18,10 @@ module Cms
     ensure
       subclass.class_eval do
 
+        # Using the table prefix here is NOT tested, since unloading classes is hard during tests.
         has_dynamic_attributes :class_name => "CmsPortletAttribute",
                                :foreign_key => "portlet_id",
-                               :table_name => Cms::Portlet.table_name,
+                               :table_name => Namespacing.prefix("portlet_attributes"),
                                :relationship_name => :portlet_attributes
 
         acts_as_content_block(

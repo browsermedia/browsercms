@@ -6,8 +6,8 @@ class HtmlBlockTest < ActiveSupport::TestCase
     assert_equal "html_block_id", Cms::HtmlBlock.version_foreign_key
   end
 
-  test "table_name" do
-    assert_equal "cms_html_blocks", Cms::HtmlBlock.table_name
+  test "default table_name" do
+    assert_equal Cms::Namespacing.prefix("html_blocks"), Cms::HtmlBlock.table_name
   end
 
   test "save" do

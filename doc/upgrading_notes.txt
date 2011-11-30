@@ -1,3 +1,7 @@
+# Upgrading to bcms 3.4
+
+* Ensure there is no table prefix set (i.e. tables will in versions prior to 3.4 were not prefixed with cms_
+
 New Project using 3.3
 ===============
 gem install browsercms

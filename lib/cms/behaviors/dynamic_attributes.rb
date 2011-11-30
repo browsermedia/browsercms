@@ -127,7 +127,7 @@ module Cms
           @has_dynamic_attributes = true
           include InstanceMethods
 
-            # Provide default options
+          # Provide default options
           options[:class_name] ||= self.model_name + 'Attribute'
           options[:table_name] ||= options[:class_name].tableize
           options[:relationship_name] ||= options[:class_name].tableize.to_sym
@@ -150,6 +150,7 @@ module Cms
           rescue
             Object.const_set(options[:class_name],
                              Class.new(ActiveRecord::Base)).class_eval do
+              set_table_name options[:table_name]
               def self.reloadable? #:nodoc:
                 false
               end
@@ -171,7 +172,6 @@ module Cms
           class_eval do
             has_many options[:relationship_name],
                      :class_name => options[:class_name],
-                     :table_name => options[:table_name],
                      :foreign_key => options[:foreign_key],
                      :dependent => :destroy
 
@@ -180,9 +180,8 @@ module Cms
 
               # Carry out delayed actions before save
               after_validation :save_modified_dynamic_attributes
-#              after_validation_on_update :save_modified_dynamic_attributes
 
-# Make attributes seem real
+              # Make attributes seem real
               alias_method :method_missing_without_dynamic_attributes, :method_missing
               alias_method :method_missing, :method_missing_with_dynamic_attributes
 
