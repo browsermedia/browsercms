@@ -110,6 +110,11 @@ module ActiveRecord
         add_column "#{table_name.to_s.singularize}_versions".to_sym, column_name, type, options
       end
 
+      def remove_content_column(table_name, column_name)
+        remove_column table_name, column_name
+        remove_column "#{table_name.to_s.singularize}_versions".to_sym, column_name
+      end
+
       # Will namespace the content table
       def content_table_exists?(table_name)
         table_exists?(Cms::Namespacing.prefixed_table_name(table_name))
