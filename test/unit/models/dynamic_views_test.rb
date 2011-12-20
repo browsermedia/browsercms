@@ -22,5 +22,15 @@ class Cms::DynamicViewsTest < ActiveSupport::TestCase
     assert_equal "basic_templates", BasicTemplate.resource_name
   end
 
+  test "Engine" do
+    assert_equal "cms", Cms::DynamicView.engine
+    assert_equal "cms", Cms::PageTemplate.engine
+    assert_equal "cms", Cms::PagePartial.engine
+  end
 
+  test "path_elements" do
+    assert_equal [Cms::PageTemplate], Cms::PageTemplate.path_elements
+    assert_equal [Cms::PagePartial], Cms::PagePartial.path_elements
+
+  end
 end

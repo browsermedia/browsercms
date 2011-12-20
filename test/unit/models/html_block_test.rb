@@ -6,8 +6,17 @@ class HtmlBlockTest < ActiveSupport::TestCase
     assert_equal "html_block_id", Cms::HtmlBlock.version_foreign_key
   end
 
+  test "template_path" do
+    assert_equal "cms/html_blocks/render", Cms::HtmlBlock.template_path
+  end
+
   test "default table_name" do
     assert_equal Cms::Namespacing.prefix("html_blocks"), Cms::HtmlBlock.table_name
+  end
+
+  test "form" do
+    type = Cms::ContentType.new(:name=>"Cms::HtmlBlock")
+    assert_equal "cms/html_blocks/form", type.form
   end
 
   test "save" do

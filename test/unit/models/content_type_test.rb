@@ -22,18 +22,61 @@ module Cms
     acts_as_content_block
   end
 end
+
+class Unnamespaced < ActiveRecord::Base
+    acts_as_content_block
+end
+
+class Widget < ActiveRecord::Base
+    acts_as_content_block
+end
+
 class ContentTypeTest < ActiveSupport::TestCase
   def setup
     @c = Cms::ContentType.new(:name => "ReallyLongNameClass")
+    @unnamespaced_type = Cms::ContentType.create!(:name => "Unnamespaced", :group_name=>"Core")
+  end
+
+
+  test "#form for unnamespaced blocks" do
+    widget_type =  Cms::ContentType.create!(:name => "Widget", :group_name=>"Core")
+    assert_equal "cms/widgets/form", widget_type.form
+  end
+
+  test "template_path" do
+    assert_equal "cms/widgets/render", Widget.template_path
+  end
+
+  test "find_by_key checks multiple namespaces" do
+    assert_equal @unnamespaced_type, Cms::ContentType.find_by_key("Unnamespaced")
   end
 
   test "model_resource_name" do
     assert_equal "really_long_name_class", @c.model_class_form_name
   end
 
-  test "model_resource_name_for removes cms_ as prefix (no longer needed for engines)" do
+  test "Project specific routes should be still be namespaced under cms_" do
+    assert_equal "main_app.cms_unnamespaced", @unnamespaced_type.route_name
+  end
+
+  test "route_name removes cms_ as prefix (no longer needed for engines)" do
     content_type = Cms::ContentType.new(:name=>"Cms::NamespacedBlock")
-    assert_equal "namespaced_block", content_type.model_class_form_name
+    assert_equal "namespaced_block", content_type.route_name
+  end
+
+  test "engine_for using Class" do
+    assert_equal "main_app", Cms::ContentType.new.engine(Unnamespaced)
+  end
+
+  test "path_elements for instance of block" do
+    u = mock()
+    Cms::ContentType.any_instance.expects(:engine).returns("main_app")
+    u.expects(:instance_of?).with(Class).returns(false).at_least_once
+    assert_equal ["cms", u], Cms::ContentType.new.path_elements(u)
+  end
+
+  test "path_elements for a ContentType" do
+    assert_equal ["cms", Unnamespaced], @unnamespaced_type.path_elements
   end
 
   def test_model_class

@@ -39,6 +39,14 @@ GEM
       multi_json (~> 1.0)
     addressable (2.2.6)
     arel (2.2.1)
+    aruba (0.4.6)
+      bcat (>= 0.6.1)
+      childprocess (>= 0.2.0)
+      cucumber (>= 1.0.2)
+      rdiscount (>= 1.6.8)
+      rspec (>= 2.6.0)
+    bcat (0.6.2)
+      rack (~> 1.0)
     bluecloth (2.1.0)
     builder (3.0.0)
     capybara (1.1.1)
@@ -115,8 +123,17 @@ GEM
       rdoc (~> 3.4)
       thor (~> 0.14.6)
     rake (0.9.2.2)
+    rdiscount (1.6.8)
     rdoc (3.11)
       json (~> 1.4)
+    rspec (2.7.0)
+      rspec-core (~> 2.7.0)
+      rspec-expectations (~> 2.7.0)
+      rspec-mocks (~> 2.7.0)
+    rspec-core (2.7.1)
+    rspec-expectations (2.7.0)
+      diff-lcs (~> 1.1.2)
+    rspec-mocks (2.7.0)
     ruby-prof (0.10.8)
     rubyzip (0.9.4)
     selenium-webdriver (2.8.0)
@@ -147,6 +164,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aruba
   bluecloth
   browsercms!
   capybara

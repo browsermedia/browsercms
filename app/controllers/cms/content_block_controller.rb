@@ -148,16 +148,19 @@ class ContentBlockController < Cms::BaseController
     # path related methods - available in the view as helpers
   
     def new_block_path(options={})
-      cms_new_url_for(@block, options)
+      cms_new_path_for(@block, options)
     end
   
     def block_path(action=nil)
-      path = [@block]
-      action ? path.unshift(action) : path
+      path = []
+      path << engine_for(@block)
+      path << action if action
+      path.concat path_elements_for(@block)
+      path
     end
   
     def blocks_path(options={})
-      cms_index_url_for(@block, options)
+      cms_index_path_for(@block.class, options)
     end
 
     # This is the partial that will be used in the form

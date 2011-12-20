@@ -16,7 +16,7 @@ module Cms
       all.map { |f| f.name.underscore.to_sym }
     end
 
-    # Given a 'key' like 'html_blocks' or 'portlet'
+    # Given a 'key' like 'html_blocks' or 'portlet'. Looks first for a class in the Cms:: namespace, then again without it.
     # Raises exception if nothing was found.
     def self.find_by_key(key)
       class_name = key.tableize.classify
@@ -34,6 +34,9 @@ module Cms
         content_type
       end
     rescue Exception
+      if class_name.starts_with? "Cms::"
+        return self.find_by_key(class_name.gsub(/Cms::/, ""))
+      end
       raise "Couldn't find ContentType of class '#{class_name}'"
     end
 
@@ -41,8 +44,13 @@ module Cms
       model_class.ancestors.map { |c| c.name }.include?(content_type.model_class)
     end
 
+    # Returns the partial used to render the form fields for a given block.
     def form
-      model_class.respond_to?(:form) ? model_class.form : "#{name.underscore.pluralize}/form"
+      f = model_class.respond_to?(:form) ? model_class.form : "#{name.underscore.pluralize}/form"
+      unless f.starts_with?("cms/")
+        f = "cms/#{f}"
+      end
+      f
     end
 
     def display_name
@@ -55,6 +63,29 @@ module Cms
 
     def model_class
       name.constantize
+    end
+
+    def route_name
+      if model_class.name.starts_with?("Cms")
+        model_class_form_name
+      else
+        "main_app.cms_#{model_class_form_name}"
+      end
+    end
+
+    def path_elements(model_or_class=model_class)
+      path = []
+      klass = model_or_class.instance_of?(Class) ? model_or_class : model_or_class.class
+      path << "cms" if engine(klass) != "cms"
+      path << model_or_class
+    end
+
+    def engine(klass=model_class)
+      if klass.name.starts_with?("Cms")
+        "cms"
+      else
+        "main_app"
+      end
     end
 
     # Cms::HtmlBlock -> html_block

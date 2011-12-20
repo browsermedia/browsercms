@@ -26,14 +26,16 @@ module Cms
       def self.included(model)
         model.extend(MacroMethods)
       end
+
       module MacroMethods
         def renderable?
           false
         end
+
         def is_renderable(options={})
-      
+
           @instance_variable_name_for_view = options[:instance_variable_name_for_view]
-      
+
           extend ClassMethods
           include InstanceMethods
 
@@ -48,11 +50,11 @@ module Cms
           include ActionController::Helpers
           include ActionController::RequestForgeryProtection
 
-          helper ApplicationHelper      
-      
+          helper ApplicationHelper
+
           attr_accessor :controller
           delegate :params, :session, :request, :flash, :to => :controller
-      
+
         end
       end
     end
@@ -60,33 +62,37 @@ module Cms
       def renderable?
         true
       end
-  
+
       # This will be the used as the name of instance variable 
       # that will be available in the view.  The default value is "@renderable"
       def instance_variable_name_for_view
         @instance_variable_name_for_view ||= "@renderable"
       end
-  
+
       def helper_path
         "app/helpers/#{name.underscore}_helper.rb"
       end
-  
+
       def helper_class
         "Cms::#{name}Helper".constantize
       end
-  
+
       # This is where the path to the template. The default is based on the class
       # of the renderable, so if you have an Article that is renderable, 
       # the template will be "articles/render"
       def template_path
-        "#{name.underscore.pluralize}/render"
+        path = "#{name.underscore.pluralize}/render"
+        unless path.starts_with?("cms/")
+          path = "cms/#{path}"
+        end
+        path
       end
-  
+
       # Instance variables that will not be copied from the renderable to the view
       def ivars_to_ignore
         ['@controller', '@_already_rendered']
-      end    
-  
+      end
+
     end
     module InstanceMethods
       def prepare_to_render(controller)
@@ -103,7 +109,7 @@ module Cms
         # but if you haven't we won't
         render if should_render_self?
       end
-    
+
       def perform_render(controller)
         return "Exception: #{@render_exception}" if @render_exception
 
@@ -116,7 +122,7 @@ module Cms
 
         if self.respond_to?(:deleted) && self.deleted
           logger.error "Attempting to render deleted object: #{self.inspect}"
-          msg = (@mode == 'edit' ?  %Q[<div class="error">This #{self.class.name} has been deleted.  Please remove this container from the page</div>] : '')
+          msg = (@mode == 'edit' ? %Q[<div class="error">This #{self.class.name} has been deleted.  Please remove this container from the page</div>] : '')
           return msg
         end
 
@@ -132,7 +138,7 @@ module Cms
           action_view.render(:file => self.class.template_path)
         end
       end
-  
+
       def render_exception=(exception)
         @render_exception = exception
       end
@@ -143,24 +149,24 @@ module Cms
         # render method, which was conflicted with block's render methods.
         public_methods(false).include?(:render)
       end
-      
+
       protected
-        def copy_instance_variables_from_controller!
-          if @controller.respond_to?(:instance_variables_for_rendering)
-            @controller.instance_variables_for_rendering.each do |iv|
-              #logger.info "Copying #{iv} => #{@controller.instance_variable_get(iv).inspect}"
-              instance_variable_set(iv, @controller.instance_variable_get(iv))
-            end
+      def copy_instance_variables_from_controller!
+        if @controller.respond_to?(:instance_variables_for_rendering)
+          @controller.instance_variables_for_rendering.each do |iv|
+            #logger.info "Copying #{iv} => #{@controller.instance_variable_get(iv).inspect}"
+            instance_variable_set(iv, @controller.instance_variable_get(iv))
           end
         end
-      
-        def assigns_for_view
-          (instance_variables - self.class.ivars_to_ignore).inject({}) do |h,k|
-            h[k[1..-1]] = instance_variable_get(k)
-            h
-          end
+      end
+
+      def assigns_for_view
+        (instance_variables - self.class.ivars_to_ignore).inject({}) do |h, k|
+          h[k[1..-1]] = instance_variable_get(k)
+          h
         end
-      
+      end
+
     end
   end
 end

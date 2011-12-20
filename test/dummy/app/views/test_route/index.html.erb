@@ -1,0 +1,14 @@
+<h1>TestRoute#index</h1>
+<p>Find me in app/views/test_route/index.html.erb</p>
+
+<%= link_to "new product", new_cms_product_path %><br>
+<%= link_to "new", new_polymorphic_path(["cms", Product]) %><br>
+<%= link_to "LIst",  polymorphic_path([main_app, "cms", Product])%> <br>
+<%= link_to "CMS HTML",  polymorphic_path([cms, Cms::HtmlBlock])%>       <br>
+<%= link_to "Order Ascending",  polymorphic_path([cms, Cms::HtmlBlock], {:order => "asc"})%><br>
+<%= link_to "Order Ascending",  polymorphic_path([cms, "html_block"], {:order => "asc"})%><br>
+
+
+
+
+

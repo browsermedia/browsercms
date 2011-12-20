@@ -1,23 +1,34 @@
 # Working on release of bcms 3.4
 
+cuke features/generators.feature
+
+
+Issues
+* When generating a new CMS project, the default template is generated twice.
+* rake db:install is not available in the gem
+
+# Migration Bugs
+* Attachment fields won't be generated correctly.
+* Attachment sections won't be generated correctly.
+* Category fields won't be generated correctly.
+* Html fields aren't sized.
+
+
 ## Goal
 Making upgrade of bcms 3.1 and 3.3 -> 3.4 work
-* Added migration to namespace classes in the database.
-* Need a way to write tests for checking upgrade scripts
 
 # Next
 
- Determine if there is a more conventional pattern for applying seed data as part of an engine.
+* Upgrade some of the modules (bcms_news)
 
-  http://www.stubbleblog.com/index.php/2011/04/writing-rails-engines-getting-started/
+## Notes (Engines)
 
-* Determine if I can automatically load seed data as part of each module/engine
-  From Docs...
+    * Thor Actions - http://rubydoc.info/github/wycats/thor/master/Thor/Actions
+    * Rails Actions - http://api.rubyonrails.org/classes/Rails/Generators/Actions.html
 
-  # If your engine has migrations, you may also want to prepare data for the database in
-  # the <tt>seeds.rb</tt> file. You can load that data using the <tt>load_seed</tt> method, e.g.
-  #
-  #   MyEngine::Engine.load_seed
+### Problems
+
+* mount_browsercms gets put in the wrong place (it needs to be last)
 
 # Short Term
 
@@ -27,9 +38,13 @@ Making upgrade of bcms 3.1 and 3.3 -> 3.4 work
 * Find a more conventional pattern for configuring Engines/Modules for individual projects.
 ** Look at the more popular gems
 
+Aruba Tests needed for:
+bcms demo
+bcms install
+
 # Bugs
 
-* If a content type can be found in code, the entire /cms/content_library will throw an error. This could be made more robust by just not showing the content type. This probably only happens when we upgrade databases for testing, but its still annoying.
+* If a content type can't be found in code, the entire /cms/content_library will throw an error. This could be made more robust by just not showing the content type. This probably only happens when we upgrade databases for testing, but its still annoying.
 * [DynamicPortlets] If you leave fields blank, they throw errors (and/or grab other default templates)
 
 # Needs
@@ -67,6 +82,15 @@ Making upgrade of bcms 3.1 and 3.3 -> 3.4 work
 ** Have at most one line per request for any diagnostic result.
 * Move 'datepicker' initialization into application.js
 * Upgrade jquery.selectbox-0.5 to jquery.sb.js (https://github.com/revsystems/jQuery-SelectBox). This will likely improve the usability of the selectbox.
+
+ Determine if there is a more conventional pattern for applying seed data as part of an engine.
+  From Docs...
+
+  # If your engine has migrations, you may also want to prepare data for the database in
+  # the <tt>seeds.rb</tt> file. You can load that data using the <tt>load_seed</tt> method, e.g.
+  #
+  #   MyEngine::Engine.load_seed
+
 
 # 3.5 Planned Features
 

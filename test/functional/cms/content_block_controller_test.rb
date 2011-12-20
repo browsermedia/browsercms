@@ -18,9 +18,11 @@ class PermissionsForContentBlockControllerTest < ActionController::TestCase
     @controller.stubs(:model_class).returns(Cms::SampleBlock)
     @controller.stubs(:set_default_category)
     @controller.stubs(:blocks_path).returns("/cms/sample_block")
+    @controller.stubs(:block_path).returns("/cms/sample_block")
     @controller.stubs(:redirect_to_first).returns("/cms/sample_block")
 
     @block = stub_everything("block")
+    @block.stubs(:class).returns(Cms::SampleBlock)
     @block.stubs(:as_of_draft_version).returns(@block)
     @block.stubs(:as_of_version).returns(@block)
     @block.stubs(:connected_pages).returns(stub(:all => stub))

@@ -1,4 +1,2 @@
-module Cms
-  class <%= class_name.pluralize %>Controller < Cms::ContentBlockController
-end
+class Cms::<%= namespaced_controller_class %> < Cms::ContentBlockController
 end

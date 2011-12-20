@@ -22,4 +22,5 @@ group :test do
   gem 'cucumber'
   gem 'launchy'
   gem 'ruby-prof'
+  gem 'aruba'
 end

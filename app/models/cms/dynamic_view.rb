@@ -92,5 +92,11 @@ module Cms
     def self.resource_collection_name
       model_name.underscore
     end
+
+    # So that route lookup works for these resources.
+    # See PathHelper#cms_index_path_for
+    def self.engine
+      "cms"
+    end
   end
 end

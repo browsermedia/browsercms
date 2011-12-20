@@ -3,25 +3,36 @@ require 'rails/generators/active_record/migration'
 module Cms
   module Generators
     # Allows developers to create new Content Blocks for their projects.
-    #
     class ContentBlockGenerator < Rails::Generators::NamedBase
 
       source_root File.expand_path('../templates', __FILE__)
       argument :attributes, :type => :array, :default => [], :banner => "field:type field:type"
-      class_option :migration, :type => :boolean, :default=>true
 
       include Rails::Generators::Migration
-      extend ActiveRecord::Generators::Migration
 
       # Don't check for class collision as overwriting content blocks is fine.
       # check_class_collision
 
-      def create_content_block
-        template 'content_block.rb', File.join('app/models', "#{file_name}.rb")
+      hook_for :orm, :in=>:rails, :required=>true, :as=>:model
+
+      def alter_the_model
+        insert_into_file "app/models/#{file_name}.rb", :after=>"ActiveRecord::Base\n" do
+          "    acts_as_content_block\n"
+        end
       end
 
-      def create_model_test
-        template 'unit_test.erb', File.join('test', 'unit', 'models', "#{file_name}_test.rb")
+      def alter_the_migration
+        migration = self.class.migration_exists?(File.absolute_path("db/migrate"), "create_#{table_name}")
+        gsub_file migration, "create_table", "create_content_table"
+        insert_into_file migration, :after=>"def change\n" do
+          <<-RUBY
+    Cms::ContentType.create!(:name => "#{class_name}", :group_name => "#{class_name}")
+          RUBY
+        end
+
+        unless class_name.starts_with?("Cms::")
+          gsub_file migration, "do", ", :prefix=>false do"
+        end
       end
 
       def create_controller_and_views
@@ -38,18 +49,11 @@ module Cms
         route "namespace :cms  do content_blocks :#{file_name.pluralize} end\n"
       end
 
-      def create_migration_file
-        return unless options[:migration]
-        migration_template "migration.erb", "db/migrate/create_#{table_name}.rb"
-      end
-
       private
 
-      # Used by migration.rb to fill in class name.
-      def migration_name
-        "Create#{class_name.pluralize.gsub(/::/, '')}"
+      def namespaced_controller_class
+        "#{class_name.pluralize}Controller"
       end
-
     end
   end
 end

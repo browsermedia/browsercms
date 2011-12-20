@@ -18,6 +18,9 @@ module Cms
       "page_partial"
     end
 
+    def self.path_elements
+      [Cms::PagePartial]
+    end
 
     def prepend_underscore
       if !name.blank? && name[0, 1] != '_'
