@@ -1,11 +1,10 @@
 # Working on release of bcms 3.4
 
-cuke features/generators.feature
-
+Things to test:
+* bcms install (verify where it puts mount_browsercms)
+* bcms demo
 
 Issues
-* When generating a new CMS project, the default template is generated twice.
-* rake db:install is not available in the gem
 
 # Migration Bugs
 * Attachment fields won't be generated correctly.
@@ -49,6 +48,7 @@ bcms install
 
 # Needs
 
+* Fix forms layouts in Chrome (Instructions cause a problem)
 * Can't create some portlets - Add scenarios
 ** Email a page portlet  - ERROR: uninitialized constant EmailPagePortlet::EmailMessage
 ** Tag Cloud portlet - ERROR: uninitialized constant TagCloudPortlet::Tag

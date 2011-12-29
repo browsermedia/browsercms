@@ -31,23 +31,26 @@ class Cms::Install < Thor
 
   desc "new", "Creates a blank BrowserCMS project with a single default template. Suitable for starting a new website project."
   common_options
+
   def new(name)
     create_blank_cms_project(name)
-    echo_next_steps(name)
+    display_instructions(name)
   end
 
 
   desc 'demo', "Generates a BrowserCMS application with a sample demo website. Suitable for learning BrowserCMS."
   common_options
+
   def demo(name)
     create_blank_cms_project(name)
     generate "browser_cms:demo_site"
-    echo_next_steps(name)
+    display_instructions(name)
   end
 
 
   desc 'module', "Generates a BrowserCMS module for sharing code between BrowserCMS projects. (Name must start with bcms_)"
   common_options
+
   def module(name)
     @project_name = name
     create_mountable_app
@@ -56,18 +59,21 @@ class Cms::Install < Thor
     inside rails_app do
       generate_seeds_rb
     end
-    generate_browsercms
+    generate_browsercms_project
+    generate_default_template
 
-    echo_next_steps(name)
+    display_instructions(name)
   end
 
   desc 'version', 'Show BrowserCMS version'
   map "-v" => :version, "--version" => :version
+
   def version
     puts "BrowserCMS #{Cms::VERSION}"
   end
 
   desc 'install', "Adds BrowserCMS to an existing rails application."
+
   def install
     common_setup('.')
     initializer 'browsercms.rb', <<-CODE
@@ -86,7 +92,6 @@ Cms.table_prefix = "cms_"
     template 'GPL.txt'
   end
 
-
   # i.e. cd project_name
   def work_in_project_root_directory(name=@project_name)
     self.destination_root = (File.join(destination_root, name))
@@ -103,8 +108,7 @@ Cms.table_prefix = "cms_"
     run(rails_cmd)
   end
 
-
-  def echo_next_steps(name)
+  def display_instructions(name)
     puts "\nCreated new BrowserCMS project '#{name}'."
     puts "    To get started, type 'cd #{name}'"
     puts "    then type 'rake db:install'"
@@ -167,7 +171,7 @@ SITE_DOMAIN="localhost:3000"
     end
   end
 
-  def generate_browsercms
+  def generate_browsercms_project
     route "mount_browsercms"
     rake 'cms:install:migrations'
     generate "browser_cms:cms"
@@ -179,7 +183,6 @@ SITE_DOMAIN="localhost:3000"
       configure_mail_server
       create_browsercms_initializer
     end
-    generate_default_template
   end
 
   # When working with modules, the 'root' is the dummy application
@@ -208,7 +211,7 @@ SITE_DOMAIN="localhost:3000"
     gem 'browsercms', :version=>::Cms::VERSION
     run_bundle_install
     generate :jdbc if defined?(JRUBY_VERSION)
-    generate_browsercms
+    generate_browsercms_project
   end
 
   def run_bundle_install
