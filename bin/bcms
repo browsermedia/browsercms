@@ -29,7 +29,7 @@ class Cms::Install < Thor
     method_option :skip_bundle, :aliases => "--skip-bundle", :desc => "Don't run bundle install", :default=>false, :type=>:boolean
   end
 
-  desc "new", "Creates a blank BrowserCMS project with a single default template. Suitable for starting a new website project."
+  desc "new [NAME]", "Creates a blank BrowserCMS project with a single default template. Suitable for starting a new website project."
   common_options
 
   def new(name)
@@ -38,7 +38,7 @@ class Cms::Install < Thor
   end
 
 
-  desc 'demo', "Generates a BrowserCMS application with a sample demo website. Suitable for learning BrowserCMS."
+  desc 'demo [NAME]', "Generates a BrowserCMS application with a sample demo website. Suitable for learning BrowserCMS."
   common_options
 
   def demo(name)
@@ -48,7 +48,7 @@ class Cms::Install < Thor
   end
 
 
-  desc 'module', "Generates a BrowserCMS module for sharing code between BrowserCMS projects. (Name must start with bcms_)"
+  desc 'module [NAME]', "Generates a BrowserCMS module for sharing code between BrowserCMS projects. (Name must start with bcms_)"
   common_options
 
   def module(name)

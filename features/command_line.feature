@@ -34,3 +34,26 @@ Feature: Command Line
     And a file named "bcms_store/test/dummy/app/views/layouts/templates/default.html.erb" should exist
 
 
+  Scenario: Creating a demo project without a name
+    When I run `bcms demo`
+    Then the output should contain:
+    """
+    "demo" was called incorrectly. Call as "bcms demo [NAME]".
+    """
+    And the exit status should be 0
+
+  Scenario: Creating a new CMS project without a  name
+    When I run `bcms new`
+    Then the output should contain:
+    """
+    "new" was called incorrectly. Call as "bcms new [NAME]".
+    """
+    And the exit status should be 0
+
+  Scenario: Creating a CMS module without a  name
+    When I run `bcms module`
+    Then the output should contain:
+    """
+    "module" was called incorrectly. Call as "bcms module [NAME]".
+    """
+    And the exit status should be 0

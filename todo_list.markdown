@@ -11,7 +11,7 @@ Issues
 * Attachment sections won't be generated correctly.
 * Category fields won't be generated correctly.
 * Html fields aren't sized.
-
+* There is no down migration.
 
 ## Goal
 Making upgrade of bcms 3.1 and 3.3 -> 3.4 work
@@ -20,14 +20,12 @@ Making upgrade of bcms 3.1 and 3.3 -> 3.4 work
 
 * Upgrade some of the modules (bcms_news)
 
-## Notes (Engines)
+## Documenation on scripts
 
     * Thor Actions - http://rubydoc.info/github/wycats/thor/master/Thor/Actions
     * Rails Actions - http://api.rubyonrails.org/classes/Rails/Generators/Actions.html
 
-### Problems
 
-* mount_browsercms gets put in the wrong place (it needs to be last)
 
 # Short Term
 
@@ -61,16 +59,13 @@ bcms install
 
 * Add Block.publish and publish! for easier coding. (or just make default for blocks to be published via code and not via UI)
 * Verify that instances of Acts::As::ContentPage in projects can correctly load CMS templates
-* Get Aruba working to test the bcms and other functions
 * Internal CMS layouts (like _head.html.erb) do not take advantage of the asset pipeline to join all css or js files (most are compiled into cms/application.css though)
 * Improve generators for assets from engines (Review http://bibwild.wordpress.com/2011/09/20/design-for-including-rails-engine-assets-into-pipeline-manifest/)
 * Remove the styled_file_field (no longer maintained)
-* Use 3.1 Migration style: Migrations have a single 'def change' method now, rather than self.up and self.down
 * Themes can be packaged as assets as well (I think?). Rework bluesteel so its part of the asset pipeline.
 * Run in production mode locally (for better error testing). Try POW to see if that adds subdomains easily.
 * Design how a portlet can include a single jquery based library by just declaring it in the render.html.erb.
 ** eg. auto_discovery_link_tag -> Does not get included in the head
-* Add better messaging for `browsercms demo [NAME]`
 * Allow for multiple view templates for blocks.
 * Look at Papertrail and see how they structure versions. Their API seems every simple for single blocks.
 * Clean up logging messages that are filling up the production logs unnecessarily
