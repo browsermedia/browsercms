@@ -5,7 +5,6 @@ module Cms
   # From app, should be cms.xyz_path
   module PathHelper
 
-
     def cms_index_path_for(resource, options={})
       polymorphic_path(build_path_for(resource), options)
     end
@@ -43,23 +42,15 @@ module Cms
       end
     end
 
+    # Returns the Engine Proxy that this resource is from.
     def engine_for(resource)
-      engine_name = if resource.respond_to?(:engine)
-        resource.engine
-      elsif resource.instance_of?(Class)
-        ContentType.new.engine(resource)
-      else
-        ContentType.new.engine(resource.class)
-      end
-      send(engine_name)
+      EngineHelper.decorate(resource)
+      send(resource.engine_name)
     end
 
     def path_elements_for(resource)
-      if resource.respond_to?(:path_elements)
-        resource.path_elements
-      else
-        ContentType.new.path_elements(resource)
-      end
+      EngineHelper.decorate(resource)
+      resource.path_elements
     end
 
     private

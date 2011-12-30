@@ -3,7 +3,7 @@ require 'test_helper'
 class SchemaStatementsTest < ActiveSupport::TestCase
 
   def ensure_no_prefix
-    Cms.expects(:table_prefix).returns("").at_least_once
+    Cms.expects(:table_prefix).returns("").at_least(0)
   end
 
   def setup
@@ -15,14 +15,15 @@ class SchemaStatementsTest < ActiveSupport::TestCase
 
   end
 
-  test "If available, blocks will use explicit version_column_name" do
+  test "Removed ability to explicitly set :version_foreign_key in bcms 3.4. Should silently do nothing" do
     class ::Cms::ExplictColumnBlock < ActiveRecord::Base
       acts_as_content_block :versioned=>{:version_foreign_key => :something_id }
     end
     connection.drop_content_table :explict_column_blocks rescue nil
     connection.create_content_table :explict_column_blocks, :prefix=>false do |t| ; end
 
-    assert_column_exists :explict_column_block_versions, :something_id
+    assert_column_exists :explict_column_block_versions, :original_record_id
+    assert_column_does_not_exist :explict_column_block_versions, :something_id
   end
 
   test "Nonversioned blocks shouldn't create versions table" do
@@ -46,7 +47,7 @@ class SchemaStatementsTest < ActiveSupport::TestCase
     connection.drop_table :possibly_versioned_block_versions rescue nil
     connection.create_content_table :possibly_versioned_blocks, :prefix=>false do |t| ; end
 
-    assert_column_exists :possibly_versioned_block_versions, :possibly_versioned_block_id
+    assert_column_exists :possibly_versioned_block_versions, :original_record_id
   end
 
   test "non-existant models should create default versions table." do
@@ -56,7 +57,7 @@ class SchemaStatementsTest < ActiveSupport::TestCase
     connection.drop_table :non_existant_block_versions rescue nil
     connection.create_content_table :non_existant_blocks, :prefix=>false do |t| ; end
 
-    assert_column_exists :non_existant_block_versions, :non_existant_block_id
+    assert_column_exists :non_existant_block_versions, :original_record_id
   end
 
   test "prefixed" do
@@ -77,7 +78,7 @@ class SchemaStatementsTest < ActiveSupport::TestCase
     end
 
     expected_columns = %w(archived created_at created_by_id deleted id lock_version name published updated_at updated_by_id version)
-    expected_columns_v = %w(archived created_at created_by_id deleted fake_content_id id name published updated_at updated_by_id version version_comment)
+    expected_columns_v = %w(archived created_at created_by_id deleted id name original_record_id published updated_at updated_by_id version version_comment)
     assert_equal expected_columns, conn.columns(:fake_contents).map { |c| c.name }.sort
     assert_equal expected_columns_v, conn.columns(:fake_content_versions).map { |c| c.name }.sort
   end

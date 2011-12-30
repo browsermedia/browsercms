@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
 
 
-  s.add_dependency('rails', "~> 3.1")
+  s.add_dependency('rails', "~> 3.1.0 ")
 
   # Required only for bcms-upgrade
   s.add_dependency('term-ansicolor')

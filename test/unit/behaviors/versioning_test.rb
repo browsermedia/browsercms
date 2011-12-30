@@ -1,17 +1,20 @@
 require 'test_helper'
 
 class VersioningTest < ActiveSupport::TestCase
-  test "default versioning column" do
-    Cms.expects(:table_prefix).returns("cms_")
-    assert_equal "html_block_id", Cms::Behaviors::Versioning.default_foreign_key(:cms_html_block)
+
+  test "version_foriegn_key is always the same" do
+    assert_equal :original_record_id, Cms::HtmlBlock.version_foreign_key
+  end
+
+  test "Non-versioned columns include 'original_record_id'" do
+    assert_equal true, Cms::HtmlBlock.non_versioned_columns.include?("original_record_id")
   end
 
   test "non_versioned_columns should be made into string" do
     class ::Cms::SpecialBlock < ActiveRecord::Base
-      is_versioned :version_foreign_key => :something_id
+      is_versioned
     end
 
-    assert_equal :something_id, Cms::SpecialBlock.version_foreign_key
     Cms::SpecialBlock.non_versioned_columns.each do |c|
       assert_equal String, c.class, "Expected #{c} to be a String, but wasn't."
     end

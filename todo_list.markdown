@@ -1,17 +1,38 @@
 # Working on release of bcms 3.4
+Task: Upgrading bcms_news to bcms-3.4
+
+Issue: Core CMS links to edit/view/add new content (when selected)/list versions and delete do not work.
+Cause: Paths for the block aren't be calculated correctly. (For index.html.erb the JS was duplicative and wrong)
+Start at: Reworking the JS to extract it. Current issue is the the draft vs published status is not being calucated corrected for each row, so the publish button never lights up. Even when you select an item.
+* Want to: Extract all JS in index into a separate JS file rather than inlining it.
+
+## Notes (for upgrading engines)
+
+1. Try to reduce to a minimum the # of steps required to setup an engine/module (look at Diesel)
+2. Adding seed data (either later or before) should always require the same installation commands (i.e. rake db:install if possible) Don't force developers to remember multiple commands
+3. Gemspec should be generated more suitably to an engine (less exceptions). Alternatively, write better clean up instructions for upgrading modules.
+4. By default, Rails wants to match the table names of namespaced models (i.e. BcmsNews::NewsArticle). This can make for somewhat LONG and/or redudant table names (i.e. bcms_news_news_articles) but is probably better in the long run since it helps uniquely tie table to their module.
+5.  The BrowserCMS convention of having 'create_versioned_table' do different things based on the underlying model is might be flawed. Migrations really need to represent a snapshot in time that won't change based on the code. Case in point, we don't know what column name is being generated for original_record_id.
+
+News Module is mostly done. Unresolved issues:
+* New concept (improvement) Remove the need for page routes and use controllers instead.
 
 Things to test:
 * bcms install (verify where it puts mount_browsercms)
 * bcms demo
 
-Issues
-
-# Migration Bugs
+# [1] Migration Bugs
 * Attachment fields won't be generated correctly.
 * Attachment sections won't be generated correctly.
 * Category fields won't be generated correctly.
 * Html fields aren't sized.
 * There is no down migration.
+
+# [2] bcms module
+* browsercms seed data is not copied into projects (Big problem)
+* rake db:install doesn't work for generated modules (either change instructions or make it work)
+* Don't create a public/bcms/bcms_modulename/README
+* Clean up licenses (MIT vs GPL)
 
 ## Goal
 Making upgrade of bcms 3.1 and 3.3 -> 3.4 work

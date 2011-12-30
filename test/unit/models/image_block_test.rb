@@ -16,11 +16,11 @@ module Cms
     end
 
     test "non_versioned_columns should not include the version_foreign_ken" do
-      assert ImageBlock.non_versioned_columns.include?("file_block_id")
+      assert ImageBlock.non_versioned_columns.include?("original_record_id")
     end
 
     test "version_foreign_key" do
-      assert_equal :file_block_id, ImageBlock.version_foreign_key
+      assert_equal :original_record_id, ImageBlock.version_foreign_key
     end
 
     test "create works" do

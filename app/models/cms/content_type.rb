@@ -47,14 +47,14 @@ module Cms
     # Returns the partial used to render the form fields for a given block.
     def form
       f = model_class.respond_to?(:form) ? model_class.form : "#{name.underscore.pluralize}/form"
-      unless f.starts_with?("cms/")
+      if main_app_model?
         f = "cms/#{f}"
       end
       f
     end
 
     def display_name
-      model_class.respond_to?(:display_name) ? model_class.display_name : model_class.to_s.demodulize.titleize
+      model_class.respond_to?(:display_name) ? model_class.display_name : Cms::Behaviors::Connecting.default_naming_for(model_class)
     end
 
     def display_name_plural
@@ -65,6 +65,7 @@ module Cms
       name.constantize
     end
 
+    # @deprecated Should be removed eventually
     def route_name
       if model_class.name.starts_with?("Cms")
         model_class_form_name
@@ -73,19 +74,13 @@ module Cms
       end
     end
 
-    def path_elements(model_or_class=model_class)
-      path = []
-      klass = model_or_class.instance_of?(Class) ? model_or_class : model_or_class.class
-      path << "cms" if engine(klass) != "cms"
-      path << model_or_class
+    include EngineHelper
+    def target_class
+      model_class
     end
 
-    def engine(klass=model_class)
-      if klass.name.starts_with?("Cms")
-        "cms"
-      else
-        "main_app"
-      end
+    def path_subject
+      model_class
     end
 
     # Cms::HtmlBlock -> html_block

@@ -25,18 +25,6 @@ module Cms
         model_class.extend(MacroMethods)
       end
 
-      # By default, each _versions table should have a column pointing back to the 'original' table. This
-      # column should alwasy be unprefixed (i.e. html_block_id even if cms_html_block_id is the table name.
-      # @param [Symbol] table_name
-      def self.default_foreign_key(table_name)
-        table_name = table_name.to_s
-        prefix = Cms.table_prefix
-        if table_name.starts_with?(prefix)
-          table_name = table_name.gsub(prefix, "")
-        end
-        "#{table_name.singularize}_id".to_s
-      end
-
       module MacroMethods
         def versioned?
           !!@is_versioned
@@ -45,7 +33,6 @@ module Cms
         def is_versioned(options={})
           @is_versioned = true
 
-          @version_foreign_key = (options[:version_foreign_key] || Cms::Behaviors::Versioning.default_foreign_key(table_name))
           @version_table_name = (options[:version_table_name] || "#{table_name.singularize}_versions").to_s
 
           extend ClassMethods
@@ -95,8 +82,9 @@ module Cms
           "#{name}::Version"
         end
 
+        # Probably no longer needs to be a method anymore, since all classes use the same column name.
         def version_foreign_key
-          @version_foreign_key
+          :original_record_id
         end
 
         def version_table_name
@@ -108,7 +96,7 @@ module Cms
         end
 
         def non_versioned_columns
-          (%w[  id lock_version position version_comment created_at updated_at created_by_id updated_by_id type  ] + [version_foreign_key.to_s])
+          (%w[  id lock_version position version_comment created_at updated_at created_by_id updated_by_id type original_record_id])
         end
       end
       module InstanceMethods

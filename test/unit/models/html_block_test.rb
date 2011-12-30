@@ -2,10 +2,6 @@ require 'test_helper'
 
 class HtmlBlockTest < ActiveSupport::TestCase
 
-  test "versioned_foreign_key" do
-    assert_equal "html_block_id", Cms::HtmlBlock.version_foreign_key
-  end
-
   test "template_path" do
     assert_equal "cms/html_blocks/render", Cms::HtmlBlock.template_path
   end

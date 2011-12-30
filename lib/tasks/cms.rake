@@ -39,19 +39,4 @@ namespace :cms do
   end
 end
 
-require 'yard'
-YARD::Rake::YardocTask.new do |t|
-  t.options = ['--output-dir', 'doc/api/']
-end
 
-
-begin
-  require 'cucumber/rake/task'
-  namespace :cucumber do
-    Cucumber::Rake::Task.new({:launch => 'db:test:prepare'}, 'Run features opening failures in the browser') do |t|
-      t.fork = true # You may get faster startup if you set this to false
-      t.profile = 'default'
-      t.cucumber_opts = ["-f", "Debug::Formatter"]
-    end
-  end
-end

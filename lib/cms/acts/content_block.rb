@@ -2,33 +2,6 @@ module Cms
   module Acts
     module ContentBlock
 
-      class NilModel
-        def initialize(table_name)
-          @table_name = table_name
-        end
-
-        def version_foreign_key
-          Cms::Behaviors::Versioning.default_foreign_key(@table_name)
-        end
-
-        def to_s
-          "NilModel::#{@table_name}"
-        end
-
-      end
-
-      def self.model_for(table_name)
-        unscoped_table_name = table_name.to_s.gsub(Cms.table_name_prefix, "")
-        class_name = unscoped_table_name.to_s.classify
-        return "Cms::#{class_name}".constantize
-      rescue NameError
-        begin
-          return class_name.constantize
-        rescue
-          return NilModel.new(table_name)
-        end
-      end
-
       def self.included(model_class)
         model_class.extend(MacroMethods)
       end

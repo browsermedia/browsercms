@@ -27,12 +27,12 @@ class PortletsController < Cms::ContentBlockController
       "portlets/portlets/form"
     end
     
-    def new_block_path
+    def new_block_path(block)
       new_portlet_path
     end
   
-    def block_path(action=nil)
-      send("#{action ? "#{action}_" : ""}portlet_path", @block)
+    def block_path(block, action=nil)
+      send("#{action ? "#{action}_" : ""}portlet_path", block)
     end
 
     def blocks_path

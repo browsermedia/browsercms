@@ -22,7 +22,7 @@ module Cms
         is_publishable
         uses_soft_delete
         is_userstamped
-        is_versioned :version_foreign_key => "dynamic_view_id"
+        is_versioned
 
         before_validation :set_publish_on_save
 

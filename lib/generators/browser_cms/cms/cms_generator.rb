@@ -16,7 +16,7 @@ module BrowserCms
         end
 
         append_to_file('db/seeds.rb') do
-          "require File.expand_path('../browsercms.seeds.rb', __FILE__)"
+          "require File.expand_path('../browsercms.seeds.rb', __FILE__)\n"
         end
       end
 

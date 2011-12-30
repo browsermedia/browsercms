@@ -1,5 +1,10 @@
 require 'test_helper'
 
+module Cms
+  class Thing < ActiveRecord::Base
+    is_connectable
+  end
+end
 class ConnectingTest < ActiveSupport::TestCase
 
   def setup
@@ -9,6 +14,18 @@ class ConnectingTest < ActiveSupport::TestCase
     reset(:page, :block)
   end
 
+  test "Class have display_names" do
+    assert_equal "Thing", Cms::Thing.display_name
+  end
+
+  test "Default Naming Strategy" do
+    assert_equal "String", Cms::Behaviors::Connecting.default_naming_for(String)
+
+    module Cms::SomeModule
+      class Thing ; end
+    end
+    assert_equal "Thing", Cms::Behaviors::Connecting.default_naming_for(Cms::SomeModule::Thing)
+  end
   test "Update connected pages should return true if there is a valid version." do
     block = Cms::HtmlBlock.new
     mock_draft = mock()

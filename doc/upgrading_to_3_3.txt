@@ -1,38 +1,27 @@
-# Upgrading to bcms 3.4
+This file is out of date. Can be deleted since: https://github.com/browsermedia/browsercms/wiki/Upgrading-modules-to-3.3 exists
 
-* Ensure there is no table prefix set (i.e. tables will in versions prior to 3.4 were not prefixed with cms_
-
-New Project using 3.3
-===============
-gem install browsercms
-bcms name_of_project
-
-
-Upgrading a Module to use BrowserCMS 3.3. (and Rails3)
+# Upgrading a Module to use BrowserCMS 3.3. (and Rails3)
 
 * Update the lib/bcms_name_of_module/routes.rb to use the Rails 3 routing syntax. This means routes like:
 
-# Rails 2 style
+## Rails 2 style
 namespace(:cms) do |cms|
     cms.content_blocks :news_articles
 end
 
 should be written as:
 
-# Rails 3 style
+## Rails 3 style
 namespace(:cms) do
     content_blocks :news_articles
 end
 
 Other individual routes may need to be rewritten as well, for example:
 
-# Rails 2 style
+## Rails 2 style
 news_articles '/news/articles.rss', :controller => "news_articles", :conditions => {:method => :get}, :format => "rss"
-# Becomes Rails 3 style
+## Becomes Rails 3 style
 match '/news/articles.rss', :to=>"news_articles#index", :as=>'news_articles', :method=>:get, :defaults => { :format => 'rss' }
-
-
-
 
 Writing a generator to handle upgrading bcms_modules from Rails 2 to Rails 3.
 =======

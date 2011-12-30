@@ -8,6 +8,8 @@ gem "mysql2"
 gem 'yard', :groups=>[:development, :test]
 gem 'bluecloth', :groups=>[:development, :test] # For YARD
 
+gem "thin" # To avoid annoying Ruby 1.9.3/Rails/Webrick warnings - See http://stackoverflow.com/questions/7082364/what-does-warn-could-not-determine-content-length-of-response-body-mean-and-h
+
 group :test do
   gem 'factory_girl_rails', '1.0.1'
   gem 'test-unit', '2.1.1'

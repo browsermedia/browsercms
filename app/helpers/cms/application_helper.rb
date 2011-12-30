@@ -230,7 +230,28 @@ LBW
       link_to span_tag("&nbsp;Add&nbsp;".html_safe), path, span_options
     end
 
+    # For each row in content block table, we need to output all the paths for the actions in a way that JS can read them.
+    # We use 'data-' elements here to avoid duplication of path calculations.
+    def content_block_tr_tag(block)
+      options = {}
+      data = options[:data] = {}
+      data[:status] = block.status if block.class.publishable?
+      options[:id] = "#{block.class.name.underscore}_#{block.id}"
+      options[:class] = [block.class.name.underscore]
+      options[:class] << 'non-editable' unless current_user.able_to_edit?(block)
+      options[:class] << 'non-publishable' unless current_user.able_to_publish?(block)
+      options['data-new_path'] = url_for(new_block_path(block))
+      options['data-view_path'] = url_for(block_path(block))
+      options['data-edit_path'] = url_for(block_path(block, :edit))
+      options['data-versions_path'] = url_for(block_path(block, :versions)) if block.class.versioned?
+      options['data-delete_path'] = url_for(block_path(block))
+      options['data-publish_path'] = url_for(block_path(block, :publish)) if block.class.publishable?
+      tag "tr", options, true
+    end
+
+
     private
+
 
     # Converts a CSS jQuery selector into something that can be suitably used as a CSS id element.
     def to_id(selector, suffix=nil)

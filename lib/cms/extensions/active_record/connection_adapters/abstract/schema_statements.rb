@@ -54,10 +54,7 @@ module ActiveRecord
           vt = TableDefinition.new(self)
           vt.primary_key(options[:primary_key] || Base.get_primary_key(table_name)) unless options[:id] == false
 
-          # This is duplicating effort between NilModel and here.
-          model = Cms::Acts::ContentBlock.model_for(table_name)
-          version_column = model.respond_to?(:version_foreign_key) ? model.version_foreign_key : Cms::Behaviors::Versioning.default_foreign_key(table_name)
-          vt.integer version_column
+          vt.integer :original_record_id
           vt.integer :version
           yield vt
 

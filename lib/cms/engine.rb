@@ -1,9 +1,7 @@
-#puts 'load engine'
 require 'rails'
 require 'cms/module'
 require 'cms/init'
 require 'browsercms'
-
 module Cms
 
   # Configuring BrowserCMS as an engine. This seems to work, but could probably be cleaned up.

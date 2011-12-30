@@ -15,7 +15,7 @@ class Cms::DynamicViewsTest < ActiveSupport::TestCase
   end
 
   test "version_foreign_key" do
-    assert_equal "dynamic_view_id", Cms::PageTemplate.version_foreign_key
+    assert_equal :original_record_id, Cms::PageTemplate.version_foreign_key
   end
 
   test "resource_name works for non-namespaced templates" do

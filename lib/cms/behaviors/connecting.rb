@@ -1,6 +1,10 @@
 module Cms
   module Behaviors
     module Connecting
+
+      def self.default_naming_for(klass)
+        klass.name.demodulize.titleize
+      end
       def self.included(model_class)
         model_class.extend(MacroMethods)
       end
@@ -33,7 +37,7 @@ module Cms
           ActiveModel::Naming.singular(self)
         end
         def display_name
-          to_s.titleize
+          Connecting.default_naming_for(self)
         end
         def display_name_plural
           display_name.pluralize

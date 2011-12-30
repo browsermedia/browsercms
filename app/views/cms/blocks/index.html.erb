@@ -1,58 +1,18 @@
 <%= content_for(:html_head) do %>
-<%= javascript_include_tag "cms/content_library" %>
-  <%= javascript_tag do %>
-    jQuery(function($){
-      var collectionName = '<%= content_type.content_block_type %>'
-      
-      $('table.data tbody tr').hover(function(){
-        $(this).addClass('hover')
-      }, function(){
-        $(this).removeClass('hover')
-      }).click(function(){
-        var match = this.id.match(/(.*)_(\d+)/) 
-        var type = match[1]
-        var id = match[2]
-        var editable = !$(this).hasClass("non-editable")
-        var publishable = !$(this).hasClass("non-publishable")
-        $('table.data tbody tr').removeClass('selected')
-        $(this).addClass('selected')
-        $('#functions .button').addClass('disabled').attr('href','#')
-        $('#add_button').removeClass('disabled').attr('href', '/cms/'+collectionName+'/new')
-        $('#view_button').removeClass('disabled').attr('href', '/cms/'+collectionName+'/'+id)
-        if (editable) $('#edit_button').removeClass('disabled').attr('href', '/cms/'+collectionName+'/'+id+'/edit')
-        <% if content_type.model_class.versioned? %>
-          $('#revisions_button').removeClass('disabled').attr('href', '/cms/'+collectionName+'/'+id+'/versions')
-        <% else %>
-          $('#revisions_button').addClass('disabled')
-            .attr('title', '<%= content_type.display_name.pluralize.titleize %> are not versioned')          
-        <% end %>
-        var cannot_be_deleted_message = $(this).find('.cannot_be_deleted_message')
-        if(cannot_be_deleted_message.length > 0) {
-          $('#delete_button').addClass('disabled')
-            .attr('title', $.trim(cannot_be_deleted_message.text()))
-        } else {
-          if (publishable) {
-            $('#delete_button').removeClass('disabled')
-              .attr('href', '/cms/'+collectionName+'/'+id)  
-              .attr('title', 'Are You Sure You Want To Delete This Record?')
-          }
-        }        
-        <%= able_to? :publish_content do -%>
-          if($(this).hasClass('draft') && publishable) {
-            $('#publish_button').removeClass('disabled').attr('href', '/cms/'+collectionName+'/'+id+'/publish?_redirect_to='+location.href)        
-          }
-        <% end %>  
-      })   
-    })
-  <% end %>
-<%= stylesheet_link_tag "cms/content_library" %>
+    <%= javascript_include_tag "cms/content_library" %>
+    <%= stylesheet_link_tag "cms/content_library" %>
 <% end %>
 <% page_title "Content Library / List #{content_type.display_name_plural}" %>
 <% @toolbar_title = "List #{content_type.display_name_plural}" %>
 <%= render :partial => 'cms/blocks/toolbar' %>
 
 <div class="roundedcorners">
-<table id="blocks" class="data">
+<table id="blocks" class="data cms-content-table"
+       data-content_type="<%= content_type.content_block_type %>"
+       data-versioned="<%= content_type.model_class.versioned? %>"
+       data-can_publish="<%= current_user.able_to?(:publish_content) %>"
+       data-plural_title="<%= content_type.display_name_plural %>"
+>
   <thead>
     <tr>
       <% content_type.columns_for_index.each_with_index do |column, i| %>
@@ -90,11 +50,11 @@
        col_ct += 1 if content_type.model_class.publishable? %>
     <% @blocks.each do |b| %>
       <% block = b.class.versioned? ? b.as_of_draft_version : b %>
-      <tr id="<%= block.class.name.underscore %>_<%= block.id %>" class="<%= block.class.name.underscore %> <%= block.class.publishable? && !block.published? ? 'draft' : 'published' %> <%= 'non-editable' unless current_user.able_to_edit?(block) %> <%= 'non-publishable' unless current_user.able_to_publish?(block) %>">
+    <%= content_block_tr_tag(block) %>
 	<td class="first"></td>
         <% content_type.columns_for_index.each_with_index do |column, i| %>
           <td class="<%= column[:label].gsub(' ', '').underscore %>">
-            <div<%= ' class="dividers"' if (i + 3 < col_ct) %>>
+            <div<%= ' class="dividers"'.html_safe if (i + 3 < col_ct) %>>
             <%= block.send(column[:method]) %>
             <% if i.zero? && block.respond_to?(:cannot_be_deleted_message) && block.cannot_be_deleted_message %>
               <div class="cannot_be_deleted_message" style="display: none">
@@ -108,7 +68,7 @@
         <% if content_type.model_class.connectable? %><td class="used"><div class="dividers"><%= block.connected_pages.count %></div></td><% end %>
         <% if content_type.model_class.publishable? %><td class="block_status"><%= status_icon(block.status) %> <div><%= block.status %></div></td><% end %>
 	<td class="last"></td>
-      </tr>
+    </tr>
     <% end %>
     <tr>
       <td colspan="<%= col_ct %>" class="buffer"></td>

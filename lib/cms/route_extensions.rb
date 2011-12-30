@@ -8,7 +8,7 @@ module Cms::RouteExtensions
   def content_blocks(content_block_name, options={}, & block)
     content_name = content_block_name.to_s.classify
     begin
-      content_block = "Cms::#{content_name}".constantize
+      content_block = "#{Cms::Module.current_namespace}::#{content_name}".constantize
     rescue NameError
       content_block = content_name.constantize
     end

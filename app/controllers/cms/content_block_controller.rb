@@ -66,14 +66,14 @@ class ContentBlockController < Cms::BaseController
   
   def publish
     do_command("published") { @block.publish! }
-    redirect_to_first params[:_redirect_to], block_path
+    redirect_to_first params[:_redirect_to], block_path(@block)
   end
   
   def revert_to
     do_command("reverted to version #{params[:version]}") do
       revert_block(params[:version])
     end
-    redirect_to_first params[:_redirect_to], block_path
+    redirect_to_first params[:_redirect_to], block_path(@block)
   end
   
   def version
@@ -147,15 +147,15 @@ class ContentBlockController < Cms::BaseController
   
     # path related methods - available in the view as helpers
   
-    def new_block_path(options={})
-      cms_new_path_for(@block, options)
+    def new_block_path(block, options={})
+      cms_new_path_for(block, options)
     end
   
-    def block_path(action=nil)
+    def block_path(block, action=nil)
       path = []
-      path << engine_for(@block)
+      path << engine_for(block)
       path << action if action
-      path.concat path_elements_for(@block)
+      path.concat path_elements_for(block)
       path
     end
   
@@ -194,7 +194,7 @@ class ContentBlockController < Cms::BaseController
       if @block.class.connectable? && @block.connected_page
         redirect_to @block.connected_page.path
       else
-        redirect_to_first params[:_redirect_to], block_path
+        redirect_to_first params[:_redirect_to], block_path(@block)
       end
     end
 
@@ -215,7 +215,7 @@ class ContentBlockController < Cms::BaseController
 
     def after_update_on_success
       flash[:notice] = "#{content_type_name.demodulize.titleize} '#{@block.name}' was updated"
-      redirect_to_first params[:_redirect_to], block_path
+      redirect_to_first params[:_redirect_to], block_path(@block)
     end
 
     def after_update_on_failure

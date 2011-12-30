@@ -14,7 +14,7 @@
 ActiveRecord::Schema.define(:version => 20111228141250) do
 
   create_table "cms_attachment_versions", :force => true do |t|
-    t.integer  "attachment_id"
+    t.integer  "original_record_id"
     t.integer  "version"
     t.string   "file_path"
     t.string   "file_location"
@@ -24,9 +24,9 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "name"
-    t.boolean  "published",       :default => false
-    t.boolean  "deleted",         :default => false
-    t.boolean  "archived",        :default => false
+    t.boolean  "published",          :default => false
+    t.boolean  "deleted",            :default => false
+    t.boolean  "archived",           :default => false
     t.string   "version_comment"
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
@@ -91,7 +91,7 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
   end
 
   create_table "cms_dynamic_view_versions", :force => true do |t|
-    t.integer  "dynamic_view_id"
+    t.integer  "original_record_id"
     t.integer  "version"
     t.string   "type"
     t.string   "name"
@@ -100,9 +100,9 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
     t.text     "body"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "published",       :default => false
-    t.boolean  "deleted",         :default => false
-    t.boolean  "archived",        :default => false
+    t.boolean  "published",          :default => false
+    t.boolean  "deleted",            :default => false
+    t.boolean  "archived",           :default => false
     t.string   "version_comment"
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
@@ -139,7 +139,7 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
   end
 
   create_table "cms_file_block_versions", :force => true do |t|
-    t.integer  "file_block_id"
+    t.integer  "original_record_id"
     t.integer  "version"
     t.string   "type"
     t.string   "name"
@@ -203,13 +203,13 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
   end
 
   create_table "cms_html_block_versions", :force => true do |t|
-    t.integer  "html_block_id"
+    t.integer  "original_record_id"
     t.integer  "version"
     t.string   "name"
-    t.text     "content",         :limit => 16777215
-    t.boolean  "published",                           :default => false
-    t.boolean  "deleted",                             :default => false
-    t.boolean  "archived",                            :default => false
+    t.text     "content",            :limit => 16777215
+    t.boolean  "published",                              :default => false
+    t.boolean  "deleted",                                :default => false
+    t.boolean  "archived",                               :default => false
     t.string   "version_comment"
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
@@ -232,16 +232,16 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
   end
 
   create_table "cms_link_versions", :force => true do |t|
-    t.integer  "link_id"
+    t.integer  "original_record_id"
     t.integer  "version"
     t.string   "name"
     t.string   "url"
-    t.boolean  "new_window",      :default => false
+    t.boolean  "new_window",         :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "published",       :default => false
-    t.boolean  "deleted",         :default => false
-    t.boolean  "archived",        :default => false
+    t.boolean  "published",          :default => false
+    t.boolean  "deleted",            :default => false
+    t.boolean  "archived",           :default => false
     t.string   "version_comment"
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
@@ -281,7 +281,7 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
   end
 
   create_table "cms_page_versions", :force => true do |t|
-    t.integer  "page_id"
+    t.integer  "original_record_id"
     t.integer  "version"
     t.string   "name"
     t.string   "title"
@@ -431,15 +431,15 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
   add_index "cms_users", ["login"], :name => "index_cms_users_on_login", :unique => true
 
   create_table "product_versions", :force => true do |t|
-    t.integer  "product_id"
+    t.integer  "original_record_id"
     t.integer  "version"
     t.string   "name"
     t.integer  "price"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "published",       :default => false
-    t.boolean  "deleted",         :default => false
-    t.boolean  "archived",        :default => false
+    t.boolean  "published",          :default => false
+    t.boolean  "deleted",            :default => false
+    t.boolean  "archived",           :default => false
     t.string   "version_comment"
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
