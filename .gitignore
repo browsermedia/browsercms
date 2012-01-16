@@ -16,3 +16,5 @@ tmp/restart.txt
 public/cache
 patches
 app/views/layouts/templates
+db/backups
+lib/tasks/backup.rake
