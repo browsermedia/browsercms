@@ -207,7 +207,7 @@ class Cms::SectionsControllerPermissionsTest < ActionController::TestCase
     @group2 = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
     expected_groups = [@group, @group2]
     login_as_cms_admin
-    put :update, :id => @editable_subsection, :section => {:name => "new name", :group_ids => [@group, @group2]}
+    put :update, :id => @editable_subsection, :section => {:name => "new name", :group_ids => [@group.id, @group2.id]}
     assert_response :redirect
     assert_equal expected_groups, assigns(:section).groups
   end
