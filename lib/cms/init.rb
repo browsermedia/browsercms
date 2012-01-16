@@ -1,3 +1,7 @@
+# This avoids throwing Deprecation warnings for Rails 3 related issues which have already been fixed in the Rails 3 branch.
+# Remove when merged into BrowserCMS 3.3.x
+ActiveSupport::Deprecation.silenced = true
+
 module Cms
   class << self
     __root__ = File.expand_path(File.join(File.dirname(__FILE__), "..", ".."))
