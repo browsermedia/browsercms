@@ -8,12 +8,10 @@ module Cms
 
     define_method(:root) { __root__ }
 
-    ::SPEC = eval(File.read(__root__ + '/browsercms.gemspec'))
-
     attr_accessor :attachment_file_permission
 
     def version
-      @version = SPEC.version.version
+      @version = Cms::VERSION
     end
 
     def load_rake_tasks
