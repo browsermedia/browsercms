@@ -3,14 +3,18 @@ class Section < ActiveRecord::Base
   flush_cache_on_change
 
   #The node that links this section to its parent
-  has_one :node, :class_name => "SectionNode", :as => :node, :dependent => :destroy
+  has_one :node, :class_name => "SectionNode", :as => :node#, :dependent => :destroy
+
+  # Cannot use dependent => :destroy to do this. Ancestry's callbacks trigger before the before_destroy callback. So sections always get deleted.
+  after_destroy :destroy_node
+  before_destroy :deletable?
 
   #The nodes that link this section to its children
-  has_many :child_nodes, :class_name => "SectionNode"
-  has_many :child_sections, :class_name => "SectionNode", :conditions => ["node_type = ?", "Section"], :order => 'section_nodes.position'
+  #has_many :child_nodes, :class_name => "SectionNode"
+  #has_many :child_sections, :class_name => "SectionNode", :conditions => ["node_type = ?", "Section"], :order => 'section_nodes.position'
 
-  has_many :pages, :through => :child_nodes, :source => :node, :source_type => 'Page', :order => 'section_nodes.position'
-  has_many :sections, :through => :child_nodes, :source => :node, :source_type => 'Section', :order => 'section_nodes.position'
+  #has_many :pages, :through => :child_nodes, :source => :node, :source_type => 'Page', :order => 'section_nodes.position'
+  #has_many :sections, :through => :child_nodes, :source => :node, :source_type => 'Section', :order => 'section_nodes.position'
 
   has_many :group_sections
   has_many :groups, :through => :group_sections
@@ -32,9 +36,44 @@ class Section < ActiveRecord::Base
 
   validate :path_not_reserved
 
-  before_destroy :deletable?
 
   attr_accessor :full_path
+
+
+
+  # Ancestry Related operations
+
+  def ancestry
+    self.node.ancestry
+  end
+
+  def before_validation
+    unless node
+      self.node = build_node
+    end
+  end
+
+  # Returns a list of all children which are sections.
+  def sections
+    child_sections = self.node.children.collect do |section_node|
+      section_node.node  if section_node.section?
+    end
+    child_sections.compact
+  end
+  alias :child_sections :sections
+
+  # Used by the sitemap to find children to iterate over.
+  def child_nodes
+    self.node.children
+  end
+
+  def pages
+    child_pages = self.node.children.collect do |section_node|
+      section_node.node if section_node.page?
+    end
+    child_pages.compact
+  end
+  # End Ancestry Options
 
   def visible_child_nodes(options={})
     children = child_nodes.of_type(["Section", "Page", "Link"]).all(:order => 'section_nodes.position')
@@ -94,11 +133,17 @@ class Section < ActiveRecord::Base
   end
 
   def empty?
-    child_nodes.reject{|n| n.orphaned?}.empty?
+    child_nodes.empty?
   end
 
+  # Callback to determine if this section can be deleted.
   def deletable?
     !root? && empty?
+  end
+
+  # Callback to clean up related nodes
+  def destroy_node
+    node.destroy
   end
 
   def editable_by_group?(group)

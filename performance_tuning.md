@@ -19,5 +19,3 @@ Sitemap - /sitemap
 * Work backwards from sitemaps
 ** Remove any loading of attachments
 ** New tests should be added in completely new files (avoid changing existing ones)
-* Add Ancestry
-* Flip inversion of hierachy

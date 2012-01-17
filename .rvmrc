@@ -1,1 +1,1 @@
-rvm use ree@rails2.3.x
+rvm use ree-1.8.7@rails2.3.x
