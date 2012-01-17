@@ -175,6 +175,11 @@ class SitemapTest < ActiveSupport::TestCase
     log_table_without_stamps(SectionNode)
     assert_equal 1, page3.section_node.position
   end
+
+  test "The root section node has no parent section" do
+    assert_nil SectionNode.new.parent_section
+  end
+
   private
 
   def root

@@ -291,10 +291,11 @@ end
 
 class GuestUserTest < ActiveSupport::TestCase
   def setup
+    @root = Factory(:root_section)
     @user = User.guest
     @guest_group = Group.guest
-    @public_page = Factory(:page, :section => root_section)
-    @protected_section = Factory(:section, :parent => root_section)
+    @public_page = Factory(:page, :section => @root)
+    @protected_section = Factory(:section, :parent => @root)
     @protected_page = Factory(:page, :section => @protected_section)
   end
 

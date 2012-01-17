@@ -127,7 +127,7 @@ class ActiveSupport::TestCase
   end
 
   def root_section
-    sections(:section_1)
+    @root_section ||= Factory(:root_section)
   end
   
 end

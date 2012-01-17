@@ -45,6 +45,7 @@ class Page < ActiveRecord::Base
   has_one :section_node, :as => :node, :dependent => :destroy
 
   include Addressable
+  include Addressable::DeprecatedPageAccessors
   # Handle the API difference between Pages and Sections.
   alias :node :section_node
 
@@ -170,26 +171,6 @@ class Page < ActiveRecord::Base
           
   def file_size
     "?"
-  end
-  
-  def section_id
-    section ? section.id : nil
-  end
-  
-  def section
-    section_node ? section_node.section : nil
-  end
-  
-  def section_id=(sec_id)
-    self.section = Section.find(sec_id)
-  end
-  
-  def section=(sec)
-    if section_node
-      section_node.move_to_end(sec)
-    else
-      build_section_node(:node => self, :section => sec)
-    end      
   end
   
   def public?

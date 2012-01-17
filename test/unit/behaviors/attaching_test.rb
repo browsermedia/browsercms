@@ -37,7 +37,7 @@ end
 class VersionedAttachable < ActiveRecord::Base
   acts_as_content_block :belongs_to_attachment => true
   
-  def set_attachment_file_path
+  def use_default_attachment_path
     if @attachment_file_path && @attachment_file_path != attachment.file_path
       attachment.file_path = @attachment_file_path
     end

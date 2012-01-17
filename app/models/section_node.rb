@@ -3,9 +3,11 @@ class SectionNode < ActiveRecord::Base
 
   # This is the parent section for this node
   # For backwards compatiblity
-  def section
-    self.parent.node
+  def parent_section
+    self.parent ? self.parent.node : nil
   end
+
+  alias :section :parent_section
 
   # For backwards compatiblity
   def section=(new_section)

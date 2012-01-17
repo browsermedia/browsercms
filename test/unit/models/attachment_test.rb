@@ -58,39 +58,59 @@ class AttachmentTest < ActiveSupport::TestCase
     assert_not_equal original_file_location, attachment.as_of_draft_version.file_location
     assert_equal "This is a new file", open(attachment.as_of_draft_version.full_file_location){|f| f.read}  
   end
-  
-  def test_find_live_by_file_path
-    file = ActionController::UploadedTempfile.new("foo.txt")
-    open(file.path, 'w') {|f| f << "This is a file"}
-    file.original_path = "bar.txt"
-    file.content_type = "text/plain"
-    attachment = Attachment.new(:temp_file => file, :file_path => "/foo.txt", :section => root_section)
-    attachment.save!
-    assert !attachment.published?, "Attachment should not be published"
-    assert_nil Attachment.find_live_by_file_path("/foo.txt")
-    
-    attachment.publish
-    assert attachment.reload.published?, "Attachment should be published"
-    assert_equal attachment, Attachment.find_live_by_file_path("/foo.txt")
-    
-    attachment.update_attributes(:file_type => "text/html")
-    assert !attachment.live?, "Attachment should not be live"
-    assert_equal attachment.as_of_version(2), Attachment.find_live_by_file_path("/foo.txt")    
-  end
-  
-  def test_update_attachment_section
-    file = ActionController::UploadedTempfile.new("foo.txt")
-    open(file.path, 'w') {|f| f << "This is a file"}
-    file.original_path = "bar.txt"
-    file.content_type = "text/plain"
-    attachment = Attachment.new(:temp_file => file, :file_path => "/foo.txt", :section => root_section)
-    attachment.save!
 
-    new_section = Factory(:section, :name => "New")
-    assert_equal root_section, attachment.section
-    
-    attachment.update_attributes!(:section => new_section)
-    assert_equal new_section, attachment.section
+end
+
+class AttachmentRelations < ActiveSupport::TestCase
+
+  def setup
+    @file = ActionController::UploadedTempfile.new("foo.txt")
+    open(@file.path, 'w') {|f| f << "This is a file"}
+    @file.original_path = "bar.txt"
+    @file.content_type = "text/plain"
+    @attachment = Attachment.new(:temp_file => @file, :file_path => "/foo.txt", :section => root)
+    @attachment.save!
   end
-  
+
+  test "New Attachment" do
+    a = Attachment.new
+    a.section = root
+    assert_equal root, a.section
+  end
+
+  test "Attachments should be associated with a section" do
+    assert_not_nil @attachment.section_node
+    assert_not_nil @attachment.section_node.parent
+    assert_equal root, @attachment.section
+  end
+
+  test "Attachment should be unpublished and unfindable" do
+    assert !@attachment.published?, "Attachment should not be published"
+    assert_nil Attachment.find_live_by_file_path("/foo.txt")
+  end
+
+  test "Publishing an attachment should make it findable" do
+    @attachment.publish
+    assert @attachment.reload.published?, "Attachment should be published"
+    assert_equal @attachment, Attachment.find_live_by_file_path("/foo.txt")
+  end
+
+  test "Changing but not republishing an attachment should keep old version live" do
+    @attachment.publish
+    assert_equal @root, @attachment.section
+    @attachment.update_attributes!(:file_type => "text/html")
+    assert !@attachment.live?, "Attachment should not be live"
+    assert_equal @attachment.as_of_version(2), Attachment.find_live_by_file_path("/foo.txt")
+  end
+
+  test "Updating the section" do
+    new_section = Factory(:section, :name => "New")
+    @attachment.update_attributes!(:section => new_section)
+    assert_equal new_section, @attachment.section
+  end
+  private
+
+  def root
+    @root ||= Factory :root_section
+  end
 end

@@ -14,4 +14,16 @@ class AbstractFileBlock < ActiveRecord::Base
     true
   end
 
+  def set_attachment_path
+    if @attachment_file_path && @attachment_file_path != attachment.file_path
+      attachment.file_path = @attachment_file_path
+    end
+  end
+
+  def set_attachment_section
+    if @attachment_section && @attachment_section != attachment.section
+      attachment.section = @attachment_section
+    end
+  end
+
 end

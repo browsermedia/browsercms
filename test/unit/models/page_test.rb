@@ -21,6 +21,11 @@ class CreatingPageTest < ActiveRecord::TestCase
 
   end
 
+  test "Creating a page builds a section node" do
+    @page = Page.create!(:name=>"Hello", :path=>"/hello", :section => Factory(:root_section))
+    assert_not_nil @page.section_node
+  end
+
   protected
   def assert_path_is_unique
     page = Factory.build(:page, :path => @page.path)
