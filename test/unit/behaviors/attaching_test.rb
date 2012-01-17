@@ -52,6 +52,8 @@ end
 
 class DefaultAttachableTest < ActiveSupport::TestCase
   def setup
+    remove_all_fixture_generated_sections_to_avoid_bugs
+
     #file is a mock of the object that Rails wraps file uploads in
     @file = file_upload_object(:original_filename => "foo.jpg",
       :content_type => "image/jpeg", :rewind => true,
@@ -61,12 +63,10 @@ class DefaultAttachableTest < ActiveSupport::TestCase
   end
   
   def test_create_with_attachment_file
-    @attachable = DefaultAttachable.new(:name => "File Name", 
-      :attachment_file => @file, :publish_on_save => true)
+    @attachable = DefaultAttachable.new(:name => "File Name", :attachment_file => @file, :publish_on_save => true)
 
     attachable_count = DefaultAttachable.count
 
-    assert_valid @attachable
     @attachable.save!
 
     assert_incremented attachable_count, DefaultAttachable.count
@@ -107,8 +107,6 @@ class DefaultAttachableTest < ActiveSupport::TestCase
     assert_equal "/attachments/foo.jpg", @attachable.attachment_file_path
     assert @attachable.attachment.published?
   end
-  
-  
 end
 
 class AttachingTest < ActiveSupport::TestCase

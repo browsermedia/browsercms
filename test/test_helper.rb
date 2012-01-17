@@ -41,9 +41,9 @@ class ActiveSupport::TestCase
 
   require File.dirname(__FILE__) + '/test_logging'
   include TestLogging
-  require File.dirname(__FILE__) + '/custom_assertions'  
+  require File.dirname(__FILE__) + '/custom_assertions'
   include CustomAssertions
-  
+
   #----- Test Macros -----------------------------------------------------------
   class << self
     def should_validate_presence_of(*fields)
@@ -69,7 +69,7 @@ class ActiveSupport::TestCase
     end
 
   end
-  
+
   #----- Fixture/Data related helpers ------------------------------------------
 
   def admin_user
@@ -87,7 +87,7 @@ class ActiveSupport::TestCase
     group.permissions << create_or_find_permission_named("edit_content")
     group.permissions << create_or_find_permission_named("publish_content")
     user.groups << group
-    user  
+    user
   end
 
   def file_upload_object(options)
@@ -100,7 +100,7 @@ class ActiveSupport::TestCase
 
   def guest_group
     Group.guest || Factory(:group, :code => Group::GUEST_CODE)
-  end  
+  end
 
   def login_as(user)
     @request.session[:user_id] = user ? user.id : nil
@@ -111,7 +111,7 @@ class ActiveSupport::TestCase
   end
 
   def mock_file(options = {})
-    file_upload_object({:original_filename => "test.jpg", 
+    file_upload_object({:original_filename => "test.jpg",
       :content_type => "image/jpeg", :rewind => true,
       :size => "99", :read => "01010010101010101"}.merge(options))
   end
@@ -129,18 +129,23 @@ class ActiveSupport::TestCase
   def root_section
     @root_section ||= Factory(:root_section)
   end
-  
+
+  # Fixtures add incorrect Section/Section node data. We don't want to replace fixtures AGAIN (this is handled in CMS 3.3)
+  # so we can just clean it out using this method where needed to avoid test breakage.
+  def remove_all_fixture_generated_sections_to_avoid_bugs
+    Section.delete_all
+  end
 end
 
 module Cms::ControllerTestHelper
   def self.included(test_case)
     test_case.send(:include, Cms::PathHelper)
   end
-  
+
   def request
     @request
   end
-  
+
   def streaming_file_contents
     #The body of a streaming response is a proc
     streamer = @response.body
@@ -149,11 +154,11 @@ module Cms::ControllerTestHelper
     #Create a dummy object for the proc to write to
     output = Object.new
     def output.write(contents)
-      (@contents ||= "") << contents 
+      (@contents ||= "") << contents
     end
 
     #run the proc
-    streamer.call(@response, output)  
+    streamer.call(@response, output)
 
     #return what it wrote to the dummy object
     output.instance_variable_get("@contents")
