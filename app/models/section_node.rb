@@ -17,6 +17,7 @@ class SectionNode < ActiveRecord::Base
 
   acts_as_list
 
+  # For acts_as_list. Specifies that position should be unique within a section.
   def scope_condition
     ancestry ? "ancestry = '#{ancestry}'" : 'ancestry IS NULL'
   end

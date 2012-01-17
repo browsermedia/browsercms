@@ -227,12 +227,25 @@ class Page < ActiveRecord::Base
     template_file_name && PageTemplate.display_name(template_file_name)
   end
 
+  # Determines if a page is a descendant of a given Section.
+  #
+  # @param [String | Section] section_or_section_name
   def in_section?(section_or_section_name)
-    sec = section_or_section_name.is_a?(String) ? 
-      Section.first(:conditions => {:name => section_or_section_name}) : 
-      section_or_section_name
-    fn = lambda{|s| s ? (s == sec || fn.call(s.parent)) : false}
-    fn.call(section)
+    found = false
+    ancestors.each do |a|
+      if section_or_section_name.is_a?(String)
+        if a.name == section_or_section_name
+          found = true
+          break
+        end
+      else
+        if a == section_or_section_name
+          found = true
+          break
+        end
+      end
+    end
+    found
   end
     
   #Returns true if the block attached to each connector in the given container are published
