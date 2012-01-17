@@ -2,11 +2,12 @@ class SectionNode < ActiveRecord::Base
   has_ancestry
 
   # This is the parent section for this node
-  #belongs_to :section
+  # For backwards compatiblity
   def section
     self.parent.node
   end
 
+  # For backwards compatiblity
   def section=(new_section)
     self.parent = new_section.node
   end
@@ -14,7 +15,11 @@ class SectionNode < ActiveRecord::Base
   # The item this node links to
   belongs_to :node, :polymorphic => :true
 
-  acts_as_list :scope => 'ancestry'
+  acts_as_list
+
+  def scope_condition
+    ancestry ? "ancestry = '#{ancestry}'" : 'ancestry IS NULL'
+  end
 
   named_scope :of_type, lambda{|types| {:conditions => ["section_nodes.node_type IN (?)", types]}}
 
@@ -91,16 +96,5 @@ class SectionNode < ActiveRecord::Base
     #1.0/0 == Infinity
     move_to(sec, 1.0/0)
   end
-  
-  def ancestors()
-    ancestors = []
-    fn = lambda do |sn|
-      ancestors << sn.section
-      if sn.section && !sn.section.root?
-        fn.call(sn.section.node)
-      end
-    end
-    fn.call(self)
-    ancestors.reverse
-  end
+
 end

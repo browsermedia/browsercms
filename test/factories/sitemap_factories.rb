@@ -7,5 +7,6 @@ end
 Factory.define :public_section, :class=>Section do |m|
   m.sequence(:name) {|n| "Public Section #{n}"}
   m.sequence(:path) {|n| "/public-section-#{n}"}
-  m.parent :factory=>:root_section
+  m.association :parent, :factory=>:root_section
+  # Doesn't yet have permissions for all groups (todo)
 end

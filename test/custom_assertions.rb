@@ -37,7 +37,7 @@ module CustomAssertions
 
   def assert_properties(object, properties)
     properties.each do |property, expected_value|
-      assert_equal expected_value, object.send(property), "Expected '#{property}' to be '#{expected_value}'"
+      assert_equal expected_value, object.send(property), "For #{object.class}:#{object.id}, expected '#{property}' to be '#{expected_value}'"
     end
   end
 

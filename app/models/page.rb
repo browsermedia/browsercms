@@ -1,5 +1,5 @@
 class Page < ActiveRecord::Base
-  
+
   is_archivable
   flush_cache_on_change
   is_hideable
@@ -43,7 +43,11 @@ class Page < ActiveRecord::Base
   }  
   
   has_one :section_node, :as => :node, :dependent => :destroy
-  
+
+  include Addressable
+  # Handle the API difference between Pages and Sections.
+  alias :node :section_node
+
   has_many :tasks
   
   before_validation :append_leading_slash_to_path
@@ -223,10 +227,6 @@ class Page < ActiveRecord::Base
     template_file_name && PageTemplate.display_name(template_file_name)
   end
 
-  def ancestors
-    section_node.ancestors
-  end
-  
   def in_section?(section_or_section_name)
     sec = section_or_section_name.is_a?(String) ? 
       Section.first(:conditions => {:name => section_or_section_name}) : 

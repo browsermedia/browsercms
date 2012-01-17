@@ -1,20 +1,14 @@
 class Section < ActiveRecord::Base
 
+  include Addressable
   flush_cache_on_change
 
   #The node that links this section to its parent
-  has_one :node, :class_name => "SectionNode", :as => :node#, :dependent => :destroy
+  has_one :node, :class_name => "SectionNode", :as => :node
 
   # Cannot use dependent => :destroy to do this. Ancestry's callbacks trigger before the before_destroy callback. So sections always get deleted.
   after_destroy :destroy_node
   before_destroy :deletable?
-
-  #The nodes that link this section to its children
-  #has_many :child_nodes, :class_name => "SectionNode"
-  #has_many :child_sections, :class_name => "SectionNode", :conditions => ["node_type = ?", "Section"], :order => 'section_nodes.position'
-
-  #has_many :pages, :through => :child_nodes, :source => :node, :source_type => 'Page', :order => 'section_nodes.position'
-  #has_many :sections, :through => :child_nodes, :source => :node, :source_type => 'Section', :order => 'section_nodes.position'
 
   has_many :group_sections
   has_many :groups, :through => :group_sections
@@ -108,11 +102,6 @@ class Section < ActiveRecord::Base
     else
       build_node(:node => self, :section => sec)
     end
-  end
-
-  def ancestors(options={})
-    ancs = node ? node.ancestors : []
-    options[:include_self] ? ancs + [self] : ancs
   end
 
   def with_ancestors(options = {})
