@@ -143,13 +143,20 @@ class Section < ActiveRecord::Base
     public? ? :unlocked : :locked
   end
 
+  # Used by the file browser to look up a section by the combined names as a path.
+  #   i.e. /A/B/
+  # @return [Section] nil if not found
   def self.find_by_name_path(name_path)
-    section = Section.root.first
-    children = name_path.split("/")[1..-1] || []
-    children.each do |name|
-      section = section.sections.first(:conditions => {:name => name})
+    current_section = Section.root.first
+    path_names = name_path.split("/")[1..-1] || []
+
+    # This implementation is very slow as it has to loop over the entire tree in memory to match each name element.
+    path_names.each do |name|
+      current_section.sections.each do |s|
+        current_section = s if s.name == name
+      end
     end
-    section
+    current_section
   end
 
   #The first page that is a decendent of this section

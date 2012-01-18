@@ -168,7 +168,11 @@ class SectionTest < ActiveSupport::TestCase
   end
 end
 
-class TestPathsWithFixtures < ActiveSupport::TestCase
+class TestPathsWithoutFixtures < ActiveSupport::TestCase
+  def setup
+    remove_all_fixture_generated_sections_to_avoid_bugs
+  end
+
   def test_find_by_name_path
     @a = Factory(:section, :parent => root_section, :name => "A")
     @b = Factory(:section, :parent => @a, :name => "B")
