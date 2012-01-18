@@ -100,4 +100,8 @@ class SectionNode < ActiveRecord::Base
     move_to(sec, 1.0/0)
   end
 
+
+  def ancestry_path
+    path_ids.join "/"
+  end
 end

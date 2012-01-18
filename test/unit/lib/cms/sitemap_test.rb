@@ -112,6 +112,10 @@ class SitemapTest < ActiveSupport::TestCase
   def teardown
   end
 
+  test "ancestry_path" do
+    section = Factory(:public_section)
+    assert_equal "#{section.parent.node.id}/#{section.node.id}", section.node.ancestry_path
+  end
   test "Build root section from factory" do
     root = Factory(:root_section)
     assert_not_nil root
