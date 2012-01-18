@@ -8,7 +8,6 @@ class Cms::MenuHelperTest < ActionView::TestCase
   end
 
   def test_menu_items
-    Page.first.update_attributes(:hidden => true, :publish_on_save => true)
     create_nfl_data
 
     expected = [
@@ -113,7 +112,6 @@ class Cms::MenuHelperTest < ActionView::TestCase
   end
 
   def test_menu_with_links
-    Page.first.update_attributes(:hidden => true, :publish_on_save => true)
 
     @news = Factory(:section, :parent => root_section, :name => "News", :path => "/whatever")
     @press_releases = Factory(:page, :section => @news, :name => "Press Releases", :path => "/press_releases", :publish_on_save => true)
