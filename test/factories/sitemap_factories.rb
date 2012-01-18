@@ -16,4 +16,5 @@ Factory.define :public_page, :class=>Page do |m|
   m.sequence(:name) {|n| "Public Page #{n}"}
   m.sequence(:path) {|n| "/public-page-#{n}"}
   m.association :section, :factory=>:public_section
+  m.publish_on_save true
 end

@@ -168,7 +168,7 @@ class SectionTest < ActiveSupport::TestCase
   end
 end
 
-class TestPathsWithoutFixtures < ActiveSupport::TestCase
+class TestsWithoutFixtures < ActiveSupport::TestCase
   def setup
     remove_all_fixture_generated_sections_to_avoid_bugs
   end
@@ -182,5 +182,25 @@ class TestPathsWithoutFixtures < ActiveSupport::TestCase
     assert_equal @a, Section.find_by_name_path("/A/")
     assert_equal @b, Section.find_by_name_path("/A/B/")
     assert_equal @c, Section.find_by_name_path("/A/B/C/")
+  end
+end
+
+class TestAncestors < ActiveSupport::TestCase
+
+  def setup
+    remove_all_fixture_generated_sections_to_avoid_bugs
+    @visible_section = Factory(:public_section, :parent=>root_section)
+    @hidden_section = Factory(:public_section, :parent=>root_section, :hidden=>true)
+    @visible_page = Factory(:public_page, :section=>root_section)
+    @hidden_page = Factory(:public_page, :hidden => true, :section=>root_section)
+  end
+
+  test "visible_child_nodes should include non-hidden sections and non-hidden pages" do
+    assert_equal [@visible_section.node, @visible_page.node], root_section.visible_child_nodes
+  end
+
+  test "ancestors_with_self" do
+    assert_equal [root_section], @visible_section.ancestors
+    assert_equal [root_section, @visible_section], @visible_section.ancestors(:include_self=>true)
   end
 end

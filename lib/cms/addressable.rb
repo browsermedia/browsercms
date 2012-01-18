@@ -4,10 +4,15 @@
 module Addressable
 
   # Returns a list of all Addressable objects that are ancestors to this record.
+  # @param [Hash] options
+  # @option [Symbol] :include_self If this object should be included in the Array
   # @return [Array<Addressable]
-  def ancestors
+  #
+  def ancestors(options={})
     ancestor_nodes = node.ancestors
-    ancestor_nodes.collect { |node| node.node }
+    ancestors = ancestor_nodes.collect { |node| node.node }
+    ancestors << self if options[:include_self]
+    ancestors
   end
 
   # I want to get rid of these in favor of parent and parent_id
