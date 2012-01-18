@@ -170,7 +170,7 @@ end
 
 class TestsWithoutFixtures < ActiveSupport::TestCase
   def setup
-    remove_all_fixture_generated_sections_to_avoid_bugs
+    remove_all_sitemap_fixtures_to_avoid_bugs
   end
 
   def test_find_by_name_path
@@ -188,7 +188,7 @@ end
 class TestAncestors < ActiveSupport::TestCase
 
   def setup
-    remove_all_fixture_generated_sections_to_avoid_bugs
+    remove_all_sitemap_fixtures_to_avoid_bugs
     @visible_section = Factory(:public_section, :parent=>root_section)
     @hidden_section = Factory(:public_section, :parent=>root_section, :hidden=>true)
     @visible_page = Factory(:public_page, :section=>root_section)

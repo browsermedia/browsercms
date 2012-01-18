@@ -52,7 +52,7 @@ end
 
 class DefaultAttachableTest < ActiveSupport::TestCase
   def setup
-    remove_all_fixture_generated_sections_to_avoid_bugs
+    remove_all_sitemap_fixtures_to_avoid_bugs
 
     #file is a mock of the object that Rails wraps file uploads in
     @file = file_upload_object(:original_filename => "foo.jpg",

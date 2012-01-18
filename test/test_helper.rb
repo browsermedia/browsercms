@@ -132,8 +132,18 @@ class ActiveSupport::TestCase
 
   # Fixtures add incorrect Section/Section node data. We don't want to replace fixtures AGAIN (this is handled in CMS 3.3)
   # so we can just clean it out using this method where needed to avoid test breakage.
-  def remove_all_fixture_generated_sections_to_avoid_bugs
+  def remove_all_sitemap_fixtures_to_avoid_bugs
     Section.delete_all
+    Page.delete_all
+  end
+
+  # Create a 'faux' sitemap which will work for tests (avoids need for fixtures)
+  def given_a_site_exists
+    @root = root_section
+    @homepage = Factory(:public_page, :name=>"Home", :section=>@root, :path=>"/")
+    @not_found_page = Factory(:public_page, :name=>"Not Found", :section=>@root, :path=>Cms::ErrorPages::NOT_FOUND_PATH)
+    @access_denied_page = Factory(:public_page, :name=>"Access Denied", :section=>@root, :path=>Cms::ErrorPages::FORBIDDEN_PATH)
+    @error_page = Factory(:public_page, :name=>"Server Error", :section=>@root, :path=>Cms::ErrorPages::SERVER_ERROR_PATH)
   end
 end
 

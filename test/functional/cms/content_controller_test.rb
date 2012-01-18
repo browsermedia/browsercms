@@ -3,6 +3,11 @@ require File.join(File.dirname(__FILE__), '/../../test_helper')
 class Cms::ContentControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
 
+  def setup
+    remove_all_sitemap_fixtures_to_avoid_bugs
+    given_a_site_exists
+  end
+
   def test_show_home_page
     get :show
     assert_response :success
@@ -19,7 +24,6 @@ class Cms::ContentControllerTest < ActionController::TestCase
     get :show, :path => ["foo"]
     assert_response :not_found
     assert_select "title", "Not Found"
-    assert_select "h1", "Page Not Found"
   end
 
   def test_page_not_found_to_cms_admin

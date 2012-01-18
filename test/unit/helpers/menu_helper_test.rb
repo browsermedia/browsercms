@@ -3,7 +3,7 @@ require File.join(File.dirname(__FILE__), '/../../test_helper')
 class Cms::MenuHelperTest < ActionView::TestCase
 
   def setup
-    remove_all_fixture_generated_sections_to_avoid_bugs
+    remove_all_sitemap_fixtures_to_avoid_bugs
     root_section # Ensure this exists
   end
 
