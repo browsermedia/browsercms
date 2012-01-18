@@ -141,9 +141,10 @@ class ActiveSupport::TestCase
   def given_a_site_exists
     @root = root_section
     @homepage = Factory(:public_page, :name=>"Home", :section=>@root, :path=>"/")
-    @not_found_page = Factory(:public_page, :name=>"Not Found", :section=>@root, :path=>Cms::ErrorPages::NOT_FOUND_PATH)
-    @access_denied_page = Factory(:public_page, :name=>"Access Denied", :section=>@root, :path=>Cms::ErrorPages::FORBIDDEN_PATH)
-    @error_page = Factory(:public_page, :name=>"Server Error", :section=>@root, :path=>Cms::ErrorPages::SERVER_ERROR_PATH)
+    @system_section = Factory(:public_page, :name=>"System", :section=>@root, :path=>"/system")
+    @not_found_page = Factory(:public_page, :name=>"Not Found", :section=>@system_section, :path=>Cms::ErrorPages::NOT_FOUND_PATH)
+    @access_denied_page = Factory(:public_page, :name=>"Access Denied", :section=>@system_section, :path=>Cms::ErrorPages::FORBIDDEN_PATH)
+    @error_page = Factory(:public_page, :name=>"Server Error", :section=>@system_section, :path=>Cms::ErrorPages::SERVER_ERROR_PATH)
   end
 end
 

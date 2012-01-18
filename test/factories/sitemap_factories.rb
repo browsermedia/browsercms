@@ -1,5 +1,5 @@
 Factory.define :root_section, :class=>Section do |m|
-  m.name "Root"
+  m.name "My Site"
   m.path "/"
   m.root true
   m.groups { Group.all }

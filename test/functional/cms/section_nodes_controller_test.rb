@@ -2,7 +2,12 @@ require File.join(File.dirname(__FILE__), '/../../test_helper')
 
 class Cms::SectionNodesControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
-  
+
+  def setup
+    remove_all_sitemap_fixtures_to_avoid_bugs
+    given_a_site_exists
+  end
+
   def test_index_as_admin
     login_as_cms_admin
     @foo = Factory(:section, :name => "Foo", :parent => root_section)
@@ -13,7 +18,7 @@ class Cms::SectionNodesControllerTest < ActionController::TestCase
     assert_select "title", "Sitemap"
     assert_select "h1", "Sitemap"
     assert_select "#sitemap" do
-      assert_select "ul#root_1" do
+      assert_select "ul#root_#{root_section.id}" do
         assert_select "#section_#{root_section.id}" do
           assert_select "div", "My Site"
         end
@@ -41,8 +46,11 @@ end
 class Cms::SectionNodesControllerPermissionsTest < ActionController::TestCase
   tests Cms::SectionNodesController
   include Cms::ControllerTestHelper
-  
+
   def setup
+    remove_all_sitemap_fixtures_to_avoid_bugs
+    given_a_site_exists
+
     # DRYME copypaste from UserPermissionTest
     @user = Factory(:user)
     login_as(@user)
