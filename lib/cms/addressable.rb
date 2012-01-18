@@ -15,8 +15,15 @@ module Addressable
     ancestors
   end
 
+  def partial_for
+    node.node_type.underscore
+  end
   # I want to get rid of these in favor of parent and parent_id
   module DeprecatedPageAccessors
+
+    def node
+       section_node
+    end
 
     def section_id
       section ? section.id : nil

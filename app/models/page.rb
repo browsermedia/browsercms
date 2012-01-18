@@ -46,8 +46,6 @@ class Page < ActiveRecord::Base
 
   include Addressable
   include Addressable::DeprecatedPageAccessors
-  # Handle the API difference between Pages and Sections.
-  alias :node :section_node
 
   has_many :tasks
   

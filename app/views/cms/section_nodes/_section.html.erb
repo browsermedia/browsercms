@@ -7,6 +7,6 @@
         :hidden => node.hidden?,
         :access_icon => status_icon(node.status),
       } %>
-    <%= render :partial => "section_node", :collection => node.child_nodes.all(:order => 'position'), :locals => {:display => false} %>    
+    <%= render :partial => "section_node", :collection => node.navigation_children, :locals => {:display => false} %>
   </li>
 </ul>

@@ -18,7 +18,8 @@ Factory.define :connector do |m|
 end
 
 Factory.define :file_block do |m|
-  m.sequence(:name) {|n| "TestFileBlock#{n}"}
+  m.sequence(:name) {|i| "TestFileBlock#{i}"}
+  m.sequence(:attachment_file_path) {|i| "/file-#{i}.txt" }
 end
 
 Factory.define :group do |m|

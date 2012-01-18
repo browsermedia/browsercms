@@ -193,6 +193,7 @@ class TestAncestors < ActiveSupport::TestCase
     @hidden_section = Factory(:public_section, :parent=>root_section, :hidden=>true)
     @visible_page = Factory(:public_page, :section=>root_section)
     @hidden_page = Factory(:public_page, :hidden => true, :section=>root_section)
+    @file_block = Factory(:file_block, :attachment_section => root_section, :attachment_file =>mock_file)
   end
 
   test "visible_child_nodes should include non-hidden sections and non-hidden pages" do
@@ -215,5 +216,15 @@ class TestAncestors < ActiveSupport::TestCase
   test "#build_section creates a new section within this section" do
     new_section = @visible_section.build_section
     assert_equal @visible_section, new_section.parent
+  end
+
+  test "#navigation_children" do
+    assert_equal [@visible_section, @hidden_section, @visible_page, @hidden_page], root_section.navigation_children
+  end
+
+  test "#partial_for" do
+    assert_equal "section", @visible_section.partial_for
+    assert_equal "page", @visible_page.partial_for
+    assert_equal "link", Factory(:link, :section=>root_section).partial_for
   end
 end

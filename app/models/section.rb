@@ -74,6 +74,12 @@ class Section < ActiveRecord::Base
     child_pages.compact
   end
 
+  # 'Navigation' children are items which should appear in a sitemap, including pages, sections and links.
+  # @return [Array<Addressable>]
+  def navigation_children
+    query = node.children.of_type(["Page", "Link", "Section"]).in_order
+    query.collect {|section_node| section_node.node }
+  end
   # End Ancestry Options
 
   def visible_child_nodes(options={})
@@ -81,6 +87,7 @@ class Section < ActiveRecord::Base
     visible_children = children.select { |sn| sn.visible? }
     options[:limit] ? visible_children[0...options[:limit]] : visible_children
   end
+
 
   # This method is probably unnecessary. Could be rewritten to have each section be able to known its own page.
   # @todo - Replace this with #sections and add a #full_path to Section

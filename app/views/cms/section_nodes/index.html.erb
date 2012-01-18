@@ -27,5 +27,5 @@
         } %>
     </li>
   </ul>
-  <%= render :partial => "section_node", :collection => @section.child_nodes.all(:order => 'position'), :locals => {:display => true, :root => true} %>    
+  <%= render :partial => "section_node", :collection => @section.navigation_children, :locals => {:display => true, :root => true} %>
 </div>

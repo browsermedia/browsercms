@@ -18,13 +18,13 @@ class SectionNode < ActiveRecord::Base
   belongs_to :node, :polymorphic => :true
 
   acts_as_list
-
   # For acts_as_list. Specifies that position should be unique within a section.
   def scope_condition
     ancestry ? "ancestry = '#{ancestry}'" : 'ancestry IS NULL'
   end
 
   named_scope :of_type, lambda{|types| {:conditions => ["section_nodes.node_type IN (?)", types]}}
+  named_scope :in_order, :order => "position asc"
 
   def visible?
     return false unless node
