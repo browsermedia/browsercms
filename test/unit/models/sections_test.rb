@@ -199,8 +199,16 @@ class TestAncestors < ActiveSupport::TestCase
     assert_equal [@visible_section.node, @visible_page.node], root_section.visible_child_nodes
   end
 
-  test "ancestors_with_self" do
+  test "ancestors :include_self" do
     assert_equal [root_section], @visible_section.ancestors
     assert_equal [root_section, @visible_section], @visible_section.ancestors(:include_self=>true)
+  end
+
+  test "all_children_with_name" do
+    assert_equal [@visible_section, @hidden_section], root_section.all_children_with_name
+  end
+
+  test "#ancestry_path delegates to SectionNode" do
+    assert_equal @visible_section.node.ancestry_path, @visible_section.ancestry_path
   end
 end

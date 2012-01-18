@@ -4,7 +4,6 @@ class Cms::ContentControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
 
   def setup
-    remove_all_sitemap_fixtures_to_avoid_bugs
     given_a_site_exists
   end
 
@@ -316,6 +315,8 @@ class Cms::ContentCachingDisabledControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
 
   def setup
+    given_a_site_exists
+
     ActionController::Base.perform_caching = false
     @page = Factory(:page, :section => root_section, :name => "Test Page", :path => "/page", :publish_on_save => true)
     @registered_user = Factory(:user)

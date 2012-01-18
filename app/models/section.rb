@@ -19,8 +19,8 @@ class Section < ActiveRecord::Base
   named_scope :hidden, :conditions => {:hidden => true}
   named_scope :not_hidden, :conditions => {:hidden => false}
 
-  named_scope :named, lambda{|name| {:conditions => ['sections.name = ?', name]}}
-  named_scope :with_path, lambda{|path| {:conditions => ['sections.path = ?', path]}}
+  named_scope :named, lambda { |name| {:conditions => ['sections.name = ?', name]} }
+  named_scope :with_path, lambda { |path| {:conditions => ['sections.path = ?', path]} }
 
   validates_presence_of :name, :path
   #validates_presence_of :parent_id, :if => Proc.new {root.count > 0}, :message => "section is required"
@@ -34,8 +34,8 @@ class Section < ActiveRecord::Base
   attr_accessor :full_path
 
 
-
   # Ancestry Related operations
+  delegate :ancestry_path, :to => :node
 
   def ancestry
     self.node.ancestry
@@ -48,12 +48,14 @@ class Section < ActiveRecord::Base
   end
 
   # Returns a list of all children which are sections.
+  # @return [Array<Section>]
   def sections
     child_sections = self.node.children.collect do |section_node|
-      section_node.node  if section_node.section?
+      section_node.node if section_node.section?
     end
     child_sections.compact
   end
+
   alias :child_sections :sections
 
   # Used by the sitemap to find children to iterate over.
@@ -67,20 +69,21 @@ class Section < ActiveRecord::Base
     end
     child_pages.compact
   end
+
   # End Ancestry Options
 
   def visible_child_nodes(options={})
     children = child_nodes.of_type(["Section", "Page", "Link"]).all(:order => 'section_nodes.position')
-    visible_children = children.select{|sn| sn.visible?}
+    visible_children = children.select { |sn| sn.visible? }
     options[:limit] ? visible_children[0...options[:limit]] : visible_children
   end
 
+  # This method is probably unnecessary. Could be rewritten to have each section be able to known its own page.
+  # @todo - Replace this with #sections and add a #full_path to Section
   def all_children_with_name
-    child_sections.map do |s|
-      if s.node
-        s.node.full_path = root? ? s.node.name : "#{name} / #{s.node.name}"
-        [s.node] << s.node.all_children_with_name
-      end
+    sections.map do |section|
+      section.full_path = root? ? section.name : "#{name} / #{section.name}"
+      [section] << section.all_children_with_name
     end.flatten.compact
   end
 

@@ -139,6 +139,7 @@ class ActiveSupport::TestCase
 
   # Create a 'faux' sitemap which will work for tests (avoids need for fixtures)
   def given_a_site_exists
+    remove_all_sitemap_fixtures_to_avoid_bugs
     @root = root_section
     @homepage = Factory(:public_page, :name=>"Home", :section=>@root, :path=>"/")
     @system_section = Factory(:public_page, :name=>"System", :section=>@root, :path=>"/system")

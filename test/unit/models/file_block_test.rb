@@ -193,7 +193,7 @@ end
 
 class ExistingFileBlocksTest < ActiveSupport::TestCase
   def setup
-    @one = Factory(:file_block, :attachment_file => mock_file, :attachment_file_path => "/one.txt", :attachment_section => root_section)
+    @one = Factory(:file_block, :attachment_file => mock_file, :attachment_file_path => "/one.txt", :attachment_section => root_section, :name=>"One")
     @two = Factory(:file_block, :attachment_file => mock_file, :attachment_file_path => "/two.txt", :attachment_section => root_section)
     @section = Factory(:section, :name => "A")
     @a1 = Factory(:file_block, :attachment_file => mock_file, :attachment_file_path => "/a/1.txt", :attachment_section => @section)
@@ -207,6 +207,23 @@ class ExistingFileBlocksTest < ActiveSupport::TestCase
 
   def test_find_blocks_in_sub_section
     assert_equal [@a1, @a2], FileBlock.by_section(@section).all(:order => "file_blocks.id")
+  end
+
+   test "searchable?" do
+    assert FileBlock.searchable?
+  end
+
+  test "search by name" do
+    assert_equal [@one], FileBlock.search("one")
+  end
+
+  test "search by section" do
+    options = {}
+    options[:page] = 1
+    options[:include] = { :attachment =>  :section_node }
+    options[:conditions] = ["section_nodes.ancestry = ?", root_section.ancestry_path]
+
+    assert_equal [@one, @two], FileBlock.search("").paginate(options)
   end
 end
 
