@@ -1,14 +1,18 @@
-<% status = node.archived? ? :archived : node.status %>
+<%
+   page = node
+   status_icon = page.archived? ? :archived : page.status
+   access_icon = page.access_status
+%>
 <ul id="section_node_<%= section_node.id %>" class="section_node<%= " rootlet" if root %>" style="display: <%= display ? "''" : "none" %>">
   <li>
     <%= render :partial => "node", :locals => {
         :node => node, 
         :node_type => "page", 
         :icon => action_icon(root ? :root_page : :page),
-        :hidden => node.hidden?,
-        :access_icon => status_icon(node.section ? node.section.status : ''),
-        :published_status_icon => status_icon(status),
-        :published_status_label => status.to_s.titleize
+        :hidden => page.hidden?,
+        :access_icon => status_icon(access_icon),
+        :published_status_icon => status_icon(status_icon),
+        :published_status_label => status_icon.to_s.titleize
       } %>
   </li>
 </ul>

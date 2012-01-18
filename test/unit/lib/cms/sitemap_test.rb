@@ -103,6 +103,20 @@ class MoveSections < ActiveSupport::TestCase
   end
 end
 
+class SitemapNavTest < ActiveSupport::TestCase
+
+  def setup
+    given_a_site_exists
+    @page = Factory(:public_page, :section=>root_section)
+    @link = Factory(:link, :section=>root_section)
+  end
+
+  test "access_status" do
+    assert_equal @page.section.status, @page.access_status
+    assert_equal @link.section.status, @link.access_status
+  end
+
+end
 class SitemapTest < ActiveSupport::TestCase
 
   def setup
@@ -183,6 +197,7 @@ class SitemapTest < ActiveSupport::TestCase
   test "The root section node has no parent section" do
     assert_nil SectionNode.new.parent_section
   end
+
 
   private
 

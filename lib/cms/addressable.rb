@@ -15,11 +15,23 @@ module Addressable
     ancestors
   end
 
+  # Computes the name of the partial used to render this object in the sitemap.
   def partial_for
     node.node_type.underscore
   end
+
+  module LeafNode
+    def access_status
+      parent.status
+    end
+  end
   # I want to get rid of these in favor of parent and parent_id
   module DeprecatedPageAccessors
+    include LeafNode
+
+    def parent
+      section
+    end
 
     def node
        section_node
