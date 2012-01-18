@@ -24,8 +24,8 @@ class AbstractFileBlock < ActiveRecord::Base
   end
 
   def set_attachment_section
-    if @attachment_section && @attachment_section != attachment.section
-      attachment.section = @attachment_section
+    if @attachment_section_id && @attachment_section_id != attachment.section
+      attachment.section_id = @attachment_section_id
     end
   end
 
