@@ -16,7 +16,7 @@ class Cms::SectionsController < Cms::BaseController
   end
   
   def new
-    @section = @parent.sections.build
+    @section = @parent.build_section
     @section.groups = @parent.groups
   end
   

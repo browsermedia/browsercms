@@ -211,4 +211,9 @@ class TestAncestors < ActiveSupport::TestCase
   test "#ancestry_path delegates to SectionNode" do
     assert_equal @visible_section.node.ancestry_path, @visible_section.ancestry_path
   end
+
+  test "#build_section creates a new section within this section" do
+    new_section = @visible_section.build_section
+    assert_equal @visible_section, new_section.parent
+  end
 end

@@ -55,8 +55,12 @@ class Section < ActiveRecord::Base
     end
     child_sections.compact
   end
-
   alias :child_sections :sections
+
+  # Since #sections isn't an association anymore, callers can use this rather than #sections.build
+  def build_section
+    Section.new(:parent=>self)
+  end
 
   # Used by the sitemap to find children to iterate over.
   def child_nodes
