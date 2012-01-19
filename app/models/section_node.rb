@@ -25,6 +25,7 @@ class SectionNode < ActiveRecord::Base
 
   named_scope :of_type, lambda{|types| {:conditions => ["section_nodes.node_type IN (?)", types]}}
   named_scope :in_order, :order => "position asc"
+  named_scope :fetch_nodes, :include => :node
 
   def visible?
     return false unless node

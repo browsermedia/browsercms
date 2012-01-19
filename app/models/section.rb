@@ -55,6 +55,7 @@ class Section < ActiveRecord::Base
     end
     child_sections.compact
   end
+
   alias :child_sections :sections
 
   # Since #sections isn't an association anymore, callers can use this rather than #sections.build
@@ -77,9 +78,28 @@ class Section < ActiveRecord::Base
   # 'Navigation' children are items which should appear in a sitemap, including pages, sections and links.
   # @return [Array<Addressable>]
   def navigation_children
-    query = node.children.of_type(["Page", "Link", "Section"]).in_order
-    query.collect {|section_node| section_node.node }
+    #return @nav_children if @nav_children
+    query = node.children.of_type(["Page", "Link", "Section"]).fetch_nodes.in_order
+    query.collect { |section_node|
+      addressable = section_node.node
+      addressable.cache_parent self
+      addressable
+    }
   end
+
+  def navigation_children=(section_nodes_as_hash)
+    return if section_nodes_as_hash.empty?
+    c = section_nodes_as_hash.keys.collect { |sn| sn.node if sn.node_type != "Attachment" }
+    @nav_children = c.compact
+
+    @nav_children.each do |child|
+      if child.respond_to? :navigation_children=
+        child.navigation_children = section_nodes_as_hash[child.node]
+      end
+    end
+
+  end
+
   # End Ancestry Options
 
   def visible_child_nodes(options={})
@@ -102,20 +122,8 @@ class Section < ActiveRecord::Base
     parent ? parent.id : nil
   end
 
-  def parent
-    node ? node.section : nil
-  end
-
   def parent_id=(sec_id)
     self.parent = Section.find(sec_id)
-  end
-
-  def parent=(sec)
-    if node
-      node.move_to_end(sec)
-    else
-      build_node(:node => self, :section => sec)
-    end
   end
 
   def with_ancestors(options = {})

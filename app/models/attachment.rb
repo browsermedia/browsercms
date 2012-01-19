@@ -26,6 +26,7 @@ class Attachment < ActiveRecord::Base
   
   #----- Associations ----------------------------------------------------------
 
+  include Addressable
   include Addressable::DeprecatedPageAccessors
   has_one :section_node, :as => :node
   alias :node :section_node

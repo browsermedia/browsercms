@@ -26,6 +26,15 @@ class CreatingPageTest < ActiveRecord::TestCase
     assert_not_nil @page.section_node
   end
 
+  test "page with no parent" do
+    @page = Page.new
+    assert_nil @page.parent
+  end
+
+  test "#section is alias for #parent" do
+    @page = Page.new
+    assert_nil @page.section
+  end
   protected
   def assert_path_is_unique
     page = Factory.build(:page, :path => @page.path)

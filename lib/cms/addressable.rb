@@ -15,26 +15,47 @@ module Addressable
     ancestors
   end
 
-  # Computes the name of the partial used to render this object in the sitemap.
-  def partial_for
-    node.node_type.underscore
+
+  def parent
+    @parent if @parent
+    node ? node.section : nil
   end
 
+  def cache_parent(section)
+    @parent = section
+  end
+
+  def parent=(sec)
+    if node
+      node.move_to_end(sec)
+    else
+      build_node(:node => self, :section => sec)
+    end
+  end
+
+  # Computes the name of the partial used to render this object in the sitemap.
+  def partial_for
+    self.class.name.underscore
+  end
+
+  # Pages/Links/Attachments use their parent to determine access
   module LeafNode
     def access_status
       parent.status
     end
   end
+
+  # These exist for backwards compatibility to avoid having to change tests.
   # I want to get rid of these in favor of parent and parent_id
   module DeprecatedPageAccessors
     include LeafNode
 
-    def parent
-      section
+    def node
+      section_node
     end
 
-    def node
-       section_node
+    def build_node(opts)
+      build_section_node(opts)
     end
 
     def section_id
@@ -46,15 +67,12 @@ module Addressable
     end
 
     def section
-      section_node ? section_node.section : nil
+      parent
     end
 
     def section=(sec)
-      if section_node
-        section_node.move_to_end(sec)
-      else
-        build_section_node(:node => self, :section => sec)
-      end
+      self.parent = sec
+
     end
   end
 end
