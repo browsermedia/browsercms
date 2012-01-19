@@ -84,6 +84,7 @@ module Cms
           if respond_to? :latest_version
             sql = "UPDATE #{self.class.table_name} SET latest_version = #{draft.version} where id = #{self.id}"
             connection.execute sql
+            self.latest_version = draft.version # So we don't need to #reload this object. Probably marks it as dirty though, which could have weird side effects.
           end
         end
 

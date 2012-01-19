@@ -41,6 +41,7 @@ end
 
 Factory.define :link do |m|
   m.sequence(:name) {|n| "Link #{n}"}
+  m.publish_on_save true
 end
 
 Factory.define :page do |m|
