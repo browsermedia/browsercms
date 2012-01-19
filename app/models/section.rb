@@ -144,7 +144,7 @@ class Section < ActiveRecord::Base
   end
 
   def status
-    public? ? :unlocked : :locked
+    @status ||= public? ? :unlocked : :locked
   end
 
   # Used by the file browser to look up a section by the combined names as a path.

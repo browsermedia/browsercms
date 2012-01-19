@@ -231,5 +231,8 @@ class TestAncestors < ActiveSupport::TestCase
     assert_equal "link", Factory(:link, :section=>root_section).partial_for
   end
 
-
+  test "#status is cached" do
+    assert_equal :unlocked, @visible_section.status
+    assert_equal :unlocked, @visible_section.instance_variable_get(:@status)
+  end
 end
