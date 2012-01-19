@@ -3,12 +3,22 @@
   access_icon = defined?(access_icon) ? access_icon : nil
   published_status_icon = defined?(published_status_icon) ? published_status_icon : nil
   published_status_label = defined?(published_status_label) ? published_status_label : nil
+
+  editable_class = ""
+  case node_type
+  when "section"
+    editable_class = "non-editable" unless @modifiable_sections.include?(node)
+  else
+    editable_class = "non-editable" unless defined?(parent) && @modifiable_sections.include?(parent)
+  end
+
+  node_type_class = node_type == "section" && node.root? ? 'root' : ''
 %>
 <div class="roundedcorners">
   <table class="section_node <%= node_type %> <%= "movable" if current_user.able_to?(:publish_content) %>" width="100%" cellspacing="0" cellpadding="0">
     <tr><td colspan="4" class="drop-before"></td></tr>
     <tr<%= ' class="doubled"' if access_icon && hidden %>>
-      <td id="<%= node_type %>_<%= node.id %>" class="<%= node_type == "section" && node.root? ? 'root' : '' %> <%= node_type %> node <%= 'non-editable' unless current_user.able_to_edit?(node) %>">
+      <td id="<%= node_type %>_<%= node.id %>" class="<%= node_type_class %> <%= node_type %> node <%= editable_class %>">
 	      <%= icon %>
 	      <div><%= h(node.name) %></div>
       </td>

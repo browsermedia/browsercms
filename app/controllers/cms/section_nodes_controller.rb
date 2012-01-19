@@ -3,6 +3,7 @@ class Cms::SectionNodesController < Cms::BaseController
   
   def index
     @toolbar_tab = :sitemap
+    @modifiable_sections = current_user.modifiable_sections
     @section = Section.root.first
   end
   def move_before

@@ -9,14 +9,16 @@
             :icon => "#{section_icons(node)} #{action_icon(root ? :root_folder : :folder, :class => "folder")}",
             :hidden => node.hidden?,
             :access_icon => status_icon(access_icon),
+            :parent => parent
     } %>
-    <% node.navigation_children do |child| %>
+    <% node.navigation_children.each do |child| %>
         <%= render :partial => child.partial_for,
                    :locals => {:display => false,
                                :access_icon => access_icon,
                                :section_node => child.node,
                                :node => child,
-                               :root => false
+                               :root => false,
+                                :parent => node
                    } %>
     <% end %>
 

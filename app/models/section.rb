@@ -33,8 +33,6 @@ class Section < ActiveRecord::Base
 
   attr_accessor :full_path
 
-
-  # Ancestry Related operations
   delegate :ancestry_path, :to => :node
 
   def ancestry
@@ -78,7 +76,6 @@ class Section < ActiveRecord::Base
   # 'Navigation' children are items which should appear in a sitemap, including pages, sections and links.
   # @return [Array<Addressable>]
   def navigation_children
-    #return @nav_children if @nav_children
     query = node.children.of_type(["Page", "Link", "Section"]).fetch_nodes.in_order
     query.collect { |section_node|
       addressable = section_node.node
@@ -86,21 +83,6 @@ class Section < ActiveRecord::Base
       addressable
     }
   end
-
-  def navigation_children=(section_nodes_as_hash)
-    return if section_nodes_as_hash.empty?
-    c = section_nodes_as_hash.keys.collect { |sn| sn.node if sn.node_type != "Attachment" }
-    @nav_children = c.compact
-
-    @nav_children.each do |child|
-      if child.respond_to? :navigation_children=
-        child.navigation_children = section_nodes_as_hash[child.node]
-      end
-    end
-
-  end
-
-  # End Ancestry Options
 
   def visible_child_nodes(options={})
     children = child_nodes.of_type(["Section", "Page", "Link"]).all(:order => 'section_nodes.position')

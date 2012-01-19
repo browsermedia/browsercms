@@ -106,6 +106,11 @@ class User < ActiveRecord::Base
     @modifiable_sections ||= Section.find(:all, :include => {:groups => [:group_type, :users]}, :conditions => ["users.id = ? and group_types.cms_access = ?", id, true])
   end
 
+  #def unmodifiable_sections
+  #
+  #  #@modifiable_sections ||= Section.find(:all, :include => {:groups => [:group_type, :users]}, :conditions => ["users.id = ? and group_types.cms_access = ?", id, true])
+  #end
+
   # Expects a list of names of Permissions
   # true if the user has any of the permissions
   def able_to?(*required_permissions)
