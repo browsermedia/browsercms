@@ -80,6 +80,11 @@ module Cms
         end
 
         def after_save
+          update_latest_version
+        end
+
+        # Used in migrations and as a callback.
+        def update_latest_version
           #Rails 3 could use update_column here instead
           if respond_to? :latest_version
             sql = "UPDATE #{self.class.table_name} SET latest_version = #{draft.version} where id = #{self.id}"
