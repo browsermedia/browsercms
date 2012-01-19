@@ -1,15 +1,24 @@
 <%
-    access_icon = node.status
+   access_icon = node.status
 %>
 <ul id="section_node_<%= section_node.id %>" class="section_node<%= " rootlet" if root %>" style="display: <%= display ? "''" : "none" %>">
   <li>
     <%= render :partial => "node", :locals => {
-        :node => node, 
-        :node_type => "section", 
-        :icon => "#{section_icons(node)} #{action_icon(root ? :root_folder : :folder, :class => "folder")}",
-        :hidden => node.hidden?,
-        :access_icon => status_icon(access_icon),
-      } %>
-    <%= render :partial => "section_node", :collection => node.navigation_children, :locals => {:display => false, :access_icon => access_icon} %>
+            :node => node,
+            :node_type => "section",
+            :icon => "#{section_icons(node)} #{action_icon(root ? :root_folder : :folder, :class => "folder")}",
+            :hidden => node.hidden?,
+            :access_icon => status_icon(access_icon),
+    } %>
+    <% node.navigation_children do |child| %>
+        <%= render :partial => child.partial_for,
+                   :locals => {:display => false,
+                               :access_icon => access_icon,
+                               :section_node => child.node,
+                               :node => child,
+                               :root => false
+                   } %>
+    <% end %>
+
   </li>
 </ul>
