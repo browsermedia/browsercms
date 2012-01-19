@@ -116,6 +116,16 @@ class SitemapNavTest < ActiveSupport::TestCase
     assert_equal @link.section.status, @link.access_status
   end
 
+  test "#sitemap_node_id" do
+    assert_equal @page.node.id, @page.sitemap_node_id
+    assert_equal @link.node.id, @link.sitemap_node_id
+    assert_equal root_section.node.id, root_section.sitemap_node_id
+  end
+
+  test "#sitemap_node_id use cached_id" do
+    @page.cache_node_id = 48
+    assert_equal 48, @page.sitemap_node_id
+  end
 end
 class SitemapTest < ActiveSupport::TestCase
 
@@ -198,8 +208,7 @@ class SitemapTest < ActiveSupport::TestCase
     assert_nil SectionNode.new.parent_section
   end
 
-
-  private
+    private
 
   def root
     @root ||= Factory(:root_section)
