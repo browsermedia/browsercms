@@ -35,6 +35,8 @@ class CreatingPageTest < ActiveRecord::TestCase
     @page = Page.new
     assert_nil @page.section
   end
+
+
   protected
   def assert_path_is_unique
     page = Factory.build(:page, :path => @page.path)
@@ -44,6 +46,49 @@ class CreatingPageTest < ActiveRecord::TestCase
 
 end
 
+class VersionTest < ActiveSupport::TestCase
+
+  def setup
+    @page = Factory(:public_page)
+    @another_page = Factory(:public_page)
+  end
+
+  test "draft_version is stored on pages" do
+    assert_equal 1, @page.version
+    assert_equal 1, @page.latest_version
+  end
+
+  test "#update increments the latest_version" do
+    @page.name = "New"
+    @page.save!
+    @page.reload
+
+    assert_equal 1, @page.version
+    assert_equal 2, @page.latest_version
+
+    assert_equal 1, @another_page.reload.latest_version, "Should only update its own version, not other tables"
+  end
+
+  test "live? using latest version" do
+    assert @page.live?
+
+    @page.update_attributes(:name => "New")
+    @page.reload
+    refute @page.live?
+
+    @page.publish!
+    @page.reload
+    assert @page.live?
+  end
+
+  test "live? as_of_version" do
+    @page.update_attributes(:name => "New")
+    @page.publish!
+
+    v1 = @page.as_of_version(1)
+    assert v1.live?
+  end
+end
 class PageTest < ActiveRecord::TestCase
 
   def test_creating_page_with_reserved_path
@@ -257,7 +302,7 @@ class PageTest < ActiveRecord::TestCase
 
 end
 
-class PageVersioningTest < ActiveRecord::TestCase
+class UserStampingTest < ActiveRecord::TestCase
 
   def setup
     @first_guy = Factory(:user, :login => "first_guy")
@@ -269,7 +314,7 @@ class PageVersioningTest < ActiveRecord::TestCase
     User.current = nil
   end
 
-  def test_that_it_works
+  def test_user_stamps_are_applied_to_versions
     page = Factory(:page, :name => "Original Value")
 
     assert_equal page, page.draft.page

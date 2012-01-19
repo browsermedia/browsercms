@@ -1,4 +1,10 @@
 module CustomAssertions
+
+  # Remove for Rails 3/1.9.2
+  def refute(value, msg=nil)
+    assert !value, msg
+  end
+
   def assert_file_exists(file_name, message=nil)
     assert File.exists?(file_name), 
       (message || "Expected File '#{file_name}' to exist, but it does not")
