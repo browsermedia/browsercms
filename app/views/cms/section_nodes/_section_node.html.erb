@@ -1,11 +1,13 @@
 <%
    r = defined?(root)
    addressable = section_node # These are actually Pages, links, sections, etc
+
 %>
 <%= render :partial => addressable.partial_for, :locals => {
   :section_node => addressable.node,
   :node => addressable,
   :display => display,
-  :root => r
+  :root => r,
+  :access_icon => access_icon
 }
 %>

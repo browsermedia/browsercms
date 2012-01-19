@@ -1,7 +1,6 @@
 <%
    page = node
    status_icon = page.archived? ? :archived : page.status
-   access_icon = page.access_status
 %>
 <ul id="section_node_<%= section_node.id %>" class="section_node<%= " rootlet" if root %>" style="display: <%= display ? "''" : "none" %>">
   <li>
