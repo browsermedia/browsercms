@@ -1,7 +1,7 @@
 <%
    access_icon = node.status
 %>
-<ul id="section_node_<%= section_node.id %>" class="section_node<%= " rootlet" if root %>" style="display: <%= display ? "''" : "none" %>">
+<ul id="section_node_<%= node.node.id %>" class="section_node<%= " rootlet" if root %>" style="display: <%= display ? "''" : "none" %>">
   <li>
     <%= render :partial => "node", :locals => {
             :node => node,
@@ -15,7 +15,6 @@
         <%= render :partial => child.partial_for,
                    :locals => {:display => false,
                                :access_icon => access_icon,
-                               :section_node => child.node,
                                :node => child,
                                :root => false,
                                 :parent => node

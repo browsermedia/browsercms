@@ -2,7 +2,7 @@
    page = node
    status_icon = page.archived? ? :archived : page.status
 %>
-<ul id="section_node_<%= section_node.id %>" class="section_node<%= " rootlet" if root %>" style="display: <%= display ? "''" : "none" %>">
+<ul id="section_node_<%= page.node.id %>" class="section_node<%= " rootlet" if root %>" style="display: <%= display ? "''" : "none" %>">
   <li>
     <%= render :partial => "node", :locals => {
         :node => node, 
