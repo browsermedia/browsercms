@@ -15,7 +15,7 @@ class SectionNode < ActiveRecord::Base
   end
 
   # The item this node links to
-  belongs_to :node, :polymorphic => :true
+  belongs_to :node, :polymorphic => :true, :inverse_of => :section_node
 
   acts_as_list
   # For acts_as_list. Specifies that position should be unique within a section.

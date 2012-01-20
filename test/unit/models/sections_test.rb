@@ -235,4 +235,20 @@ class TestAncestors < ActiveSupport::TestCase
     assert_equal :unlocked, @visible_section.status
     assert_equal :unlocked, @visible_section.instance_variable_get(:@status)
   end
+
+  test "Section#section_node should be the same object " do
+    sn = root_section.section_node
+    assert_equal sn.object_id, sn.node.section_node.object_id, "Should be the same object"
+  end
+
+  test "Page#section_node should be the same object" do
+    sn = @visible_page.section_node
+    assert_equal sn.object_id, sn.node.section_node.object_id
+  end
+
+  test "Link#section_node should be the same object" do
+    link = Factory(:link, :section=>root_section)
+    sn = link.section_node
+    assert_equal sn.object_id, sn.node.section_node.object_id
+  end
 end

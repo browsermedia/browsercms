@@ -3,7 +3,7 @@ class Link < ActiveRecord::Base
   
   named_scope :named, lambda{|name| {:conditions => ['links.name = ?', name]}}
   
-  has_one :section_node, :as => :node, :dependent => :destroy
+  has_one :section_node, :as => :node, :dependent => :destroy, :inverse_of => :node
 
   validates_presence_of :name
 

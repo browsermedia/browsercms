@@ -42,7 +42,8 @@ class Page < ActiveRecord::Base
     end 
   }  
   
-  has_one :section_node, :as => :node, :dependent => :destroy
+  has_one :section_node, :as => :node, :dependent => :destroy, :inverse_of => :node
+
 
   include Addressable
   include Addressable::DeprecatedPageAccessors

@@ -43,5 +43,6 @@ class Browsercms315 < ActiveRecord::Migration
     rename_column :section_nodes, :temp_parent_id, :parent_id
 
     SectionNode.build_ancestry_from_parent_ids!
+    SectionNode.reset_column_information
   end
 end

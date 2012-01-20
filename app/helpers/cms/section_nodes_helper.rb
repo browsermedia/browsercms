@@ -1,12 +1,23 @@
 module Cms
   module SectionNodesHelper
+
     def section_icons(node)
-      
-      if (node.root? || node.parent.root? || node.parent.parent.root?)
-        node.child_nodes.empty? ? image_tag("cms/sitemap/no_contents.png", :class => "no_folder_toggle large") : image_tag("cms/sitemap/gray_expand.png", :class => "folder_toggle large")
-      else
-        node.child_nodes.empty? ? image_tag("cms/sitemap/no_contents.png", :class => "no_folder_toggle") : image_tag("cms/sitemap/expand.png", :class => "folder_toggle")
+      folder_style = ""
+      expander_image = "expand.png"
+      if top_level_section?(node)
+        folder_style = " large"
+        expander_image = "gray_expand.png"
       end
+      if  node.child_nodes.empty?
+        image_tag("cms/sitemap/no_contents.png", :class => "no_folder_toggle#{folder_style}")
+      else
+        image_tag("cms/sitemap/#{expander_image}", :class => "folder_toggle#{folder_style}")
+      end
+    end
+
+    private
+    def top_level_section?(node)
+      node.node.depth <= 2
     end
 
   end

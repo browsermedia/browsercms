@@ -4,8 +4,13 @@ class Section < ActiveRecord::Base
   flush_cache_on_change
 
   #The node that links this section to its parent
-  has_one :node, :class_name => "SectionNode", :as => :node
-
+  has_one :section_node, :class_name => "SectionNode", :as => :node, :inverse_of => :node
+  def node
+    section_node
+  end
+  def node=(n)
+    self.section_node = n
+  end
   # Cannot use dependent => :destroy to do this. Ancestry's callbacks trigger before the before_destroy callback. So sections always get deleted.
   after_destroy :destroy_node
   before_destroy :deletable?
@@ -41,7 +46,7 @@ class Section < ActiveRecord::Base
 
   def before_validation
     unless node
-      self.node = build_node
+      self.node = build_section_node
     end
   end
 

@@ -43,7 +43,7 @@ module Addressable
     if node
       node.move_to_end(sec)
     else
-      build_node(:node => self, :section => sec)
+      build_section_node(:node => self, :section => sec)
     end
   end
 
