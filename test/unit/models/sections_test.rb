@@ -257,5 +257,9 @@ class TestAncestors < ActiveSupport::TestCase
     refute Factory(:section).public?
   end
 
-
+  test "#sitemap" do
+    sitemap = Section.sitemap
+    assert_equal root_section.node, sitemap.keys.first
+    assert_equal [@visible_section, @hidden_section, @visible_page , @hidden_page].map {|n|n.section_node}, sitemap[root_section.node].keys
+  end
 end

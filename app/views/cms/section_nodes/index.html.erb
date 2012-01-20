@@ -27,13 +27,16 @@
       } %>
     </li>
   </ul>
-  <% @section.navigation_children.each do |child| %>
-      <%= render :partial => child.partial_for,
+  <% @sitemap[@root_section_node].keys.each do |child_section_node| %>
+      <%= render :partial => child_section_node.node.partial_for,
                  :locals => {:display => true,
                              :root => true,
-                             :access_icon => @section.status,
-                             :node => child,
-                             :parent => @section}
+                             :access_icon => child_section_node.node.status,
+                             :node => child_section_node.node,
+                             :parent => @section,
+                             :child_hash => @sitemap[@root_section_node],
+                             :key => child_section_node
+                 }
       %>
   <% end %>
 </div>

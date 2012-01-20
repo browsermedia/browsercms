@@ -134,6 +134,7 @@ class ActiveSupport::TestCase
   # so we can just clean it out using this method where needed to avoid test breakage.
   def remove_all_sitemap_fixtures_to_avoid_bugs
     Section.delete_all
+    SectionNode.delete_all
     Page.delete_all
   end
 

@@ -76,6 +76,10 @@ class Section < ActiveRecord::Base
     child_pages.compact
   end
 
+  def self.sitemap
+    SectionNode.of_type(["Page", "Link", "Section"]).fetch_nodes.arrange(:order=>:position)
+  end
+
   # 'Navigation' children are items which should appear in a sitemap, including pages, sections and links.
   # @return [Array<Addressable>]
   def navigation_children

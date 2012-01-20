@@ -5,7 +5,10 @@ class Cms::SectionNodesController < Cms::BaseController
     @toolbar_tab = :sitemap
     @modifiable_sections = current_user.modifiable_sections
     @public_sections = Group.guest.sections.all # Load once here so that every section doesn't need to.
-    @section = Section.root.first
+
+    @sitemap = Section.sitemap
+    @root_section_node = @sitemap.keys.first
+    @section = @root_section_node.node
   end
   def move_before
     move(:before)

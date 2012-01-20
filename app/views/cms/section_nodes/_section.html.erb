@@ -15,13 +15,15 @@
             :access_icon => status_icon(access_icon),
             :parent => parent
     } %>
-    <% node.navigation_children.each do |child| %>
-        <%= render :partial => child.partial_for,
+    <% child_hash[key].keys.each do |child_section_node| %>
+        <%= render :partial => child_section_node.node.partial_for,
                    :locals => {:display => false,
                                :access_icon => access_icon,
-                               :node => child,
+                               :node => child_section_node.node,
                                :root => false,
-                               :parent => node
+                               :parent => node,
+                               :child_hash => child_hash[key],
+                               :key => child_section_node
                    } %>
     <% end %>
 
