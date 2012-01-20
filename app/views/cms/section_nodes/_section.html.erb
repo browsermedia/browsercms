@@ -1,4 +1,7 @@
 <%
+   children = child_hash[key].keys
+   section_node = key
+
    # Compare against master list of public sections rather than call node.status
    access_icon = :unlocked
    unless @public_sections.include?(node)
@@ -10,12 +13,12 @@
     <%= render :partial => "node", :locals => {
             :node => node,
             :node_type => "section",
-            :icon => "#{section_icons(node)} #{action_icon(root ? :root_folder : :folder, :class => "folder")}",
+            :icon => "#{section_icons(section_node, children)} #{action_icon(root ? :root_folder : :folder, :class => "folder")}",
             :hidden => node.hidden?,
             :access_icon => status_icon(access_icon),
             :parent => parent
     } %>
-    <% child_hash[key].keys.each do |child_section_node| %>
+    <% children.each do |child_section_node| %>
         <%= render :partial => child_section_node.node.partial_for,
                    :locals => {:display => false,
                                :access_icon => access_icon,
