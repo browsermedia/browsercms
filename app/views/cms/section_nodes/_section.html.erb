@@ -1,12 +1,7 @@
 <%
    children = child_hash[key].keys
    section_node = key
-
-   # Compare against master list of public sections rather than call node.status
-   access_icon = :unlocked
-   unless @public_sections.include?(node)
-       access_icon = :locked
-   end
+   access_status = access_status(node, @public_sections)
 %>
 <ul id="section_node_<%= node.sitemap_node_id %>" class="section_node<%= " rootlet" if root %>" style="display: <%= display ? "''" : "none" %>">
   <li>
@@ -15,13 +10,13 @@
             :node_type => "section",
             :icon => "#{section_icons(section_node, children)} #{action_icon(root ? :root_folder : :folder, :class => "folder")}",
             :hidden => node.hidden?,
-            :access_icon => status_icon(access_icon),
+            :access_icon => status_icon(access_status),
             :parent => parent
     } %>
     <% children.each do |child_section_node| %>
         <%= render :partial => child_section_node.node.partial_for,
                    :locals => {:display => false,
-                               :access_icon => access_icon,
+                               :access_icon => access_status,
                                :node => child_section_node.node,
                                :root => false,
                                :parent => node,

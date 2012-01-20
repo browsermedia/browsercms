@@ -1,6 +1,14 @@
 module Cms
   module SectionNodesHelper
 
+    def access_status(section_node, public_sections)
+      access_icon = :unlocked
+      unless public_sections.include?(section_node)
+        access_icon = :locked
+      end
+      access_icon
+    end
+
     def section_icons(section_node, children=[])
       folder_style = ""
       expander_image = "expand.png"
