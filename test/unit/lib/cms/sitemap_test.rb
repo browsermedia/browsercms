@@ -122,10 +122,6 @@ class SitemapNavTest < ActiveSupport::TestCase
     assert_equal root_section.node.id, root_section.sitemap_node_id
   end
 
-  test "#sitemap_node_id use cached_id" do
-    @page.cache_node_id = 48
-    assert_equal 48, @page.sitemap_node_id
-  end
 end
 class SitemapTest < ActiveSupport::TestCase
 

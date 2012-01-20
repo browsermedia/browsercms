@@ -15,19 +15,8 @@ module Addressable
     ancestors
   end
 
-  def cache_node_id=(id)
-    @sitemap_node_id = id
-  end
-
-  # Returns the id of the section_node for this object. Used by the sitemap to handle moving.
-  # Section#navigation_children will set this when looking up children, which prevents double loading of nodes
-  #   Since Rails 2.x lacks an identity map, this call sequence will trigger extra calls:
-  #
-  #   sn = Section.find(3, :include=>:node) # 2 queries: one for section_node, one for page
-  #   page = sn.node    # No query (page already loaded)
-  #   n = page.node     # 1 query: SectionNode 3 gets fetched again.
   def sitemap_node_id
-    @sitemap_node_id ? @sitemap_node_id : node.id
+    section_node.id
   end
 
   def parent

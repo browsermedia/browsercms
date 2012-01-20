@@ -82,7 +82,6 @@ class Section < ActiveRecord::Base
     query = node.children.of_type(["Page", "Link", "Section"]).fetch_nodes.in_order
     query.collect { |section_node|
       addressable = section_node.node
-      addressable.cache_node_id = section_node.id
       addressable.cache_parent self
       addressable
     }
