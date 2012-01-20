@@ -1,21 +1,12 @@
 class Browsercms315 < ActiveRecord::Migration
+
+
   def self.up
     add_column :section_nodes, :ancestry, :string
     add_index :section_nodes, :ancestry
 
-    generate_ancestry_keys_from_section_id()
-    # Remove old columns
-    # Should rename table too.
-
-    add_column :pages, :latest_version, :integer
-    add_column :links, :latest_version, :integer
-    Page.all.each do |p|
-      p.update_latest_version
-    end
-    Link.all.each do |link|
-      link.update_latest_version
-    end
-    # Will need to update all existing pages to have a valid value for this.
+    generate_ancestry_keys_from_section_id
+    update_latest_version_cache
   end
 
   def self.down
@@ -27,6 +18,10 @@ class Browsercms315 < ActiveRecord::Migration
 
 
   private
+
+  # todo
+  # Remove old columns
+  # Should rename table too.
   def self.generate_ancestry_keys_from_section_id
     add_column :section_nodes, :temp_parent_id, :integer
 
@@ -44,5 +39,16 @@ class Browsercms315 < ActiveRecord::Migration
 
     SectionNode.build_ancestry_from_parent_ids!
     SectionNode.reset_column_information
+  end
+
+  def self.update_latest_version_cache
+    add_column :pages, :latest_version, :integer
+    add_column :links, :latest_version, :integer
+    Page.all.each do |p|
+      p.update_latest_version
+    end
+    Link.all.each do |link|
+      link.update_latest_version
+    end
   end
 end

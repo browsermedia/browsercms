@@ -1,5 +1,9 @@
 <%
-   access_icon = node.status
+   # Compare against master list of public sections rather than call node.status
+   access_icon = :unlocked
+   unless @public_sections.include?(node)
+       access_icon = :locked
+   end
 %>
 <ul id="section_node_<%= node.sitemap_node_id %>" class="section_node<%= " rootlet" if root %>" style="display: <%= display ? "''" : "none" %>">
   <li>
@@ -17,7 +21,7 @@
                                :access_icon => access_icon,
                                :node => child,
                                :root => false,
-                                :parent => node
+                               :parent => node
                    } %>
     <% end %>
 

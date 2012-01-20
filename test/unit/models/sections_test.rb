@@ -251,4 +251,11 @@ class TestAncestors < ActiveSupport::TestCase
     sn = link.section_node
     assert_equal sn.object_id, sn.node.section_node.object_id
   end
+
+  test "#public?" do
+    assert @visible_section.public?
+    refute Factory(:section).public?
+  end
+
+
 end

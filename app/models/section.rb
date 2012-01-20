@@ -28,13 +28,11 @@ class Section < ActiveRecord::Base
   named_scope :with_path, lambda { |path| {:conditions => ['sections.path = ?', path]} }
 
   validates_presence_of :name, :path
-  #validates_presence_of :parent_id, :if => Proc.new {root.count > 0}, :message => "section is required"
 
   # Disabling '/' in section name for interoperability with FCKEditor file browser
   validates_format_of :name, :with => /\A[^\/]*\Z/, :message => "cannot contain '/'"
 
   validate :path_not_reserved
-
 
   attr_accessor :full_path
 
