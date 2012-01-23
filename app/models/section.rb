@@ -79,7 +79,7 @@ class Section < ActiveRecord::Base
   end
 
   def visible_child_nodes(options={})
-    children = child_nodes.of_type(["Section", "Page", "Link"]).all(:order => 'section_nodes.position')
+    children = child_nodes.of_type(["Section", "Page", "Link"]).fetch_nodes.in_order.all
     visible_children = children.select { |sn| sn.visible? }
     options[:limit] ? visible_children[0...options[:limit]] : visible_children
   end
