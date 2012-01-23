@@ -369,6 +369,11 @@ class PageInSectionTest < ActiveRecord::TestCase
     second_level_page = Factory(:public_page, :section=>second_level_section)
     assert_equal @football_section, second_level_page.top_level_section
   end
+
+  test "#top_level_section caches result to avoid repeated requests" do
+    top = @football_page.top_level_section
+    assert_equal top.object_id, @football_page.top_level_section.object_id
+  end
 end
 
 class PageWithAssociatedBlocksTest < ActiveRecord::TestCase

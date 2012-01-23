@@ -249,14 +249,16 @@ class Page < ActiveRecord::Base
     (a[1..a.size].map{|a| a.name} + [name]).join(" / ")
   end
   
-  # This will return the "top level section" for a page, which is the section directly
+  # This will return the "top level section" for this page, which is the section directly
   # below the root (a.k.a My Site) that this page is in.  If this page is in root,
   # then this will return root.
   #
-  # @return [Section] The first non-root ancestor if available.
+  # @return [Section] The first non-root ancestor if available, root otherwise.
   def top_level_section
+    # Cache the results of this since many projects will call it repeatly on current_page in menus.
+    return @top_level_section if @top_level_section
     a = ancestors
-    (a.size > 0 && ancestors[1]) ? ancestors[1] : Section.root.first
+    @top_level_section = (a.size > 0 && a[1]) ? a[1] : Section.root.first
   end
   
   def current_task
