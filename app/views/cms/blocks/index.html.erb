@@ -105,7 +105,7 @@
           </td>      
         <% end %>
         <% if content_type.model_class.respond_to?(:updated_at) %><td class="updated"><div class="dividers"><%= block.updated_at.to_s(:date) %></div></td><% end %>
-        <% if content_type.model_class.connectable? %><td class="used"><div class="dividers"><%= block.connected_pages.count %></div></td><% end %>
+        <% if content_type.model_class.connectable? %><td class="used"><div class="dividers"><%= block.connected_pages.size %></div></td><% end %>
         <% if content_type.model_class.publishable? %><td class="block_status"><%= status_icon(block.status) %> <div><%= block.status %></div></td><% end %>
 	<td class="last"></td>
       </tr>
