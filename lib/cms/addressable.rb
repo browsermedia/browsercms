@@ -15,10 +15,6 @@ module Addressable
     ancestors
   end
 
-  def sitemap_node_id
-    section_node.id
-  end
-
   def parent
     @parent if @parent
     node ? node.section : nil

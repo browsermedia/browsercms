@@ -1,13 +1,15 @@
 <%
    page = node
    status_icon = page.archived? ? :archived : page.status
+       first_level = in_first_level?(node)
+
 %>
-<ul id="section_node_<%= page.sitemap_node_id %>" class="section_node<%= " rootlet" if root %>" style="display: <%= display ? "''" : "none" %>">
+<%= sitemap_ul_tag(node) %>
   <li>
     <%= render :partial => "node", :locals => {
         :node => node, 
         :node_type => "page", 
-        :icon => action_icon(root ? :root_page : :page),
+        :icon => action_icon(first_level ? :root_page : :page),
         :hidden => page.hidden?,
         :access_icon => status_icon(access_icon),
         :published_status_icon => status_icon(status_icon),

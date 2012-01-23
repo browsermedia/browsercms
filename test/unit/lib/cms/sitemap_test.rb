@@ -116,12 +116,6 @@ class SitemapNavTest < ActiveSupport::TestCase
     assert_equal @link.section.status, @link.access_status
   end
 
-  test "#sitemap_node_id" do
-    assert_equal @page.node.id, @page.sitemap_node_id
-    assert_equal @link.node.id, @link.sitemap_node_id
-    assert_equal root_section.node.id, root_section.sitemap_node_id
-  end
-
 end
 class SitemapTest < ActiveSupport::TestCase
 

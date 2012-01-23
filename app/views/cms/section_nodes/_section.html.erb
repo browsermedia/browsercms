@@ -2,23 +2,22 @@
    children = child_hash[key].keys
    section_node = key
    access_status = access_status(node, @public_sections)
+   first_level = in_first_level?(node)
 %>
-<ul id="section_node_<%= node.sitemap_node_id %>" class="section_node<%= " rootlet" if root %>" style="display: <%= display ? "''" : "none" %>">
+<%= sitemap_ul_tag(node) %>
   <li>
     <%= render :partial => "node", :locals => {
             :node => node,
             :node_type => "section",
-            :icon => "#{section_icons(section_node, children)} #{action_icon(root ? :root_folder : :folder, :class => "folder")}",
+            :icon => "#{section_icons(section_node, children)} #{action_icon(first_level ? :root_folder : :folder, :class => "folder")}",
             :hidden => node.hidden?,
             :access_icon => status_icon(access_status),
             :parent => parent
     } %>
     <% children.each do |child_section_node| %>
         <%= render :partial => child_section_node.node.partial_for,
-                   :locals => {:display => false,
-                               :access_icon => access_status,
+                   :locals => {:access_icon => access_status,
                                :node => child_section_node.node,
-                               :root => false,
                                :parent => node,
                                :child_hash => child_hash[key],
                                :key => child_section_node
