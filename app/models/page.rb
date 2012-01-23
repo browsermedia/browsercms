@@ -252,6 +252,8 @@ class Page < ActiveRecord::Base
   # This will return the "top level section" for a page, which is the section directly
   # below the root (a.k.a My Site) that this page is in.  If this page is in root,
   # then this will return root.
+  #
+  # @return [Section] The first non-root ancestor if available.
   def top_level_section
     a = ancestors
     (a.size > 0 && ancestors[1]) ? ancestors[1] : Section.root.first

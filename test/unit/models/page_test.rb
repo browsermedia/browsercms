@@ -360,6 +360,15 @@ class PageInSectionTest < ActiveRecord::TestCase
     assert @football_page.in_section?("First Section")
     assert @baseball_page.in_section?("First Section")
   end
+
+  test "#top_level_section" do
+    assert_equal @football_section,  @football_page.top_level_section
+    assert_equal @baseball_section,  @baseball_page.top_level_section
+
+    second_level_section = Factory(:public_section, :parent=>@football_section)
+    second_level_page = Factory(:public_page, :section=>second_level_section)
+    assert_equal @football_section, second_level_page.top_level_section
+  end
 end
 
 class PageWithAssociatedBlocksTest < ActiveRecord::TestCase
