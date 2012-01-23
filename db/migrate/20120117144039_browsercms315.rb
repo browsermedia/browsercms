@@ -1,19 +1,40 @@
 class Browsercms315 < ActiveRecord::Migration
 
+  # These indexes help make the sitemap more efficient when loading
+  INDEXES = [
+    [:pages, :deleted],
+    [:groups, :code],
+    [:groups, :group_type_id],
+    [:group_types, :cms_access],
+    [:group_sections, :section_id],
+		[:group_sections, :group_id],
+    [:section_nodes, :node_type],
+    [:user_group_memberships, :group_id],
+    [:user_group_memberships, :user_id],
+    [:group_permissions, :group_id],
+    [:group_permissions, :permission_id],
+    [:group_permissions, [:group_id, :permission_id]],
+    [:section_nodes, :ancestry]
+  ]
 
   def self.up
     add_column :section_nodes, :ancestry, :string
-    add_index :section_nodes, :ancestry
 
     generate_ancestry_keys_from_section_id
     update_latest_version_cache
+
+    INDEXES.each do |index|
+      add_index *index
+    end
   end
 
   def self.down
+    INDEXES.each do |index|
+      remove_index *index
+    end
     remove_column :links, :latest_version
     remove_column :pages, :latest_version
     remove_column :section_nodes, :ancestry
-    remove_index :section_nodes, :ancestry
   end
 
 
