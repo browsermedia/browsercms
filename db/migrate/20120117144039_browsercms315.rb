@@ -1,20 +1,32 @@
 class Browsercms315 < ActiveRecord::Migration
 
-  # These indexes help make the sitemap more efficient when loading
+  # These indexes help make the following pages efficient when loading:
+  # * /cms/sitemap
+  # * Any page
   INDEXES = [
-    [:pages, :deleted],
-    [:groups, :code],
-    [:groups, :group_type_id],
-    [:group_types, :cms_access],
-    [:group_sections, :section_id],
-		[:group_sections, :group_id],
-    [:section_nodes, :node_type],
-    [:user_group_memberships, :group_id],
-    [:user_group_memberships, :user_id],
-    [:group_permissions, :group_id],
-    [:group_permissions, :permission_id],
-    [:group_permissions, [:group_id, :permission_id]],
-    [:section_nodes, :ancestry]
+      [:pages, :deleted],
+      [:pages, :path],
+      [:groups, :code],
+      [:groups, :group_type_id],
+      [:group_types, :cms_access],
+      [:group_sections, :section_id],
+      [:group_sections, :group_id],
+      [:section_nodes, :node_type],
+      [:user_group_memberships, :group_id],
+      [:user_group_memberships, :user_id],
+      [:group_permissions, :group_id],
+      [:group_permissions, :permission_id],
+      [:group_permissions, [:group_id, :permission_id]],
+      [:section_nodes, :ancestry],
+      [:connectors, :page_id],
+      [:connectors, :page_version],
+      [:page_versions, :page_id],
+      [:html_block_versions, :html_block_id],
+      [:html_block_versions, :version],
+      [:portlet_attributes, :portlet_id],
+      [:portlets, :name],
+      [:sections, :path],
+      [:redirects, :from_path],
   ]
 
   def self.up
