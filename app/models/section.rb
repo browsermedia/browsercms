@@ -1,17 +1,15 @@
 class Section < ActiveRecord::Base
 
-  include Addressable
   flush_cache_on_change
 
   #The node that links this section to its parent
   has_one :section_node, :class_name => "SectionNode", :as => :node, :inverse_of => :node
-  def node
-    section_node
-  end
-  def node=(n)
-    self.section_node = n
-  end
-  # Cannot use dependent => :destroy to do this. Ancestry's callbacks trigger before the before_destroy callback. So sections always get deleted.
+
+  include Addressable
+  include Addressable::NodeAccessors
+
+  # Cannot use dependent => :destroy to do this. Ancestry's callbacks trigger before the before_destroy callback.
+  #   So sections would always get deleted since deletable? would return true
   after_destroy :destroy_node
   before_destroy :deletable?
 
@@ -78,17 +76,6 @@ class Section < ActiveRecord::Base
 
   def self.sitemap
     SectionNode.of_type(["Page", "Link", "Section"]).fetch_nodes.arrange(:order=>:position)
-  end
-
-  # 'Navigation' children are items which should appear in a sitemap, including pages, sections and links.
-  # @return [Array<Addressable>]
-  def navigation_children
-    query = node.children.of_type(["Page", "Link", "Section"]).fetch_nodes.in_order
-    query.collect { |section_node|
-      addressable = section_node.node
-      addressable.cache_parent self
-      addressable
-    }
   end
 
   def visible_child_nodes(options={})

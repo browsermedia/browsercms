@@ -218,13 +218,6 @@ class TestAncestors < ActiveSupport::TestCase
     assert_equal @visible_section, new_section.parent
   end
 
-  test "#navigation_children" do
-    root = root_section
-    assert_equal [@visible_section, @hidden_section, @visible_page, @hidden_page], root.navigation_children
-    assert_equal root, @visible_section.parent
-    assert_equal root, @visible_page.parent
-  end
-
   test "#partial_for" do
     assert_equal "section", @visible_section.partial_for
     assert_equal "page", @visible_page.partial_for

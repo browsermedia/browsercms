@@ -44,14 +44,20 @@ module Addressable
     end
   end
 
+  module NodeAccessors
+    def node
+      section_node
+    end
+
+    def node=(n)
+      self.section_node = n
+    end
+  end
   # These exist for backwards compatibility to avoid having to change tests.
   # I want to get rid of these in favor of parent and parent_id
   module DeprecatedPageAccessors
     include LeafNode
-
-    def node
-      section_node
-    end
+    include NodeAccessors
 
     def build_node(opts)
       build_section_node(opts)
