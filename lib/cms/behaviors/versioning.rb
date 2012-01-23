@@ -218,32 +218,13 @@ module Cms
         end
 
         def as_of_draft_version
-          as_of_version(draft.version)
+          build_object_from_version(draft)
         end
 
         def as_of_version(version)
           v = find_version(version)
           raise ActiveRecord::RecordNotFound.new("version #{version.inspect} does not exist for <#{self.class}:#{id}>") unless v
-          obj = self.class.new
-
-          (self.class.versioned_columns + [:version, :created_at, :created_by_id, :updated_at, :updated_by_id]).each do |a|
-            obj.send("#{a}=", v.send(a))
-          end
-          obj.id = id
-          obj.lock_version = lock_version
-
-          # Need to do this so associations can be loaded
-          obj.instance_variable_set("@new_record", false)
-
-          # Callback to allow us to load other data when an older version is loaded
-          obj.after_as_of_version if obj.respond_to?(:after_as_of_version)
-
-          # Last but not least, clear the changed attributes
-          if changed_attrs = obj.send(:changed_attributes)
-            changed_attrs.clear
-          end
-
-          obj
+          build_object_from_version(v)
         end
 
         def revert
@@ -284,6 +265,35 @@ module Cms
             return true if self.send(col) != last_draft.send(col)
           end
           return false
+        end
+
+        private
+
+        # Given a ::Version object of a given type, create an original object from its attributes.
+        #
+        # @param [Class#name::Version] version (i.e. HtmlBlock::Version)
+        # @return [Class#name] i.e. HtmlBlock
+        def build_object_from_version(version_of_object)
+          obj = self.class.new
+
+          (self.class.versioned_columns + [:version, :created_at, :created_by_id, :updated_at, :updated_by_id]).each do |a|
+            obj.send("#{a}=", version_of_object.send(a))
+          end
+          obj.id = id
+          obj.lock_version = lock_version
+
+          # Need to do this so associations can be loaded
+          obj.instance_variable_set("@new_record", false)
+
+          # Callback to allow us to load other data when an older version is loaded
+          obj.after_as_of_version if obj.respond_to?(:after_as_of_version)
+
+          # Last but not least, clear the changed attributes
+          if changed_attrs = obj.send(:changed_attributes)
+            changed_attrs.clear
+          end
+
+          obj
         end
 
       end

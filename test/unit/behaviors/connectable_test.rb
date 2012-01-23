@@ -20,8 +20,10 @@ class ConnectableTest < ActiveSupport::TestCase
     assert_equal [@connected_page, @connected_page_2], @block.connected_pages
   end
 
-  test "@connected_pages should return same list when called twice" do
+  test "#connected_pages should return same list when called twice" do
     expected = @block.connected_pages
     assert_equal expected.object_id, @block.connected_pages.object_id
   end
+
+
 end
