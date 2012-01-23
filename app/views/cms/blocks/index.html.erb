@@ -50,7 +50,6 @@
 <% page_title "Content Library / List #{content_type.display_name_plural}" %>
 <% @toolbar_title = "List #{content_type.display_name_plural}" %>
 <%= render :partial => 'cms/blocks/toolbar' %>
-
 <div class="roundedcorners">
 <table id="blocks" class="data">
   <thead>
@@ -90,8 +89,9 @@
        col_ct += 1 if content_type.model_class.publishable? %>
     <% @blocks.each do |b| %>
       <% block = b.class.versioned? ? b.as_of_draft_version : b %>
-      <tr id="<%= block.class.name.underscore %>_<%= block.id %>" class="<%= block.class.name.underscore %> <%= block.class.publishable? && !block.published? ? 'draft' : 'published' %> <%= 'non-editable' unless current_user.able_to_edit?(block) %> <%= 'non-publishable' unless current_user.able_to_publish?(block) %>">
-	<td class="first"></td>
+
+    <%= block_row_tag(block) %>
+    <td class="first"></td>
         <% content_type.columns_for_index.each_with_index do |column, i| %>
           <td class="<%= column[:label].gsub(' ', '').underscore %>">
             <div<%= ' class="dividers"' if (i + 3 < col_ct) %>>

@@ -106,7 +106,8 @@ module Cms
         end    
             
         def status
-          live? ? :published : :draft
+          return @status if @status
+          @status = live? ? :published : :draft
         end
 
         def status_name
