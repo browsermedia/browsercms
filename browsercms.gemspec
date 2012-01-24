@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
   s.files += Dir["db/migrate/[0-9]*_*.rb"]
   s.files += Dir["db/demo/**/*"]
   s.files += Dir["lib/**/*"]
+  s.files -= Dir["lib/tasks/data.rake"]
   s.files += Dir["rails_generators/**/*"]
   s.files += Dir["public/stylesheets/cms/**/*"]
   s.files += Dir["public/javascripts/jquery*"]
@@ -40,5 +41,6 @@ Gem::Specification.new do |s|
   s.test_files = Dir["test/**/*"]
 
   s.add_dependency "rails", "~> 2.3.11"
+  s.add_dependency "ancestry", "~> 1.2.4"
 end
 
