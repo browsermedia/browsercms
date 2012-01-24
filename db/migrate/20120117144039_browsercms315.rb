@@ -32,6 +32,11 @@ class Browsercms315 < ActiveRecord::Migration
       [:connectors, :connectable_type],
       [:content_types, :content_type_group_id],
       [:content_types, :name],
+      [:file_block_versions, :file_block_id],
+      [:file_block_versions, :version],
+      [:file_blocks, :deleted],
+      [:file_blocks, :type],
+      [:attachment_versions, :attachment_id],
   ]
 
   def self.up
