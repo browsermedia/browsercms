@@ -1,6 +1,11 @@
 class LoadSeedData < ActiveRecord::Migration
   extend Cms::DataLoader
   def self.up
+    if User.count > 0
+      puts "Database has already been seeded. So skip reloading."
+      return
+    end
+
     if %w[development test dev local].include?(Rails.env)
       pwd = "cmsadmin"
     else

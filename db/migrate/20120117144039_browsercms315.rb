@@ -1,8 +1,18 @@
 class Browsercms315 < ActiveRecord::Migration
+  def self.up
+    generate_ancestry_from_section_id
+    update_latest_version_cache
 
-  # These indexes help make the following pages efficient when loading:
-  # * /cms/sitemap
-  # * Any page
+    INDEXES.each do |index|
+      add_index *index
+    end
+  end
+
+  def self.down
+    # This migration is not reversible since it removes the original section_id column.
+  end
+
+  # Add some very commonly used indexes to improve the site performance as the # of pages/content grows (i.e. several thousand pages)
   INDEXES = [
       [:pages, :deleted],
       [:pages, :path],
@@ -44,38 +54,17 @@ class Browsercms315 < ActiveRecord::Migration
       [:tasks, :assigned_to_id],
   ]
 
-  def self.up
-    add_column :section_nodes, :ancestry, :string
-
-    generate_ancestry_keys_from_section_id
-    update_latest_version_cache
-
-    INDEXES.each do |index|
-      add_index *index
-    end
-  end
-
-  def self.down
-    INDEXES.each do |index|
-      remove_index *index
-    end
-    remove_column :links, :latest_version
-    remove_column :pages, :latest_version
-    remove_column :section_nodes, :ancestry
-  end
-
-
   private
 
-  # todo
-  # Remove old columns
-  # Should rename table too.
-  def self.generate_ancestry_keys_from_section_id
+  # v3.1.5 uses Ancestry to manage the parent child relationship between sections and their children.
+  # This converts the data from the old section_id to use the ancestry column.
+  def self.generate_ancestry_from_section_id
+    add_column :section_nodes, :ancestry, :string
     add_column :section_nodes, :temp_parent_id, :integer
 
     SectionNode.reset_column_information
     root_section = Section.root.first
-    SectionNode.create!(:node => root_section)
+    SectionNode.create!(:node => root_section) if root_section
 
     all_nodes_but_root = SectionNode.find(:all, :conditions=>["section_id IS NOT NULL"])
     all_nodes_but_root.each do |sn|
@@ -83,12 +72,15 @@ class Browsercms315 < ActiveRecord::Migration
       sn.temp_parent_id = parent_node.id
       sn.save!
     end
-    rename_column :section_nodes, :temp_parent_id, :parent_id
+    rename_column :section_nodes, :temp_parent_id, :parent_id # Ancestry works off the 'parent_id' column.
 
     SectionNode.build_ancestry_from_parent_ids!
+    remove_column :section_nodes, :section_id
+    remove_column :section_nodes, :parent_id
     SectionNode.reset_column_information
   end
 
+  # Adds a 'latest_version' pointer to pages and links. Greatly reduces the number of queries the sitemap requires to determine if pages are in draft/published mode
   def self.update_latest_version_cache
     add_column :pages, :latest_version, :integer
     add_column :links, :latest_version, :integer
