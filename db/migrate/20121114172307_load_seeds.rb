@@ -1,4 +1,6 @@
-class LoadSeedData < ActiveRecord::Migration
+# This is a new seed data file (new timestamp and name) so migrations will work in order.
+#   It should be able to peacefully coexist next to the previous load_seed_data
+class LoadSeeds < ActiveRecord::Migration
   extend Cms::DataLoader
   def self.up
     if User.count > 0

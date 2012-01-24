@@ -40,7 +40,7 @@ Gem::Specification.new do |s|
   s.summary = %q{BrowserCMS is a general purpose, open source Web Content Management System (CMS) written in Ruby on Rails. Designed for web developers who want to create great looking websites while using standard Rails tools for customizing it.}
   s.test_files = Dir["test/**/*"]
 
-  s.add_dependency "rails", "~> 2.3.11"
+  s.add_dependency "rails", "~> 2.3.14"
   s.add_dependency "ancestry", "~> 1.2.4"
 end
 
