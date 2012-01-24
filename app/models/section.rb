@@ -49,10 +49,9 @@ class Section < ActiveRecord::Base
   # Returns a list of all children which are sections.
   # @return [Array<Section>]
   def sections
-    child_sections = self.node.children.collect do |section_node|
-      section_node.node if section_node.section?
+    child_nodes.of_type("Section").fetch_nodes.in_order.collect do |section_node|
+      section_node.node
     end
-    child_sections.compact
   end
 
   alias :child_sections :sections
@@ -85,12 +84,12 @@ class Section < ActiveRecord::Base
   end
 
 
-  # This method is probably unnecessary. Could be rewritten to have each section be able to known its own page.
-  # @todo - Replace this with #sections and add a #full_path to Section
-  def all_children_with_name
+  # Returns a complete list of all sections that are desecendants of this sections, in order, as a single flat list.
+  # Used by Section selectors where users have to pick a single section from a complete list of all sections.
+  def master_section_list
     sections.map do |section|
       section.full_path = root? ? section.name : "#{name} / #{section.name}"
-      [section] << section.all_children_with_name
+      [section] << section.master_section_list
     end.flatten.compact
   end
 

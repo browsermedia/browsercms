@@ -3,7 +3,7 @@
    root.full_path = root.name
    @sections = []
    @sections << root
-   @sections += root.all_children_with_name
+   @sections += root.master_section_list
    @sections.each {|s| s.full_path = "/" + s.full_path unless s == root }
   @block.attachment_file_path = @block.attachment.file_path if @block.attachment_file_path.blank? && !@block.new_record?
 %>

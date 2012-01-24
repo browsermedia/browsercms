@@ -205,10 +205,6 @@ class TestAncestors < ActiveSupport::TestCase
     assert_equal [root_section, @visible_section], @visible_section.ancestors(:include_self=>true)
   end
 
-  test "all_children_with_name" do
-    assert_equal [@visible_section, @hidden_section], root_section.all_children_with_name
-  end
-
   test "#ancestry_path delegates to SectionNode" do
     assert_equal @visible_section.node.ancestry_path, @visible_section.ancestry_path
   end
@@ -255,4 +251,14 @@ class TestAncestors < ActiveSupport::TestCase
     assert_equal root_section.node, sitemap.keys.first
     assert_equal [@visible_section, @hidden_section, @visible_page , @hidden_page].map {|n|n.section_node}, sitemap[root_section.node].keys
   end
+
+  test "#master_section_list" do
+    subsection = Factory(:public_section, :parent=>@visible_section, :name=>"Child 1")
+    sections = root_section.master_section_list
+    assert_equal [@visible_section, subsection, @hidden_section], sections
+    assert_equal "#{@visible_section.name}", sections[0].full_path
+    assert_equal "#{@visible_section.name} / #{subsection.name}", sections[1].full_path
+    assert_equal "#{@hidden_section.name}", sections[2].full_path
+  end
+
 end
