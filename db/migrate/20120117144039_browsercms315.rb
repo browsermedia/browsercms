@@ -6,12 +6,14 @@ class Browsercms315 < ActiveRecord::Migration
   INDEXES = [
       [:pages, :deleted],
       [:pages, :path],
+      [:pages, :version],
       [:page_versions, :page_id],
       [:groups, :code],
       [:groups, :group_type_id],
       [:group_types, :cms_access],
       [:group_sections, :section_id],
       [:group_sections, :group_id],
+      [:users, :expires_at],
       [:user_group_memberships, :group_id],
       [:user_group_memberships, :user_id],
       [:group_permissions, :group_id],
@@ -37,6 +39,9 @@ class Browsercms315 < ActiveRecord::Migration
       [:file_blocks, :deleted],
       [:file_blocks, :type],
       [:attachment_versions, :attachment_id],
+      [:tasks, :page_id],
+      [:tasks, :completed_at],
+      [:tasks, :assigned_to_id],
   ]
 
   def self.up
