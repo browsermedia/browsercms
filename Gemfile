@@ -4,7 +4,7 @@ source 'http://rubygems.org'
 gemspec
 
 gem "mysql2", '0.2.11'
-gem 'query_reviewer'
+# gem 'query_reviewer' # Enable for performance tuning
 
 # Gem Environments
 group :development do

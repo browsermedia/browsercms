@@ -12,7 +12,6 @@ bcms_google_mini_search - 1.2 pushed to github. Gem not released.
 
 Future Things to do
 ===============
-* Review integration tests to determine where 'error_messages_on' deprecation is coming from.
 * Having to explicitly add migrations files to module installers is somewhat tedious and error prone. (Might not be a big deal though)
 * Add Block.publish and publish! for easier coding.
 * Move 'datepicker' initialization into application.js
