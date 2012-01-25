@@ -1,5 +1,9 @@
 class Page < ActiveRecord::Base
-  
+
+  def actual_path
+    path
+  end
+
   is_archivable
   flush_cache_on_change
   is_hideable
@@ -57,8 +61,12 @@ class Page < ActiveRecord::Base
     end
   }
   
-  has_one :section_node, :as => :node, :dependent => :destroy
-  
+  has_one :section_node, :as => :node, :dependent => :destroy, :inverse_of => :node
+
+
+  include Addressable
+  include Addressable::DeprecatedPageAccessors
+
   has_many :tasks
   
   before_validation :append_leading_slash_to_path, :remove_trailing_slash_from_path
@@ -123,7 +131,7 @@ class Page < ActiveRecord::Base
           :page_version => options[:to_version_number], 
           :connectable => connectable, 
           :connectable_version => version,
-          :container => c.container, 
+          :container => c.container,
           :position => c.position
         )
         logger.debug {"Built new connector #{new_connector}."}
@@ -200,26 +208,6 @@ class Page < ActiveRecord::Base
     "?"
   end
   
-  def section_id
-    section ? section.id : nil
-  end
-  
-  def section
-    section_node ? section_node.section : nil
-  end
-  
-  def section_id=(sec_id)
-    self.section = Section.find(sec_id)
-  end
-  
-  def section=(sec)
-    if section_node
-      section_node.move_to_end(sec)
-    else
-      build_section_node(:node => self, :section => sec)
-    end      
-  end
-  
   def public?
     section ? section.public? : false
   end
@@ -261,16 +249,25 @@ class Page < ActiveRecord::Base
     template_file_name && PageTemplate.display_name(template_file_name)
   end
 
-  def ancestors
-    section_node.ancestors
-  end
-  
+  # Determines if a page is a descendant of a given Section.
+  #
+  # @param [String | Section] section_or_section_name
   def in_section?(section_or_section_name)
-    sec = section_or_section_name.is_a?(String) ? 
-      Section.first(:conditions => {:name => section_or_section_name}) : 
-      section_or_section_name
-    fn = lambda{|s| s ? (s == sec || fn.call(s.parent)) : false}
-    fn.call(section)
+    found = false
+    ancestors.each do |a|
+      if section_or_section_name.is_a?(String)
+        if a.name == section_or_section_name
+          found = true
+          break
+        end
+      else
+        if a == section_or_section_name
+          found = true
+          break
+        end
+      end
+    end
+    found
   end
     
   #Returns true if the block attached to each connector in the given container are published
@@ -294,12 +291,16 @@ class Page < ActiveRecord::Base
     (a[1..a.size].map{|a| a.name} + [name]).join(" / ")
   end
   
-  # This will return the "top level section" for a page, which is the section directly
+  # This will return the "top level section" for this page, which is the section directly
   # below the root (a.k.a My Site) that this page is in.  If this page is in root,
   # then this will return root.
+  #
+  # @return [Section] The first non-root ancestor if available, root otherwise.
   def top_level_section
+    # Cache the results of this since many projects will call it repeatly on current_page in menus.
+    return @top_level_section if @top_level_section
     a = ancestors
-    (a.size > 0 && ancestors[1]) ? ancestors[1] : Section.root.first
+    @top_level_section = (a.size > 0 && a[1]) ? a[1] : Section.root.first
   end
   
   def current_task

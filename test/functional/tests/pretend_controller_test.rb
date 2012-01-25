@@ -3,6 +3,11 @@ require 'test_helper'
 class Tests::PretendControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
 
+  def setup
+    remove_all_sitemap_fixtures_to_avoid_bugs
+    given_a_site_exists
+  end
+
   test "open" do
     get :open
     assert_response :success
@@ -14,7 +19,7 @@ class Tests::PretendControllerTest < ActionController::TestCase
 
     get :restricted
     assert_response 403
-    assert_select 'h1', "Access Denied"
+    assert_select 'title', "Access Denied"
   end
 
   test "restricted page should be visible to cmsadmins" do
@@ -32,7 +37,6 @@ class Tests::PretendControllerTest < ActionController::TestCase
     get :not_found
     assert_response :missing
     assert_select "title", "Not Found"
-    assert_select "h1", "Page Not Found"
   end
 
   # See content_controller_tests for similar behavio
@@ -49,6 +53,5 @@ class Tests::PretendControllerTest < ActionController::TestCase
     get :error
     assert_response :error
     assert_select "title", "Server Error"
-    assert_select "p", "The server encountered an unexpected condition that prevented it from fulfilling the request.", "Default CMS server error content"
   end
 end

@@ -103,3 +103,54 @@ class Attachment::SectionTest < ActiveSupport::TestCase
     assert_equal new_section, @attachment.section
   end
 end
+
+class AttachmentRelations < ActiveSupport::TestCase
+
+  def setup
+    @file = file_upload_object({:original_filename=>"sample_upload.txt", :content_type=>"text/plain"})
+    @attachment = Attachment.new(:temp_file => @file, :file_path => "/bar.txt", :section => root)
+    @attachment.save!
+  end
+
+  test "#section= assigns a parent to a given attachment" do
+    a = Attachment.new
+    a.section = root
+    assert_equal root, a.section
+  end
+
+  test "Attachments should be associated with a section" do
+    assert_not_nil @attachment.section_node
+    assert_not_nil @attachment.section_node.parent
+    assert_equal root, @attachment.section
+  end
+
+  test "Attachment should be unpublished and unfindable" do
+    assert !@attachment.published?, "Attachment should not be published"
+    assert_nil Attachment.find_live_by_file_path("/foo.txt")
+  end
+
+  test "Publishing an attachment should make it findable" do
+    @attachment.publish
+    assert @attachment.reload.published?, "Attachment should be published"
+    assert_equal @attachment, Attachment.find_live_by_file_path("/bar.txt")
+  end
+
+  test "Changing but not republishing an attachment should keep old version live" do
+    @attachment.publish
+    assert_equal @root, @attachment.section
+    @attachment.update_attributes!(:file_type => "text/html")
+    assert !@attachment.live?, "Attachment should not be live"
+    assert_equal @attachment.as_of_version(2), Attachment.find_live_by_file_path("/bar.txt")
+  end
+
+  test "Updating the section" do
+    new_section = Factory(:section, :name => "New")
+    @attachment.update_attributes!(:section => new_section)
+    assert_equal new_section, @attachment.section
+  end
+  private
+
+  def root
+    @root ||= Factory :root_section
+  end
+end

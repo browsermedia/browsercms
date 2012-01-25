@@ -4,6 +4,7 @@ class Cms::FileBlocksControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
 
   def setup
+    given_a_site_exists
     login_as_cms_admin
   end
   

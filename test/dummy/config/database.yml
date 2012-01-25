@@ -1,6 +1,6 @@
 # Only working against development for now.
 development:
-  adapter: mysql
+  adapter: mysql2
   encoding: utf8
   reconnect: false
   pool: 5
@@ -11,7 +11,7 @@ development:
 
 # Testing how static assets serving works.
 production:
-  adapter: mysql
+  adapter: mysql2
   encoding: utf8
   reconnect: false
   pool: 5

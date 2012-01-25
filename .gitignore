@@ -21,3 +21,4 @@ Gemfile.lock
 doc/api
 .yardoc/*
 .bundle/*
+db/backups

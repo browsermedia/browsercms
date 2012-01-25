@@ -4,6 +4,7 @@ class Cms::SectionsControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
   
   def setup
+    given_a_site_exists
     login_as_cms_admin
   end
   
@@ -38,6 +39,7 @@ class Cms::SectionFileBrowserControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
   
   def setup
+    given_a_site_exists
     login_as_cms_admin
   end
   

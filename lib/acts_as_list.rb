@@ -7,7 +7,7 @@ module ActsAsList
   # The class that has this specified needs to have a +position+ column defined as an integer on
   # the mapped database table.
   #
-  # Todo list example:
+  # To Do list example:
   #
   #   class TodoList < ActiveRecord::Base
   #     has_many :todo_items, :order => "position"

@@ -2,6 +2,8 @@ require 'cms/engine'
 require 'cms/extensions'
 require 'cms/routes'
 require 'cms/caching'
+require 'cms/addressable'
+require 'cms/error_pages'
 
 #Load libraries that are included with CMS
 require 'acts_as_list'

@@ -27,7 +27,7 @@ end
 class VersionedAttachable < ActiveRecord::Base
   acts_as_content_block :belongs_to_attachment => true
 
-  def set_attachment_file_path
+  def use_default_attachment_path
     if @attachment_file_path && @attachment_file_path != attachment.file_path
       attachment.file_path = @attachment_file_path
     end
@@ -40,34 +40,12 @@ class VersionedAttachable < ActiveRecord::Base
   end
 end
 
-
-class AttachableBehaviorTest < ActiveSupport::TestCase
-
-  def setup
-    @file = mock_file
-
-    @attachable = DefaultAttachable.create!(:name => "File Name", :attachment_file => @file, :publish_on_save => true)
-
-  end
-
-  test "Saving a block which an attachment should save both and associate it" do
-    content = DefaultAttachable.find(@attachable.id)
-
-    log "All default attachables #{DefaultAttachable.all}"
-    log "All attachments #{Attachment.all}"
-
-    assert_not_nil content.attachment 
-
-
-  end
-end
-
-
 class DefaultAttachableTest < ActiveSupport::TestCase
   def setup
+    remove_all_sitemap_fixtures_to_avoid_bugs
+
     #file is a mock of the object that Rails wraps file uploads in
     @file = mock_file
-
     @section = root_section
   end
 
@@ -84,12 +62,9 @@ class DefaultAttachableTest < ActiveSupport::TestCase
   end
 
   def test_create_with_attachment_file
-    @attachable = DefaultAttachable.new(:name => "File Name",
-                                        :attachment_file => @file, :publish_on_save => true)
-
+    @attachable = DefaultAttachable.new(:name => "File Name", :attachment_file => @file, :publish_on_save => true)
     attachable_count = DefaultAttachable.count
 
-    assert_valid @attachable
     @attachable.save!
 
     assert_incremented attachable_count, DefaultAttachable.count
@@ -135,7 +110,6 @@ class DefaultAttachableTest < ActiveSupport::TestCase
     assert_equal "/attachments/foo.jpg", @attachable.attachment_file_path
     assert @attachable.attachment.published?
   end
-
 
 end
 

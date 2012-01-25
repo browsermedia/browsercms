@@ -3,29 +3,12 @@ class Link < ActiveRecord::Base
   
   scope :named, lambda{|name| {:conditions => ['links.name = ?', name]}}
   
-  has_one :section_node, :as => :node, :dependent => :destroy
-  
+  has_one :section_node, :as => :node, :dependent => :destroy, :inverse_of => :node
+
   validates_presence_of :name
 
-  def section_id
-    section ? section.id : nil
-  end
-  
-  def section
-    section_node ? section_node.section : nil
-  end
-  
-  def section_id=(sec_id)
-    self.section = Section.find(sec_id)
-  end
-  
-  def section=(sec)
-    if section_node
-      section_node.move_to_end(sec)
-    else
-      build_section_node(:node => self, :section => sec)
-    end      
-  end
+  include Addressable
+  include Addressable::DeprecatedPageAccessors
 
   #needed by menu_helper
   def path

@@ -125,15 +125,24 @@ module Cms
         end    
             
         def status
-          live? ? :published : :draft
-        end        
+          return @status if @status
+          @status = live? ? :published : :draft
+        end
 
         def status_name
           status.to_s.titleize
         end
 
         def live?
-          self.class.versioned? ? live_version.version == draft.version && published? : true
+          if self.class.versioned?
+            if (respond_to?(:latest_version) && self.latest_version)
+              version == latest_version && published?
+            else
+              live_version.version == draft.version && published?
+            end
+          else
+            true
+          end
         end
         
       end

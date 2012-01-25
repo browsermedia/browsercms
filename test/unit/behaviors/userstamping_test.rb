@@ -11,6 +11,7 @@ class UserStampingTest < ActiveSupport::TestCase
   end
 
   test "if no current user, then timestamp should be nil" do
+    User.expects(:current).returns(nil).at_least_once
     block = HtmlBlock.create!(:name=>"A")
     assert_nil block.created_by
     assert_nil block.updated_by

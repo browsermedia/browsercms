@@ -146,6 +146,31 @@ class UserAbleToViewTest < ActiveSupport::TestCase
 
 end
 
+
+class PageEdittingPermissions < ActiveSupport::TestCase
+  def setup
+    given_a_site_exists
+    @content_editor = Factory(:content_editor)
+    @private_section = Factory(:section, :parent=>root_section)
+    @private_page = Factory(:public_page, :section=>@private_section)
+    @editable_page = Factory(:public_page, :section=>root_section)
+  end
+
+  test "#able_to_edit" do
+    assert_equal false, @content_editor.able_to_edit?(@private_page)
+    assert_equal true, @content_editor.able_to_edit?(@editable_page)
+  end
+
+  test "#able_to_publish?" do
+    assert_equal false, @content_editor.able_to_publish?(@private_page)
+    assert_equal true, @content_editor.able_to_publish?(@editable_page)
+  end
+
+  test "#section_blacklist" do
+    assert_equal [@root_section, @system_section], @content_editor.modifiable_sections
+  end
+end
+
 class UserPermissionsTest < ActiveSupport::TestCase
   def setup
     @user = Factory(:user)
@@ -250,22 +275,6 @@ class UserPermissionsTest < ActiveSupport::TestCase
     assert @user.able_to_view?(@page)
   end
 
-  test "cms user who can edit content" do
-    @group = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
-    @group.permissions << create_or_find_permission_named("edit_content")
-    @user.groups << @group
-
-    node = stub
-
-    @user.stubs(:able_to_modify?).with(node).returns(true)
-    assert @user.able_to_edit?(node)
-    assert !@user.able_to_publish?(node)
-
-    @user.stubs(:able_to_modify?).with(node).returns(false)
-    assert !@user.able_to_edit?(node)
-    assert !@user.able_to_publish?(node)
-  end
-
   test "cms user who can publish content" do
     @group = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
     @group.permissions << create_or_find_permission_named("publish_content")
@@ -287,9 +296,10 @@ end
 class GuestUserTest < ActiveSupport::TestCase
   def setup
     @guest_user = User.guest
+    @root = Factory(:root_section)
     @guest_group = Group.guest
-    @public_page = Factory(:page, :section => root_section)
-    @protected_section = Factory(:section, :parent => root_section)
+    @public_page = Factory(:page, :section => @root)
+    @protected_section = Factory(:section, :parent => @root)
     @protected_page = Factory(:page, :section => @protected_section)
   end
 

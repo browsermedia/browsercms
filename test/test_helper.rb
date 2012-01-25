@@ -48,9 +48,9 @@ class ActiveSupport::TestCase
 
   require File.dirname(__FILE__) + '/test_logging'
   include TestLogging
-  require File.dirname(__FILE__) + '/custom_assertions'  
+  require File.dirname(__FILE__) + '/custom_assertions'
   include CustomAssertions
-  
+
   #----- Test Macros -----------------------------------------------------------
   class << self
     def should_validate_presence_of(*fields)
@@ -76,7 +76,7 @@ class ActiveSupport::TestCase
     end
 
   end
-  
+
   #----- Fixture/Data related helpers ------------------------------------------
 
   def admin_user
@@ -94,7 +94,7 @@ class ActiveSupport::TestCase
     group.permissions << create_or_find_permission_named("edit_content")
     group.permissions << create_or_find_permission_named("publish_content")
     user.groups << group
-    user  
+    user
   end
 
   require 'mock_file'
@@ -105,7 +105,7 @@ class ActiveSupport::TestCase
 
   def guest_group
     Group.guest || Factory(:group, :code => Group::GUEST_CODE)
-  end  
+  end
 
   def login_as(user)
     @request.session[:user_id] = user ? user.id : nil
@@ -117,8 +117,7 @@ class ActiveSupport::TestCase
 
   # Creates a sample uploaded JPG file with binary data.
   def mock_file(options = {})
-    file_upload_object({:original_filename => "foo.jpg", 
-      :content_type => "image/jpeg"}.merge(options))
+    file_upload_object({:original_filename => "foo.jpg", :content_type => "image/jpeg"}.merge(options))
   end
 
   # Takes a list of the names of instance variables to "reset"
@@ -132,20 +131,39 @@ class ActiveSupport::TestCase
   end
 
   def root_section
-    sections(:section_1)
+    @root_section ||= Factory(:root_section)
   end
-  
+
+
+  # Fixtures add incorrect Section/Section node data. We don't want to replace fixtures AGAIN (this is handled in CMS 3.3)
+  # so we can just clean it out using this method where needed to avoid test breakage.
+  def remove_all_sitemap_fixtures_to_avoid_bugs
+    Section.delete_all
+    SectionNode.delete_all
+    Page.delete_all
+  end
+
+  # Create a 'faux' sitemap which will work for tests (avoids need for fixtures)
+  def given_a_site_exists
+    remove_all_sitemap_fixtures_to_avoid_bugs
+    @root = root_section
+    @homepage = Factory(:public_page, :name=>"Home", :section=>@root, :path=>"/")
+    @system_section = Factory(:public_section, :name=>"System", :parent=>@root, :path=>"/system")
+    @not_found_page = Factory(:public_page, :name=>"Not Found", :section=>@system_section, :path=>Cms::ErrorPages::NOT_FOUND_PATH)
+    @access_denied_page = Factory(:public_page, :name=>"Access Denied", :section=>@system_section, :path=>Cms::ErrorPages::FORBIDDEN_PATH)
+    @error_page = Factory(:public_page, :name=>"Server Error", :section=>@system_section, :path=>Cms::ErrorPages::SERVER_ERROR_PATH)
+  end
 end
 
 module Cms::ControllerTestHelper
   def self.included(test_case)
     test_case.send(:include, Cms::PathHelper)
   end
-  
+
   def request
     @request
   end
-  
+
   def streaming_file_contents
     #The body of a streaming response is a proc
     streamer = @response.body
@@ -154,11 +172,11 @@ module Cms::ControllerTestHelper
     #Create a dummy object for the proc to write to
     output = Object.new
     def output.write(contents)
-      (@contents ||= "") << contents 
+      (@contents ||= "") << contents
     end
 
     #run the proc
-    streamer.call(@response, output)  
+    streamer.call(@response, output)
 
     #return what it wrote to the dummy object
     output.instance_variable_get("@contents")

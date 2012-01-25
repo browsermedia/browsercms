@@ -1,4 +1,10 @@
 module CustomAssertions
+
+  # Remove for Ruby 1.9.2/Minitest
+  def refute(value, msg=nil)
+    assert !value, msg
+  end
+
   def assert_file_exists(file_name, message=nil)
     assert File.exists?(file_name), 
       (message || "Expected File '#{file_name}' to exist, but it does not")
@@ -37,7 +43,7 @@ module CustomAssertions
 
   def assert_properties(object, properties)
     properties.each do |property, expected_value|
-      assert_equal expected_value, object.send(property), "Expected '#{property}' to be '#{expected_value}'"
+      assert_equal expected_value, object.send(property), "For #{object.class}:#{object.id}, expected '#{property}' to be '#{expected_value}'"
     end
   end
 

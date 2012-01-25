@@ -2,8 +2,8 @@
 section_node_1:
   updated_at: Wed Mar 04 22:55:28 UTC 2009
   node_type: Section
-  section_id: 1
   id: 1
+  ancestry: 1
   node_id: 2
   position: 1
   created_at: Wed Mar 04 22:55:28 UTC 2009
@@ -11,7 +11,7 @@ section_node_1:
 section_node_2:
   updated_at: Wed Mar 04 22:55:28 UTC 2009
   node_type: Page
-  section_id: 1
+  ancestry: 1
   id: 2
   node_id: 1
   position: 2
@@ -20,7 +20,7 @@ section_node_2:
 section_node_3:
   updated_at: Wed Mar 04 22:55:28 UTC 2009
   node_type: Page
-  section_id: 2
+  ancestry: 1/2
   id: 3
   node_id: 2
   position: 1
@@ -29,7 +29,7 @@ section_node_3:
 section_node_4:
   updated_at: Wed Mar 04 22:55:28 UTC 2009
   node_type: Page
-  section_id: 2
+  ancestry: 1/2
   id: 4
   node_id: 3
   position: 2
@@ -38,7 +38,7 @@ section_node_4:
 section_node_5:
   updated_at: Wed Mar 04 22:55:28 UTC 2009
   node_type: Page
-  section_id: 2
+  ancestry: 1/2
   id: 5
   node_id: 4
   position: 3

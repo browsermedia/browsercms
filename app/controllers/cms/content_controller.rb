@@ -90,7 +90,7 @@ class Cms::ContentController < Cms::ApplicationController
   
   def try_to_redirect
     if redirect = Redirect.find_by_from_path(@path)
-      redirect_to redirect.to_path
+      redirect_to redirect.to_path, :status=>:moved_permanently
     end    
   end
 

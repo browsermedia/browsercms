@@ -3,7 +3,12 @@ class Cms::SectionNodesController < Cms::BaseController
   
   def index
     @toolbar_tab = :sitemap
-    @section = Section.root.first
+    @modifiable_sections = current_user.modifiable_sections
+    @public_sections = Group.guest.sections.all # Load once here so that every section doesn't need to.
+
+    @sitemap = Section.sitemap
+    @root_section_node = @sitemap.keys.first
+    @section = @root_section_node.node
   end
   def move_before
     move(:before)

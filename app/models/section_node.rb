@@ -1,10 +1,33 @@
-class SectionNode < ActiveRecord::Base
-  belongs_to :section
-  belongs_to :node, :polymorphic => :true
+require 'ancestry'
 
-  acts_as_list :scope => :section
+class SectionNode < ActiveRecord::Base
+  has_ancestry
+
+  # This is the parent section for this node
+  # For backwards compatiblity
+  def parent_section
+    self.parent ? self.parent.node : nil
+  end
+
+  alias :section :parent_section
+
+  # For backwards compatiblity
+  def section=(new_section)
+    self.parent = new_section.node
+  end
+
+  # The item this node links to
+  belongs_to :node, :polymorphic => :true, :inverse_of => :section_node
+
+  acts_as_list
+  # For acts_as_list. Specifies that position should be unique within a section.
+  def scope_condition
+    ancestry ? "ancestry = '#{ancestry}'" : 'ancestry IS NULL'
+  end
 
   scope :of_type, lambda{|types| {:conditions => ["section_nodes.node_type IN (?)", types]}}
+  scope :in_order, :order => "position asc"
+  scope :fetch_nodes, :include => :node
 
   def visible?
     return false unless node
@@ -27,27 +50,29 @@ class SectionNode < ActiveRecord::Base
   def page?
     node_type == 'Page'
   end
-  
-  def move_to(sec, pos)
+
+  # @param [Section] section
+  # @param [Integer] position
+  def move_to(section, position)
     #logger.info "Moving Section Node ##{id} to Section ##{sec.id} Position #{pos}"
     transaction do
-      if section != sec
+      if self.parent != section.node
         remove_from_list
-        self.section = sec
+        self.parent = section.node
         save
       end
       
-      if pos < 0
-        pos = 0
+      if position < 0
+        position = 0
       else
         #This helps prevent the position from getting out of whack
         #If you pass in a really high number for position, 
         #this just corrects it to the right number
-        node_count = SectionNode.count(:conditions => {:section_id => section_id})
-        pos = node_count if pos > node_count
+        node_count = SectionNode.count(:conditions => {:ancestry => ancestry})
+        position = node_count if position > node_count
       end
       
-      insert_at_position(pos)
+      insert_at_position(position)
     end
   end
   
@@ -77,17 +102,9 @@ class SectionNode < ActiveRecord::Base
     #1.0/0 == Infinity
     move_to(sec, 1.0/0)
   end
-  
-  def ancestors()
-    ancestors = []
-    fn = lambda do |sn|
-      ancestors << sn.section
-      if sn.section && !sn.section.root?
-        fn.call(sn.section.node)
-      end
-    end
-    fn.call(self)
-    ancestors.reverse
+
+
+  def ancestry_path
+    path_ids.join "/"
   end
-  
 end

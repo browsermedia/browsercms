@@ -3,6 +3,10 @@ require 'test_helper'
 class Cms::ContentControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
 
+  def setup
+    given_a_site_exists
+  end
+
   def test_show_home_page
     get :show
     assert_response :success
@@ -19,7 +23,6 @@ class Cms::ContentControllerTest < ActionController::TestCase
     get :show, :path => "foo"
     assert_response :not_found
     assert_select "title", "Not Found"
-    assert_select "h1", "Page Not Found"
   end
 
   def test_page_not_found_to_cms_admin
@@ -313,6 +316,8 @@ class Cms::ContentCachingDisabledControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
 
   def setup
+    given_a_site_exists
+
     ActionController::Base.perform_caching = false
     @page = Factory(:page, :section => root_section, :name => "Test Page", :path => "/page", :publish_on_save => true)
     @registered_user = Factory(:user)

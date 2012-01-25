@@ -34,7 +34,7 @@ Given /^there is a homepage$/ do
   if page
     @homepage = page
   else
-    @homepage = Factory(:page, :path=>"/", :name=>"Home Page")
+    @homepage = Factory(:public_page, :path=>"/", :name=>"Home Page")
   end
 end
 
