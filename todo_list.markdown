@@ -1,10 +1,10 @@
 # Working on release of bcms 3.4
-Task: Upgrading bcms_news to bcms-3.4
+Tasks:
 
-Issue: Core CMS links to edit/view/add new content (when selected)/list versions and delete do not work.
-Cause: Paths for the block aren't be calculated correctly. (For index.html.erb the JS was duplicative and wrong)
-Start at: Reworking the JS to extract it. Current issue is the the draft vs published status is not being calucated corrected for each row, so the publish button never lights up. Even when you select an item.
-* Want to: Extract all JS in index into a separate JS file rather than inlining it.
+* Write bcms-upgrade update script for modules.
+* Upgrading bcms_fckeditor to bcms-3.4
+* Verify Save & Publish blocks works
+
 
 ## Notes (for upgrading engines)
 
@@ -34,20 +34,6 @@ Things to test:
 * Don't create a public/bcms/bcms_modulename/README
 * Clean up licenses (MIT vs GPL)
 
-## Goal
-Making upgrade of bcms 3.1 and 3.3 -> 3.4 work
-
-# Next
-
-* Upgrade some of the modules (bcms_news)
-
-## Documenation on scripts
-
-    * Thor Actions - http://rubydoc.info/github/wycats/thor/master/Thor/Actions
-    * Rails Actions - http://api.rubyonrails.org/classes/Rails/Generators/Actions.html
-
-
-
 # Short Term
 
 * Get 3.4 ready for release
@@ -71,9 +57,7 @@ bcms install
 * Can't create some portlets - Add scenarios
 ** Email a page portlet  - ERROR: uninitialized constant EmailPagePortlet::EmailMessage
 ** Tag Cloud portlet - ERROR: uninitialized constant TagCloudPortlet::Tag
-* Update a few modules (like bcms_news) to test module generation
 * Test this on a production environment prior to releasing (things like assets and/or config options might be wonky)
-* Rework a few modules to work with Rails 3.1
 * Review the README for accuracy in light of engines and asset pipeline
 
 # Wants (Taking advantage of Rails 3.1)
@@ -107,13 +91,6 @@ bcms install
   #
   #   MyEngine::Engine.load_seed
 
-
-# 3.5 Planned Features
-
-* Improve Performance - Sitemap and serving pages is particularly slow
-** Use Ancestry gem - It handles automatically turning models into tree via a single column. Would be very very performant in comparison to current behavior.
-** Call it 'Addressable' (Pages, Links, Sections, etc)
-
 ## New Features
 
 * Make templating better through the UI
@@ -121,20 +98,7 @@ bcms install
 
 ## Modules to be updated (for Engines)
 
-bcms_news (first one)
-bcms_polling
-bcms_event
-bcms_fckeditor (Needs to correctly use new JS inclusion and may need to generate a customconfig.js)
-bcms_content_rotator
-bcms_webdav
-bcms_cas
-bcms_google_mini_search
-bcms_page_comments
-
-bcms_fckeditor  - 1.1.0 is pushed to github. Gem needs to be pushed as well. Need to test file upload (browser.xml) from within the browser
-* BUG - bcms_news - Recent Archive portlet is throwing errors.
-bcms_google_mini_search - 1.2 pushed to github. Gem not released.
-
+See the [State of the Modules](https://github.com/browsermedia/browsercms/wiki/State-of-the-Modules) for an up to date listing.
 
 ### How to upgrade to a Rails Engine
 

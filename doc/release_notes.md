@@ -21,6 +21,7 @@ Add the ability to add BrowserCMS to Rails projects.
 * [#443] Removed two primative javascript and stylesheets in favor of asset pipeline (where needed).
 * [#448] Mountable Engines - BrowserCMS is now a mountable engine, which should make integrating it with other projects easier.
 * [#416] BrowserCMS can be added to Gemfiles using :git or :path, which should make testing gems or projects easier.
+* [#480] Standardized Version Column - Changed how version tables point back to their 'original' record to make working with namespaces easier. Module developers will need to update their migrations for the next release of their modules.
 
 v3.3.2
 ======

@@ -46,6 +46,31 @@ Given /^a BrowserCMS project named "([^"]*)" exists$/ do |project_name|
   self.project_name = project_name
 end
 
+Given /^I am working on a BrowserCMS v3.3.x module named "([^"]*)"/ do |project_name|
+  run_simple "rails _3.0.9_ new #{project_name} --skip-bundle"
+  cd project_name
+  append_to_file "config/database.yml", "# @original-yml"
+  append_to_file "config/routes.rb", "# @original-routes"
+  append_to_file "#{project_name}.gemspec", "# @original-gemspec"
+
+  # Mimics a 3.3.x style public/bms/module_name where public files lived
+  write_file "public/bcms/#{project_name.gsub("bcms_", "")}/test.html", "@original-html"
+  write_file "public/bcms/#{project_name.gsub("bcms_", "")}/js/test.js", "@original-js"
+
+  # 3.3.x engines will probably have some code in them
+  write_file "lib/#{project_name}/engine.rb", "# @original-engine"
+  write_file "lib/#{project_name}/version.rb", "# @original-version"
+
+  # The DB folder might have some sqlite databases, BrowserCMS migrations and seeds data
+  write_file "db/seeds.rb", "# Should get deleted"
+  write_file "db/migrate/20080815014337_browsercms_3_0_0.rb", "# Should get deleted"
+  write_file "db/migrate/20091109175123_browsercms_3_0_5.rb", "# Should get deleted"
+  write_file "db/migrate/my_module_migration.rb", "# This should be kept'"
+  write_file "db/development.sqlite3", "# Should get deleted"
+  write_file "db/schema.rb", "# Should get deleted"
+  create_git_project
+end
+
 When /^I run `([^`]*)` in the project$/ do |cmd|
   cd(project_name)
   run_simple(unescape(cmd), false)

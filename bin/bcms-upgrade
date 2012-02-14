@@ -56,6 +56,12 @@ TEXT
     upgrade_to_3_3_0
   end
 
+  desc 'upgrade', "Upgrades a module from 3.3.x to 3.4.x compatibility"
+  def upgrade
+    # Ensure Verify this only works on modules.
+    upgrade_to_3_4_0
+  end
+
   desc 'module', "Upgrade a module from Rails 2 to Rails 3. (Backup before running this)"
   def module
     new_rails
@@ -130,6 +136,85 @@ TEXT
     git :checkout => '.gitignore'
     git :checkout => 'doc/README_FOR_APP'
     git :checkout => 'config/database.yml'
+  end
+
+
+  def upgrade_to_3_4_0
+    remove_dir "script" # Wipe out any old scripts, using new Rails 3.1 mountable script.
+    remove_file 'config.ru'
+    run "rails plugin new . --mountable --force"
+    revert "lib/#{name_of_module}/engine.rb"
+    revert "lib/#{name_of_module}/version.rb"
+    revert "#{name_of_module}.gemspec"
+
+    remove_file "MIT-LICENSE"
+    remove_file "README.rdoc"
+    move_file "config/database.yml", "test/dummy/config/database.yml"
+
+    move_file "config/routes.rb", "tmp/routes.rb" # Backup to avoid getting overwritten by plugin
+    remove_dir "config"
+    empty_directory "config"
+    move_file "tmp/routes.rb", "config/routes.rb"
+
+    prepend_to_file "lib/#{name_of_module}/engine.rb", "require 'browsercms'\n"
+
+    remove_dir "app/views/layouts"
+    remove_file "app/controllers/application_controller.rb"
+    remove_file "app/helpers/application_helper.rb"
+
+    move_dir "public/bcms/#{name_of_module.gsub("bcms_", "")}", "app/assets"
+    remove_dir "public"
+
+    append_to_file "test/dummy/config/routes.rb", "\tmount_browsercms\n", :after=>"/#{name_of_module}\"\n"
+
+    # Clean up db/ folder
+    remove_file "db/schema.rb"
+    remove_file "db/seeds.rb"
+    remove_files "db/migrate/*_browsercms*.rb"
+    remove_files "db/*.sqlite3"
+
+    # Create a seed data file
+    create_file "test/dummy/db/seeds.rb", "# Add seed data here"
+
+  end
+
+  # Does a git revert of a file.
+  def revert(file)
+    git :checkout => file
+  end
+
+  # Move all the contents of a given directory into the specified directory
+  # @param [String] src Relative name of src directory (with project)
+  # @param [String] dest Relative name of dest directory (with project)
+  # @param [Hash] config
+  def move_dir(src, dest, config={})
+    src_path  = File.expand_path(src, destination_root)
+
+    Dir.glob(File.join(src_path, '*' )).each do |file|
+      to = File.join(destination_root, dest, File.basename(file))
+      FileUtils.mv file, to
+      say_status :mv, "#{relative_to_original_destination_root(file)} -> #{relative_to_original_destination_root(to)}", config.fetch(:verbose, true)
+
+    end
+  end
+
+  # Remove a set of files matching a glob pattern.
+  # @param [String] pattern i.e. db/migrate/*_browsercms_*.rb
+  def remove_files(pattern)
+    Dir.glob(File.join(destination_root, pattern )).each do |file|
+      remove_file file
+    end
+  end
+
+  # Move a file within the destination directory
+  # @param [String] src
+  # @param [String] dest
+  # @param [Hash] config
+  def move_file(src, dest, config={})
+    src_path  = File.expand_path(src, destination_root)
+    dest_path  = File.expand_path(dest, destination_root)
+    say_status :mv, "#{relative_to_original_destination_root(src_path)} -> #{relative_to_original_destination_root(dest_path)}", config.fetch(:verbose, true)
+    FileUtils.mv(src_path, dest_path)
   end
 
   def upgrade_to_3_3_0
