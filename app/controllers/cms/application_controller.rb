@@ -12,7 +12,8 @@ class ApplicationController < ::ApplicationController
   helper Cms::PageHelper
   helper Cms::MenuHelper
   helper Cms::RenderingHelper
-  
+  helper Cms::UiElementsHelper
+
   protected
     def escape_javascript(javascript)
       (javascript || '').gsub('\\','\0\0').gsub('</','<\/').gsub(/\r\n|\n|\r/, "\\n").gsub(/["']/) { |m| "\\#{m}" }

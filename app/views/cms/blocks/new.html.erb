@@ -12,9 +12,7 @@
   <%= render :partial => block_form, :locals => {:f => f} %>
   <% unless @hide_buttons %>
     <div class="buttons">
-      <% if current_user.able_to?(:publish_content) && @block.publishable? %>
-        <%= lt_button_wrapper(%Q{<button type="submit" name="#{@block.content_block_type}[publish_on_save]" value="true" class="submit" tabindex="#{next_tabindex}"><span>Save And Publish</span></button>}) %>
-      <% end %>
+      <%= save_and_publish_button(@block, content_type) %>
       <%= lt_button_wrapper(f.submit("Save", :class => "submit", :tabindex => next_tabindex)) %>
     </div>
   <% end %>
