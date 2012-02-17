@@ -4,7 +4,13 @@ Feature: Generate Module
 
   Background:
 
-  Scenario:
+  Scenario: Create a BrowserCMS module
+    When I create a module named "bcms_store"
+    Then a rails engine named "bcms_store" should exist
+    And BrowserCMS should be added the .gemspec file
+    And a file named "bcms_store/test/dummy/app/views/layouts/templates/default.html.erb" should exist
+
+  Scenario: Generate a module (3.4.x)
     Given I run `bcms module bcms_widgets`
     Then I cd to "bcms_widgets"
     And a Gemfile should be created

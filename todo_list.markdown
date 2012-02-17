@@ -2,8 +2,10 @@
 Tasks:
 
 * rake db:install doesn't work for generated modules (either change instructions or make it work)
+* [BUG] When in module, `rails g cms:content_block` doesn't work
 
-
+# Running a single cucumber test
+cucumber -r features features/commands/new_projects.feature
 
 ## Notes (for upgrading engines)
 
@@ -31,11 +33,8 @@ Things to test:
 * Test upgrading a browsercms v3.1.x/3.3.x to 3.4.x
 * Write upgrade instructions from 3.1.x/3.3.x to 3.4
 
-Aruba Tests needed for:
-bcms demo
-bcms install
-
 # Bugs
+
 
 * If a content type can't be found in code, the entire /cms/content_library will throw an error. This could be made more robust by just not showing the content type. This probably only happens when we upgrade databases for testing, but its still annoying.
 * [DynamicPortlets] If you leave fields blank, they throw errors (and/or grab other default templates)

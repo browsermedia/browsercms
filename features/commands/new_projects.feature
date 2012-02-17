@@ -1,5 +1,5 @@
-Feature: Command Line
-  Commands should work from the commandline
+Feature: New Project Generator
+  Developers should be able to create new projects from the command line.
 
   Background:
 
@@ -25,14 +25,6 @@ Feature: Command Line
     And a file named "hello/app/views/layouts/templates/default.html.erb" should exist
     And the output should not contain "identical"
     And BrowserCMS should be added the Gemfile
-
-  # `bcms module`
-  Scenario: Create a BrowserCMS module
-    When I create a module named "bcms_store"
-    Then a rails engine named "bcms_store" should exist
-    And BrowserCMS should be added the .gemspec file
-    And a file named "bcms_store/test/dummy/app/views/layouts/templates/default.html.erb" should exist
-
 
   Scenario: Creating a demo project without a name
     When I run `bcms demo`
