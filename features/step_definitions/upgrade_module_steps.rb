@@ -1,0 +1,62 @@
+# We can't just call `rails _2.3.14_ new` because Aruba locks to a specific version of the gem (I think).
+# So we always get a Rails 3.1 project.
+# Instead, we are 'faking' it.
+Given /^I am working on a BrowserCMS v3.1.x module named "([^"]*)"$/ do |project_name|
+  write_file "#{project_name}/script/console", "# Rails 2 File"
+  cd project_name
+  write_file "lib/#{project_name}.rb", "# Marks this as a Module."
+  create_git_project
+end
+
+Given /^I am working on a BrowserCMS v3.3.x module named "([^"]*)"/ do |project_name|
+  run_simple "rails _3.0.9_ new #{project_name} --skip-bundle"
+  cd project_name
+  append_to_file "config/database.yml", "# @original-yml"
+  append_to_file "config/routes.rb", "# @original-routes"
+  append_to_file "#{project_name}.gemspec", "# @original-gemspec"
+
+  # Mimics a 3.3.x style public/bms/module_name where public files lived
+  write_file "public/bcms/#{project_name.gsub("bcms_", "")}/test.html", "@original-html"
+  write_file "public/bcms/#{project_name.gsub("bcms_", "")}/js/test.js", "@original-js"
+
+  # 3.3.x engines will probably have some code in them
+  write_file "lib/#{project_name}.rb", "# Marks this as a Module"
+  write_file "lib/#{project_name}/engine.rb", "# @original-engine"
+  write_file "lib/#{project_name}/version.rb", "# @original-version"
+
+  # The DB folder might have some sqlite databases, BrowserCMS migrations and seeds data
+  write_file "db/seeds.rb", "# Should get deleted"
+  write_file "db/migrate/20080815014337_browsercms_3_0_0.rb", "# Should get deleted"
+  write_file "db/migrate/20091109175123_browsercms_3_0_5.rb", "# Should get deleted"
+  write_file "db/migrate/my_module_migration.rb", "# This should be kept'"
+  write_file "db/development.sqlite3", "# Should get deleted"
+  write_file "db/schema.rb", "# Should get deleted"
+  create_git_project
+end
+
+When /^the installation script should be created$/ do
+  steps %Q{
+  And the following directories should exist:
+      | lib/generators/bcms_widgets/install/templates |
+    And the following files should exist:
+      | lib/generators/bcms_widgets/install/install_generator.rb |
+      | lib/generators/bcms_widgets/install/USAGE                |
+  }
+end
+When /^the engine should be created$/ do
+  steps %Q{
+    And the following files should exist:
+      | lib/bcms_widgets.rb        |
+      | lib/bcms_widgets/engine.rb |
+    }
+end
+Given /^I am working on a BrowserCMS v3.3.x project named "([^"]*)"$/ do |project_name|
+  cd ".."
+  run_simple "rails _3.0.9_ new #{project_name} --skip-bundle"
+  cd project_name
+end
+Then /^a Gemfile should be created$/ do
+  steps %Q{
+  Then a file named "Gemfile" should exist
+        }
+end

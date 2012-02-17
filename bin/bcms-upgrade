@@ -14,7 +14,7 @@ class App < Thor
   include Thor::Actions
   include Rails::Generators::Actions
 
-  source_root(File.join(__FILE__, '../../lib/generators/cms/upgrade_module/templates'))
+  source_root(File.expand_path(File.join(__FILE__, '../../lib/generators/cms/install')))
 
   desc "check", "Checks the existing module to determine what needs to done."
 
@@ -52,28 +52,23 @@ TEXT
   end
 
   desc 'v3_3_0', "Upgrades BrowserCMS files from 3.1.x to 3.3.0 (Back up first)"
+
   def v3_3_0
     upgrade_to_3_3_0
   end
 
-  desc 'upgrade', "Upgrades a module from 3.3.x to 3.4.x compatibility"
-  def upgrade
-    # Ensure Verify this only works on modules.
-    upgrade_to_3_4_0
-  end
-
-  desc 'module', "Upgrade a module from Rails 2 to Rails 3. (Backup before running this)"
+  desc 'module', "Upgrades a module. "
   def module
-    new_rails
-    cleanup_rails2_files
-    cleanup_rails_3
-    cleanup_module
-    upgrade_to_3_3_0
-    generate_bcms_module
-    next_steps
+    unless project_is_module?
+      say "This does not appear to be a BrowserCMS module. Skipping update."
+      exit 0
+    end
+    upgrade_module_from_3_1_x_to_3_3_x if project_is_3_1_x?
+    upgrade_from_3_3_x_to_3_4_x
   end
 
   desc 'next_steps', "Reprints instructions on final steps (Use after 'upgrade')"
+
   def next_steps
     header = <<TEXT
 Next Steps:
@@ -109,6 +104,17 @@ TEXT
     run "rails new . -f"
   end
 
+  def upgrade_module_from_3_1_x_to_3_3_x
+    puts "Upgrading to BrowserCMS 3.3.x..."
+    new_rails
+    cleanup_rails2_files
+    cleanup_rails_3
+    cleanup_module
+    upgrade_to_3_3_0
+    generate_bcms_module
+    next_steps
+  end
+
   # Removes any files which are Rails 2 specific
   def cleanup_rails2_files
     %w{about console dbconsole destroy generate performance plugin runner server}.each do |script_name|
@@ -139,7 +145,7 @@ TEXT
   end
 
 
-  def upgrade_to_3_4_0
+  def upgrade_from_3_3_x_to_3_4_x
     remove_dir "script" # Wipe out any old scripts, using new Rails 3.1 mountable script.
     remove_file 'config.ru'
     run "rails plugin new . --mountable --force"
@@ -188,9 +194,9 @@ TEXT
   # @param [String] dest Relative name of dest directory (with project)
   # @param [Hash] config
   def move_dir(src, dest, config={})
-    src_path  = File.expand_path(src, destination_root)
+    src_path = File.expand_path(src, destination_root)
 
-    Dir.glob(File.join(src_path, '*' )).each do |file|
+    Dir.glob(File.join(src_path, '*')).each do |file|
       to = File.join(destination_root, dest, File.basename(file))
       FileUtils.mv file, to
       say_status :mv, "#{relative_to_original_destination_root(file)} -> #{relative_to_original_destination_root(to)}", config.fetch(:verbose, true)
@@ -201,7 +207,7 @@ TEXT
   # Remove a set of files matching a glob pattern.
   # @param [String] pattern i.e. db/migrate/*_browsercms_*.rb
   def remove_files(pattern)
-    Dir.glob(File.join(destination_root, pattern )).each do |file|
+    Dir.glob(File.join(destination_root, pattern)).each do |file|
       remove_file file
     end
   end
@@ -211,8 +217,8 @@ TEXT
   # @param [String] dest
   # @param [Hash] config
   def move_file(src, dest, config={})
-    src_path  = File.expand_path(src, destination_root)
-    dest_path  = File.expand_path(dest, destination_root)
+    src_path = File.expand_path(src, destination_root)
+    dest_path = File.expand_path(dest, destination_root)
     say_status :mv, "#{relative_to_original_destination_root(src_path)} -> #{relative_to_original_destination_root(dest_path)}", config.fetch(:verbose, true)
     FileUtils.mv(src_path, dest_path)
   end
@@ -227,7 +233,6 @@ TEXT
       remove_file "public/javascripts/#{js}.js"
     end
 
-    copy_file '20100705083859_browsercms_3_3_0.rb', 'db/migrate/20100705083859_browsercms_3_3_0.rb'
   end
 
   def generate_bcms_module
@@ -238,16 +243,15 @@ TEXT
     # Allows gem to be loaded as a engine for testing.
     append_to_file 'Gemfile', 'gemspec'
 
-
-    template 'engine.erb', "lib/#{name_of_module}/engine.rb"
+    create_file "lib/#{name_of_module}/engine.rb", "# Engine goes here"
     prepend_to_file "lib/#{name_of_module}.rb" do
       "require '#{name_of_module}/engine'\n"
     end
     route "mount_browsercms"
     route "routes_for_#{name_of_module}"
 
-    template 'install.erb', "lib/generators/#{name_of_module}/install/install_generator.rb"
-    template 'USAGE.erb', "lib/generators/#{name_of_module}/install/USAGE"
+    template 'install_generator.rb', "lib/generators/#{name_of_module}/install/install_generator.rb"
+    template 'USAGE', "lib/generators/#{name_of_module}/install/USAGE"
     empty_directory "lib/generators/#{name_of_module}/install/templates"
 
 
@@ -312,6 +316,18 @@ TEXT
   ensure
     puts "".reset
   end
+
+  # Determines if the current projects is a BrowserCMS module or not.
+  def project_is_module?
+    module_file = File.expand_path(File.join(destination_root, "lib", "#{name_of_module}.rb"))
+    File.exists?(module_file)
+  end
+
+  def project_is_3_1_x?
+    rails_console = File.expand_path(File.join(destination_root, "script", "console"))
+    File.exists?(rails_console)
+  end
 end
+
 
 App.start

@@ -1,3 +1,4 @@
+@cli
 Feature: Upgrading BrowserCMS
 
   Background:
@@ -10,9 +11,16 @@ Feature: Upgrading BrowserCMS
     And the following files should exist:
       | config.ru |
 
-  #@announce
-  Scenario: Upgrade a Module to BrowserCMS 3.4
-    When I run `bcms-upgrade upgrade`
+  Scenario: Avoid accidently updating projects
+    Given I am working on a BrowserCMS v3.3.x project named "petstore"
+    When I run `bcms-upgrade module`
+    Then the output should contain "This does not appear to be a BrowserCMS module. Skipping update"
+    And the following files should exist:
+      | config.ru |
+
+  Scenario: Upgrade a Module from 3.3.x to 3.4.x
+    When I run `bcms-upgrade module`
+    And the output should not contain "Upgrading to BrowserCMS 3.3.x..."
     Then the file "script/rails" should contain "test/dummy/script/rails"
     And the following files should not exist:
       | config.ru                                 |
@@ -25,7 +33,7 @@ Feature: Upgrading BrowserCMS
   # Confirm a Rails 3 mountable app was created
     And the following directories should exist:
       | app/assets/javascripts |
-      | test/dummy |
+      | test/dummy             |
     And the following directories should not exist:
       | public |
     And the file "test/dummy/config/database.yml" should contain "@original-yml"
@@ -38,16 +46,16 @@ Feature: Upgrading BrowserCMS
     And the file "app/assets/js/test.js" should contain "@original-js"
     And the file "test/dummy/config/routes.rb" should contain "mount_browsercms"
     And the following files should not exist:
-    | db/migrate/20080815014337_browsercms_3_0_0.rb |
-    | db/migrate/20091109175123_browsercms_3_0_5.rb |
-    | db/schema.rb |
-    | db/seeds.rb |
-    | db/development.sqlite3 |
+      | db/migrate/20080815014337_browsercms_3_0_0.rb |
+      | db/migrate/20091109175123_browsercms_3_0_5.rb |
+      | db/schema.rb                                  |
+      | db/seeds.rb                                   |
+      | db/development.sqlite3                        |
     And the following files should exist:
-    | db/migrate/my_module_migration.rb |
+      | db/migrate/my_module_migration.rb |
     And the file "bcms_petstore.gemspec" should contain "@original-gemspec"
     And the following files should exist:
-    | test/dummy/db/seeds.rb |
+      | test/dummy/db/seeds.rb |
 
 
 
