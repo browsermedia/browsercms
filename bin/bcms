@@ -236,6 +236,7 @@ SITE_DOMAIN="localhost:3000"
 
     gemspec "browsercms", :version=>"~> #{::Cms::VERSION}"
     add_browsercms_dependency
+    include_cms_module
     remove_rails_dependency
     run_bundle_install
   end

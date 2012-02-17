@@ -39,16 +39,19 @@ When /^the installation script should be created$/ do
   And the following directories should exist:
       | lib/generators/bcms_widgets/install/templates |
     And the following files should exist:
-      | lib/generators/bcms_widgets/install/install_generator.rb |
       | lib/generators/bcms_widgets/install/USAGE                |
   }
+  generator = 'lib/generators/bcms_widgets/install/install_generator.rb'
+  check_file_presence([generator], true)
+  check_file_content(generator, "BcmsWidgets::InstallGenerator", true)
+  check_file_content(generator, "rake 'bcms_widgets:install:migrations'", true)
+  check_file_content(generator, "mount_engine(BcmsWidgets)", true)
+
 end
 When /^the engine should be created$/ do
-  steps %Q{
-    And the following files should exist:
-      | lib/bcms_widgets.rb        |
-      | lib/bcms_widgets/engine.rb |
-    }
+  check_file_presence(['lib/bcms_widgets.rb'], true)
+  check_file_content('lib/bcms_widgets/engine.rb', "include Cms::Module", true)
+
 end
 Given /^I am working on a BrowserCMS v3.3.x project named "([^"]*)"$/ do |project_name|
   cd ".."

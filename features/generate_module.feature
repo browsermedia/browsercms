@@ -4,8 +4,7 @@ Feature: Generate Module
 
   Background:
 
-  @announce
-  Scenario: 
+  Scenario:
     Given I run `bcms module bcms_widgets`
     Then I cd to "bcms_widgets"
     And a Gemfile should be created
@@ -15,6 +14,7 @@ Feature: Generate Module
     | COPYRIGHT.txt |
     | GPL.txt |
     | LICENSE.txt |
+
 
 
 
