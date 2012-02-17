@@ -6,7 +6,7 @@ require 'term/ansicolor'
 require 'rails/generators/actions'
 require 'active_support/core_ext/string/inflections'
 require 'cms/version'
-
+require 'cms/commands/actions'
 # This seems to be required only due to a bug in Thor documented here:
 #   https://rails.lighthouseapp.com/projects/8994/tickets/4692-error-when-creating-app-from-template-undefined-method-wrap-for-arrayclass
 # If this bug is fixed the following line can probably be removed.
@@ -21,7 +21,8 @@ end
 class Cms::Install < Thor
   include Thor::Actions
   include Rails::Generators::Actions
-  source_root File.expand_path('../../lib/generators/cms/upgrade_module/templates', __FILE__)
+  include Cms::Commands::Actions
+
 
   def self.common_options
     method_option :database, :aliases => "-d", :desc => "Preconfigure for selected database (options: mysql/oracle/postgresql/sqlite3/frontbase/ibm_db) [Default: sqlite3]"
@@ -60,6 +61,7 @@ class Cms::Install < Thor
       generate_seeds_rb
     end
     generate_browsercms_project
+    generate_installation_script
     generate_default_template
 
     display_instructions(name)

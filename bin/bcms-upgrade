@@ -5,6 +5,7 @@ require 'thor'
 require 'term/ansicolor'
 require 'rails/generators/actions'
 require 'active_support/core_ext/string/inflections'
+require 'cms/commands/actions'
 
 class String
   include Term::ANSIColor
@@ -13,8 +14,8 @@ end
 class App < Thor
   include Thor::Actions
   include Rails::Generators::Actions
+  include Cms::Commands::Actions
 
-  source_root(File.expand_path(File.join(__FILE__, '../../lib/generators/cms/install')))
 
   desc "check", "Checks the existing module to determine what needs to done."
 
@@ -250,9 +251,7 @@ TEXT
     route "mount_browsercms"
     route "routes_for_#{name_of_module}"
 
-    template 'install_generator.rb', "lib/generators/#{name_of_module}/install/install_generator.rb"
-    template 'USAGE', "lib/generators/#{name_of_module}/install/USAGE"
-    empty_directory "lib/generators/#{name_of_module}/install/templates"
+    generate_installation_script
 
 
     run "rails g browser_cms:cms -f"

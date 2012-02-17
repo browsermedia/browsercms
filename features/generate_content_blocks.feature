@@ -1,4 +1,4 @@
-Feature: Generators
+Feature: Generate Content Blocks
   BrowserCMS provides generators for common CMS tasks.
 
   Background:
