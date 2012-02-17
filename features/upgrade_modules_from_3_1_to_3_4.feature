@@ -7,7 +7,7 @@ Feature: Upgrade Module from 3.1.x to 3.4.x
   Scenario: Verify Project
     Then a file named "script/console" should exist
 
-  Scenario: Upgrade a Module from 3.1.x to 3. 4.x
+  Scenario: Upgrade a Module from 3.1.x to 3.4.x
     When I run `bcms-upgrade module`
     Then the output should contain "Upgrading to BrowserCMS 3.3.x"
     And a Gemfile should be created

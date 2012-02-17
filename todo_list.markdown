@@ -1,14 +1,12 @@
 # Working on release of bcms 3.4
 Tasks:
 
-* Write bcms-upgrade update script for modules.
-* Upgrading bcms_fckeditor to bcms-3.4
-* Verify Save & Publish blocks works
+* rake db:install doesn't work for generated modules (either change instructions or make it work)
+
 
 
 ## Notes (for upgrading engines)
 
-1. Try to reduce to a minimum the # of steps required to setup an engine/module (look at Diesel)
 2. Adding seed data (either later or before) should always require the same installation commands (i.e. rake db:install if possible) Don't force developers to remember multiple commands
 3. Gemspec should be generated more suitably to an engine (less exceptions). Alternatively, write better clean up instructions for upgrading modules.
 4. By default, Rails wants to match the table names of namespaced models (i.e. BcmsNews::NewsArticle). This can make for somewhat LONG and/or redudant table names (i.e. bcms_news_news_articles) but is probably better in the long run since it helps uniquely tie table to their module.
@@ -28,19 +26,10 @@ Things to test:
 * Html fields aren't sized.
 * There is no down migration.
 
-# [2] bcms module
-* browsercms seed data is not copied into projects (Big problem)
-* rake db:install doesn't work for generated modules (either change instructions or make it work)
-* Don't create a public/bcms/bcms_modulename/README
-* Clean up licenses (MIT vs GPL)
-
 # Short Term
 
-* Get 3.4 ready for release
 * Test upgrading a browsercms v3.1.x/3.3.x to 3.4.x
 * Write upgrade instructions from 3.1.x/3.3.x to 3.4
-* Find a more conventional pattern for configuring Engines/Modules for individual projects.
-** Look at the more popular gems
 
 Aruba Tests needed for:
 bcms demo

@@ -112,7 +112,7 @@ TEXT
     cleanup_rails_3
     cleanup_module
     upgrade_to_3_3_0
-    generate_bcms_module
+    generate_bcms_module_for_3_3_x
     next_steps
   end
 
@@ -164,6 +164,7 @@ TEXT
     move_file "tmp/routes.rb", "config/routes.rb"
 
     prepend_to_file "lib/#{name_of_module}/engine.rb", "require 'browsercms'\n"
+    include_cms_module
 
     remove_dir "app/views/layouts"
     remove_file "app/controllers/application_controller.rb"
@@ -236,7 +237,7 @@ TEXT
 
   end
 
-  def generate_bcms_module
+  def generate_bcms_module_for_3_3_x
     gem 'browsercms'
     gem 'mysql'
     gem 'jeweler', :group=>:development

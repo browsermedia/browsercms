@@ -12,8 +12,11 @@ Feature: Generate Module
     And the installation script should be created
     And the following files should exist:
     | COPYRIGHT.txt |
-    | GPL.txt |
-    | LICENSE.txt |
+    And the project should be LGPL licensed
+    And the following files should exist:
+    | test/dummy/db/browsercms.seeds.rb|
+    And it should no longer generate a README in the public directory
+
 
 
 

@@ -92,6 +92,7 @@ Cms.table_prefix = "cms_"
     template 'COPYRIGHT.txt'
     template 'LICENSE.txt'
     template 'GPL.txt'
+    remove_file "MIT-LICENSE"
   end
 
   # i.e. cd project_name
@@ -177,7 +178,6 @@ SITE_DOMAIN="localhost:3000"
     route "mount_browsercms"
     rake 'cms:install:migrations'
     generate "browser_cms:cms"
-    copy_file 'README', "public/bcms/#{@project_name}/README"
 
     inside rails_app do
       add_sitedomain_constant_to_environment_files

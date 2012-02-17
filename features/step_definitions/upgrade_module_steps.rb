@@ -63,3 +63,12 @@ Then /^a Gemfile should be created$/ do
   Then a file named "Gemfile" should exist
         }
 end
+
+When /^it should no longer generate a README in the public directory$/ do
+  check_file_presence ['public/bcms/bcms_widgets/README'], false
+end
+
+When /^the project should be LGPL licensed$/ do
+  check_file_presence [ 'GPL.txt', 'LICENSE.txt'], true
+  check_file_presence [ 'MIT-LICENSE'], false
+end
