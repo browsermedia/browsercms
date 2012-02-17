@@ -13,9 +13,7 @@ Feature: Generators
     And a project file named "app/views/cms/products/render.html.erb" should contain "@content_block.price"
     And a migration named "create_products.rb" should be created
 
-  # Should namespace the classes under Cms::
-  Scenario: Generate content block for Core CMS project
-    When I generate a block using a namespace
+
 
 
 
