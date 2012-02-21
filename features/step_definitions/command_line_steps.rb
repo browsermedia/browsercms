@@ -7,6 +7,10 @@ Then /^a rails application named "([^"]*)" should exist$/ do |app_name|
   expect_project_files %w{script/rails Gemfile }
 end
 
+Given /^a rails application named "([^"]*)" exists$/ do |name|
+  create_rails_project(name)
+end
+
 When /^BrowserCMS should be added the Gemfile$/ do
   check_file_content("#{project_name}/Gemfile", 'gem "browsercms"', true)
 end
@@ -25,9 +29,15 @@ Then /^a rails engine named "([^"]*)" should exist$/ do |engine_name|
   expect_project_directories %w{ app config lib }
   expect_project_files ["script/rails", "Gemfile", "#{engine_name}.gemspec"]
 end
+
 When /^BrowserCMS should be added the \.gemspec file$/ do
   check_file_content("#{project_name}/#{project_name}.gemspec", "s.add_dependency \"browsercms\", \"~> #{Cms::VERSION}\"", true)
+end
 
+Then /^BrowserCMS should be installed in the project$/ do
+  # This is a not a really complete check but it at least verifies the generator completes.
+  check_file_content('config/initializers/browsercms.rb', 'Cms.table_prefix = "cms_"', true)
+  check_file_content('config/routes.rb', 'mount_browsercms', true)
 end
 
 Given /^a BrowserCMS project named "([^"]*)" exists$/ do |project_name|

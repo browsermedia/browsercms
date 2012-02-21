@@ -1,8 +1,13 @@
 # Working on release of bcms 3.4
+
+Current: Verifying that bcms install works.
+
 Tasks:
 
-* rake db:install doesn't work for generated modules (either change instructions or make it work)
+* rake db:install doesn't exist as a task for generated modules (either change instructions or make it work)
+* rake db:install for existing rails projects (after bcms install) might want to run bcms seed data as separate tasks. How to other gems/projects handle this?
 * [BUG] When in module, `rails g cms:content_block` doesn't work
+* browsercms-cucumber - Build a separate gem from this project, which can be included in other CMS projects. (Might be 3.4.1)
 
 # Running a single cucumber test
 cucumber -r features features/commands/new_projects.feature
@@ -18,7 +23,6 @@ News Module is mostly done. Unresolved issues:
 * New concept (improvement) Remove the need for page routes and use controllers instead.
 
 Things to test:
-* bcms install (verify where it puts mount_browsercms)
 * bcms demo
 
 # [1] Migration Bugs
@@ -79,19 +83,8 @@ Things to test:
   #
   #   MyEngine::Engine.load_seed
 
-## New Features
-
-* Make templating better through the UI
-* Make content blocks the same as pages
-
 ## Modules to be updated (for Engines)
 
 See the [State of the Modules](https://github.com/browsermedia/browsercms/wiki/State-of-the-Modules) for an up to date listing.
 
-### How to upgrade to a Rails Engine
-
-* cd into your project
-* Run `rails plugin new . --mountable`
-* All the available rake tasks in the App are prefixed as 'app'. So `rake app:db:install`
-* Need to copy the migrations from the engine into the application.
 

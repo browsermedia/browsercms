@@ -78,16 +78,18 @@ class Cms::Install < Thor
 
   def install
     common_setup('.')
-    initializer 'browsercms.rb', <<-CODE
-#{standard_file_permissions}
-Cms.table_prefix = "cms_"
-    CODE
+    prefix_cms_tables
     generate_default_template
     puts "BrowserCMS has been installed. Run rake db:install to add the tables then restart your server."
   end
 
   private
 
+  def prefix_cms_tables
+    append_to_file "config/initializers/browsercms.rb", <<-CODE
+Cms.table_prefix = "cms_"
+    CODE
+  end
   def create_license_files
     template 'COPYRIGHT.txt'
     template 'LICENSE.txt'
