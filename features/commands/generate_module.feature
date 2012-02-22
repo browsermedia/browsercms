@@ -23,6 +23,22 @@ Feature: Generate Module
     | test/dummy/db/browsercms.seeds.rb|
     And it should no longer generate a README in the public directory
 
+  Scenario: Can Install modules
+    Given I run `bcms module bcms_widgets`
+    And I cd to "bcms_widgets"
+    When I run `rake db:install`
+    Then it should seed the BrowserCMS database
+
+  Scenario: Packaging Modules as Gems
+    Given I run `bcms module bcms_widgets`
+    And I cd to "bcms_widgets"
+    Then the file "bcms_widgets.gemspec" should contain "s.files -= Dir['lib/tasks/module_tasks.rake']"
+    # Better tests, build the gem, check for errors
+    # Install the gem, check the contents.
+
+
+
+
 
 
 

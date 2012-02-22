@@ -1,10 +1,9 @@
 # Working on release of bcms 3.4
 
-Current: Verify that `bcms demo` works correctly.
+Current:
 
 Tasks:
 
-* rake db:install doesn't exist as a task for generated modules (either change instructions or make it work)
 * rake db:install for existing rails projects (after bcms install) might want to run bcms seed data as separate tasks. How to other gems/projects handle this?
 * [BUG] When in module, `rails g cms:content_block` doesn't work
 * browsercms-cucumber - Build a separate gem from this project, which can be included in other CMS projects. (Might be 3.4.1)
@@ -19,11 +18,7 @@ cucumber -r features features/commands/new_projects.feature
 4. By default, Rails wants to match the table names of namespaced models (i.e. BcmsNews::NewsArticle). This can make for somewhat LONG and/or redudant table names (i.e. bcms_news_news_articles) but is probably better in the long run since it helps uniquely tie table to their module.
 5.  The BrowserCMS convention of having 'create_versioned_table' do different things based on the underlying model is might be flawed. Migrations really need to represent a snapshot in time that won't change based on the code. Case in point, we don't know what column name is being generated for original_record_id.
 
-News Module is mostly done. Unresolved issues:
-* New concept (improvement) Remove the need for page routes and use controllers instead.
-
 Things to test:
-* bcms demo
 
 # [1] Migration Bugs
 * Attachment fields won't be generated correctly.

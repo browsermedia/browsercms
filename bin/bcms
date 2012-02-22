@@ -59,6 +59,8 @@ class Cms::Install < Thor
     inside rails_app do
       generate_seeds_rb
     end
+
+    add_rake_tasks_for_module
     generate_browsercms_project
     generate_installation_script
     generate_default_template
@@ -199,6 +201,12 @@ SITE_DOMAIN="localhost:3000"
       copy_file 'demo_site.rake', 'lib/tasks/demo_site.rake'
       copy_file 'demo.seeds.rb', 'db/demo_site_seeds.rb'
     end
+  end
+
+  def add_rake_tasks_for_module
+    copy_file 'module_tasks.rake', 'lib/tasks/module_tasks.rake'
+    append_to_file 'Rakefile', "\nload 'lib/tasks/module_tasks.rake'"
+    insert_into_file "#{current_project}.gemspec", "  s.files -= Dir['lib/tasks/module_tasks.rake']\n  ", :before => "s.test_files"
   end
 
   # When working with modules, the 'root' is the dummy application
