@@ -1,6 +1,6 @@
 # Working on release of bcms 3.4
 
-Current: Verifying that bcms install works.
+Current: Verify that `bcms demo` works correctly.
 
 Tasks:
 

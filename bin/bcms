@@ -27,7 +27,7 @@ class Cms::Install < Thor
   def self.common_options
     method_option :database, :aliases => "-d", :desc => "Preconfigure for selected database (options: mysql/oracle/postgresql/sqlite3/frontbase/ibm_db) [Default: sqlite3]"
     method_option :template, :aliases => "-m", :desc => "Path to an application template (can be a filesystem path or URL)"
-    method_option :skip_bundle, :aliases => "--skip-bundle", :desc => "Don't run bundle install", :default=>false, :type=>:boolean
+    method_option :skip_bundle, :aliases => "--skip-bundle", :desc => "Don't run bundle install", :default => false, :type => :boolean
   end
 
   desc "new [NAME]", "Creates a blank BrowserCMS project with a single default template. Suitable for starting a new website project."
@@ -44,10 +44,9 @@ class Cms::Install < Thor
 
   def demo(name)
     create_blank_cms_project(name)
-    generate "browser_cms:demo_site"
+    generate_demo_project
     display_instructions(name)
   end
-
 
   desc 'module [NAME]', "Generates a BrowserCMS module for sharing code between BrowserCMS projects. (Name must start with bcms_)"
   common_options
@@ -90,6 +89,7 @@ class Cms::Install < Thor
 Cms.table_prefix = "cms_"
     CODE
   end
+
   def create_license_files
     template 'COPYRIGHT.txt'
     template 'LICENSE.txt'
@@ -189,6 +189,18 @@ SITE_DOMAIN="localhost:3000"
     end
   end
 
+  def generate_demo_project
+    self.class.source_root(File.expand_path(File.join(__FILE__, '../../lib/generators/browser_cms/demo_site/templates')))
+    inside rails_app do
+      copy_file 'logo.jpg', "public/themes/blue_steel/images/logo.jpg"
+      copy_file 'splash.jpg', "public/themes/blue_steel/images/splash.jpg"
+      copy_file 'style.css', "public/themes/blue_steel/stylesheets/style.css"
+
+      copy_file 'demo_site.rake', 'lib/tasks/demo_site.rake'
+      copy_file 'demo.seeds.rb', 'db/demo_site_seeds.rb'
+    end
+  end
+
   # When working with modules, the 'root' is the dummy application
   def in_root
     inside(rails_app) { yield }
@@ -212,7 +224,7 @@ SITE_DOMAIN="localhost:3000"
 
   # For both creating new bcms project and adding bcms to existing rails projects.
   def common_setup(name)
-    gem 'browsercms', :version=>::Cms::VERSION
+    gem 'browsercms', :version => ::Cms::VERSION
     run_bundle_install
     generate :jdbc if defined?(JRUBY_VERSION)
     generate_browsercms_project
@@ -236,7 +248,7 @@ SITE_DOMAIN="localhost:3000"
     run("rails plugin new #{name} --mountable --skip-bundle")
     work_in_project_root_directory(name)
 
-    gemspec "browsercms", :version=>"~> #{::Cms::VERSION}"
+    gemspec "browsercms", :version => "~> #{::Cms::VERSION}"
     add_browsercms_dependency
     include_cms_module
     remove_rails_dependency
@@ -283,7 +295,7 @@ SITE_DOMAIN="localhost:3000"
   end
 
   def remove_rails_dependency
-    insert_into_file gemspec_file, "# Depend on BrowserCMS,rather than Rails \n # ", :before=>"s.add_dependency \"rails\""
+    insert_into_file gemspec_file, "# Depend on BrowserCMS,rather than Rails \n # ", :before => "s.add_dependency \"rails\""
   end
 end
 

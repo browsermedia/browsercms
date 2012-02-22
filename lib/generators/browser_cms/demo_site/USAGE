@@ -1,1 +1,3 @@
-Will install an example CMS demo site
+This directory holds template files for generating 'demo' projects, used the `bcms demo` tool.
+
+This is a 'faux' generator which won't appear in a browserCMS project.

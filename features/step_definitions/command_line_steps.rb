@@ -40,6 +40,19 @@ Then /^BrowserCMS should be installed in the project$/ do
   check_file_content('config/routes.rb', 'mount_browsercms', true)
 end
 
+Then /^a demo project named "([^"]*)" should be created$/ do |project|
+  check_directory_presence [project], true
+  cd project
+  expected_files = %W{
+      public/themes/blue_steel/images/logo.jpg
+      public/themes/blue_steel/images/splash.jpg
+      public/themes/blue_steel/stylesheets/style.css
+      lib/tasks/demo_site.rake
+      db/demo_site_seeds.rb
+  }
+  check_file_presence expected_files, true
+end
+
 Given /^a BrowserCMS project named "([^"]*)" exists$/ do |project_name|
 
   unless File.exists?("#{@scratch_dir}/#{project_name}")
@@ -87,4 +100,13 @@ When /^a migration named "([^"]*)" should be created$/ do |name|
 end
 When /^I generate a block using a namespace$/ do
   pending "Need to test that rails g cms:content_block Cms::Product will namespace correctly."
+end
+
+Then /^it should seed the BrowserCMS database$/ do
+  assert_partial_output "YOUR CMS username/password is: cmsadmin/cmsadmin", all_output
+end
+
+When /^it should seed the demo data$/ do
+  assert_partial_output  "Cms::PagePartial(:_header)", all_output
+  # This output is ugly, but it verifies that seed data completely runs
 end
