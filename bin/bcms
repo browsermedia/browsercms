@@ -179,11 +179,11 @@ SITE_DOMAIN="localhost:3000"
   end
 
   def generate_browsercms_project
-    route "mount_browsercms"
     rake 'cms:install:migrations'
     generate "browser_cms:cms"
 
     inside rails_app do
+      add_route_to_end("mount_browsercms")
       add_sitedomain_constant_to_environment_files
       configure_default_cache_directory
       configure_mail_server

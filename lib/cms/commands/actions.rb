@@ -26,6 +26,12 @@ module Cms
       def module_class
         current_project.classify
       end
+
+      # Adds a route as the last file of the project.
+      # Assumes we are inside the rails app.
+      def add_route_to_end(route)
+        inject_into_file 'config/routes.rb', "\n  #{route}\n", {:before => /^end$/}
+      end
     end
   end
 end

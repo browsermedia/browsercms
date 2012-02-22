@@ -1,4 +1,5 @@
 require 'rails/generators/active_record/migration'
+require 'rails/generators/resource_helpers'
 
 module Cms
   module Generators
@@ -9,16 +10,13 @@ module Cms
       argument :attributes, :type => :array, :default => [], :banner => "field:type field:type"
 
       include Rails::Generators::Migration
-
-      # Don't check for class collision as overwriting content blocks is fine.
-      # check_class_collision
+      include Rails::Generators::ResourceHelpers
 
       hook_for :orm, :in=>:rails, :required=>true, :as=>:model
 
       def alter_the_model
-        insert_into_file "app/models/#{file_name}.rb", :after=>"ActiveRecord::Base\n" do
-          "    acts_as_content_block\n"
-        end
+        model_file = File.join('app/models', class_path, "#{file_name}.rb")
+        insert_into_file model_file, "    acts_as_content_block\n", :after=>"ActiveRecord::Base\n"
       end
 
       def alter_the_migration
@@ -26,7 +24,7 @@ module Cms
         gsub_file migration, "create_table", "create_content_table"
         insert_into_file migration, :after=>"def change\n" do
           <<-RUBY
-    Cms::ContentType.create!(:name => "#{class_name}", :group_name => "#{class_name}")
+    Cms::ContentType.create!(:name => "#{class_name}", :group_name => "#{group_name}")
           RUBY
         end
 
@@ -35,24 +33,52 @@ module Cms
         end
       end
 
-      def create_controller_and_views
-        template 'controller.rb', File.join('app/controllers/cms', "#{file_name.pluralize}_controller.rb")
-        template '_form.html.erb', File.join('app/views/cms/', file_name.pluralize, "_form.html.erb")
-        template 'render.html.erb', File.join('app/views/cms/', file_name.pluralize, "render.html.erb")
+
+      hook_for :resource_controller, :in=>:rails, :as=>:controller, :required => true do |controller|
+        invoke controller, [ namespaced_controller_name, options[:actions] ]
       end
 
-      def create_functional_test
-        template 'functional_test.erb', File.join('test/functional/cms/', "#{file_name.pluralize}_controller_test.rb")
+      def create_controller_and_views
+        gsub_file File.join('app/controllers', cms_or_class_path, "#{file_name.pluralize}_controller.rb"), /ApplicationController/, "Cms::ContentBlockController"
+        template '_form.html.erb', File.join('app/views', cms_or_class_path, file_name.pluralize, "_form.html.erb")
+        template 'render.html.erb', File.join('app/views', cms_or_class_path, file_name.pluralize, "render.html.erb")
       end
 
       def create_routes
-        route "namespace :cms  do content_blocks :#{file_name.pluralize} end\n"
+        if namespaced?
+          route "content_blocks :#{file_name.pluralize}"
+        else
+          route "namespace :cms  do content_blocks :#{file_name.pluralize} end"
+        end
       end
 
       private
 
-      def namespaced_controller_class
-        "#{class_name.pluralize}Controller"
+      def group_name
+        if namespaced?
+          class_name.split("::").first
+        else
+          class_name
+        end
+      end
+      def namespaced_controller_name
+        unless namespaced?
+          "cms/#{@controller_name}"
+        else
+          @controller_name
+        end
+      end
+      # Modules want to put classes under their namespace folders, i.e
+      #   - app/controllers/bcms_widgets/widget_controller
+      #
+      # while projects want to put it under cms
+      #   - app/controllers/cms/widget_controller
+      def cms_or_class_path
+        if namespaced?
+          class_path
+        else
+          ["cms"]
+        end
       end
     end
   end

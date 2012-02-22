@@ -83,23 +83,14 @@ Then /^a project file named "([^"]*)" should not contain "([^"]*)"$/ do |file, p
   check_file_content(prefix_project_name_to(file), partial_content, false)
 end
 
-When /^a migration named "([^"]*)" should contain "([^"]*)"$/ do |partial_file_name, partial_content|
-  abs_path_migration = find_migration_with_name(partial_file_name)
-  check_file_content(abs_path_migration, partial_content, true)
+When /^I cd into the project "([^"]*)"$/ do |project|
+  cd project
+  self.project_name = project
 end
-When /^a migration named "([^"]*)" should be created$/ do |name|
-  migration = find_migration_with_name(name)
-  expected = [
-      "create_content_table",
-      'Cms::ContentType.create!(:name => "Product", :group_name => "Product"',
-      ', :prefix=>false'
-  ]
-  expected.each do |expect|
-    check_file_content(migration, expect, true)
-  end
-end
-When /^I generate a block using a namespace$/ do
-  pending "Need to test that rails g cms:content_block Cms::Product will namespace correctly."
+
+When /^a migration named "([^"]*)" should contain:$/ do |file, partial_content|
+  migration = find_migration_with_name(file)
+  check_file_content(migration, partial_content, true)
 end
 
 Then /^it should seed the BrowserCMS database$/ do
@@ -109,4 +100,8 @@ end
 When /^it should seed the demo data$/ do
   assert_partial_output  "Cms::PagePartial(:_header)", all_output
   # This output is ugly, but it verifies that seed data completely runs
+end
+
+When /^the file "([^"]*)" should contain:$/ do |file, partial_content|
+  check_file_content(file, partial_content, true)
 end

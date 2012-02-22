@@ -1,15 +1,19 @@
 # Working on release of bcms 3.4
 
 Current:
+    Make generators for content blocks work with all 3.3.x features:
+
+    * Attachment fields won't be generated correctly.
+    * Attachment sections won't be generated correctly.
+    * Category fields won't be generated correctly.
+    * Html fields aren't sized.
+    * There is no down migration.
 
 Tasks:
 
 * rake db:install for existing rails projects (after bcms install) might want to run bcms seed data as separate tasks. How to other gems/projects handle this?
-* [BUG] When in module, `rails g cms:content_block` doesn't work
 * browsercms-cucumber - Build a separate gem from this project, which can be included in other CMS projects. (Might be 3.4.1)
 
-# Running a single cucumber test
-cucumber -r features features/commands/new_projects.feature
 
 ## Notes (for upgrading engines)
 
@@ -19,13 +23,6 @@ cucumber -r features features/commands/new_projects.feature
 5.  The BrowserCMS convention of having 'create_versioned_table' do different things based on the underlying model is might be flawed. Migrations really need to represent a snapshot in time that won't change based on the code. Case in point, we don't know what column name is being generated for original_record_id.
 
 Things to test:
-
-# [1] Migration Bugs
-* Attachment fields won't be generated correctly.
-* Attachment sections won't be generated correctly.
-* Category fields won't be generated correctly.
-* Html fields aren't sized.
-* There is no down migration.
 
 # Short Term
 

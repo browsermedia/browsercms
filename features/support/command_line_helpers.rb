@@ -1,5 +1,12 @@
 module CommandLineHelpers
-  attr_accessor :project_name
+  attr_writer :project_name
+
+  def project_name
+    unless @project_name
+      raise "This Cucumber step relies on self.project_name= to be set prior to being called."
+    end
+    @project_name
+  end
 
   def expect_project_directories(directories)
     check_directory_presence prefix_project_name_to(directories), true
@@ -28,7 +35,9 @@ module CommandLineHelpers
   # @param [String] partial_file_name Include the .rb at the end
   # @parem [String] The absolute path to the migration file
   def find_migration_with_name(partial_file_name)
-    files = Dir.glob("#{@aruba_dir}/#{project_name}/db/migrate/*#{partial_file_name}")
+    file_pattern = "#{@aruba_dir}/#{project_name}/db/migrate/*#{partial_file_name}"
+    files = Dir.glob(file_pattern)
+    fail "Couldn't find a migration file matching this pattern (#{file_pattern})'" if files.empty?
     File.absolute_path(files.first)
   end
 end

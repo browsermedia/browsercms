@@ -15,7 +15,7 @@ Before do
   @dirs = [@aruba_dir]
 
   # Generating projects takes a while, so give Aruba more time before it cuts things off.
-  @aruba_timeout_seconds = 60
+  @aruba_timeout_seconds = 30
 
   # Must explicitly clean up the working directory before each project (might be solved in later version of Aruba)
   FileUtils.rm_rf(@aruba_dir)

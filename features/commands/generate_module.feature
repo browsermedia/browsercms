@@ -22,6 +22,14 @@ Feature: Generate Module
     And the following files should exist:
     | test/dummy/db/browsercms.seeds.rb|
     And it should no longer generate a README in the public directory
+    And the file "test/dummy/config/routes.rb" should contain:
+    """
+    Rails.application.routes.draw do
+
+      mount BcmsWidgets::Engine => "/bcms_widgets"
+
+      mount_browsercms
+    """
 
   Scenario: Can Install modules
     Given I run `bcms module bcms_widgets`
