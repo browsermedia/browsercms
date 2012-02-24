@@ -3,14 +3,19 @@
 Current:
     Make generators for content blocks work with all 3.3.x features:
 
-    * Attachment fields won't be generated correctly.
-    * Attachment sections won't be generated correctly.
-    * Category fields won't be generated correctly.
-    * Html fields aren't sized.
+    * Need to create a Section in seed data if there is an attachment defined (the following should be compressed to one line like a factory.
+    unless Section.with_path('/<%= file_name.pluralize %>').exists?
+      Section.create!(:name => "<%= @attachment_section %>", :parent => Section.system_section.first, :path => '/<%= file_name.pluralize %>', :allow_groups=>:all)
+    end
+    * Need to seed Category:
+    unless CategoryType.named('<%= @category_type %>').exists?
+      CategoryType.create!(:name => "<%= @category_type %>")
+    end
     * There is no down migration.
 
 Tasks:
 
+* Merge 3.3.x into project (performance upgrades)
 * rake db:install for existing rails projects (after bcms install) might want to run bcms seed data as separate tasks. How to other gems/projects handle this?
 * browsercms-cucumber - Build a separate gem from this project, which can be included in other CMS projects. (Might be 3.4.1)
 

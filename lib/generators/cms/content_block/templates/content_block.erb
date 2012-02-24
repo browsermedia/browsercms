@@ -20,8 +20,6 @@ class <%= class_name %> < ActiveRecord::Base
         end}
     when :category
       "belongs_to_category\n"
-    when :belongs_to
-      "belongs_to :#{attribute.name}\n"
     end
 %><% end %>
 

@@ -93,6 +93,14 @@ When /^a migration named "([^"]*)" should contain:$/ do |file, partial_content|
   check_file_content(migration, partial_content, true)
 end
 
+# A table of string values to check
+When /^a migration named "([^"]*)" should contain the following:$/ do |file, table|
+  migration = find_migration_with_name(file)
+  table.rows.each do |row|
+    check_file_content(migration, row.first, true)
+  end
+end
+
 Then /^it should seed the BrowserCMS database$/ do
   assert_partial_output "YOUR CMS username/password is: cmsadmin/cmsadmin", all_output
 end

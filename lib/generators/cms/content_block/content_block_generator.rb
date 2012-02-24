@@ -12,17 +12,18 @@ module Cms
       include Rails::Generators::Migration
       include Rails::Generators::ResourceHelpers
 
-      hook_for :orm, :in=>:rails, :required=>true, :as=>:model
+      hook_for :orm, :in => :rails, :required => true, :as => :model
 
       def alter_the_model
         model_file = File.join('app/models', class_path, "#{file_name}.rb")
-        insert_into_file model_file, "    acts_as_content_block\n", :after=>"ActiveRecord::Base\n"
+        spaces = namespaced? ? 4 : 2
+        insert_into_file model_file, indent("acts_as_content_block\n", spaces), :after => "ActiveRecord::Base\n"
       end
 
       def alter_the_migration
         migration = self.class.migration_exists?(File.absolute_path("db/migrate"), "create_#{table_name}")
         gsub_file migration, "create_table", "create_content_table"
-        insert_into_file migration, :after=>"def change\n" do
+        insert_into_file migration, :after => "def change\n" do
           <<-RUBY
     Cms::ContentType.create!(:name => "#{class_name}", :group_name => "#{group_name}")
           RUBY
@@ -31,11 +32,20 @@ module Cms
         unless class_name.starts_with?("Cms::")
           gsub_file migration, "do", ", :prefix=>false do"
         end
+        self.attributes.select { |attr| attr.type == :category }.each do
+          gsub_file migration, "t.category", "t.belongs_to"
+        end
+        self.attributes.select { |attr| attr.type == :attachment }.each do
+          gsub_file migration, "t.attachment", "t.belongs_to"
+          insert_into_file migration, indent("t.integer :attachment_version\n", 6), :after => "t.belongs_to :attachment\n"
+        end
+        self.attributes.select { |attr| attr.type == :html }.each do |attribute|
+          gsub_file migration, "t.html :#{attribute.name}", "t.text :#{attribute.name}, :size => (64.kilobytes + 1)"
+        end
       end
 
-
-      hook_for :resource_controller, :in=>:rails, :as=>:controller, :required => true do |controller|
-        invoke controller, [ namespaced_controller_name, options[:actions] ]
+      hook_for :resource_controller, :in => :rails, :as => :controller, :required => true do |controller|
+        invoke controller, [namespaced_controller_name, options[:actions]]
       end
 
       def create_controller_and_views
@@ -61,6 +71,7 @@ module Cms
           class_name
         end
       end
+
       def namespaced_controller_name
         unless namespaced?
           "cms/#{@controller_name}"
@@ -68,6 +79,7 @@ module Cms
           @controller_name
         end
       end
+
       # Modules want to put classes under their namespace folders, i.e
       #   - app/controllers/bcms_widgets/widget_controller
       #
