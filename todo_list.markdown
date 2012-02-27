@@ -1,15 +1,7 @@
 # Working on release of bcms 3.4
 
 Current:
-    Make generators for content blocks work with all 3.3.x features:
-
-    * Need to seed Category (Verify its needed):
-    unless CategoryType.named('<%= @category_type %>').exists?
-      CategoryType.create!(:name => "<%= @category_type %>")
-    end
-    DSL:
-    * Cms::Seed.create_if_needed(:category)
-    * There is no down migration.
+    [BUG] Adding a category or category type throws an error (probably based on routing).
 
 Tasks:
 
@@ -37,6 +29,8 @@ Things to test:
 
 * If a content type can't be found in code, the entire /cms/content_library will throw an error. This could be made more robust by just not showing the content type. This probably only happens when we upgrade databases for testing, but its still annoying.
 * [DynamicPortlets] If you leave fields blank, they throw errors (and/or grab other default templates)
+* By default, a generated file block with an Attachment will need additional code to work correctly (I.e. copy & paste from AbstractFileBlocks)
+
 
 # Needs
 

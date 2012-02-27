@@ -4,6 +4,7 @@ class CreateProducts < ActiveRecord::Migration
     create_content_table :products, :prefix=>false do |t|
       t.string :name
       t.integer :price
+      t.integer :category_id
 
       t.timestamps
     end

@@ -86,6 +86,7 @@ begin
   end
 end
 
+load 'lib/tasks/core_tasks.rake'
 # Sample tasks to load sample data. This is unworking pseudocode at the moment.
 #task 'db:load' do
   # `mysql --user=root --password name_of_database < test/dummy/db/backups/name_of_file.sql`

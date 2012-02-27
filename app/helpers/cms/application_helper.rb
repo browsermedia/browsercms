@@ -140,9 +140,11 @@ LBW
       select_tag("group_id", options_from_collection_for_select(Group.all.insert(0, Group.new(:id => nil, :name => "Show All Groups")), "id", "name", params[:group_id].to_i))
     end
 
+    # Fetches a list of categories for a cms_drop_down. Will prompt users to create Categories/Categories types if the proper ones don't exist.
     def categories_for(category_type_name, order="name")
       cat_type = CategoryType.named(category_type_name).first
-      cat_type ? cat_type.category_list(order) : []
+      categories = cat_type ? cat_type.category_list(order) : [Category.new(:name=>"-- You must first create a 'Category Type' named '#{category_type_name}'")]
+      categories.empty? ? [Category.new(:name=>"-- You must first create a Category with a Category Type of '#{category_type_name}'.")]: categories
     end
 
     def render_pagination(collection, collection_name, options={})

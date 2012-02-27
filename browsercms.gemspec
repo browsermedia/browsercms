@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
   s.files         -= Dir['test/dummy/*']
   s.files -= Dir["lib/tasks/cucumber.rake"]
   s.files -= Dir["lib/tasks/cms.rake"]
+  s.files -= Dir["lib/tasks/core_tasks.rake"]
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
 

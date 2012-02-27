@@ -1,5 +1,4 @@
-# Provides tasks to make developing BrowserCMS modules easier.
-# Should not be packaged with the gem.
+# Tasks for working with BrowserCMS that should not be packaged into the Gem
 namespace :db do
 
   # This copy of the core CMS task is necessary because Engines push all existing Rails tasks under app:db:install

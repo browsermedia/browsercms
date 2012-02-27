@@ -28,7 +28,7 @@ Given /^an archived file named "([^"]*)" exists$/ do  |file_name|
   assert file.attachment.archived?, "File should be archived"
 end
 
-When /^I request (.*)$/ do |path|
+When /^I (?:request|visit) (#{PATH})$/ do |path|
   visit path
 end
 

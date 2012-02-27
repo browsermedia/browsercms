@@ -435,6 +435,7 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
     t.integer  "version"
     t.string   "name"
     t.integer  "price"
+    t.integer  "category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "published",          :default => false
@@ -450,6 +451,7 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
     t.integer  "lock_version",  :default => 0
     t.string   "name"
     t.integer  "price"
+    t.integer  "category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "published",     :default => false
