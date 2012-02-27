@@ -3,14 +3,12 @@
 Current:
     Make generators for content blocks work with all 3.3.x features:
 
-    * Need to create a Section in seed data if there is an attachment defined (the following should be compressed to one line like a factory.
-    unless Section.with_path('/<%= file_name.pluralize %>').exists?
-      Section.create!(:name => "<%= @attachment_section %>", :parent => Section.system_section.first, :path => '/<%= file_name.pluralize %>', :allow_groups=>:all)
-    end
-    * Need to seed Category:
+    * Need to seed Category (Verify its needed):
     unless CategoryType.named('<%= @category_type %>').exists?
       CategoryType.create!(:name => "<%= @category_type %>")
     end
+    DSL:
+    * Cms::Seed.create_if_needed(:category)
     * There is no down migration.
 
 Tasks:
