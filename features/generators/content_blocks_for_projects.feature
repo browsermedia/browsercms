@@ -30,7 +30,7 @@ Feature:
     class CreateProducts < ActiveRecord::Migration
       def change
         Cms::ContentType.create!(:name => "Product", :group_name => "Product")
-        create_content_table :products , :prefix=>false do |t|
+        create_content_table :products, :prefix=>false do |t|
           t.string :name
           t.string :price
 
@@ -106,5 +106,18 @@ Feature:
     Then a migration named "create_products.rb" should contain the following:
       | t.text :content, :size => (64.kilobytes + 1) |
 
+  Scenario: [Bug Fix] Block names starting with 'do' should work
+    When I run `rails g cms:content_block dog`
+    And a migration named "create_dogs.rb" should contain:
+    """
+    class CreateDogs < ActiveRecord::Migration
+      def change
+        Cms::ContentType.create!(:name => "Dog", :group_name => "Dog")
+        create_content_table :dogs, :prefix=>false do |t|
 
+          t.timestamps
+        end
+      end
+    end
+    """
 

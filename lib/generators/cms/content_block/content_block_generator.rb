@@ -30,7 +30,7 @@ module Cms
         end
 
         unless class_name.starts_with?("Cms::")
-          gsub_file migration, "do", ", :prefix=>false do"
+          gsub_file migration, " do |t|", ", :prefix=>false do |t|"
         end
         self.attributes.select { |attr| attr.type == :category }.each do
           gsub_file migration, "t.category", "t.belongs_to"
