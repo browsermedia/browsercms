@@ -1,10 +1,11 @@
 # Working on release of bcms 3.4
 
 Current:
-    [BUG] Adding a category or category type throws an error (probably based on routing).
 
 Tasks:
 
+* The currently selected content type is not highlighted in Content Library.
+* Refactor Cucumber steps to add seed data once as part of the env.rb file, then use truncation to leave it there.
 * Merge 3.3.x into project (performance upgrades)
 * rake db:install for existing rails projects (after bcms install) might want to run bcms seed data as separate tasks. How to other gems/projects handle this?
 * browsercms-cucumber - Build a separate gem from this project, which can be included in other CMS projects. (Might be 3.4.1)

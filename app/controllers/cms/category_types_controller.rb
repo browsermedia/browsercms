@@ -1,7 +1,7 @@
 module Cms
-class CategoryTypesController < Cms::ContentBlockController
-  def show
-    redirect_to cms_category_types_url
+  class CategoryTypesController < Cms::ContentBlockController
+    def show
+      redirect_to category_types_path
+    end
   end
-end
 end
