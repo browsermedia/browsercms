@@ -11,6 +11,18 @@ Feature: Manage Content Blocks
     When I request /cms/products
     Then I should see "List Products"
 
+  Scenario: List Content Blocks
+    When I request /cms/content_library
+    Then I should see the following content:
+      | Product       |
+      | Text          |
+      | File          |
+      | Image         |
+      | Portlet       |
+      | Category      |
+      | Category Type |
+      | Tag           |
+
   Scenario: Create a new block
     When I request /cms/products/new
     Then I should see "Add New Product"

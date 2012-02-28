@@ -11,5 +11,11 @@ module Cms
       end
     end
 
+
+    def select_content_type_tag(type, &block)
+      options = {:rel => "select-#{type.key}"}
+      options[:class] = "on" if content_type == type
+      content_tag_for(:li, type, nil, options, &block)
+    end
   end
 end

@@ -40,23 +40,29 @@ module BcmsStore
 end
 
 module Cms
+
   class ContentTypeTest < ActiveSupport::TestCase
     def setup
       @c = Cms::ContentType.new(:name => "ReallyLongNameClass")
-      @unnamespaced_type = Cms::ContentType.create!(:name => "Unnamespaced", :group_name=>"Core")
+      @unnamespaced_type = Cms::ContentType.create!(:name => "Unnamespaced", :group_name => "Core")
+    end
+
+
+    test "#key" do
+      assert_equal "really_long_name_class", @c.key
     end
 
     test "#display_name for blocks from modules" do
-      assert_equal "Widget", Cms::ContentType.new(:name=>"BcmsStore::Widget").display_name
+      assert_equal "Widget", Cms::ContentType.new(:name => "BcmsStore::Widget").display_name
       assert_equal "Widget", BcmsStore::Widget.display_name
     end
 
     test "display_name for non-Cms classes" do
-      assert_equal "String", Cms::ContentType.new(:name=>"String").display_name
+      assert_equal "String", Cms::ContentType.new(:name => "String").display_name
     end
 
     test "#form for unnamespaced blocks" do
-      widget_type = Cms::ContentType.create!(:name => "Widget", :group_name=>"Core")
+      widget_type = Cms::ContentType.create!(:name => "Widget", :group_name => "Core")
       assert_equal "cms/widgets/form", widget_type.form
     end
 
@@ -81,7 +87,7 @@ module Cms
     end
 
     test "route_name removes cms_ as prefix (no longer needed for engines)" do
-      content_type = Cms::ContentType.new(:name=>"Cms::NamespacedBlock")
+      content_type = Cms::ContentType.new(:name => "Cms::NamespacedBlock")
       assert_equal "namespaced_block", content_type.route_name
     end
 
@@ -91,12 +97,12 @@ module Cms
     end
 
     test "engine_name for Cms engine" do
-      cms_namespace = Cms::ContentType.new(:name=>"Cms::NamespacedBlock")
+      cms_namespace = Cms::ContentType.new(:name => "Cms::NamespacedBlock")
       assert_equal "cms", cms_namespace.engine_name
     end
 
     test "path_elements for Cms engine" do
-      cms_namespace = Cms::ContentType.new(:name=>"Cms::NamespacedBlock")
+      cms_namespace = Cms::ContentType.new(:name => "Cms::NamespacedBlock")
       assert_equal [Cms::NamespacedBlock], cms_namespace.path_elements
     end
 
@@ -129,12 +135,12 @@ module Cms
     end
 
     test "calculate the model_class name with s" do
-      ct = Cms::ContentType.new(:name=>"Kindness")
+      ct = Cms::ContentType.new(:name => "Kindness")
       assert_equal Kindness, ct.model_class
     end
 
     test "Form for Blocks with Engines" do
-      engine_type = Cms::ContentType.new(:name=>"BcmsStore::Widget")
+      engine_type = Cms::ContentType.new(:name => "BcmsStore::Widget")
       assert_equal true, engine_type.engine_exists?
       assert_equal "bcms_store/widgets/form", engine_type.form
     end

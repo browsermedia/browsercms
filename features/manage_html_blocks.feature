@@ -5,6 +5,10 @@ Feature: Manage Html Blocks
     Given the cms database is populated
     And I am logged in as a Content Editor
 
+  Scenario: List Html Blocks
+    Given I request /cms/html_blocks
+    Then "Text" should be selected as the current Content Type
+
   Scenario: Publishing a New Block
     Given I request /cms/html_blocks/new
     Then I should see a page titled "Add New Text"

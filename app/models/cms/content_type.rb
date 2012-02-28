@@ -16,6 +16,7 @@ module Cms
       all.map { |f| f.name.underscore.to_sym }
     end
 
+
     # Given a 'key' like 'html_blocks' or 'portlet'. Looks first for a class in the Cms:: namespace, then again without it.
     # Raises exception if nothing was found.
     def self.find_by_key(key)
@@ -40,8 +41,9 @@ module Cms
       raise "Couldn't find ContentType of class '#{class_name}'"
     end
 
-    def is_child_of?(content_type)
-      model_class.ancestors.map { |c| c.name }.include?(content_type.model_class)
+    # Returns URL friendly 'key' which is used to identify this
+    def key
+      model_class_form_name
     end
 
     # Returns the partial used to render the form fields for a given block.

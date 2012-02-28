@@ -15,3 +15,12 @@ end
 Then /^I should be redirected to ([^"]*)$/ do |path|
   assert_equal "http://www.example.com#{path}", page.response_headers["Location"]
 end
+
+Then /^"([^"]*)" should be selected as the current Content Type$/ do |name|
+  select = name.tableize.singularize
+  if name == "Text"
+    select = "html_block"
+  end
+  li = find(:xpath, "//li[@rel='select-#{select}']")
+  assert li['class'].include?("on")
+end
