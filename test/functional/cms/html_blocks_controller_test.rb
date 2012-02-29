@@ -59,16 +59,7 @@ class HtmlBlocksControllerTest < ActionController::TestCase
     assert_equal "test", @page.reload.connectors.first.container
     assert_redirected_to @page.path
   end  
-  
-  def test_index
-    get :index
-    assert_response :success
-    assert_select "td", "Test"
-    assert_select "td.block_status"  do
-      assert_select "img[alt=?]", "Published"
-    end
-  end
-  
+
   def test_search
     get :index, :search => {:term => 'test'}
     assert_response :success

@@ -6,8 +6,14 @@ Feature: Manage Html Blocks
     And I am logged in as a Content Editor
 
   Scenario: List Html Blocks
+    Given the following Html blocks exist:
+      | name      |
+      | Hello CMS |
     Given I request /cms/html_blocks
+    Then the response should be 200
     Then "Text" should be selected as the current Content Type
+    And I should see the following content:
+      | Hello CMS |
 
   Scenario: Publishing a New Block
     Given I request /cms/html_blocks/new

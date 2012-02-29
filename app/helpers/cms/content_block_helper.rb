@@ -22,7 +22,7 @@ module Cms
       tag "tr", options, true
     end
 
-    # From 3.4.x (data)
+    # From 3.4.x (Namespaced and using Data elements to clean up JS in pages)
     
     # For each row in content block table, we need to output all the paths for the actions in a way that JS can read them.
     # We use 'data-' elements here to avoid duplication of path calculations.
@@ -48,7 +48,7 @@ module Cms
     end
 
     def class_name_for(block)
-      class_name_for(block)
+      block.class.name.underscore
     end
   end
 end
