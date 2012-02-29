@@ -13,7 +13,8 @@ Feature: Manage Html Blocks
     Then the response should be 200
     Then "Text" should be selected as the current Content Type
     And I should see the following content:
-      | Hello CMS |
+      | Hello CMS     |
+      | Include body? |
 
   Scenario: Publishing a New Block
     Given I request /cms/html_blocks/new

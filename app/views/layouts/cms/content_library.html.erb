@@ -34,13 +34,13 @@
                     </div>
                     <div style="clear: both;"></div>
 
-                    <% if content_type.name == "HtmlBlock" -%>
+                    <% if content_type.name == "Cms::HtmlBlock" -%>
                       <div id="search_include_body_container">
                         <%= check_box_tag "search[include_body]", true, (params[:search] ? params[:search][:include_body] : false) %>
                         <label for="search_include_body">Include body?</label>
                       </div>
                     <%# TODO: Remove IE 6 Hack %>
-                    <% elsif %w[FileBlock ImageBlock].include?(content_type.name) && request.user_agent !~ /MSIE 6/ %>
+                    <% elsif %w[Cms::FileBlock Cms::ImageBlock].include?(content_type.name) %>
                       <p><%= select_tag 'section_id', searchable_sections(params[:section_id]) %></p>
                     <% end -%>
                   <% end -%>

@@ -19,3 +19,13 @@ Then /^the following sections exist:$/ do |table|
   end
 end
 
+When /^I should see the section search filter$/ do
+  terms = %w{
+    All sections
+    My Site
+    system
+  }
+  terms.each do |text|
+    assert page.has_content?(text)
+  end
+end

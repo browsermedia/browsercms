@@ -14,6 +14,8 @@ Feature: Manage Image Blocks
     Then I should see a page titled "Content Library / List Images"
     And I should see the following content:
       | An LOL Cat Picture |
+    And I should see the section search filter
+
 
   Scenario: Add New Image
     Given I visit /cms/image_blocks/new
