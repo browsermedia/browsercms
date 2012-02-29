@@ -31,6 +31,7 @@ module FactoryHelpers
     end
     guest_group
   end
+  alias :given_a_guest_group_exists :given_there_is_a_guest_group
 
   # Creates a sample uploaded JPG file with binary data.
   def mock_file(options = {})

@@ -12,3 +12,7 @@ Feature: Sitemap
     Then I should see a page titled "Sitemap"
     And I should see the stock CMS pages
     And I should see the new pages and sections
+
+  Scenario: Verify Editable Sections
+    # Given there are some restricted sections and pages
+    # Verify that I can edit some, but not others.
