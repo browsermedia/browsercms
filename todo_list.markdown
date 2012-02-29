@@ -1,7 +1,6 @@
 # Working on release of bcms 3.4
 
 Current:
-    * Merge 3.3.x into project (performance upgrades)
 
 Tasks:
 
