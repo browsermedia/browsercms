@@ -11,3 +11,6 @@ When /^the following Categories exist for "([^"]*)":$/ do |category_type, table|
     Factory.create(:category, attributes)
   end
 end
+Then /^an image with id "([^"]*)" should exist$/ do |arg|
+  assert Cms::ImageBlock.find(arg.to_i)
+end

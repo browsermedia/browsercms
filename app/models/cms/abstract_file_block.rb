@@ -1,6 +1,7 @@
 module Cms
   class AbstractFileBlock < ActiveRecord::Base
 
+
     set_table_name Namespacing.prefix("file_blocks")
 
     validates_presence_of :name
@@ -9,6 +10,12 @@ module Cms
             :include => {:attachment => :section_node },
             :conditions => ["#{SectionNode.table_name}.ancestry = ?", section.node.ancestry_path] }
         }
+
+    # Return the parent section for this block.
+    # @return [Cms::Section]
+    def parent
+      attachment.parent
+    end
 
     def path
       attachment_file_path

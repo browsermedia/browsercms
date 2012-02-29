@@ -20,6 +20,14 @@ Factory.define :connector, :class => Cms::Connector do |m|
   m.connectable_version 1
 end
 
+Factory.define :image_block, :class => Cms::ImageBlock do |m|
+  m.sequence(:name) { |n| "TestImageBlock#{n}" }
+  m.sequence(:attachment_file_path) {|i| "/file-#{i}.txt" }
+  m.attachment_section { find_or_create_root_section }
+  m.attachment_file { mock_file }
+  m.publish_on_save true
+end
+
 Factory.define :file_block, :class => Cms::FileBlock do |m|
   m.sequence(:name) { |n| "TestFileBlock#{n}" }
   m.sequence(:attachment_file_path) {|i| "/file-#{i}.txt" }
@@ -64,10 +72,6 @@ end
 Factory.define :html_block, :class => Cms::HtmlBlock do |m|
   m.name "About Us"
   m.content "<h1>About Us</h1>\n<p>Lorem ipsum dolor sit amet...</p>"
-end
-
-Factory.define :image_block, :class => Cms::ImageBlock do |m|
-  m.sequence(:name) { |n| "TestImageBlock#{n}" }
 end
 
 Factory.define :link, :class => Cms::Link do |m|

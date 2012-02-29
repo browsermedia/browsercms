@@ -11,6 +11,11 @@ module Cms
 
     end
 
+    test "#parent" do
+      image = Factory(:image_block)
+      assert_equal root_section, image.parent
+    end
+
     test "default table_name" do
       assert_equal Namespacing.prefix("file_blocks"), ImageBlock.table_name
     end

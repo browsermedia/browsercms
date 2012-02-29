@@ -11,6 +11,10 @@ Then /^I should see a page titled "([^"]*)"$/ do |page_title|
   should_see_a_page_titled(page_title)
 end
 
+When /^the page header should be "([^"]*)"$/ do |h1|
+  assert page.has_css?("h1", :text=>h1), "Expected to see <h1>#{h1}</h1> on the page."
+end
+
 When /^I am not logged in$/ do
   visit '/cms/logout'
 end

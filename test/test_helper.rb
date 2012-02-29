@@ -17,6 +17,7 @@ require "rails/generators/test_case"
 require 'factory_girl'
 require 'factories'
 
+require 'mock_file'
 require 'support/factory_helpers'
 require 'support/engine_controller_hacks'
 
@@ -91,12 +92,6 @@ class ActiveSupport::TestCase
     Cms::Permission.named(name).first || Factory(:permission, :name => name)
   end
 
-  require 'mock_file'
-  # Creates a TempFile attached to an uploaded file. Used to test attachments
-  def file_upload_object(options)
-    Cms::MockFile.new_file(options[:original_filename], options[:content_type])
-  end
-
   def guest_group
     Cms::Group.guest || Factory(:group, :code => Group::GUEST_CODE)
   end
@@ -112,11 +107,6 @@ class ActiveSupport::TestCase
     admin
   end
 
-
-  # Creates a sample uploaded JPG file with binary data.
-  def mock_file(options = {})
-    file_upload_object({:original_filename => "foo.jpg", :content_type => "image/jpeg"}.merge(options))
-  end
 
   # Takes a list of the names of instance variables to "reset"
   # Each instance variable will be set to a new instance

@@ -1,6 +1,8 @@
 require 'test_helper'
 
 module Cms
+
+  # As these tests break, move them to features/content_blocks/manage_image_blocks.feature
   class ImageBlocksControllerTest < ActionController::TestCase
     include Cms::ControllerTestHelper
 
@@ -11,10 +13,34 @@ module Cms
       given_there_is_a_content_type(Cms::ImageBlock)
     end
 
-    def test_new
-      get :new
+    def test_edit
+      @image = Factory(:image_block,
+                       :attachment_section => root_section,
+                       :attachment_file => mock_file,
+                       :attachment_file_path => "test.jpg")
+
+      get :edit, :id => @image.id
+
       assert_response :success
-      assert_select "title", "Content Library / Add New Image"
+      assert_equal root_section.id, assigns(:block).attachment_section_id
+      assert_select "title", "Content Library / Edit Image"
+      assert_select "h1", "Edit Image '#{@image.name}'"
+      assert_select "select[name=?]", "image_block[attachment_section_id]" do
+        assert_select "option[value=?][selected=?]", root_section.id, "selected"
+      end
+    end
+
+    def test_update_image
+      @image = Factory(:image_block,
+                       :attachment_section => root_section,
+                       :attachment_file => mock_file,
+                       :attachment_file_path => "test.jpg")
+      @other_section = Factory(:section, :parent => root_section, :name => "Other")
+
+      put :update, :id => @image.id, :image_block => {:attachment_section_id => @other_section.id}
+      reset(:image)
+
+
       assert_redirected_to @image
       assert_equal @other_section, @image.attachment_section
     end
@@ -47,43 +73,6 @@ module Cms
       assert_equal "v1", File.read(@draft_image.attachment.full_file_location)
     end
 
-  end
-
-  class Cms::MoveImageBlocks < ActionController::TestCase
-    include Cms::ControllerTestHelper
-    tests Cms::ImageBlocksController
-
-    def setup
-      given_a_site_exists
-      login_as_cms_admin
-
-      @image = Factory(:image_block,
-                       :attachment_section => root_section,
-                       :attachment_file => mock_file,
-                       :attachment_file_path => "test.jpg")
-    end
-
-    def test_edit
-      get :edit, :id => @image.id
-
-      assert_response :success
-      assert_equal root_section.id, assigns(:block).attachment_section_id
-      assert_select "title", "Content Library / Edit Image"
-      assert_select "h1", "Edit Image '#{@image.name}'"
-      assert_select "select[name=?]", "image_block[attachment_section_id]" do
-        assert_select "option[value=?][selected=?]", root_section.id, "selected"
-      end
-    end
-
-    def test_update_image
-      @other_section = Factory(:public_section, :parent => root_section, :name => "Other")
-
-      put :update, :id => @image.id, :image_block => {:attachment_section_id => @other_section.id}
-      reset(:image)
-
-      assert_redirected_to [:cms, @image]
-      assert_equal @other_section, @image.attachment.section
-    end
   end
 
 end
