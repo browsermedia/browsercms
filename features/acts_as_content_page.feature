@@ -9,17 +9,22 @@ Feature: Acts as Content Page
     Given the cms database is populated
     And I am a guest
 
+  Scenario: Content Page
+    When I visit /tests/open
+    Then the response should be 200
+    Then I should see the following content:
+      | Open Page                     |
+      | You can see this public page. |
+
   Scenario: Error Page
     When I am at /tests/error
-  # I should see the standard CMS Error page for guests
     Then the response should be 500
     And I should see a page titled "Server Error"
     And I should see the following content:
       | The server encountered an unexpected condition that prevented it from fulfilling the request. |
 
   Scenario: Controller throws Missing Page Error
-    When I am at /tests/not_found
-  # I should see the standard CMS Missing page for guests
+    When I am at /tests/not-found
     Then the response should be 404
     And I should see a page titled "Not Found"
     And I should see the following content:
@@ -33,4 +38,11 @@ Feature: Acts as Content Page
     And I should see a page titled "Access Denied"
     And I should see the following content:
       | Access Denied |
+
+
+  Scenario: NotFound Page as a Content Editor
+    Given I am logged in as a Content Editor
+    When I visit /tests/not-found
+    Then the response should be 500
+    And I should see a page titled "Error: ActiveRecord::RecordNotFound"
 
