@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
     t.integer  "updated_by_id"
   end
 
+  add_index "cms_attachment_versions", ["original_record_id"], :name => "index_cms_attachment_versions_on_original_record_id"
+
   create_table "cms_attachments", :force => true do |t|
     t.integer  "version"
     t.integer  "lock_version",   :default => 0
@@ -76,6 +78,11 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
     t.datetime "updated_at"
   end
 
+  add_index "cms_connectors", ["connectable_type"], :name => "index_cms_connectors_on_connectable_type"
+  add_index "cms_connectors", ["connectable_version"], :name => "index_cms_connectors_on_connectable_version"
+  add_index "cms_connectors", ["page_id"], :name => "index_cms_connectors_on_page_id"
+  add_index "cms_connectors", ["page_version"], :name => "index_cms_connectors_on_page_version"
+
   create_table "cms_content_type_groups", :force => true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -89,6 +96,9 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "cms_content_types", ["content_type_group_id"], :name => "index_cms_content_types_on_content_type_group_id"
+  add_index "cms_content_types", ["name"], :name => "index_cms_content_types_on_name"
 
   create_table "cms_dynamic_view_versions", :force => true do |t|
     t.integer  "original_record_id"
@@ -155,6 +165,9 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
     t.datetime "updated_at"
   end
 
+  add_index "cms_file_block_versions", ["original_record_id"], :name => "index_cms_file_block_versions_on_original_record_id"
+  add_index "cms_file_block_versions", ["version"], :name => "index_cms_file_block_versions_on_version"
+
   create_table "cms_file_blocks", :force => true do |t|
     t.integer  "version"
     t.integer  "lock_version",       :default => 0
@@ -171,15 +184,25 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
     t.datetime "updated_at"
   end
 
+  add_index "cms_file_blocks", ["deleted"], :name => "index_cms_file_blocks_on_deleted"
+  add_index "cms_file_blocks", ["type"], :name => "index_cms_file_blocks_on_type"
+
   create_table "cms_group_permissions", :force => true do |t|
     t.integer "group_id"
     t.integer "permission_id"
   end
 
+  add_index "cms_group_permissions", ["group_id", "permission_id"], :name => "index_cms_group_permissions_on_group_id_and_permission_id"
+  add_index "cms_group_permissions", ["group_id"], :name => "index_cms_group_permissions_on_group_id"
+  add_index "cms_group_permissions", ["permission_id"], :name => "index_cms_group_permissions_on_permission_id"
+
   create_table "cms_group_sections", :force => true do |t|
     t.integer "group_id"
     t.integer "section_id"
   end
+
+  add_index "cms_group_sections", ["group_id"], :name => "index_cms_group_sections_on_group_id"
+  add_index "cms_group_sections", ["section_id"], :name => "index_cms_group_sections_on_section_id"
 
   create_table "cms_group_type_permissions", :force => true do |t|
     t.integer "group_type_id"
@@ -194,6 +217,8 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
     t.datetime "updated_at"
   end
 
+  add_index "cms_group_types", ["cms_access"], :name => "index_cms_group_types_on_cms_access"
+
   create_table "cms_groups", :force => true do |t|
     t.string   "name"
     t.string   "code"
@@ -201,6 +226,9 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "cms_groups", ["code"], :name => "index_cms_groups_on_code"
+  add_index "cms_groups", ["group_type_id"], :name => "index_cms_groups_on_group_type_id"
 
   create_table "cms_html_block_versions", :force => true do |t|
     t.integer  "original_record_id"
@@ -217,6 +245,9 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
     t.datetime "updated_at"
   end
 
+  add_index "cms_html_block_versions", ["original_record_id"], :name => "index_cms_html_block_versions_on_original_record_id"
+  add_index "cms_html_block_versions", ["version"], :name => "index_cms_html_block_versions_on_version"
+
   create_table "cms_html_blocks", :force => true do |t|
     t.integer  "version"
     t.integer  "lock_version",                      :default => 0
@@ -230,6 +261,8 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "cms_html_blocks", ["deleted"], :name => "index_cms_html_blocks_on_deleted"
 
   create_table "cms_link_versions", :force => true do |t|
     t.integer  "original_record_id"
@@ -249,17 +282,18 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
 
   create_table "cms_links", :force => true do |t|
     t.integer  "version"
-    t.integer  "lock_version",  :default => 0
+    t.integer  "lock_version",   :default => 0
     t.string   "name"
     t.string   "url"
-    t.boolean  "new_window",    :default => false
+    t.boolean  "new_window",     :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "published",     :default => false
-    t.boolean  "deleted",       :default => false
-    t.boolean  "archived",      :default => false
+    t.boolean  "published",      :default => false
+    t.boolean  "deleted",        :default => false
+    t.boolean  "archived",       :default => false
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
+    t.integer  "latest_version"
   end
 
   create_table "cms_page_route_options", :force => true do |t|
@@ -302,6 +336,8 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
     t.datetime "updated_at"
   end
 
+  add_index "cms_page_versions", ["original_record_id"], :name => "index_cms_page_versions_on_original_record_id"
+
   create_table "cms_pages", :force => true do |t|
     t.integer  "version"
     t.integer  "lock_version",       :default => 0
@@ -321,7 +357,12 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
     t.integer  "updated_by_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "latest_version"
   end
+
+  add_index "cms_pages", ["deleted"], :name => "index_cms_pages_on_deleted"
+  add_index "cms_pages", ["path"], :name => "index_cms_pages_on_path"
+  add_index "cms_pages", ["version"], :name => "index_cms_pages_on_version"
 
   create_table "cms_permissions", :force => true do |t|
     t.string   "name"
@@ -338,6 +379,8 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
     t.text    "value"
   end
 
+  add_index "cms_portlet_attributes", ["portlet_id"], :name => "index_cms_portlet_attributes_on_portlet_id"
+
   create_table "cms_portlets", :force => true do |t|
     t.string   "type"
     t.string   "name"
@@ -349,6 +392,8 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
     t.datetime "updated_at"
   end
 
+  add_index "cms_portlets", ["name"], :name => "index_cms_portlets_on_name"
+
   create_table "cms_redirects", :force => true do |t|
     t.string   "from_path"
     t.string   "to_path"
@@ -356,14 +401,19 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
     t.datetime "updated_at"
   end
 
+  add_index "cms_redirects", ["from_path"], :name => "index_cms_redirects_on_from_path"
+
   create_table "cms_section_nodes", :force => true do |t|
-    t.integer  "section_id"
     t.string   "node_type"
     t.integer  "node_id"
     t.integer  "position"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "ancestry"
   end
+
+  add_index "cms_section_nodes", ["ancestry"], :name => "index_cms_section_nodes_on_ancestry"
+  add_index "cms_section_nodes", ["node_type"], :name => "index_cms_section_nodes_on_node_type"
 
   create_table "cms_sections", :force => true do |t|
     t.string   "name"
@@ -373,6 +423,8 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "cms_sections", ["path"], :name => "index_cms_sections_on_path"
 
   create_table "cms_sites", :force => true do |t|
     t.string   "name"
@@ -408,10 +460,17 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
     t.datetime "updated_at"
   end
 
+  add_index "cms_tasks", ["assigned_to_id"], :name => "index_cms_tasks_on_assigned_to_id"
+  add_index "cms_tasks", ["completed_at"], :name => "index_cms_tasks_on_completed_at"
+  add_index "cms_tasks", ["page_id"], :name => "index_cms_tasks_on_page_id"
+
   create_table "cms_user_group_memberships", :force => true do |t|
     t.integer "user_id"
     t.integer "group_id"
   end
+
+  add_index "cms_user_group_memberships", ["group_id"], :name => "index_cms_user_group_memberships_on_group_id"
+  add_index "cms_user_group_memberships", ["user_id"], :name => "index_cms_user_group_memberships_on_user_id"
 
   create_table "cms_users", :force => true do |t|
     t.string   "login",                     :limit => 40
@@ -428,6 +487,7 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
     t.string   "reset_token"
   end
 
+  add_index "cms_users", ["expires_at"], :name => "index_cms_users_on_expires_at"
   add_index "cms_users", ["login"], :name => "index_cms_users_on_login", :unique => true
 
   create_table "product_versions", :force => true do |t|

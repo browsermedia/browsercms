@@ -5,6 +5,7 @@ class SectionsControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
   
   def setup
+    given_a_site_exists
     login_as_cms_admin
     given_there_is_a_sitemap
   end
@@ -43,6 +44,7 @@ class SectionFileBrowserControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
   
   def setup
+    given_a_site_exists
     login_as_cms_admin
     given_there_is_a_sitemap
   end

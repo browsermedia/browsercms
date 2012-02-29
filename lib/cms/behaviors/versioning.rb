@@ -38,7 +38,8 @@ module Cms
           extend ClassMethods
           include InstanceMethods
 
-          has_many :versions, :class_name  => version_class_name, :foreign_key => version_foreign_key
+          has_many :versions, :class_name => version_class_name, :foreign_key => version_foreign_key
+          after_save :update_latest_version
 
           before_validation :initialize_version
           before_save :build_new_version
@@ -104,6 +105,15 @@ module Cms
           self.version = 1 if new_record?
         end
 
+        # Used in migrations and as a callback.
+        def update_latest_version
+          #Rails 3 could use update_column here instead
+          if respond_to? :latest_version
+            sql = "UPDATE #{self.class.table_name} SET latest_version = #{draft.version} where id = #{self.id}"
+            connection.execute sql
+            self.latest_version = draft.version # So we don't need to #reload this object. Probably marks it as dirty though, which could have weird side effects.
+          end
+        end
 
         def build_new_version_and_add_to_versions_list_for_saving
           # First get the values from the draft
@@ -307,7 +317,7 @@ module Cms
         end
 
         def as_of_draft_version
-          as_of_version(draft.version)
+          build_object_from_version(draft)
         end
 
         # Find a Content Block as of a specific version.
@@ -317,27 +327,7 @@ module Cms
         def as_of_version(version)
           v = find_version(version)
           raise ActiveRecord::RecordNotFound.new("version #{version.inspect} does not exist for <#{self.class}:#{id}>") unless v
-          obj = self.class.new
-
-          (self.class.versioned_columns + [:version, :created_at, :created_by_id, :updated_at, :updated_by_id]).each do |a|
-            obj.send("#{a}=", v.send(a))
-          end
-          obj.id = id
-          obj.lock_version = lock_version
-
-          # Need to do this so associations can be loaded
-          obj.instance_variable_set("@persisted", true)
-          obj.instance_variable_set("@new_record", false)
-
-          # Callback to allow us to load other data when an older version is loaded
-          obj.after_as_of_version if obj.respond_to?(:after_as_of_version)
-
-          # Last but not least, clear the changed attributes
-          if changed_attrs = obj.send(:changed_attributes)
-            changed_attrs.clear
-          end
-
-          obj
+          build_object_from_version(v)
         end
 
         def revert
@@ -380,6 +370,35 @@ module Cms
           return false
         end
 
+        private
+
+        # Given a ::Version object of a given type, create an original object from its attributes.
+        #
+        # @param [Class#name::Version] version_of_object (i.e. HtmlBlock::Version)
+        # @return [Class#name] i.e. HtmlBlock
+        def build_object_from_version(version_of_object)
+          obj = self.class.new
+
+          (self.class.versioned_columns + [:version, :created_at, :created_by_id, :updated_at, :updated_by_id]).each do |a|
+            obj.send("#{a}=", version_of_object.send(a))
+          end
+          obj.id = id
+          obj.lock_version = lock_version
+
+          # Need to do this so associations can be loaded
+          obj.instance_variable_set("@persisted", true)
+          obj.instance_variable_set("@new_record", false)
+
+          # Callback to allow us to load other data when an older version is loaded
+          obj.after_as_of_version if obj.respond_to?(:after_as_of_version)
+
+          # Last but not least, clear the changed attributes
+          if changed_attrs = obj.send(:changed_attributes)
+            changed_attrs.clear
+          end
+
+          obj
+        end
       end
     end
 

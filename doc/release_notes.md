@@ -1,7 +1,7 @@
 v3.4.0
 ======
 
-Recommend using Ruby 1.9.3 with this release.
+Rails 3.1.x compatibility, we also recommend using Ruby 1.9.3 with this release.
 
 Add the ability to add BrowserCMS to Rails projects.
 * Add bcms install method that will add browsercms to an existing Rails project.
@@ -18,10 +18,15 @@ Add the ability to add BrowserCMS to Rails projects.
     acts_as_cms_user :groups => [Cms::Group.find_by_code('admin')]
  end
 * [#3] Asset Pipeline: All bcms assets are now served using the assets pipeline.
-* [#443] Removed two primative javascript and stylesheets in favor of asset pipeline (where needed).
+* [#443] Removed two primitive javascript and stylesheets in favor of asset pipeline (where needed).
 * [#448] Mountable Engines - BrowserCMS is now a mountable engine, which should make integrating it with other projects easier.
 * [#416] BrowserCMS can be added to Gemfiles using :git or :path, which should make testing gems or projects easier.
 * [#480] Standardized Version Column - Changed how version tables point back to their 'original' record to make working with namespaces easier. Module developers will need to update their migrations for the next release of their modules.
+
+v3.3.3
+======
+
+Performance! - This merges the performance tuning updates originally added in 3.1.5. See those release notes for details.
 
 v3.3.2
 ======
@@ -56,7 +61,7 @@ Details
 * Updated API docs so YARD is being used, and hosted at http://rubydoc.info/gems/browsercms/
 
 
- v3.3.0.beta
+v3.3.0.beta
 ===========
 
 The long awaited Rails 3 release. We have completely reworked BrowserCMS to work with Rails 3 and Ruby 1.9.2. This release is a 'beta', so that folks can start testing against it. This is especially important for module authors, as any modules need to be upgraded to work with Rails 3 as well. Our next steps will be to collect feedback for a final 3.3.0 release/release candidate. If we can get most of the 'core' modules (News, Blog, etc) updated and working, that will likely mean a final 3.3.0 release.
@@ -101,9 +106,23 @@ Issues?
 
 If you encounter issues with this build, please report them for the 3.3.0.rc1 here: https://browsermedia.lighthouseapp.com/projects/28481/milestones/105840-330rc1
 
+v3.1.5
+======
+
+Performance Upgrades - This release adds a number of improvements designed to greatly improve the performance for larger sites (with thousands of pages/sections/attachments). The project now depends on the ancestry gem, which is used to handle the parent/child relationship between Sections/pages in a much more efficent way.
+
+* #432 - Sitemap - The sitemap load time has been greatly reduced for larger sites. Load times of 60s or more with multiple thousands of pages/attachments should be reduced to several sections (2-3s). The number of queries (which could have been in the thousands before) is now ~9 and won't increase as the number of pages increase. There could still be further efficency gains from loading less data overall (i.e. non-open sections), but that will be for a future version.
+* Pages - Viewing individual pages should also be faster, again by reducing the number of queries required to load the menus.
+* Content Library - The load time of the most frequently hit content library pages (Text, File, Image, Portlet) should be faster.
+* Indexes - A number of database indexes for the most commonly used core table/queries for the major pages have been added. In some cases, further indexes may/may not have advantage due to how database's (i.e. MySQL) handle optimization.
+
 v3.1.3
 ======
+
 Small fix to get rid of a troublesome bug with reverting.
+
+Bug Fixes
+* #352 - Reverting pages with connected blocks should now work.
 
 v3.1.2
 ======
@@ -125,7 +144,7 @@ v3.1.0
 BrowserCMS 3.1 is done! The release has a few exciting new features/refinements as well as its share of bug fixes. As always, you can get it by running 'gem install browsercms', and follow the upgrade guide on the wiki. Please report any errors found to our bug tracking system: https://browsermedia.lighthouseapp.com/projects/28481-browsercms-30
 
 Notable Features:
-=================
+-----------------
 
 1. New Html Editor: (LH #150) The default editor packaged with BrowserCMS is now CKEditor, which is the upgraded version of FCKEditor. CKEditor supports new features, polish and performance. For developers that still want to use FCKEditor any reason, we have made available a bcms_fckeditor module for continuity purposes. Installing the bcms_fckeditor module will switch the default editor back.
 2. Easier project creation: (LH #234) You can now create a new BrowserCMS project by typing 'bcms name_of_project' or 'browsercms name_of_project'. The command line tool is really just thin wrappers around 'rails' that invoke the application templates from within the gem itself. Run 'bcms' for more complete help tips, or http://patrickpeak.com/wordpress/2010/01/incoming-browsercms-commandline-script/ for a more indepth write up.
@@ -134,14 +153,16 @@ Notable Features:
 5. Controllers that act like Pages: (LH #202) - Added a more refined way for developers to create their own controllers that can behave like CMS content pages, including using CMS templates as layouts, being able to throw exceptions like 404s to route to the standard CMS error page, etc. Also added more hooks for securing controllers as though they were in a particular section. Developers can 'include Cms::Acts::ContentPage' in their controllers to get access to this behavior.
 
 Upgrade Notes:
-=============
+--------------
+
 When upgrading from 3.0.6 to 3.1, there are several things to keep in mind mostly related to how the new editor works.
 
 1. You can safely delete the public/fckeditor directory from your project. We have moved the default location that modules (like bcms_fckeditor) store public files to public/bcms/module_name (so public/bcms/fckeditor or public/bcms/ckeditor).
 2. FCKEditor styles: If you customized your fckeditor styles (by editing the fckstyles.xml), install the bcms_fckeditor module and it will create a public/bcms_config/fckeditor directory. The fckstyles.xml can be edited there, which will keep it separate from the 'stock' files that fckeditor comes with.
 
 More Features/Enhancements:
-===========================
+---------------------------
+
 Lighthouse ticket #s are included:
 * #199 - Developers should be able to manually set the display_name of content blocks. (See http://guides.browsercms.org/content_blocks.html for details).
 * #234 - Added a cms_check_box field so content blocks can have single boolean values.
@@ -156,7 +177,8 @@ Lighthouse ticket #s are included:
 * #205 - Developers can check if Users can view a particular section path (User.able_to_view?("/about-us").
 
 Bug Fixes:
-==========
+---------
+
 * #208 - Fixed an issue where an error on the dashboard that was preventing BrowserCMS projects from using SQLlite.
 * #161 - Fixed a typo on the Edit Group Permissions page. (Thanks to Dmytro Samodurov)
 * #197 - Fixed an issue where an editor could not cancel deleting of a template.
@@ -182,9 +204,8 @@ v3.0.6
 4. After creating or updating a category or tag via the Content Library, you are now redirected to the list page (as with Category Types) instead of being shown a blank page. (LIGHTHOUSE #259)
 5. The user list in the Admin area now shows a user's login (instead of nothing) if the user does not have a name. (LIGHTHOUSE #260)
 
-==========
-
 v3.0.5
+======
 
 BrowserCMS 3.0.5 has been released to gemcutter. This is primarily a bug fix release, correcting some IE support issues as well as some problems with reverting. We also made some subtle changes to how JS gets loaded on page templates in the CMS admin UI. If your project had been using its own javascript (like jquery/prototype) in the page templates, you should double check to make sure its working correctly.  See item #2 below for more details.
 
@@ -200,16 +221,16 @@ Bug Fixes:
 2. Internet Explorer 7 could not remove blocks from page containers nor move blocks within page containers.  This problem seemed to be due to JavaScript permissions, as the iframe rendering the page toolbar could not attach the update form to the parent window.  The edit container now requires JavaScript (see the enhancement) in the actual page to build the update forms.  LIGHTHOUSE #229.
 3. Search parameters were not included with pagination links in the Content Library, so clicking the "next page" link of the searched results would lose the search filter, thus showing results the user had previously filtered out.  Search parameters are now included in the pagination links.  LIGHTHOUSE #239.
 
-==========
 
 v3.0.4
+======
+
 We found an unfortunate bug in the changes we introduced to the
 "render menu" functionality in the 3.0.3 release.  We have quickly
 patched this and have released the 3.0.4 gem on RubyForge. BrowserCMS 3.0.3 is now released and available for download. 
 
-==========
-
 v3.0.3
+======
 
 The primary goal of this release was to incorporate the many community
 patches/changes that folks have been providing over the past few
@@ -277,10 +298,8 @@ working to improve the UI.
 
 16. Deprecated cms:install rake task removed. 
 
-
-==========
-
 v3.0.2
+======
 
 We just released the 3.0.2 release through rubyforge, and it includes
 a few small fixes.
@@ -302,9 +321,8 @@ The next release will be 3.0.3 and we are going to focus on rolling in
 most of the community patches which folks have been sending pull
 requests for, that we just haven't have a chance to get included. 
 
-==========
-
 v3.0.1
+======
 
 I have just released 3.0.1 as a gem to ruby forge. This is mostly a  
 bug fix release, with a few notable issues I will mention in this  

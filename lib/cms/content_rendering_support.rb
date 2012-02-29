@@ -14,18 +14,18 @@ module Cms
 
     def handle_not_found_on_page(exception)
       logger.warn "Page Not Found"
-      handle_error_with_cms_page('/system/not_found', exception, :not_found)
+      handle_error_with_cms_page(Cms::ErrorPages::NOT_FOUND_PATH, exception, :not_found)
     end
 
     def handle_access_denied_on_page(exception)
       logger.warn "Access Denied"
-      handle_error_with_cms_page('/system/access_denied', exception, :forbidden)
+      handle_error_with_cms_page(Cms::ErrorPages::FORBIDDEN_PATH, exception, :forbidden)
     end
 
     def handle_server_error_on_page(exception)
       logger.warn "Exception: #{exception.message}\n"
       logger.warn "#{exception.backtrace.join("\n")}\n"
-      handle_error_with_cms_page('/system/server_error', exception, :internal_server_error)
+      handle_error_with_cms_page(Cms::ErrorPages::SERVER_ERROR_PATH, exception, :internal_server_error)
     end
 
     private

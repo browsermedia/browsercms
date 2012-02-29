@@ -2,6 +2,8 @@ require 'cms/engine'
 require 'cms/extensions'
 require 'cms/route_extensions'
 require 'cms/caching'
+require 'cms/addressable'
+require 'cms/error_pages'
 
 #Load libraries that are included with CMS
 require 'acts_as_list'
@@ -16,6 +18,7 @@ require 'cms/content_rendering_support'
 
 # This shouldn't be necessary, except for the need to get into the loadpath for testing.
 require 'command_line'
+
 #Include CMS Behaviors
 ActiveRecord::Base.send(:include, Cms::Acts::ContentBlock)
 require 'cms/behaviors'

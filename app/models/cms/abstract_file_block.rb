@@ -5,7 +5,10 @@ module Cms
 
     validates_presence_of :name
 
-    scope :by_section, lambda { |section| {:include => {:attachment => :section_node}, :conditions => ["#{SectionNode.table_name}.section_id = ?", section.id]} }
+    scope :by_section, lambda { |section| {
+            :include => {:attachment => :section_node },
+            :conditions => ["#{SectionNode.table_name}.ancestry = ?", section.node.ancestry_path] }
+        }
 
     def path
       attachment_file_path
@@ -13,6 +16,18 @@ module Cms
 
     def self.publishable?
       true
+    end
+
+    def set_attachment_path
+      if @attachment_file_path && @attachment_file_path != attachment.file_path
+        attachment.file_path = @attachment_file_path
+      end
+    end
+
+    def set_attachment_section
+      if @attachment_section_id && @attachment_section_id != attachment.section
+        attachment.section_id = @attachment_section_id
+      end
     end
 
   end

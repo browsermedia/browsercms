@@ -28,7 +28,6 @@ module Cms
     before_validation :extract_file_type_from_temp_file
     before_validation :extract_file_size_from_temp_file
     before_validation :set_file_location
-    before_save :process_section
 
     after_save :write_temp_file_to_storage_location
     after_save :clear_ivars
@@ -36,39 +35,22 @@ module Cms
 
     #----- Associations ----------------------------------------------------------
 
+    include Cms::Addressable
+    include Cms::Addressable::DeprecatedPageAccessors
     has_one :section_node, :as => :node, :class_name => 'Cms::SectionNode'
+    alias :node :section_node
 
     #----- Validations -----------------------------------------------------------
 
     validates_presence_of :temp_file, :message => "You must upload a file", :on => :create
     validates_presence_of :file_path
     validates_uniqueness_of :file_path
-    validates_presence_of :section_id
 
     #----- Virtual Attributes ----------------------------------------------------
 
-    def section_id
-      @section_id ||= section_node ? section_node.section_id : nil
-    end
-
-    def section_id=(section_id)
-      if @section_id != section_id
-        dirty!
-        @section_id = section_id
-      end
-    end
-
-    def section
-      @section ||= section_node ? section_node.section : nil
-    end
-
     def section=(section)
-      logger.debug { "Attachment#section=(#{section})" }
-      if @section != section
-        dirty!
-        @section_id = section ? section.id : nil
-        @section = section
-      end
+      dirty! if self.section != section
+      super(section)
     end
 
     #----- Callbacks Methods -----------------------------------------------------
@@ -114,15 +96,6 @@ module Cms
       unless temp_file.blank?
         sha1 = Digest::SHA1.hexdigest("#{temp_file.original_filename}#{Time.now.to_f}")
         self.file_location = "#{Time.now.strftime("%Y/%m/%d")}/#{sha1}"
-      end
-    end
-
-    def process_section
-      #logger.info "processing section, section_id => #{section_id}, section_node => #{section_node.inspect}"
-      if section_node && !section_node.new_record? && section_node.section_id != section_id
-        section_node.move_to_end(Cms::Section.find(section_id))
-      else
-        build_section_node(:node => self, :section_id => section_id)
       end
     end
 

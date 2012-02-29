@@ -90,6 +90,15 @@ module PageNotFoundSteps
 end
 World(PageNotFoundSteps)
 
+Given /^there is a homepage$/ do
+  page = Page.with_path("/").first
+  if page
+    @homepage = page
+  else
+    @homepage = Factory(:public_page, :path=>"/", :name=>"Home Page")
+  end
+end
+
 Then /^I should see the CMS 404 page$/ do
   should_see_cms_404_page
 end

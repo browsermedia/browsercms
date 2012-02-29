@@ -5,7 +5,6 @@
 <% page_title "Content Library / List #{content_type.display_name_plural}" %>
 <% @toolbar_title = "List #{content_type.display_name_plural}" %>
 <%= render :partial => 'cms/blocks/toolbar' %>
-
 <div class="roundedcorners">
 <table id="blocks" class="data cms-content-table"
        data-content_type="<%= content_type.content_block_type %>"
@@ -65,7 +64,7 @@
           </td>      
         <% end %>
         <% if content_type.model_class.respond_to?(:updated_at) %><td class="updated"><div class="dividers"><%= block.updated_at.to_s(:date) %></div></td><% end %>
-        <% if content_type.model_class.connectable? %><td class="used"><div class="dividers"><%= block.connected_pages.count %></div></td><% end %>
+        <% if content_type.model_class.connectable? %><td class="used"><div class="dividers"><%= block.connected_pages.size %></div></td><% end %>
         <% if content_type.model_class.publishable? %><td class="block_status"><%= status_icon(block.status) %> <div><%= block.status %></div></td><% end %>
 	<td class="last"></td>
     </tr>

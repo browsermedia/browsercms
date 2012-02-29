@@ -9,13 +9,14 @@ Rails.backtrace_cleaner.remove_silencers!
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
 require 'action_view/test_case'
-#require 'mocha'
 
 # Allows Generators to be unit tested
 require "rails/generators/test_case"
 
+# I'm not sure why ANY of these FactoryGirl requires are necessary at all.
 require 'factory_girl'
 require 'factories'
+
 require 'support/factory_helpers'
 require 'support/engine_controller_hacks'
 
@@ -29,26 +30,27 @@ class ActiveSupport::TestCase
   require File.dirname(__FILE__) + '/custom_assertions'
   include CustomAssertions
 
-
   #----- Test Macros -----------------------------------------------------------
   class << self
-    def should_validate_presence_of(*fields)
+    def should_validate_presence_of(options)
+      factory_name = options.keys.first
+      fields = options[factory_name]
       fields.each do |f|
-        class_name = name.sub(/Test$/, '')
         define_method("test_validates_presence_of_#{f}") do
-          model = Factory.build(class_name.underscore.to_sym, f => nil)
+          model = Factory.build(factory_name, f => nil)
           assert !model.valid?
           assert_has_error_on model, f, "can't be blank"
         end
       end
     end
 
-    def should_validate_uniqueness_of(*fields)
+    def should_validate_uniqueness_of(options)
+      class_name = options.keys.first
+      fields = options[class_name]
       fields.each do |f|
-        class_name = name.sub(/Test$/, '')
         define_method("test_validates_uniqueness_of_#{f}") do
-          existing_model = Factory(class_name.underscore.to_sym)
-          model = Factory.build(class_name.underscore.to_sym, f => existing_model.send(f))
+          existing_model = Factory(class_name)
+          model = Factory.build(class_name, f => existing_model.send(f))
           assert !model.valid?
           assert_has_error_on model, f, "has already been taken"
         end
@@ -78,7 +80,6 @@ class ActiveSupport::TestCase
     end
     return subclasses
   end
-
 
   #----- Fixture/Data related helpers ------------------------------------------
 
@@ -114,8 +115,7 @@ class ActiveSupport::TestCase
 
   # Creates a sample uploaded JPG file with binary data.
   def mock_file(options = {})
-    file_upload_object({:original_filename => "foo.jpg",
-                        :content_type => "image/jpeg"}.merge(options))
+    file_upload_object({:original_filename => "foo.jpg", :content_type => "image/jpeg"}.merge(options))
   end
 
   # Takes a list of the names of instance variables to "reset"
@@ -128,6 +128,27 @@ class ActiveSupport::TestCase
     end
   end
 
+  # @3.4.x-merge Remove me once Cucumber coverage is added
+
+  # Fixtures add incorrect Section/Section node data. We don't want to replace fixtures AGAIN (this is handled in CMS 3.3)
+  # so we can just clean it out using this method where needed to avoid test breakage.
+  def remove_all_sitemap_fixtures_to_avoid_bugs
+    #Section.delete_all
+    #SectionNode.delete_all
+    #Page.delete_all
+  end
+
+  # @3.4.x-merge Remove me once Cucumber coverage is added
+
+  # Create a 'faux' sitemap which will work for tests (avoids need for fixtures)
+  def given_a_site_exists
+    @root = root_section
+    @homepage = Factory(:public_page, :name => "Home", :section => @root, :path => "/")
+    @system_section = Factory(:public_section, :name => "System", :parent => @root, :path => "/system")
+    @not_found_page = Factory(:public_page, :name => "Not Found", :section => @system_section, :path => Cms::ErrorPages::NOT_FOUND_PATH)
+    @access_denied_page = Factory(:public_page, :name => "Access Denied", :section => @system_section, :path => Cms::ErrorPages::FORBIDDEN_PATH)
+    @error_page = Factory(:public_page, :name => "Server Error", :section => @system_section, :path => Cms::ErrorPages::SERVER_ERROR_PATH)
+  end
 end
 
 ActionController::IntegrationTest.fixture_path = ActiveSupport::TestCase.fixture_path

@@ -3,6 +3,8 @@ require 'test_helper'
 class Cms::PageHelperTest < ActionView::TestCase
 
   def setup
+    root_section.name = "My Site"
+    root_section.save!
     @foo = Factory(:section, :name => "Foo", :parent => root_section, :path => "/foo")
     Factory(:page, :name => "Overview", :section => @foo, :path => "/foo")
     @bar = Factory(:section, :name => "Bar", :parent => @foo, :path => "/bar")

@@ -19,6 +19,6 @@ test/dummy/log/*
 test/dummy/tmp/*
 doc/api
 .yardoc/*
-.rvmrc
 .bundle/*
 test/dummy/db/backups/*
+db/backups

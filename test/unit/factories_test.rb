@@ -23,6 +23,12 @@ class FactoriesTest < ActiveSupport::TestCase
     assert_equal Cms::Group, group.class
   end
 
+  test ":content_editor factory has edit_permission" do
+    editor = Factory(:content_editor)
+    assert editor.able_to?(:edit_content)
+    assert editor.able_to?(:publish_content)
+  end
+
   test "section" do
     section = Factory(:section)
     assert_equal "Test", section.name

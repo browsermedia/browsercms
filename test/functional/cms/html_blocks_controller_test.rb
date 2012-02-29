@@ -5,6 +5,7 @@ class HtmlBlocksControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
   
   def setup
+    given_a_site_exists
     login_as_cms_admin
     given_there_is_a_content_type(Cms::HtmlBlock)
     @block = Factory(:html_block, :name => "Test", :content => "I worked.", :publish_on_save => true)

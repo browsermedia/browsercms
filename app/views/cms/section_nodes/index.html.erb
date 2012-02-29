@@ -20,12 +20,24 @@
   <ul id="root_<%= @section.id %>" class="root" style="padding-left: 0">
     <li>
       <%= render :partial => "node", :locals => {
-          :node => @section, 
-          :node_type => "section", 
-          :icon => action_icon(:home),
-          :display => true
-        } %>
+              :node => @section,
+              :node_type => "section",
+              :icon => action_icon(:home),
+              :display => true
+      } %>
     </li>
   </ul>
-  <%= render :partial => "section_node", :collection => @section.child_nodes.all(:order => 'position'), :locals => {:display => true, :root => true} %>    
+  <%
+     access_status = access_status(@section, @public_sections)
+     @sitemap[@root_section_node].keys.each do |child_section_node| %>
+      <%= render :partial => child_section_node.node.partial_for,
+                 :locals => {:access_icon => access_status,
+                             :node => child_section_node.node,
+                             :parent => @section,
+                             :child_hash => @sitemap[@root_section_node],
+                             :key => child_section_node
+                 }
+      %>
+  <% end %>
 </div>
+

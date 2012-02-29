@@ -123,8 +123,8 @@ class ContentBlockController < Cms::BaseController
     def load_blocks
       options = {}
       if params[:section_id] && params[:section_id] != 'all'
-        options[:include] = { :attachment => { :section_node => :section }} 
-        options[:conditions] = ["#{Section.table_name}.id = ?", params[:section_id]]
+        options[:include] = { :attachment =>  :section_node }
+        options[:conditions] = ["section_nodes.ancestry = ?", Section.find(params[:section_id]).ancestry_path]
       end
       options[:page] = params[:page]    
       options[:order] = model_class.default_order if model_class.respond_to?(:default_order)

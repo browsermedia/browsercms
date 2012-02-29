@@ -22,10 +22,10 @@ end
 
 Factory.define :file_block, :class => Cms::FileBlock do |m|
   m.sequence(:name) { |n| "TestFileBlock#{n}" }
+  m.sequence(:attachment_file_path) {|i| "/file-#{i}.txt" }
   m.attachment_section { find_or_create_root_section }
   m.publish_on_save true
 end
-
 
 Factory.define :group, :class => Cms::Group do |m|
   m.sequence(:name) { |n| "TestGroup#{n}" }
@@ -72,6 +72,7 @@ end
 
 Factory.define :link, :class => Cms::Link do |m|
   m.sequence(:name) { |n| "Link #{n}" }
+  m.publish_on_save true
 end
 
 Factory.define :page, :class => Cms::Page do |m|
@@ -131,6 +132,13 @@ Factory.define :section, :class=>Cms::Section do |m|
   m.name "Test"
   m.path "/test"
   m.parent { find_or_create_root_section }
+end
+
+Factory.define :root_section, :class=>Cms::Section do |m|
+  m.name "My Site"
+  m.path "/"
+  m.root true
+  m.groups { Cms::Group.all }
 end
 
 # A publicly accessible (published) page

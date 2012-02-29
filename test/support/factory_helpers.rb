@@ -4,7 +4,7 @@ module FactoryHelpers
     root = Cms::Section.root.first
     unless root
       # This constructor matches how seed data is set up.
-      root = Cms::Section.create!(:name=>"My Site", :root=>true, :path=>"/")
+      root = Factory(:root_section)
     end
     root
   end
@@ -31,6 +31,9 @@ module FactoryHelpers
     guest_group
   end
 
+  def given_user_permission_exist
+
+  end
   def given_there_is_a_content_type(model_class)
     Factory(:content_type, :name=>model_class.to_s)
   end
