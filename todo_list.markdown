@@ -4,6 +4,8 @@ Current:
 
 Tasks:
 
+* Review the README for accuracy in light of engines and asset pipeline
+* Evaluate pull requests from community
 * Write release notes for 3.4.0 (Rails 3.1 compliant)
 * Refactor Cucumber steps to add seed data once as part of the env.rb file, then use truncation to leave it there.
 * rake db:install for existing rails projects (after bcms install) might want to run bcms seed data as separate tasks. How to other gems/projects handle this?
@@ -29,8 +31,6 @@ Things to test:
 
 
 * If a content type can't be found in code, the entire /cms/content_library will throw an error. This could be made more robust by just not showing the content type. This probably only happens when we upgrade databases for testing, but its still annoying.
-* [DynamicPortlets] If you leave fields blank, they throw errors (and/or grab other default templates)
-* By default, a generated file block with an Attachment will need additional code to work correctly (I.e. copy & paste from AbstractFileBlocks)
 
 
 # Needs
@@ -40,7 +40,6 @@ Things to test:
 ** Email a page portlet  - ERROR: uninitialized constant EmailPagePortlet::EmailMessage
 ** Tag Cloud portlet - ERROR: uninitialized constant TagCloudPortlet::Tag
 * Test this on a production environment prior to releasing (things like assets and/or config options might be wonky)
-* Review the README for accuracy in light of engines and asset pipeline
 
 # Wants (Taking advantage of Rails 3.1)
 

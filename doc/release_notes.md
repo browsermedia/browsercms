@@ -14,14 +14,17 @@ Add the ability to add BrowserCMS to Rails projects.
 
 * Added some basic support for making other 'user' objects act like CMS users via Cms::Acts::User. For example, the following would make a custom non-CMS user gain permission to act like an admin.
 
- class MyCustomUser < ActiveRecord::Base
-    acts_as_cms_user :groups => [Cms::Group.find_by_code('admin')]
- end
+class MyCustomUser < ActiveRecord::Base
+  acts_as_cms_user :groups => [Cms::Group.find_by_code('admin')]
+end
+
 * [#3] Asset Pipeline: All bcms assets are now served using the assets pipeline.
 * [#443] Removed two primitive javascript and stylesheets in favor of asset pipeline (where needed).
 * [#448] Mountable Engines - BrowserCMS is now a mountable engine, which should make integrating it with other projects easier.
 * [#416] BrowserCMS can be added to Gemfiles using :git or :path, which should make testing gems or projects easier.
 * [#480] Standardized Version Column - Changed how version tables point back to their 'original' record to make working with namespaces easier. Module developers will need to update their migrations for the next release of their modules.
+* [#466] Generate blocks with attachments correctly - When generating blocks that have an attachment, the initially generated code should work correctly without addition customization or tweaking.
+* [#450] Generate Engines - BrowserCMS modules are created as Mountable Engines when running `bcms module`.
 
 v3.3.3
 ======
