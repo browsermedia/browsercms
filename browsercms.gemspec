@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
 
   # Required only for bcms-upgrade
   s.add_dependency('term-ansicolor')
-  s.add_dependency("jquery-rails")
+  s.add_dependency("jquery-rails", "~> 1.0.14")
 
 end
 
