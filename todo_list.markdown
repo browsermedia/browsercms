@@ -4,15 +4,11 @@ Current:
 
 Tasks:
 
-* Merge all pull requests
-* Review the README for accuracy in light of engines and asset pipeline
+* [#433] Generate Rails 3.1 projects even when Rails 3.2 is installed.
+* Clean up/Merge all pull requests
 * [CMS] Upgrade a 3rd module (with a migration) to confirm the installation and upgrade instructions work correctly.
-* Update  release notes for 3.4.0 (Rails 3.1 compliant)
 * Refactor Cucumber steps to add seed data once as part of the env.rb file, then use truncation to leave it there.
-* rake db:install for existing rails projects (after bcms install) might want to run bcms seed data as separate tasks. How to other gems/projects handle this?
-* browsercms-cucumber - Build a separate gem from this project, which can be included in other CMS projects. (Might be 3.4.1)
 * Audit the buglist to see what else is getting closed as part of 3.1
-* Regenerate documentation as part of build process. Ensure things like is_child_of? get removed automatically.
 * Test this on a production environment prior to releasing (things like assets and/or config options might be wonky)
 * Test upgrading a browsercms v3.1.x/3.3.x to 3.4.x
 * Write upgrade instructions from 3.1.x/3.3.x to 3.4
@@ -26,6 +22,13 @@ Tasks:
 
 # Bugs
 * If a content type can't be found in code, the entire /cms/content_library will throw an error. This could be made more robust by just not showing the content type. This probably only happens when we upgrade databases for testing, but its still annoying.
+
+
+# 3.4.1
+-------
+* browsercms-cucumber - Build a separate gem from this project, which can be included in other CMS projects. (Might be 3.4.1)
+* rake db:install for existing rails projects (after bcms install) might want to run bcms seed data as separate tasks. How to other gems/projects handle this?
+
 
 # Wants (Taking advantage of Rails 3.1)
 
