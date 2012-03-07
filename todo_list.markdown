@@ -1,10 +1,14 @@
 # Working on release of bcms 3.4
 
 Current:
+  * Fix Tag Cloud portlet
 
 Tasks:
 
+* Merge all pull requests
 * Review the README for accuracy in light of engines and asset pipeline
+* [CMS] Upgrade a 3rd module (with a migration) to confirm the installation and upgrade instructions work correctly.
+* Add not to upgrade instructions to delete jquery-ui if present in project.
 * Evaluate pull requests from community
 * Write release notes for 3.4.0 (Rails 3.1 compliant)
 * Refactor Cucumber steps to add seed data once as part of the env.rb file, then use truncation to leave it there.
@@ -37,7 +41,6 @@ Things to test:
 
 * Fix forms layouts in Chrome (Instructions cause a problem)
 * Can't create some portlets - Add scenarios
-** Email a page portlet  - ERROR: uninitialized constant EmailPagePortlet::EmailMessage
 ** Tag Cloud portlet - ERROR: uninitialized constant TagCloudPortlet::Tag
 * Test this on a production environment prior to releasing (things like assets and/or config options might be wonky)
 

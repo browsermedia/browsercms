@@ -2,6 +2,12 @@
 module Cms
   module ApplicationHelper
 
+    # Help with deprecations messages
+    # @deprecated
+    def cms_handler_path(*args)
+      raise "The #cms_handler_path helper method has been removed from BrowserCMS. Use '#handler_path instead'."
+    end
+
     def searchable_sections(selected = nil)
       root    = Section.root.first
       options = [['All sections', 'all'], [root.name, root.id]]

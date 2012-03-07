@@ -45,14 +45,3 @@ The user documentation and guides for this version of the application can be fou
 3. [Report a Bug!](https://github.com/browsermedia/browsercms/issues)
 4. [Discuss the Project](http://groups.google.com/group/browsercms)
 5. [BrowserCMS Site](http://browsercms.org)
-
-
-## Working on the core project source
-If you want to experiment with the source code, the BrowserCMS project can bootstrap itself as a web application. This allows developers who want to contribute to the project to easily alter and test changes. To run the application itself, do the following:
-
-    cd /path/to/browsercms
-    rake db:setup
-    rails server
-
-This will create and populate the BrowserCMS database with the minimal seed data for testing. By default, the core project is setup to use mysql as the database, but you can change that via the database.yml files.
-
