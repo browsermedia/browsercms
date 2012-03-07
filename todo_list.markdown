@@ -1,7 +1,6 @@
 # Working on release of bcms 3.4
 
 Current:
-  * Fix Tag Cloud portlet
 
 Tasks:
 
@@ -16,6 +15,9 @@ Tasks:
 * browsercms-cucumber - Build a separate gem from this project, which can be included in other CMS projects. (Might be 3.4.1)
 * Audit the buglist to see what else is getting closed as part of 3.1
 * Regenerate documentation as part of build process. Ensure things like is_child_of? get removed automatically.
+* Test this on a production environment prior to releasing (things like assets and/or config options might be wonky)
+* Test upgrading a browsercms v3.1.x/3.3.x to 3.4.x
+* Write upgrade instructions from 3.1.x/3.3.x to 3.4
 
 ## Notes (for upgrading engines)
 
@@ -24,28 +26,12 @@ Tasks:
 4. By default, Rails wants to match the table names of namespaced models (i.e. BcmsNews::NewsArticle). This can make for somewhat LONG and/or redudant table names (i.e. bcms_news_news_articles) but is probably better in the long run since it helps uniquely tie table to their module.
 5.  The BrowserCMS convention of having 'create_versioned_table' do different things based on the underlying model is might be flawed. Migrations really need to represent a snapshot in time that won't change based on the code. Case in point, we don't know what column name is being generated for original_record_id.
 
-Things to test:
-
-# Short Term
-
-* Test upgrading a browsercms v3.1.x/3.3.x to 3.4.x
-* Write upgrade instructions from 3.1.x/3.3.x to 3.4
-
 # Bugs
-
-
 * If a content type can't be found in code, the entire /cms/content_library will throw an error. This could be made more robust by just not showing the content type. This probably only happens when we upgrade databases for testing, but its still annoying.
-
-
-# Needs
-
-* Fix forms layouts in Chrome (Instructions cause a problem)
-* Can't create some portlets - Add scenarios
-** Tag Cloud portlet - ERROR: uninitialized constant TagCloudPortlet::Tag
-* Test this on a production environment prior to releasing (things like assets and/or config options might be wonky)
 
 # Wants (Taking advantage of Rails 3.1)
 
+* Fix forms layouts in Chrome (Instructions cause a problem)
 * Add Block.publish and publish! for easier coding. (or just make default for blocks to be published via code and not via UI)
 * Verify that instances of Acts::As::ContentPage in projects can correctly load CMS templates
 * Internal CMS layouts (like _head.html.erb) do not take advantage of the asset pipeline to join all css or js files (most are compiled into cms/application.css though)

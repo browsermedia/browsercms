@@ -7,7 +7,7 @@ class TagCloudPortlet < Cms::Portlet
   def render
     @sizes = self.sizes.blank? ? self.class.default_sizes : self.sizes
     @limit = self.limit.blank? ? 50 : self.limit
-    @cloud = Tag.cloud(:sizes => @sizes.size, :limit => @limit)
+    @cloud = Cms::Tag.cloud(:sizes => @sizes.size, :limit => @limit)
   end
     
 end
