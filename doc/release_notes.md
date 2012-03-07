@@ -1,23 +1,39 @@
-v3.4.0
+v3.4.0.rc1
 ======
 
-Rails 3.1.x compatibility, we also recommend using Ruby 1.9.3 with this release.
+The first release candidate of BrowserCMS 3.4.0 brings two major additions:
+1. Rails 3.1.x compatibility
+2. Mountable App: BrowserCMS can be now be added to existing Rails applications.
 
-Add the ability to add BrowserCMS to Rails projects.
+Note: We also recommend using Ruby 1.9.3 with this release (though Ruby 1.9.2 will probably still work)
+
+Rails 3.1.x and Mountable Apps
+------------------------------
+
+BrowserCMS has been rewritten as a Mountable App, bringing all the power of engines from Rails 3.1. This mean it should easier to add to an existing Rails project via running the following command in your Rails project.
+
+$ bcms install
+
+Some notable changes:
 * Add bcms install method that will add browsercms to an existing Rails project.
 * Most core files in the CMS are namespaced under Cms:: . This should reduce the chance of conflicting classes (i.e. what was User is now Cms::User)
-* Table names can optionally be namespaced. By default, there is no namespace for new projects. You can set: Cms.table_prefix = "cms_" to change this.
+* Table names can optionally be namespaced. By default, there is no namespace for standalone BrowserCMS projects. You can set: Cms.table_prefix = "cms_" to change this.
 * Prefixing tables will be reflected in cms migrations (like create_content_table) automatically. Passing :prefix=>false will add no prefix.
 * For creating tables (using create_table), you can use prefix() to apply the current prefix. i.e.
 
     create_table prefix(:users)
 
-* Added some basic support for making other 'user' objects act like CMS users via Cms::Acts::User. For example, the following would make a custom non-CMS user gain permission to act like an admin.
+* Added some basic support for making other 'user' objects act like CMS users via Cms::Acts::User.
+For example, the following would make a custom non-CMS user gain permission to act like an admin.
 
 class MyCustomUser < ActiveRecord::Base
   acts_as_cms_user :groups => [Cms::Group.find_by_code('admin')]
 end
 
+User authentication/authorization is definately something that needs more refinement, especially with regard to how Engines and Applications interact.
+
+Other Fixes
+-----------
 * [#3] Asset Pipeline: All bcms assets are now served using the assets pipeline.
 * [#443] Removed two primitive javascript and stylesheets in favor of asset pipeline (where needed).
 * [#448] Mountable Engines - BrowserCMS is now a mountable engine, which should make integrating it with other projects easier.

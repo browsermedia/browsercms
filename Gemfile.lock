@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    browsercms (3.4.0)
+    browsercms (3.4.0.rc1)
       ancestry (~> 1.2.4)
       jquery-rails
       rails (~> 3.1.0)
