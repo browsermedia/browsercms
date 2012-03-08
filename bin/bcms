@@ -38,7 +38,6 @@ class Cms::Install < Thor
     display_instructions(name)
   end
 
-
   desc 'demo [NAME]', "Generates a BrowserCMS application with a sample demo website. Suitable for learning BrowserCMS."
   common_options
 
@@ -99,20 +98,49 @@ Cms.table_prefix = "cms_"
     remove_file "MIT-LICENSE"
   end
 
-  # i.e. cd project_name
-  def work_in_project_root_directory(name=@project_name)
+  # i.e. Change the working directory (i.e. cd [name])
+  def cd_to(name=@project_name)
     self.destination_root = (File.join(destination_root, name))
   end
 
   def create_rails_app(name)
-    rails_cmd = "rails new #{name} --skip-bundle"
+    rails_options = {:skip_bundle => true}
     if options[:template]
-      rails_cmd += " -m #{options[:template]}"
+      rails_options[:template] = options[:template]
     end
     if options[:database]
-      rails_cmd += " -d #{options[:database]}"
+      rails_options[:database] = options[:database]
     end
-    run(rails_cmd)
+
+    require 'rails/generators'
+    require 'rails/generators/rails/app/app_generator'
+
+    # We invoke this programmatically, rather than via shell (`rails new #{name}`) so we get EXACT version of rails we want. (Works for Rails 3.1 or later)
+    rails_script = Rails::Generators::AppGenerator.new([name], rails_options)
+    rails_script.invoke_all
+
+  end
+
+  def create_rails_plugin(name)
+    require 'rails/generators'
+    require 'rails/generators/rails/plugin_new/plugin_new_generator'
+
+    rails_options = {:skip_bundle => true}
+    rails_options[:mountable] = true
+    plugin_script = Rails::Generators::PluginNewGenerator.new([name], rails_options)
+    plugin_script.invoke_all
+
+  end
+
+  def create_mountable_app(name = @project_name)
+    create_rails_plugin(name)
+    cd_to(name)
+
+    gemspec "browsercms", :version => "~> #{::Cms::VERSION}"
+    add_browsercms_dependency
+    include_cms_module
+    remove_rails_dependency
+    run_bundle_install
   end
 
   def display_instructions(name)
@@ -252,17 +280,6 @@ SITE_DOMAIN="localhost:3000"
     "Cms.attachment_file_permission = 0640"
   end
 
-  def create_mountable_app(name = @project_name)
-    run("rails plugin new #{name} --mountable --skip-bundle")
-    work_in_project_root_directory(name)
-
-    gemspec "browsercms", :version => "~> #{::Cms::VERSION}"
-    add_browsercms_dependency
-    include_cms_module
-    remove_rails_dependency
-    run_bundle_install
-  end
-
   def generate_seeds_rb
     create_file "db/seeds.rb", "# Load BrowserCMS seed data\n"
   end
@@ -273,7 +290,7 @@ SITE_DOMAIN="localhost:3000"
 
   def create_blank_cms_project(name)
     create_rails_app(name)
-    work_in_project_root_directory(name)
+    cd_to(name)
 
     # Unsure if this handles windows specific removal of files
     remove_file("public/index.html")

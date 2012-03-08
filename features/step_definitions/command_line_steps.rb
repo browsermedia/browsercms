@@ -11,9 +11,6 @@ Given /^a rails application named "([^"]*)" exists$/ do |name|
   create_rails_project(name)
 end
 
-When /^BrowserCMS should be added the Gemfile$/ do
-  check_file_content("#{project_name}/Gemfile", 'gem "browsercms"', true)
-end
 When /^I create a new BrowserCMS project named "([^"]*)"$/ do |name|
   self.project_name = name
   cmd = "bcms new #{project_name} --skip-bundle"
@@ -112,4 +109,12 @@ end
 
 When /^the file "([^"]*)" should contain:$/ do |file, partial_content|
   check_file_content(file, partial_content, true)
+end
+
+When /^the correct version of Rails should be added to the Gemfile$/ do
+  check_file_content("#{project_name}/Gemfile", "gem 'rails', '#{Rails::VERSION::STRING}'", true)
+end
+
+When /^BrowserCMS should be added the Gemfile$/ do
+  check_file_content("#{project_name}/Gemfile", 'gem "browsercms"', true)
 end
