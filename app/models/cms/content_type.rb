@@ -20,7 +20,7 @@ module Cms
     # Given a 'key' like 'html_blocks' or 'portlet'. Looks first for a class in the Cms:: namespace, then again without it.
     # Raises exception if nothing was found.
     def self.find_by_key(key)
-      class_name = key.tableize.classify
+      class_name = key.singularize.tableize.classify
       content_type = find(:first, :conditions => ["name like ?", "%#{class_name}"])
       if content_type.nil?
         if class_name.constantize.ancestors.include?(Cms::Portlet)
