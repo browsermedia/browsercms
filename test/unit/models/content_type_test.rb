@@ -39,6 +39,7 @@ module BcmsStore
   end
 end
 
+
 module Cms
 
   class ContentTypeTest < ActiveSupport::TestCase
@@ -145,6 +146,32 @@ module Cms
       assert_equal "bcms_store/widgets/form", engine_type.form
     end
 
+  end
+end
+
+# For testing find_by_key with pluralization
+class Person < ActiveRecord::Base
+  acts_as_content_block
+end
+
+module Cms
+
+  class FindByKeyTest < ActiveSupport::TestCase
+
+    test "ActiveSupport#classify automatically singularizes" do
+      assert_equal "Person", "people".tableize.classify
+      assert_equal "people", "people".tableize
+
+    end
+
+    test "#find_by_key with irregular pluralization" do
+      Factory(:content_type, :name => "Person")
+
+      type = Cms::ContentType.find_by_key("people")
+      assert_not_nil type
+      assert_equal "Person", type.display_name
+
+    end
   end
 end
 
