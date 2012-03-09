@@ -1,11 +1,10 @@
 # Working on release of bcms 3.4
 
 Current:
+* Clean up/Merge all pull requests
 
 Tasks:
 
-* [#433] Generate Rails 3.1 projects even when Rails 3.2 is installed.
-* Clean up/Merge all pull requests
 * [CMS] Upgrade a 3rd module (with a migration) to confirm the installation and upgrade instructions work correctly.
 * Refactor Cucumber steps to add seed data once as part of the env.rb file, then use truncation to leave it there.
 * Audit the buglist to see what else is getting closed as part of 3.1

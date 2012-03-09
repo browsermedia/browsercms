@@ -1,4 +1,4 @@
-v3.4.0.rc1
+v3.4.0
 ======
 
 The first release candidate of BrowserCMS 3.4.0 brings two major additions:
@@ -34,6 +34,7 @@ User authentication/authorization is definately something that needs more refine
 
 Other Fixes
 -----------
+* [#433] Generate new projects even when later versions of Rails are installed.
 * [#3] Asset Pipeline: All bcms assets are now served using the assets pipeline.
 * [#443] Removed two primitive javascript and stylesheets in favor of asset pipeline (where needed).
 * [#448] Mountable Engines - BrowserCMS is now a mountable engine, which should make integrating it with other projects easier.
