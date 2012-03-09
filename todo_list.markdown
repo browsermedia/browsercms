@@ -4,9 +4,6 @@ Current:
    [#482] Write Docs for adding BrowserCMS as an Engine
 
    Issues:
-    - In seed.rb it needs to add an additional return before the 'require browsercms.seeds.rb'
-    - rake db:install for existing rails projects (after bcms install) might want to run bcms seed data as separate tasks.
-        How to other gems/projects handle this? (Radiant? Spree?)
     - If user's try to add to a Rails 3.2 project, it will blow up midway through (i.e. the jquery-rails dependency will fail since R3.2 require jquery-rails-2.0
         A better plan would be to fail fast.
 Tasks:

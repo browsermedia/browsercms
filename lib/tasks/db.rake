@@ -8,6 +8,14 @@ namespace :db do
   desc "Drop, create and migrate the database"
   task :redo => ["db:drop", "db:create", "db:migrate"]
 
+  namespace :seed do
+
+    desc "Load the seed data from db/browsercms.seeds.rb"
+    task :browsercms => :environment do
+      load File.join("db", "browsercms.seeds.rb")
+    end
+  end
+
   namespace :fixtures do
     desc 'Dumps all models into fixtures.'
     task :dump => :environment do

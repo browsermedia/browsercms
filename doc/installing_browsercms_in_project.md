@@ -4,4 +4,3 @@
 - Users that log in to /cms will end up on default route
 - Clicking the CMS logo will take users to the default route.
 
-* rake db:install will run db:seed (again) for projects, which may not be acceptable. Need a separate rake task for seeding CMS data.
