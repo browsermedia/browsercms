@@ -9,6 +9,7 @@ end
 
 Given /^a rails application named "([^"]*)" exists$/ do |name|
   create_rails_project(name)
+  append_to_file "#{name}/db/seeds.rb", "# Some sample seed data here"
 end
 
 When /^I create a new BrowserCMS project named "([^"]*)"$/ do |name|
@@ -35,6 +36,7 @@ Then /^BrowserCMS should be installed in the project$/ do
   # This is a not a really complete check but it at least verifies the generator completes.
   check_file_content('config/initializers/browsercms.rb', 'Cms.table_prefix = "cms_"', true)
   check_file_content('config/routes.rb', 'mount_browsercms', true)
+  check_file_content('db/seeds.rb', "\nrequire File.expand_path('../browsercms.seeds.rb', __FILE__)\n", true)
 end
 
 Then /^a demo project named "([^"]*)" should be created$/ do |project|

@@ -1,16 +1,22 @@
 # Working on release of bcms 3.4
 
 Current:
-* Clean up/Merge all pull requests
+   [#482] Write Docs for adding BrowserCMS as an Engine
 
+   Issues:
+    - In seed.rb it needs to add an additional return before the 'require browsercms.seeds.rb'
+    - rake db:install for existing rails projects (after bcms install) might want to run bcms seed data as separate tasks.
+        How to other gems/projects handle this? (Radiant? Spree?)
+    - If user's try to add to a Rails 3.2 project, it will blow up midway through (i.e. the jquery-rails dependency will fail since R3.2 require jquery-rails-2.0
+        A better plan would be to fail fast.
 Tasks:
 
 * [CMS] Upgrade a 3rd module (with a migration) to confirm the installation and upgrade instructions work correctly.
-* Refactor Cucumber steps to add seed data once as part of the env.rb file, then use truncation to leave it there.
 * Audit the buglist to see what else is getting closed as part of 3.1
 * Test this on a production environment prior to releasing (things like assets and/or config options might be wonky)
 * Test upgrading a browsercms v3.1.x/3.3.x to 3.4.x
 * Write upgrade instructions from 3.1.x/3.3.x to 3.4
+* Update Roadmap (https://github.com/browsermedia/browsercms/wiki/Roadmap)
 
 ## Notes (for upgrading engines)
 
@@ -26,7 +32,7 @@ Tasks:
 # 3.4.1
 -------
 * browsercms-cucumber - Build a separate gem from this project, which can be included in other CMS projects. (Might be 3.4.1)
-* rake db:install for existing rails projects (after bcms install) might want to run bcms seed data as separate tasks. How to other gems/projects handle this?
+* Refactor Cucumber steps to add seed data once as part of the env.rb file, then use truncation to leave it there.
 
 
 # Wants (Taking advantage of Rails 3.1)
