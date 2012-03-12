@@ -1,11 +1,7 @@
 # Working on release of bcms 3.4
 
 Current:
-   [#482] Write Docs for adding BrowserCMS as an Engine
 
-   Issues:
-    - If user's try to add to a Rails 3.2 project, it will blow up midway through (i.e. the jquery-rails dependency will fail since R3.2 require jquery-rails-2.0
-        A better plan would be to fail fast.
 Tasks:
 
 * [CMS] Upgrade a 3rd module (with a migration) to confirm the installation and upgrade instructions work correctly.
@@ -30,6 +26,7 @@ Tasks:
 -------
 * browsercms-cucumber - Build a separate gem from this project, which can be included in other CMS projects. (Might be 3.4.1)
 * Refactor Cucumber steps to add seed data once as part of the env.rb file, then use truncation to leave it there.
+* If user's try to add to a Rails 3.2 project, it will blow up midway through (i.e. the jquery-rails dependency will fail since R3.2 require jquery-rails-2.0. A better plan would be to fail fast.
 
 
 # Wants (Taking advantage of Rails 3.1)
