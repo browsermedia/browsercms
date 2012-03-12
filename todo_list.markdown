@@ -34,6 +34,7 @@ Tasks:
 
 # Wants (Taking advantage of Rails 3.1)
 
+* How much value is there to allow users to pick the table prefix (as compared to the complexity it brings). Would it be better to just force everything to cms_?
 * Fix forms layouts in Chrome (Instructions cause a problem)
 * Add Block.publish and publish! for easier coding. (or just make default for blocks to be published via code and not via UI)
 * Verify that instances of Acts::As::ContentPage in projects can correctly load CMS templates

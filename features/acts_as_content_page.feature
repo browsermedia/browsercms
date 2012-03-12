@@ -9,12 +9,26 @@ Feature: Acts as Content Page
     Given the cms database is populated
     And I am a guest
 
+  Scenario: Use CMS templates with Rails Controllers
+    When I visit /content-page
+    Then the response should be 200
+    And I should see a page titled "Content Page"
+    And I should see the following content:
+      | Dummy Site Template |
+
+  Scenario: Set a Page Title
+    When I visit /custom-page
+    Then I should see a page titled "My Custom Page"
+    And I should see the following content:
+    | Some Custom Content |
+
   Scenario: Content Page
     When I visit /tests/open
     Then the response should be 200
     Then I should see the following content:
       | Open Page                     |
       | You can see this public page. |
+
 
   Scenario: Error Page
     When I am at /tests/error

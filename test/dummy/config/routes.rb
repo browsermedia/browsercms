@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  get "content-page", :to=>"content_page#index"
+  get "custom-page", :to=>"content_page#custom_page"
+
   namespace :cms  do content_blocks :products end
 
 

@@ -15,7 +15,24 @@
 module Cms
   module Acts
 
+    module PageHelper
 
+      # By default, the Name of the controller (minus 'Controller' will be the page name.)
+      # Unless @page_title is set in the controller action
+      def page_title(title=nil)
+        if title
+          @page_title = title
+        end
+        return controller.class.name.gsub("Controller", "").titleize unless @page_title
+        @page_title
+      end
+
+
+      # Do not show the toolbar on Acts::As::ContentPages
+      def cms_toolbar
+        ""
+      end
+    end
     module ContentPage
 
       def self.included(base)
@@ -26,6 +43,12 @@ module Cms
         base.helper Cms::PageHelper
         base.helper Cms::RenderingHelper
         base.helper Cms::MenuHelper
+        base.helper Cms::Acts::PageHelper
+      end
+
+      # Allows a Controller method to set a page title for an action.
+      def page_title=(title)
+        @page_title = title
       end
 
       # Before filter that determines if the current user can access a specific section.

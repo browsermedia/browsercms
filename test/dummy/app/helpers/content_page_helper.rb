@@ -1,0 +1,2 @@
+module ContentPageHelper
+end
