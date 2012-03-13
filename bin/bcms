@@ -158,6 +158,10 @@ Cms.table_prefix = "cms_"
     end
   end
 
+  def enable_asset_precompiling
+    gsub_file "config/environments/production.rb", /config\.assets\.compile = false/, 'config.assets.compile = true'
+  end
+
   # In Rails 3.0, we needed to disable xsendfile, since it was by default on in production.
   # In 3.1, this should be unnecessary because the default seems to have this commented out.
   #
@@ -216,6 +220,7 @@ SITE_DOMAIN="localhost:3000"
       configure_default_cache_directory
       configure_mail_server
       create_browsercms_initializer
+      enable_asset_precompiling
     end
   end
 

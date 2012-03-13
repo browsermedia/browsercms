@@ -23,7 +23,7 @@ module Cms
 
     initializer 'browsercms.add_core_routes', :after => 'action_dispatch.prepare_dispatcher' do |app|
       Rails.logger.debug "Adding Cms::Routes to ActionDispatch"
-      ::Cms::Engine.add_cms_routes_method
+      ActionDispatch::Routing::Mapper.send :include, Cms::RouteExtensions
     end
 
     initializer 'browsercms.add_load_paths', :after => 'action_controller.deprecated_routes' do |app|
@@ -31,9 +31,10 @@ module Cms
       ::Cms::Engine.add_cms_load_paths
     end
 
-    def self.add_cms_routes_method
-      ActionDispatch::Routing::Mapper.send :include, Cms::RouteExtensions
+    initializer "browsercms.precompile_assets" do |app|
+      app.config.assets.precompile += ['cms/application.css']
     end
+
 
     def self.add_cms_load_paths
       ActiveSupport::Dependencies.autoload_paths += %W( #{self.root}/vendor #{self.root}/app/mailers #{self.root}/app/helpers)

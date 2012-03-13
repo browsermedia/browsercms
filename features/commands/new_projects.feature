@@ -26,6 +26,7 @@ Feature: New Project Generator
     And the output should not contain "identical"
     And BrowserCMS should be added the Gemfile
     And the correct version of Rails should be added to the Gemfile
+    And the production environment should be configured with reasonable defaults
 
   Scenario: With a specific database
     When I run `bcms new hello_world -d mysql`

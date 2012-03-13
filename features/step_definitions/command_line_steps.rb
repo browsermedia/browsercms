@@ -120,3 +120,7 @@ end
 When /^BrowserCMS should be added the Gemfile$/ do
   check_file_content("#{project_name}/Gemfile", 'gem "browsercms"', true)
 end
+
+When /^the production environment should be configured with reasonable defaults$/ do
+  check_file_content "#{project_name}/config/environments/production.rb", "config.assets.compile = true", true
+end

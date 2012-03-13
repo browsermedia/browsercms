@@ -67,3 +67,9 @@ Tasks:
 See the [State of the Modules](https://github.com/browsermedia/browsercms/wiki/State-of-the-Modules) for an up to date listing.
 
 
+## Better Testing of Production/Env
+
+### Using Pow
+Configure a CMS application to boot in production mode (temporarily for testing)
+
+echo export RAILS_ENV=production > .powenv && touch tmp/restart.txt - From https://github.com/37signals/pow/wiki/FAQ
