@@ -162,35 +162,6 @@ Cms.table_prefix = "cms_"
     gsub_file "config/environments/production.rb", /config\.assets\.compile = false/, 'config.assets.compile = true'
   end
 
-  # In Rails 3.0, we needed to disable xsendfile, since it was by default on in production.
-  # In 3.1, this should be unnecessary because the default seems to have this commented out.
-  #
-  # Leaving here as unused for now in case later versions of Rails change this configuration.
-  def disable_xsendfile
-    insert_into_file "config/environments/production.rb", :before => 'config.action_dispatch.x_sendfile_header = "X-Sendfile"' do
-      <<-CODE
-# If you want to enable webservers to send binary files, you will need to uncomment X-Sendfile line below and configure Apache mod_sendfile
-# See http://codequest.eu/articles/rails3-apache-passenger-and-empty-file-using-send-file for details
-      CODE
-    end
-
-    gsub_file "config/environments/production.rb", /(config\.action_dispatch\.x_sendfile_header = "X-Sendfile")/, '  # \1'
-  end
-
-  # For Rails 3.0, we needed to turn on static asset serving in production, to allow assets to be served.
-  # In 3.1, this should be unnecessary because of the asset pipeline.
-  #
-  # Leaving here as unused for now.
-  def enable_static_asset_serving
-    insert_into_file "config/environments/production.rb", :before => 'config.serve_static_assets = false' do
-      <<-COMMENT
-# This allows bcms to serve static assets (like admin css files) from the gem
-      COMMENT
-    end
-
-    gsub_file "config/environments/production.rb", /(config\.serve_static_assets =) false/, '  \1 true'
-  end
-
   def configure_mail_server
     insert_into_file "config/environments/production.rb", :after => "config.active_support.deprecation = :notify" do
       %q{
