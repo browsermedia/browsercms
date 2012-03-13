@@ -1,12 +1,12 @@
 # Working on release of bcms 3.4
 
 Current:
+    * Test this on a production environment prior to releasing (things like assets and/or config options might be wonky)
 
 Tasks:
 
 * [CMS] Upgrade a 3rd module (with a migration) to confirm the installation and upgrade instructions work correctly.
 * Audit the buglist to see what else is getting closed as part of 3.1
-* Test this on a production environment prior to releasing (things like assets and/or config options might be wonky)
 * Test upgrading a browsercms v3.1.x/3.3.x to 3.4.x
 * Write upgrade instructions from 3.1.x/3.3.x to 3.4
 * Update Roadmap (https://github.com/browsermedia/browsercms/wiki/Roadmap)

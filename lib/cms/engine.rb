@@ -2,6 +2,12 @@ require 'rails'
 require 'cms/module'
 require 'cms/init'
 require 'browsercms'
+
+# Gem name is different than file name
+# Must be required FIRST, so that our assets paths appear before its do.
+# This allows app/assets/ckeditor/config.js to set CMS specific defaults.
+require 'ckeditor-rails'
+
 module Cms
 
   # Configuring BrowserCMS as an engine. This seems to work, but could probably be cleaned up.
@@ -34,7 +40,6 @@ module Cms
     initializer "browsercms.precompile_assets" do |app|
       app.config.assets.precompile += ['cms/application.css']
     end
-
 
     def self.add_cms_load_paths
       ActiveSupport::Dependencies.autoload_paths += %W( #{self.root}/vendor #{self.root}/app/mailers #{self.root}/app/helpers)

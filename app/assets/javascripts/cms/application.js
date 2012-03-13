@@ -1,5 +1,5 @@
 //
-//  Javascript librarys required for the Admin area of the CMS.
+//  Javascript libraries required for the Admin area of the CMS.
 //
 //= require jquery
 //= require jquery-ui
