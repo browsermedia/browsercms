@@ -36,7 +36,7 @@ Then /^BrowserCMS should be installed in the project$/ do
   # This is a not a really complete check but it at least verifies the generator completes.
   check_file_content('config/initializers/browsercms.rb', 'Cms.table_prefix = "cms_"', true)
   check_file_content('config/routes.rb', 'mount_browsercms', true)
-  check_file_content('db/seeds.rb', "\nrequire File.expand_path('../browsercms.seeds.rb', __FILE__)\n", true)
+  verify_seed_data_requires_browsercms_seeds
 end
 
 Then /^a demo project named "([^"]*)" should be created$/ do |project|
@@ -105,7 +105,7 @@ Then /^it should seed the BrowserCMS database$/ do
 end
 
 When /^it should seed the demo data$/ do
-  assert_partial_output  "Cms::PagePartial(:_header)", all_output
+  assert_partial_output "Cms::PagePartial(:_header)", all_output
   # This output is ugly, but it verifies that seed data completely runs
 end
 
@@ -121,6 +121,60 @@ When /^BrowserCMS should be added the Gemfile$/ do
   check_file_content("#{project_name}/Gemfile", 'gem "browsercms"', true)
 end
 
+Then /^Gemfile should have the correct version of BrowserCMS$/ do
+  check_file_content("Gemfile", %!gem "browsercms", "3.4.0.rc3"!, true)
+end
+
 When /^the production environment should be configured with reasonable defaults$/ do
   check_file_content "#{project_name}/config/environments/production.rb", "config.assets.compile = true", true
+end
+
+When /^it should comment out Rails in the Gemfile$/ do
+  check_file_content("Gemfile", "# gem 'rails', '3.1.3'", true)
+end
+
+When /^it should run bundle install$/ do
+  assert_partial_output "Your bundle is complete!", all_output
+end
+
+When /^it should copy all the migrations into the project$/ do
+  expected_outputs = %w{
+    rake  cms:install:migrations
+    Copied migration
+    browsercms300.rb from cms
+    browsercms305.rb from cms
+    browsercms330.rb from cms
+    browsercms340.rb from cms
+  }
+  expected_outputs.each do |expect|
+    assert_partial_output expect, all_output
+  end
+end
+
+When /^it should add the seed data to the project$/ do
+  check_file_presence ["db/browsercms.seeds.rb"], true
+  verify_seed_data_requires_browsercms_seeds
+end
+
+When /^it prompt the user to update Rails$/ do
+  expected = %w{
+      Next Steps:
+      Run `rake rails:update`
+    }
+  expected.each do |expect|
+    assert_partial_output expect, all_output
+  end
+end
+
+Given /^the project has a "([^"]*)" block$/ do |block_name|
+  run "rails g cms:content_block #{block_name}"
+end
+
+Then /^I should have a migration for updating the "([^"]*)" versions table$/ do |block_name|
+  migration = find_migration_with_name "update_version_id_columns.rb"
+  check_file_content migration, "models = %w{#{block_name}}", true
+end
+
+When /^the project has a "([^"]*)" model$/ do |model_name|
+  run "rails g model #{model_name}"
 end

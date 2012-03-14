@@ -6,6 +6,7 @@ require 'term/ansicolor'
 require 'rails/generators/actions'
 require 'active_support/core_ext/string/inflections'
 require 'cms/commands/actions'
+require 'cms/version'
 
 class String
   include Term::ANSIColor
@@ -16,9 +17,7 @@ class App < Thor
   include Rails::Generators::Actions
   include Cms::Commands::Actions
 
-
   desc "check", "Checks the existing module to determine what needs to done."
-
   def check
     puts "The following issues are preventing a BrowserCMS/Rails 3 upgrade.\n".red.bold
 
@@ -52,9 +51,9 @@ TEXT
     puts instructions
   end
 
-  desc 'v3_3_0', "Upgrades BrowserCMS files from 3.1.x to 3.3.0 (Back up first)"
+  desc 'v3_3_x', "Upgrades BrowserCMS files from 3.1.x to 3.3.x (Back up first)"
 
-  def v3_3_0
+  def v3_3_x
     upgrade_to_3_3_0
   end
 

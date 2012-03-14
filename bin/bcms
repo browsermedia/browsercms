@@ -7,6 +7,7 @@ require 'rails/generators/actions'
 require 'active_support/core_ext/string/inflections'
 require 'cms/version'
 require 'cms/commands/actions'
+require 'cms/commands/v3_4_0'
 # This seems to be required only due to a bug in Thor documented here:
 #   https://rails.lighthouseapp.com/projects/8994/tickets/4692-error-when-creating-app-from-template-undefined-method-wrap-for-arrayclass
 # If this bug is fixed the following line can probably be removed.
@@ -22,7 +23,7 @@ class Cms::Install < Thor
   include Thor::Actions
   include Rails::Generators::Actions
   include Cms::Commands::Actions
-
+  include Cms::Commands::V3_4_0
 
   def self.common_options
     method_option :database, :aliases => "-d", :desc => "Preconfigure for selected database (options: mysql/oracle/postgresql/sqlite3/frontbase/ibm_db) [Default: sqlite3]"
@@ -65,6 +66,25 @@ class Cms::Install < Thor
     generate_default_template
 
     display_instructions(name)
+  end
+
+  desc "upgrade", "Upgrades a BrowserCMS project to v#{Cms::VERSION}"
+  def upgrade
+    update_browsercms_gem_version
+    comment_out_rails_in_gemfile
+    run_bundle_install
+    install_migrations
+    generate_rails_3_4_0_migration
+    install_cms_seed_data
+
+    instructions = <<TEXT
+Upgrade is nearly complete. Review https://github.com/browsermedia/browsercms/wiki/Upgrading-to-3.4.x-from-3.3.x before proceeding.
+Next Steps:
+1. Run `rake rails:update`. Hit `a` when prompted to overwrite ALL files.
+2. Revert/undo the changes (see the 3.4.x Upgrade guide for details)
+3. Run `rake db:migrate`
+TEXT
+    puts instructions
   end
 
   desc 'version', 'Show BrowserCMS version'
@@ -182,10 +202,10 @@ SITE_DOMAIN="localhost:3000"
   end
 
   def generate_browsercms_project
-    rake 'cms:install:migrations'
-    generate "browser_cms:cms"
+    install_migrations
 
     inside rails_app do
+      install_cms_seed_data
       add_route_to_end("mount_browsercms")
       add_sitedomain_constant_to_environment_files
       configure_default_cache_directory
@@ -196,7 +216,8 @@ SITE_DOMAIN="localhost:3000"
   end
 
   def generate_demo_project
-    self.class.source_root(File.expand_path(File.join(__FILE__, '../../lib/generators/browser_cms/demo_site/templates')))
+    source_paths << File.expand_path(File.join(__FILE__, '../../lib/generators/browser_cms/demo_site/templates'))
+
     inside rails_app do
       copy_file 'logo.jpg', "public/themes/blue_steel/images/logo.jpg"
       copy_file 'splash.jpg', "public/themes/blue_steel/images/splash.jpg"
@@ -240,12 +261,6 @@ SITE_DOMAIN="localhost:3000"
     run_bundle_install
     generate :jdbc if defined?(JRUBY_VERSION)
     generate_browsercms_project
-  end
-
-  def run_bundle_install
-    inside project_root do
-      run "bundle install" unless options[:skip_bundle]
-    end
   end
 
   def generate_default_template

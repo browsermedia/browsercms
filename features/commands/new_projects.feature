@@ -12,12 +12,7 @@ Feature: New Project Generator
     When I create a new BrowserCMS project named "hello"
     Then a rails application named "hello" should exist
     And a file named "public/index.html" should not exist
-    And the output should contain "rake  cms:install:migrations"
-    And the output should contain "Copied migration"
-    And the output should contain "browsercms300.rb from cms"
-    And the output should contain "browsercms305.rb from cms"
-    And the output should contain "browsercms330.rb from cms"
-    And the output should contain "browsercms340.rb from cms"
+    And it should copy all the migrations into the project
     And the file "hello/config/routes.rb" should contain "mount_browsercms"
     And the file "hello/db/seeds.rb" should contain "require File.expand_path('../browsercms.seeds.rb', __FILE__)"
     And a file named "hello/db/browsercms.seeds.rb" should exist

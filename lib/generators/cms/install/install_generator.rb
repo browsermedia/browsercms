@@ -1,5 +1,3 @@
-require 'generators/browser_cms/cms/cms_generator'
-
 module Cms
 
   # A generic generator for installing BrowserCMS modules into a project. This will do the following:

@@ -32,13 +32,20 @@ module CommandLineHelpers
   end
 
   # Given the name of the migration (i.e. create_something.rb) find the EXACT migration file (which will include a timestamp)
-  # @param [String] partial_file_name Include the .rb at the end
+  #   Example:
+  #   find_migration_with_name("create_something.rb")
+  #
+  # @param [String] partial_file_name - Must include the .rb at the end
   # @parem [String] The absolute path to the migration file
   def find_migration_with_name(partial_file_name)
     file_pattern = "#{@aruba_dir}/#{project_name}/db/migrate/*#{partial_file_name}"
     files = Dir.glob(file_pattern)
     fail "Couldn't find a migration file matching this pattern (#{file_pattern})'" if files.empty?
     File.absolute_path(files.first)
+  end
+
+  def verify_seed_data_requires_browsercms_seeds
+    check_file_content('db/seeds.rb', "\nrequire File.expand_path('../browsercms.seeds.rb', __FILE__)\n", true)
   end
 end
 World(CommandLineHelpers)

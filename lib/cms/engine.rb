@@ -8,6 +8,10 @@ require 'browsercms'
 # This allows app/assets/ckeditor/config.js to set CMS specific defaults.
 require 'ckeditor-rails'
 
+# Explicitly require this, so that CMS projects do not need to add it to their Gemfile
+# Especially while upgrading
+require 'jquery-rails'
+
 module Cms
 
   # Configuring BrowserCMS as an engine. This seems to work, but could probably be cleaned up.

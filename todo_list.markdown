@@ -1,13 +1,14 @@
 # Working on release of bcms 3.4
 
 Current:
-    * Test this on a production environment prior to releasing (things like assets and/or config options might be wonky)
+* Move 'datepicker' initialization into application.js
+
+* Test upgrading a browsercms 3.3.x to 3.4.x
+* Write upgrade notes
 
 Tasks:
 
 * [CMS] Upgrade a 3rd module (with a migration) to confirm the installation and upgrade instructions work correctly.
-* Audit the buglist to see what else is getting closed as part of 3.1
-* Test upgrading a browsercms v3.1.x/3.3.x to 3.4.x
 * Write upgrade instructions from 3.1.x/3.3.x to 3.4
 * Update Roadmap (https://github.com/browsermedia/browsercms/wiki/Roadmap)
 
@@ -34,7 +35,6 @@ Tasks:
 * How much value is there to allow users to pick the table prefix (as compared to the complexity it brings). Would it be better to just force everything to cms_?
 * Fix forms layouts in Chrome (Instructions cause a problem)
 * Add Block.publish and publish! for easier coding. (or just make default for blocks to be published via code and not via UI)
-* Verify that instances of Acts::As::ContentPage in projects can correctly load CMS templates
 * Internal CMS layouts (like _head.html.erb) do not take advantage of the asset pipeline to join all css or js files (most are compiled into cms/application.css though)
 * Improve generators for assets from engines (Review http://bibwild.wordpress.com/2011/09/20/design-for-including-rails-engine-assets-into-pipeline-manifest/)
 * Remove the styled_file_field (no longer maintained)
@@ -51,7 +51,6 @@ Tasks:
 ** 'Not caching, user logged in'
 ** Rendering template X'
 ** Have at most one line per request for any diagnostic result.
-* Move 'datepicker' initialization into application.js
 * Upgrade jquery.selectbox-0.5 to jquery.sb.js (https://github.com/revsystems/jQuery-SelectBox). This will likely improve the usability of the selectbox.
 
  Determine if there is a more conventional pattern for applying seed data as part of an engine.

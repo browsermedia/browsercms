@@ -42,6 +42,7 @@ Other Fixes
 * [#480] Standardized Version Column - Changed how version tables point back to their 'original' record to make working with namespaces easier. Module developers will need to update their migrations for the next release of their modules.
 * [#466] Generate blocks with attachments correctly - When generating blocks that have an attachment, the initially generated code should work correctly without addition customization or tweaking.
 * [#450] Generate Engines - BrowserCMS modules are created as Mountable Engines when running `bcms module`.
+* [#487] CKEditor Gem - Replace the built in CKeditor gem with the Asset pipeline aware ckeditor_rails gem.
 
 v3.3.3
 ======

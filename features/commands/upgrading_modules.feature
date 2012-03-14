@@ -13,8 +13,9 @@ Feature: Upgrading BrowserCMS
     And the following files should exist:
       | config.ru |
 
-  Scenario: Avoid accidently updating projects
-    Given I am working on a BrowserCMS v3.3.x project named "petstore"
+  Scenario: Avoid accidentally updating projects
+    Given I cd to ".."
+    And I am working on a BrowserCMS v3.3.x project named "petstore"
     When I run `bcms-upgrade module`
     Then the output should contain "This does not appear to be a BrowserCMS module. Skipping update"
     And the following files should exist:

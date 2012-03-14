@@ -17,7 +17,6 @@ Feature: Add Content to Pages
     And I click the Select Existing Content button
     Then I should see the following content:
       | Hello World |
-#  I want to test selecting content, but that requires javascript drivers
 
   Scenario: Add Html/Text to a page
     Given there is a page with:
@@ -36,11 +35,11 @@ Feature: Add Content to Pages
     When I follow "Text"
     Then I should see a page titled "Content Library / Add New Text"
     And I should see the following content:
-    | Name |
-    | Text |
+      | Name |
+      | Text |
     When I fill in "Name" with "Hello"
     And I fill in "Content" with "I'm some new content"
     And I press "Save"
     Then I should see a page titled "Some Page"
     And I should see the following content:
-    | I'm some new content |
+      | I'm some new content |

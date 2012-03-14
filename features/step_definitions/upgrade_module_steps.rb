@@ -54,10 +54,12 @@ When /^the engine should be created$/ do
 
 end
 Given /^I am working on a BrowserCMS v3.3.x project named "([^"]*)"$/ do |project_name|
-  cd ".."
   run_simple "rails _3.0.9_ new #{project_name} --skip-bundle"
   cd project_name
+  append_to_file "Gemfile", "gem \"browsercms\", \"3.3.3\""
+  self.project_name = project_name
 end
+
 Then /^a Gemfile should be created$/ do
   steps %Q{
   Then a file named "Gemfile" should exist
