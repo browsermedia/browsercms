@@ -10,13 +10,24 @@ module Cms
         migration = migration_with_name("update_version_id_columns")
         text = <<TEXT
 models = %w{#{blocks.join(' ')}}
-models.each do |table|
-  rename_column(prefix("\#{table}_versions"), "\#{table}_id", :original_record_id) if column_exists?(prefix("\#{table}_versions"), "\#{table}_id")
+models.each do |model_name|
+  standardize_version_id_column(model_name)
 end
 TEXT
-        inject_into_file migration, text, :after=>"def up\n"
+        inject_into_file migration, text, :after => "def up\n"
 
+        insert_into_file migration, "require 'cms/commands/v3_4_0'\n", :before=>"class"
+        inject_into_file migration, "include Cms::Commands::V3_4_0::SchemaStatements\n", :after => "Migration\n"
+      end
+
+      module SchemaStatements
+
+        def standardize_version_id_column(model_name)
+          rename_column(prefix("#{model_name}_versions"), "#{model_name}_id", :original_record_id) if column_exists?(prefix("#{model_name}_versions"), "#{model_name}_id")
+        end
       end
     end
+
+
   end
 end

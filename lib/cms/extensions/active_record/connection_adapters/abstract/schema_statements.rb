@@ -116,6 +116,7 @@ module ActiveRecord
       def content_table_exists?(table_name)
         table_exists?(Cms::Namespacing.prefixed_table_name(table_name))
       end
+
     end
   end
 end

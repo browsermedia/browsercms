@@ -15,13 +15,11 @@ Feature:
     And it should add the seed data to the project
     And it prompt the user to update Rails
 
-
   Scenario: Projects with Content Block
     Given the project has a "turtle" block
     When I run `bcms upgrade`
     Then I should have a migration for updating the "turtle" versions table
 
-  @announce
   Scenario: Projects with Content Blocks and Models
     Basic Rails models should not be be included in the list of models getting an upgrade.
 
@@ -30,8 +28,14 @@ Feature:
     When I run `bcms upgrade`
     Then I should have a migration for updating the "turtle" versions table
 
-  Scenario: Better Migration
-    Given a migration method named "standardize_version_column_for" exists
+  Scenario: Updates version table
+    Given the project has a "turtle" block
+    When I run `bcms upgrade`
+    When I run `rake db:migrate`
+    Then the output should contain "UpdateVersionIdColumns: migrated"
+
+
+
 
 
 

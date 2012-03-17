@@ -1,5 +1,7 @@
 # Upgrade to Browsercms v3.4.0
+require 'cms/commands/v3_4_0'
 class Browsercms340 < ActiveRecord::Migration
+  include Cms::Commands::V3_4_0::SchemaStatements
 
   def change
     # Prefix the correct namespace where class_names are not prefixed
@@ -51,9 +53,9 @@ class Browsercms340 < ActiveRecord::Migration
   end
 
   def standardize_foreign_keys_from_versions_tables_to_original_table
-    tables = %w[attachment dynamic_view file_block html_block link page ]
-    tables.each do |table|
-      rename_column(prefix("#{table}_versions"), "#{table}_id", :original_record_id) if column_exists?(prefix("#{table}_versions"), "#{table}_id")
+    models = %w[attachment dynamic_view file_block html_block link page ]
+    models.each do |model|
+      standardize_version_id_column(model)
     end
   end
 end
