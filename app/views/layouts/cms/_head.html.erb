@@ -5,6 +5,7 @@
   <title><%= @page_title %></title>
   <%= stylesheet_link_tag 'cms/application', 'cms/date_picker', 'cms/sitemap', 'cms/taglist' %>
   <%= javascript_include_tag "cms/application", cms_content_editor %>
+  <%= csrf_meta_tags %>
   <script type="text/javascript">
     jQuery(function($){
       <% if protect_against_forgery? %>      
