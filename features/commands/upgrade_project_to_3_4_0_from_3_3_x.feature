@@ -21,7 +21,7 @@ Feature:
     Then I should have a migration for updating the "turtle" versions table
 
   Scenario: Projects with Content Blocks and Models
-    Basic Rails models should not be be included in the list of models getting an upgrade.
+    Rails models (that aren't blocks) should not have a migration generated for them.
 
     Given the project has a "turtle" block
     And the project has a "category" model

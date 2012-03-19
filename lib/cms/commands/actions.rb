@@ -75,10 +75,17 @@ module Cms
       # @return [Array<String>] List of file names matching the models
       def find_custom_blocks
         file_pattern = "app/models/*.rb"
-        files = Dir.glob(file_pattern)
-        files.map do |s|
-          File.basename(s, ".rb")
+        model_files = Dir.glob(file_pattern)
+        block_files = model_files.map do |f|
+          content = IO.read(f)
+          puts "Found\n#{content}"
+          if content.match(/acts_as_content_block/)
+            File.basename(f, ".rb")
+          else
+            nil
+          end
         end
+        block_files.compact
       end
     end
   end
