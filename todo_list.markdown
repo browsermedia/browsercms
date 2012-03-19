@@ -3,24 +3,11 @@
 Current:
 * Move 'datepicker' initialization into application.js
 
-* Test upgrading a browsercms 3.3.x to 3.4.x
-* Write upgrade notes
 
 Tasks:
 
 * [CMS] Upgrade a 3rd module (with a migration) to confirm the installation and upgrade instructions work correctly.
-* Write upgrade instructions from 3.1.x/3.3.x to 3.4
 * Update Roadmap (https://github.com/browsermedia/browsercms/wiki/Roadmap)
-
-## Notes (for upgrading engines)
-
-2. Adding seed data (either later or before) should always require the same installation commands (i.e. rake db:install if possible) Don't force developers to remember multiple commands
-3. Gemspec should be generated more suitably to an engine (less exceptions). Alternatively, write better clean up instructions for upgrading modules.
-4. By default, Rails wants to match the table names of namespaced models (i.e. BcmsNews::NewsArticle). This can make for somewhat LONG and/or redudant table names (i.e. bcms_news_news_articles) but is probably better in the long run since it helps uniquely tie table to their module.
-5.  The BrowserCMS convention of having 'create_versioned_table' do different things based on the underlying model is might be flawed. Migrations really need to represent a snapshot in time that won't change based on the code. Case in point, we don't know what column name is being generated for original_record_id.
-
-# Bugs
-* If a content type can't be found in code, the entire /cms/content_library will throw an error. This could be made more robust by just not showing the content type. This probably only happens when we upgrade databases for testing, but its still annoying.
 
 
 # 3.4.1

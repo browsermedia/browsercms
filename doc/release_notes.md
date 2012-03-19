@@ -30,11 +30,12 @@ class MyCustomUser < ActiveRecord::Base
   acts_as_cms_user :groups => [Cms::Group.find_by_code('admin')]
 end
 
-User authentication/authorization is definately something that needs more refinement, especially with regard to how Engines and Applications interact.
+User authentication/authorization is definitely something that needs more refinement, especially with regard to how Engines and Applications interact.
 
 Other Fixes
 -----------
-* [#433] Generate new projects even when later versions of Rails are installed.
+* [#301] New `bcms upgrade` script for updating BrowserCMS projects.
+* [#433] Starting new projects should work regardless of whether later versions of Rails are installed (i.e. Rails 3.2).
 * [#3] Asset Pipeline: All bcms assets are now served using the assets pipeline.
 * [#443] Removed two primitive javascript and stylesheets in favor of asset pipeline (where needed).
 * [#448] Mountable Engines - BrowserCMS is now a mountable engine, which should make integrating it with other projects easier.
