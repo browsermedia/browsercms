@@ -156,10 +156,10 @@ When /^it should add the seed data to the project$/ do
   verify_seed_data_requires_browsercms_seeds
 end
 
-When /^it prompt the user to update Rails$/ do
+When /^it should display instructions to the user$/ do
   expected = %w{
       Next Steps:
-      Run `rake rails:update`
+      Review https://github.com/browsermedia/browsercms/wiki/Upgrading-to-3.4.x-from-3.3.x
     }
   expected.each do |expect|
     assert_partial_output expect, all_output
