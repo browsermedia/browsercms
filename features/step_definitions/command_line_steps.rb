@@ -166,8 +166,28 @@ When /^it prompt the user to update Rails$/ do
   end
 end
 
-Given /^the project has a "([^"]*)" block$/ do |block_name|
-  run "rails g cms:content_block #{block_name}"
+Given /^the project has a "([^"]*)" block(| which hasn't ever been migrated)$/ do |block_name, been_migrated|
+  # Generate a 3.3.x block and migration (Done here so as to EXACTLY preserve how block datastructure existed in this version)
+  block_content = <<RUBY
+  class #{block_name.capitalize} < ActiveRecord::Base
+    acts_as_content_block
+  end
+RUBY
+  write_file "app/models/#{block_name}.rb", block_content
+
+
+  been_migrated_line = (been_migrated == "" ? "rename_column :#{block_name}_versions, :original_record_id, :#{block_name}_id" : "")
+  content = <<RUBY
+  class Create#{block_name.capitalize}s < ActiveRecord::Migration
+    def change
+      create_content_table :#{block_name}s, :prefix=>false do |t|
+        t.timestamps
+      end
+      #{been_migrated_line}
+    end
+  end
+RUBY
+  write_file "db/migrate/001_create_#{block_name}s.rb", content
 end
 
 Then /^I should have a migration for updating the "([^"]*)" versions table$/ do |block_name|
@@ -178,4 +198,15 @@ end
 
 When /^the project has a "([^"]*)" model$/ do |model_name|
   run "rails g model #{model_name}"
+end
+
+Then /^the migration (should|should not) update the version table for "([^"]*)" block$/ do |should, block|
+  did_migration = %!rename_column("#{block}_versions", "#{block}_id", :original_record_id)!
+
+  assert_partial_output "UpdateVersionIdColumns: migrated", all_output
+  if should == "should"
+    assert_partial_output did_migration, all_output
+  else
+    assert_no_partial_output did_migration, all_output
+  end
 end

@@ -14,10 +14,9 @@ models.each do |model_name|
   standardize_version_id_column(model_name)
 end
 TEXT
-        inject_into_file migration, text, :after => "def up\n"
-
+        insert_into_file migration, text, :after => "def up\n"
         insert_into_file migration, "require 'cms/commands/v3_4_0'\n", :before=>"class"
-        inject_into_file migration, "include Cms::Commands::V3_4_0::SchemaStatements\n", :after => "Migration\n"
+        insert_into_file migration, "include Cms::Commands::V3_4_0::SchemaStatements\n", :after => "Migration\n"
       end
 
       module SchemaStatements

@@ -32,7 +32,14 @@ Feature:
     Given the project has a "turtle" block
     When I run `bcms upgrade`
     When I run `rake db:migrate`
-    Then the output should contain "UpdateVersionIdColumns: migrated"
+    Then the migration should update the version table for "turtle" block
+
+  Scenario: Migrations work for new project
+    Given the project has a "turtle" block which hasn't ever been migrated
+    When I run `bcms upgrade`
+    When I run `rake db:migrate`
+    Then the migration should not update the version table for "turtle" block
+
 
 
 

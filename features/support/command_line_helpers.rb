@@ -38,11 +38,22 @@ module CommandLineHelpers
   # @param [String] partial_file_name - Must include the .rb at the end
   # @parem [String] The absolute path to the migration file
   def find_migration_with_name(partial_file_name)
-    file_pattern = "#{@aruba_dir}/#{project_name}/db/migrate/*#{partial_file_name}"
-    files = Dir.glob(file_pattern)
+    files, file_pattern = migrations_named(partial_file_name)
     fail "Couldn't find a migration file matching this pattern (#{file_pattern})'" if files.empty?
     File.absolute_path(files.first)
   end
+
+  def migration_exists?(partial_file_name)
+    files, fp = migrations_named(partial_file_name)
+    files.size > 0
+  end
+
+  def migrations_named(name)
+    file_pattern = "#{@aruba_dir}/#{project_name}/db/migrate/*#{name}"
+    files = Dir.glob(file_pattern)
+    return files, file_pattern
+  end
+
 
   def verify_seed_data_requires_browsercms_seeds
     check_file_content('db/seeds.rb', "\nrequire File.expand_path('../browsercms.seeds.rb', __FILE__)\n", true)
