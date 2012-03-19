@@ -9,7 +9,7 @@
   <br clear="all"/>
 <% end %>
 
-<%= form_for(@task, :url => @task.new_record? ? cms_page_tasks_path(@page) : cms_page_task_path(@page, @task)) do |f| %>
+<%= form_for(@task, :url => @task.new_record? ? page_tasks_path(@page) : page_task_path(@page, @task)) do |f| %>
 
   <%= f.cms_error_messages %>
   <div class="fields text_fields">

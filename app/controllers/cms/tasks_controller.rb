@@ -9,7 +9,7 @@ class TasksController < Cms::BaseController
   end
   
   def create
-    @task = @page.tasks.build(params[:cms_task])
+    @task = @page.tasks.build(params[:task])
     @task.assigned_by = current_user
     if @task.save
       flash[:notice] = "Page was assigned to '#{@task.assigned_to.login}'"
