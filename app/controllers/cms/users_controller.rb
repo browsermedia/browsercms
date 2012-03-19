@@ -41,7 +41,7 @@ class UsersController < Cms::ResourceController
   end
 
   def update_password
-    if user.update_attributes(params[:cms_user])
+    if user.update_attributes(params[:user])
       flash[:notice] = "Password for '#{user.login}' was changed"
       redirect_to(current_user.able_to?(:administrate) ? users_path : user_path(user))
     else

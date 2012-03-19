@@ -1,8 +1,7 @@
 # Working on release of bcms 3.4
 
 Current:
-* Move 'datepicker' initialization into application.js
-
+* Verify tasks and links work correctly.
 
 Tasks:
 
