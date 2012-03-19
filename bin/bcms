@@ -7,7 +7,7 @@ require 'rails/generators/actions'
 require 'active_support/core_ext/string/inflections'
 require 'cms/version'
 require 'cms/commands/actions'
-require 'cms/commands/v3_4_0'
+require 'cms/upgrades/v3_4_0'
 # This seems to be required only due to a bug in Thor documented here:
 #   https://rails.lighthouseapp.com/projects/8994/tickets/4692-error-when-creating-app-from-template-undefined-method-wrap-for-arrayclass
 # If this bug is fixed the following line can probably be removed.
@@ -23,7 +23,7 @@ class Cms::Install < Thor
   include Thor::Actions
   include Rails::Generators::Actions
   include Cms::Commands::Actions
-  include Cms::Commands::V3_4_0
+  include Cms::Upgrades::V3_4_0
 
   def self.common_options
     method_option :database, :aliases => "-d", :desc => "Preconfigure for selected database (options: mysql/oracle/postgresql/sqlite3/frontbase/ibm_db) [Default: sqlite3]"

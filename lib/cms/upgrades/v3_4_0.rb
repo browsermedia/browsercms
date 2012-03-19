@@ -1,5 +1,5 @@
 module Cms
-  module Commands
+  module Upgrades
 
     # Commands specifically for upgrading to version 3.4.0 of BrowserCMS
     module V3_4_0
@@ -15,8 +15,8 @@ models.each do |model_name|
 end
 TEXT
         insert_into_file migration, text, :after => "def up\n"
-        insert_into_file migration, "require 'cms/commands/v3_4_0'\n", :before=>"class"
-        insert_into_file migration, "include Cms::Commands::V3_4_0::SchemaStatements\n", :after => "Migration\n"
+        insert_into_file migration, "require 'cms/upgrades/v3_4_0'\n", :before=>"class"
+        insert_into_file migration, "include Cms::Upgrades::V3_4_0::SchemaStatements\n", :after => "Migration\n"
       end
 
       module SchemaStatements

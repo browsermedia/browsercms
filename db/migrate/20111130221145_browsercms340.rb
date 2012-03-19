@@ -1,7 +1,7 @@
 # Upgrade to Browsercms v3.4.0
-require 'cms/commands/v3_4_0'
+require 'cms/upgrades/v3_4_0'
 class Browsercms340 < ActiveRecord::Migration
-  include Cms::Commands::V3_4_0::SchemaStatements
+  include Cms::Upgrades::V3_4_0::SchemaStatements
 
   def change
     # Prefix the correct namespace where class_names are not prefixed

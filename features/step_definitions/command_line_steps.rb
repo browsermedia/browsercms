@@ -193,7 +193,7 @@ end
 Then /^I should have a migration for updating the "([^"]*)" versions table$/ do |block_name|
   migration = find_migration_with_name "update_version_id_columns.rb"
   check_file_content migration, "models = %w{#{block_name}}", true
-  check_file_content migration, "require 'cms/commands/v3_4_0'", true
+  check_file_content migration, "require 'cms/upgrades/v3_4_0'", true
 end
 
 When /^the project has a "([^"]*)" model$/ do |model_name|
