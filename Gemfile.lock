@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    browsercms (3.4.0.rc3)
+    browsercms (3.4.0)
       ancestry (~> 1.2.4)
       ckeditor_rails (~> 3.6.2.2)
       jquery-rails (~> 1.0.14)
@@ -96,7 +96,7 @@ GEM
     json_pure (1.6.1)
     launchy (2.0.5)
       addressable (~> 2.2.6)
-    mail (2.3.2)
+    mail (2.3.3)
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)

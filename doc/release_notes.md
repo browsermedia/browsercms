@@ -1,39 +1,45 @@
 v3.4.0
 ======
 
-The first release candidate of BrowserCMS 3.4.0 brings two major additions:
-1. Rails 3.1.x compatibility
+It's done! After roughly a years worth of work, along with some excellent contributions from the community (thanks Brian King, James Prior and Neil Middleton), BrowserCMS 3.4 is done. This release contains two major additions:
+
+1. It's now Rails 3.1.x compatible
 2. Mountable App: BrowserCMS can be now be added to existing Rails applications.
 
-Note: We also recommend using Ruby 1.9.3 with this release (though Ruby 1.9.2 will probably still work)
+Note: We recommend using Ruby 1.9.3 with this release (though Ruby 1.9.2 will probably still work)
 
-Rails 3.1.x and Mountable Apps
-------------------------------
+Improved Updating
+-----------------
 
-BrowserCMS has been rewritten as a Mountable App, bringing all the power of engines from Rails 3.1. This mean it should easier to add to an existing Rails project via running the following command in your Rails project.
+A primary goal of this project is have a simple upgrade path for existing projects. As such, we have baked in the support for upgrading your project right into the core tool itself. See the [Upgrade Guide](https://github.com/browsermedia/browsercms/wiki/Upgrading-a-BrowserCMS-project) for more details, but upgrading a CMS project is now (nearly) as simple as running the following command in your project:
 
-$ bcms install
+    $ bcms upgrade
 
-Some notable changes:
-* Add bcms install method that will add browsercms to an existing Rails project.
+
+CMSifying your Rails project
+----------------------------
+
+The entire project was reworked to become a Mountable Engine, meaning it should easier to add to an existing Rails project via running the following command in your Rails project. You can now add BrowserCMS to your Rails 3.1.x project by running:
+
+    $ bcms install
+
+Integrating with the CMS
+------------------------
+
+Once the CMS is installed, you can integrate with the existing templates, users, groups and pages. See [Adding BrowserCMS to an existing Rails project](https://github.com/browsermedia/browsercms/wiki/Adding-BrowserCMS-to-an-existing-Rails-project) for details on how you can integrate them. While User authentication/authorization is definitely something that needs more refinement, this release adds some support for modifying your existing User objects to behave as though they were a CMS User (and get access to CMS pages, etc).
+
+Namespacing/Prefixing
+---------------------
+
 * Most core files in the CMS are namespaced under Cms:: . This should reduce the chance of conflicting classes (i.e. what was User is now Cms::User)
 * Table names can optionally be namespaced. By default, there is no namespace for standalone BrowserCMS projects. You can set: Cms.table_prefix = "cms_" to change this.
 * Prefixing tables will be reflected in cms migrations (like create_content_table) automatically. Passing :prefix=>false will add no prefix.
-* For creating tables (using create_table), you can use prefix() to apply the current prefix. i.e.
+* When defining migrations for cms tables, (using create_table), you can use prefix() to apply the current prefix. i.e.
 
     create_table prefix(:users)
 
-* Added some basic support for making other 'user' objects act like CMS users via Cms::Acts::User.
-For example, the following would make a custom non-CMS user gain permission to act like an admin.
-
-class MyCustomUser < ActiveRecord::Base
-  acts_as_cms_user :groups => [Cms::Group.find_by_code('admin')]
-end
-
-User authentication/authorization is definitely something that needs more refinement, especially with regard to how Engines and Applications interact.
-
-Other Fixes
------------
+Other Notable Fixes
+-------------------
 * [#301] New `bcms upgrade` script for updating BrowserCMS projects.
 * [#433] Starting new projects should work regardless of whether later versions of Rails are installed (i.e. Rails 3.2).
 * [#3] Asset Pipeline: All bcms assets are now served using the assets pipeline.
@@ -44,6 +50,8 @@ Other Fixes
 * [#466] Generate blocks with attachments correctly - When generating blocks that have an attachment, the initially generated code should work correctly without addition customization or tweaking.
 * [#450] Generate Engines - BrowserCMS modules are created as Mountable Engines when running `bcms module`.
 * [#487] CKEditor Gem - Replace the built in CKeditor gem with the Asset pipeline aware ckeditor_rails gem.
+
+See the [detailed changelog](https://github.com/browsermedia/browsercms/compare/v3.3.3...v3.4.0) for a complete list of changes, as well as the [Closed Tickets for 3.4.0](https://github.com/browsermedia/browsercms/issues?milestone=1&state=closed) for a complete list of closed items.
 
 v3.3.3
 ======
