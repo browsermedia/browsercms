@@ -1,6 +1,6 @@
 module PageDiagnosticSteps
   def should_see_a_page_titled(page_title)
-    assert page.has_css?("title", :text=>page_title), "Expected a page with a title '#{page_title}'."
+    assert page.has_css?("title", :text => page_title), "Expected a page with a title '#{page_title}'."
     assert page.has_content?(page_title)
   end
 end
@@ -12,7 +12,7 @@ Then /^I should see a page titled "([^"]*)"$/ do |page_title|
 end
 
 When /^the page header should be "([^"]*)"$/ do |h1|
-  assert page.has_css?("h1", :text=>h1), "Expected to see <h1>#{h1}</h1> on the page."
+  assert page.has_css?("h1", :text => h1), "Expected to see <h1>#{h1}</h1> on the page."
 end
 
 When /^I am not logged in$/ do
@@ -28,7 +28,7 @@ end
 
 Given /^there is a LoginPortlet on the homepage$/ do
   cms_page = Cms::Page.with_path("/").first
-  portlet = LoginPortlet.create!(:name=>"Login Portlet")
+  portlet = LoginPortlet.create!(:name => "Login Portlet")
   cms_page.add_content(portlet, :main)
   cms_page.publish!
 end
@@ -54,8 +54,8 @@ end
 
 When /^login as an authorized user$/ do
   visit "/cms/login"
-  fill_in 'login', :with=>"privileged"
-  fill_in 'password', :with=>"password"
+  fill_in 'login', :with => "privileged"
+  fill_in 'password', :with => "password"
   click_button 'LOGIN'
 end
 When /^I click the Select Existing Content button$/ do
@@ -99,7 +99,7 @@ Given /^there is a homepage$/ do
   if page
     @homepage = page
   else
-    @homepage = Factory(:public_page, :path=>"/", :name=>"Home Page")
+    @homepage = Factory(:public_page, :path => "/", :name => "Home Page")
   end
 end
 
@@ -108,7 +108,7 @@ Then /^I should see the CMS 404 page$/ do
 end
 
 Given /^an archived page at "([^"]*)" exists$/ do |path|
-  page = Factory(:page, :archived=>true, :path=>path)
+  page = Factory(:page, :archived => true, :path => path)
   assert page.archived?
 end
 
@@ -146,4 +146,25 @@ end
 Given /^I am adding a page to the root section$/ do
   section = Cms::Section.root.first
   visit "/cms/sections/#{section.id}/pages/new"
+end
+When /^I am adding a link on the sitemap$/ do
+  section = Cms::Section.root.first
+  visit "/cms/sections/#{section.id}/links/new"
+end
+When /^I edit that link$/ do
+  link = Cms::Link.first
+  visit "/cms/links/#{link.id}/edit"
+end
+
+Given /^the following link exists:$/ do |table|
+  table.hashes.each do |row|
+    section = Cms::Section.with_path(row.delete('section')).first
+    row['section_id'] = section.id
+    Factory(:link, row)
+  end
+end
+
+When /^I change the link name to "([^"]*)"$/ do |new_name|
+  fill_in "Name", :with=>new_name
+  click_on "Save And Publish"
 end

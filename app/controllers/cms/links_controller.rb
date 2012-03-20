@@ -11,7 +11,7 @@ class LinksController < Cms::BaseController
   end
 
   def create
-    @link = Link.new(params[:cms_link])
+    @link = Link.new(params[:link])
     @link.section = @section
     if @link.save
       flash[:notice] = "Link was '#{@link.name}' created."
@@ -22,7 +22,7 @@ class LinksController < Cms::BaseController
   end
   
   def update
-    if @link.update_attributes(params[:cms_link])
+    if @link.update_attributes(params[:link])
       flash[:notice] = "Link '#{@link.name}' was updated"
       redirect_to @link.section
     else

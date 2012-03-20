@@ -11,6 +11,12 @@ module Cms
       end
     end
 
+    # For simple publish buttons
+    def publish_button(type)
+      html = %Q{<button type="submit" name="#{type}[publish_on_save]" value="true" class="submit"><span>Save And Publish</span></button>'}
+      lt_button_wrapper html.html_safe
+    end
+
 
     def select_content_type_tag(type, &block)
       options = {:rel => "select-#{type.key}"}

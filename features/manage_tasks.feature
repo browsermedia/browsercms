@@ -6,8 +6,7 @@ Feature: Manage Tasks
     And I am logged in as a Content Editor
 
   Scenario: Assign Home Page as a Task
-  # This is hard coded, since the buttons/nav are in an iframe
-    When I request /cms/pages/1/tasks/new
+    When I assign the home page as a task
     Then I should see a page titled "Assign Page 'Home'"
     When I select "CMS Administrator (cmsadmin)" from "Assign To"
     And I press "Save"

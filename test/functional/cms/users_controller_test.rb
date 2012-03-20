@@ -146,30 +146,6 @@ module Cms
       assert_equal "User '#{@user.login}' was updated", flash[:notice]
     end
 
-    def test_change_password
-      get :change_password, :id => @user.id
-
-      assert_response :success
-      assert_select "input#user_password"
-      assert_select "input#user_password_confirmation"
-    end
-
-    def test_update_password_failure
-      put :update_password, :id => @user.id,
-          :cms_user => {:password => "will_fail_validation", :password_confirmation => "something_else"}
-
-      assert_response :success
-      assert_select "h1", "Set New Password"
-      assert_select "div#errorExplanation"
-    end
-
-    def test_update_password_success
-      put :update_password, :id => @user.id,
-          :cms_user => {:password => "something_else", :password_confirmation => "something_else"}
-
-      assert_redirected_to users_path
-    end
-
     def test_add_to_groups
       @group_ids = [Factory(:group).id, Factory(:group).id]
       put :update, :id => @user.id, :group_ids => @group_ids

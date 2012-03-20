@@ -75,6 +75,7 @@ Factory.define :html_block, :class => Cms::HtmlBlock do |m|
 end
 
 Factory.define :link, :class => Cms::Link do |m|
+  m.association :section
   m.sequence(:name) { |n| "Link #{n}" }
   m.publish_on_save true
 end

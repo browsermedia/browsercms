@@ -7,7 +7,7 @@
 <%= form_for(@link) do |f| %>
   <%= render :partial => 'form', :locals => {:f => f} %>
   <div class="buttons">
-    <%= lt_button_wrapper('<button type="submit" name="cms_link[publish_on_save]" value="true" class="submit"><span>Save And Publish</span></button>') %>
+    <%= publish_button "link" %>
     <%= lt_button_wrapper(f.submit("Save", :class => "submit")) %>
   </div>
 <% end %>
