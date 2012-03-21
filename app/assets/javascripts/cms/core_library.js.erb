@@ -103,7 +103,9 @@ jQuery(function($) {
 
 // Automatically enable date_picker controls
 $(function() {
-    $('input.date_picker').datepicker({ changeFirstDay: false, changeMonth:true, changeYear:true, closeText:'', showButtonPanel: true, dateFormat: '<%= Cms::DatePicker.jquery_format %>' });
+	if($.datepicker){
+		$('input.date_picker').datepicker({ changeFirstDay: false, changeMonth:true, changeYear:true, closeText:'', showButtonPanel: true, dateFormat: '<%= Cms::DatePicker.jquery_format %>' });
+	}
 });
 
 //CookieSet allows us to treat one cookie value as a set of values
