@@ -19,3 +19,17 @@ Feature: Content Pages
     Given a protected page at "/protected-page" exists
     When I request /protected-page
     Then I should see the CMS :forbidden page
+
+  @page-caching
+  Scenario: A Guest tries to access a CMS page in production
+    Given a page at "/about-us" exists
+    When a guest visits "http://cms.mysite.com/about-us"
+    Then they should be redirected to "http://mysite.com/about-us"
+    And the response should be 200
+
+  @page-caching
+  Scenario: A registered user tries to access a CMS page in production
+      Given a page at "/about-us" exists
+      When a registered user visits "http://cms.mysite.com/about-us"
+      Then they should be redirected to "http://mysite.com/about-us"
+      And the response should be 200

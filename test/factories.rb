@@ -22,7 +22,7 @@ end
 
 Factory.define :image_block, :class => Cms::ImageBlock do |m|
   m.sequence(:name) { |n| "TestImageBlock#{n}" }
-  m.sequence(:attachment_file_path) {|i| "/file-#{i}.txt" }
+  m.sequence(:attachment_file_path) { |i| "/file-#{i}.txt" }
   m.attachment_section { find_or_create_root_section }
   m.attachment_file { mock_file }
   m.publish_on_save true
@@ -30,7 +30,7 @@ end
 
 Factory.define :file_block, :class => Cms::FileBlock do |m|
   m.sequence(:name) { |n| "TestFileBlock#{n}" }
-  m.sequence(:attachment_file_path) {|i| "/file-#{i}.txt" }
+  m.sequence(:attachment_file_path) { |i| "/file-#{i}.txt" }
   m.attachment_section { find_or_create_root_section }
   m.publish_on_save true
 end
@@ -39,12 +39,12 @@ Factory.define :group, :class => Cms::Group do |m|
   m.sequence(:name) { |n| "TestGroup#{n}" }
 end
 
-Factory.define :cms_user_group, :class=>Cms::Group do |m|
+Factory.define :cms_user_group, :class => Cms::Group do |m|
   m.sequence(:name) { |n| "TestGroup#{n}" }
-  m.association :group_type, :factory=>:cms_group_type
+  m.association :group_type, :factory => :cms_group_type
 end
 
-Factory.define :content_editor_group, :parent=>:group do |g|
+Factory.define :content_editor_group, :parent => :group do |g|
   g.after_create { |group|
     group.permissions << create_or_find_permission_named("administrate")
     group.permissions << create_or_find_permission_named("edit_content")
@@ -56,7 +56,7 @@ Factory.define :group_type, :class => Cms::GroupType do |m|
   m.sequence(:name) { |n| "TestGroupType#{n}" }
 end
 
-Factory.define :cms_group_type, :class=>Cms::GroupType do |m|
+Factory.define :cms_group_type, :class => Cms::GroupType do |m|
   m.name "CMS User"
   m.cms_access true
 end
@@ -66,7 +66,7 @@ Factory.define :portlet, :class => DynamicPortlet do |m|
 end
 
 # Portlets happen to be Non-versioned right now, but this abstracts that in case it changes later.
-Factory.define :non_versioned_block, :parent=>:portlet do |m|
+Factory.define :non_versioned_block, :parent => :portlet do |m|
 end
 
 Factory.define :html_block, :class => Cms::HtmlBlock do |m|
@@ -88,7 +88,7 @@ Factory.define :page, :class => Cms::Page do |m|
 end
 
 # TODO: Remove duplication between this and the :page factory.
-Factory.define :published_page, :class=>Cms::Page do |m|
+Factory.define :published_page, :class => Cms::Page do |m|
   m.sequence(:name) { |n| "Published Page #{n}" }
   m.path { |a| "/#{a.name.gsub(/\s/, '_').downcase}" }
   m.template_file_name "default.html.erb"
@@ -133,13 +133,13 @@ Cms::Authoring::PERMISSIONS.each do |p|
   end
 end
 
-Factory.define :section, :class=>Cms::Section do |m|
+Factory.define :section, :class => Cms::Section do |m|
   m.name "Test"
   m.path "/test"
   m.parent { find_or_create_root_section }
 end
 
-Factory.define :root_section, :class=>Cms::Section do |m|
+Factory.define :root_section, :class => Cms::Section do |m|
   m.name "My Site"
   m.path "/"
   m.root true
@@ -151,11 +151,11 @@ Factory.define :public_page, :class => Cms::Page do |m|
   m.sequence(:name) { |n| "Page #{n}" }
   m.path { |a| "/#{a.name.gsub(/\s/, '_').downcase}" }
   m.template_file_name "default.html.erb"
-  m.association :section, :factory=>:public_section
+  m.association :section, :factory => :public_section
   m.publish_on_save true
 end
 
-Factory.define :public_section, :class=>Cms::Section do |m|
+Factory.define :public_section, :class => Cms::Section do |m|
   m.name "Test"
   m.path "/test"
   m.parent { find_or_create_root_section }
@@ -164,7 +164,7 @@ Factory.define :public_section, :class=>Cms::Section do |m|
   }
 end
 
-Factory.define :protected_section, :class=>Cms::Section do |m|
+Factory.define :protected_section, :class => Cms::Section do |m|
   m.name "Protected Section"
   m.path "/protected-section"
   m.parent { find_or_create_root_section }
@@ -201,11 +201,18 @@ Factory.define :user, :class => Cms::User do |m|
   m.password_confirmation { |a| a.password }
 end
 
+# Represents a user who has actually created an account on the site.
+Factory.define :registered_user, :parent => :user do |u|
+  u.after_create { |user|
+    user.groups << Cms::Group.guest
+  }
+end
+
 def create_or_find_permission_named(name)
   Cms::Permission.named(name).first || Factory(:permission, :name => name)
 end
 
-Factory.define :cms_admin, :parent=>:user do |m|
+Factory.define :cms_admin, :parent => :user do |m|
   m.after_create { |user|
     group = Factory(:group, :group_type => Factory(:group_type, :cms_access => true))
     Cms::Authoring::PERMISSIONS.each do |p|
@@ -215,7 +222,7 @@ Factory.define :cms_admin, :parent=>:user do |m|
   }
 end
 
-Factory.define :content_editor, :parent=>:user do |m|
+Factory.define :content_editor, :parent => :user do |m|
   m.after_create { |user|
     group = Factory(:group, :group_type => Factory(:group_type, :cms_access => true))
     Cms::Authoring::EDITOR_PERMISSIONS.each do |p|
@@ -225,11 +232,11 @@ Factory.define :content_editor, :parent=>:user do |m|
   }
 end
 
-Factory.define :content_type_group, :class=>Cms::ContentTypeGroup do |ctg|
+Factory.define :content_type_group, :class => Cms::ContentTypeGroup do |ctg|
   ctg.sequence(:name) { |n| "Group #{n}" }
 end
 
-Factory.define :content_type, :class=>Cms::ContentType do |ct|
+Factory.define :content_type, :class => Cms::ContentType do |ct|
   ct.association :content_type_group
 end
 

@@ -67,7 +67,9 @@ class Cms::SectionsController < Cms::BaseController
       @move_to = Section.root.first
     end
   end
-  
+
+  # Generates XML for Browsing files/pages/etc.
+  # @todo This MIGHT best live in the FCKeditor module, since it's XML format is highly coupled to that module's needs.
   def file_browser              
     @section = Cms::Section.find_by_name_path(params[:CurrentFolder])
     if request.post? && params[:NewFile]
@@ -112,7 +114,7 @@ class Cms::SectionsController < Cms::BaseController
                else
                  @section.pages
                end
-       render 'cms/sections/file_browser.xml.builder', :layout => false
+       render 'cms/sections/file_browser', :layout => false, :format=>:xml
     end
 
     def public_groups

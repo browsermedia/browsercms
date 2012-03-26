@@ -1,4 +1,4 @@
-Rails.application.routes.draw do
+Dummy::Application.routes.draw do
 
   get "content-page", :to=>"content_page#index"
   get "custom-page", :to=>"content_page#custom_page"

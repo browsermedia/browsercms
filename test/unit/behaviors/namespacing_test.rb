@@ -10,7 +10,7 @@ end
 class Cms::NonNamespacedBlock < ActiveRecord::Base
 
   # Avoids need to create another table
-  set_table_name "cms_namespaced_blocks"
+  self.table_name = "cms_namespaced_blocks"
 
   acts_as_content_block namespace_table: false
 end

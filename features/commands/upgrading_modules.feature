@@ -24,7 +24,7 @@ Feature: Upgrading BrowserCMS
   Scenario: Upgrade a Module from 3.3.x to 3.4.x
     When I run `bcms-upgrade module`
     And the output should not contain "Upgrading to BrowserCMS 3.3.x..."
-    Then the file "script/rails" should contain "test/dummy/script/rails"
+    And rails script be configured to work with engines
     And the following files should not exist:
       | config.ru                                 |
       | MIT-LICENSE                               |
