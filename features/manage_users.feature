@@ -14,7 +14,6 @@ Feature: Manage Users
     And I should see the following content:
       | testuser |
 
-
   Scenario: Change Password
     Given the following content editor exists:
       | username | password | first_name | last_name |

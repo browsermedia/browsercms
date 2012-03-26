@@ -195,15 +195,6 @@ module Cms
       assert_select "title", "Test Page"
     end
 
-    def test_guest_user_views_page_on_cms_site
-      @request.host = "cms.mysite.com"
-
-        # Actually simulates http://cms.mysite.com/?path=page , but we can't test domains in functional specs
-      get :show, :path => "page", :use_route => false
-
-        # Really should go to "http://mysite.com/page" instead.
-      assert_redirected_to "http://mysite.com/?path=page"
-    end
 
     def test_registered_user_views_page_on_public_site
       login_as @registered_user
@@ -213,16 +204,6 @@ module Cms
 
       assert_response :success
       assert_select "title", "Test Page"
-    end
-
-    def test_registered_user_views_page_on_cms_site
-      login_as @registered_user
-      @request.host = "cms.mysite.com"
-
-        # Simulates http://cms.mysite.com/?path=page rather than http://cms.mysite.com/page
-      get :show, :path => "page", :use_route => false
-
-      assert_redirected_to "http://mysite.com/?path=page"
     end
 
     def test_cms_user_views_page_on_public_site

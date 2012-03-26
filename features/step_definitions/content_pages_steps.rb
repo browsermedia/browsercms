@@ -107,6 +107,10 @@ Then /^I should see the CMS 404 page$/ do
   should_see_cms_404_page
 end
 
+Given /^a page at "([^"]*)" exists$/ do |path|
+  page = Factory(:public_page, :path => path)
+end
+
 Given /^an archived page at "([^"]*)" exists$/ do |path|
   page = Factory(:page, :archived => true, :path => path)
   assert page.archived?
@@ -167,4 +171,19 @@ end
 When /^I change the link name to "([^"]*)"$/ do |new_name|
   fill_in "Name", :with=>new_name
   click_on "Save And Publish"
+end
+
+When /^a guest visits "([^"]*)"$/ do |url|
+  visit url
+end
+
+When /^a registered user visits "([^"]*)"$/ do |url|
+  registered_user = Factory(:registered_user)
+  login_as(registered_user.login, registered_user.password)
+  visit url
+end
+
+
+Then /^they should be redirected to "([^"]*)"$/ do |expected_url|
+  assert_equal expected_url, current_url
 end

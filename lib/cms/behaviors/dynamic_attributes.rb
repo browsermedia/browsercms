@@ -150,7 +150,7 @@ module Cms
           rescue
             Object.const_set(options[:class_name],
                              Class.new(ActiveRecord::Base)).class_eval do
-              set_table_name options[:table_name]
+              self.table_name = options[:table_name]
               def self.reloadable? #:nodoc:
                 false
               end

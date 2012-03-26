@@ -1,3 +1,5 @@
+# Loads the Gemfile from the root of the project itself, rather than a typical rails app.
+
 require 'rubygems'
 gemfile = File.expand_path('../../../../Gemfile', __FILE__)
 

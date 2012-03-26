@@ -130,7 +130,7 @@ When /^the production environment should be configured with reasonable defaults$
 end
 
 When /^it should comment out Rails in the Gemfile$/ do
-  check_file_content("Gemfile", "# gem 'rails', '3.1.3'", true)
+  check_file_content("Gemfile", "# gem 'rails', '#{Rails::VERSION::STRING}'", true)
 end
 
 When /^it should run bundle install$/ do
@@ -138,16 +138,16 @@ When /^it should run bundle install$/ do
 end
 
 When /^it should copy all the migrations into the project$/ do
-  expected_outputs = %w{
-    rake  cms:install:migrations
-    Copied migration
-    browsercms300.rb from cms
-    browsercms305.rb from cms
-    browsercms330.rb from cms
-    browsercms340.rb from cms
-  }
+  expected_outputs = [
+      "rake  cms:install:migrations",
+      "Copied migration",
+      "browsercms300.cms.rb from cms",
+      "browsercms305.cms.rb from cms",
+      "browsercms330.cms.rb from cms",
+      "browsercms340.cms.rb from cms"
+  ]
   expected_outputs.each do |expect|
-    assert_partial_output expect, all_output
+    assert_matching_output expect, all_output
   end
 end
 
@@ -157,10 +157,10 @@ When /^it should add the seed data to the project$/ do
 end
 
 When /^it should display instructions to the user$/ do
-  expected = %w{
-      Next Steps:
-      Review https://github.com/browsermedia/browsercms/wiki/Upgrading-to-3.4.x-from-3.3.x
-    }
+  expected = [
+      "Next Steps:",
+      "Review https://github.com/browsermedia/browsercms/wiki/Upgrading-to-3.4.x-from-3.3.x"
+   ]
   expected.each do |expect|
     assert_partial_output expect, all_output
   end
@@ -209,4 +209,12 @@ Then /^the migration (should|should not) update the version table for "([^"]*)" 
   else
     assert_no_partial_output did_migration, all_output
   end
+end
+
+Then /^it should display the current version of BrowserCMS$/ do
+  assert_partial_output "BrowserCMS #{Cms::VERSION}", all_output
+end
+
+When /^rails script be configured to work with engines$/ do
+  check_file_content "script/rails", "ENGINE_PATH = ", true
 end

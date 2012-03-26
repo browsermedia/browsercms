@@ -143,10 +143,6 @@ end
 
 ActionController::IntegrationTest.fixture_path = ActiveSupport::TestCase.fixture_path
 
-# This might be removable in later versions of Rails 3.1.x which correctly add the routes to functional controllers
-require 'support/rails_3_1_routes_hack'
-Cms::Engine.load_engine_routes
-
 module Cms::ControllerTestHelper
   def self.included(test_case)
     test_case.send(:include, Cms::PathHelper)
@@ -159,9 +155,8 @@ module Cms::ControllerTestHelper
   def streaming_file_contents
     #The body of a streaming response is a proc
     streamer = @response.body
-#    assert_equal Proc, streamer.class
 
-#Create a dummy object for the proc to write to
+    #Create a dummy object for the proc to write to
     output = Object.new
 
     def output.write(contents)

@@ -6,7 +6,7 @@ Feature: New Project Generator
 
   Scenario: Output the Version
     When I run `bcms -v`
-    Then the output should contain "BrowserCMS 3.4.2"
+    Then it should display the current version of BrowserCMS
 
   Scenario: Create a new BrowserCMS project
     When I create a new BrowserCMS project named "hello"

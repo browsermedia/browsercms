@@ -2,7 +2,7 @@ module Cms
   class AbstractFileBlock < ActiveRecord::Base
 
 
-    set_table_name Namespacing.prefix("file_blocks")
+    self.table_name = Namespacing.prefix("file_blocks")
 
     validates_presence_of :name
 
