@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<%#
+  # A CMS template used by Cucumber tests. This is the desktop version of a mobile ready template, and should have a
+  # 'partner' template in layouts/mobile with the same name.
+ %>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <title><%= page_title %></title>
+    <%= yield :html_head %>
+  </head>
+  <body style="margin: 0; padding: 0; text-align: center;">
+    <%= cms_toolbar %>
+    <div id="wrapper" style="width: 700px; margin: 0 auto; text-align: left; padding: 30px">
+      I am the desktop TEMPLATE. I want to see the <%= link_to " 'Mobile Site'", mobile_site_url %>
+
+      User Agent '<%= request.user_agent %>'
+      <%= render_menu %>
+      <h1><%= page_title %></h1>
+      <%= container :main %>
+    </div>
+  </body>
+</html>

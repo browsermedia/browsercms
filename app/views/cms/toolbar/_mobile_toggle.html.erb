@@ -1,0 +1,33 @@
+<% if mobile_template_exists?(@page) %>
+<style>
+    #mobile_toggle {
+        float: left;
+        text-transform: uppercase;
+        padding-left: 110px;
+        margin-top: 12px;
+        margin-right: 0px;
+        color: black;
+        font-weight: bold;
+        width: 200px;
+    }
+
+    #mobile_toggle div {
+        float: left;
+    }
+</style>
+<%
+   mobile_state = session[:mobile_mode] == true ? "ON" : "OFF"
+   button_text = session[:mobile_mode] == true ? "TURN OFF" : "TURN ON"
+   new_template = session[:mobile_mode] == true ? "full" : "mobile"
+%>
+
+<div id="mobile_toggle">
+  <div class="visual_editor_label">View As Mobile?:</div>
+  <div class="visual_editor_value_container">
+    <div><span id="visual_editor_state"><%= mobile_state %></span></div>
+  </div>
+  <div class="visual_editor_toggle_container">
+    <div class="sm_button"><%= link_to "<span id='visual_editor_action'>#{button_text}</span>".html_safe, "#{@page.path}?template=#{new_template}", :target => "_top", :class => "sm_button" %></div>
+  </div>
+</div>
+<% end %>

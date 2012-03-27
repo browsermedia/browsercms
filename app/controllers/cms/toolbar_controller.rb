@@ -3,6 +3,8 @@ module Cms
 
     layout "cms/toolbar"
 
+    helper MobileHelper
+
     def index
       if params[:page_toolbar] != "0"
         @mode = params[:mode]

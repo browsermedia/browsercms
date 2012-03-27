@@ -1,12 +1,11 @@
 Tasks:
 
-* Mobile Templates - Allow developers to define optional mobile templates for pages that can be shown to mobile devices.
-
-
 ## Upgrade Notes
 - Migrations are now generated with .cms. Will this cause problems during upgrades? (Write upgrade scenarios)
 - rails -h only provides generate | destroy methods with engine on a new project. Why? It sucks to have to cd into test/dummy to run tests.
 
+## Upgrade Script
+- Test what happens when you upgrade an existing Bcms 3.3.x/Rails 3.1.x project
 
 # 3.5.x Goals
 
@@ -46,6 +45,13 @@ Tasks:
 ## Better Testing of Production/Env
 
 ### Using Pow
-Configure a CMS application to boot in production mode (temporarily for testing)
+Configure a CMS application to boot in production mode (temporarily for testing). Assumes powder is installed.
+
+
+#### With a New project
+bcms new [project_name]
+echo "rvm use 1.9.3@r3.2" > .rvmrc
+powder install
+Open Browser to http://project-name.dev
 
 echo export RAILS_ENV=production > .powenv && touch tmp/restart.txt - From https://github.com/37signals/pow/wiki/FAQ

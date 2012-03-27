@@ -54,10 +54,12 @@ When /^the engine should be created$/ do
 
 end
 Given /^I am working on a BrowserCMS v3.3.x project named "([^"]*)"$/ do |project_name|
-  run_simple "rails _3.0.9_ new #{project_name} --skip-bundle"
-  cd project_name
-  append_to_file "Gemfile", "gem \"browsercms\", \"3.3.3\""
-  self.project_name = project_name
+  create_historical_cms_project(project_name, "3.0.9", "3.3.3")
+end
+
+Given /^I am working on a BrowserCMS v3.4.x project named "([^"]*)"$/ do |project_name|
+  create_historical_cms_project(project_name, "3.1.0", "3.3.3")
+  write_file 'config/environments/production.rb', "#Before\nconfig.action_controller.page_cache_directory = File.join(Rails.root,'public','cache')\nAfter"
 end
 
 Then /^a Gemfile should be created$/ do
@@ -67,10 +69,14 @@ Then /^a Gemfile should be created$/ do
 end
 
 When /^it should no longer generate a README in the public directory$/ do
-  check_file_presence ['public/bcms/bcms_widgets/README'], false
+  check_file_presence [' public/bcms/bcms_widgets/README '], false
 end
 
 When /^the project should be LGPL licensed$/ do
-  check_file_presence [ 'GPL.txt', 'LICENSE.txt'], true
-  check_file_presence [ 'MIT-LICENSE'], false
+  check_file_presence ['GPL.txt', 'LICENSE.txt'], true
+  check_file_presence ['MIT-LICENSE'], false
+end
+
+When /^it should remove the default cache directory$/ do
+  check_file_content('config/environments/production.rb', "config.action_controller.page_cache_directory", false)
 end

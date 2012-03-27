@@ -1,12 +1,27 @@
-v3.4.2
+v3.5.0
 ======
 
-Maintenance Release
+Mobile
+------
 
-* [#502] Fix issue where Page templates/partials could not be editted through the UI
-* [#491] Fix issue where custom blocks couldn't be viewed in page edit mode
-* [#470] Fix issue where loading throws errors on some OS's (Ubuntu)
+The CMS can now be configured to serve mobile optimized content, using a mobile subdomain and smart redirecting based on User Agents.
 
+* Mobile Templates: Each template can have a 'mobile' version, which will be used when users request a mobile version of that page.
+* Fallback Templates: Any page which lacks a mobile ready template will use the 'full' desktop template when displayed as mobile.
+* Mobile Subdomain:  Any requests to the mobile subdomain automatically serve mobile pages. m. is the assumed subdomain.
+* Agent Redirection: Users on mobile devices can be automatically redirected to the mobile subdomain. (Handled via Apache User Agent detection.)
+* Mobile Site Opt Out: Users on mobile device can opt to be redirected to the desktop site if they want. (Handled via a cookie)
+* Mobile caching: The mobile and full sites have their own separate page cache, mean both can be served quickly by Apache.
+* View as Mobile: Editors can preview the mobile templates while editing pages in the admin, if a page has a mobile template. Once in 'mobile' mode, all pages should be viewed as mobile until they disable it.
+
+These features are originally from the bcms_mobile module, which has been inlined into the CMS core.
+
+Notable Fixes
+-------------
+
+* [#493] Add Mobile capability
+* [#494] Speed up Cucumber Scenarios
+* [#492] Upgrade to be Rails 3.2.x compatibile
 
 v3.4.0
 ======

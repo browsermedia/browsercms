@@ -93,6 +93,38 @@ module Cms
       assert v1.live?
     end
   end
+
+  class PageLayoutTest < ActiveSupport::TestCase
+
+    def setup
+      @page = Factory.build(:page, :template_file_name => 'subpage.html.erb')
+    end
+
+    test "#template_file_name" do
+      assert_equal 'subpage.html.erb', @page.template_file_name
+    end
+
+    test "#template_name" do
+      assert_equal 'Subpage (html/erb)', @page.template_name
+    end
+
+    test "#template for File system templates" do
+      assert_nil @page.template
+    end
+
+    test "#layout for full templates" do
+      assert_equal 'templates/subpage', @page.layout
+    end
+
+    test "#layout_name" do
+      assert_equal 'subpage', @page.layout_name
+    end
+
+    test "#layout for mobile" do
+      assert_equal 'mobile/subpage', @page.layout(:mobile)
+    end
+
+  end
   class PageTest < ActiveSupport::TestCase
 
     def test_creating_page_with_reserved_path
@@ -138,13 +170,12 @@ module Cms
     end
 
     test "It should be possible to create a new page, using the same path as a previously deleted page" do
-      Cms::Page.delete_all
       p = Time.now.to_f.to_s #use a unique, but consistent path
 
-      @page = Factory(:published_page, :path => "/#{p}")
+      @page = Factory(:public_page, :path => "/#{p}")
       @page.destroy
 
-      @page2 = Factory(:published_page, :path => "/#{p}")
+      @page2 = Factory(:public_page, :path => "/#{p}")
       assert_not_equal(@page, @page2)
     end
 
@@ -173,21 +204,6 @@ module Cms
       page = Factory.build(:page, :path => '/foo/bar')
       assert_valid page
       assert_equal "/foo/bar", page.path
-    end
-
-    def test_template
-      page_template = Factory(:page_template, :name => 'test')
-      page = Factory.build(:page, :template_file_name => 'test.html.erb')
-      assert_equal 'test.html.erb', page.template_file_name
-      assert_equal 'Test (html/erb)', page.template_name
-      assert_equal page_template, page.template
-      assert_equal 'templates/test', page.layout
-
-      page = Factory.build(:page, :template_file_name => 'foo.html.erb')
-      assert_equal 'foo.html.erb', page.template_file_name
-      assert_equal 'Foo (html/erb)', page.template_name
-      assert_nil page.template
-      assert_equal 'templates/foo', page.layout
     end
 
     def test_revision_comments

@@ -93,6 +93,7 @@
     <% end %>
   <% end %>
 
+  <%= render :partial => "cms/toolbar/mobile_toggle" %>
   <div id="visual_editor_toggle">
     <% if @page.version == @page.draft.version %>
         <div class="visual_editor_label">Visual Editor:</div>

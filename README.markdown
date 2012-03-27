@@ -12,6 +12,7 @@ BrowserCMS is intended to offer features comparable to commercial CMS products, 
 Here's a quick overview of some of the more notable features:
 
 * Mountable Engine: Each CMS project is a rails project that depends on the BrowserCMS engine. Developers can add new controllers, views, etc; just like any rails project.
+* Mobile Friendly: Sites can be built to use mobile optimized designs that are optimized for small screens, with low bandwidth, with responsive design.
 * In Context Editing: Users can browse their site to locate content and change it right on the page itself.
 * Design friendly Templates: Pages aren't just a template and giant single chunk of HTML. Templates can be built to have multiple editable areas, to allow for rich designs that are still easy to manage by non-technical users.
 * Sitemap: An explorer/finder style view of sections and pages in a site allowing users to add and organize pages.

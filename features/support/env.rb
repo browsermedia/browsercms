@@ -62,7 +62,7 @@ end
 
 # Load the seed data once at the start of the test run.
 # By doing this here, and using transaction strategy, we ensure the fastest possible tests.
-require 'cms/data_loader'
-Cms::DataLoader.silent_mode = true
 DatabaseCleaner.clean_with :truncation
-require File.join(File.dirname(__FILE__), '../../db/seeds.rb')
+silence_stream(STDOUT) do
+  require File.join(File.dirname(__FILE__), '../../db/seeds.rb')
+end

@@ -15,26 +15,29 @@ require 'jquery-rails'
 
 module Cms
 
-  # Configuring BrowserCMS as an engine. This seems to work, but could probably be cleaned up.
-  #
   class Engine < Rails::Engine
     include Cms::Module
     isolate_namespace Cms
 
+    config.cms = ActiveSupport::OrderedOptions.new
 
-    # Make sure we use our rails model template
+    # Make sure we use our rails model template (rather then its default) when `rails g cms:content_block` is run.
     config.app_generators do |g|
       path = File::expand_path('../../templates', __FILE__)
       g.templates.unshift path
     end
 
+    # We want the default cache directories to be overridable in the application.rb, so set them early in the boot process.
+    config.before_configuration do |app|
+      app.config.cms.mobile_cache_directory = File.join(Rails.root, 'public', 'cache', 'mobile')
+      app.config.cms.page_cache_directory = File.join(Rails.root, 'public', 'cache', 'full')
+    end
+
     initializer 'browsercms.add_core_routes', :after => 'action_dispatch.prepare_dispatcher' do |app|
-      Rails.logger.debug "Adding Cms::Routes to ActionDispatch"
       ActionDispatch::Routing::Mapper.send :include, Cms::RouteExtensions
     end
 
     initializer 'browsercms.add_load_paths', :after => 'action_controller.deprecated_routes' do |app|
-      Rails.logger.debug "Add Cms::Dependencies and other load_path configurations."
       ::Cms::Engine.add_cms_load_paths
     end
 
