@@ -3,4 +3,9 @@
 #
 module Cms
   VERSION = "3.5.0.alpha"
+
+  # Return the current version of the CMS.
+  def self.version
+    VERSION
+  end
 end
