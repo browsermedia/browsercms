@@ -2,8 +2,7 @@ Feature: Manage Sections
   Content Editors should be able to create sections from the sitemap in order to organize site content.
 
   Background:
-    Given the cms database is populated
-    And I am logged in as a Content Editor
+    Given I am logged in as a Content Editor
 
   Scenario: Create Section
     Given I am adding a section to the root section

@@ -3,8 +3,7 @@ Feature: Manage Redirects
   admins should be able to create redirects between arbitrary paths in the CMS.
 
   Background:
-    Given the cms database is populated
-    And I am logged in as a Content Editor
+    Given I am logged in as a Content Editor
 
   Scenario: Create Redirect
     When I view the Redirects page

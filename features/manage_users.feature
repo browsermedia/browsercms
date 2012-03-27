@@ -2,8 +2,7 @@ Feature: Manage Users
   CMS Admins should be able to add/edit/disable users via the Admin UI.
 
   Background:
-    Given the cms database is populated
-    And I am logged in as a Content Editor
+    Given I am logged in as a Content Editor
 
   Scenario: Add User
     Given I request /cms/users

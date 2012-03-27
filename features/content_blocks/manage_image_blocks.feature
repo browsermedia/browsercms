@@ -2,8 +2,7 @@ Feature: Manage Image Blocks
   Content editors should be able to upload images into the content library.
 
   Background:
-    Given the cms database is populated
-    And I am logged in as a Content Editor
+    Given I am logged in as a Content Editor
     And the following images exist:
       | id  | name               |
       | 150 | An LOL Cat Picture |

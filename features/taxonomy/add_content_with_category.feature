@@ -1,7 +1,6 @@
 Feature: Add Content with categories
 
   Background:
-    Given the cms database is populated
     Given a Content Type named "Product" is registered
     And I am logged in as a Content Editor
 

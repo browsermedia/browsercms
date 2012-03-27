@@ -2,8 +2,7 @@ Feature: Manage Html Blocks
   As a content editor I should be able to add new HTML content to a site
 
   Background:
-    Given the cms database is populated
-    And I am logged in as a Content Editor
+    Given I am logged in as a Content Editor
 
   Scenario: List Html Blocks
     Given the following Html blocks exist:

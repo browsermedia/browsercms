@@ -1,10 +1,9 @@
 Feature: Content Pages
   Visitors should be able to see content pages
 
-  # This should be ported from test/functional/content_controller_test.rbover time.
+  # This should be ported from test/functional/content_controller_test.rb over time.
 
   Background:
-    Given the cms database is populated
 
   Scenario: Page Not Found as Guest
     Given I request /a/non-existent/page

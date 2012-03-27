@@ -2,8 +2,7 @@ Feature: Manage Tasks
   Content Editors should be able to assign and complete tasks.
 
   Background:
-    Given the cms database is populated
-    And I am logged in as a Content Editor
+    Given I am logged in as a Content Editor
 
   Scenario: Assign Home Page as a Task
     When I assign the home page as a task

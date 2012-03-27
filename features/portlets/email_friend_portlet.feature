@@ -3,8 +3,7 @@ Feature: Email a Friend Portlet
   a link to whatever page the portlet is embedded into.
 
   Background:
-    Given the cms database is populated
-    And I am logged in as a Content Editor
+    Given I am logged in as a Content Editor
 
   Scenario: Add New Portlet
     Given I visit /cms/portlets

@@ -4,7 +4,6 @@ Feature: Install blank site
 	so that there is a starting point for creating content.
 
   Background:
-    Given the cms database is populated
 
   Scenario: A homepage should exist
     Given I am on the homepage

@@ -4,8 +4,7 @@ Feature: Manage Page Routes
   nicely formatted path.
 
   Background:
-    Given the cms database is populated
-    And I am logged in as a Content Editor
+    Given I am logged in as a Content Editor
 
   Scenario: Show Rails Routes
     When I request /cms/routes

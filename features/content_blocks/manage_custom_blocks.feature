@@ -3,8 +3,7 @@ Feature: Manage Content Blocks
   This blocks will be generated as Rails resources, with a controller and views.
 
   Background:
-    Given the cms database is populated
-    And a Content Type named "Product" is registered
+    Given a Content Type named "Product" is registered
     And I am logged in as a Content Editor
 
   Scenario: List Content Blocks

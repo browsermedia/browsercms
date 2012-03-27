@@ -22,7 +22,4 @@ end
 
 World(FileOperations)
 
-# Make sure the database is completely empty before we start, then go back to cleaning up between transactions.
-DatabaseCleaner.clean_with :truncation
-DatabaseCleaner.strategy = :transaction
 
