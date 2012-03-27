@@ -1,6 +1,8 @@
 Tasks:
 
-** Clean up and eliminate the cms/init.rb file (once tests are fixed)
+* Profile Cucumber Scenarios to speed them up.
+    - cuke --format usage (http://stackoverflow.com/questions/1265659/profiling-a-cucumber-test-ruby-rails)
+    - Slowest Scenarios: http://itshouldbeuseful.wordpress.com/2010/11/10/find-your-slowest-running-cucumber-features/ (Might be unnecessary as compared to previous
 
 ## Upgrade Notes
 - Migrations are now generated with .cms. Will this cause problems during upgrades? (Write upgrade scenarios)
@@ -20,9 +22,7 @@ Tasks:
 * browsercms-cucumber - Build a separate gem from this project, which can be included in other CMS projects. (Might be 3.4.1)
 * Refactor Cucumber steps to add seed data once as part of the env.rb file, then use truncation to leave it there.
 * If user's try to add to a Rails 3.2 project, it will blow up midway through (i.e. the jquery-rails dependency will fail since R3.2 require jquery-rails-2.0. A better plan would be to fail fast.
-* Profile Cucumber Scenarios to speed them up.
-    - cuke --format usage (http://stackoverflow.com/questions/1265659/profiling-a-cucumber-test-ruby-rails)
-    - Slowest Scenarios: http://itshouldbeuseful.wordpress.com/2010/11/10/find-your-slowest-running-cucumber-features/ (Might be unnecessary as compared to previous
+
 
 
 # Future

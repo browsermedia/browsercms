@@ -1,6 +1,7 @@
 require 'rails'
 require 'cms/module'
-require 'cms/init'
+require 'cms/configuration'
+require 'cms/version'
 require 'browsercms'
 
 # Gem name is different than file name
@@ -9,7 +10,7 @@ require 'browsercms'
 require 'ckeditor-rails'
 
 # Explicitly require this, so that CMS projects do not need to add it to their Gemfile
-# Especially while upgrading
+# especially while upgrading
 require 'jquery-rails'
 
 module Cms
@@ -26,10 +27,6 @@ module Cms
       path = File::expand_path('../../templates', __FILE__)
       g.templates.unshift path
     end
-
-    Cms.add_generator_paths(Cms.root,
-                            "public/site/**/*",
-                            "db/seeds.rb")
 
     initializer 'browsercms.add_core_routes', :after => 'action_dispatch.prepare_dispatcher' do |app|
       Rails.logger.debug "Adding Cms::Routes to ActionDispatch"
