@@ -87,14 +87,7 @@ Factory.define :page, :class => Cms::Page do |m|
   m.association :section
 end
 
-# TODO: Remove duplication between this and the :page factory.
-Factory.define :published_page, :class => Cms::Page do |m|
-  m.sequence(:name) { |n| "Published Page #{n}" }
-  m.path { |a| "/#{a.name.gsub(/\s/, '_').downcase}" }
-  m.template_file_name "default.html.erb"
-  m.association :section
-  m.publish_on_save true
-end
+
 
 Factory.define :page_partial, :class => Cms::PagePartial do |m|
   m.sequence(:name) { |n| "_page_partial_#{n}" }

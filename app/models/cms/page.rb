@@ -239,8 +239,16 @@ class Cms::Page < ActiveRecord::Base
     end
   end
 
-  def layout
-    template_file_name && "templates/#{template_file_name.split('.').first}"
+  # Return the layout used to render this page. Will be something like: 'templates/subpage'
+  # @param [Symbol] version Valid values are :full and :mobile.
+  def layout(version = :full)
+    folder = (version == :mobile) ? "mobile" : "templates"
+    template_file_name && "#{folder}/#{layout_name}"
+  end
+
+  # Return the file name of the template
+  def layout_name
+    template_file_name.split('.').first
   end
 
   # This will be nil if it is a file system based template
