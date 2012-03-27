@@ -2,8 +2,7 @@ Feature: Manage Categories
   Content editors should be able to add/edit/delete categories from the user interface.
 
   Background:
-    Given the cms database is populated
-    And I am logged in as a Content Editor
+    Given I am logged in as a Content Editor
     And the following Category Types exist:
       | name     |
       | Product |

@@ -2,8 +2,7 @@ Feature: Caching
   In order for the site to scale there should be caching in place for pages.
 
   Background:
-    Given the cms database is populated
-    And I am logged in as a Content Editor
+    Given I am logged in as a Content Editor
     
   Scenario: Clear Page Cache
     When I request /cms/cache

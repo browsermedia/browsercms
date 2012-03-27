@@ -6,8 +6,7 @@ Feature: Acts as Content Page
   See 'Tests::PretendController' for other scenarios to pull out.
 
   Background:
-    Given the cms database is populated
-    And I am a guest
+    Given I am a guest
 
   Scenario: Use CMS templates with Rails Controllers
     When I visit /content-page

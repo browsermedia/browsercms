@@ -2,8 +2,7 @@ Feature: Tag Cloud Portlet
   Show a tag cloud
 
   Background:
-    Given the cms database is populated
-    And I am logged in as a Content Editor
+    Given I am logged in as a Content Editor
 
   Scenario: Add New Portlet
     Given I visit /cms/portlets

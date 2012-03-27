@@ -2,7 +2,6 @@ Feature: Content Files
   The content management system should serve text and other uploaded files.
 
   Background:
-    Given the cms database is populated
 
   Scenario: Serve Text Files
     Given a text file named "/test.txt" exists with:

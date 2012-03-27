@@ -3,8 +3,7 @@ Feature: Sitemap
   showing content pages and sections.
 
   Background:
-    Given the cms database is populated
-    And I am logged in as a Content Editor
+    Given I am logged in as a Content Editor
 
   Scenario: View as Admin
     Given there are some additional pages and sections

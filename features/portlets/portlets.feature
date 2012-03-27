@@ -4,8 +4,7 @@ Feature: Portlets
   I want to be able to dynamically display content.
 
   Background:
-    Given the cms database is populated
-    And I am logged in as a Content Editor
+    Given I am logged in as a Content Editor
 
   Scenario: List Portlets
     When I visit /cms/portlets

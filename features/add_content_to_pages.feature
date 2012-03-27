@@ -2,7 +2,6 @@ Feature: Add Content to Pages
   Content Editors should be able to add content to pages.
 
   Background:
-    Given the cms database is populated
 
   Scenario: Selecting an existing html block
     Given there is an Html Block with:

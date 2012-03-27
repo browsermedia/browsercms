@@ -60,14 +60,9 @@ rescue NameError
   raise "You need to add database_cleaner to your Gemfile (in the :test group) if you wish to use it."
 end
 
-# You may also want to configure DatabaseCleaner to use different strategies for certain features and scenarios.
-# See the DatabaseCleaner documentation for details. Example:
-#
-#   Before('@no-txn,@selenium,@culerity,@celerity,@javascript') do
-#     DatabaseCleaner.strategy = :truncation, {:except => %w[widgets]}
-#   end
-#
-#   Before('~@no-txn', '~@selenium', '~@culerity', '~@celerity', '~@javascript') do
-#     DatabaseCleaner.strategy = :transaction
-#   end
-#
+# Load the seed data once at the start of the test run.
+# By doing this here, and using transaction strategy, we ensure the fastest possible tests.
+require 'cms/data_loader'
+Cms::DataLoader.silent_mode = true
+DatabaseCleaner.clean_with :truncation
+require File.join(File.dirname(__FILE__), '../../db/seeds.rb')

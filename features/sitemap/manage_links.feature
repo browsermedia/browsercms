@@ -3,8 +3,7 @@ Feature: Manage Links
   served by CMS pages.
 
   Background:
-    Given the cms database is populated
-    And I am logged in as a Content Editor
+    Given I am logged in as a Content Editor
 
   Scenario: Add Link
     When I am adding a link on the sitemap
