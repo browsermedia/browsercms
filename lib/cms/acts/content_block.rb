@@ -17,7 +17,11 @@ module Cms
           }
           options = defaults.merge(options)
 
-          belongs_to_attachment(options[:belongs_to_attachment].is_a?(Hash) ? options[:belongs_to_attachment] : {}) if options[:belongs_to_attachment]
+          if options[:belongs_to_attachment].present?
+            raise ArgumentError.new ":belongs_to_attachment option is no longer supported. Please use :has_attachments option"
+          end
+
+          has_attachments if options[:has_attachments].present?
           is_archivable(options[:archiveable].is_a?(Hash) ? options[:archiveable] : {}) unless options[:archiveable] == false
           is_connectable(options[:connectable].is_a?(Hash) ? options[:connectable] : {}) unless options[:connectable] == false
           flush_cache_on_change(options[:flush_cache_on_change].is_a?(Hash) ? options[:flush_cache_on_change] : {}) unless options[:flush_cache_on_change] == false
