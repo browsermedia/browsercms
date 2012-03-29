@@ -1,114 +1,130 @@
 module Cms
   module Behaviors
+    # The paperclipping behavior sets up bolcks in much the same way the
+    # attaching behavior does.
+    # It exposes one macro method, two class methods and will be
+    # responsible for setting up validations.
+    #
+    # The uses_paperclip macro method is akin to belongs_to_attachment:
+    #
+    # class Book
+    #   acts_as_content_block
+    #   uses_paperclip
+    # end
+    #
+    # It would probably be nice to do something like:
+    #
+    # class Book
+    #   acts_as_content_block :uses_paperclip => true
+    # end
+    #
+    # has_attached_asset and has_many_attached_assets are very similar.
+    # They both define a couple of methods in the content block:
+    #
+    # class Book
+    #   uses_paperclip
+    #
+    #   has_attached_asset :cover
+    #   has_many_attached_assets :drafts
+    # end
+    #
+    #  book = Book.new
+    #  book.cover = nil #is basically calling: book.assets.named(:cover).first
+    #  book.drafts = [] #is calling book.assets.named(:drafts)
+    #
+    #  Book#cover and Book#drafts both return Asset objects as opposed to what
+    #  happens with stand alone Paperclip:
+    #
+    #  class Book
+    #     has_attached_file :invoice #straight Paperclip
+    #  end
+    #
+    #  Book.new.invoice # returns an instance of Paperclip::Attachment
+    #
+    #  However, Asset instances respond to most of the same methods
+    #  Paperclip::Attachments do (at least the most usefull ones and the ones
+    #  that make sense for this implementation). Please see asset.rb for more on
+    #  this.
+    #
+    #  At the moment, calling has_attached_asset does not enforce that only
+    #  one asset is created, it only defines a method that returns the first one
+    #  ActiveRecord finds. It would be possible to do if that makes sense.
+    #
+    #  In terms of validations, I'm aiming to expose the same 3 class methods
+    #  Paperclip exposes, apart from those needed by BCMS itself (like enforcing
+    #  unique attachment paths) but this is not ready yet:
+    #
+    #  validates_asset_size
+    #  validates_asset_presence
+    #  validates_asset_content_type
+    #
     module Attaching
-      SANITIZATION_REGEXES = [[/\s/, '_'], [/[&+()]/, '-'], [/[=?!'"{}\[\]#<>%]/, '']]
-      #' this tic cleans up emacs ruby mode
+      # extend ActiveSupport::Concern
 
-      def self.included(model_class)
-        model_class.extend(MacroMethods)
+      def self.included(base)
+        base.extend MacroMethods
       end
 
       module MacroMethods
-        def belongs_to_attachment?
-          !!@belongs_to_attachment
-        end
-
-        def belongs_to_attachment(options={})
-          @belongs_to_attachment = true
+        def has_attachments
+          extend ClassMethods
+          extend Validations
           include InstanceMethods
-          before_validation :process_attachment
-          before_save :update_attachment_if_changed
-          after_save :clear_attachment_ivars
-          belongs_to :attachment, :dependent => :destroy, :class_name => 'Cms::Attachment'
 
-          validates_each :attachment_file do |record, attr, value|
-            if record.attachment && !record.attachment.valid?
-              record.attachment.errors.each do |err_field, err_value|
-                if err_field.to_sym == :file_path
-                  record.errors.add(:attachment_file_path, err_value)
-                else
-                  record.errors.add(:attachment_file, err_value)
-                end
-              end
-            end
-          end
+          attr_accessor :attachment_id_list
+
+          Attachment.definitions[self.name] = {}
+          has_many :attachments, :as => :attachable, :dependent => :destroy
+
+          accepts_nested_attributes_for :attachments,
+                                        :allow_destroy => true,
+                                        :reject_if => lambda {|a| a[:data].blank?}
+
+          validates_associated :attachments
+          before_create :assign_attachments
+          before_validation :initialize_attachments
         end
       end
-      module InstanceMethods
 
-        def attachment_file
-          @attachment_file ||= attachment ? attachment.temp_file : nil
-        end
+      #NOTE: Assets should be validated when created individually.
+      module Validations
+        def validates_attachment_size(name, options = {})
 
-        def attachment_file=(file)
-          if @attachment_file != file
-            dirty!
-            @attachment_file = file
-          end
-        end
+          #if options.delete(:unless)
+            #logger.warn "Option :unless is not supported and will be ignored"
+          #end
 
-        def attachment_file_name
-          @attachment_file_name ||= attachment ? attachment.file_name : nil
-        end
+          min     = options[:greater_than] || (options[:in] && options[:in].first) || 0
+          max     = options[:less_than]    || (options[:in] && options[:in].last)  || (1.0/0)
+          range   = (min..max)
+          message = options[:message] || "#{name.to_s.capitalize} file size must be between :min and :max bytes."
+          message = message.gsub(/:min/, min.to_s).gsub(/:max/, max.to_s)
 
-        def attachment_file_path
-          @attachment_file_path ||= attachment ? attachment.file_path : nil
-        end
+          #options[:unless] = Proc.new {|r| r.a.asset_name != name.to_s}
 
-        def attachment_file_path=(file_path)
-          fp = sanitize_file_path(file_path)
-          if @attachment_file_path != fp
-            dirty!
-            @attachment_file_path = fp
-          end
-        end
-
-        def attachment_section_id
-          @attachment_section_id ||= attachment ? attachment.section_id : nil
-        end
-
-        def attachment_section_id=(section_id)
-          if @attachment_section_id != section_id
-            dirty!
-            @attachment_section_id = section_id
-          end
-        end
-
-        def attachment_section
-          @attachment_section ||= attachment ? attachment.section : nil
-        end
-
-        def attachment_section=(section)
-          if @attachment_section != section
-            dirty!
-            @attachment_section_id = section ? section.id : nil
-            @attachment_section = section
-          end
-        end
-
-        def process_attachment
-          Rails.logger.warn "Processing attachment (#{attachment_file})"
-          if attachment.nil? && attachment_file.blank?
-            unless attachment_file_path.blank?
-              errors.add(:attachment_file, "You must upload a file")
-              return false
+          validate(options) do |record|
+            record.attachments.each do |attachment|
+              next unless attachment.attachment_name == name.to_s
+              record.errors.add_to_base(message) unless range.include?(attachment.data_file_size)
             end
-            unless attachment_section_id.blank?
-              errors.add(:attachment_file, "You must upload a file")
-              return false
-            end
-          else
-            build_attachment if attachment.nil?
-            attachment.temp_file = attachment_file
-            handle_setting_attachment_path
-            if attachment.file_path.blank?
-              errors.add(:attachment_file_path, "File Name is required for attachment")
-              return false
-            end
-            handle_setting_attachment_section
-            unless attachment.section
-              errors.add(:attachment_file, "Section is required for attachment")
-              return false
+          end
+        end
+
+        def validates_attachment_presence(name, options = {})
+          message = options[:message] || "Must provide at least one #{name}"
+          validate(options) do |record|
+            record.errors.add_to_base(message) unless record.attachments.any? {|a| a.attachment_name == name.to_s}
+          end
+        end
+
+        def validates_attechment_content_type(name, options = {})
+          validation_options = options.dup
+          allowed_types = [validation_options[:content_type]].flatten
+          validate(validation_options) do |record|
+            attachments.each do |a|
+              if !allowed_types.any?{|t| t === a.data_content_type } && !(a.data_content_type.nil? || a.data_content_type.blank?)
+                record.add_to_base(options[:message] || "is not one of #{allowed_types.join(', ')}")
+              end
             end
 
           end
@@ -122,84 +138,67 @@ module Cms
             use_default_attachment_path
           end
         end
+      end
 
-        def clear_attachment_ivars
-          @attachment_file = nil
-          @attachment_file_path = nil
-          @attachment_section_id = nil
-          @attachment_section = nil
-        end
+      module ClassMethods
 
-        # Implement a :set_attachment_section method  if you would like to override the way the section is set
-        def handle_setting_attachment_section
-          if self.respond_to? :set_attachment_section
-            set_attachment_section
-          else
-            use_default_attachment_section
+        def has_attachment(name, options = {})
+          options[:type] = :single
+          options[:index] = Attachment.definitions[self.name].size
+          Attachment.definitions[self.name][name] = options
+
+          define_method name do
+            attachments.named(name).last
+          end
+          define_method "#{name}?" do
+            !attachments.named(name).empty?
           end
         end
 
-        # Default behavior for assigning a section, if a block does not define its own.
-        def use_default_attachment_section
-          if !attachment_file.blank?
-            attachment.section = Cms::Section.root.first
+        def has_many_attachments(name, options = {})
+          options[:type] = :multiple
+          Attachment.definitions[self.name][name] = options
+
+          define_method name do
+            attachments.named name
+          end
+
+          define_method "#{name}?" do
+            !attachments.named(name).empty?
           end
         end
+      end
 
-        def use_default_attachment_path
-          if !attachment_file.blank?
-            attachment.file_path = "/attachments/#{File.basename(attachment_file.original_filename).to_s.downcase}"
-          end
-        end
-
-        def sanitize_file_path(file_path)
-          SANITIZATION_REGEXES.inject(file_path.to_s) do |s, (regex, replace)|
-            s.gsub(regex, replace)
-          end
-        end
-
-        def update_attachment_if_changed
-          logger.debug { "UPDATE ATTACHMENT if changed" }
-          if attachment
-            attachment.archived = archived if self.class.archivable?
-            if respond_to?(:revert_to_version) && revert_to_version
-              attachment.revert_to(revert_to_version.attachment_version)
-            elsif new_record? || attachment.changed? || attachment.temp_file
-              saved_attach = attachment.save
-              logger.warn "Attachment was saved = #{saved_attach}"
-            end
-            self.attachment_version = attachment.draft.version
-          end
-        end
-
+      module InstanceMethods
         def after_publish
-          attachment.publish if attachment
+          attachments.each &:publish
         end
 
-        #Size in kilobytes
-        def file_size
-          attachment ? "%0.2f" % (attachment.file_size / 1024.0) : "?"
+        def unassigned_attachments
+          return [] if attachment_id_list.blank?
+          Attachments.find attachment_id_list.split(',').map(&:to_i)
         end
 
-        def after_as_of_version
-          if attachment_id && attachment_version
-            self.attachment = Cms::Attachment.find(attachment_id).as_of_version(attachment_version)
+        def all_attachments
+          attachments << unassigned_attachments
+        end
+
+        private
+        def assign_attachments
+          unless attachment_id_list.blank?
+            ids = attachment_id_list.split(',').map(&:to_i)
+            ids.each do |i|
+              begin
+                attachment = Attachment.find(i)
+              rescue ActiveRecord::RecordNotFound
+              end
+              attachments << attachment if attachment
+            end
           end
         end
 
-        def attachment_link
-          if attachment
-            (published? && live_version?) ? attachment_file_path : "/cms/attachments/#{attachment_id}?version=#{attachment_version}"
-          else
-            nil
-          end
-        end
-
-        # Forces this record to be changed, even if nothing has changed
-        # This is necessary if just the section.id has changed, for example
-        def dirty!
-          # Seems like a hack, is there a better way?
-          self.updated_at = Time.now
+        def initialize_attachments
+          attachments.each {|a| a.attachable_class = self.class.name}
         end
 
       end
