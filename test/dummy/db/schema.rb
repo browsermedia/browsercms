@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111228141250) do
+ActiveRecord::Schema.define(:version => 20120329144406) do
 
   create_table "cms_attachment_versions", :force => true do |t|
     t.integer  "original_record_id"
@@ -30,26 +30,42 @@ ActiveRecord::Schema.define(:version => 20111228141250) do
     t.string   "version_comment"
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
+    t.string   "data_file_name"
+    t.string   "data_content_type"
+    t.integer  "data_file_size"
+    t.string   "data_file_path"
+    t.string   "data_fingerprint"
+    t.string   "attachable_type"
+    t.string   "attachment_name"
+    t.integer  "attachable_id"
   end
 
   add_index "cms_attachment_versions", ["original_record_id"], :name => "index_cms_attachment_versions_on_original_record_id"
 
   create_table "cms_attachments", :force => true do |t|
     t.integer  "version"
-    t.integer  "lock_version",   :default => 0
+    t.integer  "lock_version",      :default => 0
     t.string   "file_path"
     t.string   "file_location"
     t.string   "file_extension"
     t.string   "file_type"
     t.integer  "file_size"
-    t.datetime "created_at",                        :null => false
-    t.datetime "updated_at",                        :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
     t.string   "name"
-    t.boolean  "published",      :default => false
-    t.boolean  "deleted",        :default => false
-    t.boolean  "archived",       :default => false
+    t.boolean  "published",         :default => false
+    t.boolean  "deleted",           :default => false
+    t.boolean  "archived",          :default => false
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
+    t.string   "data_file_name"
+    t.string   "data_content_type"
+    t.integer  "data_file_size"
+    t.string   "data_file_path"
+    t.string   "data_fingerprint"
+    t.string   "attachable_type"
+    t.string   "attachment_name"
+    t.integer  "attachable_id"
   end
 
   create_table "cms_categories", :force => true do |t|

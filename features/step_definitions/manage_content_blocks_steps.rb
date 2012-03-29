@@ -24,3 +24,7 @@ Then /^"([^"]*)" should be selected as the current Content Type$/ do |name|
   li = find(:xpath, "//li[@rel='select-#{select}']")
   assert li['class'].include?("on")
 end
+
+When /^I Save And Publish$/ do
+  click_button "true"
+end
