@@ -29,3 +29,45 @@ When /^I should see the section search filter$/ do
     assert page.has_content?(text)
   end
 end
+
+Then /^I should see an image with path "([^"]*)"$/ do |image_path|
+  page.has_xpath? "//img[@src=\"#{image_path}\"]"
+end
+
+Then /^the attachment "([^"]*)" should be in section "([^"]*)"$/ do |asset_name, section_name|
+  asset = Asset.find_by_data_file_name asset_name
+  asset.section.name.should == section_name
+end
+
+Then /^the attachment with path "([^"]*)" should be in section "([^"]*)"$/ do |asset_path, section_name|
+  asset = Asset.find_by_data_file_path asset_path
+  asset.section.name.should == section_name
+end
+
+When /^I am adding a New Image$/ do
+  visit '/cms/image_blocks/new'
+end
+
+Given /^an image with path "([^"]*)" exists$/ do |path|
+  visit '/cms/image_blocks/new'
+  fill_in "Name", :with => "Giraffe"
+  fill_in "Path", :with => path
+  attach_file "File", "test/fixtures/giraffe.jpeg"
+  click_button "true"
+end
+
+Given /^a file block with path "([^"]*)" exists$/ do |path|
+  visit '/cms/file_blocks/new'
+  fill_in "Name", :with => "Perspective"
+  fill_in "Path", :with => path
+  attach_file "File", "test/fixtures/perspective.pdf"
+  click_button "true"
+end
+
+Then /^There should be a link to "([^"]*)"$/ do |path|
+  page.has_xpath? "//a[@href=\"#{path}\"]"
+end
+
+When /^I am adding a new File$/ do
+  visit '/cms/file_blocks/new'
+end

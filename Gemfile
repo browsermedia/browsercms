@@ -3,8 +3,8 @@ source 'http://rubygems.org'
 # Load this project as a gem.
 gemspec
 
-gem 'jquery-rails'
 gem "mysql2"
+
 gem 'yard', :groups=>[:development, :test]
 gem 'bluecloth', :groups=>[:development, :test] # For YARD
 # gem 'query_reviewer' # Enable for performance tuning
