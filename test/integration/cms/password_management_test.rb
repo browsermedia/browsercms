@@ -6,17 +6,17 @@ class PasswordManagementTest < ActionController::IntegrationTest
     given_there_is_a_cmsadmin
     given_there_is_a_guest_group
     given_there_is_a_sitemap
-    @group = Factory(:group, :name => "Member")
+    @group = FactoryGirl.create(:group, :name => "Member")
 
-    @section = Factory(:public_section, :parent => root_section, :name => "Passwords", :path => "/passwords")
+    @section = FactoryGirl.create(:public_section, :parent => root_section, :name => "Passwords", :path => "/passwords")
     @section.save
 
-    @user = Factory(:user, :email => "dexter@miamidade.gov")
+    @user = FactoryGirl.create(:user, :email => "dexter@miamidade.gov")
     @user.groups << @group
     @user.save!
 
-    @forgot_password_page = Factory(:page, :section => @section, :name => "Forgot password", :path => "/passwords")
-    @reset_password_page = Factory(:page, :section => @section, :name => "Reset password", :path => "/passwords/reset")
+    @forgot_password_page = FactoryGirl.create(:page, :section => @section, :name => "Forgot password", :path => "/passwords")
+    @reset_password_page = FactoryGirl.create(:page, :section => @section, :name => "Reset password", :path => "/passwords/reset")
 
     @forgot_password_portlet = ForgotPasswordPortlet.create!(:name => "Forgot Password",
                                                              :template => ForgotPasswordPortlet.default_template,

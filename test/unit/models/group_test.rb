@@ -7,7 +7,7 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   def test_valid
-    assert Factory.build(:group).valid?
+    assert build(:group).valid?
   end
 
   test "Find guest group via method" do
@@ -17,10 +17,10 @@ class GroupTest < ActiveSupport::TestCase
   end
 
   test "has_permission?" do
-    p1 = Factory(:permission, :name=>"Edit Things")
-    p2 = Factory(:permission, :name=>"Delete things")
+    p1 = create(:permission, :name=>"Edit Things")
+    p2 = create(:permission, :name=>"Delete things")
 
-    group = Factory.build(:group)
+    group = build(:group)
     group.permissions << p1
 
     assert group.has_permission?("Edit Things")

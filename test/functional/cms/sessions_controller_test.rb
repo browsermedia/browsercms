@@ -25,7 +25,7 @@ module Cms
     end
 
     def test_return_to
-      user = Factory(:user)
+      user = create(:user)
       expected_url = "/expected_url"
 
       post :create, {:success_url => "", :login => user.login, :password => "password"}, {:return_to => expected_url}
@@ -33,7 +33,7 @@ module Cms
     end
 
     def test_success_url_overrides_return_to
-      user = Factory(:user)
+      user = create(:user)
       expected_url = "/expected_url"
 
       post :create, {:success_url => expected_url, :login => user.login, :password => "password"}, {:return_to => "/somewhere_else"}

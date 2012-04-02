@@ -26,7 +26,7 @@ module Cms
     end
 
     test "Creating a page builds a section node" do
-      @page = Page.create!(:name => "Hello", :path => "/hello", :section => Factory(:root_section))
+      @page = Page.create!(:name => "Hello", :path => "/hello", :section => create(:root_section))
       assert_not_nil @page.section_node
     end
 
@@ -43,7 +43,7 @@ module Cms
 
     protected
     def assert_path_is_unique
-      page = Factory.build(:page, :path => @page.path)
+      page = build(:page, :path => @page.path)
       assert_not_valid page
       assert_has_error_on page, :path
     end
@@ -53,8 +53,8 @@ module Cms
   class VersionTest < ActiveSupport::TestCase
 
     def setup
-      @page = Factory(:public_page)
-      @another_page = Factory(:public_page)
+      @page = create(:public_page)
+      @another_page = create(:public_page)
     end
 
     test "#latest_version set set when page is created" do
@@ -97,7 +97,7 @@ module Cms
   class PageLayoutTest < ActiveSupport::TestCase
 
     def setup
-      @page = Factory.build(:page, :template_file_name => 'subpage.html.erb')
+      @page = build(:page, :template_file_name => 'subpage.html.erb')
     end
 
     test "#template_file_name" do
@@ -142,17 +142,17 @@ module Cms
     end
 
     def test_creating_page_with_trailing_slash
-      @page = Factory.build(:page, :path => "/slashed/")
+      @page = build(:page, :path => "/slashed/")
       @page.save
       assert_equal @page.path, "/slashed"
 
-      @page = Factory.build(:page, :path => "/slashed/loooong/path/")
+      @page = build(:page, :path => "/slashed/loooong/path/")
       @page.save
       assert_equal @page.path, "/slashed/loooong/path"
     end
 
     def test_find_live_by_path
-      @page = Factory.build(:page, :path => '/foo')
+      @page = build(:page, :path => '/foo')
       assert_nil Cms::Page.find_live_by_path('/foo')
 
       @page.publish!
@@ -172,22 +172,22 @@ module Cms
     test "It should be possible to create a new page, using the same path as a previously deleted page" do
       p = Time.now.to_f.to_s #use a unique, but consistent path
 
-      @page = Factory(:public_page, :path => "/#{p}")
+      @page = create(:public_page, :path => "/#{p}")
       @page.destroy
 
-      @page2 = Factory(:public_page, :path => "/#{p}")
+      @page2 = create(:public_page, :path => "/#{p}")
       assert_not_equal(@page, @page2)
     end
 
     test "Find by live path should not located deleted blocks, even if they share paths with live ones" do
-      @page = Factory.build(:page, :path => '/foo')
+      @page = build(:page, :path => '/foo')
       @page.publish!
       reset(:page)
 
       @page.mark_as_deleted!
       assert_nil Cms::Page.find_live_by_path('/foo')
 
-      @new_page = Factory.build(:page, :path => '/foo')
+      @new_page = build(:page, :path => '/foo')
       assert_nil Cms::Page.find_live_by_path('/foo')
 
       @new_page.publish!
@@ -197,17 +197,17 @@ module Cms
     end
 
     def test_path_normalization
-      page = Factory.build(:page, :path => 'foo/bar')
+      page = build(:page, :path => 'foo/bar')
       assert_valid page
       assert_equal "/foo/bar", page.path
 
-      page = Factory.build(:page, :path => '/foo/bar')
+      page = build(:page, :path => '/foo/bar')
       assert_valid page
       assert_equal "/foo/bar", page.path
     end
 
     def test_revision_comments
-      page = Factory(:page, :section => root_section, :name => "V1")
+      page = create(:page, :section => root_section, :name => "V1")
 
       assert_equal 'Created', page.live_version.version_comment
 
@@ -220,14 +220,14 @@ module Cms
       assert_equal 'Changed name', page.draft.version_comment
       assert_equal 'Created', page.live_version.version_comment
 
-      block = Factory(:html_block, :name => "Hello, World!")
+      block = create(:html_block, :name => "Hello, World!")
       page.create_connector(block, "main")
       assert_equal "Html Block 'Hello, World!' was added to the 'main' container",
                    page.draft.version_comment
       assert_equal 'Created', page.live_version.version_comment
       assert_equal 3, page.reload.draft.version
 
-      page.create_connector(Factory(:html_block, :name => "Whatever"), "main")
+      page.create_connector(create(:html_block, :name => "Whatever"), "main")
       assert_equal 4, page.reload.draft.version
 
       page.move_connector_down(page.connectors.for_page_version(page.reload.draft.version).for_connectable(block).first)
@@ -257,9 +257,9 @@ module Cms
     end
 
     def test_container_live
-      page = Factory(:page)
-      published = Factory(:html_block, :publish_on_save => true)
-      unpublished = Factory(:html_block)
+      page = create(:page)
+      published = create(:html_block, :publish_on_save => true)
+      unpublished = create(:html_block)
       page.create_connector(published, "main")
       page.create_connector(unpublished, "main")
       assert !page.container_published?("main")
@@ -268,8 +268,8 @@ module Cms
     end
 
     def test_move_page_to_another_section
-      page = Factory(:public_page)
-      new_section = Factory(:public_section)
+      page = create(:public_page)
+      new_section = create(:public_section)
 
       assert_not_equal new_section, page.section
       page.section = new_section
@@ -278,7 +278,7 @@ module Cms
     end
 
     def test_deleting_page
-      page = Factory(:page)
+      page = create(:page)
       page_count = Cms::Page.count_with_deleted
 
       page_version_count = page.versions.count
@@ -296,8 +296,8 @@ module Cms
     end
 
     def test_adding_a_block_to_a_page_puts_page_in_draft_mode
-      @page = Factory(:page, :section => root_section, :publish_on_save => true)
-      @block = Factory(:html_block, :publish_on_save => true)
+      @page = create(:page, :section => root_section, :publish_on_save => true)
+      @block = create(:html_block, :publish_on_save => true)
       reset(:page, :block)
       assert @page.published?
       assert @block.published?
@@ -307,9 +307,9 @@ module Cms
     end
 
     def test_reverting_and_then_publishing_a_page
-      @page = Factory(:page, :section => root_section, :publish_on_save => true)
+      @page = create(:page, :section => root_section, :publish_on_save => true)
 
-      @block = Factory(:html_block,
+      @block = create(:html_block,
                        :connect_to_page_id => @page.id,
                        :connect_to_container => "main")
       @page.publish
@@ -348,8 +348,8 @@ module Cms
   class UserStampingTest < ActiveSupport::TestCase
 
     def setup
-      @first_guy = Factory(:user, :login => "first_guy")
-      @next_guy = Factory(:user, :login => "next_guy")
+      @first_guy = create(:user, :login => "first_guy")
+      @next_guy = create(:user, :login => "next_guy")
       Cms::User.current = @first_guy
     end
 
@@ -358,7 +358,7 @@ module Cms
     end
 
     def test_user_stamps_are_applied_to_versions
-      page = Factory(:page, :name => "Original Value")
+      page = create(:page, :name => "Original Value")
 
       assert_equal page, page.draft.page
       assert_equal @first_guy, page.updated_by
@@ -380,12 +380,12 @@ module Cms
   class PageInSectionTest < ActiveSupport::TestCase
 
     def setup
-      @root = Factory(:root_section, :name => "First Section")
-      @football_section = Factory :public_section, :name => "Football", :parent => @root
-      @baseball_section = Factory :public_section, :name => "Baseball", :parent => @root
+      @root = create(:root_section, :name => "First Section")
+      @football_section = create(:public_section, :name => "Football", :parent => @root)
+      @baseball_section = create(:public_section, :name => "Baseball", :parent => @root)
 
-      @football_page = Factory :public_page, :section => @football_section
-      @baseball_page = Factory :public_page, :section => @baseball_section
+      @football_page = create(:public_page, :section => @football_section)
+      @baseball_page = create(:public_page, :section => @baseball_section)
     end
 
     test "in_section if immediate parent section is included" do
@@ -409,8 +409,8 @@ module Cms
       assert_equal @football_section, @football_page.top_level_section
       assert_equal @baseball_section, @baseball_page.top_level_section
 
-      second_level_section = Factory(:public_section, :parent => @football_section)
-      second_level_page = Factory(:public_page, :section => second_level_section)
+      second_level_section = create(:public_section, :parent => @football_section)
+      second_level_page = create(:public_page, :section => second_level_section)
       assert_equal @football_section, second_level_page.top_level_section
     end
 
@@ -423,10 +423,10 @@ module Cms
   class PageWithAssociatedBlocksTest < ActiveSupport::TestCase
     def setup
       super
-      @page = Factory(:page, :section => root_section, :name => "Bar")
-      @block = Factory(:html_block)
-      @other_connector = Factory(:connector, :connectable => @block, :connectable_version => @block.version)
-      @page_connector = Factory(:connector, :page => @page, :page_version => @page.version, :connectable => @block, :connectable_version => @block.version)
+      @page = create(:page, :section => root_section, :name => "Bar")
+      @block = create(:html_block)
+      @other_connector = create(:connector, :connectable => @block, :connectable_version => @block.version)
+      @page_connector = create(:connector, :page => @page, :page_version => @page.version, :connectable => @block, :connectable_version => @block.version)
     end
 
     # It should create a new page version and a new connector
@@ -477,8 +477,8 @@ module Cms
   class AddingBlocksTest < ActiveSupport::TestCase
 
     def setup
-      @page = Factory(:page)
-      @block = Factory(:html_block)
+      @page = create(:page)
+      @block = create(:html_block)
       @original_versions_count = @page.versions.count
       @connector_count = Cms::Connector.count
 
@@ -497,7 +497,7 @@ module Cms
     end
 
     test "Adding additional blocks to a page" do
-      block2 = Factory(:html_block)
+      block2 = create(:html_block)
 
 
       conn = @page.create_connector(block2, "main")
@@ -512,7 +512,7 @@ module Cms
 
     test "Creating a new block to a page should update all existing connectors to the new page version." do
       Rails.logger.warn "Creating a new connector"
-      @page.create_connector(Factory(:html_block), "main")
+      @page.create_connector(create(:html_block), "main")
       expected_version = 3
       Rails.logger.warn "Done"
       connectors = @page.connectors.for_page_version(expected_version)
@@ -527,9 +527,9 @@ module Cms
 
 
     def test_that_it_works
-      @page = Factory(:page, :section => root_section)
-      @block = Factory(:html_block)
-      @block2 = Factory(:html_block)
+      @page = create(:page, :section => root_section)
+      @block = create(:html_block)
+      @block2 = create(:html_block)
       @first_conn = @page.create_connector(@block, "testing")
       @second_conn = @page.create_connector(@block2, "testing")
 
@@ -602,9 +602,9 @@ module Cms
   class PageWithTwoBlocksTest < ActiveSupport::TestCase
     def setup
       super
-      @page = Factory(:page, :section => root_section)
-      @foo_block = Factory(:html_block, :name => "Foo Block")
-      @bar_block = Factory(:html_block, :name => "Bar Block")
+      @page = create(:page, :section => root_section)
+      @foo_block = create(:html_block, :name => "Foo Block")
+      @bar_block = create(:html_block, :name => "Bar Block")
       @page.create_connector(@foo_block, "whatever")
       @page.reload
       @page.create_connector(@bar_block, "whatever")
@@ -691,8 +691,8 @@ module Cms
 
   class PageWithBlockTest < ActiveSupport::TestCase
     def setup
-      @page = Factory(:page, :section => root_section)
-      @block = Factory(:html_block)
+      @page = create(:page, :section => root_section)
+      @block = create(:html_block)
       @conn = @page.create_connector(@block, "bar")
       @page.publish!
       @conn = @page.connectors.for_page_version(@page.version).for_connectable(@block).first
@@ -724,7 +724,7 @@ module Cms
     end
 
     def test_removing_multiple_connectors
-      @block2 = Factory(:html_block)
+      @block2 = create(:html_block)
       @conn2 = @page.create_connector(@block2, "bar")
       @conn3 = @page.create_connector(@block2, "foo")
       #Need to get the new connector that matches @conn2, otherwise you will delete an older version, not the latest connector
@@ -762,9 +762,9 @@ module Cms
 
   class UnpublishedPageWithOnePublishedAndOneUnpublishedBlockTest < ActiveSupport::TestCase
     def setup
-      @page = Factory(:page, :section => root_section)
-      @published_block = Factory(:html_block, :name => "Published")
-      @unpublished_block = Factory(:html_block, :name => "Unpublished")
+      @page = create(:page, :section => root_section)
+      @published_block = create(:html_block, :name => "Published")
+      @unpublished_block = create(:html_block, :name => "Unpublished")
       @page.create_connector(@published_block, "main")
       @page.create_connector(@unpublished_block, "main")
       @published_block.publish!
@@ -800,14 +800,14 @@ module Cms
       Cms::Page.delete_all
 
       # 1. Create a new page (Page 1, v1)
-      @page1 = Factory(:page, :name => "Page 1")
+      @page1 = create(:page, :name => "Page 1")
       assert_equal 1, @page1.version
 
       # 2. Create a new page (Page 2, v1)
-      @page2 = Factory(:page, :name => "Page 2")
+      @page2 = create(:page, :name => "Page 2")
 
       # 3. Add a new html block to Page 1. Save, don't publish. (Page 1, v2)
-      @block = Factory(:html_block, :name => "Block v1",
+      @block = create(:html_block, :name => "Block v1",
                        :connect_to_page_id => @page1.id, :connect_to_container => "main")
       reset(:page1, :page2, :block)
       assert_equal 2, @page1.draft.version
@@ -845,10 +845,10 @@ module Cms
 
     def test_that_it_shows_the_correct_version_of_the_blocks_it_is_connected_to
       # 1. Create Page A (v1)
-      @page = Factory(:page, :section => root_section)
+      @page = create(:page, :section => root_section)
 
       # 2. Add new Html Block A to Page A (Page A v2, Block A v1)
-      @block = Factory(:html_block, :name => "Block 1", :connect_to_page_id => @page.id, :connect_to_container => "main")
+      @block = create(:html_block, :name => "Block 1", :connect_to_page_id => @page.id, :connect_to_container => "main")
       reset(:page, :block)
       assert_equal 2, @page.draft.version
       assert_equal 1, @block.draft.version
@@ -877,7 +877,7 @@ module Cms
   class PortletsDontHaveDraftsTest < ActiveSupport::TestCase
 
     def test_connectors_with_portlets_should_correctly_be_copied
-      @page = Factory(:page, :section => root_section)
+      @page = create(:page, :section => root_section)
       @portlet = TagCloudPortlet.create(:name => "Portlet", :connect_to_page_id => @page.id, :connect_to_container => "main")
 
       # Check some assumptions.

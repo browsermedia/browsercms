@@ -26,5 +26,5 @@ Then /^"([^"]*)" should be selected as the current Content Type$/ do |name|
 end
 
 When /^I Save And Publish$/ do
-  click_button "true"
+  click_button "Save And Publish"
 end

@@ -1,13 +1,13 @@
 Given /^a page exists at (#{PATH}) with a mobile ready template$/ do |path|
-  @page = Factory(:public_page, :path=>path, :template_file_name=>"mobile-ready.html.erb")
-  content = Factory(:html_block, :content=>"Mobile Content")
+  @page = create(:public_page, :path=>path, :template_file_name=>"mobile-ready.html.erb")
+  content = create(:html_block, :content=>"Mobile Content")
   @page.add_content(content)
   @page.publish!
 end
 
 Given /^a page exists at (.+) with a desktop only template$/ do |path|
-  @page = Factory(:public_page, :path=>path, :template_file_name=>"desktop-only.html.erb")
-  content = Factory(:html_block, :content=>"Mobile Content")
+  @page = create(:public_page, :path=>path, :template_file_name=>"desktop-only.html.erb")
+  content = create(:html_block, :content=>"Mobile Content")
   @page.add_content(content)
   @page.publish!
 end

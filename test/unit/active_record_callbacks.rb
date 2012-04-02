@@ -8,8 +8,8 @@ class ActiveRecordCallbacksTest < ActiveSupport::TestCase
 #  end
 
   def setup
-    @page = Factory(:page, :section => root_section)
-    @block = Factory(:html_block, :name => "Versioned Content Block")
+    @page = create(:page, :section => root_section)
+    @block = create(:html_block, :name => "Versioned Content Block")
     @page.create_connector(@block, "main")
     reset(:page, :block)
   end

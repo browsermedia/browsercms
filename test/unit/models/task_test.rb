@@ -4,11 +4,11 @@ module Cms
   class TaskTest < ActiveSupport::TestCase
     def setup
       super
-      @editor_a = Factory(:cms_admin)
-      @editor_b = Factory(:cms_admin)
-      @non_editor = Factory(:user, :login => "non_editor", :email => "non_editor@example.com")
-      @page = Factory(:page, :name => "Task Test", :path => "/task_test")
-      @page2 = Factory(:page, :name => "Task Test 2", :path => "/task_test_2")
+      @editor_a = create(:cms_admin)
+      @editor_b = create(:cms_admin)
+      @non_editor = create(:user, :login => "non_editor", :email => "non_editor@example.com")
+      @page = create(:page, :name => "Task Test", :path => "/task_test")
+      @page2 = create(:page, :name => "Task Test 2", :path => "/task_test_2")
     end
   end
 
@@ -41,31 +41,31 @@ module Cms
     protected
 
     def assert_that_you_can_assign_a_task_to_yourself
-      assert_valid Factory.build(:task, :assigned_by => @editor_a, :assigned_to => @editor_a)
+      assert_valid build(:task, :assigned_by => @editor_a, :assigned_to => @editor_a)
     end
 
     def assert_that_an_assigned_by_user_that_is_an_editor_is_required
-      task = Factory.build(:task, :assigned_by => nil, :assigned_to => @editor_a)
+      task = build(:task, :assigned_by => nil, :assigned_to => @editor_a)
       assert_not_valid task
       assert_has_error_on task, :assigned_by_id, "is required"
 
-      task = Factory.build(:task, :assigned_by => @non_editor, :assigned_to => @editor_a)
+      task = build(:task, :assigned_by => @non_editor, :assigned_to => @editor_a)
       assert_not_valid task
       assert_has_error_on task, :assigned_by_id, Cms::Task::CANT_ASSIGN_MESSAGE
     end
 
     def assert_that_an_assigned_to_user_that_is_an_editor_is_required
-      task = Factory.build(:task, :assigned_by => @editor_a, :assigned_to => nil)
+      task = build(:task, :assigned_by => @editor_a, :assigned_to => nil)
       assert_not_valid task
       assert_has_error_on task, :assigned_to_id, "is required"
 
-      task = Factory.build(:task, :assigned_by => @editor_a, :assigned_to => @non_editor)
+      task = build(:task, :assigned_by => @editor_a, :assigned_to => @non_editor)
       assert_not_valid task
       assert_has_error_on task, :assigned_to_id, Cms::Task::CANT_BE_ASSIGNED_MESSAGE
     end
 
     def assert_that_a_page_is_required
-      task = Factory.build(:task, :page => nil)
+      task = build(:task, :page => nil)
       assert_not_valid task
       assert_has_error_on task, :page_id, "is required"
     end
@@ -117,7 +117,7 @@ module Cms
   class ExistingIncompleteTaskTest < TaskTest
     def setup
       super
-      @existing_task = Factory(:task, :assigned_by => @editor_a, :assigned_to => @editor_b, :page => @page)
+      @existing_task = create(:task, :assigned_by => @editor_a, :assigned_to => @editor_b, :page => @page)
     end
 
 
@@ -128,7 +128,7 @@ module Cms
     end
 
     def test_create_task_for_a_page_with_existing_incomplete_tasks
-      @new_task = Factory(:task, :assigned_by => @editor_b, :assigned_to => @editor_a, :page => @page)
+      @new_task = create(:task, :assigned_by => @editor_b, :assigned_to => @editor_a, :page => @page)
       @existing_task = Cms::Task.find(@existing_task.id)
 
       assert @existing_task.completed?

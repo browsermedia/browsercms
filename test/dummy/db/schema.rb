@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(:version => 20120329144406) do
     t.string   "attachable_type"
     t.string   "attachment_name"
     t.integer  "attachable_id"
+    t.string   "cardinality"
   end
 
   add_index "cms_attachment_versions", ["original_record_id"], :name => "index_cms_attachment_versions_on_original_record_id"
@@ -66,6 +67,7 @@ ActiveRecord::Schema.define(:version => 20120329144406) do
     t.string   "attachable_type"
     t.string   "attachment_name"
     t.integer  "attachable_id"
+    t.string   "cardinality"
   end
 
   create_table "cms_categories", :force => true do |t|

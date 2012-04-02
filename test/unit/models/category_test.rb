@@ -2,16 +2,16 @@ require 'test_helper'
 
 class CategoryTest < ActiveSupport::TestCase
   def test_creating_categories
-    @a_type = Factory(:category_type, :name => "A")
-    @b_type = Factory(:category_type, :name => "B")
+    @a_type = create(:category_type, :name => "A")
+    @b_type = create(:category_type, :name => "B")
     
-    @a = Factory(:category, :name => "A", :category_type => @a_type)
-    @a1 = Factory(:category, :name => "A1", :category_type => @a_type, :parent => @a)
-    @a1a = Factory(:category, :name => "A1a", :category_type => @a_type, :parent => @a1)
-    @a2 = Factory(:category, :name => "A2", :category_type => @a_type, :parent => @a)
-    @b = Factory(:category, :name => "B", :category_type => @b_type)
-    @b1 = Factory(:category, :name => "B1", :category_type => @b_type, :parent => @b)
-    @b2 = Factory(:category, :name => "B2", :category_type => @b_type, :parent => @b)
+    @a = create(:category, :name => "A", :category_type => @a_type)
+    @a1 = create(:category, :name => "A1", :category_type => @a_type, :parent => @a)
+    @a1a = create(:category, :name => "A1a", :category_type => @a_type, :parent => @a1)
+    @a2 = create(:category, :name => "A2", :category_type => @a_type, :parent => @a)
+    @b = create(:category, :name => "B", :category_type => @b_type)
+    @b1 = create(:category, :name => "B1", :category_type => @b_type, :parent => @b)
+    @b2 = create(:category, :name => "B2", :category_type => @b_type, :parent => @b)
     
     assert @a.parent.blank?
     assert_equal [@a1, @a2], @a.children

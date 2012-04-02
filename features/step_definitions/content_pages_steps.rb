@@ -99,7 +99,7 @@ Given /^there is a homepage$/ do
   if page
     @homepage = page
   else
-    @homepage = Factory(:public_page, :path => "/", :name => "Home Page")
+    @homepage = create(:public_page, :path => "/", :name => "Home Page")
   end
 end
 
@@ -108,26 +108,26 @@ Then /^I should see the CMS 404 page$/ do
 end
 
 Given /^a page at "([^"]*)" exists$/ do |path|
-  page = Factory(:public_page, :path => path)
+  page = create(:public_page, :path => path)
 end
 
 Given /^an archived page at "([^"]*)" exists$/ do |path|
-  page = Factory(:page, :archived => true, :path => path)
+  page = create(:page, :archived => true, :path => path)
   assert page.archived?
 end
 
 module ProtectedContentSteps
   def create_protected_user_section_group
-    @protected_section = Factory(:section, :parent => root_section)
-    @secret_group = Factory(:group, :name => "Secret")
+    @protected_section = create(:section, :parent => root_section)
+    @secret_group = create(:group, :name => "Secret")
     @secret_group.sections << @protected_section
-    @privileged_user = Factory(:user, :login => "privileged")
+    @privileged_user = create(:user, :login => "privileged")
     @privileged_user.groups << @secret_group
   end
 
   def create_protected_page(path="/secret")
     create_protected_user_section_group
-    @page = Factory(:page,
+    @page = create(:page,
                     :section => @protected_section,
                     :path => path,
                     :name => "Shhh... It's a Secret",
@@ -164,7 +164,7 @@ Given /^the following link exists:$/ do |table|
   table.hashes.each do |row|
     section = Cms::Section.with_path(row.delete('section')).first
     row['section_id'] = section.id
-    Factory(:link, row)
+    create(:link, row)
   end
 end
 
@@ -178,7 +178,7 @@ When /^a guest visits "([^"]*)"$/ do |url|
 end
 
 When /^a registered user visits "([^"]*)"$/ do |url|
-  registered_user = Factory(:registered_user)
+  registered_user = create(:registered_user)
   login_as(registered_user.login, registered_user.password)
   visit url
 end

@@ -4,45 +4,45 @@ module Cms
   class SectionTest < ActiveSupport::TestCase
 
     def setup
-      @root = Factory(:root_section)
+      @root = create(:root_section)
     end
 
     def test_not_allow_slash_in_name
-      section = Factory.build(:section, :name => "OMG / WTF / BBQ")
+      section = build(:section, :name => "OMG / WTF / BBQ")
       assert !section.valid?
       assert_has_error_on section, :name, "cannot contain '/'"
     end
 
     test "sections return all child sections of a section" do
-      s = Factory(:public_section)
+      s = create(:public_section)
       assert_equal [s], s.parent.sections
     end
 
     def test_create_sub_section
-      sub = Factory(:section, :name => "Sub Section", :parent => root_section)
+      sub = create(:section, :name => "Sub Section", :parent => root_section)
       assert_equal sub, root_section.sections.last
       assert_equal root_section, sub.parent
     end
 
     def test_move_into_another_section
-      foo = Factory(:section, :name => "Foo", :parent => @root)
-      bar = Factory(:section, :name => "Bar", :parent => @root)
+      foo = create(:section, :name => "Foo", :parent => @root)
+      bar = create(:section, :name => "Bar", :parent => @root)
       assert_equal @root, foo.parent
       assert foo.move_to(bar)
       assert_equal bar, foo.parent
     end
 
     def test_cannot_move_root_section
-      foo = Factory(:section, :name => "Foo", :parent => @root)
+      foo = create(:section, :name => "Foo", :parent => @root)
       assert !@root.move_to(foo)
     end
 
     def test_find_first_page_or_link_in_section_page
-      @a = Factory(:section, :parent => @root, :name => "A")
-      @a1 = Factory(:section, :parent => @a, :name => "A1")
-      @a1a = Factory(:section, :parent => @a1, :name => "A1a")
-      @foo = Factory(:page, :section => @a1a, :name => "Foo")
-      @b = Factory(:section, :parent => @root, :name => "B")
+      @a = create(:section, :parent => @root, :name => "A")
+      @a1 = create(:section, :parent => @a, :name => "A1")
+      @a1a = create(:section, :parent => @a1, :name => "A1a")
+      @foo = create(:page, :section => @a1a, :name => "Foo")
+      @b = create(:section, :parent => @root, :name => "B")
 
       assert_equal @foo, @a.first_page_or_link
       assert_equal @foo, @a1.first_page_or_link
@@ -51,9 +51,9 @@ module Cms
     end
 
     def test_find_first_page_or_link_in_section_link
-      @a = Factory(:section, :parent => @root, :name => "A")
-      @a1 = Factory(:link, :section => @a, :name => "A1")
-      @a2 = Factory(:page, :section => @a, :name => "A2")
+      @a = create(:section, :parent => @root, :name => "A")
+      @a1 = create(:link, :section => @a, :name => "A1")
+      @a2 = create(:page, :section => @a, :name => "A2")
 
       assert_equal @a1, @a.first_page_or_link
 
@@ -63,10 +63,10 @@ module Cms
     end
 
     def test_find_first_page_or_link_after_delete
-      @a = Factory(:section, :parent => @root, :name => "A")
-      @a1 = Factory(:page, :section => @a, :name => "A1")
-      @a2 = Factory(:page, :section => @a, :name => "A2")
-      @a3 = Factory(:page, :section => @a, :name => "A3")
+      @a = create(:section, :parent => @root, :name => "A")
+      @a1 = create(:page, :section => @a, :name => "A1")
+      @a2 = create(:page, :section => @a, :name => "A2")
+      @a3 = create(:page, :section => @a, :name => "A3")
       assert_equal @a1, @a.first_page_or_link
       @a1.destroy
 
@@ -74,9 +74,9 @@ module Cms
     end
 
     def test_find_by_name_path
-      @a = Factory(:section, :parent => root_section, :name => "A")
-      @b = Factory(:section, :parent => @a, :name => "B")
-      @c = Factory(:section, :parent => @b, :name => "C")
+      @a = create(:section, :parent => root_section, :name => "A")
+      @b = create(:section, :parent => @a, :name => "B")
+      @c = create(:section, :parent => @b, :name => "C")
 
       assert_equal root_section, Cms::Section.find_by_name_path("/")
       assert_equal @a, Cms::Section.find_by_name_path("/A/")
@@ -85,8 +85,8 @@ module Cms
     end
 
     def test_section_with_sub_section
-      @section = Factory(:section, :parent => root_section)
-      Factory(:section, :parent => @section)
+      @section = create(:section, :parent => root_section)
+      create(:section, :parent => @section)
 
       assert !@section.empty?
       assert !@section.deletable?
@@ -98,15 +98,15 @@ module Cms
     end
 
     test "sections with pages should not be empty?" do
-      @section = Factory(:section, :parent => @root)
-      Factory(:page, :section => @section)
+      @section = create(:section, :parent => @root)
+      create(:page, :section => @section)
 
       assert_equal false, @section.empty?
     end
 
     def test_section_with_page_should_not_be_deletable
-      @section = Factory(:section, :parent => @root)
-      Factory(:page, :section => @section)
+      @section = create(:section, :parent => @root)
+      create(:page, :section => @section)
 
       assert !@section.deletable?
 
@@ -125,7 +125,7 @@ module Cms
     end
 
     def test_empty_section
-      @section = Factory(:section, :parent => @root)
+      @section = create(:section, :parent => @root)
 
       assert @section.empty?
       assert @section.deletable?
@@ -151,7 +151,7 @@ module Cms
     end
 
     def test_old_syntax_for_marking_group_sections
-      given_there_is_a_group = Factory(:group)
+      given_there_is_a_group = create(:group)
 
       groups = Cms::Group.all(&:id)
       assert_equal Cms::Group, groups[0].class, "This is previous"
@@ -187,9 +187,9 @@ module Cms
     end
 
     def test_find_by_name_path
-      @a = Factory(:section, :parent => root_section, :name => "A")
-      @b = Factory(:section, :parent => @a, :name => "B")
-      @c = Factory(:section, :parent => @b, :name => "C")
+      @a = create(:section, :parent => root_section, :name => "A")
+      @b = create(:section, :parent => @a, :name => "B")
+      @c = create(:section, :parent => @b, :name => "C")
 
       assert_equal root_section, Section.find_by_name_path("/")
       assert_equal @a, Section.find_by_name_path("/A/")
@@ -202,11 +202,11 @@ module Cms
 
     def setup
       given_there_is_a_guest_group
-      @visible_section = Factory(:public_section, :parent => root_section)
-      @hidden_section = Factory(:public_section, :parent => root_section, :hidden => true)
-      @visible_page = Factory(:public_page, :section => root_section)
-      @hidden_page = Factory(:public_page, :hidden => true, :section => root_section)
-      @file_block = Factory(:file_block, :attachment_section => root_section, :attachment_file => mock_file)
+      @visible_section = create(:public_section, :parent => root_section)
+      @hidden_section = create(:public_section, :parent => root_section, :hidden => true)
+      @visible_page = create(:public_page, :section => root_section)
+      @hidden_page = create(:public_page, :hidden => true, :section => root_section)
+      @file_block = create(:file_block, :parent => root_section)
     end
 
     test "visible_child_nodes should include non-hidden sections and non-hidden pages" do
@@ -230,7 +230,7 @@ module Cms
     test "#partial_for" do
       assert_equal "section", @visible_section.partial_for
       assert_equal "page", @visible_page.partial_for
-      assert_equal "link", Factory(:link, :section => root_section).partial_for
+      assert_equal "link", create(:link, :section => root_section).partial_for
     end
 
     test "#status is cached" do
@@ -249,14 +249,14 @@ module Cms
     end
 
     test "Link#section_node should be the same object" do
-      link = Factory(:link, :section => root_section)
+      link = create(:link, :section => root_section)
       sn = link.section_node
       assert_equal sn.object_id, sn.node.section_node.object_id
     end
 
     test "#public?" do
       assert @visible_section.public?
-      refute Factory(:section).public?
+      refute create(:section).public?
     end
 
     test "#sitemap" do
@@ -266,7 +266,7 @@ module Cms
     end
 
     test "#master_section_list" do
-      subsection = Factory(:public_section, :parent => @visible_section, :name => "Child 1")
+      subsection = create(:public_section, :parent => @visible_section, :name => "Child 1")
       sections = root_section.master_section_list
       assert_equal [@visible_section, subsection, @hidden_section], sections
       assert_equal "#{@visible_section.name}", sections[0].full_path

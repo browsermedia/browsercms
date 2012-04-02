@@ -17,7 +17,7 @@ class SectionsControllerTest < ActionController::TestCase
   end
 
   test "GET new should set the groups to the parent section's groups by default" do
-    @group = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
+    @group = create(:group, :name => "Test", :group_type => create(:group_type, :name => "CMS User", :cms_access => true))
     get :new, :section_id => root_section.to_param
 
     assert_response :success
@@ -27,7 +27,7 @@ class SectionsControllerTest < ActionController::TestCase
   end
   
   def test_update
-    @section = Factory(:section, :name => "V1", :parent => root_section, :groups => root_section.groups)
+    @section = create(:section, :name => "V1", :parent => root_section, :groups => root_section.groups)
     
     put :update, :id => @section.to_param, :section => {:name => "V2"}
     reset(:section)
@@ -50,9 +50,9 @@ class SectionFileBrowserControllerTest < ActionController::TestCase
   end
   
   def test_root_section
-    @foo = Factory(:section, :parent => root_section, :name => "Foo", :path => '/foo')
-    @bar = Factory(:section, :parent => root_section, :name => "Bar", :path => '/bar')
-    @home = Factory(:page, :section => root_section, :name => "Home", :path => '/home')
+    @foo = create(:section, :parent => root_section, :name => "Foo", :path => '/foo')
+    @bar = create(:section, :parent => root_section, :name => "Bar", :path => '/bar')
+    @home = create(:page, :section => root_section, :name => "Home", :path => '/home')
 
     get :file_browser, :format => "xml", "CurrentFolder" => "/", "Command" => "GetFilesAndFolders", "Type" => "Page"
 
@@ -71,10 +71,10 @@ class SectionFileBrowserControllerTest < ActionController::TestCase
   end
   
   def test_sub_section
-    @foo = Factory(:section, :parent => root_section, :name => "Foo", :path => '/foo')
-    @bar = Factory(:section, :parent => @foo, :name => "Bar", :path => '/foo/bar')
-    @foo_page = Factory(:page, :section => @foo, :name => "Foo Page", :path => '/foo/page')
-    @home = Factory(:page, :section => root_section, :name => "Home", :path => '/home')
+    @foo = create(:section, :parent => root_section, :name => "Foo", :path => '/foo')
+    @bar = create(:section, :parent => @foo, :name => "Bar", :path => '/foo/bar')
+    @foo_page = create(:page, :section => @foo, :name => "Foo Page", :path => '/foo/page')
+    @home = create(:page, :section => root_section, :name => "Home", :path => '/home')
     get :file_browser, :format => "xml", "CurrentFolder" => "/Foo/", "Command" => "GetFilesAndFolders", "Type" => "Page"
 
     assert_response :success
@@ -98,24 +98,24 @@ class SectionsControllerPermissionsTest < ActionController::TestCase
   
   def setup
     # DRYME copypaste from UserPermissionTest
-    @user = Factory(:user)
+    @user = create(:user)
     #@group = @user.groups.first
-    @group = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
+    @group = create(:group, :name => "Test", :group_type => create(:group_type, :name => "CMS User", :cms_access => true))
     @group.permissions << create_or_find_permission_named("edit_content")
     @group.permissions << create_or_find_permission_named("publish_content")
     @user.groups << @group
     
-    @editable_section = Factory(:section, :parent => root_section, :name => "Editable")
-    @editable_subsection = Factory(:section, :parent => @editable_section, :name => "Editable Subsection")
+    @editable_section = create(:section, :parent => root_section, :name => "Editable")
+    @editable_subsection = create(:section, :parent => @editable_section, :name => "Editable Subsection")
     @group.sections << @editable_section
-    @editable_page = Factory(:page, :section => @editable_section, :name => "Editable Page")
-    @editable_subpage = Factory(:page, :section => @editable_subsection, :name => "Editable SubPage")
-    @editable_link = Factory(:link, :section => @editable_section, :name => "Editable Link")
-    @editable_sublink = Factory(:link, :section => @editable_subsection, :name => "Editable SubLink")
+    @editable_page = create(:page, :section => @editable_section, :name => "Editable Page")
+    @editable_subpage = create(:page, :section => @editable_subsection, :name => "Editable SubPage")
+    @editable_link = create(:link, :section => @editable_section, :name => "Editable Link")
+    @editable_sublink = create(:link, :section => @editable_subsection, :name => "Editable SubLink")
     
-    @noneditable_section = Factory(:section, :parent => root_section, :name => "Not Editable")
-    @noneditable_page = Factory(:page, :section => @noneditable_section, :name => "Non-Editable Page")
-    @noneditable_link = Factory(:link, :section => @noneditable_section, :name => "Non-Editable Link")
+    @noneditable_section = create(:section, :parent => root_section, :name => "Not Editable")
+    @noneditable_page = create(:page, :section => @noneditable_section, :name => "Non-Editable Page")
+    @noneditable_link = create(:link, :section => @noneditable_section, :name => "Non-Editable Link")
     
     @noneditables = [@noneditable_section, @noneditable_page, @noneditable_link]
     @editables = [@editable_section, @editable_subsection, 
@@ -136,7 +136,7 @@ class SectionsControllerPermissionsTest < ActionController::TestCase
   end
   
   test "POST create should set the groups to the parent section's groups for non-admin user" do
-    @group = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
+    @group = create(:group, :name => "Test", :group_type => create(:group_type, :name => "CMS User", :cms_access => true))
     login_as(@user)
     get :new, :section_id => @editable_section
     assert_equal @editable_section.groups, assigns(:section).groups
@@ -188,7 +188,7 @@ class SectionsControllerPermissionsTest < ActionController::TestCase
   end
   
   test "PUT update should leave groups alone for non-admin user" do
-    @group2 = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
+    @group2 = create(:group, :name => "Test", :group_type => create(:group_type, :name => "CMS User", :cms_access => true))
     expected_groups = @editable_section.groups
     login_as(@user)
     put :update, :id => @editable_section
@@ -198,7 +198,7 @@ class SectionsControllerPermissionsTest < ActionController::TestCase
   end
 
   test "PUT update should leave groups alone for non-admin user even if hack url" do
-    @group2 = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
+    @group2 = create(:group, :name => "Test", :group_type => create(:group_type, :name => "CMS User", :cms_access => true))
     expected_groups = @editable_section.groups
     login_as(@user)
     put :update, :id => @editable_section, :section => {:name => "new name", :group_ids => [@group.id, @group2.id]}
@@ -213,7 +213,7 @@ class SectionsControllerPermissionsTest < ActionController::TestCase
 
   test "PUT update should add groups for admin user" do
     @user.groups.first.sections <<  @editable_subsection
-    @group2 = Factory(:cms_user_group)
+    @group2 = create(:cms_user_group)
     expected_groups = [@group, @group2]
     login_as_cms_admin
     put :update, :id => @editable_subsection, :cms_section => {:name => "new name", :group_ids => [@group.id, @group2.id]}

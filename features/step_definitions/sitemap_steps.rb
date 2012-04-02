@@ -1,7 +1,7 @@
 When /^there are some additional pages and sections$/ do
-  @foo = Factory(:section, :name => "Foo", :parent => root_section)
-  @bar = Factory(:section, :name => "Bar", :parent => @foo)
-  @page = Factory(:page, :name => "Test Page", :section => @bar)
+  @foo = create(:section, :name => "Foo", :parent => root_section)
+  @bar = create(:section, :name => "Bar", :parent => @foo)
+  @page = create(:page, :name => "Test Page", :section => @bar)
 end
 Then /^I should see the new pages and sections$/ do
   assert page.has_content?("Foo")

@@ -1,5 +1,5 @@
 When /^the a block exist that are tagged with "([^"]*)"$/ do |tag|
-  block = Factory(:html_block)
+  block = create(:html_block)
   block.tags << Cms::Tag.named(tag).first
   block.save!
 end

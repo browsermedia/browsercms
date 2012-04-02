@@ -1,5 +1,9 @@
 module Cms
   class Attachment < ActiveRecord::Base
+    SANITIZATION_REGEXES = [[/\s/, '_'], [/[&+()]/, '-'], [/[=?!'"{}\[\]#<>%]/, '']]
+    #' this tic cleans up emacs ruby mode
+
+    self.table_name = :cms_attachments
 
     cattr_accessor :definitions, :instance_writer => false
     @@definitions = {}.with_indifferent_access
@@ -10,10 +14,15 @@ module Cms
 
     before_save :set_section
     before_save :set_data_file_path
+    before_validation :ensure_sanitized_file_path
     before_create :setup_attachment
     before_create :set_cardinality
-
     belongs_to :attachable, :polymorphic => true
+
+    include Cms::Addressable
+    include Cms::Addressable::DeprecatedPageAccessors
+    has_one :section_node, :as => :node, :class_name => 'Cms::SectionNode'
+    alias :node :section_node
 
     is_archivable; is_publishable; uses_soft_delete; is_userstamped; is_versioned
 
@@ -22,31 +31,39 @@ module Cms
     # find_all_by_name mid
     # end
     # ...or even get rid of it
-    scope :named, lambda {|name|
+    scope :named, lambda { |name|
       {:conditions => {:attachment_name => name.to_s}}
     }
 
     scope :multiple, :conditions => {:cardinality => "multiple"}
 
-    validates_presence_of :data_file_path, :if => Proc.new {|a| a.attachable_type == "AbstractFileBlock"}
-    validates_uniqueness_of :data_file_path, :if => Proc.new {|a| a.attachable_type == "AbstractFileBlock"}
+    validates_presence_of :data_file_path, :if => Proc.new { |a| a.attachable_type == "AbstractFileBlock" }
+    validates_uniqueness_of :data_file_path, :if => Proc.new { |a| a.attachable_type == "AbstractFileBlock" }
 
     class << self
-      def definitions_for(klass, type)
-        definitions[klass].inject({}) {|d, (k, v)| d[k.capitalize] = v if v["type"] == type; d}
+
+      # Makes file paths more URL friendly
+      def sanitize_file_path(file_path)
+        SANITIZATION_REGEXES.inject(file_path.to_s) do |s, (regex, replace)|
+          s.gsub(regex, replace)
+        end
       end
 
-    include Cms::Addressable
-    include Cms::Addressable::DeprecatedPageAccessors
-    has_one :section_node, :as => :node, :class_name => 'Cms::SectionNode'
-    alias :node :section_node
+      def definitions_for(klass, type)
+        definitions[klass].inject({}) { |d, (k, v)| d[k.capitalize] = v if v["type"] == type; d }
+      end
+
       def configuration
         @@configuration ||= Cms::Attachments.configuration
       end
 
       def lambda_for(key)
         lambda do |clip|
-          clip.instance.new_record? ? "" : clip.instance.config_value_for(key)
+          if clip.instance.new_record?
+            key == :styles ? {} : ""
+          else
+            clip.instance.config_value_for(key)
+          end
         end
       end
 
@@ -57,21 +74,21 @@ module Cms
 
       def configure_paperclip
         has_attached_file :data,
-          #TODO: url's should probably not be configurable
-          :url =>  lambda_for(:url),
-          :path => lambda_for(:path),
-          :styles => lambda_for(:styles),
+                          #TODO: url's should probably not be configurable
+                          :url => lambda_for(:url),
+                          :path => lambda_for(:path),
+                          :styles => lambda_for(:styles),
 
-          #TODO: enable custom processors
-          :processors => configuration.processors,
-          :defult_url => configuration.default_url,
-          :default_style => configuration.default_style,
-          :storage => configuration.storage,
-          :use_timestamp => configuration.use_timestamp,
-          :whiny => configuration.whiny,
+                          #TODO: enable custom processors
+                          :processors => configuration.processors,
+                          :defult_url => configuration.default_url,
+                          :default_style => configuration.default_style,
+                          :storage => configuration.storage,
+                          :use_timestamp => configuration.use_timestamp,
+                          :whiny => configuration.whiny,
 
-          :s3_credentials => configuration.s3_credentials,
-          :bucket => configuration.bucket
+                          :s3_credentials => configuration.s3_credentials,
+                          :bucket => configuration.bucket
       end
     end
 
@@ -81,7 +98,7 @@ module Cms
     end
 
     def config_value_for(key)
-      definitions[content_block_class][asset_name][key] || configuration.send(key)
+      definitions[content_block_class][attachment_name][key] || configuration.send(key)
     end
 
     def content_block_class
@@ -90,16 +107,16 @@ module Cms
 
     def icon
       {
-        :doc => %w[doc],
-        :gif => %w[gif jpg jpeg png tiff bmp],
-        :htm => %w[htm html],
-        :pdf => %w[pdf],
-        :ppt => %w[ppt],
-        :swf => %w[swf],
-        :txt => %w[txt],
-        :xls => %w[xls],
-        :xml => %w[xml],
-        :zip => %w[zip rar tar gz tgz]
+          :doc => %w[doc],
+          :gif => %w[gif jpg jpeg png tiff bmp],
+          :htm => %w[htm html],
+          :pdf => %w[pdf],
+          :ppt => %w[ppt],
+          :swf => %w[swf],
+          :txt => %w[txt],
+          :xls => %w[xls],
+          :xml => %w[xml],
+          :zip => %w[zip rar tar gz tgz]
       }.each do |icon, extensions|
         return icon if extensions.include?(data_file_extension)
       end
@@ -122,18 +139,23 @@ module Cms
       %w[jpg gif png jpeg].include?(data_file_extension)
     end
 
+    # Returns a Paperclip generated relative path to the file (with thumbnail sizing)
     def url(style_name = configuration.default_style)
       data.url(style_name)
     end
 
+    # Returns the absolute file location of the underlying asset
+    # @todo I really want this to return data_file_path instead.
     def path(style_name = configuration.default_style)
       data.path(style_name)
     end
+
     alias :full_file_location :path
 
     def original_filename
       data_file_name
     end
+
     alias :file_name :original_filename
 
     def size
@@ -143,6 +165,7 @@ module Cms
     def content_type
       data_content_type
     end
+
     alias :file_type :content_type
 
 
@@ -152,19 +175,24 @@ module Cms
       data_file_name.split('.').last.downcase if data_file_name['.']
     end
 
-    def set_section
-      self.section = Section.root.first if section_id.blank?
-
-      if section_node && !section_node.new_record? && section_node.section_id != section_id
-        section_node.move_to_end(Section.find(section_id))
-      else
-        build_section_node(:node => self, :section_id => section_id)
-      end
-    end
-
     def set_data_file_path
       if data_file_path.blank?
         self.data_file_path = "/attachments/#{content_block_class}_#{data_file_name}"
+      end
+    end
+
+    def ensure_sanitized_file_path
+      if data_file_path
+        self.data_file_path = self.class.sanitize_file_path(data_file_path)
+        unless self.data_file_path.starts_with?("/")
+          self.data_file_path = "/#{data_file_path}"
+        end
+      end
+    end
+
+    def set_section
+      unless parent
+        self.parent = Section.root.first
       end
     end
 
@@ -177,7 +205,7 @@ module Cms
     end
 
     def set_cardinality
-      self.cardinality = definitions[content_block_class][asset_name][:type].to_s
+      self.cardinality = definitions[content_block_class][attachment_name][:type].to_s
     end
 
     # Forces this record to be changed, even if nothing has changed

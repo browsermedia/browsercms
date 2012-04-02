@@ -2,7 +2,7 @@ require 'test_helper'
 
 class ContentBlockTest < ActiveSupport::TestCase
   def setup
-    @block = Factory(:html_block, :name => "Test")
+    @block = create(:html_block, :name => "Test")
   end
 
   def test_publishing
@@ -52,7 +52,7 @@ end
 class SoftPublishingTest < ActiveSupport::TestCase
 
   def setup
-    @block = Factory(:html_block, :name => "Test")
+    @block = create(:html_block, :name => "Test")
   end
 
   test "deleted? should return true for deleted records, false otherwise" do
@@ -129,7 +129,7 @@ end
 
 class VersionedContentBlock < ActiveSupport::TestCase
   def setup
-    @block = Factory(:html_block, :name => "Versioned Content Block")
+    @block = create(:html_block, :name => "Versioned Content Block")
   end
 
   test "Calling publish! on a block should save it, and mark that block as published." do
@@ -201,8 +201,8 @@ end
 
 class VersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
   def setup
-    @page = Factory(:page, :section => root_section)
-    @block = Factory(:html_block, :name => "Versioned Content Block")
+    @page = create(:page, :section => root_section)
+    @block = create(:html_block, :name => "Versioned Content Block")
     @page.create_connector(@block, "main")
     reset(:page, :block)
   end
@@ -266,8 +266,8 @@ end
 
 class NonVersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
   def setup
-    @page = Factory(:page, :section => root_section)
-    @block = Factory(:non_versioned_block, :name => "Non-Versioned Non-Publishable Content Block")
+    @page = create(:page, :section => root_section)
+    @block = create(:non_versioned_block, :name => "Non-Versioned Non-Publishable Content Block")
     @page.create_connector(@block, "main")
     reset(:page, :block)
   end

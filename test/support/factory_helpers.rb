@@ -1,11 +1,13 @@
 
 module FactoryHelpers
 
+  include FactoryGirl::Syntax::Methods
+
   def find_or_create_root_section
     root = Cms::Section.root.first
     unless root
       # This constructor matches how seed data is set up.
-      root = Factory(:root_section)
+      root = create(:root_section)
     end
     root
   end
@@ -38,17 +40,21 @@ module FactoryHelpers
     file_upload_object({:original_filename => "foo.jpg", :content_type => "image/jpeg"}.merge(options))
   end
 
+  def create_or_find_permission_named(name)
+    Cms::Permission.named(name).first || create(:permission, :name => name)
+  end
+
   # Creates a TempFile attached to an uploaded file. Used to test attachments
   def file_upload_object(options)
     Cms::MockFile.new_file(options[:original_filename], options[:content_type])
   end
 
   def given_there_is_a_content_type(model_class)
-    Factory(:content_type, :name => model_class.to_s)
+    FactoryGirl.create(:content_type, :name => model_class.to_s)
   end
 
   def create_admin_user(attrs={})
-    Factory(:cms_admin, {:login => "cmsadmin"}.merge(attrs))
+    FactoryGirl.create(:cms_admin, {:login => "cmsadmin"}.merge(attrs))
   end
 
   def given_there_is_a_cmsadmin

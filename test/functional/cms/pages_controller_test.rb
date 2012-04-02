@@ -95,7 +95,7 @@ module Cms
 
     protected
     def create_page
-      @page = Factory(:page, :section => root_section, :name => "Test", :path => "test")
+      @page = create(:page, :section => root_section, :name => "Test", :path => "test")
     end
 
   end
@@ -106,23 +106,23 @@ module Cms
 
     def setup
       # DRYME copypaste from UserPermissionTest
-      @user = Factory(:user)
-      @group = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
+      @user = create(:user)
+      @group = create(:group, :name => "Test", :group_type => create(:group_type, :name => "CMS User", :cms_access => true))
       @group.permissions << create_or_find_permission_named("edit_content")
       @group.permissions << create_or_find_permission_named("publish_content")
       @user.groups << @group
 
-      @editable_section = Factory(:section, :parent => root_section, :name => "Editable")
-      @editable_subsection = Factory(:section, :parent => @editable_section, :name => "Editable Subsection")
+      @editable_section = create(:section, :parent => root_section, :name => "Editable")
+      @editable_subsection = create(:section, :parent => @editable_section, :name => "Editable Subsection")
       @group.sections << @editable_section
-      @editable_page = Factory(:page, :section => @editable_section, :name => "Editable Page")
-      @editable_subpage = Factory(:page, :section => @editable_subsection, :name => "Editable SubPage")
-      @editable_link = Factory(:link, :section => @editable_section, :name => "Editable Link")
-      @editable_sublink = Factory(:link, :section => @editable_subsection, :name => "Editable SubLink")
+      @editable_page = create(:page, :section => @editable_section, :name => "Editable Page")
+      @editable_subpage = create(:page, :section => @editable_subsection, :name => "Editable SubPage")
+      @editable_link = create(:link, :section => @editable_section, :name => "Editable Link")
+      @editable_sublink = create(:link, :section => @editable_subsection, :name => "Editable SubLink")
 
-      @noneditable_section = Factory(:section, :parent => root_section, :name => "Not Editable")
-      @noneditable_page = Factory(:page, :section => @noneditable_section, :name => "Non-Editable Page")
-      @noneditable_link = Factory(:link, :section => @noneditable_section, :name => "Non-Editable Link")
+      @noneditable_section = create(:section, :parent => root_section, :name => "Not Editable")
+      @noneditable_page = create(:page, :section => @noneditable_section, :name => "Non-Editable Page")
+      @noneditable_link = create(:link, :section => @noneditable_section, :name => "Non-Editable Link")
 
       @noneditables = [@noneditable_section, @noneditable_page, @noneditable_link]
       @editables = [@editable_section, @editable_subsection,

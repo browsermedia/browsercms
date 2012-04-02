@@ -20,44 +20,44 @@ end
 
 
 Given /^a page with a portlet that raises a Not Found exception exists$/ do
-  @last_page = Factory(:public_page)
-  @raises_not_found = Factory(:portlet, :code => 'raise ActiveRecord::RecordNotFound', :template=>"I shouldn't be shown.'")
+  @last_page = create(:public_page)
+  @raises_not_found = create(:portlet, :code => 'raise ActiveRecord::RecordNotFound', :template=>"I shouldn't be shown.'")
   @last_page.add_content(@raises_not_found)
   @last_page.publish!
   assert @last_page.published?
 end
 
 When /^a page with a portlet that raises an Access Denied exception exists$/ do
-  @last_page = Factory(:public_page)
-  @raises_access_denied = Factory(:portlet, :code => 'raise Cms::Errors::AccessDenied', :template=>"I shouldn't be shown.'")
+  @last_page = create(:public_page)
+  @raises_access_denied = create(:portlet, :code => 'raise Cms::Errors::AccessDenied', :template=>"I shouldn't be shown.'")
   @last_page.add_content(@raises_access_denied)
   @last_page.publish!
   assert @last_page.published?
 end
 
 When /^a page with a portlet that display "([^"]*)" exists$/ do |view|
-  @last_page = Factory(:public_page)
-  portlet = Factory(:portlet, :template=>view)
+  @last_page = create(:public_page)
+  portlet = create(:portlet, :template=>view)
   @last_page.add_content(portlet)
   @last_page.publish!
   assert @last_page.published?
 end
 
 When /^a page with a portlet that raises both a 404 and 403 error exists$/ do
-  @last_page = Factory(:public_page)
-  @raises_not_found = Factory(:portlet, :code => 'raise ActiveRecord::RecordNotFound', :template=>"I shouldn't be shown.'")
+  @last_page = create(:public_page)
+  @raises_not_found = create(:portlet, :code => 'raise ActiveRecord::RecordNotFound', :template=>"I shouldn't be shown.'")
   @last_page.add_content(@raises_not_found)
-  @raises_access_denied = Factory(:portlet, :code => 'raise Cms::Errors::AccessDenied', :template=>"I shouldn't be shown.'")
+  @raises_access_denied = create(:portlet, :code => 'raise Cms::Errors::AccessDenied', :template=>"I shouldn't be shown.'")
   @last_page.add_content(@raises_access_denied)
   @last_page.publish!
   assert @last_page.published?
 end
 
 When /^a page with a portlet that raises both a 403 and any other error exists$/ do
-  @last_page = Factory(:public_page)
-  @raises_not_found = Factory(:portlet, :code => 'raise "A Generic Error"', :template=>"I shouldn't be shown.'")
+  @last_page = create(:public_page)
+  @raises_not_found = create(:portlet, :code => 'raise "A Generic Error"', :template=>"I shouldn't be shown.'")
   @last_page.add_content(@raises_not_found)
-  @raises_access_denied = Factory(:portlet, :code => 'raise Cms::Errors::AccessDenied', :template=>"I shouldn't be shown.'")
+  @raises_access_denied = create(:portlet, :code => 'raise Cms::Errors::AccessDenied', :template=>"I shouldn't be shown.'")
   @last_page.add_content(@raises_access_denied)
   @last_page.publish!
   assert @last_page.published?

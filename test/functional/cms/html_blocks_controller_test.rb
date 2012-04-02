@@ -8,7 +8,7 @@ class HtmlBlocksControllerTest < ActionController::TestCase
     given_a_site_exists
     login_as_cms_admin
     given_there_is_a_content_type(Cms::HtmlBlock)
-    @block = Factory(:html_block, :name => "Test", :content => "I worked.", :publish_on_save => true)
+    @block = create(:html_block, :name => "Test", :content => "I worked.", :publish_on_save => true)
   end
   
   def test_new
@@ -18,7 +18,7 @@ class HtmlBlocksControllerTest < ActionController::TestCase
   end
 
   def test_add_to_page
-    @page = Factory(:page, :path => "/test", :section => root_section)
+    @page = create(:page, :path => "/test", :section => root_section)
     get :new, :html_block => {:connect_to_page_id => @page.id, :connect_to_container => "test"}
     assert_response :success
     assert_select "input[name=?][value=?]", "html_block[connect_to_page_id]", @page.id.to_s
@@ -49,7 +49,7 @@ class HtmlBlocksControllerTest < ActionController::TestCase
   end
   
   def test_creating_a_block_that_should_be_connected_to_a_page
-    @page = Factory(:page, :path => "/test", :section => root_section)
+    @page = create(:page, :path => "/test", :section => root_section)
     html_block_count = HtmlBlock.count
 
     post :create, :html_block => Factory.attributes_for(:html_block).merge(
@@ -141,9 +141,9 @@ class HtmlBlocksControllerTest < ActionController::TestCase
   end
   
   def test_usages
-    @page = Factory(:page, :section => root_section, :name => "Included")
-    @page2 = Factory(:page, :section => root_section, :path => "/other_path", :name => "Excluded")
-    @block = Factory(:html_block, :connect_to_page_id => @page.id, :connect_to_container => "main")
+    @page = create(:page, :section => root_section, :name => "Included")
+    @page2 = create(:page, :section => root_section, :path => "/other_path", :name => "Excluded")
+    @block = create(:html_block, :connect_to_page_id => @page.id, :connect_to_container => "main")
     @page.publish!  # usages are only relevant when page is published
 
     get :usages, :id => @block.id

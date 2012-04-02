@@ -4,16 +4,16 @@ module Cms
   class MoveSections < ActiveSupport::TestCase
 
     def setup
-      @root = Factory(:root_section)
-      @parent = Factory(:section, :parent => @root, :name => "Parent")
-      @a = Factory(:section, :parent => @parent, :name => "A")
-      @a1 = Factory(:page, :section => @a, :name => "A1")
-      @a2 = Factory(:page, :section => @a, :name => "A2")
-      @a3 = Factory(:page, :section => @a, :name => "A3")
-      @b = Factory(:section, :parent => @parent, :name => "B")
-      @b1 = Factory(:page, :section => @b, :name => "B1")
-      @b2 = Factory(:page, :section => @b, :name => "B2")
-      @b3 = Factory(:page, :section => @b, :name => "B3")
+      @root = create(:root_section)
+      @parent = create(:section, :parent => @root, :name => "Parent")
+      @a = create(:section, :parent => @parent, :name => "A")
+      @a1 = create(:page, :section => @a, :name => "A1")
+      @a2 = create(:page, :section => @a, :name => "A2")
+      @a3 = create(:page, :section => @a, :name => "A3")
+      @b = create(:section, :parent => @parent, :name => "B")
+      @b1 = create(:page, :section => @b, :name => "B1")
+      @b2 = create(:page, :section => @b, :name => "B2")
+      @b3 = create(:page, :section => @b, :name => "B3")
 
       @node_a = @a.node
       @node_b = @b.node
@@ -110,8 +110,8 @@ module Cms
 
     def setup
       given_a_site_exists
-      @page = Factory(:public_page, :section => root_section)
-      @link = Factory(:link, :section => root_section)
+      @page = create(:public_page, :section => root_section)
+      @link = create(:link, :section => root_section)
     end
 
     test "access_status" do
@@ -130,17 +130,17 @@ module Cms
     end
 
     test "ancestry_path" do
-      section = Factory(:public_section)
+      section = create(:public_section)
       assert_equal "#{section.parent.node.id}/#{section.node.id}", section.node.ancestry_path
     end
     test "Build root section from factory" do
-      root = Factory(:root_section)
+      root = create(:root_section)
       assert_not_nil root
       assert root.root?
     end
 
     test "Build section with parent = root_section from factory" do
-      section = Factory(:public_section)
+      section = create(:public_section)
       assert_not_nil section
       assert_equal false, section.root?
       assert_equal true, section.parent.root?
@@ -165,34 +165,34 @@ module Cms
     end
 
     test "child_nodes" do
-      page = Factory(:page, :section => root)
-      section = Factory :public_section, :parent => root
+      page = create(:page, :section => root)
+      section = create(:public_section, :parent => root)
 
       assert_equal [page.section_node, section.node], root.child_nodes
     end
 
     test "pages" do
-      page1 = Factory(:page, :section => root)
-      page2 = Factory(:page, :section => root)
-      section = Factory :public_section, :parent => root
+      page1 = create(:page, :section => root)
+      page2 = create(:page, :section => root)
+      section = create(:public_section, :parent => root)
 
       assert_equal [page1, page2], root.pages
     end
 
     test "child_sections" do
-      page1 = Factory(:page, :section => root)
-      page2 = Factory(:page, :section => root)
-      section = Factory :public_section, :parent => root
+      page1 = create(:page, :section => root)
+      page2 = create(:page, :section => root)
+      section = create(:public_section, :parent => root)
 
       assert_equal [section], root.child_sections
     end
 
     test "Order of pages should be unique within each section" do
-      page = Factory(:page, :section => root)
+      page = create(:page, :section => root)
       assert_equal 1, page.section_node.position
 
-      subsection = Factory(:section, :parent => root)
-      page3 = Factory(:page, :section => subsection)
+      subsection = create(:section, :parent => root)
+      page3 = create(:page, :section => subsection)
       log_table_without_stamps(SectionNode)
       assert_equal 1, page3.section_node.position
     end
@@ -204,7 +204,7 @@ module Cms
     private
 
     def root
-      @root ||= Factory(:root_section)
+      @root ||= create(:root_section)
     end
   end
 end

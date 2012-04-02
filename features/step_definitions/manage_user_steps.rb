@@ -11,7 +11,7 @@ end
 Given /^the following content editor exists:$/ do |table|
     table.hashes.each do |row|
       row['login'] = row.delete('username')
-      Factory(:content_editor, row)
+      create(:content_editor, row)
     end
 end
 

@@ -7,18 +7,18 @@ module Cms
     validates_presence_of :name
 
     scope :by_section, lambda { |section| {
-            :include => {:attachment => :section_node },
-            :conditions => ["#{SectionNode.table_name}.ancestry = ?", section.node.ancestry_path] }
-        }
+        :include => {:attachment => :section_node},
+        :conditions => ["#{SectionNode.table_name}.ancestry = ?", section.node.ancestry_path]}
+    }
 
     # Return the parent section for this block.
     # @return [Cms::Section]
     def parent
-      attachment.parent
+      file.parent
     end
 
     def path
-      attachment_file_path
+      file.data_file_path
     end
 
     def self.publishable?
@@ -37,5 +37,11 @@ module Cms
       end
     end
 
+
+    def ensure_attachment_exists
+      if new_record?
+        attachments.build
+      end
+    end
   end
 end

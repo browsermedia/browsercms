@@ -9,7 +9,7 @@ ActiveRecord::Base.connection.instance_eval do
 end
 
 
-EXTERNAL_USER_GROUPS = Hash.new {|hash,key| hash[key] = Factory.build(:group)}
+EXTERNAL_USER_GROUPS = Hash.new {|hash,key| hash[key] = build(:group)}
 
 class ExternalUser < ActiveRecord::Base
 end

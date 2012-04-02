@@ -12,12 +12,12 @@ class FileBlocksControllerTest < ActionController::TestCase
   
   def test_file_block_search
     @file = mock_file()
-    @file_block = Factory(:file_block, :attachment_section => root_section, 
+    @file_block = create(:file_block, :attachment_section => root_section,
       :attachment_file => @file, 
       :attachment_file_path => "/test.txt", 
       :name => "Test File", 
       :publish_on_save => true)
-    @foo_section = Factory(:section, :name => "Foo", :parent => root_section)
+    @foo_section = create(:section, :name => "Foo", :parent => root_section)
 
     get :index, :section_id => root_section.id
     assert_response :success
@@ -37,12 +37,12 @@ class FileBlocksControllerTest < ActionController::TestCase
   #
   def test_view_file_block_doesnt_have_view_error
     @file = mock_file()
-    @file_block = Factory(:file_block, :attachment_section => root_section,
+    @file_block = create(:file_block, :attachment_section => root_section,
       :attachment_file => @file,
       :attachment_file_path => "/test.txt",
       :name => "Test File",
       :publish_on_save => true)
-    @foo_section = Factory(:section, :name => "Foo", :parent => root_section)
+    @foo_section = create(:section, :name => "Foo", :parent => root_section)
 
     get :show, :id => @file_block.id
 

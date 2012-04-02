@@ -3,13 +3,13 @@ require 'test_helper'
 class LinkTest < ActiveSupport::TestCase
 
   def setup
-    @link = Factory(:link)
-    @another_link = Factory(:link)
+    @link = create(:link)
+    @another_link = create(:link)
   end
 
   def test_create
-    assert Factory.build(:link).valid?
-    assert !Factory.build(:link, :name => "").valid?
+    assert build(:link).valid?
+    assert !build(:link, :name => "").valid?
   end
 
   test "draft_version is stored on pages" do

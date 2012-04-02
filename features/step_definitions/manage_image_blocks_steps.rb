@@ -7,7 +7,7 @@ Then /^the following images exist:$/ do |table|
     if row['section']
       row[:attachment_section_id] = Cms::Section.find_by_name(row.delete('section'))
     end
-    b = Factory(:image_block, row)
+    b = create(:image_block, row)
     b.id = row['id']
     b.save!
   end
@@ -15,7 +15,7 @@ end
 
 Then /^the following sections exist:$/ do |table|
   table.hashes.each do |row|
-    Factory(:section, row)
+    create(:section, row)
   end
 end
 

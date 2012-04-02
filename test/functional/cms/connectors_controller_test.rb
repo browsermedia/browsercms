@@ -11,8 +11,8 @@ class ConnectorsControllerTest < ActionController::TestCase
   end
   
   def test_new
-    @page = Factory(:page, :section => root_section, :name => "Test Page")
-    @block = Factory(:html_block)
+    @page = create(:page, :section => root_section, :name => "Test Page")
+    @block = create(:html_block)
     
     get :new, :page_id => @page, :container => "main"
 
@@ -21,8 +21,8 @@ class ConnectorsControllerTest < ActionController::TestCase
   end
   
   def test_new_portlet
-    @page = Factory(:page, :section => root_section, :name => "Test Page")
-    @portlet = Factory(:portlet, :connect_to_page_id => @page.id, :connect_to_container => "main")
+    @page = create(:page, :section => root_section, :name => "Test Page")
+    @portlet = create(:portlet, :connect_to_page_id => @page.id, :connect_to_container => "main")
     reset(:page)
     
     get :new, :page_id => @page, :container => "main", :block_type => "portlets"
@@ -32,8 +32,8 @@ class ConnectorsControllerTest < ActionController::TestCase
   end
   
   def test_new_with_deleted_portlet
-    @page = Factory(:page, :section => root_section, :name => "Test Page")
-    @portlet = Factory(:portlet)
+    @page = create(:page, :section => root_section, :name => "Test Page")
+    @portlet = create(:portlet)
     @portlet.destroy
     
     get :new, :page_id => @page, :container => "main", :block_type => "portlets"
@@ -43,8 +43,8 @@ class ConnectorsControllerTest < ActionController::TestCase
   end
   
   def test_destroy
-    @page = Factory(:page, :section => root_section)
-    @block = Factory(:html_block, :connect_to_page_id => @page.id, :connect_to_container => "main")
+    @page = create(:page, :section => root_section)
+    @block = create(:html_block, :connect_to_page_id => @page.id, :connect_to_container => "main")
     reset(:page)
     
     page_version_count = Page::Version.count

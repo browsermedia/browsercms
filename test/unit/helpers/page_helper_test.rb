@@ -5,11 +5,11 @@ class Cms::PageHelperTest < ActionView::TestCase
   def setup
     root_section.name = "My Site"
     root_section.save!
-    @foo = Factory(:section, :name => "Foo", :parent => root_section, :path => "/foo")
-    Factory(:page, :name => "Overview", :section => @foo, :path => "/foo")
-    @bar = Factory(:section, :name => "Bar", :parent => @foo, :path => "/bar")
-    @overview = Factory(:page, :name => "Overview", :section => @bar, :path => "/bar")
-    @bang = Factory(:page, :name => "Bang", :section => @bar, :path => "/bar/bang")
+    @foo = create(:section, :name => "Foo", :parent => root_section, :path => "/foo")
+    create(:page, :name => "Overview", :section => @foo, :path => "/foo")
+    @bar = create(:section, :name => "Bar", :parent => @foo, :path => "/bar")
+    @overview = create(:page, :name => "Overview", :section => @bar, :path => "/bar")
+    @bang = create(:page, :name => "Bang", :section => @bar, :path => "/bar/bang")
 
     @page = @bang
   end

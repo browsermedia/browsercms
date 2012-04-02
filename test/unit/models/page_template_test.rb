@@ -2,7 +2,7 @@ require 'test_helper'
 
 class PageTemplateTest < ActiveSupport::TestCase
   def setup
-    @page_template = Factory.build(:page_template, :name => "test")
+    @page_template = build(:page_template, :name => "test")
     File.delete(@page_template.file_path) if File.exists?(@page_template.file_path)
   end
 
@@ -30,9 +30,9 @@ class PageTemplateTest < ActiveSupport::TestCase
   end
 
   def test_for_valid_name
-    assert_not_valid Factory.build(:page_template, :name => "Fancy")
-    assert_not_valid Factory.build(:page_template, :name => "foo bar")
-    assert_valid Factory.build(:page_template, :name => "subpage_1_column")
+    assert_not_valid build(:page_template, :name => "Fancy")
+    assert_not_valid build(:page_template, :name => "foo bar")
+    assert_valid build(:page_template, :name => "subpage_1_column")
   end
 
   def test_find_by_file_name
