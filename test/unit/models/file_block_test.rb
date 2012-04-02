@@ -65,9 +65,10 @@ module Cms
 
     test "#parent= during create()" do
       other_section = create(:section)
-      file = create(:file_block, :parent=>other_section)
+      file = create(:file_block, :parent => other_section)
       assert_equal other_section, file.parent
     end
+
     #Does not work properly. As is, blocks can track only one attachment per version,
     #not multiple ones. Will need to add more complicated versioning.
 

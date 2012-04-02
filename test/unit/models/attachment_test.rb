@@ -25,6 +25,12 @@ class AttachmentTest < ActiveSupport::TestCase
     refute attachment.data.exists?
   end
 
+  test "#ensure_sanitized_file_path doesn't replace empty paths'" do
+    attachment.data_file_path = ""
+    attachment.send(:ensure_sanitized_file_path)
+
+    assert_equal "", attachment.data_file_path
+  end
 
   # def test_creating_an_attachment_with_a_StringIO_file
   #   file = @file

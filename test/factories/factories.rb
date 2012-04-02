@@ -170,9 +170,9 @@ FactoryGirl.define do
     m.path "/protected-section"
     m.parent { find_or_create_root_section }
     m.after_create { |protected_section|
-      secret_group = create(:group, :name => "Secret")
+      secret_group = FactoryGirl.create(:group, :name => "Secret")
       secret_group.sections << protected_section
-      privileged_user = create(:user, :login => "privileged")
+      privileged_user = FactoryGirl.create(:user, :login => "privileged")
       privileged_user.groups << secret_group
     }
 
@@ -211,7 +211,7 @@ FactoryGirl.define do
 
   factory :cms_admin, :parent => :user do |m|
     m.after_create { |user|
-      group = create(:group, :group_type => create(:group_type, :cms_access => true))
+      group = FactoryGirl.create(:group, :group_type => FactoryGirl.create(:group_type, :cms_access => true))
       Cms::Authoring::PERMISSIONS.each do |p|
         group.permissions << create_or_find_permission_named(p)
       end
@@ -221,7 +221,7 @@ FactoryGirl.define do
 
   factory :content_editor, :parent => :user do |m|
     m.after_create { |user|
-      group = create(:group, :group_type => create(:group_type, :cms_access => true))
+      group = FactoryGirl.create(:group, :group_type => FactoryGirl.create(:group_type, :cms_access => true))
       Cms::Authoring::EDITOR_PERMISSIONS.each do |p|
         group.permissions << create_or_find_permission_named(p)
       end

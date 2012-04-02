@@ -184,7 +184,7 @@ module Cms
     def ensure_sanitized_file_path
       if data_file_path
         self.data_file_path = self.class.sanitize_file_path(data_file_path)
-        unless self.data_file_path.starts_with?("/")
+        if !data_file_path.empty? && !data_file_path.starts_with?("/")
           self.data_file_path = "/#{data_file_path}"
         end
       end
