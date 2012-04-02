@@ -60,7 +60,7 @@ module Cms
     end
 
     def test_index_with_disabled_users
-      @disabled_user = Factory(:user)
+      @disabled_user = create(:user)
       @disabled_user.disable!
 
       get :index
@@ -69,7 +69,7 @@ module Cms
     end
 
     def test_index_with_show_expired
-      @disabled_user = Factory(:user)
+      @disabled_user = create(:user)
       @disabled_user.disable!
 
       get :index, :show_expired => "true"
@@ -78,9 +78,9 @@ module Cms
     end
 
     def test_index_with_groups
-      @not_found = Factory(:user)
-      @in_group = Factory(:group)
-      @not_in_group = Factory(:group)
+      @not_found = create(:user)
+      @in_group = create(:group)
+      @not_in_group = create(:group)
       @user.groups << @in_group
 
       get :index, :group_id => @in_group.id
@@ -91,7 +91,7 @@ module Cms
     end
 
     def test_new
-      @group = Factory(:group)
+      @group = create(:group)
 
       get :new
 
@@ -109,7 +109,7 @@ module Cms
 
     def test_create
       user_count = User.count
-      @group = Factory(:group)
+      @group = create(:group)
       user_params = Factory.attributes_for(:user, :password=>"123456", :password_confirmation=>"123456")
 
       post :create, :user => user_params, :group_ids => [@group.id]
@@ -147,7 +147,7 @@ module Cms
     end
 
     def test_add_to_groups
-      @group_ids = [Factory(:group).id, Factory(:group).id]
+      @group_ids = [create(:group).id, create(:group).id]
       put :update, :id => @user.id, :group_ids => @group_ids
       reset(:user)
 
@@ -157,9 +157,9 @@ module Cms
 
     protected
     def create_key_word_test_users
-      @user_with_email = Factory(:user, :email => "somekid@southpark.com")
-      @user_with_name = Factory(:user, :first_name => "Stan", :last_name => "Marsh")
-      @user_with_login = Factory(:user, :login => "mylogin")
+      @user_with_email = create(:user, :email => "somekid@southpark.com")
+      @user_with_name = create(:user, :first_name => "Stan", :last_name => "Marsh")
+      @user_with_login = create(:user, :login => "mylogin")
     end
 
     private
@@ -176,12 +176,8 @@ module Cms
     include Cms::ControllerTestHelper
 
     def setup
-      @content_editor = Factory(:content_editor)
+      @content_editor = create(:content_editor)
       login_as(@content_editor)
-      #@user = Factory.build(:user)
-      #@user.groups = [cms_groups(:group_3)]
-      #@user.save!
-      #login_as(@user)
     end
 
     def test_show_self
@@ -190,7 +186,7 @@ module Cms
     end
 
     def test_show_other
-      get :show, :id => Factory(:user).id
+      get :show, :id => create(:user).id
       assert @response.body.include?("Access Denied")
     end
 
@@ -200,7 +196,7 @@ module Cms
     end
 
     def test_change_password_other
-      get :change_password, :id => Factory(:user).id
+      get :change_password, :id => create(:user).id
       assert @response.body.include?("Access Denied")
     end
 
@@ -211,7 +207,7 @@ module Cms
     end
 
     def test_update_password_other
-      put :update_password, :id => Factory(:user).id
+      put :update_password, :id => create(:user).id
       assert @response.body.include?("Access Denied")
     end
   end

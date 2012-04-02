@@ -6,7 +6,7 @@ class Cms::TasksControllerTest < ActionController::TestCase
   def setup
     @admin = login_as_cms_admin
 
-    @task = Factory(:task, :assigned_to=>@admin)
+    @task = create(:task, :assigned_to=>@admin)
   end
 
   def test_complete_task
@@ -25,7 +25,7 @@ class Cms::TasksControllerTest < ActionController::TestCase
 
 
   def test_complete_multiple_tasks
-    @task2 = Factory(:task, :assigned_to=>@admin)
+    @task2 = create(:task, :assigned_to=>@admin)
     ids = [@task.id, @task2.id]
     tasks = Cms::Task.find(:all, :conditions => ["assigned_to_id = ?", @admin.id])
     assert_equal 2, tasks.length, "This test depends on there being 2 tasks to complete"

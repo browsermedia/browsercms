@@ -7,7 +7,7 @@ class PageRouteTest < ActiveSupport::TestCase
 
 
   def test_create
-    page = Factory(:page, :path => "/things/overview")
+    page = create(:page, :path => "/things/overview")
     route = page.page_routes.build(:pattern => "/things/:year/:month/:day")
     route.add_requirement(:year, "\\d{4,}")
     route.add_requirement(:month, "\\d{2,}")

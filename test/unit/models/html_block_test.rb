@@ -21,8 +21,8 @@ class HtmlBlockTest < ActiveSupport::TestCase
   end
 
   def test_create    
-    @page = Factory(:page)
-    @html_block = Factory(:html_block, :connect_to_page_id => @page.id, :connect_to_container => "test")
+    @page = create(:page)
+    @html_block = create(:html_block, :connect_to_page_id => @page.id, :connect_to_container => "test")
     assert_equal 1, @page.reload.connectors.count
     assert_equal @page, @html_block.connected_page
     assert_equal @page.id, @html_block.connect_to_page_id
@@ -32,7 +32,7 @@ class HtmlBlockTest < ActiveSupport::TestCase
   def test_versioning
     assert Cms::HtmlBlock.versioned?
     
-    @html_block = Factory(:html_block, :name => "Original Value")
+    @html_block = create(:html_block, :name => "Original Value")
     assert_equal @html_block, @html_block.versions.last.html_block
 
     # Updates should make a new version
@@ -63,7 +63,7 @@ class HtmlBlockTest < ActiveSupport::TestCase
   def test_reverting
     # We need a block with a version that was created in the past
     @v1_created_at = Time.zone.now - 5.days
-    @html_block = Factory(:html_block, :name => "Version One", :created_at => @v1_created_at)
+    @html_block = create(:html_block, :name => "Version One", :created_at => @v1_created_at)
     
     # Make the version be created in the past as well
     v1 = @html_block.versions.last
@@ -103,7 +103,7 @@ class HtmlBlockTest < ActiveSupport::TestCase
   end
   
   def test_previous_version
-    @html_block = Factory(:html_block, :name => "V1")
+    @html_block = create(:html_block, :name => "V1")
     @html_block.update_attributes(:name => "V2")
     @version = @html_block.as_of_version 1
     

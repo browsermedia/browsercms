@@ -60,7 +60,7 @@ class ToolbarControllerTest < ActionController::TestCase
     
   protected
     def create_page
-      @page = Factory(:page, :section => root_section, :name => "Test", :path => "test")      
+      @page = create(:page, :section => root_section, :name => "Test", :path => "test")
     end  
 
   # More hacky overriding path for Rail 3.1/Engines problems.

@@ -17,7 +17,7 @@ class CategoriesControllerTest < ActionController::TestCase
   end
   
   def test_new_with_category_types
-    Factory(:category_type, :name => "FooCategoryType")
+    create(:category_type, :name => "FooCategoryType")
     get :new
     assert_response :success
     assert_select "title", "Content Library / Add New Category"

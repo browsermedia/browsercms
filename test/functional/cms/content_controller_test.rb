@@ -13,7 +13,7 @@ module Cms
     end
 
     def test_show_another_page
-      @page = Factory(:page, :section => root_section, :path => "/about", :name => "Test About", :template_file_name => "default.html.erb", :publish_on_save => true)
+      @page = create(:page, :section => root_section, :path => "/about", :name => "Test About", :template_file_name => "default.html.erb", :publish_on_save => true)
       get :show, :path => "about"
       assert_select "title", "Test About"
     end
@@ -46,8 +46,8 @@ module Cms
     end
 
     def test_show_page_route
-      @page_template = Factory(:page_template, :name => "test_show_page_route")
-      @page = Factory(:page,
+      @page_template = create(:page_template, :name => "test_show_page_route")
+      @page = create(:page,
                       :section => root_section,
                       :template_file_name => "test_show_page_route.html.erb")
       @portlet = DynamicPortlet.create!(:name => "Test",
@@ -98,16 +98,16 @@ module Cms
     end
 
     def create_protected_user_section_group
-      @protected_section = Factory(:section, :parent => root_section)
-      @secret_group = Factory(:group, :name => "Secret")
+      @protected_section = create(:section, :parent => root_section)
+      @secret_group = create(:group, :name => "Secret")
       @secret_group.sections << @protected_section
-      @privileged_user = Factory(:user, :login => "privileged")
+      @privileged_user = create(:user, :login => "privileged")
       @privileged_user.groups << @secret_group
     end
 
     def create_protected_page
       create_protected_user_section_group
-      @page = Factory(:page,
+      @page = create(:page,
                       :section => @protected_section,
                       :path => "/secret",
                       :name => "Shhh... It's a Secret",
@@ -117,7 +117,7 @@ module Cms
 
     def create_file
       @file = mock_file(:content_type => "text/plain")
-      @file_block = Factory(:file_block, :attachment_section => root_section, :attachment_file => @file, :attachment_file_path => "/test.txt", :publish_on_save => true)
+      @file_block = create(:file_block, :attachment_section => root_section, :attachment_file => @file, :attachment_file_path => "/test.txt", :publish_on_save => true)
     end
 
     def create_protected_file
@@ -129,7 +129,7 @@ module Cms
     end
 
     def create_archived_page
-      @page = Factory(:page,
+      @page = create(:page,
                       :section => root_section,
                       :path => "/archived",
                       :name => "Archived",
@@ -139,9 +139,9 @@ module Cms
     end
 
     def create_page_with_content
-      @page_template = Factory(:page_template, :name => "testing_editting_content")
+      @page_template = create(:page_template, :name => "testing_editting_content")
 
-      @page = Factory(:page,
+      @page = create(:page,
                       :section => root_section,
                       :path => "/page_with_content",
                       :template_file_name => "testing_editting_content.html.erb")
@@ -179,8 +179,8 @@ module Cms
       given_there_is_a_cmsadmin
       given_there_is_a_sitemap
       ActionController::Base.perform_caching = true
-      @page = Factory(:page, :section => root_section, :name => "Test Page", :path => "/page", :publish_on_save => true)
-      @registered_user = Factory(:user)
+      @page = create(:page, :section => root_section, :name => "Test Page", :path => "/page", :publish_on_save => true)
+      @registered_user = create(:user)
       @registered_user.groups << Group.guest
     end
 
@@ -253,8 +253,8 @@ module Cms
       given_there_is_a_cmsadmin
       given_there_is_a_sitemap
       ActionController::Base.perform_caching = false
-      @page = Factory(:page, :section => root_section, :name => "Test Page", :path => "/page", :publish_on_save => true)
-      @registered_user = Factory(:user)
+      @page = create(:page, :section => root_section, :name => "Test Page", :path => "/page", :publish_on_save => true)
+      @registered_user = create(:user)
       @registered_user.groups << Group.guest
     end
 
@@ -317,7 +317,7 @@ module Cms
     end
 
     test "When portlets throw a generic error, the page should still render the other content." do
-      @page = Factory(:page, :section => root_section, :path => "/about", :name => "Test About", :template_file_name => "default.html.erb", :publish_on_save => true)
+      @page = create(:page, :section => root_section, :path => "/about", :name => "Test About", :template_file_name => "default.html.erb", :publish_on_save => true)
       @portlet_render = DynamicPortlet.create!(:name => "Test", :connect_to_page_id => @page.id, :connect_to_container => "main", :template => '<p id="hi">hello</p>')
       @portlet_raise_generic = DynamicPortlet.create!(:name => "Test", :connect_to_page_id => @page.id, :connect_to_container => "main", :code => 'raise')
       reset(:page)

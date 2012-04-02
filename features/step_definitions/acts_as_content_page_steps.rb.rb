@@ -1,3 +1,3 @@
 Given /^a members only section$/ do
-   Factory(:section, :path=>"/members")
+   create(:section, :path=>"/members")
 end

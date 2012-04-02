@@ -87,7 +87,7 @@ module Cms
     end
 
     Paperclip.interpolates :attachments_root do |_, _|
-      Asset.configuration.attachments_root
+      Attachment.configuration.attachments_root
     end
 
     Paperclip.interpolates :full_filename do |asset, _|
@@ -96,5 +96,3 @@ module Cms
 
   end
 end
-
-

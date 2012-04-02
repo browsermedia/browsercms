@@ -14,7 +14,7 @@ module Cms
     end
 
     def test_edit
-      @image = Factory(:image_block,
+      @image = create(:image_block,
                        :attachment_section => root_section,
                        :attachment_file => mock_file,
                        :attachment_file_path => "test.jpg")
@@ -31,11 +31,11 @@ module Cms
     end
 
     def test_update_image
-      @image = Factory(:image_block,
+      @image = create(:image_block,
                        :attachment_section => root_section,
                        :attachment_file => mock_file,
                        :attachment_file_path => "test.jpg")
-      @other_section = Factory(:section, :parent => root_section, :name => "Other")
+      @other_section = create(:section, :parent => root_section, :name => "Other")
 
       put :update, :id => @image.id, :image_block => {:attachment_section_id => @other_section.id}
       reset(:image)
@@ -46,7 +46,7 @@ module Cms
     end
 
     def test_revert_to
-      @image = Factory(:image_block,
+      @image = create(:image_block,
                        :attachment_section => root_section,
                        :attachment_file => mock_file(:original_filename => "version1.txt"),
                        :attachment_file_path => "test.jpg",

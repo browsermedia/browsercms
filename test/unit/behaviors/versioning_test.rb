@@ -44,7 +44,7 @@ module Cms
     end
 
     test "Updating a block should increment the version on the new draft" do
-      block = Factory(:html_block)
+      block = create(:html_block)
       assert_equal 1, block.version
       block.name = "New Name"
       assert block.save
@@ -61,7 +61,7 @@ module Cms
     end
 
     test "Updating an object should perform after_save callbacks" do
-      block = Factory(:html_block)
+      block = create(:html_block)
       block.name = "New THing"
       block.expects(:update_connected_pages).returns(true)
 
@@ -72,7 +72,7 @@ module Cms
   class VersionsTest < ActiveSupport::TestCase
 
     def setup
-      @published_block = Factory(:html_block, :name => "Version 1", :publish_on_save => true)
+      @published_block = create(:html_block, :name => "Version 1", :publish_on_save => true)
       @published_block.update_attributes(:name => "Version 2")
       @published_block.reload
     end

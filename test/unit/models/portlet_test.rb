@@ -21,7 +21,7 @@ end
 class PortletTest < ActiveSupport::TestCase
 
   def setup
-    @portlet = Factory(:portlet)
+    @portlet = create(:portlet)
 
   end
 

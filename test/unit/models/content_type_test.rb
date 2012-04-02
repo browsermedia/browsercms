@@ -165,7 +165,7 @@ module Cms
     end
 
     test "#find_by_key with irregular pluralization" do
-      Factory(:content_type, :name => "Person")
+      create(:content_type, :name => "Person")
 
       type = Cms::ContentType.find_by_key("people")
       assert_not_nil type

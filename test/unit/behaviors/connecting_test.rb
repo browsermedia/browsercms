@@ -8,8 +8,8 @@ end
 class ConnectingTest < ActiveSupport::TestCase
 
   def setup
-    @page = Factory(:page, :section => root_section)
-    @block = Factory(:html_block, :name => "Versioned Content Block")
+    @page = create(:page, :section => root_section)
+    @block = create(:html_block, :name => "Versioned Content Block")
     @page.create_connector(@block, "main")
     reset(:page, :block)
   end
@@ -48,7 +48,7 @@ class ConnectingTest < ActiveSupport::TestCase
 
 
   test "connected_pages should return all pages connected to a nonversioned block " do
-    @portlet = Factory(:portlet)
+    @portlet = create(:portlet)
     @page.create_connector(@portlet, "main")
     @page.publish!
     assert_equal [@page], @portlet.connected_pages

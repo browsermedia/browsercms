@@ -4,8 +4,8 @@ module Cms
   class UserTest < ActiveSupport::TestCase
 
     def setup
-      @need_at_least_one_enabled_user = Factory(:user)
-      @user = Factory(:user)
+      @need_at_least_one_enabled_user = create(:user)
+      @user = create(:user)
     end
 
     should_validate_presence_of :user => [:login, :password, :password_confirmation]
@@ -48,7 +48,7 @@ module Cms
       @user.disable!
       assert !Cms::User.active.all.include?(@user)
 
-      user2 = Factory(:user)
+      user2 = create(:user)
       Time.zone = "Eastern Time (US & Canada)"
       user2.disable!
       assert !Cms::User.active.all.include?(user2)
@@ -94,7 +94,7 @@ module Cms
       login = 'robbo'
       fn = 'Bob'
       ln = 'Smith'
-      u = Factory.build(:user, :login => 'robbo', :first_name => nil, :last_name => nil)
+      u = build(:user, :login => 'robbo', :first_name => nil, :last_name => nil)
       assert_equal login, u.full_name_or_login
       u.first_name = fn
       assert_equal fn, u.full_name_or_login
@@ -129,8 +129,8 @@ module Cms
 
     test "Users with cmsaccess?" do
       @non_admin = Cms::GroupType.create!(:cms_access => true)
-      @group = Factory(:group, :group_type => @non_admin)
-      @public_user = Factory(:user)
+      @group = create(:group, :group_type => @non_admin)
+      @public_user = create(:user)
       @public_user.groups<< @group
       @public_user.save!
 
@@ -148,12 +148,12 @@ module Cms
 
   class PageEdittingPermissions < ActiveSupport::TestCase
     def setup
-      @content_editor = Factory(:content_editor) # Create first, so it will have permission to edit root section
+      @content_editor = create(:content_editor) # Create first, so it will have permission to edit root section
 
       given_a_site_exists
-      @private_section = Factory(:section, :parent => root_section)
-      @private_page = Factory(:public_page, :section => @private_section)
-      @editable_page = Factory(:public_page, :section => root_section)
+      @private_section = create(:section, :parent => root_section)
+      @private_page = create(:public_page, :section => @private_section)
+      @editable_page = create(:public_page, :section => root_section)
     end
 
     test "#modifiable_sections" do
@@ -179,15 +179,15 @@ module Cms
 
   class UserPermissionsTest < ActiveSupport::TestCase
     def setup
-      @user = Factory(:user)
+      @user = create(:user)
       @guest_group = Cms::Group.guest
     end
 
     def test_user_permissions
-      @have = Factory(:permission, :name => "do something the group has permission to do")
-      @havenot = Factory(:permission, :name => "do something the group does not have permission to do")
-      @group_a = Factory(:group)
-      @group_b = Factory(:group)
+      @have = create(:permission, :name => "do something the group has permission to do")
+      @havenot = create(:permission, :name => "do something the group does not have permission to do")
+      @group_a = create(:group)
+      @group_b = create(:group)
 
       @group_a.permissions << @have
       @group_b.permissions << @havenot
@@ -199,19 +199,19 @@ module Cms
     end
 
     test "cms user access to nodes" do
-      @group = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
+      @group = create(:group, :name => "Test", :group_type => create(:group_type, :name => "CMS User", :cms_access => true))
       @user.groups << @group
 
-      @modifiable_section = Factory(:section, :parent => root_section, :name => "Modifiable")
-      @non_modifiable_section = Factory(:section, :parent => root_section, :name => "Not Modifiable")
+      @modifiable_section = create(:section, :parent => root_section, :name => "Modifiable")
+      @non_modifiable_section = create(:section, :parent => root_section, :name => "Not Modifiable")
 
       @group.sections << @modifiable_section
 
-      @modifiable_page = Factory(:page, :section => @modifiable_section)
-      @non_modifiable_page = Factory(:page, :section => @non_modifiable_section)
+      @modifiable_page = create(:page, :section => @modifiable_section)
+      @non_modifiable_page = create(:page, :section => @non_modifiable_section)
 
-      @modifiable_link = Factory(:link, :section => @modifiable_section)
-      @non_modifiable_link = Factory(:link, :section => @non_modifiable_section)
+      @modifiable_link = create(:link, :section => @modifiable_section)
+      @non_modifiable_link = create(:link, :section => @non_modifiable_section)
 
       assert @user.able_to_modify?(@modifiable_section)
       assert !@user.able_to_modify?(@non_modifiable_section)
@@ -224,16 +224,16 @@ module Cms
     end
 
     test "cms user access to connectables" do
-      @group = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
+      @group = create(:group, :name => "Test", :group_type => create(:group_type, :name => "CMS User", :cms_access => true))
       @user.groups << @group
 
-      @modifiable_section = Factory(:section, :parent => root_section, :name => "Modifiable")
-      @non_modifiable_section = Factory(:section, :parent => root_section, :name => "Not Modifiable")
+      @modifiable_section = create(:section, :parent => root_section, :name => "Modifiable")
+      @non_modifiable_section = create(:section, :parent => root_section, :name => "Not Modifiable")
 
       @group.sections << @modifiable_section
 
-      @modifiable_page = Factory(:page, :section => @modifiable_section)
-      @non_modifiable_page = Factory(:page, :section => @non_modifiable_section)
+      @modifiable_page = create(:page, :section => @modifiable_section)
+      @non_modifiable_page = create(:page, :section => @non_modifiable_section)
 
       @all_modifiable_connectable = stub(
           :class => stub(:content_block? => true, :connectable? => true),
@@ -256,15 +256,15 @@ module Cms
     end
 
     test "non cms user access to nodes" do
-      @group = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "Registered User"))
+      @group = create(:group, :name => "Test", :group_type => create(:group_type, :name => "Registered User"))
       @user.groups << @group
 
-      @modifiable_section = Factory(:section, :parent => root_section, :name => "Modifiable")
+      @modifiable_section = create(:section, :parent => root_section, :name => "Modifiable")
       @group.sections << @modifiable_section
-      @non_modifiable_section = Factory(:section, :parent => root_section, :name => "Not Modifiable")
+      @non_modifiable_section = create(:section, :parent => root_section, :name => "Not Modifiable")
 
-      @modifiable_page = Factory(:page, :section => @modifiable_section)
-      @non_modifiable_page = Factory(:page, :section => @non_modifiable_section)
+      @modifiable_page = create(:page, :section => @modifiable_section)
+      @non_modifiable_page = create(:page, :section => @non_modifiable_section)
 
       assert !@user.able_to_modify?(@modifiable_section)
       assert !@user.able_to_modify?(@non_modifiable_section)
@@ -274,15 +274,15 @@ module Cms
     end
 
     test "cms user with no permissions should still be able to view pages" do
-      @group = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
+      @group = create(:group, :name => "Test", :group_type => create(:group_type, :name => "CMS User", :cms_access => true))
       @user.groups << @group
 
-      @page = Factory(:page)
+      @page = create(:page)
       assert @user.able_to_view?(@page)
     end
 
     test "cms user who can publish content" do
-      @group = Factory(:group, :name => "Test", :group_type => Factory(:group_type, :name => "CMS User", :cms_access => true))
+      @group = create(:group, :name => "Test", :group_type => create(:group_type, :name => "CMS User", :cms_access => true))
       @group.permissions << create_or_find_permission_named("publish_content")
       @user.groups << @group
 
@@ -303,9 +303,9 @@ module Cms
     def setup
       @guest_group = given_there_is_a_guest_group
       @guest_user = Cms::User.guest
-      @public_page = Factory(:page, :section => root_section)
-      @protected_section = Factory(:section, :parent => root_section)
-      @protected_page = Factory(:page, :section => @protected_section)
+      @public_page = create(:page, :section => root_section)
+      @protected_section = create(:section, :parent => root_section)
+      @protected_page = create(:page, :section => @protected_section)
     end
 
     def test_guest

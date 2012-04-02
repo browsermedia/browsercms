@@ -13,12 +13,14 @@ require 'action_view/test_case'
 # Allows Generators to be unit tested
 require "rails/generators/test_case"
 
-# I'm not sure why ANY of these FactoryGirl requires are necessary at all.
-require 'factory_girl'
-require 'factories'
-
 require 'mock_file'
 require 'support/factory_helpers'
+
+# I'm not sure why ANY of these FactoryGirl requires are necessary at all.
+require 'factory_girl'
+require 'factories/factories'
+require 'factories/attachables'
+
 require 'support/engine_controller_hacks'
 
 class ActiveSupport::TestCase
@@ -38,7 +40,7 @@ class ActiveSupport::TestCase
       fields = options[factory_name]
       fields.each do |f|
         define_method("test_validates_presence_of_#{f}") do
-          model = Factory.build(factory_name, f => nil)
+          model = FactoryGirl.build(factory_name, f => nil)
           assert !model.valid?
           assert_has_error_on model, f, "can't be blank"
         end
@@ -50,8 +52,8 @@ class ActiveSupport::TestCase
       fields = options[class_name]
       fields.each do |f|
         define_method("test_validates_uniqueness_of_#{f}") do
-          existing_model = Factory(class_name)
-          model = Factory.build(class_name, f => existing_model.send(f))
+          existing_model = FactoryGirl.create(class_name)
+          model = FactoryGirl.build(class_name, f => existing_model.send(f))
           assert !model.valid?
           assert_has_error_on model, f, "has already been taken"
         end
@@ -86,14 +88,6 @@ class ActiveSupport::TestCase
 
   def admin_user
     cms_users(:user_1)
-  end
-
-  def create_or_find_permission_named(name)
-    Cms::Permission.named(name).first || Factory(:permission, :name => name)
-  end
-
-  def guest_group
-    Cms::Group.guest || Factory(:group, :code => Group::GUEST_CODE)
   end
 
   def login_as(user)
@@ -133,11 +127,11 @@ class ActiveSupport::TestCase
   # Create a 'faux' sitemap which will work for tests (avoids need for fixtures)
   def given_a_site_exists
     @root = root_section
-    @homepage = Factory(:public_page, :name => "Home", :section => @root, :path => "/")
-    @system_section = Factory(:public_section, :name => "System", :parent => @root, :path => "/system")
-    @not_found_page = Factory(:public_page, :name => "Not Found", :section => @system_section, :path => Cms::ErrorPages::NOT_FOUND_PATH)
-    @access_denied_page = Factory(:public_page, :name => "Access Denied", :section => @system_section, :path => Cms::ErrorPages::FORBIDDEN_PATH)
-    @error_page = Factory(:public_page, :name => "Server Error", :section => @system_section, :path => Cms::ErrorPages::SERVER_ERROR_PATH)
+    @homepage = create(:public_page, :name => "Home", :section => @root, :path => "/")
+    @system_section = create(:public_section, :name => "System", :parent => @root, :path => "/system")
+    @not_found_page = create(:public_page, :name => "Not Found", :section => @system_section, :path => Cms::ErrorPages::NOT_FOUND_PATH)
+    @access_denied_page = create(:public_page, :name => "Access Denied", :section => @system_section, :path => Cms::ErrorPages::FORBIDDEN_PATH)
+    @error_page = create(:public_page, :name => "Server Error", :section => @system_section, :path => Cms::ErrorPages::SERVER_ERROR_PATH)
   end
 end
 

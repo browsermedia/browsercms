@@ -8,7 +8,7 @@ Feature: Image Blocks
     And I am adding a New Image
 
     Scenario: Creating image block
-      When I fill in "image_block_name" with "Giraffe"
+      When I fill in "Name" with "Giraffe"
       And I attach the file "test/fixtures/giraffe.jpeg" to "File"
       And I select "My Site" from "section_id"
       And I fill in "Path" with "/giraffe.jpeg"

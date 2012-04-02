@@ -12,7 +12,7 @@ module Cms
     end
 
     test "#parent" do
-      image = Factory(:image_block)
+      image = create(:image_block)
       assert_equal root_section, image.parent
     end
 
@@ -28,8 +28,28 @@ module Cms
       assert_equal :original_record_id, ImageBlock.version_foreign_key
     end
 
-    test "create works" do
-      ImageBlock.create!(:name=>"test")
+  end
+
+  class PaperclipAttachmentsTest < ActiveSupport::TestCase
+    def setup
+      @image = build(:image_block)
+      @image.save!
+    end
+
+    test "#file is set" do
+      assert_not_nil @image.file
+    end
+
+    test "#image is alias for #file" do
+      assert_equal @image.file, @image.image
+    end
+
+    test ":image_block Factory defines a default attachment" do
+      image = create(:image_block)
+      assert_not_nil image.file
+      assert_equal Cms::Attachment, image.file.class
     end
   end
+
+
 end

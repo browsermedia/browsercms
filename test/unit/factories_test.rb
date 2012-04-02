@@ -19,25 +19,25 @@ class FactoriesTest < ActiveSupport::TestCase
   # Split factories into 'sharable' cms factories (that can be used in testing BrowserCMS projects).
   #   as well as 'core' CMS factories (needed only for core)
   test "content_editor_group" do
-    group = Factory(:content_editor_group)
+    group = create(:content_editor_group)
     assert_equal Cms::Group, group.class
   end
 
   test ":content_editor factory has edit_permission" do
-    editor = Factory(:content_editor)
+    editor = create(:content_editor)
     assert editor.able_to?(:edit_content)
     assert editor.able_to?(:publish_content)
   end
 
   test "section" do
-    section = Factory(:section)
+    section = create(:section)
     assert_equal "Test", section.name
     assert_equal "/test", section.path
     assert_not_nil section.parent
   end
 
   test "cms_admin_user" do
-    user = Factory(:cms_admin)
+    user = create(:cms_admin)
     assert_equal 1, user.groups.size
     assert_equal true, user.able_to?(:edit_content)
     assert_equal true, user.able_to?(:administrate)
@@ -45,6 +45,6 @@ class FactoriesTest < ActiveSupport::TestCase
   end
 
   test ":public_page is also published" do
-    assert_equal true, Factory(:public_page).published?
+    assert_equal true, create(:public_page).published?
   end
 end

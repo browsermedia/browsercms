@@ -6,10 +6,10 @@ module Cms
 
     def setup
       given_a_site_exists
-      @block = Factory(:html_block)
-      @connected_page = Factory(:public_page, :parent => root_section)
-      @connected_page_2 = Factory(:public_page, :parent => root_section)
-      @unconnected_page = Factory(:public_page, :parent => root_section)
+      @block = create(:html_block)
+      @connected_page = create(:public_page, :parent => root_section)
+      @connected_page_2 = create(:public_page, :parent => root_section)
+      @unconnected_page = create(:public_page, :parent => root_section)
 
       @connected_page.create_connector(@block, "main")
       @connected_page_2.create_connector(@block, "main")

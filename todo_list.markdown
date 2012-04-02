@@ -1,5 +1,21 @@
 Tasks:
 
+* Paperclip Based Assets - Replace the existing 'custom' file upload behavior with one that uses Paperclip. Allow blocks to have more than one attachment.
+- Lots of attachment and file/image tests are commented out. They need to be rewritten and tested.
+- Class reloading causes Attachments to 'lose' their paperclip configuration in development mode. Need to figure out why and fix it.
+- However, upload image blocks works now.
+- Custom Attaching behavior tests are broken, mostly due to API changes. Probably need to be reworked.
+- Specifying the file path might not be working correctly for ANY block
+
+Get rid of WARNING (Paperclip?)
+  sh: identify: command not found
+  Need to install ImageMagick and configure the command via:
+    http://stackoverflow.com/questions/4900905/imagemagick-and-paperclip-problem
+    Paperclip.options[:command_path] = "/opt/local/bin/"
+
+Issues:
+- For unknown reasons, ImageBlocksController#create can't be found by Cucumber, but works fine in testing
+
 ## Upgrade Notes
 - Migrations are now generated with .cms. Will this cause problems during upgrades? (Write upgrade scenarios)
 - rails -h only provides generate | destroy methods with engine on a new project. Why? It sucks to have to cd into test/dummy to run tests.
@@ -9,7 +25,6 @@ Tasks:
 
 # 3.5.x Goals
 
-* Paperclip Based Assets - Replace the existing 'custom' file upload behavior with one that uses Paperclip. Allow blocks to have more than one attachment.
 * Faster Files - Take advantage of X-Sendfile (if possible) to speed up sending uploaded CMS files.
 * Browser Compatibility Testing - Ensure compatibility with latest versions of Chrome/IE 9/Firefox/Safari. IE 9 probably needs the most works.
 

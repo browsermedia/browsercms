@@ -1,11 +1,7 @@
 module Cms
+  # @todo Comments need to be cleaned up to get rid of 'uses_paperclip'
   module Behaviors
-    # The paperclipping behavior sets up bolcks in much the same way the
-    # attaching behavior does.
-    # It exposes one macro method, two class methods and will be
-    # responsible for setting up validations.
-    #
-    # The uses_paperclip macro method is akin to belongs_to_attachment:
+    # Allows one or more files to be attached to content blocks.
     #
     # class Book
     #   acts_as_content_block
@@ -73,8 +69,8 @@ module Cms
 
           attr_accessor :attachment_id_list
 
-          Attachment.definitions[self.name] = {}
-          has_many :attachments, :as => :attachable, :dependent => :destroy
+          Cms::Attachment.definitions[self.name] = {}
+          has_many :attachments, :as => :attachable, :dependent => :destroy, :class_name => 'Cms::Attachment'
 
           accepts_nested_attributes_for :attachments,
                                         :allow_destroy => true,
@@ -113,11 +109,11 @@ module Cms
         def validates_attachment_presence(name, options = {})
           message = options[:message] || "Must provide at least one #{name}"
           validate(options) do |record|
-            record.errors.add_to_base(message) unless record.attachments.any? {|a| a.attachment_name == name.to_s}
+            record.errors.add(:attachment, message) unless record.attachments.any? {|a| a.attachment_name == name.to_s}
           end
         end
 
-        def validates_attechment_content_type(name, options = {})
+        def validates_attachment_content_type(name, options = {})
           validation_options = options.dup
           allowed_types = [validation_options[:content_type]].flatten
           validate(validation_options) do |record|
@@ -144,8 +140,8 @@ module Cms
 
         def has_attachment(name, options = {})
           options[:type] = :single
-          options[:index] = Attachment.definitions[self.name].size
-          Attachment.definitions[self.name][name] = options
+          options[:index] = Cms::Attachment.definitions[self.name].size
+          Cms::Attachment.definitions[self.name][name] = options
 
           define_method name do
             attachments.named(name).last
@@ -157,7 +153,7 @@ module Cms
 
         def has_many_attachments(name, options = {})
           options[:type] = :multiple
-          Attachment.definitions[self.name][name] = options
+          Cms::Attachment.definitions[self.name][name] = options
 
           define_method name do
             attachments.named name
@@ -176,7 +172,7 @@ module Cms
 
         def unassigned_attachments
           return [] if attachment_id_list.blank?
-          Attachments.find attachment_id_list.split(',').map(&:to_i)
+          Cms::Attachment.find attachment_id_list.split(',').map(&:to_i)
         end
 
         def all_attachments
@@ -189,7 +185,7 @@ module Cms
             ids = attachment_id_list.split(',').map(&:to_i)
             ids.each do |i|
               begin
-                attachment = Attachment.find(i)
+                attachment = Cms::Attachment.find(i)
               rescue ActiveRecord::RecordNotFound
               end
               attachments << attachment if attachment
