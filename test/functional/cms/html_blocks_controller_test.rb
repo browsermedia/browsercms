@@ -52,7 +52,7 @@ class HtmlBlocksControllerTest < ActionController::TestCase
     @page = create(:page, :path => "/test", :section => root_section)
     html_block_count = HtmlBlock.count
 
-    post :create, :html_block => Factory.attributes_for(:html_block).merge(
+    post :create, :html_block => FactoryGirl.attributes_for(:html_block).merge(
       :connect_to_page_id => @page.id, :connect_to_container => "test")
       
     assert_incremented html_block_count, HtmlBlock.count

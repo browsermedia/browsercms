@@ -110,7 +110,7 @@ module Cms
     def test_create
       user_count = User.count
       @group = create(:group)
-      user_params = Factory.attributes_for(:user, :password=>"123456", :password_confirmation=>"123456")
+      user_params = FactoryGirl.attributes_for(:user, :password=>"123456", :password_confirmation=>"123456")
 
       post :create, :user => user_params, :group_ids => [@group.id]
       user = User.find_by_login(user_params[:login])
