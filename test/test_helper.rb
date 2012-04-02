@@ -21,10 +21,11 @@ require 'factory_girl'
 require 'factories/factories'
 require 'factories/attachables'
 
-require 'support/engine_controller_hacks'
+#require 'support/engine_controller_hacks'
 
 class ActiveSupport::TestCase
 
+  include FactoryGirl::Syntax::Methods
   include FactoryHelpers
 
   # Add more helper methods to be used by all tests here...

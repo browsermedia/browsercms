@@ -1,20 +1,17 @@
 Tasks:
 
 * Paperclip Based Assets - Replace the existing 'custom' file upload behavior with one that uses Paperclip. Allow blocks to have more than one attachment.
+- Validation - Attachment right now will 'make up' a path if none is specified. This doesn't work for file/image blocks, which should REQUIRE a path. Need to change API.
 - Lots of attachment and file/image tests are commented out. They need to be rewritten and tested.
 - Class reloading causes Attachments to 'lose' their paperclip configuration in development mode. Need to figure out why and fix it.
-- However, upload image blocks works now.
 - Custom Attaching behavior tests are broken, mostly due to API changes. Probably need to be reworked.
-- Specifying the file path might not be working correctly for ANY block
+- Path is not automatically calculated for new File/Image blocks.
 
 Get rid of WARNING (Paperclip?)
   sh: identify: command not found
   Need to install ImageMagick and configure the command via:
     http://stackoverflow.com/questions/4900905/imagemagick-and-paperclip-problem
     Paperclip.options[:command_path] = "/opt/local/bin/"
-
-Issues:
-- For unknown reasons, ImageBlocksController#create can't be found by Cucumber, but works fine in testing
 
 ## Upgrade Notes
 - Migrations are now generated with .cms. Will this cause problems during upgrades? (Write upgrade scenarios)

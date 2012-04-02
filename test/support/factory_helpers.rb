@@ -1,13 +1,11 @@
 
 module FactoryHelpers
 
-  include FactoryGirl::Syntax::Methods
-
   def find_or_create_root_section
     root = Cms::Section.root.first
     unless root
       # This constructor matches how seed data is set up.
-      root = create(:root_section)
+      root = FactoryGirl.create(:root_section)
     end
     root
   end
@@ -41,7 +39,7 @@ module FactoryHelpers
   end
 
   def create_or_find_permission_named(name)
-    Cms::Permission.named(name).first || create(:permission, :name => name)
+    Cms::Permission.named(name).first || FactoryGirl.create(:permission, :name => name)
   end
 
   # Creates a TempFile attached to an uploaded file. Used to test attachments
