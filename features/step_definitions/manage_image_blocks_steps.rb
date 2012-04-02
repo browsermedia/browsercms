@@ -13,6 +13,17 @@ Then /^the following images exist:$/ do |table|
   end
 end
 
+Then /^the following files exist:$/ do |table|
+  table.hashes.each do |row|
+    if row['section']
+      row[:attachment_section_id] = Cms::Section.find_by_name(row.delete('section'))
+    end
+    b = create(:file_block, row)
+    b.id = row['id']
+    b.save!
+  end
+end
+
 Then /^the following sections exist:$/ do |table|
   table.hashes.each do |row|
     create(:section, row)
@@ -70,4 +81,10 @@ end
 
 When /^I am adding a new File$/ do
   visit '/cms/file_blocks/new'
+end
+
+When /^the file template should render$/ do
+  within('#file_block_150') do
+    assert page.has_content?('A Sample File')
+  end
 end
