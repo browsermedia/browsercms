@@ -6,8 +6,8 @@ class AttachmentTest < ActiveSupport::TestCase
     @attachment ||= Cms::Attachment.new
   end
 
-  def test_requires_data_file_path_if_abstract_file_block
-    attachment.attachable_type = 'AbstractFileBlock'
+  test "File/Image blocks require a path to be valid" do
+    attachment.attachable_type = 'Cms::AbstractFileBlock'
     assert_not_valid attachment
     assert_has_error_on attachment, :data_file_path, "can't be blank"
   end
