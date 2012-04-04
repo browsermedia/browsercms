@@ -3,6 +3,8 @@ require 'cms/data_loader'
 require File.expand_path(File.join(__FILE__, "..", "..", "..", "test", "mock_file"))
 module FileOperations
 
+  # @deprecated Use FactoryGirl.create(:file_block) directly instead of this whereever possible.
+  #
   # Creates an 'uploaded' file block at a given relative path
   # @param [String] relative_file_path A relative file path (i.e. /test.txt) for the uploaded block.
   def create_file(relative_file_path, text="Test Content", section=nil)

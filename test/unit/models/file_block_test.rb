@@ -69,6 +69,12 @@ module Cms
       assert_equal other_section, file.parent
     end
 
+
+    test "Creating an archived block should mark the attachment as archived" do
+      file = create(:file_block, :archived=>true)
+      assert_equal true, file.archived?
+      assert_equal true, file.file.archived?
+    end
     #Does not work properly. As is, blocks can track only one attachment per version,
     #not multiple ones. Will need to add more complicated versioning.
 
@@ -230,21 +236,21 @@ module Cms
 
 # end
 
-# class ExistingFileBlockTest < ActiveSupport::TestCase
-#   def setup
-#     @file_block = create(:file_block, :attachment_file => mock_file, :attachment_file_path => "/test.txt", :attachment_section => root_section)
-#   end
+class ExistingFileBlockTest < ActiveSupport::TestCase
+   def setup
+     @file_block = create(:file_block)
+   end
 
-#   def test_archiving
-#     assert @file_block.update_attributes(:archived => true)
-#     assert @file_block.attachment.archived?
-#   end
+   def test_archiving
+     assert @file_block.update_attributes(:archived => true)
+     assert @file_block.file.archived?
+   end
 
-#   def test_destroy
-#     @file_block.destroy
-#     assert_nil Cms::Attachment.find_live_by_file_path("/test.txt")
-#   end
-# end
+   def test_destroy
+     @file_block.destroy
+     assert_nil Cms::Attachment.find_live_by_file_path("/test.txt")
+   end
+end
 
 # class ExistingFileBlocksTest < ActiveSupport::TestCase
 #   def setup

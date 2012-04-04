@@ -19,16 +19,11 @@ end
 Given /^a protected text file named "([^"]*)" exists with:$/ do |file_name, text|
   section = create(:protected_section)
   file = create_file(file_name, text, section)
-
-  #file = create(:file_block, :parent=>section, )
-
-  #file.update_attributes(:attachment_section => section)
 end
 
 Given /^an archived file named "([^"]*)" exists$/ do  |file_name|
-  file = create_file(file_name)
-  file.update_attributes(:archived => true, :publish_on_save => true)
-  assert file.attachment.archived?, "File should be archived"
+  file = create(:file_block, :archived=>true, :attachment_file_path => file_name)
+  assert file.archived?, "Verify the file I just created should be archived"
 end
 
 When /^I (?:request|visit) (#{PATH})$/ do |path|
