@@ -8,10 +8,10 @@ FactoryGirl.define do
   end
 
   factory :root_section, :class => Cms::Section do |m|
-      m.name "My Site"
-      m.path "/"
-      m.root true
-      m.groups { Cms::Group.all }
+    m.name "My Site"
+    m.path "/"
+    m.root true
+    m.groups { Cms::Group.all }
   end
 
   factory :category_type, :class => Cms::CategoryType do |m|
@@ -28,9 +28,14 @@ FactoryGirl.define do
 
 # Duplication between :file_block and :image_block
   factory :image_block, :class => Cms::ImageBlock do |m|
+    ignore do
+      parent { find_or_create_root_section }
+      attachment_file { mock_file }
+      attachment_file_path { name }
+    end
     m.sequence(:name) { |n| "TestImageBlock#{n}" }
-    m.after_build { |f|
-      f.attachments.build(:data => mock_file, :attachment_name => 'file', :parent => find_or_create_root_section, :data_file_path => f.name)
+    m.after_build { |f, evaluator|
+      f.attachments.build(:data => evaluator.attachment_file, :attachment_name => 'file', :parent => evaluator.parent, :data_file_path => evaluator.attachment_file_path)
     }
     m.publish_on_save true
   end
@@ -144,7 +149,6 @@ FactoryGirl.define do
     m.path "/test"
     m.parent { find_or_create_root_section }
   end
-
 
 
 # A publicly accessible (published) page

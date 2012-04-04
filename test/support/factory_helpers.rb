@@ -1,5 +1,11 @@
-
 module FactoryHelpers
+
+  def new_attachment(name="spreadsheet")
+    {"0" => {
+        :data => mock_file,
+        :section_id => root_section,
+        :attachment_name => name}}
+  end
 
   def find_or_create_root_section
     root = Cms::Section.root.first
@@ -31,6 +37,7 @@ module FactoryHelpers
     end
     guest_group
   end
+
   alias :given_a_guest_group_exists :given_there_is_a_guest_group
 
   # Creates a sample uploaded JPG file with binary data.

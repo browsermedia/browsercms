@@ -29,7 +29,11 @@ Feature: Manage Image Blocks
     And I click on "Save"
     Then the section 150 should be moved to "Image Gallery"
 
-
+  Scenario: Revert an Image
+    # Given an image exists with two versions
+    # When I revert the image to version 1
+    # Then visitors should see the original version of the image
+    # And the image should be updated to version 3
 
 
 

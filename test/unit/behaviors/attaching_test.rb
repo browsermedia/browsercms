@@ -34,16 +34,8 @@ module Cms
     def setup
       @file = mock_file
       @attachable = DefaultAttachable.create!(:name => "File Name",
-                                              :attachments_attributes => attachment(),
+                                              :attachments_attributes => new_attachment(),
                                               :publish_on_save => true)
-    end
-
-    # Shorthand to reduce duplication in tests
-    def attachment(file=@file, name="spreadsheet")
-      {"0" => {
-          :data => file,
-          :section_id => root_section,
-          :attachment_name => name}}
     end
 
     test "Create a block with an attached file" do
@@ -59,7 +51,7 @@ module Cms
 
     def test_create_with_attachment_file
 
-      @attachable = DefaultAttachable.new(:name => "File Name", :attachments_attributes => attachment())
+      @attachable = DefaultAttachable.new(:name => "File Name", :attachments_attributes => new_attachment())
       attachable_count = DefaultAttachable.count
 
       @attachable.save!
@@ -93,7 +85,7 @@ module Cms
 
       reset(:attachable)
 
-      @attachable.attachments_attributes = attachment()
+      @attachable.attachments_attributes = new_attachment()
       assert_equal true, @attachable.save!
       assert_equal true, @attachable.publish!
 
