@@ -176,7 +176,7 @@ module Cms
       data_file_name.split('.').last.downcase if data_file_name['.']
     end
 
-    # Sets a default path if none was specified.
+    # Filter - Sets a default path if none was specified.
     # Some types of attachments may require a path though (see validations above)
     def set_default_path
       if data_file_path.blank?
@@ -184,6 +184,7 @@ module Cms
       end
     end
 
+    # Filter - Ensure that paths are going to URL friendly (and won't need encoding for special characters.')
     def ensure_sanitized_file_path
       if data_file_path
         self.data_file_path = self.class.sanitize_file_path(data_file_path)

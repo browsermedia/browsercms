@@ -74,11 +74,12 @@ module Cms
 
           accepts_nested_attributes_for :attachments,
                                         :allow_destroy => true,
-                                        :reject_if => lambda {|a| a[:data].blank?}
+                                        :reject_if => lambda { |a| a[:data].blank? }
 
           validates_associated :attachments
           before_create :assign_attachments
           before_validation :initialize_attachments
+          before_save :ensure_status_matches_attachable
         end
       end
 
@@ -87,12 +88,12 @@ module Cms
         def validates_attachment_size(name, options = {})
 
           #if options.delete(:unless)
-            #logger.warn "Option :unless is not supported and will be ignored"
+          #logger.warn "Option :unless is not supported and will be ignored"
           #end
 
-          min     = options[:greater_than] || (options[:in] && options[:in].first) || 0
-          max     = options[:less_than]    || (options[:in] && options[:in].last)  || (1.0/0)
-          range   = (min..max)
+          min = options[:greater_than] || (options[:in] && options[:in].first) || 0
+          max = options[:less_than] || (options[:in] && options[:in].last) || (1.0/0)
+          range = (min..max)
           message = options[:message] || "#{name.to_s.capitalize} file size must be between :min and :max bytes."
           message = message.gsub(/:min/, min.to_s).gsub(/:max/, max.to_s)
 
@@ -109,7 +110,7 @@ module Cms
         def validates_attachment_presence(name, options = {})
           message = options[:message] || "Must provide at least one #{name}"
           validate(options) do |record|
-            record.errors.add(:attachment, message) unless record.attachments.any? {|a| a.attachment_name == name.to_s}
+            record.errors.add(:attachment, message) unless record.attachments.any? { |a| a.attachment_name == name.to_s }
           end
         end
 
@@ -118,7 +119,7 @@ module Cms
           allowed_types = [validation_options[:content_type]].flatten
           validate(validation_options) do |record|
             attachments.each do |a|
-              if !allowed_types.any?{|t| t === a.data_content_type } && !(a.data_content_type.nil? || a.data_content_type.blank?)
+              if !allowed_types.any? { |t| t === a.data_content_type } && !(a.data_content_type.nil? || a.data_content_type.blank?)
                 record.add_to_base(options[:message] || "is not one of #{allowed_types.join(', ')}")
               end
             end
@@ -180,6 +181,16 @@ module Cms
         end
 
         private
+
+        # Filter - Ensures that the status of all attachments matches the this block
+        def ensure_status_matches_attachable
+          if self.class.archivable?
+            attachments.each do |a|
+              a.archived = self.archived
+            end
+          end
+        end
+
         def assign_attachments
           unless attachment_id_list.blank?
             ids = attachment_id_list.split(',').map(&:to_i)
@@ -194,7 +205,7 @@ module Cms
         end
 
         def initialize_attachments
-          attachments.each {|a| a.attachable_class = self.class.name}
+          attachments.each { |a| a.attachable_class = self.class.name }
         end
 
       end
