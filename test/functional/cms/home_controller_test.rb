@@ -132,21 +132,7 @@ class HomeControllerCachingEnabledTest < ActionController::TestCase
   def test_url_with_cms_domain_prefix_with_cms_site_www
     @request.host = "www.cms.foo.com"
     @request.path = "/cms"
-    assert_equal "http://www.cms.foo.com/cms", 
-      @controller.send(:url_with_cms_domain_prefix)
-  end
-  
-  def test_redirected_to_cms_site_if_public_site
-    @request.host = "foo.com"
-    get :index
-    assert_redirected_to "http://cms.foo.com/cms"
-  end
-
-  def test_redirected_to_cms_site_if_public_site_and_logged_in
-    login_as_cms_admin
-    @request.host = "foo.com"
-    get :index
-    assert_redirected_to "http://cms.foo.com/cms"
+    assert_equal "http://www.cms.foo.com/cms", @controller.send(:url_with_cms_domain_prefix)
   end
   
   def test_success_if_cms_site_and_logged_in

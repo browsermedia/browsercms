@@ -19,8 +19,13 @@ When /^I am not logged in$/ do
   visit '/cms/logout'
 end
 
-Given /^I am logged in as a Content Editor$/ do
-  visit '/cms'
+Given /^I am logged in as a Content Editor(|on the admin subdomain)$/ do |is_admin|
+  if is_admin.blank?
+    login_at = '/cms/login'
+  else
+    login_at = 'http://cms.mysite.com/cms/login'
+  end
+  visit login_at
   fill_in 'login', :with => 'cmsadmin'
   fill_in 'password', :with => 'cmsadmin'
   click_button 'LOGIN'
@@ -173,7 +178,7 @@ When /^I change the link name to "([^"]*)"$/ do |new_name|
   click_on "Save And Publish"
 end
 
-When /^a guest visits "([^"]*)"$/ do |url|
+When /^(?:a guest|I) visits* "([^"]*)"$/ do |url|
   visit url
 end
 

@@ -1,9 +1,10 @@
 Feature: Content Pages
   Visitors should be able to see content pages
 
-  # This should be ported from test/functional/content_controller_test.rb over time.
+# This should be ported from test/functional/content_controller_test.rb over time.
 
   Background:
+    Given I am a guest
 
   Scenario: Page Not Found as Guest
     Given I request /a/non-existent/page
@@ -28,7 +29,20 @@ Feature: Content Pages
 
   @page-caching
   Scenario: A registered user tries to access a CMS page in production
-      Given a page at "/about-us" exists
-      When a registered user visits "http://cms.mysite.com/about-us"
-      Then they should be redirected to "http://mysite.com/about-us"
-      And the response should be 200
+    Given a page at "/about-us" exists
+    When a registered user visits "http://cms.mysite.com/about-us"
+    Then they should be redirected to "http://mysite.com/about-us"
+    And the response should be 200
+
+  @page-caching
+  Scenario: Guest accesses a CMS action on the public domain
+    When I visit "http://www.mysite.com/cms/dashboard"
+    Then they should be redirected to "http://cms.mysite.com/cms/login"
+    And the response should be 200
+
+  @page-caching
+  Scenario: Editor accesses the 'home' controller
+    Given I am logged in as a Content Editor on the admin subdomain
+    When I visit "http://mysite.com/cms"
+    Then they should be redirected to "http://cms.mysite.com/"
+    And the response should be 200
