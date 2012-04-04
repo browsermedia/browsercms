@@ -1,6 +1,7 @@
 Tasks:
 
 * Paperclip Based Assets - Replace the existing 'custom' file upload behavior with one that uses Paperclip. Allow blocks to have more than one attachment.
+- Updating attachments doesn't work.
 - Lots of attachment and file/image tests are commented out. They need to be rewritten and tested.
 - Class reloading causes Attachments to 'lose' their paperclip configuration in development mode. Need to figure out why and fix it.
 - Custom Attaching behavior tests are broken, mostly due to API changes. Probably need to be reworked.
