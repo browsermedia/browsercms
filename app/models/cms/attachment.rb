@@ -13,7 +13,7 @@ module Cms
     attr_accessor :attachable_class
 
     before_save :set_section
-    before_save :set_data_file_path
+    before_save :set_default_path
     before_validation :ensure_sanitized_file_path
     before_create :setup_attachment
     before_create :set_cardinality
@@ -37,8 +37,9 @@ module Cms
 
     scope :multiple, :conditions => {:cardinality => "multiple"}
 
-    validates_presence_of :data_file_path, :if => Proc.new { |a| a.attachable_type == "AbstractFileBlock" }
-    validates_uniqueness_of :data_file_path, :if => Proc.new { |a| a.attachable_type == "AbstractFileBlock" }
+    FILE_BLOCKS = "Cms::AbstractFileBlock"
+    validates_presence_of :data_file_path, :if => Proc.new { |a| a.attachable_type == FILE_BLOCKS }
+    validates_uniqueness_of :data_file_path, :if => Proc.new { |a| a.attachable_type == FILE_BLOCKS }
 
     class << self
 
@@ -175,7 +176,9 @@ module Cms
       data_file_name.split('.').last.downcase if data_file_name['.']
     end
 
-    def set_data_file_path
+    # Sets a default path if none was specified.
+    # Some types of attachments may require a path though (see validations above)
+    def set_default_path
       if data_file_path.blank?
         self.data_file_path = "/attachments/#{content_block_class}_#{data_file_name}"
       end

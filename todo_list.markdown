@@ -1,7 +1,6 @@
 Tasks:
 
 * Paperclip Based Assets - Replace the existing 'custom' file upload behavior with one that uses Paperclip. Allow blocks to have more than one attachment.
-- Validation - Attachment right now will 'make up' a path if none is specified. This doesn't work for file/image blocks, which should REQUIRE a path. Need to change API.
 - Lots of attachment and file/image tests are commented out. They need to be rewritten and tested.
 - Class reloading causes Attachments to 'lose' their paperclip configuration in development mode. Need to figure out why and fix it.
 - Custom Attaching behavior tests are broken, mostly due to API changes. Probably need to be reworked.
