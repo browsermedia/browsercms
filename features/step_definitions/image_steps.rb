@@ -94,3 +94,33 @@ When /^the file template should render$/ do
     assert page.has_content?('A Sample File')
   end
 end
+Given /^an image exists with two versions$/ do
+  @image = create(:image_block, :name => "Image Version 1")
+  @image.update_attributes(:name => "Version 2", :publish_on_save => true)
+
+  @image.reload
+  assert_equal 2, @image.version
+end
+
+When /^I revert the image to version 1$/ do
+  visit "/cms/image_blocks/#{@image.id}"
+  click_on "List Versions"
+  # Select row (uses javascript)
+  # Clicks 'revert button'
+  page.driver.put "/cms/image_blocks/#{@image.id}/revert_to/1"
+  visit "/cms/image_blocks/#{@image.id}"
+end
+
+Then /^the image should be reverted to version 1$/ do
+  assert page.has_content? "Image Version 1"
+end
+
+Then /^the image should be in draft mode$/ do
+  within(".status") do
+    assert page.has_content? "draft"
+  end
+end
+
+When /^the image should be updated to version 3$/ do
+  assert_equal 3, @image.as_of_draft_version.version
+end
