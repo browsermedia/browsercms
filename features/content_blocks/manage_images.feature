@@ -42,6 +42,9 @@ Feature: Manage Image Blocks
     Then the image should be in draft mode
     And the image should be updated to version 3
 
+    # This does not test actual file content, which it probably should
+
+
 
 
 
