@@ -123,7 +123,7 @@ module Cms
     def load_blocks
       options = {}
       if params[:section_id] && params[:section_id] != 'all'
-        options[:include] = {:attachment => :section_node}
+        options[:include] = {:attachments => :section_node}
         options[:conditions] = ["#{Namespacing.prefix("section_nodes")}.ancestry = ?", Section.find(params[:section_id]).ancestry_path]
       end
       options[:page] = params[:page]

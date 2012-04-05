@@ -49,3 +49,4 @@ Feature: File Blocks
     And I fill in "Path" with "/perspective.pdf"
     When I Save And Publish
     Then I should see "file path has already been taken"
+
