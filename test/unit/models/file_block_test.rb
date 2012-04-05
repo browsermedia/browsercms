@@ -85,7 +85,6 @@ module Cms
 
     test "don't create without a file data using nested attributes" do
       fb = FileBlock.new(:name=>"Any Name", :attachments_attributes=>{"0"=>{:data_file_path=>"/new-path.txt", :attachment_name=>"file"}})
-      #refute fb.attachments.first.valid?
       refute fb.valid?
     end
     #Does not work properly. As is, blocks can track only one attachment per version,
