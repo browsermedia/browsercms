@@ -20,19 +20,21 @@ Feature: Image Blocks
     And I should see an image with path "/giraffe.jpeg"
     And the attachment with path "/giraffe.jpeg" should be in section "My Site"
 
-  Scenario: Creating an image block with errors
+  Scenario: Missing Name
     When I Save And Publish
     Then I should see "Name can't be blank"
-    When I fill in "image_block_name" with "Giraffe"
+
+  Scenario: Missing File
+    When I fill in "Name" with "Giraffe"
+    And I fill in "Path" with "/giraffe.jpg"
     And I Save And Publish
     Then I should see "You must upload a file"
+
+  Scenario: Missing Path
+    When I fill in "Name" with "Giraffe"
     When I attach the file "test/fixtures/giraffe.jpeg" to "File"
     And I Save And Publish
     Then I should see "file path can't be blank"
-    When I fill in "Path" with "/giraffe.jpeg"
-    And I attach the file "test/fixtures/giraffe.jpeg" to "File"
-    And I Save And Publish
-    Then I should see "Image 'Giraffe' was created"
 
   Scenario: With Existing Path
     Given an image with path "/giraffe.jpeg" exists

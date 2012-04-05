@@ -7,6 +7,16 @@ Tasks:
 - Custom Attaching behavior tests are broken, mostly due to API changes. Probably need to be reworked.
 - Path is not automatically calculated for new File/Image blocks.
 
+- The mess that is publishing/saving is coming back again when trying to interact with blocks with associated attachments.
+-- Really need to simplify this API as its very painful to grok and get right currently.
+-- Key issue: For existing blocks, these two statements are not the same:
+a. @block.publish_on_save = true; @block.save
+b. @block.publish!
+When almost certainly should be.
+
+- Another Versioning related Bug: Blocks with has_many :autosave=>true does not work. The callbacks do not trigger when the block is saved.
+
+
 Get rid of WARNING (Paperclip?)
   sh: identify: command not found
   Need to install ImageMagick and configure the command via:
