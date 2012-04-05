@@ -71,9 +71,23 @@ module Cms
 
 
     test "Creating an archived block should mark the attachment as archived" do
-      file = create(:file_block, :archived=>true)
+      file = create(:file_block, :archived => true)
       assert_equal true, file.archived?
       assert_equal true, file.file.archived?
+    end
+
+
+    test "create via nested assignment" do
+      fb = FileBlock.new(:attachments_attributes=>{"0"=>{:data_file_path=>"/new-path.txt", :attachment_name=>"file"}})
+      assert_equal 1, fb.attachments.size
+      assert_equal "/new-path.txt", fb.attachments[0].data_file_path
+    end
+
+
+    test "don't create without a file data using nested attributes" do
+      fb = FileBlock.new(:name=>"Any Nam", :attachments_attributes=>{"0"=>{:data_file_path=>"/new-path.txt", :attachment_name=>"file"}})
+      #refute fb.attachments.first.valid?
+      refute fb.valid?
     end
     #Does not work properly. As is, blocks can track only one attachment per version,
     #not multiple ones. Will need to add more complicated versioning.
@@ -136,18 +150,30 @@ module Cms
 
   end
 
-# class UpdatingFileBlockTest < ActiveSupport::TestCase
-#   def setup
-#     @file_block = create(:file_block,
-#                           :attachment_section => root_section,
-#                           :attachment_file_path => "/test.jpg",
-#                           :attachment_file => mock_file(),
-#                           :name => "Test",
-#                           :publish_on_save => true)
-#     reset(:file_block)
-#     @attachment = @file_block.attachment
-#   end
+  class UpdatingFileBlockTest < ActiveSupport::TestCase
+    def setup
+      @file_block = create(:file_block)
+    end
 
+
+    test "updates to #attachments automatically autosave" do
+      @file_block.attachments[0].data_file_path = "/new-path.txt"
+      assert @file_block.attachments[0].changed?
+
+      @file_block.name = "Force an update"
+      @file_block.publish_on_save = true
+      @file_block.save!
+      reset(:file_block)
+
+      assert_equal "/new-path.txt", @file_block.attachments[0].data_file_path
+    end
+
+    test "update via nested assignment" do
+      @file_block.update_attributes(:name=>"Force an update", :attachments_attributes=>{"0"=>{:data_file_path=>"/new-path.txt", :attachment_name=>"file", :id=>@file_block.attachments[0].id}})
+      assert_equal "/new-path.txt", @file_block.attachments[0].data_file_path
+    end
+
+  end
 #   def test_change_attachment_file_name
 #     attachment_version = @attachment.version
 #     file_attachment_version = @file_block.attachment_version
@@ -236,21 +262,21 @@ module Cms
 
 # end
 
-class ExistingFileBlockTest < ActiveSupport::TestCase
-   def setup
-     @file_block = create(:file_block)
-   end
+  class ExistingFileBlockTest < ActiveSupport::TestCase
+    def setup
+      @file_block = create(:file_block)
+    end
 
-   def test_archiving
-     assert @file_block.update_attributes(:archived => true)
-     assert @file_block.file.archived?
-   end
+    def test_archiving
+      assert @file_block.update_attributes(:archived => true)
+      assert @file_block.attachments[0].archived?
+    end
 
-   def test_destroy
-     @file_block.destroy
-     assert_nil Cms::Attachment.find_live_by_file_path("/test.txt")
-   end
-end
+    def test_destroy
+      @file_block.destroy
+      assert_nil Cms::Attachment.find_live_by_file_path("/test.txt")
+    end
+  end
 
 # class ExistingFileBlocksTest < ActiveSupport::TestCase
 #   def setup

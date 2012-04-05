@@ -1,5 +1,11 @@
-Then /^the section (\d+) should be moved to "([^"]*)"$/ do |image_block_id, section_name|
-  assert_equal section_name, Cms::ImageBlock.find(image_block_id.to_i).parent.name
+Then /^the image (\d+) should be moved to "([^"]*)"$/ do |image_block_id, section_name|
+  image = Cms::ImageBlock.find(image_block_id.to_i)
+  assert_equal section_name, image.parent.name
+end
+
+Then /^the image (\d+) should be at path "([^"]*)"$/ do |image_block_id, expected_path|
+  image = Cms::ImageBlock.find(image_block_id.to_i)
+  assert_equal expected_path, image.path
 end
 
 Then /^the following images exist:$/ do |table|

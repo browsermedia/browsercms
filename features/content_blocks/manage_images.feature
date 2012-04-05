@@ -27,7 +27,13 @@ Feature: Manage Image Blocks
     When I visit /cms/image_blocks/150/edit
     And I select "Image Gallery" from "Section"
     And I click on "Save"
-    Then the section 150 should be moved to "Image Gallery"
+    Then the image 150 should be moved to "Image Gallery"
+
+  Scenario: Update the path
+    When I visit /cms/image_blocks/150/edit
+    And I fill in "Path" with "/another-path"
+    And I Save And Publish
+    Then the image 150 should be at path "/another-path"
 
   Scenario: Revert an Image
     # Given an image exists with two versions

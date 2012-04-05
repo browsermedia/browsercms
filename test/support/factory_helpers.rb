@@ -1,9 +1,10 @@
 module FactoryHelpers
 
-  def new_attachment(name="spreadsheet")
+  def new_attachment(name="spreadsheet", path="")
     {"0" => {
         :data => mock_file,
         :section_id => root_section,
+        :data_file_path => path,
         :attachment_name => name}}
   end
 

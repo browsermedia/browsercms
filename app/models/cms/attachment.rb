@@ -7,9 +7,7 @@ module Cms
 
     cattr_accessor :definitions, :instance_writer => false
     @@definitions = {}.with_indifferent_access
-
     cattr_reader :configuration
-
     attr_accessor :attachable_class
 
     before_save :set_section

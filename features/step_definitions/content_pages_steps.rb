@@ -19,7 +19,7 @@ When /^I am not logged in$/ do
   visit '/cms/logout'
 end
 
-Given /^I am logged in as a Content Editor(|on the admin subdomain)$/ do |is_admin|
+Given /^I am logged in as a Content Editor(| on the admin subdomain)$/ do |is_admin|
   if is_admin.blank?
     login_at = '/cms/login'
   else

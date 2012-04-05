@@ -70,16 +70,18 @@ module Cms
           attr_accessor :attachment_id_list
 
           Cms::Attachment.definitions[self.name] = {}
-          has_many :attachments, :as => :attachable, :dependent => :destroy, :class_name => 'Cms::Attachment'
+          has_many :attachments, :as => :attachable, :dependent => :destroy, :class_name => 'Cms::Attachment', :autosave => false
 
           accepts_nested_attributes_for :attachments,
                                         :allow_destroy => true,
-                                        :reject_if => lambda { |a| a[:data].blank? }
+                                        # New attachments must have an uploaded file
+                                        :reject_if => lambda { |a| a[:data].blank? && a[:id].blank? }
 
           validates_associated :attachments
           before_create :assign_attachments
           before_validation :initialize_attachments
           before_save :ensure_status_matches_attachable
+          after_save :save_associated_attachments
         end
       end
 
@@ -171,6 +173,7 @@ module Cms
           attachments.each &:publish
         end
 
+
         def unassigned_attachments
           return [] if attachment_id_list.blank?
           Cms::Attachment.find attachment_id_list.split(',').map(&:to_i)
@@ -182,11 +185,24 @@ module Cms
 
         private
 
+        # Callback - :autosave=>true does not work (due to versioning bug)
+        def save_associated_attachments
+          attachments.each do |a|
+            a.save
+          end
+        end
+
         # Filter - Ensures that the status of all attachments matches the this block
         def ensure_status_matches_attachable
           if self.class.archivable?
             attachments.each do |a|
               a.archived = self.archived
+            end
+          end
+
+          if self.class.publishable?
+            attachments.each do |a|
+              a.publish_on_save = self.publish_on_save
             end
           end
         end
