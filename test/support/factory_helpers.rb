@@ -8,6 +8,29 @@ module FactoryHelpers
         :attachment_name => name}}
   end
 
+  # Nested Attributes are pretty messy to build directly in code, and FactoryGirl isn't really appropriate since we need to
+  #  test mass assignment.
+  # Create a single Attachment with some default values.
+  #
+  # @param options
+  # @options :path [String]
+  # @options :name [String]
+  def attachments_hash(options={})
+    defaults = {
+        :attachment_name => "file",
+        :path => ""
+    }
+    defaults.merge!(options)
+    {:attachments_attributes =>
+         {"0" => {
+             :data => mock_file,
+             :section_id => root_section,
+             :data_file_path => defaults[:path],
+             :attachment_name => defaults[:name]}}
+    }
+  end
+
+
   def find_or_create_root_section
     root = Cms::Section.root.first
     unless root
