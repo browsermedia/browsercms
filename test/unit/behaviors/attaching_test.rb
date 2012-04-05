@@ -160,79 +160,6 @@ module Cms
       assert_was_saved_properly({:path => "/missing-forward-slash.txt"})
     end
 
-    def test_updating_the_attachment_file_name
-      @attachable = create(:versioned_attachable)
-      #@attachable = VersionedAttachable.create!(:name => "Foo",
-      #                                          :attachment_section_id => @section.id,
-      #                                          :attachment_file => @file,
-      #                                          :attachment_file_path => "test.jpg")
-
-      reset(:attachable)
-
-      @attachable.document.data_file_path = "/test2.jpg"
-      @attachable.name = "Updated"
-
-      attachment_version = @attachable.document.version
-      attachment_version_count = Cms::Attachment::Version.count
-      assert_was_saved_properly({:path => "/test2.jpg", :more_created => false})
-      assert_incremented attachment_version, @attachable.document.version
-      assert_incremented attachment_version_count, Cms::Attachment::Version.count
-
-      #attachment_count = Cms::Attachment.count
-      #attachment_version = @attachable.attachment_version
-      #attachment_version_count = Cms::Attachment::Version.count
-      #
-      #assert @attachable.update_attributes(:attachment_file_path => "test2.jpg", :publish_on_save => true)
-      #
-      #assert_equal attachment_count, Cms::Attachment.count
-      #
-      #assert_incremented attachment_version, @attachable.attachment_version
-      #assert_incremented attachment_version_count, Cms::Attachment::Version.count
-      #assert_equal "/test2.jpg", @attachable.attachment_file_path
-
-      #reset(:attachable)
-      #
-      #assert_equal attachment_count, Cms::Attachment.count
-      #assert_incremented attachment_version, @attachable.attachment_version
-      #assert_incremented attachment_version_count, Cms::Attachment::Version.count
-      #assert_equal "/test2.jpg", @attachable.attachment_file_path
-    end
-
-    def test_updating_the_attachment_file
-      @attachable = create(:versioned_attachable)
-
-      #@attachable = VersionedAttachable.create!(:name => "Foo",
-      #                                          :attachment_section_id => @section.id,
-      #                                          :attachment_file => @file,
-      #                                          :attachment_file_path => "test.jpg")
-
-      reset(:attachable)
-
-      @file2 = mock_file(:original_filename => "second_upload.txt")
-
-      attachment_count = Cms::Attachment.count
-      attachment_version = @attachable.document.version
-      attachment_version_count = Cms::Attachment::Version.count
-
-      @attachable.document.data = @file2
-      @attachable.save!
-      #assert @attachable.update_attributes(:attachment_file => @file2)
-
-      assert_equal attachment_count, Cms::Attachment.count
-      assert_equal attachment_version, @attachable.reload.document.version
-      assert_incremented attachment_version_count, Cms::Attachment::Version.count
-      @file.rewind
-      assert_equal @file.read, open(@attachable.document.full_file_location) { |f| f.read }
-
-      reset(:attachable)
-      @file.rewind
-      @file2.rewind
-
-      assert_equal @file.read, open(@attachable.document.as_of_version(1).full_file_location) { |f| f.read }
-      assert_equal @file2.read, open(@attachable.document.as_of_version(2).full_file_location) { |f| f.read }
-
-    end
-
     protected
     def assert_was_saved_properly(expected_values)
       expected = {
@@ -266,77 +193,115 @@ module Cms
 
   end
 
+
+  class UpdatingAttactableTest < ActiveSupport::TestCase
+
+    def setup
+      @attachable = create(:versioned_attachable)
+    end
+
+    def test_updating_the_attachment_file_name
+      @attachable.attachments[0].data_file_path = "/new-path.txt"
+      update_attachable
+      assert_equal "/new-path.txt", @attachable.attachments[0].data_file_path
+
+    end
+
+    test "update the file" do
+      @file = mock_file
+      @attachable.attachments[0].data = @file
+      update_attachable
+      assert_equal @file.read, open(@attachable.attachments[0].full_file_location) { |f| f.read }
+    end
+
+    private
+
+    def update_attachable
+      @attachable.name = "Force an update"
+      @attachable.publish_on_save = true
+      @attachable.save!
+      reset(:attachable)
+    end
+  end
+
   class VersionedAttachableTest < ActiveSupport::TestCase
     def setup
       #file is a mock of the object that Rails wraps file uploads in
       @file = mock_file
-
       @section = create(:section, :name => "attachables", :parent => root_section)
+      @attachable = create(:versioned_attachable, :parent => @section, :attachment_file => @file, :attachment_file_path => "version1.jpg")
 
-      @attachable = VersionedAttachable.create!(:name => "Foo v1",
-                                                :attachment_section_id => @section.id,
-                                                :attachment_file => @file,
-                                                :attachment_file_path => "test.jpg")
       reset(:attachable)
     end
 
-    def test_updating_the_versioned_attachable
-      attachment_count = Cms::Attachment.count
-      attachment_version = @attachable.attachment_version
-      attachment_version_count = Cms::Attachment::Version.count
-
-      assert @attachable.update_attributes(:name => "Foo v2")
-
-      assert_equal attachment_count, Cms::Attachment.count
-      assert_equal attachment_version, @attachable.attachment_version
-      assert_equal attachment_version_count, Cms::Attachment::Version.count
-      assert_equal "Foo v2", @attachable.name
-      assert_equal @attachable.as_of_version(1).attachment, @attachable.as_of_version(2).attachment
+    def update_attachable
+      @attachable.update_attributes(:name => "Foo v2")
     end
 
-    def test_updating_the_versioned_attachable_attachment_file_path
-      attachable_count = VersionedAttachable.count
-      attachment_count = Cms::Attachment.count
-      attachment_version = @attachable.attachment_version
-      attachment_version_count = Cms::Attachment::Version.count
-
-      assert @attachable.update_attributes(:attachment_file_path => "test2.jpg")
-
-      assert_equal attachable_count, VersionedAttachable.count
-      assert_equal attachment_count, Cms::Attachment.count
-      assert_incremented attachment_version, @attachable.attachment_version
-      assert_incremented attachment_version_count, Cms::Attachment::Version.count
-      assert_equal "/test2.jpg", @attachable.attachment_file_path
-
-      assert_equal @attachable.as_of_version(1).attachment, @attachable.as_of_version(2).attachment
-      assert_not_equal @attachable.as_of_version(1).attachment_version, @attachable.as_of_version(2).attachment_version
-      assert_equal "/test.jpg", @attachable.as_of_version(1).attachment_file_path
-      assert_equal "/test2.jpg", @attachable.as_of_version(2).attachment_file_path
+    test "Total # of attachments and versions shouldn't change'" do
+      assert_no_difference [lambda { Cms::Attachment.count }, lambda { Cms::Attachment::Version.count }] do
+        update_attachable
+      end
     end
 
-    def test_updating_the_versioned_attachable_attachment_file
-      @file2 = mock_file(:original_filename => "second_upload.txt")
+    test "Attachments should be the same" do
+      update_attachable
+      assert_equal @attachable.as_of_version(1).document, @attachable.as_of_version(2).document
+    end
 
-      attachable_count = VersionedAttachable.count
-      attachment_count = Cms::Attachment.count
-      attachment_version = @attachable.attachment_version
-      attachment_version_count = Cms::Attachment::Version.count
+    def update_path_for_attachable(new_path)
+      @attachable.attachments[0].data_file_path = new_path
+      @attachable.name = "Force Update"
+      @attachable.publish_on_save = true
+      @attachable.save!
+    end
 
-      assert @attachable.update_attributes(:attachment_file => @file2)
+    test "updating the attachment path should create a new version" do
+      assert_difference 'Cms::Attachment::Version.count', 1 do
+        update_path_for_attachable("/version2.jpg")
+      end
+    end
 
-      assert_equal attachable_count, VersionedAttachable.count
-      assert_equal attachment_count, Cms::Attachment.count
-      assert_incremented attachment_version, @attachable.attachment_version
-      assert_incremented attachment_version_count, Cms::Attachment::Version.count
+    test "updating attachment shouldn't create a new attachment'" do
+      assert_no_difference 'Cms::Attachment.count' do
+        update_path_for_attachable("/version2.jpg")
+      end
+    end
 
-      @file2.rewind
-      assert_equal @file2.read, open(@attachable.attachment.full_file_location) { |f| f.read }
 
-      @file.rewind
-      assert_equal @file.read, open(@attachable.attachment.as_of_version(1).full_file_location) { |f| f.read }
+    def update_file_for_attachable()
+      new_file = mock_file(:original_filename => "second_upload.txt")
+      @attachable.attachments[0].data = new_file
+      @attachable.name = "Force Update"
+      @attachable.publish_on_save = true
+      @attachable.save!
+      new_file
+    end
 
-      @file2.rewind
-      assert_equal @file2.read, open(@attachable.attachment.as_of_version(2).full_file_location) { |f| f.read }
+    test "File path should be different on each version" do
+      update_path_for_attachable("/version2.jpg")
+
+      log_table Cms::Attachment::Version
+      assert_equal "/version1.jpg", @attachable.as_of_version(1).attachments[0].data_file_path, "First version of the block should be connected to original file"
+      assert_equal "/version2.jpg", @attachable.as_of_version(2).attachments[0].data_file_path
+    end
+
+    test "updating the file should create a new version" do
+      assert_difference 'Cms::Attachment::Version.count', 1 do
+        update_file_for_attachable
+      end
+    end
+
+    test "updating the file shouldn't create a new attachment'" do
+      assert_no_difference 'Cms::Attachment.count' do
+        update_file_for_attachable
+      end
+    end
+
+    test "File should be different on each version" do
+      file2 = update_file_for_attachable
+      assert_equal @file.read, open(@attachable.as_of_version(1).attachments[0].full_file_location) { |f| f.read }, "The contents of version 1 of the file should be returned"
+      assert_equal file2.read, open(@attachable.as_of_version(2).attachments[0].full_file_location) { |f| f.read }
     end
 
   end
