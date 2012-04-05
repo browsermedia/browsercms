@@ -78,14 +78,13 @@ module Cms
 
 
     test "create via nested assignment" do
-      fb = FileBlock.new(:attachments_attributes=>{"0"=>{:data_file_path=>"/new-path.txt", :attachment_name=>"file"}})
+      fb = FileBlock.new(attachments_hash(:path=>'/new-path.txt'))
       assert_equal 1, fb.attachments.size
       assert_equal "/new-path.txt", fb.attachments[0].data_file_path
     end
 
-
     test "don't create without a file data using nested attributes" do
-      fb = FileBlock.new(:name=>"Any Nam", :attachments_attributes=>{"0"=>{:data_file_path=>"/new-path.txt", :attachment_name=>"file"}})
+      fb = FileBlock.new(:name=>"Any Name", :attachments_attributes=>{"0"=>{:data_file_path=>"/new-path.txt", :attachment_name=>"file"}})
       #refute fb.attachments.first.valid?
       refute fb.valid?
     end
