@@ -101,7 +101,7 @@ When /^a migration named "([^"]*)" should contain the following:$/ do |file, tab
 end
 
 Then /^it should seed the BrowserCMS database$/ do
-  assert_partial_output "YOUR CMS username/password is: cmsadmin/cmsadmin", all_output
+  assert_matching_output "YOUR CMS username/password is: cmsadmin/cmsadmin", all_output
 end
 
 When /^it should seed the demo data$/ do
