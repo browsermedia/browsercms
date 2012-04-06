@@ -4,8 +4,8 @@ Tasks:
 - Attachments are versioned, but have no connection to their original versioned block. Need to keep the original version id in it attachments table
 - Lots of attachment and file/image tests are commented out. They need to be rewritten and tested.
 - Class reloading causes Attachments to 'lose' their paperclip configuration in development mode. Need to figure out why and fix it.
-- Custom Attaching behavior tests are broken, mostly due to API changes. Probably need to be reworked.
 - Path is not automatically calculated for new File/Image blocks.
+- Figure out plan for Migrating from pre-Paperclip attachments. The file structure is different for storing them now.
 
 - The mess that is publishing/saving is coming back again when trying to interact with blocks with associated attachments.
 -- Really need to simplify this API as its very painful to grok and get right currently.

@@ -147,10 +147,10 @@ module Cms
           Cms::Attachment.definitions[self.name][name] = options
 
           define_method name do
-            attachments.named(name).last
+            attachment_named(name)
           end
           define_method "#{name}?" do
-            !attachments.named(name).empty?
+            (attachment_named(name) != nil)
           end
         end
 
@@ -166,6 +166,22 @@ module Cms
             !attachments.named(name).empty?
           end
         end
+
+        # Find all attachments as of the given version for the specified block.
+        #
+        # @param [Integer] version_number
+        # @param [Attaching] attachable The object with attachments
+        # @return [Array<Cms::Attachment>]
+        def attachments_as_of_version(version_number, attachable)
+          found_versions = Cms::Attachment::Version.where(:attachable_id => attachable.id).where(:attachable_type => attachable.attachable_type).where(:attachable_version => version_number).all
+          Rails.logger.warn "Found #{found_versions.inspect}"
+          found_attachments = []
+          found_versions.each do |av|
+            found_attachments << av.build_object_from_version
+          end
+          found_attachments
+        end
+
       end
 
       module InstanceMethods
@@ -173,6 +189,10 @@ module Cms
           attachments.each &:publish
         end
 
+        # Locates the attachment with a given name
+        def attachment_named(name)
+          attachments.select { |item| item.attachment_name.to_sym == name }.first
+        end
 
         def unassigned_attachments
           return [] if attachment_id_list.blank?
@@ -183,14 +203,48 @@ module Cms
           attachments << unassigned_attachments
         end
 
-        private
+        def attachable_type
+          self.class.name
+        end
 
-        # Callback - :autosave=>true does not work (due to versioning bug)
-        def save_associated_attachments
+        # Versioning Callback - This will result in a new version of attachments being created every time the attachable is updated.
+        #   Allows a complete version history to be reconstructed.
+        # @param [Versionable] new_version
+        def after_build_new_version(new_version)
+          logger.warn("*" * 20)
+          logger.warn "After build new version #{new_version}, update each attachment to point to: #{new_version.version}"
           attachments.each do |a|
-            a.save
+            a.attachable_version = new_version.version
           end
         end
+
+        # Version Callback - Reconstruct this object exactly as it was as of a particularly version
+        # Called after the object is 'reset' to the specific version in question.
+        def after_as_of_version()
+          logger.warn "after_as_of_version called"
+          @attachments_as_of = self.class.attachments_as_of_version(version, self)
+          logger.warn "Attachments found #{@attachments_as_of}"
+
+          # Override #attachments to return the original attachments for the current version.
+          metaclass = class << self;
+            self;
+          end
+          metaclass.send :define_method, :attachments do
+            @attachments_as_of
+          end
+        end
+
+        private
+
+        # Saves associated attachments if they were updated. (Used in place of :autosave=>true, since the CMS Versioning API seems to break that)
+        #
+        # ActiveRecord Callback
+        def save_associated_attachments
+          attachments.each do |a|
+            a.save if a.changed?
+          end
+        end
+
 
         # Filter - Ensures that the status of all attachments matches the this block
         def ensure_status_matches_attachable
