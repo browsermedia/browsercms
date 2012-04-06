@@ -6,6 +6,10 @@ class AttachmentTest < ActiveSupport::TestCase
     @attachment ||= Cms::Attachment.new
   end
 
+  test "#attachable_version records which version of the block this attachment was connected to." do
+    assert attachment.respond_to?(:attachable_version)
+  end
+
   test "File/Image blocks require a path to be valid" do
     attachment.attachable_type = 'Cms::AbstractFileBlock'
     assert_not_valid attachment

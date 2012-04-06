@@ -153,6 +153,14 @@ module Cms
       @file_block = create(:file_block)
     end
 
+    test "#attachable_type" do
+      assert_equal "Cms::AbstractFileBlock", @file_block.attachable_type
+    end
+
+    test "Loads attachments for as_of_versions" do
+      found = @file_block.as_of_version(1)
+      assert_equal 1, found.attachments.size
+    end
 
     test "updates to #attachments automatically autosave" do
       @file_block.attachments[0].data_file_path = "/new-path.txt"

@@ -69,12 +69,22 @@ module Cms
     end
   end
 
-  class VersionsTest < ActiveSupport::TestCase
+  class HistoricalVersionsTest < ActiveSupport::TestCase
 
     def setup
       @published_block = create(:html_block, :name => "Version 1", :publish_on_save => true)
       @published_block.update_attributes(:name => "Version 2")
       @published_block.reload
+    end
+
+    test "#build_object_from_version recreates a block based on a given version record" do
+      html_version = Cms::HtmlBlock::Version.first
+
+      html = html_version.build_object_from_version
+
+      assert_equal "Version 1", html.name
+      assert_equal 1, html.version
+      assert_equal @published_block.id, html.id
     end
 
     test "#name matches original version's attributes'" do

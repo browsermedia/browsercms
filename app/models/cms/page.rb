@@ -80,6 +80,7 @@ class Cms::Page < ActiveRecord::Base
   validates_uniqueness_of :path, :scope=>:deleted
   validate :path_not_reserved
 
+  # Implements Versioning Callback.
   def after_build_new_version(new_version)
     copy_connectors(
         :from_version_number => @copy_connectors_from_version || (new_version.version - 1),

@@ -36,6 +36,10 @@ module Cms
       @image.save!
     end
 
+    test "#attachable_type" do
+      assert_equal "Cms::AbstractFileBlock", @image.attachable_type
+    end
+
     test "#file is set" do
       assert_not_nil @image.file
     end

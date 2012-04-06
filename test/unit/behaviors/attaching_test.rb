@@ -200,6 +200,14 @@ module Cms
       @attachable = create(:versioned_attachable)
     end
 
+    test "#has_attachment :name" do
+      assert_equal @attachable.attachments[0], @attachable.document
+    end
+
+    test "#has_attachment :name add name? method" do
+      assert @attachable.document?
+    end
+
     def test_updating_the_attachment_file_name
       @attachable.attachments[0].data_file_path = "/new-path.txt"
       update_attachable
@@ -226,64 +234,57 @@ module Cms
 
   class VersionedAttachableTest < ActiveSupport::TestCase
     def setup
-      #file is a mock of the object that Rails wraps file uploads in
       @file = mock_file
       @section = create(:section, :name => "attachables", :parent => root_section)
-      @attachable = create(:versioned_attachable, :parent => @section, :attachment_file => @file, :attachment_file_path => "version1.jpg")
-
+      @attachable = create(:versioned_attachable, :parent => @section, :attachment_file => @file, :attachment_file_path => "version1.txt")
       reset(:attachable)
     end
 
-    def update_attachable
-      @attachable.update_attributes(:name => "Foo v2")
+    test "1 attachment version" do
+      log_table Cms::Attachment::Version
+      assert_equal 1, Cms::Attachment::Version.count
     end
 
-    test "Total # of attachments and versions shouldn't change'" do
-      assert_no_difference [lambda { Cms::Attachment.count }, lambda { Cms::Attachment::Version.count }] do
+    test "#respond_to after_build_new_version callback" do
+      assert @attachable.respond_to? :after_build_new_version
+    end
+
+    test "#respond_to after_as_of_version" do
+      assert @attachable.respond_to? :after_as_of_version
+    end
+
+    test "#attachable_version matches block version" do
+      assert_equal @attachable.version, @attachable.attachments[0].attachable_version
+    end
+
+    test "Total # of attachments shouldn't change'" do
+      assert_no_difference lambda { Cms::Attachment.count } do
+        update_attachable
+      end
+    end
+
+    test "# of attachment versions shouldn't change'" do
+      assert_difference 'Cms::Attachment::Version.count', 1 do
         update_attachable
       end
     end
 
     test "Attachments should be the same" do
       update_attachable
-      assert_equal @attachable.as_of_version(1).document, @attachable.as_of_version(2).document
+      assert_equal @attachable.as_of_version(1).attachments[0], @attachable.as_of_version(2).attachments[0]
     end
 
-    def update_path_for_attachable(new_path)
-      @attachable.attachments[0].data_file_path = new_path
-      @attachable.name = "Force Update"
-      @attachable.publish_on_save = true
-      @attachable.save!
-    end
 
     test "updating the attachment path should create a new version" do
       assert_difference 'Cms::Attachment::Version.count', 1 do
-        update_path_for_attachable("/version2.jpg")
+        update_attachable_to_version2("/version2.txt")
       end
     end
 
     test "updating attachment shouldn't create a new attachment'" do
       assert_no_difference 'Cms::Attachment.count' do
-        update_path_for_attachable("/version2.jpg")
+        update_attachable_to_version2("/version2.txt")
       end
-    end
-
-
-    def update_file_for_attachable()
-      new_file = mock_file(:original_filename => "second_upload.txt")
-      @attachable.attachments[0].data = new_file
-      @attachable.name = "Force Update"
-      @attachable.publish_on_save = true
-      @attachable.save!
-      new_file
-    end
-
-    test "File path should be different on each version" do
-      update_path_for_attachable("/version2.jpg")
-
-      log_table Cms::Attachment::Version
-      assert_equal "/version1.jpg", @attachable.as_of_version(1).attachments[0].data_file_path, "First version of the block should be connected to original file"
-      assert_equal "/version2.jpg", @attachable.as_of_version(2).attachments[0].data_file_path
     end
 
     test "updating the file should create a new version" do
@@ -298,11 +299,41 @@ module Cms
       end
     end
 
-    test "File should be different on each version" do
+    test "Keep older versions of files" do
       file2 = update_file_for_attachable
-      assert_equal @file.read, open(@attachable.as_of_version(1).attachments[0].full_file_location) { |f| f.read }, "The contents of version 1 of the file should be returned"
-      assert_equal file2.read, open(@attachable.as_of_version(2).attachments[0].full_file_location) { |f| f.read }
+
+      assert_equal file_contents(@file.path), file_contents(@attachable.as_of_version(1).attachments[0].full_file_location), "The contents of version 1 of the file should be returned"
+      assert_equal file_contents(file2.path), file_contents(@attachable.as_of_version(2).attachments[0].full_file_location)
     end
 
+    private
+    def update_attachable_to_version2(new_path)
+      @attachable.attachments[0].data_file_path = new_path
+      @attachable.name = "Force Update"
+      @attachable.publish_on_save = true
+      @attachable.save!
+      reset(:attachable)
+    end
+
+
+    def update_file_for_attachable()
+      new_file = mock_file(:original_filename => "version2.txt")
+      @attachable.attachments[0].data = new_file
+      @attachable.name = "Force Update"
+      @attachable.publish_on_save = true
+      @attachable.save!
+      new_file
+    end
+
+    def update_attachable
+      @attachable.update_attributes(:name => "Foo v2")
+    end
+
+    # Read the actual file contents and return them as a string.
+    def file_contents(path_to_file)
+      open(path_to_file) {|f| f.read }
+    end
   end
+
+
 end

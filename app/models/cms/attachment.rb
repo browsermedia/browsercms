@@ -78,6 +78,9 @@ module Cms
                           :path => lambda_for(:path),
                           :styles => lambda_for(:styles),
 
+                          # Needed for versioning
+                          :preserve_files => true,
+
                           #TODO: enable custom processors
                           :processors => configuration.processors,
                           :defult_url => configuration.default_url,
@@ -166,6 +169,15 @@ module Cms
     end
 
     alias :file_type :content_type
+
+    # Paperclip Callback - Normally this deletes old files whenever they are replaced.
+    # We override this here to keep all versions on the server, forever. Since each version of the file needs to live
+    #def destroy_attached_files
+    #  Rails.logger.warn "Called@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
+    #  true
+    #end
+
+    protected
 
 
     private

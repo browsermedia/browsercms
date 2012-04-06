@@ -14,5 +14,9 @@ module Cms
       file
     end
 
+     # Override default behavior to handle STI class when looking up other versions of attachments.
+    def attachable_type
+      Cms::Attachment::FILE_BLOCKS
+    end
   end
 end

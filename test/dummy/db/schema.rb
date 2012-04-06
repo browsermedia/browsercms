@@ -38,6 +38,7 @@ ActiveRecord::Schema.define(:version => 20120329144406) do
     t.string   "attachable_type"
     t.string   "attachment_name"
     t.integer  "attachable_id"
+    t.integer  "attachable_version"
     t.string   "cardinality"
   end
 
@@ -45,18 +46,18 @@ ActiveRecord::Schema.define(:version => 20120329144406) do
 
   create_table "cms_attachments", :force => true do |t|
     t.integer  "version"
-    t.integer  "lock_version",      :default => 0
+    t.integer  "lock_version",       :default => 0
     t.string   "file_path"
     t.string   "file_location"
     t.string   "file_extension"
     t.string   "file_type"
     t.integer  "file_size"
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.string   "name"
-    t.boolean  "published",         :default => false
-    t.boolean  "deleted",           :default => false
-    t.boolean  "archived",          :default => false
+    t.boolean  "published",          :default => false
+    t.boolean  "deleted",            :default => false
+    t.boolean  "archived",           :default => false
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
     t.string   "data_file_name"
@@ -67,6 +68,7 @@ ActiveRecord::Schema.define(:version => 20120329144406) do
     t.string   "attachable_type"
     t.string   "attachment_name"
     t.integer  "attachable_id"
+    t.integer  "attachable_version"
     t.string   "cardinality"
   end
 
