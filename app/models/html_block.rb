@@ -4,10 +4,11 @@ class HtmlBlock < ActiveRecord::Base
   
   validates_presence_of :name
   
-  # Override of search scope from searching behavior to deal with include_body 
+  # Override of search scope from searching behavior to deal with include_body
+  # @todo - This might not be necessary. When cucumber is updated, verify if i can just override '"#searchable_columns' instead
+  # which will be more DRY.
   scope :search, lambda{|search_params|
     term = search_params.is_a?(Hash) ? search_params[:term] : search_params  
-    order = search_params.is_a?(Hash) && search_params[:order] ? search_params[:order] : "html_blocks.name"
     include_body = search_params.is_a?(Hash) ? search_params[:include_body] : false
     conditions = []
     columns = ["name"]
@@ -25,7 +26,6 @@ class HtmlBlock < ActiveRecord::Base
     end
     scope = {}
     scope[:conditions] = conditions if conditions
-    scope[:order] = order if order
     scope
   }
   
