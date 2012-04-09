@@ -170,12 +170,6 @@ module Cms
 
     alias :file_type :content_type
 
-    # Paperclip Callback - Normally this deletes old files whenever they are replaced.
-    # We override this here to keep all versions on the server, forever. Since each version of the file needs to live
-    #def destroy_attached_files
-    #  Rails.logger.warn "Called@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"
-    #  true
-    #end
 
     protected
 

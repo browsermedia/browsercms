@@ -48,6 +48,8 @@ class VersionHistoryTest < ActiveSupport::TestCase
     @attachable.publish!
     @attachable.reload
 
+    log_table Cms::Attachment
+    log_table Cms::Attachment::Version
     assert_equal 3, @attachable.version
     assert_equal "/version1.jpg", @attachable.attachments[0].data_file_path
 
