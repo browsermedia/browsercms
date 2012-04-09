@@ -1,3 +1,11 @@
+v3.3.4
+======
+
+Maintenance release
+
+* [#503] - Searching and sort content blocks works
+* [#472] - Sorting content blocks works
+
 v3.3.3
 ======
 
