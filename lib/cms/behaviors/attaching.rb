@@ -234,6 +234,19 @@ module Cms
           end
         end
 
+        # Callback - Ensure attachments get reverted whenver a block does.
+        def after_revert(version)
+          version_number = version.version
+          logger.warn "Calling after_revert #{version}"
+          attachments_for_version = self.class.attachments_as_of_version(version_number, self)
+          new_attachments = []
+          attachments_for_version.each do |a|
+            a.revert_to(version_number)
+            new_attachments << a
+          end
+          self.attachments = new_attachments
+        end
+
         private
 
         # Saves associated attachments if they were updated. (Used in place of :autosave=>true, since the CMS Versioning API seems to break that)
