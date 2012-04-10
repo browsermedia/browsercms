@@ -43,7 +43,7 @@ module Cms
     def destroy
       @view.destroy
       flash[:notice] = "#{dynamic_view_type} '#{@view.name}' was deleted"
-      redirect_to cms_index_path_for(dynamic_view_type.name.underscore.pluralize)
+      redirect_to cms_index_path_for(dynamic_view_type)
     end
 
     protected

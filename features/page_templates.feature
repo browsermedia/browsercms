@@ -39,3 +39,11 @@ Feature: Page Templates
       | hello_world |
 
 
+  Scenario: Delete a template
+    Given the following page template exists:
+      | name  |
+      | hello |
+    When I delete that page template
+    Then the response should be 200
+    And the page header should be "List Page Templates"
+    And I should not see the "hello" template in the table
