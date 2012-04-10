@@ -122,7 +122,7 @@ When /^BrowserCMS should be added the Gemfile$/ do
 end
 
 Then /^Gemfile should have the correct version of BrowserCMS$/ do
-  check_file_content("Gemfile", %!gem "browsercms", "3.4.0.rc3"!, true)
+  check_file_content("Gemfile", %!gem "browsercms", "#{Cms::VERSION}"!, true)
 end
 
 When /^the production environment should be configured with reasonable defaults$/ do

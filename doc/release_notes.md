@@ -1,3 +1,13 @@
+v3.4.2
+======
+
+Maintenance Release
+
+* [#502] Fix issue where Page templates/partials could not be editted through the UI
+* [#491] Fix issue where custom blocks couldn't be viewed in page edit mode
+* [#470] Fix issue where loading throws errors on some OS's (Ubuntu)
+
+
 v3.4.0
 ======
 
