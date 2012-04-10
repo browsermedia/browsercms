@@ -91,3 +91,10 @@ Feature: Portlets
     And a page with a portlet that raises both a 403 and any other error exists
     When I visit that page
     Then I should see the CMS :forbidden page
+
+  Scenario: View Usages
+    Given portlet named "Hello World" has been added to a page
+    When I view that portlet
+    Then the response should be 200
+    And the page header should be "View Portlet 'Hello World'"
+    And I should see "Used on: 1 page"

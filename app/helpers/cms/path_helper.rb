@@ -27,7 +27,7 @@ module Cms
       if Portlet === connectable
         cms.portlet_path(connectable)
       else
-        connectable
+        polymorphic_path(build_path_for(connectable), options)
       end
     end
 
@@ -38,7 +38,26 @@ module Cms
       if Portlet === connectable
         edit_portlet_path(connectable, options)
       else
-        polymorphic_path([:edit, connectable], options)
+        edit_polymorphic_path(build_path_for(connectable), options)
+      end
+    end
+
+    def link_to_usages(block)
+      count = block.connected_pages.count
+      if count > 0
+        # Would love a cleaner solution to this problem, see http://stackoverflow.com/questions/702728
+        path = if Portlet === block
+                 usages_portlet_path(block)
+               else
+                 p = []
+                 p << engine_for(block)
+                 p << :usages
+                 p.concat path_elements_for(block)
+                 p
+               end
+        link_to count, path, :id => block.id, :block_type => block.content_block_type
+      else
+        count
       end
     end
 

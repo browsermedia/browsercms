@@ -42,17 +42,6 @@ module Cms
       image_tag "cms/icons/status/#{status.to_s.underscore}.gif", {:alt => status.to_s.titleize}.merge(options)
     end
 
-    def link_to_usages(block)
-      count = block.connected_pages.count
-      if count > 0
-        # Would love a cleaner solution to this problem, see http://stackoverflow.com/questions/702728
-        path = Portlet === block ? usages_portlet_path(block) : [:usages, block]
-        link_to count, path, :id => block.id, :block_type => block.content_block_type
-      else
-        count
-      end
-    end
-
     def time_on_date(time)
       time && "#{time.strftime("%l:%M %p")} on #{time.strftime("%b %e, %Y")}"
     end
