@@ -294,7 +294,7 @@ module Cms
           revert_to(draft_version - 1) unless draft_version == 1
         end
 
-        def revert_to_without_save(version)
+        def revert_to_without_save(version, options)
           raise "Version parameter missing" if version.blank?
           revert_to_version = find_version(version)
           raise "Could not find version #{version}" unless revert_to_version
@@ -303,13 +303,21 @@ module Cms
           (self.class.versioned_columns - ["version"]).each do |a|
             send("#{a}=", revert_to_version.send(a))
           end
+
+
+          options.keys.each do |key|
+            send("#{key}=", options[key])
+          end
+
           self.after_revert(revert_to_version) if self.respond_to?(:after_revert)
           self.version_comment = "Reverted to version #{version}"
           self
         end
 
-        def revert_to(version)
-          revert_to_without_save(version)
+        # @param [Integer] version To revert to
+        # @param [Hash] options Values to set prior to saving the updated record.
+        def revert_to(version, options={})
+          revert_to_without_save(version, options)
           save
         end
 
