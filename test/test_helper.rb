@@ -62,6 +62,12 @@ class ActiveSupport::TestCase
     end
   end
 
+
+   # Read the actual file contents and return them as a string.
+  def file_contents(path_to_file)
+    open(path_to_file) {|f| f.read }
+  end
+
   def self.subclasses_from_module(module_name)
     subclasses = []
     mod = module_name.constantize
