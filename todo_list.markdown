@@ -1,7 +1,7 @@
 Tasks:
 
 * Paperclip Based Assets - Replace the existing 'custom' file upload behavior with one that uses Paperclip. Allow blocks to have more than one attachment.
-- Attachments are versioned, but have no connection to their original versioned block. Need to keep the original version id in it attachments table
+
 - Lots of attachment and file/image tests are commented out. They need to be rewritten and tested.
 - Class reloading causes Attachments to 'lose' their paperclip configuration in development mode. Need to figure out why and fix it.
 - Figure out plan for Migrating from pre-Paperclip attachments. The file structure is different for storing them now.
@@ -15,13 +15,6 @@ b. @block.publish!
 When almost certainly should be.
 
 - Another Versioning related Bug: Blocks with has_many :autosave=>true does not work. The callbacks do not trigger when the block is saved.
-
-
-Get rid of WARNING (Paperclip?)
-  sh: identify: command not found
-  Need to install ImageMagick and configure the command via:
-    http://stackoverflow.com/questions/4900905/imagemagick-and-paperclip-problem
-    Paperclip.options[:command_path] = "/opt/local/bin/"
 
 # Path Calculations
 - Need to test multiple attachments and what happens

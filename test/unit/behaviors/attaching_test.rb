@@ -216,10 +216,13 @@ module Cms
     end
 
     test "update the file" do
-      @file = mock_file
+      @file = mock_file(:original_filename => 'version2.txt')
       @attachable.attachments[0].data = @file
       update_attachable
-      assert_equal @file.read, open(@attachable.attachments[0].full_file_location) { |f| f.read }
+
+      assert_equal file_contents(@file.path), file_contents(@attachable.attachments[0].full_file_location)
+
+      #assert_equal @file.read, open(@attachable.attachments[0].full_file_location) { |f| f.read }
     end
 
     private
@@ -329,10 +332,6 @@ module Cms
       @attachable.update_attributes(:name => "Foo v2")
     end
 
-    # Read the actual file contents and return them as a string.
-    def file_contents(path_to_file)
-      open(path_to_file) {|f| f.read }
-    end
   end
 
 
