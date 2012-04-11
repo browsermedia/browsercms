@@ -89,10 +89,6 @@ module Cms
       module Validations
         def validates_attachment_size(name, options = {})
 
-          #if options.delete(:unless)
-          #logger.warn "Option :unless is not supported and will be ignored"
-          #end
-
           min = options[:greater_than] || (options[:in] && options[:in].first) || 0
           max = options[:less_than] || (options[:in] && options[:in].last) || (1.0/0)
           range = (min..max)
@@ -174,7 +170,6 @@ module Cms
         # @return [Array<Cms::Attachment>]
         def attachments_as_of_version(version_number, attachable)
           found_versions = Cms::Attachment::Version.where(:attachable_id => attachable.id).where(:attachable_type => attachable.attachable_type).where(:attachable_version => version_number).all
-          Rails.logger.warn "Found #{found_versions.inspect}"
           found_attachments = []
           found_versions.each do |av|
             found_attachments << av.build_object_from_version
@@ -211,8 +206,6 @@ module Cms
         #   Allows a complete version history to be reconstructed.
         # @param [Versionable] new_version
         def after_build_new_version(new_version)
-          logger.warn("*" * 20)
-          logger.warn "After build new version #{new_version}, update each attachment to point to: #{new_version.version}"
           attachments.each do |a|
             a.attachable_version = new_version.version
           end
@@ -221,9 +214,7 @@ module Cms
         # Version Callback - Reconstruct this object exactly as it was as of a particularly version
         # Called after the object is 'reset' to the specific version in question.
         def after_as_of_version()
-          logger.warn "after_as_of_version called"
           @attachments_as_of = self.class.attachments_as_of_version(version, self)
-          logger.warn "Attachments found #{@attachments_as_of}"
 
           # Override #attachments to return the original attachments for the current version.
           metaclass = class << self;
@@ -237,14 +228,9 @@ module Cms
         # Callback - Ensure attachments get reverted whenver a block does.
         def after_revert(version)
           version_number = version.version
-          logger.warn "Calling after_revert #{version}"
-          attachments_for_version = self.class.attachments_as_of_version(version_number, self)
-          new_attachments = []
-          attachments_for_version.each do |a|
-            a.revert_to(version_number)
-            new_attachments << a
+          attachments.each do |a|
+            a.revert_to(version_number, {:attachable_version => self.version+1})
           end
-          self.attachments = new_attachments
         end
 
         private
