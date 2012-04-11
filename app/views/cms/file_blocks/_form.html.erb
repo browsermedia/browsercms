@@ -1,36 +1,12 @@
-<% 
-   root = Cms::Section.root.first
-   root.full_path = root.name
-   @sections = []
-   @sections << root
-   @sections += root.master_section_list
-   @sections.each {|s| s.full_path = "/" + s.full_path unless s == root }
-   @block.ensure_attachment_exists
-
-  #@block.attachment_file_path = @block.attachment.file_path if @block.attachment_file_path.blank? && !@block.new_record?
-%>
-<%= content_for :html_head do %>
-  <%= javascript_tag do %>
-    jQuery(function($) {
-      <% if @block.new_record? %>
-        var sectionIdPathMap = <%= @sections.inject({}){|map, sec| map[sec.id.to_s] = sec.path.sub(/\/$/,''); map}.to_json.html_safe %>
-        $('#file_block_attachment_file, #file_block_attachment_section_id').change(function(){
-            $('#file_block_attachment_file_path').val(sectionIdPathMap[$('#file_block_attachment_section_id').val()]+'/'+$.cms.sanitizeFileName($('#file_block_attachment_file').val()))
-        })
-      <% end %>      
-    });    
-  <% end %>
-<% end %>
+<%= render :partial=>'cms/file_blocks/section_selector' %>
+<% suggest_file_path =  @block.new_record? ? "suggest_file_path" : "keep_existing_path" %>
 
 <%= f.cms_text_field :name %>
-<%#= f.cms_file_field :attachment_file, :label => "File" %>
-<%#= f.cms_drop_down :attachment_section_id,  @sections.map{|s| [s.full_path, s.id]}, :label => "Section" %>
-<%#= f.cms_text_field :attachment_file_path, :label => "Path" %>
 <%= f.fields_for :attachments do |a| %>
   <%= a.hidden_field :attachment_name, :value => 'file' %>
-  <%= a.cms_file_field :data, :label => "File" %>
-  <%= a.cms_drop_down :section_id, @sections.map {|s| [s.full_path, s.id]}, :label => "Section" %>
-  <%= a.cms_text_field :data_file_path, :label => "Path" %>
+  <%= a.cms_file_field :data, :label => "File", 'data-purpose'=>"cms_file_field" %>
+  <%= a.cms_drop_down :section_id, @sections.map {|s| [s.full_path, s.id]}, {:label => "Section"}, {'data-purpose'=>"section_selector"} %>
+  <%= a.cms_text_field :data_file_path, :label => "Path", :class=>suggest_file_path  %>
 <% end %>
 <%= f.cms_tag_list %>
 

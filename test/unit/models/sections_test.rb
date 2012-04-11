@@ -7,6 +7,11 @@ module Cms
       @root = create(:root_section)
     end
 
+    test "prepending_path" do
+      assert_equal "/", Section.new(:path => "/").prependable_path
+      assert_equal "/system/", Section.new(:path => "/system").prependable_path
+    end
+
     def test_not_allow_slash_in_name
       section = build(:section, :name => "OMG / WTF / BBQ")
       assert !section.valid?

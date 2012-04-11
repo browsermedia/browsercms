@@ -172,6 +172,15 @@ module Cms
       nil
     end
 
+    # Returns the path for this section with a trailing slash
+    def prependable_path
+      if path.ends_with?("/")
+        path
+      else
+        "#{path}/"
+      end
+    end
+
     def actual_path
       if root?
         "/"

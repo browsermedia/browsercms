@@ -4,7 +4,6 @@ Tasks:
 - Attachments are versioned, but have no connection to their original versioned block. Need to keep the original version id in it attachments table
 - Lots of attachment and file/image tests are commented out. They need to be rewritten and tested.
 - Class reloading causes Attachments to 'lose' their paperclip configuration in development mode. Need to figure out why and fix it.
-- Path is not automatically calculated for new File/Image blocks.
 - Figure out plan for Migrating from pre-Paperclip attachments. The file structure is different for storing them now.
 - Figure out plan for Migrating from Asset module attachments. The file structure may be the same, but we need to make sure it works.
 
@@ -24,9 +23,16 @@ Get rid of WARNING (Paperclip?)
     http://stackoverflow.com/questions/4900905/imagemagick-and-paperclip-problem
     Paperclip.options[:command_path] = "/opt/local/bin/"
 
+# Path Calculations
+- Need to test multiple attachments and what happens
+
 Attachment Issues:
 - Multiple Attachments:  What happens if a block HAD attachments, but one was removed, then it got reverted. I suspect it would not 'recover' those older attachments.
 - [BUG] Can't view images when looking at older versions. The 'path' is wrong so the image is broken. This also occurs when reverting a block, but before it's published. Probably calling the wrong 'method' in the view for rendering the path.
+
+Improvements
+- API for adding attachments to blocks
+- API - Require less code to define a form for uploading an attachment. (Backwards compatiblity)
 
 ## Upgrade Notes
 - Migrations are now generated with .cms. Will this cause problems during upgrades? (Write upgrade scenarios)
