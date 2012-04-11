@@ -51,6 +51,8 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
     class_eval src, __FILE__, __LINE__
   end
 
+  # @params html_options
+  # @options html_option [:class] - This will be overridden, so don't bother to set.
   def cms_drop_down(method, choices, options={}, html_options={})
     add_tabindex!(html_options)
     set_default_value!(method, options)
