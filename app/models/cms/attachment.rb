@@ -78,7 +78,7 @@ module Cms
                           :path => lambda_for(:path),
                           :styles => lambda_for(:styles),
 
-                          # Needed for versioning
+                          # Needed for versioning so that we keep all previous files.
                           :preserve_files => true,
 
                           #TODO: enable custom processors

@@ -27,6 +27,13 @@ module Cms
       g.templates.unshift path
     end
 
+    # Ensure Attachments are configured:
+    # 1. Before every request in development mode
+    # 2. Once in production
+    config.to_prepare do
+      Attachments.configure
+    end
+
     # We want the default cache directories to be overridable in the application.rb, so set them early in the boot process.
     config.before_configuration do |app|
       app.config.cms.mobile_cache_directory = File.join(Rails.root, 'public', 'cache', 'mobile')

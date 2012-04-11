@@ -2,8 +2,11 @@ Tasks:
 
 * Paperclip Based Assets - Replace the existing 'custom' file upload behavior with one that uses Paperclip. Allow blocks to have more than one attachment.
 
+- [BUG] Can't view images when looking at older versions. The 'path' is wrong so the image is broken. This also occurs when reverting a block, but before it's published. Probably calling the wrong 'method' in the view for rendering the path.
+- Add a simple 'file_field' form helper for single files
+- Need to determine how to configure attachments for paperclip, etc.
+- Look at API for has_attachment and simplify it.
 - Lots of attachment and file/image tests are commented out. They need to be rewritten and tested.
-- Class reloading causes Attachments to 'lose' their paperclip configuration in development mode. Need to figure out why and fix it.
 - Figure out plan for Migrating from pre-Paperclip attachments. The file structure is different for storing them now.
 - Figure out plan for Migrating from Asset module attachments. The file structure may be the same, but we need to make sure it works.
 
@@ -21,7 +24,6 @@ When almost certainly should be.
 
 Attachment Issues:
 - Multiple Attachments:  What happens if a block HAD attachments, but one was removed, then it got reverted. I suspect it would not 'recover' those older attachments.
-- [BUG] Can't view images when looking at older versions. The 'path' is wrong so the image is broken. This also occurs when reverting a block, but before it's published. Probably calling the wrong 'method' in the view for rendering the path.
 
 Improvements
 - API for adding attachments to blocks

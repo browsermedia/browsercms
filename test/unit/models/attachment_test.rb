@@ -2,8 +2,8 @@ require 'test_helper'
 
 class AttachmentTest < ActiveSupport::TestCase
 
-  def attachment
-    @attachment ||= Cms::Attachment.new
+  test "Attachments are configured" do
+    assert attachment.respond_to?(:data), "Attachment.configure was not called during setup, so attachments were not configured properly."
   end
 
   test "#attachable_version records which version of the block this attachment was connected to." do
@@ -130,4 +130,10 @@ class AttachmentTest < ActiveSupport::TestCase
   #     @attachment = Cms::Attachment.find(@attachment.id) # Force reload
   #     assert_equal new_section, @attachment.section
   #   end
+
+  private
+
+  def attachment
+    @attachment ||= Cms::Attachment.new
+  end
 end
