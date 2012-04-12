@@ -5,6 +5,14 @@ module Cms
   # From app, should be cms.xyz_path
   module PathHelper
 
+    def src_for(attachment)
+      if current_user.able_to?(:edit_content)
+        attachment.attachment_version_path
+      else
+        attachment.data_file_path
+      end
+    end
+
     def cms_index_path_for(resource, options={})
       polymorphic_path(build_path_for(resource), options)
     end

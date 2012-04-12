@@ -125,13 +125,10 @@ module Cms
       :file
     end
 
-    # Returns the path to the given attached file. Handles references to older versions of attachments as well.
-    def attachment_link
-      if published? && live_version?
-        data_file_path
-      else
-        "/cms/attachments/#{id}?version=#{version}"
-      end
+    # For authorized users, return the path to get the specific version of the file associated with this attachment.
+    # Guests should always get 'data_file_path' which is the public version of the asset.
+    def attachment_version_path
+      "/cms/attachments/#{id}?version=#{version}"
     end
 
     def public?

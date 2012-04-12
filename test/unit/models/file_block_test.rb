@@ -162,22 +162,15 @@ module Cms
       assert_equal 1, found.attachments.size
     end
 
-
-    test "attachment_link" do
-      assert_equal @file_block.file.data_file_path, @file_block.file.attachment_link
-    end
-
-    test "attachment_link for older versions" do
-      original_path = @file_block.file.data_file_path
-
+    test "attachment_version_path for older versions" do
       @file_block.attachments[0].data_file_path = "/new-path.txt"
       @file_block.update_attributes(:name => "Force an update", :publish_on_save => true)
       reset(:file_block)
 
-      assert_equal '/new-path.txt', @file_block.file.attachment_link
+      assert_equal '/new-path.txt', @file_block.file.data_file_path
 
       v1 = @file_block.as_of_version(1)
-      assert_equal "/cms/attachments/#{v1.file.id}?version=#{v1.file.version}", v1.file.attachment_link
+      assert_equal "/cms/attachments/#{v1.file.id}?version=#{v1.file.version}", v1.file.attachment_version_path
     end
 
     test "updates to #attachments automatically autosave" do

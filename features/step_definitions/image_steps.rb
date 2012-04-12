@@ -157,6 +157,7 @@ end
 
 When /^I view that image on a page$/ do
   @page = create(:public_page)
+  @image.reload
   @page.add_content(@image)
   @page.publish!
 

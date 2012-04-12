@@ -46,6 +46,13 @@ Feature: Manage Image Blocks
     When I view that image on a page
     Then I should see the latest version of the image
 
+  Scenario: Reverted Image should be visible to guests
+    Given an image exists with two versions
+    When I revert the image to version 1
+    And I am a guest
+    When I view that image on a page
+    Then I should see the latest version of the image
+
   Scenario: Revert an Image
     Given an image exists with two versions
     When I revert the image to version 1
