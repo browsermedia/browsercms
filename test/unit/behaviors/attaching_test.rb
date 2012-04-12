@@ -309,6 +309,8 @@ module Cms
       assert_equal file_contents(file2.path), file_contents(@attachable.as_of_version(2).attachments[0].full_file_location)
     end
 
+
+
     private
     def update_attachable_to_version2(new_path)
       @attachable.attachments[0].data_file_path = new_path

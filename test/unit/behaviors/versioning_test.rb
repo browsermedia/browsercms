@@ -108,7 +108,8 @@ module Cms
       assert_equal "Version 1", v1.name
       assert_equal @published_block.id, v1.id
 
-      assert v1.historical_record?
     end
+
+
   end
 end

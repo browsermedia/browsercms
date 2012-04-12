@@ -127,10 +127,10 @@ module Cms
 
     # Returns the path to the given attached file. Handles references to older versions of attachments as well.
     def attachment_link
-      if historical_record?
-        "/cms/attachments/#{id}?version=#{version}"
-      else
+      if published? && live_version?
         data_file_path
+      else
+        "/cms/attachments/#{id}?version=#{version}"
       end
     end
 
