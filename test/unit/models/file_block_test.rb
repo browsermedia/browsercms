@@ -78,13 +78,13 @@ module Cms
 
 
     test "create via nested assignment" do
-      fb = FileBlock.new(attachments_hash(:path=>'/new-path.txt'))
+      fb = FileBlock.new(attachments_hash(:path => '/new-path.txt'))
       assert_equal 1, fb.attachments.size
       assert_equal "/new-path.txt", fb.attachments[0].data_file_path
     end
 
     test "don't create without a file data using nested attributes" do
-      fb = FileBlock.new(:name=>"Any Name", :attachments_attributes=>{"0"=>{:data_file_path=>"/new-path.txt", :attachment_name=>"file"}})
+      fb = FileBlock.new(:name => "Any Name", :attachments_attributes => {"0" => {:data_file_path => "/new-path.txt", :attachment_name => "file"}})
       refute fb.valid?
     end
     #Does not work properly. As is, blocks can track only one attachment per version,
@@ -162,6 +162,24 @@ module Cms
       assert_equal 1, found.attachments.size
     end
 
+
+    test "attachment_link" do
+      assert_equal @file_block.file.data_file_path, @file_block.file.attachment_link
+    end
+
+    test "attachment_link for older versions" do
+      original_path = @file_block.file.data_file_path
+
+      @file_block.attachments[0].data_file_path = "/new-path.txt"
+      @file_block.update_attributes(:name => "Force an update", :publish_on_save => true)
+      reset(:file_block)
+
+      assert_equal '/new-path.txt', @file_block.file.attachment_link
+
+      v1 = @file_block.as_of_version(1)
+      assert_equal "/cms/attachments/#{v1.file.id}?version=#{v1.file.version}", v1.file.attachment_link
+    end
+
     test "updates to #attachments automatically autosave" do
       @file_block.attachments[0].data_file_path = "/new-path.txt"
       assert @file_block.attachments[0].changed?
@@ -175,7 +193,7 @@ module Cms
     end
 
     test "update via nested assignment" do
-      @file_block.update_attributes(:name=>"Force an update", :attachments_attributes=>{"0"=>{:data_file_path=>"/new-path.txt", :attachment_name=>"file", :id=>@file_block.attachments[0].id}})
+      @file_block.update_attributes(:name => "Force an update", :attachments_attributes => {"0" => {:data_file_path => "/new-path.txt", :attachment_name => "file", :id => @file_block.attachments[0].id}})
       assert_equal "/new-path.txt", @file_block.attachments[0].data_file_path
     end
 

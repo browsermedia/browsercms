@@ -124,3 +124,33 @@ end
 When /^the image should be updated to version 3$/ do
   assert_equal 3, @image.as_of_draft_version.version
 end
+
+Given /^a file exists with two versions$/ do
+  @original_file_name = "File Version 1"
+  @file = create(:file_block, :name => @original_file_name, :attachment_file=>mock_file(:original_filename=>'version1.txt'))
+
+  visit "/cms/file_blocks/#{@file.id}/edit"
+  attach_file "File", "test/fixtures/multipart/version2.txt"
+  click_button "true"
+end
+
+When /^I view the first version of that file$/ do
+  visit "/cms/file_blocks/#{@file.id}/version/1"
+end
+
+Then /^I should see the first version of the file$/ do
+  click_on @original_file_name
+  assert page.has_content?('v1')
+  assert_equal 200, page.status_code
+end
+
+When /^I view the first version of that image$/ do
+  visit "/cms/image_blocks/#{@image.id}/version/1"
+end
+
+Then /^I should see the first version of the image$/ do
+  assert page.has_css?("img[data-type=image_block]")
+  ele = page.first(:css, "img[data-type=image_block]")
+  visit ele[:src]
+  assert_equal 200, page.status_code
+end

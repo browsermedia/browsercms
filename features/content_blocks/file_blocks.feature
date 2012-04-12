@@ -50,3 +50,7 @@ Feature: File Blocks
     When I Save And Publish
     Then I should see "file path has already been taken"
 
+  Scenario: Looking at older versions
+    Given a file exists with two versions
+    When I view the first version of that file
+    Then I should see the first version of the file

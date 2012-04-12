@@ -125,11 +125,12 @@ module Cms
       :file
     end
 
+    # Returns the path to the given attached file. Handles references to older versions of attachments as well.
     def attachment_link
-      if attachable.published? && attachable.live_version?
-        data_file_path
+      if historical_record?
+        "/cms/attachments/#{id}?version=#{version}"
       else
-        "/cms/attachments/#{id}?version=#{attachable.version}"
+        data_file_path
       end
     end
 

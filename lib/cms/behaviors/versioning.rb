@@ -21,6 +21,9 @@ module Cms
           obj.instance_variable_set("@persisted", true)
           obj.instance_variable_set("@new_record", false)
 
+          # Tells this object it was created based on a copy from the versions table.
+          obj.instance_variable_set("@historical_record", true)
+
           # Callback to allow us to load other data when an older version is loaded
           obj.after_as_of_version if obj.respond_to?(:after_as_of_version)
 
@@ -287,6 +290,11 @@ module Cms
           v = find_version(version)
           raise ActiveRecord::RecordNotFound.new("version #{version.inspect} does not exist for <#{self.class}:#{id}>") unless v
           v.build_object_from_version
+        end
+
+        # Returns true if this object was represents a historical version record.
+        def historical_record?
+          !!@historical_record
         end
 
         def revert
