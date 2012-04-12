@@ -35,6 +35,11 @@ Feature: Manage Image Blocks
     And I Save And Publish
     Then the image 150 should be at path "/another-path"
 
+  Scenario: Looking at older versions
+    Given an image exists with two versions
+    When I view the first version of that image
+    Then I should see the first version of the image
+
   Scenario: Revert an Image
     Given an image exists with two versions
     When I revert the image to version 1
@@ -42,7 +47,7 @@ Feature: Manage Image Blocks
     Then the image should be in draft mode
     And the image should be updated to version 3
 
-    # This does not test actual file content, which it probably should
+# This does not test actual file content, which it probably should
 
 
 

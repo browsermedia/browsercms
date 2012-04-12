@@ -332,6 +332,7 @@ module Cms
       @attachable.update_attributes(:name => "Foo v2")
     end
 
+
   end
 
 
