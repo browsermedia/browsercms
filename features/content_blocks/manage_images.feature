@@ -40,6 +40,12 @@ Feature: Manage Image Blocks
     When I view the first version of that image
     Then I should see the first version of the image
 
+  Scenario: View in a page as Guest
+    Given an image exists with two versions
+    And I am a guest
+    When I view that image on a page
+    Then I should see the latest version of the image
+
   Scenario: Revert an Image
     Given an image exists with two versions
     When I revert the image to version 1

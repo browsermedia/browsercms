@@ -127,7 +127,7 @@ end
 
 Given /^a file exists with two versions$/ do
   @original_file_name = "File Version 1"
-  @file = create(:file_block, :name => @original_file_name, :attachment_file=>mock_file(:original_filename=>'version1.txt'))
+  @file = create(:file_block, :name => @original_file_name, :attachment_file => mock_file(:original_filename => 'version1.txt'))
 
   visit "/cms/file_blocks/#{@file.id}/edit"
   attach_file "File", "test/fixtures/multipart/version2.txt"
@@ -152,5 +152,22 @@ Then /^I should see the first version of the image$/ do
   assert page.has_css?("img[data-type=image_block]")
   ele = page.first(:css, "img[data-type=image_block]")
   visit ele[:src]
+  assert_equal 200, page.status_code
+end
+
+When /^I view that image on a page$/ do
+  @page = create(:public_page)
+  @page.add_content(@image)
+  @page.publish!
+
+  visit @page.path
+  #save_and_open_page
+end
+
+Then /^I should see the latest version of the image$/ do
+  assert page.has_css?("img[data-type=image_block]")
+  ele = page.first(:css, "img[data-type=image_block]")
+  visit ele[:src]
+  assert_equal @image.file.data_file_path, current_path, "Should not be the login screen."
   assert_equal 200, page.status_code
 end
