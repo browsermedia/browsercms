@@ -2,7 +2,8 @@ Tasks:
 
 * Paperclip Based Assets - Replace the existing 'custom' file upload behavior with one that uses Paperclip. Allow blocks to have more than one attachment.
 
-- [BUG] Can't view images when looking at older versions. The 'path' is wrong so the image is broken. This also occurs when reverting a block, but before it's published. Probably calling the wrong 'method' in the view for rendering the path.
+- API Improvements: Refactor src_for into path_for()
+- [Bug] Can't view older versions of pages with images on them.
 - Add a simple 'file_field' form helper for single files
 - Need to determine how to configure attachments for paperclip, etc.
 - Look at API for has_attachment and simplify it.

@@ -284,7 +284,6 @@ module Cms
         # @param [Integer] version The specific version of the block to look up
         # @return [ContentBlock] The block as of the state it existed at 'version'.
         def as_of_version(version)
-          logger.warn "Called as_of_version for #{self.inspect}"
           v = find_version(version)
           raise ActiveRecord::RecordNotFound.new("version #{version.inspect} does not exist for <#{self.class}:#{id}>") unless v
           v.build_object_from_version
