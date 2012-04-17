@@ -5,7 +5,9 @@ module Cms
   # From app, should be cms.xyz_path
   module PathHelper
 
-    def src_for(attachment)
+    # Returns the relative path to the given attachment.
+    # Content editors will see exact specific version path, while other users will see the 'public' url for the path.
+    def attachment_path_for(attachment)
       if current_user.able_to?(:edit_content)
         attachment.attachment_version_path
       else

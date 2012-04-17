@@ -2,7 +2,6 @@ Tasks:
 
 * Paperclip Based Assets - Replace the existing 'custom' file upload behavior with one that uses Paperclip. Allow blocks to have more than one attachment.
 
-- API Improvements: Refactor src_for into path_for()
 - [Bug] Can't view older versions of pages with images on them.
 - Add a simple 'file_field' form helper for single files
 - Need to determine how to configure attachments for paperclip, etc.
