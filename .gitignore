@@ -21,4 +21,5 @@ doc/api
 .yardoc/*
 .bundle/*
 test/dummy/db/backups/*
+test/dummy/public/cache/*
 db/backups

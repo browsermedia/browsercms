@@ -2,7 +2,6 @@ Tasks:
 
 * Paperclip Based Assets - Replace the existing 'custom' file upload behavior with one that uses Paperclip. Allow blocks to have more than one attachment.
 
-- [Bug] Can't view older versions of pages with images on them.
 - Add a simple 'file_field' form helper for single files
 - Need to determine how to configure attachments for paperclip, etc.
 - Look at API for has_attachment and simplify it.
@@ -41,7 +40,7 @@ Improvements
 * Faster Files - Take advantage of X-Sendfile (if possible) to speed up sending uploaded CMS files.
 * Browser Compatibility Testing - Ensure compatibility with latest versions of Chrome/IE 9/Firefox/Safari. IE 9 probably needs the most works.
 
-# 3.4.1
+# 3.4.x
 
 * [CMS] Upgrade a 3rd module (with a migration) to confirm the installation and upgrade instructions work correctly.
 * browsercms-cucumber - Build a separate gem from this project, which can be included in other CMS projects. (Might be 3.4.1)

@@ -20,6 +20,12 @@ Feature: Content Pages
     When I request /protected-page
     Then I should see the CMS :forbidden page
 
+  Scenario: View Older Versions
+    Given a page exists with two versions
+    And I am logged in as a Content Editor
+    When I view the toolbar for version 1 of that page
+    Then the toolbar should display a revert to button
+
   @page-caching
   Scenario: A Guest tries to access a CMS page in production
     Given a page at "/about-us" exists

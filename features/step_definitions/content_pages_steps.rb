@@ -192,3 +192,18 @@ end
 Then /^they should be redirected to "([^"]*)"$/ do |expected_url|
   assert_equal expected_url, current_url
 end
+
+
+Given /^a page exists with two versions$/ do
+  @content_page = create(:public_page)
+  @content_page.update_attributes(:name => "Version 2")
+end
+
+When /^I view the toolbar for version (\d+) of that page$/ do |version|
+  visit "/cms/toolbar?page_id=#{@content_page.id}&page_toolbar=1&page_version=#{version}"
+end
+
+Then /^the toolbar should display a revert to button$/ do
+  assert_equal 200, page.status_code
+  assert page.has_content? "Revert to this Version"
+end
