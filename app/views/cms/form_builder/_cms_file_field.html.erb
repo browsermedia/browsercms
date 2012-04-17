@@ -1,36 +1,7 @@
-<% if cms_options[:fancy] %>
-  <%= content_for :html_head do %>
-  <%= javascript_tag do %>
-    jQuery(function($) {
-      $('#mock_<%= object_name %>_<%= method %>')
-      .focus(function() {this.blur()})
-      .mousedown(function() {this.blur()})
-      $('#<%= object_name %>_<%= method %>').change(function() {
-        $('#mock_<%= object_name %>_<%= method %>')
-        .attr('value', $(this).attr('value')) 
-      })
-     })
-   <% end %>
-  <% end %>
-<% end %>
-
 <div class="fields file_fields">
-  <% if cms_options[:label] %>
-    <%= f.label method, cms_options[:label] %>
-  <% else %>
-    <%= f.label method %>
-  <% end %>
+  <%= f.cms_label method, cms_options[:label] %>
   <div id="<%= object_name %>_<%= method %>_div" class="file_inputs">
-    <%= f.file_field method, {:class=>"#{'fancy_' if cms_options[:fancy]}file"}.merge(options) %>
-<% if cms_options[:fancy] %>  
-    <div class="fakefile">
-        <input type="text" name="temp" class="mock" id="mock_<%= object_name %>_<%= method %>" />
-        <%= image_tag("cms/browse.gif") %>
-    </div>
-<% end %>
+    <%= f.file_field method, options %>
   </div>
-  <% if cms_options[:instructions] %>
-    <div class="instructions"><%=h cms_options[:instructions] %></div>
-    <br clear="all"/>  
-  <% end %>
+  <%= f.cms_instructions cms_options[:instructions] %>
 </div>

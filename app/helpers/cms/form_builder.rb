@@ -12,21 +12,21 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
   #   * :width - The width for the select (defaults to 455px).
   #
   def drop_down(method, choices, options = {}, html_options = {})
-    select_class   = "#{@object_name}_#{method}"
-    h_opts         = add_tabindex!(@default_options.merge(html_options))
+    select_class = "#{@object_name}_#{method}"
+    h_opts = add_tabindex!(@default_options.merge(html_options))
     h_opts[:class] = select_class
 
-    opts           = objectify_options(options)
+    opts = objectify_options(options)
     set_default_value!(method, options)
     cms_options = options.extract_only!(:default_value, :width)
     render_cms_form_partial :fancy_drop_down,
                             :object_name => @object_name, :method => method,
-                            :choices     => choices, :options => opts,
+                            :choices => choices, :options => opts,
                             :cms_options => cms_options, :html_options => h_opts
   end
 
   def date_picker(method, options={})
-    text_field(method, {:size => 10, :class => "date_picker", :value=>Cms::DatePicker.format_for_ui(@object.send(method))}.merge(options))
+    text_field(method, {:size => 10, :class => "date_picker", :value => Cms::DatePicker.format_for_ui(@object.send(method))}.merge(options))
   end
 
   def tag_list(options={})
@@ -51,6 +51,27 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
     class_eval src, __FILE__, __LINE__
   end
 
+  # Returns a label for a given field
+  # @param [Symbol] field Name of the field
+  # @param [String] label_value If nil, will use default logic for Rails::FormBuilder#label
+  def cms_label(field, label_value)
+    if label_value
+      label field, label_value
+    else
+      label field
+    end
+  end
+
+  # Returns a file upload input tag for a given block, along with label and instructions.
+  #
+  # @param [Symbol] method The name of the model this form upload is associated with
+  # @param [Hash] options
+  # @option options [String] :label (Humanized field name)
+  # @option options [String] :instructions (blank) Helpful tips for the person entering the field, appears blank if nothing is specified.
+  def cms_file_field(method, options={})
+    render_form_field("file_field", method, options)
+  end
+
   # @params html_options
   # @options html_option [:class] - This will be overridden, so don't bother to set.
   def cms_drop_down(method, choices, options={}, html_options={})
@@ -59,7 +80,7 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
     cms_options = options.extract_only!(:label, :instructions, :default_value)
     render_cms_form_partial :drop_down,
                             :object_name => @object_name, :method => method,
-                            :choices     => choices, :options => options,
+                            :choices => choices, :options => options,
                             :cms_options => cms_options, :html_options => html_options
   end
 
@@ -88,20 +109,20 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
     set_default_value!(method, options)
     cms_options = options.extract_only!(:label, :instructions, :default_value)
     render_cms_form_partial :text_editor,
-                            :id             => (options[:id] || "#{@object_name}_#{method}"),
+                            :id => (options[:id] || "#{@object_name}_#{method}"),
                             :editor_enabled => (cookies["editorEnabled"].blank? ? true : (cookies["editorEnabled"] == 'true' || cookies["editorEnabled"] == ['true'])),
-                            :object_name    => @object_name, :method => method,
-                            :options        => options, :cms_options => cms_options
+                            :object_name => @object_name, :method => method,
+                            :options => options, :cms_options => cms_options
   end
 
   # Renders instructions for a given field below the field itself. Instructions can be used to provide helpful
   # guidance to content editors including formatting help or just explaining what a field is for.
   #
-  # Will not render if instructions are blank/nil.
+  # If instructions are blank/nil, then nothing will be shown.
   #
-  # * instructions - The text of the instructions to show (Defaults to blank)
+  # @param [String] instructions (blank) The help text to show
   def cms_instructions(instructions)
-    render_cms_form_partial :instructions, :instructions=>instructions
+    render_cms_form_partial :instructions, :instructions => instructions
   end
 
   # Renders a label and checkbox suitable for allow editors to update a boolean field.
@@ -117,7 +138,7 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
     add_tabindex!(options)
     set_default_value!(method, options)
     cms_options = options.extract_only!(:label, :instructions, :default_value)
-    render_cms_form_partial "check_box", :method=>method, :options => options, :cms_options => cms_options
+    render_cms_form_partial "check_box", :method => method, :options => options, :cms_options => cms_options
   end
 
   #
@@ -141,10 +162,10 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
       set_default_value!(method, options)
       options[:default_handler] = "erb" unless options[:default_handler]
 
-      cms_options      = options.extract_only!(:label, :instructions)
+      cms_options = options.extract_only!(:label, :instructions)
       dropdown_options = options.extract_only!(:default_handler)
       add_tabindex!(options)
-      render_cms_form_partial :template_editor, :method=>method, :dropdown_options=>dropdown_options, :options => options, :cms_options=>cms_options
+      render_cms_form_partial :template_editor, :method => method, :dropdown_options => dropdown_options, :options => options, :cms_options => cms_options
     end
   end
 
@@ -158,10 +179,21 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
     errors_list << @template.content_tag(:p, "There were problems with the following fields:")
     errors_list << @template.content_tag(:ul, object.errors.full_messages.map { |message| @template.content_tag(:li, message).html_safe }.join("\n").html_safe).html_safe
 
-    @template.content_tag(:div, errors_list.html_safe, :class => "errorExplanation", :id=>"errorExplanation")
+    @template.content_tag(:div, errors_list.html_safe, :class => "errorExplanation", :id => "errorExplanation")
   end
 
   private
+
+  def render_form_field(form_control_name, method, options)
+    add_tabindex!(options)
+    set_default_value!(method, options)
+    cms_options = options.extract!(:label, :instructions, :default_value)
+    render_cms_form_partial form_control_name.to_sym,
+                            :object_name => @object_name,
+                            :method => method,
+                            :options => options,
+                            :cms_options => cms_options
+  end
 
   def set_default_value!(method, options={})
     if options.has_key?(:default_value) && @object.send(method).blank?
@@ -185,7 +217,7 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
 
   def render_cms_form_partial(field_type_name, locals)
     @template.render :partial => "cms/form_builder/cms_#{field_type_name}",
-                     :locals  => {:f => self}.merge(locals)
+                     :locals => {:f => self}.merge(locals)
   end
 
 end
