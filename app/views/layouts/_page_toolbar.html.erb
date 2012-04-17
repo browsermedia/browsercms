@@ -86,7 +86,7 @@
         :class => "spacer button confirm_with_title http_delete#{ ' disabled' unless current_user.able_to_publish?(@page) }" %>
     <% else %>
       <%= link_to "<span>Revert to this Version</span>".html_safe,
-        cms.revert_to_page_path(@page, @page.version),
+        cms.revert_page_path(@page, @page.version),
         :id => "revert_button",
         :class => "button http_put", 
         :target => "_top" %>
