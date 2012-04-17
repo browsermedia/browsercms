@@ -1,4 +1,4 @@
 <%= tag :img,
-        :src => src_for(@content_block.file),
+        :src => attachment_path_for(@content_block.file),
         :alt => h(@content_block.name),
         :data => { :type => "image_block" } %>
