@@ -61,7 +61,14 @@ module Cms
       end
 
       module MacroMethods
-        def has_attachments
+
+        # Adds additional behavior to a model which allows it to have attachments.
+        # Typically, clients will not need to call this directly. Enabling attachments is normally done via:
+        #
+        #   acts_as_content_block :allow_attachments => false
+        #
+        ## By default, blocks can have attachments.
+        def allow_attachments
           extend ClassMethods
           extend Validations
           include InstanceMethods

@@ -15,6 +15,7 @@ require "rails/generators/test_case"
 
 require 'mock_file'
 require 'support/factory_helpers'
+require 'support/database_helpers'
 
 # I'm not sure why ANY of these FactoryGirl requires are necessary at all.
 require 'factory_girl'
