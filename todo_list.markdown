@@ -2,7 +2,6 @@ Tasks:
 
 * Paperclip Based Assets - Replace the existing 'custom' file upload behavior with one that uses Paperclip. Allow blocks to have more than one attachment.
 
-- [Bug] Can't update attachment images when there are multiples
 - Ensure generators create new attachments
 - Ensure developers can add attachments.
 - Need to determine how to configure attachments for paperclip, etc.

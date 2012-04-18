@@ -55,7 +55,6 @@ module Cms
     #  validates_asset_content_type
     #
     module Attaching
-      # extend ActiveSupport::Concern
 
       def self.included(base)
         base.extend MacroMethods
@@ -81,6 +80,7 @@ module Cms
           before_create :assign_attachments
           before_validation :initialize_attachments
           before_save :ensure_status_matches_attachable
+          before_validation :check_for_updated_attachments
           after_save :save_associated_attachments
         end
       end
@@ -180,6 +180,16 @@ module Cms
       end
 
       module InstanceMethods
+
+        # This ensures that if a change is made to an attachment, that this model is also marked as changed.
+        # Otherwise, if the change isn't detected, this record won't save a new version (since updates are rejected if no changes were made)
+        def check_for_updated_attachments
+          attachments.each do |a|
+            if a.changed?
+              changed_attributes['attachments'] = "Uploaded new files"
+            end
+          end
+        end
 
         # Returns a list of all attachments this content type has defined.
         # @return [Array<String>] Names

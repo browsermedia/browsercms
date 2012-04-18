@@ -134,6 +134,7 @@ module Cms
       @section = create(:section, :name => "attachables", :parent => root_section)
     end
 
+
     test "#attachment_names returns a list of each attachment defined for a content type" do
       assert_equal ["document"], VersionedAttachable.new.attachment_names
     end
@@ -220,7 +221,14 @@ module Cms
       @attachable = create(:versioned_attachable)
     end
 
-    test "#has_attachment :name" do
+    test "updating an attachment will mark the attachable record as changed" do
+      @attachable.document.attachment_name = "new.pdf"
+      @attachable.valid?
+
+      assert @attachable.changed?
+    end
+
+    test "Get attachment by name" do
       assert_equal @attachable.attachments[0], @attachable.document
     end
 
