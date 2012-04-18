@@ -100,7 +100,15 @@ module Cms
     end
 
     def config_value_for(key)
-      definitions[content_block_class][attachment_name][key] || configuration.send(key)
+      class_definitions = definitions[content_block_class]
+      if class_definitions == nil
+        raise "Couldn't find any definitions for #{content_block_class}."
+      end
+      attachment_definition = class_definitions[attachment_name]
+      if attachment_definition == nil
+        raise "Couldn't find any definitions for #{attachment_name}."
+      end
+      attachment_definition[key] || configuration.send(key)
     end
 
     def content_block_class

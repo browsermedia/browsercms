@@ -134,6 +134,26 @@ module Cms
       @section = create(:section, :name => "attachables", :parent => root_section)
     end
 
+    test "#attachment_names returns a list of each attachment defined for a content type" do
+      assert_equal ["document"], VersionedAttachable.new.attachment_names
+    end
+
+    test "#ensure_attachments_exist sets up a default attachment for each one" do
+      attachable = VersionedAttachable.new
+      attachable.ensure_attachment_exists
+
+      assert_equal 1, attachable.attachments.size
+      assert_equal "document", attachable.attachments.first.attachment_name
+    end
+
+    test "Calling #ensure doesn't create duplicates" do
+      attachable = VersionedAttachable.new
+      attachable.ensure_attachment_exists
+      attachable.ensure_attachment_exists
+
+      assert_equal 1, attachable.attachments.size
+    end
+
     test "#attachments" do
       doc = build :versioned_attachable
       assert_not_nil doc.attachments
@@ -308,7 +328,6 @@ module Cms
       assert_equal file_contents(@file.path), file_contents(@attachable.as_of_version(1).attachments[0].full_file_location), "The contents of version 1 of the file should be returned"
       assert_equal file_contents(file2.path), file_contents(@attachable.as_of_version(2).attachments[0].full_file_location)
     end
-
 
 
     private

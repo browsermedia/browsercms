@@ -14,3 +14,12 @@ Feature: Form Controls
     | Select a file to upload |
 
 
+  Scenario: Multiple Individual Attachments
+    Given I am creating a new block which has two attachments
+    Then I should see two file uploads
+
+  Scenario: Edit content with multiple attachments
+    Given a block exists with two attachments
+    When I edit that block
+    Then I should see two file uploads
+

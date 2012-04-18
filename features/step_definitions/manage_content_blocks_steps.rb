@@ -1,7 +1,16 @@
-When /^a Content Type named "Product" is registered$/ do
-  p = "Product"
-  Cms::ContentType.create!(:name => p, :group_name => p)
+module CustomBlockHelpers
+
+  def register_content_type(type)
+    Cms::ContentType.create!(:name => type, :group_name => type)
+  end
 end
+
+World(CustomBlockHelpers)
+
+When /^a Content Type named "Product" is registered$/ do
+  register_content_type("Product")
+end
+
 Given /^the following products exist:$/ do |table|
   # table is a | 1  | iPhone      | 400   |
   table.hashes.each do |row|
