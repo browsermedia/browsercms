@@ -180,6 +180,13 @@ module Cms
       end
 
       module InstanceMethods
+
+        # Returns a list of all attachments this content type has defined.
+        # @return [Array<String>] Names
+        def attachment_names
+          Cms::Attachment.definitions[self.class.name].keys
+        end
+
         def after_publish
           attachments.each &:publish
         end
@@ -230,6 +237,15 @@ module Cms
           version_number = version.version
           attachments.each do |a|
             a.revert_to(version_number, {:attachable_version => self.version+1})
+          end
+        end
+
+        # Ensures that attachments exist for form when calling /new
+        def ensure_attachment_exists
+          if new_record? && attachments.empty?
+            attachment_names.each do |n|
+              attachments.build :attachment_name => n
+            end
           end
         end
 

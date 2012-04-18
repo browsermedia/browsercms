@@ -37,13 +37,5 @@ module Cms
       end
     end
 
-
-    def ensure_attachment_exists
-      if new_record?
-        attachments.build
-      end
-    end
-
-
   end
 end
