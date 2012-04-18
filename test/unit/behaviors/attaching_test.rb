@@ -1,23 +1,15 @@
 require 'test_helper'
 
-ActiveRecord::Base.connection.instance_eval do
-  drop_table(:default_attachables) rescue nil
-  drop_table(:default_attachable_versions) rescue nil
-  create_content_table(:default_attachables, :prefix => false) do |t|
-    t.string :name
-    t.timestamps
-  end
+[:default_attachables, :versioned_attachables, :non_attachable_block].each do |t|
+  DatabaseHelpers.ensure_content_table_exists t
+end
 
-  drop_table(:versioned_attachables) rescue nil
-  drop_table(:versioned_attachable_versions) rescue nil
-  create_content_table(:versioned_attachables, :prefix => false) do |t|
-    t.string :name
-    t.timestamps
-  end
+class NonAttachableBlock < ActiveRecord::Base
+  acts_as_content_block :allow_attachments => false
 end
 
 class DefaultAttachable < ActiveRecord::Base
-  acts_as_content_block :has_attachments => true
+  acts_as_content_block
   has_attachment :spreadsheet
 end
 
@@ -106,12 +98,17 @@ module Cms
 
   class AttachingTest < ActiveSupport::TestCase
 
-    test "Blocks should all respond to has_attachments" do
-      assert Cms::HtmlBlock.respond_to? :has_attachments
+    test "Content blocks should be able to have attachments by default" do
+      assert DefaultAttachable.respond_to? :has_attachment, "Allows blocks to define a single named attachment"
     end
 
-    test "#has_attachments shouldn't be called unless configured'" do
-      refute Cms::HtmlBlock.respond_to? :has_attachment
+    test "Content blocks should be able to have multiple attachments by default" do
+      assert DefaultAttachable.respond_to? :has_many_attachments, "Allows blocks to define multiple attachments"
+    end
+
+    test "Blocks can be configured to not be allowed to have attachments." do
+      refute NonAttachableBlock.respond_to? :has_attachment
+      refute NonAttachableBlock.respond_to? :has_many_attachments
     end
 
     def test_file_path_sanitization
@@ -249,8 +246,6 @@ module Cms
       update_attachable
 
       assert_equal file_contents(@file.path), file_contents(@attachable.attachments[0].full_file_location)
-
-      #assert_equal @file.read, open(@attachable.attachments[0].full_file_location) { |f| f.read }
     end
 
     private

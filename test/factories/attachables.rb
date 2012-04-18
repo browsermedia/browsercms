@@ -1,6 +1,6 @@
 # Factories for testing Attachable Blocks
 class VersionedAttachable < ActiveRecord::Base
-  acts_as_content_block :has_attachments => true
+  acts_as_content_block
   has_attachment :document
 end
 
