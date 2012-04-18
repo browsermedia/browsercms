@@ -1,8 +1,8 @@
 Tasks:
+* Ensure if there are multiple attachments on a single block, that each control renders once.
 
 * Paperclip Based Assets - Replace the existing 'custom' file upload behavior with one that uses Paperclip. Allow blocks to have more than one attachment.
 
-- Add a simple 'file_field' form helper for single files
 - Need to determine how to configure attachments for paperclip, etc.
 - Look at API for has_attachment and simplify it.
 - Lots of attachment and file/image tests are commented out. They need to be rewritten and tested.

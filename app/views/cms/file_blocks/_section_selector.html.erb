@@ -5,13 +5,6 @@
    @sections << root
    @sections += root.master_section_list
    @sections.each {|s| s.full_path = "/" + s.full_path unless s == root }
-
-   @block.ensure_attachment_exists
-
-%>
-<%#
-   In an ideal world, the cms_drop_down would be a cms_section_selector which would apply these values to the options directly.
-   That would avoid having to write this out twice.
 %>
 <span style="display: hidden">
 <% @sections.each do |s| -%>

@@ -66,14 +66,17 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
   #
   # @param [Symbol] method The name of the model this form upload is associated with
   # @param [Hash] options
-  # @option options [String] :label (Humanized field name)
+  # @option options [String] :label (Data)
   # @option options [String] :instructions (blank) Helpful tips for the person entering the field, appears blank if nothing is specified.
+  # @option options [Boolean] :edit_path (false) If true, render a text field to allow users to edit path for this file.
+  # @option options [Boolean] :edit_section (false) If true, render a select box which allows users to choose which section this attachment should be placed in.
   def cms_file_field(method, options={})
+    @object.ensure_attachment_exists if @object.respond_to?(:ensure_attachment_exists)
     render_form_field("file_field", method, options)
   end
 
   # @params html_options
-  # @options html_option [:class] - This will be overridden, so don't bother to set.
+  # @options html_option [:class] - This will be overridden, so don't bother to set it
   def cms_drop_down(method, choices, options={}, html_options={})
     add_tabindex!(html_options)
     set_default_value!(method, options)
@@ -189,6 +192,7 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
     set_default_value!(method, options)
     cms_options = options.extract!(:label, :instructions, :default_value)
     render_cms_form_partial form_control_name.to_sym,
+                            :model_object => @object,
                             :object_name => @object_name,
                             :method => method,
                             :options => options,
@@ -216,8 +220,7 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
   end
 
   def render_cms_form_partial(field_type_name, locals)
-    @template.render :partial => "cms/form_builder/cms_#{field_type_name}",
-                     :locals => {:f => self}.merge(locals)
+    @template.render :partial => "cms/form_builder/cms_#{field_type_name}", :locals => {:f => self}.merge(locals)
   end
 
 end
