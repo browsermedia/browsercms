@@ -1,13 +1,5 @@
-<%= render :partial=>'cms/file_blocks/section_selector' %>
-<% suggest_file_path =  @block.new_record? ? "suggest_file_path" : "keep_existing_path" %>
-
 <%= f.cms_text_field :name %>
-<%= f.fields_for :attachments do |a| %>
-  <%= a.hidden_field :attachment_name, :value => 'file' %>
-  <%= a.cms_file_field :data, :label => "File", 'data-purpose'=>"cms_file_field" %>
-  <%= a.cms_drop_down :section_id, @sections.map {|s| [s.full_path, s.id]}, {:label => "Section"}, {'data-purpose'=>"section_selector"} %>
-  <%= a.cms_text_field :data_file_path, :label => "Path", :class=>suggest_file_path  %>
-<% end %>
+<%= f.cms_file_field :file, :label => "File", :instructions=>"Select a file to upload.", edit_path: true, edit_section: true %>
 <%= f.cms_tag_list %>
 
 
