@@ -19,7 +19,12 @@ Feature: Form Controls
     Then I should see two file uploads
 
   Scenario: Edit content with multiple attachments
-    Given a block exists with two attachments
+    Given a block exists which configured to have two attachments
     When I edit that block
     Then I should see two file uploads
+
+  Scenario: Updating multiple attachments
+    Given a block exists with two uploaded attachments
+    And I replace both attachments
+    Then I should see the new attachments when I view the block
 

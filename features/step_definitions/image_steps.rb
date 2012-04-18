@@ -165,10 +165,19 @@ When /^I view that image on a page$/ do
   #save_and_open_page
 end
 
+module ImageChecker
+
+  # Fetch an image from page and make sure it exists.
+  def get_image(css_selector)
+    assert page.has_css?(css_selector)
+    img_tag = page.first(:css, css_selector)
+    visit img_tag[:src]
+    assert_equal 200, page.status_code
+  end
+end
+World(ImageChecker)
+
 Then /^I should see the latest version of the image$/ do
-  assert page.has_css?("img[data-type=image_block]")
-  ele = page.first(:css, "img[data-type=image_block]")
-  visit ele[:src]
+  get_image("img[data-type=image_block]")
   assert_equal @image.file.data_file_path, current_path, "Should not be the login screen."
-  assert_equal 200, page.status_code
 end
