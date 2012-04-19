@@ -13,7 +13,6 @@ Feature: Form Controls
     And I should see the following instructions:
     | Select a file to upload |
 
-
   Scenario: Multiple Individual Attachments
     Given I am creating a new block which has two attachments
     Then I should see two file uploads
@@ -27,4 +26,12 @@ Feature: Form Controls
     Given a block exists with two uploaded attachments
     And I replace both attachments
     Then I should see the new attachments when I view the block
+
+  Scenario: Create with only one attachment
+    Given I am creating a new block which has two attachments
+    And I upload a single attachment
+    When I edit that block
+    Then I should see two file uploads
+
+
 

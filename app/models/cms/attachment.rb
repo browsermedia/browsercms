@@ -106,7 +106,7 @@ module Cms
       end
       attachment_definition = class_definitions[attachment_name]
       if attachment_definition == nil
-        raise "Couldn't find any definitions for #{attachment_name}."
+        raise "Couldn't find any definitions for '#{attachment_name}'."
       end
       attachment_definition[key] || configuration.send(key)
     end

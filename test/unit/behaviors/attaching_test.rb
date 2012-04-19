@@ -1,7 +1,7 @@
 require 'test_helper'
 
-[:default_attachables, :versioned_attachables, :non_attachable_block].each do |t|
-  DatabaseHelpers.ensure_content_table_exists t
+[:default_attachables, :versioned_attachables, :non_attachable_block, :two_attachments].each do |table|
+  DatabaseHelpers.ensure_content_table_exists table
 end
 
 class NonAttachableBlock < ActiveRecord::Base
@@ -11,6 +11,12 @@ end
 class DefaultAttachable < ActiveRecord::Base
   acts_as_content_block
   has_attachment :spreadsheet
+end
+
+class TwoAttachments < ActiveRecord::Base
+  acts_as_content_block
+  has_attachment :doc1
+  has_attachment :doc2
 end
 
 class FactoryTest < ActiveSupport::TestCase
@@ -122,6 +128,33 @@ module Cms
 
   end
 
+  class TwoAttachmentsTest < ActiveSupport::TestCase
+
+    def setup
+      @content = TwoAttachments.create!(attachments_hash(:name => 'doc1').merge({:publish_on_save => true, :name => "Test"}))
+      assert_equal 1, @content.attachments.size
+      assert_not_nil @content.doc1, "Has one document"
+      assert_nil @content.doc2, "But not the second"
+    end
+
+    test "with two attachments, ensure should make sure both are available, even if only one has been uploaded." do
+      @content.ensure_attachment_exists
+
+      assert_equal 2, @content.attachments.size
+      assert_not_nil @content.doc1
+      assert_not_nil @content.doc2
+    end
+
+    test "Can build attachments after loading a specific version" do
+      draft = @content.as_of_draft_version()
+
+      draft.ensure_attachment_exists
+
+      assert_equal 2, draft.attachments.size
+      assert_not_nil draft.doc1
+      assert_not_nil draft.doc2
+    end
+  end
   class AttachableTest < ActiveSupport::TestCase
 
     def setup
@@ -130,7 +163,6 @@ module Cms
 
       @section = create(:section, :name => "attachables", :parent => root_section)
     end
-
 
     test "#attachment_names returns a list of each attachment defined for a content type" do
       assert_equal ["document"], VersionedAttachable.new.attachment_names
