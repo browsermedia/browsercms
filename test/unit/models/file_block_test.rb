@@ -76,7 +76,6 @@ module Cms
       assert_equal true, file.file.archived?
     end
 
-
     test "create via nested assignment" do
       fb = FileBlock.new(attachments_hash(:path => '/new-path.txt'))
       assert_equal 1, fb.attachments.size
@@ -151,6 +150,14 @@ module Cms
   class UpdatingFileBlockTest < ActiveSupport::TestCase
     def setup
       @file_block = create(:file_block)
+    end
+
+
+    test "By default, attachment URL should be the data_file_path" do
+      @file_block = create(:file_block, :attachment_file_path => "/test.txt")
+
+      assert_equal @file_block.file.data_file_path, @file_block.file.url
+      assert_equal "/test.txt", @file_block.file.url
     end
 
     test "#attachable_type" do

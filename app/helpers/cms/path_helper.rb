@@ -12,7 +12,7 @@ module Cms
       if current_user.able_to?(:edit_content)
         attachment.attachment_version_path
       else
-        attachment.data_file_path
+        attachment.url
       end
     end
 
