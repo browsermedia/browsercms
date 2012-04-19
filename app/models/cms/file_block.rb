@@ -3,7 +3,7 @@ module Cms
 
     acts_as_content_block :taggable => true
 
-    has_attachment :file, :url => ":attachment_file_path"
+    has_attachment :file
     validates_attachment_presence :file, :message => "You must upload a file"
 
     def self.display_name

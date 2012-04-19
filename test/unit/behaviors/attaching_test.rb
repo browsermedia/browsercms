@@ -51,13 +51,13 @@ module Cms
       assert_incremented attachable_count, DefaultAttachable.count
       assert_equal root_section, @attachable.spreadsheet.parent
       assert_equal root_section.id, @attachable.spreadsheet.parent.id
-      assert_equal "/attachments/DefaultAttachable_foo.jpg?style=original", @attachable.spreadsheet.url
+      assert_equal "/attachments/DefaultAttachable_foo.jpg", @attachable.spreadsheet.url
 
       reset(:attachable)
 
       assert_equal root_section, @attachable.spreadsheet.section
       assert_equal root_section.id, @attachable.spreadsheet.section_id
-      assert_equal "/attachments/DefaultAttachable_foo.jpg?style=original", @attachable.spreadsheet.url
+      assert_equal "/attachments/DefaultAttachable_foo.jpg", @attachable.spreadsheet.url
     end
 
     test "Publishing block publishes attachment" do
@@ -81,7 +81,7 @@ module Cms
       assert_equal true, @attachable.save!
       assert_equal true, @attachable.publish!
 
-      assert_equal "/attachments/DefaultAttachable_foo.jpg?style=original", @attachable.spreadsheet.url
+      assert_equal "/attachments/DefaultAttachable_foo.jpg", @attachable.spreadsheet.url
 
       assert_not_nil @attachable.spreadsheet, "After attaching a file, the Attachment should exist"
 
@@ -90,7 +90,7 @@ module Cms
       assert_not_nil @attachable.spreadsheet, "The attachment should have been saved and reloaded."
       assert_equal root_section, @attachable.spreadsheet.section
       assert_equal root_section.id, @attachable.spreadsheet.section_id
-      assert_equal "/attachments/DefaultAttachable_foo.jpg?style=original", @attachable.spreadsheet.url
+      assert_equal "/attachments/DefaultAttachable_foo.jpg", @attachable.spreadsheet.url
       assert @attachable.spreadsheet.published?
     end
 
@@ -187,26 +187,22 @@ module Cms
       }
       expected.merge!(expected_values)
 
-      # For reasons I'm not 100% sure of, even when data_file_path is set, .url still ALWAYs returns this.
-      expected_paperclip_url = "/attachments/VersionedAttachable_foo.jpg?style=original"
-
       attachable_count = VersionedAttachable.count
 
       assert @attachable.save!
-
 
       assert_incremented attachable_count, VersionedAttachable.count if expected[:more_created]
       assert_equal expected[:parent], @attachable.document.parent
       assert_equal expected[:parent].id, @attachable.document.parent.id
       assert_equal expected[:path], @attachable.document.data_file_path
-      assert_equal expected_paperclip_url, @attachable.document.url
+      assert_equal expected[:path], @attachable.document.url
 
       reset(:attachable)
 
       assert_equal expected[:parent], @attachable.document.parent
       assert_equal expected[:parent].id, @attachable.document.parent.id
       assert_equal expected[:path], @attachable.document.data_file_path
-      assert_equal expected_paperclip_url, @attachable.document.url
+      assert_equal expected[:path], @attachable.document.url
     end
 
   end
