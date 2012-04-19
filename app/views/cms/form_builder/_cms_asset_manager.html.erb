@@ -1,0 +1,56 @@
+<% content_for :html_head do %>
+  <style type="text/css">
+    #assets_table label {font-weight:bold;color: #3E78C7}
+    #assets_table th {font-weight: bold}
+    #assets_table td, th  {
+      margin: 10px auto;
+      padding: 10px 15px;
+      text-align:center;
+      vertical-align:middle;
+      border-bottom: 1px solid #ddd;
+    }
+  </style>
+<% end -%>
+
+<% if asset_definitions.nil? %>
+  <p>This content type (<%= @block.class.name %>) does not have any define any attachments.<p>
+<% else %>
+<br />
+<div class="fields" id="assets_table">
+  <label><span id="asset-name"><%= @block.class.name %></span> Attachments</label>
+  <br /><br />
+    <table style="display:<%= @block.multiple_attachments.empty? ? "none" : "block"%>">
+      <tr>
+        <th>Preview</th>
+        <th>Type</th>
+        <th>Size</th>
+        <th></th>
+      <tr>
+    <% for attachment in @block.multiple_attachments %>
+      <% unless attachment.new_record? %>
+        <%= render :partial => "cms/attachments/attachment", :locals => {:attachment => attachment}%>
+      <% end %>
+    <% end %>
+  </table>
+</div>
+
+<div class="fields">
+  <p>Upload a new attachment:</p>
+</div>
+
+<div class="fields select_fields">
+  <%= label_tag "Attachment Type" %>
+  <%= select_tag :asset_types,  options_for_select(asset_types) %>
+</div>
+<%= f.hidden_field :attachment_id_list, :id=>"attachment_manager_ids_list" %>
+
+<div id="asset_add" class="fields file_fields" style="display:<%= asset_types.size > 1 ? "none" : "block"%>">
+  <label for="asset_add">Choose file</label>
+    <div id="asset_add_div">
+    <input type="file" name="attachment[data]" id="asset_add_file" onchange="$.cms.AssetManager.upload(this)" />
+    <input type="hidden" id="asset_attachable_id" name="asset[attachable_id]" value="<%= @block.id %>" />
+    <input type="hidden" id="asset_attachable_class" value="<%= @block.class.name %>" />
+    <iframe src="javascript:false" style="visibility:none;height:1px;width:1px" name="asset_add_uploader" id="asset_add_uploader"></iframe>
+  </div>
+</div>
+<% end %>

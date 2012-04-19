@@ -1,10 +1,10 @@
 Dummy::Application.routes.draw do
 
+
   get "content-page", :to=>"content_page#index"
   get "custom-page", :to=>"content_page#custom_page"
-
+  namespace :cms do content_blocks :catalogs end
   namespace :cms do content_blocks :products end
-  namespace :cms do content_blocks :games end
   namespace :cms do content_blocks :sample_blocks end
 
   # For testing Acts::As::Page

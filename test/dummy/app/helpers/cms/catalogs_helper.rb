@@ -1,0 +1,2 @@
+module Cms::CatalogsHelper
+end

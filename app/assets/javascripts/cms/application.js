@@ -7,5 +7,6 @@
 //= require jquery.selectbox
 //= require jquery.taglist
 //= require cms/core_library
+//= require cms/asset_manager
 //
 

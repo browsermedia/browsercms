@@ -75,6 +75,16 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
     render_form_field("file_field", method, options)
   end
 
+  # Renders a multiple file uploader for attachments. Allows users to add as many attachments to this model as needed.
+  def cms_asset_manager
+    defs = Cms::Attachment.definitions_for(object.class.name, :multiple)
+    names = defs.keys.sort
+    return if names.empty?
+
+    names.unshift "Select a type to upload a file" if names.size > 1
+    render_cms_form_partial :asset_manager, :asset_definitions => defs, :asset_types => names
+  end
+
   # @params html_options
   # @options html_option [:class] - This will be overridden, so don't bother to set it
   def cms_drop_down(method, choices, options={}, html_options={})

@@ -84,7 +84,7 @@ module Cms
                                         :reject_if => lambda { |a| a[:data].blank? && a[:id].blank? }
 
           validates_associated :attachments
-          before_create :assign_attachments
+          before_create :associate_new_attachments
           before_validation :initialize_attachments
           before_save :ensure_status_matches_attachable
           before_validation :check_for_updated_attachments
@@ -270,6 +270,11 @@ module Cms
           end
         end
 
+        # @return [Array<Cms::Attachment>]
+        def multiple_attachments
+          attachments.select { |a| a.cardinality == Attachment::MULTIPLE }
+        end
+
         private
 
         # Saves associated attachments if they were updated. (Used in place of :autosave=>true, since the CMS Versioning API seems to break that)
@@ -297,7 +302,11 @@ module Cms
           end
         end
 
-        def assign_attachments
+        # Handles assigning attachments that were created via use of
+        # the cms_asset manager.
+        #
+        # Since Attachments are created via AJAX, we need to go back and associate those with this Attaching object.
+        def associate_new_attachments
           unless attachment_id_list.blank?
             ids = attachment_id_list.split(',').map(&:to_i)
             ids.each do |i|
@@ -305,7 +314,10 @@ module Cms
                 attachment = Cms::Attachment.find(i)
               rescue ActiveRecord::RecordNotFound
               end
-              attachments << attachment if attachment
+              if attachment
+                attachments << attachment
+              end
+
             end
           end
         end

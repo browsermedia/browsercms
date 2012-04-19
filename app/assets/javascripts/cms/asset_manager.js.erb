@@ -1,0 +1,74 @@
+$(function () {
+    $.cms.AssetManager = {
+        upload:function (file) {
+            var assetName = $('#asset_types').val()
+                    , attachableClass = $('#asset_attachable_class').val()
+                    , attachableIDField = $('#asset_attachable_id')
+                    , attachableID = attachableIDField.val()
+                    , file = $('#asset_add_file')
+                    , clone = file.clone()
+                    , form = $('<form target="asset_add_uploader" method="post" action="/cms/attachments" enctype="multipart/form-data" style="visibility:hidden">')
+                    , fields = '';
+
+            fields += '<input type="hidden" name="attachment[attachment_name]" value="' + assetName.toLowerCase() + '" />';
+            fields += '<input type="hidden" name="attachment[attachable_class]" value="' + attachableClass + '" />';
+            fields += '<input type="hidden" name="attachment[attachable_type]" value="' + attachableClass + '" />';
+            fields += '<input type="hidden" name="attachment[attachable_id]" value="' + attachableID + '" />';
+            fields += '<input type="hidden" name="authenticity_token" value="' + $.cms.authenticity_token + '" />';
+
+            $('body').append(form);
+            form.append(fields);
+            form.append(file);
+            attachableIDField.after(clone);
+
+            var inp = $('<input type="file" name="attachment[data]" id="asset_add_file" onchange="$.cms.AssetManager.upload(this)" />');
+
+            clone.after($('<img>')
+                    .css({position:'static', margin:'5px 0 0 5px', 'verticalAlign':'middle'})
+                    .attr({'id':'file-asset-uploader', 'src':'<%= asset_path 'cms/file-uploading.gif' %>'}));
+            clone.replaceWith(inp);
+
+            form.submit();
+
+            $('div.buttons').hide();
+
+        },
+
+        destroy:function (id) {
+            if (confirm("Are you sure?")) {
+                $.post('/cms/attachments/' + id, {_method:'delete'}, null, 'script');
+                $("#asset_" + id).hide();
+                if ($("#assets_table > table tr:visible").length <= 2) {
+                    $("#assets_table > table").hide();
+                }
+            }
+            return false;
+        }
+    }
+
+    $('#asset_types').selectbox({width:'445px'});
+
+    $('#asset_types').change(function () {
+        if ($(this).val().indexOf('Select') != 0) {
+            $('#asset_add').show();
+        } else {
+            $('#asset_add').hide();
+        }
+    });
+
+    // After an attachment is uploaded, copy the values into the main attachment table.
+    $('#asset_add_uploader').load(function () {
+        var response = $(this).contents();
+
+        if (response.find('tr').html()) {
+            var asset = $(response).find('tr').clone();
+            var id = $(response).find("#asset-id").html();
+            var asset_ids = $('#attachment_manager_ids_list');
+
+            $(asset_ids).val($(asset_ids).val() + id + ",");
+            $('#file-asset-uploader').remove();
+            $('#assets_table > table').append(asset).show();
+            $('div.buttons').show();
+        }
+    });
+});

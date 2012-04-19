@@ -1,8 +1,12 @@
 Tasks:
 
+- [FEATURE] Multiple attachments on a single file works.
+    * [FEATURE] Make deleting attachments work. (It isn't handling auth token issues)
+    * [BUG] Uploading files with spaces in them breaks things.
+    * [REFACTOR] Rename cms_asset_manager -> cms_attachment_manager
+
 * Paperclip Based Assets - Replace the existing 'custom' file upload behavior with one that uses Paperclip. Allow blocks to have more than one attachment.
 
-- [VERIFY] Multiple attachments on a single file works.
 - [VERIFY] What kind of paths are generated for custom blocks?
 - Ensure generators create new attachments
 - Ensure developers can add attachments.

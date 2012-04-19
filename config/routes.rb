@@ -61,6 +61,7 @@ Cms::Engine.routes.draw do
     end
   end
   match '/attachments/:id', :to => 'attachments#show', :as=>'attachment'
+  resources :attachments, :only=>[:create, :destroy]
 
   match '/content_library', :to=>'html_blocks#index', :as=>'content_library'
   content_blocks :html_blocks

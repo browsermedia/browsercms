@@ -170,7 +170,7 @@ module Cms
     end
 
     test "attachment_version_path for older versions" do
-      @file_block.attachments[0].data_file_path = "/new-path.txt"
+      @file_block.file.data_file_path = "/new-path.txt"
       @file_block.update_attributes(:name => "Force an update", :publish_on_save => true)
       reset(:file_block)
 
