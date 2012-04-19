@@ -67,3 +67,18 @@ When /^I upload a single attachment$/ do
   create_new_product(false)
   @block = Product.last
 end
+
+When /^I am created a new block which allows many attachments$/ do
+  register_content_type("Catalog")
+  visit '/cms/catalogs/new'
+end
+
+Then /^I should see the attachment manager widget displayed$/ do
+  [
+      'Upload a new attachment',
+      'Attachment type',
+      'Choose file'
+  ].each do |words|
+    page_should_have_content(words)
+  end
+end

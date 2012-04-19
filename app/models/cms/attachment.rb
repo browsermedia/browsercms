@@ -1,5 +1,8 @@
 module Cms
   class Attachment < ActiveRecord::Base
+
+    MULTIPLE = 'multiple'
+
     SANITIZATION_REGEXES = [[/\s/, '_'], [/[&+()]/, '-'], [/[=?!'"{}\[\]#<>%]/, '']]
     #' this tic cleans up emacs ruby mode
 
@@ -12,7 +15,7 @@ module Cms
 
     before_save :set_section
     before_save :set_default_path
-    before_validation :ensure_sanitized_file_path
+    before_validation :ensure_sanitized_file_path, :set_data_defaults
     before_create :setup_attachment
     before_create :set_cardinality
     belongs_to :attachable, :polymorphic => true
@@ -33,7 +36,7 @@ module Cms
       {:conditions => {:attachment_name => name.to_s}}
     }
 
-    scope :multiple, :conditions => {:cardinality => "multiple"}
+    scope :multiple, :conditions => {:cardinality => MULTIPLE}
 
     FILE_BLOCKS = "Cms::AbstractFileBlock"
     validates_presence_of :data_file_path, :if => Proc.new { |a| a.attachable_type == FILE_BLOCKS }
@@ -176,14 +179,18 @@ module Cms
 
     alias :file_type :content_type
 
-
     protected
-
 
     private
 
+    def set_data_defaults
+      unless attachable_version
+        self.attachable_version = 1
+      end
+    end
+
     def data_file_extension
-      data_file_name.split('.').last.downcase if data_file_name['.']
+      data_file_name.split('.').last.downcase if data_file_name && data_file_name['.']
     end
 
     # Filter - Sets a default path if none was specified.

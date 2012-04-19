@@ -29,6 +29,21 @@ class AttachmentTest < ActiveSupport::TestCase
     refute attachment.data.exists?
   end
 
+  test "#is_image? for missing extension" do
+    attachment.data_file_name = "missing_extension"
+    assert_equal false, attachment.is_image?
+  end
+
+  test "#is_image? for NULL name" do
+    attachment.data_file_name = nil
+    assert_equal false, attachment.is_image?
+  end
+
+  test "#is_image?" do
+    attachment.data_file_name = "hello.jpg"
+    assert_equal true, attachment.is_image?
+  end
+
   test "#ensure_sanitized_file_path doesn't replace empty paths'" do
     attachment.data_file_path = ""
     attachment.send(:ensure_sanitized_file_path)
@@ -36,6 +51,10 @@ class AttachmentTest < ActiveSupport::TestCase
     assert_equal "", attachment.data_file_path
   end
 
+  test "attachable_version defaults to 1 for new attachments if not set" do
+    attachment.valid?
+    assert_equal 1, attachment.attachable_version
+  end
   # def test_creating_an_attachment_with_a_StringIO_file
   #   file = @file
   #   attachment = Cms::Attachment.new(:data => file,

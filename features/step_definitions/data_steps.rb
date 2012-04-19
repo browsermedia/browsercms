@@ -1,12 +1,14 @@
+
+
 Then /^I should see the following content:$/ do |table|
   table.raw.each do |row|
-    assert page.has_content?(row[0]), "Couldn't find #{row[0]}' anywhere on the page."
+    page_should_have_content(row[0])
   end
 end
 
 When /^I should not see the following content:$/ do |table|
   table.raw.each do |row|
-    assert !page.has_content?(row[0]), "Found #{row[0]}' on the page when it was not expected to be there."
+    page_should_have_content(row[0], false)
   end
 end
 

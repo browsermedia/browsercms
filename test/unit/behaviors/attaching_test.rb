@@ -263,7 +263,7 @@ module Cms
 
     def test_updating_the_attachment_file_name
       @attachable.attachments[0].data_file_path = "/new-path.txt"
-      update_attachable
+      @attachable.save!
       assert_equal "/new-path.txt", @attachable.attachments[0].data_file_path
 
     end
@@ -271,18 +271,9 @@ module Cms
     test "update the file" do
       @file = mock_file(:original_filename => 'version2.txt')
       @attachable.attachments[0].data = @file
-      update_attachable
+      @attachable.save!
 
       assert_equal file_contents(@file.path), file_contents(@attachable.attachments[0].full_file_location)
-    end
-
-    private
-
-    def update_attachable
-      @attachable.name = "Force an update"
-      @attachable.publish_on_save = true
-      @attachable.save!
-      reset(:attachable)
     end
   end
 
@@ -328,6 +319,12 @@ module Cms
       assert_equal @attachable.as_of_version(1).attachments[0], @attachable.as_of_version(2).attachments[0]
     end
 
+    test "#multiple_attachments for draft versions" do
+      update_attachable
+
+      draft = @attachable.as_of_draft_version
+      assert_equal [], draft.multiple_attachments
+    end
 
     test "updating the attachment path should create a new version" do
       assert_difference 'Cms::Attachment::Version.count', 1 do
@@ -358,6 +355,10 @@ module Cms
 
       assert_equal file_contents(@file.path), file_contents(@attachable.as_of_version(1).attachments[0].full_file_location), "The contents of version 1 of the file should be returned"
       assert_equal file_contents(file2.path), file_contents(@attachable.as_of_version(2).attachments[0].full_file_location)
+    end
+
+    test "" do
+
     end
 
 
