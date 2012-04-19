@@ -2,7 +2,6 @@ Tasks:
 
 * Paperclip Based Assets - Replace the existing 'custom' file upload behavior with one that uses Paperclip. Allow blocks to have more than one attachment.
 
-- [BUG] If a block has optional attachments, if you fill in one, the others will not be selectable when you go back to edit it.
 - [VERIFY] Multiple attachments on a single file works.
 - [VERIFY] What kind of paths are generated for custom blocks?
 - Ensure generators create new attachments

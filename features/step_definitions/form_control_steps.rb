@@ -23,11 +23,11 @@ Then /^I should see two file uploads$/ do
 end
 
 module MultipleAttachments
-  def create_new_product
+  def create_new_product(upload_both_files=true)
     visit '/cms/products/new'
     fill_in "Name", with: "Have two attachments"
     attach_file "Photo 1", "test/fixtures/giraffe.jpeg"
-    attach_file "Photo 2", "test/fixtures/hurricane.jpeg"
+    attach_file "Photo 2", "test/fixtures/hurricane.jpeg" if upload_both_files
     click_button "Save"
   end
 end
@@ -61,4 +61,9 @@ Then /^I should see the new attachments when I view the block$/ do
   assert page.has_content?("v1"), "Check the contents of the image to make sure its the correct one."
   assert "/cms/attachments?version=2", current_path
 
+end
+
+When /^I upload a single attachment$/ do
+  create_new_product(false)
+  @block = Product.last
 end

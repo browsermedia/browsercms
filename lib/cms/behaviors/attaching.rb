@@ -209,6 +209,7 @@ module Cms
         end
 
         # Locates the attachment with a given name
+        # @param [Symbol] name The name of the attachment
         def attachment_named(name)
           attachments.select { |item| item.attachment_name.to_sym == name }.first
         end
@@ -257,11 +258,14 @@ module Cms
           end
         end
 
-        # Ensures that attachments exist for form when calling /new
+        # Ensures that attachments exist for form, since it uses attachments.each to iterate over them.
+        #   Design Qualm: I don't like that this method has to exist, since its basically obscuring the fact that
+        #   individual attachments don't exist when an object is created.
         def ensure_attachment_exists
-          if new_record? && attachments.empty?
-            attachment_names.each do |n|
-              attachments.build :attachment_name => n
+          attachment_names.each do |n|
+            unless attachment_named(n.to_sym)
+              # Can't use attachments.build because sometimes its an array
+              attachments << Attachment.new(:attachment_name => n, :attachable => self)
             end
           end
         end
