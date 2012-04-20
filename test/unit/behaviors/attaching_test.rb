@@ -357,10 +357,25 @@ module Cms
       assert_equal file_contents(file2.path), file_contents(@attachable.as_of_version(2).attachments[0].full_file_location)
     end
 
-    test "" do
+    test "delete an attachment should not be found when fetching the draft version of blocks" do
+      doc = @attachable.attachments.first
+      doc.destroy
 
+      current = @attachable.as_of_draft_version()
+      assert_equal 0, current.attachments.size
     end
 
+    test "deleted attachments shouldn't be found'" do
+      @attachable.attachments << create(:attachment_document)
+      @attachable.save!
+
+      assert_equal 2, @attachable.attachments.size
+      doc = @attachable.attachments.first
+      doc.destroy
+
+      current = @attachable.as_of_draft_version()
+      assert_equal 1, current.attachments.size
+    end
 
     private
     def update_attachable_to_version2(new_path)

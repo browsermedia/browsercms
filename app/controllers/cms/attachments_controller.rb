@@ -24,7 +24,7 @@ module Cms
     def destroy
       @attachment = Attachment.find(params[:id])
       @attachment.destroy
-      render :nothing => true
+      render :json => @attachment.id
     end
   end
 end

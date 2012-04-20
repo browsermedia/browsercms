@@ -170,18 +170,27 @@ module Cms
           end
         end
 
-        # Find all attachments as of the given version for the specified block.
+        # Find all attachments as of the given version for the specified block. Excludes attachments that were
+        # deleted as of a version.
         #
         # @param [Integer] version_number
         # @param [Attaching] attachable The object with attachments
         # @return [Array<Cms::Attachment>]
         def attachments_as_of_version(version_number, attachable)
-          found_versions = Cms::Attachment::Version.where(:attachable_id => attachable.id).where(:attachable_type => attachable.attachable_type).where(:attachable_version => version_number).all
-          found_attachments = []
+          found_versions = Cms::Attachment::Version.where(:attachable_id => attachable.id).
+              where(:attachable_type => attachable.attachable_type).
+              where(:attachable_version => version_number).
+              order(:version).all
+          found_attachments = {}
+
+          # Compress multiple versions into a single record and exclude deleted records.
           found_versions.each do |av|
-            found_attachments << av.build_object_from_version
+            record = av.build_object_from_version
+            found_attachments[record.id] = record
           end
-          found_attachments
+          found_attachments.delete_if { |_, value| value.deleted? }
+
+          found_attachments.values
         end
 
       end
@@ -240,6 +249,7 @@ module Cms
         # Called after the object is 'reset' to the specific version in question.
         def after_as_of_version()
           @attachments_as_of = self.class.attachments_as_of_version(version, self)
+
 
           # Override #attachments to return the original attachments for the current version.
           metaclass = class << self;

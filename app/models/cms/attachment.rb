@@ -20,6 +20,8 @@ module Cms
     before_create :set_cardinality
     belongs_to :attachable, :polymorphic => true
 
+    validates :attachment_name, :attachable_type, :presence => true
+
     include Cms::Addressable
     include Cms::Addressable::DeprecatedPageAccessors
     has_one :section_node, :as => :node, :class_name => 'Cms::SectionNode'
