@@ -6,6 +6,7 @@ ENV["RAILS_ROOT"] ||= File.dirname(__FILE__) + "../../../test/dummy"
 require 'factory_girl'
 require 'factory_girl/step_definitions'
 require File.join(File.dirname(__FILE__), '../../test/factories/factories')
+require File.join(File.dirname(__FILE__), '../../test/factories/attachables')
 World(FactoryGirl::Syntax::Methods)
 
 require 'aruba/cucumber'

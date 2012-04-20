@@ -36,6 +36,7 @@ module Cms
           is_versioned(options[:versioned].is_a?(Hash) ? options[:versioned] : {}) unless options[:versioned] == false
 
           include InstanceMethods
+          extend Cms::Behaviors::Naming
         end
 
         module InstanceMethods

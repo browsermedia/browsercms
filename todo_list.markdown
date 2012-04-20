@@ -1,9 +1,11 @@
 Tasks:
 
 - [FEATURE] Multiple attachments on a single file works.
+    * [REFACTOR] Move attachment manager styles to asset pipeline
+    * [REFACTOR] Reuse attachment_table between _cms_attachment_manager and attachment_viewer()
     * [BUG] Remove/then add an attachment. The new one is not flagged as 'multiple'.
+    * [BUG] Can't add more attachments to an existing block.
     * [BUG] Uploading files with spaces in them breaks things.
-    * [FEATURE] Show be an attachment_manager display helper (for viewing them) or at least document it.
 
 * Paperclip Based Assets - Replace the existing 'custom' file upload behavior with one that uses Paperclip. Allow blocks to have more than one attachment.
 

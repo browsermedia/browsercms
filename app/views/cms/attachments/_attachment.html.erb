@@ -1,10 +1,14 @@
+<%
+    show_delete = true
+    show_delete = can_delete if defined?(can_delete)
+%>
 <tr id="<%= dom_id(attachment)%>">
   <% if attachment.is_image? %>
-    <td><%= link_to image_tag(attachment.url(:thumb), :size => '60x60'), attachment.url %></td>
+    <td><%= link_to image_tag(attachment.url(:thumb), :size => '60x60', :data=>{:purpose=>'attachment'}), attachment.url %></td>
   <% else %>
     <td><%= image_tag "cms/icons/file_types/#{attachment.icon}.png" %>
   <% end %>
   <td><%= attachment.attachment_name.singularize.capitalize %></td>
   <td><%= number_to_human_size(attachment.size) %></td>
-  <td><%= link_to_function "Delete", "$.cms.AttachmentManager.destroy(#{attachment.id})" %></td>
+  <td><%= link_to_function "Delete", "$.cms.AttachmentManager.destroy(#{attachment.id})" if show_delete %></td>
 </tr>
