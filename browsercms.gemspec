@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
 
   s.add_dependency "rails", "~> 3.2.0 "
+  s.add_dependency "sass-rails"
   s.add_dependency "ancestry", "~> 1.2.4"
   s.add_dependency "ckeditor_rails", "~> 3.6.2.2"
   s.add_dependency "jquery-rails", "~> 1.0.14"

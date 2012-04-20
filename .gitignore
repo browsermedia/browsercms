@@ -22,4 +22,5 @@ doc/api
 .bundle/*
 test/dummy/db/backups/*
 test/dummy/public/cache/*
+test/dummy/.sass-cache
 db/backups
