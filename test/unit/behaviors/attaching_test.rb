@@ -1,6 +1,6 @@
 require 'test_helper'
 
-[:default_attachables, :versioned_attachables, :non_attachable_block, :two_attachments].each do |table|
+[:default_attachables, :versioned_attachables, :non_attachable_block, :two_attachments, :has_many_attachments].each do |table|
   DatabaseHelpers.ensure_content_table_exists table
 end
 
@@ -153,6 +153,23 @@ module Cms
       assert_equal 2, draft.attachments.size
       assert_not_nil draft.doc1
       assert_not_nil draft.doc2
+    end
+  end
+
+  class AttachmentConfigurationTest < ActiveSupport::TestCase
+
+    test "#config for unassociated attachment returns empty Hash" do
+      assert_equal({}, Cms::Attachment.new.config)
+    end
+
+    test "#config should return the definitions for a given attachment type" do
+      single_attachment = create(:versioned_attachable).attachments.first
+      assert_equal :single, single_attachment.config[:type]
+    end
+
+    test "#config multiple cardinatlity" do
+      multiple_attachments = create(:has_many_attachments).attachments.first
+      assert_equal :multiple, multiple_attachments.config[:type]
     end
   end
   class AttachableTest < ActiveSupport::TestCase

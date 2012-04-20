@@ -4,6 +4,11 @@ class VersionedAttachable < ActiveRecord::Base
   has_attachment :document
 end
 
+class HasManyAttachments < ActiveRecord::Base
+  acts_as_content_block
+  has_many_attachments :documents
+end
+
 FactoryGirl.define do
 
   # Duplicates :file_block
@@ -17,6 +22,22 @@ FactoryGirl.define do
     m.after_build { |f, evaluator|
       opts = {:data => evaluator.attachment_file, :attachment_name => 'document'}
       opts[:parent] = evaluator.parent if evaluator.parent # Handle :parent=>nil
+      opts[:data_file_path] = evaluator.attachment_file_path if evaluator.attachment_file_path
+      f.attachments.build(opts)
+    }
+    m.publish_on_save true
+  end
+
+  factory :has_many_attachments, :class => HasManyAttachments do |m|
+    ignore do
+      parent { find_or_create_root_section }
+      attachment_file { mock_file }
+      attachment_file_path { nil }
+    end
+    m.sequence(:name) { |n| "HasManyAttachments#{n}" }
+    m.after_build { |f, evaluator|
+      opts = {:data => evaluator.attachment_file, :attachment_name => 'documents'}
+      opts[:parent] = evaluator.parent if evaluator.parent
       opts[:data_file_path] = evaluator.attachment_file_path if evaluator.attachment_file_path
       f.attachments.build(opts)
     }

@@ -1,9 +1,8 @@
 Tasks:
 
 - [FEATURE] Multiple attachments on a single file works.
-    * [BUG] Remove/then add an attachment. The new one is not flagged as 'multiple'.
-    * [BUG] Can't add more attachments to an existing block.
     * [BUG] Uploading files with spaces in them breaks things.
+    * [VERIFY] What happens if you revert a block with multiple attachments? Will older attachments be reassociated?
 
 * Paperclip Based Assets - Replace the existing 'custom' file upload behavior with one that uses Paperclip. Allow blocks to have more than one attachment.
 
@@ -24,12 +23,6 @@ b. @block.publish!
 When almost certainly should be.
 
 - Another Versioning related Bug: Blocks with has_many :autosave=>true does not work. The callbacks do not trigger when the block is saved.
-
-# Path Calculations
-- Need to test multiple attachments and what happens
-
-Attachment Issues:
-- Multiple Attachments:  What happens if a block HAD attachments, but one was removed, then it got reverted. I suspect it would not 'recover' those older attachments.
 
 Improvements
 - API for adding attachments to blocks
