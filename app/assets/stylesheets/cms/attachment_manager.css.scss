@@ -1,0 +1,28 @@
+/**
+*   Styles for the cms_attachment_manager form widget and attachment_viewer helper
+*/
+#assets_table {
+  label {
+    font-weight: bold;
+    color: #3E78C7
+  }
+  th {
+    font-weight: bold
+  }
+  td, th {
+    margin: 10px auto;
+    padding: 10px 15px;
+    text-align: center;
+    vertical-align: middle;
+    border-bottom: 1px solid #ddd;
+  }
+}
+
+#asset_add {
+  #asset_add_uploader {
+    visibility: none;
+    height: 1px;
+    width: 1px
+  }
+}
+
