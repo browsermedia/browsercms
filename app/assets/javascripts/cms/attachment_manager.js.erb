@@ -1,5 +1,5 @@
 $(function () {
-    $.cms.AssetManager = {
+    $.cms.AttachmentManager = {
         upload:function (file) {
             var assetName = $('#asset_types').val()
                     , attachableClass = $('#asset_attachable_class').val()
@@ -21,7 +21,7 @@ $(function () {
             form.append(file);
             attachableIDField.after(clone);
 
-            var inp = $('<input type="file" name="attachment[data]" id="asset_add_file" onchange="$.cms.AssetManager.upload(this)" />');
+            var inp = $('<input type="file" name="attachment[data]" id="asset_add_file" onchange="$.cms.AttachmentManager.upload(this)" />');
 
             clone.after($('<img>')
                     .css({position:'static', margin:'5px 0 0 5px', 'verticalAlign':'middle'})
