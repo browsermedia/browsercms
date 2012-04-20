@@ -47,7 +47,7 @@
 <div id="asset_add" class="fields file_fields" style="display:<%= asset_types.size > 1 ? "none" : "block"%>">
   <label for="asset_add">Choose file</label>
     <div id="asset_add_div">
-    <input type="file" name="attachment[data]" id="asset_add_file" onchange="$.cms.AssetManager.upload(this)" />
+    <input type="file" name="attachment[data]" id="asset_add_file" onchange="$.cms.AttachmentManager.upload(this)" />
     <input type="hidden" id="asset_attachable_id" name="asset[attachable_id]" value="<%= @block.id %>" />
     <input type="hidden" id="asset_attachable_class" value="<%= @block.class.name %>" />
     <iframe src="javascript:false" style="visibility:none;height:1px;width:1px" name="asset_add_uploader" id="asset_add_uploader"></iframe>
