@@ -60,8 +60,7 @@ Cms::Engine.routes.draw do
       put :move_to_root
     end
   end
-  match '/attachments/:id', :to => 'attachments#show', :as=>'attachment'
-  resources :attachments, :only=>[:create, :destroy]
+  resources :attachments, :only=>[:show, :create, :destroy]
 
   match '/content_library', :to=>'html_blocks#index', :as=>'content_library'
   content_blocks :html_blocks

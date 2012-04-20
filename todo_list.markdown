@@ -1,7 +1,7 @@
 Tasks:
 
 - [FEATURE] Multiple attachments on a single file works.
-    * [FEATURE] Make deleting attachments work. (It isn't handling auth token issues)
+    * [BUG] Remove/then add an attachment. The new one is not flagged as 'multiple'.
     * [BUG] Uploading files with spaces in them breaks things.
     * [FEATURE] Show be an attachment_manager display helper (for viewing them) or at least document it.
 

@@ -156,3 +156,28 @@ class AttachmentTest < ActiveSupport::TestCase
     @attachment ||= Cms::Attachment.new
   end
 end
+
+class AttachmentsValidation < ActiveSupport::TestCase
+
+  def setup
+    @valid_attachment = Cms::Attachment.new
+    @valid_attachment.attachment_name = "anything"
+    @valid_attachment.attachable_type = "VersionedAttachable"
+  end
+
+  test "Valid" do
+    assert @valid_attachment.valid?
+  end
+
+  test "Must have an attachment_name" do
+    @valid_attachment.attachment_name = nil
+    refute @valid_attachment.valid?
+  end
+
+  test "Must have content_block_class" do
+    @valid_attachment.attachable_type = nil
+    refute @valid_attachment.valid?
+  end
+
+
+end

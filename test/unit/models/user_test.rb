@@ -141,10 +141,7 @@ module Cms
       user = Cms::User.new
       assert(!user.cms_access?, "")
     end
-
-
   end
-
 
   class PageEdittingPermissions < ActiveSupport::TestCase
     def setup
