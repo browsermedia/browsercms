@@ -17,7 +17,7 @@ module Cms
     before_save :set_default_path
     before_validation :ensure_sanitized_file_path, :set_data_defaults
     before_create :setup_attachment
-    before_create :set_cardinality
+    before_validation :set_cardinality
     belongs_to :attachable, :polymorphic => true
 
     validates :attachment_name, :attachable_type, :presence => true
@@ -181,6 +181,13 @@ module Cms
 
     alias :file_type :content_type
 
+    # Returns the definitions for this particular attachment type.
+    # @return [Hash] Empty Hash if no definition have been defined for this attachment.
+    def config
+      content_defs = definitions[content_block_class] ? definitions[content_block_class] : {}
+      content_defs[attachment_name] ? content_defs[attachment_name] : {}
+    end
+
     protected
 
     private
@@ -227,8 +234,13 @@ module Cms
       data.send :post_process_styles
     end
 
+    # Attachments should always be configured with a cardinality
     def set_cardinality
-      self.cardinality = definitions[content_block_class][attachment_name][:type].to_s
+      unless cardinality
+        logger.warn "Calling set_cardinality for '#{config[:type]}'"
+        self.cardinality = config[:type].to_s
+      end
+
     end
 
     # Forces this record to be changed, even if nothing has changed
