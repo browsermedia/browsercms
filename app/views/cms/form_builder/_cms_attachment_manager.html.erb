@@ -16,24 +16,7 @@
   <p>This content type (<%= @block.class.name %>) does not have any define any attachments.<p>
 <% else %>
 <br />
-<div class="fields" id="assets_table">
-  <label><span id="asset-name"><%= @block.class.name %></span> Attachments</label>
-  <br /><br />
-    <table style="display:<%= @block.multiple_attachments.empty? ? "none" : "block"%>">
-      <tr>
-        <th>Preview</th>
-        <th>Type</th>
-        <th>Size</th>
-        <th></th>
-      <tr>
-    <% for attachment in @block.multiple_attachments %>
-      <% unless attachment.new_record? %>
-        <%= render :partial => "cms/attachments/attachment", :locals => {:attachment => attachment}%>
-      <% end %>
-    <% end %>
-  </table>
-</div>
-
+<%= render :partial =>'cms/attachments/attachment_table', :locals => {:block => @block, :can_delete => true} %>
 <div class="fields">
   <p>Upload a new attachment:</p>
 </div>
