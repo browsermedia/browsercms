@@ -2,7 +2,6 @@ Tasks:
 
 - [FEATURE] Multiple attachments on a single file works.
     * [REFACTOR] Move attachment manager styles to asset pipeline
-    * [REFACTOR] Reuse attachment_table between _cms_attachment_manager and attachment_viewer()
     * [BUG] Remove/then add an attachment. The new one is not flagged as 'multiple'.
     * [BUG] Can't add more attachments to an existing block.
     * [BUG] Uploading files with spaces in them breaks things.
