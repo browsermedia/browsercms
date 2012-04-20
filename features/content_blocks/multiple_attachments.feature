@@ -9,6 +9,15 @@ Feature: Attaching multiple assets to a block
   Scenario: Add New Block
     Then I should see the attachment manager widget displayed
 
+  Scenario: Attachment Manager Widget
+    Given a multi-attachment block exists with a single image
+    When I view that block
+    Then I should see that block's image
+    And I should not see the delete attachment link
+    When I edit that block
+    Then I should see the delete attachment link
+
+
 #    Scenario: Adding and deleting assets from the content manager
 #      When I choose "Photos" from "asset_types"
 #      And I attach the file "test/fixtures/giraffe.jpeg" to "asset_add_file"

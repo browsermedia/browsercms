@@ -111,7 +111,7 @@ module Cms
       end
       attachment_definition = class_definitions[attachment_name]
       if attachment_definition == nil
-        raise "Couldn't find any definitions for '#{attachment_name}'."
+        raise "Verify that '#{content_block_class}' defines an attachment named ':#{attachment_name}'."
       end
       attachment_definition[key] || configuration.send(key)
     end

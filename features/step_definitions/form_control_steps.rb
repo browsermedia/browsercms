@@ -40,7 +40,7 @@ Given /^a block exists which configured to have two attachments$/ do
 end
 
 When /^I edit that block$/ do
-  visit "/cms/products/#{@block.id}/edit"
+  visit "/cms/#{@block.class.path_name}/#{@block.id}/edit"
 end
 
 Given /^a block exists with two uploaded attachments$/ do
@@ -80,5 +80,27 @@ Then /^I should see the attachment manager widget displayed$/ do
       'Choose file'
   ].each do |words|
     page_should_have_content(words)
+  end
+end
+
+Given /^a multi-attachment block exists with a single image$/ do
+  @block = Catalog.create!(:name=>"Hello")
+  @block.attachments << create(:attachment_document, :attachment_name => "photos", :attachable_type => "Catalog")
+  @block.save!
+end
+
+When /^I view that block$/ do
+  path = "/cms/#{@block.class.path_name}/#{@block.id}"
+  assert_equal "/cms/catalogs/1", path
+  visit path
+end
+
+Then /^I should see that block's image$/ do
+  assert page.has_css?("img[data-purpose=attachment]")
+end
+
+When /^I (#{SHOULD_OR_NOT}) see the delete attachment link$/ do |should_see|
+  within("#assets_table") do
+    assert_equal should_see, page.has_css?("a", :text=>"Delete")
   end
 end

@@ -4,6 +4,14 @@
 #
 module Cms
   module RenderingHelper
+
+    # Renders a table of attachments for a given content block.
+    # This is intended as a basic view of the content, and probably won't be suitable for blocks that need to be added directly to pages.
+    #
+    def attachment_viewer(content)
+      render :partial => 'cms/attachments/attachment_table', :locals => { :block => content, :can_delete => false }
+    end
+
     def render_connector_and_connectable(connector, connectable)
       logger.warn "Rendering #{connectable} "
       if logged_in? && @mode == "edit" && current_user.able_to_edit?(connector.page)
