@@ -26,8 +26,20 @@ class FactoryTest < ActiveSupport::TestCase
   end
 end
 
+module DefaultUrls
+  def assert_has_default_url(attachment)
+    assert_equal default_url_for(attachment), attachment.url
+  end
+
+  def default_url_for(attachment)
+    "/attachments/#{attachment.id}/#{attachment.data_file_name}"
+  end
+end
+
 module Cms
   class AttachableBehaviorTest < ActiveSupport::TestCase
+
+    include DefaultUrls
 
     def setup
       @file = mock_file
@@ -57,13 +69,13 @@ module Cms
       assert_incremented attachable_count, DefaultAttachable.count
       assert_equal root_section, @attachable.spreadsheet.parent
       assert_equal root_section.id, @attachable.spreadsheet.parent.id
-      assert_equal "/attachments/DefaultAttachable_foo.jpg", @attachable.spreadsheet.url
+      assert_has_default_url @attachable.spreadsheet
 
       reset(:attachable)
 
       assert_equal root_section, @attachable.spreadsheet.section
       assert_equal root_section.id, @attachable.spreadsheet.section_id
-      assert_equal "/attachments/DefaultAttachable_foo.jpg", @attachable.spreadsheet.url
+      assert_has_default_url @attachable.spreadsheet
     end
 
     test "Publishing block publishes attachment" do
@@ -87,7 +99,7 @@ module Cms
       assert_equal true, @attachable.save!
       assert_equal true, @attachable.publish!
 
-      assert_equal "/attachments/DefaultAttachable_foo.jpg", @attachable.spreadsheet.url
+      assert_has_default_url @attachable.spreadsheet
 
       assert_not_nil @attachable.spreadsheet, "After attaching a file, the Attachment should exist"
 
@@ -96,7 +108,8 @@ module Cms
       assert_not_nil @attachable.spreadsheet, "The attachment should have been saved and reloaded."
       assert_equal root_section, @attachable.spreadsheet.section
       assert_equal root_section.id, @attachable.spreadsheet.section_id
-      assert_equal "/attachments/DefaultAttachable_foo.jpg", @attachable.spreadsheet.url
+      assert_has_default_url @attachable.spreadsheet
+
       assert @attachable.spreadsheet.published?
     end
 
@@ -172,7 +185,10 @@ module Cms
       assert_equal :multiple, multiple_attachments.config[:type]
     end
   end
+
   class AttachableTest < ActiveSupport::TestCase
+
+    include DefaultUrls
 
     def setup
       #file is a mock of the object that Rails wraps file uploads in
@@ -230,27 +246,28 @@ module Cms
     protected
     def assert_was_saved_properly(expected_values)
       expected = {
-          :path => "/attachments/VersionedAttachable_foo.jpg",
+          :path => nil,
           :parent => root_section,
           :more_created => true
       }
       expected.merge!(expected_values)
 
+
       attachable_count = VersionedAttachable.count
 
       assert @attachable.save!
-
+      unless expected[:path]
+        expected[:path] = default_url_for(@attachable.document)
+      end
       assert_incremented attachable_count, VersionedAttachable.count if expected[:more_created]
       assert_equal expected[:parent], @attachable.document.parent
       assert_equal expected[:parent].id, @attachable.document.parent.id
-      assert_equal expected[:path], @attachable.document.data_file_path
       assert_equal expected[:path], @attachable.document.url
 
       reset(:attachable)
 
       assert_equal expected[:parent], @attachable.document.parent
       assert_equal expected[:parent].id, @attachable.document.parent.id
-      assert_equal expected[:path], @attachable.document.data_file_path
       assert_equal expected[:path], @attachable.document.url
     end
 

@@ -14,7 +14,7 @@ module Cms
     attr_accessor :attachable_class
 
     before_validation :set_data_defaults, :set_cardinality
-    before_save :set_section, :set_default_path, :ensure_sanitized_file_path
+    before_save :set_section, :ensure_sanitized_file_path
     before_create :setup_attachment
 
     belongs_to :attachable, :polymorphic => true
@@ -202,11 +202,11 @@ module Cms
 
     # Filter - Sets a default path if none was specified.
     # Some types of attachments may require a path though (see validations above)
-    def set_default_path
-      if data_file_path.blank?
-        self.data_file_path = "/attachments/#{content_block_class}_#{data_file_name}"
-      end
-    end
+    #def set_default_path
+    #  if data_file_path.blank?
+    #    self.data_file_path = "/attachments/#{content_block_class}_#{data_file_name}"
+    #  end
+    #end
 
     # Filter - Ensure that paths are going to URL friendly (and won't need encoding for special characters.')
     def ensure_sanitized_file_path
