@@ -51,9 +51,22 @@ class AttachmentTest < ActiveSupport::TestCase
     assert_equal "", attachment.data_file_path
   end
 
+  test "Set default path, then sanitize it" do
+    file_attachment.data_file_name = "A File Name with Spaces.txt"
+    assert_equal nil, file_attachment.data_file_path, "Should be empty before validation"
+    file_attachment.save!
+
+    assert_equal "/attachments/Cms::FileBlock_A_File_Name_with_Spaces.txt", file_attachment.data_file_path, "Before validate should set a path"
+  end
+
   test "attachable_version defaults to 1 for new attachments if not set" do
     attachment.valid?
     assert_equal 1, attachment.attachable_version
+  end
+
+  def file_attachment
+    find_or_create_root_section
+    @file_attachment ||= Cms::Attachment.new(:attachment_name=>"file", :attachable_type=>"Cms::FileBlock", :parent=>Cms::Section.first)
   end
   # def test_creating_an_attachment_with_a_StringIO_file
   #   file = @file

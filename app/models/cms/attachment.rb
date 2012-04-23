@@ -13,13 +13,11 @@ module Cms
     cattr_reader :configuration
     attr_accessor :attachable_class
 
-    before_save :set_section
-    before_save :set_default_path
-    before_validation :ensure_sanitized_file_path, :set_data_defaults
+    before_validation :set_data_defaults, :set_cardinality
+    before_save :set_section, :set_default_path, :ensure_sanitized_file_path
     before_create :setup_attachment
-    before_validation :set_cardinality
-    belongs_to :attachable, :polymorphic => true
 
+    belongs_to :attachable, :polymorphic => true
     validates :attachment_name, :attachable_type, :presence => true
 
     include Cms::Addressable
