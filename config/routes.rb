@@ -60,6 +60,7 @@ Cms::Engine.routes.draw do
       put :move_to_root
     end
   end
+
   resources :attachments, :only=>[:show, :create, :destroy]
 
   match '/content_library', :to=>'html_blocks#index', :as=>'content_library'

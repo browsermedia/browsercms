@@ -1,9 +1,13 @@
 Tasks:
 
 - [FEATURE] Multiple attachments on a single file works.
-    * [IMPROVE] Determine what kinds of paths are generated for custom blocks, and improve them. Verify that duplicate paths can't be created
+    * Sanitize file names (for default attachments) (Get rid of special characters) http://spectator.in/2012/02/15/normalizing-paperclips-filenames/
+    * Add security to default attachments
+    * http://thewebfellas.com/blog/2009/8/29/protecting-your-paperclip-downloads - Secure and obscure the download
     * [VERIFY] What happens if you revert a block with multiple attachments? Will older attachments be reassociated?
     * [DOCS] Improve API documentation for has_attachment and has_many_attachments. Make YARD more useful.
+
+    * [REFACTOR] Reduce duplication between AttachmentController#download, #send and ContentController#try_to_send
 
 * Paperclip Based Assets - Replace the existing 'custom' file upload behavior with one that uses Paperclip. Allow blocks to have more than one attachment.
 

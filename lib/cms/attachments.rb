@@ -73,10 +73,17 @@ module Cms
       end
     end
 
-    #TODO: modify this interpolation to account for styles
-    # Allows data_file_path to be used as part of the Asset url.
+    # This is the typical url for attachments
+    # Some attachments will have a custom path (data_file_path) specified by users
+    # while others will just be 'defaults'. This dynamically returns path at runtime based
+    # on the instance of the specific instance.
     ::Paperclip.interpolates :attachment_file_path do |asset, _|
-      asset.instance.data_file_path
+      path = asset.instance.data_file_path
+      if path
+        path
+      else
+        "/attachments/#{asset.instance.id}/#{asset.instance.data_file_name}"
+      end
     end
 
     Paperclip.interpolates :attachments_root do |_, _|

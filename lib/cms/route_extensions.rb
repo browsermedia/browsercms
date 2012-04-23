@@ -40,6 +40,9 @@ module Cms::RouteExtensions
     mount Cms::Engine => "/cms", :as => "cms"
 
     add_page_routes_defined_in_database
+
+    # Handle 'stock' attachments
+    match "/attachments/:id/:filename", :to=>"cms/attachments#download"
     match "/", :to=>"cms/content#show"
     match "*path", :to=>"cms/content#show"
   end
