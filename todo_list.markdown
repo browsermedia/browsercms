@@ -1,8 +1,9 @@
 Tasks:
 
 - [FEATURE] Multiple attachments on a single file works.
-    * [BUG] Uploading files with spaces in them breaks things.
+    * [IMPROVE] Determine what kinds of paths are generated for custom blocks, and improve them. Verify that duplicate paths can't be created
     * [VERIFY] What happens if you revert a block with multiple attachments? Will older attachments be reassociated?
+    * [DOCS] Improve API documentation for has_attachment and has_many_attachments. Make YARD more useful.
 
 * Paperclip Based Assets - Replace the existing 'custom' file upload behavior with one that uses Paperclip. Allow blocks to have more than one attachment.
 
@@ -14,6 +15,7 @@ Tasks:
 - Lots of attachment and file/image tests are commented out. They need to be rewritten and tested.
 - Figure out plan for Migrating from pre-Paperclip attachments. The file structure is different for storing them now.
 - Figure out plan for Migrating from Asset module attachments. The file structure may be the same, but we need to make sure it works.
+- [IMPROVE] The error message for a duplicate path for Fileblocks is not clear.
 
 - The mess that is publishing/saving is coming back again when trying to interact with blocks with associated attachments.
 -- Really need to simplify this API as its very painful to grok and get right currently.
@@ -37,6 +39,7 @@ Improvements
 
 # 3.5.x Goals
 
+* Heroku - Make BrowserCMS work on the platform.
 * Faster Files - Take advantage of X-Sendfile (if possible) to speed up sending uploaded CMS files.
 * Browser Compatibility Testing - Ensure compatibility with latest versions of Chrome/IE 9/Firefox/Safari. IE 9 probably needs the most works.
 
