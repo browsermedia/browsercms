@@ -144,6 +144,12 @@ module Cms
 
       module ClassMethods
 
+
+        # Defines an single attachement with a given name.
+        #
+        # @param [Symbol] name The name of the attachment
+        # @param [Hash] options Accepts most Paperclip options for Paperclip::ClassMethods.has_attached_file
+        # @see http://rubydoc.info/gems/paperclip/Paperclip/ClassMethods:has_attached_file
         def has_attachment(name, options = {})
           options[:type] = :single
           options[:index] = Cms::Attachment.definitions[self.name].size
@@ -157,6 +163,11 @@ module Cms
           end
         end
 
+        # Allows multiple attachments under a specific name.
+        #
+        # @param [Symbol] name The name of the attachments.
+        # @param [Hash] options Accepts most Paperclip options for Paperclip::ClassMethods.has_attached_file
+        # @see http://rubydoc.info/gems/paperclip/Paperclip/ClassMethods:has_attached_file
         def has_many_attachments(name, options = {})
           options[:type] = :multiple
           Cms::Attachment.definitions[self.name][name] = options
