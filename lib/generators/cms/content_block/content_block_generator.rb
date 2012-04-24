@@ -33,6 +33,9 @@ module Cms
         self.attributes.select { |attr| attr.type == :attachment }.each do |attribute|
           gsub_file migration, "t.attachment :#{attribute.name}", ""
         end
+        self.attributes.select { |attr| attr.type == :attachments }.each do |attribute|
+          gsub_file migration, "t.attachments :#{attribute.name}", ""
+        end
         unless class_name.starts_with?("Cms::")
           gsub_file migration, " do |t|", ", :prefix=>false do |t|"
         end
@@ -68,12 +71,12 @@ module Cms
         !attachment_attributes().empty?
       end
 
-    def attachment_attributes
-      self.attributes.select { |attr| attr.type == :attachment }
-    end
+      def attachment_attributes
+        self.attributes.select { |attr| attr.type == :attachment }
+      end
 
 
-    def group_name
+      def group_name
         if namespaced?
           class_name.split("::").first
         else

@@ -34,7 +34,7 @@ Feature:
   Scenario: Updates version table
     Given the project has a "turtle" block
     When I run `bcms upgrade  --skip-rails`
-    When I run `rake db:migrate`
+    And I run `rake db:migrate`
     Then the migration should update the version table for "turtle" block
 
   Scenario: Migrations work for new project

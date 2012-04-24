@@ -109,8 +109,8 @@ When /^it should seed the demo data$/ do
   # This output is ugly, but it verifies that seed data completely runs
 end
 
-When /^the file "([^"]*)" should contain:$/ do |file, partial_content|
-  check_file_content(file, partial_content, true)
+When /^the file "([^"]*)" (#{SHOULD_OR_NOT}) contain:$/ do |file, should_or_not, partial_content|
+  check_file_content(file, partial_content, should_or_not)
 end
 
 When /^the correct version of Rails should be added to the Gemfile$/ do
@@ -200,11 +200,11 @@ When /^the project has a "([^"]*)" model$/ do |model_name|
   run "rails g model #{model_name}"
 end
 
-Then /^the migration (should|should not) update the version table for "([^"]*)" block$/ do |should, block|
+Then /^the migration (#{SHOULD_OR_NOT}) update the version table for "([^"]*)" block$/ do |should, block|
   did_migration = %!rename_column("#{block}_versions", "#{block}_id", :original_record_id)!
 
   assert_partial_output "UpdateVersionIdColumns: migrated", all_output
-  if should == "should"
+  if should
     assert_partial_output did_migration, all_output
   else
     assert_no_partial_output did_migration, all_output
