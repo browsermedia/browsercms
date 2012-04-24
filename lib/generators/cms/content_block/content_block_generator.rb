@@ -18,10 +18,6 @@ module Cms
         model_file = File.join('app/models', class_path, "#{file_name}.rb")
         spaces = namespaced? ? 4 : 2
         insert_into_file model_file, indent("acts_as_content_block\n", spaces), :after => "ActiveRecord::Base\n"
-
-        if model_has_attachment?
-          gsub_file model_file, "acts_as_content_block", "acts_as_content_block :belongs_to_attachment => true"
-        end
       end
 
       def alter_the_migration
@@ -33,15 +29,15 @@ module Cms
           RUBY
         end
 
+        # Attachments do not require a FK from this model to attachments.
+        self.attributes.select { |attr| attr.type == :attachment }.each do |attribute|
+          gsub_file migration, "t.attachment :#{attribute.name}", ""
+        end
         unless class_name.starts_with?("Cms::")
           gsub_file migration, " do |t|", ", :prefix=>false do |t|"
         end
         self.attributes.select { |attr| attr.type == :category }.each do
           gsub_file migration, "t.category", "t.belongs_to"
-        end
-        if model_has_attachment?
-          gsub_file migration, "t.attachment", "t.belongs_to"
-          insert_into_file migration, indent("t.integer :attachment_version\n", 6), :after => "t.belongs_to :attachment\n"
         end
         self.attributes.select { |attr| attr.type == :html }.each do |attribute|
           gsub_file migration, "t.html :#{attribute.name}", "t.text :#{attribute.name}, :size => (64.kilobytes + 1)"
@@ -69,9 +65,15 @@ module Cms
       private
 
       def model_has_attachment?
-        !self.attributes.select { |attr| attr.type == :attachment }.empty?
+        !attachment_attributes().empty?
       end
-      def group_name
+
+    def attachment_attributes
+      self.attributes.select { |attr| attr.type == :attachment }
+    end
+
+
+    def group_name
         if namespaced?
           class_name.split("::").first
         else

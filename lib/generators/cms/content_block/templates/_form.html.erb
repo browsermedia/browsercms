@@ -6,7 +6,7 @@
 <%%= f.cms_<%= 
 case attribute.type
 when :attachment
-  "file_field :#{attribute.name}_file, :label => \"File\""
+  "file_field :#{attribute.name}, :label => \"#{attribute.name.titleize}\""
 when :category
   "drop_down :category_id, categories_for('#{class_name.titleize}').map{|c| [c.path, c.id]}"
 when :date

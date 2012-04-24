@@ -8,7 +8,7 @@ Feature:
 
   Scenario: Create an content block for a project
     When I run `rails g cms:content_block product name:string price:string`
-    And the file "app/models/product.rb" should contain:
+    Then the file "app/models/product.rb" should contain:
     """
     class Product < ActiveRecord::Base
       acts_as_content_block
@@ -75,24 +75,12 @@ Feature:
     t.belongs_to :category
     """
 
-  Scenario: With Attachments
-    When I run `rails g cms:content_block product attachment:attachment`
-    Then the file "app/models/product.rb" should contain:
-    """
-    class Product < ActiveRecord::Base
-      acts_as_content_block :belongs_to_attachment => true
-    end
-    """
-    And a migration named "create_products.rb" should contain the following:
-      | t.belongs_to :attachment      |
-      | t.integer :attachment_version |
-
   Scenario: With Html attributes
     When I run `rails g cms:content_block product content:html`
     Then a migration named "create_products.rb" should contain the following:
       | t.text :content, :size => (64.kilobytes + 1) |
 
-  Scenario: [Bug Fix] Block names starting with 'do' should work
+  Scenario: Block names starting with 'do' should work
     When I run `rails g cms:content_block dog`
     And a migration named "create_dogs.rb" should contain:
     """
