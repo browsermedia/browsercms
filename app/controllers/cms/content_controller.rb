@@ -145,7 +145,7 @@ module Cms
                         :status => :not_found)
         end
       else
-        logger.info "..... Displaying live version of page"
+        logger.debug "Displaying live version of page"
         @page = Page.find_live_by_path(@path)
         page_not_found unless (@page && !@page.archived?)
       end

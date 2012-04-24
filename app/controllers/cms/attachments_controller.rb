@@ -1,9 +1,11 @@
 module Cms
   class AttachmentsController < Cms::BaseController
 
-    before_filter :redirect_to_cms_site, :only => [:download]
-    before_filter :login_required, :only => [:download]
-    before_filter :cms_access_required, :only => [:download]
+    skip_before_filter :redirect_to_cms_site, :only => [:download]
+    skip_before_filter :login_required, :only => [:download]
+    skip_before_filter :cms_access_required, :only => [:download]
+
+    include Cms::ContentRenderingSupport
 
     def show
       @attachment = Attachment.find(params[:id])
@@ -15,10 +17,15 @@ module Cms
       )
     end
 
-    # This will handle serving files that don't have custom paths
-    # Security should match how ContentController#try_to_send_file works
+    # This handles serving files for attachments that don't have a user specified path. If a path is defined,
+    # the ContentController#try_to_stream will handle it.
+    #
+    # Users can only download files if they have permission to view it.
     def download
       @attachment = Attachment.find(params[:id])
+
+      raise Cms::Errors::AccessDenied unless current_user.able_to_view?(@attachment)
+
       send_file(@attachment.full_file_location,
                 :filename => @attachment.file_name,
                 :type => @attachment.file_type,
