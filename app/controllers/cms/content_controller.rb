@@ -1,6 +1,7 @@
 module Cms
   class ContentController < Cms::ApplicationController
     include Cms::ContentRenderingSupport
+    include Cms::AttachmentServing
 
     include Cms::MobileAware
     helper MobileHelper
@@ -110,25 +111,8 @@ module Cms
 
     def try_to_stream_file
       if is_file?
-
-        #Check access to file
         @attachment = Attachment.find_live_by_file_path(request.fullpath)
-        if @attachment
-          raise Cms::Errors::AccessDenied unless current_user.able_to_view?(@attachment)
-
-          #Construct a path to where this file would be if it were cached
-          @file = @attachment.full_file_location
-
-          #Stream the file if it exists
-          if @path != "/" && File.exists?(@file)
-            logger.warn "Sending file #{@file}"
-            send_file(@file,
-                      :filename => @attachment.file_name,
-                      :type => @attachment.file_type,
-                      :disposition => "inline"
-            )
-          end
-        end
+        send_attachment(@attachment)
       end
 
     end
