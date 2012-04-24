@@ -1,8 +1,6 @@
 Tasks:
 
 - [FEATURE] Multiple attachments on a single file works.
-    * Sanitize file names (for default attachments) (Get rid of special characters) http://spectator.in/2012/02/15/normalizing-paperclips-filenames/
-    * http://thewebfellas.com/blog/2009/8/29/protecting-your-paperclip-downloads - Secure and obscure the download
     * [VERIFY] What happens if you revert a block with multiple attachments? Will older attachments be reassociated?
     * [DOCS] Improve API documentation for has_attachment and has_many_attachments. Make YARD more useful.
 
@@ -12,9 +10,7 @@ Tasks:
 * [BUG] Minor - In development mode, need to restart if core CMS code is changed (loses definations for custom blocks with attachments)
 - Ensure generators create new attachments
 - Ensure developers can add attachments.
-- Need to determine how to configure attachments for paperclip, etc.
 - Look at API for has_attachment and simplify it.
-- Lots of attachment and file/image tests are commented out. They need to be rewritten and tested.
 - Figure out plan for Migrating from pre-Paperclip attachments. The file structure is different for storing them now.
 - Figure out plan for Migrating from Asset module attachments. The file structure may be the same, but we need to make sure it works.
 - [IMPROVE] The error message for a duplicate path for Fileblocks is not clear.

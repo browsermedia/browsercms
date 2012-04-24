@@ -46,7 +46,7 @@ class AttachmentTest < ActiveSupport::TestCase
 
   test "#ensure_sanitized_file_path doesn't replace empty paths'" do
     attachment.data_file_path = ""
-    attachment.send(:ensure_sanitized_file_path)
+    attachment.send(:sanitized_file_path_and_name)
 
     assert_equal "", attachment.data_file_path
   end
@@ -56,9 +56,17 @@ class AttachmentTest < ActiveSupport::TestCase
     assert_equal 1, attachment.attachable_version
   end
 
+  test "Sanitize file name" do
+    file_attachment.data_file_name = "Something #With ?Spaces"
+    file_attachment.save!
+
+    assert_equal "Something_With_Spaces", file_attachment.data_file_name
+  end
+
   def file_attachment
+    return @file_attachment if @file_attachment
     find_or_create_root_section
-    @file_attachment ||= Cms::Attachment.new(:attachment_name=>"file", :attachable_type=>"Cms::FileBlock", :parent=>Cms::Section.first)
+    @file_attachment = Cms::Attachment.new(:attachment_name=>"file", :attachable_type=>"Cms::FileBlock", :parent=>Cms::Section.first)
   end
   # def test_creating_an_attachment_with_a_StringIO_file
   #   file = @file
