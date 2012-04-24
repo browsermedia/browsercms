@@ -1,20 +1,18 @@
 Tasks:
 
-- [FEATURE] Multiple attachments on a single file works.
-    * [VERIFY] What happens if you revert a block with multiple attachments? Will older attachments be reassociated?
-    * [DOCS] Improve API documentation for has_attachment and has_many_attachments. Make YARD more useful.
-
 * Paperclip Based Assets - Replace the existing 'custom' file upload behavior with one that uses Paperclip. Allow blocks to have more than one attachment.
 
-* [BUG] Updating a page throws 'path already used' error? Created a public section.
-* [BUG] Minor - In development mode, need to restart if core CMS code is changed (loses definations for custom blocks with attachments)
 - Ensure generators create new attachments
+
+- [VERIFY] What happens if you revert a block with multiple attachments? Will older attachments be reassociated?
+- [BUG] Minor - In development mode, need to restart if core CMS code is changed (loses definations for custom blocks with attachments)
 - Ensure developers can add attachments.
-- Look at API for has_attachment and simplify it.
 - Figure out plan for Migrating from pre-Paperclip attachments. The file structure is different for storing them now.
 - Figure out plan for Migrating from Asset module attachments. The file structure may be the same, but we need to make sure it works.
 - [IMPROVE] The error message for a duplicate path for Fileblocks is not clear.
+- [BUG] Updating a page throws 'path already used' error? Created a public section.
 
+## Publishing/Versioning Improvements:
 - The mess that is publishing/saving is coming back again when trying to interact with blocks with associated attachments.
 -- Really need to simplify this API as its very painful to grok and get right currently.
 -- Key issue: For existing blocks, these two statements are not the same:
@@ -23,10 +21,6 @@ b. @block.publish!
 When almost certainly should be.
 
 - Another Versioning related Bug: Blocks with has_many :autosave=>true does not work. The callbacks do not trigger when the block is saved.
-
-Improvements
-- API for adding attachments to blocks
-- API - Require less code to define a form for uploading an attachment. (Backwards compatiblity)
 
 ## Upgrade Notes
 - Migrations are now generated with .cms. Will this cause problems during upgrades? (Write upgrade scenarios)
