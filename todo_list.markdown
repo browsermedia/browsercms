@@ -1,8 +1,6 @@
 Tasks:
 
 - [FEATURE] Multiple attachments on a single file works.
-    * [REFACTOR] Reduce duplication between AttachmentController#download, #send and ContentController#try_to_send
-
     * Sanitize file names (for default attachments) (Get rid of special characters) http://spectator.in/2012/02/15/normalizing-paperclips-filenames/
     * http://thewebfellas.com/blog/2009/8/29/protecting-your-paperclip-downloads - Secure and obscure the download
     * [VERIFY] What happens if you revert a block with multiple attachments? Will older attachments be reassociated?
@@ -11,7 +9,7 @@ Tasks:
 * Paperclip Based Assets - Replace the existing 'custom' file upload behavior with one that uses Paperclip. Allow blocks to have more than one attachment.
 
 * [BUG] Updating a page throws 'path already used' error? Created a public section.
-- [VERIFY] What kind of paths are generated for custom blocks?
+* [BUG] Minor - In development mode, need to restart if core CMS code is changed (loses definations for custom blocks with attachments)
 - Ensure generators create new attachments
 - Ensure developers can add attachments.
 - Need to determine how to configure attachments for paperclip, etc.

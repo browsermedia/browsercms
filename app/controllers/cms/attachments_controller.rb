@@ -5,16 +5,14 @@ module Cms
     skip_before_filter :login_required, :only => [:download]
     skip_before_filter :cms_access_required, :only => [:download]
 
-    include Cms::ContentRenderingSupport
+    include ContentRenderingSupport
+    include AttachmentServing
 
+    # Returns a specific version of an attachment.
+    # Used primarily to display older versions in the editor interface.
     def show
-      @attachment = Attachment.find(params[:id])
-      @attachment = @attachment.as_of_version(params[:version]) if params[:version]
-      send_file(@attachment.full_file_location,
-                :filename => @attachment.file_name,
-                :type => @attachment.file_type,
-                :disposition => "inline"
-      )
+      @attachment = find_by_id().as_of_version(params[:version]) if params[:version]
+      send_attachment(@attachment)
     end
 
     # This handles serving files for attachments that don't have a user specified path. If a path is defined,
@@ -22,15 +20,8 @@ module Cms
     #
     # Users can only download files if they have permission to view it.
     def download
-      @attachment = Attachment.find(params[:id])
-
-      raise Cms::Errors::AccessDenied unless current_user.able_to_view?(@attachment)
-
-      send_file(@attachment.full_file_location,
-                :filename => @attachment.file_name,
-                :type => @attachment.file_type,
-                :disposition => "inline"
-      )
+      @attachment = find_by_id()
+      send_attachment(@attachment)
     end
 
     def create
@@ -45,9 +36,15 @@ module Cms
     end
 
     def destroy
-      @attachment = Attachment.find(params[:id])
+      @attachment = find_by_id()
       @attachment.destroy
       render :json => @attachment.id
+    end
+
+    private
+
+    def find_by_id
+      Attachment.find(params[:id])
     end
   end
 end
