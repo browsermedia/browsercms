@@ -13,12 +13,12 @@ module Cms
     end
 
     def handle_not_found_on_page(exception)
-      logger.warn "Page Not Found"
+      logger.warn "Rendering page for 'Page Not Found' error."
       handle_error_with_cms_page(Cms::ErrorPages::NOT_FOUND_PATH, exception, :not_found)
     end
 
     def handle_access_denied_on_page(exception)
-      logger.warn "Access Denied"
+      logger.warn "Rendering page for 'Access Denied' error."
       handle_error_with_cms_page(Cms::ErrorPages::FORBIDDEN_PATH, exception, :forbidden)
     end
 
@@ -59,7 +59,10 @@ module Cms
         end
 
         prepare_connectables_for_render
-        render :layout => @page.layout, :template => 'cms/content/show', :status => status
+
+        # The error pages are ALWAYS html since they are managed by the CMS as normal pages.
+        # So .gif or .jpg requests that throw errors will return html rather than a format warning.
+        render :layout => @page.layout, :template => 'cms/content/show', :status => status, :formats=>[:html]
       else
         handle_server_error(exception)
       end

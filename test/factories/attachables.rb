@@ -49,7 +49,14 @@ FactoryGirl.define do
     m.attachable_type "VersionedAttachable"
     m.data { mock_file }
     m.parent { find_or_create_root_section }
-    m.data_file_path "/"
+    m.publish_on_save true
+  end
+
+  factory :catalog_attachment, :class => Cms::Attachment do |m|
+    m.attachment_name "photos"
+    m.attachable_type "Catalog"
+    m.data { mock_text_file }
+    m.parent { find_or_create_root_section }
     m.publish_on_save true
   end
 

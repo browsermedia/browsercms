@@ -69,6 +69,10 @@ module FactoryHelpers
     file_upload_object({:original_filename => "foo.jpg", :content_type => "image/jpeg"}.merge(options))
   end
 
+  def mock_text_file(options = {})
+    file_upload_object({:original_filename => "sample_upload.txt", :content_type => "text/plain"}.merge(options))
+  end
+
   def create_or_find_permission_named(name)
     Cms::Permission.named(name).first || FactoryGirl.create(:permission, :name => name)
   end

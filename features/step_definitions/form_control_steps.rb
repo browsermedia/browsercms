@@ -68,9 +68,8 @@ When /^I upload a single attachment$/ do
   @block = Product.last
 end
 
-When /^I am created a new block which allows many attachments$/ do
-  register_content_type("Catalog")
-  visit '/cms/catalogs/new'
+When /^I am created a new block$/ do
+  visit "/cms/#{@content_type.model_class.path_name}/new"
 end
 
 Then /^I should see the attachment manager widget displayed$/ do
@@ -83,8 +82,8 @@ Then /^I should see the attachment manager widget displayed$/ do
   end
 end
 
-Given /^a multi-attachment block exists with a single image$/ do
-  @block = Catalog.create!(:name=>"Hello")
+Given /^a block exists with a single image$/ do
+  @block = Catalog.create!(:name => "Hello")
   @block.attachments << create(:attachment_document, :attachment_name => "photos", :attachable_type => "Catalog")
   @block.save!
 end
@@ -101,6 +100,31 @@ end
 
 When /^I (#{SHOULD_OR_NOT}) see the delete attachment link$/ do |should_see|
   within("#assets_table") do
-    assert_equal should_see, page.has_css?("a", :text=>"Delete")
+    assert_equal should_see, page.has_css?("a", :text => "Delete")
   end
+end
+
+When /^there is block which allows many attachments$/ do
+  @content_type = register_content_type("Catalog")
+end
+
+Given /^an attachment exists in a protected section$/ do
+  @protected_section = create(:protected_section)
+  @block = Catalog.create!(:name => "In Protected Section", :publish_on_save => true)
+  @block.attachments << create(:attachment_document, :attachment_name => "photos", :attachable_type => "Catalog", :parent => @protected_section)
+  @block.save!
+end
+
+When /^I try to view that attachment$/ do
+  visit @block.attachments.first.url
+end
+
+Given /^an attachment exists in a public section$/ do
+  @block = Catalog.create!(:name => "In Public Section", :publish_on_save => true)
+  @block.attachments << create(:catalog_attachment)
+  @block.save!
+end
+Then /^I should see the attachment content$/ do
+  assert_equal 200, page.status_code
+  assert page.has_content?("This is a file.")
 end
