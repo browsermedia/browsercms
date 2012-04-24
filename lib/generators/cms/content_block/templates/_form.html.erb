@@ -1,12 +1,20 @@
-<% # This 'unless' can be removed if :name is no longer assumed to be a default attribute.
+<% first_attachments = true
+
+   # This 'unless' can be removed if :name is no longer assumed to be a default attribute.
    unless attributes.find {|attr| attr.name == 'name'}
 %><%%= f.cms_text_field :name %>
 <% end %>
 <% for attribute in attributes -%>
-<%%= f.cms_<%= 
-case attribute.type
+<%=
+
+    field_type = case attribute.type
 when :attachment
   "file_field :#{attribute.name}, :label => \"#{attribute.name.titleize}\""
+when :attachments
+  if first_attachments
+    first_attachments = false
+    "attachment_manager"
+  end
 when :category
   "drop_down :category_id, categories_for('#{class_name.titleize}').map{|c| [c.path, c.id]}"
 when :date
@@ -17,6 +25,9 @@ when :html
   "text_editor :#{attribute.name}"
 else
   "#{attribute.field_type} :#{attribute.name}"
-end 
--%> %>
+end
+    if field_type
+        "<%= f.cms_#{field_type} %%>"
+    end
+-%>
 <% end -%>

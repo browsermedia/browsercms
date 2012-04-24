@@ -1,10 +1,18 @@
-<% # This 'unless' can be removed if :name is no longer assumed to be a default attribute.
+<% first_attachments = true
+
+   # This 'unless' can be removed if :name is no longer assumed to be a default attribute.
    unless attributes.find {|attr| attr.name == 'name'}
 %><p><b>Name:</b> <%%= @content_block.name %></p><% end %>
 <%- for attribute in attributes -%>
 <%- case attribute.type
     when :attachment -%>
 <p><b><%= attribute.name.titleize %>:</b> <%%= link_to attachment_path_for(@content_block.<%= attribute.name %>) %></p>
+    <%- when :attachments
+        if first_attachments
+    -%>
+<p><b>Attachments:</b> <%%= attachment_viewer @content_block %></p>
+<%- first_attachments = false
+    end -%>
     <%- when :category -%>
 <p><b>Category:</b> <%%= @content_block.category_name %></p>
     <%- else -%>
