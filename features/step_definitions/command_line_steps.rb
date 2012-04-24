@@ -87,9 +87,9 @@ When /^I cd into the project "([^"]*)"$/ do |project|
   self.project_name = project
 end
 
-When /^a migration named "([^"]*)" should contain:$/ do |file, partial_content|
+When /^a migration named "([^"]*)" (#{SHOULD_OR_NOT}) contain:$/ do |file, should_or_not, partial_content|
   migration = find_migration_with_name(file)
-  check_file_content(migration, partial_content, true)
+  check_file_content(migration, partial_content, should_or_not)
 end
 
 # A table of string values to check
