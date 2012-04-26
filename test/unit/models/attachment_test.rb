@@ -2,6 +2,9 @@ require 'test_helper'
 
 class AttachmentTest < ActiveSupport::TestCase
 
+  test "Confirm mass assignment works" do
+    assert Cms::Attachment.create(:name=>"Testing", :attachable_class => "Cms::FileBlock")
+  end
   test "Attachments are configured" do
     assert attachment.respond_to?(:data), "Attachment.configure was not called during setup, so attachments were not configured properly."
   end

@@ -117,6 +117,12 @@ module Cms
 
   class AttachingTest < ActiveSupport::TestCase
 
+    test "Mass Assignment: attachment_id_list" do
+      assert_nothing_raised do
+        DefaultAttachable.new(:attachment_id_list => "1,2")
+      end
+    end
+
     test "Content blocks should be able to have attachments by default" do
       assert DefaultAttachable.respond_to? :has_attachment, "Allows blocks to define a single named attachment"
     end

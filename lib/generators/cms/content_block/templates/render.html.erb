@@ -6,7 +6,7 @@
 <%- for attribute in attributes -%>
 <%- case attribute.type
     when :attachment -%>
-<p><b><%= attribute.name.titleize %>:</b> <%%= link_to attachment_path_for(@content_block.<%= attribute.name %>) %></p>
+<p><b><%= attribute.name.titleize %>:</b> <%%= link_to "<%= attribute.name.titleize %>", attachment_path_for(@content_block.<%= attribute.name %>) %></p>
     <%- when :attachments
         if first_attachments
     -%>

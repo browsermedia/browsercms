@@ -1,9 +1,6 @@
 module Cms
   class Attachment < ActiveRecord::Base
 
-    include DefaultAccessible
-    attr_accessible :data, :attachable
-
     MULTIPLE = 'multiple'
 
     SANITIZATION_REGEXES = [[/\s/, '_'], [/[&+()]/, '-'], [/[=?!'"{}\[\]#<>%]/, '']]
@@ -15,12 +12,17 @@ module Cms
     @@definitions = {}.with_indifferent_access
     cattr_reader :configuration
     attr_accessor :attachable_class
+    attr_accessible :attachable_class
 
     before_validation :set_data_defaults, :set_cardinality
     before_save :set_section, :sanitized_file_path_and_name
     before_create :setup_attachment
 
     belongs_to :attachable, :polymorphic => true
+
+    include DefaultAccessible
+    attr_accessible :data, :attachable, :attachment_name
+
     validates :attachment_name, :attachable_type, :presence => true
 
     include Cms::Addressable
