@@ -73,6 +73,7 @@ module Cms
           extend Validations
           include InstanceMethods
 
+          # Allows a block to be associated with a list of uploaded attachments (done via AJAX)
           attr_accessor :attachment_id_list
 
           Cms::Attachment.definitions[self.name] = {}
@@ -82,7 +83,7 @@ module Cms
                                         :allow_destroy => true,
                                         # New attachments must have an uploaded file
                                         :reject_if => lambda { |a| a[:data].blank? && a[:id].blank? }
-          attr_accessible :attachments_attributes
+          attr_accessible :attachments_attributes,:attachment_id_list
 
           validates_associated :attachments
           before_create :associate_new_attachments

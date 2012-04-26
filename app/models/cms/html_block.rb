@@ -3,6 +3,9 @@ module Cms
 
     acts_as_content_block :taggable => true
 
+    # This shouldn't be necessary but it is for browsercms.seeds.rb'
+    attr_accessible :name, :content
+
     validates_presence_of :name
 
     # Override of search scope from searching behavior to deal with include_body

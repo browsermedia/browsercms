@@ -21,7 +21,7 @@ Feature: Generate Attachments
     """
     And the file "app/views/cms/products/render.html.erb" should contain:
     """
-    <p><b>Photo:</b> <%= link_to attachment_path_for(@content_block.photo) %></p>
+    <p><b>Photo:</b> <%= link_to "Photo", attachment_path_for(@content_block.photo) %></p>
     """
     And the file "app/views/cms/products/_form.html.erb" should contain:
     """

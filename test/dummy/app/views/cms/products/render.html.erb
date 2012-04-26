@@ -4,7 +4,9 @@
         :src => attachment_path_for(@content_block.photo_1),
         :alt => h(@content_block.name),
         :data => { :type => "photo-1" } %></p>
-<p><b>Photo 2:</b> <%= tag :img,
+<p><b>Photo 2 Link:</b> <%= link_to "Photo 2", attachment_path_for(@content_block.photo_2) %>
+<p><b>Photo 2 Image:</b>  <%= tag :img,
         :src => attachment_path_for(@content_block.photo_2),
         :alt => h(@content_block.name),
-        :data => { :type => "photo-2" } %></p>
+        :data => { :type => "photo-2" } %>
+</p>
