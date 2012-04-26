@@ -14,8 +14,8 @@ module Cms
         # @option options [Boolean] :allow_attachments (true) Determines whether this content block can be marked as having attachments.
         def acts_as_content_block(options={})
           defaults = {
-            # Set default values here.
-            :allow_attachments => true
+              # Set default values here.
+              :allow_attachments => true
           }
           options = defaults.merge(options)
 
@@ -23,6 +23,7 @@ module Cms
             raise ArgumentError.new ":belongs_to_attachment option is no longer supported. Please use :has_attachments option"
           end
 
+          include Cms::DefaultAccessible
           allow_attachments if options[:allow_attachments]
           is_archivable(options[:archiveable].is_a?(Hash) ? options[:archiveable] : {}) unless options[:archiveable] == false
           is_connectable(options[:connectable].is_a?(Hash) ? options[:connectable] : {}) unless options[:connectable] == false

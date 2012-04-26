@@ -20,13 +20,17 @@ end
 
 class Publishable < ActiveRecord::Base
   is_publishable
+  attr_accessible :name
 end
 
 class Unpublishable < ActiveRecord::Base
+  attr_accessible :name
+
 end
 
 class PublishableBlock < ActiveRecord::Base
   acts_as_content_block
+  attr_accessible :name
 end
 
 class PublishableBlockTestCase < ActiveSupport::TestCase

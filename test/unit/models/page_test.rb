@@ -125,6 +125,7 @@ module Cms
     end
 
   end
+
   class PageTest < ActiveSupport::TestCase
 
     def test_creating_page_with_reserved_path

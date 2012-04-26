@@ -21,6 +21,8 @@ module Cms
                     
           extend ClassMethods
           include InstanceMethods
+
+          attr_accessible :tag_list
         end
       end
       module ClassMethods

@@ -320,7 +320,6 @@ module Cms
     end
 
     test "1 attachment version" do
-      log_table Cms::Attachment::Version
       assert_equal 1, Cms::Attachment::Version.count
     end
 

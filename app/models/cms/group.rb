@@ -3,8 +3,7 @@
 # their permissions from all groups combined represents what they can do.
 #
 class Cms::Group < ActiveRecord::Base
-
-  GUEST_CODE = "guest"
+ GUEST_CODE = "guest"
 
   has_many :user_group_memberships, :class_name => 'Cms::UserGroupMembership'
   has_many :users, :through => :user_group_memberships, :class_name => 'Cms::User'
@@ -16,6 +15,10 @@ class Cms::Group < ActiveRecord::Base
   has_many :sections, :through => :group_sections, :class_name => 'Cms::Section'
 
   belongs_to :group_type, :class_name => 'Cms::GroupType'
+
+  # :group_type might be a bad idea, but only Admins should be modifying groups anyway
+  attr_accessible :name, :code, :group_type, :permission_ids, :section_ids
+  include Cms::DefaultAccessible
 
   validates_presence_of :name
 

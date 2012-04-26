@@ -127,7 +127,7 @@ class SoftPublishingTest < ActiveSupport::TestCase
   end
 end
 
-class VersionedContentBlock < ActiveSupport::TestCase
+class VersionedContentBlockTest < ActiveSupport::TestCase
   def setup
     @block = create(:html_block, :name => "Versioned Content Block")
   end

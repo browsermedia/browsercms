@@ -4,6 +4,10 @@
 module Cms
   module Addressable
 
+    def self.included(model_class)
+      model_class.attr_accessible :parent
+    end
+
     # Returns a list of all Addressable objects that are ancestors to this record.
     # @param [Hash] options
     # @option [Symbol] :include_self If this object should be included in the Array
@@ -57,6 +61,10 @@ module Cms
     # These exist for backwards compatibility to avoid having to change tests.
     # I want to get rid of these in favor of parent and parent_id
     module DeprecatedPageAccessors
+
+      def self.included(model_class)
+        model_class.attr_accessible :section_id, :section
+      end
       include LeafNode
       include NodeAccessors
 

@@ -18,6 +18,7 @@ require 'cms/content_rendering_support'
 require 'cms/mobile_aware'
 require 'cms/attachments'
 require 'cms/attachment_serving'
+require 'cms/default_accessible'
 
 # This shouldn't be necessary, except for the need to get into the loadpath for testing.
 require 'command_line'

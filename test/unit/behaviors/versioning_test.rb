@@ -21,6 +21,7 @@ module Cms
       end
 
     end
+
     test "Saving a new record should create two rows, one in html_blocks, one in html_block_versions" do
       block = Cms::HtmlBlock.new(:name => "Name is required.")
       assert_equal true, block.save!
