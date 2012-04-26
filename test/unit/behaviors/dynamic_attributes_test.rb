@@ -16,6 +16,7 @@ end
 
 class Thing < ActiveRecord::Base
   has_dynamic_attributes
+
 end
 
 class DynamicAttributesTest < ActiveSupport::TestCase

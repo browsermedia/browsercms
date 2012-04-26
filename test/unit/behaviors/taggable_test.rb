@@ -13,9 +13,12 @@ end
 
 class TaggableArticle < ActiveRecord::Base
   is_taggable
+
+  attr_accessible :name, :tag_list
 end
 
 class VersionedTaggableArticle < ActiveRecord::Base
+  #attr_accessible :name
   acts_as_content_block :taggable => true
 end
 

@@ -1,5 +1,7 @@
 module Cms
   class GroupType < ActiveRecord::Base
+    attr_accessible :name, :guest, :cms_access
+
     has_many :groups, :class_name => 'Cms::Group'
     has_many :group_type_permissions, :class_name => 'Cms::GroupTypePermission'
     has_many :permissions, :through => :group_type_permissions, :class_name => 'Cms::Permission'

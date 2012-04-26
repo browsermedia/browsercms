@@ -24,6 +24,7 @@ module Cms
 
           extend ClassMethods
           include InstanceMethods
+          attr_accessible :deleted
 
           # By default, all queries for blocks should filter out deleted rows.
           begin

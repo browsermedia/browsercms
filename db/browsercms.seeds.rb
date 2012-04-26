@@ -20,6 +20,7 @@ create_permission(:publish_content, :name => "publish_content", :full_name => "P
 create_group_type(:guest_group_type, :name => "Guest", :guest => true)
 create_group_type(:registered_public_user, :name => "Registered Public User")
 create_group_type(:cms_user, :name => "CMS User", :cms_access => true)
+
 group_types(:cms_user).permissions<<permissions(:edit_content)
 group_types(:cms_user).permissions<<permissions(:publish_content)
 

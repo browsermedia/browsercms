@@ -2,7 +2,7 @@ Tasks:
 
 * Paperclip Based Assets - Replace the existing 'custom' file upload behavior with one that uses Paperclip. Allow blocks to have more than one attachment.
 - Ensure developers can add attachments.
-- [BUG] Mass Assignment prevent migrations from working for new models
+- [BUG] Mass Assignment prevent migrations from working for new models (Rails 3.2.3)
 - [VERIFY] What happens if you revert a block with multiple attachments? Will older attachments be reassociated?
 - [BUG] Minor - In development mode, need to restart if core CMS code is changed (loses definations for custom blocks with attachments)
 - Figure out plan for Migrating from pre-Paperclip attachments. The file structure is different for storing them now.

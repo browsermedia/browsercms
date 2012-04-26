@@ -2,6 +2,7 @@ require 'digest/sha1'
 
 module Cms
   class User < ActiveRecord::Base
+
     include Cms::Authentication::Model
 
     validates_presence_of :login
@@ -14,7 +15,6 @@ module Cms
     #validates_uniqueness_of   :email,    :case_sensitive => false
     validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => "should be an email address, ex. xx@xx.com"
     attr_accessible :login, :email, :name, :first_name, :last_name, :password, :password_confirmation, :expires_at
-
 
     has_many :user_group_memberships, :class_name => 'Cms::UserGroupMembership'
     has_many :groups, :through => :user_group_memberships, :class_name => 'Cms::Group'

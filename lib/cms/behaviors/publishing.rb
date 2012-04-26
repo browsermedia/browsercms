@@ -22,7 +22,8 @@ module Cms
           include InstanceMethods
         
           attr_accessor :publish_on_save
-        
+          attr_accessible :publish_on_save
+
           after_save :publish_for_non_versioned
         
           scope :published, :conditions => {:published => true}

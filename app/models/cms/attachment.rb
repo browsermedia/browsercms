@@ -1,6 +1,9 @@
 module Cms
   class Attachment < ActiveRecord::Base
 
+    include DefaultAccessible
+    attr_accessible :data, :attachable
+
     MULTIPLE = 'multiple'
 
     SANITIZATION_REGEXES = [[/\s/, '_'], [/[&+()]/, '-'], [/[=?!'"{}\[\]#<>%]/, '']]

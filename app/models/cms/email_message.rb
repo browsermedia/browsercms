@@ -1,6 +1,8 @@
 module Cms
   class EmailMessage < ActiveRecord::Base
 
+    include DefaultAccessible
+
     scope :undelivered, :conditions => "delivered_at is null"
     validates_presence_of :recipients
     after_create :deliver_now

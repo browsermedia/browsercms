@@ -16,6 +16,8 @@ class Cms::Page < ActiveRecord::Base
   has_many :page_routes, :class_name => 'Cms::PageRoute'
   has_many :tasks
 
+  include Cms::DefaultAccessible
+
   scope :named, lambda { |name| {:conditions => ["#{table_name}.name = ?", name]} }
   scope :with_path, lambda { |path| {:conditions => ["#{table_name}.path = ?", path]} }
 

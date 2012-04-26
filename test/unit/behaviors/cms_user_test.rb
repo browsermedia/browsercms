@@ -12,6 +12,8 @@ end
 EXTERNAL_USER_GROUPS = Hash.new {|hash,key| hash[key] = FactoryGirl.build(:group)}
 
 class ExternalUser < ActiveRecord::Base
+  attr_accessible :name
+
 end
 
 class ExternalUserA < ExternalUser
@@ -28,13 +30,11 @@ end
 
 class ExternalUserD < ExternalUser
   acts_as_cms_user :groups => :get_groups
-  
+
   def get_groups
     [EXTERNAL_USER_GROUPS['external-user-d1'], EXTERNAL_USER_GROUPS['external-user-d2']]
   end
 end
-
-
 
 class CmsUserTestCase < ActiveSupport::TestCase
   def test_responds_to

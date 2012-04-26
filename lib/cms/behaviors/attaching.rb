@@ -82,6 +82,7 @@ module Cms
                                         :allow_destroy => true,
                                         # New attachments must have an uploaded file
                                         :reject_if => lambda { |a| a[:data].blank? && a[:id].blank? }
+          attr_accessible :attachments_attributes
 
           validates_associated :attachments
           before_create :associate_new_attachments
@@ -89,6 +90,7 @@ module Cms
           before_save :ensure_status_matches_attachable
           before_validation :check_for_updated_attachments
           after_save :save_associated_attachments
+
         end
       end
 

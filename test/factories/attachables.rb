@@ -1,6 +1,9 @@
 # Factories for testing Attachable Blocks
 class VersionedAttachable < ActiveRecord::Base
   acts_as_content_block
+
+  # Not sure why this is needed, but tests fail from rake if not here
+  attr_accessible :name
   has_attachment :document
 end
 

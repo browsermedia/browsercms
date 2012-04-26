@@ -17,10 +17,9 @@ module Cms
           extend ClassMethods
           include InstanceMethods
 
-          attr_accessor :connect_to_page_id
-          attr_accessor :connect_to_container
-          attr_accessor :connected_page
-        
+          attr_accessor :connect_to_page_id, :connect_to_container,:connected_page
+          attr_accessible :connect_to_page_id, :connect_to_container,:connected_page
+
           has_many :connectors, :as => :connectable, :class_name => 'Cms::Connector'
 
           attr_accessor :updated_by_page

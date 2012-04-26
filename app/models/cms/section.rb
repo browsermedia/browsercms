@@ -2,16 +2,21 @@ module Cms
   class Section < ActiveRecord::Base
     flush_cache_on_change
 
-    #The node that links this section to its parent
 
+
+    #The node that links this section to its parent
     has_one :section_node, :class_name => 'Cms::SectionNode', :as => :node, :inverse_of => :node
     SECTION = "Cms::Section"
     PAGE = "Cms::Page"
     LINK = "Cms::Link"
     VISIBLE_NODE_TYPES = [SECTION, PAGE, LINK]
 
+    include DefaultAccessible
+    attr_accessible :allow_groups, :group_ids
+
     include Cms::Addressable
     include Cms::Addressable::NodeAccessors
+
 
     # Cannot use dependent => :destroy to do this. Ancestry's callbacks trigger before the before_destroy callback.
     #   So sections would always get deleted since deletable? would return true

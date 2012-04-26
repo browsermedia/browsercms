@@ -1,5 +1,8 @@
 module Cms
   class Site < ActiveRecord::Base
+
+    attr_accessible :name, :domain
+
     validates_uniqueness_of :domain
 
     before_validation :remove_www
