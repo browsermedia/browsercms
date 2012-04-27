@@ -100,21 +100,33 @@ module ActiveRecord
 
       alias :drop_content_table :drop_versioned_table
 
+      # Rename a column for both its
+      def rename_content_column(table_name, old_name, new_name)
+        rename_column table_name, old_name, new_name
+        rename_column version_table_name(table_name), old_name, new_name
+      end
+
       # Adds a column to both the primary and versioned table. Save needing two calls.
       # This is only needed if your content block is versioned, otherwise add_column will work just fine.
       def add_content_column(table_name, column_name, type, options={})
         add_column table_name, column_name, type, options
-        add_column "#{table_name.to_s.singularize}_versions".to_sym, column_name, type, options
+        add_column version_table_name(table_name), column_name, type, options
       end
 
       def remove_content_column(table_name, column_name)
         remove_column table_name, column_name
-        remove_column "#{table_name.to_s.singularize}_versions".to_sym, column_name
+        remove_column version_table_name(table_name), column_name
       end
 
       # Will namespace the content table
       def content_table_exists?(table_name)
         table_exists?(Cms::Namespacing.prefixed_table_name(table_name))
+      end
+
+      private
+
+      def version_table_name(table_name)
+        "#{table_name.to_s.singularize}_versions".to_sym
       end
 
     end
