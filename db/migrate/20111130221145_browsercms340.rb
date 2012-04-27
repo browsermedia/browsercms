@@ -4,7 +4,7 @@ class Browsercms340 < ActiveRecord::Migration
   include Cms::Upgrades::V3_4_0::SchemaStatements
 
   def change
-    # Prefix the correct namespace where class_names are not prefixed
+    # Namespace class_names where they are not namespaced.
     %w[HtmlBlock Category CategoryType Portlet FileBlock ImageBlock Tag].each do |content_type|
       update_content_types(content_type)
       update_connectors_table(content_type)
@@ -15,7 +15,6 @@ class Browsercms340 < ActiveRecord::Migration
     standardize_foreign_keys_from_versions_tables_to_original_table
   end
 
-
   private
 
   def namespace_model(name)
@@ -24,7 +23,7 @@ class Browsercms340 < ActiveRecord::Migration
 
   def update_files
     %w[FileBlock ImageBlock].each do |content_type|
-      Cms::AbstractFileBlock.update_all("type = '#{prefix(content_type)}'", "type = '#{content_type}'")
+      Cms::AbstractFileBlock.update_all("type = '#{namespace_model(content_type)}'", "type = '#{content_type}'")
     end
   end
 
@@ -46,8 +45,10 @@ class Browsercms340 < ActiveRecord::Migration
   end
 
   def update_connectors_table(name)
+    namespaced_class = namespace_model(name)
+    puts "Update connectors for #{name} to #{namespaced_class}"
     Cms::Connector.where(:connectable_type => name).each do |connector|
-      connector.connectable_type = prefix(name)
+      connector.connectable_type = namespaced_class
       connector.save!
     end
   end
