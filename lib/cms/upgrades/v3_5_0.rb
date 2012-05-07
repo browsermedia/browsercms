@@ -23,13 +23,15 @@ module Cms
 
         # Move the attachment files from the old file path path to new one. Updates the Attachment record to match.
         def move_attachments_to_new_location
-          [Cms::Attachment, Cms::Attachment::Version].each do |model_class|
-            migrate_attachments_file_location(model_class)
-          end
+          migrate_attachments_file_location(Cms::Attachment)
+          migrate_attachments_file_location(Cms::Attachment::Version)
         end
 
         private
 
+        # Multiple version of attachments may point to the same file, so we need to test
+        # a file exists before moving. Failure to move isn't necessary an error, since it may have been moved in
+        # an earlier version
         def migrate_attachments_file_location(model_class)
           model_class.unscoped.where("attachable_type is NOT NULL").each do |attachment|
             old_location = File.join(Cms::Attachment.configuration.attachments_root, attachment.file_location)
@@ -37,8 +39,12 @@ module Cms
             new_location = File.join(Cms::Attachment.configuration.attachments_root, new_file_location)
             new_dir_path = File.join(Cms::Attachment.configuration.attachments_root, new_dir)
 
-            FileUtils.mkdir_p(new_dir_path, :verbose => true)
-            FileUtils.cp(old_location, new_location, :verbose => true)
+            FileUtils.mkdir_p(new_dir_path, :verbose => false)
+            if File.exists?(old_location)
+              FileUtils.mv(old_location, new_location, :verbose => true)
+            else
+              puts "'#{old_location}' does not exist, and may have been moved already. Skipping move."
+            end
 
             new_fingerprint = attachment.file_location.split("/").last
             model_class.unscoped.update_all({:data_fingerprint => new_fingerprint}, :id => attachment.id)
