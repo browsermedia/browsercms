@@ -6,12 +6,11 @@ Tasks:
 
 ### Writing migration to update cms_attachments_version to match file_block_versions
 
-$ rake db:drop db:create
-$ mysql -u root -p browsercms_development < test/dummy/db/backups/ddwdev_backup_2012_4_26.sql
+$ cp -R test/dummy/tmp/uploads-backup/* test/dummy/tmp/uploads
+$ rake db:drop db:create && mysql -u root -p browsercms_development < test/dummy/db/backups/ddwdev_backup_2012_4_26.sql
 $ rake db:migrate
 
 #### Writing migrations
-- Need to make it move rather than copy files (faster)
 - Need to look up custom attachments (path of /attachments) in addition to File/Image blocks.
 - Review all rows to ensure the correct version is getting copied.
 
