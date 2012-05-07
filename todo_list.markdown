@@ -3,6 +3,19 @@ Tasks:
 * Paperclip Based Assets - Replace the existing 'custom' file upload behavior with one that uses Paperclip. Allow blocks to have more than one attachment.
 
 - Figure out plan for Migrating from pre-Paperclip attachments. The file structure is different for storing them now.
+
+### Writing migration to update cms_attachments_version to match file_block_versions
+
+$ rake db:drop db:create
+$ mysql -u root -p browsercms_development < test/dummy/db/backups/ddwdev_backup_2012_4_26.sql
+$ rake db:migrate
+
+#### Writing migrations
+- Need to make it move rather than copy files (faster)
+- Refactor existing migrations to reduce (MASSIVE) duplication
+- Need to look up custom attachments (path of /attachments) in addition to File/Image blocks.
+- Review all rows to ensure the correct version is getting copied.
+
 - Figure out plan for Migrating from Asset module attachments. The file structure may be the same, but we need to make sure it works.
 
 - [VERIFY] What happens if you revert a block with multiple attachments? Will older attachments be reassociated?
