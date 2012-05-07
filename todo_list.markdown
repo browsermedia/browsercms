@@ -12,7 +12,6 @@ $ rake db:migrate
 
 #### Writing migrations
 - Need to make it move rather than copy files (faster)
-- Refactor existing migrations to reduce (MASSIVE) duplication
 - Need to look up custom attachments (path of /attachments) in addition to File/Image blocks.
 - Review all rows to ensure the correct version is getting copied.
 
