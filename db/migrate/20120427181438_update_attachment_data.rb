@@ -1,35 +1,11 @@
+require 'cms/upgrades/v3_5_0'
+
 class UpdateAttachmentData < ActiveRecord::Migration
+
   def change
-    update_attachment(Cms::ImageBlock)
-    update_attachment(Cms::FileBlock)
-    update_versions_table
+    migrate_attachment_for(Cms::ImageBlock)
+    migrate_attachment_for(Cms::FileBlock)
+    move_attachments_to_new_location
   end
 
-  private
-
-  def update_attachment(klass)
-    # Update deleted attachments too, for consistency
-    klass.unscoped.find_each do |block|
-      Cms::Attachment.unscoped.update_all({:attachable_id => block.id,
-                                           :attachable_version => block.version,
-                                           :attachable_type => klass.name,
-                                           :attachment_name => "file",
-                                           :cardinality => 'single'},
-                                          {:id => block.attachment_id})
-    end
-
-
-  end
-
-  def update_versions_table
-    found =  Cms::FileBlock::Version.find_by_sql("SELECT original_record_id, attachment_id, version from file_block_versions")
-    found.each do |version_record|
-      Cms::Attachment::Version.unscoped.update_all({:attachable_id => version_record.original_record_id,
-                                                    :attachable_version => version_record.version,
-                                                    :attachable_type => "Cms::AbstractFileBlock",
-                                                    :attachment_name => "file",
-                                                    :cardinality => 'single'},
-                                                   {:original_record_id => version_record.attachment_id})
-    end
-  end
 end

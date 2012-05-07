@@ -6,13 +6,25 @@ Tasks:
 
 ### Writing migration to update cms_attachments_version to match file_block_versions
 
-$ cp -R test/dummy/tmp/uploads-backup/* test/dummy/tmp/uploads
-$ rake db:drop db:create && mysql -u root -p browsercms_development < test/dummy/db/backups/ddwdev_backup_2012_4_26.sql
-$ rake db:migrate
+$
+rm -rf test/dummy/tmp/uploads && mkdir test/dummy/tmp/uploads && cp -R test/dummy/tmp/uploads-backup/* test/dummy/tmp/uploads
+rake db:drop db:create && mysql -u root -p browsercms_development < test/dummy/db/backups/ddwdev_backup_2012_4_26.sql
+rake db:migrate
 
 #### Writing migrations
-- Need to look up custom attachments (path of /attachments) in addition to File/Image blocks.
+- Check that older versions of blocks have their file path displayed correctly (i.e. ImageBlock #25)
 - Review all rows to ensure the correct version is getting copied.
+- Write upgrade docs for models that use Attachments
+-- Will need to change model and add has_attachment :file
+-- Will need to add a migration with:
+    standardize_version_id_column "block_table_name"
+    migrate_attachment_for(BlockClassName)
+- After everything is done, users should be able to create a 'cleanup' migration that will tidy things up.
+-- Write instructions for defining a 'cleanup' migration
+-- Add methods to v3_5_0 for upgrades.
+-- Remove attachment_id and attachment_version from any models (file_blocks and file_block_versions)
+-- Remove attachments.file_location
+-- Remove old folders in uploads directory
 
 - Figure out plan for Migrating from Asset module attachments. The file structure may be the same, but we need to make sure it works.
 
