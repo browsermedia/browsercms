@@ -11,6 +11,7 @@ module Cms
       # Add additional methods to ActiveRecord::Migration when this file is required.
       module FileStorageUpdates
 
+
         # Old paths are:
         #       uploads/:year/:month/:day/:fingerprint
         # i.e.  uploads/2012/04/27/fb598......
@@ -65,9 +66,37 @@ module Cms
         end
 
         # Move the attachment files from the old file path path to new one. Updates the Attachment record to match.
-        def move_attachments_to_new_location
+        def migrate_attachment_files_to_new_location
           migrate_attachments_file_location(Cms::Attachment)
           migrate_attachments_file_location(Cms::Attachment::Version)
+        end
+
+        # Remove the attachment_version and attachment_id columns for all core CMS blocks.
+        def cleanup_attachment_columns_for_core_cms
+          cleanup_attachment_columns(Cms::FileBlock)
+        end
+
+        # The 'attachment_id and attachment_version are no longer stored in the model, but in the attachments table'
+        # @param [Class] model_class The model to have its columns cleaned up.
+        def cleanup_attachment_columns(model_class)
+          remove_content_column model_class.table_name, :attachment_id if column_exists?(model_class.table_name, :attachment_id)
+          remove_content_column model_class.table_name, :attachment_version if column_exists?(model_class.table_name, :attachment_id)
+        end
+
+        # Removes the cms_attachments.file_location column
+        #
+        # data_fingerprint is used to store the file name instead now.
+        def cleanup_attachments_file_location
+          remove_content_column :cms_attachments, :file_location if column_exists?(:cms_attachments, :file_location)
+        end
+
+        # Deletes the old file storage folders from the uploads directory.
+        #
+        def cleanup_attachment_file_storage
+          ["2009", "2010", "2011", "2012"].each do |year|
+            folder_to_remove = File.join(attachments_dir, year)
+            FileUtils.rm_rf(folder_to_remove, :verbose => true)
+          end
         end
 
         private
@@ -77,7 +106,7 @@ module Cms
         # an earlier version
         def migrate_attachments_file_location(model_class)
           model_class.unscoped.each do |attachment|
-            old_location = File.join(Cms::Attachment.configuration.attachments_root, attachment.file_location)
+            old_location = File.join(attachments_dir, attachment.file_location)
             new_file_location, new_dir = new_file_location(attachment)
             new_location = File.join(Cms::Attachment.configuration.attachments_root, new_file_location)
             new_dir_path = File.join(Cms::Attachment.configuration.attachments_root, new_dir)
@@ -92,6 +121,10 @@ module Cms
             new_fingerprint = attachment.file_location.split("/").last
             model_class.unscoped.update_all({:data_fingerprint => new_fingerprint}, :id => attachment.id)
           end
+        end
+
+        def attachments_dir
+          Cms::Attachment.configuration.attachments_root
         end
 
         # Allows us to use the Paperclip interpolations logic directly
