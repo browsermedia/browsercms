@@ -97,7 +97,7 @@ class ActiveSupport::TestCase
   end
 
   def login_as(user)
-    @request.session[:user_id] = user ? user.id : nil
+    @request.session[:cms_user_id] = user ? user.id : nil
   end
 
   def login_as_cms_admin

@@ -44,7 +44,7 @@ module Cms
 
         # Store the given user id in the session.
         def cms_current_user=(new_user)
-          session[:user_id] = new_user ? new_user.id : nil
+          session[:cms_user_id] = new_user ? new_user.id : nil
           @cms_current_user = new_user || false
           Cms::User.current = @cms_current_user
         end
@@ -129,7 +129,7 @@ module Cms
 
         # Called from #cms_current_user.  First attempt to login by the user id stored in the session.
         def login_from_session
-          self.cms_current_user = Cms::User.find_by_id(session[:user_id]) if session[:user_id]
+          self.cms_current_user = Cms::User.find_by_id(session[:cms_user_id]) if session[:cms_user_id]
         end
 
         # Called from #cms_current_user.  Now, attempt to login by basic authentication information.
@@ -162,7 +162,7 @@ module Cms
           Cms::User.current.forget_me if Cms::User.current.is_a? User
           Cms::User.current = false     # not logged in, and don't do it for me
           kill_remember_cookie!     # Kill client-side auth cookie
-          session[:user_id] = nil   # keeps the session but kill our variable
+          session[:cms_user_id] = nil   # keeps the session but kill our variable
           # explicitly kill any other session variables you set
         end
 
