@@ -53,14 +53,14 @@ module Cms
         def migrated_attachment_for_versioned_table(model_class, attachable_type)
           version_model = model_class.version_class
 
-          found = version_model.find_by_sql("SELECT original_record_id, attachment_id, version from #{version_model.table_name}")
+          found = version_model.find_by_sql("SELECT original_record_id, attachment_id, attachment_version, version from #{version_model.table_name}")
           found.each do |version_record|
             Cms::Attachment::Version.unscoped.update_all({:attachable_id => version_record.original_record_id,
                                                           :attachable_version => version_record.version,
                                                           :attachable_type => attachable_type,
                                                           :attachment_name => "file",
                                                           :cardinality => 'single'},
-                                                         {:original_record_id => version_record.attachment_id, :version => version_record.version})
+                                                         {:original_record_id => version_record.attachment_id, :version => version_record.attachment_version})
           end
         end
 
