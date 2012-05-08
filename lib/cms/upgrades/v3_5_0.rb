@@ -60,7 +60,7 @@ module Cms
                                                           :attachable_type => attachable_type,
                                                           :attachment_name => "file",
                                                           :cardinality => 'single'},
-                                                         {:original_record_id => version_record.attachment_id})
+                                                         {:original_record_id => version_record.attachment_id, :version => version_record.version})
           end
         end
 
