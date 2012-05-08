@@ -19,7 +19,7 @@
 #             which may be different than the 'front end' user login page. (Cms::Controller handles that differently)
 #
 #
-# To Dos: It appears as though we are storing the 'current' user in two places, @current_user and Cms::User.current. This is probably not DRY, but
+# To Dos: It appears as though we are storing the 'current' user in two places, @cms_current_user and Cms::User.current. This is probably not DRY, but
 #   more testing would be needed.
 #
 module Cms
@@ -29,24 +29,24 @@ module Cms
         # Returns true or false if the user is logged in.
         # Preloads Cms::User.current with the user model if they're logged in.
         def logged_in?
-          !current_user.nil? && !current_user.guest?
+          !cms_current_user.nil? && !cms_current_user.guest?
         end
 
         # Accesses the current user from the session or 'remember me' cookie.
         # If the user is not logged in, this will be set to the guest user, which represents a public
         # user, who will likely have more limited permissions
-        def current_user
+        def cms_current_user
           # Note: We have disabled basic_http_auth
-          @current_user ||= begin
+          @cms_current_user ||= begin
             Cms::User.current = (login_from_session || login_from_cookie || Cms::User.guest)  
           end
         end
 
         # Store the given user id in the session.
-        def current_user=(new_user)
+        def cms_current_user=(new_user)
           session[:user_id] = new_user ? new_user.id : nil
-          @current_user = new_user || false
-          Cms::User.current = @current_user
+          @cms_current_user = new_user || false
+          Cms::User.current = @cms_current_user
         end
 
         # Check if the user is authorized
@@ -59,7 +59,7 @@ module Cms
         #
         #  # only allow nonbobs
         #  def authorized?
-        #    current_user.login != "bob"
+        #    cms_current_user.login != "bob"
         #  end
         #
         def authorized?(action=nil, resource=nil, *args)
@@ -117,25 +117,25 @@ module Cms
           session[:return_to] = nil
         end
 
-        # Inclusion hook to make #current_user and #logged_in?
+        # Inclusion hook to make #cms_current_user and #logged_in?
         # available as ActionView helper methods.
         def self.included(base)
-          base.send :helper_method, :current_user, :logged_in?, :authorized? if base.respond_to? :helper_method
+          base.send :helper_method, :cms_current_user, :logged_in?, :authorized? if base.respond_to? :helper_method
         end
 
         #
         # Login
         #
 
-        # Called from #current_user.  First attempt to login by the user id stored in the session.
+        # Called from #cms_current_user.  First attempt to login by the user id stored in the session.
         def login_from_session
-          self.current_user = Cms::User.find_by_id(session[:user_id]) if session[:user_id]
+          self.cms_current_user = Cms::User.find_by_id(session[:user_id]) if session[:user_id]
         end
 
-        # Called from #current_user.  Now, attempt to login by basic authentication information.
+        # Called from #cms_current_user.  Now, attempt to login by basic authentication information.
         def login_from_basic_auth
           authenticate_with_http_basic do |login, password|
-            self.current_user = Cms::User.authenticate(login, password)
+            self.cms_current_user = Cms::User.authenticate(login, password)
           end
         end
     
@@ -143,14 +143,14 @@ module Cms
         # Logout
         #
 
-        # Called from #current_user.  Finaly, attempt to login by an expiring token in the cookie.
+        # Called from #cms_current_user.  Finaly, attempt to login by an expiring token in the cookie.
         # for the paranoid: we _should_ be storing user_token = hash(cookie_token, request IP)
         def login_from_cookie
           user = cookies[:auth_token] && Cms::User.find_by_remember_token(cookies[:auth_token])
           if user && user.remember_token?
-            self.current_user = user
+            self.cms_current_user = user
             handle_remember_cookie! false # freshen cookie token (keeping date)
-            self.current_user
+            self.cms_current_user
           end
         end
 

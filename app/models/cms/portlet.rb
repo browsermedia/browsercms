@@ -10,7 +10,7 @@ module Cms
     attr_accessor :controller
     delegate :request, :response, :session,
              :flash, :params, :cookies,
-             :current_user, :logged_in?,
+             :cms_current_user, :logged_in?,
              :to => :controller
 
     def self.inherited(subclass)

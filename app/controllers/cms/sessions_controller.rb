@@ -17,7 +17,7 @@ class SessionsController < Cms::ApplicationController
       # protection if user resubmits an earlier form using back
       # button. Uncomment if you understand the tradeoffs.
       # reset_session
-      self.current_user = user
+      self.cms_current_user = user
       new_cookie_flag = (params[:remember_me] == "1")
       handle_remember_cookie! new_cookie_flag
       flash[:notice] = "Logged in successfully"

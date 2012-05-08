@@ -37,7 +37,7 @@ module Cms
       if perform_caching
         return handle_server_error(exception) if cms_site?
       else
-        return handle_server_error(exception) if current_user.able_to?(:edit_content, :publish_content)
+        return handle_server_error(exception) if cms_current_user.able_to?(:edit_content, :publish_content)
       end
 
       # We must be showing the page outside of the CMS
@@ -71,7 +71,7 @@ module Cms
       @_connectors = @page.connectors.for_page_version(@page.version)
       @_connectables = @_connectors.map(&:connectable_with_deleted)
     
-      unless (logged_in? && current_user.able_to?(:administrate, :edit_content, :publish_content))
+      unless (logged_in? && cms_current_user.able_to?(:administrate, :edit_content, :publish_content))
         worst_exception = nil
         @_connectables.each do |c|
           begin

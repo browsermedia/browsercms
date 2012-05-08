@@ -43,13 +43,13 @@ class ApplicationController < ::ApplicationController
     end
   
     def cms_access_required
-      raise Cms::Errors::AccessDenied unless current_user.able_to?(:administrate, :edit_content, :publish_content)
+      raise Cms::Errors::AccessDenied unless cms_current_user.able_to?(:administrate, :edit_content, :publish_content)
     end
   
     def self.check_permissions(*perms)
       opts = Hash === perms.last ? perms.pop : {}
       before_filter(opts) do |controller|
-        raise Cms::Errors::AccessDenied unless controller.send(:current_user).able_to?(*perms)
+        raise Cms::Errors::AccessDenied unless controller.send(:cms_current_user).able_to?(*perms)
       end      
     end
   

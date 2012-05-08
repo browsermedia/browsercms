@@ -43,7 +43,7 @@ class UsersController < Cms::ResourceController
   def update_password
     if user.update_attributes(params[:user])
       flash[:notice] = "Password for '#{user.login}' was changed"
-      redirect_to(current_user.able_to?(:administrate) ? users_path : user_path(user))
+      redirect_to(cms_current_user.able_to?(:administrate) ? users_path : user_path(user))
     else
       render :action => 'change_password'
     end
@@ -96,7 +96,7 @@ class UsersController < Cms::ResourceController
     end
     
     def only_self_or_administrator
-      raise Cms::Errors::AccessDenied if !current_user.able_to?(:administrate) && params[:id].to_i != current_user.id
+      raise Cms::Errors::AccessDenied if !cms_current_user.able_to?(:administrate) && params[:id].to_i != cms_current_user.id
     end
 end
 end
