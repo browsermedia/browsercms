@@ -13,16 +13,6 @@ rake db:migrate
 
 #### Writing migrations
 
-- Write upgrade docs for models that use Attachments
--- Will need to change model and add has_attachment :file
--- Will need to add a migration with:
-    standardize_version_id_column "block_table_name"
-    migrate_attachment_for(BlockClassName)
-
-- After everything is done, users should be able to create a 'cleanup' migration that will tidy things up.
--- Write instructions for defining a 'cleanup' migration
-
-
 - Figure out plan for Migrating from Asset module attachments. The file structure may be the same, but we need to make sure it works.
 
 - [VERIFY] What happens if you revert a block with multiple attachments? Will older attachments be reassociated?
