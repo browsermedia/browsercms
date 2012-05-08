@@ -12,7 +12,8 @@ rake db:drop db:create && mysql -u root -p browsercms_development < test/dummy/d
 rake db:migrate
 
 #### Writing migrations
-- Check that older versions of blocks have their file path displayed correctly (i.e. ImageBlock #25)
+- Fix issue with icon for nil (Fileblock #53) when viewing
+- Merge migrations for 3.5 into a single one
 - Review all rows to ensure the correct version is getting copied.
 - Write upgrade docs for models that use Attachments
 -- Will need to change model and add has_attachment :file
