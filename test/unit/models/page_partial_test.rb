@@ -10,6 +10,10 @@ class PagePartialTest < ActiveSupport::TestCase
     File.delete(@page_partial.file_path) if File.exists?(@page_partial.file_path)
   end
 
+  test "mass assignment works" do
+    Cms::PagePartial.new(:name=>"A", :format=>"B", :handler=>"C", :body=>"D")
+    Cms::PageTemplate.new(:name=>"A", :format=>"B", :handler=>"C", :body=>"D")
+  end
   test "Name used to build the form" do
     assert_equal "page_partial", Cms::PagePartial.resource_collection_name
   end
