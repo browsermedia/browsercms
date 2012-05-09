@@ -2,12 +2,11 @@ Tasks:
 
 * Paperclip Based Assets - Replace the existing 'custom' file upload behavior with one that uses Paperclip. Allow blocks to have more than one attachment.
 
-- [BUG] Adding/removing file doesn't create a new verison of 'catalog' (or any multi-attachment block)
-- [BUG] Looking at v1 of a catalog throws an error (undefined method `catalog_path')
+- [Documentation] Write a quick how to guide about Attachments API.
+- [BUG] Adding/removing file doesn't create a new version of 'catalog' (or any multi-attachment)
 - [VERIFY] What happens if you revert a block with multiple attachments? Will older attachments be reassociated?
 - [BUG] Minor - In development mode, need to restart if core CMS code is changed (loses definations for custom blocks with attachments)
 - [IMPROVE] The error message for a duplicate path for Fileblocks is not clear.
-- [BUG] Updating a page throws 'path already used' error? Created a public section.
 
 
 ## Publishing/Versioning Improvements:
@@ -24,14 +23,14 @@ When almost certainly should be.
 - Migrations are now generated with .cms. Will this cause problems during upgrades? (Write upgrade scenarios)
 - rails -h only provides generate | destroy methods with engine on a new project. Why? It sucks to have to cd into test/dummy to run tests.
 
-## Upgrade Script
-- Test what happens when you upgrade an existing Bcms 3.3.x/Rails 3.1.x project
-
 # 3.5.x Goals
 
 * Heroku - Make BrowserCMS work on the platform.
 * Faster Files - Take advantage of X-Sendfile (if possible) to speed up sending uploaded CMS files.
 * Browser Compatibility Testing - Ensure compatibility with latest versions of Chrome/IE 9/Firefox/Safari. IE 9 probably needs the most works.
+
+- [TEST] Upgrade script from 3.4.x and 3.3.x
+- [BUG] Updating a page throws 'path already used' error? Created a public section.
 
 # 3.4.x
 

@@ -33,7 +33,7 @@
   <% if @block.respond_to?(:draft_version?) && !@block.draft_version? %>
     <div class="nv_pair">
       <div class="header">Version:</div> 
-      <div>v. <%= @block.version %> ( <%= link_to "Current", @block %> )</div>
+      <div>v. <%= @block.version %> ( <%= link_to "Current", block_path(@block) %> )</div>
     </div>
   <% end -%>
   <% if @block.class.renderable? %>
