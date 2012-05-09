@@ -1,6 +1,26 @@
 v3.5.0
 ======
 
+This release includes a number of new features, including:
+
+* Improved Attachments
+* Mobile Friendly templates
+* Rail 3.2 compatibility
+
+See the upgrade instructions here for existing projects:
+
+Improved Attachments
+--------------------
+
+Attachments have been completely reworked to use Paperclip (https://github.com/thoughtbot/paperclip).
+
+* Each block can now have multiple attachments using to different styles.
+* Attachments can be defined as one to one (has_attachment :image) or be stored as a collection (has_many_attachments).
+* Upgrade migrations are provide to migrate file and data for older projects to the new attachment structure.
+* New generators have been provided to create content blocks with the new attachment styles.
+
+See this Attachments API guide for more details: https://github.com/browsermedia/browsercms/wiki/Attachments-API
+
 Mobile
 ------
 
