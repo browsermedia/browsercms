@@ -55,9 +55,9 @@ class AttachmentTest < ActiveSupport::TestCase
     assert_equal "", attachment.data_file_path
   end
 
-  test "attachable_version defaults to 1 for new attachments if not set" do
+  test "attachable_version should be nil until its associated with a content block" do
     attachment.valid?
-    assert_equal 1, attachment.attachable_version
+    assert_nil attachment.attachable_version
   end
 
   test "Sanitize file name" do

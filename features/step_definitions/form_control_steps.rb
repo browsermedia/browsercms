@@ -84,8 +84,12 @@ end
 
 Given /^a block exists with a single image$/ do
   @block = Catalog.create!(:name => "Hello")
-  @block.attachments << create(:attachment_document, :attachment_name => "photos", :attachable_type => "Catalog")
+  @block.attachments << create(:attachment_document, :attachment_name => "photos", :attachable_type => "Catalog", :attachable_version => @block.version)
   @block.save!
+
+  a = @block.attachments.first
+  assert_equal 1, a.attachable_version
+  assert_equal @block.id, a.attachable_id
 end
 
 When /^I view that block$/ do

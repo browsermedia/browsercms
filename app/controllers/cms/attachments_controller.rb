@@ -9,9 +9,10 @@ module Cms
     include AttachmentServing
 
     # Returns a specific version of an attachment.
-    # Used primarily to display older versions in the editor interface.
+    # Used to display older versions in the editor interface.
     def show
-      @attachment = find_by_id().as_of_version(params[:version]) if params[:version]
+      @attachment = Attachment.unscoped.find(params[:id])
+      @attachment = @attachment.as_of_version(params[:version]) if params[:version]
       send_attachment(@attachment)
     end
 
@@ -20,7 +21,7 @@ module Cms
     #
     # Users can only download files if they have permission to view it.
     def download
-      @attachment = find_by_id()
+      @attachment = Attachment.find(params[:id])
       send_attachment(@attachment)
     end
 
@@ -36,15 +37,12 @@ module Cms
     end
 
     def destroy
-      @attachment = find_by_id()
+      @attachment = Attachment.find(params[:id])
       @attachment.destroy
       render :json => @attachment.id
     end
 
     private
 
-    def find_by_id
-      Attachment.find(params[:id])
-    end
   end
 end
