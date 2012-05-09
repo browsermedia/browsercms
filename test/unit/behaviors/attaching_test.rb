@@ -419,7 +419,7 @@ module Cms
 
     test "delete an attachment should not be found when fetching the draft version of blocks" do
       @attachable.attachments.first.destroy
-      update_to_version2(@attachable)
+      update_to_version(@attachable)
 
       current = @attachable.as_of_draft_version()
       assert_equal 0, current.attachments.size
@@ -428,19 +428,36 @@ module Cms
 
     test "deleted attachments should be found when looking up historical versions" do
       @attachable.attachments.first.destroy
-      update_to_version2(@attachable)
+      update_to_version(@attachable)
 
       assert_equal 0, @attachable.as_of_version(2).attachments.size
       assert_equal 1, @attachable.as_of_version(1).attachments.size
     end
 
+    test "reverting with multiple attachments doesn't work correctly'" do
+      @attachable = create(:has_many_attachments)
+
+      @attachable.attachments.first.destroy
+      update_to_version(@attachable, 2)
+      @attachable.attachments << create(:has_many_documents, :data_file_name => "new.txt", :attachable_version => 2)
+      update_to_version(@attachable, 3)
+
+      assert_equal "new.txt", @attachable.attachments.first.data_file_name
+
+      @attachable.revert_to(1)
+      @attachable.reload
+
+      assert_equal 1, @attachable.attachments.size
+      assert_equal "new.txt", @attachable.attachments.first.data_file_name, "If this worked properly, it roll back to version 1 of the attachment."
+
+    end
     private
 
-    def update_to_version2(attachable)
-      attachable.update_attributes(:name => "v2")
+    def update_to_version(attachable, v=2)
+      attachable.update_attributes(:name => "v#{v}")
       attachable.publish!
       attachable.reload
-      assert_equal 2, attachable.version, "Verifying that we have actually force this block to version 2"
+      assert_equal v, attachable.version, "Verifying that we have actually force this block to version #{v}"
     end
 
     def update_attachable_to_version2(new_path)
