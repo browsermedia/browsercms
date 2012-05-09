@@ -186,9 +186,21 @@ module Cms
       assert_equal :single, single_attachment.config[:type]
     end
 
-    test "#config multiple cardinatlity" do
+    test "#config multiple cardinality" do
       multiple_attachments = create(:has_many_attachments).attachments.first
       assert_equal :multiple, multiple_attachments.config[:type]
+    end
+
+    test "Unassociated attachments are linked when the block is saved." do
+      attachment = create(:attachment_document, :attachment_name => 'documents', :attachable_type => 'HasManyAttachments')
+      assert_nil attachment.attachable_version
+      assert_nil attachment.attachable_id
+
+      block = HasManyAttachments.new(:name => "Hello", :publish_on_save => true)
+      block.attachment_id_list = "#{attachment.id}"
+      assert block.save!
+
+      assert_equal 1, block.as_of_version(1).attachments.size
     end
   end
 
@@ -396,27 +408,41 @@ module Cms
       assert_equal file_contents(file2.path), file_contents(@attachable.as_of_version(2).attachments[0].full_file_location)
     end
 
+    test "Deleting an attachment does not increment the version # of the block" do
+      # Note: This probably SHOULD NOT work this way, but it does for now.
+      # The UI will handle updating versions of blocks
+      @attachable.attachments.first.destroy
+      @attachable.reload
+
+      assert_equal 1, @attachable.version
+    end
+
     test "delete an attachment should not be found when fetching the draft version of blocks" do
-      doc = @attachable.attachments.first
-      doc.destroy
+      @attachable.attachments.first.destroy
+      update_to_version2(@attachable)
 
       current = @attachable.as_of_draft_version()
       assert_equal 0, current.attachments.size
     end
 
-    test "deleted attachments shouldn't be found'" do
-      @attachable.attachments << create(:attachment_document)
-      @attachable.save!
 
-      assert_equal 2, @attachable.attachments.size
-      doc = @attachable.attachments.first
-      doc.destroy
+    test "deleted attachments should be found when looking up historical versions" do
+      @attachable.attachments.first.destroy
+      update_to_version2(@attachable)
 
-      current = @attachable.as_of_draft_version()
-      assert_equal 1, current.attachments.size
+      assert_equal 0, @attachable.as_of_version(2).attachments.size
+      assert_equal 1, @attachable.as_of_version(1).attachments.size
     end
 
     private
+
+    def update_to_version2(attachable)
+      attachable.update_attributes(:name => "v2")
+      attachable.publish!
+      attachable.reload
+      assert_equal 2, attachable.version, "Verifying that we have actually force this block to version 2"
+    end
+
     def update_attachable_to_version2(new_path)
       @attachable.attachments[0].data_file_path = new_path
       @attachable.name = "Force Update"

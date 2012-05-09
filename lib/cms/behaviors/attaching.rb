@@ -195,16 +195,14 @@ module Cms
               where(:attachable_type => attachable.attachable_type).
               where(:attachable_version => version_number).
               order(:version).all
-          found_attachments = {}
+          found_attachments = []
 
-          # Compress multiple versions into a single record and exclude deleted records.
           found_versions.each do |av|
             record = av.build_object_from_version
-            found_attachments[record.id] = record
+            found_attachments << record
           end
-          found_attachments.delete_if { |_, value| value.deleted? }
-
-          found_attachments.values
+          found_attachments.delete_if { |value| value.deleted? }
+          found_attachments
         end
 
       end
@@ -338,7 +336,10 @@ module Cms
                 attachment = Cms::Attachment.find(i)
               rescue ActiveRecord::RecordNotFound
               end
+
+              # Previously saved attachments shouldn't have an attachable_version or attachable_id yet.
               if attachment
+                attachment.attachable_version = self.version
                 attachments << attachment
               end
 

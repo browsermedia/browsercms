@@ -14,7 +14,7 @@ module Cms
     attr_accessor :attachable_class
     attr_accessible :attachable_class
 
-    before_validation :set_data_defaults, :set_cardinality
+    before_validation :set_cardinality
     before_save :set_section, :sanitized_file_path_and_name
     before_create :setup_attachment
 
@@ -195,12 +195,6 @@ module Cms
 
     private
 
-    def set_data_defaults
-      unless attachable_version
-        self.attachable_version = 1
-      end
-    end
-
     def data_file_extension
       data_file_name.split('.').last.downcase if data_file_name && data_file_name['.']
     end
@@ -236,7 +230,7 @@ module Cms
     # Attachments should always be configured with a cardinality
     def set_cardinality
       unless cardinality
-        logger.warn "Calling set_cardinality for '#{config[:type]}'"
+        logger.debug "Calling set_cardinality for '#{config[:type]}'"
         self.cardinality = config[:type].to_s
       end
 

@@ -4,7 +4,7 @@
 %>
 <tr id="<%= dom_id(attachment)%>">
   <% if attachment.is_image? %>
-    <td><%= link_to image_tag(attachment.url(:thumb), :size => '60x60', :data=>{:purpose=>'attachment'}), attachment.url %></td>
+    <td><%= link_to image_tag(attachment_path_for(attachment), :size => '60x60', :data=>{:purpose=>'attachment'}), attachment_path_for(attachment) %></td>
   <% else %>
     <td><%= image_tag "cms/icons/file_types/#{attachment.icon}.png" %>
   <% end %>
