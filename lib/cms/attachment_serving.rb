@@ -20,6 +20,10 @@ module Cms
                     :type => attachment.file_type,
                     :disposition => "inline"
           )
+        else
+          msg = "Couldn't find file #{path_to_file}'"
+          logger.warn msg
+          raise ActiveRecord::RecordNotFound.new(msg)
         end
       end
     end

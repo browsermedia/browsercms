@@ -20,12 +20,18 @@ module Cms
         #       uploads/000/000/001/:fingerprint
         # where it splits the id into multiple directories
         #
-        def new_file_location(attachment)
+        # @param [Cms::Attachment] attachment
+        # @return [String] path to location where an attachment should be (based on id)
+        def path_for_attachment(attachment)
           new_id_dir = "#{Paperclip::Interpolations.id_partition(AttachmentWrapper.new(attachment), nil)}/original"
-          return "#{new_id_dir}/#{attachment.data_fingerprint}", new_id_dir
+          "#{new_id_dir}/#{attachment.data_fingerprint}"
         end
 
-
+        # @return [String] Path to where an attachment should be
+        def path_to_attachment(attachment)
+          loc = path_for_attachment(attachment)
+          file_in_attachments_dir(loc)
+        end
         # For a given class with an Attachment association (pre-3.5.0), migrate its attachment data to match the new
         # table structure.
         def migrate_attachment_for(klass)
@@ -106,20 +112,25 @@ module Cms
         # an earlier version
         def migrate_attachments_file_location(model_class)
           model_class.unscoped.each do |attachment|
-            old_location = File.join(attachments_dir, attachment.file_location)
-            new_file_location, new_dir = new_file_location(attachment)
-            new_location = File.join(Cms::Attachment.configuration.attachments_root, new_file_location)
-            new_dir_path = File.join(Cms::Attachment.configuration.attachments_root, new_dir)
-
-            FileUtils.mkdir_p(new_dir_path, :verbose => false)
-            if File.exists?(old_location)
-              FileUtils.mv(old_location, new_location, :verbose => true)
-            else
-              puts "'#{old_location}' does not exist, and may have been moved already. Skipping move."
-            end
+            from = File.join(attachments_dir, attachment.file_location)
+            to = path_to_attachment(attachment)
+            move_attachment_file(from, to)
 
             new_fingerprint = attachment.file_location.split("/").last
             model_class.unscoped.update_all({:data_fingerprint => new_fingerprint}, :id => attachment.id)
+          end
+        end
+
+        def file_in_attachments_dir(file_name)
+          File.join(Cms::Attachment.configuration.attachments_root, file_name)
+        end
+
+        def move_attachment_file(old_location, new_location)
+          if File.exists?(old_location)
+            FileUtils.mkdir_p(File.dirname(new_location), :verbose => false)
+            FileUtils.mv(old_location, new_location, :verbose => true)
+          else
+            puts "'#{old_location}' does not exist, and may have been moved already. Skipping move."
           end
         end
 

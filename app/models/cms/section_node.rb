@@ -1,7 +1,7 @@
 require 'ancestry'
 
 class Cms::SectionNode < ActiveRecord::Base
-  attr_accessible :node, :section, :parent
+  attr_accessible :node, :section, :parent, :node_id, :node_type
   has_ancestry
 
   # This is the parent section for this node
