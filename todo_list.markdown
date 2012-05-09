@@ -3,8 +3,6 @@ Tasks:
 * Paperclip Based Assets - Replace the existing 'custom' file upload behavior with one that uses Paperclip. Allow blocks to have more than one attachment.
 
 - [Documentation] Write a quick how to guide about Attachments API.
-- [BUG] If you revert a block with multiple attachments, it will still be associated with the latest attachments.
-- [BUG] Minor - In development mode, need to restart if core CMS code is changed (loses definations for custom blocks with attachments)
 - [IMPROVE] The error message for a duplicate path for Fileblocks is not clear.
 
 
@@ -30,6 +28,8 @@ When almost certainly should be.
 
 - [TEST] Upgrade script from 3.4.x and 3.3.x
 - [BUG] Updating a page throws 'path already used' error? Created a public section.
+- [BUG] Reverting blocks with multiple attachments doesn't really work. It stays associated with the latest attachment, even if you had previous deleted attachments.
+- [BUG] Minor - In development mode, need to restart if core CMS code is changed (loses definations for custom blocks with attachments)
 
 # 3.4.x
 
