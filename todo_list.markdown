@@ -2,10 +2,13 @@ Tasks:
 
 * Paperclip Based Assets - Replace the existing 'custom' file upload behavior with one that uses Paperclip. Allow blocks to have more than one attachment.
 
+- [BUG] Adding/removing file doesn't create a new verison of 'catalog' (or any multi-attachment block)
+- [BUG] Looking at v1 of a catalog throws an error (undefined method `catalog_path')
 - [VERIFY] What happens if you revert a block with multiple attachments? Will older attachments be reassociated?
 - [BUG] Minor - In development mode, need to restart if core CMS code is changed (loses definations for custom blocks with attachments)
 - [IMPROVE] The error message for a duplicate path for Fileblocks is not clear.
 - [BUG] Updating a page throws 'path already used' error? Created a public section.
+
 
 ## Publishing/Versioning Improvements:
 - The mess that is publishing/saving is coming back again when trying to interact with blocks with associated attachments.

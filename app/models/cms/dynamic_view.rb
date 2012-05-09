@@ -5,6 +5,8 @@ module Cms
     after_destroy :remove_file_from_disk
 
     include DefaultAccessible
+    # Need to explicitly define these, since during new project creation, these files aren't discoverable.
+    attr_accessible :name, :body, :format, :handler
 
     scope :with_file_name, lambda { |file_name|
       conditions = {:name => nil, :format => nil, :handler => nil}
