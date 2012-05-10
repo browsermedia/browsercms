@@ -42,6 +42,8 @@ Notable Fixes
 * [#493] Add Mobile capability
 * [#494] Speed up Cucumber Scenarios
 * [#492] Upgrade to be Rails 3.2.x compatibile
+* [#509] Pagination works for custom blocks now
+* [#508] Remove fancy file upload (probably unused and wasn't working anyway)
 
 v3.4.2
 ======

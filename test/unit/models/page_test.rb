@@ -406,6 +406,11 @@ module Cms
       assert @baseball_page.in_section?("First Section")
     end
 
+    test "#top_level_section works for page in root section" do
+      page = create(:public_page, :parent=>@root)
+      assert_equal @root, page.top_level_section
+    end
+
     test "#top_level_section" do
       assert_equal @football_section, @football_page.top_level_section
       assert_equal @baseball_section, @baseball_page.top_level_section
