@@ -56,6 +56,11 @@ Feature: Manage Content Blocks
     And the page header should be "View Product 'iPhone'"
     And I should see "Used on: 1 page"
 
+  Scenario: Multiple Pages
+    Given there are multiple pages of products in the Content Library
+    When I request /cms/products
+    Then I should see the paging controls
+
 
 
 
