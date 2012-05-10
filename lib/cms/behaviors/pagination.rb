@@ -2,10 +2,13 @@
 module Cms
   module Behaviors
     module Pagination
+
+      DEFAULT_PER_PAGE =  15
+
       def self.included(model_class)
         model_class.extend(ClassMethods)
         class << model_class
-          define_method(:default_per_page) { 15 }
+          define_method(:default_per_page) { DEFAULT_PER_PAGE }
         end
       end
       class InvalidPage < ArgumentError

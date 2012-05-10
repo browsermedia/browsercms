@@ -37,3 +37,16 @@ end
 When /^I Save And Publish$/ do
   click_button "Save And Publish"
 end
+
+Given /^there are multiple pages of products in the Content Library$/ do
+  per_page = Cms::Behaviors::Pagination::DEFAULT_PER_PAGE
+  (per_page * 2).times do |i|
+    Product.create(:name=>"Product #{i}")
+  end
+end
+
+Then /^I should see the paging controls$/ do
+  assert_equal 200, page.status_code
+  assert page.has_content?("Next")
+  assert page.has_content?("Previous")
+end
