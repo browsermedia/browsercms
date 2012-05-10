@@ -26,11 +26,11 @@ module Cms
       end
       module InstanceMethods
         def set_userstamps
-          current_user = Cms::User.current ? Cms::User.current : nil
+          cms_current_user = Cms::User.current ? Cms::User.current : nil
           if new_record?
-            self.created_by = current_user
+            self.created_by = cms_current_user
           end
-          self.updated_by = current_user
+          self.updated_by = cms_current_user
 
         end
       end

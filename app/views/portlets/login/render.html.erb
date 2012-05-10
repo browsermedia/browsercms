@@ -1,6 +1,6 @@
 <div class="login-portlet">
   <% if logged_in? %>
-    <p>Welcome, <%= current_user.login %></p>
+    <p>Welcome, <%= cms_current_user.login %></p>
     <p><%= link_to "Logout", '' %></p>
     <p><%#= link_to "Logout", cms.logout_path %></p>
   <% else %>

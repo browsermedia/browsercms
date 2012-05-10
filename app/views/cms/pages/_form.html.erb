@@ -22,14 +22,14 @@
 <div class="checkbox_group fields no_check_all">
   <div class="checkbox_fields">
     <%= f.label :hidden, "Hide From Menus?" %>
-    <%= f.check_box :hidden, :disabled => (!current_user.able_to?(:publish_content)), :tabindex => next_tabindex %>
+    <%= f.check_box :hidden, :disabled => (!cms_current_user.able_to?(:publish_content)), :tabindex => next_tabindex %>
   </div>
 </div>
 
 <div class="checkbox_group fields no_check_all">
   <div class="checkbox_fields">
     <%= f.label :archived, "Archived?" %>
-    <%= f.check_box :archived, :disabled => (!current_user.able_to?(:publish_content)), :tabindex => next_tabindex %>
+    <%= f.check_box :archived, :disabled => (!cms_current_user.able_to?(:publish_content)), :tabindex => next_tabindex %>
   </div>
 </div>
 

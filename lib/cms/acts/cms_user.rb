@@ -14,7 +14,7 @@ module Cms
     # Could be used it with authlogic to grant logins and permissions to
     # everyone in a custom model.  It's not quite a drop in authentication
     # schema, but it does make it easier to wire up just about any model to be
-    # the current_user on CMS pages.
+    # the cms_current_user on CMS pages.
     module CmsUser
       def self.included(model_class)
         model_class.extend(MacroMethods)

@@ -32,7 +32,7 @@ module Cms
     # @return [String] The HTML content for the container.
     def container(name)
       content = content_for(name)
-      if logged_in? && @page && @mode == "edit" && current_user.able_to_edit?(@page)
+      if logged_in? && @page && @mode == "edit" && cms_current_user.able_to_edit?(@page)
         render :partial => 'cms/pages/edit_container', :locals => {:name => name, :content => content}
       else
         content
@@ -116,9 +116,9 @@ HTML
       end
     end
 
-    # Determines if the current_user is able to do specific permissions.
+    # Determines if the cms_current_user is able to do specific permissions.
     def able_to?(*perms, &block)
-      block.call if current_user.able_to?(*perms)
+      block.call if cms_current_user.able_to?(*perms)
       return ''
     end
 

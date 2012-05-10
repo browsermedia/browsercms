@@ -10,15 +10,15 @@ module Cms
     # * If the user can edit/publish it
     def block_row_tag(block)
       cname = class_name_for(block)
-      can_modify = current_user.able_to_modify?(block)
+      can_modify = cms_current_user.able_to_modify?(block)
 
       options = {
           :id => "#{cname}_#{block.id}",
           :class => cname
       }
       options[:class] += block.class.publishable? && !block.published? ? ' draft' : ' published'
-      options[:class] += ' non-editable' unless can_modify && current_user.able_to?(:edit_content)
-      options[:class] += ' non-publishable' unless can_modify && current_user.able_to?(:publish_content)
+      options[:class] += ' non-editable' unless can_modify && cms_current_user.able_to?(:edit_content)
+      options[:class] += ' non-publishable' unless can_modify && cms_current_user.able_to?(:publish_content)
       tag "tr", options, true
     end
 
@@ -28,7 +28,7 @@ module Cms
     # We use 'data-' elements here to avoid duplication of path calculations.
     def content_block_tr_tag(block)
       cname = class_name_for(block)
-      can_modify = current_user.able_to_modify?(block)
+      can_modify = cms_current_user.able_to_modify?(block)
 
       options = {}
       data = options[:data] = {}
@@ -36,8 +36,8 @@ module Cms
 
       options[:id] = "#{cname}_#{block.id}"
       options[:class] = [cname]
-      options[:class] << 'non-editable' unless can_modify && current_user.able_to?(:edit_content)
-      options[:class] << 'non-publishable' unless can_modify && current_user.able_to?(:publish_content)
+      options[:class] << 'non-editable' unless can_modify && cms_current_user.able_to?(:edit_content)
+      options[:class] << 'non-publishable' unless can_modify && cms_current_user.able_to?(:publish_content)
       options['data-new_path'] = url_for(new_block_path(block))
       options['data-view_path'] = url_for(block_path(block))
       options['data-edit_path'] = url_for(block_path(block, :edit))

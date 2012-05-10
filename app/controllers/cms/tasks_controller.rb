@@ -5,12 +5,12 @@ class TasksController < Cms::BaseController
   before_filter :load_page, :only => [:new, :create]
   
   def new
-    @task = @page.tasks.build(:assigned_by => current_user)
+    @task = @page.tasks.build(:assigned_by => cms_current_user)
   end
   
   def create
     @task = @page.tasks.build(params[:task])
-    @task.assigned_by = current_user
+    @task.assigned_by = cms_current_user
     if @task.save
       flash[:notice] = "Page was assigned to '#{@task.assigned_to.login}'"
       redirect_to @page.path
@@ -22,7 +22,7 @@ class TasksController < Cms::BaseController
   def complete
     if params[:task_ids]
       Task.all(:conditions => ["id in (?)", params[:task_ids]]).each do |t|
-        if t.assigned_to == current_user
+        if t.assigned_to == cms_current_user
           t.mark_as_complete!
         end
       end
@@ -30,7 +30,7 @@ class TasksController < Cms::BaseController
       redirect_to dashboard_path
     else
       @task = Task.find(params[:id])
-      if @task.assigned_to == current_user
+      if @task.assigned_to == cms_current_user
         if @task.mark_as_complete!
           flash[:notice] = "Task was marked as complete"
         end

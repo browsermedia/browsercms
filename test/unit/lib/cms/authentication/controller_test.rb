@@ -13,7 +13,7 @@ class ControllerTest < ActiveSupport::TestCase
     c = ProtectedController.new
     c.expects(:session).returns({})
 
-    c.send(:current_user=, u)
+    c.send(:cms_current_user=, u)
 
     assert_equal u, Cms::User.current
   end

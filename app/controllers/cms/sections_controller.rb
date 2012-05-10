@@ -23,7 +23,7 @@ class Cms::SectionsController < Cms::BaseController
   def create
     @section = Cms::Section.new(params[:section])
     @section.parent = @parent
-    @section.groups = @section.parent.groups unless current_user.able_to?(:administrate)
+    @section.groups = @section.parent.groups unless cms_current_user.able_to?(:administrate)
     if @section.save
       flash[:notice] = "Section '#{@section.name}' was created"
       redirect_to @section
@@ -36,7 +36,7 @@ class Cms::SectionsController < Cms::BaseController
   end
   
   def update
-    params[:section].delete('group_ids') if params[:section] &&  !current_user.able_to?(:administrate)
+    params[:section].delete('group_ids') if params[:section] &&  !cms_current_user.able_to?(:administrate)
     @section.attributes = params[:section]
     if @section.save
       flash[:notice] = "Section '#{@section.name}' was updated"
@@ -80,12 +80,12 @@ class Cms::SectionsController < Cms::BaseController
   protected
     def load_parent
       @parent = Cms::Section.find(params[:section_id])
-      raise Cms::Errors::AccessDenied unless current_user.able_to_edit?(@parent)
+      raise Cms::Errors::AccessDenied unless cms_current_user.able_to_edit?(@parent)
     end
 
     def load_section
       @section = Cms::Section.find(params[:id])
-      raise Cms::Errors::AccessDenied unless current_user.able_to_edit?(@section)
+      raise Cms::Errors::AccessDenied unless cms_current_user.able_to_edit?(@section)
     end
 
     def handle_file_browser_upload

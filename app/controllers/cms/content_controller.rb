@@ -70,7 +70,7 @@ class ContentController < Cms::ApplicationController
       logger.info "Caching is enabled"
       if cms_site?
         logger.info "This is the cms site"
-        if current_user.able_to?(:edit_content, :publish_content, :administrate)
+        if cms_current_user.able_to?(:edit_content, :publish_content, :administrate)
           logger.info "User has access to cms"
           @show_toolbar = true
         else
@@ -82,7 +82,7 @@ class ContentController < Cms::ApplicationController
       end
     else
       logger.info "Caching is disabled"
-      if current_user.able_to?(:edit_content, :publish_content, :administrate)
+      if cms_current_user.able_to?(:edit_content, :publish_content, :administrate)
         @show_toolbar = true
       end
     end
@@ -110,7 +110,7 @@ class ContentController < Cms::ApplicationController
       #Check access to file
       @attachment = Attachment.find_live_by_file_path(request.fullpath)
       if @attachment
-        raise Cms::Errors::AccessDenied unless current_user.able_to_view?(@attachment)
+        raise Cms::Errors::AccessDenied unless cms_current_user.able_to_view?(@attachment)
 
         #Construct a path to where this file would be if it were cached
         @file = @attachment.full_file_location
@@ -131,7 +131,7 @@ class ContentController < Cms::ApplicationController
 
   def check_access_to_page
     set_page_mode
-    if current_user.able_to?(:edit_content, :publish_content, :administrate)
+    if cms_current_user.able_to?(:edit_content, :publish_content, :administrate)
       logger.debug "Displaying draft version of page"
       if page = Page.first(:conditions => {:path => @path})
         @page = page.as_of_draft_version
@@ -146,7 +146,7 @@ class ContentController < Cms::ApplicationController
       page_not_found unless (@page && !@page.archived?)
     end
 
-    unless current_user.able_to_view?(@page)
+    unless cms_current_user.able_to_view?(@page)
       store_location
       raise Cms::Errors::AccessDenied
     end
@@ -174,7 +174,7 @@ class ContentController < Cms::ApplicationController
   end
 
   def set_page_mode
-    @mode = @show_toolbar && current_user.able_to?(:edit_content) ? (params[:mode] || session[:page_mode] || "edit") : "view"
+    @mode = @show_toolbar && cms_current_user.able_to?(:edit_content) ? (params[:mode] || session[:page_mode] || "edit") : "view"
     session[:page_mode] = @mode      
   end
   

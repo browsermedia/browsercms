@@ -8,7 +8,7 @@
         <%= able_to?(:administrate) do %><li><%= link_to image_tag("cms/nav_admin#{'_on' if tab == :administration}.gif", :id => 'nav_admin_img'), cms.administration_path, :target => "_top" %></li><% end %>
       </ul>
       <ul id="userlinks">
-	<li id="user_info"><a href="<%= current_user.able_to?(:administrate) ? cms.edit_user_path(current_user) : cms.user_path(current_user) %>" target="_top"><%= image_tag "cms/icons/user.png" %> <%= current_user.full_name %></a></li>
+	<li id="user_info"><a href="<%= cms_current_user.able_to?(:administrate) ? cms.edit_user_path(cms_current_user) : cms.user_path(cms_current_user) %>" target="_top"><%= image_tag "cms/icons/user.png" %> <%= cms_current_user.full_name %></a></li>
       	<li><%= link_to "Logout", cms.logout_path, :class => "http_delete", :target => "_top" %></li>
       </ul>
       <% flash_class, flash_message = flash.to_a.first %>

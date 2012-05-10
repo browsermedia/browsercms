@@ -13,7 +13,7 @@ class PermissionsForContentBlockControllerTest < ActionController::TestCase
 
     login_as_cms_admin
     @user = Cms::User.first
-    @controller.stubs(:current_user).returns(@user)
+    @controller.stubs(:cms_current_user).returns(@user)
     @controller.stubs(:render)
     @controller.stubs(:model_class).returns(Cms::SampleBlock)
     @controller.stubs(:set_default_category)

@@ -15,7 +15,7 @@
   node_type_class = node_type == "section" && node.root? ? 'root' : ''
 %>
 <div class="roundedcorners">
-  <table class="section_node <%= node_type %> <%= "movable" if current_user.able_to?(:publish_content) %>" width="100%" cellspacing="0" cellpadding="0">
+  <table class="section_node <%= node_type %> <%= "movable" if cms_current_user.able_to?(:publish_content) %>" width="100%" cellspacing="0" cellpadding="0">
     <tr><td colspan="4" class="drop-before"></td></tr>
     <tr<%= ' class="doubled"' if access_icon && hidden %>>
       <td id="<%= node_type %>_<%= node.id %>" class="<%= node_type_class %> <%= node_type %> node <%= editable_class %>">

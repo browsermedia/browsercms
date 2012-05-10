@@ -9,7 +9,7 @@
 <table id="blocks" class="data cms-content-table"
        data-content_type="<%= content_type.content_block_type %>"
        data-versioned="<%= content_type.model_class.versioned? %>"
-       data-can_publish="<%= current_user.able_to?(:publish_content) %>"
+       data-can_publish="<%= cms_current_user.able_to?(:publish_content) %>"
        data-plural_title="<%= content_type.display_name_plural %>"
 >
   <thead>

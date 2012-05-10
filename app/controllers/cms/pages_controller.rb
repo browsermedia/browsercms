@@ -64,7 +64,7 @@ class PagesController < Cms::BaseController
     define_method status do
       if params[:page_ids]
         @pages = params[:page_ids].map { |id| Page.find(id) }
-        raise Cms::Errors::AccessDenied unless @pages.all? { |page| current_user.able_to_edit?(page) }
+        raise Cms::Errors::AccessDenied unless @pages.all? { |page| cms_current_user.able_to_edit?(page) }
         @pages.each { |page| page.send(status) }
         flash[:notice] = "#{params[:page_ids].size} pages #{verb}"
         redirect_to dashboard_url
@@ -100,7 +100,7 @@ class PagesController < Cms::BaseController
  
   private
     def strip_publish_params
-      unless current_user.able_to?(:publish_content)
+      unless cms_current_user.able_to?(:publish_content)
         params[:page].delete :hidden
         params[:page].delete :archived
       end
@@ -108,7 +108,7 @@ class PagesController < Cms::BaseController
 
     def load_page
       @page = Page.find(params[:id])
-      raise Cms::Errors::AccessDenied unless current_user.able_to_edit?(@page)
+      raise Cms::Errors::AccessDenied unless cms_current_user.able_to_edit?(@page)
     end
    
     def load_draft_page
@@ -118,7 +118,7 @@ class PagesController < Cms::BaseController
  
     def load_section
       @section = Section.find(params[:section_id])
-      raise Cms::Errors::AccessDenied unless current_user.able_to_edit?(@section)
+      raise Cms::Errors::AccessDenied unless cms_current_user.able_to_edit?(@section)
     end
    
     def hide_toolbar
