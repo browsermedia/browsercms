@@ -1,7 +1,7 @@
 Given /^the following page template exists:$/ do |table|
   @page_templates =[]
   table.hashes.each do |r|
-    @page_templates << Factory(:page_template, r)
+    @page_templates << FactoryGirl.create(:page_template, r)
   end
 end
 

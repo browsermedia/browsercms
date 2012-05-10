@@ -43,6 +43,23 @@ Notable Fixes
 * [#494] Speed up Cucumber Scenarios
 * [#492] Upgrade to be Rails 3.2.x compatibile
 
+v3.4.2
+======
+
+Maintenance Release
+
+* [#502] Fix issue where Page templates/partials could not be editted through the UI
+* [#491] Fix issue where custom blocks couldn't be viewed in page edit mode
+* [#470] Fix issue where loading throws errors on some OS's (Ubuntu)
+
+
+v3.4.1
+======
+
+Maintenance Release
+
+* [#490] Fix issue where Javascript errors occured when in Page edit mode
+
 v3.4.0
 ======
 

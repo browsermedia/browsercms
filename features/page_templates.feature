@@ -46,3 +46,4 @@ Feature: Page Templates
     Then the response should be 200
     And the page header should be "List Page Templates"
     And I should not see the "hello" template in the table
+

@@ -23,4 +23,5 @@ doc/api
 test/dummy/db/backups/*
 test/dummy/public/cache/*
 test/dummy/.sass-cache
+.sass-cache
 db/backups

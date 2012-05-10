@@ -16,6 +16,19 @@ module Cms
       end
     end
 
+    # Returns a path to sort a table of Content Blocks by a given parameter. Retains other relevant parameters (like search criteria).
+    #
+    # @param [Cms::ContentType] content_type
+    # @param [String] column_to_sort The name of the column to sort on.
+    def cms_sortable_column_path(content_type, column_to_sort)
+      filtered_params = params.clone
+      filtered_params.delete(:action)
+      filtered_params.delete(:controller)
+      filtered_params.merge!(:order => determine_order(filtered_params[:order], column_to_sort))
+      cms_connectable_path(content_type.model_class, filtered_params)
+    end
+
+    # @deprecated Use cms_connectable_path instead.
     def cms_index_path_for(resource, options={})
       polymorphic_path(build_path_for(resource), options)
     end

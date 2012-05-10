@@ -6,7 +6,7 @@ end
 
 Given /^a product "([^"]*)" has been added to a page$/ do |name|
   @product = Product.create!(:name => name)
-  page = Factory(:public_page)
+  page = FactoryGirl.create(:public_page)
   page.add_content(@product)
   page.publish!
 end
@@ -16,19 +16,15 @@ When /^I view that product$/ do
 end
 
 Given /^html with "([^"]*)" has been added to a page$/ do |body|
-  @block = Factory(:html_block, :content => body)
-  page = Factory(:public_page)
+  @block = FactoryGirl.create(:html_block, :content => body)
+  page = FactoryGirl.create(:public_page)
   page.add_content(@block)
   page.publish!
 end
 
-When /^I view that block/ do
-  visit "/cms/html_blocks/#{@block.id}"
-end
-
 Given /^portlet named "([^"]*)" has been added to a page$/ do |name|
-  @subject = Factory(:portlet, :name=>name)
-  page = Factory(:public_page)
+  @subject = FactoryGirl.create(:portlet, :name=>name)
+  page = FactoryGirl.create(:public_page)
   page.add_content(@subject)
   page.publish!
 end
