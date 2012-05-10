@@ -22,3 +22,27 @@ Feature: Page Templates
     Then I should see "Displaying 1 - 15 of 20"
     When I click on "next_page_link"
     Then I should see "Displaying 16 - 20 of 20"
+
+  Scenario: Edit a template
+    Given the following page template exists:
+      | name  |
+      | hello |
+    When I edit that page template
+    Then the response should be 200
+    And the page header should be "Edit 'hello' Cms/Page Template"
+    When I fill in "Name" with "hello_world"
+    And I press "Save"
+    Then the response should be 200
+    And the page header should be "List Page Templates"
+    And I should see the following content:
+      | hello_world |
+
+
+  Scenario: Delete a template
+    Given the following page template exists:
+      | name  |
+      | hello |
+    When I delete that page template
+    Then the response should be 200
+    And the page header should be "List Page Templates"
+    And I should not see the "hello" template in the table

@@ -16,6 +16,19 @@ module Cms
       end
     end
 
+    # Returns a path to sort a table of Content Blocks by a given parameter. Retains other relevant parameters (like search criteria).
+    #
+    # @param [Cms::ContentType] content_type
+    # @param [String] column_to_sort The name of the column to sort on.
+    def cms_sortable_column_path(content_type, column_to_sort)
+      filtered_params = params.clone
+      filtered_params.delete(:action)
+      filtered_params.delete(:controller)
+      filtered_params.merge!(:order => determine_order(filtered_params[:order], column_to_sort))
+      cms_connectable_path(content_type.model_class, filtered_params)
+    end
+
+    # @deprecated Use cms_connectable_path instead.
     def cms_index_path_for(resource, options={})
       polymorphic_path(build_path_for(resource), options)
     end
@@ -38,7 +51,7 @@ module Cms
       if Portlet === connectable
         cms.portlet_path(connectable)
       else
-        connectable
+        polymorphic_path(build_path_for(connectable), options)
       end
     end
 
@@ -49,7 +62,26 @@ module Cms
       if Portlet === connectable
         edit_portlet_path(connectable, options)
       else
-        polymorphic_path([:edit, connectable], options)
+        edit_polymorphic_path(build_path_for(connectable), options)
+      end
+    end
+
+    def link_to_usages(block)
+      count = block.connected_pages.count
+      if count > 0
+        # Would love a cleaner solution to this problem, see http://stackoverflow.com/questions/702728
+        path = if Portlet === block
+                 usages_portlet_path(block)
+               else
+                 p = []
+                 p << engine_for(block)
+                 p << :usages
+                 p.concat path_elements_for(block)
+                 p
+               end
+        link_to count, path, :id => block.id, :block_type => block.content_block_type
+      else
+        count
       end
     end
 

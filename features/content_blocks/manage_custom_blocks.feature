@@ -39,6 +39,25 @@ Feature: Manage Content Blocks
     When I delete "Kindle Fire"
     Then I should be redirected to /cms/products
 
+  Scenario: Add to a page
+    When I visit /
+    And I turn on edit mode for /
+    And I add content to the main area of the page
+    And I click on "Product"
+    And I fill in "Name" with "iPhone"
+    And I click on "Save"
+    Then the response should be 200
+    And I should see "Name: iPhone"
+
+  Scenario: View Usages
+    Given a product "iPhone" has been added to a page
+    When I view that product
+    Then the response should be 200
+    And the page header should be "View Product 'iPhone'"
+    And I should see "Used on: 1 page"
+
+
+
 
 
 

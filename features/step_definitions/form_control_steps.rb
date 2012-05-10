@@ -94,7 +94,6 @@ end
 
 When /^I view that block$/ do
   path = "/cms/#{@block.class.path_name}/#{@block.id}"
-  assert_equal "/cms/catalogs/1", path
   visit path
 end
 

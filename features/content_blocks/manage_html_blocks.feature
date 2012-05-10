@@ -37,5 +37,11 @@ Feature: Manage Html Blocks
       | published               |
       | View Text 'Hello World' |
 
+  Scenario: View Usages
+    Given html with "Hello World" has been added to a page
+    When I view that block
+    Then the response should be 200
+    And the page header should be "View Text"
+    And I should see "Used on: 1 page"
     
   

@@ -13,17 +13,8 @@ class Cms::PathHelperTest < ActionController::TestCase
   def teardown
   end
 
-  def test_edit_cms_connectable_path_for_html
-    block = Cms::HtmlBlock.create!(:name=>"Testing")
-    expected_path = "/cms/html_blocks/#{block.id}/edit"
-    self.expects(:polymorphic_path).with([:edit, block], {}).returns(expected_path)
-
-    path = edit_cms_connectable_path(block)
-
-    assert_equal expected_path, path
-  end
-
-
+  # These tests are probably redundant now since we have Scenario coverage.
+  # However, it will be easier to merge forward with an editted file rather than a deleted one.
   def test_edit_cms_connectable_path_for_portlets
     portlet = DynamicPortlet.create(:name => "Testing Route generation")
     expected_path = "/cms/portlets/#{portlet.id}/edit"
@@ -32,17 +23,6 @@ class Cms::PathHelperTest < ActionController::TestCase
     path = edit_cms_connectable_path(portlet)
 
     assert_equal(expected_path, path)
-  end
-
-  def test_edit_cms_connectable_path_includes_options_for_html
-    block = Cms::HtmlBlock.create!(:name=>"Testing")
-    expected_path = "/cms/html_blocks/#{block.id}/edit?_redirect_to=some_path"
-    self.expects(:polymorphic_path).with([:edit, block], {:_redirect_to => "some_path"}).returns(expected_path)
-
-    path = edit_cms_connectable_path(block, :_redirect_to => "some_path")
-
-    assert_equal expected_path, path
-
   end
 
   def test_edit_cms_connectable_path_includes_options_for_portlets
