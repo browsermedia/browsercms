@@ -1,6 +1,6 @@
 Tasks:
 
-* Pull 3.3.x and 3.4.x forward.
+* Pull 3.4.x forward.
 
 # 3.5.x Goals
 
