@@ -1,9 +1,10 @@
 Tasks:
 
-* Heroku - Make BrowserCMS work on the platform.
+* Pull 3.3.x and 3.4.x forward.
 
 # 3.5.x Goals
 
+* Heroku - Make BrowserCMS work on the platform.
 * Faster Files - Take advantage of X-Sendfile (if possible) to speed up sending uploaded CMS files.
 * [IMPROVE] The error message for a duplicate path for Fileblocks is not clear.
 * Browser Compatibility Testing - Ensure compatibility with latest versions of Chrome/IE 9/Firefox/Safari. IE 9 probably needs the most works.
