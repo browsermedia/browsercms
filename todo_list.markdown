@@ -1,7 +1,5 @@
 Tasks:
 
-* Review Pull requests
-
 # 3.5.x Goals
 
 * Heroku - Make BrowserCMS work on the platform.
