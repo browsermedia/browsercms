@@ -14,9 +14,8 @@ module Cms
           extend ClassMethods
         
           #This is in a method to allow classes to override it
-          scope :search, lambda{|search_params| 
-            term = search_params.is_a?(Hash) ? search_params[:term] : search_params  
-            order = search_params.is_a?(Hash) && search_params[:order] ? search_params[:order] : default_order_for_search
+          scope :search, lambda{|search_params|
+            term = search_params.is_a?(Hash) ? search_params[:term] : search_params
             conditions = []
             unless term.blank?
               searchable_columns.each do |c|
@@ -31,17 +30,13 @@ module Cms
             end
             scope = {}
             scope[:conditions] = conditions if conditions
-            scope[:order] = order if order
-            scope                      
+            scope
           }
         end
       end
       module ClassMethods
         def searchable_columns
           @searchable_columns
-        end
-        def default_order_for_search
-          "#{table_name}.#{searchable_columns.first}"
         end
       end
     end

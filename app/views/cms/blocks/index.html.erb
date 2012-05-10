@@ -26,8 +26,7 @@
         <th<%= attrs %>>
           <div class="dividers">
             <% if column[:order] %>
-              <%= link_to column[:label], cms_index_path_for(content_type, 
-                :order => determine_order(params[:order], column[:order])) %>
+              <%= link_to column[:label], params.merge(:order => determine_order(params[:order], column[:order])) %>
             <% else %>
               <%= column[:label] %>
             <% end %>

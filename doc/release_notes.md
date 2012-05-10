@@ -98,6 +98,14 @@ Other Notable Fixes
 
 See the [detailed changelog](https://github.com/browsermedia/browsercms/compare/v3.3.3...v3.4.0) for a complete list of changes, as well as the [Closed Tickets for 3.4.0](https://github.com/browsermedia/browsercms/issues?milestone=1&state=closed) for a complete list of closed items.
 
+v3.3.4
+======
+
+Maintenance release
+
+* [#503] - Searching and sort content blocks works
+* [#472] - Sorting content blocks works
+
 v3.3.3
 ======
 

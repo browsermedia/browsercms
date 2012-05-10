@@ -129,6 +129,7 @@ module Cms
       options[:page] = params[:page]
       options[:order] = model_class.default_order if model_class.respond_to?(:default_order)
       options[:order] = params[:order] unless params[:order].blank?
+
       scope = model_class.respond_to?(:list) ? model_class.list : model_class
       @blocks = scope.searchable? ? scope.search(params[:search]).paginate(options) : scope.paginate(options)
       check_permissions

@@ -43,9 +43,9 @@ class SearchableContentBlockTest < ActiveSupport::TestCase
 
     assert SearchableContentBlock.searchable?
     assert_equal [@a1, @a2], SearchableContentBlock.search("a").all
-    assert_equal [@a2, @a1], SearchableContentBlock.search(:term => "a", :order => "id desc").all
-    assert_equal [@a2, @a1], SearchableContentBlock.created_after(1.hour.ago).search(:term => "a", :order => "id desc").all
-    assert_equal [@a2, @a1], @parent.children.created_after(1.hour.ago).search(:term => "a", :order => "id desc").all
+    assert_equal [@a2, @a1], SearchableContentBlock.search(:term => "a").order("id desc").all
+    assert_equal [@a2, @a1], SearchableContentBlock.created_after(1.hour.ago).search(:term => "a").order("id desc").all
+    assert_equal [@a2, @a1], @parent.children.created_after(1.hour.ago).search(:term => "a").order("id desc").all
   end
 end
 
