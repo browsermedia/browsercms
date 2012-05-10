@@ -27,7 +27,7 @@ Gem::Specification.new do |s|
   s.add_dependency "sass-rails"
   s.add_dependency "ancestry", "~> 1.2.4"
   s.add_dependency "ckeditor_rails", "~> 3.6.2.2"
-  s.add_dependency "jquery-rails", "~> 1.0.14"
+  s.add_dependency "jquery-rails", "~> 2.0"
   s.add_dependency("paperclip", '~> 2.3.5')
 
   # Required only for bcms-upgrade
