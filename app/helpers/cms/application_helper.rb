@@ -146,14 +146,13 @@ LBW
       if collection.blank?
         content_tag(:div, "No Content", :class => "pagination")
       else
-        collection_path = "#{collection_name}_path"
         render :partial => "cms/shared/pagination", :locals => {
             :collection         => collection,
-            :first_page_path    => send(collection_path, {:page => 1}.merge(options)),
-            :previous_page_path => send(collection_path, {:page => collection.previous_page ? collection.previous_page : 1}.merge(options)),
-            :current_page_path  => send(collection_path, options),
-            :next_page_path     => send(collection_path, {:page => collection.next_page ? collection.next_page : collection.current_page}.merge(options)),
-            :last_page_path     => send(collection_path, {:page => collection.total_pages}.merge(options))
+            :first_page_path    => polymorphic_path(build_path_for(collection_name), {:page => 1}.merge(options)),
+            :previous_page_path => polymorphic_path(build_path_for(collection_name), {:page => collection.previous_page ? collection.previous_page : 1}.merge(options)),
+            :current_page_path  => polymorphic_path(build_path_for(collection_name), options),
+            :next_page_path     => polymorphic_path(build_path_for(collection_name), {:page => collection.next_page ? collection.next_page : collection.current_page}.merge(options)),
+            :last_page_path     => polymorphic_path(build_path_for(collection_name), {:page => collection.total_pages}.merge(options))
         }
       end
     end
