@@ -29,6 +29,13 @@ Feature: Manage Users
       | testuser | different |
     Then I should see a page titled "Home"
 
+  Scenario: Multiple Pages of Users
+    Given there are 20 users
+    When I am at /cms/users
+    Then I should see "Displaying 1 - 10 of 20"
+    When I click on "next_page_link"
+    Then I should see "Displaying 11 - 20 of 20"
+
 
 
 

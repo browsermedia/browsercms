@@ -50,6 +50,6 @@
 <% if @views.size == 0 && params[:key_word]%>
   <div class="pagination">No results found for '<%= params[:key_word] %>'</div>
 <% elsif @views.total_pages > 1 %>
-  <%= render_pagination @views, dynamic_view_type.resource_name %>
+  <%= render_pagination @views, dynamic_view_type %>
 <% end %>
 

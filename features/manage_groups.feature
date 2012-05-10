@@ -30,3 +30,10 @@ Feature: Manage Groups
     Then I should see "Authenticated Users"
     Then I click on "Authenticated Users"
     And the new group should have neither edit nor publish permissions
+
+  Scenario: Multiple Pages of Groups
+    Given there are 20 groups
+    When I am at /cms/groups
+    Then I should see "Displaying 1 - 15 of 20"
+    When I click on "next_page_link"
+    Then I should see "Displaying 16 - 20 of 20"

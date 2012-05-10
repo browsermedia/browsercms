@@ -27,6 +27,28 @@ class BcmsParts
     include Cms::EngineHelper
   end
 end
+
+module ExpectedMockViews
+  def view_for_cms_engine
+    mock_view.expects(:cms).returns(:cms_engine)
+    mock_view
+  end
+
+  def view_for_main_app
+    mock_view.expects(:main_app).returns(:main_app)
+    mock_view
+  end
+
+  def view_for_bcms_widgets_engine
+    mock_view.expects(:bcms_widgets_engine).returns(:bcms_widgets_engine)
+    mock_view
+  end
+
+  def mock_view
+    return @view if @view
+    @view = stub()
+  end
+end
 module Cms
   class EngineHelperTest < ActiveSupport::TestCase
 
@@ -115,5 +137,64 @@ module Cms
       BcmsWidgets::ContentBlock.extend EngineHelper
       assert_equal [BcmsWidgets::ContentBlock], BcmsWidgets::ContentBlock.path_elements
     end
+
   end
+
+
+  class ContentBlocksEnginePathsTest < ActiveSupport::TestCase
+    include ExpectedMockViews
+
+    def setup
+      @pathbuilder = EngineAwarePathBuilder.new(Cms::CoreContentBlock)
+    end
+
+    test "subject_class" do
+      assert_equal Cms::CoreContentBlock, @pathbuilder.subject_class
+    end
+
+    test "engine_name" do
+      assert_equal "cms", @pathbuilder.engine_name
+    end
+
+    test "build for Core Cms class" do
+      assert_equal [:cms_engine, Cms::CoreContentBlock], @pathbuilder.build(view_for_cms_engine)
+    end
+
+
+  end
+
+  class PathsWithContentTypeTest < ActiveSupport::TestCase
+    include ExpectedMockViews
+
+    def setup
+      ct = build(:content_type, :name => "Cms::CoreContentBlock")
+      @pathbuilder = EngineAwarePathBuilder.new(ct)
+    end
+
+    test "build for contenttype" do
+      assert_equal [:cms_engine, Cms::CoreContentBlock], @pathbuilder.build(view_for_cms_engine)
+    end
+  end
+
+  class EngineAwarePathsTest < ActiveSupport::TestCase
+    include ExpectedMockViews
+    test "build for custom block class" do
+      pathbuilder = EngineAwarePathBuilder.new(MainAppThing)
+      assert_equal [:main_app, "cms", MainAppThing], pathbuilder.build(view_for_main_app)
+    end
+
+    test "paths for block from a module" do
+      pathbuilder = EngineAwarePathBuilder.new(BcmsWidgets::ContentBlock)
+      assert_equal [:bcms_widgets_engine, BcmsWidgets::ContentBlock], pathbuilder.build(view_for_bcms_widgets_engine)
+    end
+
+    test "build for model" do
+      block = Cms::CoreContentBlock.new
+      pathbuilder = EngineAwarePathBuilder.new(block)
+      assert_equal [:cms_engine, block], pathbuilder.build(view_for_cms_engine)
+    end
+
+
+  end
+
 end

@@ -97,3 +97,10 @@ Feature: Portlets
     Then the response should be 200
     And the page header should be "View Portlet 'Hello World'"
     And I should see "Used on: 1 page"
+
+  Scenario: Multiple Pages
+    Given there are multiple pages of portlets in the Content Library
+    When I request /cms/portlets
+    Then I should see the paging controls
+    And I click on "next_page_link"
+    Then I should see the second page of content

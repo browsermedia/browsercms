@@ -49,5 +49,5 @@
   </div>
 </div>
 <% if @taggings.total_pages > 1 %>
-  <%= render_pagination @taggings, :tag, {:id => @content_block} %>
+  <%= render_pagination @taggings, Cms::Tag, {:id => @content_block} %>
 <% end %>

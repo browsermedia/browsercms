@@ -9,9 +9,9 @@ module Cms
     end
 
     def searchable_sections(selected = nil)
-      root    = Section.root.first
+      root = Section.root.first
       options = [['All sections', 'all'], [root.name, root.id]]
-      root.master_section_list.each { |s|  options << [s.full_path, s.id] }
+      root.master_section_list.each { |s| options << [s.full_path, s.id] }
       options_for_select(options, selected.to_i)
     end
 
@@ -24,7 +24,7 @@ module Cms
       text = select_tag(:version,
                         options_for_select(page.versions.all(:order => "version desc").map { |r|
                           ["v#{r.version}: #{r.version_comment} by #{r.updated_by.login} at #{time_on_date(r.updated_at)}", r.version]
-                        },                 page.version),
+                        }, page.version),
                         :onchange => 'this.form.submit(); return false')
       text << javascript_tag("$('version').selectedIndex = 0") if page.live?
       text
@@ -54,7 +54,7 @@ module Cms
     #
     # @param [String] selector The CSS selector for the checkboxes that should be mass checked/unchecked.
     def check_uncheck_tag(selector)
-      check_id   = to_id(selector, "check")
+      check_id = to_id(selector, "check")
       uncheck_id = to_id(selector, "uncheck")
       content_for :html_head do
         html = <<HTML
@@ -71,7 +71,7 @@ HTML
         javascript_tag html
       end
 
-      "#{link_to "Check All", '#', :id=>check_id}, #{link_to "Uncheck All", '#', :id=>uncheck_id}".html_safe
+      "#{link_to "Check All", '#', :id => check_id}, #{link_to "Uncheck All", '#', :id => uncheck_id}".html_safe
     end
 
     # @deprecated Use check_uncheck_tag instead. Retained for backwards compatibility w/ CMS implementations.
@@ -87,7 +87,7 @@ jQuery(function($) {
 HTML
         javascript_tag html
       end
-      link_to name, '#', :id=>id
+      link_to name, '#', :id => id
     end
 
     # @deprecated Use check_uncheck_tag instead. Retained for backwards compatibility w/ CMS implementations.
@@ -103,7 +103,7 @@ jQuery(function($) {
 HTML
         javascript_tag html
       end
-      link_to name, '#', :id=>id
+      link_to name, '#', :id => id
     end
 
     def span_tag(content)
@@ -117,7 +117,7 @@ HTML
     <div class="lt_button_content">
       <span>#{ content }</span>
     </div>
-    #{image_tag "cms/lt_button_r.gif", :style=>"margin-right: 10px;"}
+    #{image_tag "cms/lt_button_r.gif", :style => "margin-right: 10px;"}
   </div>
 LBW
       button.html_safe
@@ -138,21 +138,26 @@ LBW
     # Fetches a list of categories for a cms_drop_down. Will prompt users to create Categories/Categories types if the proper ones don't exist.
     def categories_for(category_type_name, order="name")
       cat_type = CategoryType.named(category_type_name).first
-      categories = cat_type ? cat_type.category_list(order) : [Category.new(:name=>"-- You must first create a 'Category Type' named '#{category_type_name}'")]
-      categories.empty? ? [Category.new(:name=>"-- You must first create a Category with a Category Type of '#{category_type_name}'.")]: categories
+      categories = cat_type ? cat_type.category_list(order) : [Category.new(:name => "-- You must first create a 'Category Type' named '#{category_type_name}'")]
+      categories.empty? ? [Category.new(:name => "-- You must first create a Category with a Category Type of '#{category_type_name}'.")] : categories
     end
 
-    def render_pagination(collection, collection_name, options={})
+    # Generates the HTML to render a paging control, if there is more than one page to be shown.
+    #
+    # @param [Array] collection List of content to be shown
+    # @param [Cms::ContentType] content_type The content type of the collection (used to generate links to Previous/Next)
+    # @param [Hash] options
+    def render_pagination(collection, content_type, options={})
       if collection.blank?
         content_tag(:div, "No Content", :class => "pagination")
       else
         render :partial => "cms/shared/pagination", :locals => {
-            :collection         => collection,
-            :first_page_path    => polymorphic_path(build_path_for(collection_name), {:page => 1}.merge(options)),
-            :previous_page_path => polymorphic_path(build_path_for(collection_name), {:page => collection.previous_page ? collection.previous_page : 1}.merge(options)),
-            :current_page_path  => polymorphic_path(build_path_for(collection_name), options),
-            :next_page_path     => polymorphic_path(build_path_for(collection_name), {:page => collection.next_page ? collection.next_page : collection.current_page}.merge(options)),
-            :last_page_path     => polymorphic_path(build_path_for(collection_name), {:page => collection.total_pages}.merge(options))
+            :collection => collection,
+            :first_page_path => cms_connectable_path(content_type, {:page => 1}.merge(options)),
+            :previous_page_path => cms_connectable_path(content_type, {:page => collection.previous_page ? collection.previous_page : 1}.merge(options)),
+            :current_page_path => cms_connectable_path(content_type, options),
+            :next_page_path => cms_connectable_path(content_type, {:page => collection.next_page ? collection.next_page : collection.current_page}.merge(options)),
+            :last_page_path => cms_connectable_path(content_type, {:page => collection.total_pages}.merge(options))
         }
       end
     end
@@ -221,7 +226,7 @@ LBW
     #
     # @param [Path] The path or URL to link_to. Takes same types at url_for or link_to.
     def add_button(path, options={})
-      classes      = "button"
+      classes = "button"
       span_options = {:class => classes}
       link_to span_tag("&nbsp;Add&nbsp;".html_safe), path, span_options
     end

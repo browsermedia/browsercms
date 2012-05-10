@@ -47,6 +47,10 @@ module Cms
       send("new_#{resource_collection_name(resource).underscore.gsub('/', '_')}_url", options)
     end
 
+    # @param [Class, String] connectable The model class (i.e. HtmlBlock) or plural collection name (html_blocks) to link to
+    # @param [Hash] options Passed to polymorphic_path
+    #
+    # @return [String] path suitable to give to link_to
     def cms_connectable_path(connectable, options={})
       if Portlet === connectable
         cms.portlet_path(connectable)
@@ -98,11 +102,9 @@ module Cms
 
     private
 
+
     def build_path_for(model_or_class_or_content_type)
-      path = []
-      path << engine_for(model_or_class_or_content_type)
-      path.concat path_elements_for(model_or_class_or_content_type)
-      path
+      Cms::EngineAwarePathBuilder.new(model_or_class_or_content_type).build(self)
     end
 
     # Returns the name of the collection that this resource belongs to

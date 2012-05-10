@@ -60,6 +60,8 @@ Feature: Manage Content Blocks
     Given there are multiple pages of products in the Content Library
     When I request /cms/products
     Then I should see the paging controls
+    And I click on "next_page_link"
+    Then I should see the second page of content
 
 
 

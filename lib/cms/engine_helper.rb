@@ -1,4 +1,59 @@
 module Cms
+
+  class EngineAwarePathBuilder
+
+    def initialize(model_class_or_content_type_or_model)
+      # ContentType
+      if model_class_or_content_type_or_model.respond_to? :model_class
+        @path_subject = model_class_or_content_type_or_model.model_class
+      else # Class or Model
+        @path_subject = model_class_or_content_type_or_model
+      end
+    end
+
+    # The object that will be added to the constructed path.
+    def path_subject
+      @path_subject
+    end
+
+    def subject_class
+      if @path_subject.instance_of?(Class)
+        @path_subject
+      else
+        @path_subject.class
+      end
+    end
+
+    def build(view)
+      path = []
+      path << engine_name
+      path << "cms" if main_app_model?
+      path << path_subject
+
+      Rails.logger.warn "Built path is #{path}"
+      path[0] = view.send(path[0]) # Replace the engine name with an actual lookup of the proper Engine routeset
+      path
+    end
+
+    def main_app_model?
+      engine_name == "main_app"
+    end
+
+    # Determine which 'Engine' this model is from based on the class
+    def engine_name
+      name = EngineHelper.module_name(subject_class)
+      return "main_app" unless name
+
+      begin
+        engine = "#{name}::Engine".constantize
+      rescue NameError
+        # This means there is no Engine for this model, so its from the main Rails App.
+        return "main_app"
+      end
+      engine.engine_name
+    end
+  end
+
   module EngineHelper
 
     def main_app_model?
