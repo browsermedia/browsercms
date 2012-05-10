@@ -407,8 +407,8 @@ module Cms
     end
 
     test "#top_level_section works for page in root section" do
-      page = create(:public_page, :parent=>@root)
-      assert_equal @root, page.top_level_section
+      page = create(:public_page, :parent=>root_section)
+      assert_equal root_section, page.top_level_section
     end
 
     test "#top_level_section" do
