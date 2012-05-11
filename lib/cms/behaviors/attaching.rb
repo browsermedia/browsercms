@@ -205,6 +205,10 @@ module Cms
           found_attachments
         end
 
+        # Return all definitions for a given class.
+        def definitions_for(name)
+          Cms::Attachment.definitions[self.name][name]
+        end
       end
 
       module InstanceMethods

@@ -5,7 +5,7 @@ PATH
       ancestry (~> 1.2.4)
       ckeditor_rails (~> 3.6.2.2)
       jquery-rails (~> 2.0)
-      paperclip (~> 2.3.5)
+      paperclip (~> 3.0.3)
       rails (~> 3.2.0)
       sass-rails
       term-ansicolor
@@ -107,9 +107,10 @@ GEM
     multi_json (1.3.4)
     mysql2 (0.3.11)
     nokogiri (1.5.2)
-    paperclip (2.3.16)
-      activerecord (>= 2.3.0)
-      activesupport (>= 2.3.2)
+    paperclip (3.0.3)
+      activemodel (>= 3.0.0)
+      activerecord (>= 3.0.0)
+      activesupport (>= 3.0.0)
       cocaine (>= 0.0.2)
       mime-types
     polyglot (0.3.3)

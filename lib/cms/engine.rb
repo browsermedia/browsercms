@@ -20,6 +20,7 @@ module Cms
     isolate_namespace Cms
 
     config.cms = ActiveSupport::OrderedOptions.new
+    config.cms.attachments = ActiveSupport::OrderedOptions.new
 
     # Make sure we use our rails model template (rather then its default) when `rails g cms:content_block` is run.
     config.app_generators do |g|
@@ -38,6 +39,9 @@ module Cms
     config.before_configuration do |app|
       app.config.cms.mobile_cache_directory = File.join(Rails.root, 'public', 'cache', 'mobile')
       app.config.cms.page_cache_directory = File.join(Rails.root, 'public', 'cache', 'full')
+
+      app.config.cms.attachments.storage = :filesystem
+      app.config.cms.attachments.storage_directory = File.join(Rails.root, 'tmp', 'uploads')
     end
 
     initializer 'browsercms.add_core_routes', :after => 'action_dispatch.prepare_dispatcher' do |app|

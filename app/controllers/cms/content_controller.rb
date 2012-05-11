@@ -1,7 +1,7 @@
 module Cms
   class ContentController < Cms::ApplicationController
     include Cms::ContentRenderingSupport
-    include Cms::AttachmentServing
+    include Cms::Attachments::Serving
 
     include Cms::MobileAware
     helper MobileHelper

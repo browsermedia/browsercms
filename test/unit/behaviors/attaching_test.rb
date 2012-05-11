@@ -175,7 +175,76 @@ module Cms
     end
   end
 
+
+  class AttachmentServingStrategyTest < ActiveSupport::TestCase
+
+    class Cms::Attachments::AnotherStrategy
+      def send_attachment(attachment, controller)
+      end
+    end
+    include Cms::Attachments::Serving
+
+    def setup
+      @attachment = build(:attachment_document)
+    end
+
+    test "#send_attachments_with :filesystem" do
+      when_attachment_storage_is :filesystem
+      assert_equal Cms::Attachments::FilesystemStrategy, send_attachments_with
+    end
+
+    test "#send_attachments_with :another" do
+      when_attachment_storage_is :another
+      assert_equal Cms::Attachments::AnotherStrategy, send_attachments_with
+    end
+
+    test "default strategy is :filesystem" do
+      then_use_this_strategy_to_send_attachments(Cms::Attachments::FilesystemStrategy)
+      send_attachment(@attachment)
+    end
+
+    test "#send_attachment from filesystem" do
+      when_attachment_storage_is(:filesystem)
+      then_use_this_strategy_to_send_attachments(Cms::Attachments::FilesystemStrategy)
+
+      send_attachment(@attachment)
+    end
+
+    test "#send_attachment with another strategy" do
+      when_attachment_storage_is(:another)
+      then_use_this_strategy_to_send_attachments(Cms::Attachments::AnotherStrategy)
+
+      send_attachment(@attachment)
+    end
+
+    test "Attachment#path for :filesystem" do
+      when_attachment_storage_is :filesystem
+
+      assert_equal "#{Rails.root}/tmp/uploads/#{id_partition}/original/#{@attachment.data_fingerprint}", @attachment.path
+    end
+
+    private
+
+    def id_partition
+      ""
+    end
+
+    def then_use_this_strategy_to_send_attachments(strategy)
+      self.expects(:current_user).returns(stub(:able_to_view? => true))
+      strategy.expects(:send_attachment).with(@attachment, self)
+    end
+
+    def when_attachment_storage_is(value)
+      Rails.configuration.cms.attachments.expects(:storage).returns(value)
+    end
+
+
+  end
   class AttachmentConfigurationTest < ActiveSupport::TestCase
+
+    test "#definitions_for" do
+      assert_equal({"type" => :single, "index" => 0}, VersionedAttachable.definitions_for(:document))
+    end
 
     test "#config for unassociated attachment returns empty Hash" do
       assert_equal({}, Cms::Attachment.new.config)

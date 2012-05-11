@@ -1,37 +1,25 @@
 require 'paperclip'
+require 'cms/attachments/attachment_serving'
 
 module Cms
-  #Cms::Attachments exposes an interface to setup paperclip
-  #for BrowserCMS.
+  # Cms::Attachments::Configuration exposes an interface to setup paperclip for BrowserCMS.
   #
-  # Provides defaults that are suitable
-  #for the CMS and that probably make sense for most installations.
+  # Provides defaults that are suitable for the CMS and that probably make sense for most installations.
   #
   #This module also declares Paperclip interpolations that are used
   #to construct the default url and path.
   #
   # For example, the default path:
   #
-  # ":attachments_root/:date_partition/:style/:fingerprint"
+  # ":attachments_root/:id_partition/:style/:fingerprint"
   #
   # expands to something like:
   #
-  #  Rails.root/tmp/uploads/2011/1/30/thumb/thcu098rc87dgd
+  #  #{Rails.root}/tmp/uploads/2011/1/30/thumb/thcu098rc87dgd
   #
   # but can be changed by using paperclip interpolations, either
   # the ones already defined by Paperlip itself, the Cms::Assets
   # module, or user defined.
-  #
-  # As an example, Image and FileBlocks override this default url to
-  # accomidate user defined ones.
-  #
-  # class SomeBlock < AbstractFileBlock
-  #   #...
-  #   has_attached_asset :file, :url => "/attachments/:filename?style=:style"
-  # end
-  #
-  #
-  # This interpolation does not take styles into consideration yet.
   module Attachments
     mattr_accessor :configuration
 
@@ -49,10 +37,9 @@ module Cms
     # Allows each Attachment to have a customized configuration, even though there is a single Attachment class.
     # Designed to allow 'typical' Paperclip configuration to be specified per attachment.
     class Configuration
-      attr_accessor :url, :path, :styles, :processors, :default_url,
-                    :default_style, :storage, :whiny
+      attr_accessor :url, :path, :styles, :processors, :default_url, :default_style, :storage, :whiny
       attr_accessor :s3_credentials, :bucket
-      attr_accessor :attachments_root, :file_permissions
+      attr_accessor :file_permissions
 
       attr_reader :use_timestamp
 
@@ -68,16 +55,17 @@ module Cms
         self.storage = :filesystem
         self.whiny = false
 
-        self.attachments_root = File.join(Rails.root, "tmp/uploads")
         @use_timestamp = false
       end
     end
+
+
 
     # This is the typical url for attachments
     # Some attachments will have a custom path (data_file_path) specified by users
     # while others will just be 'defaults'. This dynamically returns path at runtime based
     # on the instance of the specific instance.
-    ::Paperclip.interpolates :attachment_file_path do |asset, _|
+    Paperclip.interpolates :attachment_file_path do |asset, _|
       path = asset.instance.data_file_path
       if path
         path
@@ -87,7 +75,8 @@ module Cms
     end
 
     Paperclip.interpolates :attachments_root do |_, _|
-      Attachment.configuration.attachments_root
+      strategy = Cms::Attachments::Serving.send_attachments_with
+      strategy.attachments_storage_location
     end
 
     Paperclip.interpolates :full_filename do |asset, _|

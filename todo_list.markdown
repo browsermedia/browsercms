@@ -1,15 +1,27 @@
 Tasks:
 
+* Heroku - Make BrowserCMS work on the platform.
+- Challenges
+
+1. Caching - Needs to work using a non-filesystem based format.
+2. Postgresql - This seems to work, so we should probably just update the docs to reflect that.
+3. Subdomain - Need a www and cms subdomain. Make a 'single_domain' production mode that will disable caching and not force redirects.
+4. File Uploads - Files get put in tmp directory, which isn't really persistent.
+
+Tasks:
+1. Get S3 module working with assets
+2. Define a new configuration param: config.cms.use_single_domain = true for production mode. Should disable caching and avoid redirects.
+3. Find a way to improve error messages with a subdomain (Can I automatically detect that the subdomain doesn't exist?)
+4. Rework caching so it can work with heroku.
+
 # 3.5.x Goals
 
-* Heroku - Make BrowserCMS work on the platform.
 * Faster Files - Take advantage of X-Sendfile (if possible) to speed up sending uploaded CMS files.
 * [IMPROVE] The error message for a duplicate path for Fileblocks is not clear.
 * Browser Compatibility Testing - Ensure compatibility with latest versions of Chrome/IE 9/Firefox/Safari. IE 9 probably needs the most works.
 
 - [TEST] Upgrade script from 3.4.x and 3.3.x
 - [BUG] Updating a page throws 'path already used' error? Created a public section.
-- [BUG] Reverting blocks with multiple attachments doesn't really work. It stays associated with the latest attachment, even if you had previous deleted attachments.
 - [BUG] Minor - In development mode, need to restart if core CMS code is changed (loses definations for custom blocks with attachments)
 
 ## Publishing/Versioning Improvements:

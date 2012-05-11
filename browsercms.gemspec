@@ -6,8 +6,8 @@ Gem::Specification.new do |s|
   s.version = Cms::VERSION
 
   s.authors = ["BrowserMedia"]
-  s.summary = %q{BrowserCMS is a a general purpose, open source Web Content Management System (CMS), written using Ruby on Rails.}
-  s.description = %q{Web Content Management in Rails.}
+  s.summary = %q{Web Content Management in Rails}
+  s.description = %q{BrowserCMS is a a general purpose, open source Web Content Management System (CMS), written using Ruby on Rails.}
   s.email = %q{github@browsermedia.com}
   s.extra_rdoc_files = %w{
       LICENSE.txt
@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
   s.add_dependency "ancestry", "~> 1.2.4"
   s.add_dependency "ckeditor_rails", "~> 3.6.2.2"
   s.add_dependency "jquery-rails", "~> 2.0"
-  s.add_dependency("paperclip", '~> 2.3.5')
+  s.add_dependency("paperclip", "~> 3.0.3")
 
   # Required only for bcms-upgrade
   s.add_dependency "term-ansicolor"

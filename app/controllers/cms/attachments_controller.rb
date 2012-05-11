@@ -6,7 +6,7 @@ module Cms
     skip_before_filter :cms_access_required, :only => [:download]
 
     include ContentRenderingSupport
-    include AttachmentServing
+    include Cms::Attachments::Serving
 
     # Returns a specific version of an attachment.
     # Used to display older versions in the editor interface.

@@ -79,11 +79,13 @@ module Cms
         Attachment.published.not_archived.find_by_data_file_path path
       end
 
+
       def configure_paperclip
+        # @todo This might be better done using subclasses of Attachment for each document instance.
+        # We could use single table inheritance to avoid needing to do meta configurations.
         has_attached_file :data,
-                          #TODO: url's should probably not be configurable
-                          :url => lambda_for(:url),
-                          :path => lambda_for(:path),
+                          :url => configuration.url,
+                          :path => configuration.path,
                           :styles => lambda_for(:styles),
 
                           # Needed for versioning so that we keep all previous files.
@@ -93,14 +95,19 @@ module Cms
                           :processors => configuration.processors,
                           :defult_url => configuration.default_url,
                           :default_style => configuration.default_style,
-                          :storage => configuration.storage,
                           :use_timestamp => configuration.use_timestamp,
                           :whiny => configuration.whiny,
+                          :storage => rail_config(:storage),
+                          :s3_credentials => rail_config(:s3_credentials),
+                          :bucket => rail_config(:s3_bucket)
+      end
 
-                          :s3_credentials => configuration.s3_credentials,
-                          :bucket => configuration.bucket
+      # Looks up a value from Rails config
+      def rail_config(key)
+        Rails.configuration.cms.attachments[key]
       end
     end
+
 
     def section=(section)
       dirty! if self.section != section
