@@ -72,21 +72,21 @@ module Cms
     def redirect_non_cms_users_to_public_site
       @show_toolbar = false
       if perform_caching
-        logger.info "Caching is enabled"
+        logger.debug "Using cms subdomain is enabled"
         if cms_site?
-          logger.info "This is the cms site"
+          logger.debug "User has required a page on the cms subdomain."
           if current_user.able_to?(:edit_content, :publish_content, :administrate)
-            logger.info "User has access to cms"
+            logger.debug "User has access to cms"
             @show_toolbar = true
           else
-            logger.info "User does not have access to cms"
+            logger.debug "User does not have access to cms"
             redirect_to url_without_cms_domain_prefix
           end
         else
-          logger.info "Not the cms site"
+          logger.debug "User has requested a page which is not on the cms domain."
         end
       else
-        logger.info "Caching is disabled"
+        logger.debug "Using cms subdomain is disabled"
         if current_user.able_to?(:edit_content, :publish_content, :administrate)
           @show_toolbar = true
         end

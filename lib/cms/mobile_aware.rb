@@ -43,7 +43,7 @@ module Cms
     #
     # @return [Boolean] true if this request is considered 'mobile', false otherwise
     def respond_as_mobile?
-      w "Checking the subdomain for #{request.domain} is #{request.subdomain}"
+      log "For mobile optimization, checking the subdomain for '#{request.domain}' is '#{request.subdomain}'."
       if params[:template] =='mobile'
         session[:mobile_mode] = true
       elsif params[:template] =='full'
@@ -56,24 +56,24 @@ module Cms
     private
 
     def print_request_info
-      w "*" * 20
-      w "User Agent: #{request.user_agent}"
+      log "*" * 20
+      log "User Agent: #{request.user_agent}"
       m = "Mobile Request?: "
       if respond_as_mobile?
         m += "Yes"
       else
         m += "No"
       end
-      w m
+      log m
     end
 
-    def w(m)
-      logger.warn m
+    def log(m)
+      logger.debug m
     end
 
     def banner(m)
-      w "*" * 20
-      w m
+      log "*" * 20
+      log m
     end
   end
 
