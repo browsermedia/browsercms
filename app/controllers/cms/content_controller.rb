@@ -52,7 +52,7 @@ module Cms
 
     def render_page_with_caching
       render_page
-      cache_page if perform_caching
+      cache_page if should_write_to_page_cache?
     end
 
     # ----- Before Filters -------------------------------------------------------
@@ -71,9 +71,9 @@ module Cms
 
     def redirect_non_cms_users_to_public_site
       @show_toolbar = false
-      if perform_caching
+      if using_cms_subdomains?
         logger.debug "Using cms subdomain is enabled"
-        if cms_site?
+        if request_is_for_cms_subdomain?
           logger.debug "User has required a page on the cms subdomain."
           if current_user.able_to?(:edit_content, :publish_content, :administrate)
             logger.debug "User has access to cms"

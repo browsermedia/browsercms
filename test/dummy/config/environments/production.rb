@@ -10,6 +10,9 @@ Dummy::Application.configure do
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
 
+  # Allows the CMS to use a single domain (with no caching or redirects).
+  config.cms.use_single_domain = false
+
   # Disable Rails's static asset server (Apache or nginx will already do this)
   config.serve_static_assets = false
 
@@ -17,7 +20,7 @@ Dummy::Application.configure do
   config.assets.compress = true
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
-  config.assets.compile = false
+  config.assets.compile = true
 
   # Generate digests for assets URLs
   config.assets.digest = true

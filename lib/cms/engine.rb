@@ -42,6 +42,10 @@ module Cms
 
       app.config.cms.attachments.storage = :filesystem
       app.config.cms.attachments.storage_directory = File.join(Rails.root, 'tmp', 'uploads')
+
+      # Determines if a single domain will be used (i.e. www) or multiple subdomains (www and cms). Enabling this will
+      # turn off page caching and not handle redirects between subdomains.
+      app.config.cms.use_single_domain = false
     end
 
     initializer 'browsercms.add_core_routes', :after => 'action_dispatch.prepare_dispatcher' do |app|

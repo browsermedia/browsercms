@@ -32,7 +32,7 @@ class ApplicationController < ::ApplicationController
     end
      
     def redirect_to_cms_site
-      if perform_caching && !cms_site?
+      if using_cms_subdomains? && !request_is_for_cms_subdomain?
         redirect_to(url_with_cms_domain_prefix)
       end
     end 

@@ -1,8 +1,11 @@
 module Cms
   module Caching
+
+    # Determine if page caching in enabled.
     def caching_enabled?
       ActionController::Base.perform_caching
     end
+
     def flush_cache
       #Hmmm...this is kinda scary.  What if page cache directory is
       #set to the the default, which is /public?
@@ -12,7 +15,9 @@ module Cms
         FileUtils.rm_rf Dir.glob("#{ActionController::Base.page_cache_directory}/*")
         Rails.logger.info "Cache Flushed"
       end
-    end   
+    end
+
+
   end
   class << self
     include Caching

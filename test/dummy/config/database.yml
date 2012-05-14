@@ -22,6 +22,16 @@ test: &test
   password:
   socket: /tmp/mysql.sock
 
+# Keep this around for testing the production environment behavior
+production:
+  adapter: mysql2
+  encoding: utf8
+  reconnect: false
+  pool: 5
+  database: browsercms_production
+  username: root
+  password:
+  socket: /tmp/mysql.sock
 
 cucumber:
   <<: *test
