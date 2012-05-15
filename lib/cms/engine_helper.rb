@@ -30,7 +30,6 @@ module Cms
       path << "cms" if main_app_model?
       path << path_subject
 
-      Rails.logger.warn "Built path is #{path}"
       path[0] = view.send(path[0]) # Replace the engine name with an actual lookup of the proper Engine routeset
       path
     end
