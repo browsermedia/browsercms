@@ -13,18 +13,18 @@ module Cms
     end
 
     def handle_not_found_on_page(exception)
-      logger.warn "Rendering page for 'Page Not Found' error."
+      logger.warn "Resource not found: Returning the 404 page."
       handle_error_with_cms_page(Cms::ErrorPages::NOT_FOUND_PATH, exception, :not_found)
     end
 
     def handle_access_denied_on_page(exception)
-      logger.warn "Rendering page for 'Access Denied' error."
+      logger.warn "Access denied for user '#{current_user.login}': Returning the 403 page."
       handle_error_with_cms_page(Cms::ErrorPages::FORBIDDEN_PATH, exception, :forbidden)
     end
 
     def handle_server_error_on_page(exception)
-      logger.warn "Exception: #{exception.message}\n"
-      logger.warn "#{exception.backtrace.join("\n")}\n"
+      logger.error "An Unexpected exception occurred: #{exception.message}\n"
+      logger.error "#{exception.backtrace.join("\n")}\n"
       handle_error_with_cms_page(Cms::ErrorPages::SERVER_ERROR_PATH, exception, :internal_server_error)
     end
 
@@ -43,7 +43,7 @@ module Cms
       # We must be showing the page outside of the CMS
       # So we will show the error page
       if @page = Cms::Page.find_live_by_path(error_page_path)
-        logger.info "Rendering Error Page: #{@page.inspect}"
+        logger.debug "Rendering Error Page: #{@page.inspect}"
         @mode = "view"
         @show_page_toolbar = false
 

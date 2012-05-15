@@ -44,6 +44,7 @@ module Cms
     # check_access_to_page will also call this directly
     # if caching is not enabled
     def render_page
+      logger.warn "Render page (id: #{@page.id})"
       @_page_route.execute(self) if @_page_route
       prepare_connectables_for_render
       page_layout = determine_page_layout

@@ -1,5 +1,7 @@
 Tasks:
 
+* Fix bug where thumbnails are not rendered.
+
 # 3.5.x Goals
 
 * Faster Files - Take advantage of X-Sendfile (if possible) to speed up sending uploaded CMS files.
@@ -44,13 +46,6 @@ When almost certainly should be.
 ** eg. auto_discovery_link_tag -> Does not get included in the head
 * Allow for multiple view templates for blocks.
 * Look at Papertrail and see how they structure versions. Their API seems every simple for single blocks.
-* Clean up logging messages that are filling up the production logs unnecessarily
-** 'Caching enabled'
-** 'Not the CMS site'
-** 'Rendering content block X'
-** 'Not caching, user logged in'
-** Rendering template X'
-** Have at most one line per request for any diagnostic result.
 * Upgrade jquery.selectbox-0.5 to jquery.sb.js (https://github.com/revsystems/jQuery-SelectBox). This will likely improve the usability of the selectbox.
 
 ## Better Testing of Production/Env

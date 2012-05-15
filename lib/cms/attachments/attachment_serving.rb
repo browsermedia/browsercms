@@ -40,7 +40,7 @@ module Cms
       def self.send_attachment(attachment, controller)
         path_to_file = attachment.full_file_location
         if File.exists?(path_to_file)
-          Rails.logger.warn "Sending file #{path_to_file}"
+          Rails.logger.debug "Sending file #{path_to_file}"
           controller.send_file(path_to_file,
                                :filename => attachment.file_name,
                                :type => attachment.file_type,
@@ -48,7 +48,7 @@ module Cms
           )
         else
           msg = "Couldn't find file #{path_to_file}'"
-          Rails.logger.warn msg
+          Rails.logger.error msg
           raise ActiveRecord::RecordNotFound.new(msg)
         end
       end
