@@ -23,9 +23,7 @@ module Cms
       end
       module InstanceMethods
         def flush_cache
-          if Cms.caching_enabled?
-            Cms.flush_cache
-          end
+          Cms::Cache.flush
         end
       end
     end

@@ -5,7 +5,7 @@ Around('@page-caching') do |scenario, block|
   begin
     block.call
   ensure
+    Cms::Cache.flush
     ActionController::Base.perform_caching = false
-    Cms.flush_cache
   end
 end

@@ -12,7 +12,6 @@ public/stylesheets/tuneup
 .dotest
 .idea
 tmp/restart.txt
-public/cache
 patches
 rerun.txt
 test/dummy/log/*
@@ -21,7 +20,6 @@ doc/api
 .yardoc/*
 .bundle/*
 test/dummy/db/backups/*
-test/dummy/public/cache/*
 test/dummy/.sass-cache
 .sass-cache
 db/backups

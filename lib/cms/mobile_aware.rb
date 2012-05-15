@@ -2,20 +2,7 @@ module Cms
 
   module MobileAware
 
-    # Returns the directory where BrowserCMS should write out it's Page cache files for the mobile version of the site.
-    # (Optionally) It can be configured in environment files via:
-    #   config.cms.mobile_cache_directory = File.join(Rails.root, 'some', 'mobile_dir')
-    def mobile_cache_directory
-      Rails.application.config.cms.mobile_cache_directory
-    end
-
-    # Returns the directory where BrowserCMS should write out it's Page cache files for the full version of the site.
-    # This should be exactly the same as where a typical CMS project stores it's files.
-    # (Optionally) It can be configured in environment files via:
-    #   config.cms.page_cache_directory = File.join(Rails.root, 'some', 'dir')
-    def cms_cache_directory
-      Rails.application.config.cms.page_cache_directory
-    end
+    include Cms::DefaultCaches
 
     # Looks for a mobile template if the request is mobile, falling back to the html template if it can't be found.
     #

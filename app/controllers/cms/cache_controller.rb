@@ -10,7 +10,7 @@ class CacheController < Cms::BaseController
   end
   
   def destroy
-    Cms.flush_cache
+    Cms::Cache.flush
     flash[:notice] = "Page Cache Flushed"
     redirect_to :action => "show"
   end

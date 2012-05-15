@@ -1,19 +1,5 @@
 Tasks:
 
-* Heroku - Make BrowserCMS work on the platform.
-- Challenges
-
-1. Caching - Needs to work using a non-filesystem based format.
-2. Postgresql - This seems to work, so we should probably just update the docs to reflect that.
-3. Subdomain - Need a www and cms subdomain. Make a 'single_domain' production mode that will disable caching and not force redirects.
-4. File Uploads - Files get put in tmp directory, which isn't really persistent.
-
-Tasks:
-1. Get S3 module working with assets
-2. Define a new configuration param: config.cms.use_single_domain = true for production mode. Should disable caching and avoid redirects.
-3. Find a way to improve error messages with a subdomain (Can I automatically detect that the subdomain doesn't exist?)
-4. Rework caching so it can work with heroku.
-
 # 3.5.x Goals
 
 * Faster Files - Take advantage of X-Sendfile (if possible) to speed up sending uploaded CMS files.
