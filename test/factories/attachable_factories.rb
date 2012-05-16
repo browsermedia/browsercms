@@ -15,6 +15,11 @@ class HasManyAttachments < ActiveRecord::Base
   attr_accessible :name
 end
 
+class HasThumbnail < ActiveRecord::Base
+  acts_as_content_block
+  has_attachment :document, :styles => {:thumbnail => "50x50"}
+end
+
 FactoryGirl.define do
 
   # Duplicates :file_block
@@ -65,6 +70,14 @@ FactoryGirl.define do
     m.data { mock_file }
     m.parent { find_or_create_root_section }
     m.publish_on_save true
+  end
+
+  factory :thumbnail_attachment, :class => Cms::Attachment do |m|
+      m.attachment_name "document"
+      m.attachable_type "HasThumbnail"
+      m.data { mock_file }
+      m.parent { find_or_create_root_section }
+      m.publish_on_save true
   end
 
   factory :catalog_attachment, :class => Cms::Attachment do |m|

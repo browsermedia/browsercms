@@ -20,7 +20,7 @@ require 'support/database_helpers'
 # I'm not sure why ANY of these FactoryGirl requires are necessary at all.
 require 'factory_girl'
 require 'factories/factories'
-require 'factories/attachables'
+require 'factories/attachable_factories'
 
 #require 'support/engine_controller_hacks'
 

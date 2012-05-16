@@ -63,12 +63,15 @@ module Cms
     # Some attachments will have a custom path (data_file_path) specified by users
     # while others will just be 'defaults'. This dynamically returns path at runtime based
     # on the instance of the specific instance.
-    Paperclip.interpolates :attachment_file_path do |asset, _|
+    Paperclip.interpolates :attachment_file_path do |asset, style|
       path = asset.instance.data_file_path
-      if path
-        path
+      unless path
+        path = "/attachments/#{asset.instance.id}/#{asset.instance.data_file_name}"
+      end
+      if style && style != :original
+        "#{path}?style=#{style}"
       else
-        "/attachments/#{asset.instance.id}/#{asset.instance.data_file_name}"
+        path
       end
     end
 

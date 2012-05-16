@@ -13,11 +13,6 @@ class DefaultAttachable < ActiveRecord::Base
   has_attachment :spreadsheet
 end
 
-class HasThumbnail < ActiveRecord::Base
-  acts_as_content_block
-  has_attachment :document, :styles => {:thumbnail => "50x50"}
-end
-
 class TwoAttachments < ActiveRecord::Base
   acts_as_content_block
   has_attachment :doc1
@@ -120,7 +115,7 @@ module Cms
 
   end
 
-  class ThumbnailTest < ActiveSupport::TestCase
+  class DynamicallyLookupStylesTest < ActiveSupport::TestCase
 
     test "has_assigned_content_type?" do
       c = Cms::Attachment
@@ -150,13 +145,21 @@ module Cms
       assert_equal({"thumbnail" => "50x50"}, Cms::Attachment.dynamically_return_styles.call(block.document.data))
     end
 
-
-
     test "styles for versioned" do
       block = create(:versioned_attachable)
 
       expected_styles = block.document.data.styles
       assert_equal( {}, expected_styles)
+    end
+
+  end
+
+  class RenderingStylesTest < ActiveSupport::TestCase
+
+    test "url for thumbnail" do
+      attachment = create(:thumbnail_attachment)
+      assert_equal "/attachments/#{attachment.id}/foo.jpg", attachment.url
+      assert_equal "/attachments/#{attachment.id}/foo.jpg?style=thumbnail", attachment.url(:thumbnail)
     end
   end
 
