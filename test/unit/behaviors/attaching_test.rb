@@ -131,7 +131,7 @@ module Cms
     end
 
     test "An attachment assigned to an attachable should use its styles" do
-      attachment = Cms::Attachment.new(:attachable_type => "HasThumbnail", :attachment_name =>"document")
+      attachment = Cms::Attachment.new(:attachable_type => "HasThumbnail", :attachment_name => "document")
       assert_equal({"thumbnail" => "50x50"}, Cms::Attachment.dynamically_return_styles.call(attachment.data))
     end
 
@@ -149,7 +149,7 @@ module Cms
       block = create(:versioned_attachable)
 
       expected_styles = block.document.data.styles
-      assert_equal( {}, expected_styles)
+      assert_equal({}, expected_styles)
     end
 
   end
@@ -223,6 +223,37 @@ module Cms
     end
   end
 
+  class SendFileStrategyTest < ActiveSupport::TestCase
+    test "send_attachment" do
+      expected_path = "/some/path"
+      given_an_attachment_with_file_path(expected_path, :style=>"original")
+      then_controller_should_send_file(expected_path)
+
+      Cms::Attachments::FilesystemStrategy.send_attachment(@attachment, @controller)
+    end
+
+    test "send_attachment with style" do
+      thumbnail_path = "/thumbnail/path"
+      given_an_attachment_with_file_path(thumbnail_path, :style=>"thumbnail")
+      then_controller_should_send_file(thumbnail_path, :style=>"thumbnail")
+
+      Cms::Attachments::FilesystemStrategy.send_attachment(@attachment, @controller)
+    end
+
+    private
+    def given_an_attachment_with_file_path(expected_path, options={})
+      @attachment = stub(:file_name => "NAME", :file_type => "TYPE")
+      expect = @attachment.expects(:path).with(options[:style]).returns(expected_path)
+      File.expects(:exists?).with(expected_path).returns(true)
+    end
+
+    def then_controller_should_send_file(expected_path, options={})
+      @controller = mock()
+      @controller.expects(:send_file).with(expected_path, {:filename => @attachment.file_name, :type => @attachment.file_type, :disposition => "inline"})
+      @controller.expects(:params).returns(options)
+
+    end
+  end
 
   class AttachmentServingStrategyTest < ActiveSupport::TestCase
 
@@ -270,6 +301,7 @@ module Cms
 
       assert_equal "#{Rails.root}/tmp/uploads/#{id_partition}/original/#{@attachment.data_fingerprint}", @attachment.path
     end
+
 
     private
 

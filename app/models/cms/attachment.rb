@@ -184,7 +184,6 @@ module Cms
     end
 
     # Returns the absolute file location of the underlying asset
-    # @todo I really want this to return data_file_path instead.
     def path(style_name = configuration.default_style)
       data.path(style_name)
     end
