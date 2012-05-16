@@ -474,7 +474,7 @@ module Cms
       @attachable.attachments[0].data = @file
       @attachable.save!
 
-      assert_equal file_contents(@file.path), file_contents(@attachable.attachments[0].full_file_location)
+      assert_equal file_contents(@file.path), file_contents(@attachable.attachments[0].path)
     end
   end
 
@@ -553,8 +553,8 @@ module Cms
     test "Keep older versions of files" do
       file2 = update_file_for_attachable
 
-      assert_equal file_contents(@file.path), file_contents(@attachable.as_of_version(1).attachments[0].full_file_location), "The contents of version 1 of the file should be returned"
-      assert_equal file_contents(file2.path), file_contents(@attachable.as_of_version(2).attachments[0].full_file_location)
+      assert_equal file_contents(@file.path), file_contents(@attachable.as_of_version(1).attachments[0].path), "The contents of version 1 of the file should be returned"
+      assert_equal file_contents(file2.path), file_contents(@attachable.as_of_version(2).attachments[0].path)
     end
 
     test "Deleting an attachment does not increment the version # of the block" do

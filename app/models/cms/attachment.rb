@@ -188,8 +188,6 @@ module Cms
       data.path(style_name)
     end
 
-    alias :full_file_location :path
-
     def original_filename
       data_file_name
     end
