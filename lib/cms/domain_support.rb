@@ -24,7 +24,7 @@ module Cms
     # Determines if users should be redirected between the public (www.) and admin (cms.) subdomains.
     def using_cms_subdomains?
       result = (wants_to_use_subdomains? && perform_caching)
-      Rails.logger.debug {"Are we using cms subdomains? #{result} based on 'want subdomain: #{wants_to_use_subdomains?}' and perform_caching: '#{perform_caching}'"}
+      #Rails.logger.debug {"Are we using cms subdomains? #{result} based on 'want subdomain: #{wants_to_use_subdomains?}' and perform_caching: '#{perform_caching}'"}
       result
     end
 

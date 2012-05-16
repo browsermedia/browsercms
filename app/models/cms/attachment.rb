@@ -64,16 +64,21 @@ module Cms
         @@configuration ||= Cms::Attachments.configuration
       end
 
-      def lambda_for(key)
-        lambda do |clip|
-          if clip.instance.new_record?
-            key == :styles ? {} : ""
-          else
-            clip.instance.config_value_for(key)
+      # Returns a Proc that can be used to dynamically determine styles based on the Cms::Attachment class
+      #
+      # Paperclip can handle a :styles parameter which responds to :call(Paperclip::Attachment)
+      def dynamically_return_styles
+        lambda do |paperclip_attachment|
+          cms_attachment = paperclip_attachment.instance
+
+          # Look up the style for the given block
+          if cms_attachment.has_assigned_content_type?
+            configuration_value(cms_attachment.content_block_class, cms_attachment.attachment_name, :styles)
+          else # New attachments that aren't associated with an Attaching type yet have no styles
+            {}
           end
         end
       end
-
 
       def find_live_by_file_path(path)
         Attachment.published.not_archived.find_by_data_file_path path
@@ -86,26 +91,45 @@ module Cms
         has_attached_file :data,
                           :url => configuration.url,
                           :path => configuration.path,
-                          :styles => lambda_for(:styles),
+                          :styles => dynamically_return_styles,
 
                           # Needed for versioning so that we keep all previous files.
                           :preserve_files => true,
 
                           #TODO: enable custom processors
                           :processors => configuration.processors,
-                          :defult_url => configuration.default_url,
+                          :default_url => configuration.default_url,
                           :default_style => configuration.default_style,
                           :use_timestamp => configuration.use_timestamp,
                           :whiny => configuration.whiny,
                           :storage => rail_config(:storage),
                           :s3_credentials => rail_config(:s3_credentials),
                           :bucket => rail_config(:s3_bucket)
+
       end
 
       # Looks up a value from Rails config
       def rail_config(key)
         Rails.configuration.cms.attachments[key]
       end
+
+      # Looks up the configuration value given:
+      # @param [Class] block_class The class of a block which has an attachment.
+      # @param [String] name_of_attachment The name of the attachment association (i.e. if was 'has_attachment :photos' then pass 'photo')
+      # @param [Symbol] key The key for the value to be fetched (i.e. :styles)
+      #
+      def configuration_value(block_class, name_of_attachment, key)
+        class_definitions = definitions[block_class]
+        if class_definitions == nil
+          raise "Couldn't find any definitions for '#{block_class}'."
+        end
+        attachment_definition = class_definitions[name_of_attachment]
+        if attachment_definition == nil
+          raise "Verify that '#{block_class}' defines an attachment named ':#{name_of_attachment}'."
+        end
+        attachment_definition[key] || configuration.send(key)
+      end
+
     end
 
 
@@ -115,15 +139,7 @@ module Cms
     end
 
     def config_value_for(key)
-      class_definitions = definitions[content_block_class]
-      if class_definitions == nil
-        raise "Couldn't find any definitions for #{content_block_class}."
-      end
-      attachment_definition = class_definitions[attachment_name]
-      if attachment_definition == nil
-        raise "Verify that '#{content_block_class}' defines an attachment named ':#{attachment_name}'."
-      end
-      attachment_definition[key] || configuration.send(key)
+      self.class.configuration_value(content_block_class, attachment_name, key)
     end
 
     def content_block_class
@@ -198,6 +214,12 @@ module Cms
       content_defs[attachment_name] ? content_defs[attachment_name] : {}
     end
 
+    # Determines if this Attachment has access to configuration information yet. Until it is assigned to an Attaching object,
+    # it will lack style information.
+    def has_assigned_content_type?()
+      attachable_type && attachment_name
+    end
+
     protected
 
     private
@@ -237,7 +259,6 @@ module Cms
     # Attachments should always be configured with a cardinality
     def set_cardinality
       unless cardinality
-        logger.debug "Calling set_cardinality for '#{config[:type]}'"
         self.cardinality = config[:type].to_s
       end
 

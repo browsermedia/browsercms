@@ -16,7 +16,6 @@ class HtmlBlockTest < ActiveSupport::TestCase
   end
 
   test "save" do
-
     @block = Cms::HtmlBlock.create!(:name=>"Test")
   end
 

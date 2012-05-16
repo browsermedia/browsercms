@@ -194,7 +194,7 @@ module Cms
         end
 
         def publish_if_needed
-          logger.debug { "#{self.class}#publish_if_needed. publish? = '#{!!@publish_on_save}'" }
+          #logger.debug { "#{self.class}#publish_if_needed. publish? = '#{!!@publish_on_save}'" }
 
           if @publish_on_save
             publish

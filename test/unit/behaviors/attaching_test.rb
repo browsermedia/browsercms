@@ -1,6 +1,6 @@
 require 'test_helper'
 
-[:default_attachables, :versioned_attachables, :non_attachable_block, :two_attachments, :has_many_attachments].each do |table|
+[:default_attachables, :versioned_attachables, :non_attachable_block, :two_attachments, :has_many_attachments, :has_thumbnails].each do |table|
   DatabaseHelpers.ensure_content_table_exists table
 end
 
@@ -11,6 +11,11 @@ end
 class DefaultAttachable < ActiveRecord::Base
   acts_as_content_block
   has_attachment :spreadsheet
+end
+
+class HasThumbnail < ActiveRecord::Base
+  acts_as_content_block
+  has_attachment :document, :styles => {:thumbnail => "50x50"}
 end
 
 class TwoAttachments < ActiveRecord::Base
@@ -113,6 +118,46 @@ module Cms
       assert @attachable.spreadsheet.published?
     end
 
+  end
+
+  class ThumbnailTest < ActiveSupport::TestCase
+
+    test "has_assigned_content_type?" do
+      c = Cms::Attachment
+      refute c.new.has_assigned_content_type?
+      refute c.new(:attachable_type => "HasThumbnails").has_assigned_content_type?
+      assert c.new(:attachable_type => "HasThumbnails", :attachment_name => "document").has_assigned_content_type?
+      assert create(:attachment_document, :attachable_type => "HasThumbnail", :attachment_name => "document").has_assigned_content_type?
+
+    end
+    test "A new Cms::Attachment has no styles" do
+      attachment = Cms::Attachment.new
+      assert_equal({}, Cms::Attachment.dynamically_return_styles.call(attachment.data))
+    end
+
+    test "An attachment assigned to an attachable should use its styles" do
+      attachment = Cms::Attachment.new(:attachable_type => "HasThumbnail", :attachment_name =>"document")
+      assert_equal({"thumbnail" => "50x50"}, Cms::Attachment.dynamically_return_styles.call(attachment.data))
+    end
+
+    test "styles for thumbnails" do
+      block = HasThumbnail.new
+      block.attachments << create(:attachment_document, :attachable_type => "HasThumbnail")
+      block.save!
+
+      expected_styles = block.document.data.styles
+      assert_equal "thumbnail", expected_styles.keys.first
+      assert_equal({"thumbnail" => "50x50"}, Cms::Attachment.dynamically_return_styles.call(block.document.data))
+    end
+
+
+
+    test "styles for versioned" do
+      block = create(:versioned_attachable)
+
+      expected_styles = block.document.data.styles
+      assert_equal( {}, expected_styles)
+    end
   end
 
   class AttachingTest < ActiveSupport::TestCase

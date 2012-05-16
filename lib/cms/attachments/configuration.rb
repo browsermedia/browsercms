@@ -49,7 +49,6 @@ module Cms
         self.path = ":attachments_root/:id_partition/:style/:fingerprint"
         self.styles = {}
         self.processors = [:thumbnail]
-        #TODO: set a default url that makes sense for BCMS
         self.default_url = "/:attachment/:style/missing.png"
         self.default_style = :original
         self.storage = :filesystem
@@ -58,7 +57,6 @@ module Cms
         @use_timestamp = false
       end
     end
-
 
 
     # This is the typical url for attachments
