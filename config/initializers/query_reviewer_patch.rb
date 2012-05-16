@@ -1,3 +1,5 @@
+# This doesn't do anything in this directory anymore since test/dummy is the app now.
+
 # If we are using QueryReviewer, we need to patch it to avoid the sitemap blowing up.
 if defined?(QueryReviewer)
 
