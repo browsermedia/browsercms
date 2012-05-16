@@ -1,8 +1,5 @@
 Tasks:
 
-* Fix bug where thumbnails are not rendered.
-- If an invalid style is passed (i.e. attachments/10/image.jpg?style=nonexistant) it should return a 404, not a 500.
-
 # 3.5.x Goals
 
 * Faster Files - Take advantage of X-Sendfile (if possible) to speed up sending uploaded CMS files.
