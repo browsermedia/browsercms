@@ -1,9 +1,6 @@
 # These are tasks for the core browsercms project, and shouldn't be bundled into the distributable gem
 namespace :test do
 
-  desc 'Runs all Tests (Test::Unit) and Features (cucumber)'
-  task :all => ["test", "cucumber"]
-
     # Could be improved somewhat to get rid of unneeded warnings.
   desc "run tests against sqlite database"
   task :sqlite3 do
@@ -24,19 +21,5 @@ namespace :test do
 end
 
 
-namespace :cms do
-
-  desc "Rebuild the browsercms gem locally and install it, Useful for testing releases."
-  task :gem => ["browsercms.gemspec", :build, :install]
-
-  task :install do
-    puts "installing..."
-    if RUBY_PLATFORM =~ /mswin32/
-      system("cmd /c gem install pkg/browsercms-3.1.0")
-    else
-      sh("sudo gem install pkg/browsercms-3.1.0")
-    end
-  end
-end
 
 

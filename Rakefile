@@ -81,6 +81,11 @@ YARD::Rake::YardocTask.new do |t|
   t.options = ['--output-dir', 'doc/api/']
 end
 
+# Load all tasks files
+#Dir.glob('lib/tasks/*.rake').each { |r| import r }
+
+# Load just this one task file instead (the previous rake files can probably be simplified)
+import 'lib/tasks/core_tasks.rake'
 
 begin
   require 'cucumber/rake/task'
@@ -92,13 +97,3 @@ begin
     end
   end
 end
-
-load 'lib/tasks/core_tasks.rake'
-# Sample tasks to load sample data. This is unworking pseudocode at the moment.
-#task 'db:load' do
-  # `mysql --user=root --password name_of_database < test/dummy/db/backups/name_of_file.sql`
-#end
-
-#task 'db:dump' do
-  # `mysqldump --user=name_of_user --password --database name_of_database > name_of_file.sql`
-#end

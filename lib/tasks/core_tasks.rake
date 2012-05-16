@@ -7,3 +7,10 @@ namespace :db do
 
 
 end
+
+namespace :yard do
+  desc "Clean up the YARD api docs"
+  task :clean do
+    FileUtils.rm_rf "doc/api"
+  end
+end
