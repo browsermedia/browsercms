@@ -134,7 +134,7 @@ When /^it should comment out Rails in the Gemfile$/ do
 end
 
 When /^it should run bundle install$/ do
-  assert_partial_output "Your bundle is complete!", all_output
+  assert_partial_output "Your bundle is", all_output
 end
 
 When /^it should copy all the migrations into the project$/ do
@@ -159,7 +159,6 @@ end
 When /^it should display instructions to the user$/ do
   expected = [
       "Next Steps:",
-      "Review https://github.com/browsermedia/browsercms/wiki/Upgrading-to-3.4.x-from-3.3.x"
    ]
   expected.each do |expect|
     assert_partial_output expect, all_output
@@ -217,4 +216,15 @@ end
 
 When /^rails script be configured to work with engines$/ do
   check_file_content "script/rails", "ENGINE_PATH = ", true
+end
+
+# Note: We skip running `rake rails:update` as part of these tests since it requires an interactive
+# command as part a separate process to overwrite files, so its very hard to wait for the exact timing.
+When /^I run the bcms update script$/ do
+  run_simple('bcms upgrade --skip-rails --skip-bundle', false)
+end
+
+# This will be slower since bundler needs to run.
+When /^I run the bcms update script with bundler$/ do
+  run_simple('bcms upgrade --skip-rails', false)
 end

@@ -6,8 +6,12 @@ Feature:
     Given I am working on a BrowserCMS v3.4.x project named "petstore"
 
   Scenario: Upgrade Project
-    When I run `bcms upgrade --skip-rails`
+    When I run the bcms update script
     And it should remove the default cache directory
+
+
+
+
 
 
 

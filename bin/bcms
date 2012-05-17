@@ -72,10 +72,11 @@ class Cms::Install < Thor
 
   desc "upgrade", "Upgrades a BrowserCMS project to v#{Cms::VERSION}"
   method_option :skip_rails, :aliases => "--skip-rails", :desc => "Skip running `rake rails:update`.", :default => false, :type => :boolean
+  method_option :skip_bundle, :aliases => "--skip-bundle", :desc => "Don't run `bundle update` during the process'", :default => false, :type => :boolean
   def upgrade
     update_browsercms_gem_version
     comment_out_rails_in_gemfile
-    run_bundle_install
+    run_bundle_update
     install_migrations
     rake "rails:update" unless options[:skip_rails]
     generate_rails_3_4_0_migration
@@ -83,9 +84,9 @@ class Cms::Install < Thor
     install_cms_seed_data
 
     instructions = <<TEXT
-Upgrade is nearly complete. Review https://github.com/browsermedia/browsercms/wiki/Upgrading-to-3.4.x-from-3.3.x before proceeding.
+Upgrade is nearly complete. Review https://github.com/browsermedia/browsercms/wiki/Upgrading-a-BrowserCMS-project before proceeding.
 Next Steps:
-1. Revert/undo the changes (see the 3.4.x Upgrade guide for details)
+1. Review the changes made by the script, revert any files that need it.
 2. Run `rake db:migrate`
 TEXT
     puts instructions
@@ -93,13 +94,11 @@ TEXT
 
   desc 'version', 'Show BrowserCMS version'
   map "-v" => :version, "--version" => :version
-
   def version
     puts "BrowserCMS #{Cms::VERSION}"
   end
 
   desc 'install', "Adds BrowserCMS to an existing rails application."
-
   def install
     common_setup('.')
     prefix_cms_tables

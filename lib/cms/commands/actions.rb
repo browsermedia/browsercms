@@ -34,12 +34,29 @@ module Cms
         end
       end
 
+      # Run `bundle update`, exiting if it doesn't work.
+      def run_bundle_update
+        return if options[:skip_bundle]
+        inside current_project do
+          result = run "bundle update"
+          unless result
+            puts "Check your Gemfile to ensure the dependencies are correct. Update them, then rerun the last command.".red
+            exit(false)
+          end
+        end
+
+      end
+
+      RAILS_GEMFILE_PATTERN = /gem ["|']rails["|'],/
+
       def comment_out_rails_in_gemfile
-        gsub_file "Gemfile", /gem ["|']rails["|'],/, "# Use BrowserCMS dependency on Rails instead\n# gem 'rails',"
+        gsub_file "Gemfile", RAILS_GEMFILE_PATTERN, "# gem 'rails',", :verbose => false
+        say_status :rails, "Commenting out Rails dependency."
       end
 
       def update_browsercms_gem_version
-        gsub_file "Gemfile", /gem ["|']browsercms.*$/, "gem \"browsercms\", \"#{Cms::VERSION}\""
+        gsub_file "Gemfile", /gem ["|']browsercms.*$/, "gem \"browsercms\", \"#{Cms::VERSION}\"", :verbose=>false
+        say_status :gemfile, "Update browsercms to v#{Cms::VERSION}"
       end
 
       def install_migrations

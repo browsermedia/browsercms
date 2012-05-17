@@ -1,8 +1,5 @@
 Tasks:
 
-* [TEST] Upgrade script from 3.4.x (and instructions)
-* [TEST] Upgrade script from 3.3.x (and instructions)
-
 # 3.5.x Goals
 
 * Faster Files - Take advantage of X-Sendfile (if possible) to speed up sending uploaded CMS files.
