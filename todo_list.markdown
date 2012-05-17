@@ -1,6 +1,6 @@
 Tasks:
 
-* [IMPROVE] The error message for a duplicate path for Fileblocks is not clear.
+* [IMPROVE] Attachment is invalid error message is duplicative.
 
 # 3.5.x Goals
 

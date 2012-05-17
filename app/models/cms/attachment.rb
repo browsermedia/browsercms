@@ -45,7 +45,7 @@ module Cms
 
     FILE_BLOCKS = "Cms::AbstractFileBlock"
     validates_presence_of :data_file_path, :if => Proc.new { |a| a.attachable_type == FILE_BLOCKS }
-    validates_uniqueness_of :data_file_path, :if => Proc.new { |a| a.attachable_type == FILE_BLOCKS }
+    validates_uniqueness_of :data_file_path, :message =>"must be unique. (Another file, image or page is already using '%{value}').", :if => Proc.new { |a| a.attachable_type == FILE_BLOCKS }
 
     class << self
 

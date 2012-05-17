@@ -1,0 +1,9 @@
+en:
+  activerecord:
+    attributes:
+      attachments:
+        data_file_path: Path
+      cms/file_block:
+        attachments:
+          one: The attached file
+          other: An attached file
