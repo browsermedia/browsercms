@@ -6,6 +6,7 @@ This release includes a number of new features, including:
 * Improved Attachments
 * Mobile Friendly templates
 * Rail 3.2 compatibility
+* Improved Heroku support
 
 See the upgrade instructions here for existing projects:
 
@@ -36,6 +37,13 @@ The CMS can now be configured to serve mobile optimized content, using a mobile 
 
 These features are originally from the bcms_mobile module, which has been inlined into the CMS core.
 
+Improved Heroku Support
+-----------------------
+
+To better support deploying BrowserCMS to Heroku, we have put together a new guide: https://github.com/browsermedia/browsercms/wiki/Deploying-to-Heroku which covers what steps are required, as well as some considerations. For example, using Heroku requires storing files on an external service, so we refactored the core CMS and worked on a new Amazon S3 module (bcms_aws_s3) that will integrate with it.
+
+As a side note, the CMS should work with Postgresql as well, based on our testing with Heroku (which uses Postgres by default).
+
 Notable Fixes
 -------------
 
@@ -44,6 +52,9 @@ Notable Fixes
 * [#492] Upgrade to be Rails 3.2.x compatibile
 * [#509] Pagination works for custom blocks now
 * [#508] Remove fancy file upload (probably unused and wasn't working anyway)
+* [#519] Better support for Amazon/AWS S3
+
+See the [detailed changelog](https://github.com/browsermedia/browsercms/compare/v3.4.0...v3.5.0) for more info.
 
 v3.4.2
 ======

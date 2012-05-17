@@ -1,13 +1,12 @@
 Tasks:
 
-* Write up release notes
+* [TEST] Upgrade script from 3.4.x (and instructions)
+* [TEST] Upgrade script from 3.3.x (and instructions)
 
 # 3.5.x Goals
 
 * Faster Files - Take advantage of X-Sendfile (if possible) to speed up sending uploaded CMS files.
-* [TEST] Upgrade script from 3.4.x and 3.3.x
-
-
+* [REFACTOR] Remove bcms-upgrade as a separate bin
 
 ## Upgrade Notes
 - Migrations are now generated with .cms. Will this cause problems during upgrades? (Write upgrade scenarios)
