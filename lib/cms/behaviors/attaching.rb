@@ -83,13 +83,15 @@ module Cms
                                         :allow_destroy => true,
                                         # New attachments must have an uploaded file
                                         :reject_if => lambda { |a| a[:data].blank? && a[:id].blank? }
-          attr_accessible :attachments_attributes,:attachment_id_list
+          attr_accessible :attachments_attributes, :attachment_id_list
 
           validates_associated :attachments
+          before_validation :initialize_attachments, :check_for_updated_attachments
+          after_validation :filter_generic_attachment_errors
+
           before_create :associate_new_attachments
-          before_validation :initialize_attachments
           before_save :ensure_status_matches_attachable
-          before_validation :check_for_updated_attachments
+
           after_save :save_associated_attachments
 
         end
@@ -351,10 +353,24 @@ module Cms
           end
         end
 
+        # We don't want errors like: Attachments is invalid showing up, since they are duplicates
+        def filter_generic_attachment_errors
+          filter_errors_named([:attachments])
+        end
+
         def initialize_attachments
           attachments.each { |a| a.attachable_class = self.class.name }
         end
 
+
+        private
+        def filter_errors_named(filter_list)
+          filtered_errors = self.errors.reject { |err| filter_list.include?(err.first) }
+
+          # reset the errors collection and repopulate it with the filtered errors.
+          self.errors.clear
+          filtered_errors.each { |err| self.errors.add(*err) }
+        end
       end
     end
   end

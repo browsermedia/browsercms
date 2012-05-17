@@ -34,7 +34,7 @@ Feature: Image Blocks
     When I fill in "Name" with "Giraffe"
     When I attach the file "test/fixtures/giraffe.jpeg" to "File"
     And I Save And Publish
-    Then I should see "file path can't be blank"
+    Then I should see "Path can't be blank"
 
   Scenario: With Existing Path
     Given an image with path "/giraffe.jpeg" exists
@@ -43,5 +43,5 @@ Feature: Image Blocks
     And I attach the file "test/fixtures/giraffe.jpeg" to "File"
     And I fill in "Path" with "/giraffe.jpeg"
     When I Save And Publish
-    Then I should see "file path has already been taken"
+    Then I should see "Path must be unique."
 

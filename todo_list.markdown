@@ -1,6 +1,6 @@
 Tasks:
 
-* [IMPROVE] Attachment is invalid error message is duplicative.
+* Write up release notes
 
 # 3.5.x Goals
 
