@@ -8,15 +8,15 @@ This release includes a number of new features, including:
 * Rail 3.2 compatibility
 * Improved Heroku support
 
-See the upgrade instructions here for existing projects:
+See the upgrade instructions here for existing projects: https://github.com/browsermedia/browsercms/wiki/Upgrading-to-3.5.x-from-3.4.x
 
 Improved Attachments
 --------------------
 
 Attachments have been completely reworked to use Paperclip (https://github.com/thoughtbot/paperclip).
 
-* Each block can now have multiple attachments using to different styles.
-* Attachments can be defined as one to one (has_attachment :image) or be stored as a collection (has_many_attachments).
+* Each block can now have multiple attachments using different styles.
+* Attachments can be defined as one to one (has_attachment :image) or be stored as a collection (has_many_attachments :photos).
 * Upgrade migrations are provide to migrate file and data for older projects to the new attachment structure.
 * New generators have been provided to create content blocks with the new attachment styles.
 
@@ -35,7 +35,7 @@ The CMS can now be configured to serve mobile optimized content, using a mobile 
 * Mobile caching: The mobile and full sites have their own separate page cache, mean both can be served quickly by Apache.
 * View as Mobile: Editors can preview the mobile templates while editing pages in the admin, if a page has a mobile template. Once in 'mobile' mode, all pages should be viewed as mobile until they disable it.
 
-These features are originally from the bcms_mobile module, which has been inlined into the CMS core.
+These features are originally from the bcms_mobile module, which has been inlined into the CMS core. See the [Mobile Setup Guide](https://github.com/browsermedia/browsercms/wiki/Setting-up-mobile-sites) for more information.
 
 Improved Heroku Support
 -----------------------
@@ -49,13 +49,13 @@ Notable Fixes
 
 * [#493] Add Mobile capability
 * [#494] Speed up Cucumber Scenarios
-* [#492] Upgrade to be Rails 3.2.x compatibile
+* [#492] Upgrade to be Rails 3.2.x compatible
 * [#509] Pagination works for custom blocks now
 * [#508] Remove fancy file upload (probably unused and wasn't working anyway)
 * [#519] Better support for Amazon/AWS S3
 * [#521] Remove SITE_DOMAIN constant in favor of more conventional rails configuration methods
 
-See the [detailed changelog](https://github.com/browsermedia/browsercms/compare/v3.4.0...v3.5.0) for more info.
+See the [detailed changelog](https://github.com/browsermedia/browsercms/compare/v3.4.0...v3.5.0.rc1) for more info.
 
 v3.4.2
 ======
