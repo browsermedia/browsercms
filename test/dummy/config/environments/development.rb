@@ -1,4 +1,3 @@
-SITE_DOMAIN="localhost:3000"
 Dummy::Application.configure do
 
 

@@ -27,9 +27,20 @@ module Cms
       assert(@task.due_date < Time.now)
       assert_equal "Howdy!", @task.comment
 
-      assert_that_an_email_is_sent_to_the_user_the_task_was_assigned_to
       assert_that_the_page_is_assigned_to_the_assigned_to_user
       assert_that_the_task_is_added_to_the_users_incomplete_tasks
+    end
+
+    test "Assign task sends email" do
+      Rails.configuration.cms.expects(:site_domain).returns("www.browsercms.org")
+
+      create_the_task!
+
+      email = Cms::EmailMessage.first(:order => "id asc")
+      assert_equal @editor_a.email, email.sender
+      assert_equal @editor_b.email, email.recipients
+      assert_equal "Page '#{@page.name}' has been assigned to you", email.subject
+      assert_equal "http://cms.browsercms.org#{@page.path}\n\n#{@task.comment}", email.body
     end
 
     test "An email is sent when a task is created" do
@@ -88,13 +99,6 @@ module Cms
           :page => @page2)
     end
 
-    def assert_that_an_email_is_sent_to_the_user_the_task_was_assigned_to
-      email = Cms::EmailMessage.first(:order => "id asc")
-      assert_equal @editor_a.email, email.sender
-      assert_equal @editor_b.email, email.recipients
-      assert_equal "Page '#{@page.name}' has been assigned to you", email.subject
-      assert_equal "http://cms.#{SITE_DOMAIN}#{@page.path}\n\n#{@task.comment}", email.body
-    end
 
     def assert_that_the_page_is_assigned_to_the_assigned_to_user
       assert @page.assigned_to?(@editor_b), "Expected the page to be assigned to editor b"

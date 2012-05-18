@@ -11,7 +11,7 @@ Feature: Generate Module
     And a file named "bcms_store/test/dummy/app/views/layouts/templates/default.html.erb" should exist
 
   Scenario: Generate a module (3.4.x)
-    Given I run `bcms module bcms_widgets`
+    Given I create a module named "bcms_widgets"
     Then I cd to "bcms_widgets"
     And a Gemfile should be created
     And the engine should be created

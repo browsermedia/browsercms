@@ -53,6 +53,7 @@ Notable Fixes
 * [#509] Pagination works for custom blocks now
 * [#508] Remove fancy file upload (probably unused and wasn't working anyway)
 * [#519] Better support for Amazon/AWS S3
+* [#521] Remove SITE_DOMAIN constant in favor of more conventional rails configuration methods
 
 See the [detailed changelog](https://github.com/browsermedia/browsercms/compare/v3.4.0...v3.5.0) for more info.
 

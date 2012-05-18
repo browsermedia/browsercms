@@ -53,6 +53,11 @@ Cucumber::Rake::Task.new('features:fast') do |t|
   t.cucumber_opts = "features --format progress --tags ~@cli"
 end
 
+Cucumber::Rake::Task.new('features:cli') do |t|
+  t.cucumber_opts = "features --format progress --tags @cli"
+end
+
+
 desc "Run everything but the command line (slow) tests"
 task 'test:fast' => %w{test:units test:functionals test:integration features:fast}
 

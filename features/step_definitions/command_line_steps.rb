@@ -126,7 +126,9 @@ Then /^Gemfile should have the correct version of BrowserCMS$/ do
 end
 
 When /^the production environment should be configured with reasonable defaults$/ do
-  check_file_content "#{project_name}/config/environments/production.rb", "config.assets.compile = true", true
+  production_rb = "#{project_name}/config/environments/production.rb"
+  check_file_content production_rb, "config.assets.compile = true", true
+  check_file_content production_rb, %!# config.cms.site_domain = "www.example.com"!, true
 end
 
 When /^it should comment out Rails in the Gemfile$/ do

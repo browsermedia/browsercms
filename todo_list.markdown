@@ -2,12 +2,12 @@ Tasks:
 
 # 3.5.x Goals
 
+* Get rid of FactoryGirl deprecation warnings
 * Faster Files - Take advantage of X-Sendfile (if possible) to speed up sending uploaded CMS files.
-* [REFACTOR] Remove bcms-upgrade as a separate bin
 
-## Upgrade Notes
-- Migrations are now generated with .cms. Will this cause problems during upgrades? (Write upgrade scenarios)
-- rails -h only provides generate | destroy methods with engine on a new project. Why? It sucks to have to cd into test/dummy to run tests.
+# 4.0.x
+
+* [REFACTOR] Remove bcms-upgrade as a separate bin
 
 # 3.6.x
 
@@ -49,7 +49,6 @@ When almost certainly should be.
 
 ### Using Pow
 Configure a CMS application to boot in production mode (temporarily for testing). Assumes powder is installed.
-
 
 #### With a New project
 bcms new [project_name]

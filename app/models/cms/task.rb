@@ -49,7 +49,7 @@ module Cms
       elsif assigned_to.email.blank?
         logger.warn "Can't send email for task because assigned to user #{assigned_to.login}:#{assigned_to.id} has no email address"
       else
-        domain = SITE_DOMAIN
+        domain = Rails.configuration.cms.site_domain
         if domain =~ /^www/
           host = domain.sub(/^www\./, "#{cms_domain_prefix}.")
         else

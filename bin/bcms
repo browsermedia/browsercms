@@ -73,6 +73,7 @@ class Cms::Install < Thor
   desc "upgrade", "Upgrades a BrowserCMS project to v#{Cms::VERSION}"
   method_option :skip_rails, :aliases => "--skip-rails", :desc => "Skip running `rake rails:update`.", :default => false, :type => :boolean
   method_option :skip_bundle, :aliases => "--skip-bundle", :desc => "Don't run `bundle update` during the process'", :default => false, :type => :boolean
+
   def upgrade
     update_browsercms_gem_version
     comment_out_rails_in_gemfile
@@ -94,11 +95,13 @@ TEXT
 
   desc 'version', 'Show BrowserCMS version'
   map "-v" => :version, "--version" => :version
+
   def version
     puts "BrowserCMS #{Cms::VERSION}"
   end
 
   desc 'install', "Adds BrowserCMS to an existing rails application."
+
   def install
     common_setup('.')
     prefix_cms_tables
@@ -178,21 +181,20 @@ Cms.table_prefix = "cms_"
   end
 
   def configure_mail_server
-    insert_into_file "config/environments/production.rb", :after => "config.active_support.deprecation = :notify" do
-      %q{
-
-  # Configure your mail server's address below
-  config.action_mailer.smtp_settings = {:address => 'mail.yourmailserver.com', :domain => "#{SITE_DOMAIN}"}}
+    [
+        "# Configure your mail server's address below",
+        "config.action_mailer.smtp_settings = {:address => 'mail.yourmailserver.com', :domain => config.cms.site_domain}}\n"
+    ].reverse.each do |line|
+      environment line, :env => "production"
     end
   end
 
-  def add_sitedomain_constant_to_environment_files
-    %w{development test production}.each do |env|
-      prepend_to_file "config/environments/#{env}.rb" do
-        <<-CODE
-SITE_DOMAIN="localhost:3000"
-        CODE
-      end
+  def add_sitedomain_to_production
+    [
+        %!# Uncomment and set this to match your production URL. Used for emailing links to the CMS. (default: localhost:3000)!,
+        %!# config.cms.site_domain = "www.example.com"\n!
+    ].reverse.each do |line| # Reverse ensures comment appears first
+      environment line, :env => "production"
     end
   end
 
@@ -202,11 +204,11 @@ SITE_DOMAIN="localhost:3000"
     inside rails_app do
       install_cms_seed_data
       add_route_to_end("mount_browsercms")
-      add_sitedomain_constant_to_environment_files
-      configure_mail_server
       create_browsercms_initializer
       enable_asset_precompiling
     end
+    configure_mail_server
+    add_sitedomain_to_production
   end
 
   def generate_demo_project
