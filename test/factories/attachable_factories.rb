@@ -30,7 +30,7 @@ FactoryGirl.define do
       attachment_file_path { nil }
     end
     m.sequence(:name) { |n| "VersionedAttachable#{n}" }
-    m.after_build { |f, evaluator|
+    m.after(:build) { |f, evaluator|
       opts = {:data => evaluator.attachment_file, :attachment_name => 'document'}
       opts[:parent] = evaluator.parent if evaluator.parent # Handle :parent=>nil
       opts[:data_file_path] = evaluator.attachment_file_path if evaluator.attachment_file_path
@@ -46,7 +46,7 @@ FactoryGirl.define do
       attachment_file_path { nil }
     end
     m.sequence(:name) { |n| "HasManyAttachments#{n}" }
-    m.after_build { |f, evaluator|
+    m.after(:build) { |f, evaluator|
       opts = {:data => evaluator.attachment_file, :attachment_name => 'documents'}
       opts[:parent] = evaluator.parent if evaluator.parent
       opts[:data_file_path] = evaluator.attachment_file_path if evaluator.attachment_file_path

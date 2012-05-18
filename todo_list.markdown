@@ -2,7 +2,6 @@ Tasks:
 
 # 3.5.x Goals
 
-* Get rid of FactoryGirl deprecation warnings
 * Faster Files - Take advantage of X-Sendfile (if possible) to speed up sending uploaded CMS files.
 
 # 4.0.x
