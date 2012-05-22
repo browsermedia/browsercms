@@ -1,3 +1,8 @@
+v3.5.0.rc3
+==========
+
+* Add new migration methods to make it easier for modules to namespace their blocks.
+
 v3.5.0.rc2
 ==========
 

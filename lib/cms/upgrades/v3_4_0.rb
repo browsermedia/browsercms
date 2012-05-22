@@ -15,7 +15,7 @@ models.each do |model_name|
 end
 TEXT
         insert_into_file migration, text, :after => "def up\n"
-        insert_into_file migration, "require 'cms/upgrades/v3_4_0'\n", :before=>"class"
+        insert_into_file migration, "require 'cms/upgrades/v3_4_0'\n", :before => "class"
         insert_into_file migration, "include Cms::Upgrades::V3_4_0::SchemaStatements\n", :after => "Migration\n"
       end
 
@@ -26,7 +26,6 @@ TEXT
         end
       end
     end
-
 
   end
 end

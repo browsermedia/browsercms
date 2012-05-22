@@ -8,6 +8,53 @@ module Cms
         gsub_file "config/environments/production.rb", /config.action_controller.page_cache_directory.+$/, ""
       end
 
+      # Technically these updates are for v3_4_0, but I want to avoid having to change existing migrations
+      #
+      # These migrations are designed to make it easy for modules to write migrations for their content blocks with minimal code.
+      module Retroactive_v3_4_0Updates
+        # Applys table namespacing and other fixes to blocks that need upgrading from < 3.4.0 to 3.5.
+        #
+        # @param [String] module_name I.e. module table_prefix (i.e. BcmsWhatever)
+        # @param [String] model_class_name I.e. 'Slide' or 'NewsArticle'
+        def v3_5_0_apply_namespace_to_block(module_name, model_class_name)
+          puts "Applying namespace '#{module_name}' to model '#{model_class_name}'"
+          table_prefix = module_name.underscore
+          model_name = model_class_name.underscore
+
+          rename_table model_name.pluralize, "#{table_prefix}_#{model_name.pluralize}"
+          rename_table "#{model_name}_versions", "#{table_prefix}_#{model_name}_versions"
+          v3_5_0_standardize_version_id_column(table_prefix, model_name)
+          v3_5_0_namespace_model_data(module_name, model_class_name)
+          v3_5_0_update_connector_namespaces(module_name, model_class_name)
+        end
+
+        def v3_5_0_standardize_version_id_column(table_prefix, model_name)
+          if column_exists?("#{table_prefix}_#{model_name}_versions", "#{model_name}_id")
+            rename_column("#{table_prefix}_#{model_name}_versions", "#{model_name}_id", :original_record_id)
+          end
+        end
+
+        def v3_5_0_namespace_model_data(module_name, model_class_name)
+          found = Cms::ContentType.named(model_class_name).first
+          if found
+            found.name = v3_5_0_namespace_model(module_name, model_class_name)
+            found.save!
+          end
+        end
+
+        def v3_5_0_update_connector_namespaces(module_name, model_class_name)
+          namespaced_class = v3_5_0_namespace_model(module_name, model_class_name)
+          Cms::Connector.where(:connectable_type => model_class_name).each do |connector|
+            connector.connectable_type = namespaced_class
+            connector.save!
+          end
+        end
+
+        def v3_5_0_namespace_model(module_name, model_class_name)
+          "#{module_name}::#{model_class_name}"
+        end
+      end
+
       # Add additional methods to ActiveRecord::Migration when this file is required.
       module FileStorageUpdates
 
@@ -32,6 +79,7 @@ module Cms
           loc = path_for_attachment(attachment)
           file_in_attachments_dir(loc)
         end
+
         # For a given class with an Attachment association (pre-3.5.0), migrate its attachment data to match the new
         # table structure.
         def migrate_attachment_for(klass)
@@ -152,4 +200,7 @@ module Cms
     end
   end
 end
-ActiveRecord::Migration.send(:include, Cms::Upgrades::V3_5_0::FileStorageUpdates) if defined?(ActiveRecord::Migration)
+if defined?(ActiveRecord::Migration)
+  ActiveRecord::Migration.send(:include, Cms::Upgrades::V3_5_0::FileStorageUpdates)
+  ActiveRecord::Migration.send(:include, Cms::Upgrades::V3_5_0::Retroactive_v3_4_0Updates)
+end
