@@ -29,6 +29,9 @@ module Cms
       # Make all Route helpers available in the view, i.e. cms_xyz_path and cms_xyz_url
       self.class.send(:include, Cms::Engine.routes.url_helpers)
 
+      # Need to add Cms::PageRoute helpers to the view
+      self.class.send(:include, Rails.application.routes.url_helpers)
+
       # See what values are getting copied into template
 #      Rails.logger.warn "Assigned these variables: #{attributes_to_assign}"
 

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    browsercms (3.5.0.rc1)
+    browsercms (3.5.0.rc2)
       ancestry (~> 1.2.4)
       ckeditor_rails (~> 3.6.2.2)
       jquery-rails (~> 2.0)
@@ -109,7 +109,7 @@ GEM
     multi_json (1.3.5)
     mysql2 (0.3.11)
     nokogiri (1.5.2)
-    paperclip (3.0.3)
+    paperclip (3.0.4)
       activemodel (>= 3.0.0)
       activerecord (>= 3.0.0)
       activesupport (>= 3.0.0)

@@ -5,6 +5,9 @@ class PageRouteTest < ActiveSupport::TestCase
     @route = Cms::PageRoute.new(:pattern=>"/:some/:pattern", :name=>"My Name")
   end
 
+  test "mass assignment" do
+    route = Cms::PageRoute.new(:pattern=>"/:some/:pattern", :name=>"My Name", :code=>"# Do somethings")
+  end
 
   def test_create
     page = create(:page, :path => "/things/overview")

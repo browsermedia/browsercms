@@ -1,0 +1,6 @@
+<b>Product Catalog</b>
+
+We have: <%= Product.all.size %> products. <br>
+<% Product.all.each do |p| %>
+    <%= link_to "View #{p.name}", product_path(:id => p.id) %> <br />
+<% end %>
