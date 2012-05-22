@@ -1,9 +1,5 @@
 Tasks:
 
-# 3.5.x Goals
-
-* Faster Files - Take advantage of X-Sendfile (if possible) to speed up sending uploaded CMS files.
-
 # 4.0.x
 
 * [REFACTOR] Remove bcms-upgrade as a separate bin

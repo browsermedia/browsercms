@@ -1,4 +1,26 @@
-v3.5.0
+v3.5.0.rc2
+==========
+
+* Fixed issue where named page routes couldn't be found in portlet views
+* Fixed issue where page routes can't be created in seed data.
+* Confirmed that X-Sendfile works
+
+X-Sendfile
+----------
+
+One way to improve the performance of BrowserCMS is to enable X-Sendfile. Used in conjunction with Web servers like Apache and Nginx, X-Sendfile will allow web servers to handle serving files that have been uploaded into the CMS. Web servers are very well optimized for sending static files, and doing so takes load off the Ruby processes reducing bottlenecks.
+
+To enable X-Sendfile in your application, uncomment one of the following two lines depending on which web server you are using.
+
+```
+# In config/environments/production.rb
+config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
+config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
+```
+
+You will then need to configure your web server to handle X-Sendfile requests. See documentation for [Apache](https://tn123.org/mod_xsendfile/) and [Nginx](http://wiki.nginx.org/XSendfile) for details.
+
+v3.5.0.rc1
 ======
 
 This release includes a number of new features, including:
