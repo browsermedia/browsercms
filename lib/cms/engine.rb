@@ -21,6 +21,9 @@ module Cms
 
     config.cms = ActiveSupport::OrderedOptions.new
     config.cms.attachments = ActiveSupport::OrderedOptions.new
+    
+    # Allows additional menu items to be added to the 'Tools' menu on the Admin tab.
+    config.cms.tools_menu = ActiveSupport::OrderedOptions.new
 
     # Make sure we use our rails model template (rather then its default) when `rails g cms:content_block` is run.
     config.app_generators do |g|
@@ -56,6 +59,8 @@ module Cms
       # I.e.
       #   config.cms.site_domain = "www.browsercms.org"
       app.config.cms.site_domain = "localhost:3000"
+      
+      app.config.cms.tools_menu = []
     end
 
     initializer 'browsercms.add_core_routes', :after => 'action_dispatch.prepare_dispatcher' do |app|

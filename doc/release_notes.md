@@ -2,6 +2,39 @@ v3.5.0.rc3
 ==========
 
 * Add new migration methods to make it easier for modules to namespace their blocks.
+* Allow modules to add new links to the Admin tab without overriding views. 
+
+In an engine, you can do the following:
+
+```
+# In lib/bcms_your_module/engine.rb
+initializer 'bcms_your_module.add_menu_item' do |app|
+  app.config.cms.tools_menu << {:menu_section => 'widgets', 
+								:name => 'List of Widgets', 
+								:engine=>'bcms_your_module', 
+								:route_name => 'widgets_path'
+							}
+end
+
+# In app/controllers/bcms_your_module/widget_controller.rb
+class BcmsYourModule::WidgetsController < Cms::BaseController
+
+  layout 'cms/administration'
+  check_permissions :administrate
+  
+  def index
+	@menu_section = 'widgets'
+	# Do something interesting
+  end
+end
+
+# In config/routes.rb
+BcmsYourModule::Engine.routes.draw do
+  get '/widgets' => 'widgets#index', :as =>:widgets
+end
+```
+
+
 
 v3.5.0.rc2
 ==========
