@@ -109,6 +109,12 @@ TEXT
     puts "BrowserCMS has been installed. Run rake db:install to add the tables then restart your server."
   end
 
+  desc 'install_db', "Adds just migrations and seed data to the project."
+  def install_db
+    install_migrations
+    install_cms_seed_data
+  end
+
   private
 
   def prefix_cms_tables

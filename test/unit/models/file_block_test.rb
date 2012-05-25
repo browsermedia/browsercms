@@ -35,6 +35,11 @@ module Cms
       @file_block = build(:file_block)
     end
 
+    test "file_size" do
+      assert_not_nil build(:file_block).file_size
+      assert_not_nil build(:image_block).file_size
+      assert_not_nil build(:page).file_size
+    end
     def test_table_name
       assert_equal "cms_file_blocks", Cms::FileBlock.table_name
     end
@@ -79,6 +84,13 @@ module Cms
     test "don't create without a file data using nested attributes" do
       fb = FileBlock.new(:name => "Any Name", :attachments_attributes => {"0" => {:data_file_path => "/new-path.txt", :attachment_name => "file"}})
       refute fb.valid?
+    end
+
+    test "by_section" do
+      target_section = create(:public_section)
+      fb = create(:file_block, :parent => target_section)
+
+      assert_equal [fb], FileBlock.by_section(target_section).all
     end
   end
 

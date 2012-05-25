@@ -7,7 +7,7 @@ xml.tag! 'Connector', "command" => params["Command"], "resourceType" => params["
     end
   end
   xml.tag! 'Files' do
-    for file in @files do
+    @files.each do |file|
       xml.tag! 'File', "name" => file.name, "url" => file.path, "size" => file.file_size
     end
   end

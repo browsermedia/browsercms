@@ -12,7 +12,7 @@ module Cms
     VISIBLE_NODE_TYPES = [SECTION, PAGE, LINK]
 
     include DefaultAccessible
-    attr_accessible :allow_groups, :group_ids
+    attr_accessible :allow_groups, :group_ids, :name, :path, :root, :hidden
 
     include Cms::Addressable
     include Cms::Addressable::NodeAccessors
