@@ -46,7 +46,6 @@ Cms::Engine.routes.draw do
       put :complete
     end
   end
-  match '/sections/file_browser.xml', :to => 'sections#file_browser', :format => "xml", :as=>'file_browser'
   resources :sections do
     resources :links, :pages
   end

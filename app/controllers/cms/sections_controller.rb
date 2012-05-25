@@ -69,17 +69,6 @@ module Cms
       end
     end
 
-    # Generates XML for Browsing files/pages/etc.
-    # @todo This MIGHT best live in the FCKeditor module, since it's XML format is highly coupled to that module's needs.
-    def file_browser
-      @section = Cms::Section.find_by_name_path(params[:CurrentFolder])
-      if request.post? && params[:NewFile]
-        handle_file_browser_upload
-      else
-        render_file_browser
-      end
-    end
-
     protected
     def load_parent
       @parent = Cms::Section.find(params[:section_id])
@@ -89,33 +78,6 @@ module Cms
     def load_section
       @section = Cms::Section.find(params[:id])
       raise Cms::Errors::AccessDenied unless current_user.able_to_edit?(@section)
-    end
-
-    def handle_file_browser_upload
-      begin
-        case params[:Type].downcase
-          when "file"
-            FileBlock.create!(:section => @section, :file => params[:NewFile])
-          when "image"
-            ImageBlock.create!(:section => @section, :file => params[:NewFile])
-        end
-        result = "0"
-      rescue Exception => e
-        result = "1,'#{escape_javascript(e.message)}'"
-      end
-      render :text => %Q{<script type="text/javascript">window.parent.frames['frmUpload'].OnUploadCompleted(#{result});</script>}, :layout => false
-    end
-
-    def render_file_browser
-      @files = case params[:Type].downcase
-                 when "file"
-                   FileBlock.by_section(@section)
-                 when "image"
-                   ImageBlock.by_section(@section)
-                 else
-                   @section.pages
-               end
-      render 'cms/sections/file_browser', :layout => false, :format => :xml
     end
 
     def public_groups
