@@ -178,7 +178,7 @@ class Attachment < ActiveRecord::Base
     section ? section.public? : false
   end
   
-  def full_file_location
+  def full_file_location(param=nil)
     File.join(Attachment.storage_location, file_location)
   end
 
