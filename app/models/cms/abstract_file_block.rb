@@ -19,8 +19,9 @@ module Cms
 
     # Exists here so FileBrowser can polymorphically call file_size on Page, Images, Files, etc.
     def file_size
-      file.size
+      file.size.round_bytes
     end
+
     def path
       file.url
     end

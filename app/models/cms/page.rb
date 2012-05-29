@@ -210,8 +210,9 @@ class Cms::Page < ActiveRecord::Base
     super(version)
   end
 
+  # Pages have no size (for the purposes of FCKEditor)
   def file_size
-    "?"
+    "NA"
   end
 
   def public?
