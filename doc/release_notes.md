@@ -1,64 +1,4 @@
-v3.5.0.rc3
-==========
-
-* Add new migration methods to make it easier for modules to namespace their blocks.
-* Allow modules to add new links to the Admin tab without overriding views. 
-
-In an engine, you can do the following:
-
-```
-# In lib/bcms_your_module/engine.rb
-initializer 'bcms_your_module.add_menu_item' do |app|
-  app.config.cms.tools_menu << {:menu_section => 'widgets', 
-								:name => 'List of Widgets', 
-								:engine=>'bcms_your_module', 
-								:route_name => 'widgets_path'
-							}
-end
-
-# In app/controllers/bcms_your_module/widget_controller.rb
-class BcmsYourModule::WidgetsController < Cms::BaseController
-
-  layout 'cms/administration'
-  check_permissions :administrate
-  
-  def index
-	@menu_section = 'widgets'
-	# Do something interesting
-  end
-end
-
-# In config/routes.rb
-BcmsYourModule::Engine.routes.draw do
-  get '/widgets' => 'widgets#index', :as =>:widgets
-end
-```
-
-
-
-v3.5.0.rc2
-==========
-
-* Fixed issue where named page routes couldn't be found in portlet views
-* Fixed issue where page routes can't be created in seed data.
-* Confirmed that X-Sendfile works
-
-X-Sendfile
-----------
-
-One way to improve the performance of BrowserCMS is to enable X-Sendfile. Used in conjunction with Web servers like Apache and Nginx, X-Sendfile will allow web servers to handle serving files that have been uploaded into the CMS. Web servers are very well optimized for sending static files, and doing so takes load off the Ruby processes reducing bottlenecks.
-
-To enable X-Sendfile in your application, uncomment one of the following two lines depending on which web server you are using.
-
-```
-# In config/environments/production.rb
-config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
-config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
-```
-
-You will then need to configure your web server to handle X-Sendfile requests. See documentation for [Apache](https://tn123.org/mod_xsendfile/) and [Nginx](http://wiki.nginx.org/XSendfile) for details.
-
-v3.5.0.rc1
+v3.5.0
 ======
 
 This release includes a number of new features, including:
@@ -104,7 +44,54 @@ To better support deploying BrowserCMS to Heroku, we have put together a new gui
 
 As a side note, the CMS should work with Postgresql as well, based on our testing with Heroku (which uses Postgres by default).
 
-Notable Fixes
+Admin Links
+==========
+In an engine, you can do the following:
+
+```
+# In lib/bcms_your_module/engine.rb
+initializer 'bcms_your_module.add_menu_item' do |app|
+  app.config.cms.tools_menu << {:menu_section => 'widgets',
+								:name => 'List of Widgets',
+								:engine=>'bcms_your_module',
+								:route_name => 'widgets_path'
+							}
+end
+
+# In app/controllers/bcms_your_module/widget_controller.rb
+class BcmsYourModule::WidgetsController < Cms::BaseController
+
+  layout 'cms/administration'
+  check_permissions :administrate
+
+  def index
+	@menu_section = 'widgets'
+	# Do something interesting
+  end
+end
+
+# In config/routes.rb
+BcmsYourModule::Engine.routes.draw do
+  get '/widgets' => 'widgets#index', :as =>:widgets
+end
+```
+
+X-Sendfile
+----------
+
+One way to improve the performance of BrowserCMS is to enable X-Sendfile. Used in conjunction with Web servers like Apache and Nginx, X-Sendfile will allow web servers to handle serving files that have been uploaded into the CMS. Web servers are very well optimized for sending static files, and doing so takes load off the Ruby processes reducing bottlenecks.
+
+To enable X-Sendfile in your application, uncomment one of the following two lines depending on which web server you are using.
+
+```
+# In config/environments/production.rb
+config.action_dispatch.x_sendfile_header = "X-Sendfile" # for apache
+config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for nginx
+```
+
+You will then need to configure your web server to handle X-Sendfile requests. See documentation for [Apache](https://tn123.org/mod_xsendfile/) and [Nginx](http://wiki.nginx.org/XSendfile) for details.
+
+Other Notable Fixes
 -------------
 
 * [#493] Add Mobile capability
@@ -114,8 +101,13 @@ Notable Fixes
 * [#508] Remove fancy file upload (probably unused and wasn't working anyway)
 * [#519] Better support for Amazon/AWS S3
 * [#521] Remove SITE_DOMAIN constant in favor of more conventional rails configuration methods
+* Add new migration methods to make it easier for modules to namespace their blocks.
+* Allow modules to add new links to the Admin tab without overriding views.
+* Fixed issue where named page routes couldn't be found in portlet views
+* Fixed issue where page routes can't be created in seed data.
+* Confirmed that X-Sendfile works
 
-See the [detailed changelog](https://github.com/browsermedia/browsercms/compare/v3.4.0...v3.5.0.rc1) for more info.
+See the [detailed changelog](https://github.com/browsermedia/browsercms/compare/v3.4.0...v3.5.0) for more info.
 
 v3.4.2
 ======

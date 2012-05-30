@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    browsercms (3.5.0.rc4)
+    browsercms (3.5.0)
       ancestry (~> 1.2.4)
       ckeditor_rails (~> 3.6.2.2)
       jquery-rails (~> 2.0)
@@ -106,7 +106,7 @@ GEM
     mime-types (1.18)
     mocha (0.9.8)
       rake
-    multi_json (1.3.5)
+    multi_json (1.3.6)
     mysql2 (0.3.11)
     nokogiri (1.5.2)
     paperclip (3.0.4)
@@ -151,12 +151,12 @@ GEM
     rspec-mocks (2.10.1)
     ruby-prof (0.11.2)
     rubyzip (0.9.8)
-    sass (3.1.18)
+    sass (3.1.19)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
       tilt (~> 1.3)
-    selenium-webdriver (2.21.2)
+    selenium-webdriver (2.22.0)
       childprocess (>= 0.2.5)
       ffi (~> 1.0)
       libwebsocket (~> 0.1.3)
