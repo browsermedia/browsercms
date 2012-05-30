@@ -1,7 +1,7 @@
 module Cms
   class ContentType < ActiveRecord::Base
 
-    attr_accessible :name, :group_name
+    attr_accessible :name, :group_name, :content_type_group
 
     attr_accessor :group_name
     belongs_to :content_type_group, :class_name => 'Cms::ContentTypeGroup'

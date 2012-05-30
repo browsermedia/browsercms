@@ -39,59 +39,6 @@ class SectionsControllerTest < ActionController::TestCase
   
 end
 
-class SectionFileBrowserControllerTest < ActionController::TestCase
-  tests Cms::SectionsController
-  include Cms::ControllerTestHelper
-  
-  def setup
-    given_a_site_exists
-    login_as_cms_admin
-    given_there_is_a_sitemap
-  end
-  
-  def test_root_section
-    @foo = create(:section, :parent => root_section, :name => "Foo", :path => '/foo')
-    @bar = create(:section, :parent => root_section, :name => "Bar", :path => '/bar')
-    @home = create(:page, :section => root_section, :name => "Home", :path => '/home')
-
-    get :file_browser, :format => "xml", "CurrentFolder" => "/", "Command" => "GetFilesAndFolders", "Type" => "Page"
-
-    assert_response :success
-    assert_equal "application/xml", @response.content_type
-    assert_select "Connector[command=?][resourceType=?]", "GetFilesAndFolders", "Page" do
-      assert_select "CurrentFolder[path=?][url=?]", "/", "/"
-      assert_select "Folders" do
-        assert_select "Folder[name=?]", "Foo"
-        assert_select "Folder[name=?]", "Bar"
-      end
-      assert_select "Files" do
-        assert_select "File[name=?][url=?][size=?]", "Home", "/home", "?"
-      end
-    end
-  end
-  
-  def test_sub_section
-    @foo = create(:section, :parent => root_section, :name => "Foo", :path => '/foo')
-    @bar = create(:section, :parent => @foo, :name => "Bar", :path => '/foo/bar')
-    @foo_page = create(:page, :section => @foo, :name => "Foo Page", :path => '/foo/page')
-    @home = create(:page, :section => root_section, :name => "Home", :path => '/home')
-    get :file_browser, :format => "xml", "CurrentFolder" => "/Foo/", "Command" => "GetFilesAndFolders", "Type" => "Page"
-
-    assert_response :success
-    assert_equal "application/xml", @response.content_type
-    assert_select "Connector[command=?][resourceType=?]", "GetFilesAndFolders", "Page" do
-      assert_select "CurrentFolder[path=?][url=?]", "/Foo/", "/Foo/"
-      assert_select "Folders" do
-        assert_select "Folder[name=?]", "Bar"
-      end
-      assert_select "Files" do
-        assert_select "File[name=?][url=?][size=?]", "Foo Page", "/foo/page", "?"
-      end
-    end
-  end
-  
-end
-
 class SectionsControllerPermissionsTest < ActionController::TestCase
   tests Cms::SectionsController
   include Cms::ControllerTestHelper

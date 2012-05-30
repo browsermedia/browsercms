@@ -43,6 +43,10 @@ module Cms
       @controller.instance_variable_get("@template").content_for(name, content, &block)
     end
 
+    # Returns the routes for the Cms::Engine for view that need to access them.
+    def cms
+      Cms::Engine.routes.url_helpers
+    end
   end
 
 

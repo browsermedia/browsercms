@@ -7,6 +7,8 @@ module Cms
 
     include DefaultAccessible
 
+    attr_accessible :category_type
+
     validates_presence_of :category_type_id, :name
     validates_uniqueness_of :name, :scope => :category_type_id
 
