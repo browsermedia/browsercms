@@ -74,7 +74,7 @@ module Cms
           include InstanceMethods
 
           # Allows a block to be associated with a list of uploaded attachments (done via AJAX)
-          attr_accessor :attachment_id_list
+          attr_accessor :attachment_id_list, :attachments_changed
 
           Cms::Attachment.definitions[self.name] = {}
           has_many :attachments, :as => :attachable, :dependent => :destroy, :class_name => 'Cms::Attachment', :autosave => false
@@ -83,7 +83,7 @@ module Cms
                                         :allow_destroy => true,
                                         # New attachments must have an uploaded file
                                         :reject_if => lambda { |a| a[:data].blank? && a[:id].blank? }
-          attr_accessible :attachments_attributes, :attachment_id_list
+          attr_accessible :attachments_attributes, :attachment_id_list, :attachments_changed
 
           validates_associated :attachments
           before_validation :initialize_attachments, :check_for_updated_attachments
@@ -218,13 +218,19 @@ module Cms
         # This ensures that if a change is made to an attachment, that this model is also marked as changed.
         # Otherwise, if the change isn't detected, this record won't save a new version (since updates are rejected if no changes were made)
         def check_for_updated_attachments
-          attachments.each do |a|
-            if a.changed?
-              changed_attributes['attachments'] = "Uploaded new files"
-            end
+          if attachments_changed == "true" || attachments_were_updated?
+            changed_attributes['attachments'] = "Uploaded new files"
           end
         end
 
+        def attachments_were_updated?
+          attachments.each do |a|
+            if a.changed?
+              return true
+            end
+          end
+          false
+        end
         # Returns a list of all attachments this content type has defined.
         # @return [Array<String>] Names
         def attachment_names
@@ -309,6 +315,7 @@ module Cms
         #
         # ActiveRecord Callback
         def save_associated_attachments
+          logger.warn "save_associated_attachments #{attachments}"
           attachments.each do |a|
             a.save if a.changed?
           end

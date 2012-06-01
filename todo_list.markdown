@@ -1,7 +1,5 @@
 Tasks:
 
-* [BUG] Email Page portlet handler_path isn't generating a correct URL for a given email/portlet (There is failing scenario for this.) Probably related to how view helpers are added to portlets.
-
 # 4.0.x
 
 * [REFACTOR] Remove bcms-upgrade as a separate bin

@@ -52,6 +52,7 @@ $(function () {
                     if ($("#assets_table > table tr:visible").length <= 2) {
                         $("#assets_table > table").hide();
                     }
+                    $('#attachments_manager_changed').val(true);
                 }, 'script');
 
             }
@@ -71,6 +72,7 @@ $(function () {
 
     // After an attachment is uploaded, copy the values into the main attachment table.
     $('#asset_add_uploader').load(function () {
+        $('#attachments_manager_changed').val(true); // Mark that the list of attachment has changed
         var response = $(this).contents();
 
         if (response.find('tr').html()) {

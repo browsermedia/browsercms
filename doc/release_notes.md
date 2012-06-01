@@ -1,7 +1,9 @@
 v3.5.1
 ======
 
+* Test with Rails 3.2.5 release
 * Update gemspec to enforce Rails 3.2.5 or later (which contains a critical security SQL Injection patch)
+* Fix issue with has_attachments (possibly caused by nested_assignment changes in Rails 3.2.5)
 
 v3.5.0
 ======

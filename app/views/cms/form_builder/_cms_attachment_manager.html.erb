@@ -12,6 +12,7 @@
       <%= select_tag :asset_types, options_for_select(asset_types) %>
     </div>
     <%= f.hidden_field :attachment_id_list, :id => "attachment_manager_ids_list" %>
+    <%= f.hidden_field :attachments_changed, :id => "attachments_manager_changed" %>
 
     <div id="asset_add" class="fields file_fields" style="display:<%= asset_types.size > 1 ? "none" : "block" %>">
       <label for="asset_add">Choose file</label>

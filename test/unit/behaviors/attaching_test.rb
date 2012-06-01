@@ -226,7 +226,7 @@ module Cms
   class SendFileStrategyTest < ActiveSupport::TestCase
     test "send_attachment" do
       expected_path = "/some/path"
-      given_an_attachment_with_file_path(expected_path, :style=>"original")
+      given_an_attachment_with_file_path(expected_path, :style => "original")
       then_controller_should_send_file(expected_path)
 
       Cms::Attachments::FilesystemStrategy.send_attachment(@attachment, @controller)
@@ -234,8 +234,8 @@ module Cms
 
     test "send_attachment with style" do
       thumbnail_path = "/thumbnail/path"
-      given_an_attachment_with_file_path(thumbnail_path, :style=>"thumbnail")
-      then_controller_should_send_file(thumbnail_path, :style=>"thumbnail")
+      given_an_attachment_with_file_path(thumbnail_path, :style => "thumbnail")
+      then_controller_should_send_file(thumbnail_path, :style => "thumbnail")
 
       Cms::Attachments::FilesystemStrategy.send_attachment(@attachment, @controller)
     end
@@ -454,6 +454,24 @@ module Cms
       assert @attachable.changed?
     end
 
+    test "adding new attachments will mark the attachable as changed" do
+      @attachable.attachments_changed = "true"
+      @attachable.valid?
+      assert @attachable.changed?
+    end
+
+    test "blank attachments_changed" do
+      @attachable.attachments_changed = ""
+      @attachable.valid?
+      refute @attachable.changed?
+    end
+
+    test "false attachments_changed" do
+
+      @attachable.attachments_changed = "false"
+      @attachable.valid?
+      refute @attachable.changed?
+    end
     test "Get attachment by name" do
       assert_equal @attachable.attachments[0], @attachable.document
     end
