@@ -10,7 +10,7 @@ Feature:
     When I run `bcms demo`
     Then the output should contain:
     """
-    "demo" was called incorrectly. Call as "bcms demo [NAME]".
+    bcms demo requires at least 1 argument: "bcms demo [NAME]".
     """
     And the exit status should be 0
 

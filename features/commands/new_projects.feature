@@ -37,7 +37,7 @@ Feature: New Project Generator
     When I run `bcms new`
     Then the output should contain:
     """
-    "new" was called incorrectly. Call as "bcms new [NAME]".
+    bcms new requires at least 1 argument: "bcms new [NAME]".
     """
     And the exit status should be 0
 
@@ -45,6 +45,6 @@ Feature: New Project Generator
     When I run `bcms module`
     Then the output should contain:
     """
-    "module" was called incorrectly. Call as "bcms module [NAME]".
+    bcms module requires at least 1 argument: "bcms module [NAME]".
     """
     And the exit status should be 0

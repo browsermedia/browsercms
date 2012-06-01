@@ -30,6 +30,10 @@ class Cms::Install < Thor
   def self.common_options
     method_option :database, :aliases => "-d", :desc => "Preconfigure for selected database (options: mysql/oracle/postgresql/sqlite3/frontbase/ibm_db) [Default: sqlite3]"
     method_option :template, :aliases => "-m", :desc => "Path to an application template (can be a filesystem path or URL)"
+    option_skip_bundle
+  end
+
+  def self.option_skip_bundle
     method_option :skip_bundle, :aliases => "--skip-bundle", :desc => "Don't run bundle install", :default => false, :type => :boolean
   end
 
@@ -101,7 +105,7 @@ TEXT
   end
 
   desc 'install', "Adds BrowserCMS to an existing rails application."
-
+  option_skip_bundle
   def install
     common_setup('.')
     prefix_cms_tables

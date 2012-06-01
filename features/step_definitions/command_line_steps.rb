@@ -33,6 +33,7 @@ When /^BrowserCMS should be added the \.gemspec file$/ do
 end
 
 Then /^BrowserCMS should be installed in the project$/ do
+  assert_matching_output("BrowserCMS has been installed", all_output)
   # This is a not a really complete check but it at least verifies the generator completes.
   check_file_content('config/initializers/browsercms.rb', 'Cms.table_prefix = "cms_"', true)
   check_file_content('config/routes.rb', 'mount_browsercms', true)

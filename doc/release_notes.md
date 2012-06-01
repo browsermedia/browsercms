@@ -1,3 +1,8 @@
+v3.5.1
+======
+
+* Update gemspec to enforce Rails 3.2.5 or later (which contains a critical security SQL Injection patch)
+
 v3.5.0
 ======
 
