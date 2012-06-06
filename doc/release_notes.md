@@ -1,3 +1,8 @@
+v3.5.2
+======
+
+* Refactor CKEditor integration to make it easier to support external integrations (like CKFinder/KCFinder modules)
+
 v3.5.1
 ======
 
