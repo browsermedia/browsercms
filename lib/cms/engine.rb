@@ -25,6 +25,9 @@ module Cms
     # Allows additional menu items to be added to the 'Tools' menu on the Admin tab.
     config.cms.tools_menu = ActiveSupport::OrderedOptions.new
 
+    # Define configuration for the CKEditor
+    config.cms.ckeditor = ActiveSupport::OrderedOptions.new
+    
     # Make sure we use our rails model template (rather then its default) when `rails g cms:content_block` is run.
     config.app_generators do |g|
       path = File::expand_path('../../templates', __FILE__)
@@ -60,6 +63,11 @@ module Cms
       #   config.cms.site_domain = "www.browsercms.org"
       app.config.cms.site_domain = "localhost:3000"
       
+      # Determines which ckeditor file will be used to configure all instances.
+      # There should be at most ONE of these, so use manifest files which require the below one to augement it.
+      app.config.cms.ckeditor.configuration_file = 'bcms/ckeditor_standard_config.js'
+      
+      # Define menu items to be added dynamically to the CMS Admin tab.
       app.config.cms.tools_menu = []
     end
 
