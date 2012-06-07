@@ -137,15 +137,6 @@ module Cms
       assert_response :success
     end
 
-    def test_update
-      put :update, :id => @user.id, :cms_user => {:first_name => "First"}
-      reset(:user)
-
-      assert_redirected_to users_path
-      assert_equal "First", @user.first_name
-      assert_equal "User '#{@user.login}' was updated", flash[:notice]
-    end
-
     def test_add_to_groups
       @group_ids = [create(:group).id, create(:group).id]
       put :update, :id => @user.id, :group_ids => @group_ids
