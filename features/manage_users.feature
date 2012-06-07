@@ -13,6 +13,17 @@ Feature: Manage Users
     And I should see the following content:
       | testuser |
 
+  Scenario: Update username
+    Given the following content editor exists:
+      | username | password | first_name | last_name |
+      | testuser | abc123   | Mr         | Blank     |
+    When I request /cms/users
+    And I click on "Mr Blank"
+    And I fill in "First Name" with "Mister"
+    And I press "Save"
+    Then I should see the following content:
+      | Mister Blank |
+
   Scenario: Change Password
     Given the following content editor exists:
       | username | password | first_name | last_name |

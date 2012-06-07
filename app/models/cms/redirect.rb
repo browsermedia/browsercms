@@ -3,6 +3,10 @@ module Cms
     validates_presence_of :from_path, :to_path
     validates_uniqueness_of :from_path
 
-    include DefaultAccessible
+    def self.from(path)
+      where(:from_path => path).first
+    end
+
+    attr_accessible :from_path, :to_path
   end
 end

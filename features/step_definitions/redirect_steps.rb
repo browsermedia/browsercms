@@ -10,3 +10,13 @@ When /^create a Redirect with the following:$/ do |table|
   click_on 'Save'
 end
 
+Given /^the following redirects exist:$/ do |table|
+  table.hashes.each do |row|
+    Cms::Redirect.create!(:from_path=>row[:from], :to_path=>row[:to])
+  end
+end
+
+When /^I edit the "([^"]*)" redirect$/ do |from_path|
+  r = Cms::Redirect.from(from_path)
+  visit "/cms/redirects/#{r.id}/edit"
+end

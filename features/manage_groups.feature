@@ -31,6 +31,17 @@ Feature: Manage Groups
     Then I click on "Authenticated Users"
     And the new group should have neither edit nor publish permissions
 
+  Scenario: Update Group
+    Given the following group exists:
+      | name    |
+      | Members |
+    Given I request /cms/groups
+    And I click on "Members"
+    And I fill in "Group Name" with "Members for Life"
+    And I press "Save"
+    Then I should see "Members for Life"
+
+
   Scenario: Multiple Pages of Groups
     Given there are 20 groups
     When I am at /cms/groups

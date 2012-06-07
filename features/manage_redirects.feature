@@ -15,5 +15,17 @@ Feature: Manage Redirects
       | /path-a | /path-b |
     Then I should see a page titled "List Redirects"
     And I should see the following content:
-    | /path-a |
-    | /path-b |
+      | /path-a |
+      | /path-b |
+
+  Scenario: Update Redirects
+    Given the following redirects exist:
+      | from      | to        |
+      | /about-us | /about-you |
+    When I edit the "/about-us" redirect
+    And I fill in "To" with "/about-them"
+    And I press "Save"
+    Then I should see the following content:
+    | /about-them |
+
+
