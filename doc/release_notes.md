@@ -2,6 +2,7 @@ v3.5.2
 ======
 
 * Refactor CKEditor integration to make it easier to support external integrations (like CKFinder/KCFinder modules)
+* [#527] Fix bug that prevented editing users/groups/redirects.
 
 v3.5.1
 ======
