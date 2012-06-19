@@ -3,6 +3,7 @@ source 'http://rubygems.org'
 # Load this project as a gem.
 gemspec
 
+gem 'mercury-rails'
 gem "mysql2"
 
 gem 'yard', :groups=>[:development, :test]
