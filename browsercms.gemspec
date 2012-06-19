@@ -32,6 +32,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency("rails", "< 3.3.0", ">= 3.2.5")
   s.add_dependency "sass-rails"
+  s.add_dependency "bootstrap-sass"
   s.add_dependency "ancestry", "~> 1.2.4"
   s.add_dependency "ckeditor_rails", "~> 3.6.2.2"
   s.add_dependency "jquery-rails", "~> 2.0"

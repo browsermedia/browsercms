@@ -3,6 +3,7 @@ PATH
   specs:
     browsercms (3.5.2)
       ancestry (~> 1.2.4)
+      bootstrap-sass
       ckeditor_rails (~> 3.6.2.2)
       jquery-rails (~> 2.0)
       paperclip (~> 3.0.3)
@@ -50,6 +51,7 @@ GEM
       ffi (>= 1.0.11)
       rspec (>= 2.7.0)
     bluecloth (2.2.0)
+    bootstrap-sass (2.0.3.1)
     builder (3.0.0)
     capybara (1.1.2)
       mime-types (>= 1.16)
@@ -194,6 +196,7 @@ PLATFORMS
 DEPENDENCIES
   aruba
   bluecloth
+  bootstrap-sass
   browsercms!
   capybara
   cucumber
@@ -204,6 +207,7 @@ DEPENDENCIES
   mocha (= 0.9.8)
   mysql2
   ruby-prof
+  sass-rails
   sqlite3-ruby
   test-unit (= 2.1.1)
   thin

@@ -16,6 +16,11 @@ group :production do
   gem 'uglifier'
 end
 
+group :assets do
+  gem 'sass-rails'
+  gem 'bootstrap-sass'
+end
+
 group :test do
   gem 'factory_girl_rails'
   gem 'test-unit', '2.1.1'
