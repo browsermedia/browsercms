@@ -10,9 +10,8 @@
             <b class="caret"></b>
           </a>
           <ul class="dropdown-menu">
-            <li><%= link_to "Home", "/" %></li>
-            <li><%= link_to "Dashboard", cms.dashboard_path %></li>
-            <li><%= link_to "Edit Site Properties", "" %></li>
+            <%= nav_link_to "Home", "/" %>
+            <%= nav_link_to "Dashboard", cms.dashboard_path %>
           </ul>
         </li>
         <li class="dropdown">
@@ -23,12 +22,13 @@
             <b class="caret"></b>
           </a>
           <ul class="dropdown-menu">
-            <li><%= link_to "New Page", cms.new_page_path %></li>
-            <li><%= link_to "New Link", cms.new_link_path %></li>
-            <li><%= link_to "New Section", cms.new_section_path %></li>
-            <li class="divider">
-            <li><%= link_to "View Sitemap", cms.sitemap_path %></li>
-            <li><%= link_to "Redirects", cms.redirects_path %></li>
+            <%= nav_link_to "View Sitemap", cms.sitemap_path %>
+            <%= divider_tag %>
+            <%= nav_link_to "New Page", cms.new_page_path %>
+            <%= nav_link_to "New Link", cms.new_link_path %>
+            <%= nav_link_to "New Section", cms.new_section_path %>
+            <%= divider_tag %>
+            <%= nav_link_to "Redirects", cms.redirects_path %>
           </ul>
         </li>
         <li class="dropdown">
@@ -39,12 +39,12 @@
             <b class="caret"></b>
           </a>
           <ul class="dropdown-menu">
+            <%= nav_link_to "Content Library", cms.content_library_path %>
+            <%= divider_tag %>
             <% Cms::ContentTypeGroup.menu_list.each_with_index do |group, i| %>
                 <%= divider_tag(i) %>
                 <% group.types.each do |type| %>
-                    <%= select_content_type_tag(type) do %>
-                        <%= link_to h(type.display_name), cms_index_path_for(type) %>
-                    <% end %>
+                    <%= nav_link_to h(type.display_name), cms_index_path_for(type) %>
                 <% end -%>
             <% end %>
           </ul>
@@ -52,18 +52,18 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<b class="caret"></b></a>
           <ul class="dropdown-menu">
-            <li><%= link_to "Users", cms.users_path %></li>
-            <li><%= link_to "Groups", cms.groups_path %></li>
+            <%= nav_link_to "Users", cms.users_path %>
+            <%= nav_link_to "Groups", cms.groups_path %>
             <li class="divider">
-            <li><%= link_to "Partials", cms.page_partials_path %></li>
-            <li><%= link_to "Page Templates", cms.page_templates_path %></li>
+              <%= nav_link_to "Partials", cms.page_partials_path %>
+              <%= nav_link_to "Page Templates", cms.page_templates_path %>
             <li class="divider">
-            <li><%= link_to "Routes", cms.page_routes_path %></li>
-            <li><%= link_to "Clear Page Cache", cms.cache_path %></li>
-            <li><%= link_to "Email Messages", cms.email_messages_path %></li>
-            <% Rails.application.config.cms.tools_menu.each do |menu_item| %>
-                <li><%= link_to(menu_item[:name], self.send(menu_item[:engine]).send(menu_item[:route_name])) %></li>
-            <% end %>
+              <%= nav_link_to "Routes", cms.page_routes_path %>
+              <%= nav_link_to "Clear Page Cache", cms.cache_path %>
+              <%= nav_link_to "Email Messages", cms.email_messages_path %>
+              <% Rails.application.config.cms.tools_menu.each do |menu_item| %>
+                  <%= nav_link_to(menu_item[:name], self.send(menu_item[:engine]).send(menu_item[:route_name])) %>
+              <% end %>
           </ul>
         </li>
         <form class="navbar-search">
@@ -82,9 +82,9 @@
             <b class="caret"></b>
           </a>
           <ul class="dropdown-menu">
-            <li><%= link_to current_user.full_name, cms.user_path(current_user) %></li>
+            <%= nav_link_to current_user.full_name, cms.user_path(current_user) %>
             <li class="divider">
-            <li><%= link_to "Logout", cms.logout_path, :class => "http_delete", :target => "_top" %></li>
+              <%= nav_link_to "Logout", cms.logout_path, :class => "http_delete", :target => "_top" %>
           </ul>
         </li>
         <li class="dropdown pull-right">
@@ -98,9 +98,7 @@
             <% Cms::ContentTypeGroup.menu_list.each_with_index do |group, i| %>
                 <%= divider_tag(i) %>
                 <% group.types.each do |type| %>
-                    <%= content_tag :li do %>
-                        <%= link_to h(type.display_name), cms_new_path_for(type) %>
-                    <% end %>
+                    <%= nav_link_to h(type.display_name), cms_new_path_for(type) %>
                 <% end -%>
             <% end %>
           </ul>

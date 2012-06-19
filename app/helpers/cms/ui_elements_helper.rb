@@ -28,8 +28,12 @@ module Cms
 
     # Used by Twitter Bootstrap dropdown menus used to divide groups of menu items.
     # @param [Integer] index
-    def divider_tag(index)
+    def divider_tag(index = 1)
       tag(:li, class: "divider") if index != 0
+    end
+
+    def nav_link_to(name, link, options={})
+      content_tag(:li, link_to(name, link, options.merge({:target => "_top"})))
     end
   end
 end
