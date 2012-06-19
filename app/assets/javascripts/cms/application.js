@@ -8,5 +8,6 @@
 //= require jquery.taglist
 //= require cms/core_library
 //= require cms/attachment_manager
+//= require bootstrap
 //
 

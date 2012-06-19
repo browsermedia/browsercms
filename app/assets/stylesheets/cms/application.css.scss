@@ -1,6 +1,7 @@
 /**
 *  Manifest file for the CMS Admin interface
 *
+*= require cms/load_bootstrap
 *= require cms/reset
 *= require cms/nav
 *= require cms/menu
@@ -10,5 +11,6 @@
 *= require cms/styles
 *= require cms/content_library
 *= require cms/administration
+*= require cms/bootstrap_corrections
 *
 */

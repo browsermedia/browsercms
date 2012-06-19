@@ -20,8 +20,16 @@ module Cms
 
     def select_content_type_tag(type, &block)
       options = {:rel => "select-#{type.key}"}
-      options[:class] = "on" if content_type == type
+      if (defined?(content_type) && content_type == type)
+        options[:class] = "on"
+      end
       content_tag_for(:li, type, nil, options, &block)
+    end
+
+    # Used by Twitter Bootstrap dropdown menus used to divide groups of menu items.
+    # @param [Integer] index
+    def divider_tag(index)
+      tag(:li, class: "divider") if index != 0
     end
   end
 end
