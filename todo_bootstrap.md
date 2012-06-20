@@ -1,6 +1,10 @@
 Making the admin menu work
 
-* Merge ALL the different admin layouts (why are there so many?)
+* Add the button bar menu
+** Disable buttons
+*** Publish
+*** Edit
+* Reduce the different admin layouts (why are there so many?)
 * Need to highlight active tab
 * Need to highlight the active menu item
 * Enforce link security for menus

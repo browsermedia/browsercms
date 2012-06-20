@@ -17,6 +17,95 @@ module Cms
       lt_button_wrapper html.html_safe
     end
 
+    # Renders a Publish button for the menu based on whether:
+    #   1. The current user can publish
+    #   2. The content item can or needs to be published.
+    def publish_menu_button(content_item)
+      options = {class: ["btn"]}
+      path = "#"
+      if current_user.able_to?(:publish_content) && !content_item.new_record? && content_item.respond_to?(:live?) && !content_item.live?
+        options[:class] << "btn-primary" << "http_put"
+
+        path = block_path(@block, :publish)
+      else
+        options[:class] << "btn-inverse"
+      end
+      link_to "Publish", path, options
+    end
+
+    def edit_content_menu_button(content_item)
+      path = "#"
+      unless content_item.new_record?
+        path = block_path(content_item, :edit)
+      end
+      link_to "Edit Content", path, class: "btn btn-primary"
+    end
+
+    def view_content_menu_button(content_item)
+      path = "#"
+      unless content_item.new_record?
+        path = block_path(content_item)
+      end
+      link_to "View Content", path, class: "btn btn-primary"
+    end
+
+    def versions_menu_button(content_item)
+      options = {class: ["btn"], id: "list_versions"}
+      path = content_item.new_record? ? "#" : block_path(@block, :versions)
+
+      if content_item.class.versioned?
+        options[:class] << "btn-primary"
+      else
+        options[:class] << "disabled"
+      end
+      link_to "List Versions", path, options
+    end
+
+    # Render a CMS styled 'X Delete' button. This button will appear on tool bars, typically set apart visually from other buttons.
+    # Has a 'confirm?' popup attached to it as well.
+    # Assumes that javascript code to handle the 'confirm' has already been included in the page.
+    #
+    # @param [Hash] options The options for this tag
+    # @option options [String or Boolean] :title Title for 'confirm' popup. If specified as 'true' or with a string value a standard 'confirm yes/no' window should be used. If true is specified, its assume that the javascript popup handles the title.
+    # @option options [Path] :path The path or URL to link_to. Takes same types at url_for or link_to. Defaults to '#' if not specified.
+    # @option options [Boolean] :enabled If false, the button will be marked disabled. Default to false.
+    def delete_button(options={})
+      classes = "button"
+      classes << " disabled" if !options[:enabled]
+      classes << " delete_button"
+      classes << " http_delete confirm_with_title" if options[:title]
+
+      link_to_path = options[:path] ? options[:path] : "#"
+
+      span_options = {:id => 'delete_button', :class => classes}
+      span_options[:title] = options[:title] if (!options[:title].blank? && options[:title].class == String)
+      link_to span_tag("<span class=\"delete_img\">&nbsp;</span>Delete".html_safe), link_to_path, span_options
+    end
+
+    # Render a CMS styled 'Delete' button. This button will appear on tool bars, typically set apart visually from other buttons.
+    # Has a 'confirm?' popup attached to it as well.
+    # Assumes that javascript code to handle the 'confirm' has already been included in the page.
+    #
+
+    def delete_menu_button(content_item)
+      classes = ["btn", "http_delete", "confirm_with_title"]
+      if current_user.able_to_publish?(content_item)
+        classes << 'btn-primary'
+      else
+        classes << 'disabled'
+      end
+
+      link_to_path = block_path(content_item)
+      options = {:id => 'delete_button', :class => classes}
+      options[:title] = "Are you sure you want to delete '#{content_item.name}'?"
+
+      if content_item.new_record?
+        link_to_path = "#"
+        classes.delete("confirm_with_title")
+        classes.delete("http_delete")
+      end
+      link_to "Delete", link_to_path, options
+    end
 
     def select_content_type_tag(type, &block)
       options = {:rel => "select-#{type.key}"}

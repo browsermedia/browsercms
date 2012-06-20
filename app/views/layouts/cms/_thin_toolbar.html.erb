@@ -87,11 +87,9 @@
               <%= nav_link_to "Logout", cms.logout_path, :class => "http_delete", :target => "_top" %>
           </ul>
         </li>
-        <li class="dropdown pull-right">
-          <a href="#"
-             class="dropdown-toggle"
-             data-toggle="dropdown">
-            New
+        <li class="btn-group pull-right">
+          <a href="<%= url_for(new_html_block_path) %>" class="btn btn-primary">New</a>
+          <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
             <b class="caret"></b>
           </a>
           <ul class="dropdown-menu">
@@ -104,6 +102,11 @@
           </ul>
         </li>
       </ul>
+    </div>
+  </div>
+  <div class="navbar-inner">
+    <div class="container">
+      <%= yield :button_bar %>
     </div>
   </div>
 </div>

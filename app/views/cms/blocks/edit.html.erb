@@ -4,7 +4,7 @@
 <% end %>
 <% page_title "Content Library / Edit #{content_type.display_name}" %>
 <% @toolbar_title = "Edit #{content_type.display_name} '#{@block.name}'" %>
-<%= content_for :functions,  render(:partial => 'cms/blocks/toolbar') %>
+<%= content_for :button_bar, render(:partial => 'cms/blocks/buttonbar') %>
 
 <% if @block.respond_to?(:deleted) && @block.deleted %>
   <div class="header">This <%= @block.class.name %> has been deleted.</div>
