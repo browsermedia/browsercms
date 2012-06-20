@@ -32,7 +32,7 @@ module Cms
 
       options = {}
       data = options[:data] = {}
-      data[:status] = block.class.publishable? && !block.published? ? ' draft' : ' published'
+      data[:status] = block.class.publishable? && !block.published? ? 'draft' : 'published'
 
       options[:id] = "#{cname}_#{block.id}"
       options[:class] = [cname]

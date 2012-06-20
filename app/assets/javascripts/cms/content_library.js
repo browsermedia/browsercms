@@ -1,4 +1,4 @@
-jQuery(function($) {
+jQuery(function ($) {
 
     //----- Helper Functions -----------------------------------------------------
     //In all of this code, we are defining functions that we use later
@@ -8,12 +8,12 @@ jQuery(function($) {
     //For example, if you have section_node_5, 
     //you pass this 'section_node_5', 'section_node' 
     //and this returns 5
-    var getId = function(elementId, s) {
+    var getId = function (elementId, s) {
         return elementId.replace(s, '')
     }
 
 
-    var nodeOnDoubleClick = function() {
+    var nodeOnDoubleClick = function () {
         if ($('#edit_button').hasClass('disabled')) {
             //$('#view_button').click()
             location.href = $('#view_button')[0].href
@@ -23,7 +23,7 @@ jQuery(function($) {
         }
     }
 
-    var addNodeOnDoubleClick = function() {
+    var addNodeOnDoubleClick = function () {
         $('#blocks tr').dblclick(nodeOnDoubleClick)
     }
 
@@ -39,21 +39,20 @@ jQuery(function($) {
 //  I.e. Select a row, the 'View' button becomes active and the URL goes to the right path.
 //
 //  Any element with class='cms-content-table' will have this applied to it.
-(function($) {
-    $.fn.cmsContentToolbar = function() {
-
+(function ($) {
+    $.fn.cmsContentToolbar = function () {
         var content_type = this.data('content_type')
         var is_versioned = this.data('versioned')
         var can_publish = this.data('can_publish')
         var plural_title = this.data('plural_title')
 
         $('table.data tbody tr').hover(
-            function() {
+            function () {
                 $(this).addClass('hover')
             },
-            function() {
+            function () {
                 $(this).removeClass('hover')
-            }).click(function() {
+            }).click(function () {
                 var view_path = $(this).data('view_path');
                 var edit_path = $(this).data('edit_path');
                 var delete_path = $(this).data('delete_path');
@@ -89,14 +88,32 @@ jQuery(function($) {
                 }
                 if (can_publish) {
                     if (status == 'draft' && publishable) {
-                        $('#publish_button').removeClass('disabled').attr('href', publish_path);
+                        $('#publish_button')
+                            .attr('href', publish_path)
+                            .enable_menu_button();
+                    } else {
+                        $('#publish_button')
+                            .disable_menu_button();
                     }
                 }
             })
     };
 })(jQuery);
 
-$(function() {
+(function ($) {
+    $.fn.disable_menu_button = function () {
+        $(this).removeClass('btn-primary');
+        $(this).addClass('disabled');
+        $(this).attr("href", "#");
+    }
+    $.fn.enable_menu_button = function () {
+        $(this).addClass('btn-primary');
+        $(this).removeClass('disabled');
+        return $(this);
+    }
+})(jQuery);
+
+$(function () {
     $('.cms-content-table').cmsContentToolbar();
 });
 

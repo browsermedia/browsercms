@@ -1,3 +1,8 @@
+<% # Handles both looking at a single block and a collection of blocks.
+   unless @block
+    @block = content_type.model_class.new
+   end
+%>
 <%#
  Enable/Disable publish button for
     - editting permission

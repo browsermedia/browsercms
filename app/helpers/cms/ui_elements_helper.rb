@@ -21,14 +21,13 @@ module Cms
     #   1. The current user can publish
     #   2. The content item can or needs to be published.
     def publish_menu_button(content_item)
-      options = {class: ["btn"]}
+      options = {class: ["btn", "http_put"], id: "publish_button"}
       path = "#"
       if current_user.able_to?(:publish_content) && !content_item.new_record? && content_item.respond_to?(:live?) && !content_item.live?
-        options[:class] << "btn-primary" << "http_put"
-
+        options[:class] << "btn-primary"
         path = block_path(@block, :publish)
       else
-        options[:class] << "btn-inverse"
+        options[:class] << "disabled"
       end
       link_to "Publish", path, options
     end
@@ -38,7 +37,7 @@ module Cms
       unless content_item.new_record?
         path = block_path(content_item, :edit)
       end
-      link_to "Edit Content", path, class: "btn btn-primary"
+      link_to "Edit Content", path, class: "btn btn-primary", id: "edit_button"
     end
 
     def view_content_menu_button(content_item)
@@ -46,12 +45,12 @@ module Cms
       unless content_item.new_record?
         path = block_path(content_item)
       end
-      link_to "View Content", path, class: "btn btn-primary"
+      link_to "View Content", path, class: "btn btn-primary", id: "view_button"
     end
 
     def versions_menu_button(content_item)
-      options = {class: ["btn"], id: "list_versions"}
-      path = content_item.new_record? ? "#" : block_path(@block, :versions)
+      options = {class: ["btn"], id: "revisions_button"}
+      path = content_item.new_record? ? "#" : block_path(content_item, :versions)
 
       if content_item.class.versioned?
         options[:class] << "btn-primary"
