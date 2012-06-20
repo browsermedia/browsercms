@@ -13,7 +13,7 @@
   <% end %>
 <% end %>
 
-<%= render :partial => 'cms/blocks/toolbar' %>
+<%= content_for :button_bar, render(:partial => 'cms/blocks/buttonbar') %>
 <div class="roundedcorners">
   <table id="blocks" class="data">
   <thead>
