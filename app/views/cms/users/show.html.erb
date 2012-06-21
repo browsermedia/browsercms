@@ -1,4 +1,4 @@
-<% @page_title = @toolbar_title = h(@user.login) %>
+<% page_title h(@user.login) %>
 <%= render 'toolbar' %>
 
 <%= content_for :html_head do %>
