@@ -88,7 +88,7 @@
           </ul>
         </li>
         <li class="btn-group pull-right">
-          <a href="<%= url_for(new_html_block_path) %>" class="btn btn-primary">New</a>
+          <%= menu_button "New", url_for(new_html_block_path), :target=>"_top" %>
           <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
             <b class="caret"></b>
           </a>

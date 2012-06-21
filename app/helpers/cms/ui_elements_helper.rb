@@ -21,10 +21,9 @@ module Cms
     #   1. The current user can publish
     #   2. The content item can or needs to be published.
     def publish_menu_button(content_item)
-      options = {class: ["btn", "http_put"], id: "publish_button"}
+      options = {class: ["btn", "btn-primary", "http_put"], id: "publish_button"}
       path = "#"
       if current_user.able_to?(:publish_content) && !content_item.new_record? && content_item.respond_to?(:live?) && !content_item.live?
-        options[:class] << "btn-primary"
         path = block_path(@block, :publish)
       else
         options[:class] << "disabled"
