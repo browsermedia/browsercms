@@ -85,8 +85,7 @@ module Cms
     # Has a 'confirm?' popup attached to it as well.
     # Assumes that javascript code to handle the 'confirm' has already been included in the page.
     #
-
-    def delete_menu_button(content_item)
+    def delete_menu_button(content_item=nil, opts={class: []})
       classes = ["btn", "http_delete", "confirm_with_title"]
       if current_user.able_to_publish?(content_item)
         classes << 'btn-primary'
@@ -94,14 +93,15 @@ module Cms
         classes << 'disabled'
       end
 
-      link_to_path = block_path(content_item)
+      link_to_path =  "#"
       options = {:id => 'delete_button', :class => classes}
-      options[:title] = "Are you sure you want to delete '#{content_item.name}'?"
+      options[:class].concat(opts[:class])
 
-      if content_item.new_record?
-        link_to_path = "#"
-        classes.delete("confirm_with_title")
-        classes.delete("http_delete")
+      if content_item == nil || content_item.new_record?
+        classes << 'disabled'
+      else
+        options[:title] = "Are you sure you want to delete '#{content_item.name}'?"
+        link_to_path = block_path(content_item)
       end
       link_to "Delete", link_to_path, options
     end
