@@ -51,7 +51,11 @@ module Cms
 
     # Generic bootstrap based menu button
     def menu_button(label, path, options={})
-      link_to(label, path, :class => "btn btn-primary pull-left")
+      defaults = {
+          :class => %w{btn btn-primary pull-left}
+      }
+      defaults[:class] << options[:class]
+      link_to(label, path, defaults)
     end
 
     def versions_menu_button(content_item)
