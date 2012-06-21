@@ -47,10 +47,10 @@
                             :pull => 'left',
                             :class => %w{confirm_with_title http_delete} %>
         <% else %>
-            <%= link_to "<span>Revert to this Version</span>".html_safe,
+            <%= menu_button "Revert to this Version",
                         cms.revert_page_path(@page, @page.version),
                         :id => "revert_button",
-                        :class => "button http_put",
+                        :method => :put,
                         :target => "_top" %>
         <% end %>
     <% end %>

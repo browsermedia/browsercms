@@ -53,16 +53,23 @@ module Cms
     # @param [Hash] options
     # @option options [Boolean] :enabled
     # @option options [Array<String>] :class An array of additional classes to apply
-    def menu_button(label, path, options={enabled: true})
-      html_options = {
-          :class => %w{btn btn-primary}
+    def menu_button(label, path, options={})
+      defaults = {
+          enabled: true,
+          pull: 'left'
       }
-      html_options[:class] << options[:class]
-      html_options[:class] << "pull-#{options[:pull]}" if (options[:pull] == 'left' || options[:pull]== 'right')
-      html_options[:class] << 'disabled' unless options[:enabled]
-      copy_title(options, html_options)
-      copy_target(options, html_options)
-      link_to(label, path, html_options)
+      options = defaults.merge!(options)
+      options[:class] =  %w{btn btn-primary}
+      if (options[:pull] == 'left' || options[:pull]== 'right')
+        options[:class] << "pull-#{options.delete(:pull)}"
+      end
+
+      options[:class] << 'disabled' unless options[:enabled]
+      options.delete(:enabled)
+      options[:class] << 'http_put' if options[:method] == :put
+      options.delete(:method)
+      copy_title(options, options)
+      link_to(label, path, options)
     end
 
     def versions_menu_button(content_item)
@@ -153,8 +160,5 @@ module Cms
       to[:title] = from[:title] if (!from[:title].blank? && from[:title].class == String)
     end
 
-    def copy_target(from, to)
-      to[:target] = from[:target]
-    end
   end
 end
