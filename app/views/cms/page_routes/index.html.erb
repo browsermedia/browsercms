@@ -19,14 +19,7 @@
   <% end %>
 <% end %>
 
-<%= content_for :functions do %>
-  <%= add_button new_page_route_path %>
-  <%= edit_button %>
-  <%= delete_button :title => "Are you sure you want to delete this Page Route?" %>
-  <%= link_to(span_tag("View"), "#", :id => 'view_button', :class => "button") %>
-  <%= link_to(span_tag("View Rails Routes"), routes_path, :class => "button") %>
-<% end %>
-
+<%= render 'toolbar' %>
 <div class="roundedcorners">
   <table class="data">
     <tr>

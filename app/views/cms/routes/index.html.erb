@@ -1,8 +1,7 @@
 <% page_title "Rails Routes" %>
-<%= content_for :functions do %>
-  <h1><%=h page_title %></h1>
+<% content_for :button_bar  do %>
+    <%= link_to "Back to Routes", page_routes_path, class: 'btn btn-primary pull-left' %>
 <% end %>
-
 <div style="margin: 10px 0">
   <%= form_tag routes_path, :method => :get do %>
     <label>

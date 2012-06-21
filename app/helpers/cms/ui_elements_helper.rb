@@ -48,6 +48,12 @@ module Cms
       link_to "View Content", path, class: "btn btn-primary", id: "view_button"
     end
 
+
+    # Generic bootstrap based menu button
+    def menu_button(label, path, options={})
+      link_to(label, path, :class => "btn btn-primary pull-left")
+    end
+
     def versions_menu_button(content_item)
       options = {class: ["btn"], id: "revisions_button"}
       path = content_item.new_record? ? "#" : block_path(content_item, :versions)
