@@ -82,7 +82,7 @@
             <b class="caret"></b>
           </a>
           <ul class="dropdown-menu">
-            <%= nav_link_to current_user.full_name, cms.user_path(current_user) %>
+            <%= nav_link_to current_user.full_name, cms.edit_user_path(current_user) %>
             <li class="divider">
               <%= nav_link_to "Logout", cms.logout_path, :class => "http_delete", :target => "_top" %>
           </ul>
