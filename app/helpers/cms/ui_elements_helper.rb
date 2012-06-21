@@ -95,7 +95,7 @@ module Cms
 
       link_to_path =  "#"
       options = {:id => 'delete_button', :class => classes}
-      options[:class].concat(opts[:class])
+      options[:class].concat(opts[:class]) if opts[:class]
 
       if content_item == nil || content_item.new_record?
         classes << 'disabled'

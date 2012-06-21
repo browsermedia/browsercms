@@ -191,27 +191,33 @@ LBW
     # @param [Hash] options The options for this tag
     # @option options [Path] :path The path or URL to link_to. Takes same types at url_for or link_to. Defaults to '#' if not specified.
     # @option options [Boolean] :enabled If false, the button will be marked disabled. Default to false.
-    def edit_button(options={})
-      classes = "button"
+    def edit_button(options={bootstrap: false})
+
+      label = options[:bootstrap]? "Edit" : span_tag("&nbsp;Edit&nbsp;".html_safe)
+      classes = styles_for_button(options)
       classes << " disabled" if !options[:enabled]
 
       link_to_path = options[:path] ? options[:path] : "#"
       span_options = {:id => 'edit_button', :class => classes}
-      link_to span_tag("&nbsp;Edit&nbsp;".html_safe), link_to_path, span_options
+      link_to label, link_to_path, span_options
 
     end
 
     # Render a CMS styled 'Add' button. This button will appear on tool bars, typically set apart visually from other buttons.
     #
     # @param [Path] The path or URL to link_to. Takes same types at url_for or link_to.
-    def add_button(path, options={})
-      classes = "button"
+    def add_button(path, options={bootstrap: false})
+      classes = styles_for_button(options)
+      label = options[:bootstrap]? "Add" : span_tag("&nbsp;Add&nbsp;".html_safe)
       span_options = {:class => classes}
-      link_to span_tag("&nbsp;Add&nbsp;".html_safe), path, span_options
+      link_to label, path, span_options
     end
 
     private
 
+    def styles_for_button(options)
+      options[:bootstrap] ? "btn btn-primary pull-left": "button"
+    end
     # Converts a CSS jQuery selector into something that can be suitably used as a CSS id element.
     def to_id(selector, suffix=nil)
       id = selector.gsub(".", "_")

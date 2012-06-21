@@ -1,0 +1,10 @@
+<%= content_for :button_bar do %>
+    <% if @view %>
+        <%= link_to "Back to Partials", cms_index_path_for(dynamic_view_type), class: 'btn btn-primary pull-left' %>
+    <% else %>
+        <%= add_button cms_new_path_for(dynamic_view_type), bootstrap: true %>
+        <%= edit_button(bootstrap: true) %>
+        <%= delete_menu_button nil, :title => "Are you sure you want to delete this #{dynamic_view_type.name.demodulize.underscore.titleize}?", class: ["pull-left"] %>
+    <% end %>
+
+<% end %>

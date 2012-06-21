@@ -1,4 +1,5 @@
 <%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
+<%= render 'toolbar' %>
 <%= form_for(@view) do |f| %>
   <%= f.cms_error_messages %>
   <%= f.cms_text_field :name %>
