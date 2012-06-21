@@ -60,6 +60,8 @@ module Cms
       link_to "List Versions", path, options
     end
 
+    # @deprecated Use 'delete_menu_button'' instead as we move to use bootstrap
+    #
     # Render a CMS styled 'X Delete' button. This button will appear on tool bars, typically set apart visually from other buttons.
     # Has a 'confirm?' popup attached to it as well.
     # Assumes that javascript code to handle the 'confirm' has already been included in the page.
@@ -102,6 +104,9 @@ module Cms
       else
         options[:title] = "Are you sure you want to delete '#{content_item.name}'?"
         link_to_path = block_path(content_item)
+      end
+      if opts[:title]
+        options[:title] = opts[:title]
       end
       link_to "Delete", link_to_path, options
     end
