@@ -1,0 +1,20 @@
+<%
+    message = @mode == "edit" ? "On" : "Off"
+   button_style = @mode == "edit" ? "btn-success" : ""
+%>
+<%= content_for :button_bar do %>
+    <% if @page.version == @page.draft.version %>
+        <div class="btn-group pull-right">
+          <a class="btn dropdown-toggle <%= button_style %>" data-toggle="dropdown" href="#">
+            Editor <%= message %>
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <%= link_to "Enable", url_with_mode(request.referrer, "edit"), :target => "_top" %>
+            <%= link_to "Disable", url_with_mode(request.referrer, "view"), :target => "_top" %>
+          </ul>
+        </div>
+    <% else %>
+        <%= menu_button "View Current Version", @page.path, class: 'current_version', :target => "_top" %>
+    <% end %>
+<% end %>

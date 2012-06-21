@@ -1,20 +1,4 @@
 <% if mobile_template_exists?(@page) %>
-<style>
-    #mobile_toggle {
-        float: left;
-        text-transform: uppercase;
-        padding-left: 110px;
-        margin-top: 12px;
-        margin-right: 0px;
-        color: black;
-        font-weight: bold;
-        width: 200px;
-    }
-
-    #mobile_toggle div {
-        float: left;
-    }
-</style>
 <%
    mobile_state = session[:mobile_mode] == true ? "ON" : "OFF"
    button_text = session[:mobile_mode] == true ? "TURN OFF" : "TURN ON"

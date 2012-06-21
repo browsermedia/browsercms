@@ -15,9 +15,7 @@
     <%= yield :html_head %>
   </head>
   <body>
-    <div id="wrapper">
-      <%= yield %>
-      <%= render :partial => 'layouts/page_toolbar' if @page_toolbar_enabled %>
-    </div>
+  <%= render 'layouts/cms/thin_toolbar' %>
+  <%= yield %>
   </body>
 </html>

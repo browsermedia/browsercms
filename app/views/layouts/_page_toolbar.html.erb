@@ -1,50 +1,6 @@
 <% if(logged_in? && @page && !@hide_page_toolbar) %>
-<% status = @page.live? ? 'published' : 'draft' %>
-<%= image_tag "cms/page_toolbar/page_toolbar_l.gif", :style => "float: left;" %>
-<%= image_tag "cms/page_toolbar/status_#{status}_l.gif", :style => "float: left;" %>
-<%= image_tag "cms/page_toolbar/page_toolbar_r.gif", :style => "float: right;" %>
-<div id="page_toolbar">
-  <div id="status_div" class="<%= status %> page_attribute_div">
-    <div class="page_attribute_label">Status:</div>
-    <div id="<%= status %>_page_status_container" class="page_attribute_value_container">
-      <%= image_tag "cms/page_toolbar/page_toolbar_inset_#{ status }_l.gif", :style => "float: left;" %>
-      <div id="page_status" class="page_attribute_value"><%= status %></div>
-      <%= image_tag "cms/page_toolbar/page_toolbar_inset_#{ status }_r.gif", :style => "float: left;" %>
-    </div>
-  </div>
-  <div class="page_attribute_div">
-    <div class="page_attribute_label">Section:</div>
-    <div class="page_attribute_value_container">
-      <%= image_tag "cms/page_toolbar/page_toolbar_inset_l.gif", :style => "float: left;" %>
-      <div id="section_link" class="page_attribute_value"><%= link_to h(@page.section.name), cms.sections_path(:page_id => @page), :target => "_top" %></div>
-      <%= image_tag "cms/page_toolbar/page_toolbar_inset_r.gif", :style => "float: left;" %>
-    </div>
-  </div>
-  <div class="page_attribute_div">
-    <div class="page_attribute_label">Page:</div>
-    <div class="page_attribute_value_container">
-      <%= image_tag "cms/page_toolbar/page_toolbar_inset_l.gif", :style => "float: left;" %>
-      <div class="page_attribute_value"><%= h(@page.name) %></div>
-      <%= image_tag "cms/page_toolbar/page_toolbar_inset_r.gif", :style => "float: left;" %>
-    </div>
-  </div>
-  <div class="page_attribute_div">
-    <div class="page_attribute_label">Template:</div>
-    <div class="page_attribute_value_container">
-      <%= image_tag "cms/page_toolbar/page_toolbar_inset_l.gif", :style => "float: left;" %>
-      <div class="page_attribute_value"><%= h(@page.template_name) %></div>
-      <%= image_tag "cms/page_toolbar/page_toolbar_inset_r.gif", :style => "float: left;" %>
-    </div>
-  </div>
-  <div class="page_attribute_div">
-    <div class="page_attribute_label">Version:</div>
-    <div class="page_attribute_value_container">
-      <%= image_tag "cms/page_toolbar/page_toolbar_inset_l.gif", :style => "float: left;" %>
-      <div class="page_attribute_value"><%= h(@page.version) %><%= ' (LIVE)' if @page.live_version && @page.version == @page.live_version.version %></div>
-      <%= image_tag "cms/page_toolbar/page_toolbar_inset_r.gif", :style => "float: left;" %>
-    </div>
-  </div>
-</div>  
+
+<%= render 'layouts/page_info_bar' %>
 <div class="buttons">
   
   <%= link_to "<span>Publish</span>".html_safe, 

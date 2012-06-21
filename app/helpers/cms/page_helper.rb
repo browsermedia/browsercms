@@ -1,6 +1,10 @@
 module Cms
   module PageHelper
 
+    # Keep this taller until we reverse the iframes (so menus will work)
+    PAGE_TOOLBAR_HEIGHT = 159
+    TOOLBAR_HEIGHT = 100
+
     # Return the JS file to load the configured default WYSIWYG editor
     #
     # Ideally, this could be improved if sprockets allows for dynamically determining which js library to use.
@@ -63,7 +67,7 @@ module Cms
     # Add the code to render the CMS toolbar.
     def cms_toolbar
       toolbar = <<HTML
-<iframe src="#{cms.toolbar_path(:page_id => @page.id, :page_version => @page.version, :mode => @mode, :page_toolbar => @show_page_toolbar ? 1 : 0) }" width="100%" height="#{@show_page_toolbar ? 159 : 100 }px" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" name="cms_toolbar"></iframe>
+<iframe src="#{cms.toolbar_path(:page_id => @page.id, :page_version => @page.version, :mode => @mode, :page_toolbar => @show_page_toolbar ? 1 : 0) }" width="100%" height="#{@show_page_toolbar ? PAGE_TOOLBAR_HEIGHT : TOOLBAR_HEIGHT }px" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" name="cms_toolbar"></iframe>
 HTML
       toolbar.html_safe if @show_toolbar
     end

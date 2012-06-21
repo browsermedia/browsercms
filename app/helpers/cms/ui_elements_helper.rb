@@ -50,12 +50,19 @@ module Cms
 
 
     # Generic bootstrap based menu button
-    def menu_button(label, path, options={})
-      defaults = {
-          :class => %w{btn btn-primary pull-left}
+    # @param [Hash] options
+    # @option options [Boolean] :enabled
+    # @option options [Array<String>] :class An array of additional classes to apply
+    def menu_button(label, path, options={enabled: true})
+      html_options = {
+          :class => %w{btn btn-primary}
       }
-      defaults[:class] << options[:class]
-      link_to(label, path, defaults)
+      html_options[:class] << options[:class]
+      html_options[:class] << "pull-#{options[:pull]}" if (options[:pull] == 'left' || options[:pull]== 'right')
+      html_options[:class] << 'disabled' unless options[:enabled]
+      copy_title(options, html_options)
+      copy_target(options, html_options)
+      link_to(label, path, html_options)
     end
 
     def versions_menu_button(content_item)
@@ -89,9 +96,10 @@ module Cms
       link_to_path = options[:path] ? options[:path] : "#"
 
       span_options = {:id => 'delete_button', :class => classes}
-      span_options[:title] = options[:title] if (!options[:title].blank? && options[:title].class == String)
+      copy_title(options, span_options)
       link_to span_tag("<span class=\"delete_img\">&nbsp;</span>Delete".html_safe), link_to_path, span_options
     end
+
 
     # Render a CMS styled 'Delete' button. This button will appear on tool bars, typically set apart visually from other buttons.
     # Has a 'confirm?' popup attached to it as well.
@@ -105,7 +113,7 @@ module Cms
         classes << 'disabled'
       end
 
-      link_to_path =  "#"
+      link_to_path = "#"
       options = {:id => 'delete_button', :class => classes}
       options[:class].concat(opts[:class]) if opts[:class]
 
@@ -137,6 +145,16 @@ module Cms
 
     def nav_link_to(name, link, options={})
       content_tag(:li, link_to(name, link, options.merge({:target => "_top"})))
+    end
+
+    private
+
+    def copy_title(from, to)
+      to[:title] = from[:title] if (!from[:title].blank? && from[:title].class == String)
+    end
+
+    def copy_target(from, to)
+      to[:target] = from[:target]
     end
   end
 end
