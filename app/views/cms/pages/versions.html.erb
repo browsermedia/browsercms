@@ -34,6 +34,7 @@
   <%= stylesheet_link_tag("cms/form_layout") %>
 <% end %>
 <%= content_for :button_bar do %>
+  <%= menu_button "Back to Page", page_path(@page) %>
   <%= menu_button "View", "#", :id => "view_button", enabled: false %>
   <%= menu_button "Edit Content", "#", :id => "edit_content_button", enabled: false %>
   <%= menu_button "Edit Properties", "#", :id => "edit_properties_button", enabled: false %>

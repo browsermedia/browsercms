@@ -2,7 +2,8 @@
     <%= menu_button "Publish",
                     @page.live? ? '#' : cms.publish_page_path(@page),
                     :id => "publish_button",
-                    :class => "http_put pull-left",
+                    :pull => 'left',
+                    :method => :put,
                     :target => "_top",
                     :enabled => !(!current_user.able_to?(:publish_content) || !current_user.able_to_edit?(@page) || @page.version != @page.draft.version || @page.live?) %>
     <div class="btn-group pull-left">
@@ -48,10 +49,10 @@
                             :class => %w{confirm_with_title http_delete} %>
         <% else %>
             <%= menu_button "Revert to this Version",
-                        cms.revert_page_path(@page, @page.version),
-                        :id => "revert_button",
-                        :method => :put,
-                        :target => "_top" %>
+                            cms.revert_page_path(@page, @page.version),
+                            :id => "revert_button",
+                            :method => :put,
+                            :target => "_top" %>
         <% end %>
     <% end %>
 <% end %>
