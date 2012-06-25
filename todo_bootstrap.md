@@ -14,3 +14,10 @@ New
 
 * Implement search
 * Implement notifications
+
+# Developer Tasks
+
+Style the following elements
+
+* Edit Properties popover (currently centered and too small text)
+

@@ -1,4 +1,9 @@
 <%= content_for :button_bar do %>
+    <% if !@page.live? %>
+        <span class="label label-important">DRAFT</span>
+    <% else %>
+        <span class="label label-success">Published</span>
+    <% end %>
     <%= menu_button "Publish",
                     @page.live? ? '#' : cms.publish_page_path(@page),
                     :id => "publish_button",
@@ -23,11 +28,24 @@
                       :pull => 'center',
                       :enabled => !(@page.assigned_to != current_user || !current_user.able_to_edit?(@page)) %>
     </div>
+    <%
+       tooltip = <<HTML
+        <b>Page Name</b>: #{@page.name}<br>
+        <b>Status</b>: #{@page.status}<br>
+        <b>Template</b>: #{@page.template_name}<br />
+        <b>Section</b>: #{@page.section.name}<br />
+        <b>Version</b>: #{@page.version} #{@page.live_version && @page.version == @page.live_version.version ? '(LIVE)' : ''}<br />
+
+HTML
+
+    %>
     <%= menu_button "Edit Properties",
                     [:edit, @page],
                     :id => "edit_properties_button",
                     :target => "_top",
                     :pull => 'left',
+                    :title => "Page Properties",
+                    'data-content'=>tooltip,
                     :enabled => current_user.able_to_edit?(@page)
     %>
 
