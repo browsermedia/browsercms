@@ -1,15 +1,15 @@
 <% @toolbar_title = @page_title = "Add Existing Content to '#{@page.page_title}' Page" %>
 
 <%= content_for :html_head do %>
-  <%= stylesheet_link_tag("cms/content_library") %>
-  <%= javascript_tag do %>
-    jQuery(function($){
-      var collectionName = '<%= @block_type.content_block_type %>'
-      $('table.data tbody tr').hover(function(){
+    <%= stylesheet_link_tag("cms/content_library") %>
+    <%= javascript_tag do %>
+        jQuery(function($){
+        var collectionName = '<%= @block_type.content_block_type %>'
+        $('table.data tbody tr').hover(function(){
         $(this).addClass('hover');
-      }, function(){
+        }, function(){
         $(this).removeClass('hover');
-      }).click(function(){
+        }).click(function(){
         var match = this.id.match(/(.*)_(\d+)/);
         var type = match[1];
         var id = match[2];
@@ -18,52 +18,54 @@
         $('#connectable_type').attr('value', type);
         $('#connectable_id').attr('value', id);
         $('#add_button').removeClass('disabled').click(function(){
-          $('#connect_form').submit();
-          return false;
+        $('#connect_form').submit();
+        return false;
         });
         $('#view_button').removeClass('disabled').attr('href', '/cms/'+collectionName+'/'+id);
-      })
-    })
-  <% end %>
+        })
+        })
+    <% end %>
 <% end %>
 
-<%= content_for :functions do %>
-  <h1><%=h @toolbar_title %></h1>
-  <%= link_to span_tag("Add to Page"), "#", :id => "add_button", :class => "button disabled" %>
-  <%= link_to span_tag("View Content"), "#", :id => "view_button", :class => "button disabled" %>
-  <%= form_tag connectors_path, :id => 'connect_form' do %>
+<%= content_for :button_bar do %>
+    <%= menu_button "Back to Page", page_path(@page) %>
+    <%= menu_button "Add to Page", "#", :id => "add_button", :enabled => false %>
+    <%= menu_button "View Content", "#", :id => "view_button", :enabled => false %>
+<% end %>
+<%= form_tag connectors_path, :id => 'connect_form' do %>
     <%= hidden_field_tag :page_id, @page.to_param %>
-    <%= hidden_field_tag :container,  @container %>
+    <%= hidden_field_tag :container, @container %>
     <%= hidden_field_tag :connectable_type, '' %>
     <%= hidden_field_tag :connectable_id, '' %>
-  <% end %>
-  <br clear="all" />
 <% end %>
-
 <%= form_tag new_connector_path, :method => :get do %>
-  <%= hidden_field_tag :page_id, @page.to_param %>
-  <%= hidden_field_tag :container, @container %>
-  <div style="margin: 20px 2px;">
-    <label>
-      Choose Type of Content
-      <%= select_tag "block_type", options_for_select(Cms::ContentType.connectable.all.map{|ct| [ct.display_name, ct.content_block_type]}, @block_type.content_block_type), :onchange => 'this.form.submit()' %>
-    </label>
-  </div>
+    <%= hidden_field_tag :page_id, @page.to_param %>
+    <%= hidden_field_tag :container, @container %>
+    <div style="margin: 20px 2px;">
+      <label>
+        Choose Type of Content
+        <%= select_tag "block_type", options_for_select(Cms::ContentType.connectable.all.map { |ct| [ct.display_name, ct.content_block_type] }, @block_type.content_block_type), :onchange => 'this.form.submit()' %>
+      </label>
+    </div>
 <% end %>
 
 <table class="data">
   <thead>
-    <tr>
-      <th class="name first"><div class="dividers">Name</div></th>
-      <th class="updated"><div class="dividers">Updated</div></th>
-      <th class="used last">Uses</th>
-    </tr>
+  <tr>
+    <th class="name first">
+      <div class="dividers">Name</div>
+    </th>
+    <th class="updated">
+      <div class="dividers">Updated</div>
+    </th>
+    <th class="used last">Uses</th>
+  </tr>
   </thead>
   <% @blocks.each do |block| %>
-    <tr id="<%= @block_type.content_block_type.singularize %>_<%= block.id %>">
-      <td class="name"><%= block.name %></td>
-      <td class="updated"><%= block.updated_at.to_formatted_s(:date) %></td>
-      <td class="used"><%= link_to_usages(block) %></td>
-    </tr>
+      <tr id="<%= @block_type.content_block_type.singularize %>_<%= block.id %>">
+        <td class="name"><%= block.name %></td>
+        <td class="updated"><%= block.updated_at.to_formatted_s(:date) %></td>
+        <td class="used"><%= link_to_usages(block) %></td>
+      </tr>
   <% end %>
 </table>

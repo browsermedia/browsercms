@@ -21,3 +21,8 @@ Style the following elements
 
 * Edit Properties popover (currently centered and too small text)
 
+
+# Points of Design Discussion
+
+* What information should be visible on toolbar, what should be hidden?
+* Should we turn the entire toolbar red for draft pages?
