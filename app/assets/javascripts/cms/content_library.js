@@ -102,12 +102,10 @@ jQuery(function ($) {
 
 (function ($) {
     $.fn.disable_menu_button = function () {
-        $(this).removeClass('btn-primary');
         $(this).addClass('disabled');
         $(this).attr("href", "#");
     }
     $.fn.enable_menu_button = function () {
-        $(this).addClass('btn-primary');
         $(this).removeClass('disabled');
         return $(this);
     }
