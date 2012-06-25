@@ -26,3 +26,9 @@ Style the following elements
 
 * What information should be visible on toolbar, what should be hidden?
 * Should we turn the entire toolbar red for draft pages?
+
+
+
+## 4.0 Release Testing
+
+* Verify caching works (was refactored)

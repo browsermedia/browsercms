@@ -54,7 +54,19 @@ module Cms
 
     def render_page_with_caching
       render_page
-      cache_page if should_write_to_page_cache?
+      cache_page if should_cache_page?
+    end
+
+    # Determine if this page is eligible for caching or not.
+    def should_cache_page?
+      should_cache = (using_cms_subdomains? && !logged_in? && @page.cacheable? && params[:cms_cache] != "false")
+      if should_cache
+        msg = "'#{request.path}' being written to cache."
+      else
+        msg = "'#{request.path}' not eligible for caching."
+      end
+      logger.info msg
+      should_cache
     end
 
     # ----- Before Filters -------------------------------------------------------
@@ -141,20 +153,6 @@ module Cms
         raise Cms::Errors::AccessDenied
       end
 
-      # Doing this so if you are logged in, you never see the cached page
-      # We are calling render_page just like the show action does
-      # But since we do it from a before filter, the page doesn't get cached
-      if logged_in?
-        logger.info "Not Caching, user is logged in"
-        render_page
-      elsif !@page.cacheable?
-        logger.info "Not Caching, page cachable is false"
-        render_page
-      elsif params[:cms_cache] == "false"
-        logger.info "Not Caching, cms_cache is false"
-        render_page
-      end
-      logger.warn "Finish check_access_to_page"
     end
 
     # ----- Other Methods --------------------------------------------------------
