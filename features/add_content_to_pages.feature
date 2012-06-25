@@ -31,7 +31,7 @@ Feature: Add Content to Pages
       | Image   |
       | Portlet |
     And I should see a page titled "Select Content Type"
-    When I follow "Text"
+    When I choose to add a new 'Text' content type to the page
     Then I should see a page titled "Content Library / Add New Text"
     And I should see the following content:
       | Name |

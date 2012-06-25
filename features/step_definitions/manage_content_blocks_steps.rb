@@ -69,3 +69,28 @@ Then /^I should see the second page of content$/ do
   assert_equal 200, page.status_code
   assert page.has_content?("Displaying 16 - 30 of 30")
 end
+
+When /^I create a new "([^"]*)" portlet$/ do |portlet_type|
+  click_on 'create_new_portlet'
+  click_on portlet_type
+end
+
+When /^the publish button should be (#{ENABLED_OR_DISABLED})$/ do |is_enabled|
+  button = find('#publish_button')
+  assert_equal !is_enabled, button[:class].include?('disabled')
+end
+
+Given /^I have an Html block in draft mode$/ do
+  @block = create(:html_block, :content=>"Testing Modes")
+  @block.update_attributes(:name => "Should be updated.")
+  assert !@block.live?
+end
+
+When /^I should see that block's content$/ do
+  assert page.has_content?(@block.content), "Expected to see #{@block.content} on the page."
+end
+When /^I should see it's draft mode$/ do
+  within(".block_published_status") do
+    assert page.has_content?('draft')
+  end
+end

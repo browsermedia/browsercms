@@ -4,7 +4,6 @@ Feature:
   Background:
     Given a page exists at /mobile-page with a mobile ready template
 
-
   Scenario: Desktop Visitor sees Desktop template
     Given a user is browsing the desktop site
     When they request /mobile-page

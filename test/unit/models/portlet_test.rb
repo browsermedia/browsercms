@@ -25,6 +25,13 @@ class PortletTest < ActiveSupport::TestCase
 
   end
 
+  test "Users should able_to_modify? portlets" do
+    user = create(:content_editor)
+    assert_equal [], Cms::Portlet.new.connected_pages
+    assert user.able_to_modify?(Cms::Portlet.new)
+
+  end
+
   test "destroy should mark a portlet as deleted" do
     @portlet.destroy
     @portlet.reload!

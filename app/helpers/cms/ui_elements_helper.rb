@@ -1,4 +1,7 @@
 module Cms
+
+  # Defines functions for creating buttons and links using the CMS styling.
+  # I.e. Menus, Save, Publish buttons and links.
   module UiElementsHelper
 
     # Renders a Save And Publish button if:
@@ -72,13 +75,13 @@ module Cms
     end
 
     def versions_menu_button(content_item)
-      options = {class: ["btn"], id: "revisions_button"}
-      path = content_item.new_record? ? "#" : block_path(content_item, :versions)
-
-      if content_item.class.versioned?
-        options[:class] << "btn-primary"
+      options = {class: ["btn", "btn-primary"], id: "revisions_button"}
+      path = "#"
+      if !content_item.new_record? && content_item.class.versioned?
+        block_path(content_item, :versions)
       else
         options[:class] << "disabled"
+
       end
       link_to "List Versions", path, options
     end
@@ -146,7 +149,7 @@ module Cms
     # Used by Twitter Bootstrap dropdown menus used to divide groups of menu items.
     # @param [Integer] index
     def divider_tag(index = 1)
-      tag(:li, class: "divider") if index != 0
+      content_tag(:li, "&nbsp;", {class: "divider"}) if index != 0
     end
 
     def nav_link_to(name, link, options={})

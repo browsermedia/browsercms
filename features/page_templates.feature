@@ -7,7 +7,7 @@ Feature: Page Templates
   Scenario: Add a Page Template
     When I am at /cms/page_templates
     And I click on "Add"
-    Then I should see "New Cms/Page Template"
+    Then I should see "New Page Template"
     When I fill in the following:
       | Name | hello |
       | Body | World |
@@ -29,13 +29,13 @@ Feature: Page Templates
       | hello |
     When I edit that page template
     Then the response should be 200
-    And the page header should be "Edit 'hello' Cms/Page Template"
+    And the page header should be "Edit 'hello' Page Template"
     When I fill in "Name" with "hello_world"
     And I press "Save"
     Then the response should be 200
     And the page header should be "List Page Templates"
     And I should see the following content:
-      | hello_world |
+      | Hello World |
 
 
   Scenario: Delete a template
@@ -45,5 +45,5 @@ Feature: Page Templates
     When I delete that page template
     Then the response should be 200
     And the page header should be "List Page Templates"
-    And I should not see the "hello" template in the table
+    And I should not see the "Hello" template in the table
 

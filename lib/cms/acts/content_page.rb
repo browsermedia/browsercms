@@ -44,6 +44,8 @@ module Cms
         base.helper Cms::RenderingHelper
         base.helper Cms::MenuHelper
         base.helper Cms::Acts::PageHelper
+        base.helper Cms::UiElementsHelper
+        base.helper Cms::PathHelper
       end
 
       # Allows a Controller method to set a page title for an action.

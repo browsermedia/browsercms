@@ -18,6 +18,7 @@ module Cms
 
     # ----- Actions --------------------------------------------------------------
     def show
+      logger.warn "Calling 'show' action"
       render_page_with_caching
     end
 
@@ -153,7 +154,7 @@ module Cms
         logger.info "Not Caching, cms_cache is false"
         render_page
       end
-
+      logger.warn "Finish check_access_to_page"
     end
 
     # ----- Other Methods --------------------------------------------------------

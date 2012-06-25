@@ -6,7 +6,7 @@ Feature: Manage Users
 
   Scenario: Add User
     Given I request /cms/users
-    And I click on "ADD USER"
+    And I add a new user
     Then I should see a page titled "New User"
     When fill valid fields for a new user named "testuser"
     Then I should see a page titled "User Browser"

@@ -43,7 +43,7 @@ Feature: Manage Content Blocks
     When I visit /
     And I turn on edit mode for /
     And I add content to the main area of the page
-    And I click on "Product"
+    And I click on "add_new_product"
     And I fill in "Name" with "iPhone"
     And I click on "Save"
     Then the response should be 200

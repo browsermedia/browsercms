@@ -68,6 +68,10 @@ When /^I click the Select Existing Content button$/ do
   click_link "insert_existing_content_#{container}"
 end
 
+When /^I choose to add a new 'Text' content type to the page$/ do
+  click_link 'add_new_html_block'
+end
+
 When /^I turn on edit mode for (.*)$/ do |path|
   goto = path + "?mode=edit"
   visit(goto)

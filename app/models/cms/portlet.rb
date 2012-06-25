@@ -137,6 +137,11 @@ module Cms
       true
     end
 
+    # For polymorphic permissions
+    # A generic portlet shouldn't be connected to pages.
+    def connected_pages
+      []
+    end
     #----- Portlet Action Related Methods ----------------------------------------
     def instance_name
       "#{self.class.name.demodulize.underscore}_#{id}"
