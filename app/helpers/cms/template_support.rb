@@ -10,13 +10,7 @@ module Cms
         helper Cms::PageHelper
         helper Cms::MenuHelper
         helper Cms::RenderingHelper
-        helper do
-          def cms_toolbar
-            if current_user.able_to?(:administrate, :edit_content, :publish_content)
-              %Q{<iframe src="#{cms.toolbar_path(:page_toolbar => 0)}" width="100%" height="100px" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" name="cms_toolbar"></iframe>}
-            end
-          end
-        end
+
       end
     end
   end

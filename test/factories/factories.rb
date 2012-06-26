@@ -131,7 +131,6 @@ FactoryGirl.define do
     <%= yield :html_head %>
   </head>
   <body>
-    <%= cms_toolbar %>
     <%= container :main %>
   </body>
 </html>}

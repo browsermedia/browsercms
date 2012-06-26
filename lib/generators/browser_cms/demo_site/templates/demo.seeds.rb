@@ -128,7 +128,6 @@ create_page_template(:home_page,
   </style>
   </head>
   <body>
-  <%= cms_toolbar %>
     <%= render :partial => "partials/header"%>
       <div id="main">
   <div id="broad" class="wrapper">
@@ -172,7 +171,6 @@ create_page_template(:sub_page,
     <%= stylesheet_link_tag "/themes/blue_steel/stylesheets/style" %>
   </head>
   <body>
-    <%= cms_toolbar %>
       <%= render :partial => "partials/header"%>
       <div id="main">
         <div id="sub_nav" class="nav wrapper">
