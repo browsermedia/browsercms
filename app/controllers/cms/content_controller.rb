@@ -18,12 +18,18 @@ module Cms
 
     # ----- Actions --------------------------------------------------------------
     def show
-      logger.warn "Calling 'show' action"
-      render_page_with_caching
+      if @show_toolbar && params[:show_page] != 'show'
+        render_editing_frame
+      else
+        render_page
+      end
+      cache_if_eligible
     end
 
     def show_page_route
-      render_page_with_caching
+      @_page_route.execute(self) if @_page_route
+      render_page
+      cache_if_eligible
     end
 
 
@@ -41,19 +47,19 @@ module Cms
 
     private
 
-    # This is the method all actions delegate to
-    # check_access_to_page will also call this directly
-    # if caching is not enabled
+    def render_editing_frame
+      @page_title = @page.page_title
+      render 'editing_frame', :layout => 'cms/page_editor'
+    end
+
     def render_page
       logger.warn "Render page (id: #{@page.id})"
-      @_page_route.execute(self) if @_page_route
       prepare_connectables_for_render
       page_layout = determine_page_layout
       render :layout => page_layout, :action => 'show'
     end
 
-    def render_page_with_caching
-      render_page
+    def cache_if_eligible
       cache_page if should_cache_page?
     end
 

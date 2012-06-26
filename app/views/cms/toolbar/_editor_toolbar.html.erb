@@ -10,11 +10,11 @@
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
-            <%= link_to "Enable", url_with_mode(request.referrer, "edit"), :target => "_top" %>
-            <%= link_to "Disable", url_with_mode(request.referrer, "view"), :target => "_top" %>
+            <%= link_to "Enable", url_with_mode(@page.path, "edit") %>
+            <%= link_to "Disable", url_with_mode(@page.path, "view")%>
           </ul>
         </div>
     <% else %>
-        <%= menu_button "View Current Version", @page.path, class: 'current_version', :target => "_top" %>
+        <%= menu_button "View Current Version", @page.path, class: 'current_version'%>
     <% end %>
 <% end %>

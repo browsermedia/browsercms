@@ -32,3 +32,4 @@ Style the following elements
 ## 4.0 Release Testing
 
 * Verify caching works (was refactored)
+* Page editing - iframe is too long (1600px) but using 100% height is too short.

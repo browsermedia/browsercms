@@ -1,4 +1,3 @@
-<%# This view should no longer be used as the toolbar is not loaded as its own request.  %>
 <%= content_for :button_bar do %>
     <% if !@page.live? %>
         <span class="label label-important">DRAFT</span>
@@ -24,7 +23,7 @@
       <%= menu_button "Complete Task",
                       @page.current_task ? cms.complete_task_path(@page.current_task) : '#',
                       :id => "complete_task_button",
-                      :class => "http_put",
+                      :method => :put,
                       :target => "_top",
                       :pull => 'center',
                       :enabled => !(@page.assigned_to != current_user || !current_user.able_to_edit?(@page)) %>
@@ -75,7 +74,6 @@ HTML
         <% end %>
     <% end %>
 <% end %>
-
 <%= render "cms/toolbar/editor_toolbar" %>
 <%= render "cms/toolbar/mobile_toolbar" %>
 

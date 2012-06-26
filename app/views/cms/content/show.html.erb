@@ -2,6 +2,7 @@
 
 <%= content_for :html_head do %>
   <meta name="generator" content="BrowserCMS <%= Cms.version %>"/>
+  <%= javascript_include_tag 'cms/page_editing' if @show_toolbar %>
 <% end %>
 <% if @show_toolbar %>
   <% flash.keep %>

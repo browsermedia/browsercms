@@ -1,5 +1,17 @@
 module Cms
+
+  module DeprecatedBehavior
+
+    # Add the code to render the CMS toolbar.
+    # @deprecated This method is no longer required for BrowserCMS templates.
+    def cms_toolbar
+      ActiveSupport::Deprecation.warn "The cms_toolbar helper is deprecated and no longer necessary. You can safely remove <%= cms_toolbar %> from templates.", caller
+      return ""
+    end
+  end
+
   module PageHelper
+    include Cms::DeprecatedBehavior
 
     # Keep this taller until we reverse the iframes (so menus will work)
     PAGE_TOOLBAR_HEIGHT = 159
@@ -63,16 +75,6 @@ module Cms
         has_block
       end
     end
-
-    # Add the code to render the CMS toolbar.
-    def cms_toolbar
-      toolbar = <<HTML
-<iframe src="#{cms.toolbar_path(:page_id => @page.id, :page_version => @page.version, :mode => @mode, :page_toolbar => @show_page_toolbar ? 1 : 0) }" width="100%" height="#{@show_page_toolbar ? PAGE_TOOLBAR_HEIGHT : TOOLBAR_HEIGHT }px" frameborder="0" marginwidth="0" marginheight="0" scrolling="no" name="cms_toolbar"></iframe>
-HTML
-      toolbar.html_safe if @show_toolbar
-    end
-
-
 
     # Renders breadcrumbs based on the current_page. This will generate an unordered list representing the
     # current page and all it's ancestors including the root name of of the site. The UL can be styled via CSS for
