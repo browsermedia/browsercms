@@ -3,8 +3,10 @@
     <%= link_to image_tag("cms/pages/show_connectable.gif", :class=>'cms-content-button'), cms_connectable_path(connectable), :title => "View this content (#{connectable.name})" , :class=>"cms-content-link"%>
     <%= link_to image_tag("cms/pages/edit_connectable.gif", :class=>'cms-content-button'), edit_cms_connectable_path(connectable, :_redirect_to => @page.path), :title => "Edit this content (#{connectable.name})" , :class=>"cms-content-link"%>
     <% if @page.connectors.for_page_version(@page.version).in_container(connector.container).count > 1 %>
-      <%= link_to image_tag("cms/pages/up_connectable.gif", :class=>'cms-content-button'), cms.move_up_connector_path(connector), :class => "http_put", :title => "Move this content up (#{connectable.name})" , :class=>"cms-content-link"%>
-      <%= link_to image_tag("cms/pages/down_connectable.gif", :class=>'cms-content-button'), cms.move_down_connector_path(connector), :class => "http_put", :title => "Move this content down (#{connectable.name})" , :class=>"cms-content-link"%>
+      <%= link_to image_tag("cms/pages/up_connectable.gif", :class=>'cms-content-button'), cms.move_up_connector_path(connector),
+                  :method => :put, :title => "Move this content up (#{connectable.name})" , :class=>"cms-content-link"%>
+      <%= link_to image_tag("cms/pages/down_connectable.gif", :class=>'cms-content-button'), cms.move_down_connector_path(connector),
+                  :method => :put, :title => "Move this content down (#{connectable.name})" , :class=>"cms-content-link"%>
     <% else %>
       <%= image_tag("cms/pages/up_connectable_disabled.gif", :class=>'cms-content-button') %>
       <%= image_tag("cms/pages/down_connectable_disabled.gif", :class=>'cms-content-button') %>
