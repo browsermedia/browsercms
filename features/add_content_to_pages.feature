@@ -2,6 +2,7 @@ Feature: Add Content to Pages
   Content Editors should be able to add content to pages.
 
   Background:
+    Given I am logged in as a Content Editor
 
   Scenario: Selecting an existing html block
     Given there is an Html Block with:
@@ -10,7 +11,6 @@ Feature: Add Content to Pages
     And there is a page with:
       | path       | name      |
       | /some-page | Some Page |
-    And I am logged in as a Content Editor
     When I am editing the page at /some-page
     And I click the Select Existing Content button
     Then I should see the following content:
@@ -20,7 +20,6 @@ Feature: Add Content to Pages
     Given there is a page with:
       | path       | name      |
       | /some-page | Some Page |
-    And I am logged in as a Content Editor
     When I am editing the page at /some-page
     And I add new content to the page
     Then I should see the following content:
@@ -39,4 +38,5 @@ Feature: Add Content to Pages
     And I press "Save"
     Then I should see a page titled "Some Page"
     And the page content should contain "I'm some new content"
+
 

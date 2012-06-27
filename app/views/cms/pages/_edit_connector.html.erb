@@ -9,7 +9,12 @@
       <%= image_tag("cms/pages/up_connectable_disabled.gif", :class=>'cms-content-button') %>
       <%= image_tag("cms/pages/down_connectable_disabled.gif", :class=>'cms-content-button') %>
     <% end %>
-    <%= link_to image_tag("cms/pages/delete_connectable.gif", :class=>'cms-content-button'), cms.connector_path(connector, :_redirect_to => @page.path), :class => "confirm_with_title http_delete", :title => "Remove this content from page (#{connectable.name}).  It will remain available in the Content Library." , :style => "text-decoration: none; padding: 0 2px 0 0; background: none; margin: 0; float: none; border: none;"%>
+    <%= link_to image_tag("cms/pages/delete_connectable.gif", :class=>'cms-content-button', :alt=>"Remove content"),
+                cms.connector_path(connector, :_redirect_to => @page.path),
+                :class => "cms-content-link",
+                :method=>:delete,
+                :confirm => "Are you sure you want to remove this content from the page? (It will remain available in the Content Library.)",
+                :title => "Remove this content from page (#{connectable.name})." %>
     <%= status_icon connector.status,
           :class => "published_status", 
           :title => connector.live? ? "This content is published and can be seen by site visitors." : "This content is a draft and won't be seen by site visitors until this page is published." ,
