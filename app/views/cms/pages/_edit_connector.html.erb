@@ -25,12 +25,3 @@
   </div>
     <%= render_connectable connectable %>
 </div>
-<%= content_for :html_head do %>
-    <%= stylesheet_link_tag 'cms/page_content_editing' %>
-    <%= javascript_include_tag 'cms/core_library' %>
-    <% if  @authenticity_token_loaded.nil? && protect_against_forgery? %><script type="text/javascript">
-      jQuery(function($){
-        $.cms.authenticity_token = '<%= form_authenticity_token %>'
-      })
-    </script><% end %><% @authenticity_token_loaded = true %>
-<% end %>

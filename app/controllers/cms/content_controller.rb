@@ -53,7 +53,6 @@ module Cms
     end
 
     def render_page
-      logger.warn "Render page (id: #{@page.id})"
       prepare_connectables_for_render
       page_layout = determine_page_layout
       render :layout => page_layout, :action => 'show'
