@@ -63,6 +63,11 @@ When /^login as an authorized user$/ do
   fill_in 'password', :with => "password"
   click_button 'LOGIN'
 end
+
+When /^I am editing the page at (#{PATH})$/ do |path|
+  visit("#{path}?show_page=show&mode=edit")
+end
+
 When /^I click the Select Existing Content button$/ do
   container = "main"
   click_link "insert_existing_content_#{container}"
@@ -137,11 +142,11 @@ module ProtectedContentSteps
   def create_protected_page(path="/secret")
     create_protected_user_section_group
     @page = create(:page,
-                    :section => @protected_section,
-                    :path => path,
-                    :name => "Shhh... It's a Secret",
-                    :template_file_name => "default.html.erb",
-                    :publish_on_save => true)
+                   :section => @protected_section,
+                   :path => path,
+                   :name => "Shhh... It's a Secret",
+                   :template_file_name => "default.html.erb",
+                   :publish_on_save => true)
   end
 
 end
@@ -178,7 +183,7 @@ Given /^the following link exists:$/ do |table|
 end
 
 When /^I change the link name to "([^"]*)"$/ do |new_name|
-  fill_in "Name", :with=>new_name
+  fill_in "Name", :with => new_name
   click_on "Save And Publish"
 end
 
@@ -210,4 +215,9 @@ end
 Then /^the toolbar should display a revert to button$/ do
   assert_equal 200, page.status_code
   assert page.has_content? "Revert to this Version"
+end
+
+When /^the page content should contain "([^"]*)"$/ do |content|
+  visit("#{current_url}?show_page=show")
+  assert page.has_content?(content)
 end

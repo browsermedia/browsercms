@@ -11,8 +11,7 @@ Feature: Add Content to Pages
       | path       | name      |
       | /some-page | Some Page |
     And I am logged in as a Content Editor
-    And I turn on edit mode for /some-page
-    When I am at /some-page
+    When I am editing the page at /some-page
     And I click the Select Existing Content button
     Then I should see the following content:
       | Hello World |
@@ -22,8 +21,7 @@ Feature: Add Content to Pages
       | path       | name      |
       | /some-page | Some Page |
     And I am logged in as a Content Editor
-    And I turn on edit mode for /some-page
-    When I am at /some-page
+    When I am editing the page at /some-page
     And I add new content to the page
     Then I should see the following content:
       | File    |
@@ -40,5 +38,5 @@ Feature: Add Content to Pages
     And I fill in "Content" with "I'm some new content"
     And I press "Save"
     Then I should see a page titled "Some Page"
-    And I should see the following content:
-      | I'm some new content |
+    And the page content should contain "I'm some new content"
+

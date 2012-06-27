@@ -12,8 +12,8 @@ Feature: Portlets
 
   Scenario: Login portlet when logged in
     And there is a LoginPortlet on the homepage
-    And I am on the homepage
-    Then I should see Welcome, cmsadmin
+    And I am editing the page at /
+    Then the page content should contain "Welcome, cmsadmin"
 
   Scenario: Login portlet when logged out
     Given there is a LoginPortlet on the homepage

@@ -40,14 +40,13 @@ Feature: Manage Content Blocks
     Then I should be redirected to /cms/products
 
   Scenario: Add to a page
-    When I visit /
-    And I turn on edit mode for /
+    When I am editing the page at /
     And I add content to the main area of the page
     And I click on "add_new_product"
     And I fill in "Name" with "iPhone"
     And I click on "Save"
     Then the response should be 200
-    And I should see "Name: iPhone"
+    Then the page content should contain "Name: iPhone"
 
   Scenario: View Usages
     Given a product "iPhone" has been added to a page
