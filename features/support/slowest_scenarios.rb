@@ -9,7 +9,9 @@ scenario_times = {}
 Around() do |scenario, block|
   start = Time.now
   block.call
-  scenario_times["#{scenario.feature.file}::#{scenario.name}"] = Time.now - start
+  # Examples don't respond to features, so need guard clause
+  scenario_times["#{scenario.feature.file}::#{scenario.name}"] = Time.now - start if scenario.respond_to?(:feature)
+
 end
 
 at_exit do

@@ -6,6 +6,8 @@ module Cms
 
     included do
       layout 'cms/administration'
+      before_filter :set_menu_section
+
     end
 
     def new_button_path

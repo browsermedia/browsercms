@@ -30,3 +30,9 @@ end
 Then /^it should add a new user$/ do
   should_see_a_page_titled "New User"
 end
+When /^I am managing groups$/ do
+  visit '/cms/groups'
+end
+Then /^it should add a new redirect$/ do
+  should_see_a_page_titled "New Redirect"
+end

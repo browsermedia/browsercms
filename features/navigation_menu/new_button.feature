@@ -20,12 +20,23 @@ Feature: New Button
     And I press the 'New' menu button
     Then it should add a new item of that type
 
-  Scenario: On Administration Tab
-    When I am managing users
+  Scenario: Redirects
+    When I am at /cms/redirects
+    And I press the 'New' menu button
+    Then it should add a new redirect
+
+  Scenario Outline: Administration tab
+    When I am at <path>
     And I press the 'New' menu button
     Then it should add a new user
 
-
+    Examples:
+      | path                |
+      | /cms/users          |
+      | /cms/groups         |
+      | /cms/page_templates |
+      | /cms/cache          |
+      | /cms/email_messages  |
 
 
 
