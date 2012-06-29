@@ -1,26 +1,28 @@
-Making the admin menu work
+## Big Tasks
 
-* Add the button bar menu
-** Disable buttons
-*** Publish
-*** Edit
+* Do UX for the content library, admin and sitemap
+* Implement implied features (Search/Notifications)
+
+## Admin Menu
 * Reduce the different admin layouts (why are there so many?)
 * Need to highlight active tab
 * Need to highlight the active menu item
 * Enforce link security for menus
 * iframe means drop downs don't appear under page rather than over when editing a page.
 
-New
+## New Features to implement
 
 * Implement search
 * Implement notifications
 
-# Developer Tasks
+## Developer Tasks
 
 Style the following elements
 
+* Need a * for the BrowserCMS logo
 * Edit Properties popover (currently centered and too small text)
-
+* Disabled state looks bad
+* New button shouldn't be split like it is
 
 # Points of Design Discussion
 
