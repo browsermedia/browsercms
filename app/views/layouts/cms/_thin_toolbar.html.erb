@@ -24,10 +24,7 @@
           <ul class="dropdown-menu">
             <%= nav_link_to "View Sitemap", cms.sitemap_path %>
             <%= divider_tag %>
-            <%= nav_link_to "New Page", cms.new_page_path %>
-            <%= nav_link_to "New Link", cms.new_link_path %>
-            <%= nav_link_to "New Section", cms.new_section_path %>
-            <%= divider_tag %>
+            <%= render :partial=> 'cms/toolbar/new_pages_menu', :locals => {:prefix => "New "}%>
             <%= nav_link_to "Redirects", cms.redirects_path %>
           </ul>
         </li>
@@ -95,6 +92,7 @@
             <b class="caret"></b>
           </a>
           <ul class="dropdown-menu">
+            <%= render 'cms/toolbar/new_pages_menu'%>
             <% Cms::ContentTypeGroup.menu_list.each_with_index do |group, i| %>
                 <%= divider_tag(i) %>
                 <% group.types.each do |type| %>

@@ -61,7 +61,7 @@ module Cms
           pull: 'left'
       }
       options = defaults.merge!(options)
-      options[:class] =  %w{btn btn-primary}
+      options[:class] = %w{btn btn-primary}
       if (options[:pull] == 'left' || options[:pull]== 'right')
         options[:class] << "pull-#{options.delete(:pull)}"
       end
@@ -154,6 +154,15 @@ module Cms
 
     def nav_link_to(name, link, options={})
       content_tag(:li, link_to(name, link, options.merge({:target => "_top"})))
+    end
+
+    # Used to determine which section a New Page should go in, based on the current context.
+    def target_section
+      if @page
+        @page.section
+      else
+        Cms::Section.first
+      end
     end
 
     private
