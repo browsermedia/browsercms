@@ -83,11 +83,11 @@
           <ul class="dropdown-menu">
             <%= nav_link_to current_user.full_name, cms.edit_user_path(current_user) %>
             <li class="divider">
-              <%= nav_link_to "Logout", cms.logout_path, :class => "http_delete", :target => "_top" %>
+              <%= nav_link_to "Logout", cms.logout_path, :class => "http_delete" %>
           </ul>
         </li>
         <li class="btn-group pull-right">
-          <%= menu_button "New", url_for(cms.new_html_block_path), :target => "_top" %>
+          <%= menu_button "New", new_content_item_path %>
           <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
             <b class="caret"></b>
           </a>

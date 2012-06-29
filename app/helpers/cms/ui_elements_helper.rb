@@ -153,7 +153,17 @@ module Cms
     end
 
     def nav_link_to(name, link, options={})
-      content_tag(:li, link_to(name, link, options.merge({:target => "_top"})))
+      content_tag(:li, link_to(name, link, options))
+    end
+
+    # The 'New' button will do different things based on which page the user is on.
+    # When a user is:
+    # 1. Viewing a page, it should add a new page in the same section the user is in.
+    # 2. Viewing the sitemap, it should add a new page to the root section.
+    # 3. Viewing a content type in the Content Library, it should add a new item of the current type
+    # 4. On the admin tab, then it should add a new user.
+    def new_content_item_path
+      cms.new_section_page_path(target_section)
     end
 
     # Used to determine which section a New Page should go in, based on the current context.
