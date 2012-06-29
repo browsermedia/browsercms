@@ -4,7 +4,7 @@ require 'cms/category_type'
 module Cms
   class ContentBlockController < Cms::BaseController
 
-    layout :determine_layout
+    layout 'cms/content_library'
 
     before_filter :set_toolbar_tab
 
@@ -97,6 +97,10 @@ module Cms
       load_block_draft
       @pages = @block.connected_pages.all(:order => 'name')
       render "#{template_directory}/usages"
+    end
+
+    def new_button_path
+      cms_new_path_for(content_type)
     end
 
     protected
@@ -291,9 +295,6 @@ module Cms
       @toolbar_tab = :content_library
     end
 
-    def determine_layout
-      'cms/content_library'
-    end
 
     def template_directory
       "cms/blocks"

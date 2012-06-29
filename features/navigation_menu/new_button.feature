@@ -10,6 +10,23 @@ Feature: New Button
     And I press the 'New' menu button
     Then it should add a page in the same section I as the page I was editing
 
+  Scenario: On the sitemap
+    When I am at /cms/sitemap
+    And I press the 'New' menu button
+    Then it should add a page in the root section
+
+  Scenario: On Content Library
+    When I am working with a content type
+    And I press the 'New' menu button
+    Then it should add a new item of that type
+
+  Scenario: On Administration Tab
+    When I am managing users
+    And I press the 'New' menu button
+    Then it should add a new user
+
+
+
 
 
 
