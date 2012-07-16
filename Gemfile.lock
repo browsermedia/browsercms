@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    browsercms (3.5.2)
+    browsercms (3.5.3)
       ancestry (~> 1.2.4)
       ckeditor_rails (~> 3.6.2.2)
       jquery-rails (~> 2.0)
@@ -151,7 +151,7 @@ GEM
     rspec-mocks (2.10.1)
     ruby-prof (0.11.2)
     rubyzip (0.9.8)
-    sass (3.1.19)
+    sass (3.1.20)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
       sass (>= 3.1.10)
