@@ -92,13 +92,7 @@ module Cms
         # @return [String] path to location where an attachment should be (based on id)
         def path_for_attachment(attachment)
           new_id_dir = "#{Paperclip::Interpolations.id_partition(AttachmentWrapper.new(attachment), nil)}/original"
-          "#{new_id_dir}/#{attachment.data_fingerprint}"
-        end
-
-        # @return [String] Path to where an attachment should be
-        def path_to_attachment(attachment)
-          loc = path_for_attachment(attachment)
-          file_in_attachments_dir(loc)
+          File.join(attachments_dir, new_id_dir, fingerprint_for_file_location(attachment))
         end
 
         # For a given class with an Attachment association (pre-3.5.0), migrate its attachment data to match the new
@@ -182,18 +176,19 @@ module Cms
         def migrate_attachments_file_location(model_class)
           model_class.unscoped.each do |attachment|
             from = File.join(attachments_dir, attachment.file_location)
-            to = path_to_attachment(attachment)
+            to = path_for_attachment(attachment)
             move_attachment_file(from, to)
 
-            new_fingerprint = attachment.file_location.split("/").last
+            new_fingerprint = fingerprint_for_file_location(attachment)
             model_class.unscoped.update_all({:data_fingerprint => new_fingerprint}, :id => attachment.id)
           end
         end
 
-        def file_in_attachments_dir(file_name)
-          File.join(Cms::Attachment.configuration.attachments_root, file_name)
+        # Given a CMS <3.5 file_location, figure out the fingerprint, which should just be the file name.
+        def fingerprint_for_file_location(attachment)
+          attachment.file_location.split("/").last
         end
-
+        
         def move_attachment_file(old_location, new_location)
           if File.exists?(old_location)
             FileUtils.mkdir_p(File.dirname(new_location), :verbose => false)
@@ -203,10 +198,15 @@ module Cms
           end
         end
 
+        # Return the location of the attachment's upload directory.
         def attachments_dir
-          Cms::Attachment.configuration.attachments_root
+          Cms::Attachments::Serving.send_attachments_with.attachments_storage_location
         end
-
+        
+        # def attachments_dir
+        #           Cms::Attachment.configuration.attachments_root
+        #         end
+        
         # Allows us to use the Paperclip interpolations logic directly
         class AttachmentWrapper
           def initialize(attachment)
