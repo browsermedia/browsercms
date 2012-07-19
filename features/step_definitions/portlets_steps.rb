@@ -75,3 +75,8 @@ end
 Then /^I should see the portlet helper rendered in the view$/ do
   assert page.has_content?(UsesHelperPortletHelper::EXPECTED_CONTENT)
 end
+
+Given /^there is a portlet that sets a custom page title like so:$/ do |body_we_are_ignoring|
+  @page_path = "/portlet/custom-page-title"
+  @portlet = create(:portlet_with_helper, page_path: @page_path)
+end

@@ -4,7 +4,7 @@ class UsesHelperPortlet < Cms::Portlet
   enable_template_editor false
      
   def render
-    # Your Code Goes Here
+    page_title "My Custom Title"
   end
     
 end
