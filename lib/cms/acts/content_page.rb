@@ -15,22 +15,17 @@
 module Cms
   module Acts
 
+    # Override some of the behavior defined in Cms::PageHelper so templates display correctly Rails Controllers
     module PageHelper
-
-      # By default, the Name of the controller (minus 'Controller' will be the page name.)
-      # Unless @page_title is set in the controller action
-      def page_title(title=nil)
-        if title
-          @page_title = title
-        end
-        return controller.class.name.gsub("Controller", "").titleize unless @page_title
-        @page_title
-      end
-
 
       # Do not show the toolbar on Acts::As::ContentPages
       def cms_toolbar
         ""
+      end
+      
+      # If we are showing an error page, use that. Otherwise, just a blank page object that has a default title.
+      def current_page
+        super ? super : OpenStruct.new(page_title: controller.class.name.gsub("Controller", ""))
       end
     end
     module ContentPage
