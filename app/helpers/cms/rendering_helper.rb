@@ -12,9 +12,14 @@ module Cms
       render :partial => 'cms/attachments/attachment_table', :locals => { :block => content, :can_delete => false }
     end
 
+    # Determines if a user is currently editing this page
+    def is_editing_page?(page)
+      logged_in? && @mode == "edit" && current_user.able_to_edit?(page)
+    end
+    
     def render_connector_and_connectable(connector, connectable)
       logger.debug "Rendering #{connectable} "
-      if logged_in? && @mode == "edit" && current_user.able_to_edit?(connector.page)
+      if is_editing_page?(connector.page)
         render(:partial => 'cms/pages/edit_connector', :locals => { :connector => connector, :connectable => connectable})
       else
         render_connectable(connectable)

@@ -1,5 +1,13 @@
 <%= content_for :html_head do %>
   <meta name="generator" content="BrowserCMS <%= Cms.version %>"/>
+  <% if is_editing_page?(current_page) %>
+  <%= javascript_include_tag 'cms/core_library' %>
+  <% if  @authenticity_token_loaded.nil? && protect_against_forgery? %><script type="text/javascript">
+    jQuery(function($){
+      $.cms.authenticity_token = '<%= form_authenticity_token %>'
+    })
+  </script><% end %><% @authenticity_token_loaded = true %>
+  <% end %>
 <% end %>
 <% if @show_toolbar %>
   <% flash.keep %>
