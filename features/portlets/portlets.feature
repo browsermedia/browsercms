@@ -104,3 +104,13 @@ Feature: Portlets
     Then I should see the paging controls
     And I click on "next_page_link"
     Then I should see the second page of content
+
+  Scenario: Portlets set page title
+    Given there is a portlet that sets a custom page title like so:
+    """
+    def render
+      page_title "My Custom Title"
+    end
+    """
+	When I view that page
+	Then I should see a page titled "My Custom Title"

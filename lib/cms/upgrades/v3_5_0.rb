@@ -21,8 +21,14 @@ module Cms
           table_prefix = module_name.underscore
           model_name = model_class_name.underscore
 
-          rename_table model_name.pluralize, "#{table_prefix}_#{model_name.pluralize}"
-          rename_table "#{model_name}_versions", "#{table_prefix}_#{model_name}_versions"
+          old_content_table = model_name.pluralize
+          new_content_table = "#{table_prefix}_#{model_name.pluralize}"
+          rename_table old_content_table, new_content_table if have_not_renamed(old_content_table, new_content_table)
+
+
+          old_versions_table = "#{model_name}_versions"
+          new_versions_table = "#{table_prefix}_#{model_name}_versions"
+          rename_table old_versions_table, new_versions_table if have_not_renamed(old_versions_table, new_versions_table)
           v3_5_0_standardize_version_id_column(table_prefix, model_name)
           v3_5_0_namespace_model_data(module_name, model_class_name)
           v3_5_0_update_connector_namespaces(module_name, model_class_name)
@@ -53,6 +59,21 @@ module Cms
         def v3_5_0_namespace_model(module_name, model_class_name)
           "#{module_name}::#{model_class_name}"
         end
+
+        private
+
+        # If we already renamed these tables, they should be skipped
+        def have_not_renamed(old_table, new_table)
+          unless table_exists?(old_table)
+            puts "Table #{old_table} does not exist. Skipping rename."
+            return false
+          end
+          unless !table_exists?(new_table)
+            puts "Table #{new_table} already exists. Skipping rename."
+            return false
+          end
+          true
+        end
       end
 
       # Add additional methods to ActiveRecord::Migration when this file is required.
@@ -71,13 +92,7 @@ module Cms
         # @return [String] path to location where an attachment should be (based on id)
         def path_for_attachment(attachment)
           new_id_dir = "#{Paperclip::Interpolations.id_partition(AttachmentWrapper.new(attachment), nil)}/original"
-          "#{new_id_dir}/#{attachment.data_fingerprint}"
-        end
-
-        # @return [String] Path to where an attachment should be
-        def path_to_attachment(attachment)
-          loc = path_for_attachment(attachment)
-          file_in_attachments_dir(loc)
+          File.join(attachments_dir, new_id_dir, fingerprint_for_file_location(attachment))
         end
 
         # For a given class with an Attachment association (pre-3.5.0), migrate its attachment data to match the new
@@ -161,18 +176,19 @@ module Cms
         def migrate_attachments_file_location(model_class)
           model_class.unscoped.each do |attachment|
             from = File.join(attachments_dir, attachment.file_location)
-            to = path_to_attachment(attachment)
+            to = path_for_attachment(attachment)
             move_attachment_file(from, to)
 
-            new_fingerprint = attachment.file_location.split("/").last
+            new_fingerprint = fingerprint_for_file_location(attachment)
             model_class.unscoped.update_all({:data_fingerprint => new_fingerprint}, :id => attachment.id)
           end
         end
 
-        def file_in_attachments_dir(file_name)
-          File.join(Cms::Attachment.configuration.attachments_root, file_name)
+        # Given a CMS <3.5 file_location, figure out the fingerprint, which should just be the file name.
+        def fingerprint_for_file_location(attachment)
+          attachment.file_location.split("/").last
         end
-
+        
         def move_attachment_file(old_location, new_location)
           if File.exists?(old_location)
             FileUtils.mkdir_p(File.dirname(new_location), :verbose => false)
@@ -182,10 +198,15 @@ module Cms
           end
         end
 
+        # Return the location of the attachment's upload directory.
         def attachments_dir
-          Cms::Attachment.configuration.attachments_root
+          Cms::Attachments::Serving.send_attachments_with.attachments_storage_location
         end
-
+        
+        # def attachments_dir
+        #           Cms::Attachment.configuration.attachments_root
+        #         end
+        
         # Allows us to use the Paperclip interpolations logic directly
         class AttachmentWrapper
           def initialize(attachment)

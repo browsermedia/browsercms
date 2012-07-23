@@ -138,6 +138,14 @@ module Cms
     end
 
     #----- Portlet Action Related Methods ----------------------------------------
+    
+    # Used by portlets to set a custom title, typically in the render body.
+    # For example, this allows a page with a single portlet that might display a content block to set the page name to 
+    # that block name.
+    def page_title(new_title)
+      controller.current_page.title = new_title
+    end
+    
     def instance_name
       "#{self.class.name.demodulize.underscore}_#{id}"
     end

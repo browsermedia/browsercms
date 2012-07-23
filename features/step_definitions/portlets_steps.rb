@@ -62,3 +62,21 @@ When /^a page with a portlet that raises both a 403 and any other error exists$/
   @last_page.publish!
   assert @last_page.published?
 end
+
+Given /^there is a portlet that uses a helper$/ do
+  @page_path = "/with-helper"
+  @portlet = create(:portlet_with_helper, page_path: @page_path)
+
+end
+When /^I view that page$/ do
+  visit @page_path
+end
+
+Then /^I should see the portlet helper rendered in the view$/ do
+  assert page.has_content?(UsesHelperPortletHelper::EXPECTED_CONTENT)
+end
+
+Given /^there is a portlet that sets a custom page title like so:$/ do |body_we_are_ignoring|
+  @page_path = "/portlet/custom-page-title"
+  @portlet = create(:portlet_with_helper, page_path: @page_path)
+end

@@ -241,4 +241,16 @@ FactoryGirl.define do
     ct.association :content_type_group
   end
 
+  # This is just for CMS testing
+  factory :portlet_with_helper, :class=>UsesHelperPortlet do |portlet|
+    ignore do
+      page_path "/random"
+    end
+    portlet.name "ProductCatalog"
+    portlet.after(:create) do |content, evaluator|
+      page = FactoryGirl.create(:public_page, path: evaluator.page_path)
+      page.add_content(content)
+      page.publish!
+    end
+  end
 end

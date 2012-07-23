@@ -3,9 +3,9 @@ module Cms
 
     layout "cms/toolbar"
 
-    helper MobileHelper
+    helper Cms::MobileHelper
 
-    def index
+    def index      
       if params[:page_toolbar] != "0"
         @mode = params[:mode]
         @page_toolbar_enabled = true

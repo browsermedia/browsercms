@@ -1,3 +1,14 @@
+v3.5.3
+======
+
+* [#461] Allow portlets to easily set the page title. This makes it easy for one portlet to render multiple different content blocks, and change the displayed <title> attribute to match the name of the block. For example:
+	
+	def render
+	  @block = Product.find(params[:id])
+	  page_title @block.name
+	end 
+* [#536] Fix bug to make PortletHelpers available in the render.html.erb.
+	
 v3.5.2
 ======
 

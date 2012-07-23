@@ -130,6 +130,8 @@ module Cms
         # Create, Instantiate and Initialize the view
         action_view = Cms::ViewContext.new(@controller, assigns_for_view)
 
+        add_content_helpers_if_defined(action_view)
+
         # Determine if this content should render from a file system template or inline (i.e. database based template)
         if respond_to?(:inline_options) && self.inline_options && self.inline_options.has_key?(:inline)
           options = self.inline_options
@@ -152,6 +154,18 @@ module Cms
       end
 
       protected
+
+      # Add the helper class for this particular object, if its defined
+      # This is mostly for portlets, and should not fail if no helper is defined.
+      def add_content_helpers_if_defined(action_view)
+        begin
+          helper_module = self.class.helper_class
+          action_view.extend(helper_module)
+        rescue NameError => error
+          logger.debug "No helper class named '#{error.missing_name}' was found. This isn't necessarily an error as '#{self.class}' doesn't NEED a separate helper.'"
+        end
+      end
+
       def copy_instance_variables_from_controller!
         if @controller.respond_to?(:instance_variables_for_rendering)
           @controller.instance_variables_for_rendering.each do |iv|

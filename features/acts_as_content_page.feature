@@ -11,7 +11,7 @@ Feature: Acts as Content Page
   Scenario: Use CMS templates with Rails Controllers
     When I visit /content-page
     Then the response should be 200
-    And I should see a page titled "Content Page"
+    And I should see a page titled "ContentPage"
     And I should see the following content:
       | Dummy Site Template |
 
