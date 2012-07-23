@@ -12,7 +12,6 @@ class Browsercms340 < ActiveRecord::Migration
 
     update_sitemap
     update_files
-    standardize_foreign_keys_from_versions_tables_to_original_table
   end
 
   private
@@ -53,10 +52,5 @@ class Browsercms340 < ActiveRecord::Migration
     end
   end
 
-  def standardize_foreign_keys_from_versions_tables_to_original_table
-    models = %w[attachment dynamic_view file_block html_block link page ]
-    models.each do |model|
-      standardize_version_id_column(model)
-    end
-  end
+
 end

@@ -69,7 +69,7 @@ class Browsercms315 < ActiveRecord::Migration
 
     all_nodes_but_root = Cms::SectionNode.find(:all, :conditions=>["section_id IS NOT NULL"])
     all_nodes_but_root.each do |sn|
-      parent_node = Cms::SectionNode.find(:first, :conditions => ["node_id = ? and node_type = 'Section'", sn.section_id])
+      parent_node = Cms::SectionNode.find(:first, :conditions => ["node_id = ? and (node_type = 'Section' or node_type = 'Cms::Section')", sn.section_id])
       sn.temp_parent_id = parent_node.id
       sn.save!
     end
