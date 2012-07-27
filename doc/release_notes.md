@@ -1,6 +1,8 @@
 v3.5.3
 ======
 
+Bug fixes, with some improvements for upgrading projects from older versions of the CMS.
+
 * [#461] Allow portlets to easily set the page title. This makes it easy for one portlet to render multiple different content blocks, and change the displayed <title> attribute to match the name of the block. For example:
 	
 	def render
@@ -8,7 +10,9 @@ v3.5.3
 	  page_title @block.name
 	end 
 * [#536] Fix bug to make PortletHelpers available in the render.html.erb.
-	
+* [#534] Bug Fix - Ensure image/file blocks can be deleted from the content library.
+* Migrations - Add another migration to handle Rails 2->3 updates (v3.1.4) which should retroactivealy added before v315.
+
 v3.5.2
 ======
 
