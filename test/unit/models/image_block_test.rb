@@ -28,12 +28,38 @@ module Cms
       assert_equal :original_record_id, ImageBlock.version_foreign_key
     end
 
+
   end
 
   class PaperclipAttachmentsTest < ActiveSupport::TestCase
     def setup
       @image = build(:image_block)
       @image.save!
+    end
+
+    test "validates_attachment_presence should ensure blocks have uploaded files.'" do
+      image = ImageBlock.new
+      assert_equal false, image.valid?
+      assert_equal true, image.errors.messages.include?(:attachment)
+      assert_equal ["You must upload a file"], image.errors.messages[:attachment]
+    end
+
+
+    test "validates_attachment_presence doesn't fire when deleting a block'" do
+      image = ImageBlock.new(:name => "A valid name")
+      image.deleted = true
+      assert image.valid?, "A block being deleted doesn't need an attachment to be valid'"
+
+    end
+
+    test "Can delete a block" do
+      @image.destroy
+      assert @image.valid?
+      assert @image.deleted?
+
+      @image.reload
+      assert @image.attachments.empty?, "Should remove attachments"
+      assert_equal true, @image.deleted?, "The image should be deleted."
     end
 
     test "#attachable_type" do
