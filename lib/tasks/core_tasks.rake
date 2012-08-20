@@ -36,4 +36,13 @@ namespace :test do
     Rake::Task['db:create'].invoke
     system "rake db:migrate test"
   end
+
+  desc 'Copy database.yml files for running tests'
+  task :setup do
+    drivers = %w(jdbcmysql mysql postgres sqlite3).each do |driver|
+      source      = File.join('config', "database.#{driver}.yml.example")
+      destination = File.join('config', "database.#{driver}.yml")
+      cp(source, destination, :verbose => true)
+    end
+  end
 end
