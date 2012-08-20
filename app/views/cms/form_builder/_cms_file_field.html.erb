@@ -10,7 +10,7 @@
     <% if a.object.attachment_name == method.to_s %>
         <%= a.hidden_field :attachment_name, :value => method.to_s %>
         <div class="fields file_fields">
-            <%= a.cms_label :data, cms_options[:label] %>
+            <%= a.cms_label method, cms_options[:label] %>
             <div id="<%= object_name %>_<%= method %>_div" class="file_inputs">
                 <%= a.file_field :data, options.merge('data-purpose'=>"cms_file_field") %>
             </div>
