@@ -44,5 +44,9 @@ namespace :test do
       destination = File.join('config', "database.#{driver}.yml")
       cp(source, destination, :verbose => true)
     end
+
+    source      = File.join('test/dummy/config', "database.yml.example")
+    destination = File.join('test/dummy/config', "database.yml")
+    cp(source, destination, :verbose => true)
   end
 end
