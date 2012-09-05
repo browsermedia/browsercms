@@ -1,3 +1,8 @@
+v3.5.4
+======
+
+* [IE and Ckeditor] Fix issue where ckeditor would not load correctly in production for users using Internet Explorer 7-9.
+
 v3.5.3
 ======
 

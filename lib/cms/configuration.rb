@@ -11,7 +11,8 @@ module Cms
     #
     # bcms modules can changes this by overriding it in their configuration.
     def content_editor
-      @wysiwig_editor ||= "ckeditor"
+      # CKEditor is the default.
+      @wysiwig_editor ||= ['bcms/ckeditor_load', 'ckeditor-jquery']
     end
 
     def content_editor=(editor)
