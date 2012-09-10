@@ -44,7 +44,14 @@ module Cms::RouteExtensions
     # Handle 'stock' attachments
     match "/attachments/:id/:filename", :to=>"cms/attachments#download"
     match "/", :to=>"cms/content#show"
-    match "*path", :to=>"cms/content#show"
+    
+    # If explicit routes are required, only paths set in the database will used.
+    # This allows mount_browsercms to be located higher in the containing app's
+    # routes file (such as to allow 404s to hit containing apps route instead
+    # of BCMS's 404 route)
+    if !Cms.require_explicit_page_routes
+      match "*path", :to=>"cms/content#show"
+    end
   end
 
   # Preserving for backwards compatibility with bcms-3.3.x and earlier.

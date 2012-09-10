@@ -20,6 +20,18 @@ module Cms
     @table_prefix
   end
 
+  # By setting this to true, only page routes specified in the database
+  # as set in the Administration > Page Routes control panel will be used
+  # and paths set in Page Properties will be ignored.
+  def self.require_explicit_page_routes=(setting)
+    @require_explicit_page_routes = setting
+  end
+
+  # Returns the setting for explicit page routes
+  def self.require_explicit_page_routes
+    @require_explicit_page_routes
+  end
+
   # By setting this, ActiveRecord will automatically prefix all tables in the Cms:: module to start with the value of prefix_
   # Defaults to "" if not specified.
   def self.table_name_prefix
