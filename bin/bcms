@@ -108,8 +108,8 @@ TEXT
   option_skip_bundle
   def install
     common_setup('.')
-    prefix_cms_tables
     set_default_settings
+    prefix_cms_tables
     generate_default_template
     puts "BrowserCMS has been installed. Run rake db:install to add the tables then restart your server."
   end
@@ -121,10 +121,10 @@ TEXT
   end
 
   private
-
+  
   def set_default_settings
     append_to_file "config/initializers/browsercms.rb", <<-CODE
-Cms.require_explicit_page_routes = false # Set to true to disable broad path matching (required for paths set in Page Properties).  Disabling allows mount_browsercms to be placed anywhere in routes.rb.
+Cms.match_nonexisting_routes = true # Set to false to allow non-existing page routes to fall through to existing application's error handler
     CODE
   end
 

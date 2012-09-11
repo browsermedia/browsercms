@@ -11,7 +11,6 @@ module Cms
     @table_prefix = prefix
   end
 
-
   # Returns the table name prefix for models in the Cms:: Namespace
   # Prefer calling table_name_prefix to this methods
   # @return [String] nil if no namespace has been set.
@@ -20,22 +19,21 @@ module Cms
     @table_prefix
   end
 
-  # By setting this to true, only page routes specified in the database
-  # as set in the Administration > Page Routes control panel will be used
-  # and paths set in Page Properties will be ignored.
-  def self.require_explicit_page_routes=(setting)
-    @require_explicit_page_routes = setting
-  end
-
-  # Returns the setting for explicit page routes
-  def self.require_explicit_page_routes
-    @require_explicit_page_routes
-  end
-
   # By setting this, ActiveRecord will automatically prefix all tables in the Cms:: module to start with the value of prefix_
   # Defaults to "" if not specified.
   def self.table_name_prefix
     self.table_prefix ? self.table_prefix : ""
+  end
+
+  # Allows user configuration of whether or not to match non-existing routes.
+  # If set to false, non-existing routes will not be handled by BCMS
+  # and will fall through to existing application's error handler.
+  def self.match_nonexisting_routes=(setting)
+    @match_nonexisting_routes = setting
+  end
+  
+  def self.match_nonexisting_routes
+    @match_nonexisting_routes
   end
 
   module Namespacing

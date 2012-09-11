@@ -59,7 +59,10 @@ module Cms
     # ----- Before Filters -------------------------------------------------------
     def construct_path
       # @paths = params[:cms_page_path] || params[:path] || []
-      @path = "/#{params[:path]}"
+      
+      # When add_dynamic_routes is run by route_extensions.rb, path is 
+      # passed in as :_path
+      @path = params[:_path] || "/#{params[:path]}"
       @paths = @path.split("/")
     end
 

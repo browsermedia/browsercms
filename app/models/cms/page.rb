@@ -95,6 +95,13 @@ class Cms::Page < ActiveRecord::Base
 
   # Publish all
   def after_publish
+
+    # Force Rails to reload the routes.  Allows for case that user sets
+    # Cms.match_nonexisting_routes = false, in which case routes are set
+    # explicitly for each page use page.path necessitating reloading routes
+    # each time a page is published.
+    Rails.application.reload_routes!
+    
     self.reload # Get's the correct version number loaded
     self.connectors.for_page_version(self.version).all(:order => "position").each do |c|
       if c.connectable_type.constantize.publishable? && con = c.connectable
