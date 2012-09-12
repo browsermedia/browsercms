@@ -62,6 +62,9 @@ module Cms::RouteExtensions
   private
   
   def add_dynamic_routes
+    Cms::Section.where(:hidden => 'f').each do |r|
+      match r.path, :to=>"cms/content#show", :_path => r.path, :via => [:get, :post]
+    end
     Cms::Page.where(:hidden => 'f').each do |r|
       match r.path, :to=>"cms/content#show", :_path => r.path
     end
