@@ -84,6 +84,10 @@ class Cms::Page < ActiveRecord::Base
   # Paths must be unique among undeleted records
   validates_uniqueness_of :path, :scope=>:deleted
   validate :path_not_reserved
+  
+  def self.can_be_loaded?
+    database_exists? && table_exists?
+  end  
 
   # Implements Versioning Callback.
   def after_build_new_version(new_version)
