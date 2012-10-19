@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    browsercms (3.5.4)
+    browsercms (3.5.5)
       ancestry (~> 1.2.4)
       ckeditor_rails (~> 3.6.4)
       jquery-rails (~> 2.0)
@@ -63,7 +63,7 @@ GEM
     ckeditor_rails (3.6.4.1)
       railties (~> 3.0)
       thor (~> 0.14)
-    cocaine (0.3.0)
+    cocaine (0.3.1)
     cucumber (1.2.0)
       builder (>= 2.1.2)
       diff-lcs (>= 1.1.3)
@@ -91,7 +91,7 @@ GEM
     hike (1.2.1)
     i18n (0.6.1)
     journey (1.0.4)
-    jquery-rails (2.1.1)
+    jquery-rails (2.1.3)
       railties (>= 3.1.0, < 5.0)
       thor (~> 0.14)
     json (1.7.5)
@@ -177,7 +177,7 @@ GEM
       rack (>= 1.0.0)
     thor (0.16.0)
     tilt (1.3.3)
-    treetop (1.4.10)
+    treetop (1.4.11)
       polyglot
       polyglot (>= 0.3.1)
     tzinfo (0.3.33)

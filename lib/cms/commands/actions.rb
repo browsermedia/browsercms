@@ -24,7 +24,7 @@ module Cms
 
       # i.e. BcmsWhatever
       def module_class
-        current_project.classify
+        current_project.camelize
       end
 
       # Runs `bundle install` inside the correct project directory (unless --skip_bundle was passed to the command)
