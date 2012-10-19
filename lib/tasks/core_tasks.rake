@@ -17,36 +17,43 @@ end
 
 
 # These are tasks for the core browsercms project, and shouldn't be bundled into the distributable gem
-namespace :test do
+namespace :project do
 
-    # Could be improved somewhat to get rid of unneeded warnings.
-  desc "run tests against sqlite database"
-  task :sqlite3 do
-    cp(File.join('config', 'database.sqlite3.yml'), File.join('config', 'database.yml'), :verbose => true)
-    Rake::Task['db:drop'].invoke
-    Rake::Task['db:create'].invoke
-    system "rake db:migrate test"
-  end
+  # Could be improved somewhat to get rid of unneeded warnings.
+  #desc "run tests against sqlite database"
+  #task :sqlite3 do
+  #  cp(File.join('config', 'database.sqlite3.yml'), File.join('config', 'database.yml'), :verbose => true)
+  #  Rake::Task['db:drop'].invoke
+  #  Rake::Task['db:create'].invoke
+  #  system "rake db:migrate test"
+  #end
+  #
+  ## Could be improved somewhat to get rid of unneeded warnings.
+  #desc "run tests against mysql database"
+  #task :mysql do
+  #  cp(File.join('config', 'database.mysql.yml'), File.join('config', 'database.yml'), :verbose => true)
+  #  Rake::Task['db:drop'].invoke
+  #  Rake::Task['db:create'].invoke
+  #  system "rake db:migrate test"
+  #end
 
-    # Could be improved somewhat to get rid of unneeded warnings.
-  desc "run tests against mysql database"
-  task :mysql do
-    cp(File.join('config', 'database.mysql.yml'), File.join('config', 'database.yml'), :verbose => true)
-    Rake::Task['db:drop'].invoke
-    Rake::Task['db:create'].invoke
-    system "rake db:migrate test"
+  task :ensure_db_exists do
+    unless File.exists?("test/dummy/config/database.yml")
+      fail("Need to create a database.yml file before running tests. Run:\n $ rake project:setup[database] to create a sample database.yml for the project.")
+    end
   end
 
   desc 'Copy database.yml files for running tests'
-  task :setup do
-    drivers = %w(jdbcmysql mysql postgres sqlite3).each do |driver|
-      source      = File.join('config', "database.#{driver}.yml.example")
-      destination = File.join('config', "database.#{driver}.yml")
-      cp(source, destination, :verbose => true)
+  task :setup, :database do |t, args|
+    drivers = %w(jdbcmysql mysql postgres sqlite3)
+    unless drivers.include?(args[:database])
+      fail("'#{args[:database]}' is not an available database. Choose from one of the following #{drivers.inspect}. i.e\n\t$ rake project:setup[mysql]")
     end
 
-    source      = File.join('test/dummy/config', "database.yml.example")
+    source = File.join('test/dummy/config', "database.#{args[:database]}.yml")
     destination = File.join('test/dummy/config', "database.yml")
     cp(source, destination, :verbose => true)
+
+
   end
 end
