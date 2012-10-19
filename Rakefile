@@ -79,7 +79,9 @@ task :test => 'app:test:prepare' do
   end
 end
 
-task :default => :test
+task :test_ci => ['db:drop', 'db:create:all', 'db:install', 'test']
+
+task :default => :test_ci
 
 require 'yard'
 YARD::Rake::YardocTask.new do |t|
