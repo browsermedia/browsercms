@@ -4,7 +4,7 @@ log/*.log
 tmp/**/*
 db/*.sqlite3
 db/schema.rb
-config/database.yml
+config/database*.yml
 public/images/tuneup
 public/javascripts/tuneup
 public/stylesheets/tuneup
@@ -21,5 +21,6 @@ doc/api
 .bundle/*
 test/dummy/db/backups/*
 test/dummy/.sass-cache
+test/dummy/config/database*.yml
 .sass-cache
 db/backups
