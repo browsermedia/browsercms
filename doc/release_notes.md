@@ -1,3 +1,9 @@
+v3.5.5
+======
+
+* Update to Rails 3.2.8 - Ensure tests to pass (there appeared to be some changes in inflection and html_safe between 3.2.5 and 3.2.8)
+
+
 v3.5.4
 ======
 

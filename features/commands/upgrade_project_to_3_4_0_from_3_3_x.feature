@@ -6,6 +6,7 @@ Feature:
   Background:
     Given I am working on a BrowserCMS v3.3.x project named "petstore"
 
+  @long-scenario
   Scenario: Upgrade Project
     When I run the bcms update script with bundler
     Then Gemfile should have the correct version of BrowserCMS
