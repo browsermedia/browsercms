@@ -61,8 +61,8 @@ class Cms::ApplicationHelper::DeleteButtonTest < ActionView::TestCase
   end
 
   test "Writes out title if specified as a string" do
-    expected_html = '<a href="#" class="button disabled delete_button http_delete confirm_with_title" id="delete_button" title="Really delete \'Server Error\'?"><span><span class="delete_img">&nbsp;</span>Delete</span></a>'
-    assert_equal expected_html, delete_button(:title=>"Really delete \'Server Error\'?")
+    expected_html = '<a href="#" class="button disabled delete_button http_delete confirm_with_title" id="delete_button" title="Really delete Server Error?"><span><span class="delete_img">&nbsp;</span>Delete</span></a>'
+    assert_equal expected_html, delete_button(:title=>"Really delete Server Error?")
   end
 
   test "default to disabled, but have an :enabled option" do
