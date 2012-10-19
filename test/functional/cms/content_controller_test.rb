@@ -33,7 +33,7 @@ module Cms
 
       get :show, :path => "secret"
       assert_response :success
-      assert_select "title", "Shhh... It's a Secret"
+      assert_select "title", "Shhh... It&#x27;s a Secret" # Should page_title be html_safe or not?
     end
 
     def test_show_archived_page_to_user

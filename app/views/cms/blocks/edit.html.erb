@@ -3,7 +3,7 @@
   <%= stylesheet_link_tag('cms/content_library') %>
 <% end %>
 <% page_title "Content Library / Edit #{content_type.display_name}" %>
-<% @toolbar_title = "Edit #{content_type.display_name} '#{@block.name}'" %>
+<% @toolbar_title = "Edit #{content_type.display_name} '#{@block.name}'".html_safe %>
 <%= content_for :functions,  render(:partial => 'cms/blocks/toolbar') %>
 
 <% if @block.respond_to?(:deleted) && @block.deleted %>

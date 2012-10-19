@@ -22,7 +22,7 @@ require 'factory_girl'
 require 'factories/factories'
 require 'factories/attachable_factories'
 
-#require 'support/engine_controller_hacks'
+require 'support/engine_controller_hacks'
 
 class ActiveSupport::TestCase
 

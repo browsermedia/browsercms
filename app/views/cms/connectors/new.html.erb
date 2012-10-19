@@ -1,4 +1,4 @@
-<% @toolbar_title = @page_title = "Add Existing Content to '#{@page.page_title}' Page" %>
+<% @toolbar_title = @page_title = "Add Existing Content to '#{@page.page_title}' Page".html_safe %>
 
 <%= content_for :html_head do %>
   <%= stylesheet_link_tag("cms/content_library") %>
