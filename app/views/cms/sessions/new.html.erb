@@ -3,11 +3,11 @@
   <%= javascript_tag do %>
       jQuery(function($){
         $('#login_button').hover(function(){
-          $('#login_button').css('background-image', 'url(/images/cms/buttons/button_cap_h.png)');
-          $('#login_button > input').css('background-image', 'url(/images/cms/buttons/button_h.png)');
+          $('#login_button').css('background-image', 'url(<%= asset_path "cms/buttons/button_cap_h.png" %>)');
+          $('#login_button > input').css('background-image', 'url(<%= asset_path "cms/buttons/button_h.png" %>)');
         }, function(){
-          $('#login_button').css('background-image', 'url(/images/cms/buttons/button_cap.png)');
-          $('#login_button > input').css('background-image', 'url(/images/cms/buttons/button.png)');
+          $('#login_button').css('background-image', 'url(<%= asset_path "cms/buttons/button_cap.png" %>)');
+          $('#login_button > input').css('background-image', 'url(<%= asset_path "cms/buttons/button.png" %>)');
   })});
   <% end %>
 <% end %>
