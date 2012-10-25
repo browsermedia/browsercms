@@ -1,0 +1,11 @@
+# Do not edit the database.yml file directory. BrowserCMS test suites run against multiple databases, so
+# make changes to the correct 'source' db file. In this case, edit: config/database.sqlite3.yml instead.
+development:
+  adapter: sqlite3
+  database: ":memory:"
+
+
+test:
+  adapter: sqlite3
+  database: "db/test.sqlite3"
+
