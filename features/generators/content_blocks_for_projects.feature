@@ -42,9 +42,14 @@ Feature:
     And the file "config/routes.rb" should contain:
     """
     Petstore::Application.routes.draw do
-      namespace :cms  do content_blocks :products end
-
-      mount_browsercms
+    """
+    And the file "config/routes.rb" should contain:
+    """
+    namespace :cms  do content_blocks :products end
+    """
+    And the file "config/routes.rb" should contain:
+    """
+    mount_browsercms
     """
 
   Scenario: With Belongs To
