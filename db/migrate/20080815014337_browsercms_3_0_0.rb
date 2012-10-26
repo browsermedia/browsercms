@@ -73,7 +73,7 @@ class Browsercms300 < ActiveRecord::Migration
 
     create_versioned_table :html_blocks do |t|
       t.string :name
-      t.string :content, :limit => 64.kilobytes + 1
+      t.text :content, :limit => 64.kilobytes + 1
     end
 
     create_table prefix(:sections) do |t|
