@@ -6,12 +6,16 @@ Feature: Form Controls
   Background: 
     Given I am logged in as a Content Editor
 
-  Scenario: File Field Helper
+  Scenario: Default File Field
     Given I am adding a new File
     Then I should see a label named "File"
     And I should see a file upload button
     And I should see the following instructions:
     | Select a file to upload |
+
+  Scenario: Setting a label named 'Name' for File Field
+    Given I am adding a New Image
+    Then I should see a label named "Image"
 
   Scenario: Multiple Individual Attachments
     Given I am creating a new block which has two attachments
@@ -32,6 +36,7 @@ Feature: Form Controls
     And I upload a single attachment
     When I edit that block
     Then I should see two file uploads
+
 
 
 

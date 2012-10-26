@@ -69,7 +69,7 @@ Given /^an image with path "([^"]*)" exists$/ do |path|
   visit '/cms/image_blocks/new'
   fill_in "Name", :with => "Giraffe"
   fill_in "Path", :with => path
-  attach_file "File", "test/fixtures/giraffe.jpeg"
+  attach_file "Image", "test/fixtures/giraffe.jpeg"
   click_button "true"
 end
 

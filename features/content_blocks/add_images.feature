@@ -12,7 +12,7 @@ Feature: Image Blocks
 
   Scenario: Creating image block
     When I fill in "Name" with "Giraffe"
-    And I attach the file "test/fixtures/giraffe.jpeg" to "File"
+    And I upload an image named "test/fixtures/giraffe.jpeg"
     And I select "My Site" from "section_id"
     And I fill in "Path" with "/giraffe.jpeg"
     And I Save And Publish
@@ -32,7 +32,7 @@ Feature: Image Blocks
 
   Scenario: Missing Path
     When I fill in "Name" with "Giraffe"
-    When I attach the file "test/fixtures/giraffe.jpeg" to "File"
+    And I upload an image named "test/fixtures/giraffe.jpeg"
     And I Save And Publish
     Then I should see "Path can't be blank"
 
@@ -40,7 +40,7 @@ Feature: Image Blocks
     Given an image with path "/giraffe.jpeg" exists
     And I am adding a New Image
     When I fill in "Name" with "Giraffe"
-    And I attach the file "test/fixtures/giraffe.jpeg" to "File"
+    And I upload an image named "test/fixtures/giraffe.jpeg"
     And I fill in "Path" with "/giraffe.jpeg"
     When I Save And Publish
     Then I should see "Path must be unique."

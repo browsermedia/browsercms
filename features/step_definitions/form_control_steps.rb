@@ -39,6 +39,10 @@ Given /^a block exists which configured to have two attachments$/ do
   @block = Product.last
 end
 
+When /^I upload an image named "([^"]*)"$/ do |path|
+  attach_file("Image", File.expand_path(path))
+end
+
 When /^I edit that block$/ do
   visit "/cms/#{@block.class.path_name}/#{@block.id}/edit"
 end

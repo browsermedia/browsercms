@@ -66,12 +66,16 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
   #
   # @param [Symbol] method The name of the model this form upload is associated with
   # @param [Hash] options
-  # @option options [String] :label (Data)
+  # @option options [String] :label (method) If no label is specified, the human readable name for method will be used.
   # @option options [String] :instructions (blank) Helpful tips for the person entering the field, appears blank if nothing is specified.
   # @option options [Boolean] :edit_path (false) If true, render a text field to allow users to edit path for this file.
   # @option options [Boolean] :edit_section (false) If true, render a select box which allows users to choose which section this attachment should be placed in.
   def cms_file_field(method, options={})
     @object.ensure_attachment_exists if @object.respond_to?(:ensure_attachment_exists)
+
+    unless options[:label]
+      options[:label] = method.to_s.humanize
+    end
     render_form_field("file_field", method, options)
   end
 
