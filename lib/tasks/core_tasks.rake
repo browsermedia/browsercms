@@ -43,6 +43,7 @@ namespace :project do
     end
   end
 
+
   desc 'Copy database.yml files for running tests'
   task :setup, :database do |t, args|
     drivers = %w(jdbcmysql mysql postgres sqlite3)
@@ -55,5 +56,11 @@ namespace :project do
     cp(source, destination, :verbose => true)
 
 
+  end
+
+  namespace :setup do
+    task :mysql do
+      Rake::Task['project:setup'].invoke('mysql')
+    end
   end
 end

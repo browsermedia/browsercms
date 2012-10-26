@@ -80,8 +80,8 @@ task :test => ['project:ensure_db_exists', 'app:test:prepare'] do
 end
 
 # Build and run against MySQL.
-task :test_ci => ['project:setup[mysql]', 'db:drop', 'db:create:all', 'db:install', 'test']
-task :default => :test_ci
+task 'ci:test' => ['project:setup:mysql', 'db:drop', 'db:create:all', 'db:install', 'test']
+task :default => 'ci:test'
 
 require 'yard'
 YARD::Rake::YardocTask.new do |t|
