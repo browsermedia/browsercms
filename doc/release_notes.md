@@ -2,7 +2,10 @@ v3.5.5
 ======
 
 * Update to Rails 3.2.8 - Ensure tests to pass (there appeared to be some changes in inflection and html_safe between 3.2.5 and 3.2.8)
-
+* Allow cms_file_field to use default label (Thanks josiahivey)
+* Continuous Integration - Get Travis CI up and working for the project.
+* Fix missing assets on CMS Login page (Thanks korin)
+* Better support core contributions by removing database.yml from checkin. Run `rake project:setup[mysql]` to create a database.yml for your local database. (Thanks josiahivey)
 
 v3.5.4
 ======
