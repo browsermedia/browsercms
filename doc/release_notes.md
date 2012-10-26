@@ -1,3 +1,8 @@
+v4.0
+====
+
+* Nothing yet, but soon!
+
 v3.5.5
 ======
 
