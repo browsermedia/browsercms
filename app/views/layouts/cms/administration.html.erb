@@ -1,13 +1,8 @@
-<%= content_for :html_head do %>
-    <%= stylesheet_link_tag("cms/administration.css") %>
-    <%= stylesheet_link_tag("cms/content_library.css") %>
-<% end %>
 <%= render :partial => 'layouts/cms/head' %>
 <body>
+<%= render :partial => 'layouts/cms/thin_toolbar' %>
 <div id="wrapper">
-  <%= render_cms_toolbar(:administration) %>
   <div id="main">
-
     <% if current_user.able_to?(:administrate) %>
         <div class="top_cap_menu"></div>
         <div id="menu">
@@ -20,9 +15,7 @@
     <% end %>
 
     <div id="functions">
-      <h1><%= @toolbar_title %></h1>
-      <%= yield :functions %>
-
+      <h1><%= @toolbar_title ? @toolbar_title : page_title %></h1>
     </div>
     <br clear="all"/>
 

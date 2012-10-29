@@ -23,3 +23,19 @@ SHOULD_OR_NOT = Transform /^(should|should not)$/ do |should_or_should_not|
     false
   end
 end
+
+ENABLED_OR_DISABLED = Transform /^(enabled|disabled)$/ do |enabled_or_not|
+  if enabled_or_not == 'enabled'
+    true
+  else
+    false
+  end
+end
+
+module StepConversions
+  def from_first_row(table)
+    table.hashes.first
+  end
+
+end
+World(StepConversions)

@@ -1,7 +1,18 @@
 v4.0
 ====
 
-* Nothing yet, but soon!
+This release includes the following features:
+
+* User Interface Redesign
+
+UI Redesign
+----------
+
+The entire UI has been reworked to be more streamlined and lightweight. It is now built using Twitter Bootstrap, and makes better use of global menus and toolbars. Here are the notable changes.
+
+1. Global Menu - Many commons functions can now be invoked directly from the main menu, including adding new content or users.
+2. Smart 'New' button - Users can add content from any page in the CMS. The "New" button is a split button that can either add a specific type of content, or will 'guess' based on where a user is in the site.
+
 
 v3.5.5
 ======

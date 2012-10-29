@@ -55,5 +55,5 @@ end
 Then /^they should (see|not see) the mobile toggle$/ do |should_see|
   p = Cms::Page.find_by_path(current_path)
   visit ("/cms/toolbar?page_id=#{p.id}&page_version=#{p.version}")
-  assert_equal should_see == 'see', page.has_content?('View As Mobile?')
+  assert_equal should_see == 'see', page.has_content?('View as Mobile')
 end

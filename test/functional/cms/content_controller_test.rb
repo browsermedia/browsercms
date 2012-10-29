@@ -70,18 +70,6 @@ module Cms
       assert_select "h3", "TEST"
     end
 
-    def test_show_draft_page_with_content_as_editor
-      login_as_cms_admin
-      create_page_with_content
-
-      @block.update_attributes(:content => "<h3>I've been edited</h3>")
-      reset(:page, :block)
-
-      get :show, :path => "page_with_content"
-      assert_response :success
-      assert_select "h3", "I've been edited"
-    end
-
     def test_is_file
       assert_is_file(true, "/system/file.pdf")
       assert_is_file(true, "/system/file.txt")

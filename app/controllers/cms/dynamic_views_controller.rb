@@ -1,10 +1,9 @@
 module Cms
   class DynamicViewsController < Cms::BaseController
 
-    layout 'cms/administration'
+    include Cms::AdminTab
     check_permissions :administrate
 
-    before_filter :set_menu_section
     before_filter :load_view, :only => [:show, :edit, :update, :destroy]
 
     helper_method :dynamic_view_type

@@ -4,9 +4,53 @@ Feature: Manage Users
   Background:
     Given I am logged in as a Content Editor
 
+  Scenario: List Users
+    When I view the list of users
+    Then I should see myself on the list
+
+  Scenario: Search for users by email
+    Given the following user exists:
+      | email              |
+      | sample@example.com |
+    And there exists some other users
+    When I search for a user with "sample"
+    Then I should see only that user
+
+  Scenario: Search for users by login
+    Given the following user exists:
+      | login       |
+      | sample-user |
+    And there exists some other users
+    When I search for a user with "sample"
+    Then I should see only that user
+
+  Scenario: Search for users by first name
+    Given the following user exists:
+      | first_name |
+      | Stan       |
+    And there exists some other users
+    When I search for a user with "Stan"
+    Then I should see only that user
+
+  Scenario: Search for users by first name
+    Given the following user exists:
+      | last_name |
+      | Marsh     |
+    And there exists some other users
+    When I search for a user with "Marsh"
+    Then I should see only that user
+
+  Scenario: Search for users by group
+    Given the following user exists:
+      | email              | group        |
+      | sample@example.com | Contributors |
+    And there exists some other users
+    When I search for users with group "Contributors"
+    Then I should see only that user
+
   Scenario: Add User
     Given I request /cms/users
-    And I click on "ADD USER"
+    And I add a new user
     Then I should see a page titled "New User"
     When fill valid fields for a new user named "testuser"
     Then I should see a page titled "User Browser"
@@ -47,7 +91,26 @@ Feature: Manage Users
     When I click on "next_page_link"
     Then I should see "Displaying 11 - 20 of 20"
 
+  Scenario: Disabled Users aren't show by default
+    Given the following disabled user exists:
+      | email            |
+      | none@example.com |
+    When I view the list of users
+    Then I should not see that user
 
+  Scenario: Show expired users
+    Given the following disabled user exists:
+      | email            |
+      | none@example.com |
+    When I search for expired users
+    Then I should see that user
+
+  Scenario: Update a group
+    Given the following user exists:
+      | login    |
+      | testuser |
+    When I add that user to a new group
+    Then that user should have 1 group
 
 
 

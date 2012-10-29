@@ -11,12 +11,7 @@
     });
   <% end %>
 <% end %>
-
-<%= content_for :functions do %>
-  <%= link_to(span_tag("List All"), groups_path,
-    :id => "list_all_button", 
-    :class => "button") %>
-<% end %>
+<%= render 'toolbar' %>
 
 <%= form_for @group do |f| %>
   <%= f.cms_error_messages %>

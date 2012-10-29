@@ -4,7 +4,6 @@ Feature:
   Background:
     Given a page exists at /mobile-page with a mobile ready template
 
-
   Scenario: Desktop Visitor sees Desktop template
     Given a user is browsing the desktop site
     When they request /mobile-page
@@ -29,23 +28,23 @@ Feature:
 
   Scenario: Editors can see mobile version of page
     Given a cms editor is logged in
-    When they request /mobile-page
+    When they request /mobile-page?show_page=show
     Then they should see the desktop content
-    When they request /mobile-page?template=mobile
+    When they request /mobile-page?template=mobile&show_page=show
     Then they should see the mobile template
 
   Scenario: Mobile 'mode' is sticky
     Given a page exists at /another-page with a mobile ready template
     And a cms editor is logged in
     When they request /another-page?template=mobile
-    Then they request /mobile-page
+    Then they request /mobile-page?show_page=show
     Then they should see the mobile template
 
   Scenario: Disable Mobile mode
     Given a page exists at /another-page with a mobile ready template
     And a cms editor is logged in
     When they request /mobile-page?template=mobile
-    Then they request /mobile-page?template=full
+    Then they request /mobile-page?template=full&show_page=show
     Then they should see the desktop content
 
   Scenario: Guests can't request mobile versions of page

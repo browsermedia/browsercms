@@ -33,4 +33,9 @@ class Cms::DynamicViewsTest < ActiveSupport::TestCase
     assert_equal [Cms::PagePartial], Cms::PagePartial.path_elements
 
   end
+
+  test "Display Name" do
+    assert_equal "Page Partial", Cms::PagePartial.title
+    assert_equal "Page Template", Cms::PageTemplate.title
+  end
 end

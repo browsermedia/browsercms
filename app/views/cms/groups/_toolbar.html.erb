@@ -1,0 +1,6 @@
+<%= content_for :button_bar do %>
+    <% unless @groups %>
+        <%= link_to("Back to Groups", groups_path, :id => "list_all_button", :class => "btn btn-primary pull-left") %>
+    <% end %>
+    <%= link_to("Add Group", new_group_path, :id => "new_group_button", :class => "btn btn-primary pull-left") %>
+<% end %>

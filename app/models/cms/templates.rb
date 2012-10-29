@@ -16,7 +16,6 @@ module Cms
     <%= yield :html_head %>
   </head>
   <body style="margin: 0; padding: 0; text-align: center;">
-    <%= cms_toolbar %>
     <div id="wrapper" style="width: 700px; margin: 0 auto; text-align: left; padding: 30px">
       Breadcrumbs: <%= render_breadcrumbs %>
       Main Menu: <%= render_menu %>

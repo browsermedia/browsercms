@@ -1,0 +1,10 @@
+<%
+   # Allows Sitemap menu to have 'New Page' while New menu has no prefix.
+    unless defined?(prefix)
+        prefix = ""
+    end
+%>
+<%= nav_link_to "#{prefix}Page", cms.new_section_page_path(target_section) %>
+<%= nav_link_to "#{prefix}Link", cms.new_section_link_path(target_section) %>
+<%= nav_link_to "#{prefix}Section", cms.new_section_path(:section_id => target_section.id) %>
+<%= divider_tag %>

@@ -13,6 +13,7 @@
         $('table.data tbody tr').removeClass('selected');
         $(this).addClass('selected');
         $('#view_button').removeClass('disabled').attr('href', '/cms/pages/<%= @page.id %>/version/'+id+'?mode=view');
+        console.log($(this).attr('class') + ' selected');
         if ($(this).hasClass('current')){
           $('#revert_button').addClass('disabled').attr('href', '');
           $('#revert_form').attr('action', '');
@@ -32,16 +33,15 @@
   <%= stylesheet_link_tag("cms/content_library") %>
   <%= stylesheet_link_tag("cms/form_layout") %>
 <% end %>
-<%= content_for :functions do %>
-  <%=  "<h1>#{ @toolbar_title }</h1>" %>
-  <%= link_to span_tag("view"), "#", :id => "view_button", :class => "button disabled" %>
-  <%= link_to span_tag("edit content"), "#", :id => "edit_content_button", :class => "button disabled" %>
-  <%= link_to span_tag("edit properties"), "#", :id => "edit_properties_button", :class => "button disabled" %>
-  <%= link_to span_tag("revert"), "#", :id => "revert_button", :class => "button disabled", :onclick => "$('#revert_form').submit(); return false;" %>
+<%= content_for :button_bar do %>
+  <%= menu_button "Back to Page", page_path(@page) %>
+  <%= menu_button "View", "#", :id => "view_button", enabled: false %>
+  <%= menu_button "Edit Content", "#", :id => "edit_content_button", enabled: false %>
+  <%= menu_button "Edit Properties", "#", :id => "edit_properties_button", enabled: false %>
+  <%= menu_button "Revert", "#", :id => "revert_button", enabled: false, :onclick => "$('#revert_form').submit(); return false;" %>
   <%= form_tag '', :method => 'put', :id => "revert_form" do %>
-  <%= hidden_field_tag :version, '', :id => 'revert_form_version'  %>
+    <%= hidden_field_tag :version, '', :id => 'revert_form_version'  %>
   <% end %>
-  <br clear="all" />
 <% end %>
 
 <div class="roundedcorners">
@@ -57,7 +57,7 @@
     <tbody>
       <% @page.versions.all(:order => "version desc").each_with_index do |r, i| %>
         <% current = @page.version == r.version %>
-        <tr id="revision_<%= r.version %>" <%= 'class="current"' if current %>>
+        <%= tag :tr, {:id => "revision_#{r.version}", :class => current ? "current" : nil}, false %>
           <td class="first"></td>
           <td>
             <div class="dividers">

@@ -1,10 +1,6 @@
 <% page_title "Administration / Group Browser" %>
 <% @toolbar_title = "List Groups" %>
-
-<%= content_for :functions do %>
-  <%= link_to(span_tag("Add Group"), new_group_path,
-    :id => "new_group_button", :class => "button") %>
-<% end %>
+<%= render 'toolbar' %>
 
 <div class="roundedcorners">
   <table class="data">

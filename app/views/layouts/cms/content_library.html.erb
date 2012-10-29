@@ -15,9 +15,9 @@
 <% end %>
 <%= render :partial => 'layouts/cms/head' %>
   <body>
+<%= render :partial => 'layouts/cms/thin_toolbar' %>
     <div id="wrapper">
       <div id="page">
-        <%= render_cms_toolbar(:content_library) %>
         <div id="main">
           <div id="cms_content_library">
             <div class="top_cap_menu"></div>
@@ -75,8 +75,6 @@
             <div id="contentwrap">
               <div id="functions">
                 <h1><%= @toolbar_title %></h1>
-                <%= yield :functions %>
-                <br clear="all" />
               </div>
               <div class="top_cap_content"></div>
               <div id="content">

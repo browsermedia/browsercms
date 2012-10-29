@@ -1,24 +1,21 @@
-<%= content_for :html_head do %>
-  <%= stylesheet_link_tag('cms/selectbox') %>
-  <%= javascript_tag do %>
-    jQuery(function($) {
-      $('#per_page').selectbox({width: '127px'});
-      $('#group_id').selectbox({width: '126px'});
-    })
-  <% end %>
-<% end %>
-
-<%= yield :toolbar_links %>
-
-<% if @users %>
-  <div class="box">
-    <%= form_tag(users_path, :method => :get ) do %>
-    <div><%= text_field_tag "key_word", params[:key_word] %></div><div id="user_search_submit_container">
-        <%= image_submit_tag "cms/user_search_submit.gif", :alt=>"submit", :id=>"user_search_submit" %>
-    </div>
-    <div><%= select_per_page %></div>
-    <div><%= group_filter %></div>
-    <div class="cb"><label><%= check_box_tag "show_expired", "yes", params[:show_expired] %><span>Show inactive?</span></label></div>
+<%= content_for :button_bar do %>
+    <%= link_to "Add User", new_user_path, :id => "add_user_button", :class => "btn btn-primary pull-left" %>
+    <% if @user && !@user.new_record? %>
+        <%= link_to("Edit User", edit_user_path(@user), :id => "edit_user_button", :class => "btn btn-primary pull-left") if current_user.able_to?(:administrate)%>
+        <%= link_to("Change Password", [:change_password, @user], :id => "change_password_button", :class => "btn btn-primary pull-left") %>
     <% end %>
-  </div>
+    <% if @users %>
+        <div class="pull-right">
+          <%= form_tag(users_path, :method => :get, :class => 'navbar-form') do %>
+              <%= text_field_tag "key_word", params[:key_word], placeholder: "Find Users..." %>
+              <span id="user_search_submit_container">
+            <%= image_submit_tag "cms/user_search_submit.gif", :alt => "submit", :id => "user_search_submit" %>
+          </span>
+              <%= select_per_page %>
+              <%= group_filter %>
+              <%= check_box_tag "show_expired", "yes", params[:show_expired] %>
+              <span>Show inactive?</span>
+          <% end %>
+        </div>
+    <% end %>
 <% end %>

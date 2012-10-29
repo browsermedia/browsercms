@@ -2,7 +2,7 @@ Feature: Portlet Helpers
   Portlets should automatically include their helpers as part of their view.
 
   Background:
-    Given I am logged in as a Content Editor
+    Given I am visiting as a guest
 
   Scenario: Render Portlet Helpers
     Given there is a portlet that uses a helper

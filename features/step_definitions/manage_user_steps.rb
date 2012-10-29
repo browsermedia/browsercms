@@ -25,3 +25,6 @@ When /^I login as:$/ do |table|
   user = table.hashes.first
   login_as(user['login'], user['password'])
 end
+When /^I add a new user$/ do
+  click_on "Add User"
+end

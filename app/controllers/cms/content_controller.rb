@@ -18,11 +18,18 @@ module Cms
 
     # ----- Actions --------------------------------------------------------------
     def show
-      render_page_with_caching
+      if @show_toolbar && params[:show_page] != 'show'
+        render_editing_frame
+      else
+        render_page
+      end
+      cache_if_eligible
     end
 
     def show_page_route
-      render_page_with_caching
+      @_page_route.execute(self) if @_page_route
+      render_page
+      cache_if_eligible
     end
 
 
@@ -40,20 +47,31 @@ module Cms
 
     private
 
-    # This is the method all actions delegate to
-    # check_access_to_page will also call this directly
-    # if caching is not enabled
+    def render_editing_frame
+      @page_title = @page.page_title
+      render 'editing_frame', :layout => 'cms/page_editor'
+    end
+
     def render_page
-      logger.warn "Render page (id: #{@page.id})"
-      @_page_route.execute(self) if @_page_route
       prepare_connectables_for_render
       page_layout = determine_page_layout
       render :layout => page_layout, :action => 'show'
     end
 
-    def render_page_with_caching
-      render_page
-      cache_page if should_write_to_page_cache?
+    def cache_if_eligible
+      cache_page if should_cache_page?
+    end
+
+    # Determine if this page is eligible for caching or not.
+    def should_cache_page?
+      should_cache = (using_cms_subdomains? && !logged_in? && @page.cacheable? && params[:cms_cache] != "false")
+      if should_cache
+        msg = "'#{request.path}' being written to cache."
+      else
+        msg = "'#{request.path}' not eligible for caching."
+      end
+      logger.info msg
+      should_cache
     end
 
     # ----- Before Filters -------------------------------------------------------
@@ -138,20 +156,6 @@ module Cms
       unless current_user.able_to_view?(@page)
         store_location
         raise Cms::Errors::AccessDenied
-      end
-
-      # Doing this so if you are logged in, you never see the cached page
-      # We are calling render_page just like the show action does
-      # But since we do it from a before filter, the page doesn't get cached
-      if logged_in?
-        logger.info "Not Caching, user is logged in"
-        render_page
-      elsif !@page.cacheable?
-        logger.info "Not Caching, page cachable is false"
-        render_page
-      elsif params[:cms_cache] == "false"
-        logger.info "Not Caching, cms_cache is false"
-        render_page
       end
 
     end

@@ -42,8 +42,7 @@ end
 
 class Cms::ApplicationHelper::DeleteButtonTest < ActionView::TestCase
   include Cms::ApplicationHelper
-
-  # Scenario: Delete Buttons should:
+  include Cms::UiElementsHelper
 
   test "generate a button without an explicit title by default" do
     expected_html = '<a href="#" class="button disabled delete_button" id="delete_button"><span><span class="delete_img">&nbsp;</span>Delete</span></a>'

@@ -1,8 +1,9 @@
 PATH
   remote: .
   specs:
-    browsercms (3.5.5)
+    browsercms (4.0.0.a)
       ancestry (~> 1.2.4)
+      bootstrap-sass
       ckeditor_rails (~> 3.6.4)
       jquery-rails (~> 2.0)
       paperclip (~> 3.0.3)
@@ -50,6 +51,7 @@ GEM
       ffi (>= 1.0.11)
       rspec (>= 2.7.0)
     bluecloth (2.2.0)
+    bootstrap-sass (2.1.0.1)
     builder (3.0.4)
     capybara (1.1.2)
       mime-types (>= 1.16)
@@ -179,7 +181,7 @@ GEM
     treetop (1.4.11)
       polyglot
       polyglot (>= 0.3.1)
-    tzinfo (0.3.33)
+    tzinfo (0.3.34)
     uglifier (1.3.0)
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
@@ -193,6 +195,7 @@ PLATFORMS
 DEPENDENCIES
   aruba
   bluecloth
+  bootstrap-sass
   browsercms!
   capybara
   cucumber
@@ -203,6 +206,7 @@ DEPENDENCIES
   mocha (= 0.9.8)
   mysql2
   ruby-prof
+  sass-rails
   sqlite3-ruby
   test-unit (= 2.1.1)
   thin

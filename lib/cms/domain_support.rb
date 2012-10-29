@@ -28,10 +28,6 @@ module Cms
       result
     end
 
-    def should_write_to_page_cache?
-      using_cms_subdomains?
-    end
-
     private
 
     def wants_to_use_subdomains?

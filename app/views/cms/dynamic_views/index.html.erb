@@ -19,12 +19,7 @@
   <% end %>
 <% end %>
 
-<%= content_for :functions do %>
-    <%= add_button cms_new_path_for(dynamic_view_type) %>
-    <%= edit_button  %>
-    <%= delete_button :title => "Are you sure you want to delete this #{dynamic_view_type.name.demodulize.underscore.titleize}?" %>
-<% end %>
-
+<%= render 'toolbar' %>
 <div class="roundedcorners">
   <table class="data">
     <tr>

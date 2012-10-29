@@ -1,0 +1,20 @@
+/**
+*   Correct styles for bootstrap that the CSS has broken
+*/
+
+.navbar {
+  a {
+    font-size: 13px;
+    text-align: left;
+  }
+}
+
+#button-bar {
+  padding-top: 40px;
+}
+
+// Pushes body below fixed nav menu for admin.
+body {
+  padding-top: 75px;
+}
+

@@ -3,10 +3,8 @@
 <% end %>
 
 <% page_title "Assign Page '#{@page.name}'" %>
-<%= content_for :functions do %>
-  <h1><%=h @page_title %></h1>
-  <%= link_to(span_tag("Back To Page"), @page.path, :class => "button") %>
-  <br clear="all"/>
+<%= content_for :button_bar do %>
+    <%= menu_button "Back to Page", @page.path, pull: 'left' %>
 <% end %>
 
 <%= form_for(@task, :url => @task.new_record? ? page_tasks_path(@page) : page_task_path(@page, @task)) do |f| %>

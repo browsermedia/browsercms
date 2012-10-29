@@ -1,4 +1,6 @@
 <%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
+<%= content_for :button_bar, menu_button("Back to Redirects", redirects_path) %>
+
 <%= form_for(@redirect) do |f| %>
   <%= f.cms_error_messages %>
   <div class="fields text_fields">

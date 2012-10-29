@@ -1,0 +1,4 @@
+<%= content_for :button_bar do %>
+    <%= render 'cms/toolbar/toolbar' %>
+<% end %>
+<iframe id="page_content" src="<%= "#{@page.path}?show_page=show" %>" frameborder="0" height="1600px" width="100%"></iframe>

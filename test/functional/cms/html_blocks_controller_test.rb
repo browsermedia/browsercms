@@ -25,29 +25,6 @@ class HtmlBlocksControllerTest < ActionController::TestCase
     assert_select "input[name=?][value=?]", "html_block[connect_to_container]", "test"
   end
   
-  def test_show
-    get :show, :id => @block.id, :format => "html"
-
-    assert_response :success
-    log @response.body
-    assert_select "div.content", "I worked."
-    assert_select "a.disabled span", "Publish"
-    assert_select ".block_published_status", "published"
-  end
-  
-  def test_show_draft
-    @block.update_attributes(:content => "Something Different")
-    
-    get :show, :id => @block.id, :format => "html"
-
-    assert_response :success
-    log @response.body
-    assert_select "div.content", "Something Different"
-    assert_select "a.disabled span", :text => "Publish", :count => 0
-    assert_select "a.button span", :text => "Publish", :count => 1    
-    assert_select ".block_published_status", "draft"
-  end
-  
   def test_creating_a_block_that_should_be_connected_to_a_page
     @page = create(:page, :path => "/test", :section => root_section)
     html_block_count = HtmlBlock.count

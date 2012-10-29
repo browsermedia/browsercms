@@ -12,8 +12,8 @@ Feature: Portlets
 
   Scenario: Login portlet when logged in
     And there is a LoginPortlet on the homepage
-    And I am on the homepage
-    Then I should see Welcome, cmsadmin
+    And I am editing the page at /
+    Then the page content should contain "Welcome, cmsadmin"
 
   Scenario: Login portlet when logged out
     Given there is a LoginPortlet on the homepage
@@ -105,12 +105,11 @@ Feature: Portlets
     And I click on "next_page_link"
     Then I should see the second page of content
 
-  Scenario: Portlets set page title
-    Given there is a portlet that sets a custom page title like so:
-    """
-    def render
-      page_title "My Custom Title"
-    end
-    """
-	When I view that page
-	Then I should see a page titled "My Custom Title"
+  Scenario: Portlets can override page titles
+    Given a developer creates a portlet which sets a custom page title as "A Custom Title"
+    When a guest views that page
+    Then I should see a page titled "A Custom Title"
+
+  # Scenario: Custom page titles while editing
+    # Content editors will not see custom page titles while editing content
+    # Since the editing page loads the content in an iframe

@@ -1,11 +1,3 @@
-module PageDiagnosticSteps
-  def should_see_a_page_titled(page_title)
-    assert page.has_css?("title", :text => page_title), "Expected a page with a title '#{page_title}'."
-    assert page.has_content?(page_title)
-  end
-end
-World(PageDiagnosticSteps)
-
 # ex: Then I should see a page titled "Home"
 Then /^I should see a page titled "([^"]*)"$/ do |page_title|
   should_see_a_page_titled(page_title)
@@ -16,7 +8,11 @@ When /^the page header should be "([^"]*)"$/ do |h1|
 end
 
 When /^I am not logged in$/ do
-  visit '/cms/logout'
+  logout
+end
+
+Given /^I am visiting as a guest$/ do
+  logout
 end
 
 Given /^I am logged in as a Content Editor(| on the admin subdomain)$/ do |is_admin|
@@ -63,9 +59,18 @@ When /^login as an authorized user$/ do
   fill_in 'password', :with => "password"
   click_button 'LOGIN'
 end
+
+When /^I am editing the page at (#{PATH})$/ do |path|
+  visit("#{path}?show_page=show&mode=edit")
+end
+
 When /^I click the Select Existing Content button$/ do
   container = "main"
   click_link "insert_existing_content_#{container}"
+end
+
+When /^I choose to add a new 'Text' content type to the page$/ do
+  click_link 'add_new_html_block'
 end
 
 When /^I turn on edit mode for (.*)$/ do |path|
@@ -89,16 +94,6 @@ When /^I am a guest$/ do
   visit '/cms/logout'
 end
 
-
-module PageNotFoundSteps
-  def should_see_cms_404_page
-    should_see_a_page_titled "Page Not Found"
-    assert_equal 404, page.status_code
-    assert page.has_content?("Page Not Found")
-  end
-end
-World(PageNotFoundSteps)
-
 Given /^there is a homepage$/ do
   page = Page.with_path("/").first
   if page
@@ -120,28 +115,6 @@ Given /^an archived page at "([^"]*)" exists$/ do |path|
   page = create(:page, :archived => true, :path => path)
   assert page.archived?
 end
-
-module ProtectedContentSteps
-  def create_protected_user_section_group
-    @protected_section = create(:section, :parent => root_section)
-    @secret_group = create(:group, :name => "Secret")
-    @secret_group.sections << @protected_section
-    @privileged_user = create(:user, :login => "privileged")
-    @privileged_user.groups << @secret_group
-  end
-
-  def create_protected_page(path="/secret")
-    create_protected_user_section_group
-    @page = create(:page,
-                    :section => @protected_section,
-                    :path => path,
-                    :name => "Shhh... It's a Secret",
-                    :template_file_name => "default.html.erb",
-                    :publish_on_save => true)
-  end
-
-end
-World(ProtectedContentSteps)
 
 Given /^a protected page at "([^"]*)" exists$/ do |path|
   create_protected_page(path)
@@ -174,7 +147,7 @@ Given /^the following link exists:$/ do |table|
 end
 
 When /^I change the link name to "([^"]*)"$/ do |new_name|
-  fill_in "Name", :with=>new_name
+  fill_in "Name", :with => new_name
   click_on "Save And Publish"
 end
 
@@ -207,3 +180,9 @@ Then /^the toolbar should display a revert to button$/ do
   assert_equal 200, page.status_code
   assert page.has_content? "Revert to this Version"
 end
+
+When /^the page content should contain "([^"]*)"$/ do |content|
+  visit("#{current_url}?show_page=show")
+  assert page.has_content?(content)
+end
+

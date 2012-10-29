@@ -1,10 +1,10 @@
-<% @toolbar_title = page_title "'#{@page_route.name}' Page Route" %>
-<%= content_for :functions do %>
-  <%= add_button new_page_route_path %>
-  <%= edit_button :path=>edit_page_route_path(@page_route), :enabled=>true %>
-  <%= delete_button :path=>@page_route, :title => "Are you sure you want to delete this Page Route?", :enabled=>true %>
-  <%= link_to(span_tag("List All"), page_routes_path, :class => "button") %>
-  <%= link_to(span_tag("View Rails Routes"), routes_path, :class => "button") %>
+<% page_title "'#{@page_route.name}' Page Route" %>
+<%= render 'back_to_routes' %>
+<%= content_for :button_bar do %>
+    <%= add_button new_page_route_path, bootstrap: true %>
+    <%= edit_button path: edit_page_route_path(@page_route), bootstrap: true, enabled: true %>
+    <%= menu_button("View", page_route_path(@page_route), :id => 'view_button') %>
+    <%= delete_menu_button nil, :title => "Are you sure you want to delete this Page Route?", class: ['pull-left'] %>
+    <%= link_to("View Rails Routes", routes_path, :class => "btn btn-primary pull-right") %>
 <% end %>
-
 <%= @page_route.name %>

@@ -37,6 +37,11 @@ module Cms
       end
     end
 
+    # Returns the title of this class
+    def self.title
+      self.name.demodulize.titleize
+    end
+
     def self.new_with_defaults(options={})
       new({:format => "html", :handler => "erb", :body => default_body}.merge(options))
     end

@@ -24,6 +24,7 @@ Feature: Manage Html Blocks
     And I should see the following content:
       | published               |
       | View Text 'Hello World' |
+    And the publish button should be disabled
 
   Scenario: Publishing an existing block
     Given the following Html blocks exist:
@@ -50,4 +51,10 @@ Feature: Manage Html Blocks
     Then I should see the paging controls
     And I click on "next_page_link"
     Then I should see the second page of content
-  
+
+  Scenario: Draft Html Block
+    Given I have an Html block in draft mode
+    When I view that block
+    Then the publish button should be enabled
+    And I should see that block's content
+    And I should see it's draft mode

@@ -1,0 +1,122 @@
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <ul class="nav">
+        <li class="dropdown">
+          <a href="#"
+             class="dropdown-toggle"
+             data-toggle="dropdown">
+            BrowserCMS
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <%= nav_link_to "Home", "/" %>
+            <%= nav_link_to "Dashboard", cms.dashboard_path %>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#"
+             class="dropdown-toggle"
+             data-toggle="dropdown">
+            Sitemap
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <%= nav_link_to "View Sitemap", cms.sitemap_path %>
+            <%= divider_tag %>
+            <%= render :partial=> 'cms/toolbar/new_pages_menu', :locals => {:prefix => "New "}%>
+            <%= nav_link_to "Redirects", cms.redirects_path %>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#"
+             class="dropdown-toggle"
+             data-toggle="dropdown">
+            Content
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <%= nav_link_to "Content Library", cms.content_library_path %>
+            <%= divider_tag %>
+            <% Cms::ContentTypeGroup.menu_list.each_with_index do |group, i| %>
+                <%= divider_tag(i) %>
+                <% group.types.each do |type| %>
+                    <%= nav_link_to h(type.display_name), cms_index_path_for(type) %>
+                <% end -%>
+            <% end %>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<b class="caret"></b></a>
+          <ul class="dropdown-menu">
+            <%= nav_link_to "Users", cms.users_path %>
+            <%= nav_link_to "Groups", cms.groups_path %>
+            <%= divider_tag %>
+            <%= nav_link_to "Partials", cms.page_partials_path %>
+            <%= nav_link_to "Page Templates", cms.page_templates_path %>
+            <%= divider_tag %>
+            <%= nav_link_to "Routes", cms.page_routes_path %>
+            <%= nav_link_to "Clear Page Cache", cms.cache_path %>
+            <%= nav_link_to "Email Messages", cms.email_messages_path %>
+            <% Rails.application.config.cms.tools_menu.each do |menu_item| %>
+            <%= nav_link_to(menu_item[:name], self.send(menu_item[:engine]).send(menu_item[:route_name])) %>
+            <% end %>
+          </ul>
+        </li>
+        <li>
+        <form class="navbar-search">
+          <input type="text" class="search-query" placeholder="Search...">
+        </form>
+        </li>
+      </ul>
+      <ul class="nav pull-right">
+        <li>
+          <span id="notifications-badge" class="badge" title="Notifications" data-content="You have 0 notifications. ">0</span>
+        </li>
+        <li class="dropdown">
+          <a href="#"
+             class="dropdown-toggle"
+             data-toggle="dropdown">
+            <%= image_tag "cms/icons/user.png" %>
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <%= nav_link_to current_user.full_name, cms.edit_user_path(current_user) %>
+            <li class="divider">
+              <%= nav_link_to "Logout", cms.logout_path, :class => "http_delete" %>
+          </ul>
+        </li>
+        <li class="btn-group pull-right">
+          <%= menu_button "New", new_button_path %>
+          <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+            <b class="caret"></b>
+          </a>
+          <ul class="dropdown-menu">
+            <%= render 'cms/toolbar/new_pages_menu'%>
+            <% Cms::ContentTypeGroup.menu_list.each_with_index do |group, i| %>
+                <%= divider_tag(i) %>
+                <% group.types.each do |type| %>
+                    <%= nav_link_to h(type.display_name), cms_new_path_for(type), id: "create_new_#{type.key}" %>
+                <% end -%>
+            <% end %>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="navbar-inner">
+    <div class="container">
+      <%= yield :button_bar %>
+      <% flash_class, flash_message = flash.to_a.first %>
+
+      <%# This needs styling work %>
+      <div id="flash" style="display: none">
+        <div id="message" class="<%= flash_class %>">
+          <% if flash_message %>
+              <p><%= flash_message %></p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

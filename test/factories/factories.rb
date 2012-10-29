@@ -131,7 +131,6 @@ FactoryGirl.define do
     <%= yield :html_head %>
   </head>
   <body>
-    <%= cms_toolbar %>
     <%= container :main %>
   </body>
 </html>}
@@ -210,6 +209,12 @@ FactoryGirl.define do
   factory :registered_user, :parent => :user do |u|
     u.after(:create){ |user|
       user.groups << Cms::Group.guest
+    }
+  end
+
+  factory :disabled_user, parent: :user do |u|
+    u.after(:create) { |user|
+      user.disable!
     }
   end
 

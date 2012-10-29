@@ -137,6 +137,11 @@ module Cms
       true
     end
 
+    # For polymorphic permissions
+    # A generic portlet shouldn't be connected to pages.
+    def connected_pages
+      []
+    end
     #----- Portlet Action Related Methods ----------------------------------------
     
     # Used by portlets to set a custom title, typically in the render body.

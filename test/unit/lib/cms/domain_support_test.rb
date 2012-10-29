@@ -29,21 +29,21 @@ module Cms
       given_rails_page_caching_is true
       given_use_single_domain_is true
 
-      refute should_write_to_page_cache?
+      refute using_cms_subdomains?
     end
 
     test "with subdomains and caching" do
       given_rails_page_caching_is true
       given_use_single_domain_is false
 
-      assert should_write_to_page_cache?
+      assert using_cms_subdomains?
     end
 
     test "no caching, single domain" do
       given_rails_page_caching_is false
       given_use_single_domain_is true
 
-      refute should_write_to_page_cache?
+      refute using_cms_subdomains?
     end
 
     private

@@ -10,8 +10,7 @@
     }
   </style>
 <% end %>
-<%= content_for :functions,  render(:partial => 'cms/blocks/toolbar') %>
-
+<%= content_for :button_bar, render(:partial => 'cms/blocks/buttonbar') %>
 <div id="block_content">
   <% if @block.respond_to?(:deleted) && @block.deleted %>
   <div class="header">This <%= @block.class.name %> has been deleted.</div>

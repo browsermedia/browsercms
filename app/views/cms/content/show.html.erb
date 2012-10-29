@@ -1,22 +1,19 @@
 <%= content_for :html_head do %>
-  <meta name="generator" content="BrowserCMS <%= Cms.version %>"/>
-  <% if is_editing_page?(current_page) %>
-  <%= javascript_include_tag 'cms/core_library' %>
-  <% if  @authenticity_token_loaded.nil? && protect_against_forgery? %><script type="text/javascript">
-    jQuery(function($){
-      $.cms.authenticity_token = '<%= form_authenticity_token %>'
-    })
-  </script><% end %><% @authenticity_token_loaded = true %>
-  <% end %>
+<meta name="generator" content="BrowserCMS <%= Cms.version %>"/>
+<% if @show_toolbar %>
+<%= javascript_include_tag 'cms/page_editing' %>
+<%= stylesheet_link_tag 'cms/page_content_editing' %>
+<%= csrf_meta_tags %>
+<% end %>
 <% end %>
 <% if @show_toolbar %>
-  <% flash.keep %>
+    <% flash.keep %>
 <% end %>
 
 <% @_connectors.each_with_index do |connector, i| %>
-  <%= content_for(connector.container.to_sym) do %>
-    <%= render_connector_and_connectable(connector, @_connectables[i]) %>
-  <% end %>
+    <%= content_for(connector.container.to_sym) do %>
+        <%= render_connector_and_connectable(connector, @_connectables[i]) %>
+    <% end %>
 <% end %> 
 
 

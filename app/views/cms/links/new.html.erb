@@ -1,14 +1,10 @@
-<% @link_title = @page_title = "Add New Link to Sitemap" %>
-<%= content_for :functions do %>
-<%= "<h1>#{ @page_title }</h1>" %> 
-<%= link_to(span_tag("list all"), cms.sitemap_path, :class => "button") %>
-<br clear="all"/>
-<% end %>
+<% @link_title = @page_title = "Add New Link" %>
+<%= render partial: 'cms/section_nodes/button_bar' %>
 <%= form_for(@link) do |f| %>
-  <%= hidden_field_tag :section_id, @link.section_id %>
-  <%= render :partial => 'form', :locals => {:f => f} %>
-  <div class="buttons">
-    <%= publish_button "link" %>
-    <%= lt_button_wrapper(f.submit("Save", :class => "submit", :tabindex => next_tabindex )) %>
-  </div>
+    <%= hidden_field_tag :section_id, @link.section_id %>
+    <%= render :partial => 'form', :locals => {:f => f} %>
+    <div class="buttons">
+      <%= publish_button "link" %>
+      <%= lt_button_wrapper(f.submit("Save", :class => "submit", :tabindex => next_tabindex)) %>
+    </div>
 <% end %>

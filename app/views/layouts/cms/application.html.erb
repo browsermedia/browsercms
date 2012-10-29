@@ -1,12 +1,13 @@
 <% @toolbar_tab ||= :dashboard %>
   <%= render :partial => 'layouts/cms/head' %>
   <body>
+  <%= render :partial => 'layouts/cms/thin_toolbar' %>
     <div id="wrapper">
-      <%= render_cms_toolbar(@toolbar_tab) %>
       <div id="main">
         <div class="top_cap"></div>
         <div id="contentwrapbig">
           <div id="functions">
+            <h1><%= page_title %></h1>
             <%= yield :functions %>
           </div>
           <div class="top_cap_sitemap_content"></div>

@@ -1,3 +1,4 @@
+<%# This is the pre-4.0 white admin toolbar. No longer used, but kept for reference. %>
 <%= able_to? :edit_content, :publish_content, :administrate do -%>
   <div id="nav">
   	<h1><%= link_to image_tag("cms/browsercms_logo.png"), "/", :target => "_top" %></h1>
@@ -19,36 +20,4 @@
       </div>
   </div>
 <% end -%>
-  <%= javascript_tag do %>
-    jQuery(function($){
-<% unless tab == :dashboard %>
-      $('#nav_dash_img').hover(function(){
-        $('#nav_dash_img').attr('src', '<%= asset_path "cms/nav_dash_h.gif" %>');
-      }, function(){
-        $('#nav_dash_img').attr('src', '<%= asset_path "cms/nav_dash.gif" %>');
-    });
-<% end %>
-<% unless tab == :sitemap %>
-      $('#nav_sitemap_img').hover(function(){
-        $('#nav_sitemap_img').attr('src', '<%= asset_path "cms/nav_sitemap_h.gif" %>');
-      }, function(){
-        $('#nav_sitemap_img').attr('src', '<%= asset_path "cms/nav_sitemap.gif" %>');
-    });
-<% end %>
-<% unless tab == :content_library %>
-      $('#nav_content_library_img').hover(function(){
-        $('#nav_content_library_img').attr('src', '<%= asset_path "cms/nav_content_library_h.gif" %>');
-      }, function(){
-        $('#nav_content_library_img').attr('src', '<%= asset_path "cms/nav_content_library.gif" %>');
-    });
-<% end %>
-<% unless tab == :administration %>
-      $('#nav_admin_img').hover(function(){
-        $('#nav_admin_img').attr('src', '<%= asset_path "cms/nav_admin_h.gif" %>');
-      }, function(){
-        $('#nav_admin_img').attr('src', '<%= asset_path "cms/nav_admin.gif" %>');
-    });
-<% end %>
 
-});
-  <% end %>
