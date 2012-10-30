@@ -8,6 +8,8 @@
 
 * Currently loading from test/dummy app. Need to ensure jquery+other libraries are loaded by the CMS engine.
 
+* Add BrowserCMS to the list of projects using Mercury
+
 ### Notes
 
 * Multiple versions of jquery being loaded breaks things.

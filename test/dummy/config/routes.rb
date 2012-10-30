@@ -1,12 +1,6 @@
 Dummy::Application.routes.draw do
 
-  # It is unclear why mounting the Engine doesn't just work here.
-  match '/editor(/*requested_uri)' => "mercury#edit", :as => :mercury_editor
-  scope '/mercury' do
-    match ':type/:resource' => "mercury#resource"
-    match 'snippets/:name/options' => "mercury#snippet_options"
-    match 'snippets/:name/preview' => "mercury#snippet_preview"
-  end
+  mount Mercury::Engine => '/'
 
   get "content-page", :to=>"content_page#index"
   get "custom-page", :to=>"content_page#custom_page"

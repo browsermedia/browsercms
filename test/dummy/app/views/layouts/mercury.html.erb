@@ -4,30 +4,20 @@
     <meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0">
     <%= csrf_meta_tags %>
     <title>Mercury Editor</title>
-    <%= stylesheet_link_tag    'mercury', 'mercury_overrides' %>
-    <%= javascript_include_tag 'mercury', 'mercury_overrides' %>
+    <%= stylesheet_link_tag    'mercury' %>
+    <%= javascript_include_tag 'jquery-1.7', 'mercury' %>
   </head>
   <body>
     <script type="text/javascript">
-      var saveUrl = null; // Set to the url that you want to save any given page to.
-      var options = {
-        saveStyle: null,  // 'form', or 'json' (default json)
-        saveMethod: null, // 'POST', or 'PUT', (create, vs. update -- default POST)
-        visible: null     // if the interface should start visible or not (default true)
-      };
+      // Set to the url that you want to save any given page to, leave null for default handling.
+      var saveUrl = null;
 
-      <!-- Mix in any configurations provided through Rails.application.config.mercury_config -->
-      <% if Rails.application.config.respond_to?(:mercury_config) %>
-        jQuery.extend(Mercury.config, <%= Rails.application.config.mercury_config.to_json.html_safe %>);
-      <% end -%>
-
-      <!-- Mix in any options for PageEditor provided through Rails.application.config.mercury_page_editor_config -->
-      <% if Rails.application.config.respond_to?(:mercury_page_editor_config) %>
-        jQuery.extend(options, <%= Rails.application.config.mercury_page_editor_config.to_json.html_safe %>);
-      <% end -%>
-
-      <!-- Instantiate the PageEditor -->
-      new Mercury.PageEditor(saveUrl, options);
+      // Instantiate the PageEditor
+      new Mercury.PageEditor(saveUrl, {
+        saveStyle:  null, // 'form', or 'json' (default json)
+        saveMethod: null, // 'PUT', or 'POST', (create, vs. update -- default PUT)
+        visible:    true  // boolean - if the interface should start visible or not
+      });
     </script>
   </body>
 </html>
