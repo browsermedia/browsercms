@@ -13,13 +13,15 @@
   padding-top: 40px;
 }
 
-// Pushes body below fixed nav menu for admin.
 body {
+  // Pushes body below toolbar for admin.
   padding-top: 75px;
 }
 
-// Put Mercury toolbar below CMS Menus
 .mercury-toolbar-container {
+  // Put Mercury toolbar below CMS Menus
   padding-top: 90px;
+  // Ensures Bootstrap toolbars are on top of this toolbar (or links won't work)
+  z-index: 0;
 }
 
