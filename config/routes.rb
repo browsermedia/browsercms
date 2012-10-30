@@ -14,6 +14,7 @@ Cms::Engine.routes.draw do
   match '/toolbar', :to=>"toolbar#index", :as=>'toolbar'
   match '/content_types', :to=>"content_types#index", :as=>'content_types'
 
+  resources :page_components
   resources :connectors do
     member do
       put :move_up

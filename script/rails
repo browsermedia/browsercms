@@ -10,8 +10,12 @@ load File.expand_path('../../test/dummy/script/rails',  __FILE__)
 # - rails destroy
 # I kept the above (for now anyway) so I can get access to rails server, though I will need to test that it works for other commands too.
 
+# Bugs:  Adding the following would:
+# 1. Enable generators to work correctly (right now they put code into test/dummy)
+# 2. Prevent loading, since engine requires other files directly.
+
 #ENGINE_ROOT = File.expand_path('../..', __FILE__)
-#ENGINE_PATH = File.expand_path('../../lib/browsercms/engine', __FILE__)
-#
+#ENGINE_PATH = File.expand_path('../../lib/cms/engine', __FILE__)
+##
 #require 'rails/all'
 #require 'rails/engine/commands'
