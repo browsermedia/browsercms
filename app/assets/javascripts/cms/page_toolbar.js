@@ -8,9 +8,5 @@
 //= require cms/core_library
 //= require cms/attachment_manager
 //= require bootstrap
-
-
-// Add an information popup to the Edit Properties button on the Page Toolbar
-$(function(){
-    $('#edit_properties_button').popover({placement: 'bottom'});
-});
+//= require mercury
+//= require cms/toolbar

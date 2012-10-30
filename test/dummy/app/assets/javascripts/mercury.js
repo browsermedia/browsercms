@@ -5,7 +5,7 @@
  *= require_self
  *
  * Minimum jQuery requirements are 1.7
- *= require mercury/dependencies/jquery-1.7
+ * - CMS includes a later version of this already.
  *
  * You can include the Rails jQuery ujs script here to get some nicer behaviors in modals, panels and lightviews when
  * using :remote => true within the contents rendered in them.

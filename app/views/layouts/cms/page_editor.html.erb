@@ -1,20 +1,48 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-    <title><%= @page_title %></title>
-    <%= stylesheet_link_tag 'cms/application', 'cms/page_editor' %>
-    <%= javascript_include_tag 'cms/toolbar' %>
-    <%= csrf_meta_tags %>
-    <% if protect_against_forgery? %><script type="text/javascript">
-      jQuery(function($){
-        $.cms.authenticity_token = '<%= form_authenticity_token %>'
-      })
-    </script><% end %>    
-    <%= yield :html_head %>
-  </head>
-  <body>
-  <%= render 'layouts/cms/thin_toolbar' %>
-  <%= yield %>
-  </body>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+  <meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0">
+
+  <title><%= @page_title %></title>
+  <%# Issue: Bootstrap and Mercury conflict, and bootstrap menus don't work.
+      To undo, remove mercury js/sytles and the script element below, plust viewpoar above.
+
+    %>
+  <%= stylesheet_link_tag 'mercury', 'mercury_overrides', 'cms/application', 'cms/page_editor' %>
+  <%= javascript_include_tag  'cms/page_toolbar' %>
+  <%= csrf_meta_tags %>
+  <%= yield :html_head %>
+  <script type="text/javascript">
+      $(function () {
+
+
+      });
+  </script>
+</head>
+<body>
+<%= render 'layouts/cms/thin_toolbar' %>
+<script type="text/javascript">
+    var saveUrl = null; // Set to the url that you want to save any given page to.
+    var options = {
+        saveStyle:null, // 'form', or 'json' (default json)
+        saveMethod:null, // 'POST', or 'PUT', (create, vs. update -- default POST)
+        visible:null     // if the interface should start visible or not (default true)
+    };
+
+    <!-- Mix in any configurations provided through Rails.application.config.mercury_config -->
+    <% if Rails.application.config.respond_to?(:mercury_config) %>
+    jQuery.extend(Mercury.config, <%= Rails.application.config.mercury_config.to_json.html_safe %>);
+    <% end -%>
+
+    <!-- Mix in any options for PageEditor provided through Rails.application.config.mercury_page_editor_config -->
+    <% if Rails.application.config.respond_to?(:mercury_page_editor_config) %>
+    jQuery.extend(options, <%= Rails.application.config.mercury_page_editor_config.to_json.html_safe %>);
+    <% end -%>
+
+    <!-- Instantiate the PageEditor -->
+    new Mercury.PageEditor(saveUrl, options);
+
+</script>
+</body>
 </html>

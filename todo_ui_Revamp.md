@@ -1,7 +1,16 @@
 ## Big Tasks
 
+* Integrate Mercury
 * Do UX for the content library, admin and sitemap
 * Implement implied features (Search/Notifications)
+
+## Integrate Mercury
+
+* Currently loading from test/dummy app. Need to ensure jquery+other libraries are loaded by the CMS engine.
+
+### Notes
+
+* Multiple versions of jquery being loaded breaks things.
 
 ## Admin Menu
 * Reduce the different admin layouts (why are there so many?)

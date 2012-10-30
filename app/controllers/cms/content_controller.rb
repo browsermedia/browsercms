@@ -18,11 +18,17 @@ module Cms
 
     # ----- Actions --------------------------------------------------------------
     def show
-      if @show_toolbar && params[:show_page] != 'show'
-        render_editing_frame
-      else
+      if params[:mercury_frame]    # No security here
         render_page
+      else
+        render_editing_frame
       end
+
+      #if @show_toolbar && params[:show_page] != 'show'
+      #  render_editing_frame
+      #else
+      #  render_page
+      #end
       cache_if_eligible
     end
 
