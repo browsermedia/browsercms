@@ -21,6 +21,7 @@ license, including:
 
 - jQuery - Copyright (C) 2009 John Resig
 - CKEditor - Copyright (C) 2003-2009 Frederico Caldeira Knabben
+- Icons - Copyright (C) 2012 Keyamoon
 
 
 
