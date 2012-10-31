@@ -1,0 +1,237 @@
+/*! normalize.css 2012-03-11T12:53 UTC - http://github.com/necolas/normalize.css */
+article,aside,details,figcaption,figure,footer,header,hgroup,nav,section,summary{display:block}audio,canvas,video{display:inline-block;*display:inline;*zoom:1}audio:not([controls]){display:none;height:0}[hidden]{display:none}html{font-size:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}html,button,input,select,textarea{font-family:sans-serif}body{margin:0}a:focus{outline:thin dotted}a:hover,a:active{outline:0}h1{font-size:2em;margin:.67em 0}h2{font-size:1.5em;margin:.83em 0}h3{font-size:1.17em;margin:1em 0}h4{font-size:1em;margin:1.33em 0}h5{font-size:.83em;margin:1.67em 0}h6{font-size:.75em;margin:2.33em 0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:bold}blockquote{margin:1em 40px}dfn{font-style:italic}mark{background:#ff0;color:#000}p,pre{margin:1em 0}pre,code,kbd,samp{font-family:monospace,serif;_font-family:'courier new',monospace;font-size:1em}pre{white-space:pre;white-space:pre-wrap;word-wrap:break-word}q{quotes:none}q:before,q:after{content:'';content:none}small{font-size:75%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-0.5em}sub{bottom:-0.25em}dl,menu,ol,ul{margin:1em 0}dd{margin:0 0 0 40px}menu,ol,ul{padding:0 0 0 40px}nav ul,nav ol{list-style:none;list-style-image:none}img{border:0;-ms-interpolation-mode:bicubic}svg:not(:root){overflow:hidden}figure{margin:0}form{margin:0}fieldset{border:1px solid #c0c0c0;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0;white-space:normal;*margin-left:-7px}button,input,select,textarea{font-size:100%;margin:0;vertical-align:baseline;*vertical-align:middle}button,input{line-height:normal}button,input[type="button"],input[type="reset"],input[type="submit"]{cursor:pointer;-webkit-appearance:button;*overflow:visible}button[disabled],input[disabled]{cursor:default}input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0;*height:13px;*width:13px}input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type="search"]::-webkit-search-decoration,input[type="search"]::-webkit-search-cancel-button{-webkit-appearance:none}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}textarea{overflow:auto;vertical-align:top}table{border-collapse:collapse;border-spacing:0}
+
+/*******************
+Begin Styles
+*******************/
+
+* { -webkit-box-sizing:border-box; -moz-box-sizing:border-box; box-sizing:border-box; }
+html { height:100%; }
+body { width:100%; font-size:100%; height:100%; overflow:auto; line-height:1.5; color:#58595b; font-weight:400; font-family: "Avant Garde", "Century Gothic", CenturyGothic, "AppleGothic", sans-serif; letter-spacing:normal; position:relative;
+background:#f0f3f2;
+/*background: -webkit-gradient(linear, 0 0, 0 bottom, from(#f0f3f2), to(#ffffff));
+background: -webkit-linear-gradient(#f0f3f2, #ffffff);
+background: -moz-linear-gradient(#f0f3f2, #ffffff);
+background: -ms-linear-gradient(#f0f3f2, #ffffff);
+background: -o-linear-gradient(#f0f3f2, #ffffff);
+background: linear-gradient(#f0f3f2, #ffffff);*/
+}
+::selection{ background:#46534c; color:white; text-shadow:none; }
+.cf:before, .cf:after, .mem li:before, .mem li:after, .cms_edit_container:before, .cms_edit_container:after  { content:""; display:table; }
+.cf:after, .mem li:after, .clear, .cms_edit_container:after { clear:both; }
+.cf, .mem li, .cms_edit_container { *zoom:1; }
+
+h1, h2,	h3 { font-weight:400; }
+h1 { font-size:28px; }
+h2 { font-size:22px; }
+h3 { font-size:16px; }
+
+p, li { font-family: "Avant Garde", "Century Gothic", CenturyGothic, "AppleGothic", sans-serif; font-size:14px; }
+
+h1, h2, h3, h4, h5, h6, p, ul, blockquote, img { margin:0 0 15px; }
+hr { background:none; height:1px; border:0; border-top:1px solid #e2e3e3; margin:15px 0; clear:both; }
+
+strong { font-weight:bold; }
+em { font-style:italic; }
+
+a:link,
+a:visited { color:#90a198; text-decoration:none; -webkit-transition:color .3s ease-in-out; -moz-transition:color .3s ease-in-out; transition:color .3s ease-in-out; font-weight:bold; }
+a:focus { outline:1px dotted #5bbd53; color:#5bbd53; }
+a:hover { color:#46534c; text-decoration:none; }
+a:active { color:#323c36; -webkit-transition:none; -moz-transition:none; transition:none; }
+
+header, footer, .slide-wrap { width:100%; }
+
+/* Help Screen Readers */
+#skip { position:relative; }
+#skip a { position:absolute; left:-9999px; top:-9999px; display:block; -webkit-transition:none; -moz-transition:none; transition:none; }
+#skip a:active, #skip a:focus, #skip a:hover { top:0; left:47%; height:auto; width:auto; background:#040407; color:white; padding:0 5px; box-shadow:0 1px 4px rgba(0,0,0,0.3); }
+
+/* Header */
+header { background:url(/images/header-back2.png) repeat-x 0 -25px; display:table; }
+header .wrap { width:950px; margin:0 auto; height:158px; position:relative; }
+header .wrap { width:950px; margin:0 auto; height:158px; position:relative; }
+header h2 { margin:0; padding:12px 0 0 73px; }
+header h2 a { display:block; height:75px; width:250px; text-indent:-9999px; background:url(http://placehold.it/350x150) no-repeat -10px -10px; }
+header nav { position:absolute; left:45px; bottom:0; height:39px; background:url(http://placehold.it/350x150) no-repeat -10px -486px; width:100%; }
+header nav img { position:absolute; top:0; right:70px; }
+header nav ul { margin:0; padding:0; }
+header nav li { float:left; }
+header nav a:link, header nav a:visited { display:block; height:39px; padding:8px 0 0; text-align:center; width:156px; color:#6d6e71; /*font-family: Baskerville, "Baskerville Old Face", "Hoefler Text", Garamond, "Times New Roman", serif;*/ font-family: "Avant Garde", "Century Gothic", CenturyGothic, "AppleGothic", sans-serif; font-weight:bold; background:rgba(255,0,0,0.0); text-shadow:0 1px 0 rgba(255,255,255,0.5); }
+header nav a:hover { -webkit-transition:none; -moz-transition:none; transition:none; }
+header nav a:active { text-shadow:0 1px 0 rgba(0,0,0,0.5); padding:9px 0 0; }
+header #section_5 a { width:157px; }
+header #section_6 a { width:157px; }
+header #section_12 a { width:234px; }
+header #section_8 a:hover, header #section_8.on a { background:url(http://placehold.it/350x150) no-repeat -10px -526px; }
+header #section_8 a:active { background:url(http://placehold.it/350x150) no-repeat -10px -566px; color:white; }
+header #section_9 a:hover, header #section_9.on a { background:url(http://placehold.it/350x150) no-repeat -167px -526px; }
+header #section_9 a:active { background:url(http://placehold.it/350x150) no-repeat -167px -566px; color:white; }
+header #section_5 a:hover, header #section_5.on a { background:url(http://placehold.it/350x150) no-repeat -323px -526px; }
+header #section_5 a:active { background:url(http://placehold.it/350x150) no-repeat -323px -566px; color:white; }
+header #section_6 a:hover, header #section_6.on a { background:url(http://placehold.it/350x150) no-repeat -479px -526px; }
+header #section_6 a:active { background:url(http://placehold.it/350x150) no-repeat -479px -566px; color:white; }
+header #section_12 a:hover, header #section_12.on a { background:url(http://placehold.it/350x150) no-repeat -636px -526px; }
+header #section_12 a:active { background:url(http://placehold.it/350x150) no-repeat -636px -566px; color:white; }
+header form { position:absolute; right:45px; top:27px; }
+header fieldset { border:0; padding:0; position:relative; }
+header label { display:none; }
+header [type=text] { border:1px solid #38423d; background:white; color:#d4d5d5; font-size:11px; height:20px; padding:3px; outline:none; width:233px; position:absolute; right:0; z-index:1; text-transform:uppercase; line-height:1; }
+header [type=text]:focus { border-color:#68a462; box-shadow:0 0 3px #68a462; }
+header [type=image] { position:absolute; z-index:2; border:0; background:none; right:5px; top:6px; }
+.sub { position:absolute; right:45px; top:42px; }
+.sub li { float:left; list-style:none; font-size:10px; border-left:1px solid white; padding:0 10px; line-height:1; font-weight:bold; }
+.sub .first { border-left:0; }
+.sub .last { /*padding-right:0; */}
+.sub a, .sub a:visited { color:white; display:block; padding:0; margin:0; }
+.sub a:hover { text-decoration:underline; }
+
+/* Slide Area */
+.slide-wrap { width:950px; height:320px; margin:0 auto;  line-height:1.25; position: relative;}
+.slide-wrap div.text {padding:35px 20px 0 520px;}
+.slide-wrap div.text p {margin: 0;}
+.slide-wrap h1 { font-weight:bold; color:#58595b; font-size:34px; line-height:1.1; position: relative;}
+.slide-wrap div.text h1 + p {position: relative;}
+.slide-wrap div.text p img {position: absolute; top: 0; left: 0; z-index: 0;}
+
+/* Home Bottom */
+.content-wrap { width:950px; margin:0 auto; background:url(/images/home-lower-back.png) repeat-y -35px 0; padding:0 60px 20px; }
+.left, .mid, .right { width:33%; float:left; position: relative;}
+.content-wrap h2 { color:white; text-align:center; margin:0; width:307px; padding-bottom:5px; position:relative; font-weight:bold; font-size:20px; text-shadow:0 0 2px rgba(0,0,0,0.5), 0 0 4px rgba(0,0,0,0.3);
+background: #9190a3;
+background: -webkit-gradient(linear, 0 0, 0 bottom, from(#9190a3), to(#838295));
+background: -webkit-linear-gradient(#9190a3, #838295);
+background: -moz-linear-gradient(#9190a3, #838295);
+background: -ms-linear-gradient(#9190a3, #838295);
+background: -o-linear-gradient(#9190a3, #838295);
+background: linear-gradient(#9190a3, #838295);
+}
+.content-wrap img { margin:0; }
+.content-wrap h3 { font-size:20px; margin:0 0 5px; }
+/*.left p { font-family:Georgia, serif; font-size:16px; line-height:1.1; }*/
+.left h2 { left:-46px; }
+/*.left .corner, .mid img { position:relative; left:-47px; }*/
+.left .corner { left:-46px; position: absolute;}
+.left-home-image { background:url(/images/left-corner-home.png) no-repeat 0 0; width:307px; height:31px; }
+.mid-home-image { background:url(/images/mid-corner-home.png) no-repeat 0 1px; width:266px; height:31px; }
+.right .right-home-image { background:url(/images/right-corner-home.png) no-repeat 0 0; width:307px; height:31px; position:relative; right:31px; }
+/*.mid img { left:0; }*/
+.mid { padding:0 0 0 7px; }
+.mid h2 { width:266px; }
+.mid ul, .right ul { margin:0; padding:0; }
+.right ul { margin:0 0 20px; width:266px; position:relative; left:-20px; }
+.mid li, .right li { list-style:none; clear:both; padding:10px 0; border-bottom:3px dotted #6d6f72; }
+.right li { padding:10px; }
+.mid li:first-child, .right li:first-child { padding-top:0; }
+.mid li:last-child, .right li:last-child { padding-bottom:0; border:0; }
+.mid li table, .right li table { border-collapse:collapse; float:left; margin:5px 20px 60px 15px; }
+.mid li td, .right li td { border:4px solid #cccc99; text-align:center; padding:0 10px; color:#939598; }
+.mid li .date, .right li .date { font-family:Georgia, serif; font-weight:bold; }
+.mid li h3, .right li h3 { font-size:16px; margin:0; }
+.mid h3.clear, .right h3.clear { font-size:16px; }
+.right h3.clear { position:relative; left:-20px; }
+.mid li h4, .right li h4, .mid li p, .right li p { font-size:12px; font-weight:normal; margin:0; }
+.mid li h4, .right li h4 { margin:0 0 10px; }
+.right { padding:0 0 0 50px; }
+.right h2 { right:30px; width:307px; }
+/*.right img { position:relative; right:30px; }*/
+.mid h3.clear img, .right h3.clear img { right:-2px; top:4px; display:inline; }
+.home-bottom { display:block; margin:0 auto; background:url(http://placehold.it/350x150) no-repeat 0 -455px; height:11px; width:950px; }
+
+/* Inner */
+.content-wrap.inner { width:950px; margin:0 auto; background:none; padding:0 23px 0 22px; }
+.inner .main-holder { float:right; width:690px; }
+.inner .main { float:right; width:690px; background:url(/images/inner-back-repeat.png) repeat-y; padding:10px 40px 30px; }
+
+/* Breadcrumbs & ShareThis */
+.breadcrumbs { margin:0 0 10px; padding:0; width:50%; float:left; position:relative; z-index:3; }
+.breadcrumbs li { float:left; list-style:none; margin-bottom: 0; }
+.breadcrumbs a { display:block; }
+.breadcrumbs a:after { content:"\003E"; display:block; padding:0 10px; float:right; text-decoration:none; color:#58595b; }
+.addthis_toolbox { width:150px; float:right; margin:0 0 10px; position:relative; z-index:3; }
+
+.inner h1 { clear:both; color:white; margin:0; padding:8px 20px 8px 25px; width:644px; position:relative; font-weight:bold; font-size:27px; text-shadow:0 0 2px rgba(0,0,0,0.5), 0 0 4px rgba(0,0,0,0.3); line-height:1.1;
+background: #9190a3;
+background: -webkit-gradient(linear, 0 0, 0 bottom, from(#9190a3), to(#838295));
+background: -webkit-linear-gradient(#9190a3, #838295);
+background: -moz-linear-gradient(#9190a3, #838295);
+background: -ms-linear-gradient(#9190a3, #838295);
+background: -o-linear-gradient(#9190a3, #838295);
+background: linear-gradient(#9190a3, #838295);
+}
+.main-image { background:url(http://placehold.it/645x30) no-repeat 0 0; width:645px; height:30px; }
+.content-wrap.inner h2 { background:none; text-shadow:none; text-align:left; color:#58595b; width:auto; }
+.content-wrap.inner p { font-family: "Avant Garde", "Century Gothic", CenturyGothic, "AppleGothic", sans-serif; font-size:13px; line-height:1.4; }
+.inner-left { /*float:left; width:400px;*/ padding-left:20px; overflow: hidden;}
+.inner-left ul { padding:0 0 0 20px; }
+.inner-left ul li { padding:0 0 0 10px; margin:0 0 8px; font-size:13px; }
+.inner-left hr { height:8px; border:0; background:#8b8a9e; margin:15px 0; }
+.inner-left img, .main aside img { border:1px solid #ddd; }
+.main .pad { padding-left:20px; }
+.main aside img.corner { border:0; }
+.main aside { float:right; width:180px; position:relative; right:-19px; }
+.main aside h3 { color:white; text-align:center; margin:0; width:196px; padding:5px 10px; position:relative; font-weight:bold; font-size:20px; text-shadow:0 0 2px rgba(0,0,0,0.5), 0 0 4px rgba(0,0,0,0.3);
+background: #9190a3;
+background: -webkit-gradient(linear, 0 0, 0 bottom, from(#9190a3), to(#838295));
+background: -webkit-linear-gradient(#9190a3, #838295);
+background: -moz-linear-gradient(#9190a3, #838295);
+background: -ms-linear-gradient(#9190a3, #838295);
+background: -o-linear-gradient(#9190a3, #838295);
+background: linear-gradient(#9190a3, #838295);
+}
+/*.main aside h3:after*/ .inner-side { /*content:""; display:block;*/ background:transparent url(http://placehold.it/33x196) no-repeat 0 0; height:33px; width:196px; margin-bottom:5px; }
+.main aside p { padding-right:10px; line-height:1.25; }
+aside img.corner { margin-bottom:-10px; }
+.bot-wrap { width:960px; margin:0 auto; }
+.inner-bottom { display:block; margin:0 3px 50px 0; background:url(http://placehold.it/350x150) no-repeat -9px -628px; height:50px; width:686px; float:right; }
+
+/* Inner Left Column */
+.main-holder + aside { float:left; width:192px; padding:20px 0; margin:0 0 0 23px; position:relative; z-index:3; }
+.main-holder + aside ul { margin:0; padding:0; }
+.main-holder + aside li { text-transform:uppercase; font-size:12px; }
+.main-holder + aside li li { text-transform:none; }
+.main-holder + aside li ul { padding:5px 0 5px 25px; }
+.main-holder + aside a, .main-holder + aside a:visited { color:#7e7f80; font-weight:normal; padding:5px 10px 5px 20px; display:block; -webkit-transition:none; -moz-transition:none; transition:none; }
+.main-holder + aside a:hover, .main-holder + aside .on a { background:#8b8a9e; color:white; }
+.main-holder + aside li li a, .main-holder + aside li li a:visited, .main-holder + aside li.on li a { border-left:5px solid #f0f3f2; padding:0 5px; margin:5px 0; background:none; color:#7e7f80; }
+.main-holder + aside li li a:hover, .main-holder + aside li li.on a { background:none; color:#8b8a9e; border-left:5px solid #8b8a9e; font-weight:bold; }
+
+/* Footer */
+footer { width:100%; height:159px; background:url(http://placehold.it/1600x159) repeat-x; padding:40px 0; margin:35px 0 0; display:table; }
+footer .wrap { width:950px; margin:0 auto; position:relative; }
+footer ul { width:300px; padding:0 0 0 60px; }
+footer li { width:50%; float:left; list-style:none; font-size:12px; margin-bottom:4px; }
+footer a:link, footer a:visited { color:#6d6e71; }
+footer a:hover { text-decoration:underline; }
+footer .wrap .details { position:absolute; right:60px; top:6px; }
+footer .wrap h4 { float:left; font-weight:bold; font-size:11px; text-align:right; padding:10px 15px 0 0; }
+footer .wrap img { float:right; }
+
+/* CMS Stuffs */
+.cms_edit_container { margin-bottom:20px !important; }
+
+/* ADDED */
+hr { margin:30px 0; }
+.main .pad { padding: 0 20px; }
+.breadcrumbs { margin:0 0 0; padding:0; width:75%; float:left; position:relative; z-index:3; font-size: 12px;}
+.content-wrap.inner .breadcrumbs li { font-size: 11px; }
+.content-wrap.inner h2 { margin: 10px 0}
+.content-wrap h3, .content-wrap h4 { margin: 10px 0}
+.content-wrap td h3, .content-wrap td h4 { margin-top:0; }
+.content-wrap.inner dl { font-size: 13px; line-height: 1.5; margin: 20px 0; }
+.content-wrap.inner .box-left { float: left; width: 180px; padding: 0 0 10px 0; }
+.content-wrap.inner .box-right { float: right; width: 390px; padding: 10px 0 0 20px; border-left: #E2E3E3 solid 1px; margin: 0 0 20px 20px; }
+.content-wrap.inner .box-right ul { padding: 0 0 0 15px; font-size: 12px; }
+.content-wrap.inner .box-right li { font-size: 12px; }
+.content-wrap.inner li { font-size:13px; margin-bottom:10px; line-height: 15px;}
+.content-wrap.inner li h3 {line-height: 24px;}
+.content-wrap.inner .main-holder + aside li { font-size:12px; margin: 0px 0; }
+table.resources { width: 100%; margin: 30px 0 40px; }
+table.resources td { padding: 15px 10px 5px; border-top: #8B8A9E solid 1px; }
+table.resources td.top { text-transform: uppercase; border-top: #8B8A9E solid 1px; border-bottom: #8B8A9E solid 6px; }
+table.resources td.bottom { border-bottom: #8B8A9E solid 6px; margin:35px 0; }
+table {font-size: 13px;}
+.pad table td { padding-right: 40px }
+.main aside p { padding: 0 20px 0 10px; font-size: 11px !important;}
+.main aside ul { padding: 0 20px 0 30px;}
+.calendar .daytag {font-size: 12px !important; width: 15px !important; height: 15px !important;}
