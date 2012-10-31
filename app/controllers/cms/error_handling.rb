@@ -18,7 +18,7 @@ module Cms
     end
 
     def handle_server_error(exception)
-      logger.error "Handling Exception: #{exception}"
+      log_complete_stacktrace(exception)
       with_format('html') do
         render :layout => 'cms/application',
                :template => 'cms/shared/error',
@@ -33,5 +33,11 @@ module Cms
              :status => 403
     end
 
+    # Print the underlying stack trace to the logs for debugging.
+    # Should be human readable (i.e. line breaks)
+    # See http://stackoverflow.com/questions/228441/how-do-i-log-the-entire-trace-back-of-a-ruby-exception-using-the-default-rails-l for discussion of implementation
+    def log_complete_stacktrace(exception)
+      logger.error "#{exception.message}\n#{exception.backtrace.join("\n")}"
+    end
   end
 end

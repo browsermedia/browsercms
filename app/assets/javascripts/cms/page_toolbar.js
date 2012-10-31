@@ -10,4 +10,5 @@
 //= require cms/attachment_manager
 //= require bootstrap
 //= require mercury
+//= require mercury_overrides
 //= require cms/toolbar

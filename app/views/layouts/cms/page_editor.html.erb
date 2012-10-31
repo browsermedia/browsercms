@@ -5,19 +5,16 @@
   <meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0">
 
   <title><%= @page_title %></title>
-  <%# Issue: Bootstrap and Mercury conflict, and bootstrap menus don't work.
-      To undo, remove mercury js/sytles and the script element below, plust viewpoar above.
-
-  %>
   <%= stylesheet_link_tag 'mercury', 'mercury_overrides', 'cms/application', 'cms/page_editor' %>
   <%= javascript_include_tag 'cms/page_toolbar' %>
   <%= csrf_meta_tags %>
   <%= yield :html_head %>
   <script type="text/javascript">
-      $(function () {
-
-
-      });
+      jQuery(function ($) {
+          <% if protect_against_forgery? %>
+          $.cms.authenticity_token = '<%= form_authenticity_token %>'
+          <% end %>
+      })
   </script>
 </head>
 <body>
@@ -28,7 +25,7 @@
 
     // Instantiate the PageEditor
     new Mercury.PageEditor(saveUrl, {
-        saveStyle:null, // 'form', or 'json' (default json)
+        saveStyle:'form', // 'form', or 'json' (default json)
         saveMethod:null, // 'PUT', or 'POST', (create, vs. update -- default PUT)
         visible:true  // boolean - if the interface should start visible or not
     });
