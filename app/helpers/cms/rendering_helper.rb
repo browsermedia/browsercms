@@ -20,7 +20,8 @@ module Cms
     def render_connector_and_connectable(connector, connectable)
       logger.debug "Rendering #{connectable} "
       if is_editing_page?(connector.page)
-        render(:partial => 'cms/pages/edit_connector', :locals => { :connector => connector, :connectable => connectable})
+        #render(:partial => 'cms/pages/edit_connector', :locals => { :connector => connector, :connectable => connectable})
+        render(:partial => 'cms/pages/edit_content', :locals => { :connector => connector, :connectable => connectable})
       else
         render_connectable(connectable)
       end
