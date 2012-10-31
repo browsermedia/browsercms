@@ -1,0 +1,48 @@
+<%# A sample template to verify editor works correctly with some content. %>
+<%= render :partial=>"partials/header" %>
+	<!-- Begin Inner -->
+	<div class="content-wrap inner cf" id="content">
+		<!-- Begin Left -->
+		<div class="main-holder">
+			<section class="main cf">
+				<%= render_breadcrumbs %>
+				<!-- AddThis Button BEGIN -->
+				<div class="addthis_toolbox addthis_default_style ">
+					<a class="addthis_button_preferred_1"></a>
+					<a class="addthis_button_preferred_2"></a>
+					<a class="addthis_button_preferred_3"></a>
+					<a class="addthis_button_preferred_4"></a>
+					<a class="addthis_button_compact"></a>
+					<a class="addthis_counter addthis_bubble_style"></a>
+				</div>
+				<!-- AddThis Button END -->
+				<h1><%= editable_page_title %></h1>
+				<div class="main-image"></div>
+				<div class="pad">
+					<%= container :main_intro %>
+				</div>
+              <aside id="sub">
+                <%= container :main_aside %>
+              </aside>
+				<section class="inner-left">
+					<%= container :main_sub %>
+				</section>
+
+				<!--[if IE 7]><div class="clear"></div><![endif]-->
+			</section>
+			<div class="inner-bottom"></div>
+		</div>
+		<!-- Begin Sidebar -->
+		<aside id="sidebar">
+			<nav>
+				<% if current_page.name == 'Access Denied' %>
+				<!-- none -->
+				<% elsif current_page.top_level_section.name == 'system' && current_page.name != 'Access Denied' %>
+				<%= render_menu :from_top=>0, :depth=>1 %>
+				<% else %>
+				<%= render_menu :from_top=>1, :depth=>3 %>
+				<% end %>
+			</nav>
+		</aside>
+	</div>
+<%= render :partial=>"partials/footer" %>

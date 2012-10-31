@@ -32,16 +32,33 @@ module Cms
     # Outputs the title for this page. Used by both internal CMS pages, as well as page templates. If not explicitily set,
     #   returns the title of the page.
     #
-    # @param [String] The name this page should be set to.
+    # @TODO - Should split this into two methods page_title= to avoid complicated logic.
+    # @param [String] page_title The name this page should be set to.
+    # @param [String] options Options for the page title
     # @return [String] The title of the page.
     def page_title(*args)
       if args.first
-        # Removed unneeded indirection/fixed issue where @template is frozen in r1.9.1
         @page_title = args.first
       else
         @page_title ? @page_title : current_page.page_title
       end
-    end    
+    end
+
+    # Returns the Page title in an In Context editable area.
+    #
+    # Use for h1/h2 elements. Use page_title for title elements.
+    def editable_page_title()
+      editable(page_title , id: 'page_title', region: 'simple')
+    end
+
+    # Mark the given content as editable by mercury
+    # @param [String] content
+    # @param [Hash] options
+    # @options options [String] :id The id attribute identifying which content is being edited. Passed to Mercury
+    # @options options [String] :region The type of Region (i.e. simple, full, etc). See https://github.com/jejacks0n/mercury
+    def editable(content, options)
+      content_tag "div", content, id: options[:id], data: {mercury: options[:region]}
+    end
     
     def current_page
       @page

@@ -1,0 +1,47 @@
+<!doctype html>
+<!--[if lt IE 7 ]><html lang=en-us class="no-js ie6"><![endif]-->
+<!--[if IE 7 ]><html lang=en-us class="no-js ie7"><![endif]-->
+<!--[if IE 8 ]><html lang=en-us class="no-js ie8"><![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--> <html lang="en-us"> <!--<![endif]-->
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge;chrome=1">
+	<title><%= page_title %> | Name of Client</title>
+	<meta name="Description" content="<%= current_page.description %>">
+	<meta name="Keywords" content="<%= current_page.keywords %>">
+	<%= stylesheet_link_tag 'theme' -%>
+	<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<link href="/stylesheets/ie.css" media="screen" rel="stylesheet" type="text/css" />
+	<![endif]-->
+	<!--[if IE 7]> <link href="/stylesheets/ie7.css" media="screen" rel="stylesheet" type="text/css" /> <![endif]-->
+
+	<%= yield :html_head %>
+</head>
+<body>
+	<div id="skip"><a href="#content">Skip Navigation</a></div>
+	<!-- Begin Header -->
+	<header>
+		<div class="wrap">
+			<h2><a href="/" title="Home">Corporation Name
+			<span>Our Corporate Motto will appear here.</span></a></h2>
+			<nav>
+				<%= render_menu :from_top=>0, :depth=>0 %>
+				<% if current_page.name != 'Home' %><img src="/images/inner-nav-shade.png" /><% end %>
+			</nav>
+		  	<form role="search" method="get" action="/search" id="search" >
+				<fieldset>
+					<label for="query">Search</label>
+					<input type="text" name="query" alt="Search" value="Search" title="Search" onfocus="if (this.value=='Search'){this.value='';};return false;" onblur="if (this.value==''){this.value='Search';return false;}" />
+					<input type="image" src="http://placehold.it/8x8" id="submit" value="Go" alt="Go" />
+				</fieldset>
+			</form>
+			<div class="sub">
+			  	<li id="login_link"><%= link_to "Member Login", "/member-resources" %></li>
+			  	<li id="logout_link"><%= link_to "Logout", "/cms/logout" %></li>
+				<%= render_menu :from_top => 1, :depth => 3, :path => "/top-level-nav" %>
+			</div>
+		</div>
+	</header>
+
+

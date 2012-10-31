@@ -1,0 +1,49 @@
+<!-- Begin Footer -->
+<footer>
+	<div class="wrap cf">
+		<%= render_menu :from_top => 1, :depth => 3, :path => "/footer-nav-links" %>
+		<div class="details">
+			<h4>Copyright <%= Date.today.year %><br />
+			Name of the client</h4>
+			<img src="http://placehold.it/147x57" alt="Logo" />
+		</div>
+		
+	</div>
+</footer>
+<% if current_page.name != 'Home' %>
+<script>
+<% if current_page.top_level_section.name == 'About Us' %>
+//About
+var about = 'About';
+if (about){ $('#section_8').addClass('on'); }
+<% end %>
+<% if current_page.top_level_section.name == 'Membership' %>
+//Members
+var mem = 'Membership';
+if (mem){ $('#section_9').addClass('on'); }
+<% end %>
+<% if current_page.top_level_section.name == 'Events' %>
+//Events
+var events = 'Events';
+if (events){ $('#section_5').addClass('on'); }
+<% end %>
+<% if current_page.top_level_section.name == 'Resources' %>
+//Resources
+var res = 'Resources';
+if (res){ $('#section_6').addClass('on'); }
+<% end %>
+<% if current_page.top_level_section.name == 'Member Resources' %>
+//Mem Resources
+var memr = 'Member Resources';
+if (memr){ $('#section_12').addClass('on'); }
+<% end %>
+$(function(){
+var subhead = $('#sub').find('h3');
+var subheadd = $('#sub').find('h2');
+subhead.after('<div class="inner-side"></div>');
+subheadd.after('<div class="inner-side"></div>');
+});
+</script>
+<% end %>
+</body>
+</html>
