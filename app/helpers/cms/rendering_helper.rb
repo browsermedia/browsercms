@@ -14,7 +14,8 @@ module Cms
 
     # Determines if a user is currently editing this page
     def is_editing_page?(page)
-      logged_in? && @mode == "edit" && current_user.able_to_edit?(page)
+      logged_in? && current_user.able_to_edit?(page)
+      #logged_in? && @mode == "edit" && current_user.able_to_edit?(page)
     end
     
     def render_connector_and_connectable(connector, connectable)

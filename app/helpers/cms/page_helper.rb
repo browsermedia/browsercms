@@ -70,8 +70,9 @@ module Cms
     # @return [String] The HTML content for the container.
     def container(name)
       content = content_for(name)
-      if logged_in? && @page && @mode == "edit" && current_user.able_to_edit?(@page)
-        render :partial => 'cms/pages/edit_container', :locals => {:name => name, :content => content}
+
+      if logged_in? && @page && current_user.able_to_edit?(@page)
+        render :partial => 'cms/pages/simple_container', :locals => {:name => name, :content => content}
       else
         content
       end
