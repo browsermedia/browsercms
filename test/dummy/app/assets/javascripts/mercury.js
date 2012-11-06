@@ -180,8 +180,16 @@ window.Mercury = {
           },
         editors:               {
           htmlEditor:          ['Edit HTML', 'Edit the HTML content', { regions: ['full'] }]
+          },
+        content_blocks:        {
+            sep2:              '-',
+            moveBlockUp:       ['Move block up', 'Move the selected content block up', { regions: ['full'] }],
+            moveBlockDown:     ['Move block down', 'Move the selected content block down', { regions: ['full'] }],
+            removeBlock:       ['Remove a block', 'Remove a block from the given page', { regions: ['full'] }]
+
           }
         },
+
 
       snippets: {
         _custom:               true,
@@ -312,6 +320,9 @@ window.Mercury = {
     // callback functions are executed within the scope of the given region, so you have access to all it's methods.
     behaviors: {
       //foreColor: function(selection, options) { selection.wrap('<span style="color:' + options.value.toHex() + '">', true) },
+        moveBlockUp:   function(){ console.log("Move Up")},
+        moveBlockDown: function(){ console.log("Move Down")},
+        removeBlock: function(){ console.log("Remove Block")},
         htmlEditor: function() { Mercury.modal('/mercury/modals/htmleditor.html', { title: 'HTML Editor', fullHeight: true, handler: 'htmlEditor' }); }
       },
 
