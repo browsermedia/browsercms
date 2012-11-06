@@ -1,3 +1,38 @@
+// A Container that can hold one or more content blocks.
+// Style only appears during page editing.
+.cms-container {
+  outline-color: #999;
+  outline-style: dashed;
+  outline-width: 1px;
+  position: relative;
+  height: auto;
+  display: block;
+  margin: 2px;
+  padding: 4px;
+}
+
+// A Container in 'Preview' mode. It should be completely invisible to users.
+.cms-container-preview {
+  outline-color: #999;
+  outline-style: dashed;
+  outline-width: 0px;
+  position: relative;
+  height: auto;
+  display: inline;
+  margin: 0px;
+  padding: 0px;
+}
+
+// The 'Add Content' link that appears when containers are visible.
+.cms-add-content {
+
+}
+
+// *****************************************************************
+// Deprecated (pre 4.0)
+// The rest of these are the pre 4.0 UI controls and can be safely deleted after the UI revamp is complete.
+// *****************************************************************
+
 // Minimalist styles for page editing controls that are added to CMS pages in edit mode.
 image.cms-content-button {
   text-decoration: none;
@@ -24,34 +59,6 @@ a.cms-content-status {
   right: 10px;
 }
 
-// A Container that can hold one or more content blocks.
-.cms-container {
-  outline-color: #999;
-  outline-style: dashed;
-  outline-width: 1px;
-  position: relative;
-  height: auto;
-  display: block;
-  margin: 1px 5px 2px 5px;
-  padding: 5px 5px 5px 5px;
-}
-
-// A Container in 'Preview' mode. It should be completely invisible to users.
-.cms-container-preview {
-  outline-color: #999;
-  outline-style: dashed;
-  outline-width: 0px;
-  position: relative;
-  height: auto;
-  display: inline;
-  margin: 0px;
-  padding: 0px;
-}
-
-.cms-add-content {
-
-}
-
 .cms-outer-container {
   display: block;
   height: auto;
@@ -62,6 +69,7 @@ a.cms-content-status {
   background: image-url("cms/containers/beta.png") repeat-x 0 0;
 }
 
+// Deprecated (pre 4.0)
 .cms-inner-container {
   display: block;
   width: 100%;
