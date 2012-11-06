@@ -1,3 +1,13 @@
+Current Task:
+
+Task 1: Remove the editor toggle completely.
+ We don't need the toggle anymore, as the Mercury editor can handle toggling between Preview/not preview.
+
+Task 2: Remove the containers (+ and [][])
+ Instead, use a popup to add content to a page via a modal window?
+
+
+
 ## Big Tasks
 
 * Integrate Mercury
@@ -9,6 +19,10 @@
 * Currently loading from test/dummy app. Need to ensure jquery+other libraries are loaded by the CMS engine.
 
 * Add BrowserCMS to the list of projects using Mercury
+
+### UX Considerations
+
+1. How should new content blocks be added to a page? Right now, the + button uses the old world flow.
 
 ### Notes
 

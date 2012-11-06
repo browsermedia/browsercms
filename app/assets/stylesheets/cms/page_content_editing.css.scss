@@ -24,6 +24,34 @@ a.cms-content-status {
   right: 10px;
 }
 
+// A Container that can hold one or more content blocks.
+.cms-container {
+  outline-color: #999;
+  outline-style: dashed;
+  outline-width: 1px;
+  position: relative;
+  height: auto;
+  display: block;
+  margin: 1px 5px 2px 5px;
+  padding: 5px 5px 5px 5px;
+}
+
+// A Container in 'Preview' mode. It should be completely invisible to users.
+.cms-container-preview {
+  outline-color: #999;
+  outline-style: dashed;
+  outline-width: 0px;
+  position: relative;
+  height: auto;
+  display: inline;
+  margin: 0px;
+  padding: 0px;
+}
+
+.cms-add-content {
+
+}
+
 .cms-outer-container {
   display: block;
   height: auto;
