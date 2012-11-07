@@ -37,5 +37,13 @@ jQuery(function ($) {
 
         }
     }
+
+    $.cms_editor = {
+        // Returns the widget that a user has currently selected.
+        // @return [JQuery.Element]
+        selectedElement: function(){
+            return $($('#mercury_iframe').contents()[0].activeElement);
+        }
+    }
 });
 
