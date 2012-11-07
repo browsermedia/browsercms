@@ -321,15 +321,13 @@ window.Mercury = {
     behaviors: {
       //foreColor: function(selection, options) { selection.wrap('<span style="color:' + options.value.toHex() + '">', true) },
         moveBlockUp:   function(){
-            var div_element = $('#mercury_iframe').contents().find('.content-block')[0];
-            var move_up_path = $(div_element).data('move-up');
+            var move_up_path = $.cms_editor.selectedElement().data('move-up');
             $.cms_ajax.put(move_up_path, function(data){
                 window.location.reload();
             });
         },
         moveBlockDown: function(){
-            var div_element = $('#mercury_iframe').contents().find('.content-block')[0];
-            var move_down_path = $(div_element).data('move-down');
+            var move_down_path = $.cms_editor.selectedElement().data('move-down');
             $.cms_ajax.put(move_down_path, function(data){
                 window.location.reload();
             });
