@@ -50,7 +50,12 @@ class ConnectorsController < Cms::BaseController
       else
         flash[:error] = "Failed to move '#{@connectable.name}' #{where} the '#{@connector.container}' container"
       end
-      redirect_to @page.path    
+
+      respond_to do |format|
+        format.html { redirect_to @page.path  }
+        format.json { render :json => @connector }
+      end
+
     end
   end
 
