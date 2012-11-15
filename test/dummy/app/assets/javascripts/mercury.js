@@ -322,15 +322,15 @@ window.Mercury = {
       //foreColor: function(selection, options) { selection.wrap('<span style="color:' + options.value.toHex() + '">', true) },
         moveBlockUp:   function(){
             var move_up_path = $.cms_editor.selectedElement().data('move-up');
-            $.cms_ajax.put(move_up_path, $.cms_editor.reload);
+            $.cms_ajax.put(move_up_path, $.cms_editor.save);
         },
         moveBlockDown: function(){
             var move_down_path = $.cms_editor.selectedElement().data('move-down');
-            $.cms_ajax.put(move_down_path, $.cms_editor.reload);
+            $.cms_ajax.put(move_down_path, $.cms_editor.save);
         },
         removeBlock: function(){
             var path = $.cms_editor.selectedElement().data('remove');
-            $.cms_ajax.delete(path, $.cms_editor.reload);
+            $.cms_ajax.delete(path, $.cms_editor.save);
         },
         htmlEditor: function() { Mercury.modal('/mercury/modals/htmleditor.html', { title: 'HTML Editor', fullHeight: true, handler: 'htmlEditor' }); }
       },

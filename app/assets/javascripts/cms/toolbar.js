@@ -53,14 +53,16 @@ jQuery(function ($) {
     };
 
     $.cms_editor = {
+
         // Returns the widget that a user has currently selected.
         // @return [JQuery.Element]
         selectedElement:function () {
             return $($('#mercury_iframe').contents()[0].activeElement);
         },
-        // Most updates will need to reload the page. This function can be passed as a handler to ajax requests.
-        reload:function (data) {
-            window.location.reload();
+
+        // Triggers a save, which should also reload the page.
+        save:function(){
+            Mercury.trigger('action', {action: 'save'});
         }
     };
 });
