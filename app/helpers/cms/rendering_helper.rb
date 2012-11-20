@@ -5,24 +5,51 @@
 module Cms
   module RenderingHelper
 
+    # Renders the content for the given field from the current content block.
+    # Designed to be used in Block Templates instead of direct output of fields.
+    #   Example:
+    #     <pre><%= show :content %></pre>
+    #   Instead of:
+    #     <pre><%= @content_block.content.html_safe %></pre>
+    #
+    # Why bother?: This abstracts the actual variable name (makes future upgrades more robust),
+    #   as well as let us mark up the content with html_safe,
+    #   plus conditionally make fields editable.
+    #
+    # @param [Symbol] method
+    # @param [Hash] options
+    def show(method, options={})
+      if (!logged_in?) # Need to check the current user can edit the page attached to this block too
+        @content_block.send(method).html_safe
+      else
+        connectable = @content_block
+        editor_info = @content_block.editor_info(method)
+        content_tag editor_info[:element], id: "blocks[#{connectable.class}][#{connectable.id}][#{method}]", class: 'content-block',
+                    data: {mercury: editor_info[:region] } do
+          content = @content_block.send(method)
+          content.to_s.html_safe
+        end
+      end
+
+    end
+
     # Renders a table of attachments for a given content block.
     # This is intended as a basic view of the content, and probably won't be suitable for blocks that need to be added directly to pages.
     #
     def attachment_viewer(content)
-      render :partial => 'cms/attachments/attachment_table', :locals => { :block => content, :can_delete => false }
+      render :partial => 'cms/attachments/attachment_table', :locals => {:block => content, :can_delete => false}
     end
 
     # Determines if a user is currently editing this page
     def is_editing_page?(page)
       logged_in? && current_user.able_to_edit?(page)
-      #logged_in? && @mode == "edit" && current_user.able_to_edit?(page)
     end
-    
+
     def render_connector_and_connectable(connector, connectable)
       logger.debug "Rendering #{connectable} "
       if is_editing_page?(connector.page)
         #render(:partial => 'cms/pages/edit_connector', :locals => { :connector => connector, :connectable => connectable})
-        render(:partial => 'cms/pages/edit_content', :locals => { :connector => connector, :connectable => connectable})
+        render(:partial => 'cms/pages/edit_content', :locals => {:connector => connector, :connectable => connectable})
       else
         render_connectable(connectable)
       end
