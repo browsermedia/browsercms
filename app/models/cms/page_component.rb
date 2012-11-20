@@ -24,16 +24,20 @@ module Cms
 
         content_ids.each do |block_id|
           block = content_block_class.constantize.find(block_id)
-
-          block_attribute_names = block_type[1][block_id].keys
-          block_attribute_names.each do |attr_name|
-            # TODO: Mass assignment concern here...
-            block.send("#{attr_name}=".to_sym, block_type[1][block_id][attr_name][:value])
-          end
-          block.save!
+          assignment_hash = convert_mercury_params_to_assignment_hash(block_id, block_type)
+          block.update_attributes(assignment_hash)
         end
       end
       @page.save
+    end
+
+    def convert_mercury_params_to_assignment_hash(block_id, block_type)
+      block_attribute_names = block_type[1][block_id].keys
+      assignment_hash = {}
+      block_attribute_names.each do |attr_name|
+        assignment_hash[attr_name] = block_type[1][block_id][attr_name][:value]
+      end
+      assignment_hash
     end
   end
 end

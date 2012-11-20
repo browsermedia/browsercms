@@ -24,7 +24,7 @@ module Cms
       assert_equal "New Title", Page.find(@page.id).draft.title
     end
 
-    test "#saves name and content for an HtmlBlock" do
+    test "Saves name and content for an HtmlBlock" do
       b = create(:html_block, name: "Old block name", content: "Old Content")
       @page.add_content(b)
       @page.save!
@@ -44,6 +44,29 @@ module Cms
       updated_block = HtmlBlock.find(b.id).draft
       assert_equal "New Name", updated_block.name
       assert_equal "New Content", updated_block.content
+    end
+
+    test "Doesn't update protected attributes'" do
+      block_id = 12
+      msg_payload = {
+          "blocks" => {
+              "Cms::HtmlBlock" => {
+                  block_id => {
+                      "created_by_id" => {"type" => "full", "value" => 24},
+                  }
+              }
+          }}
+      mock_block = mock()
+      HtmlBlock.expects(:find).with(block_id).returns(mock_block)
+      mock_block.expects(:update_attributes).with({'created_by_id' => 24}).raises(ActiveModel::MassAssignmentSecurity::Error)
+
+      add_page_title(msg_payload)
+      c = PageComponent.new(@page.id, msg_payload)
+
+      assert_raises(ActiveModel::MassAssignmentSecurity::Error) do
+        c.save
+      end
+
     end
 
     private
