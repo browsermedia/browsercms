@@ -281,7 +281,7 @@ class NonVersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
     assert @block.update_attributes(:name => "something different")
     reset(:page)
 
-    assert 2, @page.version
+    assert_equal 1, @page.version
     assert_equal page_version_count, Cms::Page::Version.count
     assert !@page.published?
 

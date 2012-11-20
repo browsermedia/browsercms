@@ -22,15 +22,25 @@ group :assets do
   gem 'bootstrap-sass'
 end
 
+
+group :development do
+  gem 'rake', '~> 0.9.5'
+end
+group :test, :development do
+  gem 'minitest'
+  gem 'minitest-rails'
+  #gem 'minitest-reporters'
+end
+
 group :test do
+  gem 'm', '~> 1.2'
+
   gem 'factory_girl_rails', '3.3.0'
-  gem 'test-unit', '2.1.1'
-  # :require=>false allows mocha to correctly modify the test:unit code to add mock() and stub()
-  gem "mocha", '=0.9.8', :require=>false
+  gem "mocha"
   gem "sqlite3-ruby", :require => "sqlite3"
 
   # Cucumber and dependencies
-  gem 'capybara'
+  gem 'capybara', '~>1.1'
   gem 'database_cleaner'
   gem 'cucumber-rails', require: false
   gem 'cucumber'

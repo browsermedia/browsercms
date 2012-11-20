@@ -1,5 +1,5 @@
 require "test_helper"
-require "mocha"
+require "mocha/setup"
 
 class CommandLineTest < ActiveSupport::TestCase
 

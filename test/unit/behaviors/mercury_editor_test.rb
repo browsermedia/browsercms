@@ -1,23 +1,21 @@
-require "test_helper"
+require 'minitest_helper'
 
-class MecuryEditorTest < ActiveSupport::TestCase
+describe "MercuryEditor" do
 
-  test "#editor_type_for Text Areas" do
-    field_info = Cms::HtmlBlock.new.editor_info(:content)
-    assert_equal "full", field_info[:region]
-    assert_equal "div", field_info[:element]
-  end
+  describe "#editor_info" do
 
-  test "#editor_type_for text fields" do
-    field_info = content_block().editor_info(:name)
-    assert_equal "simple", field_info[:region]
-    assert_equal "span", field_info[:element]
-  end
+    let(:content_block) { Cms::HtmlBlock.new }
 
-  private
+    it "returns full for text area fields" do
+      field_info = content_block.editor_info(:content)
+      field_info[:region].must_equal "full"
+      field_info[:element].must_equal "div"
+    end
 
-  # Factory for a simple content block.
-  def content_block
-    Cms::HtmlBlock.new
+    it "returns simple region for text fields" do
+      field_info = content_block.editor_info(:name)
+      field_info[:region].must_equal "simple"
+      field_info[:element].must_equal "span"
+    end
   end
 end

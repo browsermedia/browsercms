@@ -1,7 +1,5 @@
 require 'test_helper'
 
-require 'mocha'
-
 class CmsDomainSupportTest < ActiveSupport::TestCase
 
   def setup
