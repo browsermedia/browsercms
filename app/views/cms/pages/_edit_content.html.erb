@@ -1,4 +1,4 @@
-<%= content_tag 'div', id: "blocks[#{connectable.class}][#{connectable.id}]", class: 'connector',
+<%= content_tag 'div', class: 'connector',
                 data: { move_up: cms.move_up_connector_path(connector, format: :json),
                         move_down: cms.move_down_connector_path(connector, format: :json),
                         remove: cms.connector_path(connector, format: :json)
