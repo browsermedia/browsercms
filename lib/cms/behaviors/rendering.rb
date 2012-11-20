@@ -96,6 +96,19 @@ module Cms
 
     end
     module InstanceMethods
+
+      # Returns the Mercury editor type for a given attribute
+      # @param [Symbol] method (i.e. :name, :content, etc)
+      # @return [Hash]
+      def editor_info(method)
+        column = self.class.columns_hash[method.to_s]
+        if column.type == :text
+          {:element => 'div', :region => 'full'}
+        else
+          {:element => 'span', :region => 'simple'}
+        end
+      end
+
       def prepare_to_render(controller)
         # Give this renderable a reference to the controller
         @controller = controller
