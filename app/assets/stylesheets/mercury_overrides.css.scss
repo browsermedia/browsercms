@@ -1,13 +1,15 @@
-.mercury-editable-toolbar {
+.mercury-toolbar {
+
   .mercury-moveBlockUp-button {
-    background: url(/assets/cms/arrow-up.png) no-repeat 0 0;
+    background: url(/assets/cms/arrow-up.png) no-repeat center center;
   }
+
   .mercury-moveBlockDown-button {
-    background: url(/assets/cms/arrow-down.png) no-repeat 0 0;
+    background: url(/assets/cms/arrow-down.png) no-repeat center center;
   }
 
   .mercury-removeBlock-button {
-    background: url(/assets/cms/cancel.png) no-repeat 0 0;
+    background: url(/assets/cms/cancel.png) no-repeat center center;
   }
   .mercury-moveBlockUp-button.active, .mercury-moveBlockDown-button.active, .mercury-removeBlock-button.active {
     background-position: 0 -18px;

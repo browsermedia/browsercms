@@ -26,7 +26,7 @@ jQuery(function ($) {
                     xhr.setRequestHeader("Accept", "application/json");
                 },
                 error:function (x, status, error) {
-                    alert("A "+ x.status +" error occurred: " + error);
+                    alert("A " + x.status + " error occurred: " + error);
                 }
             });
         },
@@ -57,12 +57,16 @@ jQuery(function ($) {
 
     $.cms_editor = {
 
+
         // Returns the widget that a user has currently selected.
         // @return [JQuery.Element]
         selectedElement:function () {
             return $($('#mercury_iframe').contents()[0].activeElement);
         },
-        selectedConnector:function(){
+        selectedConnector:function () {
+            var parents = $.cms_editor.selectedElement().parents();
+            console.log(parents);
+
             return $.cms_editor.selectedElement().parents(".connector");
         },
 

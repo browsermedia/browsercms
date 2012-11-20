@@ -108,7 +108,13 @@ window.Mercury = {
         sep2:                  ' ',
         historyPanel:          ['History', 'Page Version History', { panel: '/mercury/panels/history.html' }],
         sep3:                  ' ',
-        notesPanel:            ['Notes', 'Page Notes', { panel: '/mercury/panels/notes.html' }]
+        notesPanel:            ['Notes', 'Page Notes', { panel: '/mercury/panels/notes.html' }],
+        content_blocks:        {
+                sep2:              '-',
+                moveBlockUp:       ['Up', 'Move the selected content block up', { regions: ['full', 'simple'] }],
+                moveBlockDown:     ['Down', 'Move the selected content block down', { regions: ['full', 'simple'] }],
+                removeBlock:       ['Remove', 'Remove a block from the given page', { regions: ['full', 'simple'] }]
+            }
         },
 
       editable: {
@@ -180,14 +186,8 @@ window.Mercury = {
           },
         editors:               {
           htmlEditor:          ['Edit HTML', 'Edit the HTML content', { regions: ['full'] }]
-          },
-        content_blocks:        {
-            sep2:              '-',
-            moveBlockUp:       ['Move block up', 'Move the selected content block up', { regions: ['full'] }],
-            moveBlockDown:     ['Move block down', 'Move the selected content block down', { regions: ['full'] }],
-            removeBlock:       ['Remove a block', 'Remove a block from the given page', { regions: ['full'] }]
-
           }
+
         },
 
 
@@ -320,18 +320,7 @@ window.Mercury = {
     // callback functions are executed within the scope of the given region, so you have access to all it's methods.
     behaviors: {
       //foreColor: function(selection, options) { selection.wrap('<span style="color:' + options.value.toHex() + '">', true) },
-        moveBlockUp:   function(){
-            var move_up_path = $.cms_editor.selectedConnector().data('move-up');
-            $.cms_ajax.put(move_up_path, $.cms_editor.save);
-        },
-        moveBlockDown: function(){
-            var move_down_path = $.cms_editor.selectedConnector().data('move-down');
-            $.cms_ajax.put(move_down_path, $.cms_editor.save);
-        },
-        removeBlock: function(){
-            var path = $.cms_editor.selectedConnector().data('remove');
-            $.cms_ajax.delete(path, $.cms_editor.save);
-        },
+
         htmlEditor: function() { Mercury.modal('/mercury/modals/htmleditor.html', { title: 'HTML Editor', fullHeight: true, handler: 'htmlEditor' }); }
       },
 
@@ -353,8 +342,21 @@ window.Mercury = {
     // This is a nice way to add functionality, when the behaviors aren't region specific.  These can be triggered by a
     // button, or manually with `Mercury.trigger('action', {action: 'barrelRoll'})`
     globalBehaviors: {
-      exit: function() { window.location.href = this.iframeSrc() },
-      barrelRoll: function() { $('body').css({webkitTransform: 'rotate(360deg)'}) }
+        exit: function() { window.location.href = this.iframeSrc() },
+        barrelRoll: function() { $('body').css({webkitTransform: 'rotate(360deg)'}) },
+        moveBlockUp:   function(){
+           var move_up_path = $.cms_editor.selectedConnector().data('move-up');
+           $.cms_ajax.put(move_up_path, $.cms_editor.save);
+        },
+        moveBlockDown: function(){
+           console.log("Calling movedown");
+           var move_down_path = $.cms_editor.selectedConnector().data('move-down');
+           $.cms_ajax.put(move_down_path, $.cms_editor.save);
+        },
+        removeBlock: function(){
+           var path = $.cms_editor.selectedConnector().data('remove');
+           $.cms_ajax.delete(path, $.cms_editor.save);
+        }
       },
 
 
