@@ -23,13 +23,14 @@ jQuery(window).on('mercury:mode', function (event, data) {
 });
 
 jQuery(window).bind('mercury:ready', function () {
-    console.log("Mercury has loaded.");
+
+//    console.log("Mercury has loaded.");
     Mercury.Toolbar.Button.contexts.moveBlockUp = function (node, region) {
-        console.log("I'm looking at region:");
-        console.log(region);
+//        console.log("I'm looking at region:");
+//        console.log(region);
     }
-    console.log(Mercury.Toolbar.Button.contexts);
-    console.log(Mercury.Toolbar.ButtonGroup.contexts);
+//    console.log(Mercury.Toolbar.Button.contexts);
+//    console.log(Mercury.Toolbar.ButtonGroup.contexts);
 
 //  Mercury.modalHandlers.foo = function() { alert('foo') };
 });
