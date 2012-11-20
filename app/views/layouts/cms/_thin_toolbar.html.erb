@@ -4,6 +4,7 @@
       <ul class="nav">
         <li class="dropdown">
           <a href="#">
+            <%# This nested li syntax causes functional tests to fail. (i.e. ignoring attempt to close li with div)  %>
             <%= nav_link_to image_tag("cms/home.png"), "/" %>
           </a>
           <ul class="dropdown-menu">

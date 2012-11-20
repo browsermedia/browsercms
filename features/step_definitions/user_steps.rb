@@ -77,7 +77,7 @@ When /^I try to edit another user account$/ do
 end
 
 Then /^I should be denied access$/ do
-  assert 403, page.status_code
+  assert_equal 403, page.status_code
 end
 
 Given /^I have a content editor account$/ do

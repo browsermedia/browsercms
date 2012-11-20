@@ -215,7 +215,6 @@ module Cms
 
       assert_response :success
       assert_select "title", "Test Page"
-      assert_select "iframe"
     end
 
   end
@@ -289,7 +288,6 @@ module Cms
 
       assert_response :success
       assert_select "title", "Test Page"
-      assert_select "iframe"
     end
 
     def test_cms_user_views_page_on_cms_site
@@ -301,7 +299,6 @@ module Cms
 
       assert_response :success
       assert_select "title", "Test Page"
-      assert_select "iframe"
     end
 
     test "When portlets throw a generic error, the page should still render the other content." do

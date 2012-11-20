@@ -19,8 +19,8 @@ module PageInspector
   end
 
   def should_see_a_page_titled(page_title)
-    assert page.has_css?("title", :text => page_title), "Expected a page with a title '#{page_title}'."
     assert page.has_content?(page_title)
+    assert page.has_css?("title", :text => page_title), "Expected a page with a title '#{page_title}'."
   end
 
   def should_see_cms_404_page

@@ -85,7 +85,7 @@ class HtmlBlockTest < ActiveSupport::TestCase
     assert_equal @v1_created_at.to_i, @html_block.find_version(1).created_at.to_i
     assert_equal @v2_created_at.to_i, @html_block.find_version(2).created_at.to_i
     assert @html_block.find_version(3).created_at.to_i >= @v2_created_at.to_i
-    assert @v1_created_at.to_i, @html_block.created_at.to_i
+    assert_equal @v1_created_at.to_i, @html_block.created_at.to_i
     
     # version is required for revert_to
     html_block_version_count = Cms::HtmlBlock::Version.count

@@ -11,9 +11,9 @@ module CustomAssertions
   end
 
   # Remove for Ruby 1.9.2/Minitest
-  def refute(value, msg=nil)
-    assert !value, msg
-  end
+  #def refute(value, msg=nil)
+  #  assert !value, msg
+  #end
 
   def assert_file_exists(file_name, message=nil)
     assert File.exists?(file_name), 
