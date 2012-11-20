@@ -111,9 +111,10 @@ window.Mercury = {
         notesPanel:            ['Notes', 'Page Notes', { panel: '/mercury/panels/notes.html' }],
         content_blocks:        {
                 sep2:              '-',
-                moveBlockUp:       ['Up', 'Move the selected content block up', { regions: ['full', 'simple'] }],
-                moveBlockDown:     ['Down', 'Move the selected content block down', { regions: ['full', 'simple'] }],
-                removeBlock:       ['Remove', 'Remove a block from the given page', { regions: ['full', 'simple'] }]
+                editBlock:     ["Edit", "Edit the selected content block", { regions: ['full', 'simple'] }],
+                moveBlockUp:   ['Up', 'Move the selected content block up', { regions: ['full', 'simple'] }],
+                moveBlockDown: ['Down', 'Move the selected content block down', { regions: ['full', 'simple'] }],
+                removeBlock:   ['Remove', 'Remove a block from the given page', { regions: ['full', 'simple'] }]
             }
         },
 
@@ -344,12 +345,20 @@ window.Mercury = {
     globalBehaviors: {
         exit: function() { window.location.href = this.iframeSrc() },
         barrelRoll: function() { $('body').css({webkitTransform: 'rotate(360deg)'}) },
+        editBlock: function(){
+//            Mercury.trigger('action', {action:'save'});
+            var goto = $.cms_editor.selectedConnector().data('edit-path');
+            window.location = goto;
+            //console.log(goto);
+
+//           var move_down_path = $.cms_editor.selectedConnector().data('move-down');
+//           $.cms_ajax.put(move_down_path, $.cms_editor.save);
+        },
         moveBlockUp:   function(){
            var move_up_path = $.cms_editor.selectedConnector().data('move-up');
            $.cms_ajax.put(move_up_path, $.cms_editor.save);
         },
         moveBlockDown: function(){
-           console.log("Calling movedown");
            var move_down_path = $.cms_editor.selectedConnector().data('move-down');
            $.cms_ajax.put(move_down_path, $.cms_editor.save);
         },

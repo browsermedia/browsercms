@@ -1,7 +1,8 @@
 <%= content_tag 'div', class: 'connector',
                 data: { move_up: cms.move_up_connector_path(connector, format: :json),
                         move_down: cms.move_down_connector_path(connector, format: :json),
-                        remove: cms.connector_path(connector, format: :json)
+                        remove: cms.connector_path(connector, format: :json),
+                        edit_path: edit_cms_connectable_path(connectable, :_redirect_to => @page.path)
                 } do %>
 <%= render_connectable connectable %>
 <% end %>

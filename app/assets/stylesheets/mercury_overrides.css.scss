@@ -1,5 +1,10 @@
 .mercury-toolbar {
 
+  .mercury-editBlock-button {
+      background: url(/assets/cms/pencil.png) no-repeat center center;
+      background-size:24px 24px;
+    }
+
   .mercury-moveBlockUp-button {
     background: url(/assets/cms/arrow-up.png) no-repeat center center;
   }
