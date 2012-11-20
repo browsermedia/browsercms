@@ -24,6 +24,9 @@ jQuery(function ($) {
                 beforeSend:function (xhr) {
                     xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
                     xhr.setRequestHeader("Accept", "application/json");
+                },
+                error:function (x, status, error) {
+                    alert("A "+ x.status +" error occurred: " + error);
                 }
             });
         },
@@ -59,10 +62,13 @@ jQuery(function ($) {
         selectedElement:function () {
             return $($('#mercury_iframe').contents()[0].activeElement);
         },
+        selectedConnector:function(){
+            return $.cms_editor.selectedElement().parents(".connector");
+        },
 
         // Triggers a save, which should also reload the page.
-        save:function(){
-            Mercury.trigger('action', {action: 'save'});
+        save:function () {
+            Mercury.trigger('action', {action:'save'});
         }
     };
 });
