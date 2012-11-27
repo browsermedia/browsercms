@@ -20,7 +20,7 @@ body {
 
 .mercury-toolbar-container {
   // Put Mercury toolbar below CMS Menus
-  padding-top: 123px;
+  padding-top: 92px;
   // Ensures Bootstrap toolbars are on top of this toolbar (or links won't work)
   z-index: 0;
 }
@@ -30,9 +30,9 @@ a.btn.btn-primary.pull-left, a.btn.btn-primary.pull-left:hover {color: #FFF; tex
 
 #search_term {border-radius: 0;}
 
-.label-success {margin: 12px 10px; float: right;}
+.label-success {margin: 6px 10px; float: right;}
 
-.navbar-inner .container {padding: 10px 0;}
+.navbar-inner .container {padding: 5px 0;}
 .navbar .nav.pull-right .pull-right {margin-top: 0;}
 
 .badge {margin: 10px 0 0 0; float: left; clear: none;}
@@ -52,4 +52,6 @@ a.btn.btn-primary.pull-left, a.btn.btn-primary.pull-left:hover {color: #FFF; tex
 
 a.disabled:hover {background: none; background-color: #0044CC;}
 .navbar .nav > li > a {color: #FFF; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);}
-.navbar .nav > li > a:focus, .navbar .nav > li > a:hover {text-shadow: 0 -1px 0 rgba(0,0,0,0.25); background-color: #E6E6E6; color: #555555;}
+.navbar .nav > li > a:focus, .navbar .nav > li > a:hover {text-shadow: 0 -1px 0 rgba(0,0,0,0.25); background-color: rgba(255,255,255,.05); color: #fff;}
+.navbar .nav li.dropdown.open > .dropdown-toggle, .navbar .nav li.dropdown.active > .dropdown-toggle, .navbar .nav li.dropdown.open.active > .dropdown-toggle {text-shadow: 0 -1px 0 rgba(0,0,0,0.25); background-color: rgba(255,255,255,.05); color: #fff;}
+.navbar .btn, .navbar .btn-group {margin: 0;}
