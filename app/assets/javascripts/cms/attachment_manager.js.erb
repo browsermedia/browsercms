@@ -47,7 +47,7 @@ $(function () {
         destroy:function (id) {
             if (confirm("Are you sure want to delete this attachment?")) {
                 $.post('/cms/attachments/' + id, {_method:'delete', authenticity_token:$.cms.auth_token()}, function (attachment_id) {
-                    console.log(attachment_id);
+//                    console.log(attachment_id);
                     $("#attachment_" + attachment_id).hide();
                     if ($("#assets_table > table tr:visible").length <= 2) {
                         $("#assets_table > table").hide();
