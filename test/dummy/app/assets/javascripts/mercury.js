@@ -346,13 +346,8 @@ window.Mercury = {
         exit: function() { window.location.href = this.iframeSrc() },
         barrelRoll: function() { $('body').css({webkitTransform: 'rotate(360deg)'}) },
         editBlock: function(){
-            $.cms_editor.save();
             var goto = $.cms_editor.selectedConnector().data('edit-path');
             window.location.href = goto;
-            //console.log(goto);
-
-//           var move_down_path = $.cms_editor.selectedConnector().data('move-down');
-//           $.cms_ajax.put(move_down_path, $.cms_editor.save);
         },
         moveBlockUp:   function(){
            var move_up_path = $.cms_editor.selectedConnector().data('move-up');
