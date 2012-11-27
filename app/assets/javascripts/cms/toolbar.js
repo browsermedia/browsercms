@@ -16,24 +16,19 @@ $(function () {
 });
 
 jQuery(function ($) {
-
-    $.cms_ajax = {
-        // Add the CSRF token to an AJAX/JSON request.
-        setup:function () {
-            $.ajaxSetup({
-                beforeSend:function (xhr) {
-                    xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
-                    xhr.setRequestHeader("Accept", "application/json");
-                },
-                error:function (x, status, error) {
-                    alert("A " + x.status + " error occurred: " + error);
-                }
-            });
+    $.ajaxSetup({
+        beforeSend:function (xhr) {
+            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+            xhr.setRequestHeader("Accept", "application/json");
         },
-
+        error:function (x, status, error) {
+            alert("A " + x.status + " error occurred: " + error);
+        }
+    });
+    $.cms_ajax = {
         // Invoke a Rails aware (w/ CSRF token) PUT request.
         put:function (path, success) {
-            $.cms_ajax.setup();
+//            $.cms_ajax.setup();
             $.ajax({
                 type:'POST',
                 url:path,
@@ -44,7 +39,6 @@ jQuery(function ($) {
         },
         // Invoke a Rails aware (w/ CSRF token) DELETE request.
         delete:function (path, success) {
-            $.cms_ajax.setup();
             $.ajax({
                 type:'POST',
                 url:path,
@@ -65,8 +59,6 @@ jQuery(function ($) {
         },
         selectedConnector:function () {
             var parents = $.cms_editor.selectedElement().parents();
-            console.log(parents);
-
             return $.cms_editor.selectedElement().parents(".connector");
         },
 
