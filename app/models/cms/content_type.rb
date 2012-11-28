@@ -19,6 +19,14 @@ module Cms
       all.map { |f| f.name.underscore.to_sym }
     end
 
+    # Returns all content types besides the default.
+    def self.other_connectables()
+      self.connectable.where("#{ContentType.table_name}.name != 'Cms::HtmlBlock'")
+    end
+
+    def self.default()
+      self.where(:name => "Cms::HtmlBlock").first
+    end
 
     # Given a 'key' like 'html_blocks' or 'portlet'. Looks first for a class in the Cms:: namespace, then again without it.
     # Raises exception if nothing was found.

@@ -1,4 +1,9 @@
 <div class="cms-container">
   <%= content %>
-  <%= link_to image_tag("cms/plus.png"), cms.content_types_path(:connect_to_page_id => @page, :connect_to_container => name), :class=>'cms-add-content'%>
+  <%= image_tag "cms/plus.png",
+                :class => 'cms-add-content',
+                :data => {:remote => cms.new_page_component_path(:connect_to_page_id => @page, :connect_to_container => name),
+                          :insert_existing_content_path => cms.new_connector_path(:page_id => @page, :container => name)}
+  %>
 </div>
+

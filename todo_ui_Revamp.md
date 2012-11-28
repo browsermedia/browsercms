@@ -1,16 +1,7 @@
 Current Task:
 
-Task 1: Remove the editor toggle completely.
- We don't need the toggle anymore, as the Mercury editor can handle toggling between Preview/not preview.
-
-Task 2: Remove the containers (+ and [][])
- Instead, use a popup to add content to a page via a modal window?
-
-
-
 ## Big Tasks
 
-* Integrate Mercury
 * Do UX for the content library, admin and sitemap
 * Implement implied features (Search/Notifications)
 
