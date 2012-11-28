@@ -24,13 +24,14 @@ jQuery(window).on('mercury:mode', function (event, data) {
 
 jQuery(window).bind('mercury:ready', function () {
 
-//    console.log("Mercury has loaded.");
-    Mercury.Toolbar.Button.contexts.moveBlockUp = function (node, region) {
-//        console.log("I'm looking at region:");
-//        console.log(region);
-    }
-//    console.log(Mercury.Toolbar.Button.contexts);
-//    console.log(Mercury.Toolbar.ButtonGroup.contexts);
+    // The goal here was to disable the edit block buttons when non-connector regions were selected.
+    // However, context only seems to fire when 'full' regions are selected, so it doesn't really work well.
+    // Other than when the page is first loaded, when it disables the button when the page title is selected.
+    Mercury.Toolbar.ButtonGroup.contexts.content_blocks = function (node, region) {
+        var parents =  node.parents(".connector");
+        return parents.size() > 0;
+    };
 
-//  Mercury.modalHandlers.foo = function() { alert('foo') };
+
+
 });
