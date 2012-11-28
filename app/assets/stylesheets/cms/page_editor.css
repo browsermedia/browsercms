@@ -2,3 +2,15 @@ body {
     padding-top: 92px;
     background-image: none;
 }
+
+
+/*
+    These ensure that modal window appears below the backdrop.
+*/
+#modal-add-content {
+    z-index: 2;
+}
+
+.modal-backdrop {
+    z-index: 1;
+}
