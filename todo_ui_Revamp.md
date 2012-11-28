@@ -44,19 +44,19 @@ Task 2: Remove the containers (+ and [][])
 
 Style the following elements
 
-* Need a * for the BrowserCMS logo
 * Edit Properties popover (currently centered and too small text)
-* Disabled state looks bad
-* New button shouldn't be split like it is
 
 # Points of Design Discussion
 
 * What information should be visible on toolbar, what should be hidden?
 * Should we turn the entire toolbar red for draft pages?
 
+### Known Issues
 
+1. When a user selects the page title, the block editing controls are enabled, though they do nothing. (Minor)
 
 ## 4.0 Release Testing
 
 * Verify caching works (was refactored)
 * Page editing - iframe is too long (1600px) but using 100% height is too short.
+

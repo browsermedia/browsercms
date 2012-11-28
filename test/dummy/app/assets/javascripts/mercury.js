@@ -108,19 +108,13 @@ window.Mercury = {
         sep2:                  ' ',
         historyPanel:          ['History', 'Page Version History', { panel: '/mercury/panels/history.html' }],
         sep3:                  ' ',
-        notesPanel:            ['Notes', 'Page Notes', { panel: '/mercury/panels/notes.html' }],
-        content_blocks:        {
-                sep2:              '-',
-                editBlock:     ["Edit", "Edit the selected content block", { regions: ['full', 'simple'] }],
-                moveBlockUp:   ['Up', 'Move the selected content block up', { regions: ['full', 'simple'] }],
-                moveBlockDown: ['Down', 'Move the selected content block down', { regions: ['full', 'simple'] }],
-                removeBlock:   ['Remove', 'Remove a block from the given page', { regions: ['full', 'simple'] }]
-            }
+        notesPanel:            ['Notes', 'Page Notes', { panel: '/mercury/panels/notes.html' }]
         },
 
       editable: {
-        _regions:              ['full', 'markdown'],
+        _regions:              ['full', 'markdown', 'simple'], // Added simple so block editing controls can be on for simple regions.
         predefined:            {
+          _regions:            ['full', 'markdown'], // Duplication
           style:               ['Style', null, { select: '/mercury/selects/style.html', preload: true }],
           sep1:                ' ',
           formatblock:         ['Block Format', null, { select: '/mercury/selects/formatblock.html', preload: true }],
@@ -133,6 +127,7 @@ window.Mercury = {
           sep2:                '-'
           },
         decoration:            {
+          _regions:            ['full', 'markdown'], // Duplication
           bold:                ['Bold', null, { context: true }],
           italic:              ['Italicize', null, { context: true }],
           overline:            ['Overline', null, { context: true, regions: ['full'] }],
@@ -141,6 +136,7 @@ window.Mercury = {
           sep:                 '-'
           },
         script:                {
+          _regions:            ['full', 'markdown'], // Duplication
           subscript:           ['Subscript', null, { context: true }],
           superscript:         ['Superscript', null, { context: true }],
           sep: '-'
@@ -153,11 +149,13 @@ window.Mercury = {
           sep:                 '-'
           },
         list:                  {
+          _regions:            ['full', 'markdown'], // Duplication
           insertUnorderedList: ['Unordered List', null, { context: true }],
           insertOrderedList:   ['Numbered List', null, { context: true }],
           sep:                 '-'
           },
         indent:                {
+          _regions:            ['full', 'markdown'], // Duplication
           outdent:             ['Decrease Indentation'],
           indent:              ['Increase Indentation'],
           sep:                 '-'
@@ -178,6 +176,7 @@ window.Mercury = {
           sep2:                '-'
           },
         rules:                 {
+          _regions:            ['full', 'markdown'], // Duplication
           horizontalRule:      ['Horizontal Rule', 'Insert a horizontal rule'],
           sep1:                '-'
           },
@@ -187,6 +186,15 @@ window.Mercury = {
           },
         editors:               {
           htmlEditor:          ['Edit HTML', 'Edit the HTML content', { regions: ['full'] }]
+          },
+        content_blocks:      {
+          _context: true,
+          _regions:         ['full', 'simple'],
+          sep2:              '-',
+          editBlock:        ["Edit", "Edit the selected content block", { regions: ['full', 'simple'] }],
+          moveBlockUp:      ['Up', 'Move the selected content block up', { regions: ['full', 'simple'] }],
+          moveBlockDown:    ['Down', 'Move the selected content block down', { regions: ['full', 'simple'] }],
+          removeBlock:      ['Remove', 'Remove a block from the given page', { regions: ['full', 'simple'] }]
           }
 
         },
@@ -322,7 +330,23 @@ window.Mercury = {
     behaviors: {
       //foreColor: function(selection, options) { selection.wrap('<span style="color:' + options.value.toHex() + '">', true) },
 
-        htmlEditor: function() { Mercury.modal('/mercury/modals/htmleditor.html', { title: 'HTML Editor', fullHeight: true, handler: 'htmlEditor' }); }
+        htmlEditor: function() { Mercury.modal('/mercury/modals/htmleditor.html', { title: 'HTML Editor', fullHeight: true, handler: 'htmlEditor' }); },
+        editBlock: function(){
+            var goto = $.cms_editor.selectedConnector().data('edit-path');
+            window.location.href = goto;
+        },
+        moveBlockUp:   function(){
+           var move_up_path = $.cms_editor.selectedConnector().data('move-up');
+           $.cms_ajax.put(move_up_path, $.cms_editor.save);
+        },
+        moveBlockDown: function(){
+           var move_down_path = $.cms_editor.selectedConnector().data('move-down');
+           $.cms_ajax.put(move_down_path, $.cms_editor.save);
+        },
+        removeBlock: function(){
+           var path = $.cms_editor.selectedConnector().data('remove');
+           $.cms_ajax.delete(path, $.cms_editor.save);
+        }
       },
 
 
@@ -344,23 +368,7 @@ window.Mercury = {
     // button, or manually with `Mercury.trigger('action', {action: 'barrelRoll'})`
     globalBehaviors: {
         exit: function() { window.location.href = this.iframeSrc() },
-        barrelRoll: function() { $('body').css({webkitTransform: 'rotate(360deg)'}) },
-        editBlock: function(){
-            var goto = $.cms_editor.selectedConnector().data('edit-path');
-            window.location.href = goto;
-        },
-        moveBlockUp:   function(){
-           var move_up_path = $.cms_editor.selectedConnector().data('move-up');
-           $.cms_ajax.put(move_up_path, $.cms_editor.save);
-        },
-        moveBlockDown: function(){
-           var move_down_path = $.cms_editor.selectedConnector().data('move-down');
-           $.cms_ajax.put(move_down_path, $.cms_editor.save);
-        },
-        removeBlock: function(){
-           var path = $.cms_editor.selectedConnector().data('remove');
-           $.cms_ajax.delete(path, $.cms_editor.save);
-        }
+        barrelRoll: function() { $('body').css({webkitTransform: 'rotate(360deg)'}) }
       },
 
 
