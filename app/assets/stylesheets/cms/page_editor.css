@@ -8,9 +8,9 @@ body {
     These ensure that modal window appears below the backdrop.
 */
 #modal-add-content {
-    z-index: 2;
+    z-index: 9999;
 }
 
 .modal-backdrop {
-    z-index: 1;
+    z-index: 2000;
 }
