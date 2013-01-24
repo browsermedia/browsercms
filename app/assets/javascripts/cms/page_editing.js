@@ -11,6 +11,10 @@ $(function () {
 $(function () {
 
     // Click the 'Add Content' button (PLUS) when editing content.
+    //
+
+    // Rework this function to first update the URLs, then call 'click' on the 'Add content' button
+    // Which should be invisible. This should place the backgroup modal toggle in the correct body (i.e. the parent, not the iframe)
     $('.cms-add-content').click(function () {
         var link = $("#insert_existing_content", window.parent.document);
         link.attr('href', $(this).data('insert-existing-content-path'));

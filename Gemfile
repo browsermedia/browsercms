@@ -3,7 +3,6 @@ source 'http://rubygems.org'
 # Load this project as a gem.
 gemspec
 
-gem 'mercury-rails'
 gem "mysql2"
 
 gem 'yard', :groups=>[:development, :test]
@@ -29,7 +28,6 @@ end
 group :test, :development do
   gem 'minitest'
   gem 'minitest-rails'
-  #gem 'minitest-reporters'
 end
 
 group :test do

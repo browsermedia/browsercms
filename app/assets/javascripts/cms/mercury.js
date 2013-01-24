@@ -1,4 +1,6 @@
 /*!
+ * This file has BrowserCMS specific configuration of the Mercury Editor.
+ *
  * Mercury Editor is a CoffeeScript and jQuery based WYSIWYG editor.  Documentation and other useful information can be
  * found at https://github.com/jejacks0n/mercury
  *

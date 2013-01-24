@@ -6,6 +6,7 @@ PATH
       bootstrap-sass
       ckeditor_rails (~> 3.6.4)
       jquery-rails (~> 2.0)
+      mercury-rails
       paperclip (~> 3.0.3)
       rails (>= 3.2.5, < 3.3.0)
       sass-rails
@@ -65,7 +66,10 @@ GEM
     ckeditor_rails (3.6.4.1)
       railties (~> 3.0)
       thor (~> 0.14)
-    cocaine (0.4.2)
+    climate_control (0.0.3)
+      activesupport (>= 3.0)
+    cocaine (0.5.1)
+      climate_control (>= 0.0.3, < 1.0)
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -100,7 +104,7 @@ GEM
     hike (1.2.1)
     i18n (0.6.1)
     journey (1.0.4)
-    jquery-rails (2.1.4)
+    jquery-rails (2.2.0)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
     json (1.7.5)
@@ -218,7 +222,6 @@ DEPENDENCIES
   factory_girl_rails (= 3.3.0)
   launchy
   m (~> 1.2)
-  mercury-rails
   minitest
   minitest-rails
   mocha
