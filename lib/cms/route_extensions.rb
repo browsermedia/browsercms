@@ -37,6 +37,7 @@ module Cms::RouteExtensions
   #   end
   #
   def mount_browsercms
+    mount Mercury::Engine => '/'
     mount Cms::Engine => "/cms", :as => "cms"
 
     add_page_routes_defined_in_database

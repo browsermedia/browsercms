@@ -73,6 +73,7 @@ HTML
                             :target => "_top" %>
         <% end %>
     <% end %>
+    <%# @TODO - Extract this into a partial. I don't really like having this function embedded into the toolbar either. %>
     <%= link_to "Test Modal", "#modal-add-content", :data => { :toggle => 'modal'}, :class=>"btn btn-primary"  %>
     <div id="modal-add-content" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-header">
