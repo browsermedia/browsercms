@@ -23,7 +23,7 @@
            elsif i == 0
              %Q{ colspan='2' class='name first'}
           end %>
-        <th<%= attrs %>>
+        <th<%= raw attrs %>>
           <div class="dividers">
             <% if column[:order] %>
               <%= link_to column[:label], cms_sortable_column_path(content_type, column[:order])%>

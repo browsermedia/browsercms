@@ -1,10 +1,13 @@
 v3.5.5
 ======
 
-* Allow cms_file_field to use default label (Thanks josiahivey)
-* Continuous Integration - Get Travis CI up and working for the project.
-* Fix missing assets on CMS Login page (Thanks korin)
-* Better support core contributions by removing database.yml from checkin. Run `rake project:setup[mysql]` to create a database.yml for your local database. (Thanks josiahivey)
+Bug fixes and making it easier for the community to start contributing to the project.
+
+* [#557] Fix extra column on blocks index page (Thanks metalon)
+* [#543] Allow cms_file_field to use default label (Thanks josiahivey)
+* [#563] Continuous Integration - Get Travis CI up and working for the project.
+* [#539] Fix missing assets on CMS Login page (Thanks korin)
+* [#537] Better support core contributions by removing database.yml from checkin. Run `rake project:setup[mysql]` to create a database.yml for your local database. (Thanks josiahivey)
 * [#564] Update to Rails 3.2.12 - Ensure tests to pass (there appeared to be some changes in inflection and html_safe between 3.2.5 and 3.2.8)
 
 v3.5.4
