@@ -61,11 +61,6 @@ jQuery(function ($) {
             var parents = $.cms_editor.selectedElement().parents();
             return $.cms_editor.selectedElement().parents(".connector");
         },
-
-        // Triggers a save, which should also reload the page.
-        save:function () {
-            Mercury.trigger('action', {action:'save'});
-        }
     };
 });
 

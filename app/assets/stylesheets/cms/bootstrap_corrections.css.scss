@@ -18,13 +18,6 @@ body {
   padding-top: 75px;
 }
 
-.mercury-toolbar-container {
-  // Put Mercury toolbar below CMS Menus
-  padding-top: 92px;
-  // Ensures Bootstrap toolbars are on top of this toolbar (or links won't work)
-  z-index: 0;
-}
-
 .btn.btn-primary.pull-left, .btn-group > .btn + .dropdown-toggle {float: left; clear: none;}
 a.btn.btn-primary.pull-left, a.btn.btn-primary.pull-left:hover {color: #FFF; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);}
 

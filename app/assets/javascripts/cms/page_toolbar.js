@@ -9,6 +9,4 @@
 //= require cms/core_library
 //= require cms/attachment_manager
 //= require bootstrap
-//= require cms/mercury
-//= require mercury_overrides
 //= require cms/toolbar
