@@ -1,8 +1,9 @@
 v3.5.5
 ======
 
-Bug fixes and making it easier for the community to start contributing to the project.
+Community contributed bug fixes, including making it easier to start contributing to the project.
 
+* [#561] Fix invalid code in generated production.rb file (Thanks RoopeHakulinen)
 * [#557] Fix extra column on blocks index page (Thanks metalon)
 * [#543] Allow cms_file_field to use default label (Thanks josiahivey)
 * [#563] Continuous Integration - Get Travis CI up and working for the project.
