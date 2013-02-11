@@ -193,7 +193,7 @@ Cms.table_prefix = "cms_"
   def configure_mail_server
     [
         "# Configure your mail server's address below",
-        "config.action_mailer.smtp_settings = {:address => 'mail.yourmailserver.com', :domain => config.cms.site_domain}}\n"
+        "config.action_mailer.smtp_settings = {:address => 'mail.yourmailserver.com', :domain => config.cms.site_domain}\n"
     ].reverse.each do |line|
       environment line, :env => "production"
     end
