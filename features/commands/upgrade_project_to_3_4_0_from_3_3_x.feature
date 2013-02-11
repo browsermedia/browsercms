@@ -8,10 +8,9 @@ Feature:
 
   @long-scenario
   Scenario: Upgrade Project
-    When I run the bcms update script with bundler
+    When I run the bcms update script
     Then Gemfile should have the correct version of BrowserCMS
     And it should comment out Rails in the Gemfile
-    And it should run bundle install
     And it should copy all the migrations into the project
     And it should add the seed data to the project
     And it should display instructions to the user
