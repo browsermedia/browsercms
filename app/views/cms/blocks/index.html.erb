@@ -49,7 +49,6 @@
     <% @blocks.each do |b| %>
       <% block = b.class.versioned? ? b.as_of_draft_version : b %>
     <%= content_block_tr_tag(block) %>
-	<td class="first"></td>
         <% content_type.columns_for_index.each_with_index do |column, i| %>
           <td class="<%= column[:label].gsub(' ', '').underscore %>">
             <div<%= ' class="dividers"'.html_safe if (i + 3 < col_ct) %>>
