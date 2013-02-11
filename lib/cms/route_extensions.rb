@@ -43,8 +43,16 @@ module Cms::RouteExtensions
 
     # Handle 'stock' attachments
     match "/attachments/:id/:filename", :to=>"cms/attachments#download"
-    match "/", :to=>"cms/content#show"
-    match "*path", :to=>"cms/content#show"
+    
+    # Allows user configuration of whether or not to match non-existing routes.
+    # If set to false, non-existing routes will not be handled by BCMS
+    # and will fall through to existing application's error handler.
+    if Cms.match_nonexisting_routes
+      match "/", :to=>"cms/content#show"
+      match "*path", :to=>"cms/content#show"
+    else
+      add_dynamic_routes
+    end
   end
 
   # Preserving for backwards compatibility with bcms-3.3.x and earlier.
@@ -52,6 +60,17 @@ module Cms::RouteExtensions
   alias :routes_for_browser_cms :mount_browsercms
 
   private
+  
+  def add_dynamic_routes
+    if Cms::Section.can_be_loaded? && Cms::Page.can_be_loaded?
+      Cms::Section.where(:hidden => 'f').each do |r|
+        match r.path, :to=>"cms/content#show", :_path => r.path, :via => [:get, :post]
+      end
+      Cms::Page.where(:hidden => 'f').each do |r|
+        match r.path, :to=>"cms/content#show", :_path => r.path
+      end
+    end
+  end
 
   def add_page_routes_defined_in_database
     if Cms::PageRoute.can_be_loaded?

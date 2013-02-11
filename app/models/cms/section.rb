@@ -93,6 +93,9 @@ module Cms
       options[:limit] ? visible_children[0...options[:limit]] : visible_children
     end
 
+    def self.can_be_loaded?
+      database_exists? && table_exists?
+    end
 
     # Returns a complete list of all sections that are desecendants of this sections, in order, as a single flat list.
     # Used by Section selectors where users have to pick a single section from a complete list of all sections.

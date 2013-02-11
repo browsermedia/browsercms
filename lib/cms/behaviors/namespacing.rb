@@ -11,7 +11,6 @@ module Cms
     @table_prefix = prefix
   end
 
-
   # Returns the table name prefix for models in the Cms:: Namespace
   # Prefer calling table_name_prefix to this methods
   # @return [String] nil if no namespace has been set.
@@ -24,6 +23,17 @@ module Cms
   # Defaults to "" if not specified.
   def self.table_name_prefix
     self.table_prefix ? self.table_prefix : ""
+  end
+
+  # Allows user configuration of whether or not to match non-existing routes.
+  # If set to false, non-existing routes will not be handled by BCMS
+  # and will fall through to existing application's error handler.
+  def self.match_nonexisting_routes=(setting)
+    @match_nonexisting_routes = setting
+  end
+  
+  def self.match_nonexisting_routes
+    @match_nonexisting_routes
   end
 
   module Namespacing

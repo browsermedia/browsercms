@@ -21,6 +21,8 @@ class Cms::Page < ActiveRecord::Base
 
   scope :named, lambda { |name| {:conditions => ["#{table_name}.name = ?", name]} }
   scope :with_path, lambda { |path| {:conditions => ["#{table_name}.path = ?", path]} }
+  
+  after_save :reload_routes
 
   # This scope will accept a connectable object or a Hash.  The Hash is expect to have
   # a value for the key :connectable, which is the connectable object, and possibly
@@ -82,6 +84,10 @@ class Cms::Page < ActiveRecord::Base
   # Paths must be unique among undeleted records
   validates_uniqueness_of :path, :scope=>:deleted
   validate :path_not_reserved
+  
+  def self.can_be_loaded?
+    database_exists? && table_exists?
+  end  
 
   # Implements Versioning Callback.
   def after_build_new_version(new_version)
@@ -95,12 +101,22 @@ class Cms::Page < ActiveRecord::Base
 
   # Publish all
   def after_publish
+    reload_routes
     self.reload # Get's the correct version number loaded
     self.connectors.for_page_version(self.version).all(:order => "position").each do |c|
       if c.connectable_type.constantize.publishable? && con = c.connectable
         con.publish
       end
     end
+  end
+
+  # Reload routes after a page is updated
+  def reload_routes
+    # Force Rails to reload the routes.  Allows for case that user sets
+    # Cms.match_nonexisting_routes = false, in which case routes are set
+    # explicitly for each page use page.path necessitating reloading routes
+    # each time a page is published.
+    Rails.application.reload_routes!
   end
 
   # Each time a page is updated, we need to copy all connectors associated with it forward, and save
