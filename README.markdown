@@ -28,7 +28,7 @@ Here's a quick overview of some of the more notable features:
 See the [Getting Started](https://github.com/browsermedia/browsercms/wiki/Getting-Started) guide for instructions on how to install and start a project with BrowserCMS.
 
 ## License
-BrowserCMS is released under a LGPL license, and is copyright 1998-2012 BrowserMedia. The complete copyright can be found in COPYRIGHT.txt, and copy of the license can be found in LICENSE.txt.
+BrowserCMS is released under a LGPL license, and is copyright 1998-2013 BrowserMedia. The complete copyright can be found in COPYRIGHT.txt, and copy of the license can be found in LICENSE.txt.
 
 ## Documentation / Support
 The user documentation and guides for this version of the application can be found at:

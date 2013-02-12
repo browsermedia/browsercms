@@ -11,6 +11,8 @@ Community contributed bug fixes, including making it easier to start contributin
 * [#537] Better support core contributions by removing database.yml from checkin. Run `rake project:setup[mysql]` to create a database.yml for your local database. (Thanks josiahivey)
 * [#564] Update to Rails 3.2.12 - Ensure tests to pass (there appeared to be some changes in inflection and html_safe between 3.2.5 and 3.2.8)
 
+See https://github.com/browsermedia/browsercms/issues?milestone=18&page=1&state=closed for more details.
+
 v3.5.4
 ======
 
