@@ -5,9 +5,6 @@ Current Task:
 * Do UX for the content library, admin and sitemap
 * Implement implied features (Search/Notifications)
 
-## Integrate Mercury
-
-* Currently loading from test/dummy app. Need to ensure jquery+other libraries are loaded by the CMS engine.
 
 * Add BrowserCMS to the list of projects using Mercury
 

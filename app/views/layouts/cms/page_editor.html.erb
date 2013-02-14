@@ -16,21 +16,12 @@
           <% end %>
       })
   </script>
+  <style>
+      html, body { height: 100% }
+  </style>
 </head>
 <body>
 <%= render 'layouts/cms/thin_toolbar' %>
-<iframe src="<%= url_for(current_page.path, {:mercury_frame=>true } %>" frameborder="0"></iframe>
-<script type="text/javascript">
-    // Set to the url that you want to save any given page to, leave null for default handling.
-    var saveUrl = '<%= cms.page_component_path(current_page) %>';
-
-    // Instantiate the PageEditor
-    new Mercury.PageEditor(saveUrl, {
-        saveStyle:'form', // 'form', or 'json' (default json)
-        saveMethod:null, // 'PUT', or 'POST', (create, vs. update -- default PUT)
-        visible:true  // boolean - if the interface should start visible or not
-    });
-
-</script>
+<iframe src="<%= edit_content_path(current_page) %>" frameborder="0" marginheight="0" marginwidth="0" width="100%" height="100%" scrolling="auto"></iframe>
 </body>
 </html>

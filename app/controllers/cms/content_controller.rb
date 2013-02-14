@@ -18,7 +18,7 @@ module Cms
 
     # ----- Actions --------------------------------------------------------------
     def show
-      if @show_toolbar && !params[:mercury_frame]
+      if @show_toolbar
         render_editing_frame
       else
         render_page
@@ -32,6 +32,19 @@ module Cms
       cache_if_eligible
     end
 
+    # Used in the iframe to display a page that's being editted.
+    def edit
+      @show_toolbar = true
+      if page = Page.where(:id => params[:id]).first
+        @page = page.as_of_draft_version
+        render_page
+      else
+        render(:layout => 'cms/application',
+               :template => 'cms/content/no_page',
+               :status => :not_found)
+      end
+
+    end
 
     # Used by the rendering behavior
     def instance_variables_for_rendering
