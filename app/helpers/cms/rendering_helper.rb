@@ -22,10 +22,17 @@ module Cms
       if (!logged_in?) # Need to check the current user can edit the page attached to this block too
         @content_block.send(method).html_safe
       else
-        connectable = @content_block
-        editor_info = @content_block.editor_info(method)
-        content_tag editor_info[:element], id: "blocks[#{connectable.class}][#{connectable.id}][#{method}]", class: 'content-block',
-                    data: {mercury: editor_info[:region] } do
+        #editor_info = @content_block.editor_info(method)
+        content_tag 'div',
+                    id: "#{@content_block.content_block_type}-#{@content_block.id}-#{method}",
+                    class: 'content-block',
+                    contenteditable: true,
+                    data: {
+                      class: @content_block.content_block_type,
+                      id: @content_block.id,
+                      attribute: method
+
+                    } do
           content = @content_block.send(method)
           content.to_s.html_safe
         end
