@@ -8,6 +8,7 @@ Rails.backtrace_cleaner.remove_silencers!
 # Load support files
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 
+require 'mocha/setup'
 require 'action_view/test_case'
 
 # Allows Generators to be unit tested

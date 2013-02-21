@@ -1,5 +1,4 @@
 require "test_helper"
-require "mocha/setup"
 
 class CmsActsAsContentPageTest < ActiveSupport::TestCase
   EXPECTED_SECTION = "/members"

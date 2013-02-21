@@ -69,7 +69,6 @@ class Cms::Page < ActiveRecord::Base
 
   has_one :section_node, :as => :node, :dependent => :destroy, :inverse_of => :node, :class_name => 'Cms::SectionNode'
 
-
   include Cms::Addressable
   include Cms::Addressable::DeprecatedPageAccessors
 
@@ -82,6 +81,15 @@ class Cms::Page < ActiveRecord::Base
   # Paths must be unique among undeleted records
   validates_uniqueness_of :path, :scope=>:deleted
   validate :path_not_reserved
+
+  # Find the latest draft of a given page.
+  #
+  # @param [Integer] id The id of the page
+  # @return [Cms::Page::Version] The version of the page as of the current Draft
+  def self.find_draft(id)
+    current = self.find(id)
+    current.as_of_draft_version
+  end
 
   # Implements Versioning Callback.
   def after_build_new_version(new_version)

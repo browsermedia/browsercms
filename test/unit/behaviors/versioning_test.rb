@@ -79,8 +79,7 @@ module Cms
     end
 
     test "#build_object_from_version recreates a block based on a given version record" do
-      html_version = Cms::HtmlBlock::Version.first
-
+      html_version = @published_block.versions[0]
       html = html_version.build_object_from_version
 
       assert_equal "Version 1", html.name

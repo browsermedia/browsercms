@@ -38,10 +38,23 @@ $(function () {
                 blur:function (event) {
                     var block_id = event.editor.name;
                     var block = $("#" + block_id);
-                    console.log("Saving " + block_id);
-                    console.log("Content Type: " + $("#" + block_id).data('class'));
+                    var attribute = block.data('attribute');
+                    var content_name = block.data('content-name');
+                    var content_id = block.data('id');
                     var data = event.editor.getData();
-                    console.log("The following content should be saved.\n" + data);
+                    var message = {
+                        page_id: block.data('page-id'),
+                        content: {}
+                    };
+                    message["content"][attribute] = data;
+                    $.ajax({
+                        url: '/cms/inline_content/' + content_name + "/" + content_id,
+                        type: 'PUT',
+                        data: message,
+                        success: function(result) {
+                            eval(result);
+                        }
+                    });
                 }
             }
         });

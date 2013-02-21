@@ -1,5 +1,5 @@
 # This removes all the Sprocket asset logging from development log, which makes them much saner.
-silence_sprockets = true
+silence_sprockets = false
 
 if silence_sprockets
   Rails.application.assets.logger = Logger.new('/dev/null')

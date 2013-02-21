@@ -4,6 +4,10 @@ require File.expand_path("../dummy/config/environment.rb", __FILE__)
 require "minitest/autorun"
 require "minitest/rails"
 
+Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
+require 'factories/factories'
+require 'factories/attachable_factories'
+
 #require 'minitest/reporters'
 #MiniTest::Reporters.use!
 
@@ -13,9 +17,21 @@ require "minitest/rails"
 # Uncomment if you want awesome colorful output
 # require "minitest/pride"
 
+require 'database_cleaner'
+DatabaseCleaner.strategy = :truncation
+
+class MiniTest::Spec
+  after :each do
+    DatabaseCleaner.clean
+  end
+  include FactoryGirl::Syntax::Methods
+  include FactoryHelpers
+end
+
 class MiniTest::Rails::ActiveSupport::TestCase
+
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
-  fixtures :all
+  #fixtures :all
 
   # Add more helper methods to be used by all tests here...
 end

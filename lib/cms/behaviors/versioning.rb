@@ -264,6 +264,11 @@ module Cms
           save(:validate => perform_validations) || raise(ActiveRecord::RecordNotSaved.new(errors.full_messages))
         end
 
+        # Returns the most recently created Version for this class. Drafts are the most recent change from
+        # the _versions table for a given content item.
+        #    i.e. For Cms::Page, this would return Cms::Page::Version
+        #
+        # @return [<Class>::Version] The version for this class that represents the draft.
         def draft
           versions.first(:order => "version desc")
         end

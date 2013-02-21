@@ -15,6 +15,7 @@ Cms::Engine.routes.draw do
   match '/toolbar', :to=>"toolbar#index", :as=>'toolbar'
   match '/content_types', :to=>"content_types#index", :as=>'content_types'
 
+  put "/inline_content/:content_name/:id", to: "inline_content#update", as: "update_inline_content"
   resources :page_components
   resources :connectors do
     member do

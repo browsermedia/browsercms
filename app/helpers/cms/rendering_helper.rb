@@ -28,9 +28,10 @@ module Cms
                     class: 'content-block',
                     contenteditable: true,
                     data: {
-                      class: @content_block.content_block_type,
+                      content_name: @content_block.content_name,
                       id: @content_block.id,
-                      attribute: method
+                      attribute: method,
+                      page_id: @page.id
 
                     } do
           content = @content_block.send(method)

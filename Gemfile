@@ -34,7 +34,7 @@ group :test do
   gem 'm', '~> 1.2'
 
   gem 'factory_girl_rails', '3.3.0'
-  gem "mocha"
+  gem "mocha", :require=>false
   gem "sqlite3-ruby", :require => "sqlite3"
 
   # Cucumber and dependencies

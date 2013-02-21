@@ -44,6 +44,12 @@ module Cms
       end
       module InstanceMethods
 
+        # Returns a machine readable key that identifies the type of content this is.
+        # Should match the key passed to ContentType.find_by_key
+        def content_name
+          self.class.name.demodulize.underscore
+        end
+
         def connected_pages
           return @connected_pages if @connected_pages
           @connected_pages = Page.connected_to(self)
