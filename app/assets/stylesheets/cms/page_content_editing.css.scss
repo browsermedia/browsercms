@@ -1,15 +1,6 @@
 // A Container that can hold one or more content blocks.
 // Style only appears during page editing.
-.cms-container {
-  outline-color: #999;
-  outline-style: dashed;
-  outline-width: 1px;
-  position: relative;
-  height: auto;
-  display: block;
-  margin: 2px;
-  padding: 4px;
-}
+
 
 // A Container in 'Preview' mode. It should be completely invisible to users.
 .cms-container-preview {
@@ -23,6 +14,18 @@
   padding: 0px;
 }
 
+.cms-container {
+  @extend .cms-container-preview;
+
+  //outline-color: #999;
+  //outline-style: dashed;
+  //outline-width: 1px;
+  //position: relative;
+  //height: auto;
+  //display: block;
+  //margin: 2px;
+  //padding: 4px;
+}
 // The 'Add Content' link that appears when containers are visible.
 .cms-add-content {
 
