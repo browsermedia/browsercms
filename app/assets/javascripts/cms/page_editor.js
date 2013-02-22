@@ -9,6 +9,21 @@ $(function () {
     $('a').attr('target', '_top');
 });
 
+$(function () {
+    $.cms_editor = {
+        // Returns the widget that a user has currently selected.
+        // @return [JQuery.Element]
+        selectedElement:function () {
+            var editor = CKEDITOR.currentInstance;
+            return $(editor.element.$);
+        },
+        selectedConnector:function () {
+            var parents = $.cms_editor.selectedElement().parents();
+            return $.cms_editor.selectedElement().parents(".connector");
+        },
+    };
+});
+
 // On Ready
 $(function () {
 
@@ -40,21 +55,29 @@ $(function () {
                     var block = $("#" + block_id);
                     var attribute = block.data('attribute');
                     var content_name = block.data('content-name');
+
+                    // Ensure the selected content is not gone, or skip updating.
+                    if(content_name == null){
+                        return;
+                    }
                     var content_id = block.data('id');
                     var data = event.editor.getData();
                     var message = {
-                        page_id: block.data('page-id'),
-                        content: {}
+                        page_id:block.data('page-id'),
+                        content:{}
                     };
                     message["content"][attribute] = data;
-                    $.ajax({
-                        url: '/cms/inline_content/' + content_name + "/" + content_id,
-                        type: 'PUT',
-                        data: message,
-                        success: function(result) {
-                            eval(result);
-                        }
-                    });
+                    var path = '/cms/inline_content/' + content_name + "/" + content_id;
+                    var result =
+                        $.cms_ajax.put({
+                            url:path,
+                            success:function (result) {
+                                eval(result);
+                            },
+                            data:message,
+                            beforeSend:$.cms_ajax.asJS()
+                        });
+
                 }
             }
         });

@@ -1,6 +1,6 @@
 module Cms
   class InlineContentController < Cms::BaseController
-    respond_to :json
+    respond_to :js
 
     def update
       content = Content.find(params[:content_name], params[:id])
@@ -8,10 +8,12 @@ module Cms
       @page = Page.find_draft(params[:page_id])
       if (!@page.live?)
         @page_status = "draft-status"
+        @remove_class = "published-status"
         @status_label = "DRAFT"
         @enable_publish = true
       else
         @page_status = "published-status"
+        @remove_class = "draft-status"
         @status_label = "Published"
         @enable_publish = false
       end

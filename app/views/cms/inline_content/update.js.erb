@@ -1,5 +1,6 @@
 var status_label = $('#page-status-label', window.parent.document);
 status_label.addClass("<%= @page_status %>");
+status_label.removeClass("<%= @remove_class %>");
 status_label.html("<%= @status_label %>");
 
 var publish_button =  $('#publish_button', window.parent.document);

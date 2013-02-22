@@ -1,5 +1,7 @@
 # This removes all the Sprocket asset logging from development log, which makes them much saner.
-silence_sprockets = false
+#
+# Change this to false if stack traces are being obfuscated.
+silence_sprockets = true
 
 if silence_sprockets
   Rails.application.assets.logger = Logger.new('/dev/null')
