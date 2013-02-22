@@ -17,7 +17,8 @@ CKEDITOR.plugins.add('delete_content', {
                     url:remove_path,
                     success:function(){
                         sc.remove();
-                    }
+                    },
+                    beforeSend:$.cms_ajax.asJSON()
                 });
             }
         });

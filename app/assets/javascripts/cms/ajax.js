@@ -2,10 +2,6 @@
 // A layer on top of jQuery .ajax that adds some Rails and CMS logic
 jQuery(function ($) {
     $.ajaxSetup({
-        beforeSend:function (xhr) {
-            xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
-            xhr.setRequestHeader("Accept", "application/json");
-        },
         error:function (x, status, error) {
             alert("A " + x.status + " error occurred: " + error);
         }
@@ -18,6 +14,12 @@ jQuery(function ($) {
             return function (xhr) {
                 xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
                 xhr.setRequestHeader("Accept", "text/javascript");
+            }
+        },
+        asJSON:function () {
+            return function (xhr) {
+                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                xhr.setRequestHeader("Accept", "application/json");
             }
         },
         // Invoke a Rails aware (w/ CSRF token) PUT request.
