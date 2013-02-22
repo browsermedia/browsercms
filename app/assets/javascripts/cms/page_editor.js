@@ -21,6 +21,10 @@ $(function () {
             var parents = $.cms_editor.selectedElement().parents();
             return $.cms_editor.selectedElement().parents(".connector");
         },
+        // Reload the parent window
+        reload:function(){
+            window.parent.location.reload();
+        }
     };
 });
 
