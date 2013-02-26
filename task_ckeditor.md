@@ -7,15 +7,15 @@
 ### Features
 
 * No need to toggle the editor on/off. Just click the area of the page you want to edit.
-* Full Edit - Click to edit in full text editor.
+* Full Edit - Click to edit in full text editor. Any changes made will be saved before going to the full editor.
 * Remove blocks from page - Editors can select a block then remove it from the page via a button on the editor.
 * Reorder content - Can move content blocks up or down within a page. Page will refresh after moving.
 
 ### ToDo
 
-* Edit Content - Needs to save existing work before editing the block.
+* Confirm Delete - Ask before removing a block from the page.
 * Block Orders - Disable button based on position (i.e. Can't move first block up, last block down)
-* Adding the same block twice to a page screws things up.
+* [BUG] Adding the same block twice to a page screws things up.
 * Add a 'Preview' button - Open window in new tab, no UI.
 * Edit page title
 * Handle editing other blocks (i.e. Products)

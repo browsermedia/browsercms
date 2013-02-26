@@ -22,8 +22,44 @@ $(function () {
             return $.cms_editor.selectedElement().parents(".connector");
         },
         // Reload the parent window
-        reload:function(){
+        reload:function () {
             window.parent.location.reload();
+        },
+
+        // Saves the changes using AJAX for the given editor.
+        //
+        // @param [CKEditor] editor
+        saveChanges:function (currentEditor, afterSave) {
+            var block_id = currentEditor.name;
+            var block = $("#" + block_id);
+            var attribute = block.data('attribute');
+            var content_name = block.data('content-name');
+
+            // Ensure the selected content is not gone, or skip updating.
+            if (content_name == null) {
+                return;
+            }
+            var content_id = block.data('id');
+            var data = currentEditor.getData();
+            var message = {
+                page_id:block.data('page-id'),
+                content:{}
+            };
+            message["content"][attribute] = data;
+            var path = '/cms/inline_content/' + content_name + "/" + content_id;
+
+            $.cms_ajax.put({
+                url:path,
+                success:function (result) {
+                    eval(result);
+                    currentEditor.resetDirty();
+                    if(afterSave){
+                        afterSave.apply();
+                    }
+                },
+                data:message,
+                beforeSend:$.cms_ajax.asJS()
+            });
         }
     };
 });
@@ -33,7 +69,6 @@ $(function () {
 
     // Click the 'Add Content' button (PLUS) when editing content.
     //
-
     // Rework this function to first update the URLs, then call 'click' on the 'Add content' button
     // Which should be invisible. This should place the backgroup modal toggle in the correct body (i.e. the parent, not the iframe)
     $('.cms-add-content').click(function () {
@@ -55,35 +90,35 @@ $(function () {
             toolbar:'inline',
             on:{
                 blur:function (event) {
-                    var block_id = event.editor.name;
-                    var block = $("#" + block_id);
-                    var attribute = block.data('attribute');
-                    var content_name = block.data('content-name');
-
-                    // Ensure the selected content is not gone, or skip updating.
-                    if(content_name == null){
-                        return;
-                    }
-                    var content_id = block.data('id');
-                    var data = event.editor.getData();
-                    var message = {
-                        page_id:block.data('page-id'),
-                        content:{}
-                    };
-                    message["content"][attribute] = data;
-                    var path = '/cms/inline_content/' + content_name + "/" + content_id;
-                    var result =
-                        $.cms_ajax.put({
-                            url:path,
-                            success:function (result) {
-                                eval(result);
-                            },
-                            data:message,
-                            beforeSend:$.cms_ajax.asJS()
-                        });
-
+                    $.cms_editor.saveChanges(event.editor);
                 }
             }
         });
     });
+
+
+    /* warn user on leaving if he changed text */
+//    var warn_on_leave = false;
+//    CKEDITOR.on('currentInstance', function () {
+//        try {
+//            CKEDITOR.currentInstance.on('key', function () {
+//                warn_on_leave = true;
+//            });
+//        } catch (err) {
+//        }
+//    });
+    // show no popup when user saves changes
+//    $(document.activeElement).submit(function () {
+//        warn_on_leave = false;
+//    });
+    // show popup
+//    $(window).bind('beforeunload', function () {
+//        if (CKEDITOR.currentInstance) { // Ensure there was actually an editor here.
+//            if (CKEDITOR.currentInstance.checkDirty()) {
+//                return "Unsaved changes."
+//            }
+//        }
+//
+//    });
+
 });
