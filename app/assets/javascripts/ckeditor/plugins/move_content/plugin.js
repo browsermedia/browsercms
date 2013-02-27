@@ -15,28 +15,12 @@ CKEDITOR.plugins.add('move_content', {
         });
         editor.addCommand('moveContentDown', {
             exec:function (editor) {
-                var move_down_path = $.cms_editor.selectedConnector().data('move-down');
-                $.cms_ajax.put({
-                    url:move_down_path,
-                    success:function () {
-                        $.cms_editor.reload();
-                    },
-                    beforeSend:$.cms_ajax.asJSON()
-                });
+                $.cms_editor.moveContent(editor, 'move-down');
             }
         });
         editor.addCommand('moveContentUp', {
             exec:function (editor) {
-                var current_connector = $.cms_editor.selectedConnector();
-                var move_up_path = current_connector.data('move-up');
-
-                $.cms_ajax.put({
-                    url:move_up_path,
-                    success:function (result) {
-                        $.cms_editor.reload();
-                    },
-                    beforeSend:$.cms_ajax.asJSON()
-                });
+                $.cms_editor.moveContent(editor, 'move-up');
             }
         });
     }

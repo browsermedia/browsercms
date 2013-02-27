@@ -25,6 +25,27 @@ $(function () {
         reload:function () {
             window.parent.location.reload();
         },
+        // Move content up or down. Will save any updates (after moving).
+        //
+        // @param [String] direction 'move-up' or 'move-down'
+        moveContent:function (editor, direction) {
+            var reload = function () {
+                $.cms_editor.reload();
+            };
+            var path = $.cms_editor.selectedConnector().data(direction);
+            $.cms_ajax.put({
+                url:path,
+                success:function () {
+                    if (editor.checkDirty()) {
+                        $.cms_editor.saveChanges(editor, reload);
+                    } else {
+                        reload.apply();
+                    }
+                },
+                beforeSend:$.cms_ajax.asJSON()
+            });
+
+        },
 
         // Saves the changes using AJAX for the given editor.
         //
@@ -53,7 +74,7 @@ $(function () {
                 success:function (result) {
                     eval(result);
                     currentEditor.resetDirty();
-                    if(afterSave){
+                    if (afterSave) {
                         afterSave.apply();
                     }
                 },
