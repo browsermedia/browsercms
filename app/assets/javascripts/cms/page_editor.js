@@ -25,6 +25,17 @@ $(function () {
         reload:function () {
             window.parent.location.reload();
         },
+        deleteContent:function () {
+            var sc = $.cms_editor.selectedConnector();
+            var remove_path = sc.data('remove');
+            $.cms_ajax.delete({
+                url:remove_path,
+                success:function () {
+                    sc.remove();
+                },
+                beforeSend:$.cms_ajax.asJSON()
+            });
+        },
         // Move content up or down. Will save any updates (after moving).
         //
         // @param [String] direction 'move-up' or 'move-down'

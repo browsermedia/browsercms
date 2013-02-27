@@ -9,18 +9,30 @@ CKEDITOR.plugins.add('delete_content', {
             toolbar:'tools'
         });
 
-        editor.addCommand('deleteContent', {
-            exec:function (editor) {
-                var sc = $.cms_editor.selectedConnector();
-                var remove_path = sc.data('remove');
-                $.cms_ajax.delete({
-                    url:remove_path,
-                    success:function(){
-                        sc.remove();
-                    },
-                    beforeSend:$.cms_ajax.asJSON()
-                });
-            }
+        editor.addCommand('deleteContent', new CKEDITOR.dialogCommand('deleteContent'));
+
+        CKEDITOR.dialog.add('deleteContent', function (editor) {
+            return {
+                title:'Remove Content',
+                minWidth:300,
+                minHeight:100,
+                contents:[
+                    {
+                        id:'tab1',
+                        label:'Confirm Delete',
+                        elements:[
+                            {
+                                type:'html',
+                                html:'<p>Do you want to remove this content from the page?</p><br /><p>(It will remain in the content library)</p>'
+                            }
+                        ]
+                    }
+                ],
+
+                onOk:function () {
+                    $.cms_editor.deleteContent();
+                }
+            };
         });
     }
 });
