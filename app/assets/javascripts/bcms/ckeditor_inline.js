@@ -14,5 +14,10 @@ CKEDITOR.config.toolbar_inline =
         { name:'tools', items:[ 'About' ] }
 
     ];
+CKEDITOR.config.toolbar_page_title =
+    [
+        { name:'undo', items:[ 'Undo', 'Redo' ] },
+        { name:'clipboard', items:[ 'Cut', 'Copy', 'Paste' ] }
 
+    ];
 CKEDITOR.config.extraPlugins = 'delete_content,edit_content,move_content';

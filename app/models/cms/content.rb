@@ -10,6 +10,9 @@ module Cms
     # @param [Integer] id The id of the content.
     # @return [ContentBlock] A single content block
     def self.find(content_type, id)
+      if content_type == "page"
+        return Cms::Page.find(id)
+      end
       type = ContentType.find_by_key(content_type)
       type.model_class.find(id)
     end

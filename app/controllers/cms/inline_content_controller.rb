@@ -4,7 +4,7 @@ module Cms
 
     def update
       content = Content.find(params[:content_name], params[:id])
-      content.update_attributes(params[:content])
+      content.update_attributes(filtered_content)
       @page = Page.find_draft(params[:page_id])
       if (!@page.live?)
         @page_status = "draft-status"
@@ -18,6 +18,19 @@ module Cms
         @enable_publish = false
       end
       render layout: false
+    end
+
+    private
+
+    def filtered_content
+
+      # Handles CKEditors habit of adding opening/closing <p> tags to everything.
+      if params[:content_name] == "page"
+        params[:content][:title] = HTML::FullSanitizer.new.sanitize(params[:content][:title])
+        params[:content]
+      else
+        params[:content]
+      end
     end
   end
 end

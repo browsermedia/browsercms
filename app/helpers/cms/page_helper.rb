@@ -48,18 +48,11 @@ module Cms
     #
     # Use for h1/h2 elements. Use page_title for title elements.
     def editable_page_title()
-      editable(page_title , id: 'page_title', region: 'simple')
+      options = {id: 'page_title', contenteditable: true, data: { attribute: "title", content_name: "page", id: current_page.id, page_id: current_page.id}}
+      content_tag "div", page_title, options
     end
 
-    # Mark the given content as editable by mercury
-    # @param [String] content
-    # @param [Hash] options
-    # @options options [String] :id The id attribute identifying which content is being edited. Passed to Mercury
-    # @options options [String] :region The type of Region (i.e. simple, full, etc). See https://github.com/jejacks0n/mercury
-    def editable(content, options)
-      content_tag "div", content, id: options[:id], data: {mercury: options[:region]}
-    end
-    
+
     def current_page
       @page
     end
