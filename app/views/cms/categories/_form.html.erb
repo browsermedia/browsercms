@@ -24,7 +24,7 @@
   <%= f.cms_text_field :name %>
 
 <% else %>
-  <% page_title "Please Create A Category Type" %>
+  <% use_page_title "Please Create A Category Type" %>
   <%= content_for :html_head do %>
     <script type="text/javascript">
       jQuery(function($){

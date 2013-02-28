@@ -10,14 +10,19 @@
 * Full Edit - Click to edit in full text editor. Any changes made will be saved before going to the full editor.
 * Remove blocks from page - Editors can select a block then remove it from the page via a button on the editor. Users will be prompted before its removed.
 * Reorder content - Can move content blocks up or down within a page. Page will refresh after moving.
+* Edit Page titles - Page title can be edited directly from the header.
+
+### Deprecations
+
+* page_title("Some Name") is deprecated in favor of use_page_title("Some Name") for overriding a page title. This will be remove in 4.1.
 
 ### ToDo
 
+* Refactor editable vs page_title
 * [Minor] Block Orders - Disable button based on position (i.e. Can't move first block up, last block down)
 * [BUG] Adding the same block twice to a page screws things up.
 * [BUG] Editing a block, then moving a block will throw an error. (Connector ids change between page versions)[Suggest: After editting block, replace container with new content)
 * Add a 'Preview' button - Open window in new tab, no UI.
-* Edit page title
 * Handle editing other blocks (i.e. Products)
 * Link to files
 * Link to images

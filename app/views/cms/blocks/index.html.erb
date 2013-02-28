@@ -2,7 +2,7 @@
     <%= javascript_include_tag "cms/content_library" %>
     <%= stylesheet_link_tag "cms/content_library" %>
 <% end %>
-<% page_title "Content Library / List #{content_type.display_name_plural}" %>
+<% use_page_title "Content Library / List #{content_type.display_name_plural}" %>
 <% @toolbar_title = "List #{content_type.display_name_plural}" %>
 <%= content_for :button_bar, render(:partial => 'cms/blocks/buttonbar') %>
 <div class="roundedcorners">

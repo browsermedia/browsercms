@@ -2,7 +2,7 @@
   <%= stylesheet_link_tag 'cms/form_layout' %>
 <% end %>
 
-<% page_title "Assign Page '#{@page.name}'" %>
+<% use_page_title "Assign Page '#{@page.name}'" %>
 <%= content_for :button_bar do %>
     <%= menu_button "Back to Page", @page.path, pull: 'left' %>
 <% end %>

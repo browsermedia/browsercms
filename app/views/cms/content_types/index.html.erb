@@ -1,4 +1,4 @@
-<% page_title "Select Content Type" %>
+<% use_page_title "Select Content Type" %>
 <%= content_for :html_head, stylesheet_link_tag('cms/content_types') %>
 <ul id="content_types">
   <% Cms::ContentType.connectable.all.each_with_index do |type, i| %>

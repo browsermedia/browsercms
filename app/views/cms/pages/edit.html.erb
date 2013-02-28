@@ -1,4 +1,4 @@
-<% page_title "Edit Properties / '#{h(@page.name)}' Page" %>
+<% use_page_title "Edit Properties / '#{h(@page.name)}' Page" %>
 <%= render partial: 'cms/section_nodes/button_bar' %>
 <%= content_for :button_bar do %>
     <%= link_to "Edit Page Content", @page.path, :class=>"btn btn-primary pull-left" %>

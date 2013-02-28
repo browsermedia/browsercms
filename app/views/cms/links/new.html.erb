@@ -1,4 +1,4 @@
-<% @link_title = @page_title = "Add New Link" %>
+<% use_page_title @link_title = "Add New Link" %>
 <%= render partial: 'cms/section_nodes/button_bar' %>
 <%= form_for(@link) do |f| %>
     <%= hidden_field_tag :section_id, @link.section_id %>

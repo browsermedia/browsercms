@@ -17,7 +17,7 @@
   <%= link_to span_tag("List All"), cms_email_messages_path, :class => "button" %>
 <% end %>
 
-<% @page_title = @toolbar_title = "Email Message '#{@message.subject}'" %>
+<% use_page_title @toolbar_title = "Email Message '#{@message.subject}'" %>
 <div class="field">
   <div class="label">Delivered At:</div> 
   <div class="value"><%= time_on_date(@message.delivered_at) %></div>

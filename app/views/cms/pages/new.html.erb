@@ -16,7 +16,7 @@ jQuery(function($){
 </script>
 <% end %>
 
-<% page_title "New Page" %>
+<% use_page_title "New Page" %>
 <%= render partial: 'cms/section_nodes/button_bar' %>
 <%= form_for(@page) do |f| %>
   <%= hidden_field_tag :section_id, @page.section_id %>

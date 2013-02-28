@@ -29,26 +29,32 @@ module Cms
       end
     end
 
-    # Outputs the title for this page. Used by both internal CMS pages, as well as page templates. If not explicitily set,
-    #   returns the title of the page.
+    # Outputs the title for this page. Used by both internal CMS pages, as well as page templates. Call use_page_title to
+    # change this value.
     #
-    # @TODO - Should split this into two methods page_title= to avoid complicated logic.
-    # @param [String] page_title The name this page should be set to.
-    # @param [String] options Options for the page title
+    # @param [String] If provided, this is the name of the page to set. (Deprecated in 4.0)
     # @return [String] The title of the page.
     def page_title(*args)
       if args.first
-        @page_title = args.first
+        ActiveSupport::Deprecation.warn "Calling page_title('#{args.first}') is deprecated and will be remove in 4.1. Call use_page_title('#{args.first}') instead.", caller
+        use_page_title args.first
       else
         @page_title ? @page_title : current_page.page_title
       end
+    end
+
+    # Allows Views to set what will be displayed as the <title> element for Page Templates (and Cms admin pages.)
+    #
+    # Named use_page_title rather than page_title= because ruby will create local variable if you call <%= page_title = "Sometthing" %>
+    def use_page_title(title)
+      @page_title = title
     end
 
     # Returns the Page title in an In Context editable area.
     #
     # Use for h1/h2 elements. Use page_title for title elements.
     def editable_page_title()
-      options = {id: 'page_title', contenteditable: true, data: { attribute: "title", content_name: "page", id: current_page.id, page_id: current_page.id}}
+      options = {id: 'page_title', contenteditable: true, data: {attribute: "title", content_name: "page", id: current_page.id, page_id: current_page.id}}
       content_tag "div", page_title, options
     end
 
@@ -69,7 +75,8 @@ module Cms
       else
         content
       end
-    end    
+    end
+
     # Determine if a given container has any blocks within it. Useful for determine if markup should be conditionally included
     # when a block is present, but not shown if no block was added. For example:
     #
@@ -115,9 +122,9 @@ module Cms
       show_parent = options[:show_parent].nil? ? false : options[:show_parent]
       ancestors = current_page.ancestors
       items = []
-      ancestors[start..ancestors.size].each_with_index do |sec,i|
-        items << content_tag(:li, 
-          link_to(sec.name, sec.actual_path), (i == 0 ? {:class => "first"} : {}))
+      ancestors[start..ancestors.size].each_with_index do |sec, i|
+        items << content_tag(:li,
+                             link_to(sec.name, sec.actual_path), (i == 0 ? {:class => "first"} : {}))
       end
       if !show_parent && current_page.section.path == current_page.path
         items[items.size-1] = content_tag(:li, current_page.section.name)
@@ -126,7 +133,7 @@ module Cms
       end
       content_tag(:ul, "\n  #{items.join("\n  ")}\n".html_safe, :class => "breadcrumbs")
     end
-    
+
     def render_portlet(name)
       portlets = Portlet.all(:conditions => ["name = ?", name.to_s])
       if portlets.size > 1

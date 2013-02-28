@@ -1,4 +1,4 @@
-<% page_title "Content Library / View #{content_type.display_name}" %>
+<% use_page_title "Content Library / View #{content_type.display_name}" %>
 <% @toolbar_title = "View #{content_type.display_name} '#{ @block.name }'" %>
 <%= content_for :html_head do %>
   <%= stylesheet_link_tag('cms/form_layout') %>

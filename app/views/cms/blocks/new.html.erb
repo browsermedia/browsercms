@@ -2,7 +2,7 @@
   <%= stylesheet_link_tag('cms/form_layout') %>
   <%= stylesheet_link_tag('cms/content_library') %>
 <% end %>
-<% page_title "Content Library / Add New #{content_type.display_name}" %>
+<% use_page_title "Content Library / Add New #{content_type.display_name}" %>
 <% @toolbar_title = "Add New #{content_type.display_name}" %>
 <%= content_for :button_bar,  render(:partial => 'cms/blocks/buttonbar') %>
 <%= form_for(@block, :url => blocks_path, :html => {:multipart => true}) do |f| %>

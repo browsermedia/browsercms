@@ -1,4 +1,4 @@
-<% page_title "'#{@page_route.name}' Page Route" %>
+<% use_page_title "'#{@page_route.name}' Page Route" %>
 <%= render 'back_to_routes' %>
 <%= content_for :button_bar do %>
     <%= add_button new_page_route_path, bootstrap: true %>
