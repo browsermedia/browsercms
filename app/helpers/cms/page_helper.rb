@@ -1,5 +1,6 @@
 module Cms
 
+  # Deprecated in 4.0. Remove in 4.1
   module DeprecatedBehavior
 
     # Add the code to render the CMS toolbar.
@@ -7,6 +8,11 @@ module Cms
     def cms_toolbar
       ActiveSupport::Deprecation.warn "The cms_toolbar helper is deprecated and no longer necessary. You can safely remove <%= cms_toolbar %> from templates.", caller
       return ""
+    end
+
+    def deprecated_set_page_title_usage(args)
+      ActiveSupport::Deprecation.warn "Calling page_title('#{args.first}') is deprecated and will be remove in 4.1. Call use_page_title('#{args.first}') instead.", caller
+      use_page_title args.first
     end
   end
 
@@ -32,32 +38,35 @@ module Cms
     # Outputs the title for this page. Used by both internal CMS pages, as well as page templates. Call use_page_title to
     # change this value.
     #
-    # @param [String] If provided, this is the name of the page to set. (Deprecated in 4.0)
+    # @param [String] If provided, this is the name of the page to set. (This usage is deprecated in 4.0 and will be removed in 4.1)
     # @return [String] The title of the page.
     def page_title(*args)
       if args.first
-        ActiveSupport::Deprecation.warn "Calling page_title('#{args.first}') is deprecated and will be remove in 4.1. Call use_page_title('#{args.first}') instead.", caller
-        use_page_title args.first
+        deprecated_set_page_title_usage(args)
       else
         @page_title ? @page_title : current_page.page_title
       end
     end
 
-    # Allows Views to set what will be displayed as the <title> element for Page Templates (and Cms admin pages.)
-    #
-    # Named use_page_title rather than page_title= because ruby will create local variable if you call <%= page_title = "Sometthing" %>
-    def use_page_title(title)
-      @page_title = title
-    end
-
     # Returns the Page title in an In Context editable area.
     #
     # Use for h1/h2 elements. Use page_title for title elements.
-    def editable_page_title()
-      options = {id: 'page_title', contenteditable: true, data: {attribute: "title", content_name: "page", id: current_page.id, page_id: current_page.id}}
-      content_tag "div", page_title, options
+    def page_header()
+      if (current_user.able_to_modify?(current_page))
+        options = {id: 'page_title', contenteditable: true, data: {attribute: "title", content_name: "page", id: current_page.id, page_id: current_page.id}}
+        content_tag "div", page_title, options
+      else
+        page_title
+      end
     end
 
+    # Allows Views to set what will be displayed as the <title> element for Page Templates (and Cms admin pages.)
+    #
+    def use_page_title(title)
+      # Implementation note: This method is named use_page_title rather than page_title= because ruby will create a
+      # local variable if you call <%= page_title = "A New Page Name" %>
+      @page_title = title
+    end
 
     def current_page
       @page

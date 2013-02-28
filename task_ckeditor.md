@@ -11,6 +11,7 @@
 * Remove blocks from page - Editors can select a block then remove it from the page via a button on the editor. Users will be prompted before its removed.
 * Reorder content - Can move content blocks up or down within a page. Page will refresh after moving.
 * Edit Page titles - Page title can be edited directly from the header.
+* New Template API Method: page_header(). Used for h1/h2 etc, this will output an editable page title element (for logging in users).
 
 ### Deprecations
 
@@ -18,7 +19,8 @@
 
 ### ToDo
 
-* Refactor editable vs page_title
+* [BUG] Updating the page_header does not immediately update the <title> element.
+* [BUG] If you edit the page title, then tab to save, it resets the page title to blank.
 * [Minor] Block Orders - Disable button based on position (i.e. Can't move first block up, last block down)
 * [BUG] Adding the same block twice to a page screws things up.
 * [BUG] Editing a block, then moving a block will throw an error. (Connector ids change between page versions)[Suggest: After editting block, replace container with new content)
