@@ -17,6 +17,7 @@ module Cms
 
     # Override some of the behavior defined in Cms::PageHelper so templates display correctly Rails Controllers
     module PageHelper
+      require 'ostruct' # Required or PageHelper things OpenStruct belongs under the PageHelper module and throws an error.
 
       # Do not show the toolbar on Acts::As::ContentPages
       def cms_toolbar
