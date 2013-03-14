@@ -2,7 +2,7 @@
 # Allows the precise version of BrowserCMS to be determined programatically.
 #
 module Cms
-  VERSION = "3.5.5"
+  VERSION = "3.5.6"
 
   # Return the current version of the CMS.
   def self.version
