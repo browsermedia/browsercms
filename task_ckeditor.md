@@ -19,15 +19,19 @@
 
 ### ToDo
 
+* Handle editing other blocks (i.e. Products)
+* [BUG] InlineEditor doesn't load the latest 'draft' of a block. i.e. Product with two fields:
+    - Change name (A -> A1)
+    - Change price (B -> B1)
+    - Name field will go back to
+* Add a 'Preview' button - Open window in new tab, no UI.
+* Link to files
+* Link to images
 * [BUG] Updating the page_header does not immediately update the <title> element.
 * [BUG] If you edit the page title, then tab to save, it resets the page title to blank.
 * [Minor] Block Orders - Disable button based on position (i.e. Can't move first block up, last block down)
 * [BUG] Adding the same block twice to a page screws things up.
 * [BUG] Editing a block, then moving a block will throw an error. (Connector ids change between page versions)[Suggest: After editting block, replace container with new content)
-* Add a 'Preview' button - Open window in new tab, no UI.
-* Handle editing other blocks (i.e. Products)
-* Link to files
-* Link to images
 * View as Mobile? - Does this still work?
 
 

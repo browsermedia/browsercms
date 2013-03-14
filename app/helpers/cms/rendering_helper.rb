@@ -20,7 +20,8 @@ module Cms
     # @param [Hash] options
     def show(method, options={})
       if (!logged_in?) # Need to check the current user can edit the page attached to this block too
-        @content_block.send(method).html_safe
+        value = @content_block.send(method)
+        value.respond_to?(:html_safe) ? value.html_safe : value
       else
         #editor_info = @content_block.editor_info(method)
         content_tag 'div',

@@ -19,6 +19,7 @@ require 'cms/mobile_aware'
 require 'cms/attachments/configuration'
 require 'cms/default_accessible'
 require 'cms/admin_tab'
+require 'cms/content_filter'
 
 # This shouldn't be necessary, except for the need to get into the loadpath for testing.
 require 'command_line'
