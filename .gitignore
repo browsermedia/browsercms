@@ -23,4 +23,5 @@ test/dummy/db/backups/*
 test/dummy/.sass-cache
 test/dummy/config/database.yml
 .sass-cache
+.rvmrc
 db/backups
