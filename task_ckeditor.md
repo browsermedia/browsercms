@@ -12,6 +12,7 @@
 * Reorder content - Can move content blocks up or down within a page. Page will refresh after moving.
 * Edit Page titles - Page title can be edited directly from the header.
 * New Template API Method: page_header(). Used for h1/h2 etc, this will output an editable page title element (for logging in users).
+* Preview Page - Editors can now preview the page without a toolbar or editing controls.
 
 ### Deprecations
 
@@ -20,7 +21,7 @@
 ### ToDo
 
 * Handle editing other blocks (i.e. Products)
-* Add a 'Preview' button - Open window in new tab, no UI.
+-- [BUG] Inline (i.e. product.name) fields display have a <p> tag added by ckeditor, so they display as block elements.
 * Link to files
 * Link to images
 * [BUG] Updating the page_header does not immediately update the <title> element.

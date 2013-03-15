@@ -19,7 +19,7 @@ module Cms
     # @param [Symbol] method
     # @param [Hash] options
     def show(method, options={})
-      if (!logged_in?) # Need to check the current user can edit the page attached to this block too
+      if (!is_current_user_able_to_edit_this_content?(@content_block)) # Need to check the current user can edit the page attached to this block too
         value = @content_block.send(method)
         value.respond_to?(:html_safe) ? value.html_safe : value
       else
@@ -52,6 +52,11 @@ module Cms
     # Determines if a user is currently editing this page
     def is_editing_page?(page)
       logged_in? && current_user.able_to_edit?(page)
+    end
+
+    # Determines if the current user can edit and is currently editing this content.
+    def is_current_user_able_to_edit_this_content?(content)
+      content && logged_in? && edit_mode? && current_user.able_to_edit?(content)
     end
 
     def render_connector_and_connectable(connector, connectable)

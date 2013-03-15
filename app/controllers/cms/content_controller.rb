@@ -12,7 +12,7 @@ module Cms
     before_filter :construct_path_from_route, :only => [:show_page_route]
     before_filter :try_to_redirect, :only => [:show]
     before_filter :try_to_stream_file, :only => [:show]
-    before_filter :check_access_to_page, :only => [:show, :show_page_route]
+    before_filter :check_access_to_page, :except => [:edit, :preview]
     before_filter :select_cache_directory
 
 
@@ -35,6 +35,7 @@ module Cms
     # Used in the iframe to display a page that's being editted.
     def edit
       @show_toolbar = true
+      @mode = "edit"
       if page = Page.where(:id => params[:id]).first
         @page = page.as_of_draft_version
         render_page
@@ -44,6 +45,13 @@ module Cms
                :status => :not_found)
       end
 
+    end
+
+    def preview
+      @mode = "view"
+      @page = Page.find_draft(params[:id])
+      ensure_current_user_can_edit(@page)
+      render_page
     end
 
     # Used by the rendering behavior
@@ -150,7 +158,6 @@ module Cms
     end
 
     def check_access_to_page
-      set_page_mode
       if current_user.able_to?(:edit_content, :publish_content, :administrate)
         logger.debug "Displaying draft version of page"
         if page = Page.first(:conditions => {:path => @path})
@@ -166,24 +173,20 @@ module Cms
         page_not_found unless (@page && !@page.archived?)
       end
 
-      unless current_user.able_to_view?(@page)
-        store_location
-        raise Cms::Errors::AccessDenied
-      end
+      ensure_current_user_can_edit(@page)
 
     end
 
     # ----- Other Methods --------------------------------------------------------
+    def ensure_current_user_can_edit(page)
+      unless current_user.able_to_view?(page)
+        store_location
+        raise Cms::Errors::AccessDenied
+      end
+    end
 
     def page_not_found
       raise ActiveRecord::RecordNotFound.new("No page at '#{@path}'")
     end
-
-    def set_page_mode
-      @mode = @show_toolbar && current_user.able_to?(:edit_content) ? (params[:mode] || session[:page_mode] || "edit") : "view"
-      session[:page_mode] = @mode
-    end
-
-
   end
 end

@@ -78,8 +78,7 @@ module Cms
     # @return [String] The HTML content for the container.
     def container(name)
       content = content_for(name)
-
-      if logged_in? && @page && current_user.able_to_edit?(@page)
+      if is_current_user_able_to_edit_this_content?(@page)
         render :partial => 'cms/pages/simple_container', :locals => {:name => name, :content => content}
       else
         content
@@ -99,7 +98,7 @@ module Cms
     # @param [Proc] block
     # @return [Boolean] True if the container has one or more blocks, or if we are in edit mode. False otherwise. 
     def container_has_block?(name, &block)
-      has_block = (@mode == "edit") || current_page.connectable_count_for_container(name) > 0
+      has_block = (edit_mode?) || current_page.connectable_count_for_container(name) > 0
       logger.info "mode = #{@mode}, has_block = #{has_block}"
       if block_given?
         concat(capture(&block)) if has_block
@@ -146,9 +145,9 @@ module Cms
     def render_portlet(name)
       portlets = Portlet.all(:conditions => ["name = ?", name.to_s])
       if portlets.size > 1
-        @mode == "edit" ? "ERROR: Multiple Portlets with name '#{name}'" : nil
+        edit_mode? ? "ERROR: Multiple Portlets with name '#{name}'" : nil
       elsif portlets.empty?
-        @mode == "edit" ? "ERROR: No Portlet with name '#{name}'" : nil
+        edit_mode? ? "ERROR: No Portlet with name '#{name}'" : nil
       else
         render_connectable(portlets.first)
       end
@@ -160,5 +159,9 @@ module Cms
       return ''
     end
 
+    # Determines whether this page is in edit mode or not.
+    def edit_mode?()
+      @mode == "edit"
+    end
   end
 end

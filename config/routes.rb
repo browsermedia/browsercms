@@ -39,6 +39,7 @@ Cms::Engine.routes.draw do
     end
     resources :tasks
   end
+  get '/pages/:id/preview', to: 'content#preview', as: 'preview_page'
   get '/pages/:id/version/:version', :to=>'pages#version', :as=>'version_cms_page'
   put '/pages/:id/revert_to/:version', :to=>'pages#revert_to', :as=>'revert_page'
   resources :tasks do
