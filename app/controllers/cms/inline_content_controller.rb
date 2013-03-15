@@ -3,8 +3,7 @@ module Cms
     respond_to :js
 
     def update
-      ## This isn't looking up the DRAFT, so it will save the wrong values.
-      content = Content.find(params[:content_name], params[:id])
+      content = Content.find_draft(params[:content_name], params[:id])
 
       content.update_attributes(filtered_content)
       @page = Page.find_draft(params[:page_id])

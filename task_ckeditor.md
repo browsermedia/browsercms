@@ -20,10 +20,6 @@
 ### ToDo
 
 * Handle editing other blocks (i.e. Products)
-* [BUG] InlineEditor doesn't load the latest 'draft' of a block. i.e. Product with two fields:
-    - Change name (A -> A1)
-    - Change price (B -> B1)
-    - Name field will go back to
 * Add a 'Preview' button - Open window in new tab, no UI.
 * Link to files
 * Link to images
@@ -33,7 +29,7 @@
 * [BUG] Adding the same block twice to a page screws things up.
 * [BUG] Editing a block, then moving a block will throw an error. (Connector ids change between page versions)[Suggest: After editting block, replace container with new content)
 * View as Mobile? - Does this still work?
-
+* [BUG] On 'View Block'/'Edit Block' List Versions button is broken (for products)
 
 #### Styling Concerns
 
