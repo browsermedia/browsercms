@@ -91,6 +91,17 @@ class Cms::Page < ActiveRecord::Base
     current.as_of_draft_version
   end
 
+  # Returns all content for the current page, excluding any deleted ones.
+  # @return [Array<ContentBlock>]
+  def contents
+    current_connectors.map(&:connectable_with_deleted)
+  end
+
+  # Return a list of all connectors for the current version of the page.
+  def current_connectors
+    @current_connectors ||= self.connectors.for_page_version(self.version)
+  end
+
   # Implements Versioning Callback.
   def after_build_new_version(new_version)
     copy_connectors(

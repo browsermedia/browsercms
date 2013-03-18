@@ -82,8 +82,8 @@ class PagesController < Cms::BaseController
     @page = @page.as_of_version(params[:version])
     @show_toolbar = true
     @show_page_toolbar = true
-    @_connectors = @page.connectors.for_page_version(@page.version)
-    @_connectables = @_connectors.map(&:connectable_with_deleted)   
+    @_connectors = @page.current_connectors
+    @_connectables = @page.contents
     render :layout => @page.layout, :template => 'cms/content/show'
   end 
  

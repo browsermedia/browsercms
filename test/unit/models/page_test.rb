@@ -704,6 +704,14 @@ module Cms
       @conn = @page.connectors.for_page_version(@page.version).for_connectable(@block).first
     end
 
+    test ".current_connectors finds all connectors for current version of the page" do
+      assert_equal [@conn], @page.current_connectors
+    end
+
+    test ".contents finds all non-deleted content items for the current version of the page" do
+      assert_equal [@conn.connectable], @page.contents
+    end
+
     def test_removing_connector
       page_version = @page.draft.version
       page_version_count = Cms::Page::Version.count
