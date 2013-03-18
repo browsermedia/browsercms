@@ -13,7 +13,7 @@ module Cms
         page_status = "published-status"
         status_label = "Published"
       end
-      render json: { page_status: page_status, status_label: status_label}, layout: false
+      render json: { page_status: page_status, status_label: status_label, page_title: @page.title}, layout: false
     end
 
     private

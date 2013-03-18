@@ -66,7 +66,7 @@ $(function () {
             var publish_button =  $('#publish_button', window.parent.document);
             publish_button.removeClass('disabled');
           }
-
+          window.parent.document.title = data.page_title;
         },
         // Saves the changes using AJAX for the given editor.
         //
@@ -93,7 +93,6 @@ $(function () {
             $.cms_ajax.put({
                 url:path,
                 success:function (data) {
-//                    console.log(data);
                     $.cms_editor.updatePageStatus(data);
                     currentEditor.resetDirty();
                     if (afterSave) {
