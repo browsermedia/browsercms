@@ -21,7 +21,7 @@
 ### ToDo
 
 * Handle editing other blocks (i.e. Products)
--- [BUG] Inline (i.e. product.name) fields display have a <p> tag added by ckeditor, so they display as block elements.
+-- [BUG][Minor] Inline (i.e. product.name) fields display have a <p> tag added by ckeditor, so they display as block elements. This might go away if we don't embed content blocks.
 * [BUG] Updating the page_header does not immediately update the <title> element.
 * [Minor] Block Orders - Disable button based on position (i.e. Can't move first block up, last block down)
 * [BUG] Adding the same block twice to a page screws things up.

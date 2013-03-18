@@ -1,6 +1,5 @@
-// A Container that can hold one or more content blocks.
-// Style only appears during page editing.
-
+// This CSS sheet is injected into the page when a CMS user is editing it.
+// All styles here should be very specific to avoid clashes with existing CSS from templates.
 
 // A Container in 'Preview' mode. It should be completely invisible to users.
 .cms-container-preview {
@@ -16,19 +15,24 @@
 
 .cms-container {
   @extend .cms-container-preview;
-
-  //outline-color: #999;
-  //outline-style: dashed;
-  //outline-width: 1px;
-  //position: relative;
-  //height: auto;
-  //display: block;
-  //margin: 2px;
-  //padding: 4px;
 }
 // The 'Add Content' link that appears when containers are visible.
 .cms-add-content {
 
+}
+
+// Image button for editing a content area.
+.cms-edit-content-link {
+  right: 0;
+  height: 16px;
+  width: 16px;
+  position: absolute;
+  z-index: 999;
+  opacity:0.5;
+}
+
+.cms-edit-content-link:hover {
+  opacity:1;
 }
 
 // *****************************************************************
@@ -80,18 +84,4 @@ a.cms-content-status {
   top: 5px;
   left: 5px;
   height: 30px;
-}
-
-// Image button for editing a content area.
-.cms-edit-content-link {
-  right: 0;
-  height: 16px;
-  width: 16px;
-  position: absolute;
-  z-index: 999;
-  opacity:0.5;
-}
-
-.cms-edit-content-link:hover {
-  opacity:1;
 }
