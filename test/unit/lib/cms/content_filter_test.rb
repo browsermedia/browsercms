@@ -9,12 +9,17 @@ describe Cms::ContentFilter do
       result.must_equal({title: "Test"})
     end
 
-    it 'should not strip html from content' do
-      unaltered_content = {content: "<p>Test</p>"}
+    it 'should not strip html from "content"' do
+      unaltered_content = {"content" => "<p>Test</p>"}
       result = filter.filter(unaltered_content)
       result.must_equal(unaltered_content)
     end
 
+    it 'should not strip html from :content' do
+      unaltered_content = {content: "<p>Test</p>"}
+      result = filter.filter(unaltered_content)
+      result.must_equal(unaltered_content)
+    end
     it 'should strip whitespace' do
       result = filter.filter({title: "Title\n"})
       result.must_equal({title: "Title"})

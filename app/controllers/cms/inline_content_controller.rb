@@ -4,7 +4,6 @@ module Cms
 
     def update
       content = Content.find_draft(params[:content_name], params[:id])
-
       content.update_attributes(filtered_content)
       @page = Page.find_draft(params[:page_id])
       if (!@page.live?)
