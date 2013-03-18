@@ -4,5 +4,6 @@
                         remove: cms.connector_path(connector, format: :json),
                         edit_path: edit_cms_connectable_path(connectable, :_redirect_to => @page.path)
                 } do %>
+<%= link_to(image_tag('cms/pencil.png', class: 'cms-edit-content-link'), edit_cms_connectable_path(connectable, :_redirect_to => @page.path), title: "Edit this content.") %>
 <%= render_connectable connectable %>
 <% end %>

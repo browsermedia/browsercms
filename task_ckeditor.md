@@ -7,7 +7,7 @@
 ### Features
 
 * No need to toggle the editor on/off. Just click the area of the page you want to edit.
-* Full Edit - Click to edit in full text editor. Any changes made will be saved before going to the full editor.
+* Full Edit - Click to edit in full text editor. Any changes made will be saved before going to the full editor. There is also a edit button on each block in the upper right hand corner.
 * Remove blocks from page - Editors can select a block then remove it from the page via a button on the editor. Users will be prompted before its removed.
 * Reorder content - Can move content blocks up or down within a page. Page will refresh after moving.
 * Edit Page titles - Page title can be edited directly from the header.
@@ -22,10 +22,7 @@
 
 * Handle editing other blocks (i.e. Products)
 -- [BUG] Inline (i.e. product.name) fields display have a <p> tag added by ckeditor, so they display as block elements.
-* Link to files
-* Link to images
 * [BUG] Updating the page_header does not immediately update the <title> element.
-* [BUG] If you edit the page title, then tab to save, it resets the page title to blank.
 * [Minor] Block Orders - Disable button based on position (i.e. Can't move first block up, last block down)
 * [BUG] Adding the same block twice to a page screws things up.
 * [BUG] Editing a block, then moving a block will throw an error. (Connector ids change between page versions)[Suggest: After editting block, replace container with new content)

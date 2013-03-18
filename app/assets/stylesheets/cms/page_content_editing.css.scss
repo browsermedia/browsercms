@@ -81,3 +81,17 @@ a.cms-content-status {
   left: 5px;
   height: 30px;
 }
+
+// Image button for editing a content area.
+.cms-edit-content-link {
+  right: 0;
+  height: 16px;
+  width: 16px;
+  position: absolute;
+  z-index: 999;
+  opacity:0.5;
+}
+
+.cms-edit-content-link:hover {
+  opacity:1;
+}
