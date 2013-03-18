@@ -57,7 +57,17 @@ $(function () {
             });
 
         },
+        updatePageStatus:function(data){
+          var status_label = $('#page-status-label', window.parent.document);
+          status_label.removeClass('draft-status published-status');
+          status_label.addClass(data.page_status);
+          status_label.html(data.status_label);
+          if(data.page_status === 'draft-status'){
+            var publish_button =  $('#publish_button', window.parent.document);
+            publish_button.removeClass('disabled');
+          }
 
+        },
         // Saves the changes using AJAX for the given editor.
         //
         // @param [CKEditor] editor
@@ -82,8 +92,9 @@ $(function () {
 
             $.cms_ajax.put({
                 url:path,
-                success:function (result) {
-                    eval(result);
+                success:function (data) {
+//                    console.log(data);
+                    $.cms_editor.updatePageStatus(data);
                     currentEditor.resetDirty();
                     if (afterSave) {
                         afterSave.apply();

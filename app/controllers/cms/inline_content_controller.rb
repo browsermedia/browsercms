@@ -7,17 +7,13 @@ module Cms
       content.update_attributes(filtered_content)
       @page = Page.find_draft(params[:page_id])
       if (!@page.live?)
-        @page_status = "draft-status"
-        @remove_class = "published-status"
-        @status_label = "DRAFT"
-        @enable_publish = true
+        page_status = "draft-status"
+        status_label = "DRAFT"
       else
-        @page_status = "published-status"
-        @remove_class = "draft-status"
-        @status_label = "Published"
-        @enable_publish = false
+        page_status = "published-status"
+        status_label = "Published"
       end
-      render layout: false
+      render json: { page_status: page_status, status_label: status_label}, layout: false
     end
 
     private
