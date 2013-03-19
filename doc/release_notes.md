@@ -4,6 +4,7 @@ v4.0
 This release includes the following features:
 
 * User Interface Redesign
+* True In Context Editing - Editors can directly edit Html content and page titles using CKEditor's inline capability.
 
 UI Redesign
 ----------
@@ -11,8 +12,31 @@ UI Redesign
 The entire UI has been reworked to be more streamlined and lightweight. It is now built using Twitter Bootstrap, and makes better use of global menus and toolbars. Here are the notable changes.
 
 1. Global Menu - Many commons functions can now be invoked directly from the main menu, including adding new content or users.
-2. Smart 'New' button - Users can add content from any page in the CMS. The "New" button is a split button that can either add a specific type of content, or will 'guess' based on where a user is in the site.
+1. Smart 'New' button - Users can add content from any page in the CMS. The "New" button is a split button that can either add a specific type of content, or will 'guess' based on where a user is in the site.
 
+
+In Context Editing
+------------------
+
+Users can now edit most HTML content directly in the page. Icons indicate the area of the pages that are editable. Here are some of the highlights:
+
+1. No need to toggle the editor on/off. Just click the area of the page you want to edit.
+1. Full Edit - Click to edit in full text editor. Any changes made will be saved before going to the full editor. There is also a edit button on each block in the upper right hand corner.
+1. Remove blocks from page - Editors can select a block then remove it from the page via a button on the editor. Users will be prompted before its removed.
+1. Reorder content - Can move content blocks up or down within a page. Page will refresh after moving.
+1. Editable Page titles - Page title can be edited directly from the header.
+1. Preview Page - Editors can now preview the page without a toolbar or editing controls.
+1. Non-incontext Content - Not all content makes sense to be inline editable (for example portlets). For these content types, the previous move/remove/edit links now float in the upper right hand corner of the content block.
+
+Upgrading
+--------
+
+1. Editable Page Titles: In order to take advantage of the editable pages titles, templates need to use the new Template API Method: page_header(). Used rather that <%= page_title %> within h1/h2 etc, this will output an editable page title element for logging in users.
+
+Deprecations
+------------
+
+* page_title("Some Name") is deprecated in favor of use_page_title("Some Name") for overriding a page title. This will be remove in 4.1. This probably will probably only effect changes make in modules or customizations to the core.
 
 v3.5.5
 ======
