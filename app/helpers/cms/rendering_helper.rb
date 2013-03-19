@@ -24,7 +24,7 @@ module Cms
         value.respond_to?(:html_safe) ? value.html_safe : value
       else
         content_tag 'div',
-                    id: "#{@content_block.content_block_type}-#{@content_block.id}-#{method}",
+                    id: random_unique_identifier(),
                     class: 'content-block',
                     contenteditable: true,
                     data: {
@@ -89,6 +89,14 @@ module Cms
     #
     def render_cms_toolbar(tab=:dashboard)
       render :partial => 'layouts/cms_toolbar', :locals => {:tab => tab}
+    end
+
+    private
+
+    # Each block needs a unique id on the page so CKeditor can attach to it. Doesn't matter what it is though.
+    # This ensure that if the same block is add twice, it will still work.
+    def random_unique_identifier
+      SecureRandom.urlsafe_base64
     end
   end
 end
