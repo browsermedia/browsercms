@@ -4,6 +4,21 @@
                        remove: cms.connector_path(connector, format: :json),
                        edit_path: edit_cms_connectable_path(connectable, :_redirect_to => @page.path)
                 } do %>
+    <% if (!content_supports_inline_editing?(connector)) %>
+        <%= link_to(image_tag('cms/arrow-up.png', class: 'cms-move-up-content-link'),
+                    move_up_connector_path(connector),
+                    method: :put,
+                    title: "Move this content up.") %>
+        <%= link_to(image_tag('cms/arrow-down.png', class: 'cms-move-down-content-link'),
+                    move_down_connector_path(connector),
+                    method: :put,
+                    title: "Move this content down.") %>
+        <%= link_to image_tag("ckeditor/plugins/delete_content/icons/deletecontent.png", class: 'cms-remove-content-link', alt: "Remove content"),
+                        cms.connector_path(connector, _redirect_to: @page.path),
+                        method: :delete,
+                        confirm:"Are you sure you want to remove this content from the page? (It will remain available in the Content Library.)",
+                        title: "Remove this content from page (#{connectable.name})." %>
+    <% end %>
     <%= link_to(image_tag('cms/pencil.png', class: 'cms-edit-content-link'),
                 edit_cms_connectable_path(connectable, :_redirect_to => @page.path),
                 title: "Edit this content.") %>

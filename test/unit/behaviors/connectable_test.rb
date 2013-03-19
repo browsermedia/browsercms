@@ -27,6 +27,12 @@ module Cms
       assert_equal expected.object_id, @block.connected_pages.object_id
     end
 
+    test ".supports_inline_editing?" do
+      assert @block.supports_inline_editing?
+    end
 
+    test ".supports_inline_editing? shouldn't be true for portlet subclasses'" do
+      refute LoginPortlet.new.supports_inline_editing?
+    end
   end
 end

@@ -81,6 +81,10 @@ module Cms
           true
         end
 
+        # By default, all content types will support inline editing. Subclasses can override this.
+        def supports_inline_editing?
+          true
+        end
         #
         # After blocks are updated, all pages they are connected to should also be updated,
         # connecting the page to the new version of the block, as well as putting the pages into

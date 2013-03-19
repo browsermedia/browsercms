@@ -35,6 +35,20 @@
   opacity:1;
 }
 
+.cms-move-up-content-link {
+  @extend .cms-edit-content-link;
+  right: 32px;
+}
+.cms-move-down-content-link {
+  @extend .cms-edit-content-link;
+  right: 16px;
+}
+
+.cms-remove-content-link{
+  @extend .cms-edit-content-link;
+  right:50px;
+}
+
 // *****************************************************************
 // Deprecated (pre 4.0)
 // The rest of these are the pre 4.0 UI controls and can be safely deleted after the UI revamp is complete.

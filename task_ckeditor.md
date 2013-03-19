@@ -20,7 +20,6 @@
 
 ### ToDo
 
-* [BUG] Can't move portlets up/down.
 * [BUG][Minor] Inline (i.e. product.name) fields display have a <p> tag added by ckeditor, so they display as block elements. This might go away if we don't embed content blocks.
 * [Improvement][Minor] Block Orders - Disable button based on position (i.e. Can't move first block up, last block down)
 * [BUG][Trivial] If the same block appears twice on the same page, inline editing one will not cause the other to immediately show the update. (This is probably so rare as to be a non-issue anyway.)

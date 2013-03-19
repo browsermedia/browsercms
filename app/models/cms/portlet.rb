@@ -45,6 +45,11 @@ module Cms
         def self.helper_class
           "#{name}Helper".constantize
         end
+
+        # Portlets don't generally support inline editing. Subclasses can override this if they do though.
+        def supports_inline_editing?
+          false
+        end
       end
     end
 

@@ -81,6 +81,11 @@ module Cms
       "ERROR: #{e.message}"
     end
 
+    # Some content doesn't have inline editing, so we need to conditionally show move up/down/remove buttons on the page
+    def content_supports_inline_editing?(connector)
+      content = connector.connectable
+      content.supports_inline_editing?
+    end
     ##
     # Renders the toolbar for the CMS. All page templates need to include this or they won't be editable.
     # Typically rendered as an iframe to avoid CSS/JS conflicts.
