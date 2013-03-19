@@ -98,8 +98,14 @@ class Cms::Page < ActiveRecord::Base
   end
 
   # Return a list of all connectors for the current version of the page.
-  def current_connectors
+  # @param [Symbol] container The name of the container to match (Optional - Return all)
+  def current_connectors(container=nil)
     @current_connectors ||= self.connectors.for_page_version(self.version)
+    if(container)
+      @current_connectors.select { |c| c.container.to_sym == container }
+    else
+      @current_connectors
+    end
   end
 
   # Implements Versioning Callback.
@@ -186,6 +192,7 @@ class Cms::Page < ActiveRecord::Base
     end
   end
 
+  # @deprecated
   alias_method :create_connector, :add_content
 
   def move_connector(connector, direction)

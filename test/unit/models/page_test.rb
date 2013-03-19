@@ -699,15 +699,26 @@ module Cms
     def setup
       @page = create(:page, :section => root_section)
       @block = create(:html_block)
-      @conn = @page.create_connector(@block, "bar")
+      @conn = @page.add_content(@block, "bar")
       @page.publish!
-      @conn = @page.connectors.for_page_version(@page.version).for_connectable(@block).first
+      @conn = first_connector_for(@page, @block)
+    end
+
+    def first_connector_for(page, block)
+      page.connectors.for_page_version(page.version).for_connectable(block).first
     end
 
     test ".current_connectors finds all connectors for current version of the page" do
       assert_equal [@conn], @page.current_connectors
     end
 
+    test ".current_connectors(name) returns connectors for given container" do
+      new_conn = @page.add_content(create(:html_block), "main")
+      @page.publish!
+      assert_equal [new_conn], @page.current_connectors(:main)
+      assert_equal [first_connector_for(@page, @block)], @page.current_connectors(:bar)
+
+    end
     test ".contents finds all non-deleted content items for the current version of the page" do
       assert_equal [@conn.connectable], @page.contents
     end

@@ -22,11 +22,14 @@
 
 * [BUG] Can't move portlets up/down.
 * [BUG][Minor] Inline (i.e. product.name) fields display have a <p> tag added by ckeditor, so they display as block elements. This might go away if we don't embed content blocks.
-* [Minor] Block Orders - Disable button based on position (i.e. Can't move first block up, last block down)
-* [BUG] Adding the same block twice to a page screws things up.
-* [BUG] Editing a block, then moving a block will throw an error. (Connector ids change between page versions)[Suggest: After editting block, replace container with new content)
-* View as Mobile? - Does this still work?
+* [Improvement][Minor] Block Orders - Disable button based on position (i.e. Can't move first block up, last block down)
+* [BUG][Major] Adding the same block twice to a page screws things up.
+
+### General UI issues
+
+* [BUG] View versions of blocks has no toolbar.
 * [BUG] On 'View Block'/'Edit Block' List Versions button is broken (for products)
+* View as Mobile? - Does this still work?
 
 #### Styling Concerns
 
@@ -35,14 +38,9 @@
 * Modal window doesn't black out back.
 * Better 'Add Content' icon (over plus)
 
-#### Other Desired Features
-
-* Edit Page - Show all editable components on a page (title, etc).
-
 ### Bugs
 
 A. Removing/re-add block from page and it won't update
-B. 500 error after editing and removing a block
 C. Save And Publish from editing a block doesn't publish the block.
 
 A. Removing/re-add block from page and it won't update   (Versioning bug?)
@@ -58,5 +56,4 @@ Possible Steps:
 
     Observed: 'Old' version of the block would still be shown.
 
-B. 500 error after editing and removing a block
 

@@ -23,7 +23,6 @@ module Cms
         value = @content_block.send(method)
         value.respond_to?(:html_safe) ? value.html_safe : value
       else
-        #editor_info = @content_block.editor_info(method)
         content_tag 'div',
                     id: "#{@content_block.content_block_type}-#{@content_block.id}-#{method}",
                     class: 'content-block',

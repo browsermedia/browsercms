@@ -79,7 +79,7 @@ module Cms
     def container(name)
       content = content_for(name)
       if is_current_user_able_to_edit_this_content?(@page)
-        render :partial => 'cms/pages/simple_container', :locals => {:name => name, :content => content}
+        render :partial => 'cms/pages/simple_container', :locals => {:name => name, :content => content, :container => name}
       else
         content
       end
