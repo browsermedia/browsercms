@@ -14,8 +14,6 @@
   <%= render :partial => 'form', :locals => {:f => f} %>
   <% if @other_version %>
     <%= render :partial => "cms/shared/version_conflict_diff", :locals => {:other_version => @other_version, :your_version => @page} %>
-  <% end %>  
-  <div class="buttons">
-    <%= lt_button_wrapper(f.submit("Save", :class => "submit", :tabindex => next_tabindex)) %>
-  </div>
+  <% end %>
+  <%= f.submit("Save", :class => "submit btn btn-primary", :tabindex => next_tabindex) %>
 <% end %>

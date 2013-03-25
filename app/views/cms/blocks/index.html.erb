@@ -5,8 +5,7 @@
 <% page_title "Content Library / List #{content_type.display_name_plural}" %>
 <% @toolbar_title = "List #{content_type.display_name_plural}" %>
 <%= content_for :button_bar, render(:partial => 'cms/blocks/buttonbar') %>
-<div class="roundedcorners">
-<table id="blocks" class="data cms-content-table"
+<table id="blocks" class="data cms-content-table table table-striped table-bordered table-hover"
        data-content_type="<%= content_type.content_block_type %>"
        data-versioned="<%= content_type.model_class.versioned? %>"
        data-can_publish="<%= current_user.able_to?(:publish_content) %>"
@@ -19,9 +18,7 @@
                       !content_type.model_class.connectable? && 
                       !content_type.model_class.publishable? && 
                       content_type.columns_for_index.size == i + 1
-             %Q{ colspan='2' class='last'}
-           elsif i == 0
-             %Q{ colspan='2' class='name first'}
+
           end %>
         <th<%=raw attrs %>>
           <div class="dividers">
@@ -34,10 +31,10 @@
         </th>
       <% end %>
       <% if content_type.model_class.respond_to?(:updated_at) %>
-        <th class="updated <%= 'last" colspan="2' unless content_type.model_class.publishable? || content_type.model_class.connectable? %>"><div class="dividers">Updated</div></th>
+        <th class="updated <%= 'last" ' unless content_type.model_class.publishable? || content_type.model_class.connectable? %>">Updated</th>
       <% end %>
-      <% if content_type.model_class.connectable? %><th class="used <%= ' last" colspan="2' unless content_type.model_class.publishable? %>"><div class="dividers">Used</div></th><% end %>
-      <% if content_type.model_class.publishable? %><th colspan="2" class="block_status last">Status</th><% end %>
+      <% if content_type.model_class.connectable? %><th class="used <%= ' last" ' unless content_type.model_class.publishable? %>">Used</th><% end %>
+      <% if content_type.model_class.publishable? %><th  class="block_status last">Status</th><% end %>
     </tr>
   </thead>
   <tbody>
@@ -49,7 +46,7 @@
     <% @blocks.each do |b| %>
       <% block = b.class.versioned? ? b.as_of_draft_version : b %>
     <%= content_block_tr_tag(block) %>
-	<td class="first"></td>
+
         <% content_type.columns_for_index.each_with_index do |column, i| %>
           <td class="<%= column[:label].gsub(' ', '').underscore %>">
             <div<%= ' class="dividers"'.html_safe if (i + 3 < col_ct) %>>
@@ -62,22 +59,15 @@
             </div>
           </td>      
         <% end %>
-        <% if content_type.model_class.respond_to?(:updated_at) %><td class="updated"><div class="dividers"><%= block.updated_at.to_s(:date) %></div></td><% end %>
-        <% if content_type.model_class.connectable? %><td class="used"><div class="dividers"><%= block.connected_pages.size %></div></td><% end %>
-        <% if content_type.model_class.publishable? %><td class="block_status"><%= status_icon(block.status) %> <div><%= block.status %></div></td><% end %>
-	<td class="last"></td>
+        <% if content_type.model_class.respond_to?(:updated_at) %><td class="updated"><%= block.updated_at.to_s(:date) %></td><% end %>
+        <% if content_type.model_class.connectable? %><td class="used"><%= block.connected_pages.size %></td><% end %>
+        <% if content_type.model_class.publishable? %><td class="block_status <%= block.status %>"><%= block.status %></td><% end %>
+
     </tr>
     <% end %>
-    <tr>
-      <td colspan="<%= col_ct %>" class="buffer"></td>
-    </tr>
   </tbody>
 </table>
-<div class="tl"></div>
-<div class="tr"></div>
-<div class="bl"></div>
-<div class="br"></div>
-</div>
+
 
 <% if params[:search] && @blocks.size == 0 %>
   <div class="pagination">No results found for '<%= params[:search][:term] %>'</div>

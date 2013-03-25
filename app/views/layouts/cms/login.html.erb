@@ -3,8 +3,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <title><%= @page_title %></title>
-    <%= stylesheet_link_tag 'cms/application' %>
-    <%= stylesheet_link_tag 'cms/login' %>
+    <%= stylesheet_link_tag 'cms/application', 'cms/load_bootstrap', 'cms/bootstrap_corrections' %>
   <%= javascript_include_tag 'jquery', 'jquery-ui', 'jquery.cookie.js' %>
   <%= javascript_include_tag 'cms/application' %>
   <%= csrf_meta_tags %>
@@ -24,7 +23,7 @@
         <% if flash_message %><p><%= flash_message %></p><% end %>
 	<%= yield %>
       </div>
-      <%= image_tag "cms/login_bottom.jpg", :style => "padding: 0; margin: 0;" %>
+
       <%= render :partial => "layouts/cms/footer" %>
     </div>
   </body>

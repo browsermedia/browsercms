@@ -14,31 +14,24 @@
 
   node_type_class = node_type == "section" && node.root? ? 'root' : ''
 %>
-<div class="roundedcorners">
-  <table class="section_node <%= node_type %> <%= "movable" if current_user.able_to?(:publish_content) %>" width="100%" cellspacing="0" cellpadding="0">
-    <tr><td colspan="4" class="drop-before"></td></tr>
+  <table class="section_node <%= node_type %> <%= "movable" if current_user.able_to?(:publish_content) %> table table-condensed table-hover row-fluid" width="100%" cellspacing="0" cellpadding="0">
     <tr<%= ' class="doubled"' if access_icon && hidden %>>
-      <td id="<%= node_type %>_<%= node.id %>" class="<%= node_type_class %> <%= node_type %> node <%= editable_class %>">
+      <td id="<%= node_type %>_<%= node.id %>" class="<%= node_type_class %> <%= node_type %> node <%= editable_class %>" width="82%">
 	      <%= icon.html_safe %>
 	      <div><%= h(node.name) %></div>
       </td>
-      <td class="sitemap_hidden divided">
+      <td class="sitemap_hidden divided" width="8%">
         <a href="#" class="hidden"><%= status_icon(:hidden) if hidden %><span>HIDDEN</span></a>
       </td>
-      <td class="sitemap_access divided">
+      <td class="sitemap_access divided" width="2%">
         <%= access_icon ? access_icon : raw("&nbsp;") %>
       </td>
-      <td class="sitemap_published_status">
+      <td class="sitemap_published_status" width="8%">
         <div>
           <%= published_status_icon ? published_status_icon : raw("&nbsp;") %>
           <div><%= published_status_label if published_status_label %></div>
         </div>
       </td>
     </tr>
-    <tr><td colspan="4" class="drop-after"></td></tr>
   </table>
-  <div class="stl"></div>
-  <div class="str"></div>
-  <div class="sbl"></div>
-  <div class="sbr"></div>
-</div>
+

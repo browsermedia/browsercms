@@ -2,6 +2,9 @@
 *   Correct styles for bootstrap that the CSS has broken
 */
 
+.btn-group .btn.pull-left {float: left;}
+.btn-group .btn.dropdown-toggle {float: right;}
+
 .navbar {
   a {
     font-size: 13px;
@@ -15,6 +18,35 @@
 
 // Pushes body below fixed nav menu for admin.
 body {
-  padding-top: 75px;
+  padding-top: 85px;
 }
 
+.table thead th {background-color: #b1b4b7;}
+
+tbody .block_status {color: #FFF; text-shadow: 0 1px 0 rgba(0,0,0,0.5) !important; text-transform: capitalize;}
+
+tbody .block_status.draft {
+  background: #EE5F5B;
+  background: -webkit-gradient(linear, 0 0, 0 bottom, from(#EE5F5B), to(#BD362F));
+  background: -webkit-linear-gradient(#EE5F5B, #BD362F);
+  background: -moz-linear-gradient(#EE5F5B, #BD362F);
+  background: -ms-linear-gradient(#EE5F5B, #BD362F);
+  background: -o-linear-gradient(#EE5F5B, #BD362F);
+  background: linear-gradient(#EE5F5B, #BD362F);
+}
+
+tbody .block_status.published {
+  background: #62c462;
+  background: -webkit-gradient(linear, 0 0, 0 bottom, from(#62c462), to(#51a351));
+  background: -webkit-linear-gradient(#62c462, #51a351);
+  background: -moz-linear-gradient(#62c462, #51a351);
+  background: -ms-linear-gradient(#62c462, #51a351);
+  background: -o-linear-gradient(#62c462, #51a351);
+  background: linear-gradient(#62c462, #51a351);
+}
+
+#sitemap ul {margin: 0; padding: 0;}
+#sitemap ul li {margin: 0; padding: 0; list-style: none;}
+#sitemap .table {margin: 0;}
+#sitemap .table td {vertical-align: middle;}
+#sitemap .table img + div {display: inline;}
