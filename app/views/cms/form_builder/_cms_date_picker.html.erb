@@ -6,7 +6,6 @@
   <% end %>
   <%= f.date_picker method, options %>
   <% if cms_options[:instructions] %>
-    <div class="instructions"><%=h cms_options[:instructions] %></div>
-    <br clear="all"/>  
-  <% end %>  
+    <div class="muted help-block"><%=h cms_options[:instructions] %></div>
+  <% end %>
 </div>

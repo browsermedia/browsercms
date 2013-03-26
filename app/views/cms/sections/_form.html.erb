@@ -23,7 +23,7 @@
           <label for="public_group_ids_<%= group.id %>"><%= group.name %></label>
       </div>
       <% end %>
-      <div class="instructions">Which &ldquo;Public&rdquo; groups can view pages in this section?</div>
+      <div class="muted help-block">Which &ldquo;Public&rdquo; groups can view pages in this section?</div>
       <div class="check_uncheck">
         <%= check_uncheck_tag 'input.public_group_ids' %>
       </div>
@@ -43,7 +43,7 @@
           <label for="cms_group_ids_<%= group.id %>"><%= group.name %></label>
       </div>
       <% end %>
-      <div class="instructions">Which &ldquo;CMS&rdquo; groups can edit pages and content in this section?</div>
+      <div class="muted help-block">Which &ldquo;CMS&rdquo; groups can edit pages and content in this section?</div>
       <div class="check_uncheck">
         <%= check_uncheck_tag 'input.cms_group_ids' %>
       </div>
