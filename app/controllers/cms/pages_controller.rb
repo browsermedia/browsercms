@@ -25,7 +25,7 @@ class PagesController < Cms::BaseController
   def create
     @page = Page.new(params[:page])
     @page.section = @section
-    if @page.save
+    if @page.save_draft
       flash[:notice] = "Page was '#{@page.name}' created."
       redirect_to @page
     else

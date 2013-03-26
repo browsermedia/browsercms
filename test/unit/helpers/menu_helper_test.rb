@@ -132,8 +132,8 @@ module Cms
       @page = create(:page, :section => @section, :name => "Overview", :path => "/test", :publish_on_save => true)
 
       @draft_page = create(:page, :section => @section, :name => "Draft v1", :path => "/draft", :publish_on_save => true)
-      @draft_page.update_attributes(:name => "Draft v2")
-      @never_published = create(:page, :section => @section, :name => "Never Published", :path => "/never_published")
+      @draft_page.update_attributes(:name => "Draft v2", :publish_on_save => false)
+      @never_published = create(:page, :section => @section, :name => "Never Published", :path => "/never_published", :publish_on_save=>false)
 
       expected = [
           {:id => "cms_page_#{@page.id}", :name => "Overview", :url => "/test", :selected => true},

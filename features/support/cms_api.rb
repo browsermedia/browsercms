@@ -15,6 +15,9 @@ module Cms
       visit '/cms/logout'
     end
 
+    def most_recently_created_page
+      Cms::Page.order("created_at DESC").first
+    end
   end
 end
 World(Cms::WebApi)

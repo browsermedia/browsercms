@@ -82,13 +82,14 @@ end
 
 Given /^I have an Html block in draft mode$/ do
   @block = create(:html_block, :content=>"Testing Modes")
-  @block.update_attributes(:name => "Should be updated.")
-  assert !@block.live?
+  @block.update_attributes(:name => "Should be updated.", :publish_on_save => false)
+  refute @block.live?, "Assumed: Block should not be published."
 end
 
 When /^I should see that block's content$/ do
   assert page.has_content?(@block.content), "Expected to see #{@block.content} on the page."
 end
+
 When /^I should see it's draft mode$/ do
   within(".block_published_status") do
     assert page.has_content?('draft')

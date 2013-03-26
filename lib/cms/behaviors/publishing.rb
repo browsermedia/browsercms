@@ -21,9 +21,7 @@ module Cms
           extend ClassMethods
           include InstanceMethods
         
-          attr_accessor :publish_on_save
           attr_accessible :publish_on_save
-
           after_save :publish_for_non_versioned
         
           scope :published, :conditions => {:published => true}
@@ -44,6 +42,22 @@ module Cms
       module ClassMethods
       end
       module InstanceMethods
+
+        # Whether or not this object will be published the next time '.save' is called.
+        # @return [Boolean] True unless explicitly set otherwise.
+        def publish_on_save
+          if @publish_on_save.nil?
+            @publish_on_save = true
+          end
+          @publish_on_save
+        end
+
+        # Set whether or not this object will be published next time '.save' is called.
+        # This status resets to true after calling '.save'
+        def publish_on_save=(publish)
+          @publish_on_save = publish
+        end
+
         def publishable?
           if self.class.connectable?
             new_record? ? connect_to_page_id.blank? : connected_page_count < 1
@@ -60,34 +74,40 @@ module Cms
             end
           end
         end
-        
+
+        def publish_if_needed
+          if publish_on_save
+            publish
+          else
+            self.publish_on_save = true
+          end
+        end
+
+        # Publishes the latest previously saved version of content as published. This will not create a new version,
+        # and will not persist changes made to a record.
+        #
+        # @return [Boolean] true if there was a draft record that was published, false otherwise.
         def publish
           publish!
-          true
         rescue Exception => e
           logger.warn("Could not publish, #{e.class}: #{e.message}\n#{e.backtrace.join("\n")}")
           false
         end
 
-        # Force the publishing of this block.
-        #
-        # Warning: The behavior of calling the following on an existing block:
-        #   block.save_on_publish = true
-        #   block.save!
-        #
-        # Is different than calling:
-        #   block.publish!
-        #
-        # And it probably shouldn't be. Try to merge the 'else' with the 'Versioning#create_or_update' method to eliminate duplication.
-        #
-        # In addition, after_publish is NOT called if you do:
-        #   block.save_on_publish = true
-        #   block.save!
-        # which will cause problems if blocks are updated via the method (like with the UI)
+        # Saves a draft copy of this content item. This will create a new record in the _versions table for this item, but
+        # will not update the existing published record.
+        def save_draft
+          self.publish_on_save = false
+          save
+        end
+
+        # Publishes the latest draft version of a block. See .publish for more documentation. Can throw errors if publishing failed for unexpected reasons.
+        # Note: Having separate .publish! and .publish methods is probably no longer necessary. In practice, only .publish is probably needed.
+        # @return [Boolean] true if the block had a draft that was published, false otherwise.
         def publish!
+          did_publish = false
           if new_record?
-            self.publish_on_save = true
-            save!
+            ActiveSupport::Deprecation.warn "Calling .publish! on a new record no longer saves the record. Call '.save' to persist and publish the record.", caller
           else
             # Do this for publishing existing blocks.
             transaction do
@@ -115,6 +135,7 @@ module Cms
 
                   # Doing the SQL ourselves to avoid callbacks
                   self.class.unscoped.where(self.class.arel_table[self.class.primary_key].eq(id)).arel.update(quoted_attributes)
+                  did_publish = true
                 end
               else
                 connection.update(
@@ -123,11 +144,13 @@ module Cms
                   "WHERE #{connection.quote_column_name(self.class.primary_key)} = #{quote_value(id)}",
                   "#{self.class.name.demodulize} Publish"
                 )
+                did_publish = true
               end
               after_publish if respond_to?(:after_publish)
             end
             self.published = true
           end
+          did_publish
         end    
             
         def status

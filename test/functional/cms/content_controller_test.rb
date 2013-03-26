@@ -300,18 +300,5 @@ module Cms
       assert_response :success
       assert_select "title", "Test Page"
     end
-
-    test "When portlets throw a generic error, the page should still render the other content." do
-      @page = create(:page, :section => root_section, :path => "/about", :name => "Test About", :template_file_name => "default.html.erb", :publish_on_save => true)
-      @portlet_render = DynamicPortlet.create!(:name => "Test", :connect_to_page_id => @page.id, :connect_to_container => "main", :template => '<p id="hi">hello</p>')
-      @portlet_raise_generic = DynamicPortlet.create!(:name => "Test", :connect_to_page_id => @page.id, :connect_to_container => "main", :code => 'raise')
-      reset(:page)
-
-      get :show, :path => "about"
-
-
-      assert_select "#hi", "hello"
-
-    end
   end
 end

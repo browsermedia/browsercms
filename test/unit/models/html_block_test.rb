@@ -70,7 +70,7 @@ class HtmlBlockTest < ActiveSupport::TestCase
     v1.save
 
     # Make a new version
-    @html_block.update_attributes(:name => "Version Two")
+    @html_block.update_attributes(:name => "Version Two", :publish_on_save => false)
     @v2_created_at = @html_block.versions.last.created_at
 
     assert_equal "Version Two", @html_block.name
@@ -103,7 +103,7 @@ class HtmlBlockTest < ActiveSupport::TestCase
   
   def test_previous_version
     @html_block = create(:html_block, :name => "V1")
-    @html_block.update_attributes(:name => "V2")
+    @html_block.update_attributes(:name => "V2", :publish_on_save => false)
     @version = @html_block.as_of_version 1
     
     assert_equal Cms::HtmlBlock, @version.class
@@ -112,9 +112,9 @@ class HtmlBlockTest < ActiveSupport::TestCase
     assert_equal @html_block.id, @version.id
     
     # We can't freeze the version because we need to be able to load assocations
-    assert !@version.frozen?
-    assert !@version.live?
-    assert !@html_block.live?
+    refute @version.frozen?
+    refute @version.live?
+    refute @html_block.live?
   end
   
 end

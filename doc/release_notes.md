@@ -5,6 +5,7 @@ This release includes the following features:
 
 * User Interface Redesign
 * True In Context Editing - Editors can directly edit Html content and page titles using CKEditor's inline capability.
+* Refined Content API
 
 UI Redesign
 ----------
@@ -27,6 +28,19 @@ Users can now edit most HTML content directly in the page. Icons indicate the ar
 1. Editable Page titles - Page title can be edited directly from the header.
 1. Preview Page - Editors can now preview the page without a toolbar or editing controls.
 1. Non-incontext Content - Not all content makes sense to be inline editable (for example portlets). For these content types, the previous move/remove/edit links now float in the upper right hand corner of the content block.
+
+Refined Content API
+-------------------
+
+1. .save now works identically between ActiveRecord and Content Blocks
+
+Previously, calling .save on a block would save a draft copy, rather then updating the record in place. This has been changed. To save a draft, you can do either:
+
+    @block.publish_on_save
+    @block.save
+    # or
+    @block.save_draft
+
 
 Upgrading
 --------

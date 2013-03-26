@@ -45,20 +45,6 @@ module Cms
       assert !@page.draft.hidden?
     end
 
-    def test_publish
-      create_page
-
-      assert !@page.published?
-
-      put :publish, :id => @page.to_param
-      reset(:page)
-
-      assert @page.published?
-      assert_equal "Page 'Test' was published", flash[:notice]
-
-      assert_redirected_to @page.path
-    end
-
     def test_versions
       create_page
       @page.update_attributes(:name => "V2")
@@ -79,10 +65,7 @@ module Cms
     end
 
     def test_revert_to
-      create_page
-      @page.update_attributes(:name => "V2")
-      @page.update_attributes(:name => "V3")
-      reset(:page)
+      create_draft_page_with_multiple_edits
 
       put :revert_to, :id => @page.to_param, :version => 1
       reset(:page)
@@ -93,9 +76,16 @@ module Cms
       assert_equal 4, @page.draft.version
     end
 
+    def create_draft_page_with_multiple_edits
+      create_page
+      @page.update_attributes(:name => "V2", :publish_on_save=>false)
+      @page.update_attributes(:name => "V3", :publish_on_save=>false)
+      reset(:page)
+    end
+
     protected
     def create_page
-      @page = create(:page, :section => root_section, :name => "Test", :path => "test")
+      @page = create(:page, :section => root_section, :name => "Test", :path => "test", :publish_on_save=>false)
     end
 
   end

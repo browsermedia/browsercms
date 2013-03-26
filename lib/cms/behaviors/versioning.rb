@@ -193,16 +193,6 @@ module Cms
           end
         end
 
-        def publish_if_needed
-          #logger.debug { "#{self.class}#publish_if_needed. publish? = '#{!!@publish_on_save}'" }
-
-          if @publish_on_save
-            publish
-            @publish_on_save = nil
-          end
-        end
-
-
         #
         #ActiveRecord 3.0.0 call chain
         # ActiveRecord 3 now uses basic inheritence rather than alias_method_chain.  The order in which ActiveRecord::Base
@@ -329,6 +319,7 @@ module Cms
 
           self.after_revert(revert_to_version) if self.respond_to?(:after_revert)
           self.version_comment = "Reverted to version #{version}"
+          self.publish_on_save = false
           self
         end
 

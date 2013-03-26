@@ -72,18 +72,6 @@ class HtmlBlocksControllerTest < ActionController::TestCase
     assert_equal "Html Block 'Test V2' was updated", flash[:notice]
   end
     
-  def test_publish
-    @block.update_attributes(:content => "Something Different")
-    
-    assert !@block.live?
-
-    put :publish, :id => @block.id
-    reset(:block)
-
-    assert_redirected_to @block
-    assert @block.reload.live?
-  end  
-  
   def test_versions
     get :versions, :id => @block.id
     assert_response :success
@@ -91,7 +79,7 @@ class HtmlBlocksControllerTest < ActionController::TestCase
   end  
   
   def test_revert_to
-    @block.update_attributes(:name => "Test V2")
+    @block.update_attributes(:name => "Test V2", :publish_on_save =>false)
     reset(:block)
     
     put :revert_to, :id => @block.id, :version => "1"

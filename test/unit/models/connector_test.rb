@@ -142,7 +142,7 @@ class ConnectorTest < ActiveSupport::TestCase
     assert @file.live?
     assert @page.connectors.last.live?
     
-    @file.update_attributes(:name => "Something Else")
+    @file.update_attributes(:name => "Something Else", :publish_on_save => false)
     @page.reload
 
     assert !@file.live?

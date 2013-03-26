@@ -105,7 +105,7 @@ module Cms
               if p != updated_by_page
                 #This just creates a new version of the page
                 action = deleted? ? "Deleted" : "Edited"
-                p.update_attributes(:version_comment => "#{self.class.name.demodulize} ##{id} was #{action}")
+                p.update_attributes(:version_comment => "#{self.class.name.demodulize} ##{id} was #{action}", :publish_on_save=>false)
 
                 #The previous step will copy over a connector pointing to the previous version of this connectable
                 #We need to change that to point at the new version of this connectable

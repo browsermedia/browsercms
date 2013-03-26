@@ -91,6 +91,24 @@ Feature: Portlets
     When I visit that page
     Then I should see the CMS :forbidden page
 
+  Scenario: Portlet errors should not blow up the page
+    Given I am not logged in
+    And a portlet that throws an unexpected error exists
+    When I view that page
+    Then the page should show content but not the error
+
+#  test "When portlets throw a generic error, the page should still render the other content." do
+#    @page = create(:page, :section => root_section, :path => "/about", :name => "Test About", :template_file_name => "default.html.erb", :publish_on_save => true)
+#    @portlet_render = DynamicPortlet.create!(:name => "Test", :connect_to_page_id => @page.id, :connect_to_container => "main", :template => '<p id="hi">hello</p>')
+#    @portlet_raise_generic = DynamicPortlet.create!(:name => "Test", :connect_to_page_id => @page.id, :connect_to_container => "main", :code => 'raise')
+#    reset(:page)
+#
+#    get :show, :path => "about"
+#
+#
+#    assert_select "#hi", "hello"
+#
+#  end
   Scenario: View Usages
     Given portlet named "Hello World" has been added to a page
     When I view that portlet

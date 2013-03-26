@@ -186,3 +186,26 @@ When /^the page content should contain "([^"]*)"$/ do |content|
   assert page.has_content?(content)
 end
 
+When /^I create a new page$/ do
+  visit '/cms/sections/1/pages/new'
+  fill_in "Name", with: "New Page"
+  fill_in "Path", with: "/new-page"
+  click_on 'Save'
+end
+
+Then /^that page should not be published$/ do
+  refute most_recently_created_page.published?, "The page should not be published."
+end
+
+Then /^I publish that page$/ do
+  visit most_recently_created_page.path
+  click_put_link "Publish"
+end
+
+Then /^that page should be published$/ do
+  assert most_recently_created_page.published?, "The page should be published."
+end
+
+Then /^I should end up on that page$/ do
+  should_see_a_page_titled(most_recently_created_page.title)
+end

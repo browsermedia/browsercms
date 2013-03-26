@@ -73,8 +73,8 @@ module Cms
   class HistoricalVersionsTest < ActiveSupport::TestCase
 
     def setup
-      @published_block = create(:html_block, :name => "Version 1", :publish_on_save => true)
-      @published_block.update_attributes(:name => "Version 2")
+      @published_block = create(:html_block, :name => "Version 1")
+      @published_block.update_attributes(:name => "Version 2", :publish_on_save => false)
       @published_block.reload
     end
 

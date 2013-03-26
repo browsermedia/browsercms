@@ -19,7 +19,7 @@ class LinkTest < ActiveSupport::TestCase
 
   test "#update increments the latest_version" do
     @link.name = "New"
-    @link.save!
+    @link.save_draft
     @link.reload
 
     assert_equal 1, @link.version
@@ -33,7 +33,7 @@ class LinkTest < ActiveSupport::TestCase
   end
 
   test "updating makes it not live" do
-    @link.update_attributes(:name => "New")
+    @link.update_attributes(:name => "New", :publish_on_save => false)
     @link.reload
     refute @link.live?
 

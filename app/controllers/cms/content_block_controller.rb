@@ -175,13 +175,17 @@ module Cms
 
 
     def build_block
-      begin
-        @block = model_class.new(params[model_form_name])
-      ensure
-        # Recover from an Exception thrown during binding of parameters to model class
+      if params[model_form_name]
+        defaults = {"publish_on_save" => false}
+        model_params = params[model_form_name]
+        model_params = defaults.merge(model_params)
+        @block = model_class.new(model_params)
+        logger.warn model_params
+      else
         # Need to make sure @block exists for form helpers to correctly generate paths
         @block = model_class.new unless @block
       end
+
       check_permissions
     end
 
@@ -219,7 +223,6 @@ module Cms
       log_complete_stacktrace(@exception)
       after_update_on_failure
     end
-
 
 
     # update related methods

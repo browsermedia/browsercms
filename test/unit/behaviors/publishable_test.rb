@@ -45,7 +45,7 @@ class PublishableBlockTestCase < ActiveSupport::TestCase
 
   test "#live? if there are draft versions" do
     @object.name = "New Name"
-    @object.save!
+    @object.save_draft
 
     assert_equal false, @object.live?
     assert_equal :draft, @object.status

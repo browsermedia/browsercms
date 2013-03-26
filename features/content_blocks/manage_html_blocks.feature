@@ -15,6 +15,17 @@ Feature: Manage Html Blocks
       | Hello CMS     |
       | Include body? |
 
+  Scenario: Save but not publish a New Block
+    Given I request /cms/html_blocks/new
+    Then I should see a page titled "Add New Text"
+    When I fill in "Name" with "Hello World"
+    And I click on "Save"
+    Then I should see a page titled "Content Library / View Text"
+    And I should see the following content:
+      | draft                   |
+      | View Text 'Hello World' |
+    And the publish button should be enabled
+
   Scenario: Publishing a New Block
     Given I request /cms/html_blocks/new
     Then I should see a page titled "Add New Text"

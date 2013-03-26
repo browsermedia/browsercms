@@ -172,18 +172,21 @@ class Cms::Page < ActiveRecord::Base
   end
 
   # Adds a Content block to this page.
+  #
   # @param [ContentBlock] connectable The content block to be added
   # @param [Symbol] container The container to add it in (default :main)
   def add_content(connectable, container=:main)
     transaction do
       raise "Connectable is nil" unless connectable
       raise "Container is required" if container.blank?
+      #should_publish =  published? &&
+      #              connectable.connected_page &&
+      #              (connectable.class.publishable? ? connectable.published? : true)
+      should_publish = false
       update_attributes(
           :version_comment => "#{connectable} was added to the '#{container}' container",
-          :publish_on_save => (
-          published? &&
-              connectable.connected_page &&
-              (connectable.class.publishable? ? connectable.published? : true)))
+          :publish_on_save => should_publish
+      )
       connectors.create(
           :page_version => draft.version,
           :connectable => connectable,
@@ -195,12 +198,13 @@ class Cms::Page < ActiveRecord::Base
   # @deprecated
   alias_method :create_connector, :add_content
 
+  # Moves a specific connector up or down within its container for a page.
   def move_connector(connector, direction)
     transaction do
       raise "Connector is nil" unless connector
       raise "Direction is nil" unless direction
       orientation = direction[/_/] ? "#{direction.sub('_', ' the ')} of" : "#{direction} within"
-      update_attributes(:version_comment => "#{connector.connectable} was moved #{orientation} the '#{connector.container}' container")
+      update_attributes(:version_comment => "#{connector.connectable} was moved #{orientation} the '#{connector.container}' container", :publish_on_save=>false)
       connectors.for_page_version(draft.version).like(connector).first.send("move_#{direction}")
     end
   end
@@ -214,7 +218,7 @@ class Cms::Page < ActiveRecord::Base
   def remove_connector(connector)
     transaction do
       raise "Connector is nil" unless connector
-      update_attributes(:version_comment => "#{connector.connectable} was removed from the '#{connector.container}' container")
+      update_attributes(version_comment: "#{connector.connectable} was removed from the '#{connector.container}' container", publish_on_save: false)
 
       #The logic of this is to go ahead and let the container get copied forward, then delete the new connector
       if new_connector = connectors.for_page_version(draft.version).like(connector).first
