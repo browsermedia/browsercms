@@ -1,6 +1,7 @@
 require 'ancestry'
 
 class Cms::SectionNode < ActiveRecord::Base
+  self.table_name = :cms_addressable_paths
   attr_accessible :node, :section, :parent, :node_id, :node_type
   has_ancestry
 
