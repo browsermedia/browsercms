@@ -21,7 +21,7 @@ module Cms
           extend ClassMethods
           include InstanceMethods
         
-          attr_accessible :publish_on_save
+          attr_accessible :publish_on_save, :as
           after_save :publish_for_non_versioned
         
           scope :published, :conditions => {:published => true}
@@ -43,6 +43,16 @@ module Cms
       end
       module InstanceMethods
 
+        # Can specify whether to save this block as a draft using a terser syntax.
+        # These two calls behave identically
+        #   - Cms::HtmlBlock.create(name: "Shorter", as: :draft)
+        #   - Cms::HtmlBlock.create(name: "Longer",  publish_on_save: false)
+        # @param [Symbol] status :draft to not publish on the next save. All other values are ignored.
+        def as=(status)
+          if status == :draft
+            self.publish_on_save = false
+          end
+        end
         # Whether or not this object will be published the next time '.save' is called.
         # @return [Boolean] True unless explicitly set otherwise.
         def publish_on_save

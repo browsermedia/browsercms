@@ -1,12 +1,9 @@
 require "minitest_helper"
 
 describe 'Publishing' do
-  let (:block) do
-    b = Cms::HtmlBlock.create!(name: "Published Version")
-    b.publish!
-    b
-  end
-  let(:draft_block) { create(:html_block, publish_on_save: false)}
+  let(:block) { create(:html_block, name: "Published Version") }
+  let(:new_block) { build(:html_block) }
+  let(:draft_block) { create(:html_block, as: :draft) }
   let(:invalid_params) { {} }
   let(:valid_params) { {name: "Any Name"} }
   describe '.publish_on_save' do
@@ -39,6 +36,19 @@ describe 'Publishing' do
     end
   end
 
+  describe '.as=' do
+    it "can specify to save as draft" do
+      new_block.as = :draft
+      new_block.save!
+
+      new_block.published?.wont_equal true
+    end
+
+    it "can be called during mass assignment" do
+      block = Cms::HtmlBlock.create(name: "Mass", as: :draft)
+      block.published?.wont_equal true
+    end
+  end
   describe '.publish' do
     it "should not publish a new block" do
       block = Cms::HtmlBlock.new(valid_params)
@@ -106,7 +116,7 @@ describe 'Publishing' do
   # Creates and returns a block with a single draft version.
   def block_with_draft
     block_with_draft = create(:html_block)
-    block_with_draft.update_attributes(name: "Draft Copy", publish_on_save: false)
+    block_with_draft.update_attributes(name: "Draft Copy", as: :draft)
     block_with_draft.versions.size.must_equal 2
     block_with_draft
   end
