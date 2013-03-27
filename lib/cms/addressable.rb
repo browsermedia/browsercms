@@ -2,6 +2,17 @@
 #
 # Can have parents (using SectionNodes) and children.
 module Cms
+
+  # Added to all ActiveRecord::Base instances, this allows any object to become addressable.
+  module MightBeAddressable
+
+    # Adds addressable behavior to a model.
+    def is_addressable
+      include Cms::Addressable
+      has_one :section_node, :as => :node, :dependent => :destroy, :inverse_of => :node, :class_name => 'Cms::SectionNode'
+    end
+
+  end
   module Addressable
 
     def self.included(model_class)
@@ -65,6 +76,7 @@ module Cms
       def self.included(model_class)
         model_class.attr_accessible :section_id, :section
       end
+
       include LeafNode
       include NodeAccessors
 

@@ -3,11 +3,10 @@ class Cms::Link < ActiveRecord::Base
 
   scope :named, lambda{|name| {:conditions => ["#{table_name}.name = ?", name]}}
   
-  has_one :section_node, :as => :node, :dependent => :destroy, :inverse_of => :node, :class_name => 'Cms::SectionNode'
 
   validates_presence_of :name
 
-  include Cms::Addressable
+  is_addressable
   include Cms::Addressable::DeprecatedPageAccessors
 
   #needed by menu_helper

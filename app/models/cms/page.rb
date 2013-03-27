@@ -67,9 +67,7 @@ class Cms::Page < ActiveRecord::Base
     end
   }
 
-  has_one :section_node, :as => :node, :dependent => :destroy, :inverse_of => :node, :class_name => 'Cms::SectionNode'
-
-  include Cms::Addressable
+  is_addressable
   include Cms::Addressable::DeprecatedPageAccessors
 
 

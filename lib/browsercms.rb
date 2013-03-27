@@ -28,5 +28,6 @@ require 'command_line'
 ActiveRecord::Base.send(:include, Cms::Acts::ContentBlock)
 require 'cms/behaviors'
 
+
 ActiveRecord::Base.send(:include, Cms::Acts::CmsUser)
 

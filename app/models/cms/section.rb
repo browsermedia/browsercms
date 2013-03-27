@@ -6,6 +6,7 @@ module Cms
 
     #The node that links this section to its parent
     has_one :section_node, :class_name => 'Cms::SectionNode', :as => :node, :inverse_of => :node
+
     SECTION = "Cms::Section"
     PAGE = "Cms::Page"
     LINK = "Cms::Link"
