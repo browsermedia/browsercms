@@ -6,7 +6,7 @@ class Cms::Link < ActiveRecord::Base
 
   validates_presence_of :name
 
-  is_addressable
+  is_addressable(dependent: :destroy)
   include Cms::Addressable::DeprecatedPageAccessors
 
   #needed by menu_helper

@@ -25,10 +25,9 @@ module Cms
 
     validates :attachment_name, :attachable_type, :presence => true
 
-    include Cms::Addressable
+    is_addressable
+    include Cms::Addressable::NodeAccessors
     include Cms::Addressable::DeprecatedPageAccessors
-    has_one :section_node, :as => :node, :class_name => 'Cms::SectionNode'
-    alias :node :section_node
 
     is_archivable; is_publishable; uses_soft_delete; is_userstamped; is_versioned
 

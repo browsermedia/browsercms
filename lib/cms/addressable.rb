@@ -7,9 +7,11 @@ module Cms
   module MightBeAddressable
 
     # Adds addressable behavior to a model.
-    def is_addressable
+    def is_addressable(options={})
+      defaults = {as: :node, inverse_of: :node, class_name: 'Cms::SectionNode'}
+      options = defaults.merge(options)
       include Cms::Addressable
-      has_one :section_node, :as => :node, :dependent => :destroy, :inverse_of => :node, :class_name => 'Cms::SectionNode'
+      has_one :section_node, options
     end
 
   end
