@@ -1,5 +1,7 @@
 module Cms
   class ContentController < Cms::ApplicationController
+    respond_to :html
+
     include Cms::ContentRenderingSupport
     include Cms::Attachments::Serving
 
@@ -16,6 +18,7 @@ module Cms
     before_filter :check_access_to_page, :except => [:edit, :preview]
     before_filter :select_cache_directory
 
+    self.responder = Cms::ContentResponder
 
     # ----- Actions --------------------------------------------------------------
     def show
@@ -76,8 +79,7 @@ module Cms
 
     def render_page
       prepare_connectables_for_render
-      page_layout = determine_page_layout
-      render :layout => page_layout, :action => 'show'
+      respond_with @page, determine_page_layout
     end
 
     def cache_if_eligible
@@ -98,7 +100,6 @@ module Cms
 
     # ----- Before Filters -------------------------------------------------------
     def construct_path
-      # @paths = params[:cms_page_path] || params[:path] || []
       @path = "/#{params[:path]}"
       @paths = @path.split("/")
     end

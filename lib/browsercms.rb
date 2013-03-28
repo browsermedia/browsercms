@@ -30,4 +30,4 @@ require 'cms/behaviors'
 
 
 ActiveRecord::Base.send(:include, Cms::Acts::CmsUser)
-
+require 'cms/responders/content_responder'
