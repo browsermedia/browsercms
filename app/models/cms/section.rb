@@ -3,9 +3,7 @@ module Cms
     flush_cache_on_change
 
     is_addressable
-    include Cms::Addressable::NodeAccessors
-
-     # Cannot use dependent => :destroy to do this. Ancestry's callbacks trigger before the before_destroy callback.
+    # Cannot use dependent => :destroy to do this. Ancestry's callbacks trigger before the before_destroy callback.
     #   So sections would always get deleted since deletable? would return true
     after_destroy :destroy_node
     before_destroy :deletable?

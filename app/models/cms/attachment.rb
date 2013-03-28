@@ -26,16 +26,10 @@ module Cms
     validates :attachment_name, :attachable_type, :presence => true
 
     is_addressable
-    include Cms::Addressable::NodeAccessors
     include Cms::Addressable::DeprecatedPageAccessors
 
     is_archivable; is_publishable; uses_soft_delete; is_userstamped; is_versioned
 
-    #TODO change this to a simple method
-    #def named(mid)
-    # find_all_by_name mid
-    # end
-    # ...or even get rid of it
     scope :named, lambda { |name|
       {:conditions => {:attachment_name => name.to_s}}
     }

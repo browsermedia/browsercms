@@ -11,6 +11,7 @@ module Cms
       defaults = {as: :node, inverse_of: :node, class_name: 'Cms::SectionNode'}
       options = defaults.merge(options)
       include Cms::Addressable
+      include Cms::Addressable::NodeAccessors
       has_one :section_node, options
     end
 
@@ -20,6 +21,7 @@ module Cms
     def self.included(model_class)
       model_class.attr_accessible :parent
     end
+
 
     # Returns a list of all Addressable objects that are ancestors to this record.
     # @param [Hash] options
@@ -62,6 +64,7 @@ module Cms
       end
     end
 
+    # alias :node, :section_node
     module NodeAccessors
       def node
         section_node
@@ -80,7 +83,6 @@ module Cms
       end
 
       include LeafNode
-      include NodeAccessors
 
       def build_node(opts)
         build_section_node(opts)
