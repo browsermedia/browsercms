@@ -40,18 +40,6 @@ ActiveRecord::Schema.define(:version => 20130327184912) do
     t.integer  "updated_by_id"
   end
 
-  create_table "cms_addressable_paths", :force => true do |t|
-    t.string   "node_type"
-    t.integer  "node_id"
-    t.integer  "position"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-    t.string   "ancestry"
-  end
-
-  add_index "cms_addressable_paths", ["ancestry"], :name => "index_cms_section_nodes_on_ancestry"
-  add_index "cms_addressable_paths", ["node_type"], :name => "index_cms_section_nodes_on_node_type"
-
   create_table "cms_attachment_versions", :force => true do |t|
     t.integer  "original_record_id"
     t.integer  "version"
@@ -292,6 +280,7 @@ ActiveRecord::Schema.define(:version => 20130327184912) do
     t.integer  "updated_by_id"
     t.datetime "created_at",                                                :null => false
     t.datetime "updated_at",                                                :null => false
+    t.string   "path"
   end
 
   add_index "cms_html_block_versions", ["original_record_id"], :name => "index_cms_html_block_versions_on_original_record_id"
@@ -309,6 +298,7 @@ ActiveRecord::Schema.define(:version => 20130327184912) do
     t.integer  "updated_by_id"
     t.datetime "created_at",                                           :null => false
     t.datetime "updated_at",                                           :null => false
+    t.string   "path"
   end
 
   add_index "cms_html_blocks", ["deleted"], :name => "index_cms_html_blocks_on_deleted"
@@ -451,6 +441,18 @@ ActiveRecord::Schema.define(:version => 20130327184912) do
   end
 
   add_index "cms_redirects", ["from_path"], :name => "index_cms_redirects_on_from_path"
+
+  create_table "cms_section_nodes", :force => true do |t|
+    t.string   "node_type"
+    t.integer  "node_id"
+    t.integer  "position"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+    t.string   "ancestry"
+  end
+
+  add_index "cms_section_nodes", ["ancestry"], :name => "index_cms_section_nodes_on_ancestry"
+  add_index "cms_section_nodes", ["node_type"], :name => "index_cms_section_nodes_on_node_type"
 
   create_table "cms_sections", :force => true do |t|
     t.string   "name"
