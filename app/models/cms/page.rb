@@ -83,15 +83,19 @@ class Cms::Page < ActiveRecord::Base
   # Find the latest draft of a given page.
   #
   # @param [Integer | String] id_or_path The id or path of the page
-  # @return [Cms::Page::Version] The version of the page as of the current Draft. Or nil if Page doesn't exist.
-  #
+  # @return [Cms::Page::Version] The version of the page as of the current Draft.
+  # @raises [Cms::Errors::ContentNotFound] if no record could be found.
   def self.find_draft(id_or_path)
     if id_or_path.is_a? String
       current = self.with_path(id_or_path).first
     else
       current = self.find(id_or_path)
     end
-    current ? current.as_of_draft_version : nil
+    if current
+      current.as_of_draft_version
+    else
+      raise Cms::Errors::ContentNotFound
+    end
   end
 
   # Returns all content for the current page, excluding any deleted ones.

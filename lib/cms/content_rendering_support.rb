@@ -5,11 +5,19 @@ module Cms
   module ContentRenderingSupport
 
     def self.included(base)
-      base.send :include, Cms::ErrorHandling
 
       base.rescue_from Exception, :with => :handle_server_error_on_page
-      base.rescue_from Cms::Errors::AccessDenied, :with => :handle_access_denied_on_page
       base.rescue_from ActiveRecord::RecordNotFound, :with => :handle_not_found_on_page
+      base.rescue_from Cms::Errors::ContentNotFound, :with => :handle_content_not_found
+      base.rescue_from Cms::Errors::AccessDenied, :with => :handle_access_denied_on_page
+
+    end
+
+    def handle_content_not_found(exception)
+      logger.warn "Content Not Found"
+      render(:layout => 'cms/application',
+             :template => 'cms/content/no_page',
+             :status => :not_found)
     end
 
     def handle_not_found_on_page(exception)
@@ -54,7 +62,7 @@ module Cms
 
         # clear out any content already captured
         # by previous attempts to render the page within this request
-        @template.instance_variables.select{|v| v =~ /@content_for_/ }.each do |v|
+        @template.instance_variables.select { |v| v =~ /@content_for_/ }.each do |v|
           @template.instance_variable_set("#{v}", nil)
         end
 
@@ -62,7 +70,7 @@ module Cms
 
         # The error pages are ALWAYS html since they are managed by the CMS as normal pages.
         # So .gif or .jpg requests that throw errors will return html rather than a format warning.
-        render :layout => @page.layout, :template => 'cms/content/show', :status => status, :formats=>[:html]
+        render :layout => @page.layout, :template => 'cms/content/show', :status => status, :formats => [:html]
       else
         handle_server_error(exception)
       end
@@ -73,7 +81,7 @@ module Cms
     def prepare_connectables_for_render
       @_connectors = @page.current_connectors
       @_connectables = @page.contents
-    
+
       unless (logged_in? && current_user.able_to?(:administrate, :edit_content, :publish_content))
         worst_exception = nil
         @_connectables.each do |c|

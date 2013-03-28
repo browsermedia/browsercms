@@ -17,7 +17,7 @@ class CmsActsAsContentPageTest < ActiveSupport::TestCase
     assert c.respond_to? :handle_error_with_cms_page, true
 
     assert(c.respond_to?(:logged_in?), "Should include Cms::Authentication::Controller methods")
-    assert(c.respond_to?(:handle_server_error), "Should include Cms::ErrorHandling methods")
+    #assert(c.respond_to?(:handle_server_error), "Should include Cms::ErrorHandling methods")
 
     assert(MyController.respond_to?(:requires_permission_for_section), "Should add ClassMethods to the controller.")
   end

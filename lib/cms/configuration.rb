@@ -1,4 +1,4 @@
-#require 'cms/version'
+require 'active_record/errors'
 
 # Used for some misc configuration around the project.
 module Cms
@@ -33,6 +33,11 @@ module Cms
       def initialize
         super("Access Denied")
       end
+    end
+
+    # Indicates no content block could be found.
+    class ContentNotFound < ActiveRecord::RecordNotFound
+
     end
   end
 end

@@ -22,9 +22,10 @@ describe Cms::Page do
       found.version.must_equal 2
     end
 
-    it "should return nil if page not found" do
-      Cms::Page.find_draft('/non-existant-path').must_be_nil
+    it "should throw error if page not found" do
+      proc { Cms::Page.find_draft('/non-existent-path')}.must_raise Cms::Errors::ContentNotFound
     end
+
     def page_with_draft
       page.update_attributes(name: 'Version 2', as: :draft)
       page

@@ -40,14 +40,8 @@ module Cms
     def edit
       @show_toolbar = true
       @mode = "edit"
-      if @page = Page.find_draft(params[:id].to_i)
-        render_page
-      else
-        render(:layout => 'cms/application',
-               :template => 'cms/content/no_page',
-               :status => :not_found)
-      end
-
+      @page = Page.find_draft(params[:id].to_i)
+      render_page
     end
 
     def preview
@@ -161,11 +155,7 @@ module Cms
     def load_page_or_content
       if current_user.able_to?(:edit_content, :publish_content, :administrate)
         logger.debug "Displaying draft version of page"
-        unless @page = Page.find_draft(@path)
-          return render(:layout => 'cms/application',
-                        :template => 'cms/content/no_page',
-                        :status => :not_found)
-        end
+        @page = Page.find_draft(@path)
       else
         logger.debug "Displaying live version of page"
         @page = Page.find_live_by_path(@path)

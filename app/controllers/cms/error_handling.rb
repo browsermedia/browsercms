@@ -3,7 +3,7 @@ module Cms
     def self.included(controller)
       controller.class_eval do
         rescue_from Exception, :with => :handle_server_error unless Rails.env == "test"
-        rescue_from Cms::Errors::AccessDenied, :with => :handle_access_denied
+        rescue_from Cms::Errors::AccessDenied, :with => :handle_internal_access_denied
       end
     end
 
@@ -27,7 +27,7 @@ module Cms
       end
     end
 
-    def handle_access_denied(exception)
+    def handle_internal_access_denied(exception)
       render :layout => 'cms/application',
              :template => 'cms/shared/access_denied',
              :status => 403
