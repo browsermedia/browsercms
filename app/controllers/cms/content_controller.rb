@@ -40,8 +40,7 @@ module Cms
     def edit
       @show_toolbar = true
       @mode = "edit"
-      if page = Page.where(:id => params[:id]).first
-        @page = page.as_of_draft_version
+      if @page = Page.find_draft(params[:id].to_i)
         render_page
       else
         render(:layout => 'cms/application',
@@ -53,7 +52,7 @@ module Cms
 
     def preview
       @mode = "view"
-      @page = Page.find_draft(params[:id])
+      @page = Page.find_draft(params[:id].to_i)
       ensure_current_user_can_edit(@page)
       render_page
     end
