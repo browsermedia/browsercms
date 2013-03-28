@@ -77,16 +77,21 @@ class Cms::Page < ActiveRecord::Base
   validates_presence_of :name, :path
 
   # Paths must be unique among undeleted records
-  validates_uniqueness_of :path, :scope=>:deleted
+  validates_uniqueness_of :path, :scope => :deleted
   validate :path_not_reserved
 
   # Find the latest draft of a given page.
   #
-  # @param [Integer] id The id of the page
-  # @return [Cms::Page::Version] The version of the page as of the current Draft
-  def self.find_draft(id)
-    current = self.find(id)
-    current.as_of_draft_version
+  # @param [Integer | String] id_or_path The id or path of the page
+  # @return [Cms::Page::Version] The version of the page as of the current Draft. Or nil if Page doesn't exist.
+  #
+  def self.find_draft(id_or_path)
+    if id_or_path.is_a? String
+      current = self.with_path(id_or_path).first
+    else
+      current = self.find(id_or_path)
+    end
+    current ? current.as_of_draft_version : nil
   end
 
   # Returns all content for the current page, excluding any deleted ones.
@@ -99,7 +104,7 @@ class Cms::Page < ActiveRecord::Base
   # @param [Symbol] container The name of the container to match (Optional - Return all)
   def current_connectors(container=nil)
     @current_connectors ||= self.connectors.for_page_version(self.version)
-    if(container)
+    if (container)
       @current_connectors.select { |c| c.container.to_sym == container }
     else
       @current_connectors
@@ -157,11 +162,11 @@ class Cms::Page < ActiveRecord::Base
         logger.debug "When copying block #{connectable.inspect} version is '#{version}'"
 
         new_connector = connectors.create(
-          :page_version => options[:to_version_number],
-          :connectable => connectable, 
-          :connectable_version => version,
-          :container => c.container,
-          :position => c.position
+            :page_version => options[:to_version_number],
+            :connectable => connectable,
+            :connectable_version => version,
+            :container => c.container,
+            :position => c.position
         )
         logger.debug { "Built new connector #{new_connector}." }
       end
@@ -202,7 +207,7 @@ class Cms::Page < ActiveRecord::Base
       raise "Connector is nil" unless connector
       raise "Direction is nil" unless direction
       orientation = direction[/_/] ? "#{direction.sub('_', ' the ')} of" : "#{direction} within"
-      update_attributes(:version_comment => "#{connector.connectable} was moved #{orientation} the '#{connector.container}' container", :publish_on_save=>false)
+      update_attributes(:version_comment => "#{connector.connectable} was moved #{orientation} the '#{connector.container}' container", :publish_on_save => false)
       connectors.for_page_version(draft.version).like(connector).first.send("move_#{direction}")
     end
   end

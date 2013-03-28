@@ -12,6 +12,7 @@ module Cms
     before_filter :construct_path_from_route, :only => [:show_page_route]
     before_filter :try_to_redirect, :only => [:show]
     before_filter :try_to_stream_file, :only => [:show]
+    before_filter :load_page_or_content, :only => [:show, :show_page_route]
     before_filter :check_access_to_page, :except => [:edit, :preview]
     before_filter :select_cache_directory
 
@@ -157,12 +158,10 @@ module Cms
 
     end
 
-    def check_access_to_page
+    def load_page_or_content
       if current_user.able_to?(:edit_content, :publish_content, :administrate)
         logger.debug "Displaying draft version of page"
-        if page = Page.first(:conditions => {:path => @path})
-          @page = page.as_of_draft_version
-        else
+        unless @page = Page.find_draft(@path)
           return render(:layout => 'cms/application',
                         :template => 'cms/content/no_page',
                         :status => :not_found)
@@ -172,9 +171,10 @@ module Cms
         @page = Page.find_live_by_path(@path)
         page_not_found unless (@page && !@page.archived?)
       end
+    end
 
+    def check_access_to_page
       ensure_current_user_can_edit(@page)
-
     end
 
     # ----- Other Methods --------------------------------------------------------

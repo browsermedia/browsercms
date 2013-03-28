@@ -5,13 +5,29 @@ describe Cms::Page do
   let(:page) { create(:page) }
 
   describe ".find_draft" do
-    it "should return the latest draft of the page" do
-      page.name = "Version 2"
-      page.save
 
-      found = Cms::Page.find_draft(page.id)
-      found.must_be_instance_of Cms::Page
-      found.name.must_equal page.name
+    it "should return the latest draft of the page" do
+      expected = page_with_draft
+
+      found = Cms::Page.find_draft(expected.id)
+      found.name.must_equal expected.name
+      found.version.must_equal 2
+    end
+
+    it "should find by path" do
+      expected = page_with_draft
+
+      found = Cms::Page.find_draft(expected.path)
+      found.name.must_equal expected.name
+      found.version.must_equal 2
+    end
+
+    it "should return nil if page not found" do
+      Cms::Page.find_draft('/non-existant-path').must_be_nil
+    end
+    def page_with_draft
+      page.update_attributes(name: 'Version 2', as: :draft)
+      page
     end
   end
 
