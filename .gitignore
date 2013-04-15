@@ -21,6 +21,8 @@ doc/api
 .bundle/*
 test/dummy/db/backups/*
 test/dummy/.sass-cache
+test/dummy/.rvmrc
+test/dummy/.powder
 test/dummy/config/database.yml
 .sass-cache
 db/backups

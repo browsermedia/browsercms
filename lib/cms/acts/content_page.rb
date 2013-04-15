@@ -56,6 +56,10 @@ module Cms
         end
       end
 
+      def determine_page_layout
+        @page.layout
+      end
+
       module ClassMethods
 
         # Requires that some or all of the actions on this controller require the same permissions as a specific section of the website.

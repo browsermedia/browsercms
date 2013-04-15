@@ -28,6 +28,12 @@ module Cms
       handle_error_with_cms_page(Cms::ErrorPages::SERVER_ERROR_PATH, exception, :internal_server_error)
     end
 
+    # Basic implementation for looking up the template based on the page layout.
+    # This will be overwritten by Cms::MobileAware to show mobile aware templates.
+    def determine_page_layout
+      @page.layout
+    end
+
     private
 
     # This is the method all error handlers delegate to
@@ -62,7 +68,7 @@ module Cms
 
         # The error pages are ALWAYS html since they are managed by the CMS as normal pages.
         # So .gif or .jpg requests that throw errors will return html rather than a format warning.
-        render :layout => @page.layout, :template => 'cms/content/show', :status => status, :formats=>[:html]
+        render :layout => determine_page_layout, :template => 'cms/content/show', :status => status, :formats=>[:html]
       else
         handle_server_error(exception)
       end
