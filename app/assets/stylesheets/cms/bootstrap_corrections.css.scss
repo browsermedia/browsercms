@@ -25,7 +25,7 @@ body {
 
 tbody .block_status {color: #FFF; text-shadow: 0 1px 0 rgba(0,0,0,0.5) !important; text-transform: capitalize;}
 
-tbody .block_status.draft {
+tbody .block_status.draft, #sitemap .span1.Draft {
   background: #EE5F5B;
   background: -webkit-gradient(linear, 0 0, 0 bottom, from(#EE5F5B), to(#BD362F));
   background: -webkit-linear-gradient(#EE5F5B, #BD362F);
@@ -35,7 +35,7 @@ tbody .block_status.draft {
   background: linear-gradient(#EE5F5B, #BD362F);
 }
 
-tbody .block_status.published {
+tbody .block_status.published, #sitemap .span1.Published {
   background: #62c462;
   background: -webkit-gradient(linear, 0 0, 0 bottom, from(#62c462), to(#51a351));
   background: -webkit-linear-gradient(#62c462, #51a351);
@@ -50,3 +50,7 @@ tbody .block_status.published {
 #sitemap .table {margin: 0;}
 #sitemap .table td {vertical-align: middle;}
 #sitemap .table img + div {display: inline;}
+
+.label {margin: 12px 10px 0 0;}
+
+#loginmain {margin: 0 auto; float: none;}

@@ -14,6 +14,8 @@
             :access_icon => status_icon(access_status),
             :parent => parent
     } %>
+    <% if children %>
+    <div id="subsection<%= section_node.id %>" class="collapse out pull-right row-fluid">
     <% children.each do |child_section_node| %>
         <%= render :partial => child_section_node.node.partial_for,
                    :locals => {:access_icon => access_status,
@@ -22,6 +24,8 @@
                                :child_hash => child_hash[key],
                                :key => child_section_node
                    } %>
+    <% end %>
+    </div>
     <% end %>
 
   </li>

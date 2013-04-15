@@ -19,7 +19,7 @@ module Cms
       if children.empty?
         image_tag("cms/sitemap/no_contents.png", :class => "no_folder_toggle#{folder_style}")
       else
-        image_tag("cms/sitemap/#{expander_image}", :class => "folder_toggle#{folder_style}")
+        image_tag("cms/sitemap/#{expander_image}", :class => "folder_toggle#{folder_style}", :data => {:toggle => "collapse", :target => "#subsection#{section_node.id}"})
       end
     end
 
@@ -33,7 +33,7 @@ module Cms
         :class => "section_node"
       }
       opts[:class] += " rootlet" if in_first_level?(node)
-      opts[:style] = "display: none" unless in_first_level?(node)
+      #opts[:style] = "display: none" unless in_first_level?(node)
       tag("ul", opts, true)
     end
 

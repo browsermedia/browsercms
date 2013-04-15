@@ -1,8 +1,8 @@
 <%= content_for :button_bar do %>
     <% if !@page.live? %>
-        <span class="label label-important">DRAFT</span>
+        <span class="label label-important pull-left">DRAFT</span>
     <% else %>
-        <span class="label label-success">Published</span>
+        <span class="label label-success pull-left">Published</span>
     <% end %>
     <%= menu_button "Publish",
                     @page.live? ? '#' : cms.publish_page_path(@page),
