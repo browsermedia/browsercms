@@ -52,6 +52,11 @@ Deprecations
 
 * page_title("Some Name") is deprecated in favor of use_page_title("Some Name") for overriding a page title. This will be remove in 4.1. This probably will probably only effect changes make in modules or customizations to the core.
 
+v3.5.6
+======
+
+* [#591] Error pages do not render mobile templates
+
 v3.5.5
 ======
 
