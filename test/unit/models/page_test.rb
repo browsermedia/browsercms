@@ -150,26 +150,6 @@ module Cms
       assert_equal @page.path, "/slashed/loooong/path"
     end
 
-    test "#find_live_by_path should find published page" do
-      @page = create(:page, :path => '/foo')
-      assert_equal @page, Cms::Page.find_live_by_path('/foo')
-    end
-
-    test "#find_live_by_path should not find draft with given path" do
-      @page = create(:page, :path => '/foo')
-      @page.update_attributes(:path => '/bar', :publish_on_save => false)
-      assert_equal @page, Cms::Page.find_live_by_path('/foo')
-      assert_nil Cms::Page.find_live_by_path('/bar')
-    end
-
-    test "#find_live_by_path should not find draft with old path" do
-      @page = create(:page, :path => '/foo', :publish_on_save => false)
-      @page.update_attributes(:path => '/bar')
-
-      assert_nil Cms::Page.find_live_by_path('/foo')
-      assert_equal @page, Cms::Page.find_live_by_path('/bar')
-    end
-
     test "It should be possible to create a new page, using the same path as a previously deleted page" do
       p = Time.now.to_f.to_s #use a unique, but consistent path
 

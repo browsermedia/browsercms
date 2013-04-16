@@ -1,3 +1,4 @@
+require 'cms/error_handling'
 #
 # This module can be added to Controllers to provide support for rendering CMS content pages.
 #
@@ -5,16 +6,17 @@ module Cms
   module ContentRenderingSupport
 
     def self.included(base)
-
+      base.send :include, Cms::ErrorHandling
       base.rescue_from Exception, :with => :handle_server_error_on_page
       base.rescue_from ActiveRecord::RecordNotFound, :with => :handle_not_found_on_page
-      base.rescue_from Cms::Errors::ContentNotFound, :with => :handle_content_not_found
+      base.rescue_from Cms::Errors::ContentNotFound, :with => :handle_not_found_on_page
+      base.rescue_from Cms::Errors::DraftNotFound, :with => :handle_draft_not_found
       base.rescue_from Cms::Errors::AccessDenied, :with => :handle_access_denied_on_page
 
     end
 
-    def handle_content_not_found(exception)
-      logger.warn "Content Not Found"
+    def handle_draft_not_found(exception)
+      logger.warn "Draft Content Not Found"
       render(:layout => 'cms/application',
              :template => 'cms/content/no_page',
              :status => :not_found)

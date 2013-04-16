@@ -94,8 +94,26 @@ class Cms::Page < ActiveRecord::Base
     if current
       current.as_of_draft_version
     else
+      raise Cms::Errors::DraftNotFound
+    end
+  end
+
+  # Finds the live version of a Page.
+  # @param [String] path The relative path to the page
+  # @return [Cms::Page] The page if found
+  # @rais [Cms::Errors::ContentNotFound] If no published page was found with the given path.
+  def self.find_live(path)
+    result = find_live_by_path(path)
+    unless result
       raise Cms::Errors::ContentNotFound
     end
+    result
+  end
+
+  # Find live version of a page.
+  # @return [Cms::Page] Or nil if not found.
+  def self.find_live_by_path(path)
+    published.not_archived.first(:conditions => {:path => path})
   end
 
   # Returns all content for the current page, excluding any deleted ones.
@@ -333,10 +351,6 @@ class Cms::Page < ActiveRecord::Base
   # Returns the number of connectables in the given container for this version of this page
   def connectable_count_for_container(container)
     connectors.for_page_version(version).in_container(container.to_s).count
-  end
-
-  def self.find_live_by_path(path)
-    published.not_archived.first(:conditions => {:path => path})
   end
 
   def name_with_section_path

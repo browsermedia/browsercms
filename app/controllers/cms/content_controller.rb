@@ -158,8 +158,7 @@ module Cms
         @page = Page.find_draft(@path)
       else
         logger.debug "Displaying live version of page"
-        @page = Page.find_live_by_path(@path)
-        page_not_found unless (@page && !@page.archived?)
+        @page = Page.find_live(@path)
       end
     end
 
@@ -175,8 +174,5 @@ module Cms
       end
     end
 
-    def page_not_found
-      raise ActiveRecord::RecordNotFound.new("No page at '#{@path}'")
-    end
   end
 end

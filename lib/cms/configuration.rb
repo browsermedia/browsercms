@@ -22,7 +22,7 @@ module Cms
     def markdown?
       Object.const_defined?("Markdown")
     end
-    
+
     def reserved_paths
       @reserved_paths ||= ["/cms", "/cache"]
     end
@@ -39,12 +39,17 @@ module Cms
     class ContentNotFound < ActiveRecord::RecordNotFound
 
     end
+
+    # Indicates that no draft version of a given piece of content exists.
+    class DraftNotFound < ContentNotFound
+
+    end
   end
 end
 
 Time::DATE_FORMATS.merge!(
-	:year_month_day => '%Y/%m/%d',
-	:date => '%m/%d/%Y'	
+    :year_month_day => '%Y/%m/%d',
+    :date => '%m/%d/%Y'
 )
 
 
