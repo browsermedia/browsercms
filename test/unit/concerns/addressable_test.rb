@@ -57,6 +57,16 @@ describe Cms::Concerns::Addressable do
     end
   end
 
+  describe "#can_have_parent?" do
+    it "should be false for non-addressable blocks" do
+      WannabeAddressable.can_have_parent?.must_equal false
+    end
+
+    it "should be true for addressable block" do
+      IsAddressable.can_have_parent?.must_equal true
+    end
+  end
+
   describe "#path" do
 
     it "should " do

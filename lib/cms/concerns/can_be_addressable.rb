@@ -28,6 +28,10 @@ module Cms
         end
       end
 
+      # @return [Boolean] Until is_addressable is called, this will always be false.
+      def can_have_parent?
+        false
+      end
     end
 
     module Addressable
@@ -35,8 +39,14 @@ module Cms
       module ClassMethods
 
         # The base path where new records will be added.
+        # @return [String]
         def path
           @path
+        end
+
+        # @return [Boolean] Once is_addressable is called, this will always be true.
+        def can_have_parent?
+          true
         end
       end
 

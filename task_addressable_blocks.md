@@ -1,3 +1,6 @@
-* find_draft needs to also look at blocks.
-* Make path unique between htmlblocks and pages
-* Need to find live version of block too.
+* View blocks as page should include page toolbar
+
+## Nice to haves
+
+* Autocomplete on paths
+* Automatically insert :path field after name (avoid manual insertion). Use javascript to insert this once a user starts typing into Name field.

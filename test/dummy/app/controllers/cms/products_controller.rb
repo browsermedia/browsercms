@@ -5,7 +5,7 @@ module Cms
     before_filter :cms_access_required, except: [:view]
     before_filter :login_required, except: [:view]
 
-    before_filter :set_default_section, only: [:edit, :new]
+
 
     def view_as_page
       @product = Product.where(slug: params[:slug]).first
@@ -13,19 +13,5 @@ module Cms
       render 'view', layout: "templates/default"
     end
 
-    def build_block
-      super
-      assign_to_section_if_specified()
-    end
-
-    def set_default_section
-      @section = Section.with_path("/products").first
-    end
-
-    private
-
-    def assign_to_section_if_specified
-      @block.parent = Cms::Section.find(params[:section]) if params[:section]
-    end
   end
 end

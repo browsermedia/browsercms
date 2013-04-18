@@ -7,10 +7,10 @@ module Cms
     layout 'cms/content_library'
 
     before_filter :set_toolbar_tab
+    before_filter :load_default_parent, only: [:edit, :new]
 
     helper_method :block_form, :new_block_path, :block_path, :blocks_path, :content_type
     helper Cms::RenderingHelper
-    # Basic REST Crud Action
 
     def index
       load_blocks
@@ -104,7 +104,18 @@ module Cms
     end
 
     protected
-    # methods that are used to detemine what content block type we are dealing with
+
+    # When editing/creating a block, load the default parent it will be assigned to.
+    def load_default_parent
+      logger.warn "Loading default parent #{model_class.can_have_parent?}"
+      if model_class.can_have_parent?
+        @parent = Section.with_path(model_class.path).first
+      end
+    end
+
+    def assign_parent_if_specified
+      @block.parent = Cms::Section.find(params[:parent]) if params[:parent]
+    end
 
     def content_type_name
       self.class.name.sub(/Controller/, '').singularize
@@ -185,7 +196,7 @@ module Cms
         # Need to make sure @block exists for form helpers to correctly generate paths
         @block = model_class.new unless @block
       end
-
+      assign_parent_if_specified
       check_permissions
     end
 
