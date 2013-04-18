@@ -68,7 +68,7 @@ class Cms::Page < ActiveRecord::Base
   }
 
   is_addressable(dependent: :destroy)
-  include Cms::Addressable::DeprecatedPageAccessors
+  include Cms::Concerns::Addressable::DeprecatedPageAccessors
 
 
   before_validation :append_leading_slash_to_path, :remove_trailing_slash_from_path

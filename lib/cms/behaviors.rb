@@ -32,4 +32,3 @@ Dir["#{File.dirname(__FILE__)}/behaviors/*.rb"].each do |b|
   ActiveRecord::Base.send(:include, "Cms::Behaviors::#{File.basename(b, ".rb").camelize}".constantize)
 end
 
-ActiveRecord::Base.extend Cms::MightBeAddressable

@@ -27,6 +27,7 @@ require 'command_line'
 #Include CMS Behaviors
 ActiveRecord::Base.send(:include, Cms::Acts::ContentBlock)
 require 'cms/behaviors'
+require 'cms/concerns'
 
 
 ActiveRecord::Base.send(:include, Cms::Acts::CmsUser)

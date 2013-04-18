@@ -26,7 +26,7 @@ module Cms
     validates :attachment_name, :attachable_type, :presence => true
 
     is_addressable
-    include Cms::Addressable::DeprecatedPageAccessors
+    include Cms::Concerns::Addressable::DeprecatedPageAccessors
 
     is_archivable; is_publishable; uses_soft_delete; is_userstamped; is_versioned
 
