@@ -1,0 +1,13 @@
+<div class="fields text_fields">
+  <% if cms_options[:label] %>
+    <%= f.label method, cms_options[:label] %>
+  <% else %>
+    <%= f.label method %>
+  <% end %>
+  <span data-type="base-path"><%= options[:base_path] %></span>
+  <%= f.text_field method, options %>
+  <% if cms_options[:instructions] %>
+    <div class="instructions"><%=h cms_options[:instructions] %></div>
+    <br clear="all" /><%# Fixes issue with bad line wrapping %>
+  <% end %>
+</div>

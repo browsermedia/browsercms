@@ -535,6 +535,7 @@ ActiveRecord::Schema.define(:version => 20130327184912) do
     t.string   "name"
     t.integer  "price"
     t.integer  "category_id"
+    t.string   "slug"
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
     t.boolean  "published",          :default => false
@@ -551,6 +552,7 @@ ActiveRecord::Schema.define(:version => 20130327184912) do
     t.string   "name"
     t.integer  "price"
     t.integer  "category_id"
+    t.string   "slug"
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
     t.boolean  "published",     :default => false

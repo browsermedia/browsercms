@@ -4,7 +4,7 @@ class CreateProducts < ActiveRecord::Migration
       t.string :name
       t.integer :price
       t.integer :category_id
-
+      t.string :slug
       t.timestamps
     end
   end
