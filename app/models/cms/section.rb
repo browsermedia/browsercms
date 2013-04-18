@@ -2,7 +2,7 @@ module Cms
   class Section < ActiveRecord::Base
     flush_cache_on_change
 
-    is_addressable
+    is_addressable no_dynamic_path: true
     # Cannot use dependent => :destroy to do this. Ancestry's callbacks trigger before the before_destroy callback.
     #   So sections would always get deleted since deletable? would return true
     after_destroy :destroy_node

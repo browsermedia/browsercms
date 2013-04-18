@@ -3,23 +3,53 @@ module Cms
     module CanBeAddressable
 
       # Adds addressable behavior to a model. This allows models to be inserted into the sitemap, having parent
-      # sections. By default, this method is available to all
+      # sections. By default, this method is available to all ActiveRecord::Base classes.
+      #
+      # @params [Hash] options
+      # @option options [String] :path The base path where instances will be placed.
+      # @option options [String] :no_dynamic_path Set as true if the Record has a :path attribute managed as a column in the db. (Default: false)
       def is_addressable(options={})
-        defaults = {as: :node, inverse_of: :node, class_name: 'Cms::SectionNode'}
-        options = defaults.merge(options)
+        has_one_options = {as: :node, inverse_of: :node, class_name: 'Cms::SectionNode'}
+        if options[:dependent]
+          has_one_options[:dependent] = options[:dependent]
+        end
+        has_one :section_node, has_one_options
+
         include Cms::Concerns::Addressable
+        extend Cms::Concerns::Addressable::ClassMethods
         include Cms::Concerns::Addressable::NodeAccessors
-        has_one :section_node, options
+
+        if options[:path]
+          @path = options[:path]
+        end
+
+        unless options[:no_dynamic_path]
+          include Addressable::DynamicPath
+        end
       end
 
     end
 
     module Addressable
 
+      module ClassMethods
+
+        # The base path where instances will be placed.
+        def path
+          @path
+        end
+      end
+
+      module DynamicPath
+        # Returns the relative path to this content
+        def path
+          "#{self.class.path}/#{slug}"
+        end
+      end
+
       def self.included(model_class)
         model_class.attr_accessible :parent
       end
-
 
       # Returns a list of all Addressable objects that are ancestors to this record.
       # @param [Hash] options

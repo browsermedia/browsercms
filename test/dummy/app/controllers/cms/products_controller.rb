@@ -7,10 +7,10 @@ module Cms
 
     before_filter :set_default_section, only: [:edit, :new]
 
-    def view
+    def view_as_page
       @product = Product.where(slug: params[:slug]).first
       @page = @product
-      render layout: "templates/default"
+      render 'view', layout: "templates/default"
     end
 
     def build_block

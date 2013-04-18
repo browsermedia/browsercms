@@ -67,7 +67,7 @@ class Cms::Page < ActiveRecord::Base
     end
   }
 
-  is_addressable(dependent: :destroy)
+  is_addressable(dependent: :destroy, no_dynamic_path: true)
   include Cms::Concerns::Addressable::DeprecatedPageAccessors
 
 

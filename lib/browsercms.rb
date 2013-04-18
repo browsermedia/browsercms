@@ -2,7 +2,6 @@ require 'cms/engine'
 require 'cms/extensions'
 require 'cms/route_extensions'
 require 'cms/caching'
-require 'cms/addressable'
 require 'cms/error_pages'
 
 #Load libraries that are included with CMS
