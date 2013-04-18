@@ -2,7 +2,7 @@ module Cms
   module Concerns
     module CanBeAddressable
 
-      # Adds addressable behavior to a model. This allows models to be inserted into the sitemap, having parent
+      # Adds Addressable behavior to a model. This allows models to be inserted into the sitemap, having parent
       # sections. By default, this method is available to all ActiveRecord::Base classes.
       #
       # @params [Hash] options
@@ -34,14 +34,15 @@ module Cms
 
       module ClassMethods
 
-        # The base path where instances will be placed.
+        # The base path where new records will be added.
         def path
           @path
         end
       end
 
       module DynamicPath
-        # Returns the relative path to this content
+
+        # @return [String] The relative path to this content
         def path
           "#{self.class.path}/#{slug}"
         end
@@ -49,6 +50,20 @@ module Cms
 
       def self.included(model_class)
         model_class.attr_accessible :parent
+      end
+
+      # Returns the value that will appear in the <title> element of the page when this content is rendered.
+      # Subclasses can override this.
+      #
+      # @return [String]
+      # @example Override the page title
+      #   class MyWidget < ActiveRecord::Base
+      #     def page_title
+      #       "My Widget | #{name}"
+      #     end
+      #   end
+      def page_title
+        name
       end
 
       # Returns a list of all Addressable objects that are ancestors to this record.

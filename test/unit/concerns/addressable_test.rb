@@ -26,6 +26,7 @@ describe Cms::Concerns::Addressable do
 
   before :all do
     create_testing_table :is_addressables do |t|
+      t.string :name
       t.string :slug
     end
     create_testing_table :has_self_defined_paths do |t|
@@ -33,6 +34,7 @@ describe Cms::Concerns::Addressable do
     end
   end
 
+  let(:addressable) { IsAddressable.new }
   describe '#is_addressable' do
     it "should have parent relationship" do
       WannabeAddressable.expects(:attr_accessible).with(:parent)
@@ -58,10 +60,16 @@ describe Cms::Concerns::Addressable do
   describe "#path" do
 
     it "should " do
-      content = IsAddressable.new
-      content.slug = "one"
-      content.path.must_equal "/widgets/one"
+      addressable.slug = "one"
+      addressable.path.must_equal "/widgets/one"
     end
   end
 
+  describe ".page_title" do
+    it "should default to the name" do
+      addressable.name = "Some Name"
+      addressable.page_title.must_equal "Some Name"
+    end
+
+  end
 end

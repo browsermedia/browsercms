@@ -8,8 +8,4 @@ class Product < ActiveRecord::Base
   has_attachment :photo_1
   has_attachment :photo_2
 
-  def page_title
-    "Product: #{name}"
-  end
-
 end
