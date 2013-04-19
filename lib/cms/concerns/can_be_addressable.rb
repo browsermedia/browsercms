@@ -52,6 +52,11 @@ module Cms
         def calculate_path(slug)
           "#{self.path}/#{slug}"
         end
+
+        # Used in UI forms to show what the complete URL will look like with a slug added to it.
+        def base_path
+          "#{self.path}/"
+        end
       end
 
       module DynamicPath

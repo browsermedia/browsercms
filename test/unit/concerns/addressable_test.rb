@@ -81,6 +81,12 @@ describe Cms::Concerns::Addressable do
     end
   end
 
+  describe "#base_path" do
+    it "should return base path where new records will be placed" do
+      IsAddressable.base_path.must_equal "/widgets/"
+    end
+  end
+
   describe ".page_title" do
     it "should default to the name" do
       addressable.name = "Some Name"

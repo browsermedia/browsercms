@@ -103,10 +103,9 @@ module Cms
     end
 
     def view_as_page
-
       @block = model_class.where(slug: params[:slug]).first
       unless @block
-        raise Cms::Errors::ContentNotFound.new("404: No Content at #{model_class.calculate_path(params[:slug])}")
+        raise Cms::Errors::ContentNotFound.new("No Content at #{model_class.calculate_path(params[:slug])}")
       end
       ensure_current_user_can_view(@block)
       @page = @block
