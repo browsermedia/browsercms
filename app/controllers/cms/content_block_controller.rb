@@ -99,6 +99,12 @@ module Cms
       render "#{template_directory}/usages"
     end
 
+    def view_as_page
+      @block = model_class.where(slug: params[:slug]).first
+      @page = @block
+      render 'view', layout: "templates/default"
+    end
+
     def new_button_path
       cms_new_path_for(content_type)
     end
