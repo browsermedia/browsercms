@@ -45,9 +45,9 @@ module Cms
 
       # If we are in the CMS, we just want to show the exception
       if perform_caching
-        return handle_server_error(exception) if cms_site?
+        return handle_server_error(exception, status) if cms_site?
       else
-        return handle_server_error(exception) if current_user.able_to?(:edit_content, :publish_content)
+        return handle_server_error(exception, status) if current_user.able_to?(:edit_content, :publish_content)
       end
 
       # We must be showing the page outside of the CMS
@@ -74,7 +74,7 @@ module Cms
         # So .gif or .jpg requests that throw errors will return html rather than a format warning.
         render :layout => @page.layout, :template => 'cms/content/show', :status => status, :formats => [:html]
       else
-        handle_server_error(exception)
+        handle_server_error(exception, status)
       end
     end
 

@@ -48,13 +48,17 @@ module Cms
         def can_have_parent?
           true
         end
+
+        def calculate_path(slug)
+          "#{self.path}/#{slug}"
+        end
       end
 
       module DynamicPath
 
         # @return [String] The relative path to this content
         def path
-          "#{self.class.path}/#{slug}"
+          self.class.calculate_path(slug)
         end
       end
 

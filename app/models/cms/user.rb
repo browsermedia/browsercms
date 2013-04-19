@@ -134,7 +134,7 @@ module Cms
         section = Cms::Section.find_by_path(object)
         raise ActiveRecord::RecordNotFound.new("Could not find section with path = '#{object}'") unless section
       elsif !object.is_a?(Cms::Section)
-        section = object.section
+        section = object.parent
       end
       viewable_sections.include?(section) || cms_access?
     end

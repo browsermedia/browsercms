@@ -67,11 +67,17 @@ describe Cms::Concerns::Addressable do
     end
   end
 
-  describe "#path" do
+  describe ".path" do
 
-    it "should " do
+    it "should join #path and .slug" do
       addressable.slug = "one"
       addressable.path.must_equal "/widgets/one"
+    end
+  end
+
+  describe "#calculate_path" do
+    it "should generate the correct path given a slug" do
+      IsAddressable.calculate_path("slug").must_equal "/widgets/slug"
     end
   end
 

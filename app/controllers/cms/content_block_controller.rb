@@ -3,9 +3,12 @@ require 'cms/category_type'
 # This is the base class for other content blocks
 module Cms
   class ContentBlockController < Cms::BaseController
+    include Cms::ContentRenderingSupport
 
     layout 'cms/content_library'
-
+    skip_filter :cms_access_required, :login_required
+    before_filter :login_required, except: [:view_as_page]
+    before_filter :cms_access_required, except: [:view_as_page]
     before_filter :set_toolbar_tab
     before_filter :load_default_parent, only: [:edit, :new]
 
@@ -100,7 +103,12 @@ module Cms
     end
 
     def view_as_page
+
       @block = model_class.where(slug: params[:slug]).first
+      unless @block
+        raise Cms::Errors::ContentNotFound.new("404: No Content at #{model_class.calculate_path(params[:slug])}")
+      end
+      ensure_current_user_can_view(@block)
       @page = @block
       render 'view', layout: "templates/default"
     end

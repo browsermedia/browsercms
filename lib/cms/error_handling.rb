@@ -17,12 +17,12 @@ module Cms
       result
     end
 
-    def handle_server_error(exception)
+    def handle_server_error(exception, status=:internal_server_error)
       log_complete_stacktrace(exception)
       with_format('html') do
         render :layout => 'cms/application',
                :template => 'cms/shared/error',
-               :status => :internal_server_error,
+               :status => status,
                :locals => {:exception => exception}
       end
     end

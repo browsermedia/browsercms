@@ -1,5 +1,4 @@
 * View blocks as page should include page toolbar
-* Permissions to view content based on section.
 
 ## Nice to haves
 

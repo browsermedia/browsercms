@@ -47,7 +47,7 @@ module Cms
     def preview
       @mode = "view"
       @page = Page.find_draft(params[:id].to_i)
-      ensure_current_user_can_edit(@page)
+      ensure_current_user_can_view(@page)
       render_page
     end
 
@@ -163,16 +163,7 @@ module Cms
     end
 
     def check_access_to_page
-      ensure_current_user_can_edit(@page)
+      ensure_current_user_can_view(@page)
     end
-
-    # ----- Other Methods --------------------------------------------------------
-    def ensure_current_user_can_edit(page)
-      unless current_user.able_to_view?(page)
-        store_location
-        raise Cms::Errors::AccessDenied
-      end
-    end
-
   end
 end
