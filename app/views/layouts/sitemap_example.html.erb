@@ -25,34 +25,48 @@
         background: linear-gradient(#EE5F5B, #BD362F);
         text-transform: uppercase;
     }
+    #sitemap .phidden {
+        color: #000;
+        background: #ffae00;
+        background: -webkit-gradient(linear, 0 0, 0 bottom, from(#ffae00), to(#bf8a19));
+        background: -webkit-linear-gradient(#ffae00, #bf8a19);
+        background: -moz-linear-gradient(#ffae00, #bf8a19);
+        background: -ms-linear-gradient(#ffae00, #bf8a19);
+        background: -o-linear-gradient(#ffae00, #bf8a19);
+        background: linear-gradient(#ffae00, #bf8a19);
+        text-transform: uppercase;
+        float: left;
+    }
+    #sitemap i {margin-left: 28px;}
+    #sitemap .phidden + i {margin-left: 10px;}
 </style>
 
 <div id="sitemap">
   <ul class="nav nav-list nav-stacked">
     <li><a href="#"><i class="icon-home"></i> My Site</a>
       <ul class="nav nav-list">
-        <li><a href="#"><i class="icon-file"></i> Home <span class="span1">H <i class="icon-ok-circle"></i><span class="status published">p</span></span></a> </li>
-        <li><a href="#" data-toggle="collapse" data-target="#section1"><i class="icon-folder-close"></i> Section 1 <span class="span1">H <i class="icon-ok-circle"></i><span class="status published">p</span></span></a>
+        <li><a href="#"><i class="icon-file"></i> Home <span class="span1"><i class="icon-ok-circle"></i><span class="status published">p</span></span></a></li>
+        <li><a href="#" data-toggle="collapse" data-target="#section1"><i class="icon-folder-close"></i> Section 1 <span class="span1"><i class="icon-ok-circle"></i><span class="status published">p</span></span></a>
           <ul id="section1" class="nav nav-list collapse">
-            <li><a href="#"><i class="icon-file"></i> 404 <span class="span1">H <i class="icon-ok-circle"></i><span class="status published">p</span></span></a></li>
-            <li><a href="#"><i class="icon-file"></i> System <span class="span1">H <i class="icon-ok-circle"></i><span class="status published">p</span></span></a></li>
-            <li><a href="#"><i class="icon-file"></i> Whatever <span class="span1">H <i class="icon-ok-circle"></i><span class="status published">p</span></span></a></li>
+            <li><a href="#"><i class="icon-file"></i> 404 <span class="span1"><span class="status phidden">H</span> <i class="icon-ok-circle"></i><span class="status published">p</span></span></a></li>
+            <li><a href="#"><i class="icon-file"></i> System <span class="span1"><i class="icon-ok-circle"></i><span class="status published">p</span></span></a></li>
+            <li><a href="#"><i class="icon-file"></i> Whatever <span class="span1"><i class="icon-ok-circle"></i><span class="status published">p</span></span></a></li>
           </ul>
         </li>
-        <li><a href="#"><i class="icon-file"></i> Page <span class="span1">H <i class="icon-ok-circle"></i><span class="status draft">d</span></span></a></li>
-        <li><a href="#" data-toggle="collapse" data-target="#section2"><i class="icon-folder-close"></i> Section 2 <span class="span1">H <i class="icon-ok-circle"></i><span class="status published">p</span></span></a>
+        <li><a href="#"><i class="icon-file"></i> Page <span class="span1"><i class="icon-ok-circle"></i><span class="status draft">d</span></span></a></li>
+        <li><a href="#" data-toggle="collapse" data-target="#section2"><i class="icon-folder-close"></i> Section 2 <span class="span1"><i class="icon-ok-circle"></i><span class="status published">p</span></span></a>
           <ul class="nav nav-list collapse" id="section2">
-            <li><a href="#"><i class="icon-file"></i> Landing <span class="span1">H <i class="icon-ok-circle"></i><span class="status published">p</span></span></a></li>
-            <li><a href="#" data-toggle="collapse" data-target="#subsection1"><i class="icon-folder-close"></i> Subsection <span class="span1">H <i class="icon-ok-circle"></i><span class="status published">p</span></span></a>
+            <li><a href="#"><i class="icon-file"></i> Landing <span class="span1"><span class="status phidden">H</span><i class="icon-ok-circle"></i><span class="status published">p</span></span></a></li>
+            <li><a href="#" data-toggle="collapse" data-target="#subsection1"><i class="icon-folder-close"></i> Subsection <span class="span1"><i class="icon-ok-circle"></i><span class="status published">p</span></span></a>
               <ul class="nav nav-list collapse" id="subsection1">
-                <li><a href="#"><i class="icon-file"></i> Page 1 <span class="span1">H <i class="icon-ok-circle"></i><span class="status published">p</span></span></a></li>
-                <li><a href="#"><i class="icon-file"></i> Page 2 <span class="span1">H <i class="icon-ok-circle"></i><span class="status published">p</span></span></a></li>
-                <li><a href="#"><i class="icon-file"></i> Page 3 <span class="span1">H <i class="icon-ok-circle"></i><span class="status published">p</span></span></a></li>
+                <li><a href="#"><i class="icon-file"></i> Page 1 <span class="span1"><span class="status phidden">H</span><i class="icon-ok-circle"></i><span class="status published">p</span></span></a></li>
+                <li><a href="#"><i class="icon-file"></i> Page 2 <span class="span1"><i class="icon-ok-circle"></i><span class="status published">p</span></span></a></li>
+                <li><a href="#"><i class="icon-file"></i> Page 3 <span class="span1"><i class="icon-ok-circle"></i><span class="status published">p</span></span></a></li>
               </ul>
             </li>
           </ul>
         </li>
-        <li><a href="#"><i class="icon-file"></i> Page <span class="span1">H <i class="icon-ban-circle"></i><span class="status published">p</span></span></a></li>
+        <li><a href="#"><i class="icon-file"></i> Page <span class="span1"><span class="status phidden">H</span><i class="icon-lock"></i><span class="status published">p</span></span></a></li>
       </ul>
     </li>
   </ul>
