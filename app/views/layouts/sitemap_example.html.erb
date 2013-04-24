@@ -42,7 +42,7 @@
       #filter {float: right;clear: both;}
 </style>
 
-<div id="filter">Show Special: <select id="filtershow"><option value="none" selected="selected">None</option><option value="event">Events</option><option value="article">Articles</option><option value="portlet">Portlets</option><option value="slide">Slides</option></select></div>
+<div id="filter">Show: <select id="filtershow"><option value="none" selected="selected">None</option><option value="event">Events</option><option value="article">Articles</option><option value="portlet">Portlets</option><option value="slide">Slides</option><option value="all">All</option></select></div>
     <div id="sitemap">
       <ul class="nav nav-list nav-stacked">
         <li><a href="#"><i class="icon-home"></i> My Site</a>
@@ -96,6 +96,8 @@
       var what = $(this).val();
       if (what == "none") {
         $('#sitemap li[data-nodetype]').slideUp();
+      } else if (what == "all") {
+        $('#sitemap li[data-nodetype]').slideDown();
       } else {
         $('#sitemap li[data-nodetype="'+what+'"]').slideDown();
       };
