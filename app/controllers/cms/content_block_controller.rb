@@ -107,9 +107,15 @@ module Cms
       unless @block
         raise Cms::Errors::ContentNotFound.new("No Content at #{model_class.calculate_path(params[:slug])}")
       end
-      ensure_current_user_can_view(@block)
-      @page = @block
-      render 'view', layout: "templates/default"
+      if current_user.able_to_edit?(@block) && params["edit"] != 'true'
+        @page = @block
+        @page_title = @block.page_title
+        render :layout => 'cms/block_editor'
+      else
+        ensure_current_user_can_view(@block)
+        @page = @block
+        render 'view', layout: "templates/default"
+      end
     end
 
     def new_button_path
