@@ -10,6 +10,7 @@
 %>
 <span class="btn-group pull-left">
   <%= publish_menu_button(@block) %>
+  <%= link_to("Preview", @block.path, id: "preview_button", target: "_blank", class: "btn btn-primary") %>
   <%= view_content_menu_button(@block) %>
   <%= edit_content_menu_button(@block) %>
 </span>

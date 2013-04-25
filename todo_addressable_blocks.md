@@ -1,10 +1,9 @@
 Task: As an editor, I should be able to create events, products, etc, and have them be accessible at a given path.
 
-* Add 'Preview' for blocks that sends users to the proper path.
-* Show the 'render' of the block rather than another view.
 * [BUG] Clicking on link from 'view' block doesn't reset the frame.
-* Need to show draft of block when not logged in.
-* Add route for slug to content_blocks DSL.
+* Show the 'render' of the block rather than another view.
+* Need to show draft of block when not logged in and not looking at the preview.
+* Add route for slug to content_blocks DSL. (mount_browsercms will need to iterate over all content blocks and add blocks/:slug)
 * Put slug on section_nodes table.
 * Test behavior for other blocks
 * Select a template to view a content type. Use the same template for each instance.
