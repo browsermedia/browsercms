@@ -17,18 +17,15 @@ module Cms
 
     def index
       load_blocks
-      render "#{template_directory}/index"
     end
 
     def show
       load_block_draft
-      render "#{template_directory}/show"
     end
 
     def new
       build_block
       set_default_category
-      render "#{template_directory}/new"
     end
 
     def create
@@ -44,7 +41,6 @@ module Cms
 
     def edit
       load_block_draft
-      render "#{template_directory}/edit"
     end
 
     def update
@@ -84,13 +80,12 @@ module Cms
       if params[:version]
         @block = @block.as_of_version(params[:version])
       end
-      render "#{template_directory}/show"
+      render "show"
     end
 
     def versions
       if model_class.versioned?
         load_block
-        render "#{template_directory}/versions"
       else
         render :text => "Not Implemented", :status => :not_implemented
       end
@@ -99,7 +94,6 @@ module Cms
     def usages
       load_block_draft
       @pages = @block.connected_pages.all(:order => 'name')
-      render "#{template_directory}/usages"
     end
 
     def view_as_page
@@ -241,7 +235,7 @@ module Cms
     end
 
     def after_create_on_failure
-      render "#{template_directory}/new"
+      render "new"
     end
 
     def after_create_on_error
@@ -267,7 +261,7 @@ module Cms
     end
 
     def after_update_on_failure
-      render "#{template_directory}/edit"
+      render "edit"
     end
 
     def after_update_on_edit_conflict
@@ -321,11 +315,6 @@ module Cms
 
     def set_toolbar_tab
       @toolbar_tab = :content_library
-    end
-
-
-    def template_directory
-      "cms/blocks"
     end
 
   end

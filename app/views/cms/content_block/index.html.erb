@@ -4,7 +4,7 @@
 <% end %>
 <% use_page_title "Content Library / List #{content_type.display_name_plural}" %>
 <% @toolbar_title = "List #{content_type.display_name_plural}" %>
-<%= content_for :button_bar, render(:partial => 'cms/blocks/buttonbar') %>
+<%= content_for :button_bar, render(:partial => 'buttonbar') %>
 <div class="roundedcorners">
 <table id="blocks" class="data cms-content-table"
        data-content_type="<%= content_type.content_block_type %>"
