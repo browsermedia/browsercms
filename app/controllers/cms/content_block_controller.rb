@@ -20,7 +20,24 @@ module Cms
     end
 
     def show
-      load_block_draft
+      if params[:slug]
+        @block = model_class.where(slug: params[:slug]).first
+        unless @block
+          raise Cms::Errors::ContentNotFound.new("No Content at #{model_class.calculate_path(params[:slug])}")
+        end
+      else
+         load_block_draft
+      end
+
+      if current_user.able_to_edit?(@block) && params["edit"] != 'true'
+        @page = @block
+        @page_title = @block.page_title
+        render :layout => 'cms/block_editor'
+      else
+        ensure_current_user_can_view(@block)
+        @page = @block
+        render 'view', layout: "templates/default"
+      end
     end
 
     def new
@@ -80,7 +97,7 @@ module Cms
       if params[:version]
         @block = @block.as_of_version(params[:version])
       end
-      render "show"
+      render "version"
     end
 
     def versions
@@ -94,22 +111,6 @@ module Cms
     def usages
       load_block_draft
       @pages = @block.connected_pages.all(:order => 'name')
-    end
-
-    def view_as_page
-      @block = model_class.where(slug: params[:slug]).first
-      unless @block
-        raise Cms::Errors::ContentNotFound.new("No Content at #{model_class.calculate_path(params[:slug])}")
-      end
-      if current_user.able_to_edit?(@block) && params["edit"] != 'true'
-        @page = @block
-        @page_title = @block.page_title
-        render :layout => 'cms/block_editor'
-      else
-        ensure_current_user_can_view(@block)
-        @page = @block
-        render 'view', layout: "templates/default"
-      end
     end
 
     def new_button_path

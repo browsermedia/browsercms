@@ -1,11 +1,15 @@
 Task: As an editor, I should be able to create events, products, etc, and have them be accessible at a given path.
 
+* Add 'Preview' for blocks that sends users to the proper path.
+* Show the 'render' of the block rather than another view.
+* [BUG] Clicking on link from 'view' block doesn't reset the frame.
+* Need to show draft of block when not logged in.
+* Add route for slug to content_blocks DSL.
 * Put slug on section_nodes table.
-* View blocks as page should include page toolbar
 * Test behavior for other blocks
-* Merge #show and #view_as_page
 * Select a template to view a content type. Use the same template for each instance.
 * Generate a new section when adding the first item of content (rather than as a seed)
+* Show Publish status and usage data on toolbar. Need a way to get back to list of 'Products'.
 
 ## Nice to haves
 
