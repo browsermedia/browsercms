@@ -6,8 +6,6 @@ Dummy::Application.routes.draw do
   namespace :cms do content_blocks :products end
   namespace :cms do content_blocks :sample_blocks end
 
-  get "products/:slug", to: "cms/products#show"
-
   # For testing Acts::As::Page
   match "/__test__", :to => "cms/content#show_page_route"
   match "/tests/restricted", :to => "tests/pretend#restricted"

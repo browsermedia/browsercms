@@ -81,13 +81,28 @@ describe Cms::Concerns::Addressable do
     end
   end
 
+  describe "#descendants" do
+    it "should return a list of all classes that are Addressable" do
+      Cms::Concerns::Addressable.descendants.include?(IsAddressable).must_equal true
+    end
+  end
+
+  describe "#classes_that_require_custom_routes" do
+    it "should include addressable blocks but not pages/links/etc (i.e. already have controllers to display them)" do
+      classes = Cms::Concerns::Addressable.classes_that_require_custom_routes
+      classes.include?(IsAddressable).must_equal true
+      classes.include?(Cms::Page).must_equal false
+      classes.include?(Cms::Link).must_equal false
+    end
+  end
+
   describe "#with_slug" do
 
     it "should find content" do
       content = IsAddressable.create(name: "Coke", slug: "coke", parent_id: root_section)
       found = IsAddressable.with_slug("coke")
       found.wont_be_nil
-      found.name.must_equal "Coke"
+      found.must_equal content
     end
 
     it "should find correct type" do

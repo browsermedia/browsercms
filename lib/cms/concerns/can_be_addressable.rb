@@ -63,6 +63,7 @@ module Cms
           section_node = SectionNode.where(slug: slug).where(node_type: self.name).first
           section_node.node
         end
+
       end
 
       module DynamicPath
@@ -97,6 +98,17 @@ module Cms
       def self.included(model_class)
         model_class.attr_accessible :parent, :parent_id
       end
+
+      # Returns all classes which need a custom route to show themselves.
+      def self.classes_that_require_custom_routes
+        descendants.select {|klass| klass.path != nil}
+      end
+
+      # Returns all classes which inherit from Cms::Concerns::Addressable
+      def self.descendants
+        ObjectSpace.each_object(::Class).select{|klass| klass < Cms::Concerns::Addressable }
+      end
+
 
       # Returns the value that will appear in the <title> element of the page when this content is rendered.
       # Subclasses can override this.
