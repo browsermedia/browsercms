@@ -35,8 +35,9 @@ module Cms
         render :layout => 'cms/block_editor'
       else
         ensure_current_user_can_view(@block)
-        @page = @block
-        render 'view', layout: "templates/default"
+        @page = @block          # page templates expect a @page attribute
+        @content_block = @block # render.html.erb's expect a @content_block attribute
+        render 'render_block_in_main_container', layout: "templates/default"
       end
     end
 
