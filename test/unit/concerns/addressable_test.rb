@@ -4,7 +4,8 @@ class WannabeAddressable
   extend Cms::Concerns::CanBeAddressable
 end
 
-class CouldBeAddressable < ActiveRecord::Base; end
+class CouldBeAddressable < ActiveRecord::Base;
+end
 
 class HasSelfDefinedPath < ActiveRecord::Base
   is_addressable(no_dynamic_path: true)
@@ -13,6 +14,7 @@ end
 
 class IsAddressable < ActiveRecord::Base;
   is_addressable path: "/widgets"
+  attr_accessible :name
 end
 
 describe Cms::Concerns::Addressable do
@@ -27,7 +29,6 @@ describe Cms::Concerns::Addressable do
   before :all do
     create_testing_table :is_addressables do |t|
       t.string :name
-      t.string :slug
     end
     create_testing_table :has_self_defined_paths do |t|
       t.string :path
@@ -37,7 +38,7 @@ describe Cms::Concerns::Addressable do
   let(:addressable) { IsAddressable.new }
   describe '#is_addressable' do
     it "should have parent relationship" do
-      WannabeAddressable.expects(:attr_accessible).with(:parent)
+      WannabeAddressable.expects(:attr_accessible).at_least_once
       WannabeAddressable.expects(:has_one)
       WannabeAddressable.is_addressable
       WannabeAddressable.new.must_respond_to :parent
@@ -68,10 +69,45 @@ describe Cms::Concerns::Addressable do
   end
 
   describe ".path" do
-
     it "should join #path and .slug" do
-      addressable.slug = "one"
+      addressable.expects(:slug).returns("one")
       addressable.path.must_equal "/widgets/one"
+    end
+  end
+
+  describe ".slug" do
+    it "should be nil for new objects" do
+      addressable.slug.must_be_nil
+    end
+  end
+
+  describe "#with_slug" do
+
+    it "should find content" do
+      content = IsAddressable.create(name: "Coke", slug: "coke", parent_id: root_section)
+      found = IsAddressable.with_slug("coke")
+      found.wont_be_nil
+      found.name.must_equal "Coke"
+    end
+
+    it "should find correct type" do
+      Cms::HtmlBlock.create!(name: "Coke", slug: "coke", parent_id: root_section)
+      content = IsAddressable.create(name: "Coke", slug: "coke", parent_id: root_section)
+      found = IsAddressable.with_slug("coke")
+      found.must_equal content
+
+    end
+  end
+
+  describe "#create" do
+    it "should allow for both parent and slug to be saved" do
+      f = IsAddressable.create(parent_id: root_section.id, slug: "slug")
+      f.section_node.slug.must_equal "slug"
+    end
+
+    it "should allow for both parent and slug to be saved in any order" do
+      f = IsAddressable.create(slug: "slug", parent_id: root_section.id)
+      f.section_node.slug.must_equal "slug"
     end
   end
 

@@ -21,7 +21,7 @@ module Cms
 
     def show
       if params[:slug]
-        @block = model_class.where(slug: params[:slug]).first
+        @block = model_class.with_slug(params[:slug])
         unless @block
           raise Cms::Errors::ContentNotFound.new("No Content at #{model_class.calculate_path(params[:slug])}")
         end
@@ -129,7 +129,7 @@ module Cms
     end
 
     def assign_parent_if_specified
-      @block.parent = Cms::Section.find(params[:parent]) if params[:parent]
+      @block.parent_id = params[:parent] if params[:parent]
     end
 
     def content_type_name

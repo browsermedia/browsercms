@@ -57,6 +57,12 @@ module Cms
         def base_path
           "#{self.path}/"
         end
+
+        # Find an addressable object with the given content type
+        def with_slug(slug)
+          section_node = SectionNode.where(slug: slug).where(node_type: self.name).first
+          section_node.node
+        end
       end
 
       module DynamicPath
@@ -65,10 +71,31 @@ module Cms
         def path
           self.class.calculate_path(slug)
         end
+
+        def slug
+          if section_node
+            section_node.slug
+          else
+            nil
+          end
+        end
+
+        def slug=(slug)
+          if section_node
+            section_node.slug = slug
+          else
+            @slug = slug # Store temporarily until there is a section_node created.
+          end
+
+        end
+
+        def self.included(klass)
+          klass.attr_accessible :slug
+        end
       end
 
       def self.included(model_class)
-        model_class.attr_accessible :parent
+        model_class.attr_accessible :parent, :parent_id
       end
 
       # Returns the value that will appear in the <title> element of the page when this content is rendered.
@@ -104,6 +131,15 @@ module Cms
 
       def cache_parent(section)
         @parent = section
+      end
+
+      def parent_id=(id)
+        self.parent = Cms::Section.find(id)
+        # Handles slug being set before there is a parent
+        if @slug
+          self.slug = @slug
+          @slug = nil
+        end
       end
 
       def parent=(sec)

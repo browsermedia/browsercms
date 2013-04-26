@@ -14,7 +14,7 @@ module Cms
     before_filter :construct_path_from_route, :only => [:show_page_route]
     before_filter :try_to_redirect, :only => [:show]
     before_filter :try_to_stream_file, :only => [:show]
-    before_filter :load_page_or_content, :only => [:show, :show_page_route]
+    before_filter :load_page, :only => [:show, :show_page_route]
     before_filter :check_access_to_page, :except => [:edit, :preview]
     before_filter :select_cache_directory
 
@@ -152,7 +152,7 @@ module Cms
 
     end
 
-    def load_page_or_content
+    def load_page
       if current_user.able_to?(:edit_content, :publish_content, :administrate)
         logger.debug "Displaying draft version of page"
         @page = Page.find_draft(@path)

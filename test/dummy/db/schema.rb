@@ -280,7 +280,6 @@ ActiveRecord::Schema.define(:version => 20130327184912) do
     t.integer  "updated_by_id"
     t.datetime "created_at",                                                :null => false
     t.datetime "updated_at",                                                :null => false
-    t.string   "path"
   end
 
   add_index "cms_html_block_versions", ["original_record_id"], :name => "index_cms_html_block_versions_on_original_record_id"
@@ -298,7 +297,6 @@ ActiveRecord::Schema.define(:version => 20130327184912) do
     t.integer  "updated_by_id"
     t.datetime "created_at",                                           :null => false
     t.datetime "updated_at",                                           :null => false
-    t.string   "path"
   end
 
   add_index "cms_html_blocks", ["deleted"], :name => "index_cms_html_blocks_on_deleted"
@@ -449,6 +447,7 @@ ActiveRecord::Schema.define(:version => 20130327184912) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.string   "ancestry"
+    t.string   "slug"
   end
 
   add_index "cms_section_nodes", ["ancestry"], :name => "index_cms_section_nodes_on_ancestry"
@@ -535,7 +534,6 @@ ActiveRecord::Schema.define(:version => 20130327184912) do
     t.string   "name"
     t.integer  "price"
     t.integer  "category_id"
-    t.string   "slug"
     t.datetime "created_at",                            :null => false
     t.datetime "updated_at",                            :null => false
     t.boolean  "published",          :default => false
@@ -552,7 +550,6 @@ ActiveRecord::Schema.define(:version => 20130327184912) do
     t.string   "name"
     t.integer  "price"
     t.integer  "category_id"
-    t.string   "slug"
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
     t.boolean  "published",     :default => false
