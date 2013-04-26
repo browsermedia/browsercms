@@ -2,7 +2,6 @@ module Cms
   class HtmlBlock < ActiveRecord::Base
 
     acts_as_content_block :taggable => true
-    is_addressable(path: "/")
 
     # This shouldn't be necessary but it is for browsercms.seeds.rb'
     attr_accessible :name, :content

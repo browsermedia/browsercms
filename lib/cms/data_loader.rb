@@ -43,19 +43,6 @@ module Cms
       model.save!
       @data[model_storage_name][record_name] = model
     end
-
-    # Creates the default section for a given model class.
-    # Will be created at whatever #path is defined for a given model.
-    #
-    # @param [Class] klass A content block that is_addressable.
-    def create_section_for(klass)
-      create_section(klass.name.tableize.to_sym,
-                     :name => klass.name.demodulize.pluralize,
-                     :parent => Cms::Section.root.first,
-                     :path => klass.path,
-                     :hidden => true,
-                     allow_groups: :all)
-    end
   end
 end
 extend Cms::DataLoader

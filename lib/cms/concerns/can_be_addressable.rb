@@ -29,7 +29,7 @@ module Cms
       end
 
       # @return [Boolean] Until is_addressable is called, this will always be false.
-      def can_have_parent?
+      def addressable?
         false
       end
     end
@@ -45,7 +45,7 @@ module Cms
         end
 
         # @return [Boolean] Once is_addressable is called, this will always be true.
-        def can_have_parent?
+        def addressable?
           true
         end
 

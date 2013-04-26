@@ -14,7 +14,10 @@ end
 
 class IsAddressable < ActiveRecord::Base;
   is_addressable path: "/widgets"
-  attr_accessible :name
+end
+
+class AnotherAddressable < ActiveRecord::Base;
+  is_addressable path: "/another-addressables"
 end
 
 describe Cms::Concerns::Addressable do
@@ -30,6 +33,7 @@ describe Cms::Concerns::Addressable do
     create_testing_table :is_addressables do |t|
       t.string :name
     end
+    create_testing_table :another_addressables
     create_testing_table :has_self_defined_paths do |t|
       t.string :path
     end
@@ -60,11 +64,11 @@ describe Cms::Concerns::Addressable do
 
   describe "#can_have_parent?" do
     it "should be false for non-addressable blocks" do
-      WannabeAddressable.can_have_parent?.must_equal false
+      WannabeAddressable.addressable?.must_equal false
     end
 
     it "should be true for addressable block" do
-      IsAddressable.can_have_parent?.must_equal true
+      IsAddressable.addressable?.must_equal true
     end
   end
 
@@ -99,15 +103,15 @@ describe Cms::Concerns::Addressable do
   describe "#with_slug" do
 
     it "should find content" do
-      content = IsAddressable.create(name: "Coke", slug: "coke", parent_id: root_section)
+      content = IsAddressable.create(slug: "coke", parent_id: root_section)
       found = IsAddressable.with_slug("coke")
       found.wont_be_nil
       found.must_equal content
     end
 
     it "should find correct type" do
-      Cms::HtmlBlock.create!(name: "Coke", slug: "coke", parent_id: root_section)
-      content = IsAddressable.create(name: "Coke", slug: "coke", parent_id: root_section)
+      AnotherAddressable.create!(slug: "coke", parent_id: root_section)
+      content = IsAddressable.create( slug: "coke", parent_id: root_section)
       found = IsAddressable.with_slug("coke")
       found.must_equal content
 
