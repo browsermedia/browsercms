@@ -18,3 +18,10 @@
 </span>
 <%= versions_menu_button(@block) %>
 <%= delete_menu_button(@block) %>
+<% if @block.persisted? %>
+    <% if !@block.live? %>
+        <span id="page-status-label" class="draft-status">DRAFT</span>
+    <% else %>
+       <span id="page-status-label" class="published-status">Published</span>
+    <% end %>
+<% end %>

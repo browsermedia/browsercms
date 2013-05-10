@@ -71,6 +71,10 @@ module Cms
       assert_equal 1, @another_page.reload.latest_version, "Should only update its own version, not other tables"
     end
 
+    test "live? should be false for 'new' objects" do
+      refute Cms::Page.new.live?
+    end
+
     test "live? using latest version" do
       assert @page.live?
 

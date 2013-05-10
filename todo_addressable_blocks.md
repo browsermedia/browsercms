@@ -1,13 +1,22 @@
 Task: As an editor, I should be able to create events, products, etc, and have them be accessible at a given path.
+Intent: Make it easier to create custom content types (like News)
 
-* [1] Test behavior for other blocks (This seems to mostly work, but need a bit more testing)
-* [2] Show Publish status on the toolbar.
-* [3] Show usage data on toolbar. (Not sure if this should be done or not)
+* [BUG] Multiple sections of the same name get created when you make a new block.
+* Show non-file blocks in the sitemap.
+* [BUG] Can't publish the block when viewing it (logs you out)
+* [BUG] Can't save a block as not in draft once its been created.
 * [BUG] Clicking on link from 'view' block doesn't reset the frame.
 * Need to show draft of block when not logged in and not looking at the preview.
 * Select a template to view a content type. Use the same template for each instance.
 * Need a way to get back to list of 'Products'.
 * [BUG] Preview doesn't work on contentblock#index
+* Handle custom routes (like news /news/:year/:month/:day/:slug)
+
+## TBDs
+
+* How should content blocks be shown in sitemap? (Show things that are not attachments)
+* Decide whether HTML/Portlets/etc should be addressable or not.
+* [3] Show usage data on toolbar. (Not sure if this should be done or not)
 
 ## Nice to haves
 
@@ -17,6 +26,8 @@ Task: As an editor, I should be able to create events, products, etc, and have t
 ## Documentation
 
 ### To make a block addressable:
+
+Content blocks can created with as their own pages. To make a block addressable, a developer must do the following:
 
 1. Add is_addressable path: "/some-relative-path" to the model
 2. Add <%= f.cms_path_field :slug %> to the _form.html.erb for the given model.
