@@ -264,10 +264,22 @@ module Cms
       refute create(:section).public?
     end
 
-    test "#sitemap" do
-      sitemap = Section.sitemap
-      assert_equal root_section.node, sitemap.keys.first
-      assert_equal [@visible_section, @hidden_section, @visible_page, @hidden_page].map { |n| n.section_node }, sitemap[root_section.node].keys
+    test "#sitemap should return root_section as key" do
+      assert_equal root_section.node, Section.sitemap.keys.first
+    end
+
+    test "#sitemap should include visible pages" do
+      assert_equal [@visible_section, @hidden_section, @visible_page, @hidden_page], content_in_root_section
+    end
+
+    test "#sitemap should exclude files" do
+      refute content_in_root_section.include?(@file_block)
+    end
+
+    test "#sitemap should include addressable content blocks" do
+      product = Product.create!(name: "Hello", parent: root_section)
+      assert child_nodes_in(root_section).include?(product), "Verify product is in root section"
+      assert content_in_root_section.include?(product), "Verify it doesn't get filtered out when returned by sitemap'"
     end
 
     test "#master_section_list" do
@@ -279,5 +291,18 @@ module Cms
       assert_equal "#{@hidden_section.name}", sections[2].full_path
     end
 
+
+    private
+
+    def child_nodes_in(section)
+      section.child_nodes.map { |sn| sn.node }
+    end
+
+    # Pages/section/etc in / that is visible in the sitemap
+    def content_in_root_section
+      Section.sitemap.first[1].keys.map { |sn| sn.node }
+    end
   end
+
+
 end

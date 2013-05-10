@@ -21,6 +21,7 @@ module Cms
 
         if options[:path]
           @path = options[:path]
+          include GenericSitemapBehavior
         end
 
         unless options[:no_dynamic_path]
@@ -30,6 +31,18 @@ module Cms
 
       # @return [Boolean] Until is_addressable is called, this will always be false.
       def addressable?
+        false
+      end
+    end
+
+    # Implements behavior for displaying content blocks that should appear in the
+    # sitemap (as opposed to pages/sections/links)
+    module GenericSitemapBehavior
+      def partial_for
+        "page"
+      end
+
+      def hidden?
         false
       end
     end

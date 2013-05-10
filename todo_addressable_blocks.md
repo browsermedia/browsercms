@@ -1,7 +1,7 @@
 Task: As an editor, I should be able to create events, products, etc, and have them be accessible at a given path.
 Intent: Make it easier to create custom content types (like News)
 
-* Show non-file blocks in the sitemap.
+* [BUG - Needs steps] Moving blocks out the sitemap (or around) makes them uneditable.
 * [BUG] Can't publish the block when viewing it (logs you out)
 * [BUG] Can't save a block as not in draft once its been created.
 * [BUG] Clicking on link from 'view' block doesn't reset the frame.
@@ -10,10 +10,11 @@ Intent: Make it easier to create custom content types (like News)
 * Need a way to get back to list of 'Products'.
 * [BUG] Preview doesn't work on contentblock#index
 * Handle custom routes (like news /news/:year/:month/:day/:slug)
+* [BUG] If product is first item in section, menus will not link to the correct location.
 
 ## TBDs
 
-* How should content blocks be shown in sitemap? (Show things that are not attachments)
+* Add a 'Side Effects' hint when creating an addressable block that a section will be created. (i.e. This will create a new Section called '/catalog')
 * Decide whether HTML/Portlets/etc should be addressable or not.
 * [3] Show usage data on toolbar. (Not sure if this should be done or not)
 

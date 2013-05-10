@@ -12,6 +12,7 @@ module Cms
     PAGE = "Cms::Page"
     LINK = "Cms::Link"
     VISIBLE_NODE_TYPES = [SECTION, PAGE, LINK]
+    HIDDEN_NODE_TYPES = "Cms::Attachment"
 
     include DefaultAccessible
     attr_accessible :allow_groups, :group_ids, :name, :path, :root, :hidden
@@ -77,7 +78,7 @@ module Cms
     end
 
     def self.sitemap
-      SectionNode.of_type(VISIBLE_NODE_TYPES).fetch_nodes.arrange(:order => :position)
+      SectionNode.not_of_type(HIDDEN_NODE_TYPES).fetch_nodes.arrange(:order => :position)
     end
 
     def visible_child_nodes(options={})
