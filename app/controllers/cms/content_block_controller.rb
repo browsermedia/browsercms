@@ -10,7 +10,6 @@ module Cms
     before_filter :login_required, except: [:view_as_page]
     before_filter :cms_access_required, except: [:view_as_page]
     before_filter :set_toolbar_tab
-    before_filter :load_default_parent, only: [:edit, :new]
 
     helper_method :block_form, :new_block_path, :block_path, :blocks_path, :content_type
     helper Cms::RenderingHelper
@@ -126,24 +125,19 @@ module Cms
 
     protected
 
-    # When editing/creating a block, load the default parent it will be assigned to.
-    def load_default_parent
-      logger.warn "Loading default parent #{model_class.addressable?}"
-      if model_class.addressable?
-        @parent = Section.with_path(model_class.path).first
-      end
-    end
-
     def assign_parent_if_specified
       if params[:parent]
         @block.parent_id = params[:parent]
       elsif @block.class.addressable?
-        logger.warn "Creating default section for #{@block.display_name} in #{@block.class.path}."
-        parent = Cms::Section.create(:name => @block.class.name.demodulize.pluralize,
-                                     :parent => Cms::Section.root.first,
-                                     :path => @block.class.path,
-                                     :hidden => true,
-                                     allow_groups: :all)
+        parent = Cms::Section.with_path(@block.class.path).first
+        unless parent
+          logger.warn "Creating default section for #{@block.display_name} in #{@block.class.path}."
+          parent = Cms::Section.create(:name => @block.class.name.demodulize.pluralize,
+                                       :parent => Cms::Section.root.first,
+                                       :path => @block.class.path,
+                                       :hidden => true,
+                                       allow_groups: :all)
+        end
         @block.parent_id = parent.id
       end
     end

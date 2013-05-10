@@ -1,7 +1,6 @@
 Task: As an editor, I should be able to create events, products, etc, and have them be accessible at a given path.
 Intent: Make it easier to create custom content types (like News)
 
-* [BUG] Multiple sections of the same name get created when you make a new block.
 * Show non-file blocks in the sitemap.
 * [BUG] Can't publish the block when viewing it (logs you out)
 * [BUG] Can't save a block as not in draft once its been created.
