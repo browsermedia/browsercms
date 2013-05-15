@@ -79,10 +79,9 @@ module Cms
       options = {class: ["btn", "btn-primary"], id: "revisions_button"}
       path = "#"
       if !content_item.new_record? && content_item.class.versioned?
-        block_path(content_item, :versions)
+        path = block_path(content_item, :versions)
       else
         options[:class] << "disabled"
-
       end
       link_to "List Versions", path, options
     end
