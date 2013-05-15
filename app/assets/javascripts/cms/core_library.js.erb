@@ -66,7 +66,7 @@ jQuery(function ($) {
                 if ($(this).hasClass('disabled')) return false;
                 if ($(this).hasClass('confirm_with_title') ? confirm(this.title) : true) {
 
-                    // Create the form
+                    // Create a hidden form to submit this link as PUT/POST/DELETE.
                     var f = document.createElement('form')
                     f.style.display = 'none'
                     this.parentNode.appendChild(f)
@@ -80,12 +80,10 @@ jQuery(function ($) {
                     $(m).attr('type', 'hidden').attr('name', '_method').attr('value', http_method)
                     f.appendChild(m)
 
-                    //Create the authenticity_token hidden input
-                    if ($.cms.authenticity_token && $.cms.authenticity_token != '') {
-                        var m = document.createElement('input')
-                        $(m).attr('type', 'hidden').attr('name', 'authenticity_token').attr('value', $.cms.authenticity_token)
-                        f.appendChild(m)
-                    }
+                    // Add the authenticity_token as a hidden input so rails doesn't reject the form.
+                    var m = document.createElement('input')
+                    $(m).attr('type', 'hidden').attr('name', 'authenticity_token').attr('value', $.cms_ajax.csrfToken());
+                    f.appendChild(m);
 
                     f.submit()
                 }
