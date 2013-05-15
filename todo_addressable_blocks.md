@@ -4,7 +4,6 @@ Intent: Make it easier to create custom content types (like News)
 * [BUG] Can't save a block as not in draft once its been created.
 * [BUG] Need to show draft of block when not logged in and not looking at the preview.
 * Select a template to view a content type. Use the same template for each instance.
-* Need a way to get back to list of 'Products'.
 * Handle custom routes (like news /news/:year/:month/:day/:slug)
 * [BUG] If product is first item in section, menus will not link to the correct location.
 * [BUG] When viewing a page, and deleting it, it doesn't confirm.
