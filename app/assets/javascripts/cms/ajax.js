@@ -9,21 +9,17 @@ jQuery(function ($) {
     });
 
     $.cms_ajax = {
-        // Return the Rails CSRF token.
-        csrfToken:function(){
-          return $('meta[name="csrf-token"]').attr('content');
-        },
         // Sets the message Accepts to javascript.
         // Pass to beforeSend: when calling AJAX.
         asJS:function () {
             return function (xhr) {
-                xhr.setRequestHeader('X-CSRF-Token', $.cms_ajax.csrfToken());
+                xhr.setRequestHeader('X-CSRF-Token', $.cms.csrfToken());
                 xhr.setRequestHeader("Accept", "text/javascript");
             }
         },
         asJSON:function () {
             return function (xhr) {
-                xhr.setRequestHeader('X-CSRF-Token', $.cms_ajax.csrfToken());
+                xhr.setRequestHeader('X-CSRF-Token', $.cms.csrfToken());
                 xhr.setRequestHeader("Accept", "application/json");
             }
         },

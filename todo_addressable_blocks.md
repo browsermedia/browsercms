@@ -1,6 +1,7 @@
 Task: As an editor, I should be able to create events, products, etc, and have them be accessible at a given path.
 Intent: Make it easier to create custom content types (like News)
 
+* [BUG] Cannot delete page when viewing it. (Does nothing).
 * [BUG] Can't save a block as not in draft once its been created.
 * Need to show draft of block when not logged in and not looking at the preview.
 * Select a template to view a content type. Use the same template for each instance.
