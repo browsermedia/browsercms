@@ -3,7 +3,6 @@ Intent: Make it easier to create custom content types (like News)
 
 * [BUG] Can't publish the block when viewing it (logs you out)
 * [BUG] Can't save a block as not in draft once its been created.
-* [BUG] Clicking on link from 'view' block doesn't reset the frame.
 * Need to show draft of block when not logged in and not looking at the preview.
 * Select a template to view a content type. Use the same template for each instance.
 * Need a way to get back to list of 'Products'.
