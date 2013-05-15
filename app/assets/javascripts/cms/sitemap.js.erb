@@ -195,6 +195,7 @@ jQuery(function($) {
     }
 
     var enableButtonsForNode = function(node) {
+        $('#edit-button').attr('href', $(node).data('edit-path'));
         var id = getId(node.id, /(section|page|link)_/);
         if (!$(node).is(".non-editable")) {
             if ($(node).hasClass('section')) {
@@ -208,7 +209,6 @@ jQuery(function($) {
             $('#edit-button')
                     .html('<span>View Page</span>')
                     .removeClass('disabled')
-                    .attr('href', '/cms/pages/' + id)
                     .unbind('click')
                     .click(function() {
                 return true
@@ -284,9 +284,7 @@ jQuery(function($) {
 
     var enableButtonsForPage = function(id) {
         $('#edit-button')
-                .html('<span>Edit Page</span>')
                 .removeClass('disabled')
-                .attr('href', '/cms/pages/' + id)
                 .unbind('click')
                 .click(function() {
             return true

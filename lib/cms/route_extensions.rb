@@ -59,8 +59,15 @@ module Cms::RouteExtensions
     classes = Cms::Concerns::Addressable.classes_that_require_custom_routes
     classes.each do |klass|
       path = "#{klass.path}/:slug"
-      to = "cms/#{klass.name.demodulize.pluralize.underscore}#show"
-      get path, to: to
+      route_name = klass.name.demodulize.pluralize.underscore
+      to = "cms/#{route_name}#show"
+      route_params = [path, to: to]
+
+      # /products/:slug
+      get *route_params
+
+      # /products/:id
+      #get "#{klass.path}/:id", to: to, as: klass.name.demodulize.underscore
     end
   end
 

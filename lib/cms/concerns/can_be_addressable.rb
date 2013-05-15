@@ -39,7 +39,7 @@ module Cms
     # sitemap (as opposed to pages/sections/links)
     module GenericSitemapBehavior
       def partial_for
-        "page"
+        "addressable_content_block"
       end
 
       def hidden?

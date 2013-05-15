@@ -192,14 +192,6 @@ module Cms
       cms_new_path_for(block, options)
     end
 
-    def block_path(block, action=nil)
-      path = []
-      path << engine_for(block)
-      path << action if action
-      path.concat path_elements_for(block)
-      path
-    end
-
     def blocks_path(options={})
       cms_index_path_for(@content_type.model_class, options)
     end

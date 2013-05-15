@@ -1,7 +1,7 @@
 Task: As an editor, I should be able to create events, products, etc, and have them be accessible at a given path.
 Intent: Make it easier to create custom content types (like News)
 
-* [BUG - Needs steps] Moving blocks out the sitemap (or around) makes them uneditable.
+* [BUG] Edit properties with a selected product take you to 'edit properties' for page.
 * [BUG] Can't publish the block when viewing it (logs you out)
 * [BUG] Can't save a block as not in draft once its been created.
 * [BUG] Clicking on link from 'view' block doesn't reset the frame.
@@ -11,6 +11,10 @@ Intent: Make it easier to create custom content types (like News)
 * [BUG] Preview doesn't work on contentblock#index
 * Handle custom routes (like news /news/:year/:month/:day/:slug)
 * [BUG] If product is first item in section, menus will not link to the correct location.
+
+Nomenclature:
+
+* Sitemap: Edit Page vs Edit Properties (How about 'Edit' and 'configure')
 
 ## TBDs
 

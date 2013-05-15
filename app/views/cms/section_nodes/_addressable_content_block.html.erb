@@ -2,7 +2,6 @@
    page = node
    status_icon = page.archived? ? :archived : page.status
        first_level = in_first_level?(node)
-
 %>
 <%= sitemap_ul_tag(node) %>
   <li>
@@ -14,7 +13,7 @@
         :access_icon => status_icon(access_icon),
         :published_status_icon => status_icon(status_icon),
         :published_status_label => status_icon.to_s.titleize,
-        :edit_path => url_for(page_path(node)),
+        :edit_path => url_for(block_path(node)),
         :parent => parent
       } %>
   </li>
