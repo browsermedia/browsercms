@@ -14,6 +14,7 @@
         :published_status_icon => status_icon(status_icon),
         :published_status_label => status_icon.to_s.titleize,
         :edit_path => url_for(block_path(node)),
+        :configure_path => url_for(block_path(node, :edit)),
         :parent => parent
       } %>
   </li>

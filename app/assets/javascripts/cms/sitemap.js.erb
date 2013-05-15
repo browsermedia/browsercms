@@ -196,6 +196,8 @@ jQuery(function($) {
 
     var enableButtonsForNode = function(node) {
         $('#edit-button').attr('href', $(node).data('edit-path'));
+        $('#properties-button').attr('href', $(node).data('configure-path'));
+
         var id = getId(node.id, /(section|page|link)_/);
         if (!$(node).is(".non-editable")) {
             if ($(node).hasClass('section')) {
@@ -288,11 +290,10 @@ jQuery(function($) {
                 .unbind('click')
                 .click(function() {
             return true
-        })
+        });
 
         $('#properties-button')
                 .removeClass('disabled')
-                .attr('href', '/cms/pages/' + id + '/edit')
                 .unbind('click')
                 .click(function() {
             return true

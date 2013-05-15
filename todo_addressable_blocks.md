@@ -1,7 +1,6 @@
 Task: As an editor, I should be able to create events, products, etc, and have them be accessible at a given path.
 Intent: Make it easier to create custom content types (like News)
 
-* [BUG] Edit properties with a selected product take you to 'edit properties' for page.
 * [BUG] Can't publish the block when viewing it (logs you out)
 * [BUG] Can't save a block as not in draft once its been created.
 * [BUG] Clicking on link from 'view' block doesn't reset the frame.
