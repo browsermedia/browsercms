@@ -204,11 +204,7 @@ module Cms
 
     def build_block
       if params[model_form_name]
-        defaults = {"publish_on_save" => false}
-        model_params = params[model_form_name]
-        model_params = defaults.merge(model_params)
         @block = model_class.new(model_params)
-        logger.warn model_params
       else
         # Need to make sure @block exists for form helpers to correctly generate paths
         @block = model_class.new unless @block
@@ -256,7 +252,15 @@ module Cms
     # update related methods
     def update_block
       load_block
-      @block.update_attributes(params[model_form_name])
+      @block.update_attributes(model_params())
+    end
+
+    # Returns the parameters for the block to be saved.
+    # Handles defaults as well as eventually 'strong_params'
+    def model_params
+      defaults = {"publish_on_save" => false}
+      model_params = params[model_form_name]
+      defaults.merge(model_params)
     end
 
     def after_update_on_success
