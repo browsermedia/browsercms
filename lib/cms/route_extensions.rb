@@ -54,20 +54,16 @@ module Cms::RouteExtensions
 
   private
 
-  # Creates a GET route for every addressable content block class.
+  # Creates a default GET route for every addressable content block class.
+  # This will be use a :slug and the module path, like:
+  #   /products/:slug
   def add_routes_for_addressable_content_blocks
     classes = Cms::Concerns::Addressable.classes_that_require_custom_routes
     classes.each do |klass|
       path = "#{klass.path}/:slug"
-      route_name = klass.name.demodulize.pluralize.underscore
-      to = "cms/#{route_name}#show"
-      route_params = [path, to: to]
-
-      # /products/:slug
-      get *route_params
-
-      # /products/:id
-      #get "#{klass.path}/:id", to: to, as: klass.name.demodulize.underscore
+      controller_name = klass.name.demodulize.pluralize.underscore
+      get path, to: "cms/#{controller_name}#show_via_slug"
+      get "cms/#{klass.path}/:id/inline", to: "cms/#{controller_name}#inline", as: "inline_cms_#{klass.name.demodulize.underscore}"
     end
   end
 

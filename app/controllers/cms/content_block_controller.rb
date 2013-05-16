@@ -18,21 +18,33 @@ module Cms
       load_blocks
     end
 
-    def show
-      if params[:slug]
-        @block = model_class.with_slug(params[:slug])
-        unless @block
-          raise Cms::Errors::ContentNotFound.new("No Content at #{model_class.calculate_path(params[:slug])}")
-        end
-      else
-        load_block_draft
+    def show_via_slug
+      @block = model_class.with_slug(params[:slug])
+      unless @block
+        raise Cms::Errors::ContentNotFound.new("No Content at #{model_class.calculate_path(params[:slug])}")
       end
+      render_block
+    end
 
+    def show
+      load_block_draft
+      render_block
+    end
+
+    def inline
+      load_block_draft
+      #ensure_current_user_can_view(@block)
+      @page = @block # page templates expect a @page attribute
+      @content_block = @block # render.html.erb's expect a @content_block attribute
+      render 'render_block_in_main_container', layout: "templates/default"
+    end
+
+    def render_block
       if @block.class.addressable?
         if current_user.able_to_edit?(@block) && params["edit"] != 'true'
           @page = @block
           @page_title = @block.page_title
-          render :layout => 'cms/block_editor'
+          render "show", :layout => 'cms/block_editor'
         else
           ensure_current_user_can_view(@block)
           @page = @block # page templates expect a @page attribute
@@ -42,8 +54,6 @@ module Cms
       else
         render 'version'
       end
-
-
     end
 
     def new
@@ -310,7 +320,7 @@ module Cms
       case action_name
         when "index", "show", "new", "create", "version", "versions", "usages"
           # Allow
-        when "edit", "update"
+        when "edit", "update", "inline"
           raise Cms::Errors::AccessDenied unless current_user.able_to_edit?(@block)
         when "destroy", "publish", "revert_to"
           raise Cms::Errors::AccessDenied unless current_user.able_to_publish?(@block)

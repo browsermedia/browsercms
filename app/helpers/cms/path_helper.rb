@@ -93,7 +93,9 @@ module Cms
     #
     # @param [Object] block A content block
     # @param [String] action (Optional) i.e. :edit
-    # @return [Array] An array of argument suitable to be passed to url_for or link_to helpers.
+    # @return [Array] An array of argument suitable to be passed to url_for or link_to helpers. This will be something like:
+    #     [main_app, :cms, :products, @block, :edit]
+    #  or [cms, :html_blocks, @block]
     #
     # This will work whether the block is:
     #   1. A custom unnamespaced block in a project (i.e. Product)
