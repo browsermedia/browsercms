@@ -74,6 +74,14 @@ describe Cms::Concerns::Addressable do
       end
       UsingDefaultTemplate.layout.must_equal 'templates/default'
     end
+
+    it "should not require a slug unless a path was specified" do
+      HasSelfDefinedPath.requires_slug?.must_equal false
+    end
+
+    it "should require a slug if a path was specified" do
+      IsAddressable.requires_slug?.must_equal true
+    end
   end
 
   describe "#can_have_parent?" do

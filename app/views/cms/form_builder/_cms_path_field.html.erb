@@ -1,4 +1,4 @@
-<% if Cms::Section.with_path(f.object.class.path).first.nil?
+<% if forecasting_a_new_section?(f)
      cms_options[:instructions] = "Forecast: Saving this first #{f.object.class.display_name} will create a new section at #{f.object.class.path}."
    end
 %>

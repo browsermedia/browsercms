@@ -35,6 +35,11 @@ module Cms
       def addressable?
         false
       end
+
+      # @return [Boolean] Some addressable content types don't require a slug.
+      def requires_slug?
+        false
+      end
     end
 
     # Implements behavior for displaying content blocks that should appear in the
@@ -47,11 +52,16 @@ module Cms
       def hidden?
         false
       end
+
     end
 
     module Addressable
 
       module ClassMethods
+
+        def requires_slug?
+          !@path.nil?
+        end
 
         # The base path where new records will be added.
         # @return [String]
