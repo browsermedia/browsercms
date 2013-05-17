@@ -1,10 +1,12 @@
 Task: As an editor, I should be able to create events, products, etc, and have them be accessible at a given path.
 Intent: Make it easier to create custom content types (like News)
 
+* Refactor render_block to flatten it out (eliminate duplicate path ways)
 * Select a template to view a content type. Use the same template for each instance.
 * Handle custom routes (like news /news/:year/:month/:day/:slug)
 * [BUG] If product is first item in section, menus will not link to the correct location.
 * [BUG] When viewing a page, and deleting it, it doesn't confirm.
+* [BUG] Check All groups doesn't work for groups.
 
 Nomenclature:
 

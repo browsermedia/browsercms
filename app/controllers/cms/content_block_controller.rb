@@ -7,8 +7,8 @@ module Cms
 
     layout 'cms/content_library'
     skip_filter :cms_access_required, :login_required
-    before_filter :login_required, except: [:view_as_page]
-    before_filter :cms_access_required, except: [:view_as_page]
+    before_filter :login_required, except: [:show_via_slug]
+    before_filter :cms_access_required, except: [:show_via_slug]
     before_filter :set_toolbar_tab
 
     helper_method :block_form, :new_block_path, :block_path, :blocks_path, :content_type
@@ -23,37 +23,17 @@ module Cms
       unless @block
         raise Cms::Errors::ContentNotFound.new("No Content at #{model_class.calculate_path(params[:slug])}")
       end
-      render_block
+      render_block_in_main_container
     end
 
     def show
       load_block_draft
-      render_block
+      render_toolbar_or_block_in_main_container
     end
 
     def inline
       load_block_draft
-      #ensure_current_user_can_view(@block)
-      @page = @block # page templates expect a @page attribute
-      @content_block = @block # render.html.erb's expect a @content_block attribute
-      render 'render_block_in_main_container', layout: "templates/default"
-    end
-
-    def render_block
-      if @block.class.addressable?
-        if current_user.able_to_edit?(@block) && params["edit"] != 'true'
-          @page = @block
-          @page_title = @block.page_title
-          render "show", :layout => 'cms/block_editor'
-        else
-          ensure_current_user_can_view(@block)
-          @page = @block # page templates expect a @page attribute
-          @content_block = @block # render.html.erb's expect a @content_block attribute
-          render 'render_block_in_main_container', layout: "templates/default"
-        end
-      else
-        render 'version'
-      end
+      render_block_in_main_container
     end
 
     def new
@@ -335,5 +315,32 @@ module Cms
       @toolbar_tab = :content_library
     end
 
+    private
+
+    def render_block_in_main_container
+      ensure_current_user_can_view(@block)
+      @page = @block # page templates expect a @page attribute
+      @content_block = @block # render.html.erb's expect a @content_block attribute
+      render 'render_block_in_main_container', layout: "templates/default"
+    end
+
+    def render_block_in_content_library
+      render 'version'
+    end
+
+    def render_toolbar_or_block_in_main_container
+      if @block.class.addressable?
+        # 'edit' param shouldn't be used anymore
+        if current_user.able_to_edit?(@block) && params["edit"] != 'true'
+          @page = @block
+          @page_title = @block.page_title
+          render "show", :layout => 'cms/block_editor'
+        else
+          render_block_in_main_container
+        end
+      else
+        render_block_in_content_library
+      end
+    end
   end
 end
