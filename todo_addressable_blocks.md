@@ -14,9 +14,7 @@ Nomenclature:
 ## TBDs
 
 * Double clicking block should go to 'View' rather than edit.
-* Add a 'Side Effects' hint when creating an addressable block that a section will be created. (i.e. This will create a new Section called '/catalog')
 * Decide whether HTML/Portlets/etc should be addressable or not.
-* [3] Show usage data on toolbar. (Not sure if this should be done or not)
 
 ## Nice to haves
 

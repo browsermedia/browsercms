@@ -203,7 +203,6 @@ module Cms
         # Need to make sure @block exists for form helpers to correctly generate paths
         @block = model_class.new unless @block
       end
-      assign_parent_if_specified
       check_permissions
     end
 
@@ -215,6 +214,7 @@ module Cms
 
     def create_block
       build_block
+      assign_parent_if_specified
       @block.save
     end
 
