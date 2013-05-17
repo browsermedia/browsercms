@@ -25,7 +25,6 @@ Nomenclature:
     - Might want to have 'edit' block (/cms/product/1) redirect to the path of the page (/products/abc).
     - Then Preview can just open it in a new window.
 * Autosuggest slugs based on name.
-* Automatically insert :path field after name (avoid manual insertion). Use javascript or attach to :name (for addressable blocks) to insert this once a user starts typing into Name field.
 
 ## Documentation
 
@@ -33,5 +32,11 @@ Nomenclature:
 
 Content blocks can created with as their own pages. To make a block addressable, a developer must do the following:
 
-1. Add is_addressable path: "/some-relative-path" to the model
-2. Add <%= f.cms_path_field :slug %> to the _form.html.erb for the given model.
+1. Add is_addressable to the model. This will automatically generate a :slug form field when creating/editing instances.
+2. Set the Page Template that should be used (defaults to 'default').
+
+#### Example
+
+class Product < ActiveRecord::Base
+  is_addressable path: "/some-relative-path", template: "product"
+end

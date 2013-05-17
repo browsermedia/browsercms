@@ -10,3 +10,7 @@
     <br clear="all" /><%# Fixes issue with bad line wrapping %>
   <% end %>
 </div>
+<% # Auto-insert slug field where appropriate.
+   if method == :name && f.object.class.addressable? %>
+   <%= f.cms_path_field :slug %>
+<% end %>
