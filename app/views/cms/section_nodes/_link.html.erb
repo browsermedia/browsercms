@@ -8,6 +8,7 @@
         :icon => action_icon(first_level ? :root_link : :link),
         :published_status_icon => status_icon(node.status),
         :published_status_label => node.published? ? "Published" : "Draft",
+        :edit_path => link_path(node),
         :parent => parent
       } %>
   </li>

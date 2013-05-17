@@ -41,6 +41,7 @@ module Cms
       options['data-new_path'] = url_for(new_block_path(block))
       options['data-view_path'] = url_for(block_path(block))
       options['data-edit_path'] = url_for(block_path(block, :edit))
+      options['data-preview_path'] = block.path if block.class.addressable?
       options['data-versions_path'] = url_for(block_path(block, :versions)) if block.class.versioned?
       options['data-delete_path'] = url_for(block_path(block))
       options['data-publish_path'] = url_for(block_path(block, :publish)) if block.class.publishable?

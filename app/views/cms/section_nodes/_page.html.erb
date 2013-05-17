@@ -14,6 +14,8 @@
         :access_icon => status_icon(access_icon),
         :published_status_icon => status_icon(status_icon),
         :published_status_label => status_icon.to_s.titleize,
+        :edit_path => page_path(node),
+        :configure_path => edit_page_path(node),
         :parent => parent
       } %>
   </li>

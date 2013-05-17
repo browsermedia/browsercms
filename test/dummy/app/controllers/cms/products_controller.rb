@@ -1,2 +1,6 @@
-class Cms::ProductsController < Cms::ContentBlockController
+module Cms
+  class ProductsController < Cms::ContentBlockController
+
+
+  end
 end

@@ -1,6 +1,26 @@
 module Cms
   module FormTagHelper
-    
+
+    def forecasting_a_new_section?(form_object)
+      Cms::Section.with_path(form_object.object.class.path).first.nil?
+    end
+
+    def slug_source_if(boolean)
+      if boolean
+        {class: 'slug-source'}
+      else
+        {}
+      end
+    end
+
+    def content_requires_slug_field?(method, form_object)
+      method == :name && form_object.object.class.requires_slug?
+    end
+
+    def should_autogenerate_slug?(method, form_object)
+      content_requires_slug_field?(method, form_object) && form_object.object.new_record?
+    end
+
     # A drop-down is just a specialized HTML select
     
     def drop_down_tag(name, option_tags = nil, options = {}) 

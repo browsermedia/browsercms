@@ -2,6 +2,7 @@
 // A layer on top of jQuery .ajax that adds some Rails and CMS logic
 jQuery(function ($) {
     $.ajaxSetup({
+        // By default, use a generic error handler that will report an AJAX error via an Alert.
         error:function (x, status, error) {
             alert("A " + x.status + " error occurred: " + error);
         }
@@ -12,13 +13,13 @@ jQuery(function ($) {
         // Pass to beforeSend: when calling AJAX.
         asJS:function () {
             return function (xhr) {
-                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                xhr.setRequestHeader('X-CSRF-Token', $.cms.csrfToken());
                 xhr.setRequestHeader("Accept", "text/javascript");
             }
         },
         asJSON:function () {
             return function (xhr) {
-                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
+                xhr.setRequestHeader('X-CSRF-Token', $.cms.csrfToken());
                 xhr.setRequestHeader("Accept", "application/json");
             }
         },

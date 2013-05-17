@@ -1,3 +1,4 @@
+<%# This is the old 'show' which is used now only for looking at older versions. Might want to get rid of at some point. %>
 <% use_page_title "Content Library / View #{content_type.display_name}" %>
 <% @toolbar_title = "View #{content_type.display_name} '#{ @block.name }'" %>
 <%= content_for :html_head do %>
@@ -10,7 +11,7 @@
     }
   </style>
 <% end %>
-<%= content_for :button_bar, render(:partial => 'cms/blocks/buttonbar') %>
+<%= content_for :button_bar, render(:partial => 'buttonbar') %>
 <div id="block_content">
   <% if @block.respond_to?(:deleted) && @block.deleted %>
   <div class="header">This <%= @block.class.name %> has been deleted.</div>

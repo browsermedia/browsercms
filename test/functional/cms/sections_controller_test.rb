@@ -10,12 +10,6 @@ class SectionsControllerTest < ActionController::TestCase
     given_there_is_a_sitemap
   end
   
-  def test_edit
-    get :edit, :id => root_section.to_param
-    assert_response :success
-    assert_select "input[name=?][value=?]", "section[name]", root_section.name
-  end
-
   test "GET new should set the groups to the parent section's groups by default" do
     @group = create(:group, :name => "Test", :group_type => create(:group_type, :name => "CMS User", :cms_access => true))
     get :new, :section_id => root_section.to_param

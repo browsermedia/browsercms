@@ -1,5 +1,4 @@
 require 'cms/data_loader'
-extend Cms::DataLoader
 
 if %w[development test dev local].include?(Rails.env)
   pwd = "cmsadmin"

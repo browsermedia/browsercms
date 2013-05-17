@@ -12,6 +12,7 @@
             :icon => "#{section_icons(section_node, children)} #{action_icon(first_level ? :root_folder : :folder, :class => "folder")}",
             :hidden => node.hidden?,
             :access_icon => status_icon(access_status),
+            :edit_path => section_path(node),
             :parent => parent
     } %>
     <% children.each do |child_section_node| %>
@@ -20,6 +21,7 @@
                                :node => child_section_node.node,
                                :parent => node,
                                :child_hash => child_hash[key],
+                               :edit_path => section_path(node),
                                :key => child_section_node
                    } %>
     <% end %>

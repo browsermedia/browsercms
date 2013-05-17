@@ -1,17 +1,7 @@
-<%= content_for :html_head do %>
-    <script type="text/javascript">
-        jQuery(function ($) {
-            $("#section_name").keyup(function () {
-                var section_path = "<%= @parent.path %>".replace(/\/$/, '')
-                $("#section_path").val(section_path + "/" + $.cms.slug($(this).val()))
-            })
-        })
-    </script>
-<% end %>
 <% use_page_title "New Section" %>
 <%= render partial: 'cms/section_nodes/button_bar' %>
 <%= form_for(@section, :id => 'section_form') do |f| %>
     <%= hidden_field_tag :section_id, @parent.id %>
 
-    <%= render :partial => 'form', :locals => {:f => f} %>
+    <%= render :partial => 'form', :locals => {:f => f, :parent => @parent} %>
 <% end %>

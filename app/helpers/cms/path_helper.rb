@@ -89,6 +89,31 @@ module Cms
       end
     end
 
+    # Return the path for a given block. Similar to polymorphic_path but handles resources from different engines.
+    #
+    # @param [Object] block A content block
+    # @param [String] action (Optional) i.e. :edit
+    # @return [Array] An array of argument suitable to be passed to url_for or link_to helpers. This will be something like:
+    #     [main_app, :cms, :products, @block, :edit]
+    #  or [cms, :html_blocks, @block]
+    #
+    # This will work whether the block is:
+    #   1. A custom unnamespaced block in a project (i.e. Product)
+    #   2. A core CMS block (i.e. Cms::Portlet)
+    #   3. A block in a module (i.e. BcmsNews::NewsArticle)
+    # e.g.
+    #   block_path(Product.find(1)) => /cms/products/1
+    #   block_path(Cms::HtmlBlock.find(1)) => /cms/html_blocks/1
+    #   block_path(BcmsNews::NewsArticle.find(1)) => /bcms_news/news_articles/1
+    #
+    def block_path(block, action=nil)
+      path = []
+      path << engine_for(block)
+      path << action if action
+      path.concat path_elements_for(block)
+      path
+    end
+
     # Returns the Engine Proxy that this resource is from.
     def engine_for(resource)
       EngineHelper.decorate(resource)

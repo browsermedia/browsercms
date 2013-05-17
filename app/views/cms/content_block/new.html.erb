@@ -4,11 +4,11 @@
 <% end %>
 <% use_page_title "Content Library / Add New #{content_type.display_name}" %>
 <% @toolbar_title = "Add New #{content_type.display_name}" %>
-<%= content_for :button_bar,  render(:partial => 'cms/blocks/buttonbar') %>
+<%= content_for :button_bar,  render(:partial => 'buttonbar') %>
 <%= form_for(@block, :url => blocks_path, :html => {:multipart => true}) do |f| %>
   <%= f.cms_error_messages %>
   <%= render :partial => 'cms/shared/exception', :object => @exception if @exception %>
-  <%= render :partial => 'cms/blocks/hidden_fields', :locals => {:f => f} %>
+  <%= render :partial => 'hidden_fields', :locals => {:f => f} %>
   <%= render :partial => block_form, :locals => {:f => f} %>
   <% unless @hide_buttons %>
     <div class="buttons">

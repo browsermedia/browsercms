@@ -69,6 +69,7 @@ module Cms
       options[:class] << 'disabled' unless options[:enabled]
       options.delete(:enabled)
       options[:class] << 'http_put' if options[:method] == :put
+      options[:class] << 'http_delete' if options[:method] == :delete
       options.delete(:method)
       copy_title(options, options)
       link_to(label, path, options)
@@ -78,10 +79,9 @@ module Cms
       options = {class: ["btn", "btn-primary"], id: "revisions_button"}
       path = "#"
       if !content_item.new_record? && content_item.class.versioned?
-        block_path(content_item, :versions)
+        path = block_path(content_item, :versions)
       else
         options[:class] << "disabled"
-
       end
       link_to "List Versions", path, options
     end

@@ -174,7 +174,10 @@ module Cms
 
         def live?
           if self.class.versioned?
-            if (respond_to?(:latest_version) && self.latest_version)
+            unless persisted?
+              return false
+            end
+            if respond_to?(:latest_version) && self.latest_version
               version == latest_version && published?
             else
               live_version.version == draft.version && published?
