@@ -1,6 +1,7 @@
 Task: As an editor, I should be able to create events, products, etc, and have them be accessible at a given path.
 Intent: Make it easier to create custom content types (like News)
 
+* Encode slugs, validate their characters.
 * Handle custom routes (like news /news/:year/:month/:day/:slug)
 * [BUG] If product is first item in section, menus will not link to the correct location.
 * [BUG] When viewing a page, and deleting it, it doesn't confirm.
@@ -24,7 +25,7 @@ Nomenclature:
     - Preview blocks opens with toolbar.
     - Might want to have 'edit' block (/cms/product/1) redirect to the path of the page (/products/abc).
     - Then Preview can just open it in a new window.
-* Autosuggest slugs based on name.
+
 
 ## Documentation
 

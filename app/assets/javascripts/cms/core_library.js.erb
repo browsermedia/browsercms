@@ -105,6 +105,22 @@ jQuery(function($) {
 
 });
 
+// Autogenerate slugs for form fields as user types.
+// Requires two fields to enable autogeneration, a source and destination. You can leave one out for cases
+// where you don't want to overwrite the existing slug (i.e. editing an existing record's name).
+//
+// Here are the css classes to set:
+// .slug-source - The input field to pull the name from.
+// .slug-dest - The input field to set the slug value in.
+$(function() {
+    if ($('.slug-dest').length && $('.slug-source').length) {
+        $('.slug-source').keyup(function() {
+            var name = $('.slug-source').val();
+            $('.slug-dest').val($.cms.slug(name));
+        });
+    }
+});
+
 // Automatically enable date_picker controls
 $(function() {
     if ($.datepicker) {
