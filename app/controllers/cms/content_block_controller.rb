@@ -18,6 +18,7 @@ module Cms
       load_blocks
     end
 
+    # Getting content by its path  (i.e. /products/:slug)
     def show_via_slug
       @block = model_class.with_slug(params[:slug])
       unless @block
@@ -26,11 +27,14 @@ module Cms
       render_block_in_main_container
     end
 
+    # Getting content by its id (i.e. /products/:id)
+    # Logged in editors will get the editing frame.
     def show
       load_block_draft
-      render_toolbar_or_block_in_main_container
+      render_toolbar_and_iframe_or_block_in_main_container
     end
 
+    # Getting the content for the editing frame.
     def inline
       load_block_draft
       render_block_in_main_container
@@ -328,19 +332,22 @@ module Cms
       render 'version'
     end
 
-    def render_toolbar_or_block_in_main_container
+    def render_toolbar_and_iframe_or_block_in_main_container
       if @block.class.addressable?
-        # 'edit' param shouldn't be used anymore
-        if current_user.able_to_edit?(@block) && params["edit"] != 'true'
-          @page = @block
-          @page_title = @block.page_title
-          render "show", :layout => 'cms/block_editor'
+        if current_user.able_to_edit?(@block)
+          render_toolbar_and_iframe
         else
           render_block_in_main_container
         end
       else
         render_block_in_content_library
       end
+    end
+
+    def render_toolbar_and_iframe
+      @page = @block
+      @page_title = @block.page_title
+      render "show", :layout => 'cms/block_editor'
     end
   end
 end
