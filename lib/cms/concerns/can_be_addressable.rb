@@ -24,6 +24,8 @@ module Cms
           include GenericSitemapBehavior
         end
 
+        @template = options[:template]
+
         unless options[:no_dynamic_path]
           include Addressable::DynamicPath
         end
@@ -77,6 +79,16 @@ module Cms
           section_node.node
         end
 
+        # Returns the layout (Page Template) that should be used to render instances of this content.
+        # Can be specified as is_addressable template: 'subpage'
+        # @return [String] template/default unless template was set.
+        def layout
+          if @template
+            "templates/#{@template}"
+          else
+            "templates/default"
+          end
+        end
       end
 
       module DynamicPath
@@ -114,12 +126,12 @@ module Cms
 
       # Returns all classes which need a custom route to show themselves.
       def self.classes_that_require_custom_routes
-        descendants.select {|klass| klass.path != nil}
+        descendants.select { |klass| klass.path != nil }
       end
 
       # Returns all classes which inherit from Cms::Concerns::Addressable
       def self.descendants
-        ObjectSpace.each_object(::Class).select{|klass| klass < Cms::Concerns::Addressable }
+        ObjectSpace.each_object(::Class).select { |klass| klass < Cms::Concerns::Addressable }
       end
 
 

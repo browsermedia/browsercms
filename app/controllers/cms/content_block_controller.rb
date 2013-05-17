@@ -31,7 +31,7 @@ module Cms
     # Logged in editors will get the editing frame.
     def show
       load_block_draft
-      render_toolbar_and_iframe_or_block_in_main_container
+      render_editing_frame_or_block_in_main_container
     end
 
     # Getting the content for the editing frame.
@@ -325,14 +325,14 @@ module Cms
       ensure_current_user_can_view(@block)
       @page = @block # page templates expect a @page attribute
       @content_block = @block # render.html.erb's expect a @content_block attribute
-      render 'render_block_in_main_container', layout: "templates/default"
+      render 'render_block_in_main_container', layout: @block.class.layout
     end
 
     def render_block_in_content_library
       render 'version'
     end
 
-    def render_toolbar_and_iframe_or_block_in_main_container
+    def render_editing_frame_or_block_in_main_container
       if @block.class.addressable?
         if current_user.able_to_edit?(@block)
           render_toolbar_and_iframe

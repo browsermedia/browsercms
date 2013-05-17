@@ -60,6 +60,20 @@ describe Cms::Concerns::Addressable do
       p = HasSelfDefinedPath.new(path: "/custom")
       p.path.must_equal "/custom"
     end
+
+    it "should allow the page template to be used to display a block" do
+      class SpecifyingTemplate < ActiveRecord::Base
+        is_addressable path: "/templates", template: 'subpage'
+      end
+      SpecifyingTemplate.layout.must_equal 'templates/subpage'
+    end
+
+    it "should use the default template if non is specified" do
+      class UsingDefaultTemplate < ActiveRecord::Base
+        is_addressable path: "/templates"
+      end
+      UsingDefaultTemplate.layout.must_equal 'templates/default'
+    end
   end
 
   describe "#can_have_parent?" do
@@ -111,7 +125,7 @@ describe Cms::Concerns::Addressable do
 
     it "should find correct type" do
       AnotherAddressable.create!(slug: "coke", parent_id: root_section)
-      content = IsAddressable.create( slug: "coke", parent_id: root_section)
+      content = IsAddressable.create(slug: "coke", parent_id: root_section)
       found = IsAddressable.with_slug("coke")
       found.must_equal content
 
