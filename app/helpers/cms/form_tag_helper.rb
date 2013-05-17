@@ -1,6 +1,14 @@
 module Cms
   module FormTagHelper
 
+    def slug_source_if(boolean)
+      if boolean
+        {class: 'slug-source'}
+      else
+        {}
+      end
+    end
+
     def content_requires_slug_field?(method, form_object)
       method == :name && form_object.object.class.addressable? && form_object.object.respond_to?(:slug)
     end
