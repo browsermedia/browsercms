@@ -4,6 +4,6 @@
   <%= render :partial => 'form', :locals => {:f => f} %>
   <div class="buttons">
     <%= publish_button "link" %>
-    <%= lt_button_wrapper(f.submit("Save", :class => "submit")) %>
+    <%= f.submit("Save", :class => "btn btn-primary") %>
   </div>
 <% end %>
