@@ -1,11 +1,4 @@
-<%= content_for :html_head do %>
-  <%= stylesheet_link_tag('cms/form_layout') %>
-  <%= javascript_tag do %>
-  jQuery(function($) {
-    $('#page_template').selectbox({width: '440px'});
-  });
-  <% end %>
-<% end %>
+
 <%= f.cms_error_messages %>
 <%= f.cms_text_field :name %>
 <%= f.cms_text_field :title, :instructions => "(Leave blank if same as name)" %>

@@ -2,48 +2,36 @@
   <h2 class="left">Page Drafts</h2>
 
   <%= form_tag cms.publish_pages_path, :method => :put do %>
-    <div class="roundedcorners" style="position: relative">
-      <table class="data">
+      <table class="data table table-bordered table-rounded">
         <thead>
           <tr>
-            <th class="select first unbordered">&nbsp;</th>
-            <th colspan="2"><div class="dividers">Name</div></th>
-            <th><div class="dividers">User</div></th>
-	          <th class="last" colspan="2">Date</th>
+            <th></th>
+            <th>Name</th>
+            <th>User</th>
+	        <th>Date</th>
           </tr>
         </thead>
         <tbody>
           <% if @unpublished_pages.empty? %>
-            <tr><td colspan="3">All pages are published</td></tr>
+            <tr><td colspan="4">All pages are published</td></tr>
           <% else %>  
             <% @unpublished_pages.each do |page| %>
               <tr>
-                <td class="first"></td>
                 <td class="select"><%= check_box_tag "page_ids[]", page.id, false, :id => "publish_page_#{page.id}" %></td>
                 <td class="name">
-                  <div class="dividers">
                     <%= link_to h(page.name_with_section_path), page.path %>
-                  </div>
                 </td>
                 <td class="updated_by">
-                  <div class="dividers">
                     <%= h(page.updated_by ? page.updated_by.login : nil) %>
-                  </div>
                 </td>
                 <td class="updated_at"><%= page.updated_at.strftime("%b %d") %></td>
-                <td class="last"></td>
               </tr>
             <% end %>
             <tr>
-              <td colspan="5"><%= lt_button_wrapper(submit_tag("Publish Selected", :class => "submit")) %></td>
+              <td colspan="4"><%= submit_tag("Publish Selected", :class => "submit btn btn-primary") %></td>
             </tr>
           <% end %>
         </tbody>
       </table>
-      <div class="tl"></div>
-      <div class="tr"></div>
-      <div class="bl"></div>
-      <div class="br"></div>
-    </div>
   <% end %>
 </div>

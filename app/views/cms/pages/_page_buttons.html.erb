@@ -1,8 +1,8 @@
 <span id="page-status-label">
 <% if !@page.live? %>
-    <span id="page-status-label" class="draft-status">DRAFT</span>
+    <span id="page-status-label" class="draft-status pull-left">DRAFT</span>
 <% else %>
-   <span id="page-status-label" class="published-status">Published</span>
+   <span id="page-status-label" class="published-status pull-left">Published</span>
 <% end %>
 </span>
 <%= menu_button "Publish",

@@ -2,6 +2,9 @@
 *   Correct styles for bootstrap that the CSS has broken
 */
 
+.btn-group .btn.pull-left {float: left;}
+.btn-group .btn.dropdown-toggle {float: right;}
+
 .navbar {
   a {
     font-size: 13px;
@@ -14,39 +17,39 @@
 }
 
 body {
-  // Pushes body below toolbar for admin.
-  padding-top: 75px;
+  padding-top: 85px;
 }
 
-.btn.btn-primary.pull-left, .btn-group > .btn + .dropdown-toggle {float: left; clear: none;}
-a.btn.btn-primary.pull-left, a.btn.btn-primary.pull-left:hover {color: #FFF; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);}
+.table thead th {background-color: #b1b4b7;}
 
-#search_term {border-radius: 0;}
+tbody .block_status {color: #FFF; text-shadow: 0 1px 0 rgba(0,0,0,0.5) !important; text-transform: capitalize;}
 
-.label-success {margin: 6px 10px; float: right;}
-
-.navbar-inner .container {padding: 5px 0;}
-.navbar .nav.pull-right .pull-right {margin-top: 0;}
-
-.badge {margin: 10px 0 0 0; float: left; clear: none;}
-
-.nav .dropdown-toggle .caret {border-bottom-color: #fff; border-top-color: #FFF;}
-.nav .dropdown-toggle:hover .caret {border-top-color: #fff; border-bottom-color: #fff;}
-.navbar .nav > li > a.btn.btn-primary {background-color:#004BB2;}
-.navbar-inner {
-  background-image: -moz-linear-gradient(top, #222222, #111111);
-  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#222222), to(#111111));
-  background-image: -webkit-linear-gradient(top, #222222, #111111);
-  background-image: -o-linear-gradient(top, #222222, #111111);
-  background-image: linear-gradient(to bottom, #222222, #111111);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF222222', endColorstr='#FF111111', GradientType=0);
+tbody .block_status.draft, #sitemap .span1.Draft {
+  background: #EE5F5B;
+  background: -webkit-gradient(linear, 0 0, 0 bottom, from(#EE5F5B), to(#BD362F));
+  background: -webkit-linear-gradient(#EE5F5B, #BD362F);
+  background: -moz-linear-gradient(#EE5F5B, #BD362F);
+  background: -ms-linear-gradient(#EE5F5B, #BD362F);
+  background: -o-linear-gradient(#EE5F5B, #BD362F);
+  background: linear-gradient(#EE5F5B, #BD362F);
 }
 
-a.disabled:hover {background: none; background-color: #0044CC;}
-.navbar .nav > li > a {color: #FFF; text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);}
-.navbar .nav > li > a:focus, .navbar .nav > li > a:hover {text-shadow: 0 -1px 0 rgba(0,0,0,0.25); background-color: rgba(255,255,255,.05); color: #fff;}
-.navbar .nav li.dropdown.open > .dropdown-toggle, .navbar .nav li.dropdown.active > .dropdown-toggle, .navbar .nav li.dropdown.open.active > .dropdown-toggle {text-shadow: 0 -1px 0 rgba(0,0,0,0.25); background-color: rgba(255,255,255,.05); color: #fff;}
-.navbar .btn, .navbar .btn-group {margin: 0;}
+tbody .block_status.published, #sitemap .span1.Published {
+  background: #62c462;
+  background: -webkit-gradient(linear, 0 0, 0 bottom, from(#62c462), to(#51a351));
+  background: -webkit-linear-gradient(#62c462, #51a351);
+  background: -moz-linear-gradient(#62c462, #51a351);
+  background: -ms-linear-gradient(#62c462, #51a351);
+  background: -o-linear-gradient(#62c462, #51a351);
+  background: linear-gradient(#62c462, #51a351);
+}
 
+#sitemap ul {margin: 0; padding: 0;}
+#sitemap ul li {margin: 0; padding: 0; list-style: none;}
+#sitemap .table {margin: 0;}
+#sitemap .table td {vertical-align: middle;}
+#sitemap .table img + div {display: inline;}
 
+.label {margin: 12px 10px 0 0;}
+
+#loginmain {margin: 0 auto; float: none;}

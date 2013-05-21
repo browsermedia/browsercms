@@ -15,11 +15,11 @@ jQuery(function($) {
     var addHoverToSectionNodes = function() {
         $('#sitemap div.roundedcorners').hover(
                 function() {
-                    $(this).find('table.section_node').addClass('hover');
+                    $(this).find('div.section_node').addClass('hover');
                     $(this).addClass('over')
                 },
                 function() {
-                    $(this).find('table.section_node').removeClass('hover');
+                    $(this).find('div.section_node').removeClass('hover');
                     $(this).removeClass('over')
                 }
                 )
@@ -32,7 +32,7 @@ jQuery(function($) {
     }
 
     var makeMovableRowsDraggable = function() {
-        $('#sitemap table.movable').draggable({
+        $('#sitemap .movable').draggable({
             revert: 'invalid',
             revertDuration: 200,
             helper: 'clone',
@@ -70,11 +70,11 @@ jQuery(function($) {
 
     var nodeOnDrop = function(e, ui) {
         //Remove any drop zone highlights still hanging out
-        $('#sitemap td.drop-before, #sitemap td.node, #sitemap td.drop-after').removeClass('drop-over')
+        $('#sitemap div.drop-before, #sitemap div.node, #sitemap div.drop-after').removeClass('drop-over')
 
         //Get the object and the id for the src (what we are droping)
         //and the dest (where we are dropping)
-        var src = ui.draggable.parents('ul:first') //The UL the TD is in
+        var src = ui.draggable.parents('ul:first') //The UL the div is in
         var sid = getId(src[0].id, 'section_node_')
         var dest = $(this).parents('ul:first') //The UL the drop zone is in
         var did = getId(dest[0].id, 'section_node_')
@@ -99,9 +99,9 @@ jQuery(function($) {
                 openSection(dest[0])
                 //If the drop zone is directly after an open section,
                 //move this to the beginning of the section
-            } else if ($(this).hasClass('drop-after') && dest.find('table:first img.folder-open').length > 0) {
+            } else if ($(this).hasClass('drop-after') && dest.find('.span12:first img.folder-open').length > 0) {
                 var move = 'to_beginning'
-                src.insertAfter(dest.find('table:first'))
+                src.insertAfter(dest.find('.span12:first'))
             } else {
                 //insert before or after, based on the class of the drop zone
                 if (dest.hasClass('rootlet')) {
@@ -128,7 +128,7 @@ jQuery(function($) {
     }
 
     var makeExpandable = function(dest) {
-        var dest_toggle = dest.find('td.node:first img:first');
+        var dest_toggle = dest.find('div.node:first img:first');
         dest_toggle.removeClass('no_folder_toggle');
         dest_toggle.addClass('folder_toggle');
         dest_toggle.click(toggleSectionOnClick);
@@ -141,7 +141,7 @@ jQuery(function($) {
 
     var makeRootlet = function(src) {
         src.addClass('rootlet')
-        var src_icon = src.find('td.node:first img:last')
+        var src_icon = src.find('div.node:first img:last')
         var src_icon_src = src_icon.attr('src')
         if (src_icon_src.indexOf('/root_') == -1) {
             src_icon.attr('src', src_icon_src.replace(/\/([^/]+\.png).*/, '/root_$1'))
@@ -150,7 +150,7 @@ jQuery(function($) {
 
     var unMakeRootlet = function (src) {
         src.removeClass('rootlet')
-        var src_icon = src.find('td.node:first img:last')
+        var src_icon = src.find('div.node:first img:last')
         var src_icon_src = src_icon.attr('src')
         if (src_icon_src.indexOf('/root_') > -1) {
             src_icon.attr('src', src_icon_src.replace(/\/root_([^/]+\.png).*/, '/$1'))
@@ -158,8 +158,8 @@ jQuery(function($) {
     }
 
     var enableDropZones = function() {
-        $('#sitemap td.drop-before, #sitemap td.node, #sitemap td.drop-after').droppable({
-            accept: 'table',
+        $('#sitemap div.drop-before, #sitemap div.node, #sitemap div.drop-after').droppable({
+            accept: 'div',
             tolerance: 'pointer',
             over: function(e, ui) {
                 $(this).addClass('drop-over')
@@ -173,15 +173,15 @@ jQuery(function($) {
 
     var clearSelectedSectionNode = function() {
         disableButtons()
-        $('#sitemap table.section_node').removeClass('selected');
-        $('.roundedcorners').removeClass('on')
+        //$('#sitemap .section_node').removeClass('selected');
+        //$('.roundedcorners').removeClass('on')
     }
 
     var selectSectionNode = function(sectionNode) {
         clearSelectedSectionNode(sectionNode)
         enableButtonsForSectionNode(sectionNode)
-        $(sectionNode).find('table:first').addClass('selected');
-        $(sectionNode).find('div.roundedcorners:first').addClass('on')
+        //$(sectionNode).find('div.span12:first').addClass('selected');
+        //$(sectionNode).find('div.roundedcorners:first').addClass('on')
     }
 
     var isSectionEmpty = function(id) {
@@ -189,7 +189,7 @@ jQuery(function($) {
     }
 
     var enableButtonsForSectionNode = function(sectionNode) {
-        enableButtonsForNode($(sectionNode).find('td.node')[0])
+        enableButtonsForNode($(sectionNode).find('div.node')[0])
     }
 
     var enableButtonsForNode = function(node) {
@@ -357,7 +357,7 @@ jQuery(function($) {
 
         $(sectionNode).addClass('open')
         $(sectionNode).find('li:first > ul').show();
-        var img = $(sectionNode).find('li:first table:first img.folder_toggle');
+        var img = $(sectionNode).find('li:first .span12:first img.folder_toggle');
         if (img.hasClass('large')) {
             img.attr('src', '<%= asset_path "cms/sitemap/gray_contract.png" %>').addClass("folder-open")
         } else {
@@ -374,7 +374,7 @@ jQuery(function($) {
         //close this
         $(sectionNode).removeClass('open')
         $(sectionNode).find('li:first > ul').hide()
-        var img = $(sectionNode).find('li:first table:first img.folder_toggle');
+        var img = $(sectionNode).find('li:first .span12:first img.folder_toggle');
         if (img.hasClass('large')) {
             img.attr('src', '<%= asset_path "cms/sitemap/gray_expand.png" %>').removeClass("folder-open")
         } else {
@@ -383,7 +383,7 @@ jQuery(function($) {
     }
 
     var sectionNodeIsOpen = function(sectionNode) {
-        return $(sectionNode).find('li:first table:first img.folder-open').length
+        return $(sectionNode).find('li:first .span12:first img.folder-open').length
     }
 
     var nodeOnClick = function() {
@@ -392,7 +392,7 @@ jQuery(function($) {
         clearSelectedSectionNode()
         $(this).addClass('selected')
 
-        var node = $(this).find('td.node')[0]
+        var node = $(this).find('div.node')[0]
         var id = getId(node.id, /(section|page|link)_/)
         var sectionNode = $(this).parents('ul:first')[0]
 
@@ -419,7 +419,7 @@ jQuery(function($) {
     }
 
     var addNodeOnClick = function() {
-        $('#sitemap table.section_node').click(nodeOnClick).dblclick(nodeOnDoubleClick)
+        $('#sitemap .section_node').click(nodeOnClick).dblclick(nodeOnDoubleClick)
     }
 
     var addToggleSectionOnClick = function() {
@@ -430,12 +430,12 @@ jQuery(function($) {
     //that section will start in open state
     var fireOnClickForOpenSectionNodes = function() {
         var openSectionNodeIds = $.cookieSet.get('openSectionNodes')
-        var selectedSectionSelector = '.root table:first'
+        var selectedSectionSelector = '.root .span12:first'
         if (openSectionNodeIds) {
             $.each(openSectionNodeIds, function(i, e) {
-                $('#section_node_' + e + ' table:first img.folder_toggle').click()
+                $('#section_node_' + e + ' .span12:first img.folder_toggle').click()
             })
-            selectedSectionSelector = '#section_node_' + openSectionNodeIds[openSectionNodeIds.length - 1] + ' table:first'
+            selectedSectionSelector = '#section_node_' + openSectionNodeIds[openSectionNodeIds.length - 1] + ' .span12:first'
         }
         $(selectedSectionSelector).click()
     }

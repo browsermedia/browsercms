@@ -1,39 +1,22 @@
-<%= content_for :html_head do %>
-  <%= stylesheet_link_tag('cms/form_layout') %>
-  <style type="text/css">
-    .checkbox_group .checkboxes .instructions {
-      padding-bottom: 10px;
-    }
-  </style>
-  <%= javascript_tag do %>
-    jQuery(function($) {
-      $('#group_group_type_id').selectbox();
-    });
-  <% end %>
-<% end %>
 <%= render 'toolbar' %>
-
 <%= form_for @group do |f| %>
   <%= f.cms_error_messages %>
-  <div class="fields text_fields">
+  <div class="row-fluid">
     <%= f.label :name, "Group Name" %>
     <%= f.text_field :name %>
   </div>
 
   <% unless @group.guest? %>
-    <div class="fields select_fields">
-    	<%= f.label :group_type_id, "Type of User" %>
-    	<div><%= f.select :group_type_id, Cms::GroupType.non_guest.map { |g| [g.name, g.id] } %></div>
-    	<div class="instructions">What kind of user does this group represent?</div>
-  	<br clear="all" />
+    <%= f.label :group_type_id, "Type of User" %>
+    <div class="row-fluid">
+      <%= f.select :group_type_id, Cms::GroupType.non_guest.map { |g| [g.name, g.id] } %>
+      <div class="muted help-block">What kind of user does this group represent?</div>
     </div>
   <% end %>
 
   <%= render :partial => 'permissions' %>
   <%= render :partial => 'sections' %>
 
-  <div class="buttons">
-    <%= lt_button_wrapper(f.submit("Save", :class => "submit")) %>
-  </div>
+  <%= f.submit("Save", :class => "submit btn btn-primary") %>
 
 <% end %>

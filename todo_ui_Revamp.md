@@ -1,16 +1,17 @@
+Tasks:
+
+## UI Merge
+
+* Sitemap - Reverse engineer sitemap from new files
+* New Button - Figure out styling issue
+*
+##
+
+
 Current Task:
 
-## Big Tasks
-
-* Do UX for the content library, admin and sitemap
 * Implement implied features (Search/Notifications)
 
-
-* Add BrowserCMS to the list of projects using Mercury
-
-### UX Considerations
-
-1. How should new content blocks be added to a page? Right now, the + button uses the old world flow.
 
 ### Notes
 

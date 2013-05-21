@@ -1,5 +1,4 @@
 <%= content_for :html_head do %>
-    <%= stylesheet_link_tag 'cms/sitemap' %>
     <%= javascript_include_tag 'cms/sitemap' %>
 <% end %>
 
@@ -18,9 +17,9 @@
     <%= delete_menu_button(nil, class: ['pull-left']) %>
 <% end %>
 
-<div id="sitemap">
+<div id="sitemap" class="row-fluid">
   <ul id="root_<%= @section.id %>" class="root" style="padding-left: 0">
-    <li>
+    <li class="row-fluid">
       <%= render :partial => "node", :locals => {
               :node => @section,
               :node_type => "section",

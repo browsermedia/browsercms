@@ -1,17 +1,4 @@
 <% use_page_title "CMS Login" %>
-<%= content_for :html_head do %>
-  <%= javascript_tag do %>
-      jQuery(function($){
-        $('#login_button').hover(function(){
-          $('#login_button').css('background-image', 'url(<%= asset_path "cms/buttons/button_cap_h.png" %>)');
-          $('#login_button > input').css('background-image', 'url(<%= asset_path "cms/buttons/button_h.png" %>)');
-        }, function(){
-          $('#login_button').css('background-image', 'url(<%= asset_path "cms/buttons/button_cap.png" %>)');
-          $('#login_button > input').css('background-image', 'url(<%= asset_path "cms/buttons/button.png" %>)');
-  })});
-  <% end %>
-<% end %>
-
 <% @login ||= "Username" %>
 <% @password ||= "Password" %>
 <%= form_tag cms.login_path, :id => 'login_form' do %>
@@ -22,7 +9,7 @@
     <%= password_field_tag 'password', @password, :onfocus => "if(this.value == 'Password') this.value = '';", :onblur => "if(this.value == '') this.value = 'Password';", :tabindex => 2 %>
   </div>
   <div class="buttons">
-    <div id="login_button"><%= submit_tag("LOGIN") %></div>
+    <%= submit_tag("LOGIN") %>
   <div id="remember_me_div">
     <%= label_tag 'remember_me', 'Remember me', :class => "inline" %>
    <%= check_box_tag 'remember_me', '1', @remember_me, :tabindex => 3 %>

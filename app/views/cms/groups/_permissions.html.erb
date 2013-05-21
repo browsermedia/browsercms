@@ -20,18 +20,16 @@
     <label>Global Permissions</label>
     <%= hidden_field_tag "group[permission_ids][]", "" %>  
     <div class="checkboxes">
-    <% Cms::Permission.all(:order => "name").each do |p| %>
-      <div class="checkbox_fields">
-          <%= check_box_tag "group[permission_ids][]", p.id, @group.permissions.include?(p), :id => "permission_ids_#{p.id}", :class => "permission_ids" %>
-          <label for="permission_ids_<%= p.id %>" style="width: 400px;#padding-top: 6px;"><%=h p.full_name %></label>
-      </div>
-      <div class="instructions"><%=h p.description %></div>
-    <% end %>
-    <div class="check_uncheck">
-      <%= check_uncheck_tag 'input.permission_ids' %>
+        <% Cms::Permission.all(:order => "name").each do |p| %>
+          <div class="checkbox_fields">
+              <%= check_box_tag "group[permission_ids][]", p.id, @group.permissions.include?(p), :id => "permission_ids_#{p.id}", :class => "permission_ids" %>
+              <label for="permission_ids_<%= p.id %>" style="width: 400px;#padding-top: 6px;"><%=h p.full_name %></label>
+          </div>
+          <div class="muted help-block"><%=h p.description %></div>
+        <% end %>
+        <div class="check_uncheck">
+          <%= check_uncheck_tag 'input.permission_ids' %>
+        </div>
     </div>
   </div>
-    <br clear="all" />
-  <div style="clear: all; margin-top: -10px;"></div>
-    </div>
 </div>

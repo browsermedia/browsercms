@@ -12,10 +12,9 @@
   <% else %>
     <%= f.label method %>
   <% end %>
-  <%= f.text_field method, options %>
+  <%= f.text_field method, options = {:class=>"input-xxlarge"} %>
   <% if cms_options[:instructions] %>
-    <div class="instructions"><%=h cms_options[:instructions] %></div>
-    <br clear="all" /><%# Fixes issue with bad line wrapping %>
+    <div class="muted help-block"><%=h cms_options[:instructions] %></div>
   <% end %>
 </div>
 <% # Auto-insert slug field where appropriate.

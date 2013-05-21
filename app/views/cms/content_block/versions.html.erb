@@ -37,10 +37,10 @@
 <% end %>
 
 <div class="roundedcorners">
-  <table id="blocks" class="data">
+  <table id="blocks" class="data table table-bordered table-striped table-hover">
     <thead>
       <tr>
-        <th colspan="2" class="first"><div class="dividers">Version</div></th>
+        <th class="first"><div class="dividers">Version</div></th>
         <th>
           <div class="dividers">Comment</div>
         </th>
@@ -55,7 +55,6 @@
     <tbody>
       <% @block.versions.all(:order => "version desc").each_with_index do |r, i| %>
         <tr id="<%= content_type.content_block_type.singularize %>_<%= r.version %>">
-          <td class="first"></td>
           <td>
             <div class="dividers">
               <%= "v. #{r.version}" %>
@@ -74,17 +73,10 @@
           <td>
             <div><%= r.updated_by.login if r.updated_by %></div>
           </td>
-          <td class="last"></td>
         </tr>
       <% end %>
-      <tr>
-        <td colspan="8" class="buffer"></td>
-      </tr>
+
     </tbody>
   </table>
-  <div class="tl"></div>
-  <div class="tr"></div>
-  <div class="bl"></div>
-  <div class="br"></div>
 </div>
 

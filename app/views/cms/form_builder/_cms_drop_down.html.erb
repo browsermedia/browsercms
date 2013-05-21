@@ -4,9 +4,8 @@
   <% else %>
     <%= f.label method %>
   <% end %>
-  <%= f.drop_down method, choices, options, html_options %>
+  <%= f.drop_down method, choices, options={:class=>"btn dropdown-toggle"}, html_options %>
   <% if cms_options[:instructions] %>
-    <div class="instructions"><%=h cms_options[:instructions] %></div>
-    <br clear="all"/>  
+    <div class="muted help-block"><%=h cms_options[:instructions] %></div>
   <% end %>  
 </div>

@@ -13,7 +13,7 @@
   <% unless @hide_buttons %>
     <div class="buttons">
       <%= save_and_publish_button(@block, content_type) %>
-      <%= lt_button_wrapper(f.submit("Save", :class => "submit", :tabindex => next_tabindex)) %>
+      <%= f.submit("Save", :class => "submit btn", :tabindex => next_tabindex) %>
     </div>
   <% end %>
 <% end %>

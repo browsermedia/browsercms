@@ -1,15 +1,10 @@
 <% use_page_title "Dashboard" %>
 
-<%= content_for :html_head do %>
-  <%= stylesheet_link_tag('cms/dashboard') %>
-  <%= stylesheet_link_tag('cms/form_layout') %>
-<% end %>
-
-<div class="dashboard_wrap">
-  <%= render :partial => 'page_drafts' %>
-  <%= image_tag "cms/dashboard/bottom_cap.png", :style=>"position: absolute; bottom: -9px; left: 0"%>
-</div>
-<div class="dashboard_wrap tasks_margin">  
-  <%= render :partial => 'tasks' %>
-  <%= image_tag "cms/dashboard/bottom_cap.png", :style=>"position: absolute; bottom: -9px; left: 0"%>
-</div>
+    <div class="row-fluid">
+        <div class="span6">
+          <%= render :partial => 'page_drafts' %>
+        </div>
+        <div class="span6">
+          <%= render :partial => 'tasks' %>
+        </div>
+    </div>

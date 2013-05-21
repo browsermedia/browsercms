@@ -110,21 +110,10 @@ HTML
       content_tag :span, content
     end
 
-    def lt_button_wrapper(content)
-      button = <<LBW
-  <div class="lt_button">
-    #{image_tag "cms/lt_button_l.gif"}
-    <div class="lt_button_content">
-      <span>#{ content }</span>
-    </div>
-    #{image_tag "cms/lt_button_r.gif", :style => "margin-right: 10px;"}
-  </div>
-LBW
-      button.html_safe
-    end
+
 
     def dk_button_wrapper(content)
-      lt_button_wrapper(content).gsub("lt_button_", "dk_button_")
+      (content).gsub("lt_button_", "dk_button_")
     end
 
     def group_ids
