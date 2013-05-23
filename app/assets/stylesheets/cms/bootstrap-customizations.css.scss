@@ -1,6 +1,25 @@
-/**
-*   Correct styles for bootstrap that the CSS has broken
-*/
+@import "bootstrap";
+@import "bootstrap-responsive";
+
+// For classes that need to explicitly extend bootstrap classes.
+// They must go in this file.
+
+// The 'DRAFT' label on the toolbar.
+.draft-status {
+  @extend .label;
+  @extend .label-important;
+  float: right;
+  margin: 6px 10px;
+}
+
+// The 'Published' label on the toolbar.
+.published-status {
+  @extend .label;
+  @extend .label-success;
+  float: right;
+  margin: 6px 10px;
+
+}
 
 .btn-group .btn.pull-left {float: left;}
 .btn-group .btn.dropdown-toggle {float: right;}
