@@ -1,3 +1,4 @@
+<%= render 'nav_bar' %>
 <div id="filter">Show: <select id="filtershow">
   <option value="none" selected="selected">None</option>
   <option value="event">Events</option>
@@ -6,67 +7,72 @@
   <option value="slide">Slides</option>
   <option value="all">All</option>
 </select></div>
+
 <div id="sitemap">
   <ul class="nav nav-list nav-stacked">
-    <li><a href="#"><i class="icon-home"></i> My Site</a>
-      <ul class="nav nav-list">
-        <li><a href="#"><i class="icon-file"></i> Home
-          <span class="span1"><i class="icon-ok-circle"></i><span class="status published">p</span></span></a></li>
-        <li><a href="#" data-toggle="collapse" data-target="#section1"><i class="icon-folder-close"></i> Section 1
-          <span class="span1"><i class="icon-ok-circle"></i><span class="status published">p</span></span></a>
-          <ul id="section1" class="nav nav-list collapse">
-            <li><a href="#"><i class="icon-file"></i> 404
-              <span class="span1"><span class="status phidden">H</span> <i class="icon-ok-circle"></i><span class="status published">p</span></span></a>
-            </li>
-            <li><a href="#"><i class="icon-file"></i> System
-              <span class="span1"><i class="icon-ok-circle"></i><span class="status published">p</span></span></a></li>
-            <li><a href="#"><i class="icon-file"></i> Whatever
-              <span class="span1"><i class="icon-ok-circle"></i><span class="status published">p</span></span></a></li>
-          </ul>
-        </li>
-        <li><a href="#"><i class="icon-file"></i> Page
-          <span class="span1"><i class="icon-ok-circle"></i><span class="status draft">d</span></span></a></li>
-        <li><a href="#" data-toggle="collapse" data-target="#section2"><i class="icon-folder-close"></i> Section 2
-          <span class="span1"><i class="icon-ok-circle"></i><span class="status published">p</span></span></a>
-          <ul class="nav nav-list collapse" id="section2">
-            <li><a href="#"><i class="icon-file"></i> Landing
-              <span class="span1"><span class="status phidden">H</span><i class="icon-ok-circle"></i><span class="status published">p</span></span></a>
-            </li>
-            <li>
-              <a href="#" data-toggle="collapse" data-target="#subsection1"><i class="icon-folder-close"></i> Subsection
-                <span class="span1"><i class="icon-ok-circle"></i><span class="status published">p</span></span></a>
-              <ul class="nav nav-list collapse" id="subsection1">
-                <li><a href="#"><i class="icon-file"></i> Page 1
-                  <span class="span1"><span class="status phidden">H</span><i class="icon-ok-circle"></i><span class="status published">p</span></span></a>
-                </li>
-                <li><a href="#"><i class="icon-file"></i> Page 2
-                  <span class="span1"><i class="icon-ok-circle"></i><span class="status published">p</span></span></a>
-                </li>
-                <li><a href="#"><i class="icon-file"></i> Page 3
-                  <span class="span1"><i class="icon-ok-circle"></i><span class="status published">p</span></span></a>
-                </li>
-                <li data-nodetype="portlet"><a href="#"><i class="icon-cog"></i> Portlet
-                  <span class="span1"><span class="status phidden">H</span><i class="icon-ok-circle"></i><span class="status published">p</span></span></a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-        <li><a href="#"><i class="icon-file"></i> Page
-          <span class="span1"><span class="status phidden">H</span><i class="icon-lock"></i><span class="status published">p</span></span></a>
-        </li>
-        <li data-nodetype="event"><a href="#"><i class="icon-calendar"></i> Event
-          <span class="span1"><span class="status phidden">H</span><i class="icon-ok-circle"></i><span class="status published">p</span></span></a>
-        </li>
-        <li data-nodetype="article"><a href="#"><i class="icon-list"></i> Article
-          <span class="span1"><span class="status phidden">H</span><i class="icon-ok-circle"></i><span class="status published">p</span></span></a>
-        </li>
-        <li data-nodetype="portlet"><a href="#"><i class="icon-cog"></i> Portlet
-          <span class="span1"><span class="status phidden">H</span><i class="icon-ok-circle"></i><span class="status published">p</span></span></a>
-        </li>
-        <li data-nodetype="slide"><a href="#"><i class="icon-picture"></i> Slide
-          <span class="span1"><span class="status phidden">H</span><i class="icon-ok-circle"></i><span class="status published">p</span></span></a>
-        </li>
+    <li><a href="#"><%= icon("home") %> <%= @section.name %></a>
+      <ul id="section<%= @section.id %>" class="nav nav-list">
+        <% access_icon = access_status(@section, @public_sections) %>
+        <% @sitemap[@root_section_node].keys.each do |child_section_node| %>
+            <%= render partial: child_section_node.node, locals: { access_icon: access_icon} %>
+        <% end %>
+        <!--<li><a href="#"><i class="icon-file"></i> Home-->
+        <!--<span class="span1"><i class="icon-ok-circle"></i><span class="status published">p</span></span></a></li>-->
+        <!--<li><a href="#" data-toggle="collapse" data-target="#section1"><i class="icon-folder-close"></i> Section 1-->
+        <!--<span class="span1"><i class="icon-ok-circle"></i><span class="status published">p</span></span></a>-->
+        <!--<ul id="section1" class="nav nav-list collapse">-->
+        <!--<li><a href="#"><i class="icon-file"></i> 404-->
+        <!--<span class="span1"><span class="status phidden">H</span> <i class="icon-ok-circle"></i><span class="status published">p</span></span></a>-->
+        <!--</li>-->
+        <!--<li><a href="#"><i class="icon-file"></i> System-->
+        <!--<span class="span1"><i class="icon-ok-circle"></i><span class="status published">p</span></span></a></li>-->
+        <!--<li><a href="#"><i class="icon-file"></i> Whatever-->
+        <!--<span class="span1"><i class="icon-ok-circle"></i><span class="status published">p</span></span></a></li>-->
+        <!--</ul>-->
+        <!--</li>-->
+        <!--<li><a href="#"><i class="icon-file"></i> Page-->
+        <!--<span class="span1"><i class="icon-ok-circle"></i><span class="status draft">d</span></span></a></li>-->
+        <!--<li><a href="#" data-toggle="collapse" data-target="#section2"><i class="icon-folder-close"></i> Section 2-->
+        <!--<span class="span1"><i class="icon-ok-circle"></i><span class="status published">p</span></span></a>-->
+        <!--<ul class="nav nav-list collapse" id="section2">-->
+        <!--<li><a href="#"><i class="icon-file"></i> Landing-->
+        <!--<span class="span1"><span class="status phidden">H</span><i class="icon-ok-circle"></i><span class="status published">p</span></span></a>-->
+        <!--</li>-->
+        <!--<li>-->
+        <!--<a href="#" data-toggle="collapse" data-target="#subsection1"><i class="icon-folder-close"></i> Subsection-->
+        <!--<span class="span1"><i class="icon-ok-circle"></i><span class="status published">p</span></span></a>-->
+        <!--<ul class="nav nav-list collapse" id="subsection1">-->
+        <!--<li><a href="#"><i class="icon-file"></i> Page 1-->
+        <!--<span class="span1"><span class="status phidden">H</span><i class="icon-ok-circle"></i><span class="status published">p</span></span></a>-->
+        <!--</li>-->
+        <!--<li><a href="#"><i class="icon-file"></i> Page 2-->
+        <!--<span class="span1"><i class="icon-ok-circle"></i><span class="status published">p</span></span></a>-->
+        <!--</li>-->
+        <!--<li><a href="#"><i class="icon-file"></i> Page 3-->
+        <!--<span class="span1"><i class="icon-ok-circle"></i><span class="status published">p</span></span></a>-->
+        <!--</li>-->
+        <!--<li data-nodetype="portlet"><a href="#"><i class="icon-cog"></i> Portlet-->
+        <!--<span class="span1"><span class="status phidden">H</span><i class="icon-ok-circle"></i><span class="status published">p</span></span></a>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--</li>-->
+        <!--</ul>-->
+        <!--</li>-->
+        <!--<li><a href="#"><i class="icon-file"></i> Page-->
+        <!--<span class="span1"><span class="status phidden">H</span><i class="icon-lock"></i><span class="status published">p</span></span></a>-->
+        <!--</li>-->
+        <!--<li data-nodetype="event"><a href="#"><i class="icon-calendar"></i> Event-->
+        <!--<span class="span1"><span class="status phidden">H</span><i class="icon-ok-circle"></i><span class="status published">p</span></span></a>-->
+        <!--</li>-->
+        <!--<li data-nodetype="article"><a href="#"><i class="icon-list"></i> Article-->
+        <!--<span class="span1"><span class="status phidden">H</span><i class="icon-ok-circle"></i><span class="status published">p</span></span></a>-->
+        <!--</li>-->
+        <!--<li data-nodetype="portlet"><a href="#"><i class="icon-cog"></i> Portlet-->
+        <!--<span class="span1"><span class="status phidden">H</span><i class="icon-ok-circle"></i><span class="status published">p</span></span></a>-->
+        <!--</li>-->
+        <!--<li data-nodetype="slide"><a href="#"><i class="icon-picture"></i> Slide-->
+        <!--<span class="span1"><span class="status phidden">H</span><i class="icon-ok-circle"></i><span class="status published">p</span></span></a>-->
+        <!--</li>-->
       </ul>
     </li>
   </ul>

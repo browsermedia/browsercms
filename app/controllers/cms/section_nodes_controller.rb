@@ -6,7 +6,7 @@ module Cms
 
     # For getting styles correct during sitemap build out.
     def fake
-      use_page_title "Sitemap"
+      index
       render 'show', layout: 'cms/sitemap'
     end
 

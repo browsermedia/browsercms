@@ -1,0 +1,8 @@
+<li id="section_<%= section.id %>">
+  <%= link_to_function action_icon(:folder_open), {}, {:class => "section"} %>
+  <span class="section<%= @selected_section == section ? ' selected_section' : ''%>"><%=h section.name %></span>
+  <ul>
+    <%= render :partial => 'section', :collection => section.sections %>
+    <%= render :partial => 'page', :collection => section.pages %>
+  </ul>
+</li>

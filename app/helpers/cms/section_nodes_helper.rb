@@ -1,12 +1,22 @@
 module Cms
   module SectionNodesHelper
 
+    def icon(name)
+      content_tag("i", "", {class: "icon-#{name}"})
+    end
+
+    def status_tag(publishable_content)
+      status = publishable_content.status.to_s
+      letter = status[0,1]
+      content_tag("span", letter, class: "status #{status}")
+    end
+
     def access_status(section_node, public_sections)
-      access_icon = :unlocked
+      access_icon = 'ok-circle'
       unless public_sections.include?(section_node)
-        access_icon = :locked
+        access_icon = 'lock'
       end
-      access_icon
+      "icon-#{access_icon}"
     end
 
     def section_icons(section_node, children=[])
@@ -29,8 +39,8 @@ module Cms
     #   - All non-first level items should be hidden.
     def sitemap_ul_tag(node)
       opts = {
-        :id => "section_node_#{node.section_node.id}",
-        :class => "section_node"
+          :id => "section_node_#{node.section_node.id}",
+          :class => "section_node"
       }
       opts[:class] += " rootlet" if in_first_level?(node)
       #opts[:style] = "display: none" unless in_first_level?(node)

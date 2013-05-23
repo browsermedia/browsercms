@@ -8,6 +8,10 @@ Tasks:
 ##
 
 
+## Bugs
+
+- Can't edit the root section
+
 Current Task:
 
 * Implement implied features (Search/Notifications)
