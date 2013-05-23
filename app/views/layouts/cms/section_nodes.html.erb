@@ -3,10 +3,10 @@
 <body>
 <%= render :partial => 'layouts/cms/thin_toolbar' %>
 <div class="container-fluid">
-        <h1><%= page_title %></h1>
-        <%= yield :functions %>
-      <%= yield %>
-    <%= render :partial => 'layouts/cms/footer' %>
+  <h1><%= page_title %></h1>
+  <%= yield :functions %>
+  <%= yield %>
+  <%= render :partial => 'layouts/cms/footer' %>
 </div>
 </body>
 </html>
