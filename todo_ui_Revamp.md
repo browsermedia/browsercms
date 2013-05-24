@@ -5,13 +5,15 @@ Tasks:
 * Sections can be hidden (but sitemap doesn't show it)
 * Select something else after deleting.
 * Handle non-editable sections (from security)
-* Have something selected at the start (last selected or Root)
 * Remove (or center) the lock/unlock icon for the root section
-* Keep open/closed state of sitemap
+* Keep open/closed/last selected state of sitemap
 * Audit/Delete/merge js/cms/sitemap.js.erb
 * Move/drag/drop sections
 * Paths are not autogenerating when creating products/catalogs.
 * No visual indicator of an empty section
+
+* page_editor.css/page_content_editing.css shouldn't have been deleted.
+
 ##
 
 

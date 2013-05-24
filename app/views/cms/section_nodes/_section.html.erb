@@ -4,7 +4,7 @@
    data = {
            target: "#section#{section.id}",
            type: 'section',
-           :configure_path => section_path(section),
+           :configure_path => edit_section_path(section),
            :delete_path => section_path(section)
    }
    unless section.root?

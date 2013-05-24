@@ -81,11 +81,14 @@ Sitemap.prototype.enableButtons = function() {
 };
 var sitemap = new Sitemap();
 
-// Enable buttons for Selecting pages
 $(function() {
+  // Enable buttons for Selecting pages
   $('.selectable').click(function() {
     sitemap.selectRow($(this));
   });
+
+  // Select the root section when the sitemap first loads
+  $('.nav-stacked a')[0].click();
 });
 
 // Make sections collapsible/expandable
