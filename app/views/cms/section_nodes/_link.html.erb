@@ -1,15 +1,7 @@
-<% first_level =  in_first_level?(node)
- %>
-<%= sitemap_ul_tag(node) %>
-  <li>
-    <%= render :partial => "node", :locals => {
-        :node => node, 
-        :node_type => "link", 
-        :icon => action_icon(first_level ? :root_link : :link),
-        :published_status_icon => status_icon(node.status),
-        :published_status_label => node.published? ? "Published" : "Draft",
-        :edit_path => link_path(node),
-        :parent => parent
-      } %>
-  </li>
-</ul>
+<%# Renders an instance of this in the sitemap. %>
+<li><a href="#"><%= icon "share" %> <%= link.name %>
+  <span class="span1">
+    <%= content_tag "i", "", class: access_icon %>
+    </span>
+</a>
+</li>

@@ -6,8 +6,7 @@ module Cms
 
     # For getting styles correct during sitemap build out.
     def fake
-      index
-      render 'show', layout: 'cms/sitemap'
+      render text: "", layout: 'sitemap_example'
     end
 
     def index
@@ -18,6 +17,7 @@ module Cms
       @sitemap = Section.sitemap
       @root_section_node = @sitemap.keys.first
       @section = @root_section_node.node
+      render 'show', layout: 'cms/sitemap'
     end
 
     def move_before

@@ -1,0 +1,24 @@
+<% # Handles both Root Section and Subsections
+   collapse = section.root? ? "" : "collapse"
+   icon_name = section.root? ? "home" : "folder-close"
+%>
+<li><%= content_tag("a", href: "#", data: {toggle: 'collapse', target: "#section#{section.id}"}) do %>
+      <%= icon(icon_name) %> <%= section.name %>
+      <span class="span1">
+        <%= content_tag "i", "", class: access_status(section, @public_sections) %>
+      </span>
+  <% end %>
+  <ul id="section<%= section.id %>" class="nav nav-list <%= collapse %>">
+    <% access_icon = access_status(section, @public_sections) %>
+    <% children = child_hash[key] %>
+    <% children.keys.each do |child_section_node| %>
+        <%= render partial: child_section_node.node.partial_for,
+                   :object => child_section_node.node,
+                   locals: {access_icon: access_icon,
+                            child_hash: children,
+                            key: child_section_node,
+                            object: child_section_node.node # Because sometimes we don't know what the :object local would be called.
+                   } %>
+    <% end %>
+  </ul>
+</li>

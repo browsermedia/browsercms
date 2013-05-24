@@ -1,7 +1,0 @@
-<li><%= content_tag("a", href: "#", data: {toggle: 'collapse', target: "section#{section.id}"}) do %>
-      <%= icon("folder-close") %> <%= section.name %>
-      <span class="span1">
-        <%= content_tag "i", "", class: access_status(section, @public_sections) %>
-      </span>
-  <% end %>
-</li>
