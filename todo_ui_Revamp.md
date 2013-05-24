@@ -2,8 +2,8 @@ Tasks:
 
 ## UI Merge
 
-* [BUG] Deleting addressable content from the sitemap throws error and breaks the UI.
-* Select something else after deleting.
+* Sections can be hidden (but sitemap doesn't show it)
+    * Select something else after deleting.
 * Handle non-editable sections (from security)
 * Audit sitemap.js.erb for remaining features.
 * Have something selected at the start (last selected or Root)

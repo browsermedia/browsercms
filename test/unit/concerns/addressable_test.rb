@@ -94,6 +94,15 @@ describe Cms::Concerns::Addressable do
     end
   end
 
+  describe ".destroy" do
+    it "should also delete the section node" do
+      add = IsAddressable.create(slug: "coke", parent_id: root_section)
+      before = Cms::SectionNode.count
+      add.destroy
+      (Cms::SectionNode.count - before).must_equal -1
+    end
+  end
+
   describe ".path" do
     it "should join #path and .slug" do
       addressable.expects(:slug).returns("one")

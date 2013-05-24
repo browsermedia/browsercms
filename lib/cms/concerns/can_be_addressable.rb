@@ -8,11 +8,16 @@ module Cms
       # @params [Hash] options
       # @option options [String] :path The base path where instances will be placed.
       # @option options [String] :no_dynamic_path Set as true if the Record has a :path attribute managed as a column in the db. (Default: false)
+      # @option options [Symbol] :destroy_if Name of a custom method used to determine when this object should be destrotyed. Rather than dependant: destroy to determine if the section node should be destroyed when this object is.
       def is_addressable(options={})
         has_one_options = {as: :node, inverse_of: :node, class_name: 'Cms::SectionNode'}
-        if options[:dependent]
-          has_one_options[:dependent] = options[:dependent]
+        unless options[:destroy_if]
+          has_one_options[:dependent] = :destroy
+        else
+          before_destroy options[:destroy_if]
+          after_destroy :destroy_node
         end
+
         has_one :section_node, has_one_options
 
         include Cms::Concerns::Addressable
@@ -144,6 +149,10 @@ module Cms
         ObjectSpace.each_object(::Class).select { |klass| klass < Cms::Concerns::Addressable }
       end
 
+      # Allows for manual destruction of node
+      def destroy_node
+        node.destroy
+      end
 
       # Returns the value that will appear in the <title> element of the page when this content is rendered.
       # Subclasses can override this.

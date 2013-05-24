@@ -75,7 +75,11 @@ module Cms
 
     def destroy
       do_command("deleted") { @block.destroy }
-      redirect_to_first params[:_redirect_to], blocks_path
+      respond_to do |format|
+          format.html {redirect_to_first params[:_redirect_to], blocks_path}
+          format.json {render :json => {:success => true }}
+        end
+
     end
 
     # Additional CMS Action
