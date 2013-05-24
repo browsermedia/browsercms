@@ -3,6 +3,7 @@
      unless options[:class]
         options[:class] = []
      end
+     options[:class] << 'input-xxlarge'
      options[:class] << 'slug-source'
    end
 %>
@@ -12,7 +13,7 @@
   <% else %>
     <%= f.label method %>
   <% end %>
-  <%= f.text_field method, options = {:class=>"input-xxlarge"} %>
+  <%= f.text_field method, options %>
   <% if cms_options[:instructions] %>
     <div class="muted help-block"><%=h cms_options[:instructions] %></div>
   <% end %>

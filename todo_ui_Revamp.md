@@ -6,9 +6,8 @@ Tasks:
 * Keep open/closed/last selected state of sitemap
 * Audit/Delete/merge js/cms/sitemap.js.erb
 * Move/drag/drop sections
-* Paths are not autogenerating when creating products/catalogs.
 * No visual indicator of an empty section
-
+* Doubleclicking on items
 * page_editor.css/page_content_editing.css shouldn't have been deleted.
 
 ##
