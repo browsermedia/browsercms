@@ -2,7 +2,7 @@ Tasks:
 
 ## UI Merge
 
-* Make addressable content selectable.
+* [BUG] Deleting addressable content from the sitemap throws error and breaks the UI.
 * Select something else after deleting.
 * Handle non-editable sections (from security)
 * Audit sitemap.js.erb for remaining features.
@@ -13,7 +13,7 @@ Tasks:
 * Move/drag/drop sections
 * Enable buttons correctly based on selected item
 * Selecting the root section should not change its icon or expand/collapse it.
-* Handle non-editable pages/nodes
+* Paths are not autogenerating when creating products/catalogs.
 
 ##
 

@@ -1,7 +1,15 @@
-<li><a href="#"><%= icon "th-list" %> <%= object.name %>
+<li><%= tag "a", {href: "#",
+                  class: 'selectable',
+                  data: {edit_path: url_for(block_path(object)),
+                         configure_path: url_for(block_path(object, :edit)),
+                         delete_path: url_for(block_path(object)),
+                         type: object.class.name
+                  }},
+            true %>
+  <%= icon "th-list" %> <%= object.name %>
   <span class="span1">
     <%= content_tag "i", "", class: access_icon %>
     <%= status_tag(object) %>
     </span>
-</a>
+  </a>
 </li>
