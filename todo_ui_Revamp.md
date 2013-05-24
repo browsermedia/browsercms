@@ -3,18 +3,15 @@ Tasks:
 ## UI Merge
 
 * Sections can be hidden (but sitemap doesn't show it)
-    * Select something else after deleting.
+* Select something else after deleting.
 * Handle non-editable sections (from security)
-* Audit sitemap.js.erb for remaining features.
 * Have something selected at the start (last selected or Root)
 * Remove (or center) the lock/unlock icon for the root section
 * Keep open/closed state of sitemap
-* Delete/merge js/cms/sitemap.js.erb
+* Audit/Delete/merge js/cms/sitemap.js.erb
 * Move/drag/drop sections
-* Enable buttons correctly based on selected item
-* Selecting the root section should not change its icon or expand/collapse it.
 * Paths are not autogenerating when creating products/catalogs.
-
+* No visual indicator of an empty section
 ##
 
 

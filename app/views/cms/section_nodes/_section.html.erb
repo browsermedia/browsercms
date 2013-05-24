@@ -1,15 +1,18 @@
 <% # Handles both Root Section and Subsections
    collapse = section.root? ? "" : "collapse"
    icon_name = section.root? ? "home" : "folder-close"
+   data = {
+           target: "#section#{section.id}",
+           type: 'section',
+           :configure_path => section_path(section),
+           :delete_path => section_path(section)
+   }
+   unless section.root?
+     data[:toggle] = 'collapse'
+   end
 %>
 <li>
-  <%= content_tag("a", href: "#", class: 'selectable',
-                  data: {toggle: 'collapse',
-                         target: "#section#{section.id}",
-                         type: 'section',
-                         :configure_path => section_path(section),
-                         :delete_path => section_path(section)
-                  }) do %>
+  <%= content_tag("a", href: "#", class: 'selectable', data: data) do %>
       <%= icon(icon_name) %> <%= section.name %>
       <span class="span1">
         <%= content_tag "i", "", class: access_status(section, @public_sections) %>
