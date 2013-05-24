@@ -6,17 +6,17 @@
 
 var Sitemap = function() {
 };
+
 Sitemap.prototype.selectSection = function(section) {
   this.selectedSection = section;
 };
 
 Sitemap.prototype.clearSelection = function() {
   $('.active').removeClass('active');
-  disableButtons();
 };
 
 // @return [Selector]
-Sitemap.prototype.selectedContent= function(){
+Sitemap.prototype.selectedContent = function() {
   return $(this.selectedRow);
 };
 
@@ -36,6 +36,7 @@ Sitemap.prototype.selectRow = function(row) {
   this.enableButtons();
 };
 
+// @return [Selector]
 Sitemap.prototype.deleteButton = function() {
   return $('#delete_button');
 };
@@ -52,24 +53,28 @@ Sitemap.prototype._deleteContent = function(event) {
   }
 };
 
-Sitemap.prototype.enableButtons = function() {
-  $('#edit-button').removeClass('disabled').attr('href', $(this.selectedRow).data('edit-path'));
-  $('#properties-button').removeClass('disabled').attr('href', $(this.selectedRow).data('configure-path'));
-  $('#delete_button')
-    .unbind('click')
-    .click(this._deleteContent)
-    .removeClass('disabled')
-    .attr('href', $(this.selectedRow)
-    .data('delete-path'));
+// @return [Boolean] Whether or not the button was (and should have been) enabled.
+//                   Not all functions are available with each button.
+Sitemap.prototype.enable = function(button_name, path_name) {
+  if ($(this.selectedRow).is('[data-' + path_name + ']')) {
+    $(button_name).removeClass('disabled').attr('href', $(this.selectedRow).data(path_name));
+    return true;
+  } else {
+    $(button_name).addClass('disabled').attr('href', '#');
+    return false;
+  }
+};
 
+Sitemap.prototype.enableButtons = function() {
+  this.enable('#edit-button', 'edit-path');
+  this.enable('#properties-button', 'configure-path');
+  if (this.enable('#delete_button', 'delete-path')) {
+    $('#delete_button')
+      .unbind('click')
+      .click(this._deleteContent);
+  }
 };
 var sitemap = new Sitemap();
-
-var disableButtons = function() {
-  $('a.button').addClass('disabled').click(function() {
-    return false;
-  });
-};
 
 // Enable buttons for Selecting pages
 $(function() {

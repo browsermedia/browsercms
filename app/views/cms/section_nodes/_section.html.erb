@@ -6,7 +6,9 @@
   <%= content_tag("a", href: "#", class: 'selectable',
                   data: {toggle: 'collapse',
                          target: "#section#{section.id}",
-                         type: 'section'
+                         type: 'section',
+                         :configure_path => section_path(section),
+                         :delete_path => section_path(section)
                   }) do %>
       <%= icon(icon_name) %> <%= section.name %>
       <span class="span1">

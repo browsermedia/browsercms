@@ -2,7 +2,8 @@ Tasks:
 
 ## UI Merge
 
-* Enable the buttons for everything else.
+* Select something else after deleting.
+* Disable buttons that shouldn't be enabled.
 * Remove (or center) the lock/unlock icon for the root section
 * Keep open/closed state of sitemap
 * Delete/merge js/cms/sitemap.js.erb
