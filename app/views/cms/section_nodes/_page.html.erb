@@ -1,10 +1,15 @@
+<% data = {
+        edit_path: page_path(page),
+        configure_path: edit_page_path(page),
+        delete_path: page_path(page),
+        type: 'page'
+}
+   data[:editable] = false unless @modifiable_sections.include?(parent)
+%>
 <li><%= tag "a", {href: "#",
                   class: 'selectable',
-                  data: {edit_path: page_path(page),
-                         configure_path: edit_page_path(page),
-                         delete_path: page_path(page),
-                         type: 'page'
-                  }},
+                  data: data
+},
             true %>
   <%= icon "file" %> <%= page.name %>
   <span class="span1">

@@ -10,6 +10,8 @@
    unless section.root?
      data[:toggle] = 'collapse'
    end
+   data[:editable] = false unless @modifiable_sections.include?(section)
+
 %>
 <li>
   <%= content_tag("a", href: "#", class: 'selectable', data: data) do %>
@@ -26,6 +28,7 @@
         <%= render partial: child_section_node.node.partial_for,
                    :object => child_section_node.node,
                    locals: {access_icon: access_icon,
+                            parent: section,
                             child_hash: children,
                             key: child_section_node,
                             object: child_section_node.node # Because sometimes we don't know what the :object local would be called.

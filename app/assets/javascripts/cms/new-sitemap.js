@@ -42,13 +42,13 @@ Sitemap.prototype.deleteButton = function() {
 };
 
 // @return [String] The name for the type of content which is currently selected.
-Sitemap.prototype.typeOfSelectedContent = function(){
+Sitemap.prototype.typeOfSelectedContent = function() {
   return this.selectedContent().data('type');
 };
 
 Sitemap.prototype._deleteContent = function(event) {
   event.preventDefault();
-  if (confirm('Are you sure you want to delete this ' + sitemap.typeOfSelectedContent() +'?')) {
+  if (confirm('Are you sure you want to delete this ' + sitemap.typeOfSelectedContent() + '?')) {
     $.cms_ajax.delete({
       url: sitemap.deleteButton().attr('href'),
       success: function(result) {
@@ -59,14 +59,17 @@ Sitemap.prototype._deleteContent = function(event) {
   }
 };
 
-Sitemap.prototype.clickWebsite = function(){
+Sitemap.prototype.clickWebsite = function() {
   $('.nav-stacked a')[0].click();
 };
 
+
+// Enable the button if the current user has edit permission and if the button should be enabled.
+//
 // @return [Boolean] Whether or not the button was (and should have been) enabled.
 //                   Not all functions are available with each button.
 Sitemap.prototype.enable = function(button_name, path_name) {
-  if ($(this.selectedRow).is('[data-' + path_name + ']')) {
+  if ($(this.selectedRow).is('[data-' + path_name + ']') && this.selectedContent().data('editable') != false) {
     $(button_name).removeClass('disabled').attr('href', $(this.selectedRow).data(path_name));
     return true;
   } else {

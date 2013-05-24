@@ -6,7 +6,5 @@
   <%= render :partial => 'user_fields', :locals => {:f => f} unless @change_password %>
   <%= render :partial => 'password', :locals => {:f => f} if @user.new_record? %>
   <%= render :partial => 'groups' %>
-  <div class="buttons">
-    <%= lt_button_wrapper(f.submit("Save", :class => "submit")) %>
-  </div>
+  <%= f.submit("Save", :class => "submit btn", :tabindex => next_tabindex) %>
 <% end %>

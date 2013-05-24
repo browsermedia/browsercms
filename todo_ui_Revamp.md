@@ -2,24 +2,16 @@ Tasks:
 
 ## UI Merge
 
-* Handle non-editable sections (from security)
+* Visual indicator that a section is not editable.
 * Keep open/closed/last selected state of sitemap
 * Audit/Delete/merge js/cms/sitemap.js.erb
 * Move/drag/drop sections
 * No visual indicator of an empty section
 * Doubleclicking on items
 * page_editor.css/page_content_editing.css shouldn't have been deleted.
-
-##
-
-
-## Bugs
-
-- Can't edit the root section
-
-Current Task:
-
-* Implement implied features (Search/Notifications)
+* Can't edit the root section
+* Delete old sitemap pages
+* Use different 'Site' icon for My Site and Home icon for the homepage.
 
 ## Admin Menu
 * Reduce the different admin layouts (why are there so many?)

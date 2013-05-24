@@ -1,10 +1,15 @@
+<%
+   data = {edit_path: url_for(block_path(object)),
+           configure_path: url_for(block_path(object, :edit)),
+           delete_path: url_for(block_path(object)),
+           type: object.class.name
+   }
+   data[:editable] = false unless @modifiable_sections.include?(parent)
+
+%>
 <li><%= tag "a", {href: "#",
                   class: 'selectable',
-                  data: {edit_path: url_for(block_path(object)),
-                         configure_path: url_for(block_path(object, :edit)),
-                         delete_path: url_for(block_path(object)),
-                         type: object.class.name
-                  }},
+                  data: data},
             true %>
   <%= icon "th-list" %> <%= object.name %>
   <span class="span1">

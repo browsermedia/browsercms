@@ -1,9 +1,14 @@
+<%
+   data = {configure_path: edit_link_path(link),
+           delete_path: link_path(link),
+           type: 'link'
+   }
+   data[:editable] = false unless @modifiable_sections.include?(parent)
+
+%>
 <li><%= tag "a", {href: "#",
                   class: 'selectable',
-                  data: {configure_path: edit_link_path(link),
-                         delete_path: link_path(link),
-                         type: 'link'
-                  }},
+                  data: data},
             true %>
   <%= icon "share" %> <%= link.name %>
   <span class="span1">
