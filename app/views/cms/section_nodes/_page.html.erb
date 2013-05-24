@@ -1,4 +1,4 @@
-<li><a href="#"><%= icon "file" %> <%= page.name %>
+<li><a href="#" class="selectable"><%= icon "file" %> <%= page.name %>
   <span class="span1">
     <%= content_tag "span", "H", class: "status phidden" if page.hidden? %>
     <%= content_tag "i", "", class: access_icon %>

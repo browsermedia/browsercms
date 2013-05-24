@@ -2,9 +2,15 @@ Tasks:
 
 ## UI Merge
 
-* Sitemap - Reverse engineer sitemap from new files
-* New Button - Figure out styling issue
-*
+* Enable the buttons for pages
+* Enable the buttons for everything else.
+* Remove (or center) the lock/unlock icon for the root section
+* Keep open/closed state of sitemap
+* Delete/merge js/cms/sitemap.js.erb
+* Move/drag/drop sections
+* Enable buttons correctly based on selected item
+* Selecting the root section should not change its icon or expand/collapse it.
+
 ##
 
 
@@ -15,11 +21,6 @@ Tasks:
 Current Task:
 
 * Implement implied features (Search/Notifications)
-
-
-### Notes
-
-* Multiple versions of jquery being loaded breaks things.
 
 ## Admin Menu
 * Reduce the different admin layouts (why are there so many?)

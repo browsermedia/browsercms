@@ -2,7 +2,12 @@
    collapse = section.root? ? "" : "collapse"
    icon_name = section.root? ? "home" : "folder-close"
 %>
-<li><%= content_tag("a", href: "#", data: {toggle: 'collapse', target: "#section#{section.id}"}) do %>
+<li>
+  <%= content_tag("a", href: "#", class: 'selectable',
+                  data: {toggle: 'collapse',
+                         target: "#section#{section.id}",
+                         type: 'section'
+                  }) do %>
       <%= icon(icon_name) %> <%= section.name %>
       <span class="span1">
         <%= content_tag "i", "", class: access_status(section, @public_sections) %>

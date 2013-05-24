@@ -3,6 +3,45 @@
 
 // Code for working with the new sitemap structure.
 
+var Sitemap = function() {
+};
+Sitemap.prototype.selectSection = function(section) {
+  this.selectedSection = section;
+};
+
+Sitemap.prototype.clearSelection = function() {
+  $('.active').removeClass('active');
+  disableButtons();
+};
+
+// Selecting a row in the sitemap
+// @param [HtmlElement] row The selected row.
+Sitemap.prototype.selectRow = function(row) {
+  this.clearSelection();
+  this.selectedRow = row;
+  if (this.selectedRow.data('type') != 'section') {
+    this.selectSection(this.selectedRow.parents('ul:first')[0]);
+  }else {
+    this.selectSection(this.selectedRow[0]);
+  }
+
+  // Highlight the row as selected.
+  this.selectedRow.parents('li:first').addClass('active');
+};
+var sitemap = new Sitemap();
+
+var disableButtons = function() {
+  $('a.button').addClass('disabled').click(function() {
+    return false;
+  });
+};
+
+// Enable buttons for Selecting pages
+$(function() {
+  $('.selectable').click(function() {
+    sitemap.selectRow($(this));
+  });
+});
 
 // Make sections collapsible/expandable
 $(function() {
