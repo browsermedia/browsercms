@@ -2,7 +2,6 @@ Tasks:
 
 ## UI Merge
 
-* Visual indicator that a section is not editable.
 * Keep open/closed/last selected state of sitemap
 * Audit/Delete/merge js/cms/sitemap.js.erb
 * Move/drag/drop sections

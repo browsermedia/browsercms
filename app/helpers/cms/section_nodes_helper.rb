@@ -1,6 +1,10 @@
 module Cms
   module SectionNodesHelper
 
+    def protected_content_icon(section)
+      icon "warning-sign" unless @modifiable_sections.include?(section)
+    end
+
     def icon(name)
       content_tag("i", "", {class: "icon-#{name}"})
     end

@@ -4,14 +4,19 @@
         delete_path: page_path(page),
         type: 'page'
 }
-   data[:editable] = false unless @modifiable_sections.include?(parent)
+   unless @modifiable_sections.include?(parent)
+     data[:editable] = false
+   else
+
+   end
 %>
 <li><%= tag "a", {href: "#",
                   class: 'selectable',
                   data: data
 },
             true %>
-  <%= icon "file" %> <%= page.name %>
+  <%= icon "file" %>  <%= page.name %>
+  <%= protected_content_icon parent %>
   <span class="span1">
     <%= content_tag "span", "H", class: "status phidden" if page.hidden? %>
     <%= content_tag "i", "", class: access_icon %>

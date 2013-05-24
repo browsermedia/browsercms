@@ -11,7 +11,8 @@
                   class: 'selectable',
                   data: data},
             true %>
-  <%= icon "th-list" %> <%= object.name %>
+  <%= icon "th-list" %> <%= object.name %><%= protected_content_icon parent %>
+
   <span class="span1">
     <%= content_tag "i", "", class: access_icon %>
     <%= status_tag(object) %>
