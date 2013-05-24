@@ -1,6 +1,13 @@
-<li><a href="#" class="selectable"><%= icon "share" %> <%= link.name %>
+<li><%= tag "a", {href: "#",
+                  class: 'selectable',
+                  data: {configure_path: edit_link_path(link),
+                         delete_path: link_path(link),
+                         type: 'link'
+                  }},
+            true %>
+  <%= icon "share" %> <%= link.name %>
   <span class="span1">
     <%= content_tag "i", "", class: access_icon %>
     </span>
-</a>
+  </a>
 </li>

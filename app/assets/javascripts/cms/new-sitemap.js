@@ -41,9 +41,14 @@ Sitemap.prototype.deleteButton = function() {
   return $('#delete_button');
 };
 
+// @return [String] The name for the type of content which is currently selected.
+Sitemap.prototype.typeOfSelectedContent = function(){
+  return this.selectedContent().data('type');
+};
+
 Sitemap.prototype._deleteContent = function(event) {
   event.preventDefault();
-  if (confirm('Are you sure you want to delete this page?')) {
+  if (confirm('Are you sure you want to delete this ' + sitemap.typeOfSelectedContent() +'?')) {
     $.cms_ajax.delete({
       url: sitemap.deleteButton().attr('href'),
       success: function(result) {
