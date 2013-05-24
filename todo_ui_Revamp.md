@@ -2,7 +2,6 @@ Tasks:
 
 ## UI Merge
 
-* Select something else after deleting.
 * Handle non-editable sections (from security)
 * Keep open/closed/last selected state of sitemap
 * Audit/Delete/merge js/cms/sitemap.js.erb

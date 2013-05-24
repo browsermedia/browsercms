@@ -53,9 +53,14 @@ Sitemap.prototype._deleteContent = function(event) {
       url: sitemap.deleteButton().attr('href'),
       success: function(result) {
         sitemap.selectedContent().parents('li:first').remove();
+        sitemap.clickWebsite();
       }
     });
   }
+};
+
+Sitemap.prototype.clickWebsite = function(){
+  $('.nav-stacked a')[0].click();
 };
 
 // @return [Boolean] Whether or not the button was (and should have been) enabled.
@@ -87,8 +92,7 @@ $(function() {
     sitemap.selectRow($(this));
   });
 
-  // Select the root section when the sitemap first loads
-  $('.nav-stacked a')[0].click();
+  sitemap.clickWebsite();
 });
 
 // Change the folder icon when they are opened/closed.
