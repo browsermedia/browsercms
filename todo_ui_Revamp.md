@@ -2,10 +2,8 @@ Tasks:
 
 ## UI Merge
 
-* Sections can be hidden (but sitemap doesn't show it)
 * Select something else after deleting.
 * Handle non-editable sections (from security)
-* Remove (or center) the lock/unlock icon for the root section
 * Keep open/closed/last selected state of sitemap
 * Audit/Delete/merge js/cms/sitemap.js.erb
 * Move/drag/drop sections

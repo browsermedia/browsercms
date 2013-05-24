@@ -15,7 +15,8 @@
   <%= content_tag("a", href: "#", class: 'selectable', data: data) do %>
       <%= icon(icon_name) %> <%= section.name %>
       <span class="span1">
-        <%= content_tag "i", "", class: access_status(section, @public_sections) %>
+        <%= content_tag "span", "H", class: "status phidden" if section.hidden? %>
+        <%= content_tag "i", "", class: access_status(section, @public_sections) unless section.root? %>
       </span>
   <% end %>
   <ul id="section<%= section.id %>" class="nav nav-list <%= collapse %>">

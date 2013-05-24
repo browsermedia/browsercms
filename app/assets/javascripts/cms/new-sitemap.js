@@ -91,7 +91,7 @@ $(function() {
   $('.nav-stacked a')[0].click();
 });
 
-// Make sections collapsible/expandable
+// Change the folder icon when they are opened/closed.
 $(function() {
   $('a[data-toggle="collapse"]').click(function() {
     if ($(this).siblings('ul').hasClass('in') == true) {
@@ -102,7 +102,7 @@ $(function() {
   });
 });
 
-// Make Sitemap filters work.
+// Make Sitemap filters show specific content types.
 $(function() {
   $('#sitemap li[data-nodetype]').hide();
   $('#filtershow').change(function() {
