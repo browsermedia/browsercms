@@ -2,7 +2,6 @@ Tasks:
 
 ## UI Merge
 
-* Enable the buttons for pages
 * Enable the buttons for everything else.
 * Remove (or center) the lock/unlock icon for the root section
 * Keep open/closed state of sitemap
@@ -10,6 +9,7 @@ Tasks:
 * Move/drag/drop sections
 * Enable buttons correctly based on selected item
 * Selecting the root section should not change its icon or expand/collapse it.
+* Handle non-editable pages/nodes
 
 ##
 

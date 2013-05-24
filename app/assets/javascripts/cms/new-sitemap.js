@@ -1,5 +1,6 @@
 //= require 'jquery'
 //= require 'bootstrap'
+//= require 'cms/ajax'
 
 // Code for working with the new sitemap structure.
 
@@ -14,6 +15,11 @@ Sitemap.prototype.clearSelection = function() {
   disableButtons();
 };
 
+// @return [Selector]
+Sitemap.prototype.selectedContent= function(){
+  return $(this.selectedRow);
+};
+
 // Selecting a row in the sitemap
 // @param [HtmlElement] row The selected row.
 Sitemap.prototype.selectRow = function(row) {
@@ -21,12 +27,41 @@ Sitemap.prototype.selectRow = function(row) {
   this.selectedRow = row;
   if (this.selectedRow.data('type') != 'section') {
     this.selectSection(this.selectedRow.parents('ul:first')[0]);
-  }else {
+  } else {
     this.selectSection(this.selectedRow[0]);
   }
 
   // Highlight the row as selected.
   this.selectedRow.parents('li:first').addClass('active');
+  this.enableButtons();
+};
+
+Sitemap.prototype.deleteButton = function() {
+  return $('#delete_button');
+};
+
+Sitemap.prototype._deleteContent = function(event) {
+  event.preventDefault();
+  if (confirm('Are you sure you want to delete this page?')) {
+    $.cms_ajax.delete({
+      url: sitemap.deleteButton().attr('href'),
+      success: function(result) {
+        sitemap.selectedContent().parents('li:first').remove();
+      }
+    });
+  }
+};
+
+Sitemap.prototype.enableButtons = function() {
+  $('#edit-button').removeClass('disabled').attr('href', $(this.selectedRow).data('edit-path'));
+  $('#properties-button').removeClass('disabled').attr('href', $(this.selectedRow).data('configure-path'));
+  $('#delete_button')
+    .unbind('click')
+    .click(this._deleteContent)
+    .removeClass('disabled')
+    .attr('href', $(this.selectedRow)
+    .data('delete-path'));
+
 };
 var sitemap = new Sitemap();
 

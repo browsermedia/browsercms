@@ -1,14 +1,10 @@
+//= require 'cms/core_library'
+
 // CMS library for invoking ajax functions.
 // A layer on top of jQuery .ajax that adds some Rails and CMS logic
 jQuery(function ($) {
-    $.ajaxSetup({
-        // By default, use a generic error handler that will report an AJAX error via an Alert.
-        error:function (x, status, error) {
-            alert("A " + x.status + " error occurred: " + error);
-        }
-    });
-
     $.cms_ajax = {
+
         // Sets the message Accepts to javascript.
         // Pass to beforeSend: when calling AJAX.
         asJS:function () {
@@ -53,4 +49,12 @@ jQuery(function ($) {
 
         }
     };
+
+    // Defaults for AJAX requests
+    $.ajaxSetup({
+        error:function (x, status, error) {
+            alert("A " + x.status + " error occurred: " + error);
+        },
+        beforeSend: $.cms_ajax.asJSON()
+    });
 });
