@@ -140,10 +140,10 @@ var sitemap = new Sitemap();
 
 $(function() {
   // Enable buttons for Selecting pages
-  $('.selectable').click(function() {
+  $('.selectable').on('click', function() {
     sitemap.selectRow($(this));
   });
-  $('.selectable').dblclick(sitemap._doubleClick);
+  $('.selectable').on('dblclick', sitemap._doubleClick);
   sitemap.clickWebsite();
 });
 
