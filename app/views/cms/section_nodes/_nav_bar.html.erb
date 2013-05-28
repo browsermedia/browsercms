@@ -5,10 +5,7 @@
       <%= link_to "Edit Page", '#', :id => 'edit-button', :class => "btn btn-primary disabled" %>
       <%= link_to "Edit Properties", '#', :id => 'properties-button', :class => "btn btn-primary disabled" %>
     </div>
-    <div class="btn-group pull-left">
-      <%= link_to "Add Page", '#', :id => 'add-page-button', :class => "btn btn-primary disabled" %>
-      <%= link_to "Add Section", '#', :id => 'add-section-button', :class => "btn btn-primary disabled" %>
-      <%= link_to "Add Link", '#', :id => 'add-link-button', :class => "btn btn-primary disabled" %>
+    <div class="btn-group">
+      <%= delete_menu_button  %>
     </div>
-    <%= delete_menu_button(nil, class: ['pull-left']) %>
 <% end %>

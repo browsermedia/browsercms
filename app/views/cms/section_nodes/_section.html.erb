@@ -4,8 +4,12 @@
    data = {
            target: "#section#{section.id}",
            type: 'section',
-           :configure_path => edit_section_path(section),
-           :delete_path => section_path(section)
+           configure_path: edit_section_path(section),
+           delete_path: section_path(section),
+           add_page_path: new_section_page_path(section),
+           add_link_path: new_section_link_path(section),
+           add_section_path: new_section_path(section_id: section)
+
    }
    unless section.root?
      data[:toggle] = 'collapse'

@@ -4,7 +4,7 @@
         prefix = ""
     end
 %>
-<%= nav_link_to "#{prefix}Page", cms.new_section_page_path(target_section) %>
-<%= nav_link_to "#{prefix}Link", cms.new_section_link_path(target_section) %>
-<%= nav_link_to "#{prefix}Section", cms.new_section_path(:section_id => target_section.id) %>
+<%= nav_link_to "#{prefix}Page", cms.new_section_page_path(target_section), class: 'add-page-button' %>
+<%= nav_link_to "#{prefix}Link", cms.new_section_link_path(target_section), class: 'add-section-button' %>
+<%= nav_link_to "#{prefix}Section", cms.new_section_path(:section_id => target_section.id), class: 'add-link-button' %>
 <%= divider_tag %>

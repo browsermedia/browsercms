@@ -4,7 +4,34 @@
 
 // Code for working with the new sitemap structure.
 
+var GlobalMenu = function() {
+
+};
+
+// Setting the 'New Page' path should update the global menu
+GlobalMenu.prototype.addPagePath = function(path){
+  $('#new-content-button').attr('href', path);
+  $('.add-page-button').attr('href', path);
+};
+
+GlobalMenu.prototype.addSectionPath = function(path){
+  $('.add-link-button').attr('href', path);
+};
+
+GlobalMenu.prototype.addLinkPath = function(path){
+  $('.add-section-button').attr('href', path);
+};
+
+var globalMenu = new GlobalMenu();
+
 var Sitemap = function() {
+};
+
+// @return [Selector] The currently selected section in the sitemap. If a page or other child is selected, this will be
+//    that element's parent.
+Sitemap.prototype.currentSection = function(){
+  console.log(this.selectedSection);
+  return $(this.selectedSection);
 };
 
 Sitemap.prototype.selectSection = function(section) {
@@ -33,7 +60,15 @@ Sitemap.prototype.selectRow = function(row) {
 
   // Highlight the row as selected.
   this.selectedRow.parents('li:first').addClass('active');
-  this.enableButtons();
+  this.enableMenuButtons();
+  this.configureNewButton();
+};
+
+// Configure the 'New' button for content that is added directly to sections.
+Sitemap.prototype.configureNewButton = function(){
+  globalMenu.addPagePath(this.currentSection().data('add-page-path'));
+  globalMenu.addLinkPath(this.currentSection().data('add-link-path'));
+  globalMenu.addSectionPath(this.currentSection().data('add-section-path'));
 };
 
 // @return [Selector]
@@ -78,7 +113,7 @@ Sitemap.prototype.enable = function(button_name, path_name) {
   }
 };
 
-Sitemap.prototype.enableButtons = function() {
+Sitemap.prototype.enableMenuButtons = function() {
   this.enable('#edit-button', 'edit-path');
   this.enable('#properties-button', 'configure-path');
   if (this.enable('#delete_button', 'delete-path')) {
@@ -86,6 +121,7 @@ Sitemap.prototype.enableButtons = function() {
       .unbind('click')
       .click(this._deleteContent);
   }
+
 };
 var sitemap = new Sitemap();
 

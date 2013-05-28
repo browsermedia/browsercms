@@ -21,7 +21,6 @@
             <%= nav_link_to "View Sitemap", cms.sitemap_path %>
             <%= nav_link_to "Dashboard", cms.dashboard_path %>
             <%= divider_tag %>
-            <%= render :partial=> 'cms/toolbar/new_pages_menu', :locals => {:prefix => "New "}%>
             <%= nav_link_to "Redirects", cms.redirects_path %>
           </ul>
         </li>
@@ -84,7 +83,7 @@
           </ul>
         </li>
         <li class="btn-group pull-right">
-          <%= menu_button "New", new_button_path %>
+          <%= menu_button "New", new_button_path, id: 'new-content-button' %>
           <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
             <b class="caret"></b>
           </a>
