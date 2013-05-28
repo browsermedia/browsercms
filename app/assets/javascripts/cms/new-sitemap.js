@@ -30,7 +30,6 @@ var Sitemap = function() {
 // @return [Selector] The currently selected section in the sitemap. If a page or other child is selected, this will be
 //    that element's parent.
 Sitemap.prototype.currentSection = function(){
-  console.log(this.selectedSection);
   return $(this.selectedSection);
 };
 
@@ -40,6 +39,20 @@ Sitemap.prototype.selectSection = function(section) {
 
 Sitemap.prototype.clearSelection = function() {
   $('.active').removeClass('active');
+};
+
+// Different Content types have different behaviors when double clicked.
+Sitemap.prototype._doubleClick = function(event){
+  var type = $(event.target).data('type');
+  switch(type)
+  {
+  case 'section':
+  case 'link':
+    $('#properties-button')[0].click();
+    break;
+  default:
+    $('#edit-button')[0].click();
+  }
 };
 
 // @return [Selector]
@@ -130,7 +143,7 @@ $(function() {
   $('.selectable').click(function() {
     sitemap.selectRow($(this));
   });
-
+  $('.selectable').dblclick(sitemap._doubleClick);
   sitemap.clickWebsite();
 });
 
