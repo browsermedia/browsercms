@@ -3,6 +3,12 @@ require 'test_helper'
 module Cms
   class CreatingPageTest < ActiveSupport::TestCase
 
+
+    test "home?" do
+      @page = create(:page, path: "/")
+      assert @page.home?
+    end
+
     test "Testing Database should be empty and have no pages" do
       assert_nil Cms::Page.with_path("/").first
     end

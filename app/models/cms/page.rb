@@ -358,6 +358,11 @@ class Cms::Page < ActiveRecord::Base
     (a[1..a.size].map { |a| a.name } + [name]).join(" / ")
   end
 
+  # @return [Boolean] true if this page is the home page of the site.
+  def home?
+    path == "/"
+  end
+
   # This will return the "top level section" for this page, which is the section directly
   # below the root (a.k.a My Site) that this page is in.  If this page is in root,
   # then this will return root.

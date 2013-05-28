@@ -6,16 +6,15 @@
 }
    unless @modifiable_sections.include?(parent)
      data[:editable] = false
-   else
-
    end
+   icon_name = page.home? ? "home" : "file"
 %>
 <li><%= tag "a", {href: "#",
                   class: 'selectable',
                   data: data
 },
             true %>
-  <%= icon "file" %>  <%= page.name %>
+  <%= icon icon_name %>  <%= page.name %>
   <%= protected_content_icon parent %>
   <span class="span1">
     <%= content_tag "span", "H", class: "status phidden" if page.hidden? %>
