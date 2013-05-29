@@ -1,4 +1,5 @@
 //= require 'jquery'
+//= require 'jquery-ui'
 //= require 'bootstrap'
 //= require 'cms/ajax'
 
@@ -9,16 +10,16 @@ var GlobalMenu = function() {
 };
 
 // Setting the 'New Page' path should update the global menu
-GlobalMenu.prototype.addPagePath = function(path){
+GlobalMenu.prototype.addPagePath = function(path) {
   $('#new-content-button').attr('href', path);
   $('.add-page-button').attr('href', path);
 };
 
-GlobalMenu.prototype.addSectionPath = function(path){
+GlobalMenu.prototype.addSectionPath = function(path) {
   $('.add-link-button').attr('href', path);
 };
 
-GlobalMenu.prototype.addLinkPath = function(path){
+GlobalMenu.prototype.addLinkPath = function(path) {
   $('.add-section-button').attr('href', path);
 };
 
@@ -29,7 +30,7 @@ var Sitemap = function() {
 
 // @return [Selector] The currently selected section in the sitemap. If a page or other child is selected, this will be
 //    that element's parent.
-Sitemap.prototype.currentSection = function(){
+Sitemap.prototype.currentSection = function() {
   return $(this.selectedSection);
 };
 
@@ -42,16 +43,15 @@ Sitemap.prototype.clearSelection = function() {
 };
 
 // Different Content types have different behaviors when double clicked.
-Sitemap.prototype._doubleClick = function(event){
+Sitemap.prototype._doubleClick = function(event) {
   var type = $(event.target).data('type');
-  switch(type)
-  {
-  case 'section':
-  case 'link':
-    $('#properties-button')[0].click();
-    break;
-  default:
-    $('#edit-button')[0].click();
+  switch(type) {
+    case 'section':
+    case 'link':
+      $('#properties-button')[0].click();
+      break;
+    default:
+      $('#edit-button')[0].click();
   }
 };
 
@@ -78,7 +78,7 @@ Sitemap.prototype.selectRow = function(row) {
 };
 
 // Configure the 'New' button for content that is added directly to sections.
-Sitemap.prototype.configureNewButton = function(){
+Sitemap.prototype.configureNewButton = function() {
   globalMenu.addPagePath(this.currentSection().data('add-page-path'));
   globalMenu.addLinkPath(this.currentSection().data('add-link-path'));
   globalMenu.addSectionPath(this.currentSection().data('add-section-path'));
@@ -145,6 +145,15 @@ $(function() {
   });
   $('.selectable').on('dblclick', sitemap._doubleClick);
   sitemap.clickWebsite();
+  $('#sitemap ul ul').sortable({
+    connectWith: '#sitemap ul ul',
+    placeholder: 'ui-placeholder',
+    delay: 250,
+    start: function(event, ui) {
+      sitemap.clearSelection();
+    }
+  });
+
 });
 
 // Change the folder icon when they are opened/closed.

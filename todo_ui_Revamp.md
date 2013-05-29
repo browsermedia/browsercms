@@ -1,5 +1,10 @@
 Tasks:
 
+- Move sitemap items
+-- Add ajax calls to move items.
+-- Need to expand sections as you pass over them.
+-- Need an image/section name for hover element when it leaves a parent section.
+
 ## UI Merge
 
 * Move/drag/drop sections
@@ -22,11 +27,19 @@ Tasks:
 * Implement search
 * Implement notifications
 
-## Developer Tasks
+## UI Open Issues
 
-Style the following elements
+Things that need to be updated in the CSS for the new UI.
 
-* Edit Properties popover (currently centered and too small text)
+* Selecting a row in content tables have no visual indicator.
+* New button looks bad when you hover over it.
+* When viewing a page, the draft button is on the right (rather than left) [Bad Merge?]
+* Flash messages still don't look right.
+* Select boxes are not styled.
+* RTE drop down isn't styled correctly
+* Form pages need to be styled
+
+
 
 # Points of Design Discussion
 

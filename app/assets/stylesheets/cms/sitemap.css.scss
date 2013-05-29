@@ -68,6 +68,7 @@ body {
   margin-left: 28px;
 }
 
+
 #sitemap .phidden + i {
   margin-left: 10px;
 }
@@ -75,6 +76,16 @@ body {
 #filter {
   float: right;
   clear: both;
+}
+
+// Ensures open folders have a hitable drop target.
+ul.in { min-height:10px; }
+
+// Drop location for pages or sections within sitemap.
+.ui-placeholder {
+  background-color: #EE5F5B;
+  padding-right: 10px;
+  height: 30px;
 }
 
 
