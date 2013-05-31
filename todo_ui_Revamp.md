@@ -3,12 +3,10 @@ Tasks:
 - Move sitemap items
 -- [BUG] After moving a node, the section_node_ids are probably wrong. This means moving a node twice won't work (though it will appear to).
 -- It's hard visually to drop items into a section (especially if empty). (Should create obvious drop targets when you start dragging).
--- Need to expand sections as you pass over them.
 -- Need an image/section name for hover element when it leaves a parent section.
 
 ## UI Merge
 
-* Move/drag/drop sections
 * Audit/Delete/merge js/cms/sitemap.js.erb
 * No visual indicator of an empty section
 * page_editor.css/page_content_editing.css shouldn't have been deleted during the bootstrap UI merge.

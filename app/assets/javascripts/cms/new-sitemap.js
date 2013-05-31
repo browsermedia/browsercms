@@ -161,34 +161,53 @@ Sitemap.prototype.move_to = function(node_id, target_node_id, position) {
 };
 
 // @param [Selector] A selected link (<a>)
-Sitemap.prototype.isOpen = function(link){
+Sitemap.prototype.isOpen = function(link) {
   return link.siblings('ul').hasClass('in') == true
 };
 
 // @param [Selector] link A selected link (<a>)
 // @param [String] icon The full name of the icon (icon-folder-open)
-Sitemap.prototype.changeIcon = function(link, icon){
+Sitemap.prototype.changeIcon = function(link, icon) {
   link.find('i:first').attr('class', icon);
 };
 
 // @param [Number] id
-Sitemap.prototype.openedSection = function(id){
+Sitemap.prototype.saveAsOpened = function(id) {
   $.cookieSet.add(Sitemap.STATE, id);
 };
-Sitemap.prototype.closedSection = function(id){
+Sitemap.prototype.closedSection = function(id) {
   $.cookieSet.remove(Sitemap.STATE, id);
 };
 
 // Reopen all sections that the user was last working with.
-Sitemap.prototype.restoreOpenState = function(){
+Sitemap.prototype.restoreOpenState = function() {
   var section_ids = $.cookieSet.get(Sitemap.STATE);
-  _.each(section_ids, function(id){
+  _.each(section_ids, function(id) {
     var link = $('.selectable[data-type="section"][data-id=' + id + ']');
     sitemap.changeIcon(link, 'icon-folder-open');
     $(link.data('target')).addClass('in');
   });
 };
 
+// @param [Selector] link
+// @param [Boolean] forceOpen (Optional: false) Whether to manually force open the section
+Sitemap.prototype.open = function(link, forceOpen) {
+  forceOpen = forceOpen || false;
+  // Ignore requests to open non-sections, or those already open.
+  if (link.data('type') == 'section' && !$(link.data('target')).hasClass('in')) {
+    this.changeIcon(link, 'icon-folder-open');
+    this.saveAsOpened(link.data('id'));
+    if(forceOpen){
+      $(link.data('target')).collapse('show');
+    }
+  }
+
+};
+
+Sitemap.prototype.close = function(link) {
+  this.closedSection(link.data('id'));
+  this.changeIcon(link, 'icon-folder-close');
+};
 var sitemap = new Sitemap();
 
 $(function() {
@@ -209,24 +228,27 @@ $(function() {
       var parent_section = ui.item.parents('ul:first');
       var moving_node_id = ui.item.children('a:first').data('node-id');
       sitemap.move_to(moving_node_id, parent_section.data('node-id'), ui.item.index() + 1);
+    },
+
+    // As we move items around, expand (permanently) the surrounding lists to provide drop targets.
+    change: function(event, ui) {
+      var previousLink = $(ui.placeholder.prev().children('a')[0]);
+      sitemap.open(previousLink, true);
+      var nextLink = $(ui.placeholder.next().children('a')[0]);
+      sitemap.open(nextLink, true);
+
     }
   });
-
 });
 
 // Change the folder icon when they are opened/closed.
 $(function() {
   sitemap.restoreOpenState();
-  console.log("On page load, these sections should be open", $.cookie('sitemap.opened'));
   $('a[data-toggle="collapse"]').click(function() {
     if (sitemap.isOpen($(this))) {
-//      console.log("Section", $(this).data('id'), "was closed.");
-      sitemap.closedSection($(this).data('id'));
-      sitemap.changeIcon($(this), 'icon-folder-close');
+      sitemap.close($(this));
     } else {
-//      console.log("Section", $(this).data('id'), "was opened.");
-      sitemap.openedSection($(this).data('id'));
-      sitemap.changeIcon($(this), 'icon-folder-open');
+      sitemap.open($(this));
     }
   });
 });
