@@ -78,9 +78,6 @@ body {
   clear: both;
 }
 
-// Ensures open folders have a hitable drop target.
-ul.in { min-height:10px; }
-
 // Drop location for pages or sections within sitemap.
 .ui-placeholder {
   background-color: #EE5F5B;
@@ -88,6 +85,11 @@ ul.in { min-height:10px; }
   height: 30px;
 }
 
+// A highlight to make it easy to drop items into sections.
+.empty-section-highlight {
+  min-height: 25px;
+  background-color: #62c462;
+}
 
 
 

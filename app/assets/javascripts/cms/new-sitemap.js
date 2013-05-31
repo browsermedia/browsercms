@@ -197,11 +197,25 @@ Sitemap.prototype.open = function(link, forceOpen) {
   if (link.data('type') == 'section' && !$(link.data('target')).hasClass('in')) {
     this.changeIcon(link, 'icon-folder-open');
     this.saveAsOpened(link.data('id'));
-    if(forceOpen){
+    if (forceOpen) {
       $(link.data('target')).collapse('show');
     }
   }
 
+};
+
+// Open and increase the size of empty sections during dragging.
+Sitemap.prototype.highlightEmptySections = function() {
+  _.each($('ul.nav-list'), function(item) {
+    if ($(item).children().length == 0) {
+      sitemap.open($($(item).prev()[0]));
+      $(item).addClass('empty-section-highlight');
+    }
+  });
+};
+
+Sitemap.prototype.cleanUpHighlights = function(){
+  $('.empty-section-highlight').removeClass('empty-section-highlight');
 };
 
 Sitemap.prototype.close = function(link) {
@@ -223,11 +237,13 @@ $(function() {
     delay: 250,
     start: function(event, ui) {
       sitemap.clearSelection();
+      sitemap.highlightEmptySections();
     },
     stop: function(event, ui) {
       var parent_section = ui.item.parents('ul:first');
       var moving_node_id = ui.item.children('a:first').data('node-id');
       sitemap.move_to(moving_node_id, parent_section.data('node-id'), ui.item.index() + 1);
+      sitemap.cleanUpHighlights();
     },
 
     // As we move items around, expand (permanently) the surrounding lists to provide drop targets.

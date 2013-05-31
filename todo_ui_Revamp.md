@@ -1,8 +1,6 @@
 Tasks:
 
 - Move sitemap items
--- [BUG] After moving a node, the section_node_ids are probably wrong. This means moving a node twice won't work (though it will appear to).
--- It's hard visually to drop items into a section (especially if empty). (Should create obvious drop targets when you start dragging).
 -- Need an image/section name for hover element when it leaves a parent section.
 
 ## UI Merge
