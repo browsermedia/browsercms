@@ -9,10 +9,9 @@ Tasks:
 ## UI Merge
 
 * Move/drag/drop sections
-* Keep open/closed/last selected state of sitemap
 * Audit/Delete/merge js/cms/sitemap.js.erb
 * No visual indicator of an empty section
-* page_editor.css/page_content_editing.css shouldn't have been deleted.
+* page_editor.css/page_content_editing.css shouldn't have been deleted during the bootstrap UI merge.
 * Can't edit the root section
 * Delete old sitemap pages (_section.old.erb, etc)
 

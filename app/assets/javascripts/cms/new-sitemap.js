@@ -1,7 +1,9 @@
 //= require 'jquery'
 //= require 'jquery-ui'
+//= require 'jquery.cookie'
 //= require 'bootstrap'
 //= require 'cms/ajax'
+//= require 'underscore'
 
 // Code for working with the new sitemap structure.
 
@@ -27,6 +29,8 @@ var globalMenu = new GlobalMenu();
 
 var Sitemap = function() {
 };
+
+Sitemap.STATE = 'cms.sitemap.opened';
 
 // @return [Selector] The currently selected section in the sitemap. If a page or other child is selected, this will be
 //    that element's parent.
@@ -155,6 +159,36 @@ Sitemap.prototype.move_to = function(node_id, target_node_id, position) {
   console.log("Dropping node", node_id, "into", target_node_id, "at position", position);
 
 };
+
+// @param [Selector] A selected link (<a>)
+Sitemap.prototype.isOpen = function(link){
+  return link.siblings('ul').hasClass('in') == true
+};
+
+// @param [Selector] link A selected link (<a>)
+// @param [String] icon The full name of the icon (icon-folder-open)
+Sitemap.prototype.changeIcon = function(link, icon){
+  link.find('i:first').attr('class', icon);
+};
+
+// @param [Number] id
+Sitemap.prototype.openedSection = function(id){
+  $.cookieSet.add(Sitemap.STATE, id);
+};
+Sitemap.prototype.closedSection = function(id){
+  $.cookieSet.remove(Sitemap.STATE, id);
+};
+
+// Reopen all sections that the user was last working with.
+Sitemap.prototype.restoreOpenState = function(){
+  var section_ids = $.cookieSet.get(Sitemap.STATE);
+  _.each(section_ids, function(id){
+    var link = $('.selectable[data-type="section"][data-id=' + id + ']');
+    sitemap.changeIcon(link, 'icon-folder-open');
+    $(link.data('target')).addClass('in');
+  });
+};
+
 var sitemap = new Sitemap();
 
 $(function() {
@@ -182,11 +216,17 @@ $(function() {
 
 // Change the folder icon when they are opened/closed.
 $(function() {
+  sitemap.restoreOpenState();
+  console.log("On page load, these sections should be open", $.cookie('sitemap.opened'));
   $('a[data-toggle="collapse"]').click(function() {
-    if ($(this).siblings('ul').hasClass('in') == true) {
-      $(this).find('i:first').attr('class', 'icon-folder-close');
+    if (sitemap.isOpen($(this))) {
+//      console.log("Section", $(this).data('id'), "was closed.");
+      sitemap.closedSection($(this).data('id'));
+      sitemap.changeIcon($(this), 'icon-folder-close');
     } else {
-      $(this).find('i:first').attr('class', 'icon-folder-open');
+//      console.log("Section", $(this).data('id'), "was opened.");
+      sitemap.openedSection($(this).data('id'));
+      sitemap.changeIcon($(this), 'icon-folder-open');
     }
   });
 });
