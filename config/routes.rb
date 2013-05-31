@@ -59,11 +59,6 @@ Cms::Engine.routes.draw do
   resources :section_nodes do
     member do
       put :move_to_position
-      put :move_before
-      put :move_after
-      put :move_to_beginning
-      put :move_to_end
-      put :move_to_root
     end
   end
 
