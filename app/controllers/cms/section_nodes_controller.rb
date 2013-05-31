@@ -4,11 +4,6 @@ module Cms
     layout 'cms/section_nodes'
     check_permissions :publish_content, :except => [:index]
 
-    # For getting styles correct during sitemap build out.
-    def fake
-      render text: "", layout: 'sitemap_example'
-    end
-
     def index
       @toolbar_tab = :sitemap
       @modifiable_sections = current_user.modifiable_sections

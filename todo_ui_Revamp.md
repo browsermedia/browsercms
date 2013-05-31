@@ -1,22 +1,18 @@
 Tasks:
 
 - Move sitemap items
--- Need an image/section name for hover element when it leaves a parent section.
+-- [BUG] Sometime when you move an item between lists, the moving element disappears behind the other lists. All you see is the drop target.
+-- Rename new-sitemap.js to sitemap.js
 
-## UI Merge
-
-* Audit/Delete/merge js/cms/sitemap.js.erb
-* No visual indicator of an empty section
+## UI Merge Items
 * page_editor.css/page_content_editing.css shouldn't have been deleted during the bootstrap UI merge.
 * Can't edit the root section
-* Delete old sitemap pages (_section.old.erb, etc)
 
 ## Admin Menu
 * Reduce the different admin layouts (why are there so many?)
 * Need to highlight active tab
 * Need to highlight the active menu item
 * Enforce link security for menus
-* iframe means drop downs don't appear under page rather than over when editing a page.
 
 ## New Features to implement
 
