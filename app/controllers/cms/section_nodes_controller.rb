@@ -20,6 +20,13 @@ module Cms
       render 'show', layout: 'cms/sitemap'
     end
 
+    def move_to_position
+      @section_node = SectionNode.find(params[:id])
+      target_node = SectionNode.find(params[:target_node_id])
+      @section_node.move_to(target_node.node, params[:position].to_i)
+      render :json => {:success => true, :message => "'#{@section_node.node.name}' was moved to '#{target_node.node.name}'"}
+    end
+
     def move_before
       move(:before)
     end

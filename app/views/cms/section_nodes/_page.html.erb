@@ -2,6 +2,7 @@
         edit_path: page_path(page),
         configure_path: edit_page_path(page),
         delete_path: page_path(page),
+        node_id: key.id,
         type: 'page'
 }
    unless @modifiable_sections.include?(parent)

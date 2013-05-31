@@ -1,7 +1,10 @@
 Tasks:
 
 - Move sitemap items
--- Add ajax calls to move items.
+-- [BUG] After moving a node, the section_node_ids are probably wrong. This means moving a node twice won't work (though it will appear to).
+-- [BUG] Can't move an item into the 'last' position in a section (It ends up as the 2nd to last).
+-- It's hard visually to drop items into a section (especially if empty). (Should create obvious drop targets when you start dragging).
+-- Delete other move_before/etc methods
 -- Need to expand sections as you pass over them.
 -- Need an image/section name for hover element when it leaves a parent section.
 

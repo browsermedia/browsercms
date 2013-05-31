@@ -1,7 +1,9 @@
 <%
    data = {configure_path: edit_link_path(link),
            delete_path: link_path(link),
-           type: 'link'
+           type: 'link',
+           node_id: key.id,
+
    }
    data[:editable] = false unless @modifiable_sections.include?(parent)
 
