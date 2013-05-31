@@ -75,7 +75,7 @@ class Cms::SectionNode < ActiveRecord::Base
         #This helps prevent the position from getting out of whack
         #If you pass in a really high number for position, 
         #this just corrects it to the right number
-        node_count =Cms::SectionNode.count(:conditions => {:ancestry => ancestry})
+        node_count = Cms::SectionNode.count(:conditions => {:ancestry => ancestry})
         position = node_count if position > node_count
       end
       

@@ -139,20 +139,20 @@ Sitemap.prototype.enableMenuButtons = function() {
 
 // @param [Number] node_id
 // @param [Number] target_node_id
-// @param [Number] order
-Sitemap.prototype.move_to = function(node_id, target_node_id, order) {
+// @param [Number] position A 1 based position for order
+Sitemap.prototype.move_to = function(node_id, target_node_id, position) {
   var path = "/cms/section_nodes/" + node_id + '/move_to_position'
   $.cms_ajax.put({
     url: path,
     data: {
       target_node_id: target_node_id,
-      position: order
+      position: position
     },
     success: function(result) {
       sitemap.clickWebsite();
     }
   });
-  console.log("Dropping node", node_id, "into", target_node_id, "at", order);
+  console.log("Dropping node", node_id, "into", target_node_id, "at position", position);
 
 };
 var sitemap = new Sitemap();
@@ -174,7 +174,7 @@ $(function() {
     stop: function(event, ui) {
       var parent_section = ui.item.parents('ul:first');
       var moving_node_id = ui.item.children('a:first').data('node-id');
-      sitemap.move_to(moving_node_id, parent_section.data('node-id'), ui.item.index());
+      sitemap.move_to(moving_node_id, parent_section.data('node-id'), ui.item.index() + 1);
     }
   });
 
