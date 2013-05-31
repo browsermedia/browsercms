@@ -156,8 +156,6 @@ Sitemap.prototype.move_to = function(node_id, target_node_id, position) {
       sitemap.clickWebsite();
     }
   });
-  console.log("Dropping node", node_id, "into", target_node_id, "at position", position);
-
 };
 
 // @param [Selector] A selected link (<a>)
@@ -232,10 +230,18 @@ $(function() {
   $('.selectable').on('dblclick', sitemap._doubleClick);
   sitemap.clickWebsite();
   $('#sitemap ul ul').sortable({
+
+    helper: 'clone',
+    appendTo: 'body',
+    zIndex: 10000, //or greater than any other relative/absolute/fixed elements and droppables
     connectWith: '#sitemap ul ul',
     placeholder: 'ui-placeholder',
     delay: 250,
     start: function(event, ui) {
+
+      // Clean up the element that is being dragged so its just the name and icon.
+      ui.helper.find('span').remove();
+
       sitemap.clearSelection();
       sitemap.highlightEmptySections();
     },

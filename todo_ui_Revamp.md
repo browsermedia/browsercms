@@ -1,8 +1,5 @@
 Tasks:
 
-- Move sitemap items
--- [BUG] Sometime when you move an item between lists, the moving element disappears behind the other lists. All you see is the drop target.
-
 ## UI Merge Items
 * page_editor.css/page_content_editing.css shouldn't have been deleted during the bootstrap UI merge.
 * Can't edit the root section
