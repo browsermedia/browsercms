@@ -49,3 +49,6 @@ end
 Then /^I should be able to click on a link to see a product$/ do
   assert page.has_content?("A Widget")
 end
+Then /^a new product should be created$/ do
+  assert_equal 1, Product.count
+end

@@ -209,3 +209,11 @@ end
 Then /^I should end up on that page$/ do
   should_see_a_page_titled(most_recently_created_page.title)
 end
+
+Then /^the page frame should contain the following:$/ do |table|
+  within_frame 'page_content' do
+    table.rows.each do |row|
+      assert page.has_content? row[0]
+    end
+  end
+end
