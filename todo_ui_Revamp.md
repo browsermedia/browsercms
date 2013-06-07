@@ -21,7 +21,6 @@ Things that need to be updated in the CSS for the new UI.
 
 * Selecting a row in content tables have no visual indicator.
 * New button looks bad when you hover over it.
-* When viewing a page, the draft button is on the right (rather than left) [Bad Merge?]
 * Flash messages still don't look right.
 * Select boxes are not styled.
 * RTE drop down isn't styled correctly

@@ -23,6 +23,9 @@ require 'factory_girl'
 require 'factories/factories'
 require 'factories/attachable_factories'
 
+# Silence warnings (hopefully) primarily from HTML parsing in functional tests.
+$VERBOSE = nil
+
 require 'support/engine_controller_hacks'
 
 class ActiveSupport::TestCase
