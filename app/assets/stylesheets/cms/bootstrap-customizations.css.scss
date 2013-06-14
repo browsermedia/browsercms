@@ -71,13 +71,13 @@ tbody .block_status.published, #sitemap .span1.Published {
   padding-top: 20px;
 }
 
-.navbar .nav > li > a {
+.navbar .nav > li > .btn {
   color: #fff;
   text-shadow: 0 0px 0 white;
 }
 
-.navbar .nav > li > a:focus,
-.navbar .nav > li > a:hover {
+.navbar .nav > li > .btn:focus,
+.navbar .nav > li > .btn:hover {
   background-color: #eeeeee;
   color: #fff;
   text-decoration: none;
