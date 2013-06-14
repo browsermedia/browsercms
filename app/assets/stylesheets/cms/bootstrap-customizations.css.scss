@@ -86,3 +86,9 @@ tbody .block_status.published, #sitemap .span1.Published {
 .navbar .nav > li > .btn:hover, .btn:focus {
   background-position: 0 0px;
 }
+
+input,
+textarea,
+.uneditable-input {
+  width: inherit;
+}

@@ -1,5 +1,3 @@
-//= require cms/ajax
-
 CKEDITOR.plugins.add('move_content', {
     icons:'movecontentup,movecontentdown',
     init:function (editor) {
