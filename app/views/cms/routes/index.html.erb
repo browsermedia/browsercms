@@ -15,14 +15,16 @@
   <% end %>
 </div>
 <div class="roundedcorners">
-<table class="data">
-  <tr>
-    <th class="first" colspan="2"><div class="dividers">Name</div></th>
-    <th><div class="dividers" style="width: 50px;">Verb</div></th>
-    <th><div class="dividers">Pattern</div></th>
-    <th class="last" colspan="2"><div class="dividers">Result</div></th>
+<table class="data cms-content-table table table-striped table-bordered table-hover">
+  <thead>  
+	  <tr>
+	    <th class="first" colspan="2"><div class="dividers">Name</div></th>
+	    <th><div class="dividers" style="width: 50px;">Verb</div></th>
+	    <th><div class="dividers">Pattern</div></th>
+	    <th class="last" colspan="2"><div class="dividers">Result</div></th>
 
-  </tr>
+	  </tr>
+  <thead>  
   <% for route in @routes %><tr>
     <td class="first"></td>
     <td><%=h route[:name] %></td>
