@@ -66,3 +66,24 @@ tbody .block_status.published, #sitemap .span1.Published {
 .label {margin: 12px 10px 0 0;}
 
 #loginmain {margin: 0 auto; float: none;}
+
+.container-fluid {
+  padding-top: 20px;
+}
+
+.navbar .nav > li > a {
+  color: #fff;
+  text-shadow: 0 0px 0 white;
+}
+
+/* line 256, ../../../../../.rvm/gems/ruby-1.9.3-p125@rails323/gems/bootstrap-sass-2.3.2.0/vendor/assets/stylesheets/bootstrap/_navbar.scss */
+.navbar .nav > li > a:focus,
+.navbar .nav > li > a:hover {
+  background-color: #eeeeee;
+  color: #fff;
+  text-decoration: none;
+}
+
+.navbar .nav > li > .btn:hover, .btn:focus {
+  background-position: 0 0px;
+}
