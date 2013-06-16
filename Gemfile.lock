@@ -6,6 +6,7 @@ PATH
       bootstrap-sass
       ckeditor_rails (~> 4.0.1.1)
       jquery-rails (~> 2.0)
+      panoramic
       paperclip (~> 3.0.3)
       rails (>= 3.2.5, < 3.3.0)
       sass-rails
@@ -124,6 +125,8 @@ GEM
     multi_json (1.7.6)
     mysql2 (0.3.11)
     nokogiri (1.5.9)
+    panoramic (0.0.4)
+      rails (>= 3.0.7)
     paperclip (3.0.4)
       activemodel (>= 3.0.0)
       activerecord (>= 3.0.0)
@@ -225,6 +228,7 @@ DEPENDENCIES
   minitest-rails
   mocha
   mysql2
+  panoramic
   poltergeist
   rake (~> 0.9.5)
   ruby-prof
