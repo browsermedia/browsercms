@@ -25,4 +25,5 @@ test/dummy/config/database.yml
 test/dummy/.powder
 test/dummy/.rvmrc
 .sass-cache
+.rvmrc
 db/backups
