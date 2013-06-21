@@ -66,3 +66,29 @@ tbody .block_status.published, #sitemap .span1.Published {
 .label {margin: 12px 10px 0 0;}
 
 #loginmain {margin: 0 auto; float: none;}
+
+.container-fluid {
+  padding-top: 20px;
+}
+
+.navbar .nav > li > .btn {
+  color: #fff;
+  text-shadow: 0 0px 0 white;
+}
+
+.navbar .nav > li > .btn:focus,
+.navbar .nav > li > .btn:hover {
+  background-color: #eeeeee;
+  color: #fff;
+  text-decoration: none;
+}
+
+.navbar .nav > li > .btn:hover, .btn:focus {
+  background-position: 0 0px;
+}
+
+input,
+textarea,
+.uneditable-input {
+  width: inherit;
+}

@@ -5,7 +5,7 @@ module Cms
     def update
       content = Content.find_draft(params[:content_name], params[:id])
       content.update_attributes(filtered_content)
-      @page = Page.find_draft(params[:page_id])
+      @page = Page.find_draft(params[:page_id].to_i)
       if (!@page.live?)
         page_status = "draft-status"
         status_label = "DRAFT"

@@ -21,11 +21,13 @@
 
 <%= render 'toolbar' %>
 <div class="roundedcorners">
-  <table class="data">
-    <tr>
-      <th class="first" colspan="2"><div class="dividers">Name</div></th>
-      <th colspan="2" class="last"><div class="dividers">Pattern</div></th>
-    </tr>
+  <table class="data cms-content-table table table-striped table-bordered table-hover">
+	<thead>  
+	    <tr>
+	      <th class="first" colspan="2"><div class="dividers">Name</div></th>
+	      <th colspan="2" class="last"><div class="dividers">Pattern</div></th>
+	    </tr>
+	<thead>  
     <% @page_routes.each do |page_route| %>
       <tr id="page_route_<%= page_route.id %>">
         <td class="first"></td>

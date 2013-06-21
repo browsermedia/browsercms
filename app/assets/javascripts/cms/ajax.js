@@ -10,13 +10,13 @@ jQuery(function ($) {
         asJS:function () {
             return function (xhr) {
                 xhr.setRequestHeader('X-CSRF-Token', $.cms.csrfToken());
-                xhr.setRequestHeader("Accept", "text/javascript");
+                xhr.setRequestHeader("Accept", "text/javascript, */*, q=0.1");
             }
         },
         asJSON:function () {
             return function (xhr) {
                 xhr.setRequestHeader('X-CSRF-Token', $.cms.csrfToken());
-                xhr.setRequestHeader("Accept", "application/json");
+                xhr.setRequestHeader("Accept", "application/json, */*, q=0.1");
             }
         },
         // Invoke a Rails aware (w/ CSRF token) PUT request.
