@@ -111,6 +111,7 @@ FactoryGirl.define do
     m.sequence(:name) { |n| "_page_partial_#{n}" }
     m.format "html"
     m.handler "erb"
+    m.body "Nonblank"
   end
 
   factory :page_route, :class => Cms::PageRoute do |m|

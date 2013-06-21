@@ -1,6 +1,6 @@
 module Cms
   class DynamicView < ActiveRecord::Base
-	  store_templates
+    store_templates
 
 
     after_save :write_file_to_disk
@@ -31,7 +31,7 @@ module Cms
         is_versioned
 
         before_validation :set_publish_on_save
-        before_validation  :set_defaults,  :set_path
+        before_validation :set_defaults, :set_path
 
         validates_presence_of :name, :format, :handler, :path, :locale
         validates_uniqueness_of :name, :scope => [:format, :handler],
@@ -111,14 +111,14 @@ module Cms
       "cms"
     end
 
-		def set_path
-			self.path = self.class.relative_path + '/' + name
-		end
+    def set_path
+      self.path = self.class.relative_path + '/' + name
+    end
 
-		def set_defaults
-			self.locale = I18n.locale.to_s unless locale
-			self.partial = partial?
-			return true
-		end
+    def set_defaults
+      self.locale = I18n.locale.to_s unless locale
+      self.partial = partial?
+      true
+    end
   end
 end

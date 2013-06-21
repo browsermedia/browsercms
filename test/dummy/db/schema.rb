@@ -153,6 +153,9 @@ ActiveRecord::Schema.define(:version => 20130327184912) do
     t.string   "version_comment"
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
+    t.string   "path"
+    t.string   "locale"
+    t.boolean  "partial"
   end
 
   create_table "cms_dynamic_views", :force => true do |t|
@@ -170,6 +173,9 @@ ActiveRecord::Schema.define(:version => 20130327184912) do
     t.boolean  "archived",      :default => false
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
+    t.string   "path"
+    t.string   "locale"
+    t.boolean  "partial"
   end
 
   create_table "cms_email_messages", :force => true do |t|
