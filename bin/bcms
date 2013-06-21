@@ -188,6 +188,12 @@ Cms.table_prefix = "cms_"
 
   def enable_asset_precompiling
     gsub_file "config/environments/production.rb", /config\.assets\.compile = false/, 'config.assets.compile = true'
+    gsub_file 'config/application.rb', /^(\s*)(config\.assets\.enabled = true)/, <<-RUBY
+\1\2
+
+\1# Don't require environment or DB during asset compilation
+\1config.assets.initialize_on_precompile = false
+    RUBY
   end
 
   def configure_mail_server
