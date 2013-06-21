@@ -72,6 +72,7 @@ module Cms
 
     def render_page
       prepare_connectables_for_render
+      prepend_view_path DynamicView.resolver
       respond_with @page, determine_page_layout
     end
 

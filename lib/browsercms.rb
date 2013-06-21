@@ -31,3 +31,5 @@ require 'cms/concerns'
 
 ActiveRecord::Base.send(:include, Cms::Acts::CmsUser)
 require 'cms/responders/content_responder'
+
+require "panoramic"

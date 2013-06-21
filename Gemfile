@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 # Load this project as a gem.
 gemspec
-
+gem "panoramic"
 gem "mysql2"
 
 gem 'yard', :groups=>[:development, :test]
@@ -41,7 +41,7 @@ group :test do
   # Cucumber and dependencies
   gem 'capybara'
   gem 'database_cleaner'
-  gem 'cucumber-rails', require: false
+  gem 'cucumber-rails', :require=> false
   gem 'cucumber'
   gem 'launchy'
   gem 'ruby-prof'

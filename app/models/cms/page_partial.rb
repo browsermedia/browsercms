@@ -28,5 +28,9 @@ module Cms
       end
     end
 
+    def partial?
+			true
+		end
+
   end
 end
