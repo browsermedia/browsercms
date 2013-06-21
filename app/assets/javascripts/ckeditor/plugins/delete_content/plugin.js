@@ -1,5 +1,3 @@
-//= require cms/ajax
-
 CKEDITOR.plugins.add('delete_content', {
     icons:'deletecontent',
     init:function (editor) {
