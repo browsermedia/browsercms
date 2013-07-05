@@ -1,3 +1,10 @@
+v3.5.7
+======
+
+Fixes to handle Rails 4 dependency conflicts.
+
+* [#612] Fix overly broad sass-rails dependency.
+
 v3.5.5
 ======
 
