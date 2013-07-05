@@ -7,6 +7,7 @@ This release includes the following features:
 * True In Context Editing - Editors can directly edit Html content and page titles using CKEditor's inline capability.
 * Addressable Content Blocks - Custom content blocks (i.e. Product, Event, News Articles) can be created directly as pages in the sitemap.
 * Refined Content API - Make content blocks closer in behavior to ActiveRecord.
+* Improved Template Storage - Templates stored in the database no longer need to be written out to the file system. This should make it easier to deploy CMS apps to Heroku.
 
 UI Redesign
 ----------

@@ -1,5 +1,21 @@
 Tasks:
 
+* Database Templates:
+  - Remove disk writing (no longer necessary)
+  - Add migrations for existing data
+* Make it easier to create controller as pages
+  - I.e. a custom login form
+  - Should include cms_toolbar (for free) when logged in(?)
+  - DSL for mapping groups to temp users.
+  - Groups should have purpose/description field. Explain who this group represents.
+  - Groups should have 'external' user flag to prevent deletion.
+* Multisite (for larger sites) 
+* User Management[Devise?]
+  - Built in 'Temp' users (store arbitrary attributes in session)
+  - Forgot Password (for admins) 
+  - Public login page (for non-admins)
+* Marketing / Email notifications
+
 ## UI Merge Items
 * page_editor.css/page_content_editing.css shouldn't have been deleted during the bootstrap UI merge.
 * Can't edit the root section
