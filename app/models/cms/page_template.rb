@@ -17,7 +17,8 @@ module Cms
 
     def self.display_name(file_name)
       name, format, handler = file_name.split('.')
-      "#{name.titleize} (#{format}/#{handler})"
+      content_type = handler ? "#{format}/#{handler}" : "#{format}"
+      "#{name.titleize} (#{content_type})"
     end
 
     def self.resource_collection_name

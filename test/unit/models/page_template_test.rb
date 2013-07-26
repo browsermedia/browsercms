@@ -47,4 +47,9 @@ class PageTemplateTest < ActiveSupport::TestCase
   def test_default_body
     assert_not_nil Cms::PageTemplate.default_body
   end
+
+  def test_display_name
+    assert_equal "Foo (html/erb)", Cms::PageTemplate.display_name("foo.html.erb")
+    assert_equal "Foo (slim)", Cms::PageTemplate.display_name("foo.slim")
+  end
 end
