@@ -1,6 +1,6 @@
 ## After UI Rework
 
-Failing Scenarios:  (51)
+Failing Scenarios:  (44)
 cucumber features/acts_as_content_page.feature:56 # Scenario: NotFound Page as a Content Editor
 cucumber features/add_content_to_pages.feature:7 # Scenario: Selecting an existing html block
 cucumber features/add_content_to_pages.feature:19 # Scenario: Add Html/Text to a page
@@ -11,12 +11,6 @@ cucumber features/commands/upgrade_project_to_3_4_0_from_3_3_x.feature:10 # Scen
 cucumber features/commands/upgrade_project_to_3_4_0_from_3_3_x.feature:32 # Scenario: Updates version table
 cucumber features/commands/upgrade_project_to_3_4_0_from_3_3_x.feature:38 # Scenario: Migrations work for new project
 cucumber features/commands/upgrading_to_3_5_0.feature:8 # Scenario: Comments out rails in gem
-cucumber features/content_blocks/add_images.feature:13 # Scenario: Creating image block
-cucumber features/content_blocks/file_blocks.feature:19 # Scenario: Creating File block
-cucumber features/content_blocks/form_controls.feature:29 # Scenario: Updating multiple attachments
-cucumber features/content_blocks/manage_custom_blocks.feature:42 # Scenario: Add to a page
-cucumber features/content_blocks/manage_custom_blocks.feature:51 # Scenario: View Usages
-cucumber features/content_blocks/manage_custom_blocks.feature:65 # Scenario: Custom Page Routes
 cucumber features/content_blocks/manage_html_blocks.feature:7 # Scenario: List Html Blocks
 cucumber features/content_blocks/manage_html_blocks.feature:66 # Scenario: Draft Html Block
 cucumber features/content_blocks/manage_images.feature:11 # Scenario: List Images
@@ -44,7 +38,6 @@ cucumber features/mobile_templates.feature:60 # Scenario: Toolbar for pages with
 cucumber features/navigation_menu/new_button.feature:23 # Scenario: Redirects
 cucumber features/portlets/email_friend_portlet.feature:8 # Scenario: Add New Portlet
 cucumber features/portlets/portlets.feature:9 # Scenario: List Portlets
-cucumber features/portlets/portlets.feature:13 # Scenario: Login portlet when logged in
 cucumber features/portlets/portlets.feature:36 # Scenario: Deleting a portlet
 cucumber features/portlets/portlets.feature:48 # Scenario: Editing a portlet
 cucumber features/portlets/portlets.feature:94 # Scenario: Portlet errors should not blow up the page

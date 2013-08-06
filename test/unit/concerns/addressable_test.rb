@@ -133,6 +133,10 @@ describe Cms::Concerns::Addressable do
 
   describe "#with_slug" do
 
+    it "return nil if no matching content exists" do
+      IsAddressable.with_slug("non-existant").must_be_nil
+    end
+
     it "should find content" do
       content = IsAddressable.create(slug: "coke", parent_id: root_section)
       found = IsAddressable.with_slug("coke")

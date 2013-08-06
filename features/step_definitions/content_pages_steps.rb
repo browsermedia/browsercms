@@ -61,7 +61,7 @@ When /^login as an authorized user$/ do
 end
 
 When /^I am editing the page at (#{PATH})$/ do |path|
-  visit("#{path}?show_page=show&mode=edit")
+  visit cms.edit_content_path(Cms::Page.with_path(path).first)
 end
 
 When /^I click the Select Existing Content button$/ do

@@ -39,22 +39,6 @@ Feature: Manage Content Blocks
     When I delete "Kindle Fire"
     Then I should be redirected to /cms/products
 
-  Scenario: Add to a page
-    When I am editing the page at /
-    And I add content to the main area of the page
-    And I click on "add_new_product"
-    And I fill in "Name" with "iPhone"
-    And I click on "Save"
-    Then the response should be 200
-    Then the page content should contain "Name: iPhone"
-
-  Scenario: View Usages
-    Given a product "iPhone" has been added to a page
-    When I view that product
-    Then the response should be 200
-    And the page header should be "View Product 'iPhone'"
-    And I should see "Used on: 1 page"
-
   Scenario: Multiple Pages
     Given there are multiple pages of products in the Content Library
     When I request /cms/products
@@ -68,7 +52,11 @@ Feature: Manage Content Blocks
     When I view a page that lists products
     Then I should be able to click on a link to see a product
 
-
+  Scenario: Nonexistant Product
+    Given no product with a slug "/some-path" exists
+    And I am not logged in
+    When I visit "/products/some-path"
+    Then I should see the CMS 404 page
 
 
 

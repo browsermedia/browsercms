@@ -88,10 +88,13 @@ module Cms
           "#{self.path}/"
         end
 
-        # Find an addressable object with the given content type
+        # Find an addressable object with the given content type.
+        #
+        # @param [String] slug
+        # @return [Addressable] The content block with that slug (if it exists). Nil otherwise
         def with_slug(slug)
           section_node = SectionNode.where(slug: slug).where(node_type: self.name).first
-          section_node.node
+          section_node ? section_node.node : nil
         end
 
         # Returns the layout (Page Template) that should be used to render instances of this content.
