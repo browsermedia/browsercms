@@ -110,8 +110,9 @@ When /^it should seed the demo data$/ do
   # This output is ugly, but it verifies that seed data completely runs
 end
 
-When /^the file "([^"]*)" (#{SHOULD_OR_NOT}) contain:$/ do |file, should_or_not, partial_content|
-  check_file_content(file, partial_content, should_or_not)
+# Opposite of aruba step 'the file "x" should contain:'
+When /^the file "([^"]*)" should not contain:$/ do |file, partial_content|
+  check_file_content(file, partial_content, false)
 end
 
 When /^the correct version of Rails should be added to the Gemfile$/ do
