@@ -2,8 +2,6 @@
 
 Failing Scenarios:  (29)
 cucumber features/acts_as_content_page.feature:56 # Scenario: NotFound Page as a Content Editor
-cucumber features/add_content_to_pages.feature:7 # Scenario: Selecting an existing html block
-cucumber features/add_content_to_pages.feature:19 # Scenario: Add Html/Text to a page
 cucumber features/content_blocks/multiple_attachments.feature:13 # Scenario: Attachment Manager Widget
 cucumber features/content_pages.feature:23 # Scenario: View Older Versions
 cucumber features/manage_page_routes.feature:19 # Scenario: Create Page Route

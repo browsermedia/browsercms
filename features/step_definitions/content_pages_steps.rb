@@ -61,16 +61,18 @@ When /^login as an authorized user$/ do
 end
 
 When /^I am editing the page at (#{PATH})$/ do |path|
-  visit cms.edit_content_path(Cms::Page.with_path(path).first)
+  @last_page = Cms::Page.with_path(path).first
+  visit cms.edit_content_path(@last_page)
 end
 
-When /^I click the Select Existing Content button$/ do
-  container = "main"
-  click_link "insert_existing_content_#{container}"
+# Uses direct link rather than clicking which requires Javascript driver to do.
+When /^I choose to reuse content$/ do
+  visit cms.new_connector_path(container: 'main', page_id: @last_page.id)
 end
 
+# Uses direct link rather than clicking which requires Javascript driver to do.
 When /^I choose to add a new 'Text' content type to the page$/ do
-  click_link 'add_new_html_block'
+  visit cms.new_html_block_path('html_block[connect_to_container]' => 'main', 'html_block[connect_to_page_id]' => @last_page.id)
 end
 
 When /^I turn on edit mode for (.*)$/ do |path|
@@ -79,8 +81,9 @@ When /^I turn on edit mode for (.*)$/ do |path|
 end
 
 When /^I add new content to the page$/ do
-  container = "main"
-  click_link "Add new content to this container (#{container})"
+
+  #container = "main"
+  #click_link "Add new content to this container (#{container})"
 end
 Then /^I should see a list of selectable content types$/ do
   pending
@@ -182,7 +185,10 @@ Then /^the toolbar should display a revert to button$/ do
 end
 
 When /^the page content should contain "([^"]*)"$/ do |content|
-  visit("#{current_url}?show_page=show")
+  assert_equal '/some-page', current_path
+  current_page = Cms::Page.with_path(current_path).first
+  assert_equal current_path, current_page.path
+  visit cms.edit_content_path(current_page)
   assert page.has_content?(content)
 end
 
