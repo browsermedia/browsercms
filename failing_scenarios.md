@@ -4,10 +4,6 @@ Failing Scenarios:  (29)
 cucumber features/acts_as_content_page.feature:56 # Scenario: NotFound Page as a Content Editor
 cucumber features/add_content_to_pages.feature:7 # Scenario: Selecting an existing html block
 cucumber features/add_content_to_pages.feature:19 # Scenario: Add Html/Text to a page
-cucumber features/content_blocks/manage_html_blocks.feature:7 # Scenario: List Html Blocks
-cucumber features/content_blocks/manage_html_blocks.feature:66 # Scenario: Draft Html Block
-cucumber features/content_blocks/manage_images.feature:11 # Scenario: List Images
-cucumber features/content_blocks/manage_images.feature:56 # Scenario: Revert an Image
 cucumber features/content_blocks/multiple_attachments.feature:13 # Scenario: Attachment Manager Widget
 cucumber features/content_pages.feature:23 # Scenario: View Older Versions
 cucumber features/manage_page_routes.feature:19 # Scenario: Create Page Route
@@ -28,8 +24,6 @@ cucumber features/portlets/portlets.feature:48 # Scenario: Editing a portlet
 cucumber features/portlets/portlets.feature:94 # Scenario: Portlet errors should not blow up the page
 cucumber features/portlets/portlets.feature:112 # Scenario: View Usages
 cucumber features/portlets/tag_cloud_portlet.feature:7 # Scenario: Add New Portlet
-cucumber features/taxonomy/manage_categories.feature:7 # Scenario: Add New Category
-cucumber features/taxonomy/manage_category_types.feature:7 # Scenario: Add New Category Type
 
 
 ## After Inline Editing

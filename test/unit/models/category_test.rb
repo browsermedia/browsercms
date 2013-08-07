@@ -1,6 +1,12 @@
 require 'test_helper'
 
 class CategoryTest < ActiveSupport::TestCase
+
+
+  test "#create! with publish_on_save" do
+    assert create(:category,  publish_on_save: true)
+  end
+
   def test_creating_categories
     @a_type = create(:category_type, :name => "A")
     @b_type = create(:category_type, :name => "B")

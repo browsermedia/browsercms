@@ -6,6 +6,7 @@ module Cms
     is_searchable
 
     include DefaultAccessible
+    include Concerns::IgnoresPublishing
 
     attr_accessible :category_type
 

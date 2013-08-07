@@ -11,7 +11,6 @@ end
 
 When /^I edit that portlet$/ do
   visit cms.edit_portlet_path(@subject)
-  #visit "/cms/portlets/#{@subject.id}/edit"
 end
 
 When /^I visit that page$/ do
