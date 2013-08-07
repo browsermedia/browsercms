@@ -1,20 +1,14 @@
 ## After UI Rework
 
 Failing Scenarios:  (29)
-cucumber features/acts_as_content_page.feature:56 # Scenario: NotFound Page as a Content Editor
 cucumber features/content_blocks/multiple_attachments.feature:13 # Scenario: Attachment Manager Widget
 cucumber features/content_pages.feature:23 # Scenario: View Older Versions
-cucumber features/manage_page_routes.feature:19 # Scenario: Create Page Route
-cucumber features/manage_page_routes.feature:31 # Scenario: Edit Page Route
-cucumber features/manage_redirects.feature:8 # Scenario: Create Redirect
-cucumber features/manage_redirects.feature:21 # Scenario: Update Redirects
 cucumber features/manage_tasks.feature:7 # Scenario: Assign Home Page as a Task
 cucumber features/mobile_templates.feature:29 # Scenario: Editors can see mobile version of page
 cucumber features/mobile_templates.feature:36 # Scenario: Mobile 'mode' is sticky
 cucumber features/mobile_templates.feature:43 # Scenario: Disable Mobile mode
 cucumber features/mobile_templates.feature:55 # Scenario: Toolbar for mobile ready pages
 cucumber features/mobile_templates.feature:60 # Scenario: Toolbar for pages without mobile templates
-cucumber features/navigation_menu/new_button.feature:23 # Scenario: Redirects
 cucumber features/portlets/email_friend_portlet.feature:8 # Scenario: Add New Portlet
 cucumber features/portlets/portlets.feature:9 # Scenario: List Portlets
 cucumber features/portlets/portlets.feature:36 # Scenario: Deleting a portlet
