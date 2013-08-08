@@ -98,8 +98,8 @@ Given /^a block exists with a single image$/ do
   assert_equal @block.id, a.attachable_id
 end
 
-When /^I view that block$/ do
-  path = "/cms/#{@block.class.path_name}/#{@block.id}"
+When /^I view that block inline$/ do
+  path = "/cms/#{@block.class.path_name}/#{@block.id}/inline"
   visit path
 end
 

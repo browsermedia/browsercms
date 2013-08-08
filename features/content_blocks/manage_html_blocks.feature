@@ -50,7 +50,7 @@ Feature: Manage Html Blocks
 
   Scenario: View Usages
     Given html with "Hello World" has been added to a page
-    When I view that block
+    When I view that block inline
     Then the response should be 200
     And the page header should be "View Text"
     And I should see "Used on: 1 page"
@@ -64,7 +64,7 @@ Feature: Manage Html Blocks
 
   Scenario: Draft Html Block
     Given I have an Html block in draft mode
-    When I view that block
+    When I view that block inline
     Then the publish button should be enabled
     And I should see that block's content
     And I should see it's draft mode

@@ -13,7 +13,7 @@ module Cms
 
     # Used to determine which section a New Page should go in, based on the current context.
     def target_section
-      if @page
+      if @page && @page.parent
         @page.parent
       else
         Cms::Section.first

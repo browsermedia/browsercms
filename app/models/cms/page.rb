@@ -271,6 +271,14 @@ class Cms::Page < ActiveRecord::Base
     "NA"
   end
 
+  # Whether or not this page is considered the 'landing' page for its parent section. These 'Overview' pages
+  # will have the same path as their parent.
+  #
+  # @return [Boolean]
+  def landing_page?
+    parent.path == path
+  end
+
   def public?
     section ? section.public? : false
   end

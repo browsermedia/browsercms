@@ -157,6 +157,13 @@ module Cms
         node.destroy
       end
 
+      # Whether or not this content is the 'landing' page for its section.
+      #
+      # @return [Boolean] false always, since a content block won't ever be the landing page for the section
+      def landing_page?
+        false
+      end
+
       # Returns the value that will appear in the <title> element of the page when this content is rendered.
       # Subclasses can override this.
       #
@@ -174,9 +181,10 @@ module Cms
       # Returns a list of all Addressable objects that are ancestors to this record.
       # @param [Hash] options
       # @option [Symbol] :include_self If this object should be included in the Array
-      # @return [Array<Addressable]
+      # @return [Array<Addressable>] Or [] if no ancestors and/or has no parent.
       #
       def ancestors(options={})
+        return [] unless node
         ancestor_nodes = node.ancestors
         ancestors = ancestor_nodes.collect { |node| node.node }
         ancestors << self if options[:include_self]

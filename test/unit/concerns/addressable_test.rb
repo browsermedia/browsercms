@@ -177,11 +177,26 @@ describe Cms::Concerns::Addressable do
     end
   end
 
-  describe ".page_title" do
+  describe "#page_title" do
     it "should default to the name" do
       addressable.name = "Some Name"
       addressable.page_title.must_equal "Some Name"
     end
 
+  end
+
+  describe "#landing_page?" do
+    it "a resource won't ever be the landing page for the section'" do
+      addressable.landing_page?.must_equal false
+    end
+  end
+
+  describe "#ancestors" do
+    describe "without a parent" do
+      it "should have no ancestors" do
+        content = IsAddressable.create
+        content.ancestors.must_equal []
+      end
+    end
   end
 end

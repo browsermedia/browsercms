@@ -3,6 +3,11 @@ require 'test_helper'
 module Cms
   class CreatingPageTest < ActiveSupport::TestCase
 
+    test "#landing_page? if matches parent's path'" do
+      section = create(:section, path: "/about")
+      landing_page = create(:page, path: "/about", parent: section)
+      assert landing_page.landing_page?
+    end
 
     test "home?" do
       @page = create(:page, path: "/")

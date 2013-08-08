@@ -175,13 +175,13 @@ Given /^a page exists with two versions$/ do
   @content_page.update_attributes(:name => "Version 2")
 end
 
-When /^I view the toolbar for version (\d+) of that page$/ do |version|
-  visit "/cms/toolbar?page_id=#{@content_page.id}&page_toolbar=1&page_version=#{version}"
+When /^I view version (\d+) of that page$/ do |version|
+  visit cms.version_cms_page_path(id: @content_page.id, version: version)
 end
 
 Then /^the toolbar should display a revert to button$/ do
   assert_equal 200, page.status_code
-  assert page.has_content? "Revert to this Version"
+  assert((page.has_content? "Revert to this Version"), "The Page toolbar does not display the revert to button.")
 end
 
 When /^the page content should contain "([^"]*)"$/ do |content|
