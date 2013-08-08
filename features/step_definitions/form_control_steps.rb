@@ -98,10 +98,18 @@ Given /^a block exists with a single image$/ do
   assert_equal @block.id, a.attachable_id
 end
 
-When /^I view that block inline$/ do
-  path = "/cms/#{@block.class.path_name}/#{@block.id}/inline"
-  visit path
+When /^I view that block$/ do
+  if @block.class.addressable?
+    # Can't load iframes with current capybara drivers, so must test inline content for addressable blocks.
+    visit "/cms/#{@block.class.path_name}/#{@block.id}/inline"
+  else
+    visit cms.polymorphic_path(@block)
+  end
 end
+
+#When /^I view that block inline$/ do
+#  visit "/cms/#{@block.class.path_name}/#{@block.id}/inline"
+#end
 
 Then /^I should see that block's image$/ do
   assert page.has_css?("img[data-purpose=attachment]")

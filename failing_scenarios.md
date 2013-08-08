@@ -1,9 +1,6 @@
 ## After UI Rework
 
 Failing Scenarios:  (29)
-cucumber features/content_blocks/manage_html_blocks.feature:51 # Scenario: View Usages
-cucumber features/content_blocks/manage_html_blocks.feature:65 # Scenario: Draft Html Block
-cucumber features/manage_tasks.feature:7 # Scenario: Assign Home Page as a Task
 cucumber features/mobile_templates.feature:29 # Scenario: Editors can see mobile version of page
 cucumber features/mobile_templates.feature:36 # Scenario: Mobile 'mode' is sticky
 cucumber features/mobile_templates.feature:43 # Scenario: Disable Mobile mode

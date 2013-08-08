@@ -12,7 +12,7 @@ Feature: Attaching multiple assets to a block
 
   Scenario: Attachment Manager Widget
     Given a block exists with a single image
-    When I view that block inline
+    When I view that block
     Then I should see that block's image
     And I should not see the delete attachment link
     When I edit that block

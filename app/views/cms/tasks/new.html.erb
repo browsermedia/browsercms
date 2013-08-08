@@ -23,9 +23,7 @@
     <br/>
     <%= f.text_area :comment, :tabindex => next_tabindex %>
   </div>
+  <%= f.submit("Save", :class => "submit btn", :tabindex => next_tabindex) %>
 
-  <div class="buttons">
-    <%= lt_button_wrapper(f.submit("Save", :class => "submit", :tabindex => next_tabindex)) %>
-  </div>
 <% end %>
 
