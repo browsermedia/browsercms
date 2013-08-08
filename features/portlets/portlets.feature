@@ -32,6 +32,11 @@ Feature: Portlets
     And follow "Portlet"
     Then I should see the following content:
       | A new portlet |
+    When I view that portlet
+    Then I should see the following content:
+     | A new portlet |
+
+
 
   Scenario: Deleting a portlet
     Given there is a "Portlet" with:

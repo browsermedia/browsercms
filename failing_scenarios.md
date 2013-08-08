@@ -2,11 +2,11 @@
 
 Failing Scenarios:  (7)
 cucumber features/portlets/email_friend_portlet.feature:8 # Scenario: Add New Portlet
-cucumber features/portlets/portlets.feature:13 # Scenario: Login portlet when logged in
-cucumber features/portlets/portlets.feature:36 # Scenario: Deleting a portlet
-cucumber features/portlets/portlets.feature:48 # Scenario: Editing a portlet
-cucumber features/portlets/portlets.feature:95 # Scenario: Portlet errors should not blow up the page
-cucumber features/portlets/portlets.feature:101 # Scenario: View Usages
+cucumber features/portlets/portlets.feature:27 # Scenario: Viewing a portlet
+cucumber features/portlets/portlets.feature:41 # Scenario: Deleting a portlet
+cucumber features/portlets/portlets.feature:53 # Scenario: Editing a portlet
+cucumber features/portlets/portlets.feature:100 # Scenario: Portlet errors should not blow up the page
+cucumber features/portlets/portlets.feature:106 # Scenario: View Usages
 cucumber features/portlets/tag_cloud_portlet.feature:7 # Scenario: Add New Portlet
 
 

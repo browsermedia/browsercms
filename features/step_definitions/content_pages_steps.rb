@@ -185,11 +185,9 @@ Then /^the toolbar should display a revert to button$/ do
 end
 
 When /^the page content should contain "([^"]*)"$/ do |content|
-  assert_equal '/some-page', current_path
-  current_page = Cms::Page.with_path(current_path).first
-  assert_equal current_path, current_page.path
-  visit cms.edit_content_path(current_page)
-  assert page.has_content?(content)
+  within_content_frame do
+    assert page.has_content?(content)
+  end
 end
 
 When /^I create a new page$/ do
