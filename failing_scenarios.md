@@ -1,11 +1,6 @@
 ## After UI Rework
 
-Failing Scenarios:  (29)
-cucumber features/mobile_templates.feature:29 # Scenario: Editors can see mobile version of page
-cucumber features/mobile_templates.feature:36 # Scenario: Mobile 'mode' is sticky
-cucumber features/mobile_templates.feature:43 # Scenario: Disable Mobile mode
-cucumber features/mobile_templates.feature:55 # Scenario: Toolbar for mobile ready pages
-cucumber features/mobile_templates.feature:60 # Scenario: Toolbar for pages without mobile templates
+Failing Scenarios:  (7)
 cucumber features/portlets/email_friend_portlet.feature:8 # Scenario: Add New Portlet
 cucumber features/portlets/portlets.feature:13 # Scenario: Login portlet when logged in
 cucumber features/portlets/portlets.feature:36 # Scenario: Deleting a portlet

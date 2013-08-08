@@ -4,6 +4,10 @@ Feature: Manage Pages
   Background:
     Given I am logged in as a Content Editor
 
+  Scenario: Edit Page
+    When I create a new page
+    Then I should the content rendered inside the editor frame
+
   Scenario: Creating Page as unpublished
     When I create a new page
     Then that page should not be published

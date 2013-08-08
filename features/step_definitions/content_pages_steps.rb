@@ -223,3 +223,7 @@ Then /^the page frame should contain the following:$/ do |table|
     end
   end
 end
+
+Then /^I should the content rendered inside the editor frame$/ do
+  assert page_has_editor_iframe?()
+end
