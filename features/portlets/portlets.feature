@@ -36,8 +36,6 @@ Feature: Portlets
     Then I should see the following content:
      | A new portlet |
 
-
-
   Scenario: Deleting a portlet
     Given there is a "Portlet" with:
       | name          | template    |
@@ -98,6 +96,7 @@ Feature: Portlets
 
   # @todo - Actual broken feature. Need to fix implementation
   Scenario: Portlet errors should not blow up the page
+    Given a bug: Portlet errors should not throw 500 and blow up the page.
     Given I am not logged in
     And a portlet that throws an unexpected error exists
     When I view that page

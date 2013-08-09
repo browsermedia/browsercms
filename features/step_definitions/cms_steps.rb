@@ -1,7 +1,7 @@
 # Try putting more steps into this single file. Splitting them up is kinda pointless in practice.
 
-Given /^this bug must be fixed:$/ do |text|
-  pending text
+Given /^(?:this|a) bug:/ do
+  pending
 end
 
 Given /^a members only section$/ do

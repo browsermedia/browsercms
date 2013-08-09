@@ -21,11 +21,7 @@ Feature: Content Pages
     Then I should see the CMS :forbidden page
 
   Scenario: View Older Versions
-    Given this bug must be fixed:
-    """
-    Need to make the toolbar display when looking at older versions. (Alternative UX: Leave as is and require
-     that users 'rollback' from the list.)
-    """
+    Given a bug: Need to make the toolbar display when looking at older versions. (Alternative UX: Leave as is and require that users 'rollback' from the list.)
     Given a page exists with two versions
     And I am logged in as a Content Editor
     When I view version 1 of that page

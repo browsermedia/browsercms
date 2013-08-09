@@ -9,7 +9,7 @@
     - If block is already published.
 %>
 <span class="btn-group pull-left">
-  <%= menu_button("Back to #{@block.class.display_name_plural}", cms_index_path_for(@block.class)) unless @block.new_record? %>
+  <%= menu_button("Back to #{@block.class.display_name_plural}", cms_connectable_path(@block.class)) unless @block.new_record? %>
   <%= publish_menu_button(@block) %>
   <% if @block.class.addressable? %>
   <%= link_to("Preview", @block.path, id: "preview_button", target: "_blank", class: "btn btn-primary") %>
