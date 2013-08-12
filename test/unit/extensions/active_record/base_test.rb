@@ -1,4 +1,4 @@
-require 'test_helper'
+require 'minitest_helper'
 
 class ActiveRecord::BaseTest < ActiveSupport::TestCase
   def test_updated_on_string
@@ -10,7 +10,7 @@ class ActiveRecord::BaseTest < ActiveSupport::TestCase
 end
 
 # Must use vanilla TestCase to avoid ActiveRecord setup conflicts
-class TestExtensions < Test::Unit::TestCase
+class TestExtensions < MiniTest::Unit
 
   #"If a connection throws an error when established, then we consider the database to not exist."
   def test_throws_error

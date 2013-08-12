@@ -5,13 +5,8 @@ ActiveRecord::Base.connection.instance_eval do
   create_table(:searchable_content_block_parents) {|t| t.string :name }
   drop_table(:searchable_content_blocks) if table_exists?(:searchable_content_blocks)
   drop_table(:searchable_content_block_versions) if table_exists?(:searchable_content_block_versions)
-  create_versioned_table(:searchable_content_blocks, :prefix=>false) do |t|
+  create_content_table(:searchable_content_blocks, :prefix=>false) do |t|
     t.integer :parent_id
-    t.string :name 
-    t.boolean :deleted, :default => 0
-    t.integer :created_by
-    t.integer :updated_by
-    t.timestamps
   end
 
   # Verifies that blocks are created with a :name column if one is not specified.

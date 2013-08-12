@@ -16,11 +16,12 @@ group :production do
   gem 'uglifier'
 end
 
-group :assets do
-  gem 'sass-rails'
-  gem 'bootstrap-sass'
-end
-
+# Temporarily here for Upgrade
+gem 'protected_attributes'
+gem 'rails-observers'
+gem 'actionpack-page_caching'
+gem 'actionpack-action_caching'
+gem 'activerecord-deprecated_finders'
 
 group :development do
   gem 'rake', '~> 0.9.5'

@@ -43,9 +43,9 @@ module Cms::RouteExtensions
     add_page_routes_defined_in_database
 
     # Handle 'stock' attachments
-    match "/attachments/:id/:filename", :to=>"cms/attachments#download"
-    match "/", :to=>"cms/content#show"
-    match "*path", :to=>"cms/content#show"
+    get "/attachments/:id/:filename", :to=>"cms/attachments#download"
+    get "/", :to=>"cms/content#show"
+    get "*path", :to=>"cms/content#show"
   end
 
   # Preserving for backwards compatibility with bcms-3.3.x and earlier.

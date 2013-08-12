@@ -2,7 +2,7 @@ module Cms
 
   # Handles the conversion from Mercury editor (i.e. the JSON hash it submits) to a Cms Page and blocks
   class PageComponent
-    extend ActiveModel::Naming
+    extend ::ActiveModel::Naming
 
     attr_accessor :page_id, :page_title, :blocks
 

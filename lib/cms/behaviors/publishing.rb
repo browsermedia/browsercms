@@ -131,7 +131,7 @@ module Cms
                   d.update_attributes(:published => true)
 
                   # copy values from the draft to the main record
-                  quoted_attributes = d.send(:arel_attributes_values, false, false, self.class.versioned_columns)
+                  quoted_attributes = d.send(:arel_attributes_with_values_for_update, self.class.versioned_columns)
 
                   #the values from the draft MAY have a relation of the versioned module
                   #as opposed to the actual class itself

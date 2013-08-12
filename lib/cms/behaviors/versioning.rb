@@ -5,7 +5,7 @@ module Cms
     # Skip sanitizing attributes from mass assignment. This should be used sparingly, since it bypasses security.
     # Ideally used for dynamically created classes (like ::Version or ::Attribute) where the attributes are not known at
     # design time.
-    def sanitize(attributes, authorizer)
+    def sanitize(klass, attributes, authorizer)
       attributes
     end
   end

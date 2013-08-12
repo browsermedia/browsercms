@@ -1,6 +1,6 @@
 module Cms
   class SampleBlock
-    extend ActiveModel::Naming
+    extend ::ActiveModel::Naming
 
     def self.versioned?;
       true;

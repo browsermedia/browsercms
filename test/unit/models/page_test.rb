@@ -35,7 +35,8 @@ module Cms
     end
 
     test "Creating a page builds a section node" do
-      @page = Page.create!(:name => "Hello", :path => "/hello", :section => create(:root_section))
+      section = create(:root_section)
+      @page = Page.create!(:name => "Hello", :path => "/hello", :section => section)
       assert_not_nil @page.section_node
     end
 

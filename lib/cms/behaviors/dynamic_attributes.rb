@@ -128,7 +128,7 @@ module Cms
           include InstanceMethods
 
           # Provide default options
-          options[:class_name] ||= self.model_name + 'Attribute'
+          options[:class_name] ||= "#{self.model_name}Attribute"
           options[:table_name] ||= options[:class_name].tableize
           options[:relationship_name] ||= options[:class_name].tableize.to_sym
           options[:foreign_key] ||= self.model_name.foreign_key

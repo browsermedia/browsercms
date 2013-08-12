@@ -7,12 +7,12 @@ Dummy::Application.routes.draw do
   namespace :cms do content_blocks :sample_blocks end
 
   # For testing Acts::As::Page
-  match "/__test__", :to => "cms/content#show_page_route"
-  match "/tests/restricted", :to => "tests/pretend#restricted"
-  match "/tests/open", :to => "tests/pretend#open"
-  match "/tests/open_with_layout", :to => "tests/pretend#open_with_layout"
-  match "/tests/error", :to => "tests/pretend#error"
-  match "/tests/not-found", :to => "tests/pretend#not_found"
+  get "/__test__", :to => "cms/content#show_page_route"
+  get "/tests/restricted", :to => "tests/pretend#restricted"
+  get "/tests/open", :to => "tests/pretend#open"
+  get "/tests/open_with_layout", :to => "tests/pretend#open_with_layout"
+  get "/tests/error", :to => "tests/pretend#error"
+  get "/tests/not-found", :to => "tests/pretend#not_found"
 
   mount_browsercms
 end
