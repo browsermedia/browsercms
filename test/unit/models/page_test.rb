@@ -177,6 +177,13 @@ module Cms
       assert_not_equal(@page, @page2)
     end
 
+    test "Make a new page with a path shouldn't create section_node'" do
+      section = create(:section)
+      original_count =  Cms::SectionNode.count
+      Cms::Page.new(name: 'New', path: "/", parent: section)
+      assert_equal original_count, Cms::SectionNode.count, "Bug in can_be_addressable means its creating section_node as side effect"
+    end
+
     test "Find by live path should not located deleted blocks, even if they share paths with live ones" do
       @page = create(:page, :path => '/foo')
       @page.mark_as_deleted!

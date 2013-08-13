@@ -27,9 +27,19 @@ class Cms::SectionNode < ActiveRecord::Base
   end
 
 
-  scope :of_type, lambda{|types| {:conditions => ["#{table_name}.node_type IN (?)", types]}}
-  scope :in_order, :order => "position asc"
-  scope :fetch_nodes, :include => :node
+  class << self
+    def of_type(types)
+      where(["#{table_name}.node_type IN (?)", types])
+    end
+
+    def in_order
+      order("position asc")
+    end
+
+    def fetch_nodes
+      includes(:node)
+    end
+  end
 
   # Return all section nodes which are not of the given type (i.e. class name)
   # @param [String] klass A specific class name that should be excluded.

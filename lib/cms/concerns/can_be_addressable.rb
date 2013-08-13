@@ -210,11 +210,23 @@ module Cms
       end
 
       def parent=(sec)
-        #puts @attributes.frozen?
         if node
           node.move_to_end(sec)
         else
+
+          # @bug This doesn't completely work as it creates a section_node even if we only build a page. (i.e. Page#new)
           create_section_node(:node => self, :section => sec)
+
+          # These both blow up with:
+          #  RuntimeError: can't modify frozen Hash
+          # Explicit Option A:
+          #n = SectionNode.new
+          #n.node = self
+          #n.section = sec
+          #self.section_node = n
+
+          # Implicit option B
+          #build_section_node(:node => self, :section => sec)
         end
       end
 
