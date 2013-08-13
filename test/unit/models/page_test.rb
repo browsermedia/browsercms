@@ -699,14 +699,14 @@ module Cms
       @conn2 = @page.create_connector(@block2, "bar")
       @conn3 = @page.create_connector(@block2, "foo")
       #Need to get the new connector that matches @conn2, otherwise you will delete an older version, not the latest connector
-      @conn2 = Cms::Connector.first(:conditions => {:page_id => @page.reload.id, :page_version => @page.draft.version, :connectable_id => @block2.id, :connectable_version => @block2.version, :container => "bar"})
+      @conn2 = Cms::Connector.where({:page_id => @page.reload.id, :page_version => @page.draft.version, :connectable_id => @block2.id, :connectable_version => @block2.version, :container => "bar"}).first
       @page.remove_connector(@conn2)
 
       page_version_count = Cms::Page::Version.count
       page_version = @page.draft.version
       page_connector_count = @page.connectors.for_page_version(@page.draft.version).count
 
-      @conn = Cms::Connector.first(:conditions => {:page_id => @page.reload.id, :page_version => @page.draft.version, :connectable_id => @block2.id, :connectable_version => @block2.version, :container => "foo"})
+      @conn = Cms::Connector.where({:page_id => @page.reload.id, :page_version => @page.draft.version, :connectable_id => @block2.id, :connectable_version => @block2.version, :container => "foo"}).first
       @page.remove_connector(@conn)
       @page.reload
 

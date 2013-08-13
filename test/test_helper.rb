@@ -147,7 +147,7 @@ class ActiveSupport::TestCase
   end
 end
 
-ActionController::IntegrationTest.fixture_path = ActiveSupport::TestCase.fixture_path
+ActionDispatch::IntegrationTest.fixture_path = ActiveSupport::TestCase.fixture_path
 
 module Cms::ControllerTestHelper
   def self.included(test_case)

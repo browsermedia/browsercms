@@ -28,7 +28,7 @@ class Cms::Page < ActiveRecord::Base
   # it will use the value in :version if present, otherwise it will use the version 
   # of the object.  In either case of a connectable object or a Hash, if the object
   # is not versioned, no version will be used
-  scope :connected_to, lambda { |b|
+  def self.connected_to(b)
     if b.is_a?(Hash)
       obj = b[:connectable]
       if obj.class.versioned?
@@ -42,13 +42,13 @@ class Cms::Page < ActiveRecord::Base
     end
 
     if ver
-      {:include => :connectors,
-       :conditions => ["#{Cms::Connector.table_name}.connectable_id = ? and #{Cms::Connector.table_name}.connectable_type = ? and #{Cms::Connector.table_name}.connectable_version = ?", obj.id, obj.class.base_class.name, ver]}
+      query = where(["#{Cms::Connector.table_name}.connectable_id = ? and #{Cms::Connector.table_name}.connectable_type = ? and #{Cms::Connector.table_name}.connectable_version = ?", obj.id, obj.class.base_class.name, ver])
     else
-      {:include => :connectors,
-       :conditions => ["#{Cms::Connector.table_name}.connectable_id = ? and #{Cms::Connector.table_name}.connectable_type = ?", obj.id, obj.class.base_class.name]}
+      query = where(["#{Cms::Connector.table_name}.connectable_id = ? and #{Cms::Connector.table_name}.connectable_type = ?", obj.id, obj.class.base_class.name])
     end
-  }
+    query.includes(:connectors).references(:connectors)
+
+  end
 
   # currently_connected_to tightens the scope of connected_to by restricting to the 
   # results to matches on current versions of pages only.  This renders obj versions

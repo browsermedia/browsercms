@@ -49,7 +49,7 @@ module Cms
         #
         # @param args Same params as ActiveRecord.find
         def find_with_deleted(* args)
-          self.with_exclusive_scope { find(* args) }
+          self.unscoped.where(* args).first
         end
 
         # Returns a count of all records of this type, including those marked as deleted.
