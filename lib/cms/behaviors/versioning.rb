@@ -86,7 +86,7 @@ module Cms
           before_validation :initialize_version
           before_save :build_new_version
           attr_accessor :skip_callbacks
-          attr_accessible :version_comment
+         #attr_accessible :version_comment
 
           #Define the version class
           #puts "is_version called for #{self}"
@@ -96,7 +96,7 @@ module Cms
             end
 
             include VersionRecord
-            self.mass_assignment_sanitizer = Cms::IgnoreSanitizer.new
+            #self.mass_assignment_sanitizer = Cms::IgnoreSanitizer.new
 
             def versioned_class
               self.class.versioned_class
@@ -155,7 +155,7 @@ module Cms
           #Rails 3 could use update_column here instead
           if respond_to? :latest_version
             sql = "UPDATE #{self.class.table_name} SET latest_version = #{draft.version} where id = #{self.id}"
-            connection.execute sql
+            self.class.connection.execute sql
             self.latest_version = draft.version # So we don't need to #reload this object. Probably marks it as dirty though, which could have weird side effects.
           end
         end
@@ -260,7 +260,7 @@ module Cms
         #
         # @return [<Class>::Version] The version for this class that represents the draft.
         def draft
-          versions.first(:order => "version desc")
+          versions.order("version desc").first
         end
 
         def draft_version?
@@ -280,7 +280,7 @@ module Cms
         end
 
         def find_version(number)
-          versions.first(:conditions => {:version => number})
+          versions.where(:version => number).first
         end
 
         def as_of_draft_version

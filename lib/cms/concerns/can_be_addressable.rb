@@ -134,12 +134,12 @@ module Cms
         end
 
         def self.included(klass)
-          klass.attr_accessible :slug
+          #klass.attr_accessible :slug
         end
       end
 
       def self.included(model_class)
-        model_class.attr_accessible :parent, :parent_id
+        #model_class.attr_accessible :parent, :parent_id
       end
 
       # Returns all classes which need a custom route to show themselves.
@@ -210,10 +210,11 @@ module Cms
       end
 
       def parent=(sec)
+        #puts @attributes.frozen?
         if node
           node.move_to_end(sec)
         else
-          build_section_node(:node => self, :section => sec)
+          create_section_node(:node => self, :section => sec)
         end
       end
 
@@ -245,7 +246,7 @@ module Cms
       module DeprecatedPageAccessors
 
         def self.included(model_class)
-          model_class.attr_accessible :section_id, :section
+          #model_class.attr_accessible :section_id, :section
         end
 
         include LeafNode

@@ -1,19 +1,32 @@
 module Cms
   class ContentType < ActiveRecord::Base
 
-    attr_accessible :name, :group_name, :content_type_group
+   #attr_accessible :name, :group_name, :content_type_group
 
     attr_accessor :group_name
     belongs_to :content_type_group, :class_name => 'Cms::ContentTypeGroup'
     validates_presence_of :content_type_group
     before_validation :set_content_type_group
 
-    scope :named, lambda { |name| {:conditions => ["#{ContentType.table_name}.name = ?", name]} }
+    class << self
+      def named(name)
+        where(["#{ContentType.table_name}.name = ?", name])
+      end
 
-    scope :connectable,
-          :include => :content_type_group,
-          :conditions => ["#{ContentTypeGroup.table_name}.name != ?", 'Categorization'],
-          :order => "#{ContentType.table_name}.priority, #{ContentType.table_name}.name"
+      def connectable
+        where(["#{ContentTypeGroup.table_name}.name != ?", 'Categorization'])
+            .order
+            .includes(:content_type_group)
+      end
+    end
+
+
+    #scope :named, lambda { |name| {:conditions => ["#{ContentType.table_name}.name = ?", name]} }
+
+    #scope :connectable,
+    #      :include => :content_type_group,
+    #      :conditions => ["#{ContentTypeGroup.table_name}.name != ?", 'Categorization'],
+    #      :order => "#{ContentType.table_name}.priority, #{ContentType.table_name}.name"
 
     def self.list
       all.map { |f| f.name.underscore.to_sym }

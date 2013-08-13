@@ -83,7 +83,7 @@ module Cms
                                         :allow_destroy => true,
                                         # New attachments must have an uploaded file
                                         :reject_if => lambda { |a| a[:data].blank? && a[:id].blank? }
-          attr_accessible :attachments_attributes, :attachment_id_list, :attachments_changed
+         #attr_accessible :attachments_attributes, :attachment_id_list, :attachments_changed
 
           validates_associated :attachments
           before_validation :initialize_attachments, :check_for_updated_attachments
@@ -199,7 +199,7 @@ module Cms
           found_versions = Cms::Attachment::Version.where(:attachable_id => attachable.id).
               where(:attachable_type => attachable.attachable_type).
               where(:attachable_version => version_number).
-              order(:version).all
+              order(:version).load
           found_attachments = []
 
           found_versions.each do |av|

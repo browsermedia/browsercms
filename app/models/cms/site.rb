@@ -1,7 +1,7 @@
 module Cms
   class Site < ActiveRecord::Base
 
-    attr_accessible :name, :domain
+   #attr_accessible :name, :domain
 
     validates_uniqueness_of :domain
 
@@ -10,12 +10,12 @@ module Cms
     before_save :unset_default
     after_save :set_default
 
-    scope :default, :conditions => {:the_default => true}
+    scope :default, -> {where(:the_default => true)}
 
     def self.find_by_domain(domain)
       d = domain.clone
       strip_www!(d)
-      if site = first(:conditions => {:domain => d})
+      if site = where(:domain => d).first
         site
       else
         default.first

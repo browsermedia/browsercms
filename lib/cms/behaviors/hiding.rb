@@ -13,8 +13,8 @@ module Cms
           extend ClassMethods
           include InstanceMethods
         
-          scope :hidden, :conditions => {:hidden => true}
-          scope :not_hidden, :conditions => {:hidden => false}        
+          scope :hidden, ->{where(:hidden => true)}
+          scope :not_hidden, ->{where(:hidden => false)}
         end
       end
       module ClassMethods

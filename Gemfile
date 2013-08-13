@@ -17,7 +17,7 @@ group :production do
 end
 
 # Temporarily here for Upgrade
-gem 'protected_attributes'
+#gem 'protected_attributes'
 gem 'rails-observers'
 gem 'actionpack-page_caching'
 gem 'actionpack-action_caching'

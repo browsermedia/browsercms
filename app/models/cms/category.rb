@@ -8,15 +8,15 @@ module Cms
     include DefaultAccessible
     include Concerns::IgnoresPublishing
 
-    attr_accessible :category_type
+   #attr_accessible :category_type
 
     validates_presence_of :category_type_id, :name
     validates_uniqueness_of :name, :scope => :category_type_id
 
     scope :named, lambda { |name| {:conditions => ["#{table_name}.name = ?", name]} }
     scope :of_type, lambda { |type_name| {:include => :category_type, :conditions => ["#{CategoryType.table_name}.name = ?", type_name], :order => "#{Category.table_name}.name"} }
-    scope :top_level, :conditions => ["#{Category.table_name}.parent_id is null"]
-    scope :list, :include => :category_type
+    scope :top_level, -> {where(["#{Category.table_name}.parent_id is null"])}
+    scope :list,->{ includes(:category_type)}
 
     def ancestors
       fn = lambda do |cat, parents|

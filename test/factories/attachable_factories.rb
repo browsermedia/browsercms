@@ -3,7 +3,7 @@ class VersionedAttachable < ActiveRecord::Base
   acts_as_content_block
 
   # Not sure why this is needed, but tests fail from rake if not here
-  attr_accessible :name
+ #attr_accessible :name
   has_attachment :document
 end
 
@@ -12,7 +12,7 @@ class HasManyAttachments < ActiveRecord::Base
   has_many_attachments :documents
 
   # Necessarily only for rake tests to make mass assignment work
-  attr_accessible :name
+ #attr_accessible :name
 end
 
 class HasThumbnail < ActiveRecord::Base

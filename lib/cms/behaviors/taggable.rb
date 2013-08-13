@@ -13,7 +13,7 @@ module Cms
           @tag_separator = options[:separator] || " "
           
           has_many :taggings, :as => :taggable, :class_name => 'Cms::Tagging'
-          has_many :tags, :through => :taggings, :order => "#{Cms::Tag.table_name}.name", :class_name => 'Cms::Tag'          
+          has_many :tags, ->{order("#{Cms::Tag.table_name}.name")},  :class_name => 'Cms::Tag', :through => :taggings
           
           scope :tagged_with, lambda{|t| {:include => {:taggings => :tag}, :conditions => ["#{Cms::Tag.table_name}.name = ?", t]} }
 
@@ -22,7 +22,7 @@ module Cms
           extend ClassMethods
           include InstanceMethods
 
-          attr_accessible :tag_list
+         #attr_accessible :tag_list
         end
       end
       module ClassMethods

@@ -9,7 +9,7 @@ end
 
 class HasSelfDefinedPath < ActiveRecord::Base
   is_addressable(no_dynamic_path: true)
-  attr_accessible :path
+ #attr_accessible :path
 end
 
 class IsAddressable < ActiveRecord::Base;

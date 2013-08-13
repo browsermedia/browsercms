@@ -11,8 +11,7 @@ Dummy::Application.configure do
   config.serve_static_assets = true
   config.static_cache_control = "public, max-age=3600"
 
-  # Log error messages when you accidentally call methods on nil
-  config.whiny_nils = true
+  config.eager_load = false
 
   # Show full error reports and disable caching
   config.consider_all_requests_local       = true

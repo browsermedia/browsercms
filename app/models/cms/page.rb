@@ -17,7 +17,7 @@ class Cms::Page < ActiveRecord::Base
   has_many :tasks
 
   include Cms::DefaultAccessible
-  attr_accessible :name, :path, :template_file_name, :hidden, :cacheable # Needs to be explicit so seed data will work.
+ #attr_accessible :name, :path, :template_file_name, :hidden, :cacheable # Needs to be explicit so seed data will work.
 
   scope :named, lambda { |name| {:conditions => ["#{table_name}.name = ?", name]} }
   scope :with_path, lambda { |path| {:conditions => ["#{table_name}.path = ?", path]} }
@@ -113,7 +113,7 @@ class Cms::Page < ActiveRecord::Base
   # Find live version of a page.
   # @return [Cms::Page] Or nil if not found.
   def self.find_live_by_path(path)
-    published.not_archived.first(:conditions => {:path => path})
+    published.not_archived.where(path: path).first
   end
 
   # Returns all content for the current page, excluding any deleted ones.
@@ -146,7 +146,7 @@ class Cms::Page < ActiveRecord::Base
   # Publish all
   def after_publish
     self.reload # Get's the correct version number loaded
-    self.connectors.for_page_version(self.version).all(:order => "position").each do |c|
+    self.connectors.for_page_version(self.version).order("position").to_a.each do |c|
       if c.connectable_type.constantize.publishable? && con = c.connectable
         con.publish
       end
@@ -158,7 +158,7 @@ class Cms::Page < ActiveRecord::Base
   def copy_connectors(options={})
     logger.debug { "Copying connectors from Page #{id} v#{options[:from_version_number]} to v#{options[:to_version_number]}." }
 
-    c_found = connectors.for_page_version(options[:from_version_number]).all(:order => "#{Cms::Connector.table_name}.container, #{Cms::Connector.table_name}.position")
+    c_found = connectors.for_page_version(options[:from_version_number]).order("#{Cms::Connector.table_name}.container, #{Cms::Connector.table_name}.position").to_a
     logger.debug { "Found connectors #{c_found}" }
     c_found.each do |c|
 
@@ -256,7 +256,7 @@ class Cms::Page < ActiveRecord::Base
 
   # Pages that get deleted should be 'disconnected' from any blocks they were associated with.
   def delete_connectors
-    connectors.for_page_version(version).all.each { |c| c.destroy }
+    connectors.for_page_version(version).to_a.each { |c| c.destroy }
   end
 
   #This is done to let copy_connectors know which version to pull from

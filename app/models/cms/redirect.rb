@@ -7,6 +7,6 @@ module Cms
       where(:from_path => path).first
     end
 
-    attr_accessible :from_path, :to_path
+   #attr_accessible :from_path, :to_path
   end
 end

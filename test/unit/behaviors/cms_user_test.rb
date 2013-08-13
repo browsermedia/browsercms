@@ -12,7 +12,7 @@ end
 EXTERNAL_USER_GROUPS = Hash.new {|hash,key| hash[key] = FactoryGirl.build(:group)}
 
 class ExternalUser < ActiveRecord::Base
-  attr_accessible :name
+ #attr_accessible :name
 
 end
 

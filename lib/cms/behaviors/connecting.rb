@@ -18,7 +18,7 @@ module Cms
           include InstanceMethods
 
           attr_accessor :connect_to_page_id, :connect_to_container,:connected_page
-          attr_accessible :connect_to_page_id, :connect_to_container,:connected_page
+          #attr_accessible :connect_to_page_id, :connect_to_container,:connected_page
 
           has_many :connectors, :as => :connectable, :class_name => 'Cms::Connector'
 
@@ -97,7 +97,7 @@ module Cms
 
             #Get all the pages the previous version of this connectable was connected to
             draft_version = draft.version
-            connected_pages = Page.connected_to(:connectable => self, :version => (draft_version - 1)).all
+            connected_pages = Page.connected_to(:connectable => self, :version => (draft_version - 1)).to_a
 #            puts "Found #{connected_pages}"
             connected_pages.each do |p|
               # This is needed in the case of updating page,

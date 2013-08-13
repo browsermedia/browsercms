@@ -21,7 +21,7 @@ class Cms::PageRoute < ActiveRecord::Base
   has_many :conditions, :class_name => 'Cms::PageRouteCondition'
   has_many :requirements, :class_name => 'Cms::PageRouteRequirement'
 
-  attr_accessible :name, :pattern, :code, :page_id, :page
+ #attr_accessible :name, :pattern, :code, :page_id, :page
   
   validates_presence_of :pattern, :page_id
   validates_uniqueness_of :pattern

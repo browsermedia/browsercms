@@ -21,11 +21,11 @@ module Cms
           extend ClassMethods
           include InstanceMethods
         
-          attr_accessible :publish_on_save, :as
+         #attr_accessible :publish_on_save, :as
           after_save :publish_for_non_versioned
         
-          scope :published, :conditions => {:published => true}
-          scope :unpublished, lambda {
+          scope :published, -> {where(:published => true)}
+          scope :unpublished, -> {
             if versioned?
               { :joins => :versions,
                 :conditions =>
@@ -33,7 +33,7 @@ module Cms
                   "#{connection.quote_table_name(table_name)}.#{connection.quote_column_name('version')}",
                 :select => "distinct #{connection.quote_table_name(table_name)}.*" }
             else
-              { :conditions => { :published => false } }
+              where( :published => false )
             end
           }
 

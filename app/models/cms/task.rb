@@ -9,16 +9,23 @@ module Cms
     belongs_to :page, :class_name => 'Cms::Page'
 
     include DefaultAccessible
-    attr_accessible :assigned_by, :assigned_to, :page
+   #attr_accessible :assigned_by, :assigned_to, :page
 
     after_create :mark_other_tasks_for_the_same_page_as_complete
     after_create :send_email
 
-    scope :complete, :conditions => ["completed_at is not null"]
-    scope :incomplete, :conditions => ["completed_at is null"]
+    scope :complete, ->{ where( ["completed_at is not null"])}
+    scope :incomplete, ->{ where( ["completed_at is null"])}
 
-    scope :for_page, lambda { |p| {:conditions => ["page_id = ?", p]} }
-    scope :other_than, lambda { |t| {:conditions => ["id != ?", t.id]} }
+    def self.for_page(p)
+      where(["page_id = ?", p])
+    end
+
+    def other_than(t)
+      where( ["id != ?", t.id])
+    end
+    #scope :for_page, lambda { |p| {->{ where( ["page_id = ?", p]} }
+    #scope :other_than, lambda { |t| {->{ where( ["id != ?", t.id]} }
 
     validates_presence_of :assigned_by_id, :message => "is required"
     validates_presence_of :assigned_to_id, :message => "is required"

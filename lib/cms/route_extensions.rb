@@ -69,7 +69,7 @@ module Cms::RouteExtensions
 
   def add_page_routes_defined_in_database
     if Cms::PageRoute.can_be_loaded?
-      Cms::PageRoute.all(:order => "#{Cms::PageRoute.table_name}.name").each do |r|
+      Cms::PageRoute.order("#{Cms::PageRoute.table_name}.name").each do |r|
         match r.pattern, :to=>r.to, :as=>r.route_name, :_page_route_id=>r.page_route_id, :via=>r.via, :constraints=>r.constraints
       end
     end

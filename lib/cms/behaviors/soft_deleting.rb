@@ -17,18 +17,18 @@ module Cms
         def uses_soft_delete(options={})
           @uses_soft_delete = true
 
-          scope :not_deleted, :conditions => ["#{table_name}.deleted = ?", false]
+          scope :not_deleted, -> {where (["#{table_name}.deleted = ?", false])}
           class << self
             alias_method :delete_all!, :delete_all
           end
 
           extend ClassMethods
           include InstanceMethods
-          attr_accessible :deleted
+         #attr_accessible :deleted
 
           # By default, all queries for blocks should filter out deleted rows.
           begin
-            default_scope where(:deleted => false)
+            default_scope {where(:deleted => false)}
           # This may fail during gem loading, if no DB or the table does not exist. Log it and move on.
           rescue StandardError => e
             handle_missing_table_error_during_startup("Can't set a default_scope for soft_deleting", e)
@@ -58,7 +58,7 @@ module Cms
         #
         # @param args Same params as ActiveRecord.count
         def count_with_deleted(* args)
-          self.with_exclusive_scope { count(* args) }
+          self.unscoped.count(* args)
         end
 
         def delete_all(conditions=nil)

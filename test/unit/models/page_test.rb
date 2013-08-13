@@ -34,9 +34,10 @@ module Cms
       assert_equal 1, page.version
     end
 
-    test "Creating a page builds a section node" do
-      section = create(:root_section)
-      @page = Page.create!(:name => "Hello", :path => "/hello", :section => section)
+    test "#create with :parent" do
+      parent = create(:root_section)
+      @page = Page.create!(:name => "Hello", :path => "/hello")
+      @page.parent = parent
       assert_not_nil @page.section_node
     end
 
@@ -497,7 +498,7 @@ module Cms
 
 
       # should leave the previous connectors untouched
-      @conns = @page.connectors.all(:conditions => ["page_version < 4"], :order => "id")
+      @conns = @page.connectors.where(["page_version < 4"]).order("id").to_a
 
       assert_equal 3, @conns.size
 
@@ -522,7 +523,7 @@ module Cms
           :connectable_version => 1
       }
 
-      @conns = @page.connectors.for_page_version(4).all(:order => "id")
+      @conns = @page.connectors.for_page_version(4).order("id").to_a
       assert_equal 3, @conns.size
 
       assert_properties @conns[0], {
@@ -598,7 +599,7 @@ module Cms
 
       assert_equal connector_count + 2, Cms::Connector.count
 
-      foo, bar = @page.reload.connectors.for_page_version(@page.draft.version).find(:all, :order => "#{Cms::Connector.table_name}.position")
+      foo, bar = @page.reload.connectors.for_page_version(@page.draft.version).order("#{Cms::Connector.table_name}.position")
 
       assert_properties foo, {
           :page => @page,
@@ -633,8 +634,8 @@ module Cms
 
     protected
     def remove_both_connectors!
-      @page.remove_connector(@page.connectors.for_page_version(@page.draft.version).first(:order => "#{Cms::Connector.table_name}.position"))
-      @page.remove_connector(@page.connectors.for_page_version(@page.draft.version).first(:order => "#{Cms::Connector.table_name}.position"))
+      @page.remove_connector(@page.connectors.for_page_version(@page.draft.version).order("#{Cms::Connector.table_name}.position").first)
+      @page.remove_connector(@page.connectors.for_page_version(@page.draft.version).order("#{Cms::Connector.table_name}.position").first)
     end
 
 
@@ -679,7 +680,7 @@ module Cms
 
       assert_incremented page_version, @page.draft.version
 
-      conns = @page.connectors.for_page_version(@page.draft.version-1).all
+      conns = @page.connectors.for_page_version(@page.draft.version-1).to_a
       assert_equal 1, conns.size
 
       assert_properties conns.first, {

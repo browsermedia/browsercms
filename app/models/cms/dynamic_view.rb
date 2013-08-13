@@ -8,7 +8,7 @@ module Cms
 
     include DefaultAccessible
     # Need to explicitly define these, since during new project creation, these files aren't discoverable.
-    attr_accessible :name, :body, :format, :handler, :locale, :path, :partial
+   #attr_accessible :name, :body, :format, :handler, :locale, :path, :partial
 
     scope :with_file_name, lambda { |file_name|
       conditions = {:name => nil, :format => nil, :handler => nil}

@@ -17,7 +17,7 @@ class Cms::Group < ActiveRecord::Base
   belongs_to :group_type, :class_name => 'Cms::GroupType'
 
   # :group_type might be a bad idea, but only Admins should be modifying groups anyway
-  attr_accessible :name, :code, :group_type, :permission_ids, :section_ids
+ #attr_accessible :name, :code, :group_type, :permission_ids, :section_ids
   include Cms::DefaultAccessible
 
   validates_presence_of :name
@@ -26,8 +26,8 @@ class Cms::Group < ActiveRecord::Base
   scope :with_code, lambda { |c| {:conditions => {:code => c}} }
 
 
-  scope :public, :include => :group_type, :conditions => ["#{Cms::GroupType.table_name}.cms_access = ?", false]
-  scope :cms_access, :include => :group_type, :conditions => ["#{Cms::GroupType.table_name}.cms_access = ?", true]
+  scope :public, ->{where(["#{Cms::GroupType.table_name}.cms_access = ?", false]).includes(:group_type)}
+  scope :cms_access, ->{where(["#{Cms::GroupType.table_name}.cms_access = ?", true]).includes(:group_type) }
 
   def guest?
     group_type && group_type.guest?

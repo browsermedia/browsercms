@@ -14,7 +14,7 @@ end
 class TaggableArticle < ActiveRecord::Base
   is_taggable
 
-  attr_accessible :name, :tag_list
+ #attr_accessible :name, :tag_list
 end
 
 class VersionedTaggableArticle < ActiveRecord::Base

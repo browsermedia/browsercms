@@ -6,7 +6,7 @@ module Cms
     # These are here simply to temporarily hold these values
     # Makes it easy to pass them through the process of selecting a portlet type
     attr_accessor :connect_to_page_id, :connect_to_container, :controller
-    attr_accessible :connect_to_page_id, :connect_to_container, :controller, :name
+   #attr_accessible :connect_to_page_id, :connect_to_container, :controller, :name
 
     delegate :request, :response, :session,
              :flash, :params, :cookies,

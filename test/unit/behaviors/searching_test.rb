@@ -18,7 +18,7 @@ ActiveRecord::Base.connection.instance_eval do
 end
 
 class SearchableContentBlockParent < ActiveRecord::Base
-  attr_accessible :name
+ #attr_accessible :name
   has_many :children, :class_name => "SearchableContentBlock", :foreign_key => "parent_id" 
 end
 

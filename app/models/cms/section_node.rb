@@ -1,7 +1,7 @@
 require 'ancestry'
 
 class Cms::SectionNode < ActiveRecord::Base
-  attr_accessible :node, :section, :parent, :node_id, :node_type
+ #attr_accessible :node, :section, :parent, :node_id, :node_type
   has_ancestry
 
   # This is the parent section for this node
@@ -75,7 +75,7 @@ class Cms::SectionNode < ActiveRecord::Base
         #This helps prevent the position from getting out of whack
         #If you pass in a really high number for position, 
         #this just corrects it to the right number
-        node_count = Cms::SectionNode.count(:conditions => {:ancestry => ancestry})
+        node_count = Cms::SectionNode.where({:ancestry => ancestry}).count
         position = node_count if position > node_count
       end
       

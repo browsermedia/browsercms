@@ -5,29 +5,58 @@ module Cms
     belongs_to :connectable, :polymorphic => true
 
     include DefaultAccessible
-    attr_accessible :connectable, :page_version, :connectable_version, :container # Need to be explicit due to seed data loading
+    #attr_accessible :connectable, :page_version, :connectable_version, :container # Need to be explicit due to seed data loading
 
     acts_as_list :scope => "#{Connector.table_name}.page_id = \#{page_id} and #{Cms::Connector.table_name}.page_version = \#{page_version} and #{Cms::Connector.table_name}.container = '\#{container}'"
     alias :move_up :move_higher
     alias :move_down :move_lower
 
-    scope :for_page_version, lambda { |pv| {:conditions => {:page_version => pv}} }
-    scope :for_connectable_version, lambda { |cv| {:conditions => {:connectable_version => cv}} }
-    scope :for_connectable, lambda { |c|
-#    puts "Finding for_connectable for #{c.id} and #{c.class.base_class.name}"
-      {:conditions => {:connectable_id => c.id, :connectable_type => c.class.base_class.name}}
-    }
-    scope :in_container, lambda { |container| {:conditions => {:container => container}} }
-    scope :at_position, lambda { |position| {:conditions => {:position => position}} }
-    scope :like, lambda { |connector|
-      {:conditions => {
-          :connectable_id => connector.connectable_id,
-          :connectable_type => connector.connectable_type,
-          :connectable_version => connector.connectable_version,
-          :container => connector.container,
-          :position => connector.position
-      }}
-    }
+    class << self
+      def for_page_version(pv)
+        where(:page_version => pv)
+      end
+
+      def for_connectable_version(cv)
+        where(:connectable_version => cv)
+      end
+
+      def for_connectable(c)
+        where(:connectable_id => c.id, :connectable_type => c.class.base_class.name)
+      end
+
+      def in_container(container)
+        where(:container => container)
+      end
+
+      def at_position(position)
+        where(:position => position)
+      end
+
+      def like(connector)
+        where(:connectable_id => connector.connectable_id,
+              :connectable_type => connector.connectable_type,
+              :connectable_version => connector.connectable_version,
+              :container => connector.container,
+              :position => connector.position)
+      end
+    end
+    #    scope :for_page_version, lambda { |pv| {where(:page_version => pv)} }
+    #    scope :for_connectable_version, lambda { |cv| {where(:connectable_version => cv)} }
+    #    scope :for_connectable, lambda { |c|
+    ##    puts "Finding for_connectable for #{c.id} and #{c.class.base_class.name}"
+    #      {where(:connectable_id => c.id, :connectable_type => c.class.base_class.name)}
+    #    }
+    #scope :in_container, lambda { |container| {:conditions => {:container => container}} }
+    #scope :at_position, lambda { |position| {:conditions => {:position => position}} }
+    #scope :like, lambda { |connector|
+    #  {:conditions => {
+    #      :connectable_id => connector.connectable_id,
+    #      :connectable_type => connector.connectable_type,
+    #      :connectable_version => connector.connectable_version,
+    #      :container => connector.container,
+    #      :position => connector.position
+    #  }}
+    #}
 
     validates_presence_of :page_id, :page_version, :connectable_id, :connectable_type, :container
 

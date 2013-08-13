@@ -12,7 +12,7 @@ module Cms
     @@definitions = {}.with_indifferent_access
     cattr_reader :configuration
     attr_accessor :attachable_class
-    attr_accessible :attachable_class
+   #attr_accessible :attachable_class
 
     before_validation :set_cardinality
     before_save :set_section, :sanitized_file_path_and_name
@@ -21,7 +21,7 @@ module Cms
     belongs_to :attachable, :polymorphic => true
 
     include DefaultAccessible
-    attr_accessible :data, :attachable, :attachment_name
+   #attr_accessible :data, :attachable, :attachment_name
 
     validates :attachment_name, :attachable_type, :presence => true
 
@@ -34,7 +34,7 @@ module Cms
       {:conditions => {:attachment_name => name.to_s}}
     }
 
-    scope :multiple, :conditions => {:cardinality => MULTIPLE}
+    scope :multiple, -> {where(:cardinality => MULTIPLE)}
 
     FILE_BLOCKS = "Cms::AbstractFileBlock"
     validates_presence_of :data_file_path, :if => Proc.new { |a| a.attachable_type == FILE_BLOCKS }

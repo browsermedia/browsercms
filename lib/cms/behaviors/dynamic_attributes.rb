@@ -150,7 +150,7 @@ module Cms
           rescue
             Object.const_set(options[:class_name], Class.new(ActiveRecord::Base)).class_eval do
               self.table_name = options[:table_name]
-              self.mass_assignment_sanitizer = Cms::IgnoreSanitizer.new
+              #self.mass_assignment_sanitizer = Cms::IgnoreSanitizer.new
 
               def self.reloadable? #:nodoc:
                 false
@@ -167,7 +167,7 @@ module Cms
           attribute_class.class_eval do
             belongs_to base_class, :foreign_key => options[:base_foreign_key]
             alias_method :base, base_class # For generic access
-            attr_accessible :name, :value, "#{base_class.to_s}_id".to_sym
+           #attr_accessible :name, :value, "#{base_class.to_s}_id".to_sym
           end
 
           # Modify main class

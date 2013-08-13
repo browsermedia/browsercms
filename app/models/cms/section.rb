@@ -15,17 +15,25 @@ module Cms
     HIDDEN_NODE_TYPES = "Cms::Attachment"
 
     include DefaultAccessible
-    attr_accessible :allow_groups, :group_ids, :name, :path, :root, :hidden
+   #attr_accessible :allow_groups, :group_ids, :name, :path, :root, :hidden
 
     has_many :group_sections, :class_name => 'Cms::GroupSection'
     has_many :groups, :through => :group_sections, :class_name => 'Cms::Group'
 
-    scope :root, :conditions => ['root = ?', true]
-    scope :system, :conditions => {:name => 'system'}
-    scope :hidden, :conditions => {:hidden => true}
-    scope :not_hidden, :conditions => {:hidden => false}
-    scope :named, lambda { |name| {:conditions => ["#{table_name}.name = ?", name]} }
-    scope :with_path, lambda { |path| {:conditions => ["#{table_name}.path = ?", path]} }
+    scope :root, -> {where( ['root = ?', true]  )}
+    scope :system, -> {where( {:name => 'system'}  )}
+    scope :hidden, -> {where( {:hidden => true}   )}
+    scope :not_hidden, -> {where( {:hidden => false}   )}
+
+    def self.named(name)
+      where(["#{table_name}.name = ?", name])
+    end
+
+    def self.with_path(path)
+      where(["#{table_name}.path = ?", path])
+    end
+    #scope :named, lambda { |name| {-> {where( ["#{table_name}.name = ?", name]} }   )}
+    #scope :with_path, lambda { |path| {-> {where( ["#{table_name}.path = ?", path]} }    )}
 
     validates_presence_of :name, :path
 
