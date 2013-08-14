@@ -90,7 +90,7 @@ module Cms
     end
 
     def visible_child_nodes(options={})
-      children = child_nodes.of_type(VISIBLE_NODE_TYPES).fetch_nodes.in_order.all
+      children = child_nodes.of_type(VISIBLE_NODE_TYPES).fetch_nodes.in_order.to_a
       visible_children = children.select { |sn| sn.visible? }
       options[:limit] ? visible_children[0...options[:limit]] : visible_children
     end

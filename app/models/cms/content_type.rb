@@ -15,18 +15,10 @@ module Cms
 
       def connectable
         where(["#{ContentTypeGroup.table_name}.name != ?", 'Categorization'])
-            .order
+            .order("#{ContentType.table_name}.priority, #{ContentType.table_name}.name")
             .includes(:content_type_group)
       end
     end
-
-
-    #scope :named, lambda { |name| {:conditions => ["#{ContentType.table_name}.name = ?", name]} }
-
-    #scope :connectable,
-    #      :include => :content_type_group,
-    #      :conditions => ["#{ContentTypeGroup.table_name}.name != ?", 'Categorization'],
-    #      :order => "#{ContentType.table_name}.priority, #{ContentType.table_name}.name"
 
     def self.list
       all.map { |f| f.name.underscore.to_sym }
@@ -34,7 +26,7 @@ module Cms
 
     # Returns all content types besides the default.
     def self.other_connectables()
-      self.connectable.where("#{ContentType.table_name}.name != 'Cms::HtmlBlock'")
+      self.connectable.where("#{ContentType.table_name}.name != 'Cms::HtmlBlock'").references(:content_types)
     end
 
     def self.default()
@@ -45,7 +37,7 @@ module Cms
     # Raises exception if nothing was found.
     def self.find_by_key(key)
       class_name = key.tableize.classify
-      content_type = find(:first, :conditions => ["name like ?", "%#{class_name}"])
+      content_type = where(["name like ?", "%#{class_name}"]).first
       if content_type.nil?
         if class_name.constantize.ancestors.include?(Cms::Portlet)
           content_type = Cms::ContentType.new(:name => class_name)
@@ -145,7 +137,7 @@ module Cms
 
     def set_content_type_group
       if group_name
-        group = Cms::ContentTypeGroup.first(:conditions => {:name => group_name})
+        group = Cms::ContentTypeGroup.where(:name => group_name).first
         self.content_type_group = group || build_content_type_group(:name => group_name)
       end
     end

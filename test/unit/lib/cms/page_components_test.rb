@@ -46,29 +46,6 @@ module Cms
       assert_equal "New Content", updated_block.content
     end
 
-    test "Doesn't update protected attributes'" do
-      block_id = 12
-      msg_payload = {
-          "blocks" => {
-              "Cms::HtmlBlock" => {
-                  block_id => {
-                      "created_by_id" => {"type" => "full", "value" => 24},
-                  }
-              }
-          }}
-      mock_block = mock()
-      HtmlBlock.expects(:find).with(block_id).returns(mock_block)
-      mock_block.expects(:update_attributes).with({'created_by_id' => 24}).raises(ActiveModel::MassAssignmentSecurity::Error)
-
-      add_page_title(msg_payload)
-      c = PageComponent.new(@page.id, msg_payload)
-
-      assert_raises(ActiveModel::MassAssignmentSecurity::Error) do
-        c.save
-      end
-
-    end
-
     private
     # page_title is required. This is a pseudo factory for testing.
     def add_page_title(msg)

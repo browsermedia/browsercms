@@ -33,7 +33,7 @@ module Cms
       module ClassMethods
 
         def content_block_type
-          ActiveModel::Naming.singular(self)
+          ::ActiveModel::Naming.singular(self)
         end
         def display_name
           Connecting.default_naming_for(self)
