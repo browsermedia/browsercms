@@ -40,42 +40,6 @@ class Cms::ApplicationHelperTest < ActionView::TestCase
   end
 end
 
-class Cms::ApplicationHelper::DeleteButtonTest < ActionView::TestCase
-  include Cms::ApplicationHelper
-  include Cms::UiElementsHelper
-
-  test "generate a button without an explicit title by default" do
-    expected_html = '<a href="#" class="button disabled delete_button" id="delete_button"><span><span class="delete_img">&nbsp;</span>Delete</span></a>'
-    assert_equal expected_html, delete_button
-  end
-
-  test "use a standard Confirm link if :title option is specified" do
-    expected_html = '<a href="#" class="button disabled delete_button http_delete confirm_with_title" id="delete_button"><span><span class="delete_img">&nbsp;</span>Delete</span></a>'
-    assert_equal expected_html, delete_button(:title=>true)
-  end  
-  
-  test "take :path attribute if specified" do
-    expected_html = '<a href="/cms/html_blocks/3" class="button disabled delete_button" id="delete_button"><span><span class="delete_img">&nbsp;</span>Delete</span></a>'
-    assert_equal expected_html, delete_button(:path=>"/cms/html_blocks/3")
-  end
-
-  test "Writes out title if specified as a string" do
-    expected_html = '<a href="#" class="button disabled delete_button http_delete confirm_with_title" id="delete_button" title="Really delete Server Error?"><span><span class="delete_img">&nbsp;</span>Delete</span></a>'
-    assert_equal expected_html, delete_button(:title=>"Really delete Server Error?")
-  end
-
-  test "default to disabled, but have an :enabled option" do
-    expected_html = '<a href="#" class="button disabled delete_button" id="delete_button"><span><span class="delete_img">&nbsp;</span>Delete</span></a>'
-    assert_equal expected_html, delete_button
-
-    expected_html = '<a href="#" class="button disabled delete_button" id="delete_button"><span><span class="delete_img">&nbsp;</span>Delete</span></a>'
-    assert_equal expected_html, delete_button(:enabled=>false)
-
-    expected_html = '<a href="#" class="button delete_button" id="delete_button"><span><span class="delete_img">&nbsp;</span>Delete</span></a>'
-    assert_equal expected_html, delete_button(:enabled=>true)
-  end
-end
-
 class Cms::ApplicationHelper::EditButtonTest < ActionView::TestCase
   include Cms::ApplicationHelper
 

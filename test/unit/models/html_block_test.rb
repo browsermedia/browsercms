@@ -89,15 +89,17 @@ class HtmlBlockTest < ActiveSupport::TestCase
     
     # version is required for revert_to
     html_block_version_count = Cms::HtmlBlock::Version.count
-    assert_raise "Version parameter missing" do
+    ex = assert_raises RuntimeError do
       @html_block.revert_to nil
     end
+    assert_equal "Version parameter missing", ex.message
     assert_equal html_block_version_count, Cms::HtmlBlock::Version.count
      
     html_block_version_count = Cms::HtmlBlock::Version.count
-    assert_raise "Could not find version 42" do
+    ex = assert_raise RuntimeError do
       @html_block.revert_to 42
     end
+    assert_equal "Could not find version 42", ex.message
     assert_equal html_block_version_count, Cms::HtmlBlock::Version.count 
   end
   

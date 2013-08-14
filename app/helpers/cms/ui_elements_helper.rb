@@ -86,30 +86,6 @@ module Cms
       link_to "List Versions", path, options
     end
 
-    # @deprecated Use 'delete_menu_button'' instead as we move to use bootstrap
-    #
-    # Render a CMS styled 'X Delete' button. This button will appear on tool bars, typically set apart visually from other buttons.
-    # Has a 'confirm?' popup attached to it as well.
-    # Assumes that javascript code to handle the 'confirm' has already been included in the page.
-    #
-    # @param [Hash] options The options for this tag
-    # @option options [String or Boolean] :title Title for 'confirm' popup. If specified as 'true' or with a string value a standard 'confirm yes/no' window should be used. If true is specified, its assume that the javascript popup handles the title.
-    # @option options [Path] :path The path or URL to link_to. Takes same types at url_for or link_to. Defaults to '#' if not specified.
-    # @option options [Boolean] :enabled If false, the button will be marked disabled. Default to false.
-    def delete_button(options={})
-      classes = "button"
-      classes << " disabled" if !options[:enabled]
-      classes << " delete_button"
-      classes << " http_delete confirm_with_title" if options[:title]
-
-      link_to_path = options[:path] ? options[:path] : "#"
-
-      span_options = {:id => 'delete_button', :class => classes}
-      copy_title(options, span_options)
-      link_to span_tag("<span class=\"delete_img\">&nbsp;</span>Delete".html_safe), link_to_path, span_options
-    end
-
-
     # Render a CMS styled 'Delete' button. This button will appear on tool bars, typically set apart visually from other buttons.
     # Has a 'confirm?' popup attached to it as well.
     # Assumes that javascript code to handle the 'confirm' has already been included in the page.

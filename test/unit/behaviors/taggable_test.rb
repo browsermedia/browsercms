@@ -37,9 +37,9 @@ class TaggableBlockTest < ActiveSupport::TestCase
     assert_equal 2, Cms::Tag.count
     assert_equal 2, Cms::Tagging.count
     
-    assert_equal [article], TaggableArticle.tagged_with("foo").all
-    assert_equal [article], TaggableArticle.tagged_with("bar").all
-    assert TaggableArticle.tagged_with("bang").all.empty?
+    assert_equal [article], TaggableArticle.tagged_with("foo").to_a
+    assert_equal [article], TaggableArticle.tagged_with("bar").to_a
+    assert TaggableArticle.tagged_with("bang").to_a.empty?
         
     article.tag_list = "foo bang"
     assert article.save
@@ -48,9 +48,9 @@ class TaggableBlockTest < ActiveSupport::TestCase
     assert_equal 3, Cms::Tag.count
     assert_equal 2, Cms::Tagging.count
 
-    assert_equal [article], TaggableArticle.tagged_with("foo").all
-    assert_equal [article], TaggableArticle.tagged_with("bang").all
-    assert TaggableArticle.tagged_with("bar").all.empty?
+    assert_equal [article], TaggableArticle.tagged_with("foo").to_a
+    assert_equal [article], TaggableArticle.tagged_with("bang").to_a
+    assert TaggableArticle.tagged_with("bar").to_a.empty?
     
     assert_equal "bang foo", article.tag_list
   end
