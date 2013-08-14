@@ -14,6 +14,11 @@ module Cms
     #
     # @return [Array] Each element of the area contains [Id (Integer), Name (String), count (Integer)] (with Sqlite3 anyway)
     def self.counts(options={})
+      #select("#{Tag.table_name}.id, #{Tag.table_name}.name, count(*) as count_all")
+      #  .where(options)
+      #  .joins(:taggings)
+      #  .group("#{Tag.table_name}.id, #{Tag.table_name}.name")
+      #  .order("count_all desc, #{Tag.table_name}.name")
       with_scope(:find => {
           :select => "#{Tag.table_name}.id, #{Tag.table_name}.name, count(*) as count",
           :joins => :taggings,

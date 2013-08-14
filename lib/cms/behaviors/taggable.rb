@@ -42,7 +42,7 @@ module Cms
           @tag_list = tag_names
         end
         def save_tags
-          tag_list_tags = tag_list.to_s.split(self.class.tag_separator).map{|t| Cms::Tag.find_or_create_by_name(t.strip) }
+          tag_list_tags = tag_list.to_s.split(self.class.tag_separator).map{|t| Cms::Tag.find_or_create_by(name: t.strip) }
           taggings.each do |tg|
             if tag_list_tags.include?(tg.tag)
               tag_list_tags.delete(tg.tag)

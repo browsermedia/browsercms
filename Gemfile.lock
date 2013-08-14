@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     browsercms (4.0.0.a)
-      ancestry (~> 1.2.4)
+      ancestry (~> 2.0.0)
       bootstrap-sass
       ckeditor_rails (~> 4.0.1.1)
       jquery-rails (~> 2.0)
@@ -45,8 +45,8 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     addressable (2.3.5)
-    ancestry (1.2.5)
-      activerecord (>= 2.2.2)
+    ancestry (2.0.0)
+      activerecord (>= 3.0.0)
     arel (4.0.0)
     aruba (0.5.3)
       childprocess (>= 0.3.6)

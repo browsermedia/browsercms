@@ -12,44 +12,52 @@ class Cms::Page < ActiveRecord::Base
   is_userstamped
   is_versioned
 
-  has_many :connectors, :class_name => 'Cms::Connector', :order => "#{Cms::Connector.table_name}.container, #{Cms::Connector.table_name}.position"
+  has_many :connectors, ->{order("#{Cms::Connector.table_name}.container, #{Cms::Connector.table_name}.position")}, :class_name => 'Cms::Connector'
   has_many :page_routes, :class_name => 'Cms::PageRoute'
   has_many :tasks
 
   include Cms::DefaultAccessible
  #attr_accessible :name, :path, :template_file_name, :hidden, :cacheable # Needs to be explicit so seed data will work.
 
-  scope :named, lambda { |name| {:conditions => ["#{table_name}.name = ?", name]} }
-  scope :with_path, lambda { |path| {:conditions => ["#{table_name}.path = ?", path]} }
+  class << self
+    def named(name)
+      where(["#{table_name}.name = ?", name])
+    end
 
-  # This scope will accept a connectable object or a Hash.  The Hash is expect to have
-  # a value for the key :connectable, which is the connectable object, and possibly
-  # a value for the key :version.  The Hash contains a versioned connectable object,
-  # it will use the value in :version if present, otherwise it will use the version 
-  # of the object.  In either case of a connectable object or a Hash, if the object
-  # is not versioned, no version will be used
-  def self.connected_to(b)
-    if b.is_a?(Hash)
-      obj = b[:connectable]
-      if obj.class.versioned?
-        ver = b[:version] ? b[:version] : obj.version
+    def with_path(path)
+      where(["#{table_name}.path = ?", path])
+    end
+  #scope :named, lambda { |name| {:conditions => ["#{table_name}.name = ?", name]} }
+  #scope :with_path, lambda { |path| {:conditions => ["#{table_name}.path = ?", path]} }
+
+    # This scope will accept a connectable object or a Hash.  The Hash is expect to have
+    # a value for the key :connectable, which is the connectable object, and possibly
+    # a value for the key :version.  The Hash contains a versioned connectable object,
+    # it will use the value in :version if present, otherwise it will use the version
+    # of the object.  In either case of a connectable object or a Hash, if the object
+    # is not versioned, no version will be used
+    def connected_to(b)
+      if b.is_a?(Hash)
+        obj = b[:connectable]
+        if obj.class.versioned?
+          ver = b[:version] ? b[:version] : obj.version
+        else
+          ver = nil
+        end
       else
-        ver = nil
+        obj = b
+        ver = obj.class.versioned? ? obj.version : nil
       end
-    else
-      obj = b
-      ver = obj.class.versioned? ? obj.version : nil
-    end
 
-    if ver
-      query = where(["#{Cms::Connector.table_name}.connectable_id = ? and #{Cms::Connector.table_name}.connectable_type = ? and #{Cms::Connector.table_name}.connectable_version = ?", obj.id, obj.class.base_class.name, ver])
-    else
-      query = where(["#{Cms::Connector.table_name}.connectable_id = ? and #{Cms::Connector.table_name}.connectable_type = ?", obj.id, obj.class.base_class.name])
-    end
-    query.includes(:connectors).references(:connectors)
+      if ver
+        query = where(["#{Cms::Connector.table_name}.connectable_id = ? and #{Cms::Connector.table_name}.connectable_type = ? and #{Cms::Connector.table_name}.connectable_version = ?", obj.id, obj.class.base_class.name, ver])
+      else
+        query = where(["#{Cms::Connector.table_name}.connectable_id = ? and #{Cms::Connector.table_name}.connectable_type = ?", obj.id, obj.class.base_class.name])
+      end
+      query.includes(:connectors).references(:connectors)
 
+    end
   end
-
   # currently_connected_to tightens the scope of connected_to by restricting to the 
   # results to matches on current versions of pages only.  This renders obj versions
   # useless, as the older objects will very likely have older versions of pages and

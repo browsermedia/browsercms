@@ -66,12 +66,12 @@ module Cms
         end
 
         def exists?(id_or_conditions)
-          if id_or_conditions.is_a?(Hash) || id_or_conditions.is_a?(Array)
-            conditions = {:conditions => id_or_conditions}
+          query = if id_or_conditions.is_a?(Hash) || id_or_conditions.is_a?(Array)
+            where id_or_conditions
           else
-            conditions = {:conditions => {:id => id_or_conditions}}
+            where(:id => id_or_conditions)
           end
-          count(conditions) > 0
+          query.count > 0
         end
       end
       module InstanceMethods

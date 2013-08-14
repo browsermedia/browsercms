@@ -1,7 +1,9 @@
 ## Tests
 
-Units: 29 F, 271 E
-Units: 45F, 112 E
+### Units:
+1. 29 F, 271 E
+2. 45F, 112 E
+3. 23F 99E
 
 ## Cleanup
 
@@ -11,6 +13,7 @@ Units: 45F, 112 E
 ## Upgrading Guide:
 
 1. Change 'match' to 'get'. Tests will prompt you, so not to worry.
+2. Install the deprecated finders and other gems to help with upgrade.
 
 ## Rollbacks
 

@@ -65,7 +65,7 @@ class TaggableBlockTest < ActiveSupport::TestCase
       TaggableArticle.create!(:name => "Article ##{n}", :tag_list => tag_list.join(" ") )
     end
     
-    tag_counts = Cms::Tag.counts(:limit => 4)
+    tag_counts = Cms::Tag.counts(limit: 4)
     assert_equal 4, tag_counts.size
     assert_equal Cms::Tag.find_by_name("article"), tag_counts[0]
     assert_equal 25, tag_counts[0].count.to_i

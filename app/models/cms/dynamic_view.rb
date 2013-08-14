@@ -8,17 +8,17 @@ module Cms
 
     include DefaultAccessible
     # Need to explicitly define these, since during new project creation, these files aren't discoverable.
-   #attr_accessible :name, :body, :format, :handler, :locale, :path, :partial
+    #attr_accessible :name, :body, :format, :handler, :locale, :path, :partial
 
-    scope :with_file_name, lambda { |file_name|
+    def self.with_file_name(file_name)
       conditions = {:name => nil, :format => nil, :handler => nil}
       if file_name && (parts = file_name.split(".")).size == 3
         conditions[:name] = parts[0]
         conditions[:format] = parts[1]
         conditions[:handler] = parts[2]
       end
-      {:conditions => conditions}
-    }
+      where(conditions)
+    end
 
     def self.inherited(subclass)
       super if defined? super
