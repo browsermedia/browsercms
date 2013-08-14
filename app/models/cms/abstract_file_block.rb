@@ -6,11 +6,6 @@ module Cms
 
     validates_presence_of :name
 
-    scope :by_section, lambda { |section| {
-        :include => {:attachments => :section_node},
-        :conditions => ["#{SectionNode.table_name}.ancestry = ?", section.node.ancestry_path]}
-    }
-
     # Return the parent section for this block.
     # @return [Cms::Section]
     def parent

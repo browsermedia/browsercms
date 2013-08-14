@@ -152,6 +152,14 @@ module Cms
 
       module ClassMethods
 
+        # Finds all instances of this Attaching content that exist in a given section.
+        # @param [Cms::Section] section
+        # @return [ActiveRecord::Relation] A relation that will return Attaching instances.
+        def by_section(section)
+          where(["#{SectionNode.table_name}.ancestry = ?", section.node.ancestry_path])
+            .includes(:attachments => :section_node)
+            .references(:section_nodes)
+        end
 
         # Defines an single attachement with a given name.
         #

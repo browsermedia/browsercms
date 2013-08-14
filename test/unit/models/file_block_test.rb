@@ -90,7 +90,7 @@ module Cms
       target_section = create(:public_section)
       fb = create(:file_block, :parent => target_section)
 
-      assert_equal [fb], FileBlock.by_section(target_section).all
+      assert_equal [fb], FileBlock.by_section(target_section).to_a
     end
   end
 
