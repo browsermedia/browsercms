@@ -3,7 +3,7 @@ module Cms
 
     include DefaultAccessible
 
-    scope :undelivered, :conditions => "delivered_at is null"
+    scope :undelivered, -> {where("delivered_at is null")}
     validates_presence_of :recipients
     after_create :deliver_now
 

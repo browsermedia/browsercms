@@ -36,7 +36,7 @@ module Cms
 
       create_the_task!
 
-      email = Cms::EmailMessage.first(:order => "id asc")
+      email = Cms::EmailMessage.order('id asc').first
       assert_equal @editor_a.email, email.sender
       assert_equal @editor_b.email, email.recipients
       assert_equal "Page '#{@page.name}' has been assigned to you", email.subject
@@ -106,13 +106,13 @@ module Cms
     end
 
     def assert_that_the_task_is_added_to_the_users_incomplete_tasks
-      assert !@editor_a.tasks.incomplete.all.include?(@task),
+      assert !@editor_a.tasks.incomplete.to_a.include?(@task),
              "Expected Editor A's incomplete tasks not to include the task"
-      assert !@editor_a.tasks.incomplete.all.include?(@task2),
+      assert !@editor_a.tasks.incomplete.to_a.include?(@task2),
              "Expected Editor A's incomplete tasks not to include the second task"
-      assert @editor_b.tasks.incomplete.all.include?(@task),
+      assert @editor_b.tasks.incomplete.to_a.include?(@task),
              "Expected Editor B's incomplete tasks to include the task"
-      assert @editor_b.tasks.incomplete.all.include?(@task2),
+      assert @editor_b.tasks.incomplete.to_a.include?(@task2),
              "Expected Editor B's incomplete tasks to include the second task"
     end
 
@@ -128,7 +128,7 @@ module Cms
     test "Existing task is incomplete, and assigned to Editor B's task list" do
       assert !@existing_task.completed?
       assert_equal @editor_b, @page.assigned_to
-      assert @editor_b.tasks.incomplete.all.include?(@existing_task)
+      assert @editor_b.tasks.incomplete.to_a.include?(@existing_task)
     end
 
     def test_create_task_for_a_page_with_existing_incomplete_tasks
@@ -139,8 +139,8 @@ module Cms
       assert !@new_task.completed?
       assert @page.assigned_to?(@editor_a)
       assert !@page.assigned_to?(@editor_b)
-      assert @editor_a.tasks.incomplete.all.include?(@new_task)
-      assert !@editor_b.tasks.incomplete.all.include?(@existing_task)
+      assert @editor_a.tasks.incomplete.to_a.include?(@new_task)
+      assert !@editor_b.tasks.incomplete.to_a.include?(@existing_task)
     end
 
     test "Marking a task complete should mark it as unassigned" do
@@ -148,7 +148,7 @@ module Cms
 
       assert @existing_task.completed?
       assert @page.assigned_to.nil?
-      assert !@editor_b.tasks.incomplete.all.include?(@existing_task)
+      assert !@editor_b.tasks.incomplete.to_a.include?(@existing_task)
     end
   end
 end

@@ -21,11 +21,9 @@ module Cms
       where(["page_id = ?", p])
     end
 
-    def other_than(t)
+    def self.other_than(t)
       where( ["id != ?", t.id])
     end
-    #scope :for_page, lambda { |p| {->{ where( ["page_id = ?", p]} }
-    #scope :other_than, lambda { |t| {->{ where( ["id != ?", t.id]} }
 
     validates_presence_of :assigned_by_id, :message => "is required"
     validates_presence_of :assigned_to_id, :message => "is required"
@@ -43,7 +41,7 @@ module Cms
 
     protected
     def mark_other_tasks_for_the_same_page_as_complete
-      self.class.for_page(self.page_id.to_i).other_than(self).incomplete.all.each do |t|
+      self.class.for_page(self.page_id.to_i).other_than(self).incomplete.to_a.each do |t|
         t.mark_as_complete!
       end
     end

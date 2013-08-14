@@ -102,7 +102,7 @@ module Cms
 
     # Default implementation
     def self.resource_collection_name
-      model_name.underscore
+      model_name.plural
     end
 
     # So that route lookup works for these resources.

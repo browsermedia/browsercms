@@ -22,9 +22,15 @@ class Cms::Group < ActiveRecord::Base
 
   validates_presence_of :name
 
-  scope :named, lambda { |n| {:conditions => {:name => n}} }
-  scope :with_code, lambda { |c| {:conditions => {:code => c}} }
+  class << self
+    def named(n)
+      where name: n
+    end
 
+    def with_code(c)
+      where code: c
+    end
+  end
 
   scope :public, ->{where(["#{Cms::GroupType.table_name}.cms_access = ?", false]).includes(:group_type)}
   scope :cms_access, ->{where(["#{Cms::GroupType.table_name}.cms_access = ?", true]).includes(:group_type) }

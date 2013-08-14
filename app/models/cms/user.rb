@@ -102,7 +102,7 @@ module Cms
     end
 
     def permissions
-      @permissions ||= Cms::Permission.find(:all, :include => {:groups => :users}, :conditions => ["#{User.table_name}.id = ?", id])
+      @permissions ||= Cms::Permission.where(["#{User.table_name}.id = ?", id]).includes({:groups => :users}).references(:users)
     end
 
     def viewable_sections

@@ -170,7 +170,7 @@ module Cms
 
     def test_new_section_with_groups
       section = Cms::Section.new(:allow_groups => :all)
-      assert_equal Cms::Group.all, section.groups
+      assert_equal Cms::Group.all.to_a, section.groups.to_a
 
     end
 

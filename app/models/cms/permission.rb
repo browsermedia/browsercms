@@ -9,7 +9,9 @@ module Cms
     validates_presence_of :name
     validates_uniqueness_of :name
 
-    scope :named, lambda { |name| {:conditions => {:name => name}} }
+    def self.named(name)
+      where(name: name)
+    end
 
   end
 end
