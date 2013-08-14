@@ -42,7 +42,6 @@ describe Cms::Concerns::Addressable do
   let(:addressable) { IsAddressable.new }
   describe '#is_addressable' do
     it "should have parent relationship" do
-      WannabeAddressable.expects(:attr_accessible).at_least_once
       WannabeAddressable.expects(:has_one)
       WannabeAddressable.is_addressable
       WannabeAddressable.new.must_respond_to :parent
@@ -140,6 +139,7 @@ describe Cms::Concerns::Addressable do
     it "should find content" do
       content = IsAddressable.create(slug: "coke", parent_id: root_section)
       found = IsAddressable.with_slug("coke")
+
       found.wont_be_nil
       found.must_equal content
     end
@@ -155,8 +155,14 @@ describe Cms::Concerns::Addressable do
 
   describe "#create" do
     it "should allow for both parent and slug to be saved" do
-      f = IsAddressable.create(parent_id: root_section.id, slug: "slug")
+      f = IsAddressable.create!(parent_id: root_section.id, slug: "slug")
       f.section_node.slug.must_equal "slug"
+    end
+
+    # @bug These fail due to section_nodes getting persisted (create_section_node)
+    it "#slug should be persisted" do
+      IsAddressable.create!(parent_id: root_section.id, slug: "coke")
+      Cms::SectionNode.where(node_type: 'IsAddressable').first.slug.wont_be_nil
     end
 
     it "should allow for both parent and slug to be saved in any order" do

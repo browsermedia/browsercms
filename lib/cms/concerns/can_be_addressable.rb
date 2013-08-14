@@ -147,7 +147,9 @@ module Cms
         descendants.select { |klass| klass.path != nil }
       end
 
-      # Returns all classes which inherit from Cms::Concerns::Addressable
+      # List of all classes that can be in the sitemap.
+      #
+      # @return [Array<Class>] Returns all classes which inherit from Cms::Concerns::Addressable
       def self.descendants
         ObjectSpace.each_object(::Class).select { |klass| klass < Cms::Concerns::Addressable }
       end
