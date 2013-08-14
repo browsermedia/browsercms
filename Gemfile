@@ -24,7 +24,7 @@ gem 'actionpack-action_caching'
 gem 'activerecord-deprecated_finders'
 
 group :development do
-  gem 'rake', '~> 0.9.5'
+  gem 'rake'
 end
 group :test, :development do
   gem 'minitest'

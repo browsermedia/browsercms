@@ -11,8 +11,6 @@ module Cms
     cattr_accessor :definitions, :instance_writer => false
     @@definitions = {}.with_indifferent_access
     cattr_reader :configuration
-    attr_accessor :attachable_class
-   #attr_accessible :attachable_class
 
     before_validation :set_cardinality
     before_save :set_section, :sanitized_file_path_and_name
@@ -21,7 +19,6 @@ module Cms
     belongs_to :attachable, :polymorphic => true
 
     include DefaultAccessible
-   #attr_accessible :data, :attachable, :attachment_name
 
     validates :attachment_name, :attachable_type, :presence => true
 
@@ -125,6 +122,14 @@ module Cms
 
     end
 
+    def attachable_class
+      attachable_type
+    end
+
+    # @todo There isn't any good reason I know of why this needs to be a distinct field. Needed to add it to get it working for 4.0 though.
+    def attachable_class=(klass)
+      self.attachable_type = klass
+    end
 
     def section=(section)
       dirty! if self.section != section
@@ -136,7 +141,8 @@ module Cms
     end
 
     def content_block_class
-      attachable_class || attachable.try(:class).try(:name) || attachable_type
+      attachable.try(:class).try(:name) || attachable_type
+      #attachable_class || attachable.try(:class).try(:name) || attachable_type
     end
 
     def icon

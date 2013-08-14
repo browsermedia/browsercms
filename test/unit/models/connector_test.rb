@@ -51,19 +51,19 @@ class ConnectorTest < ActiveSupport::TestCase
     
     two.reload.move_up
     assert_equal [two, one, three].map(&:id),
-      page.reload.connectors.for_page_version(page.version).in_container("foo").all.map(&:id)
+      page.reload.connectors.for_page_version(page.version).in_container("foo").to_a.map(&:id)
     
     two.reload.move_down
     assert_equal [one, two, three],
-      page.reload.connectors.for_page_version(page.version).in_container("foo").all
+      page.reload.connectors.for_page_version(page.version).in_container("foo").to_a
     
     three.reload.move_to_top
     assert_equal [three, one, two],
-      page.reload.connectors.for_page_version(page.version).in_container("foo").all
+      page.reload.connectors.for_page_version(page.version).in_container("foo").to_a
     
     one.reload.move_to_bottom
     assert_equal [three, two, one],
-      page.reload.connectors.for_page_version(page.version).in_container("foo").all
+      page.reload.connectors.for_page_version(page.version).in_container("foo").to_a
   end
   
   def test_connectable_with_deleted

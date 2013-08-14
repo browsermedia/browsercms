@@ -2,8 +2,10 @@ require 'test_helper'
 
 class AttachmentTest < ActiveSupport::TestCase
 
-  test "Confirm mass assignment works" do
-    assert Cms::Attachment.create(:data_file_name=>"Testing", :attachable_class => "Cms::FileBlock")
+  test "#attachable_class sets #attachable_type attribute" do
+    a = Cms::Attachment.new
+    a.attachable_class = Cms::FileBlock
+    assert_equal Cms::FileBlock, a.attachable_type
   end
 
   test "Attachments are configured" do
@@ -70,7 +72,7 @@ class AttachmentTest < ActiveSupport::TestCase
   def file_attachment
     return @file_attachment if @file_attachment
     find_or_create_root_section
-    @file_attachment = Cms::Attachment.new(:attachment_name=>"file", :attachable_type=>"Cms::FileBlock", :parent=>Cms::Section.first)
+    @file_attachment = Cms::Attachment.new(:attachment_name => "file", :attachable_type => "Cms::FileBlock", :parent => Cms::Section.first)
   end
 
   private
