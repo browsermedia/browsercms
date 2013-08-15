@@ -212,7 +212,7 @@ class VersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
   test "Adding a block to page" do
     refute @page.published?, "The page should not be published yet."
     assert_equal 2, @page.versions.size, "Should be two versions of the page"
-    pages = Cms::Page.connected_to(:connectable => @block, :version => @block.version).all
+    pages = Cms::Page.connected_to(:connectable => @block, :version => @block.version).to_a
     assert_equal [@page], pages, "The block should be connected to page"
   end
 
@@ -301,7 +301,7 @@ class NonVersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
     assert_equal page_version_count, Cms::Page::Version.count
     assert !@page.published?
 
-    conns = Cms::Connector.for_connectable(@block).all(:order => 'id')
+    conns = Cms::Connector.for_connectable(@block).order('id')
     assert_equal 1, conns.size
     assert_properties conns[0], :page => @page, :page_version => 2, :connectable => @block, :connectable_version => nil, :container => "main"
   end

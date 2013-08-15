@@ -10,12 +10,19 @@ class HtmlBlockTest < ActiveSupport::TestCase
     assert_equal Cms::Namespacing.prefix("html_blocks"), Cms::HtmlBlock.table_name
   end
 
+  test ".search" do
+    find = Cms::HtmlBlock.create!(:name=>"Test A", content: "Alpha" )
+    dont_find = Cms::HtmlBlock.create!(:name=>"Test B", content: "Bravo")
+
+    assert_equal [ find ], Cms::HtmlBlock.search({term: 'Test A'}).to_a
+    assert_equal [ find ], Cms::HtmlBlock.search({term: 'Alpha', include_body: true}).to_a
+  end
   test "form" do
     type = Cms::ContentType.new(:name=>"Cms::HtmlBlock")
     assert_equal "cms/html_blocks/form", type.form
   end
 
-  test "save" do
+  test "#create!" do
     @block = Cms::HtmlBlock.create!(:name=>"Test")
   end
 

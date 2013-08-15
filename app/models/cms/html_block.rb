@@ -8,28 +8,22 @@ module Cms
 
     validates_presence_of :name
 
+    def self.eager_matching(term)
+      "%#{term}%"
+    end
     # Override of search scope from searching behavior to deal with include_body
-    scope :search, lambda { |search_params|
+    def self.search(search_params)
       term = search_params.is_a?(Hash) ? search_params[:term] : search_params
       include_body = search_params.is_a?(Hash) ? search_params[:include_body] : false
-      conditions = []
-      columns = ["name"]
-      columns << "content" if include_body
-      unless term.blank?
-        columns.each do |c|
-          if conditions.empty?
-            conditions = ["lower(#{table_name}.#{c}) like lower(?)"]
-          else
-            conditions.first << "or lower(#{table_name}.#{c}) like (?)"
-          end
-          conditions << "%#{term}%"
-        end
-        conditions[0] = "(#{conditions[0]})"
+
+
+      conditions = ["name like lower(?)", eager_matching(term)]
+      if include_body
+        conditions[0] << "OR content like lower(?)"
+        conditions << eager_matching(term)
       end
-      scope = {}
-      scope[:conditions] = conditions if conditions
-      scope
-    }
+      where(conditions)
+    end
 
     def self.display_name
       "Text"
