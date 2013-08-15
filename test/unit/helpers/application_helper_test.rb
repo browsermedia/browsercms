@@ -46,7 +46,7 @@ class Cms::ApplicationHelper::EditButtonTest < ActionView::TestCase
   # Scenario: Edit Buttons should:
 
   test "generate a button without an explicit title by default" do
-    expected_html = '<a href="#" class="button disabled" id="edit_button"><span>&nbsp;Edit&nbsp;</span></a>'
+    expected_html = '<a class="button disabled" href="#" id="edit_button"><span>&nbsp;Edit&nbsp;</span></a>'
     assert_equal expected_html, edit_button
   end
 
@@ -59,7 +59,7 @@ class Cms::ApplicationHelper::AddButtonTest < ActionView::TestCase
   # Scenario: Add Buttons should:
 
   test "generate a button without an explicit title by default" do
-    expected_html = '<a href="/cms/page_routes/new" class="button"><span>&nbsp;Add&nbsp;</span></a>'
+    expected_html = '<a class="button" href="/cms/page_routes/new"><span>&nbsp;Add&nbsp;</span></a>'
     assert_equal expected_html, add_button("/cms/page_routes/new")
   end
 
