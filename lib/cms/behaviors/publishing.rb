@@ -148,10 +148,10 @@ module Cms
                   did_publish = true
                 end
               else
-                connection.update(
+                self.class.connection.update(
                   "UPDATE #{self.class.quoted_table_name} " +
-                  "SET published = #{connection.quote(true, self.class.columns_hash["published"])} " +
-                  "WHERE #{connection.quote_column_name(self.class.primary_key)} = #{quote_value(id)}",
+                  "SET published = #{self.class.connection.quote(true, self.class.columns_hash["published"])} " +
+                  "WHERE #{self.class.connection.quote_column_name(self.class.primary_key)} = #{self.class.quote_value(id)}",
                   "#{self.class.name.demodulize} Publish"
                 )
                 did_publish = true
