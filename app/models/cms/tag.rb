@@ -10,22 +10,14 @@ module Cms
     is_searchable
     scope :named, lambda { |tag| {:conditions => ["#{table_name}.name = ? ", tag]} }
 
-    # Returns an array of tags with a count attribute
+    # Returns an array of tags with a #count attribute
     #
     # @return [Array] Each element of the area contains [Id (Integer), Name (String), count (Integer)] (with Sqlite3 anyway)
-    def self.counts(options={})
-      #select("#{Tag.table_name}.id, #{Tag.table_name}.name, count(*) as count_all")
-      #  .where(options)
-      #  .joins(:taggings)
-      #  .group("#{Tag.table_name}.id, #{Tag.table_name}.name")
-      #  .order("count_all desc, #{Tag.table_name}.name")
-      with_scope(:find => {
-          :select => "#{Tag.table_name}.id, #{Tag.table_name}.name, count(*) as count",
-          :joins => :taggings,
-          :group => "#{Tag.table_name}.id, #{Tag.table_name}.name",
-          :order => "count desc, #{Tag.table_name}.name"}) do
-        all(options)
-      end
+    def self.counts()
+      select("#{table_name}.id, #{table_name}.name, count(#{table_name}.id) as count")
+        .joins(:taggings)
+        .group("#{table_name}.id, #{table_name}.name")
+        .order("count desc, #{table_name}.name")
     end
 
     # Returns an array of tags with a size attribute
@@ -35,7 +27,7 @@ module Cms
     def self.cloud(options={})
       sizes = (options.delete(:sizes) || 5) - 1
       sizes = 1 if sizes < 1
-      tags = counts(options)
+      tags = counts.limit(sizes)
       return [] if tags.blank?
 
       min = nil
