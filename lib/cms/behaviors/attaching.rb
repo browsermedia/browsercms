@@ -377,7 +377,7 @@ module Cms
         end
 
         def initialize_attachments
-          attachments.each { |a| a.attachable_class = self.class.name }
+          attachments.each { |a| a.attachable_class = self.attachable_type }
         end
 
 

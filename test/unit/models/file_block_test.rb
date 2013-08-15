@@ -136,6 +136,7 @@ module Cms
       @file_block.save!
       reset(:file_block)
 
+      assert_equal 1, @file_block.attachments.size, "Should still have an attachment after updating it."
       assert_equal "/new-path.txt", @file_block.attachments[0].data_file_path
     end
 
