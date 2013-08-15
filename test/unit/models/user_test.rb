@@ -77,16 +77,16 @@ module Cms
     test "email validation" do
       assert @user.valid?
 
-      valid_emails = ['t@test.com', 'T@test.com', 'test@somewhere.mobi', 'test@somewhere.tv', 'joe_blow@somewhere.co.nz', 'joe_blow@somewhere.com.au', 't@t-t.co']
+      valid_emails = ['t@test.com', 'T@test.com', 'test@somewhere.mobi', 'test@somewhere.tv', 'joe_blow@somewhere.co.nz', 'joe_blow@somewhere.com.au', 't@t-t.co', 'test@somewhere.x']
       valid_emails.each do |email|
         @user.email = email
         assert @user.valid?
       end
 
-      invalid_emails = ['', '@test.com', '@test', 'test@test', 'test@somewhere', 'test@somewhere.', 'test@somewhere.x', 'test@somewhere..']
+      invalid_emails = ['', '@test.com', '@test', 'test@test', 'test@somewhere', 'test@somewhere.', 'test@somewhere..']
       invalid_emails.each do |email|
         @user.email = email
-        assert !@user.valid?
+        assert !@user.valid?, "This email '#{email}' is not considered valid."
       end
     end
 
