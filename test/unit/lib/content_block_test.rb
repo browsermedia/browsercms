@@ -103,7 +103,7 @@ class SoftPublishingTest < ActiveSupport::TestCase
     assert_equal 2, deleted_block.versions.size
     assert_equal 2, deleted_block.version
     assert_equal 1, deleted_block.versions.first.version
-    assert_equal 2, Cms::HtmlBlock::Version.count(:conditions => {:original_record_id => @block.id})
+    assert_equal 2, Cms::HtmlBlock::Version.where(:original_record_id => @block.id).count
   end
 
   test "Count should exclude deleted records" do
@@ -241,7 +241,7 @@ class VersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
     assert_incremented page_version_count, Cms::Page::Version.count
     assert_match /^HtmlBlock #\d+ was Edited/, @page.draft.version_comment
 
-    conns = @block.connectors.all(:order => 'id')
+    conns = @block.connectors.order('id')
     assert_equal 2, conns.size
     assert_properties conns[0], :page => @page, :page_version => 2, :connectable => @block, :connectable_version => 1, :container => "main"
     assert_properties conns[1], :page => @page, :page_version => 3, :connectable => @block, :connectable_version => 2, :container => "main"
@@ -284,6 +284,9 @@ class NonVersionedContentBlockConnectedToAPageTest < ActiveSupport::TestCase
     @page.create_connector(@block, "main")
     reset(:page, :block)
   end
+
+
+
 
   def test_editing_connected_to_an_unpublished_page
     page_version_count = Cms::Page::Version.count

@@ -62,7 +62,7 @@ module Cms
         end
 
         def delete_all(conditions=nil)
-          update_all(["deleted = ?", true], conditions)
+          where(conditions).update_all(["deleted = ?", true])
         end
 
         def exists?(id_or_conditions)
