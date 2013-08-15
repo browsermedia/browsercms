@@ -52,7 +52,7 @@ module Cms
     end
 
     def disable
-      if self.class.count(:conditions => ["expires_at is null and id != ?", id]) > 0
+      if self.class.where(["expires_at is null and id != ?", id]).count > 0
         self.expires_at = Time.now - 2.minutes
       else
         false
@@ -106,11 +106,11 @@ module Cms
     end
 
     def viewable_sections
-      @viewable_sections ||= Cms::Section.find(:all, :include => {:groups => :users}, :conditions => ["#{User.table_name}.id = ?", id])
+      @viewable_sections ||= Cms::Section.where(["#{User.table_name}.id = ?", id]).includes(:groups => :users).references(:users)
     end
 
     def modifiable_sections
-      @modifiable_sections ||= Cms::Section.find(:all, :include => {:groups => [:group_type, :users]}, :conditions => ["#{Cms::User.table_name}.id = ? and #{GroupType.table_name}.cms_access = ?", id, true])
+      @modifiable_sections ||= Cms::Section.where(["#{Cms::User.table_name}.id = ? and #{GroupType.table_name}.cms_access = ?", id, true]).includes(:groups => [:group_type, :users]).references(:users,:groups)
     end
 
     # Expects a list of names of Permissions

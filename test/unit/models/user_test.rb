@@ -37,21 +37,21 @@ module Cms
     end
 
     def test_active
-      assert Cms::User.active.all.include?(@user)
+      assert Cms::User.active.to_a.include?(@user)
 
       @user.update_attribute(:expires_at, 1.year.from_now)
-      assert Cms::User.active.all.include?(@user)
+      assert Cms::User.active.to_a.include?(@user)
     end
 
     test "Disable should work regardless of time zone" do
       Time.zone = "UTC"
       @user.disable!
-      assert !Cms::User.active.all.include?(@user)
+      assert !Cms::User.active.to_a.include?(@user)
 
       user2 = create(:user)
       Time.zone = "Eastern Time (US & Canada)"
       user2.disable!
-      assert !Cms::User.active.all.include?(user2)
+      assert !Cms::User.active.to_a.include?(user2)
 
     end
 
@@ -59,19 +59,19 @@ module Cms
       assert_nil @user.expires_at
       assert !@user.expired?
 
-      assert Cms::User.active.all.include?(@user)
+      assert Cms::User.active.to_a.include?(@user)
 
       assert @user.disable!
 
       assert @user.expires_at <= Time.now.utc
       assert @user.expired?
-      assert !Cms::User.active.all.include?(@user)
+      assert !Cms::User.active.to_a.include?(@user)
 
       @user.enable!
 
       assert_nil @user.expires_at
       assert !@user.expired?
-      assert Cms::User.active.all.include?(@user)
+      assert Cms::User.active.to_a.include?(@user)
     end
 
     test "email validation" do

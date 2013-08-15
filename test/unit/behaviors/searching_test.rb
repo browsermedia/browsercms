@@ -1,31 +1,34 @@
 require 'test_helper'
 
 ActiveRecord::Base.connection.instance_eval do
-  drop_table(:searchable_content_block_parents) if table_exists?(:searchable_content_block_parents)  
-  create_table(:searchable_content_block_parents) {|t| t.string :name }
+  drop_table(:searchable_content_block_parents) if table_exists?(:searchable_content_block_parents)
+  create_table(:searchable_content_block_parents) { |t| t.string :name }
   drop_table(:searchable_content_blocks) if table_exists?(:searchable_content_blocks)
   drop_table(:searchable_content_block_versions) if table_exists?(:searchable_content_block_versions)
-  create_content_table(:searchable_content_blocks, :prefix=>false) do |t|
+  create_content_table(:searchable_content_blocks, :prefix => false) do |t|
     t.integer :parent_id
   end
 
   # Verifies that blocks are created with a :name column if one is not specified.
   drop_table(:searchable_block_without_names) if table_exists?(:searchable_block_without_names)
   drop_table(:searchable_block_without_name_versions) if table_exists?(:searchable_block_without_name_versions)
-  create_versioned_table(:searchable_block_without_names, :prefix=>false) do |t|
+  create_versioned_table(:searchable_block_without_names, :prefix => false) do |t|
     t.string :title
   end
 end
 
 class SearchableContentBlockParent < ActiveRecord::Base
- #attr_accessible :name
-  has_many :children, :class_name => "SearchableContentBlock", :foreign_key => "parent_id" 
+  #attr_accessible :name
+  has_many :children, :class_name => "SearchableContentBlock", :foreign_key => "parent_id"
 end
 
 class SearchableContentBlock < ActiveRecord::Base
   acts_as_content_block
   belongs_to :parent, :class_name => "SearchableContentBlockParent"
-  scope :created_after, lambda{|time| {:conditions => ["created_at > ?", time]}}
+
+  def self.created_after(time)
+    where(["created_at > ?", time])
+  end
 end
 
 class SearchableContentBlockTest < ActiveSupport::TestCase
@@ -37,10 +40,10 @@ class SearchableContentBlockTest < ActiveSupport::TestCase
     @b2 = @parent.children.create!(:name => "b2")
 
     assert SearchableContentBlock.searchable?
-    assert_equal [@a1, @a2], SearchableContentBlock.search("a").all
-    assert_equal [@a2, @a1], SearchableContentBlock.search(:term => "a").order("id desc").all
-    assert_equal [@a2, @a1], SearchableContentBlock.created_after(1.hour.ago).search(:term => "a").order("id desc").all
-    assert_equal [@a2, @a1], @parent.children.created_after(1.hour.ago).search(:term => "a").order("id desc").all
+    assert_equal [@a1, @a2], SearchableContentBlock.search("a").to_a
+    assert_equal [@a2, @a1], SearchableContentBlock.search(:term => "a").order("id desc").to_a
+    assert_equal [@a2, @a1], SearchableContentBlock.created_after(1.hour.ago).search(:term => "a").order("id desc").to_a
+    assert_equal [@a2, @a1], @parent.children.created_after(1.hour.ago).search(:term => "a").order("id desc").to_a
   end
 end
 
@@ -52,9 +55,9 @@ class SearchableHtmlBlockTest < ActiveSupport::TestCase
     @b2 = create(:html_block, :name => "b2", :content => "b two")
 
     assert Cms::HtmlBlock.searchable?
-    assert_equal [@a2, @b2], Cms::HtmlBlock.search("2").all
-    assert Cms::HtmlBlock.search(:term => "one").all.empty?
-    assert_equal [@a1, @b1], Cms::HtmlBlock.search(:term => "one", :include_body => true).all
+    assert_equal [@a2, @b2], Cms::HtmlBlock.search("2").to_a
+    assert Cms::HtmlBlock.search(:term => "one").to_a.empty?
+    assert_equal [@a1, @b1], Cms::HtmlBlock.search(:term => "one", :include_body => true).to_a
     assert Cms::HtmlBlock.search(nil).include?(@b2)
   end
 end
@@ -79,11 +82,11 @@ class SearchableBlockWithoutNameTest < ActiveSupport::TestCase
     assert_equal block, SearchableBlockWithoutName.find_by_name("NAME")
     assert_equal "NAME", block.name
   end
-  
+
   test "Search method should not fail if block has no :name field" do
     block = SearchableBlockWithoutName.create!(:name => ":implicitly specfied")
 
-    assert_equal SearchableBlockWithoutName.all.size, SearchableBlockWithoutName.search({}).size, "Should list all rows when no param is passed in."
+    assert_equal SearchableBlockWithoutName.count, SearchableBlockWithoutName.search({}).size, "Should list all rows when no param is passed in."
   end
 
   test "Versions table for block should have 'name' attribute as well" do

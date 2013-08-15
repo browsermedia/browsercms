@@ -26,11 +26,12 @@ module Cms
                 end
                 conditions << "%#{term}%"
               end
-              conditions[0] = "(#{conditions[0]})"
+              #conditions[0] = "(#{conditions[0]})"
             end
-            scope = {}
-            scope[:conditions] = conditions if conditions
-            scope
+            where(conditions)
+            #scope = {}
+            #scope[:conditions] = conditions if conditions
+            #scope
           }
         end
       end

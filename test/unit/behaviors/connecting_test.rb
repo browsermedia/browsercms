@@ -37,7 +37,7 @@ class ConnectingTest < ActiveSupport::TestCase
 
   test "Connected_to" do
     assert_equal 1, @block.version
-    pages = Cms::Page.connected_to(:connectable => @block, :version => @block.version).all
+    pages = Cms::Page.connected_to(:connectable => @block, :version => @block.version).to_a
     assert_equal @page, pages.first
   end
 

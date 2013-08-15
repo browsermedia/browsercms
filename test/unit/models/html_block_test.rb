@@ -22,11 +22,7 @@ class HtmlBlockTest < ActiveSupport::TestCase
     assert_equal "cms/html_blocks/form", type.form
   end
 
-  test "#create!" do
-    @block = Cms::HtmlBlock.create!(:name=>"Test")
-  end
-
-  def test_create    
+  def test_create
     @page = create(:page)
     @html_block = create(:html_block, :connect_to_page_id => @page.id, :connect_to_container => "test")
     assert_equal 1, @page.reload.connectors.count

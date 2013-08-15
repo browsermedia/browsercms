@@ -41,6 +41,6 @@ class CategoryTest < ActiveSupport::TestCase
       "#{@a.name} > #{@a1.name}",
       "#{@a.name} > #{@a1.name} > #{@a1a.name}",
       "#{@a.name} > #{@a2.name}"
-    ], Cms::Category.of_type("A").all.map(&:path)
+    ], Cms::Category.of_type("A").to_a.map(&:path)
   end
 end

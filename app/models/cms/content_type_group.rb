@@ -7,7 +7,7 @@ module Cms
     has_many :types, ->{order("priority, name")}, :class_name => 'Cms::ContentType'
 
     def self.menu_list
-      order(:id).all
+      order(:id).to_a
     end
 
 
