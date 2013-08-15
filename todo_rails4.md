@@ -1,12 +1,8 @@
 ## Tests
 
-### Units:
-1. 29 F, 271 E
-2. 45F, 112 E
-3. 23F 99E
-4. 23F, 92E
-5. 24F, 3E
-6. 18F, 2E
+### Functionals:
+2F, 1E
+
 
 ## Cleanup
 

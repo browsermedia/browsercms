@@ -38,7 +38,7 @@ module Cms
 
     def update
       params[:section].delete('group_ids') if params[:section] && !current_user.able_to?(:administrate)
-      @section.attributes = params[:section]
+      @section.attributes = section_params()
       if @section.save
         flash[:notice] = "Section '#{@section.name}' was updated"
         redirect_to @section
@@ -70,6 +70,11 @@ module Cms
     end
 
     protected
+
+    def section_params
+      params.require(:section).permit(Cms::Section.new.permitted_params)
+    end
+
     def load_parent
       @parent = Cms::Section.find(params[:section_id])
       raise Cms::Errors::AccessDenied unless current_user.able_to_edit?(@parent)
@@ -81,11 +86,11 @@ module Cms
     end
 
     def public_groups
-      @public_groups ||= Cms::Group.public.all(:order => "#{Cms::Group.table_name}.name")
+      @public_groups ||= Cms::Group.public.order("#{Cms::Group.table_name}.name")
     end
 
     def cms_groups
-      @cms_groups ||= Cms::Group.cms_access.all(:order => "#{Cms::Group.table_name}.name")
+      @cms_groups ||= Cms::Group.cms_access.order( "#{Cms::Group.table_name}.name")
     end
 
     def set_toolbar_tab

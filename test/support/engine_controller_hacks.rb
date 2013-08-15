@@ -29,7 +29,7 @@ module EngineControllerHacks
       parameters.delete(:use_route)
       merge = {}
     end
-    process(action, parameters.merge!(merge), session, flash, method)
+    process(action, method, parameters.merge!(merge), session, flash)
   end
 end
 
