@@ -7,6 +7,10 @@ module Cms
       @root = create(:root_section)
     end
 
+    test ".permitted_params" do
+      assert Cms::Section.permitted_params.include?(:group_ids)
+    end
+
     test "prepending_path" do
       assert_equal "/", Section.new(:path => "/").prependable_path
       assert_equal "/system/", Section.new(:path => "/system").prependable_path

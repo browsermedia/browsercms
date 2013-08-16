@@ -22,7 +22,7 @@ module Cms
     end
 
     def create
-      @section = Cms::Section.new(params[:section])
+      @section = Cms::Section.new(section_params)
       @section.parent = @parent
       @section.groups = @section.parent.groups unless current_user.able_to?(:administrate)
       if @section.save

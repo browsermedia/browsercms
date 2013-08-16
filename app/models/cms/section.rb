@@ -15,7 +15,10 @@ module Cms
     HIDDEN_NODE_TYPES = "Cms::Attachment"
 
     extend DefaultAccessible
-   #attr_accessible :allow_groups, :group_ids, :name, :path, :root, :hidden
+    # @override
+    def self.permitted_params
+      super + [:allow_groups, group_ids: []]
+    end
 
     has_many :group_sections, :class_name => 'Cms::GroupSection'
     has_many :groups, :through => :group_sections, :class_name => 'Cms::Group'

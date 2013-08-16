@@ -13,7 +13,6 @@ cucumber features/content_blocks/file_blocks.feature:19 # Scenario: Creating Fil
 cucumber features/content_blocks/file_blocks.feature:30 # Scenario: Creating a File block with errors
 cucumber features/content_blocks/manage_images.feature:11 # Scenario: List Images
 cucumber features/email_messages.feature:8 # Scenario: Multiple Pages
-cucumber features/manage_sections.feature:7 # Scenario: Create Section
 cucumber features/manage_tasks.feature:7 # Scenario: Assign Home Page as a Task
 cucumber features/page_templates.feature:7 # Scenario: Add a Page Template
 cucumber features/page_templates.feature:19 # Scenario: Multiple pages of templates
