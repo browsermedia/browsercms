@@ -20,7 +20,7 @@
     <label>Global Permissions</label>
     <%= hidden_field_tag "group[permission_ids][]", "" %>  
     <div class="checkboxes">
-        <% Cms::Permission.all(:order => "name").each do |p| %>
+        <% Cms::Permission.order(:name).each do |p| %>
           <div class="checkbox_fields">
               <%= check_box_tag "group[permission_ids][]", p.id, @group.permissions.include?(p), :id => "permission_ids_#{p.id}", :class => "permission_ids" %>
               <label for="permission_ids_<%= p.id %>" style="width: 400px;#padding-top: 6px;"><%=h p.full_name %></label>

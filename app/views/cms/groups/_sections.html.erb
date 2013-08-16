@@ -3,7 +3,7 @@
     <%= hidden_field_tag "group[section_ids][]", "" %>
 </div>
 <div class="row-fluid">
-    <% Cms::Section.all(:order => "path").each do |s|%>
+    <% Cms::Section.order(:path).each do |s|%>
         <%= check_box_tag "group[section_ids][]", s.id, @group.sections.include?(s), :id => "section_ids_#{s.id}", :class => "section_ids" %>
         <label for= "section_ids_<%= s.id %>" style="width: 400px; padding-top: 0; #padding-top: 4px;"><%=h s.name %>(Path: <%=h s.path %>)</label>
     <% end %>
