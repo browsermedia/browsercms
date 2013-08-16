@@ -17,6 +17,8 @@ module Cms
         where(["#{ContentTypeGroup.table_name}.name != ?", 'Categorization'])
             .order("#{ContentType.table_name}.priority, #{ContentType.table_name}.name")
             .includes(:content_type_group)
+            .references(:content_type_group)
+
       end
     end
 

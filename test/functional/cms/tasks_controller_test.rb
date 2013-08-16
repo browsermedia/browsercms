@@ -27,7 +27,7 @@ class Cms::TasksControllerTest < ActionController::TestCase
   def test_complete_multiple_tasks
     @task2 = create(:task, :assigned_to=>@admin)
     ids = [@task.id, @task2.id]
-    tasks = Cms::Task.find(:all, :conditions => ["assigned_to_id = ?", @admin.id])
+    tasks = Cms::Task.where(["assigned_to_id = ?", @admin.id]).to_a
     assert_equal 2, tasks.length, "This test depends on there being 2 tasks to complete"
     assert !tasks.detect {|t| t.completed?}
 

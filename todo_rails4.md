@@ -1,10 +1,8 @@
 ## Tests
 
 ### Functionals:
-1F, 0E
 
-
-Need to upgrade will_paginate
+Need to upgrade will_paginate to fix deprecation errors before removing deprecated-finders.
 
 ## Cleanup
 
@@ -15,11 +13,6 @@ Need to upgrade will_paginate
 
 1. Change 'match' to 'get'. Tests will prompt you, so not to worry.
 2. Install the deprecated finders and other gems to help with upgrade.
-
-## Rollbacks
-
-          create_section_node(:node => self, :section => sec)
-          build_section_node(:node => self, :section => sec)
 
 
 ## Ideas

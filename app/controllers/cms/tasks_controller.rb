@@ -21,7 +21,7 @@ class TasksController < Cms::BaseController
   
   def complete
     if params[:task_ids]
-      Task.all(:conditions => ["id in (?)", params[:task_ids]]).each do |t|
+      Task.where(["id in (?)", params[:task_ids]]).each do |t|
         if t.assigned_to == current_user
           t.mark_as_complete!
         end

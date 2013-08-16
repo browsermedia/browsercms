@@ -8,7 +8,7 @@ class ConnectorsController < Cms::BaseController
     @block_type = ContentType.find_by_key(params[:block_type] || session[:last_block_type] || 'html_block')
     @container = params[:container]
     @connector = @page.connectors.build(:container => @container)
-    @blocks = @block_type.model_class.all(:order => "name", :conditions => ["deleted = ?", false])      
+    @blocks = @block_type.model_class.where(["deleted = ?", false]).order("name")
   end
 
   def create
