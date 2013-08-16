@@ -16,7 +16,7 @@ Feature: Manage Html Blocks
 
   Scenario: Save but not publish a New Block
     Given I request /cms/html_blocks/new
-    Then I should see a page titled "Add New Text"
+    Then I should see a page named "Add New Text"
     When I fill in "Name" with "Hello World"
     And I click on "Save"
     Then I should see the View Text page
@@ -27,7 +27,7 @@ Feature: Manage Html Blocks
 
   Scenario: Publishing a New Block
     Given I request /cms/html_blocks/new
-    Then I should see a page titled "Add New Text"
+    Then I should see a page named "Add New Text"
     When I fill in "Name" with "Hello World"
     And I click on "Save And Publish"
     Then I should see the View Text page

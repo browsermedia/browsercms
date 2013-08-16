@@ -12,7 +12,7 @@ Feature: Page Templates
       | Name | hello |
       | Body | World |
     And I press "Save"
-    Then I should see a page titled "List Page Templates"
+    Then I should see a page named "List Page Templates"
     Then I should see the following content:
       | Hello |
 

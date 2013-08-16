@@ -11,13 +11,13 @@ Feature: Acts as Content Page
   Scenario: Use CMS templates with Rails Controllers
     When I visit /content-page
     Then the response should be 200
-    And I should see a page titled "ContentPage"
+    And I should see a page named "ContentPage"
     And I should see the following content:
       | Dummy Site Template |
 
   Scenario: Set a Page Title
     When I visit /custom-page
-    Then I should see a page titled "My Custom Page"
+    Then I should see a page named "My Custom Page"
     And I should see the following content:
     | Some Custom Content |
 
@@ -32,14 +32,14 @@ Feature: Acts as Content Page
   Scenario: Error Page
     When I am at /tests/error
     Then the response should be 500
-    And I should see a page titled "Server Error"
+    And I should see a page named "Server Error"
     And I should see the following content:
       | The server encountered an unexpected condition that prevented it from fulfilling the request. |
 
   Scenario: Controller throws Missing Page Error
     When I am at /tests/not-found
     Then the response should be 404
-    And I should see a page titled "Not Found"
+    And I should see a page named "Not Found"
     And I should see the following content:
       | Page Not Found |
 
@@ -48,7 +48,7 @@ Feature: Acts as Content Page
     Given a members only section
     When I am at /tests/restricted
     Then the response should be 403
-    And I should see a page titled "Access Denied"
+    And I should see a page named "Access Denied"
     And I should see the following content:
       | Access Denied |
 
@@ -57,5 +57,5 @@ Feature: Acts as Content Page
     Given I am logged in as a Content Editor
     When I visit /tests/not-found
     Then the response should be 404
-    And I should see a page titled "Error: ActiveRecord::RecordNotFound"
+    And I should see a page named "Error: ActiveRecord::RecordNotFound"
 

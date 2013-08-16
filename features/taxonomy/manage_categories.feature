@@ -12,7 +12,7 @@ Feature: Manage Categories
     When I fill in "Name" with "T-Shirts"
     And I select "Product" from "Type"
     And I click on "Save"
-    Then I should see a page titled "List Categories"
+    Then I should see a page named "List Categories"
     And I should see "T-Shirts"
 
   Scenario: Add Category with no category types

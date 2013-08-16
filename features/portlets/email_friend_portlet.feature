@@ -8,7 +8,7 @@ Feature: Email a Friend Portlet
   Scenario: Add New Portlet
     Given I visit /cms/portlets
     When I create a new "Email Page Portlet" portlet
-    Then I should see a page titled "Add New Portlet"
+    Then I should see a page named "Add New Portlet"
     When I fill in "Name" with "Hello"
     And I click on "Save"
     Then I should not see "ERROR"

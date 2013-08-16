@@ -8,7 +8,7 @@ Feature: Sitemap
   Scenario: View as Admin
     Given there are some additional pages and sections
     When I request /cms/sitemap
-    Then I should see a page titled "Sitemap"
+    Then I should see a page named "Sitemap"
     And I should see the stock CMS pages
     And I should see the new pages and sections
 

@@ -8,7 +8,7 @@ Feature: Portlets
 
   Scenario: List Portlets
     When I visit /cms/portlets
-    Then I should see a page titled "List Portlets"
+    Then I should see a page named "List Portlets"
 
   Scenario: Login portlet when logged in
     And there is a LoginPortlet on the homepage
@@ -119,4 +119,4 @@ Feature: Portlets
   Scenario: Portlets can override page titles
     Given a developer creates a portlet which sets a custom page title as "A Custom Title"
     When a guest views that page
-    Then I should see a page titled "A Custom Title"
+    Then I should see a page named "A Custom Title"

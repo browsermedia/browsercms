@@ -6,7 +6,7 @@ Feature: Manage Tasks
 
   Scenario: Assign Home Page as a Task
     When I assign the home page as a task
-    Then I should see a page titled "Assign Page 'Home'"
+    Then I should see a page named "Assign Page 'Home'"
     When I select "CMS Administrator (cmsadmin)" from "Assign To"
     And I press "Save"
     Then I should see a page titled "Home"

@@ -8,7 +8,7 @@ Feature: Image Blocks
     And I am adding a New Image
 
   Scenario: Add New Image
-    Then I should see a page titled "Content Library / Add New Image"
+    Then I should see a page named "Content Library / Add New Image"
 
   Scenario: Creating image block
     When I fill in "Name" with "Giraffe"

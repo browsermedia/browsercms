@@ -6,7 +6,7 @@ Feature: Caching
     
   Scenario: Clear Page Cache
     When I request /cms/cache
-    Then I should see a page titled "Page Cache Info"
+    Then I should see a page named "Page Cache Info"
     When I click on "Clear Page Cache"
-    Then I should see a page titled "Page Cache Info"
+    Then I should see a page named "Page Cache Info"
 

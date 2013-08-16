@@ -1,6 +1,10 @@
-# ex: Then I should see a page titled "Home"
-Then /^I should see a page titled "([^"]*)"$/ do |page_title|
+# ex: Then I should see a page named "Home"
+Then /^I should see a page named "([^"]*)"$/ do |page_title|
   should_see_a_page_title_and_header(page_title)
+end
+
+Then /^I should see a page titled "([^"]*)"$/ do |page_title|
+  should_see_a_page_titled(page_title)
 end
 
 Then /^I should see a page with a header "([^"]*)"$/ do |page_header|

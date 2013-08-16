@@ -8,7 +8,7 @@ Feature: Manage Category Types
     Given I visit /cms/category_types/new
     And I fill in "Name" with "Product"
     And I click on "Save"
-    Then I should see a page titled "List Category Types"
+    Then I should see a page named "List Category Types"
     And I should see "Product"
 
 

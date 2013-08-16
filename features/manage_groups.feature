@@ -8,7 +8,7 @@ Feature: Manage Groups
     Given I request /cms/groups
     Then I should see "List Groups"
     When I click on "Add Group"
-    Then I should see a page titled "Add New Group"
+    Then I should see a page named "Add New Group"
     When I fill in "Name" with "Publisher's Group"
     And I select "CMS User" from "Type of User"
     And I check "Edit Content"
@@ -23,7 +23,7 @@ Feature: Manage Groups
     Given I request /cms/groups
     Then I should see "List Groups"
     When I click on "Add Group"
-    Then I should see a page titled "Add New Group"
+    Then I should see a page named "Add New Group"
     When I fill in "Name" with "Authenticated Users"
     And I select "Registered Public User" from "Type of User"
     And I press "Save"

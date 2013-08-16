@@ -18,7 +18,7 @@ Feature: Content Files
     """
     When I request /test.txt
     Then the response should be 403
-    And I should see a page titled "Access Denied"
+    And I should see a page named "Access Denied"
 
   Scenario: Authorized users viewing protected file
     Given a protected text file named "/test.txt" exists with:

@@ -8,7 +8,7 @@ Feature: Manage Page Routes
 
   Scenario: Show Rails Routes
     When I request /cms/routes
-    Then I should see a page titled "Rails Routes"
+    Then I should see a page named "Rails Routes"
 
   Scenario: Match a path to a Controller
     When I request /cms/routes
@@ -18,23 +18,23 @@ Feature: Manage Page Routes
 
   Scenario: Create Page Route
     When I request /cms/page_routes
-    Then I should see a page titled "List Page Routes"
+    Then I should see a page named "List Page Routes"
     When I click on "Add"
-    Then I should see a page titled "New Page Route"
+    Then I should see a page named "New Page Route"
     When create a Page Route with the following:
       | name     |
       | my_route |
-    Then I should see a page titled "'my_route' Page Route"
+    Then I should see a page named "'my_route' Page Route"
     And I should see the following content:
       | my_route |
 
   Scenario: Edit Page Route
     Given a Page Route exists
     When I edit that page route
-    Then I should see a page titled "Edit Page Route"
+    Then I should see a page named "Edit Page Route"
     When I fill in "Name" with "My Updated Route"
     And I click on "Save"
-    Then I should see a page titled "'My Updated Route' Page Route"
+    Then I should see a page named "'My Updated Route' Page Route"
     And I should see "My Updated Route"
 
   Scenario: A simple route to a CMS page

@@ -10,5 +10,5 @@ Feature: Create Pages
     And I fill in "Path" with "/my-new-page"
     And I select "Default" from "Template"
     And I click on "Save"
-    Then I should see a page titled "A New Page"
+    Then I should see a page named "A New Page"
     

@@ -12,28 +12,30 @@ module Cms
           end
         end
       end
+
       module MacroMethods
         def publishable?
           !!@is_publishable
         end
+
         def is_publishable(options={})
           @is_publishable = true
           extend ClassMethods
           include InstanceMethods
-        
-         #attr_accessible :publish_on_save, :as
+
+          #attr_accessible :publish_on_save, :as
           after_save :publish_for_non_versioned
-        
-          scope :published, -> {where(:published => true)}
+
+          scope :published, -> { where(:published => true) }
           scope :unpublished, -> {
-            if versioned?
-              { :joins => :versions,
-                :conditions =>
-                  "#{connection.quote_table_name(version_table_name)}.#{connection.quote_column_name('version')} > " +
-                  "#{connection.quote_table_name(table_name)}.#{connection.quote_column_name('version')}",
-                :select => "distinct #{connection.quote_table_name(table_name)}.*" }
+            if self.versioned?
+              q =  "#{connection.quote_table_name(version_table_name)}.#{connection.quote_column_name('version')} > " +
+                   "#{connection.quote_table_name(table_name)}.#{connection.quote_column_name('version')}"
+              select("distinct #{connection.quote_table_name(table_name)}.*")
+                .where(q)
+                .joins(:versions)
             else
-              where( :published => false )
+              where(:published => false)
             end
           }
 
@@ -53,6 +55,7 @@ module Cms
             self.publish_on_save = false
           end
         end
+
         # Whether or not this object will be published the next time '.save' is called.
         # @return [Boolean] True unless explicitly set otherwise.
         def publish_on_save
@@ -75,7 +78,7 @@ module Cms
             true
           end
         end
-        
+
         def publish_for_non_versioned
           unless self.class.versioned?
             if @publish_on_save
@@ -127,7 +130,7 @@ module Cms
                 # We only need to publish if this isn't already published
                 # or the draft version is greater than the live version
                 if !self.published? || d.version > self.version
-                  
+
                   d.update_attributes(:published => true)
 
                   # copy values from the draft to the main record
@@ -140,7 +143,7 @@ module Cms
                   #I haven't figured out why this is, but I know it happens when you call save! on Page
                   #during seeding of data
                   if self.class.arel_table.name != quoted_attributes.keys[0].relation.name
-                    quoted_attributes = quoted_attributes.inject({}){|hash, pair| hash[self.class.arel_table[pair[0].name]] = pair[1]; hash}
+                    quoted_attributes = quoted_attributes.inject({}) { |hash, pair| hash[self.class.arel_table[pair[0].name]] = pair[1]; hash }
                   end
 
                   # Doing the SQL ourselves to avoid callbacks
@@ -149,10 +152,10 @@ module Cms
                 end
               else
                 self.class.connection.update(
-                  "UPDATE #{self.class.quoted_table_name} " +
-                  "SET published = #{self.class.connection.quote(true, self.class.columns_hash["published"])} " +
-                  "WHERE #{self.class.connection.quote_column_name(self.class.primary_key)} = #{self.class.quote_value(id)}",
-                  "#{self.class.name.demodulize} Publish"
+                    "UPDATE #{self.class.quoted_table_name} " +
+                        "SET published = #{self.class.connection.quote(true, self.class.columns_hash["published"])} " +
+                        "WHERE #{self.class.connection.quote_column_name(self.class.primary_key)} = #{self.class.quote_value(id)}",
+                    "#{self.class.name.demodulize} Publish"
                 )
                 did_publish = true
               end
@@ -161,8 +164,8 @@ module Cms
             self.published = true
           end
           did_publish
-        end    
-            
+        end
+
         def status
           return @status if @status
           @status = live? ? :published : :draft
@@ -186,7 +189,7 @@ module Cms
             true
           end
         end
-        
+
       end
     end
   end

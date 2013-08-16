@@ -7,13 +7,13 @@ Feature: Manage Redirects
 
   Scenario: Create Redirect
     When I view the Redirects page
-    Then I should see a page titled "List Redirects"
+    Then I should see a page named "List Redirects"
     When I click on "Add"
-    Then I should see a page titled "New Redirect"
+    Then I should see a page named "New Redirect"
     When create a Redirect with the following:
       | from    | to      |
       | /path-a | /path-b |
-    Then I should see a page titled "List Redirects"
+    Then I should see a page named "List Redirects"
     And I should see the following content:
       | /path-a |
       | /path-b |

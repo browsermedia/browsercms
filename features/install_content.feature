@@ -7,15 +7,15 @@ Feature: Install blank site
 
   Scenario: A homepage should exist
     Given I am on the homepage
-    Then I should see a page titled "Home"
+    Then I should see a page named "Home"
 
   Scenario: An error page should exist
     Given I am at /system/server_error
-    Then I should see a page titled "Server Error"
+    Then I should see a page named "Server Error"
 
   Scenario: A 404 page should exist
     Given I am at /system/not_found
-    Then I should see a page titled "Page Not Found"
+    Then I should see a page named "Page Not Found"
 
 
 

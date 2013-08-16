@@ -10,13 +10,13 @@ Feature: Manage Image Blocks
 
   Scenario: List Images
     When I visit /cms/image_blocks
-    Then I should see a page titled "Content Library / List Images"
+    Then I should see a page named "Content Library / List Images"
     And I should see the following content:
       | An LOL Cat Picture |
 
   Scenario: Edit an Image
     When I visit /cms/image_blocks/150/edit
-    Then I should see a page titled "Content Library / Edit Image"
+    Then I should see a page named "Content Library / Edit Image"
     And the page header should be "Edit Image 'An LOL Cat Picture'"
 
   Scenario: Move an Image to another Section

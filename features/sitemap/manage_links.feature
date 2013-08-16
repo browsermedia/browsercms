@@ -10,7 +10,7 @@ Feature: Manage Links
     And I fill in "Name" with "A New Link"
     And I fill in "Url" with "http://www.browsercms.com"
     And I click on "Save"
-    Then I should see a page titled "Sitemap"
+    Then I should see a page named "Sitemap"
     Then I should see the following content:
       | A New Link |
 
@@ -21,7 +21,7 @@ Feature: Manage Links
       | CMS  | www.browsercms.com | /       |
     When I edit that link
     And I change the link name to "A more well tested CMS"
-    Then I should see a page titled "Sitemap"
+    Then I should see a page named "Sitemap"
     Then I should see the following content:
       | A more well tested CMS |
 

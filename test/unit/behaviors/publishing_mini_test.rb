@@ -113,6 +113,29 @@ describe 'Publishing' do
     end
   end
 
+  describe '.published' do
+    before do
+      block
+      draft_block
+    end
+
+    it "should find published blocks" do
+      Cms::HtmlBlock.published.to_a.must_equal [block]
+    end
+  end
+
+  describe '.unpublished' do
+    before do
+      block
+      draft_block.publish!
+      draft_block.update_attributes(name: 'Make draft', as: :draft)
+    end
+
+    it "should find unpublished blocks" do
+      Cms::HtmlBlock.unpublished.to_a.must_equal [draft_block]
+    end
+
+  end
   # Creates and returns a block with a single draft version.
   def block_with_draft
     block_with_draft = create(:html_block)

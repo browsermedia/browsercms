@@ -7,5 +7,5 @@ Feature: Manage Sections
   Scenario: Create Section
     Given I am adding a section to the root section
     When I create a public section
-    Then I should see a page titled "Sitemap"
+    Then I should see a page named "Sitemap"
     And the new section should be accessible to everyone
