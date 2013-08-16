@@ -33,7 +33,7 @@ module Cms
 
       get :show, :path => "secret"
       assert_response :success
-      assert_select "title", "Shhh... It&#x27;s a Secret" # Should page_title be html_safe or not?
+      assert_select "title", "Shhh... It is a Secret"
     end
 
     def test_show_archived_page_to_user
@@ -98,7 +98,7 @@ module Cms
       @page = create(:page,
                       :section => @protected_section,
                       :path => "/secret",
-                      :name => "Shhh... It's a Secret",
+                      :name => "Shhh... It is a Secret",
                       :template_file_name => "default.html.erb",
                       :publish_on_save => true)
     end
