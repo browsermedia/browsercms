@@ -3,7 +3,7 @@ module Cms
     belongs_to :tag, :class_name => 'Cms::Tag'
     belongs_to :taggable, :polymorphic => true, :class_name => 'Cms::Taggable', :foreign_type => 'taggable_type'
 
-    include DefaultAccessible
+    extend DefaultAccessible
    #attr_accessible :tag, :taggable
 
     def content_type

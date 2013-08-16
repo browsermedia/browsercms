@@ -1,5 +1,5 @@
 module Cms
   class PageRouteCondition < Cms::PageRouteOption
-    include DefaultAccessible
+    extend DefaultAccessible
   end
 end

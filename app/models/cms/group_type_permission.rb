@@ -3,6 +3,6 @@ module Cms
     belongs_to :group_type, :class_name => 'Cms::GroupType'
     belongs_to :permission, :class_name => 'Cms::Permission'
 
-    include DefaultAccessible
+    extend DefaultAccessible
   end
 end

@@ -18,7 +18,7 @@ class Cms::Group < ActiveRecord::Base
 
   # :group_type might be a bad idea, but only Admins should be modifying groups anyway
  #attr_accessible :name, :code, :group_type, :permission_ids, :section_ids
-  include Cms::DefaultAccessible
+  extend Cms::DefaultAccessible
 
   validates_presence_of :name
 

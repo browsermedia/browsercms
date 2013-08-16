@@ -72,7 +72,7 @@ module Cms
     protected
 
     def section_params
-      params.require(:section).permit(Cms::Section.new.permitted_params)
+      params.require(:section).permit(Cms::Section.permitted_params)
     end
 
     def load_parent

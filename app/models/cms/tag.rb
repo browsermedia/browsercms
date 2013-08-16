@@ -2,7 +2,7 @@ module Cms
   class Tag < ActiveRecord::Base
 
     has_many :taggings, :class_name => 'Cms::Tagging'
-    include DefaultAccessible
+    extend DefaultAccessible
 
     validates_uniqueness_of :name
 

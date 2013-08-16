@@ -74,5 +74,7 @@ module Cms
         raise Cms::Errors::AccessDenied
       end
     end
+
+
   end
 end

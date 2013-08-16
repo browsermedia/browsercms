@@ -1,5 +1,5 @@
 module Cms
   class PageRouteRequirement < Cms::PageRouteOption
-    include DefaultAccessible
+    extend DefaultAccessible
   end
 end

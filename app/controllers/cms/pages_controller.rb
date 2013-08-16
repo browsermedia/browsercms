@@ -103,7 +103,7 @@ module Cms
     private
 
     def page_params
-      params.require(:page).permit(Cms::Page.new.permitted_params)
+      params.require(:page).permit(Cms::Page.permitted_params)
     end
 
     def strip_publish_params

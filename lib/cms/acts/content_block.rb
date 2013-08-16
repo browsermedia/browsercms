@@ -23,7 +23,7 @@ module Cms
             raise ArgumentError.new ":belongs_to_attachment option is no longer supported. Please use :has_attachments option"
           end
 
-          include Cms::DefaultAccessible
+          extend Cms::DefaultAccessible
           allow_attachments if options[:allow_attachments]
           is_archivable(options[:archiveable].is_a?(Hash) ? options[:archiveable] : {}) unless options[:archiveable] == false
           is_connectable(options[:connectable].is_a?(Hash) ? options[:connectable] : {}) unless options[:connectable] == false

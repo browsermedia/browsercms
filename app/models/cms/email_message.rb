@@ -1,7 +1,7 @@
 module Cms
   class EmailMessage < ActiveRecord::Base
 
-    include DefaultAccessible
+    extend DefaultAccessible
 
     scope :undelivered, -> {where("delivered_at is null")}
     validates_presence_of :recipients

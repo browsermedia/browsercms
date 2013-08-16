@@ -2,7 +2,7 @@ module Cms
   module DefaultAccessible
 
     def permitted_params
-      self.class.attribute_names.map{|string| string.to_sym} - non_permitted_params
+      attribute_names.map{|string| string.to_sym} - non_permitted_params
     end
 
     def non_permitted_params

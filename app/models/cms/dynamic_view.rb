@@ -6,7 +6,7 @@ module Cms
     after_save :write_file_to_disk
     after_destroy :remove_file_from_disk
 
-    include DefaultAccessible
+    extend DefaultAccessible
     # Need to explicitly define these, since during new project creation, these files aren't discoverable.
     #attr_accessible :name, :body, :format, :handler, :locale, :path, :partial
 

@@ -10,7 +10,7 @@ describe Cms::DefaultAccessible do
   end
 
   def permitted
-    @permitted ||= Cms::HtmlBlock.new.permitted_params
+    @permitted ||= Cms::HtmlBlock.permitted_params
   end
 
 end

@@ -18,7 +18,7 @@ module Cms
 
     belongs_to :attachable, :polymorphic => true
 
-    include DefaultAccessible
+    extend DefaultAccessible
 
     validates :attachment_name, :attachable_type, :presence => true
 

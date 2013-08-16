@@ -5,7 +5,7 @@ module Cms
     has_many :children, :class_name => 'Cms::Category', :foreign_key => "parent_id"
     is_searchable
 
-    include DefaultAccessible
+    extend DefaultAccessible
     include Concerns::IgnoresPublishing
 
     #attr_accessible :category_type

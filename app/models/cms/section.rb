@@ -14,7 +14,7 @@ module Cms
     VISIBLE_NODE_TYPES = [SECTION, PAGE, LINK]
     HIDDEN_NODE_TYPES = "Cms::Attachment"
 
-    include DefaultAccessible
+    extend DefaultAccessible
    #attr_accessible :allow_groups, :group_ids, :name, :path, :root, :hidden
 
     has_many :group_sections, :class_name => 'Cms::GroupSection'
