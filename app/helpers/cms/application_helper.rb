@@ -121,7 +121,7 @@ HTML
     end
 
     def group_filter
-      select_tag("group_id", options_from_collection_for_select(Group.all.insert(0, Group.new(:id => nil, :name => "Show All Groups")), "id", "name", params[:group_id].to_i))
+      select_tag("group_id", options_from_collection_for_select(Group.all.to_a.insert(0, Group.new(:id => nil, :name => "Show All Groups")), "id", "name", params[:group_id].to_i))
     end
 
     # Fetches a list of categories for a cms_drop_down. Will prompt users to create Categories/Categories types if the proper ones don't exist.

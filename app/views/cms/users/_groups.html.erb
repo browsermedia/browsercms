@@ -1,7 +1,7 @@
 <div class="fields checkbox_group no_check_all">
   <label>Groups</label>
   <div class="checkboxes">
-    <% Cms::Group.find(:all).each do |g| %>
+    <% Cms::Group.all.each do |g| %>
       <div class="checkbox_fields">
         <%= check_box_tag("group_ids[]", g.id, group_ids.include?(g.id), :id => "group_id_#{g.id}") %> <label for="group_id_<%= g.id -%>"><%= g.name %></label>
       </div>

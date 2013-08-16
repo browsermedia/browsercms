@@ -21,7 +21,7 @@
             <%= link_to user.email, "mailto:#{user.email}" %>
           </td>
           <td>
-              <% user.groups.all(:order => "#{Cms::Group.table_name}.name").each do |g| %>
+              <% user.groups.order("#{Cms::Group.table_name}.name").each do |g| %>
                   <%= g.name %>
               <% end %>
           </td>
