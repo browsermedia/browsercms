@@ -45,7 +45,10 @@ module Cms::RouteExtensions
     # Handle 'stock' attachments
     get "/attachments/:id/:filename", :to=>"cms/attachments#download"
     get "/", :to=>"cms/content#show"
-    get "*path", :to=>"cms/content#show"
+
+    # Only need :POST to support  portlets that are acting like controllers.
+    # Ideally we could get rid of this need.
+    match "*path", :to=>"cms/content#show", via: [:get, :post]
   end
 
   # Preserving for backwards compatibility with bcms-3.3.x and earlier.

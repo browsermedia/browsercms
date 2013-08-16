@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class SitemapPerformanceTest < ActionController::IntegrationTest
+class SitemapPerformanceTest < ActionDispatch::IntegrationTest
   include Cms::IntegrationTestHelper
 
   def setup

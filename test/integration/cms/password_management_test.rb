@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class PasswordManagementTest < ActionController::IntegrationTest
+class PasswordManagementTest < ActionDispatch::IntegrationTest
 
   def setup
     given_there_is_a_cmsadmin
