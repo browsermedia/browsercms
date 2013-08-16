@@ -10,4 +10,10 @@ class CategoryTypeTest < ActiveSupport::TestCase
     category_type = Cms::CategoryType.new(:name => "Test")
     assert category_type.save
   end
+
+  test ".named" do
+    colors = Cms::CategoryType.create!(:name => "Colors")
+    flowers = Cms::CategoryType.create!(:name => "Flowers")
+    assert_equal [colors], Cms::CategoryType.named("Colors").to_a
+  end
 end

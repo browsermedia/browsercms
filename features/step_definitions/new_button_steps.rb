@@ -8,11 +8,11 @@ When /^I press the 'New' menu button$/ do
 end
 
 Then /^it should add a page in the same section I as the page I was editing$/ do
-  should_see_a_page_titled("New Page")
+  should_see_a_page_title_and_header("New Page")
 end
 
 Then /^it should add a page in the root section$/ do
-  should_see_a_page_titled("New Page")
+  should_see_a_page_title_and_header("New Page")
 end
 
 When /^I am working with a content type$/ do
@@ -20,7 +20,7 @@ When /^I am working with a content type$/ do
 end
 
 Then /^it should add a new item of that type$/ do
-  should_see_a_page_titled("Add New Text")
+  should_see_a_page_title_and_header("Add New Text")
 end
 
 When /^I am managing users$/ do
@@ -28,11 +28,11 @@ When /^I am managing users$/ do
 end
 
 Then /^it should add a new user$/ do
-  should_see_a_page_titled "New User"
+  should_see_a_page_title_and_header "New User"
 end
 When /^I am managing groups$/ do
   visit '/cms/groups'
 end
 Then /^it should add a new redirect$/ do
-  should_see_a_page_titled "New Redirect"
+  should_see_a_page_title_and_header "New Redirect"
 end

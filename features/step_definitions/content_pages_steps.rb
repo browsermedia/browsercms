@@ -1,6 +1,10 @@
 # ex: Then I should see a page titled "Home"
 Then /^I should see a page titled "([^"]*)"$/ do |page_title|
-  should_see_a_page_titled(page_title)
+  should_see_a_page_title_and_header(page_title)
+end
+
+Then /^I should see a page with a header "([^"]*)"$/ do |page_header|
+  should_see_a_page_header(page_header)
 end
 
 When /^the page header should be "([^"]*)"$/ do |h1|
@@ -125,7 +129,7 @@ end
 
 Then /^I should see the CMS :forbidden page$/ do
   assert_equal 403, page.status_code
-  should_see_a_page_titled("Access Denied")
+  should_see_a_page_title_and_header("Access Denied")
 end
 
 Given /^I am adding a page to the root section$/ do
@@ -211,7 +215,7 @@ Then /^that page should be published$/ do
 end
 
 Then /^I should end up on that page$/ do
-  should_see_a_page_titled(most_recently_created_page.title)
+  should_see_a_page_title_and_header(most_recently_created_page.title)
 end
 
 Then /^the page frame should contain the following:$/ do |table|
@@ -224,4 +228,11 @@ end
 
 Then /^I should the content rendered inside the editor frame$/ do
   assert page_has_editor_iframe?()
+end
+Then /^I should return to List Users$/ do
+  should_see_a_page_header 'List Users'
+end
+
+Then /^I should see the Home page$/ do
+  should_see_a_page_titled 'Home'
 end

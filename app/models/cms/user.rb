@@ -14,7 +14,6 @@ module Cms
     #validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => "should be an email address, ex. xx@xx.com"
     validates_format_of :email, :with => /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/, :message => "should be an email address, ex. xx@xx.com"
 
-   #attr_accessible :login, :email, :name, :first_name, :last_name, :password, :password_confirmation, :expires_at
 
     has_many :user_group_memberships, :class_name => 'Cms::UserGroupMembership'
     has_many :groups, :through => :user_group_memberships, :class_name => 'Cms::Group'
@@ -25,9 +24,12 @@ module Cms
       where(["#{Permission.table_name}.name = ? OR #{Permission.table_name}.name = ?", "edit_content", "publish_content"])
         .includes({:groups => :permissions})
     end
-    #scope :able_to_edit_or_publish_content,
-    #      :include => {:groups => :permissions},
-    #      :conditions => ["#{Permission.table_name}.name = ? OR #{Permission.table_name}.name = ?", "edit_content", "publish_content"]
+
+    extend DefaultAccessible
+
+    def self.permitted_params
+      super + [:password, :password_confirmation]
+    end
 
     def self.current
       Thread.current[:cms_user]

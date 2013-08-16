@@ -53,7 +53,7 @@ Feature: Manage Users
     And I add a new user
     Then I should see a page titled "New User"
     When fill valid fields for a new user named "testuser"
-    Then I should see a page titled "User Browser"
+    Then I should return to List Users
     And I should see the following content:
       | testuser |
 
@@ -78,11 +78,11 @@ Feature: Manage Users
     And I fill in "Password" with "different"
     And I fill in "Confirm Password" with "different"
     And I press "Save"
-    Then I should see a page titled "User Browser"
+    Then I should return to List Users
     When I login as:
       | login    | password  |
       | testuser | different |
-    Then I should see a page titled "Home"
+    Then I should see the Home page
 
   Scenario: Multiple Pages of Users
     Given there are 20 users

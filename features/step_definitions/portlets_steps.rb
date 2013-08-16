@@ -101,5 +101,5 @@ Then /^the page should show content but not the error$/ do
   refute page.has_content?('Exception'), "Exception should not appear on the page"
   refute page.has_content?('Error'), "The word 'Error' should not appear on the page"
   assert page.has_content?('hello'), "Should see other content"
-  should_see_a_page_titled(most_recently_created_page.title)
+  should_see_a_page_title_and_header(most_recently_created_page.title)
 end

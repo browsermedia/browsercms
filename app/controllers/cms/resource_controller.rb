@@ -12,7 +12,7 @@ class ResourceController < Cms::BaseController
   end
 
   def create
-    @object = build_object(params[variable_name])
+    @object = build_object(resource_params)
     if @object.save
       flash[:notice] = "#{resource_name.singularize.titleize} '#{object_name}' was created"
       redirect_to after_create_url
@@ -36,7 +36,7 @@ class ResourceController < Cms::BaseController
 
   def update
     @object = resource.find(params[:id])
-    if @object.update_attributes(params["#{variable_name}"])
+    if @object.update_attributes(resource_params())
       flash[:notice] = "#{resource_name.singularize.titleize} '#{object_name}' was updated"
       redirect_to after_update_url
     else
@@ -58,6 +58,17 @@ class ResourceController < Cms::BaseController
   end
 
   protected
+
+  # Returns the permitted parameters for the current resource, based on:
+  # 1. The name of the resource (i.e. :page)
+  # 2. The permitted parameters on the resource (i.e. Page.permitted_params)
+  #
+  # Resources can override permitted_params to add/remove fields as needed.
+  def resource_params
+    params.require("#{variable_name}").permit(resource.permitted_params)
+  end
+
+
   def resource_name
     controller_name
   end

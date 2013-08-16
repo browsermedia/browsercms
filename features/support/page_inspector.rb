@@ -18,13 +18,21 @@ module PageInspector
     end
   end
 
+  def should_see_a_page_header(page_header)
+    assert page.has_content?(page_header)
+  end
+
+  def should_see_a_page_title_and_header(page_title)
+    should_see_a_page_header(page_title)
+    should_see_a_page_titled(page_title)
+  end
+
   def should_see_a_page_titled(page_title)
-    assert page.has_content?(page_title)
-    assert page.has_title?(page_title), "Expected a page with a title '#{page_title}'."
+    assert page.has_title?(page_title), "Expected a page with a title '#{page_title}' but it was '#{page.title}'."
   end
 
   def should_see_cms_404_page
-    should_see_a_page_titled "Page Not Found"
+    should_see_a_page_title_and_header "Page Not Found"
     assert_equal 404, page.status_code
     assert page.has_content?("Page Not Found")
   end
