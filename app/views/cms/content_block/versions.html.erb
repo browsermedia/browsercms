@@ -53,7 +53,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @block.versions.all(:order => "version desc").each_with_index do |r, i| %>
+      <% @block.versions.order("version desc").each_with_index do |r, i| %>
         <tr id="<%= content_type.content_block_type.singularize %>_<%= r.version %>">
           <td>
             <div class="dividers">

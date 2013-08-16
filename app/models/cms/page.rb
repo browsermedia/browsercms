@@ -67,11 +67,13 @@ class Cms::Page < ActiveRecord::Base
 
     ver = obj.class.versioned? ? obj.version : nil
     if ver
-      {:include => :connectors,
-       :conditions => ["#{connectors_table}.connectable_id = ? and #{connectors_table}.connectable_type = ? and #{connectors_table}.connectable_version = ? and #{connectors_table}.page_version = #{Cms::Page.table_name}.version", obj.id, obj.class.base_class.name, ver]}
+      where(["#{connectors_table}.connectable_id = ? and #{connectors_table}.connectable_type = ? and #{connectors_table}.connectable_version = ? and #{connectors_table}.page_version = #{Cms::Page.table_name}.version", obj.id, obj.class.base_class.name, ver])
+          .includes(:connectors)
+          .references(:connectors)
     else
-      {:include => :connectors,
-       :conditions => ["#{connectors_table}.connectable_id = ? and #{connectors_table}.connectable_type = ? and #{connectors_table}.page_version = #{Cms::Page.table_name}.version", obj.id, obj.class.base_class.name]}
+      where(["#{connectors_table}.connectable_id = ? and #{connectors_table}.connectable_type = ? and #{connectors_table}.page_version = #{Cms::Page.table_name}.version", obj.id, obj.class.base_class.name])
+                .includes(:connectors)
+                .references(:connectors)
     end
   }
 

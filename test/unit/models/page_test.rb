@@ -247,6 +247,16 @@ module Cms
 
     end
 
+    test "#currently_connected_to" do
+      page = create(:page)
+      block = create(:html_block)
+
+      page.add_content(block)
+      page.publish!
+
+      assert_equal [page], Cms::Page.currently_connected_to(block).to_a
+    end
+
     def test_adding_a_block_to_a_page_puts_page_in_draft_mode
       @page = create(:page, :section => root_section, :publish_on_save => true)
       @block = create(:html_block, :publish_on_save => true)

@@ -1,8 +1,10 @@
 ## Tests
 
 ### Functionals:
-2F, 1E
+1F, 0E
 
+
+Need to upgrade will_paginate
 
 ## Cleanup
 

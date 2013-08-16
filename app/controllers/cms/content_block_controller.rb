@@ -114,7 +114,7 @@ module Cms
 
     def usages
       load_block_draft
-      @pages = @block.connected_pages.all(:order => 'name')
+      @pages = @block.connected_pages.order(:name)
     end
 
     def new_button_path

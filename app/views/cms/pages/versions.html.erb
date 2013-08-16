@@ -55,7 +55,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @page.versions.all(:order => "version desc").each_with_index do |r, i| %>
+      <% @page.versions.order("version desc").each_with_index do |r, i| %>
         <% current = @page.version == r.version %>
         <%= tag :tr, {:id => "revision_#{r.version}", :class => current ? "current" : nil}, false %>
           <td class="first"></td>
