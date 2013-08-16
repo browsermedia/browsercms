@@ -92,7 +92,9 @@ class SoftPublishingTest < ActiveSupport::TestCase
 
   test "find with deleted returns all records even marked as deleted" do
     @block.destroy
-    assert_not_nil Cms::HtmlBlock.find_with_deleted(@block.id)
+    deleted_block = Cms::HtmlBlock.find_with_deleted(id: @block.id)
+    assert_not_nil deleted_block
+    assert_equal @block.name, deleted_block.name
   end
 
   test "Marking as deleted should create a new record in the versions table" do

@@ -43,13 +43,10 @@ module Cms
       # See http://github.com/fernandoluizao/acts_as_active for an implementation of this
       module ClassMethods
 
-        # Returns all records, including those which are marked as deleted.
-        #
-        # Basically 'find' exactly how ActiveRecord originally implements it.
-        #
-        # @param args Same params as ActiveRecord.find
-        def find_with_deleted(* args)
-          self.unscoped.where(* args).first
+        # Returns a content block even if it is marked as deleted.
+        # @param [Hash] options Hash suitable to be passed to '#where'
+        def find_with_deleted(options)
+          self.unscoped.where(options).first
         end
 
         # Returns a count of all records of this type, including those marked as deleted.

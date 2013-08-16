@@ -40,23 +40,6 @@ module Cms
               :position => connector.position)
       end
     end
-    #    scope :for_page_version, lambda { |pv| {where(:page_version => pv)} }
-    #    scope :for_connectable_version, lambda { |cv| {where(:connectable_version => cv)} }
-    #    scope :for_connectable, lambda { |c|
-    ##    puts "Finding for_connectable for #{c.id} and #{c.class.base_class.name}"
-    #      {where(:connectable_id => c.id, :connectable_type => c.class.base_class.name)}
-    #    }
-    #scope :in_container, lambda { |container| {:conditions => {:container => container}} }
-    #scope :at_position, lambda { |position| {:conditions => {:position => position}} }
-    #scope :like, lambda { |connector|
-    #  {:conditions => {
-    #      :connectable_id => connector.connectable_id,
-    #      :connectable_type => connector.connectable_type,
-    #      :connectable_version => connector.connectable_version,
-    #      :container => connector.container,
-    #      :position => connector.position
-    #  }}
-    #}
 
     validates_presence_of :page_id, :page_version, :connectable_id, :connectable_type, :container
 
@@ -70,7 +53,7 @@ module Cms
 
     def connectable_with_deleted
       c = if connectable_type.constantize.respond_to?(:find_with_deleted)
-            connectable_type.constantize.find_with_deleted(connectable_id)
+            connectable_type.constantize.find_with_deleted(id: connectable_id)
           else
             connectable_type.constantize.find(connectable_id)
           end

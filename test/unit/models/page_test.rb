@@ -682,6 +682,7 @@ module Cms
       assert_equal [first_connector_for(@page, @block)], @page.current_connectors(:bar)
 
     end
+
     test ".contents finds all non-deleted content items for the current version of the page" do
       assert_equal [@conn.connectable], @page.contents
     end
