@@ -12,13 +12,8 @@ cucumber features/content_blocks/file_blocks.feature:10 # Scenario: View a File 
 cucumber features/content_blocks/file_blocks.feature:19 # Scenario: Creating File block
 cucumber features/content_blocks/file_blocks.feature:30 # Scenario: Creating a File block with errors
 cucumber features/content_blocks/manage_images.feature:11 # Scenario: List Images
-
 cucumber features/email_messages.feature:8 # Scenario: Multiple Pages
 cucumber features/manage_groups.feature:7 # Scenario: Create a new content editor group
-cucumber features/manage_page_routes.feature:19 # Scenario: Create Page Route
-cucumber features/manage_page_routes.feature:31 # Scenario: Edit Page Route
-cucumber features/manage_redirects.feature:8 # Scenario: Create Redirect
-cucumber features/manage_redirects.feature:21 # Scenario: Update Redirects
 cucumber features/manage_sections.feature:7 # Scenario: Create Section
 cucumber features/manage_tasks.feature:7 # Scenario: Assign Home Page as a Task
 cucumber features/page_templates.feature:7 # Scenario: Add a Page Template
