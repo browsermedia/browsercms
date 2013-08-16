@@ -236,3 +236,7 @@ end
 Then /^I should see the Home page$/ do
   should_see_a_page_titled 'Home'
 end
+
+Then /^I should see the View Text page$/ do
+  should_see_a_page_titled "Content Library / View Text"
+end

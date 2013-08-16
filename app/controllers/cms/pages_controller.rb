@@ -23,7 +23,7 @@ module Cms
     end
 
     def create
-      @page = Page.new(params[:page])
+      @page = Page.new(page_params)
       @page.section = @section
       if @page.save_draft
         flash[:notice] = "Page was '#{@page.name}' created."

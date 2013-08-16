@@ -11,13 +11,8 @@ cucumber features/content_blocks/add_images.feature:13 # Scenario: Creating imag
 cucumber features/content_blocks/file_blocks.feature:10 # Scenario: View a File block
 cucumber features/content_blocks/file_blocks.feature:19 # Scenario: Creating File block
 cucumber features/content_blocks/file_blocks.feature:30 # Scenario: Creating a File block with errors
-cucumber features/content_blocks/manage_html_blocks.feature:17 # Scenario: Save but not publish a New Block
-cucumber features/content_blocks/manage_html_blocks.feature:28 # Scenario: Publishing a New Block
-cucumber features/content_blocks/manage_html_blocks.feature:39 # Scenario: Publishing an existing block
 cucumber features/content_blocks/manage_images.feature:11 # Scenario: List Images
-cucumber features/content_blocks/manage_pages.feature:7 # Scenario: Edit Page
-cucumber features/content_blocks/manage_pages.feature:11 # Scenario: Creating Page as unpublished
-cucumber features/content_blocks/manage_pages.feature:15 # Scenario: Publishing a Page (which was unpublished)
+
 cucumber features/email_messages.feature:8 # Scenario: Multiple Pages
 cucumber features/manage_groups.feature:7 # Scenario: Create a new content editor group
 cucumber features/manage_page_routes.feature:19 # Scenario: Create Page Route
