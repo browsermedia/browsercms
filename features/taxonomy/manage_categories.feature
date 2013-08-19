@@ -18,7 +18,7 @@ Feature: Manage Categories
   Scenario: Add Category with no category types
     When no category types exist
     And I add a new category
-    Then I should see "Please Create A Category Type"
+    Then I should see "create a category type"
 
 
 

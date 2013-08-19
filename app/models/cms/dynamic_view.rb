@@ -58,7 +58,7 @@ module Cms
     end
 
     def self.form_name
-      ActiveModel::Naming.singular(self)
+      ::ActiveModel::Naming.singular(self)
     end
 
     def file_name

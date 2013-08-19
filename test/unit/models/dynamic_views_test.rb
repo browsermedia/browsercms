@@ -14,6 +14,10 @@ class Cms::DynamicViewsTest < ActiveSupport::TestCase
 
   end
 
+  test "#form_name" do
+    assert_equal "cms_page_template", Cms::PageTemplate.form_name
+  end
+
   test "version_foreign_key" do
     assert_equal :original_record_id, Cms::PageTemplate.version_foreign_key
   end

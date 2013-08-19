@@ -17,7 +17,7 @@ module Cms
     end
 
     def create
-      @view = dynamic_view_type.new(params[view_param_name])
+      @view = dynamic_view_type.new(dynamic_view_params)
       if @view.save
         flash[:notice] = "#{dynamic_view_type} '#{@view.name}' was created"
         redirect_to cms_index_path_for(dynamic_view_type)
@@ -31,7 +31,7 @@ module Cms
     end
 
     def update
-      if @view.update_attributes(params[view_param_name])
+      if @view.update_attributes(dynamic_view_params)
         flash[:notice] = "#{dynamic_view_type} '#{@view.name}' was updated"
         redirect_to cms_index_path_for(dynamic_view_type)
       else
@@ -46,6 +46,10 @@ module Cms
     end
 
     protected
+
+    def dynamic_view_params
+      params.require(view_param_name).permit(dynamic_view_type.permitted_params)
+    end
 
     def view_param_name
       dynamic_view_type.resource_collection_name

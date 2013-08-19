@@ -19,7 +19,7 @@ module PageInspector
   end
 
   def should_see_a_page_header(page_header)
-    assert page.has_content?(page_header)
+    assert page.has_content?(page_header), "Expected to have a header with '#{page_header}' but couldn't find it.'"
   end
 
   def should_see_a_page_title_and_header(page_title)
