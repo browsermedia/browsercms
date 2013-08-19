@@ -35,7 +35,12 @@ FactoryGirl.define do
     end
     m.sequence(:name) { |n| "TestImageBlock#{n}" }
     m.after(:build) { |f, evaluator|
-      f.attachments.build(:data => evaluator.attachment_file, :attachment_name => 'file', :parent => evaluator.parent, :data_file_path => evaluator.attachment_file_path)
+      f.attachments.build(:data => evaluator.attachment_file,
+                          :attachment_name => 'file',
+                          :parent => evaluator.parent,
+                          :data_file_path => evaluator.attachment_file_path
+      )
+      f.attachments.first.attachable = f
     }
     m.publish_on_save true
   end
@@ -49,6 +54,8 @@ FactoryGirl.define do
     m.sequence(:name) { |n| "TestFileBlock#{n}" }
     m.after(:build) { |f, evaluator|
       f.attachments.build(:data => evaluator.attachment_file, :attachment_name => 'file', :parent => evaluator.parent, :data_file_path => evaluator.attachment_file_path)
+      f.attachments.first.attachable = f
+
     }
     m.publish_on_save true
 

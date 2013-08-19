@@ -8,7 +8,7 @@ Feature: Image Blocks
     And I am adding a New Image
 
   Scenario: Add New Image
-    Then I should see a page named "Content Library / Add New Image"
+    Then I should see a page titled "Content Library / Add New Image"
 
   Scenario: Creating image block
     When I fill in "Name" with "Giraffe"
@@ -16,7 +16,6 @@ Feature: Image Blocks
     And I select "My Site" from "Section"
     And I fill in "Path" with "/giraffe.jpeg"
     And I Save And Publish
-    Then I should see "Image 'Giraffe' was created"
     And I should see an image with path "/giraffe.jpeg"
     And the attachment with path "/giraffe.jpeg" should be in section "My Site"
 

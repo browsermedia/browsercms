@@ -111,7 +111,7 @@ module Cms
       def configuration_value(block_class, name_of_attachment, key)
         class_definitions = definitions[block_class]
         if class_definitions == nil
-          raise "Couldn't find any definitions for '#{block_class}'."
+          raise "Couldn't find any definitions for '#{block_class}'. Available definitions are #{definitions.inspect}."
         end
         attachment_definition = class_definitions[name_of_attachment]
         if attachment_definition == nil

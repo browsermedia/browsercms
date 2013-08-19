@@ -7,7 +7,6 @@ cucumber features/content_blocks/add_images.feature:13 # Scenario: Creating imag
 cucumber features/content_blocks/file_blocks.feature:10 # Scenario: View a File block
 cucumber features/content_blocks/file_blocks.feature:19 # Scenario: Creating File block
 cucumber features/content_blocks/file_blocks.feature:30 # Scenario: Creating a File block with errors
-cucumber features/content_blocks/manage_images.feature:11 # Scenario: List Images
 
 
 Need to upgrade will_paginate to fix deprecation errors before removing deprecated-finders.
