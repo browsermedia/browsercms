@@ -1,5 +1,6 @@
 <%= f.cms_text_field :name %>
-<%= f.cms_text_field :subject, 
+<%= f.cms_text_field :sender, :instructions => "Enter the email for the 'from' field on any emails sent out." %>
+<%= f.cms_text_field :subject,
   :default_value => "A link you might be interested in" %>
 <%= f.cms_text_field :success_url, 
   :instructions => "Leave blank to return the same page" %>

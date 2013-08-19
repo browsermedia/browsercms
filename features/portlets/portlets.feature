@@ -29,7 +29,7 @@ Feature: Portlets
       | name          | template    |
       | A new portlet | Hello World |
     When I request /cms/content_library
-    And follow "Portlet"
+    And choose to view "Portlet" from the main menu
     Then I should see the following content:
       | A new portlet |
     When I view that portlet
@@ -42,7 +42,7 @@ Feature: Portlets
       | A new portlet | Hello World |
     When I delete that portlet
     And I request /cms/content_library
-    And I click on "Portlet"
+    And choose to view "Portlet" from the main menu
     And I should not see "A new portlet"
     When I view that portlet
     Then I should see the following content:

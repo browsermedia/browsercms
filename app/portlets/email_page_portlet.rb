@@ -10,9 +10,10 @@ class EmailPagePortlet < Cms::Portlet
 
   #----- Handlers --------------------------------------------------------------
   def deliver
-    message = Cms::EmailMessage.new(params[:email_message])
+    message = Cms::EmailMessage.new(email_message_params())
     message.subject = self.subject
-    message.body = "#{params[:email_page_portlet_url]}\n\n#{message.body}"    
+    message.body = "#{params[:email_page_portlet_url]}\n\n#{message.body}"
+    message.sender = self.sender
     if message.save
       url_for_success
     else
@@ -21,5 +22,9 @@ class EmailPagePortlet < Cms::Portlet
       url_for_failure
     end
   end
-  
+
+  def email_message_params
+    params.require(:email_message).permit(Cms::EmailMessage.permitted_params)
+  end
+
 end

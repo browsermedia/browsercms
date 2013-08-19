@@ -31,7 +31,7 @@
             Content
             <b class="caret"></b>
           </a>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu" id="content-library-menu">
             <%= nav_link_to "Content Library", cms.content_library_path %>
             <%= divider_tag %>
             <% Cms::ContentTypeGroup.menu_list.each_with_index do |group, i| %>

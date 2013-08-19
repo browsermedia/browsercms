@@ -10,6 +10,7 @@ Feature: Email a Friend Portlet
     When I create a new "Email Page Portlet" portlet
     Then I should see a page named "Add New Portlet"
     When I fill in "Name" with "Hello"
+    And I fill in "Sender" with "hello@browsercms.org"
     And I click on "Save"
     Then I should not see "ERROR"
     Then I should see the following content:

@@ -13,9 +13,7 @@ cucumber features/content_blocks/file_blocks.feature:19 # Scenario: Creating Fil
 cucumber features/content_blocks/file_blocks.feature:30 # Scenario: Creating a File block with errors
 cucumber features/content_blocks/manage_images.feature:11 # Scenario: List Images
 cucumber features/email_messages.feature:8 # Scenario: Multiple Pages
-cucumber features/portlets/email_friend_portlet.feature:8 # Scenario: Add New Portlet
-cucumber features/portlets/portlets.feature:27 # Scenario: Viewing a portlet
-cucumber features/portlets/portlets.feature:39 # Scenario: Deleting a portlet
+
 
 Need to upgrade will_paginate to fix deprecation errors before removing deprecated-finders.
 

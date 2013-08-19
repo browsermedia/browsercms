@@ -244,3 +244,8 @@ end
 Then /^I should see the View Text page$/ do
   should_see_a_page_titled "Content Library / View Text"
 end
+When /^choose to view "([^"]*)" from the main menu$/ do |arg|
+  within('#content-library-menu') do
+    click_link arg
+  end
+end
