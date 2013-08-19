@@ -5,7 +5,7 @@
 <% end %>
 
 <%= content_for :button_bar do %>
-  <%= menu_button "Clear Page Cache", cache_path, :class => "http_delete"  %>
+  <%= menu_button "Clear Page Cache", cache_path, :class => "http_delete", :rel=>'clear-cache'  %>
 <% end %>
 
 <p style="font-size: larger; margin: 10px; line-height: 20px;">The CMS System caches pages which are frequently accessed by guest users to increase throughput. If data appears stale, you may manually clear this page cache.</p>

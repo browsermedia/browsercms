@@ -249,3 +249,7 @@ When /^choose to view "([^"]*)" from the main menu$/ do |arg|
     click_link arg
   end
 end
+
+When /^I clear the page cache$/ do
+  find(:rel, 'clear-cache').click
+end

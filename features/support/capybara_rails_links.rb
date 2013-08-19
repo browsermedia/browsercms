@@ -12,3 +12,9 @@ module Capybara
 
 end
 World(Capybara::RailsLinks)
+
+
+# Find and return a link by its :rel attribute.
+Capybara.add_selector(:rel) do
+  xpath {|rel| ".//a[@rel='#{rel}']"}
+end
