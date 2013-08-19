@@ -30,13 +30,13 @@ end
 
 Given /^there are (\d+) send email messages$/ do |i|
   i.to_i.times do
-    Cms::EmailMessage.create!(:recipients => "example@browsermedia.com")
+    Cms::EmailMessage.create!(:recipients => "example@browsermedia.com", :delivered_at => 1.day.ago)
   end
 end
 
 Then /^I should see the CKEditor$/ do
-  assert page.has_css?('script', :src=>"/bcms/ckeditor/ckeditor.js"), "Should include the ckeditor file"
-  assert page.has_css?('script', :src=>"/bcms/ckeditor/editor.js"), "Should include the ckeditor file"
+  selector = 'script[src="/assets/bcms/ckeditor_load.js"]'
+  assert page.has_css? selector, visible: false
 end
 
 Then /^I should see a widget to select which editor to use$/ do
