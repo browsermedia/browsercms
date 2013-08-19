@@ -2,8 +2,6 @@
 
 ### Broken Features (11F):
 
-cucumber features/caching.feature:7 # Scenario: Clear Page Cache
-cucumber features/commands/confirm_aruba_works.feature:6 # Scenario: Create a new Rails project
 cucumber features/content_blocks/add_images.feature:10 # Scenario: Add New Image
 cucumber features/content_blocks/add_images.feature:13 # Scenario: Creating image block
 cucumber features/content_blocks/file_blocks.feature:10 # Scenario: View a File block

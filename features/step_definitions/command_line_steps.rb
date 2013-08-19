@@ -4,7 +4,7 @@ Then /^a rails application named "([^"]*)" should exist$/ do |app_name|
   self.project_name = app_name
   check_directory_presence [project_name], true
   expect_project_directories %w{ app config db }
-  expect_project_files %w{script/rails Gemfile }
+  expect_project_files %w{bin/rails Gemfile }
 end
 
 Given /^a rails application named "([^"]*)" exists$/ do |name|

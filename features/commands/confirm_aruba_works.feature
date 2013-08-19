@@ -1,5 +1,7 @@
+@cli
 Feature: Aruba Behavior
   Verifies that Aruba is configured correctly and that it is testing things as I expect them to.
+  These tests might break if basic Rails or Aruba/Cucumber behavior breaks.
 
   Background:
 
