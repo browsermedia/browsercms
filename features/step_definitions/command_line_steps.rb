@@ -25,7 +25,7 @@ end
 Then /^a rails engine named "([^"]*)" should exist$/ do |engine_name|
   check_directory_presence [engine_name], true
   expect_project_directories %w{ app config lib }
-  expect_project_files ["script/rails", "Gemfile", "#{engine_name}.gemspec"]
+  expect_project_files ["bin/rails", "Gemfile", "#{engine_name}.gemspec"]
 end
 
 When /^BrowserCMS should be added the \.gemspec file$/ do
