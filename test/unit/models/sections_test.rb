@@ -7,8 +7,8 @@ module Cms
       @root = create(:root_section)
     end
 
-    test ".permitted_params" do
-      assert Cms::Section.permitted_params.include?(:group_ids)
+    test ".permitted_params allows mass assignment of :group_ids" do
+      assert Cms::Section.permitted_params.include?({group_ids: []})
     end
 
     test "prepending_path" do

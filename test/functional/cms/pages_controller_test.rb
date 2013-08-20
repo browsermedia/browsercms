@@ -134,10 +134,10 @@ module Cms
     def test_create_permissions
       login_as(@user)
 
-      post :create, :section_id => @editable_section, :name => "Another editable page"
-      assert_response :success
+      post :create, :section_id => @editable_section, page: {:name => "Another editable page"}
+      assert_response 302
 
-      post :create, :section_id => @noneditable_section, :name => "Another non-editable page"
+      post :create, :section_id => @noneditable_section, page: {:name => "Another non-editable page"}
       assert_response 403
       assert_template "cms/shared/access_denied"
     end
