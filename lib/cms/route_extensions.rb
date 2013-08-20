@@ -22,8 +22,8 @@ module Cms::RouteExtensions
     end
 
     if content_block.versioned?
-      send("get", "/#{content_block_name}/:id/version/:version", :to=>"#{content_block_name}#version", :as=>"version_cms_#{content_block_name}".to_sym)
-      send("put", "/#{content_block_name}/:id/revert_to/:version", :to=>"#{content_block_name}#revert_to", :as=>"revert_to_cms_#{content_block_name}".to_sym)
+      send("get", "/#{content_block_name}/:id/version/:version", :to => "#{content_block_name}#version", :as => "version_cms_#{content_block_name}".to_sym)
+      send("put", "/#{content_block_name}/:id/revert_to/:version", :to => "#{content_block_name}#revert_to", :as => "revert_to_cms_#{content_block_name}".to_sym)
     end
   end
 
@@ -43,12 +43,12 @@ module Cms::RouteExtensions
     add_page_routes_defined_in_database
 
     # Handle 'stock' attachments
-    get "/attachments/:id/:filename", :to=>"cms/attachments#download"
-    get "/", :to=>"cms/content#show"
+    get "/attachments/:id/:filename", :to => "cms/attachments#download"
+    get "/", :to => "cms/content#show"
 
     # Only need :POST to support  portlets that are acting like controllers.
     # Ideally we could get rid of this need.
-    match "*path", :to=>"cms/content#show", via: [:get, :post]
+    match "*path", :to => "cms/content#show", via: [:get, :post]
   end
 
   # Preserving for backwards compatibility with bcms-3.3.x and earlier.
@@ -66,14 +66,25 @@ module Cms::RouteExtensions
       path = "#{klass.path}/:slug"
       controller_name = klass.name.demodulize.pluralize.underscore
       get path, to: "cms/#{controller_name}#show_via_slug"
-      get "cms/#{klass.path}/:id/inline", to: "cms/#{controller_name}#inline", as: "inline_cms_#{klass.name.demodulize.underscore}"
+      route_name = "inline_cms_#{klass.name.demodulize.underscore}"
+      unless route_exists?(route_name)
+        get "cms/#{klass.path}/:id/inline", to: "cms/#{controller_name}#inline", as: route_name
+      end
+
     end
+
+  end
+
+  # Determine if a named route already exists, since Rails 4 will object if a duplicate named route is defined now.
+  # Otherwise in development, when routes are reloaded the CMS would throw errors.
+  def route_exists?(route_name)
+    Rails.application.routes.named_routes[route_name]
   end
 
   def add_page_routes_defined_in_database
     if Cms::PageRoute.can_be_loaded?
       Cms::PageRoute.order("#{Cms::PageRoute.table_name}.name").each do |r|
-        match r.pattern, :to=>r.to, :as=>r.route_name, :_page_route_id=>r.page_route_id, :via=>r.via, :constraints=>r.constraints
+        match r.pattern, :to => r.to, :as => r.route_name, :_page_route_id => r.page_route_id, :via => r.via, :constraints => r.constraints
       end
     end
   end
