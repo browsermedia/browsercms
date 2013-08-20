@@ -14,7 +14,7 @@ Feature:
       acts_as_content_block
     end
     """
-    And a file named "test/unit/product_test.rb" should exist
+    And a file named "test/models/product_test.rb" should exist
     And the file "app/controllers/cms/products_controller.rb" should contain:
     """
     class Cms::ProductsController < Cms::ContentBlockController

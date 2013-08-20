@@ -15,22 +15,28 @@ module Cms
 
     def method_missing(method_name, *args)
       if md = method_name.to_s.match(/^create_(.+)$/)
-        # We search the CMS namespace first.
-        # for things like DynamicPortlets "Cms::DynamicPortlet".constantize returns "DynamicPortlet"
-        model_name = "Cms/#{md[1]}".classify.constantize.name        
-        begin
-          #Make sure this is an active record class
-          super unless model_name.classify.constantize.ancestors.include?(ActiveRecord::Base)
-        rescue NameError => e
-          super
-        end
-        self.create(model_name, args[0], args[1] || {})
+        klass = model_class(md[1])
+        self.create(klass.name, args[0], args[1] || {})
       elsif @data && @data.has_key?(method_name)
         record = @data[method_name][args.first]
         record ? record.class.find(record.id) : nil
       else
         super
       end
+    end
+
+    # We search the CMS namespace first.
+    # for things like DynamicPortlets "Cms::DynamicPortlet".constantize returns "DynamicPortlet"
+    def model_class(model_name)
+      klass = begin
+        "Cms/#{model_name}".classify.constantize
+      rescue NameError => e
+        model_name.classify.constantize
+      end
+      unless klass.ancestors.include?(ActiveRecord::Base)
+        raise "Can't create an instance of #{klass} because its not an ActiveRecord instance."
+      end
+      klass
     end
 
 

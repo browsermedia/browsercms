@@ -1,13 +1,15 @@
 ## Tests
 
-### Broken Features (11F):
+### Broken Features (6F):
 
-cucumber features/content_blocks/add_images.feature:10 # Scenario: Add New Image
-cucumber features/content_blocks/add_images.feature:13 # Scenario: Creating image block
-cucumber features/content_blocks/file_blocks.feature:10 # Scenario: View a File block
-cucumber features/content_blocks/file_blocks.feature:19 # Scenario: Creating File block
-cucumber features/content_blocks/file_blocks.feature:30 # Scenario: Creating a File block with errors
+All of these are commandline based.
 
+cucumber features/commands/generate_module.feature:7 # Scenario: Create a BrowserCMS module
+cucumber features/commands/install_browsercms.feature:13 # Scenario: Install CMS into existing project
+cucumber features/commands/upgrade_modules_to_3_4_0_from_3_1_x.feature:10 # Scenario: Upgrade a Module from 3.1.x to 3.4.x
+cucumber features/commands/upgrading_modules.feature:9 # Scenario: Verify a Rails 3.0 app was created
+cucumber features/commands/upgrading_modules.feature:24 # Scenario: Upgrade a Module from 3.3.x to 3.4.x
+cucumber features/generators/content_blocks_for_modules.feature:9 # Scenario: Generate content block in a module
 
 Need to upgrade will_paginate to fix deprecation errors before removing deprecated-finders.
 

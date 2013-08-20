@@ -1,4 +1,4 @@
-require 'rails/generators/active_record/migration'
+require 'rails/generators/migration'
 require 'rails/generators/resource_helpers'
 
 module Cms

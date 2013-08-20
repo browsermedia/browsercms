@@ -10,7 +10,7 @@ Feature:
     When I run `bcms demo`
     Then the output should contain:
     """
-    bcms demo requires at least 1 argument: "bcms demo [NAME]".
+    Usage: "bcms demo [NAME]"
     """
     And the exit status should be 0
 
