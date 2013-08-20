@@ -46,7 +46,6 @@ Feature: Generate Content Blocks
     """
     BcmsWidgets::Engine.routes.draw do
       content_blocks :products
-
     end
     """
 
