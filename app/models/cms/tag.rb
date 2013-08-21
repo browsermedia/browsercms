@@ -8,7 +8,10 @@ module Cms
 
     attr_accessor :size
     is_searchable
-    scope :named, lambda { |tag| {:conditions => ["#{table_name}.name = ? ", tag]} }
+
+    def self.named(tag)
+      where(name: tag)
+    end
 
     # Returns an array of tags with a #count attribute
     #

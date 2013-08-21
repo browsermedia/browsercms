@@ -4,7 +4,7 @@ module Cms
 class ResourceController < Cms::BaseController
 
   def index
-    instance_variable_set("@#{variable_name.pluralize}", resource.all(:order => order_by_column))
+    instance_variable_set("@#{variable_name.pluralize}", resource.order(order_by_column))
   end
 
   def new

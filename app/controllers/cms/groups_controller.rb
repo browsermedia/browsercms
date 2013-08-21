@@ -5,10 +5,7 @@ module Cms
     check_permissions :administrate
 
     def index
-      @groups = Group.paginate(
-          :include => :group_type,
-          :page => params[:page],
-          :order => params[:order] || "#{Group.table_name}.name")
+      @groups = Group.includes(:group_type).paginate(:page => params[:page]).order(params[:order] || :name)
     end
 
     protected

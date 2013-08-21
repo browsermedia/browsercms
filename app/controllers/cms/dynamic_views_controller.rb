@@ -9,7 +9,7 @@ module Cms
     helper_method :dynamic_view_type
 
     def index
-      @views = dynamic_view_type.paginate(:page => params[:page], :order => "name")
+      @views = dynamic_view_type.paginate(:page => params[:page]).order("name")
     end
 
     def new

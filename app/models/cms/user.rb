@@ -23,6 +23,7 @@ module Cms
     def self.able_to_edit_or_publish_content
       where(["#{Permission.table_name}.name = ? OR #{Permission.table_name}.name = ?", "edit_content", "publish_content"])
         .includes({:groups => :permissions})
+        .references(:permissions)
     end
 
     extend DefaultAccessible

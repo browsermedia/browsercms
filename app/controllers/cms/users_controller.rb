@@ -31,7 +31,7 @@ class UsersController < Cms::ResourceController
     per_page = params[:per_page] || 10
 
     page_num = params[:page] ? params[:page].to_i : 1
-    @users = User.where(conditions).paginate(page: page_num, per_page: per_page).includes(:user_group_memberships).order("first_name, last_name, email")
+    @users = User.where(conditions).paginate(page: page_num, per_page: per_page).includes(:user_group_memberships).references(:user_group_memberships).order("first_name, last_name, email")
   end
 
   def change_password

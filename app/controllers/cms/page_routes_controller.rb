@@ -5,7 +5,7 @@ module Cms
     layout 'cms/administration'
 
     def index
-      @page_routes = PageRoute.paginate(:order => "name", :page => params[:page])
+      @page_routes = PageRoute.paginate(:page => params[:page]).order("name")
     end
 
     def new
