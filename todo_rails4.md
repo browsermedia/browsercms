@@ -1,14 +1,6 @@
 ## Tests
 
-### Broken Features (6F):
-
-All of these are commandline based.
-
-cucumber features/commands/install_browsercms.feature:13 # Scenario: Install CMS into existing project
-
-cucumber features/generators/content_blocks_for_modules.feature:9 # Scenario: Generate content block in a module
-
-Need to upgrade will_paginate to fix deprecation errors before removing deprecated-finders.
+DEPRECATION WARNING: ActionController::Integration is deprecated and will be removed, use ActionDispatch::Integration instead. (called from <top (required)> at /Users/ppeak/projects/browsercms/features/support/env.rb:40)
 
 ## Cleanup
 

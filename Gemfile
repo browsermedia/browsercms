@@ -2,7 +2,6 @@ source 'http://rubygems.org'
 
 # Load this project as a gem.
 gemspec
-gem "panoramic"
 gem "mysql2"
 
 gem 'yard', :groups=>[:development, :test]
@@ -15,13 +14,6 @@ gem "thin" # To avoid annoying Ruby 1.9.3/Rails/Webrick warnings - See http://st
 group :production do
   gem 'uglifier'
 end
-
-# Temporarily here for Upgrade
-#gem 'protected_attributes'
-gem 'rails-observers'
-gem 'actionpack-page_caching'
-gem 'actionpack-action_caching'
-gem 'activerecord-deprecated_finders'
 
 group :development do
   gem 'rake'

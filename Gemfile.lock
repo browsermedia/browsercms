@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     browsercms (4.0.0.a)
+      actionpack-page_caching (~> 1.0)
       ancestry (~> 2.0.0)
       bootstrap-sass
       ckeditor_rails (~> 4.0.1.1)
@@ -26,8 +27,6 @@ GEM
       erubis (~> 2.7.0)
       rack (~> 1.5.2)
       rack-test (~> 0.6.2)
-    actionpack-action_caching (1.0.0)
-      actionpack (>= 4.0.0.beta, < 5.0)
     actionpack-page_caching (1.0.0)
       actionpack (>= 4.0.0.beta, < 5.0)
     activemodel (4.0.0)
@@ -151,8 +150,6 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.0.0)
       sprockets-rails (~> 2.0.0)
-    rails-observers (0.1.2)
-      activemodel (~> 4.0)
     railties (4.0.0)
       actionpack (= 4.0.0)
       activesupport (= 4.0.0)
@@ -207,9 +204,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  actionpack-action_caching
-  actionpack-page_caching
-  activerecord-deprecated_finders
   aruba
   bluecloth
   browsercms!
@@ -224,9 +218,7 @@ DEPENDENCIES
   minitest-rails
   mocha
   mysql2
-  panoramic
   poltergeist
-  rails-observers
   rake
   ruby-prof
   sqlite3-ruby
