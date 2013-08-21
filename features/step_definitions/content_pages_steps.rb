@@ -61,16 +61,18 @@ When /^login as an authorized user$/ do
 end
 
 When /^I am editing the page at (#{PATH})$/ do |path|
-  visit("#{path}?show_page=show&mode=edit")
+  @last_page = Cms::Page.with_path(path).first
+  visit cms.edit_content_path(@last_page)
 end
 
-When /^I click the Select Existing Content button$/ do
-  container = "main"
-  click_link "insert_existing_content_#{container}"
+# Uses direct link rather than clicking which requires Javascript driver to do.
+When /^I choose to reuse content$/ do
+  visit cms.new_connector_path(container: 'main', page_id: @last_page.id)
 end
 
+# Uses direct link rather than clicking which requires Javascript driver to do.
 When /^I choose to add a new 'Text' content type to the page$/ do
-  click_link 'add_new_html_block'
+  visit cms.new_html_block_path('html_block[connect_to_container]' => 'main', 'html_block[connect_to_page_id]' => @last_page.id)
 end
 
 When /^I turn on edit mode for (.*)$/ do |path|
@@ -79,8 +81,9 @@ When /^I turn on edit mode for (.*)$/ do |path|
 end
 
 When /^I add new content to the page$/ do
-  container = "main"
-  click_link "Add new content to this container (#{container})"
+
+  #container = "main"
+  #click_link "Add new content to this container (#{container})"
 end
 Then /^I should see a list of selectable content types$/ do
   pending
@@ -172,18 +175,19 @@ Given /^a page exists with two versions$/ do
   @content_page.update_attributes(:name => "Version 2")
 end
 
-When /^I view the toolbar for version (\d+) of that page$/ do |version|
-  visit "/cms/toolbar?page_id=#{@content_page.id}&page_toolbar=1&page_version=#{version}"
+When /^I view version (\d+) of that page$/ do |version|
+  visit cms.version_cms_page_path(id: @content_page.id, version: version)
 end
 
 Then /^the toolbar should display a revert to button$/ do
   assert_equal 200, page.status_code
-  assert page.has_content? "Revert to this Version"
+  assert((page.has_content? "Revert to this Version"), "The Page toolbar does not display the revert to button.")
 end
 
 When /^the page content should contain "([^"]*)"$/ do |content|
-  visit("#{current_url}?show_page=show")
-  assert page.has_content?(content)
+  within_content_frame do
+    assert page.has_content?(content)
+  end
 end
 
 When /^I create a new page$/ do
@@ -208,4 +212,16 @@ end
 
 Then /^I should end up on that page$/ do
   should_see_a_page_titled(most_recently_created_page.title)
+end
+
+Then /^the page frame should contain the following:$/ do |table|
+  within_frame 'page_content' do
+    table.rows.each do |row|
+      assert page.has_content? row[0]
+    end
+  end
+end
+
+Then /^I should the content rendered inside the editor frame$/ do
+  assert page_has_editor_iframe?()
 end

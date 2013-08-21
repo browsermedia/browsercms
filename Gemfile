@@ -2,7 +2,7 @@ source 'http://rubygems.org'
 
 # Load this project as a gem.
 gemspec
-
+gem "panoramic"
 gem "mysql2"
 
 gem 'yard', :groups=>[:development, :test]
@@ -31,6 +31,7 @@ group :test, :development do
 end
 
 group :test do
+  gem 'poltergeist'
   gem 'm', '~> 1.2'
 
   gem 'factory_girl_rails', '3.3.0'
@@ -38,9 +39,9 @@ group :test do
   gem "sqlite3-ruby", :require => "sqlite3"
 
   # Cucumber and dependencies
-  gem 'capybara', '~>1.1'
+  gem 'capybara'
   gem 'database_cleaner'
-  gem 'cucumber-rails', require: false
+  gem 'cucumber-rails', :require=> false
   gem 'cucumber'
   gem 'launchy'
   gem 'ruby-prof'

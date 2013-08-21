@@ -36,17 +36,6 @@ Then /^the following sections exist:$/ do |table|
   end
 end
 
-When /^I should see the section search filter$/ do
-  terms = %w{
-    All sections
-    My Site
-    system
-  }
-  terms.each do |text|
-    assert page.has_content?(text)
-  end
-end
-
 Then /^I should see an image with path "([^"]*)"$/ do |image_path|
   page.has_xpath? "//img[@src=\"#{image_path}\"]"
 end
@@ -113,12 +102,6 @@ end
 
 Then /^the image should be reverted to version 1$/ do
   assert page.has_content? "Image Version 1"
-end
-
-Then /^the image should be in draft mode$/ do
-  within(".status") do
-    assert page.has_content? "draft"
-  end
 end
 
 When /^the image should be updated to version 3$/ do

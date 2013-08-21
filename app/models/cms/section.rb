@@ -2,26 +2,20 @@ module Cms
   class Section < ActiveRecord::Base
     flush_cache_on_change
 
-
-
-    #The node that links this section to its parent
-    has_one :section_node, :class_name => 'Cms::SectionNode', :as => :node, :inverse_of => :node
-    SECTION = "Cms::Section"
-    PAGE = "Cms::Page"
-    LINK = "Cms::Link"
-    VISIBLE_NODE_TYPES = [SECTION, PAGE, LINK]
-
-    include DefaultAccessible
-    attr_accessible :allow_groups, :group_ids, :name, :path, :root, :hidden
-
-    include Cms::Addressable
-    include Cms::Addressable::NodeAccessors
-
-
+    is_addressable no_dynamic_path: true, destroy_if: :deletable?
     # Cannot use dependent => :destroy to do this. Ancestry's callbacks trigger before the before_destroy callback.
     #   So sections would always get deleted since deletable? would return true
     after_destroy :destroy_node
     before_destroy :deletable?
+
+    SECTION = "Cms::Section"
+    PAGE = "Cms::Page"
+    LINK = "Cms::Link"
+    VISIBLE_NODE_TYPES = [SECTION, PAGE, LINK]
+    HIDDEN_NODE_TYPES = "Cms::Attachment"
+
+    include DefaultAccessible
+    attr_accessible :allow_groups, :group_ids, :name, :path, :root, :hidden
 
     has_many :group_sections, :class_name => 'Cms::GroupSection'
     has_many :groups, :through => :group_sections, :class_name => 'Cms::Group'
@@ -84,7 +78,7 @@ module Cms
     end
 
     def self.sitemap
-      SectionNode.of_type(VISIBLE_NODE_TYPES).fetch_nodes.arrange(:order => :position)
+      SectionNode.not_of_type(HIDDEN_NODE_TYPES).fetch_nodes.arrange(:order => :position)
     end
 
     def visible_child_nodes(options={})
@@ -135,11 +129,6 @@ module Cms
     # Callback to determine if this section can be deleted.
     def deletable?
       !root? && empty?
-    end
-
-    # Callback to clean up related nodes
-    def destroy_node
-      node.destroy
     end
 
     def editable_by_group?(group)

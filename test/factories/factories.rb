@@ -43,7 +43,7 @@ FactoryGirl.define do
   factory :file_block, :class => Cms::FileBlock do |m|
     ignore do
       parent { find_or_create_root_section }
-      attachment_file { mock_file(:original_filename=>'sample_upload.txt') }
+      attachment_file { mock_file(:original_filename => 'sample_upload.txt') }
       attachment_file_path { name }
     end
     m.sequence(:name) { |n| "TestFileBlock#{n}" }
@@ -64,7 +64,7 @@ FactoryGirl.define do
   end
 
   factory :content_editor_group, :parent => :group do |g|
-    g.after(:create){ |group|
+    g.after(:create) { |group|
       group.permissions << create_or_find_permission_named("administrate")
       group.permissions << create_or_find_permission_named("edit_content")
       group.permissions << create_or_find_permission_named("publish_content")
@@ -111,6 +111,7 @@ FactoryGirl.define do
     m.sequence(:name) { |n| "_page_partial_#{n}" }
     m.format "html"
     m.handler "erb"
+    m.body "Nonblank"
   end
 
   factory :page_route, :class => Cms::PageRoute do |m|
@@ -163,7 +164,7 @@ FactoryGirl.define do
     m.name "Test"
     m.path "/test"
     m.parent { find_or_create_root_section }
-    m.after(:create){ |section|
+    m.after(:create) { |section|
       section.allow_groups = :all
     }
   end
@@ -172,7 +173,7 @@ FactoryGirl.define do
     m.name "Protected Section"
     m.path "/protected-section"
     m.parent { find_or_create_root_section }
-    m.after(:create){ |protected_section|
+    m.after(:create) { |protected_section|
       secret_group = FactoryGirl.create(:group, :name => "Secret")
       secret_group.sections << protected_section
       privileged_user = FactoryGirl.create(:user, :login => "privileged")
@@ -207,7 +208,7 @@ FactoryGirl.define do
 
 # Represents a user who has actually created an account on the site.
   factory :registered_user, :parent => :user do |u|
-    u.after(:create){ |user|
+    u.after(:create) { |user|
       user.groups << Cms::Group.guest
     }
   end
@@ -219,7 +220,7 @@ FactoryGirl.define do
   end
 
   factory :cms_admin, :parent => :user do |m|
-    m.after(:create){ |user|
+    m.after(:create) { |user|
       group = FactoryGirl.create(:group, :group_type => FactoryGirl.create(:group_type, :cms_access => true))
       Cms::Authoring::PERMISSIONS.each do |p|
         group.permissions << create_or_find_permission_named(p)
@@ -229,7 +230,7 @@ FactoryGirl.define do
   end
 
   factory :content_editor, :parent => :user do |m|
-    m.after(:create){ |user|
+    m.after(:create) { |user|
       group = FactoryGirl.create(:group, :group_type => FactoryGirl.create(:group_type, :cms_access => true))
       Cms::Authoring::EDITOR_PERMISSIONS.each do |p|
         group.permissions << create_or_find_permission_named(p)
@@ -247,7 +248,7 @@ FactoryGirl.define do
   end
 
   # This is just for CMS testing
-  factory :portlet_with_helper, :class=>UsesHelperPortlet do |portlet|
+  factory :portlet_with_helper, :class => UsesHelperPortlet do |portlet|
     ignore do
       page_path "/random"
     end
@@ -257,5 +258,10 @@ FactoryGirl.define do
       page.add_content(content)
       page.publish!
     end
+  end
+
+  factory :product, :class => Product do |product|
+    product.name "Product"
+    product.sequence(:slug) { |n| "/product-#{n}" }
   end
 end

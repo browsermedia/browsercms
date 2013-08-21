@@ -1,0 +1,76 @@
+<%= content_for(:html_head) do %>
+    <%= javascript_include_tag "cms/content_library" %>
+    <%= stylesheet_link_tag "cms/content_library" %>
+<% end %>
+<% use_page_title "Content Library / List #{content_type.display_name_plural}" %>
+<% @toolbar_title = "List #{content_type.display_name_plural}" %>
+<%= content_for :button_bar, render('buttonbar') %>
+<table id="blocks" class="data cms-content-table table table-striped table-bordered table-hover"
+       data-content_type="<%= content_type.content_block_type %>"
+       data-versioned="<%= content_type.model_class.versioned? %>"
+       data-can_publish="<%= current_user.able_to?(:publish_content) %>"
+       data-plural_title="<%= content_type.display_name_plural %>"
+>
+  <thead>
+    <tr>
+      <% content_type.columns_for_index.each_with_index do |column, i| %>
+        <% attrs = if !content_type.model_class.respond_to?(:updated_at) && 
+                      !content_type.model_class.connectable? && 
+                      !content_type.model_class.publishable? && 
+                      content_type.columns_for_index.size == i + 1
+
+          end %>
+        <th<%=raw attrs %>>
+          <div class="dividers">
+            <% if column[:order] %>
+              <%= link_to column[:label], cms_sortable_column_path(content_type, column[:order])%>
+            <% else %>
+              <%= column[:label] %>
+            <% end %>
+          </div>
+        </th>
+      <% end %>
+      <% if content_type.model_class.respond_to?(:updated_at) %>
+        <th class="updated <%= 'last" ' unless content_type.model_class.publishable? || content_type.model_class.connectable? %>">Updated</th>
+      <% end %>
+      <% if content_type.model_class.connectable? %><th class="used <%= ' last" ' unless content_type.model_class.publishable? %>">Used</th><% end %>
+      <% if content_type.model_class.publishable? %><th  class="block_status last">Status</th><% end %>
+    </tr>
+  </thead>
+  <tbody>
+    <% col_ct = 2
+       col_ct += content_type.columns_for_index.size
+       col_ct += 1 if content_type.model_class.respond_to?(:updated_at)
+       col_ct += 1 if content_type.model_class.connectable?
+       col_ct += 1 if content_type.model_class.publishable? %>
+    <% @blocks.each do |b| %>
+      <% block = b.class.versioned? ? b.as_of_draft_version : b %>
+    <%= content_block_tr_tag(block) %>
+
+        <% content_type.columns_for_index.each_with_index do |column, i| %>
+          <td class="<%= column[:label].gsub(' ', '').underscore %>">
+            <div<%= ' class="dividers"'.html_safe if (i + 3 < col_ct) %>>
+            <%= block.send(column[:method]) %>
+            <% if i.zero? && block.respond_to?(:cannot_be_deleted_message) && block.cannot_be_deleted_message %>
+              <div class="cannot_be_deleted_message" style="display: none">
+                <%=h block.cannot_be_deleted_message %>
+              </div>
+            <% end %>
+            </div>
+          </td>      
+        <% end %>
+        <% if content_type.model_class.respond_to?(:updated_at) %><td class="updated"><%= block.updated_at.to_s(:date) %></td><% end %>
+        <% if content_type.model_class.connectable? %><td class="used"><%= block.connected_pages.size %></td><% end %>
+        <% if content_type.model_class.publishable? %><td class="block_status <%= block.status %>"><%= block.status %></td><% end %>
+
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<% if params[:search] && @blocks.size == 0 %>
+  <div class="pagination">No results found for '<%= params[:search][:term] %>'</div>
+<% elsif @blocks.total_pages > 1 %>
+  <%= render_pagination @blocks, content_type, :order => params[:order], :search => params[:search] %>
+<% end %>

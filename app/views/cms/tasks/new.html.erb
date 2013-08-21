@@ -1,8 +1,5 @@
-<%= content_for :html_head do %>
-  <%= stylesheet_link_tag 'cms/form_layout' %>
-<% end %>
-
 <% use_page_title "Assign Page '#{@page.name}'" %>
+
 <%= content_for :button_bar do %>
     <%= menu_button "Back to Page", @page.path, pull: 'left' %>
 <% end %>
@@ -18,7 +15,7 @@
   <div class="fields text_fields">
       <%= f.label :due_date %>
       <%= f.date_picker :due_date %>
-      <div class="instructions">Leave blank for no due date</div><br clear="all" />
+      <div class="muted help-block">Leave blank for no due date</div><br clear="all" />
   </div>  
   
   <div class="fields text_editor_fields">
@@ -26,9 +23,7 @@
     <br/>
     <%= f.text_area :comment, :tabindex => next_tabindex %>
   </div>
+  <%= f.submit("Save", :class => "submit btn", :tabindex => next_tabindex) %>
 
-  <div class="buttons">
-    <%= lt_button_wrapper(f.submit("Save", :class => "submit", :tabindex => next_tabindex)) %>
-  </div>
 <% end %>
 

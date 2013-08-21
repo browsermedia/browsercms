@@ -3,29 +3,46 @@ require 'cms/category_type'
 # This is the base class for other content blocks
 module Cms
   class ContentBlockController < Cms::BaseController
+    include Cms::ContentRenderingSupport
 
     layout 'cms/content_library'
-
+    skip_filter :cms_access_required, :login_required
+    before_filter :login_required, except: [:show_via_slug]
+    before_filter :cms_access_required, except: [:show_via_slug]
     before_filter :set_toolbar_tab
 
     helper_method :block_form, :new_block_path, :block_path, :blocks_path, :content_type
     helper Cms::RenderingHelper
-    # Basic REST Crud Action
 
     def index
       load_blocks
-      render "#{template_directory}/index"
     end
 
+    # Getting content by its path  (i.e. /products/:slug)
+    def show_via_slug
+      @block = model_class.with_slug(params[:slug])
+      unless @block
+        raise Cms::Errors::ContentNotFound.new("No Content at #{model_class.calculate_path(params[:slug])}")
+      end
+      render_block_in_main_container
+    end
+
+    # Getting content by its id (i.e. /products/:id)
+    # Logged in editors will get the editing frame.
     def show
       load_block_draft
-      render "#{template_directory}/show"
+      render_editing_frame_or_block_in_main_container
+    end
+
+    # Getting the content for the editing frame.
+    def inline
+      load_block_draft
+      render_block_in_main_container
     end
 
     def new
       build_block
       set_default_category
-      render "#{template_directory}/new"
     end
 
     def create
@@ -41,7 +58,6 @@ module Cms
 
     def edit
       load_block_draft
-      render "#{template_directory}/edit"
     end
 
     def update
@@ -59,7 +75,11 @@ module Cms
 
     def destroy
       do_command("deleted") { @block.destroy }
-      redirect_to_first params[:_redirect_to], blocks_path
+      respond_to do |format|
+          format.html {redirect_to_first params[:_redirect_to], blocks_path}
+          format.json {render :json => {:success => true }}
+        end
+
     end
 
     # Additional CMS Action
@@ -81,13 +101,12 @@ module Cms
       if params[:version]
         @block = @block.as_of_version(params[:version])
       end
-      render "#{template_directory}/show"
+      render "version"
     end
 
     def versions
       if model_class.versioned?
         load_block
-        render "#{template_directory}/versions"
       else
         render :text => "Not Implemented", :status => :not_implemented
       end
@@ -96,7 +115,6 @@ module Cms
     def usages
       load_block_draft
       @pages = @block.connected_pages.all(:order => 'name')
-      render "#{template_directory}/usages"
     end
 
     def new_button_path
@@ -104,7 +122,23 @@ module Cms
     end
 
     protected
-    # methods that are used to detemine what content block type we are dealing with
+
+    def assign_parent_if_specified
+      if params[:parent]
+        @block.parent_id = params[:parent]
+      elsif @block.class.addressable?
+        parent = Cms::Section.with_path(@block.class.path).first
+        unless parent
+          logger.warn "Creating default section for #{@block.display_name} in #{@block.class.path}."
+          parent = Cms::Section.create(:name => @block.class.name.demodulize.pluralize,
+                                       :parent => Cms::Section.root.first,
+                                       :path => @block.class.path,
+                                       :hidden => true,
+                                       allow_groups: :all)
+        end
+        @block.parent_id = parent.id
+      end
+    end
 
     def content_type_name
       self.class.name.sub(/Controller/, '').singularize
@@ -156,14 +190,6 @@ module Cms
       cms_new_path_for(block, options)
     end
 
-    def block_path(block, action=nil)
-      path = []
-      path << engine_for(block)
-      path << action if action
-      path.concat path_elements_for(block)
-      path
-    end
-
     def blocks_path(options={})
       cms_index_path_for(@content_type.model_class, options)
     end
@@ -176,16 +202,11 @@ module Cms
 
     def build_block
       if params[model_form_name]
-        defaults = {"publish_on_save" => false}
-        model_params = params[model_form_name]
-        model_params = defaults.merge(model_params)
         @block = model_class.new(model_params)
-        logger.warn model_params
       else
         # Need to make sure @block exists for form helpers to correctly generate paths
         @block = model_class.new unless @block
       end
-
       check_permissions
     end
 
@@ -197,6 +218,7 @@ module Cms
 
     def create_block
       build_block
+      assign_parent_if_specified
       @block.save
     end
 
@@ -211,7 +233,7 @@ module Cms
     end
 
     def after_create_on_failure
-      render "#{template_directory}/new"
+      render "new"
     end
 
     def after_create_on_error
@@ -228,7 +250,15 @@ module Cms
     # update related methods
     def update_block
       load_block
-      @block.update_attributes(params[model_form_name])
+      @block.update_attributes(model_params())
+    end
+
+    # Returns the parameters for the block to be saved.
+    # Handles defaults as well as eventually 'strong_params'
+    def model_params
+      defaults = {"publish_on_save" => false}
+      model_params = params[model_form_name]
+      defaults.merge(model_params)
     end
 
     def after_update_on_success
@@ -237,7 +267,7 @@ module Cms
     end
 
     def after_update_on_failure
-      render "#{template_directory}/edit"
+      render "edit"
     end
 
     def after_update_on_edit_conflict
@@ -278,7 +308,7 @@ module Cms
       case action_name
         when "index", "show", "new", "create", "version", "versions", "usages"
           # Allow
-        when "edit", "update"
+        when "edit", "update", "inline"
           raise Cms::Errors::AccessDenied unless current_user.able_to_edit?(@block)
         when "destroy", "publish", "revert_to"
           raise Cms::Errors::AccessDenied unless current_user.able_to_publish?(@block)
@@ -293,10 +323,35 @@ module Cms
       @toolbar_tab = :content_library
     end
 
+    private
 
-    def template_directory
-      "cms/blocks"
+    def render_block_in_main_container
+      ensure_current_user_can_view(@block)
+      @page = @block # page templates expect a @page attribute
+      @content_block = @block # render.html.erb's expect a @content_block attribute
+      render 'render_block_in_main_container', layout: @block.class.layout
     end
 
+    def render_block_in_content_library
+      render 'version'
+    end
+
+    def render_editing_frame_or_block_in_main_container
+      if @block.class.addressable?
+        if current_user.able_to_edit?(@block)
+          render_toolbar_and_iframe
+        else
+          render_block_in_main_container
+        end
+      else
+        render_block_in_content_library
+      end
+    end
+
+    def render_toolbar_and_iframe
+      @page = @block
+      @page_title = @block.page_title
+      render "show", :layout => 'cms/block_editor'
+    end
   end
 end

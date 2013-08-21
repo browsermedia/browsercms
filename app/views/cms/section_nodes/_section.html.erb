@@ -1,28 +1,45 @@
-<%
-   children = child_hash[key].keys
-   section_node = key
-   access_status = access_status(node, @public_sections)
-   first_level = in_first_level?(node)
+<% # Handles both Root Section and Subsections
+   collapse = section.root? ? "" : "collapse"
+   icon_name = section.root? ? "globe" : "folder-close"
+   data = {
+           target: "#section#{section.id}",
+           type: 'section',
+           id: section.id,
+           node_id: key.id,
+           configure_path: edit_section_path(section),
+           delete_path: section_path(section),
+           add_page_path: new_section_page_path(section),
+           add_link_path: new_section_link_path(section),
+           add_section_path: new_section_path(section_id: section)
+
+   }
+   unless section.root?
+     data[:toggle] = 'collapse'
+   end
+   data[:editable] = false unless @modifiable_sections.include?(section)
+
 %>
-<%= sitemap_ul_tag(node) %>
-  <li>
-    <%= render :partial => "node", :locals => {
-            :node => node,
-            :node_type => "section",
-            :icon => "#{section_icons(section_node, children)} #{action_icon(first_level ? :root_folder : :folder, :class => "folder")}",
-            :hidden => node.hidden?,
-            :access_icon => status_icon(access_status),
-            :parent => parent
-    } %>
-    <% children.each do |child_section_node| %>
-        <%= render :partial => child_section_node.node.partial_for,
-                   :locals => {:access_icon => access_status,
-                               :node => child_section_node.node,
-                               :parent => node,
-                               :child_hash => child_hash[key],
-                               :key => child_section_node
+<li>
+  <%= content_tag("a", href: "#", class: 'selectable', data: data) do %>
+      <%= icon(icon_name) %> <%= section.name %>
+      <%= protected_content_icon section %>
+      <span class="span1">
+        <%= content_tag "span", "H", class: "status phidden" if section.hidden? %>
+        <%= content_tag "i", "", class: access_status(section, @public_sections) unless section.root? %>
+      </span>
+  <% end %>
+  <%= tag "ul", {id: "section#{section.id}", class: "nav nav-list #{collapse}", data: {node_id: key.id}}, true %>
+    <% access_icon = access_status(section, @public_sections) %>
+    <% children = child_hash[key] %>
+    <% children.keys.each do |child_section_node| %>
+        <%= render partial: child_section_node.node.partial_for,
+                   :object => child_section_node.node,
+                   locals: {access_icon: access_icon,
+                            parent: section,
+                            child_hash: children,
+                            key: child_section_node,
+                            object: child_section_node.node # Because sometimes we don't know what the :object local would be called.
                    } %>
     <% end %>
-
-  </li>
-</ul>
+  </ul>
+</li>

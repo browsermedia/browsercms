@@ -1,18 +1,19 @@
 # Merge this into manage_content_block_steps after pulling this forward into 3.5.x
 
 When /^I add content to the main area of the page$/ do
+  visit
   click_on "add_new_content_main"
 end
 
 Given /^a product "([^"]*)" has been added to a page$/ do |name|
-  @product = Product.create!(:name => name)
+  @product = FactoryGirl.create(:product, :name => name)
   page = FactoryGirl.create(:public_page)
   page.add_content(@product)
   page.publish!
 end
 
 When /^I view that product$/ do
-  visit "/cms/products/#{@product.id}"
+  visit cms_product_path(@product)
 end
 
 Given /^html with "([^"]*)" has been added to a page$/ do |body|
@@ -34,18 +35,24 @@ Given /^there is a page route for viewing a product$/ do
   route = page.page_routes.build(:name=>"Product", :pattern=>"/products/view/:id", :code=>"# Non-blank code")
   route.save!
 
-  portlet_page = FactoryGirl.create(:public_page, :name=>"Product Catalog", :path=>"/products/list")
+  portlet_page = FactoryGirl.create(:public_page, :name=>"Product Catalog", :path=>"/products")
   portlet_page.add_content(ProductCatalogPortlet.create!(:name=>"Catalog"))
   portlet_page.publish!
 
-  product = Product.create!(:name => "A Widget", :publish_on_save=>true)
-
+  FactoryGirl.create(:product, name: "A Widget", slug: "/widget")
 end
 
 When /^I view a page that lists products$/ do
-  visit "/products/list"
+  visit "/products"
 end
 
 Then /^I should be able to click on a link to see a product$/ do
   assert page.has_content?("A Widget")
+end
+Then /^a new product should be created$/ do
+  assert_equal 1, Product.count
+end
+
+Given /^no product with a slug "([^"]*)" exists$/ do |slug|
+  assert_nil Product.with_slug(slug)
 end

@@ -11,7 +11,5 @@
     <%= f.label :to_path, "To" %>
     <%= f.text_field :to_path, :size => 50 %>
   </div>
-  <div class="buttons">
-    <%= lt_button_wrapper(f.submit("Save", :class => "submit")) %>
-  </div>
+  <%= f.submit("Save", :class => "submit btn", :tabindex => next_tabindex) %>
 <% end %>

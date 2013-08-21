@@ -54,13 +54,15 @@ Given /^a block exists with two uploaded attachments$/ do
 end
 
 When /^I replace both attachments$/ do
-  visit "/cms/products/#{@block.id}/edit"
+  visit edit_cms_product_path(@block)
   attach_file "Photo 1", "test/fixtures/multipart/version1.txt"
   attach_file "Photo 2", "test/fixtures/multipart/version2.txt"
   click_button "Save"
 end
 
 Then /^I should see the new attachments when I view the block$/ do
+  visit inline_cms_product_path(@block)
+
   get_image("img[data-type=photo-1]")
   assert page.has_content?("v1"), "Check the contents of the image to make sure its the correct one."
   assert "/cms/attachments?version=2", current_path
@@ -97,9 +99,17 @@ Given /^a block exists with a single image$/ do
 end
 
 When /^I view that block$/ do
-  path = "/cms/#{@block.class.path_name}/#{@block.id}"
-  visit path
+  if @block.class.addressable?
+    # Can't load iframes with current capybara drivers, so must test inline content for addressable blocks.
+    visit "/cms/#{@block.class.path_name}/#{@block.id}/inline"
+  else
+    visit cms.polymorphic_path(@block)
+  end
 end
+
+#When /^I view that block inline$/ do
+#  visit "/cms/#{@block.class.path_name}/#{@block.id}/inline"
+#end
 
 Then /^I should see that block's image$/ do
   assert page.has_css?("img[data-purpose=attachment]")

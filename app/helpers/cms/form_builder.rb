@@ -37,7 +37,7 @@ class Cms::FormBuilder < ActionView::Helpers::FormBuilder
   # These are the higher-level fields, 
   # that get wrapped in divs with labels, instructions, etc.
 
-  %w[date_picker datetime_select text_area text_field file_field].each do |f|
+  %w[date_picker datetime_select text_area text_field file_field path_field].each do |f|
     src = <<-end_src
       def cms_#{f}(method, options={})
         add_tabindex!(options)

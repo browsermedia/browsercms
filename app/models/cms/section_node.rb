@@ -26,9 +26,16 @@ class Cms::SectionNode < ActiveRecord::Base
     ancestry ? "ancestry = '#{ancestry}'" : 'ancestry IS NULL'
   end
 
+
   scope :of_type, lambda{|types| {:conditions => ["#{table_name}.node_type IN (?)", types]}}
   scope :in_order, :order => "position asc"
   scope :fetch_nodes, :include => :node
+
+  # Return all section nodes which are not of the given type (i.e. class name)
+  # @param [String] klass A specific class name that should be excluded.
+  def self.not_of_type(klass)
+    where("#{table_name}.node_type NOT IN (?)", klass)
+  end
 
   def visible?
     return false unless node
@@ -68,7 +75,7 @@ class Cms::SectionNode < ActiveRecord::Base
         #This helps prevent the position from getting out of whack
         #If you pass in a really high number for position, 
         #this just corrects it to the right number
-        node_count =Cms::SectionNode.count(:conditions => {:ancestry => ancestry})
+        node_count = Cms::SectionNode.count(:conditions => {:ancestry => ancestry})
         position = node_count if position > node_count
       end
       

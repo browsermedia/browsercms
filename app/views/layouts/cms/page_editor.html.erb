@@ -9,19 +9,12 @@
   <%= javascript_include_tag 'cms/page_toolbar' %>
   <%= csrf_meta_tags %>
   <%= yield :html_head %>
-  <script type="text/javascript">
-      jQuery(function ($) {
-          <% if protect_against_forgery? %>
-          $.cms.authenticity_token = '<%= form_authenticity_token %>'
-          <% end %>
-      })
-  </script>
   <style>
       html, body { height: 100% }
   </style>
 </head>
 <body>
 <%= render 'layouts/cms/thin_toolbar' %>
-<iframe src="<%= edit_content_path(current_page) %>" frameborder="0" marginheight="0" marginwidth="0" width="100%" height="100%" scrolling="auto"></iframe>
+<iframe name="page_content" src="<%= edit_content_path(current_page) %>" frameborder="0" marginheight="0" marginwidth="0" width="100%" height="100%" scrolling="auto"></iframe>
 </body>
 </html>

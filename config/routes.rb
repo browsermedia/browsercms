@@ -2,6 +2,8 @@
 # There are other routes that will be added at the root of the site (i.e. /) which can
 #   be found in lib/cms/route_extensions.rb
 Cms::Engine.routes.draw do
+
+  get 'fakemap', to: 'section_nodes#fake'
   get '/content/:id/edit', :to=>"content#edit", :as=>'edit_content'
   match '/dashboard', :to=>"dashboard#index", :as=>'dashboard'
   match '/', :to => 'home#index', :as=>'home'
@@ -56,11 +58,7 @@ Cms::Engine.routes.draw do
 
   resources :section_nodes do
     member do
-      put :move_before
-      put :move_after
-      put :move_to_beginning
-      put :move_to_end
-      put :move_to_root
+      put :move_to_position
     end
   end
 

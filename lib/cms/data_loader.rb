@@ -1,4 +1,14 @@
 module Cms
+  # A DSL for creating CMS content in seed data. Creating content in this manner will log the creation of the record
+  # and store any created records in a hash.
+  # To use, add the following to your seeds.rb.
+  # require "cms/data_loader"
+  #
+  # @example Create a Page in the root section
+  #   create_page(:hello, name: "Hello", path: "/hello", parent: sections(:root))
+  #
+  # @example Lookup a previously created page
+  #   puts pages(:hello).name
   module DataLoader
 
     mattr_accessor :silent_mode
@@ -22,6 +32,8 @@ module Cms
         super
       end
     end
+
+
     def create(model_name, record_name, data={})
       puts "-- create_#{model_name}(:#{record_name})" unless Cms::DataLoader.silent_mode
       @data ||= {}
@@ -33,3 +45,4 @@ module Cms
     end
   end
 end
+extend Cms::DataLoader

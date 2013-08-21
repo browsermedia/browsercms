@@ -39,6 +39,7 @@ module Cms::RouteExtensions
   def mount_browsercms
     mount Cms::Engine => "/cms", :as => "cms"
 
+    add_routes_for_addressable_content_blocks
     add_page_routes_defined_in_database
 
     # Handle 'stock' attachments
@@ -52,6 +53,19 @@ module Cms::RouteExtensions
   alias :routes_for_browser_cms :mount_browsercms
 
   private
+
+  # Creates a default GET route for every addressable content block class.
+  # This will be use a :slug and the module path, like:
+  #   /products/:slug
+  def add_routes_for_addressable_content_blocks
+    classes = Cms::Concerns::Addressable.classes_that_require_custom_routes
+    classes.each do |klass|
+      path = "#{klass.path}/:slug"
+      controller_name = klass.name.demodulize.pluralize.underscore
+      get path, to: "cms/#{controller_name}#show_via_slug"
+      get "cms/#{klass.path}/:id/inline", to: "cms/#{controller_name}#inline", as: "inline_cms_#{klass.name.demodulize.underscore}"
+    end
+  end
 
   def add_page_routes_defined_in_database
     if Cms::PageRoute.can_be_loaded?

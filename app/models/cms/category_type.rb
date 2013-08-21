@@ -7,6 +7,8 @@ module Cms
     validates_uniqueness_of :name
     is_searchable
 
+    include Concerns::IgnoresPublishing
+
     scope :named, lambda { |name| {:conditions => ["#{table_name}.name = ?", name]} }
 
     # Return a map when the key is category type id as a string

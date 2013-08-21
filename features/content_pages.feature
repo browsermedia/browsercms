@@ -21,9 +21,10 @@ Feature: Content Pages
     Then I should see the CMS :forbidden page
 
   Scenario: View Older Versions
+    Given a bug: Need to make the toolbar display when looking at older versions. (Alternative UX: Leave as is and require that users 'rollback' from the list.)
     Given a page exists with two versions
     And I am logged in as a Content Editor
-    When I view the toolbar for version 1 of that page
+    When I view version 1 of that page
     Then the toolbar should display a revert to button
 
   @page-caching

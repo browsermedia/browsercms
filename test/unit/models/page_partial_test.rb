@@ -2,12 +2,17 @@ require 'test_helper'
 
 class PagePartialTest < ActiveSupport::TestCase
   def setup
-    @page_partial = build(:page_partial, :name => "_test")
+    @page_partial = build(:page_partial)
     File.delete(@page_partial.file_path) if File.exists?(@page_partial.file_path)
   end
 
   def teardown
     File.delete(@page_partial.file_path) if File.exists?(@page_partial.file_path)
+  end
+
+  test "calculates path" do
+    @page_partial.save!
+    assert_equal "partials/#{@page_partial.name}", @page_partial.path
   end
 
   test "mass assignment works" do
@@ -20,6 +25,10 @@ class PagePartialTest < ActiveSupport::TestCase
 
   test "resource_name works for namespaced templates" do
     assert_equal "page_partials", Cms::PagePartial.resource_name
+  end
+
+  test "create" do
+    @page_partial.save!
   end
 
   def test_create

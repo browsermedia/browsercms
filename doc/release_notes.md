@@ -3,9 +3,11 @@ v4.0
 
 This release includes the following features:
 
-* User Interface Redesign
+* User Interface Redesign - Complete UI rework to use Bootstrap.
 * True In Context Editing - Editors can directly edit Html content and page titles using CKEditor's inline capability.
-* Refined Content API
+* Addressable Content Blocks - Custom content blocks (i.e. Product, Event, News Articles) can be created directly as pages in the sitemap.
+* Refined Content API - Make content blocks closer in behavior to ActiveRecord.
+* Improved Template Storage - Templates stored in the database no longer need to be written out to the file system. This should make it easier to deploy CMS apps to Heroku.
 
 UI Redesign
 ----------
@@ -28,6 +30,18 @@ Users can now edit most HTML content directly in the page. Icons indicate the ar
 1. Editable Page titles - Page title can be edited directly from the header.
 1. Preview Page - Editors can now preview the page without a toolbar or editing controls.
 1. Non-incontext Content - Not all content makes sense to be inline editable (for example portlets). For these content types, the previous move/remove/edit links now float in the upper right hand corner of the content block.
+
+Addressable Content Blocks
+--------------------------
+
+Content blocks can created with as their own pages. To make a block addressable, a developer must do the following:
+
+1. Add is_addressable to the model. This will automatically generate a :slug form field when creating/editing instances.
+2. Set the Page Template that should be used (defaults to 'default').
+
+class Product < ActiveRecord::Base
+  is_addressable path: "/products", template: "product"
+end
 
 Refined Content API
 -------------------

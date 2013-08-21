@@ -1,16 +1,7 @@
 /**
 *  Manifest file for the CMS Admin interface
 *
-*= require cms/load_bootstrap
-*= require cms/reset
-*= require cms/nav
-*= require cms/menu
-*= require cms/buttons
-*= require cms/data_table
-*= require cms/attachment_manager
-*= require cms/styles
-*= require cms/content_library
-*= require cms/administration
-*= require cms/bootstrap_corrections
+*= require cms/bootstrap-customizations
+*= require cms/sitemap
 *
 */

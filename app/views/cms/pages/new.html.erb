@@ -15,14 +15,14 @@ jQuery(function($){
 });
 </script>
 <% end %>
-
 <% use_page_title "New Page" %>
 <%= render partial: 'cms/section_nodes/button_bar' %>
-<%= form_for(@page) do |f| %>
-  <%= hidden_field_tag :section_id, @page.section_id %>
-  <%= render :partial => 'form', :locals => {:f => f} %>
-  <div class="buttons">
-  <%= lt_button_wrapper(f.submit("Save", :class => "submit", :tabindex => next_tabindex)) %>
-  </div>
-<% end %>
-
+<div class="row-fluid">
+    <div class="span12">
+    <%= form_for(@page) do |f| %>
+      <%= hidden_field_tag :section_id, @page.section_id %>
+      <%= render :partial => 'form', :locals => {:f => f} %>
+      <%= f.submit("Save", :class => "btn btn-primary", :tabindex => next_tabindex) %>
+    <% end %>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<%# This is the old 'show' which is used now only for looking at older versions. Might want to get rid of at some point. %>
+<% use_page_title "Content Library / View #{content_type.display_name}" %>
+<% @toolbar_title = "View #{content_type.display_name} '#{ @block.name }'" %>
+<%= content_for :button_bar, render('buttonbar') %>
+  <% if @block.respond_to?(:deleted) && @block.deleted %>
+  <p>This <%= @block.class.name %> has been deleted.</p>
+  <% end %>
+  <% if @block.class.publishable? %>
+    <% block_published_status = (@block.live? ? 'published' : 'draft') %>
+    <p>Status: <%= status_icon(block_published_status) %> <%= block_published_status %></p>
+  <% end %>
+  <% if @block.class.connectable? %>
+    <p>Used on: <%= link_to_usages(@block) %> <%= "page".pluralize_unless_one(@block.connected_pages.count)%></p>
+  <% end -%>
+  <% if @block.respond_to?(:draft_version?) && !@block.draft_version? %>
+    <p>Version: v. <%= @block.version %> ( <%= link_to "Current", block_path(@block) %> )</p>
+  <% end -%>
+  <% if @block.class.renderable? %>
+    <p>Block Contents:</p>
+    <div class="row-fluid">
+      <div class="span12"><%= render_connectable(@block) %></div>
+    </div>
+  <% end %>
+

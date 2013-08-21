@@ -110,21 +110,10 @@ HTML
       content_tag :span, content
     end
 
-    def lt_button_wrapper(content)
-      button = <<LBW
-  <div class="lt_button">
-    #{image_tag "cms/lt_button_l.gif"}
-    <div class="lt_button_content">
-      <span>#{ content }</span>
-    </div>
-    #{image_tag "cms/lt_button_r.gif", :style => "margin-right: 10px;"}
-  </div>
-LBW
-      button.html_safe
-    end
+
 
     def dk_button_wrapper(content)
-      lt_button_wrapper(content).gsub("lt_button_", "dk_button_")
+      (content).gsub("lt_button_", "dk_button_")
     end
 
     def group_ids
@@ -145,19 +134,20 @@ LBW
     # Generates the HTML to render a paging control, if there is more than one page to be shown.
     #
     # @param [Array] collection List of content to be shown
-    # @param [Cms::ContentType] content_type The content type of the collection (used to generate links to Previous/Next)
+    # @param [Cms::ContentType || Class] content_type The content type of the collection (used to generate links to Previous/Next)
     # @param [Hash] options
     def render_pagination(collection, content_type, options={})
       if collection.blank?
         content_tag(:div, "No Content", :class => "pagination")
       else
+        model_class = content_type.instance_of?(Class) ? content_type : content_type.model_class
         render :partial => "cms/shared/pagination", :locals => {
             :collection => collection,
-            :first_page_path => cms_connectable_path(content_type, {:page => 1}.merge(options)),
-            :previous_page_path => cms_connectable_path(content_type, {:page => collection.previous_page ? collection.previous_page : 1}.merge(options)),
-            :current_page_path => cms_connectable_path(content_type, options),
-            :next_page_path => cms_connectable_path(content_type, {:page => collection.next_page ? collection.next_page : collection.current_page}.merge(options)),
-            :last_page_path => cms_connectable_path(content_type, {:page => collection.total_pages}.merge(options))
+            :first_page_path => cms_connectable_path(model_class, {:page => 1}.merge(options)),
+            :previous_page_path => cms_connectable_path(model_class, {:page => collection.previous_page ? collection.previous_page : 1}.merge(options)),
+            :current_page_path => cms_connectable_path(model_class, options),
+            :next_page_path => cms_connectable_path(model_class, {:page => collection.next_page ? collection.next_page : collection.current_page}.merge(options)),
+            :last_page_path => cms_connectable_path(model_class, {:page => collection.total_pages}.merge(options))
         }
       end
     end

@@ -5,6 +5,10 @@ module Cms
 
     validates_format_of :name, :with => /\A_[a-z]+[a-z0-9_]*\Z/, :message => "can only contain lowercase letters, numbers and underscores and must begin with an underscore"
 
+    def self.relative_path
+      "partials"
+    end
+
     def file_path
       File.join(self.class.base_path, "partials", file_name)
     end
@@ -26,6 +30,10 @@ module Cms
       if !name.blank? && name[0, 1] != '_'
         self.name = "_#{name}"
       end
+    end
+
+    def partial?
+      true
     end
 
   end

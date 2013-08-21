@@ -2,11 +2,21 @@ module Cms
   module MobileHelper
 
     def full_site_url
-      main_app.url_for(:host => Rails.configuration.cms.site_domain, :prefer_full_site => true)
+      options = {
+          :host => Rails.configuration.cms.site_domain,
+          path: current_page.path,
+          params: {:prefer_full_site => true}
+      }
+      ActionDispatch::Http::URL.url_for(options)
     end
 
     def mobile_site_url
-      main_app.url_for(:host => Rails.configuration.cms.site_domain, :prefer_mobile_site => true)
+      options = {
+          :host => Rails.configuration.cms.site_domain,
+          path: current_page.path,
+          params: {:prefer_mobile_site => true}
+      }
+      ActionDispatch::Http::URL.url_for(options)
     end
 
     # Determines if the mobile template exists for a given page.

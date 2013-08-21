@@ -1,0 +1,95 @@
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+
+body {
+  padding-top: 70px; /* 60px to make the container go all the way to the bottom of the topbar */
+}
+
+#sitemap {
+  padding: 20px 0;
+  border-radius: 5px;
+  border: 1px solid #999;
+  clear: both;
+}
+
+#sitemap span {
+  float: right;
+  color: #000;
+}
+
+#sitemap .nav-list .nav-list {
+  padding-right: 0;
+}
+
+#sitemap .status {
+  display: block;
+  border-radius: 4px;
+  padding: 0 4px;
+}
+
+#sitemap .published {
+  color: #000;
+  background: #62c462;
+  background: -webkit-gradient(linear, 0 0, 0 bottom, from(#62c462), to(#51a351));
+  background: -webkit-linear-gradient(#62c462, #51a351);
+  background: -moz-linear-gradient(#62c462, #51a351);
+  background: -ms-linear-gradient(#62c462, #51a351);
+  background: -o-linear-gradient(#62c462, #51a351);
+  background: linear-gradient(#62c462, #51a351);
+  text-transform: uppercase;
+}
+
+#sitemap .draft {
+  color: #000;
+  background: #EE5F5B;
+  background: -webkit-gradient(linear, 0 0, 0 bottom, from(#EE5F5B), to(#BD362F));
+  background: -webkit-linear-gradient(#EE5F5B, #BD362F);
+  background: -moz-linear-gradient(#EE5F5B, #BD362F);
+  background: -ms-linear-gradient(#EE5F5B, #BD362F);
+  background: -o-linear-gradient(#EE5F5B, #BD362F);
+  background: linear-gradient(#EE5F5B, #BD362F);
+  text-transform: uppercase;
+}
+
+#sitemap .phidden {
+  color: #000;
+  background: #ffae00;
+  background: -webkit-gradient(linear, 0 0, 0 bottom, from(#ffae00), to(#bf8a19));
+  background: -webkit-linear-gradient(#ffae00, #bf8a19);
+  background: -moz-linear-gradient(#ffae00, #bf8a19);
+  background: -ms-linear-gradient(#ffae00, #bf8a19);
+  background: -o-linear-gradient(#ffae00, #bf8a19);
+  background: linear-gradient(#ffae00, #bf8a19);
+  text-transform: uppercase;
+  float: left;
+}
+
+#sitemap i {
+  margin-left: 28px;
+}
+
+
+#sitemap .phidden + i {
+  margin-left: 10px;
+}
+
+#filter {
+  float: right;
+  clear: both;
+}
+
+// Drop location for pages or sections within sitemap.
+.ui-placeholder {
+  background-color: #bedbe9; // Random light blue
+  padding-right: 10px;
+  height: 30px;
+}
+
+// A highlight to make it easy to drop items into sections.
+.empty-section-highlight {
+  min-height: 25px;
+  background-color: #019fde;  // Another random darker blue
+}
+
+
+

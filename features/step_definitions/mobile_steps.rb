@@ -1,13 +1,13 @@
 Given /^a page exists at (#{PATH}) with a mobile ready template$/ do |path|
-  @page = create(:public_page, :path=>path, :template_file_name=>"mobile-ready.html.erb")
-  content = create(:html_block, :content=>"Mobile Content")
+  @page = create(:public_page, :path => path, :template_file_name => "mobile-ready.html.erb")
+  content = create(:html_block, :content => "Mobile Content")
   @page.add_content(content)
   @page.publish!
 end
 
 Given /^a page exists at (.+) with a desktop only template$/ do |path|
-  @page = create(:public_page, :path=>path, :template_file_name=>"desktop-only.html.erb")
-  content = create(:html_block, :content=>"Mobile Content")
+  @page = create(:public_page, :path => path, :template_file_name => "desktop-only.html.erb")
+  content = create(:html_block, :content => "Mobile Content")
   @page.add_content(content)
   @page.publish!
 end
@@ -30,13 +30,17 @@ When /^they request (.+)$/ do |path|
 end
 
 Then /^they should see the desktop content$/ do
-  assert page.has_content? "I am the desktop TEMPLATE"
-  assert page.has_content? "Mobile Content"
+  within_content_frame do
+    assert page.has_content? "I am the desktop TEMPLATE"
+    assert page.has_content? "Mobile Content"
+  end
 end
 
 Then /^they should see the mobile template$/ do
-  assert page.has_content? "I am a stripped down MOBILE template."
-  assert page.has_content? "Mobile Content"
+  within_content_frame do
+    assert page.has_content? "I am a stripped down MOBILE template."
+    assert page.has_content? "Mobile Content"
+  end
 end
 
 When /^they are using an iPhone$/ do
@@ -52,8 +56,6 @@ Given /^the page \/mobile-page is public$/ do
   assert_equal 3, p.parent.sections.size
 end
 
-Then /^they should (see|not see) the mobile toggle$/ do |should_see|
-  p = Cms::Page.find_by_path(current_path)
-  visit ("/cms/toolbar?page_id=#{p.id}&page_version=#{p.version}")
-  assert_equal should_see == 'see', page.has_content?('View as Mobile')
+Then /^they should( not)? see the mobile toggle$/ do |negate|
+  assert_equal negate.blank?, page.has_content?('View as Mobile')
 end

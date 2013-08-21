@@ -1,9 +1,0 @@
-<%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
-
-<%= content_for :functions do %>
-  <% if @block && !@block.new_record? %>
-    <%= render :partial => 'cms/blocks/toolbar_for_member' %>
-  <% else %>
-    <%= render :partial => 'cms/blocks/toolbar_for_collection' %>
-  <% end %>
-<% end %>

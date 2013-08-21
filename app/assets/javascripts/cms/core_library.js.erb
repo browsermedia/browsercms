@@ -1,9 +1,8 @@
 //
 // Defines Core BrowserCMS functions used throughout the application.
 //
-//= require jquery
 //
-jQuery(function ($) {
+jQuery(function($) {
 
     //It would be cool if these were added to the real jQuery
     //You can call this a few ways:
@@ -11,7 +10,7 @@ jQuery(function ($) {
     //createElement('p','hi') => "<p>hi</p>"
     //createElement('p', {align: 'center'}) => "<p align="center"/>"
     //createElement('p','hi',{align: 'center'}) => "<p align="center">hi</p>"
-    $.createElement = function (tag_name, tag_value, tag_attrs) {
+    $.createElement = function(tag_name, tag_value, tag_attrs) {
         var name = tag_name
         if (typeof tag_value == "object") {
             var value = null
@@ -22,7 +21,7 @@ jQuery(function ($) {
         }
         var element = $(document.createElement(tag_name))
         if (attrs) {
-            $.each(attrs, function (k, v) {
+            $.each(attrs, function(k, v) {
                 element.attr(k, v)
             })
         }
@@ -40,33 +39,39 @@ jQuery(function ($) {
     ]
 
     $.cms = {
-        sanitizeFileName:function (s) {
+        // Return the CSRF token for any JS function that needs to do AJAX.
+        // Since AJAX posts will fail if you don't attach this as defined here:
+        // http://michaelhendrickx.com/201012_jquery-ajax-with-rails-authenticity-token.html
+        csrfToken: function() {
+            return $('meta[name=csrf-token]').attr('content');
+        },
+        sanitizeFileName: function(s) {
             var split = s.split(/\/|\\/)
             s = split[split.length - 1]
-            $.each(sanitizationRegexes, function (i, e) {
+            $.each(sanitizationRegexes, function(i, e) {
                 var r = new RegExp(e[0].source, 'g')
                 s = s.replace(r, e[1])
             })
             return s;
         },
-        slug:function (s) {
+        slug: function(s) {
             return $.trim(s.toLowerCase().replace(/[^a-zA-Z0-9_\s]+/g, '')).replace(/\ +/g, '-')
         },
-        showNotice:function (msg) {
-            $('#message').removeClass('error').addClass('notice').html(msg).parent().show().animate({opacity:1.0}, 3000).fadeOut("normal")
+        showNotice: function(msg) {
+            $('#message').removeClass('error').addClass('notice').html(msg).parent().show().animate({opacity: 1.0}, 3000).fadeOut("normal")
         },
-        showError:function (msg) {
-            $('#message').removeClass('notice').addClass('error').html(msg).parent().show().animate({opacity:1.0}, 3000).fadeOut("normal")
+        showError: function(msg) {
+            $('#message').removeClass('notice').addClass('error').html(msg).parent().show().animate({opacity: 1.0}, 3000).fadeOut("normal")
         },
-        attachEventHandlers:function (context) {
-            $('a.button', context).click(function () {
+        attachEventHandlers: function(context) {
+            $('a.button', context).click(function() {
                 if ($(this).hasClass('disabled')) return false;
             });
-            $('a.http_post, a.http_put, a.http_delete', context).click(function () {
+            $('a.http_post, a.http_put, a.http_delete', context).click(function() {
                 if ($(this).hasClass('disabled')) return false;
                 if ($(this).hasClass('confirm_with_title') ? confirm(this.title) : true) {
 
-                    // Create the form
+                    // Create a hidden form to submit this link as PUT/POST/DELETE.
                     var f = document.createElement('form')
                     f.style.display = 'none'
                     this.parentNode.appendChild(f)
@@ -80,12 +85,10 @@ jQuery(function ($) {
                     $(m).attr('type', 'hidden').attr('name', '_method').attr('value', http_method)
                     f.appendChild(m)
 
-                    //Create the authenticity_token hidden input
-                    if ($.cms.authenticity_token && $.cms.authenticity_token != '') {
-                        var m = document.createElement('input')
-                        $(m).attr('type', 'hidden').attr('name', 'authenticity_token').attr('value', $.cms.authenticity_token)
-                        f.appendChild(m)
-                    }
+                    // Add the authenticity_token as a hidden input so rails doesn't reject the form.
+                    var m = document.createElement('input')
+                    $(m).attr('type', 'hidden').attr('name', 'authenticity_token').attr('value', $.cms.csrfToken());
+                    f.appendChild(m);
 
                     f.submit()
                 }
@@ -96,38 +99,67 @@ jQuery(function ($) {
 
     $.cms.attachEventHandlers(document);
 
-    $('#message.notice').parent().show().animate({opacity:1.0}, 3000).fadeOut("normal")
-    $('#message.error').parent().show().animate({opacity:1.0}, 3000).fadeOut("normal")
+    $('#message.notice').parent().show().animate({opacity: 1.0}, 3000).fadeOut("normal")
+    $('#message.error').parent().show().animate({opacity: 1.0}, 3000).fadeOut("normal")
 
 });
 
+// Autogenerate slugs for form fields as user types.
+// Requires two fields to enable autogeneration, a source and destination. You can leave one out for cases
+// where you don't want to overwrite the existing slug (i.e. editing an existing record's name).
+//
+// Required CSS classes:
+// .slug-source - The input field to pull the name from.
+// .slug-dest - The input field to set the slug value in.
+//   @options data-prefix An optional prefix (on slug-dest) that should be added in front of autogenerated slugs
+//      (i.e. <input class='slug-dest' data-prefix="/products" />)
+$(function() {
+    if ($('.slug-dest').length && $('.slug-source').length) {
+        $('.slug-source').keyup(function() {
+            var name = $('.slug-source').val();
+            if ($('.slug-dest').attr('data-prefix')) {
+                var prefix = $('.slug-dest').data('prefix');
+                // Handle / section
+                if (prefix !== '/') {
+                    prefix += "/";
+                }
+            } else {
+                var prefix = "";
+            }
+
+            var slug_value = prefix + $.cms.slug(name);
+            $('.slug-dest').val(slug_value);
+        });
+    }
+});
+
 // Automatically enable date_picker controls
-$(function () {
+$(function() {
     if ($.datepicker) {
-        $('input.date_picker').datepicker({ changeFirstDay:false, changeMonth:true, changeYear:true, closeText:'', showButtonPanel:true, dateFormat:'<%= Cms::DatePicker.jquery_format %>' });
+        $('input.date_picker').datepicker({ changeFirstDay: false, changeMonth: true, changeYear: true, closeText: '', showButtonPanel: true, dateFormat: '<%= Cms::DatePicker.jquery_format %>' });
     }
 });
 
 // UI Enhancement to suggest paths for uploaded files
-$(function () {
+$(function() {
     var path_input = $('.suggest_file_path');
     if (path_input.length) {
-        $('select[data-purpose=section_selector], input[data-purpose=cms_file_field]').change(function () {
+        $('select[data-purpose=section_selector], input[data-purpose=cms_file_field]').change(function() {
             var section_id = $('select[data-purpose=section_selector]').val();
-            var section_path = $('.section_id_map[data-id='+ section_id +']').data('path');
-            var file_path =  $.cms.sanitizeFileName($('input[data-purpose=cms_file_field]').val());
+            var section_path = $('.section_id_map[data-id=' + section_id + ']').data('path');
+            var file_path = $.cms.sanitizeFileName($('input[data-purpose=cms_file_field]').val());
             path_input.val(section_path + file_path);
         });
     }
 });
 
-//CookieSet allows us to treat one cookie value as a set of values
-jQuery(function ($) {
+//CookieSet allows us to treat one cookie value as a Set of values (Each value can appear only once)
+jQuery(function($) {
     var sep = '|'
 
     $.cookieSet = {
         //Treats the cookie as an array
-        add:function (name, value, options) {
+        add: function(name, value, options) {
             this.remove(name, value, options)
             var set = this.get(name)
             if (set) {
@@ -139,7 +171,7 @@ jQuery(function ($) {
             return this.get(name)
         },
 
-        get:function (name) {
+        get: function(name) {
             var val = $.cookie(name)
             if (val) {
                 return val.split(sep)
@@ -148,11 +180,11 @@ jQuery(function ($) {
             }
         },
 
-        remove:function (name, value, options) {
+        remove: function(name, value, options) {
             var set = this.get(name)
             if (set) {
                 var arr = []
-                $.each(set, function () {
+                $.each(set, function() {
                     if (this != value + '') {
                         arr.push(this)
                     }
@@ -165,7 +197,7 @@ jQuery(function ($) {
         },
 
         //Treats the cookie as an array
-        contains:function (name, value) {
+        contains: function(name, value) {
             var set = this.get(name)
             if (set) {
                 return $.inArray(value + '', set) > -1

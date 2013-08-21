@@ -1,0 +1,17 @@
+<% if forecasting_a_new_section?(f)
+     cms_options[:instructions] = "Forecast: Saving this first #{f.object.class.display_name} will create a new section at #{f.object.class.path}."
+   end
+%>
+<div class="fields text_fields">
+  <% if cms_options[:label] %>
+    <%= f.label method, cms_options[:label] %>
+  <% else %>
+    <%= f.label "Path" %>
+  <% end %>
+  <span data-type="base-path"><%= f.object.class.base_path %></span>
+  <%= f.text_field method, options %>
+  <% if cms_options[:instructions] %>
+    <div class="instructions"><%=h cms_options[:instructions] %></div>
+    <br clear="all" /><%# Fixes issue with bad line wrapping %>
+  <% end %>
+</div>

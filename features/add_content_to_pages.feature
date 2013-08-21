@@ -12,7 +12,7 @@ Feature: Add Content to Pages
       | path       | name      |
       | /some-page | Some Page |
     When I am editing the page at /some-page
-    And I click the Select Existing Content button
+    And I choose to reuse content
     Then I should see the following content:
       | Hello World |
 
@@ -21,14 +21,7 @@ Feature: Add Content to Pages
       | path       | name      |
       | /some-page | Some Page |
     When I am editing the page at /some-page
-    And I add new content to the page
-    Then I should see the following content:
-      | File    |
-      | Text    |
-      | Image   |
-      | Portlet |
-    And I should see a page titled "Select Content Type"
-    When I choose to add a new 'Text' content type to the page
+    And I choose to add a new 'Text' content type to the page
     Then I should see a page titled "Content Library / Add New Text"
     And I should see the following content:
       | Name |

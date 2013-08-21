@@ -2,20 +2,11 @@
 <%= render :partial => 'layouts/cms/head' %>
 <body>
 <%= render :partial => 'layouts/cms/thin_toolbar' %>
-<div id="wrapper">
-  <div id="main">
-    <div class="top_cap"></div>
-    <div id="contentwrapbig">
-      <div id="functions">
-        <h1><%= page_title %></h1>
-        <%= yield :functions %>
-      </div>
-      <%= yield %>
-    </div>
-    <br clear="all"/>
-    <div class="bottom_cap"></div>
-    <%= render :partial => 'layouts/cms/footer' %>
-  </div>
+<div class="container-fluid">
+  <h1><%= page_title %></h1>
+  <%= yield :functions %>
+  <%= yield %>
+  <%= render :partial => 'layouts/cms/footer' %>
 </div>
 </body>
 </html>

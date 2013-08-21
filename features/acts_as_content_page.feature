@@ -56,6 +56,6 @@ Feature: Acts as Content Page
   Scenario: NotFound Page as a Content Editor
     Given I am logged in as a Content Editor
     When I visit /tests/not-found
-    Then the response should be 500
+    Then the response should be 404
     And I should see a page titled "Error: ActiveRecord::RecordNotFound"
 

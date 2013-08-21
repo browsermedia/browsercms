@@ -10,6 +10,7 @@
 //= require bootstrap
 //= require cms/ajax
 
+
 // Add an information popup to the Edit Properties button on the Page Toolbar
 $(function () {
     $('#edit_properties_button').popover({placement:'bottom'});

@@ -2,7 +2,6 @@ require 'cms/engine'
 require 'cms/extensions'
 require 'cms/route_extensions'
 require 'cms/caching'
-require 'cms/addressable'
 require 'cms/error_pages'
 
 #Load libraries that are included with CMS
@@ -27,6 +26,10 @@ require 'command_line'
 #Include CMS Behaviors
 ActiveRecord::Base.send(:include, Cms::Acts::ContentBlock)
 require 'cms/behaviors'
+require 'cms/concerns'
+
 
 ActiveRecord::Base.send(:include, Cms::Acts::CmsUser)
+require 'cms/responders/content_responder'
 
+require "panoramic"

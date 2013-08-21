@@ -8,7 +8,7 @@ Feature: Portlets
 
   Scenario: List Portlets
     When I visit /cms/portlets
-    Then "Portlets" should be selected as the current Content Type
+    Then I should see a page titled "List Portlets"
 
   Scenario: Login portlet when logged in
     And there is a LoginPortlet on the homepage
@@ -32,6 +32,9 @@ Feature: Portlets
     And follow "Portlet"
     Then I should see the following content:
       | A new portlet |
+    When I view that portlet
+    Then I should see the following content:
+     | A new portlet |
 
   Scenario: Deleting a portlet
     Given there is a "Portlet" with:
@@ -91,24 +94,14 @@ Feature: Portlets
     When I visit that page
     Then I should see the CMS :forbidden page
 
+  # @todo - Actual broken feature. Need to fix implementation
   Scenario: Portlet errors should not blow up the page
+    Given a bug: Portlet errors should not throw 500 and blow up the page.
     Given I am not logged in
     And a portlet that throws an unexpected error exists
     When I view that page
     Then the page should show content but not the error
 
-#  test "When portlets throw a generic error, the page should still render the other content." do
-#    @page = create(:page, :section => root_section, :path => "/about", :name => "Test About", :template_file_name => "default.html.erb", :publish_on_save => true)
-#    @portlet_render = DynamicPortlet.create!(:name => "Test", :connect_to_page_id => @page.id, :connect_to_container => "main", :template => '<p id="hi">hello</p>')
-#    @portlet_raise_generic = DynamicPortlet.create!(:name => "Test", :connect_to_page_id => @page.id, :connect_to_container => "main", :code => 'raise')
-#    reset(:page)
-#
-#    get :show, :path => "about"
-#
-#
-#    assert_select "#hi", "hello"
-#
-#  end
   Scenario: View Usages
     Given portlet named "Hello World" has been added to a page
     When I view that portlet
@@ -127,7 +120,3 @@ Feature: Portlets
     Given a developer creates a portlet which sets a custom page title as "A Custom Title"
     When a guest views that page
     Then I should see a page titled "A Custom Title"
-
-  # Scenario: Custom page titles while editing
-    # Content editors will not see custom page titles while editing content
-    # Since the editing page loads the content in an iframe

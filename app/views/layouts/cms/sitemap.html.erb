@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <title><%= page_title %></title>
+  <%= stylesheet_link_tag 'cms/application' %>
+  <%= javascript_include_tag "cms/sitemap" %>
+  <%= csrf_meta_tags %>
+  <%= yield :html_head %>
+</head>
+<body>
+<%= render :partial => 'layouts/cms/thin_toolbar' %>
+<div class="container-fluid">
+  <h1><%= page_title %></h1>
+  <%= yield :functions %>
+  <%= yield %>
+  <%= render :partial => 'layouts/cms/footer' %>
+</div>
+</body>
+</html>

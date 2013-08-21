@@ -1,14 +1,20 @@
-<% first_level =  in_first_level?(node)
- %>
-<%= sitemap_ul_tag(node) %>
-  <li>
-    <%= render :partial => "node", :locals => {
-        :node => node, 
-        :node_type => "link", 
-        :icon => action_icon(first_level ? :root_link : :link),
-        :published_status_icon => status_icon(node.status),
-        :published_status_label => node.published? ? "Published" : "Draft",
-        :parent => parent
-      } %>
-  </li>
-</ul>
+<%
+   data = {configure_path: edit_link_path(link),
+           delete_path: link_path(link),
+           type: 'link',
+           node_id: key.id,
+
+   }
+   data[:editable] = false unless @modifiable_sections.include?(parent)
+
+%>
+<li><%= tag "a", {href: "#",
+                  class: 'selectable',
+                  data: data},
+            true %>
+  <%= icon "share" %> <%= link.name %>   <%= protected_content_icon parent %>
+  <span class="span1">
+    <%= content_tag "i", "", class: access_icon %>
+    </span>
+  </a>
+</li>

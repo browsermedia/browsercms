@@ -1,0 +1,82 @@
+<% use_page_title "Content Library / List of Versions" %>
+<% @toolbar_title = "List Versions / '#{@block.name}' #{content_type.display_name}" %>
+<%= content_for :html_head do %>
+<%= stylesheet_link_tag("cms/content_library") %>
+  <%= javascript_tag do %>
+    jQuery(function($){
+      var collectionName = '<%= content_type.content_block_type %>'
+      
+      $('table.data tbody tr').hover(function(){
+        $(this).addClass('hover')
+      }, function(){
+        $(this).removeClass('hover')
+      }).click(function(){
+        var match = this.id.match(/(.*)_(\d+)/) 
+        var id = match[2]
+        $('table.data tbody tr').removeClass('selected')
+        $(this).addClass('selected')
+        $('#functions .button').addClass('disabled').attr('href','#')
+        $('#functions .off span').css('color', '#FFFFFF')
+        $('#add_button').removeClass('disabled').attr('href', '/cms/'+collectionName+'/new')
+        $('#view_button').removeClass('disabled').attr('href', '/cms/'+collectionName+'/<%= @block.id %>/version/'+id)
+        if($(this).find('.current').length > 0) {
+          $('#view_button').attr('href', '/cms/'+collectionName+'/<%= @block.id %>')
+          $('#edit_button').removeClass('disabled').attr('href', '/cms/'+collectionName+'/<%= @block.id %>/edit')
+        } else {
+          $('#revert_button').removeClass('disabled').attr('href', '/cms/'+collectionName+'/<%= @block.id %>/revert_to/'+id)
+        }
+      })
+    })
+  <% end %>
+
+<% end %>
+
+<%= content_for :button_bar do %>
+  <%= render :partial => 'buttonbar' %>
+  <%= link_to "Revert", "#", :id => "revert_button", :class => "http_put btn btn-primary disabled pull-right" %>
+<% end %>
+
+<div class="roundedcorners">
+  <table id="blocks" class="data table table-bordered table-striped table-hover">
+    <thead>
+      <tr>
+        <th class="first"><div class="dividers">Version</div></th>
+        <th>
+          <div class="dividers">Comment</div>
+        </th>
+        <th>
+          <div class="dividers">Date</div>
+        </th>
+        <th class="last" colspan="2">
+          <div class="dividers">Editor</div>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @block.versions.all(:order => "version desc").each_with_index do |r, i| %>
+        <tr id="<%= content_type.content_block_type.singularize %>_<%= r.version %>">
+          <td>
+            <div class="dividers">
+              <%= "v. #{r.version}" %>
+              <%= '(LIVE)' if @block.version == r.version %>
+              <%= '<span class="current">(CURRENT)</span>'.html_safe if i == 0 %>
+            </div>
+          </td>
+          <td>
+            <div class="dividers"><%=  r.version_comment %></div>
+          </td>
+          <td>
+            <div class="dividers">
+              <%= r.created_at.strftime("%b %d, %Y %I:%M %p") if r.created_at %>
+            </div>
+          </td>
+          <td>
+            <div><%= r.updated_by.login if r.updated_by %></div>
+          </td>
+        </tr>
+      <% end %>
+
+    </tbody>
+  </table>
+</div>
+

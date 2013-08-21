@@ -73,7 +73,7 @@ Then /^that user should have (\d+) group$/ do |number|
 end
 
 When /^I try to edit another user account$/ do
-  visit "/cms/user/#{@another_user.id}/edit"
+  visit cms.edit_user_path(@another_user)
 end
 
 Then /^I should be denied access$/ do
@@ -91,6 +91,7 @@ end
 When /^there is another user$/ do
   @another_user = create(:registered_user)
 end
+
 When /^I change my password$/ do
   visit "/cms/users/#{current_user.id}/change_password"
   fill_in "Password", with: "new"
@@ -103,7 +104,7 @@ Then /^I should successful$/ do
 end
 
 When /^I try to change another user's password$/ do
-  visit "/cms/users/#{@another_user.id}/change_password"
+  visit cms.change_password_user_path(@another_user)
 end
 When /^no category types exist$/ do
   Cms::CategoryType.delete_all

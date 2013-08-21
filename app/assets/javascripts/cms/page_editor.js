@@ -3,6 +3,7 @@
 //= require 'cms/core_library'
 //= require 'bootstrap-modal'
 //= require 'ckeditor-jquery'
+//= require 'cms/ajax'
 
 // Since we are within the page editing iframe, add a 'target=_top' to all links so they refresh the entire page.
 $(function() {
@@ -52,8 +53,8 @@ $(function() {
           } else {
             reload.apply();
           }
-        },
-        beforeSend: $.cms_ajax.asJSON()
+        }
+		//,beforeSend: $.cms_ajax.asJSON()
       });
 
     },
@@ -114,8 +115,8 @@ $(function() {
             afterSave.apply();
           }
         },
-        data: message,
-        beforeSend: $.cms_ajax.asJS()
+        data: message
+		//,beforeSend: $.cms_ajax.asJS()
       });
     }
   };

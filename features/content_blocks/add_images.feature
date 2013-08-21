@@ -13,7 +13,7 @@ Feature: Image Blocks
   Scenario: Creating image block
     When I fill in "Name" with "Giraffe"
     And I upload an image named "test/fixtures/giraffe.jpeg"
-    And I select "My Site" from "section_id"
+    And I select "My Site" from "Section"
     And I fill in "Path" with "/giraffe.jpeg"
     And I Save And Publish
     Then I should see "Image 'Giraffe' was created"

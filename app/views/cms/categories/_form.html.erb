@@ -1,26 +1,13 @@
 <% if Cms::CategoryType.count > 0 %>
-  <%= content_for :html_head do %>
-    <script type="text/javascript">
-      jQuery(function($){
-        var categoriesByType = <%= Cms::CategoryType.category_map.to_json %>
-        $("#cms_category_category_type_id").change(function(){
-          $("#cms_category_parent_id option").remove()
-          $.each(categoriesByType[$(this).val()], function(){        
-            $("#cms_category_parent_id").append($.createElement("option", this[0], {value: this[1]}))
-          })
-        })
-      })
-    </script>
-  <% end %>
 
-  <% @block.category_type ||= (Cms::Category.last(:include => :category_type) && Cms::Category.last.category_type) %>  
-  <%= f.cms_drop_down :category_type_id, Cms::CategoryType.all(:order => "name").map{|c| [c.name, c.id]}, :prompt => "Select a Type of Category", :label => "Type" %>
+  <% @block.category_type ||= (Cms::Category.last(:include => :category_type) && Cms::Category.last.category_type) %>
+  <%= f.cms_drop_down :category_type_id, Cms::CategoryType.all(:order => "name").map{|c| [c.name, c.id]}, :prompt => "Select a Type of Category", :label => "Type", :class =>"btn btn-primary dropdown-toggle" %>
 
   <% categories = @block.category_type ? @block.category_type.category_list.map{|c| [c.path, c.id]} : [] %>
   <% unless categories.empty? %>
-    <%= f.cms_drop_down :parent_id, categories, :include_blank => true %>
+    <%= f.cms_drop_down :parent_id, categories, :include_blank => true, :class=>"dropdown-menu" %>
   <% end %>
-  
+
   <%= f.cms_text_field :name %>
 
 <% else %>

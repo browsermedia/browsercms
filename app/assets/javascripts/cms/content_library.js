@@ -58,6 +58,7 @@ jQuery(function ($) {
                 var delete_path = $(this).data('delete_path');
                 var new_path = $(this).data('new_path');
                 var versions_path = $(this).data('versions_path');
+                var preview_path = $(this).data('preview_path');
                 var publish_path = $(this).data('publish_path') + '?_redirect_to=' + location.href;
                 var status = $(this).data('status');
 
@@ -95,6 +96,9 @@ jQuery(function ($) {
                         $('#publish_button')
                             .disable_menu_button();
                     }
+                }
+                if(preview_path){
+                  $('#preview_button').attr('href', preview_path).enable_menu_button();
                 }
             })
     };

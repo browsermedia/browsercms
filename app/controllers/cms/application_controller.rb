@@ -68,5 +68,11 @@ module Cms
       request.url.sub(/#{cms_domain_prefix}\./, '')
     end
 
+    def ensure_current_user_can_view(content)
+      unless current_user.able_to_view?(content)
+        store_location
+        raise Cms::Errors::AccessDenied
+      end
+    end
   end
 end

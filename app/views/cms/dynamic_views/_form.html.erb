@@ -5,8 +5,6 @@
   <%= f.cms_text_field :name %>
   <%= f.cms_text_field :format %>
   <%= f.cms_drop_down :handler, ActionView::Template.template_handler_extensions, :default => "erb" %>
-  <%= f.cms_text_area :body, :style => "height: 500px" %>
-  <div class="buttons">
-    <%= lt_button_wrapper(f.submit("Save", :class => "submit", :tabindex => next_tabindex)) %>
-  </div>
+  <%= f.cms_text_area :body, :style => "height: 500px", :cols => 80 %>
+  <%= f.submit("Save", :class => "submit btn", :tabindex => next_tabindex) %>
 <% end %>

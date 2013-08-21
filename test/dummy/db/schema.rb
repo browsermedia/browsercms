@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120813180110) do
+ActiveRecord::Schema.define(:version => 20130327184912) do
 
   create_table "catalog_versions", :force => true do |t|
     t.integer  "original_record_id"
@@ -153,6 +153,9 @@ ActiveRecord::Schema.define(:version => 20120813180110) do
     t.string   "version_comment"
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
+    t.string   "path"
+    t.string   "locale"
+    t.boolean  "partial"
   end
 
   create_table "cms_dynamic_views", :force => true do |t|
@@ -170,6 +173,9 @@ ActiveRecord::Schema.define(:version => 20120813180110) do
     t.boolean  "archived",      :default => false
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
+    t.string   "path"
+    t.string   "locale"
+    t.boolean  "partial"
   end
 
   create_table "cms_email_messages", :force => true do |t|
@@ -447,6 +453,7 @@ ActiveRecord::Schema.define(:version => 20120813180110) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
     t.string   "ancestry"
+    t.string   "slug"
   end
 
   add_index "cms_section_nodes", ["ancestry"], :name => "index_cms_section_nodes_on_ancestry"

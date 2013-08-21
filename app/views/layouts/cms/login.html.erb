@@ -3,29 +3,28 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
     <title><%= page_title %></title>
-    <%= stylesheet_link_tag 'cms/application' %>
-    <%= stylesheet_link_tag 'cms/login' %>
+    <%= stylesheet_link_tag 'cms/application', 'cms/load_bootstrap', 'cms/bootstrap_corrections' %>
   <%= javascript_include_tag 'jquery', 'jquery-ui', 'jquery.cookie.js' %>
   <%= javascript_include_tag 'cms/application' %>
   <%= csrf_meta_tags %>
-  <% if protect_against_forgery? %><script type="text/javascript">
-    jQuery(function($){
-      $.cms.authenticity_token = '<%= form_authenticity_token %>'
-    })
-  </script><% end %>
+
   <%= yield :html_head %>
   </head>
-  <body>
-
-    <div id="login_panel">
-      <%= image_tag "cms/login_top.gif" %><br />
-      <div id="form_panel">
-	<% flash_class, flash_message = flash.to_a.first %>
-        <% if flash_message %><p><%= flash_message %></p><% end %>
-	<%= yield %>
-      </div>
-      <%= image_tag "cms/login_bottom.jpg", :style => "padding: 0; margin: 0;" %>
+  <body class="container-fluid">
+    <div class="row-fluid">
+          <div class="span3" id="loginmain">
+            <%= image_tag "cms/login_top.gif" %><br />
+            <div id="form_panel">
+            <% flash_class, flash_message = flash.to_a.first %>
+            <% if flash_message %><p><%= flash_message %></p><% end %>
+            <%= yield %>
+            </div>
+          </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span12">
       <%= render :partial => "layouts/cms/footer" %>
+      </div>
     </div>
   </body>
 </html>

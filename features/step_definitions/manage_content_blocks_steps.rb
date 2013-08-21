@@ -91,7 +91,7 @@ When /^I should see that block's content$/ do
 end
 
 When /^I should see it's draft mode$/ do
-  within(".block_published_status") do
-    assert page.has_content?('draft')
+  within("#page-status-label") do
+    assert page.has_content?('DRAFT')
   end
 end

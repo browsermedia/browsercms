@@ -19,7 +19,7 @@ Feature: File Blocks
   Scenario: Creating File block
     When I fill in "Name" with "Perspective"
     And I attach the file "test/fixtures/perspective.pdf" to "File"
-    And I select "My Site" from "section_id"
+    And I select "My Site" from "Section"
     And I fill in "Path" with "/perspective.pdf"
     And I Save And Publish
     Then I should see "File 'Perspective' was created"

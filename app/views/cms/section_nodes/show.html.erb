@@ -1,0 +1,20 @@
+<%= render 'nav_bar' %>
+<div id="filter">Show: <select id="filtershow">
+  <option value="none" selected="selected">None</option>
+  <option value="event">Events</option>
+  <option value="article">Articles</option>
+  <option value="portlet">Portlets</option>
+  <option value="slide">Slides</option>
+  <option value="all">All</option>
+</select></div>
+
+<div id="sitemap">
+  <ul class="nav nav-list nav-stacked">
+    <%= render partial: @section.partial_for,
+               :object => @section,
+               locals: {
+                       child_hash: @sitemap,
+                       key: @root_section_node
+               } %>
+  </ul>
+</div>

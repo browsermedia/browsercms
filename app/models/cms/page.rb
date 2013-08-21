@@ -67,10 +67,8 @@ class Cms::Page < ActiveRecord::Base
     end
   }
 
-  has_one :section_node, :as => :node, :dependent => :destroy, :inverse_of => :node, :class_name => 'Cms::SectionNode'
-
-  include Cms::Addressable
-  include Cms::Addressable::DeprecatedPageAccessors
+  is_addressable(no_dynamic_path: true)
+  include Cms::Concerns::Addressable::DeprecatedPageAccessors
 
 
   before_validation :append_leading_slash_to_path, :remove_trailing_slash_from_path
@@ -79,16 +77,43 @@ class Cms::Page < ActiveRecord::Base
   validates_presence_of :name, :path
 
   # Paths must be unique among undeleted records
-  validates_uniqueness_of :path, :scope=>:deleted
+  validates_uniqueness_of :path, :scope => :deleted
   validate :path_not_reserved
 
   # Find the latest draft of a given page.
   #
-  # @param [Integer] id The id of the page
-  # @return [Cms::Page::Version] The version of the page as of the current Draft
-  def self.find_draft(id)
-    current = self.find(id)
-    current.as_of_draft_version
+  # @param [Integer | String] id_or_path The id or path of the page
+  # @return [Cms::Page::Version] The version of the page as of the current Draft.
+  # @raises [Cms::Errors::ContentNotFound] if no record could be found.
+  def self.find_draft(id_or_path)
+    if id_or_path.is_a? String
+      current = self.with_path(id_or_path).first
+    else
+      current = self.find(id_or_path)
+    end
+    if current
+      current.as_of_draft_version
+    else
+      raise Cms::Errors::DraftNotFound
+    end
+  end
+
+  # Finds the live version of a Page.
+  # @param [String] path The relative path to the page
+  # @return [Cms::Page] The page if found
+  # @rais [Cms::Errors::ContentNotFound] If no published page was found with the given path.
+  def self.find_live(path)
+    result = find_live_by_path(path)
+    unless result
+      raise Cms::Errors::ContentNotFound
+    end
+    result
+  end
+
+  # Find live version of a page.
+  # @return [Cms::Page] Or nil if not found.
+  def self.find_live_by_path(path)
+    published.not_archived.first(:conditions => {:path => path})
   end
 
   # Returns all content for the current page, excluding any deleted ones.
@@ -101,7 +126,7 @@ class Cms::Page < ActiveRecord::Base
   # @param [Symbol] container The name of the container to match (Optional - Return all)
   def current_connectors(container=nil)
     @current_connectors ||= self.connectors.for_page_version(self.version)
-    if(container)
+    if (container)
       @current_connectors.select { |c| c.container.to_sym == container }
     else
       @current_connectors
@@ -159,11 +184,11 @@ class Cms::Page < ActiveRecord::Base
         logger.debug "When copying block #{connectable.inspect} version is '#{version}'"
 
         new_connector = connectors.create(
-          :page_version => options[:to_version_number],
-          :connectable => connectable, 
-          :connectable_version => version,
-          :container => c.container,
-          :position => c.position
+            :page_version => options[:to_version_number],
+            :connectable => connectable,
+            :connectable_version => version,
+            :container => c.container,
+            :position => c.position
         )
         logger.debug { "Built new connector #{new_connector}." }
       end
@@ -204,7 +229,7 @@ class Cms::Page < ActiveRecord::Base
       raise "Connector is nil" unless connector
       raise "Direction is nil" unless direction
       orientation = direction[/_/] ? "#{direction.sub('_', ' the ')} of" : "#{direction} within"
-      update_attributes(:version_comment => "#{connector.connectable} was moved #{orientation} the '#{connector.container}' container", :publish_on_save=>false)
+      update_attributes(:version_comment => "#{connector.connectable} was moved #{orientation} the '#{connector.container}' container", :publish_on_save => false)
       connectors.for_page_version(draft.version).like(connector).first.send("move_#{direction}")
     end
   end
@@ -244,6 +269,14 @@ class Cms::Page < ActiveRecord::Base
   # Pages have no size (for the purposes of FCKEditor)
   def file_size
     "NA"
+  end
+
+  # Whether or not this page is considered the 'landing' page for its parent section. These 'Overview' pages
+  # will have the same path as their parent.
+  #
+  # @return [Boolean]
+  def landing_page?
+    parent.path == path
   end
 
   def public?
@@ -328,13 +361,14 @@ class Cms::Page < ActiveRecord::Base
     connectors.for_page_version(version).in_container(container.to_s).count
   end
 
-  def self.find_live_by_path(path)
-    published.not_archived.first(:conditions => {:path => path})
-  end
-
   def name_with_section_path
     a = ancestors
     (a[1..a.size].map { |a| a.name } + [name]).join(" / ")
+  end
+
+  # @return [Boolean] true if this page is the home page of the site.
+  def home?
+    path == "/"
   end
 
   # This will return the "top level section" for this page, which is the section directly

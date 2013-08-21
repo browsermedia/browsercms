@@ -1,5 +1,3 @@
-//= require cms/ajax
-
 CKEDITOR.plugins.add('edit_content', {
     icons:'editcontent',
     init:function (editor) {

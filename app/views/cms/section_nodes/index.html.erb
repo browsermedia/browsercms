@@ -1,30 +1,17 @@
 <%= content_for :html_head do %>
-    <%= stylesheet_link_tag 'cms/sitemap' %>
     <%= javascript_include_tag 'cms/sitemap' %>
 <% end %>
 
-<% use_page_title "Sitemap" %>
+<%= render 'nav_bar' %>
 
-<%= content_for :button_bar do %>
-    <div class="btn-group pull-left">
-      <%= link_to "Edit Page", '#', :id => 'edit-button', :class => "btn btn-primary disabled" %>
-      <%= link_to "Edit Properties", '#', :id => 'properties-button', :class => "btn btn-primary disabled" %>
-    </div>
-    <div class="btn-group pull-left">
-      <%= link_to "Add Page", '#', :id => 'add-page-button', :class => "btn btn-primary disabled" %>
-      <%= link_to "Add Section", '#', :id => 'add-section-button', :class => "btn btn-primary disabled" %>
-      <%= link_to "Add Link", '#', :id => 'add-link-button', :class => "btn btn-primary disabled" %>
-    </div>
-    <%= delete_menu_button(nil, class: ['pull-left']) %>
-<% end %>
-
-<div id="sitemap">
+<div id="sitemap" class="row-fluid">
   <ul id="root_<%= @section.id %>" class="root" style="padding-left: 0">
-    <li>
+    <li class="row-fluid">
       <%= render :partial => "node", :locals => {
               :node => @section,
               :node_type => "section",
               :icon => action_icon(:home),
+              :edit_path => section_path(@section),
               :display => true
       } %>
     </li>

@@ -3,16 +3,74 @@ require "minitest_helper"
 describe Cms::Page do
   let(:block) { create(:html_block, :name => "Hello, World!") }
   let(:page) { create(:page) }
+  let(:page_with_draft) do
+    page.update_attributes(name: 'Version 2', as: :draft)
+    page
+  end
+  let(:archived_page) do
+    p = create(:page)
+    p.archive!
+    p
+  end
 
-  describe ".find_draft" do
-    it "should return the latest draft of the page" do
-      page.name = "Version 2"
-      page.save
-
-      found = Cms::Page.find_draft(page.id)
-      found.must_be_instance_of Cms::Page
-      found.name.must_equal page.name
+  describe '#find_live' do
+    it "should return the latest published version of a page" do
+      found = Cms::Page.find_live(page_with_draft.path)
+      found.version.must_equal 1
+      found.name.wont_equal 'Version 2'
     end
+
+    it "should raise error if non-existent path" do
+      ->{Cms::Page.find_live("/non-existent")}.must_raise Cms::Errors::ContentNotFound
+    end
+
+    it "should raise error for archived pages" do
+      ->{Cms::Page.find_live(archived_page.path)}.must_raise Cms::Errors::ContentNotFound
+    end
+  end
+  describe '#find_live_by_path' do
+
+    it "should return nil for archived page" do
+      found = Cms::Page.find_live_by_path(archived_page.path)
+      found.must_be_nil
+    end
+
+    it "should return nil if not found" do
+      found = Cms::Page.find_live_by_path("/non-existent-path")
+      found.must_be_nil
+    end
+
+    it "should not find draft if path was changed" do
+        @page = create(:page, :path => '/old-path')
+        @page.update_attributes(:path => '/new-path', :publish_on_save => false)
+        assert_equal @page, Cms::Page.find_live_by_path('/old-path')
+        assert_nil Cms::Page.find_live_by_path('/new-path')
+    end
+  end
+
+
+  describe '#find_draft' do
+
+    it "should return the latest draft of the page" do
+      expected = page_with_draft
+
+      found = Cms::Page.find_draft(expected.id)
+      found.name.must_equal expected.name
+      found.version.must_equal 2
+    end
+
+    it "should find by path" do
+      expected = page_with_draft
+
+      found = Cms::Page.find_draft(expected.path)
+      found.name.must_equal expected.name
+      found.version.must_equal 2
+    end
+
+    it "should throw error if page not found" do
+      proc { Cms::Page.find_draft('/non-existent-path')}.must_raise Cms::Errors::DraftNotFound
+    end
+
   end
 
   describe '.move_connector' do

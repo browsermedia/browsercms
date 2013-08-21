@@ -1,25 +1,22 @@
+//= require 'cms/core_library'
+
 // CMS library for invoking ajax functions.
 // A layer on top of jQuery .ajax that adds some Rails and CMS logic
 jQuery(function ($) {
-    $.ajaxSetup({
-        error:function (x, status, error) {
-            alert("A " + x.status + " error occurred: " + error);
-        }
-    });
-
     $.cms_ajax = {
+
         // Sets the message Accepts to javascript.
         // Pass to beforeSend: when calling AJAX.
         asJS:function () {
             return function (xhr) {
-                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
-                xhr.setRequestHeader("Accept", "text/javascript");
+                xhr.setRequestHeader('X-CSRF-Token', $.cms.csrfToken());
+                xhr.setRequestHeader("Accept", "text/javascript, */*, q=0.1");
             }
         },
         asJSON:function () {
             return function (xhr) {
-                xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'));
-                xhr.setRequestHeader("Accept", "application/json");
+                xhr.setRequestHeader('X-CSRF-Token', $.cms.csrfToken());
+                xhr.setRequestHeader("Accept", "application/json, */*, q=0.1");
             }
         },
         // Invoke a Rails aware (w/ CSRF token) PUT request.
@@ -52,4 +49,12 @@ jQuery(function ($) {
 
         }
     };
+
+    // Defaults for AJAX requests
+    $.ajaxSetup({
+        error:function (x, status, error) {
+            alert("A " + x.status + " error occurred: " + error);
+        },
+        beforeSend: $.cms_ajax.asJSON()
+    });
 });

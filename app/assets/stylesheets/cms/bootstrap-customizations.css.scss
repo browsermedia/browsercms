@@ -1,0 +1,94 @@
+@import "bootstrap";
+@import "bootstrap-responsive";
+
+// For classes that need to explicitly extend bootstrap classes.
+// They must go in this file.
+
+// The 'DRAFT' label on the toolbar.
+.draft-status {
+  @extend .label;
+  @extend .label-important;
+  float: right;
+  margin: 6px 10px;
+}
+
+// The 'Published' label on the toolbar.
+.published-status {
+  @extend .label;
+  @extend .label-success;
+  float: right;
+  margin: 6px 10px;
+
+}
+
+.btn-group .btn.pull-left {float: left;}
+.btn-group .btn.dropdown-toggle {float: right;}
+
+.navbar {
+  a {
+    font-size: 13px;
+    text-align: left;
+  }
+}
+
+#button-bar {
+  padding-top: 40px;
+}
+
+body {
+  padding-top: 85px;
+}
+
+.table thead th {background-color: #b1b4b7;}
+
+tbody .block_status {color: #FFF; text-shadow: 0 1px 0 rgba(0,0,0,0.5) !important; text-transform: capitalize;}
+
+tbody .block_status.draft, #sitemap .span1.Draft {
+  background: #EE5F5B;
+  background: -webkit-gradient(linear, 0 0, 0 bottom, from(#EE5F5B), to(#BD362F));
+  background: -webkit-linear-gradient(#EE5F5B, #BD362F);
+  background: -moz-linear-gradient(#EE5F5B, #BD362F);
+  background: -ms-linear-gradient(#EE5F5B, #BD362F);
+  background: -o-linear-gradient(#EE5F5B, #BD362F);
+  background: linear-gradient(#EE5F5B, #BD362F);
+}
+
+tbody .block_status.published, #sitemap .span1.Published {
+  background: #62c462;
+  background: -webkit-gradient(linear, 0 0, 0 bottom, from(#62c462), to(#51a351));
+  background: -webkit-linear-gradient(#62c462, #51a351);
+  background: -moz-linear-gradient(#62c462, #51a351);
+  background: -ms-linear-gradient(#62c462, #51a351);
+  background: -o-linear-gradient(#62c462, #51a351);
+  background: linear-gradient(#62c462, #51a351);
+}
+
+.label {margin: 12px 10px 0 0;}
+
+#loginmain {margin: 0 auto; float: none;}
+
+.container-fluid {
+  padding-top: 20px;
+}
+
+.navbar .nav > li > .btn {
+  color: #fff;
+  text-shadow: 0 0px 0 white;
+}
+
+.navbar .nav > li > .btn:focus,
+.navbar .nav > li > .btn:hover {
+  background-color: #eeeeee;
+  color: #fff;
+  text-decoration: none;
+}
+
+.navbar .nav > li > .btn:hover, .btn:focus {
+  background-position: 0 0px;
+}
+
+input,
+textarea,
+.uneditable-input {
+  width: inherit;
+}

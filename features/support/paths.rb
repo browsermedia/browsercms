@@ -30,3 +30,7 @@ module NavigationHelpers
 end
 
 World(NavigationHelpers)
+
+# Add all BrowserCMS Engine routes under the "cms" helper.
+# i.e. cms.new_user_path
+World(Cms::Engine.routes.url_helpers)

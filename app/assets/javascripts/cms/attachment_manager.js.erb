@@ -1,13 +1,6 @@
 // Allows users to upload files via AJAX as attachments for a given block.
 //
 $(function () {
-
-    // Return the authenticity token for any JS function that needs to do AJAX.
-    // Since AJAX posts will fail if you don't attach this as defined here: http://michaelhendrickx.com/201012_jquery-ajax-with-rails-authenticity-token.html
-    $.cms.auth_token = function () {
-        return $('meta[name=csrf-token]').attr('content');
-    };
-
     $.cms.AttachmentManager = {
         upload:function (file) {
             var assetName = $('#asset_types').val()
@@ -23,7 +16,7 @@ $(function () {
             fields += '<input type="hidden" name="attachment[attachable_class]" value="' + attachableClass + '" />';
             fields += '<input type="hidden" name="attachment[attachable_type]" value="' + attachableClass + '" />';
             fields += '<input type="hidden" name="attachment[attachable_id]" value="' + attachableID + '" />';
-            fields += '<input type="hidden" name="authenticity_token" value="' + $.cms.authenticity_token + '" />';
+            fields += '<input type="hidden" name="authenticity_token" value="' + $.cms.csrfToken() + '" />';
 
             $('body').append(form);
             form.append(fields);
@@ -46,7 +39,7 @@ $(function () {
         // @param [Integer] id The id of the attachment to delete.
         destroy:function (id) {
             if (confirm("Are you sure want to delete this attachment?")) {
-                $.post('/cms/attachments/' + id, {_method:'delete', authenticity_token:$.cms.auth_token()}, function (attachment_id) {
+                $.post('/cms/attachments/' + id, {_method:'delete', authenticity_token:$.cms.csrfToken()}, function (attachment_id) {
 //                    console.log(attachment_id);
                     $("#attachment_" + attachment_id).hide();
                     if ($("#assets_table > table tr:visible").length <= 2) {

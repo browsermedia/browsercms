@@ -3,6 +3,17 @@ require 'test_helper'
 module Cms
   class CreatingPageTest < ActiveSupport::TestCase
 
+    test "#landing_page? if matches parent's path'" do
+      section = create(:section, path: "/about")
+      landing_page = create(:page, path: "/about", parent: section)
+      assert landing_page.landing_page?
+    end
+
+    test "home?" do
+      @page = create(:page, path: "/")
+      assert @page.home?
+    end
+
     test "Testing Database should be empty and have no pages" do
       assert_nil Cms::Page.with_path("/").first
     end
@@ -69,6 +80,10 @@ module Cms
       assert_equal 2, @page.latest_version
 
       assert_equal 1, @another_page.reload.latest_version, "Should only update its own version, not other tables"
+    end
+
+    test "live? should be false for 'new' objects" do
+      refute Cms::Page.new.live?
     end
 
     test "live? using latest version" do
@@ -148,26 +163,6 @@ module Cms
       @page = build(:page, :path => "/slashed/loooong/path/")
       @page.save
       assert_equal @page.path, "/slashed/loooong/path"
-    end
-
-    test "#find_live_by_path should find published page" do
-      @page = create(:page, :path => '/foo')
-      assert_equal @page, Cms::Page.find_live_by_path('/foo')
-    end
-
-    test "#find_live_by_path should not find draft with given path" do
-      @page = create(:page, :path => '/foo')
-      @page.update_attributes(:path => '/bar', :publish_on_save => false)
-      assert_equal @page, Cms::Page.find_live_by_path('/foo')
-      assert_nil Cms::Page.find_live_by_path('/bar')
-    end
-
-    test "#find_live_by_path should not find draft with old path" do
-      @page = create(:page, :path => '/foo', :publish_on_save => false)
-      @page.update_attributes(:path => '/bar')
-
-      assert_nil Cms::Page.find_live_by_path('/foo')
-      assert_equal @page, Cms::Page.find_live_by_path('/bar')
     end
 
     test "It should be possible to create a new page, using the same path as a previously deleted page" do

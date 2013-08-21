@@ -1,5 +1,5 @@
 <% use_page_title "Edit Properties / '#{h(@section.name)}' Section" %>
 <%= render partial: 'cms/section_nodes/button_bar' %>
 <%= form_for(@section) do |f| %>
-  <%= render :partial => 'form', :locals => {:f => f} %>
+  <%= render :partial => 'form', :locals => {:f => f, :parent => @section.parent} %>
 <% end %>

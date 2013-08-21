@@ -1,0 +1,11 @@
+<% use_page_title "Sitemap" %>
+
+<%= content_for :button_bar do %>
+    <div class="btn-group pull-left">
+      <%= link_to "Edit Page", '#', :id => 'edit-button', :class => "btn btn-primary disabled" %>
+      <%= link_to "Edit Properties", '#', :id => 'properties-button', :class => "btn btn-primary disabled" %>
+    </div>
+    <div class="btn-group">
+      <%= delete_menu_button  %>
+    </div>
+<% end %>

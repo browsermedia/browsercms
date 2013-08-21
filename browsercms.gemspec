@@ -35,8 +35,10 @@ Gem::Specification.new do |s|
   s.add_dependency("bootstrap-sass")
   s.add_dependency("ancestry", "~> 1.2.4")
   s.add_dependency("ckeditor_rails", "~> 4.0.1.1")
+  s.add_dependency("underscore-rails", "~> 1.4")
   s.add_dependency("jquery-rails", "~> 2.0")
   s.add_dependency("paperclip", "~> 3.0.3")
+  s.add_dependency("panoramic")
 
   # Required only for bcms-upgrade
   s.add_dependency "term-ansicolor"

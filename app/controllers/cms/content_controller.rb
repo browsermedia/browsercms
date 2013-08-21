@@ -1,5 +1,7 @@
 module Cms
   class ContentController < Cms::ApplicationController
+    respond_to :html
+
     include Cms::ContentRenderingSupport
     include Cms::Attachments::Serving
 
@@ -12,9 +14,11 @@ module Cms
     before_filter :construct_path_from_route, :only => [:show_page_route]
     before_filter :try_to_redirect, :only => [:show]
     before_filter :try_to_stream_file, :only => [:show]
+    before_filter :load_page, :only => [:show, :show_page_route]
     before_filter :check_access_to_page, :except => [:edit, :preview]
     before_filter :select_cache_directory
 
+    self.responder = Cms::ContentResponder
 
     # ----- Actions --------------------------------------------------------------
     def show
@@ -36,21 +40,14 @@ module Cms
     def edit
       @show_toolbar = true
       @mode = "edit"
-      if page = Page.where(:id => params[:id]).first
-        @page = page.as_of_draft_version
-        render_page
-      else
-        render(:layout => 'cms/application',
-               :template => 'cms/content/no_page',
-               :status => :not_found)
-      end
-
+      @page = Page.find_draft(params[:id].to_i)
+      render_page
     end
 
     def preview
       @mode = "view"
-      @page = Page.find_draft(params[:id])
-      ensure_current_user_can_edit(@page)
+      @page = Page.find_draft(params[:id].to_i)
+      ensure_current_user_can_view(@page)
       render_page
     end
 
@@ -75,8 +72,8 @@ module Cms
 
     def render_page
       prepare_connectables_for_render
-      page_layout = determine_page_layout
-      render :layout => page_layout, :action => 'show'
+      prepend_view_path DynamicView.resolver
+      respond_with @page, determine_page_layout
     end
 
     def cache_if_eligible
@@ -97,7 +94,6 @@ module Cms
 
     # ----- Before Filters -------------------------------------------------------
     def construct_path
-      # @paths = params[:cms_page_path] || params[:path] || []
       @path = "/#{params[:path]}"
       @paths = @path.split("/")
     end
@@ -157,36 +153,18 @@ module Cms
 
     end
 
-    def check_access_to_page
+    def load_page
       if current_user.able_to?(:edit_content, :publish_content, :administrate)
         logger.debug "Displaying draft version of page"
-        if page = Page.first(:conditions => {:path => @path})
-          @page = page.as_of_draft_version
-        else
-          return render(:layout => 'cms/application',
-                        :template => 'cms/content/no_page',
-                        :status => :not_found)
-        end
+        @page = Page.find_draft(@path)
       else
         logger.debug "Displaying live version of page"
-        @page = Page.find_live_by_path(@path)
-        page_not_found unless (@page && !@page.archived?)
-      end
-
-      ensure_current_user_can_edit(@page)
-
-    end
-
-    # ----- Other Methods --------------------------------------------------------
-    def ensure_current_user_can_edit(page)
-      unless current_user.able_to_view?(page)
-        store_location
-        raise Cms::Errors::AccessDenied
+        @page = Page.find_live(@path)
       end
     end
 
-    def page_not_found
-      raise ActiveRecord::RecordNotFound.new("No page at '#{@path}'")
+    def check_access_to_page
+      ensure_current_user_can_view(@page)
     end
   end
 end

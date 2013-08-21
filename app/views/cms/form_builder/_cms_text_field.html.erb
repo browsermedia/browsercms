@@ -1,3 +1,12 @@
+<%
+   if should_autogenerate_slug?(method, f)
+     unless options[:class]
+        options[:class] = []
+     end
+     options[:class] << 'input-xxlarge'
+     options[:class] << 'slug-source'
+   end
+%>
 <div class="fields text_fields">
   <% if cms_options[:label] %>
     <%= f.label method, cms_options[:label] %>
@@ -6,7 +15,10 @@
   <% end %>
   <%= f.text_field method, options %>
   <% if cms_options[:instructions] %>
-    <div class="instructions"><%=h cms_options[:instructions] %></div>
-    <br clear="all" /><%# Fixes issue with bad line wrapping %>
+    <div class="muted help-block"><%=h cms_options[:instructions] %></div>
   <% end %>
 </div>
+<% # Auto-insert slug field where appropriate.
+   if content_requires_slug_field?(method, f) %>
+   <%= f.cms_path_field :slug, class: 'slug-dest' %>
+<% end %>

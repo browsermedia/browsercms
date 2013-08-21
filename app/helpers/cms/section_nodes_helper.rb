@@ -1,12 +1,26 @@
 module Cms
   module SectionNodesHelper
 
+    def protected_content_icon(section)
+      icon "warning-sign" unless @modifiable_sections.include?(section)
+    end
+
+    def icon(name)
+      content_tag("i", "", {class: "icon-#{name}"})
+    end
+
+    def status_tag(publishable_content)
+      status = publishable_content.status.to_s
+      letter = status[0,1]
+      content_tag("span", letter, class: "status #{status}")
+    end
+
     def access_status(section_node, public_sections)
-      access_icon = :unlocked
+      access_icon = 'ok-circle'
       unless public_sections.include?(section_node)
-        access_icon = :locked
+        access_icon = 'lock'
       end
-      access_icon
+      "icon-#{access_icon}"
     end
 
     def section_icons(section_node, children=[])
@@ -19,7 +33,7 @@ module Cms
       if children.empty?
         image_tag("cms/sitemap/no_contents.png", :class => "no_folder_toggle#{folder_style}")
       else
-        image_tag("cms/sitemap/#{expander_image}", :class => "folder_toggle#{folder_style}")
+        image_tag("cms/sitemap/#{expander_image}", :class => "folder_toggle#{folder_style}", :data => {:toggle => "collapse", :target => "#subsection#{section_node.id}"})
       end
     end
 
@@ -29,11 +43,11 @@ module Cms
     #   - All non-first level items should be hidden.
     def sitemap_ul_tag(node)
       opts = {
-        :id => "section_node_#{node.section_node.id}",
-        :class => "section_node"
+          :id => "section_node_#{node.section_node.id}",
+          :class => "section_node"
       }
       opts[:class] += " rootlet" if in_first_level?(node)
-      opts[:style] = "display: none" unless in_first_level?(node)
+      #opts[:style] = "display: none" unless in_first_level?(node)
       tag("ul", opts, true)
     end
 

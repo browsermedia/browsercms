@@ -21,19 +21,19 @@
 
 <%= render 'toolbar' %>
 <div class="roundedcorners">
-  <table class="data">
-    <tr>
-      <th class="first"></th>
-      <th><div class="dividers">Name</div></th>
-      <th><div>Updated At</div></th>
-      <th class="last"></th>
-    </tr>
+  <table class="data cms-content-table table table-striped table-bordered table-hover">
+	<thead>  
+		<tr>
+	      <th><div class="dividers">Name</div></th>
+        <th><div>Path</div></th>
+	      <th><div>Updated At</div></th>
+	    </tr>
+	</thead>
     <% @views.each do |view| %>
       <tr id="<%= dynamic_view_type.form_name %>_<%= view.id %>">
-        <td class="first"></td>
         <td><div class="dividers" title="<%=h view.file_path %>"><%=h view.display_name %></div></td>
+        <td><div class="dividers" title="<%=h view.path %>"><%=h view.path %></div></td>
         <td><div><%= view.updated_at && view.updated_at.to_s(:date) %></div></td>
-        <td class="last"></td>
       </tr>
     <% end %>
   </table>

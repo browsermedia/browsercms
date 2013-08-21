@@ -1,0 +1,28 @@
+<% # Handles both looking at a single block and a collection of blocks.
+   unless @block
+    @block = content_type.model_class.new
+   end
+%>
+<%#
+ Enable/Disable publish button for
+    - editting permission
+    - If block is already published.
+%>
+<span class="btn-group pull-left">
+  <%= menu_button("Back to #{@block.class.display_name_plural}", cms_connectable_path(@block.class)) unless @block.new_record? %>
+  <%= publish_menu_button(@block) %>
+  <% if @block.class.addressable? %>
+  <%= link_to("Preview", @block.path, id: "preview_button", target: "_blank", class: "btn btn-primary") %>
+  <% end %>
+  <%= view_content_menu_button(@block) %>
+  <%= edit_content_menu_button(@block) %>
+</span>
+<%= versions_menu_button(@block) %>
+<%= delete_menu_button(@block) %>
+<% if @block.persisted? %>
+    <% if !@block.live? %>
+        <span id="page-status-label" class="draft-status">DRAFT</span>
+    <% else %>
+       <span id="page-status-label" class="published-status">Published</span>
+    <% end %>
+<% end %>

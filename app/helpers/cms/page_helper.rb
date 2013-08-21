@@ -134,8 +134,8 @@ module Cms
         items << content_tag(:li,
                              link_to(sec.name, sec.actual_path), (i == 0 ? {:class => "first"} : {}))
       end
-      if !show_parent && current_page.section.path == current_page.path
-        items[items.size-1] = content_tag(:li, current_page.section.name)
+      if !show_parent && current_page.landing_page?
+        items[items.size-1] = content_tag(:li, current_page.parent.name)
       else
         items << content_tag(:li, current_page.page_title)
       end

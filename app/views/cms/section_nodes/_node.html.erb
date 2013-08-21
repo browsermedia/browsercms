@@ -1,44 +1,33 @@
 <%
-  hidden = defined?(hidden) ? hidden : false
-  access_icon = defined?(access_icon) ? access_icon : nil
-  published_status_icon = defined?(published_status_icon) ? published_status_icon : nil
-  published_status_label = defined?(published_status_label) ? published_status_label : nil
+   hidden = defined?(hidden) ? hidden : false
+   access_icon = defined?(access_icon) ? access_icon : nil
+   published_status_label = defined?(published_status_label) ? published_status_label : nil
+   edit_path = defined?(edit_path) ? edit_path : nil
+     configure_path = defined?(configure_path) ? configure_path : nil
 
-  editable_class = ""
-  case node_type
-  when "section"
-    editable_class = "non-editable" unless @modifiable_sections.include?(node)
-  else
-    editable_class = "non-editable" unless defined?(parent) && @modifiable_sections.include?(parent)
-  end
-
-  node_type_class = node_type == "section" && node.root? ? 'root' : ''
+   editable_class = ""
+   case node_type
+     when "section"
+       editable_class = "non-editable" unless @modifiable_sections.include?(node)
+     else
+       editable_class = "non-editable" unless defined?(parent) && @modifiable_sections.include?(parent)
+   end
+   node_type_class = node_type == "section" && node.root? ? 'root' : ''
 %>
-<div class="roundedcorners">
-  <table class="section_node <%= node_type %> <%= "movable" if current_user.able_to?(:publish_content) %>" width="100%" cellspacing="0" cellpadding="0">
-    <tr><td colspan="4" class="drop-before"></td></tr>
-    <tr<%= ' class="doubled"' if access_icon && hidden %>>
-      <td id="<%= node_type %>_<%= node.id %>" class="<%= node_type_class %> <%= node_type %> node <%= editable_class %>">
-	      <%= icon.html_safe %>
-	      <div><%= h(node.name) %></div>
-      </td>
-      <td class="sitemap_hidden divided">
-        <a href="#" class="hidden"><%= status_icon(:hidden) if hidden %><span>HIDDEN</span></a>
-      </td>
-      <td class="sitemap_access divided">
-        <%= access_icon ? access_icon : raw("&nbsp;") %>
-      </td>
-      <td class="sitemap_published_status">
-        <div>
-          <%= published_status_icon ? published_status_icon : raw("&nbsp;") %>
-          <div><%= published_status_label if published_status_label %></div>
-        </div>
-      </td>
-    </tr>
-    <tr><td colspan="4" class="drop-after"></td></tr>
-  </table>
-  <div class="stl"></div>
-  <div class="str"></div>
-  <div class="sbl"></div>
-  <div class="sbr"></div>
+<div class="section_node <%= node_type %> <%= "movable" if current_user.able_to?(:publish_content) %> span12" >
+  <div class="row-fluid<%= ' doubled' if access_icon && hidden %>">
+    <%= tag("div", {id: "#{node_type}_#{node.id}", class: "#{node_type_class} #{node_type} node #{editable_class} span8",
+                         data: {edit_path: edit_path, configure_path: configure_path, id: node.id, class: node_type}}, true) %>
+      <%= icon.html_safe %> <%= h(node.name) %>
+    </div>
+    <div class="span1">
+      <a href="#" class="hidden"><%= status_icon(:hidden) if hidden %></a>
+    </div>
+    <div class="span1">
+      <%= access_icon ? access_icon : raw("&nbsp;") %>
+    </div>
+    <div class="span1">
+        <%= published_status_label if published_status_label %>
+    </div>
+  </div>
 </div>

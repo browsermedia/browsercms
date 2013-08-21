@@ -2,36 +2,22 @@
 <% @toolbar_title = "List Groups" %>
 <%= render 'toolbar' %>
 
-<div class="roundedcorners">
-  <table class="data">
+  <table class="data table table-rounded table-bordered table-hover table-striped">
     <thead>
       <tr>
-        <th colspan="2" class="first">
-          <div class="dividers">
-            <%= link_to "Name", groups_path(:order => determine_order(params[:order], "#{Cms::Group.table_name}.name")) %>
-          </div>
-        </th>
-        <th>
-          <div class="dividers">
-            <%= link_to "Type", groups_path(:order => determine_order(params[:order], "#{Cms::GroupType.table_name}.name")) %>
-          </div>
-        </th>
-        <th colspan="2" class="last"><div class="dividers">Permissions</div></th>
+        <th><%= link_to "Name", groups_path(:order => determine_order(params[:order], "#{Cms::Group.table_name}.name")) %></th>
+        <th><%= link_to "Type", groups_path(:order => determine_order(params[:order], "#{Cms::GroupType.table_name}.name")) %></th>
+        <th>Permissions</th>
       </tr>
     </thead>
     <% section_count = Cms::Section.count %>
     <% @groups.each do |g| %>
       <tr>
-        <td class="first"></td>
         <td>
-          <div class="dividers">
             <%= link_to h(g.name), [:edit, g] %>
-          </div>
         </td>
         <td>
-          <div class="dividers">
             <%= h(g.group_type.name) %>
-          </div>
         </td>
         <td>
           <% g.permissions.uniq.each do |p| %>
@@ -40,15 +26,9 @@
           - <%= g.cms_access? ? "Edit" : "View" %>
           <%= g.sections.count >= section_count ? "All Sections" : "#{g.sections.count} of #{section_count} Sections" %>
         </td>
-        <td class="last"></td>
       </tr>
     <% end %>
   </table>
-  <div class="tl"></div>
-  <div class="tr"></div>
-  <div class="bl"></div>
-  <div class="br"></div>
-</div>
 <% if @groups.total_pages > 1 %>
   <%= render_pagination @groups, Cms::Group %>
 <% end %>

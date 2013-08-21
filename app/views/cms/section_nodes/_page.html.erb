@@ -1,20 +1,26 @@
-<%
-   page = node
-   status_icon = page.archived? ? :archived : page.status
-       first_level = in_first_level?(node)
-
+<% data = {
+        edit_path: page_path(page),
+        configure_path: edit_page_path(page),
+        delete_path: page_path(page),
+        node_id: key.id,
+        type: 'page'
+}
+   unless @modifiable_sections.include?(parent)
+     data[:editable] = false
+   end
+   icon_name = page.home? ? "home" : "file"
 %>
-<%= sitemap_ul_tag(node) %>
-  <li>
-    <%= render :partial => "node", :locals => {
-        :node => node, 
-        :node_type => "page", 
-        :icon => action_icon(first_level ? :root_page : :page),
-        :hidden => page.hidden?,
-        :access_icon => status_icon(access_icon),
-        :published_status_icon => status_icon(status_icon),
-        :published_status_label => status_icon.to_s.titleize,
-        :parent => parent
-      } %>
-  </li>
-</ul>
+<li><%= tag "a", {href: "#",
+                  class: 'selectable',
+                  data: data
+},
+            true %>
+  <%= icon icon_name %>  <%= page.name %>
+  <%= protected_content_icon parent %>
+  <span class="span1">
+    <%= content_tag "span", "H", class: "status phidden" if page.hidden? %>
+    <%= content_tag "i", "", class: access_icon %>
+    <%= status_tag(page) %>
+    </span>
+  </a>
+</li>

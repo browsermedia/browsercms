@@ -1,0 +1,28 @@
+<%= content_for :html_head do %>
+  <%= stylesheet_link_tag('cms/form_layout') %>
+  <%= stylesheet_link_tag('cms/content_library') %>
+<% end %>
+<% use_page_title "Content Library / Edit #{content_type.display_name}" %>
+<% @toolbar_title = "Edit #{content_type.display_name} '#{@block.name}'".html_safe %>
+<%= content_for :button_bar, render(:partial => 'buttonbar') %>
+
+<% if @block.respond_to?(:deleted) && @block.deleted %>
+  <div class="header">This <%= @block.class.name %> has been deleted.</div>
+<% else %>
+<%= form_for(@block, :url => block_path(@block), :html => {:multipart => true}) do |f| %>
+  <%= f.cms_error_messages %>
+  <%= render :partial => 'cms/shared/exception', :object => @exception if @exception %>  
+  <% if @other_version %>
+    <%= render :partial => 'cms/shared/version_conflict_error', :locals => {:other_version => @other_version, :your_version => @block} %>
+  <% end %>  
+  <%= render :partial => 'hidden_fields', :locals => { :f => f } %>
+  <%= render :partial => block_form, :locals => {:f => f} %>
+  <% if @other_version %>
+    <%= render :partial => "cms/shared/version_conflict_diff", :locals => {:other_version => @other_version, :your_version => @block} %>
+  <% end %>
+    <div class="buttons">
+      <%= save_and_publish_button(@block, content_type) %>
+      <%= f.submit("Save", :class => "submit btn", :tabindex => next_tabindex) %>
+    </div>
+<% end %>
+<% end %>

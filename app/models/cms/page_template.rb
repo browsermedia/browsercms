@@ -36,5 +36,9 @@ module Cms
       page_templates.map { |f| [display_name(f), f] }.sort.uniq
     end
 
+		def partial?
+			false
+		end
+
   end
 end

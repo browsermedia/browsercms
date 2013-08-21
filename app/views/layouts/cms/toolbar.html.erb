@@ -7,11 +7,6 @@
     <%= stylesheet_link_tag 'cms/page_toolbar' %>
     <%= javascript_include_tag 'cms/toolbar' %>
     <%= csrf_meta_tags %>
-    <% if protect_against_forgery? %><script type="text/javascript">
-      jQuery(function($){
-        $.cms.authenticity_token = '<%= form_authenticity_token %>'
-      })
-    </script><% end %>    
     <%= yield :html_head %>
   </head>
   <body>

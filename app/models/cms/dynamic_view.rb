@@ -1,12 +1,14 @@
 module Cms
   class DynamicView < ActiveRecord::Base
+    store_templates
+
 
     after_save :write_file_to_disk
     after_destroy :remove_file_from_disk
 
     include DefaultAccessible
     # Need to explicitly define these, since during new project creation, these files aren't discoverable.
-    attr_accessible :name, :body, :format, :handler
+    attr_accessible :name, :body, :format, :handler, :locale, :path, :partial
 
     scope :with_file_name, lambda { |file_name|
       conditions = {:name => nil, :format => nil, :handler => nil}
@@ -29,8 +31,9 @@ module Cms
         is_versioned
 
         before_validation :set_publish_on_save
+        before_validation :set_defaults, :set_path
 
-        validates_presence_of :name, :format, :handler
+        validates_presence_of :name, :format, :handler, :path, :locale
         validates_uniqueness_of :name, :scope => [:format, :handler],
                                 :message => "Must have a unique combination of name, format and handler"
 
@@ -43,7 +46,7 @@ module Cms
     end
 
     def self.new_with_defaults(options={})
-      new({:format => "html", :handler => "erb", :body => default_body}.merge(options))
+      new({:format => "html", :handler => "erb", :body => default_body, :locale => I18n.locale}.merge(options))
     end
 
     def self.find_by_file_name(file_name)
@@ -106,6 +109,16 @@ module Cms
     # See PathHelper#cms_index_path_for
     def self.engine
       "cms"
+    end
+
+    def set_path
+      self.path = self.class.relative_path + '/' + name
+    end
+
+    def set_defaults
+      self.locale = I18n.locale.to_s unless locale
+      self.partial = partial?
+      true
     end
   end
 end

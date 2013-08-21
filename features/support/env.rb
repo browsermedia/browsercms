@@ -11,6 +11,12 @@ World(FactoryGirl::Syntax::Methods)
 
 require 'aruba/cucumber'
 
+require 'capybara/poltergeist'
+
+require 'capybara/dsl'
+#Capybara.javascript_driver = :poltergeist
+#Capybara.default_driver = :poltergeist
+
 Before do
   # Configure where Aruba generates files.
   # You can't generate rails projects within rails projects', so it needs to be parallel to the browsercms project
@@ -19,7 +25,7 @@ Before do
   @dirs = [@aruba_dir]
 
   # Generating projects takes a while, so give Aruba more time before it cuts things off.
-  @aruba_timeout_seconds = 30
+  @aruba_timeout_seconds = 15
 
   # Must explicitly clean up the working directory before each project (might be solved in later version of Aruba)
   FileUtils.rm_rf(@aruba_dir)
