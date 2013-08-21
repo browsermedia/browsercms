@@ -47,22 +47,6 @@ class SearchableContentBlockTest < ActiveSupport::TestCase
   end
 end
 
-class SearchableHtmlBlockTest < ActiveSupport::TestCase
-  def test_searchable
-    @a1 = create(:html_block, :name => "a1", :content => "a one")
-    @a2 = create(:html_block, :name => "a2", :content => "a two")
-    @b1 = create(:html_block, :name => "b1", :content => "b one")
-    @b2 = create(:html_block, :name => "b2", :content => "b two")
-
-    assert Cms::HtmlBlock.searchable?
-    assert_equal [@a2, @b2], Cms::HtmlBlock.search("2").to_a
-    assert Cms::HtmlBlock.search(:term => "one").to_a.empty?
-    assert_equal [@a1, @b1], Cms::HtmlBlock.search(:term => "one", :include_body => true).to_a
-    assert Cms::HtmlBlock.search(nil).include?(@b2)
-  end
-end
-
-
 class SearchableBlockWithoutName < ActiveRecord::Base
   acts_as_content_block
 end

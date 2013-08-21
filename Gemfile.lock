@@ -12,6 +12,7 @@ PATH
       sass-rails
       term-ansicolor
       underscore-rails (~> 1.4)
+      will_paginate (~> 3.0.0)
 
 GEM
   remote: http://rubygems.org/
@@ -188,7 +189,7 @@ GEM
     thread_safe (0.1.2)
       atomic
     tilt (1.4.1)
-    tins (0.8.4)
+    tins (0.9.0)
     treetop (1.4.14)
       polyglot
       polyglot (>= 0.3.1)
@@ -197,6 +198,7 @@ GEM
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
     underscore-rails (1.5.1)
+    will_paginate (3.0.4)
     xpath (2.0.0)
       nokogiri (~> 1.3)
     yard (0.8.7)

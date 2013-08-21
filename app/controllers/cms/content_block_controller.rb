@@ -76,9 +76,9 @@ module Cms
     def destroy
       do_command("deleted") { @block.destroy }
       respond_to do |format|
-          format.html {redirect_to_first params[:_redirect_to], blocks_path}
-          format.json {render :json => {:success => true }}
-        end
+        format.html { redirect_to_first params[:_redirect_to], blocks_path }
+        format.json { render :json => {:success => true} }
+      end
 
     end
 
@@ -160,16 +160,19 @@ module Cms
 
     def load_blocks
       options = {}
-      if params[:section_id] && params[:section_id] != 'all'
-        options[:include] = {:attachments => :section_node}
-        options[:conditions] = ["#{Namespacing.prefix("section_nodes")}.ancestry = ?", Section.find(params[:section_id]).ancestry_path]
-      end
+
       options[:page] = params[:page]
       options[:order] = model_class.default_order if model_class.respond_to?(:default_order)
       options[:order] = params[:order] unless params[:order].blank?
 
       scope = model_class.respond_to?(:list) ? model_class.list : model_class
-      @blocks = scope.searchable? ? scope.search(params[:search]).paginate(options) : scope.paginate(options)
+      if scope.searchable?
+        scope = scope.search(params[:search])
+      end
+      if params[:section_id] && model_class.respond_to?(:with_parent_id)
+        scope = scope.with_parent_id(params[:section_id])
+      end
+      @blocks = scope.paginate(options)
       check_permissions
     end
 

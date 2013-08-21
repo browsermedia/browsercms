@@ -16,6 +16,9 @@ require 'jquery-rails'
 
 require 'underscore-rails'
 
+require 'will_paginate'
+require 'will_paginate/active_record'
+
 module Cms
 
   class Engine < Rails::Engine
@@ -47,6 +50,7 @@ module Cms
     # Set reasonable defaults
     # These default values can be changed by developers in their projects in their application.rb or environment's files.
     config.before_configuration do |app|
+      WillPaginate.per_page = 15
 
       # Default cache directories.
       app.config.cms.mobile_cache_directory = File.join(Rails.root, 'public', 'cache', 'mobile')

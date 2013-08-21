@@ -39,14 +39,14 @@ When /^I Save And Publish$/ do
 end
 
 Given /^there are multiple pages of portlets in the Content Library$/ do
-  per_page = Cms::Behaviors::Pagination::DEFAULT_PER_PAGE
+  per_page = WillPaginate.per_page
   (per_page * 2).times do
     create(:portlet)
   end
 end
 
 Given /^there are multiple pages of html blocks in the Content Library$/ do
-  per_page = Cms::Behaviors::Pagination::DEFAULT_PER_PAGE
+  per_page = WillPaginate.per_page
   two_pages_of_blocks = (per_page * 2) - Cms::HtmlBlock.count
   two_pages_of_blocks.times do
     create(:html_block)
@@ -54,7 +54,7 @@ Given /^there are multiple pages of html blocks in the Content Library$/ do
 end
 
 Given /^there are multiple pages of products in the Content Library$/ do
-  per_page = Cms::Behaviors::Pagination::DEFAULT_PER_PAGE
+  per_page = WillPaginate.per_page
   (per_page * 2).times do |i|
     Product.create(:name => "Product #{i}")
   end

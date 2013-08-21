@@ -8,8 +8,8 @@
     <%= collection.total_entries %>
   </div>
   <div class="links">
-    <%= link_to "&nbsp;".html_safe, first_page_path, :id => "first_page_link" %>
-    <%= link_to "&nbsp;".html_safe, previous_page_path, :id => "previous_page_link" %>
+    <%= link_to "<< &nbsp;".html_safe, first_page_path, :id => "first_page_link" %>
+    <%= link_to "< &nbsp;".html_safe, previous_page_path, :id => "previous_page_link" %>
     <span>
       <% url = URI.parse(current_page_path) %>
       <%= form_tag url.path, :method => :get, :class => "current_page" do %>
@@ -24,8 +24,8 @@
         </strong>
       <% end %> 
     </span>
-    <%= link_to "&nbsp;".html_safe, next_page_path, :id => "next_page_link" %>
-    <%= link_to "&nbsp;".html_safe, last_page_path, :id => "last_page_link" %>
+    <%= link_to "&nbsp; >".html_safe, next_page_path, :id => "next_page_link" %>
+    <%= link_to "&nbsp; >>".html_safe, last_page_path, :id => "last_page_link" %>
   </div>
   <br clear="all"/>
 </div>
