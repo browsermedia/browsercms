@@ -8,6 +8,7 @@ This release includes the following features:
 * Addressable Content Blocks - Custom content blocks (i.e. Product, Event, News Articles) can be created directly as pages in the sitemap.
 * Refined Content API - Make content blocks closer in behavior to ActiveRecord.
 * Improved Template Storage - Templates stored in the database no longer need to be written out to the file system. This should make it easier to deploy CMS apps to Heroku.
+* Rails 4 Upgrade - BrowserCMS is now designed to work with Rail 4.0.
 
 UI Redesign
 ----------
@@ -60,6 +61,8 @@ Upgrading
 --------
 
 1. Editable Page Titles: In order to take advantage of the editable pages titles, templates need to use the new Template API Method: page_header(). Used rather that <%= page_title %> within h1/h2 etc, this will output an editable page title element for logging in users.
+2. match -> get: Update your config/routes.rb to change any use of 'match' to get or post for your controller.
+3. Install the deprecated finders and other gems to help with upgrade. Once you get rid of the deprecation warnings you can remove the gem.
 
 Deprecations
 ------------

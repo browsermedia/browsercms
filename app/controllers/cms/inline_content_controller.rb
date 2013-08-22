@@ -4,7 +4,7 @@ module Cms
 
     def update
       content = Content.find_draft(params[:content_name], params[:id])
-      content.update_attributes(filtered_content)
+      content.update_attributes(filtered_content(content))
       @page = Page.find_draft(params[:page_id].to_i)
       if (!@page.live?)
         page_status = "draft-status"
@@ -37,8 +37,12 @@ module Cms
 
     private
 
-    def filtered_content
-      ContentFilter.new.filter(params[:content])
+    def filtered_content(content)
+      ContentFilter.new.filter(content_params(content))
+    end
+
+    def content_params(content)
+      params.require(:content).permit(content.class.permitted_params)
     end
   end
 end
