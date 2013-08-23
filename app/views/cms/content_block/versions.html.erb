@@ -1,7 +1,6 @@
 <% use_page_title "Content Library / List of Versions" %>
 <% @toolbar_title = "List Versions / '#{@block.name}' #{content_type.display_name}" %>
 <%= content_for :html_head do %>
-<%= stylesheet_link_tag("cms/content_library") %>
   <%= javascript_tag do %>
     jQuery(function($){
       var collectionName = '<%= content_type.content_block_type %>'

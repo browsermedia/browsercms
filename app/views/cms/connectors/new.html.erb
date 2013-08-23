@@ -4,7 +4,6 @@
 %>
 
 <%= content_for :html_head do %>
-    <%= stylesheet_link_tag("cms/content_library") %>
     <%= javascript_tag do %>
         jQuery(function($){
         var collectionName = '<%= @block_type.content_block_type %>'
