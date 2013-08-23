@@ -48,19 +48,6 @@ module Cms
       @unnamespaced_type = Cms::ContentType.create!(:name => "Unnamespaced", :group_name => "Core")
     end
 
-    test ".default finds the default content type" do
-      create(:content_type, name: "Cms::HtmlBlock")
-
-      assert_equal "Cms::HtmlBlock", ContentType.default.name
-    end
-
-    test ".other_connectable doesn't include the 'default' content type'" do
-      create(:content_type, name: "Cms::HtmlBlock")
-
-      content_type_names = ContentType.other_connectables.collect { |ct| ct.name }
-      assert !content_type_names.include?("Cms::HtmlBlock")
-    end
-
     test "#key" do
       assert_equal "really_long_name_class", @c.key
     end

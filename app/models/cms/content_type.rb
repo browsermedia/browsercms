@@ -1,12 +1,12 @@
 module Cms
   class ContentType < ActiveRecord::Base
 
-   #attr_accessible :name, :group_name, :content_type_group
-
     attr_accessor :group_name
     belongs_to :content_type_group, :class_name => 'Cms::ContentTypeGroup'
     validates_presence_of :content_type_group
     before_validation :set_content_type_group
+
+    DEFAULT_CONTENT_TYPE_NAME = 'Cms::HtmlBlock'
 
     class << self
       def named(name)
@@ -14,26 +14,41 @@ module Cms
       end
 
       def connectable
-        where(["#{ContentTypeGroup.table_name}.name != ?", 'Categorization'])
-            .order("#{ContentType.table_name}.priority, #{ContentType.table_name}.name")
-            .includes(:content_type_group)
-            .references(:content_type_group)
+        where(["#{Cms::ContentTypeGroup.table_name}.name != ?", 'Categorization']).order("#{ContentType.table_name}.priority, #{ContentType.table_name}.name").includes(:content_type_group).references(:content_type_group)
+      end
 
+      # Returns a list of all ContentTypes in the system.
+      # Note: Ignores the database to just look at classes, then returns a 'new' ContentType to match.
+      #
+      # @return [Array<Cms::ContentType] An alphabetical list of content types.
+      def available
+        subclasses = ObjectSpace.each_object(::Class).select { |klass| klass < Cms::Acts::ContentBlock::MacroMethods::InstanceMethods }
+        subclasses << Cms::Portlet
+        subclasses.uniq! {|k| k.name} # filter duplicate classes
+        subclasses.map do |klass|
+          unless klass < Cms::Portlet
+            Cms::ContentType.new(name: klass.name)
+          end
+        end.compact.sort { |a, b| a.name <=> b.name }
+      end
+
+      def list
+        all.map { |f| f.name.underscore.to_sym }
+      end
+
+      # Returns all content types besides the default.
+      #
+      # @return [Array<Cms::ContentType]
+      def other_connectables()
+        available.select { |content_type| content_type.name != DEFAULT_CONTENT_TYPE_NAME }
+      end
+
+      # Returns the default content type that is most frequently added to pages.
+      def default()
+        Cms::ContentType.new(name: DEFAULT_CONTENT_TYPE_NAME)
       end
     end
 
-    def self.list
-      all.map { |f| f.name.underscore.to_sym }
-    end
-
-    # Returns all content types besides the default.
-    def self.other_connectables()
-      self.connectable.where("#{ContentType.table_name}.name != 'Cms::HtmlBlock'").references(:content_types)
-    end
-
-    def self.default()
-      self.where(:name => "Cms::HtmlBlock").first
-    end
 
     # Given a 'key' like 'html_blocks' or 'portlet'. Looks first for a class in the Cms:: namespace, then again without it.
     # Raises exception if nothing was found.
@@ -95,6 +110,7 @@ module Cms
     end
 
     include EngineHelper
+
     def target_class
       model_class
     end
