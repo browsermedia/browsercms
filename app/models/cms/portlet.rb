@@ -15,6 +15,9 @@ module Cms
       unless description.blank?
         @description = description
       end
+      if @description.blank?
+        return "(No description available)"
+      end
       @description
     end
 

@@ -16,8 +16,7 @@ end
 
 class EditablePortlet < Cms::Portlet
   enable_template_editor true
-  description
-    "Shows how you can create
+  description "Shows how you can create
     a multiline description."
 
 end
@@ -32,9 +31,12 @@ class PortletTest < ActiveSupport::TestCase
 
   test ".description" do
     assert_equal "Tests #render_inline", NoInlinePortlet.description
-    #assert_not_nil EditablePortlet.description
+    assert_not_nil EditablePortlet.description
   end
 
+  test ".description when missing" do
+    assert_equal "(No description available)", NonEditablePortlet.description
+  end
   test "Users should able_to_modify? portlets" do
     user = create(:content_editor)
     assert_equal [], Cms::Portlet.new.connected_pages
@@ -73,6 +75,8 @@ class PortletTest < ActiveSupport::TestCase
   test ".underscore" do
     assert_equal "inline_portlet", InlinePortlet.name.underscore
   end
+
+
   def test_portlets_consistently_load_the_same_number_of_types
 
     list = Cms::Portlet.types
