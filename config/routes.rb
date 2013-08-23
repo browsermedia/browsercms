@@ -15,7 +15,6 @@ Cms::Engine.routes.draw do
   post '/login', :to=>"sessions#create"
 
   get '/toolbar', :to=>"toolbar#index", :as=>'toolbar'
-  get '/content_types', :to=>"content_types#index", :as=>'content_types'
 
   put "/inline_content/:content_name/:id", to: "inline_content#update", as: "update_inline_content"
   resources :page_components

@@ -15,7 +15,7 @@ end
 
 describe Cms::ContentType do
   describe '.content_type' do
-    it 'should return ContentType info' do
+    it "should return ContentType info" do
       content_type = Widget.content_type
       content_type.must_be_instance_of Cms::ContentType
       content_type.name.must_equal "Widget"
