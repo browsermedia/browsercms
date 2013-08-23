@@ -1,5 +1,7 @@
 class TagCloudPortlet < Cms::Portlet
-  
+
+  description "Generates a Tag cloud by based the tags used on content blocks."
+
   def self.default_sizes
     (0..4).map{|n| "size-#{n}" }.join(" ")
   end

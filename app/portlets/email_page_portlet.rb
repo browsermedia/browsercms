@@ -1,5 +1,7 @@
 class EmailPagePortlet < Cms::Portlet
 
+  description "Display a form that allows visitors to email the current page to a friend."
+
   def render
     pmap = flash[instance_name] || params
     @email_message = Cms::EmailMessage.new pmap[:email_message]

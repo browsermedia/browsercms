@@ -2,6 +2,7 @@ class ForgotPasswordPortlet < Cms::Portlet
   require 'digest/sha1'  
 
   enable_template_editor true
+  description "Displays a form that allows users to request to reset their account password."
 
   def render
     logger.warn "Handling Class #{request.class}"
