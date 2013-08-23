@@ -31,6 +31,7 @@ Users can now edit most HTML content directly in the page. Icons indicate the ar
 1. Editable Page titles - Page title can be edited directly from the header.
 1. Preview Page - Editors can now preview the page without a toolbar or editing controls.
 1. Non-incontext Content - Not all content makes sense to be inline editable (for example portlets). For these content types, the previous move/remove/edit links now float in the upper right hand corner of the content block.
+1. [#619] Add descriptions to portlets. Developers can customize these.
 
 Addressable Content Blocks
 --------------------------

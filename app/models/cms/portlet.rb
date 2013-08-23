@@ -6,7 +6,17 @@ module Cms
     # These are here simply to temporarily hold these values
     # Makes it easy to pass them through the process of selecting a portlet type
     attr_accessor :connect_to_page_id, :connect_to_container, :controller
-   #attr_accessible :connect_to_page_id, :connect_to_container, :controller, :name
+
+    # Descriptions for portlets will be displayed when a user is adding one to page, or when editing the portlet.
+    # The goal is provide a more detailed overview of how a portlet should be used or what it does.
+    # @param [String] description (If supplied, it will set the new value)
+    # @return [String]
+    def self.description(description="")
+      unless description.blank?
+        @description = description
+      end
+      @description
+    end
 
     delegate :request, :response, :session,
              :flash, :params, :cookies,
@@ -61,10 +71,10 @@ module Cms
       @types ||= ActiveSupport::Dependencies.autoload_paths.map do |d|
         if d =~ /app\/portlets/
           Dir["#{d}/*_portlet.rb"].map do |p|
-            File.basename(p, ".rb").classify
+            File.basename(p, ".rb").classify.constantize
           end
         end
-      end.flatten.compact.uniq.sort
+      end.flatten.compact.uniq
     end
 
     def self.get_subclass(type)
@@ -147,15 +157,16 @@ module Cms
     def connected_pages
       []
     end
+
     #----- Portlet Action Related Methods ----------------------------------------
-    
+
     # Used by portlets to set a custom title, typically in the render body.
-    # For example, this allows a page with a single portlet that might display a content block to set the page name to 
+    # For example, this allows a page with a single portlet that might display a content block to set the page name to
     # that block name.
     def page_title(new_title)
       controller.current_page.title = new_title
     end
-    
+
     def instance_name
       "#{self.class.name.demodulize.underscore}_#{id}"
     end

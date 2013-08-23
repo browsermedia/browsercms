@@ -4,6 +4,7 @@ require 'test_helper'
 # related to the dynamic attributes causes other tests to fail otherwise.
 class NoInlinePortlet < Cms::Portlet
   render_inline false
+  description "Tests #render_inline"
 end
 
 class InlinePortlet < Cms::Portlet
@@ -15,6 +16,10 @@ end
 
 class EditablePortlet < Cms::Portlet
   enable_template_editor true
+  description
+    "Shows how you can create
+    a multiline description."
+
 end
 
 
@@ -23,6 +28,11 @@ class PortletTest < ActiveSupport::TestCase
   def setup
     @portlet = create(:portlet)
 
+  end
+
+  test ".description" do
+    assert_equal "Tests #render_inline", NoInlinePortlet.description
+    #assert_not_nil EditablePortlet.description
   end
 
   test "Users should able_to_modify? portlets" do
@@ -36,10 +46,6 @@ class PortletTest < ActiveSupport::TestCase
     @portlet.destroy
     @portlet.reload!
     assert_equal true, @portlet.deleted?
-    #Cms::Portlet.find(@portlet.id)
-    #assert_raise(ActiveRecord::RecordNotFound){
-    #  Cms::Portlet.find(@portlet.id)
-    #}
   end
 
   test "update_attributes" do
@@ -58,6 +64,15 @@ class PortletTest < ActiveSupport::TestCase
     assert_equal "Dynamic Portlet", portlet.portlet_type_name
   end
 
+  test ".types returns a list of portlet classes" do
+    types = Cms::Portlet.types
+    assert types.first.is_a? Class
+    assert types.include? LoginPortlet
+  end
+
+  test ".underscore" do
+    assert_equal "inline_portlet", InlinePortlet.name.underscore
+  end
   def test_portlets_consistently_load_the_same_number_of_types
 
     list = Cms::Portlet.types
