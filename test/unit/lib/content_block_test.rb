@@ -5,6 +5,17 @@ class ContentBlockTest < ActiveSupport::TestCase
     @block = create(:html_block, :name => "Test", :publish_on_save => false)
   end
 
+  test "#save returns false if validation fails" do
+    invalid_content = Cms::HtmlBlock.new
+    refute invalid_content.save
+    refute invalid_content.valid?
+  end
+
+  test "#update_attributes returns false if validation fails" do
+    valid = create(:html_block)
+    refute valid.update_attributes(name: nil)
+  end
+
   def test_publishing
     assert_equal "Draft", @block.status_name
     assert !@block.published?
