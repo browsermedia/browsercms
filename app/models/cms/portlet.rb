@@ -70,6 +70,9 @@ module Cms
       false
     end
 
+    # Returns an alphabetical list of classes that descend from Cms::Portlet.
+    #
+    # @return [Array<Class>]
     def self.types
       @types ||= ActiveSupport::Dependencies.autoload_paths.map do |d|
         if d =~ /app\/portlets/
@@ -78,6 +81,8 @@ module Cms
           end
         end
       end.flatten.compact.uniq
+      @types.sort! { |a,b| a.name.downcase <=> b.name.downcase }
+      @types
     end
 
     def self.get_subclass(type)

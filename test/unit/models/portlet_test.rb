@@ -66,6 +66,10 @@ class PortletTest < ActiveSupport::TestCase
     assert_equal "Dynamic Portlet", portlet.portlet_type_name
   end
 
+  test ".types is alphabetical" do
+    assert_equal DynamicPortlet, Cms::Portlet.types.first
+  end
+
   test ".types returns a list of portlet classes" do
     types = Cms::Portlet.types
     assert types.first.is_a? Class
