@@ -9,6 +9,7 @@ This release includes the following features:
 * Refined Content API - Make content blocks closer in behavior to ActiveRecord.
 * Improved Template Storage - Templates stored in the database no longer need to be written out to the file system. This should make it easier to deploy CMS apps to Heroku.
 * Rails 4 Upgrade - BrowserCMS is now designed to work with Rail 4.0.
+* Portlet Descriptions - Portlets can now have a description that will be used to provide additional context when users are building/placing them.
 
 UI Redesign
 ----------
