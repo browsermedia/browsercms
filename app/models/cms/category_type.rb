@@ -5,8 +5,7 @@ module Cms
     validates_presence_of :name
     validates_uniqueness_of :name
     is_searchable
-    has_content_type
-    content_module :categorization
+    has_content_type :module => :categorization
 
     include Concerns::IgnoresPublishing
 

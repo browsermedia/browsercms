@@ -2,9 +2,7 @@ module Cms
   class Portlet < ActiveRecord::Base
     validates_presence_of :name
     is_searchable
-
-    has_content_type
-    content_module :core
+    has_content_type :module => :core
 
     # These are here simply to temporarily hold these values
     # Makes it easy to pass them through the process of selecting a portlet type

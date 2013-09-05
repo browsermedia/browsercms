@@ -14,10 +14,6 @@ class AAAFirstBlock < ActiveRecord::Base
   acts_as_content_block
 end
 
-def given_login_portlet_has_been_loaded_as_constant_by_rails
-  LoginPortlet
-end
-
 describe Cms::ContentType do
 
   describe '#module_name' do
@@ -100,12 +96,15 @@ describe Cms::ContentType do
       content_type_names.first.must_equal "AAAFirstBlock"
       content_type_names.last.must_equal "Widget"
     end
+  end
 
+  def content_type_names
+    @types ||= Cms::ContentType.available.map { |t| t.name }
+  end
 
-    def content_type_names
-      @types ||= Cms::ContentType.available.map { |t| t.name }
-    end
-
+  # Support
+  def given_login_portlet_has_been_loaded_as_constant_by_rails
+    LoginPortlet
   end
 end
 

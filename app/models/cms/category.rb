@@ -4,8 +4,7 @@ module Cms
     belongs_to :parent, :class_name => 'Cms::Category'
     has_many :children, :class_name => 'Cms::Category', :foreign_key => "parent_id"
     is_searchable
-    has_content_type
-    content_module :categorization
+    has_content_type :module => :categorization
 
     extend DefaultAccessible
     include Concerns::IgnoresPublishing
