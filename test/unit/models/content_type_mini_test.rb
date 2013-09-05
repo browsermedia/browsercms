@@ -14,6 +14,22 @@ def given_login_portlet_has_been_loaded_as_constant_by_rails
 end
 
 describe Cms::ContentType do
+
+  describe '#module' do
+    it "returns a :symbol that groups related content types." do
+      type = Cms::ContentType.new(name: 'Cms::HtmlBlock')
+      type.module_name.must_equal :core
+    end
+  end
+
+  describe '.available_by_module' do
+    it "should return a list of modules" do
+      modules = Cms::ContentType.available_by_module
+      modules.keys.must_include :core
+      modules[:core].map { |t| t.name }.must_include 'Cms::HtmlBlock'
+    end
+  end
+
   describe '.content_type' do
     it "should return ContentType info" do
       content_type = Widget.content_type

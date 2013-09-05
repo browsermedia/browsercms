@@ -17,6 +17,14 @@ module Cms
         where(["#{Cms::ContentTypeGroup.table_name}.name != ?", 'Categorization']).order("#{ContentType.table_name}.priority, #{ContentType.table_name}.name").includes(:content_type_group).references(:content_type_group)
       end
 
+      def available_by_module
+        modules = {}
+        available.each do |content_type|
+          modules[content_type.module_name] = [] unless modules[content_type.module_name]
+          modules[content_type.module_name] << content_type
+        end
+        modules
+      end
       # Returns a list of all ContentTypes in the system.
       # Note: Ignores the database to just look at classes, then returns a 'new' ContentType to match.
       #
@@ -72,6 +80,11 @@ module Cms
         return self.find_by_key(class_name.gsub(/Cms::/, ""))
       end
       raise "Couldn't find ContentType of class '#{class_name}'"
+    end
+
+
+    def module_name
+      :core
     end
 
     # Returns URL friendly 'key' which is used to identify this
