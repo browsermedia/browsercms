@@ -10,7 +10,7 @@ module Cms
 
     class << self
       def named(name)
-        where(["#{ContentType.table_name}.name = ?", name])
+        [Cms::ContentType.new(name: name)]
       end
 
       def connectable

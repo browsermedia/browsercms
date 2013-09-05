@@ -74,11 +74,15 @@ describe Cms::ContentType do
     end
   end
 
+  describe '.named' do
+    it "should return the content type based on the class name" do
+      type = Cms::ContentType.named('Cms::HtmlBlock')
+      type.first.model_class.must_equal Cms::HtmlBlock
+    end
+  end
+
   describe '.connectable' do
-
-
     it "should return only content blocks can be added to pages" do
-
       connectable = Cms::ContentType.connectable
       names_of_connectables = connectable.map {|c| c.name}
       names_of_connectables.must_include 'Cms::HtmlBlock'
