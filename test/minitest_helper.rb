@@ -5,7 +5,6 @@ require "minitest/spec"
 #require "minitest/autorun"
 require "minitest/unit"
 
-
 #ENV["RAILS_ENV"] = "test"
 #require File.expand_path("../dummy/config/environment.rb", __FILE__)
 #
@@ -16,8 +15,8 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 require 'factories/factories'
 require 'factories/attachable_factories'
 
-#require 'minitest/reporters'
-#MiniTest::Reporters.use!
+require 'minitest/reporters'
+MiniTest::Reporters.use!
 
 # Uncomment if you want Capybara in accceptance/integration tests
 # require "minitest/rails/capybara"

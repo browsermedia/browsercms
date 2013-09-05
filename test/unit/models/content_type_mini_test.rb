@@ -2,6 +2,7 @@ require "minitest_helper"
 
 class Widget < ActiveRecord::Base
   acts_as_content_block
+  content_module :widgets
 end
 
 
@@ -15,17 +16,27 @@ end
 
 describe Cms::ContentType do
 
-  describe '#module' do
+  describe '#module_name' do
     it "returns a :symbol that groups related content types." do
       type = Cms::ContentType.new(name: 'Cms::HtmlBlock')
       type.module_name.must_equal :core
     end
+
+    it "can be configured in the content block" do
+      type = Cms::ContentType.new(name: 'Widget')
+      assert_equal :widgets, type.module_name
+    end
+
+    it "should default to :general if not specified" do
+      type = Cms::ContentType.new(name: 'AAAFirstBlock')
+      assert_equal :general, type.module_name
+    end
   end
 
   describe '.available_by_module' do
-    it "should return a list of modules" do
+    it "should return a list of modules in alphabetical order" do
       modules = Cms::ContentType.available_by_module
-      modules.keys.must_include :core
+      modules.keys.sort.first.must_equal :core
       modules[:core].map { |t| t.name }.must_include 'Cms::HtmlBlock'
     end
   end

@@ -20,6 +20,7 @@ module Cms
       def available_by_module
         modules = {}
         available.each do |content_type|
+
           modules[content_type.module_name] = [] unless modules[content_type.module_name]
           modules[content_type.module_name] << content_type
         end
@@ -83,8 +84,11 @@ module Cms
     end
 
 
+    # Return the name of the module this content type should be grouped in. In most cases, content blocks will be
+    # configured to specify this.
+    # @return [Symbol]
     def module_name
-      :core
+      model_class.content_module
     end
 
     # Returns URL friendly 'key' which is used to identify this

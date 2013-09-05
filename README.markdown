@@ -11,7 +11,7 @@ BrowserCMS is intended to offer features comparable to commercial CMS products, 
 
 Here's a quick overview of some of the more notable features:
 
-* Stanealone CMS: BrowserCMS is designed to provide a robust CMS capabilities out of the box for content heavy web sites.
+* Standalone CMS: BrowserCMS is designed to provide a robust CMS capabilities out of the box for content heavy web sites.
 * Mobile Friendly: Sites can be built to use mobile optimized designs that are optimized for small screens, with low bandwidth, with responsive design.
 * In Context Editing: Users can browse their site to locate content and make changes from the page itself.
 * Design friendly Templates: Pages aren't just a template and giant single chunk of HTML. Templates can be built to have multiple editable areas, to allow for rich designs that are still easy to manage by non-technical users.

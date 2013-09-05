@@ -1,5 +1,9 @@
 Tasks:
 
+Testing:
+
+ruby -Ilib -Itest test/unit/models/content_type_mini_test.rb --name=/available_by_module/
+
 * Database Templates:
   - Remove disk writing (no longer necessary)
   - Add migrations for existing data

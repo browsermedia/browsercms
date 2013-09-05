@@ -3,6 +3,9 @@ module Cms
     validates_presence_of :name
     is_searchable
 
+    extend Cms::Acts::ContentBlock::ClassMethods
+    content_module :core
+
     # These are here simply to temporarily hold these values
     # Makes it easy to pass them through the process of selecting a portlet type
     attr_accessor :connect_to_page_id, :connect_to_container, :controller
@@ -46,7 +49,6 @@ module Cms
         # Portlets aren't verisonable but are connectable, so this will prevent the saving of portlets.
         attr_accessor :skip_callbacks
 
-
         def self.template_path
           default_template_path
         end
@@ -63,6 +65,8 @@ module Cms
         def supports_inline_editing?
           false
         end
+
+
       end
     end
 

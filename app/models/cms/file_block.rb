@@ -2,6 +2,7 @@ module Cms
   class FileBlock < Cms::AbstractFileBlock
 
     acts_as_content_block :taggable => true
+    content_module :core
 
     has_attachment :file
     validates_attachment_presence :file, :message => "You must upload a file"

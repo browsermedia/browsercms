@@ -21,6 +21,7 @@ end
 group :test, :development do
   gem 'minitest'
   gem 'minitest-rails'
+  gem 'minitest-reporters'
 end
 
 group :test do
