@@ -8,6 +8,8 @@ module Cms
 
     attr_accessor :size
     is_searchable
+    has_content_type
+    content_module :categorization
 
     def self.named(tag)
       where(name: tag)

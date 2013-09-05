@@ -36,7 +36,7 @@ describe Cms::ContentType do
   describe '.available_by_module' do
     it "should return a list of modules in alphabetical order" do
       modules = Cms::ContentType.available_by_module
-      modules.keys.sort.first.must_equal :core
+      modules.keys.sort.first.must_equal :categorization
       modules[:core].map { |t| t.name }.must_include 'Cms::HtmlBlock'
     end
 
@@ -66,6 +66,13 @@ describe Cms::ContentType do
   end
 
   describe '.available' do
+
+    it "should include categories" do
+      content_type_names.must_include "Cms::Category"
+      content_type_names.must_include "Cms::CategoryType"
+      content_type_names.must_include "Cms::Tag"
+
+    end
     it "should not include Link (which is more of a page type)" do
       content_type_names.wont_include 'Cms::Link'
     end

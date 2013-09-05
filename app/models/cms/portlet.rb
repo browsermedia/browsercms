@@ -3,7 +3,7 @@ module Cms
     validates_presence_of :name
     is_searchable
 
-    extend Cms::Acts::ContentBlock::ClassMethods
+    has_content_type
     content_module :core
 
     # These are here simply to temporarily hold these values

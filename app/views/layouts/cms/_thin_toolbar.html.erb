@@ -34,9 +34,10 @@
           <ul class="dropdown-menu" id="content-library-menu">
             <%= nav_link_to "Content Library", cms.content_library_path %>
             <%= divider_tag %>
-            <% Cms::ContentTypeGroup.menu_list.each_with_index do |group, i| %>
+            <% modules = Cms::ContentType.available_by_module
+               modules.keys.sort.each_with_index do |module_name, i| %>
                 <%= divider_tag(i) %>
-                <% group.types.each do |type| %>
+                <% modules[module_name].each do |type| %>
                     <%= nav_link_to h(type.display_name), cms_index_path_for(type) %>
                 <% end -%>
             <% end %>

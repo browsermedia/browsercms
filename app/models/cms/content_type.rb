@@ -17,6 +17,9 @@ module Cms
         where(["#{Cms::ContentTypeGroup.table_name}.name != ?", 'Categorization']).order("#{ContentType.table_name}.priority, #{ContentType.table_name}.name").includes(:content_type_group).references(:content_type_group)
       end
 
+      # Return all content types, grouped by module.
+      #
+      # @return [Hash<Symbol, Cms::ContentType]
       def available_by_module
         modules = {}
         available.each do |content_type|
@@ -27,14 +30,17 @@ module Cms
         modules
       end
       # Returns a list of all ContentTypes in the system. Content Types can opt out of this list by specifying:
-      # acts_as_content content_module: false
       #
-      # Note: Ignores the database to just look at classes, then returns a 'new' ContentType to match.
+      #   class MyWidget < ActiveRecord::Base
+      #     acts_as_content content_module: false
+      #   end
+      #
+      # Ignores the database to just look at classes, then returns a 'new' ContentType to match.
       #
       # @return [Array<Cms::ContentType] An alphabetical list of content types.
       def available
         subclasses = ObjectSpace.each_object(::Class).select do |klass|
-          klass < Cms::Acts::ContentBlock::MacroMethods::InstanceMethods && klass.respond_to?(:content_module)
+          klass < Cms::Concerns::HasContentType::InstanceMethods
         end
         subclasses << Cms::Portlet
         subclasses.uniq! {|k| k.name} # filter duplicate classes

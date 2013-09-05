@@ -40,7 +40,7 @@ module Cms
           include InstanceMethods
 
           unless options[:content_module] == false
-            extend Acts::ContentBlock::ClassMethods
+            has_content_type
           end
           extend Cms::Behaviors::Naming
 
@@ -55,22 +55,7 @@ module Cms
 
       end
 
-      module ClassMethods
 
-        # Allows a content block to configure which module it will be placed in.
-        # @param [Symbol] module_name (Optional) Sets value if provided.
-        # @return [Symbol] module_name
-        def content_module(module_name=nil)
-          if module_name
-            @module_name = module_name
-          end
-          if @module_name
-            @module_name
-          else
-            :general
-          end
-        end
-      end
     end
   end
 end
