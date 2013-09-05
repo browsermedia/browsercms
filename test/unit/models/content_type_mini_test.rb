@@ -61,6 +61,32 @@ describe Cms::ContentType do
     end
   end
 
+  describe '#connectable?' do
+    it "should mark content_types as connectable to pages" do
+      Cms::HtmlBlock.content_type.connectable?.must_equal true
+      Product.content_type.connectable?.must_equal true
+
+      [Cms::Category, Cms::Tag, Cms::CategoryType].each do |unconnectable|
+        unconnectable.content_type.connectable?.must_equal false
+      end
+      Cms::Category.content_type.connectable?.must_equal false
+      Cms::CategoryType.content_type.connectable?.must_equal false
+    end
+  end
+
+  describe '.connectable' do
+
+
+    it "should return only content blocks can be added to pages" do
+
+      connectable = Cms::ContentType.connectable
+      names_of_connectables = connectable.map {|c| c.name}
+      names_of_connectables.must_include 'Cms::HtmlBlock'
+      names_of_connectables.wont_include 'Cms::Category'
+    end
+
+
+  end
   describe '.other_connectables' do
     it "should return all types but the default" do
       others = Cms::ContentType.other_connectables

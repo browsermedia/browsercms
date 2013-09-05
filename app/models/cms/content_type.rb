@@ -14,7 +14,7 @@ module Cms
       end
 
       def connectable
-        where(["#{Cms::ContentTypeGroup.table_name}.name != ?", 'Categorization']).order("#{ContentType.table_name}.priority, #{ContentType.table_name}.name").includes(:content_type_group).references(:content_type_group)
+        available.select {|content_type| content_type.connectable? }
       end
 
       # Return all content types, grouped by module.
@@ -144,6 +144,11 @@ module Cms
 
     def path_subject
       model_class
+    end
+
+    # Determines if the content can be connected to other pages.
+    def connectable?
+      model_class.connectable?
     end
 
     # Cms::HtmlBlock -> html_block

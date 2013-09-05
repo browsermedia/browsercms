@@ -12,6 +12,7 @@ module Cms
         if options[:module]
           content_module options[:module]
         end
+
       end
 
       # Used as a marker for finding classes that implement Content Types.
@@ -20,6 +21,7 @@ module Cms
       end
 
       module ClassMethods
+
         # Returns the Cms::ContentType which provides information about the content.
         def content_type
           Cms::ContentType.new(name: self.name)
