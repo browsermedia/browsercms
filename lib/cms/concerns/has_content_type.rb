@@ -3,11 +3,18 @@ module Cms
     module HasContentType
 
       # Adds ContentType information to the object.
-      def has_content_type
+      # @param [Hash] options
+      # @option options [Symbol] :module The module name, same as would be passed to content_module()
+      def has_content_type(options={})
         include InstanceMethods
         extend ClassMethods
+
+        if options[:module]
+          content_module options[:module]
+        end
       end
 
+      # Used as a marker for finding classes that implement Content Types.
       module InstanceMethods
 
       end

@@ -6,6 +6,10 @@ class Widget < ActiveRecord::Base
 end
 
 
+class JustHasContentType < ActiveRecord::Base
+  has_content_type module: :widgets
+end
+
 class AAAFirstBlock < ActiveRecord::Base
   acts_as_content_block
 end
@@ -30,6 +34,10 @@ describe Cms::ContentType do
     it "should default to :general if not specified" do
       type = Cms::ContentType.new(name: 'AAAFirstBlock')
       assert_equal :general, type.module_name
+    end
+
+    it "can be specified as argument to has_content_type" do
+      JustHasContentType.content_type.module_name.must_equal :widgets
     end
   end
 
