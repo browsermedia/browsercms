@@ -39,6 +39,7 @@ describe Cms::ContentType do
       modules.keys.sort.first.must_equal :core
       modules[:core].map { |t| t.name }.must_include 'Cms::HtmlBlock'
     end
+
   end
 
   describe '.content_type' do
@@ -65,11 +66,14 @@ describe Cms::ContentType do
   end
 
   describe '.available' do
+    it "should not include Link (which is more of a page type)" do
+      content_type_names.wont_include 'Cms::Link'
+    end
+
     it "should exclude descendants of portlets" do
       given_login_portlet_has_been_loaded_as_constant_by_rails
-      type_names = Cms::ContentType.available.map { |t| t.name }
-      type_names.wont_include "LoginPortlet"
-      type_names.must_include "Cms::Portlet"
+      content_type_names.wont_include "LoginPortlet"
+      content_type_names.must_include "Cms::Portlet"
 
     end
     it "should return all available content types" do
@@ -78,9 +82,13 @@ describe Cms::ContentType do
     end
 
     it "should be ordered alphabetically" do
-      ordered = Cms::ContentType.available
-      ordered.first.name.must_equal "AAAFirstBlock"
-      ordered.last.name.must_equal "Widget"
+      content_type_names.first.must_equal "AAAFirstBlock"
+      content_type_names.last.must_equal "Widget"
+    end
+
+
+    def content_type_names
+      @types ||= Cms::ContentType.available.map { |t| t.name }
     end
 
   end

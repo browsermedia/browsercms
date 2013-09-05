@@ -26,12 +26,16 @@ module Cms
         end
         modules
       end
-      # Returns a list of all ContentTypes in the system.
+      # Returns a list of all ContentTypes in the system. Content Types can opt out of this list by specifying:
+      # acts_as_content content_module: false
+      #
       # Note: Ignores the database to just look at classes, then returns a 'new' ContentType to match.
       #
       # @return [Array<Cms::ContentType] An alphabetical list of content types.
       def available
-        subclasses = ObjectSpace.each_object(::Class).select { |klass| klass < Cms::Acts::ContentBlock::MacroMethods::InstanceMethods }
+        subclasses = ObjectSpace.each_object(::Class).select do |klass|
+          klass < Cms::Acts::ContentBlock::MacroMethods::InstanceMethods && klass.respond_to?(:content_module)
+        end
         subclasses << Cms::Portlet
         subclasses.uniq! {|k| k.name} # filter duplicate classes
         subclasses.map do |klass|

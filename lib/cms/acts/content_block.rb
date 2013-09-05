@@ -15,7 +15,8 @@ module Cms
         def acts_as_content_block(options={})
           defaults = {
               # Set default values here.
-              :allow_attachments => true
+              :allow_attachments => true,
+              :content_module => true
           }
           options = defaults.merge(options)
 
@@ -37,8 +38,12 @@ module Cms
           is_versioned(options[:versioned].is_a?(Hash) ? options[:versioned] : {}) unless options[:versioned] == false
 
           include InstanceMethods
-          extend Acts::ContentBlock::ClassMethods
+
+          unless options[:content_module] == false
+            extend Acts::ContentBlock::ClassMethods
+          end
           extend Cms::Behaviors::Naming
+
         end
 
         module InstanceMethods
