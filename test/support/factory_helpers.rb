@@ -82,10 +82,6 @@ module FactoryHelpers
     Cms::MockFile.new_file(options[:original_filename], options[:content_type])
   end
 
-  def given_there_is_a_content_type(model_class)
-    FactoryGirl.create(:content_type, :name => model_class.to_s)
-  end
-
   def create_admin_user(attrs={})
     FactoryGirl.create(:cms_admin, {:login => "cmsadmin"}.merge(attrs))
   end

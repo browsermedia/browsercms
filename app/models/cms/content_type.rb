@@ -1,10 +1,11 @@
 module Cms
-  class ContentType < ActiveRecord::Base
+  class ContentType
 
-    attr_accessor :group_name
-    belongs_to :content_type_group, :class_name => 'Cms::ContentTypeGroup'
-    validates_presence_of :content_type_group
-    before_validation :set_content_type_group
+    attr_accessor :name
+
+    def initialize(options)
+      self.name = options[:name]
+    end
 
     DEFAULT_CONTENT_TYPE_NAME = 'Cms::HtmlBlock'
 
@@ -14,7 +15,7 @@ module Cms
       end
 
       def connectable
-        available.select {|content_type| content_type.connectable? }
+        available.select { |content_type| content_type.connectable? }
       end
 
       # Return all content types, grouped by module.
@@ -29,6 +30,7 @@ module Cms
         end
         modules
       end
+
       # Returns a list of all ContentTypes in the system. Content Types can opt out of this list by specifying:
       #
       #   class MyWidget < ActiveRecord::Base
@@ -43,7 +45,7 @@ module Cms
           klass < Cms::Concerns::HasContentType::InstanceMethods
         end
         subclasses << Cms::Portlet
-        subclasses.uniq! {|k| k.name} # filter duplicate classes
+        subclasses.uniq! { |k| k.name } # filter duplicate classes
         subclasses.map do |klass|
           unless klass < Cms::Portlet
             Cms::ContentType.new(name: klass.name)
@@ -52,7 +54,7 @@ module Cms
       end
 
       def list
-        all.map { |f| f.name.underscore.to_sym }
+        available
       end
 
       # Returns all content types besides the default.
@@ -73,26 +75,27 @@ module Cms
     # Raises exception if nothing was found.
     def self.find_by_key(key)
       class_name = key.tableize.classify
-      content_type = where(["name like ?", "%#{class_name}"]).first
-      if content_type.nil?
-        if class_name.constantize.ancestors.include?(Cms::Portlet)
-          content_type = Cms::ContentType.new(:name => class_name)
-          content_type.content_type_group = Cms::ContentTypeGroup.find_by_name('Core')
-          content_type.freeze
-          content_type
-        else
-          raise "Not a Portlet"
-        end
-      else
-        content_type
+      klass = nil
+      if !class_name.starts_with? "Cms::"
+        klass = "Cms::#{class_name}".safe_constantize
       end
-    rescue Exception
-      if class_name.starts_with? "Cms::"
-        return self.find_by_key(class_name.gsub(/Cms::/, ""))
+      unless klass
+        klass = class_name.safe_constantize
       end
-      raise "Couldn't find ContentType of class '#{class_name}'"
+      unless klass
+        raise "Couldn't find ContentType for '#{key}'. Checked for classes Cms::#{class_name} and #{class_name}."
+      end
+      klass.content_type
     end
 
+    # @deprecated
+    def save!
+      ActiveSupport::Deprecation.warn "Cms::ContentType#save! should no longer be called. Content Types do not need to be registered in the database."
+    end
+
+    def self.create!
+      ActiveSupport::Deprecation.warn "Cms::ContentType.create! should no longer be called. Content Types do not need to be registered in the database."
+    end
 
     # Return the name of the module this content type should be grouped in. In most cases, content blocks will be
     # configured to specify this.
@@ -182,13 +185,6 @@ module Cms
         model_class.content_block_type_for_list
       else
         content_block_type
-      end
-    end
-
-    def set_content_type_group
-      if group_name
-        group = Cms::ContentTypeGroup.where(:name => group_name).first
-        self.content_type_group = group || build_content_type_group(:name => group_name)
       end
     end
 

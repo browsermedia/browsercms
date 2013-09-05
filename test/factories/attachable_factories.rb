@@ -10,9 +10,6 @@ end
 class HasManyAttachments < ActiveRecord::Base
   acts_as_content_block
   has_many_attachments :documents
-
-  # Necessarily only for rake tests to make mass assignment work
- #attr_accessible :name
 end
 
 class HasThumbnail < ActiveRecord::Base

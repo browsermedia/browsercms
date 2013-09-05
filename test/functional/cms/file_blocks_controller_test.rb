@@ -7,7 +7,6 @@ module Cms
     def setup
       given_a_site_exists
       login_as_cms_admin
-      given_there_is_a_content_type(Cms::FileBlock)
     end
 
     def test_file_block_search

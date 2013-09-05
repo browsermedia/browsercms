@@ -246,14 +246,6 @@ FactoryGirl.define do
     }
   end
 
-  factory :content_type_group, :class => Cms::ContentTypeGroup do |ctg|
-    ctg.sequence(:name) { |n| "Group #{n}" }
-  end
-
-  factory :content_type, :class => Cms::ContentType do |ct|
-    ct.association :content_type_group
-  end
-
   # This is just for CMS testing
   factory :portlet_with_helper, :class => UsesHelperPortlet do |portlet|
     ignore do

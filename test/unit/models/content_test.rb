@@ -2,9 +2,6 @@ require "minitest_helper"
 
 describe Cms::Content do
 
-  before do
-    create(:content_type, name: "Cms::HtmlBlock")
-  end
   let(:expected_block) { create(:html_block) }
 
   describe ".find" do

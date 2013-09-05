@@ -44,12 +44,13 @@ module Cms
 
   class ContentTypeTest < ActiveSupport::TestCase
     def setup
-      @c = Cms::ContentType.new(:name => "ReallyLongNameClass")
-      @unnamespaced_type = Cms::ContentType.create!(:name => "Unnamespaced", :group_name => "Core")
+      #long_name_content_type = Cms::ContentType.new(:name => "ReallyLongNameClass")
+      #@unnamespaced_type = Cms::ContentType.new(:name => "Unnamespaced")
     end
 
+
     test "#key" do
-      assert_equal "really_long_name_class", @c.key
+      assert_equal "really_long_name_class", long_name_content_type.key
     end
 
     test "#display_name for blocks from modules" do
@@ -62,7 +63,7 @@ module Cms
     end
 
     test "#form for unnamespaced blocks" do
-      widget_type = Cms::ContentType.create!(:name => "Widget", :group_name => "Core")
+      widget_type = Cms::ContentType.new(:name => "Widget")
       assert_equal "cms/widgets/form", widget_type.form
     end
 
@@ -75,19 +76,19 @@ module Cms
     end
 
     test "find_by_key checks multiple namespaces" do
-      assert_equal @unnamespaced_type, Cms::ContentType.find_by_key("Unnamespaced")
+      assert_equal Unnamespaced, Cms::ContentType.find_by_key("Unnamespaced").model_class
     end
 
     test "model_resource_name" do
-      assert_equal "really_long_name_class", @c.model_class_form_name
+      assert_equal "really_long_name_class", long_name_content_type().model_class_form_name
     end
 
     test "Project specific routes should be still be namespaced under cms_" do
-      assert_equal "main_app.cms_unnamespaced", @unnamespaced_type.route_name
+      assert_equal "main_app.cms_unnamespaced", Unnamespaced.content_type.route_name
     end
 
     test "route_name removes cms_ as prefix (no longer needed for engines)" do
-      content_type = Cms::ContentType.new(:name => "Cms::NamespacedBlock")
+      content_type = Cms::NamespacedBlock.content_type
       assert_equal "namespaced_block", content_type.route_name
     end
 
@@ -107,27 +108,26 @@ module Cms
     end
 
     test "path_elements for an app ContentType" do
-      assert_equal ["cms", Unnamespaced], @unnamespaced_type.path_elements
+      assert_equal ["cms", Unnamespaced], unnamespaced_type().path_elements
     end
 
     def test_model_class
-      assert_equal ReallyLongNameClass, @c.model_class
+      assert_equal ReallyLongNameClass, long_name_content_type.model_class
     end
 
     test "creating self.display_name on content block will set display_name on content type" do
-      assert_equal "Short", @c.display_name
+      assert_equal "Short", long_name_content_type.display_name
     end
 
     test "creating self.display_name_plural on content block will set display_name_plural on content type" do
-      assert_equal "Shorteez", @c.display_name_plural
+      assert_equal "Shorteez", long_name_content_type.display_name_plural
     end
 
     def test_content_block_type
-      assert_equal "really_long_name_classes", @c.content_block_type
+      assert_equal "really_long_name_classes", long_name_content_type.content_block_type
     end
 
     test "find_by_key handles names that end with s correctly" do
-      Cms::ContentType.create!(:name => "Kindness", :group_name => "Anything")
 
       ct = Cms::ContentType.find_by_key("kindness")
       assert_not_nil ct
@@ -145,6 +145,18 @@ module Cms
       assert_equal "bcms_store/widgets/form", engine_type.form
     end
 
+    test ".find_by_key with unnamespaced blocks" do
+      type = Cms::ContentType.find_by_key("html_blocks")
+      assert_equal Cms::HtmlBlock, type.model_class
+    end
+
+    def long_name_content_type
+      ReallyLongNameClass.content_type
+    end
+
+    def unnamespaced_type
+      Unnamespaced.content_type
+    end
   end
 end
 
@@ -164,7 +176,6 @@ module Cms
     end
 
     test "#find_by_key with irregular pluralization" do
-      create(:content_type, :name => "Person")
 
       type = Cms::ContentType.find_by_key("people")
       assert_not_nil type

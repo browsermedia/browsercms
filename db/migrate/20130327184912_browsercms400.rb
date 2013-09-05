@@ -8,5 +8,8 @@ class Browsercms400 < ActiveRecord::Migration
     add_column prefix(:dynamic_view_versions), :path, :string
     add_column prefix(:dynamic_view_versions), :locale, :string
     add_column prefix(:dynamic_view_versions), :partial, :boolean
+
+    drop_table prefix(:content_type_groups)
+    drop_table prefix(:content_types)
   end
 end

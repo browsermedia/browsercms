@@ -1,7 +1,7 @@
 module CustomBlockHelpers
 
   def register_content_type(type)
-    Cms::ContentType.create!(:name => type, :group_name => type)
+    type.classify.constantize
   end
 end
 

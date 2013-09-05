@@ -2,6 +2,13 @@ require "test_helper"
 
 module Cms
   class CoreContentBlock
+    extend Cms::Concerns::HasContentType
+    has_content_type
+
+    def self.connectable?
+      false
+    end
+
     include EngineHelper
   end
 end
@@ -167,7 +174,7 @@ module Cms
     include ExpectedMockViews
 
     def setup
-      ct = build(:content_type, :name => "Cms::CoreContentBlock")
+      ct = Cms::CoreContentBlock.content_type
       @pathbuilder = EngineAwarePathBuilder.new(ct)
     end
 

@@ -9,7 +9,6 @@ class PermissionsForContentBlockControllerTest < ActionController::TestCase
 
   # We're stubbing a lot because we *just* want to isolate the behaviour for checking permissions
   def setup
-    given_there_is_a_content_type(Cms::SampleBlock)
 
     login_as_cms_admin
     @user = Cms::User.first

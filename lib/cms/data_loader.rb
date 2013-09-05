@@ -33,7 +33,7 @@ module Cms
       rescue NameError => e
         model_name.classify.constantize
       end
-      unless klass.ancestors.include?(ActiveRecord::Base)
+      unless klass.method_defined?(:save!)
         raise "Can't create an instance of #{klass} because its not an ActiveRecord instance."
       end
       klass

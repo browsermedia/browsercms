@@ -5,8 +5,6 @@ class ConnectorsControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
   
   def setup
-    given_there_is_a_content_type Cms::HtmlBlock
-    given_there_is_a_content_type Cms::Portlet
     login_as_cms_admin
   end
   
