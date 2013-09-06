@@ -39,11 +39,21 @@ module BcmsStore
   end
 end
 
+class AudioTour < ActiveRecord::Base
+  acts_as_content_block
+end
+class Tour < ActiveRecord::Base
+  acts_as_content_block
+end
 
 module Cms
 
   class ContentTypeTest < ActiveSupport::TestCase
 
+    test "ContentTypes with matching suffixes" do
+      assert_equal Tour, Cms::ContentType.find_by_key('Tour').model_class
+      assert_equal AudioTour, Cms::ContentType.find_by_key('AudioTour').model_class
+    end
 
     test "#find_by_key searches Cms:: then non Cms:: namespace class" do
       assert_equal Product, Cms::ContentType.find_by_key('Cms::Product').model_class
