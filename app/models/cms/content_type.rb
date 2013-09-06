@@ -76,11 +76,17 @@ module Cms
     def self.find_by_key(key)
       class_name = key.tableize.classify
       klass = nil
-      if !class_name.starts_with? "Cms::"
+      prefix = "Cms::"
+      if !class_name.starts_with? prefix
         klass = "Cms::#{class_name}".safe_constantize
       end
       unless klass
         klass = class_name.safe_constantize
+      end
+      unless klass
+        if class_name.starts_with?(prefix)
+          klass = class_name[prefix.length, class_name.length].safe_constantize
+        end
       end
       unless klass
         raise "Couldn't find ContentType for '#{key}'. Checked for classes Cms::#{class_name} and #{class_name}."

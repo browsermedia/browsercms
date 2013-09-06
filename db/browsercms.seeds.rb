@@ -7,11 +7,6 @@ else
 end
 Cms::User.current = create_user(:cmsadmin, :login => "cmsadmin", :first_name => "CMS", :last_name => "Administrator", :email => "cmsadmin@example.com", :password => pwd, :password_confirmation => pwd)
 
-[["Cms::CategoryType", "Categorization"], ["Cms::Category","Categorization"], ["Cms::Tag", "Categorization"],
- ["Cms::HtmlBlock", "Core"], ["Cms::Portlet", "Core"], ["Cms::FileBlock", "Core"], ["Cms::ImageBlock", "Core"]
-].each do |type|
-  create_content_type(type[0].to_sym, :name=>type[0], :group_name=>type[1])
-end
 create_permission(:administrate, :name => "administrate", :full_name => "Administer CMS", :description => "Allows users to administer the CMS, including adding users and groups.")
 create_permission(:edit_content, :name => "edit_content", :full_name => "Edit Content", :description => "Allows users to Add, Edit and Delete both Pages and Blocks. Can Save (but not Publish) and Assign them as well.")
 create_permission(:publish_content, :name => "publish_content", :full_name => "Publish Content", :description => "Allows users to Save and Publish, Hide and Archive both Pages and Blocks.")

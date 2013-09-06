@@ -43,9 +43,14 @@ end
 module Cms
 
   class ContentTypeTest < ActiveSupport::TestCase
-    def setup
-      #long_name_content_type = Cms::ContentType.new(:name => "ReallyLongNameClass")
-      #@unnamespaced_type = Cms::ContentType.new(:name => "Unnamespaced")
+
+
+    test "#find_by_key searches Cms:: then non Cms:: namespace class" do
+      assert_equal Product, Cms::ContentType.find_by_key('Cms::Product').model_class
+    end
+
+    test "#find_by_key using key" do
+      assert_equal Cms::HtmlBlock, Cms::ContentType.find_by_key('html_block').model_class
     end
 
 

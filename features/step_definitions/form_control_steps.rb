@@ -122,7 +122,7 @@ When /^I (#{SHOULD_OR_NOT}) see the delete attachment link$/ do |should_see|
 end
 
 When /^there is block which allows many attachments$/ do
-  @content_type = register_content_type("Catalog")
+  @content_type = Catalog.content_type
 end
 
 Given /^an attachment exists in a protected section$/ do
