@@ -13,6 +13,7 @@ Feature: Generate Content Blocks
     module BcmsWidgets
       class Product < ActiveRecord::Base
         acts_as_content_block
+        content_module :products
       end
     end
     """
@@ -32,7 +33,6 @@ Feature: Generate Content Blocks
         """
         class CreateBcmsWidgetsProducts < ActiveRecord::Migration
           def change
-            Cms::ContentType.create!(:name => "BcmsWidgets::Product", :group_name => "BcmsWidgets")
             create_content_table :bcms_widgets_products, :prefix=>false do |t|
               t.string :name
               t.string :price

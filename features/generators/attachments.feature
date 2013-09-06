@@ -12,6 +12,7 @@ Feature: Generate Attachments
     """
     class Product < ActiveRecord::Base
       acts_as_content_block
+      content_module :products
       has_attachment :photo
     end
     """
@@ -34,6 +35,7 @@ Feature: Generate Attachments
     """
     class Product < ActiveRecord::Base
       acts_as_content_block
+      content_module :products
       has_attachment :photo
       has_attachment :cover
     end
@@ -45,6 +47,7 @@ Feature: Generate Attachments
     """
     class Product < ActiveRecord::Base
       acts_as_content_block
+      content_module :products
       has_many_attachments :photos
     end
     """
@@ -67,6 +70,7 @@ Feature: Generate Attachments
     """
     class Product < ActiveRecord::Base
       acts_as_content_block
+      content_module :products
       has_many_attachments :photos
       has_many_attachments :documents
     end

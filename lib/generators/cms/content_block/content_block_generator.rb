@@ -18,16 +18,12 @@ module Cms
         model_file = File.join('app/models', class_path, "#{file_name}.rb")
         spaces = namespaced? ? 4 : 2
         insert_into_file model_file, indent("acts_as_content_block\n", spaces), :after => "ActiveRecord::Base\n"
+        insert_into_file model_file, indent("content_module :#{file_name.pluralize}\n", spaces), :after => "acts_as_content_block\n"
       end
 
       def alter_the_migration
         migration = self.class.migration_exists?(File.absolute_path("db/migrate"), "create_#{table_name}")
         gsub_file migration, "create_table", "create_content_table"
-        insert_into_file migration, :after => "def change\n" do
-          <<-RUBY
-    Cms::ContentType.create!(:name => "#{class_name}", :group_name => "#{group_name}")
-          RUBY
-        end
 
         # Attachments do not require a FK from this model to attachments.
         self.attributes.select { |attr| attr.type == :attachment }.each do |attribute|
