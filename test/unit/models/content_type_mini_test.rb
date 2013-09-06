@@ -126,6 +126,8 @@ describe Cms::ContentType do
       content_type_names.first.must_equal "AAAFirstBlock"
       content_type_names.last.must_equal "Widget"
     end
+
+
   end
 
   def content_type_names

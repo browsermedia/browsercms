@@ -1,6 +1,6 @@
 # Factories for testing Attachable Blocks
 class VersionedAttachable < ActiveRecord::Base
-  acts_as_content_block
+  acts_as_content_block content_module: false
 
   # Not sure why this is needed, but tests fail from rake if not here
  #attr_accessible :name
@@ -8,12 +8,12 @@ class VersionedAttachable < ActiveRecord::Base
 end
 
 class HasManyAttachments < ActiveRecord::Base
-  acts_as_content_block
+  acts_as_content_block content_module: false
   has_many_attachments :documents
 end
 
 class HasThumbnail < ActiveRecord::Base
-  acts_as_content_block
+  acts_as_content_block content_module: false
   has_attachment :document, :styles => {:thumbnail => "50x50"}
 end
 
