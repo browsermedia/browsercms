@@ -3,8 +3,8 @@ module Cms
     respond_to :js
 
     def update
-      content = Content.find_draft(params[:content_name], params[:id])
-      content.update_attributes(filtered_content(content))
+      content_block = Content.find_draft(params[:content_name], params[:id])
+      content_block.update_attributes(filtered_content(content_block))
       @page = Page.find_draft(params[:page_id].to_i)
       if (!@page.live?)
         page_status = "draft-status"
@@ -37,8 +37,8 @@ module Cms
 
     private
 
-    def filtered_content(content)
-      ContentFilter.new.filter(content_params(content))
+    def filtered_content(content_block)
+      ContentFilter.new.filter(content_params(content_block))
     end
 
     def content_params(content)
