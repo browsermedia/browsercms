@@ -193,11 +193,6 @@ FactoryGirl.define do
     m.sequence(:name) { |n| "TestPermission#{n}" }
   end
 
-  factory :site, :class => Cms::Site do |m|
-    m.sequence(:name) { |n| "Test #{n}" }
-    m.domain { |a| "#{a.name.gsub(/\s/, "_").downcase}.com" }
-  end
-
   factory :task, :class => Cms::Task do |m|
     m.association :assigned_by, :factory => :cms_admin
     m.association :assigned_to, :factory => :cms_admin

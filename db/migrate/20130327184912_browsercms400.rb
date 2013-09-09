@@ -11,5 +11,6 @@ class Browsercms400 < ActiveRecord::Migration
 
     drop_table prefix(:content_type_groups)
     drop_table prefix(:content_types)
+    drop_table prefix(:sites)
   end
 end

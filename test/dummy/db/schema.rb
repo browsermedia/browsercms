@@ -453,14 +453,6 @@ ActiveRecord::Schema.define(version: 20130327184912) do
 
   add_index "cms_sections", ["path"], name: "index_cms_sections_on_path", using: :btree
 
-  create_table "cms_sites", force: true do |t|
-    t.string   "name"
-    t.string   "domain"
-    t.boolean  "the_default"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "cms_taggings", force: true do |t|
     t.integer  "tag_id"
     t.integer  "taggable_id"

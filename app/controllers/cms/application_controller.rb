@@ -28,10 +28,6 @@ module Cms
       end
     end
 
-    def current_site
-      @current_site ||= Site.find_by_domain(request.host)
-    end
-
     def redirect_to_cms_site
       if using_cms_subdomains? && !request_is_for_cms_subdomain?
         redirect_to(url_with_cms_domain_prefix)

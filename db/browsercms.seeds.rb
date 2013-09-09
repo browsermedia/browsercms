@@ -28,7 +28,6 @@ groups(:content_admin).permissions<<permissions(:administrate)
 groups(:content_editor).permissions<<permissions(:edit_content)
 groups(:content_editor).permissions<<permissions(:publish_content)
 
-create_site(:default, :name => "Default", :domain => "example.com")
 create_section(:root, :name => "My Site", :path => "/", :root => true)
 create_section(:system, :name => "system", :parent => sections(:root), :path => "/system", :hidden => true)
 
