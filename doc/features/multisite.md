@@ -1,6 +1,5 @@
 Tasks for Multisite
 
-* Remove the existing site class. Does actual nothing. Remove from seeds.rb.
 * /sites/nameofsubsite.com/modules
 * /sites/nameofsubsite.com/themes
 * /sites/nameofsubsite.com/setting.rb = database settings
@@ -10,5 +9,27 @@ Tasks for Multisite
 To start:
 
 * Assume all templates and all modules available to all sites.
-* Get POW working with a single site.
-* Get POW working with a second site.
+* Add POW so it works with a second site. (microsite.dev)
+
+
+## Release Notes
+
+* Removed existing Site class since it did not do anything real.
+
+## Getting Started
+
+Need to create identical .rvmrc in both / and /test/dummy. I.e.
+    rvm use 1.9.3@browsercms-4.x
+
+Use POW for two domains (browsercms.dev and microsite.dev). Require steps:
+
+gem install powder
+cd test/dummy
+powder link browsercms
+rm .powder
+powder link microsite
+rm .powder
+
+Now both browsercms.dev and microsite.dev point to same app.
+
+
