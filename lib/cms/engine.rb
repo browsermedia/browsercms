@@ -19,6 +19,7 @@ require 'will_paginate'
 require 'will_paginate/active_record'
 require 'actionpack/page_caching'
 require 'panoramic'
+require 'simple_form'
 
 module Cms
 

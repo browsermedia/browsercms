@@ -29,7 +29,7 @@ module Cms
     extend DefaultAccessible
 
     def self.permitted_params
-      super + [:password, :password_confirmation]
+      super + [{:group_ids => []}, :password, :password_confirmation]
     end
 
     def self.current

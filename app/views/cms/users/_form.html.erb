@@ -1,10 +1,6 @@
-<%= content_for :html_head do %>
-  <%= stylesheet_link_tag('cms/form_layout') %>
-<% end %>
-<%= form_for(@user) do |f| %>
-  <%= f.cms_error_messages %>
+<%= simple_form_for(@user, html: { autocomplete: 'off' }) do |f| %>
   <%= render :partial => 'user_fields', :locals => {:f => f} unless @change_password %>
   <%= render :partial => 'password', :locals => {:f => f} if @user.new_record? %>
-  <%= render :partial => 'groups' %>
-  <%= f.submit("Save", :class => "submit btn", :tabindex => next_tabindex) %>
+  <%= f.association :groups, as: :check_boxes %>
+  <%= f.button :submit, "Save" %>
 <% end %>

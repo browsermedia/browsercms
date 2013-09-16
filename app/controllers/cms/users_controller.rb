@@ -5,7 +5,6 @@ class UsersController < Cms::ResourceController
   check_permissions :administrate, :except => [:show, :change_password, :update_password]
   before_filter :only_self_or_administrator, :only => [:show, :change_password, :update_password]
   
-  after_filter :update_group_membership, :only => [:update, :create]
   after_filter :update_flash, :only => [ :update, :create ]
 
   def index
@@ -79,10 +78,6 @@ class UsersController < Cms::ResourceController
       else
         flash[:notice] = "User '#{@object.login}' was updated"
       end
-    end
-
-    def update_group_membership
-      @object.group_ids = params[:group_ids] unless params[:on_fail_action] == "change_password"
     end
 
   private

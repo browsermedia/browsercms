@@ -11,6 +11,7 @@ PATH
       paperclip (~> 3.5.1)
       rails (~> 4.0.0)
       sass-rails
+      simple_form (>= 3.0.0.rc, < 3.1)
       term-ansicolor
       underscore-rails (~> 1.4)
       will_paginate (~> 3.0.0)
@@ -55,7 +56,7 @@ GEM
       rspec-expectations (>= 2.7.0)
     atomic (1.1.12)
     bluecloth (2.2.0)
-    bootstrap-sass (2.3.2.1)
+    bootstrap-sass (2.3.2.2)
       sass (~> 3.2)
     builder (3.1.4)
     capybara (2.1.0)
@@ -174,6 +175,9 @@ GEM
       railties (>= 4.0.0.beta, < 5.0)
       sass (>= 3.1.10)
       sprockets-rails (~> 2.0.0)
+    simple_form (3.0.0.rc)
+      actionpack (>= 4.0.0.rc1, < 4.1)
+      activemodel (>= 4.0.0.rc1, < 4.1)
     sprockets (2.10.0)
       hike (~> 1.2)
       multi_json (~> 1.0)

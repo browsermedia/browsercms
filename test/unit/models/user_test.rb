@@ -11,6 +11,11 @@ module Cms
     should_validate_presence_of :user => [:login, :password, :password_confirmation]
     should_validate_uniqueness_of :user => [:login]
 
+
+    test ".permitted_params" do
+      assert User.permitted_params.include? :group_ids => [], "Allow for bulk submitted group_ids as a collection."
+    end
+
     def test_authenticate
       assert_equal @user, Cms::User.authenticate(@user.login, @user.password)
       assert_nil Cms::User.authenticate(@user.login, 'FAIL')
