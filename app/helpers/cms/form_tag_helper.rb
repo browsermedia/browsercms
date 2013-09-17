@@ -7,7 +7,7 @@ module Cms
 
     def slug_source_if(boolean)
       if boolean
-        {class: 'slug-source'}
+        {input_html: {class: 'slug-source'}}
       else
         {}
       end
