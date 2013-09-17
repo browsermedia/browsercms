@@ -57,6 +57,14 @@ Feature: Manage Users
     And I should see the following content:
       | testuser |
 
+  Scenario: Add expired user
+    Given I create an expired user
+    When I request /cms/users
+    Then I should not see that user
+    When I look at expired users
+    Then I should see that user
+
+
   Scenario: Update username
     Given the following content editor exists:
       | username | password | first_name | last_name |
