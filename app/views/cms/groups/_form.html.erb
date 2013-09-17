@@ -1,9 +1,10 @@
 <%= content_for :html_head do %>
     <%= javascript_tag do %>
         jQuery(function($){
+            var element = $('#group_group_type_id');
             var cms_access_group_ids = <%= Cms::GroupType.cms_access.to_a.map { |e| e.id.to_s }.to_json.html_safe %>
-            $('#group_group_type').change(function() {
-                if ($.inArray($('#group_group_type')[0].value, cms_access_group_ids) < 0) {
+            element.change(function() {
+                if ($.inArray(element[0].value, cms_access_group_ids) < 0) {
                     $('#permissions').hide();
                     $('#section-action').text('view');
                 } else {
@@ -17,7 +18,6 @@
 <%= render 'toolbar' %>
 <%= simple_form_for @group do |f| %>
     <%= f.input :name, label: "Group Name" %>
-
     <% unless @group.guest? %>
         <%= f.association :group_type,
                     collection: Cms::GroupType.non_guest,
@@ -28,8 +28,6 @@
     <% end %>
 
     <%= render :partial => 'permissions', locals: {f: f} %>
-    <%= render :partial => 'sections' %>
-
-    <%= f.submit("Save", :class => "submit btn btn-primary") %>
-
+    <%= render :partial => 'sections', locals: {f: f} %>
+    <%= f.button :submit, "Save" %>
 <% end %>
