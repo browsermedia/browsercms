@@ -1,15 +1,7 @@
-<%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
 <%= content_for :button_bar, menu_button("Back to Redirects", redirects_path) %>
 
-<%= form_for(@redirect) do |f| %>
-  <%= f.cms_error_messages %>
-  <div class="fields text_fields">
-    <%= f.label :from_path, "From" %>
-    <%= f.text_field :from_path, :size => 50 %>
-  </div>
-  <div class="fields text_fields">
-    <%= f.label :to_path, "To" %>
-    <%= f.text_field :to_path, :size => 50 %>
-  </div>
-  <%= f.submit("Save", :class => "submit btn", :tabindex => next_tabindex) %>
+<%= simple_form_for(@redirect) do |f| %>
+    <%= f.input :from_path, label: "From" %>
+    <%= f.input :to_path, label: "To" %>
+    <%= f.button :submit, "Save" %>
 <% end %>
