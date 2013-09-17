@@ -1,9 +1,10 @@
-<%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
-<%= form_for(@page_route) do |f| %>
-  <%= f.cms_error_messages %>
-  <%= f.cms_drop_down :page_id, Cms::Page.order("path").map{|p| ["#{p.path} (#{p.name})", p.id]}%>
-  <%= f.cms_text_field :name %>
-  <%= f.cms_text_field :pattern %>
-  <%= f.cms_text_area :code, :style => "height: 200px" %>
-  <%= f.submit("Save", :class => "submit btn", :tabindex => next_tabindex) %>
+<%= simple_form_for(@page_route) do |f| %>
+  <%= f.association :page,
+                    collection: Cms::Page.order(:path),
+                    include_blank: false,
+                    label_method: lambda {|p| "#{p.path} (#{p.name})"} %>
+  <%= f.input :name %>
+  <%= f.input :pattern %>
+  <%= f.input :code, as: :text, input_html: { style: "height: 200px"} %>
+  <%= f.button :submit, "Save" %>
 <% end %>
