@@ -1,10 +1,5 @@
 <% use_page_title @link_title = "Add New Link" %>
-<%= render partial: 'cms/section_nodes/button_bar' %>
-<%= form_for(@link) do |f| %>
+<%= simple_form_for(@link) do |f| %>
     <%= hidden_field_tag :section_id, @link.section_id %>
     <%= render :partial => 'form', :locals => {:f => f} %>
-    <div class="buttons">
-      <%= publish_button "link" %>
-      <%= f.submit("Save", :class => "btn btn-primary", :tabindex => next_tabindex) %>
-    </div>
 <% end %>

@@ -1,13 +1,9 @@
-<%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
-<%= f.cms_error_messages %>
+<%= render partial: 'cms/section_nodes/button_bar' %>
 
-<%= f.cms_text_field :name %>
-<%= f.cms_text_field :url %>
-
-<div class="checkbox_group fields no_check_all">
-  <div class="checkbox_fields">
-    <%= f.label :new_window, "Open In New Window?" %>
-    <%= f.check_box :new_window, :tabindex => next_tabindex %>
-  </div>
+<%= f.input :name %>
+<%= f.input :url %>
+<%= f.input :new_window, label: "Open In New Window?" %>
+<div class="buttons">
+  <%= publish_button "link" %>
+  <%= f.button :submit,  "Save" %>
 </div>
-
