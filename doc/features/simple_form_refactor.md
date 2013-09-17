@@ -1,15 +1,24 @@
-Refactor to use SimpleForm
+[#623] Refactor to use SimpleForm
 
 * Convert the existing forms to use simple rather than our custom form code.
 
+
+Current: Make sure switching between group types works.
+
 ## Steps
 
-1. Convert a simple form (New User)
+1. Replace all existing forms for non-block code
+2. Replace block code
+3. Make sure old widgets are deprecated but still work
+4. Add new widgets for things like section selectors, etc.
+5. Document new widgets on developer manual.
 
 10. Move all the manual initializers in dummy into the engine.
 10. Ensure we don't conflict with existing simple_form implementations
 
 ## Widgets to Replace
 
-* DatePicker - Need to build a component to handle jquery date pickers (with empty form fields)
-    * users/_user_fields -> Expiration Date
+## Cleanup
+
+
+* Remove date_picker html code

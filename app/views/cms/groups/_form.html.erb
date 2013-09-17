@@ -1,22 +1,35 @@
+<%= content_for :html_head do %>
+    <%= javascript_tag do %>
+        jQuery(function($){
+            var cms_access_group_ids = <%= Cms::GroupType.cms_access.to_a.map { |e| e.id.to_s }.to_json.html_safe %>
+            $('#group_group_type').change(function() {
+                if ($.inArray($('#group_group_type')[0].value, cms_access_group_ids) < 0) {
+                    $('#permissions').hide();
+                    $('#section-action').text('view');
+                } else {
+                    $('#permissions').show();
+                    $('#section-action').text('edit');
+                }
+            }).change();
+        });
+    <% end %>
+<% end %>
 <%= render 'toolbar' %>
-<%= form_for @group do |f| %>
-  <%= f.cms_error_messages %>
-  <div class="row-fluid">
-    <%= f.label :name, "Group Name" %>
-    <%= f.text_field :name %>
-  </div>
+<%= simple_form_for @group do |f| %>
+    <%= f.input :name, label: "Group Name" %>
 
-  <% unless @group.guest? %>
-    <%= f.label :group_type_id, "Type of User" %>
-    <div class="row-fluid">
-      <%= f.select :group_type_id, Cms::GroupType.non_guest.map { |g| [g.name, g.id] } %>
-      <div class="muted help-block">What kind of user does this group represent?</div>
-    </div>
-  <% end %>
+    <% unless @group.guest? %>
+        <%= f.association :group_type,
+                    collection: Cms::GroupType.non_guest,
+                    label: 'Type of User',
+                    hint: 'What kind of user does this group represent?',
+                    include_blank: false
+        %>
+    <% end %>
 
-  <%= render :partial => 'permissions' %>
-  <%= render :partial => 'sections' %>
+    <%= render :partial => 'permissions', locals: {f: f} %>
+    <%= render :partial => 'sections' %>
 
-  <%= f.submit("Save", :class => "submit btn btn-primary") %>
+    <%= f.submit("Save", :class => "submit btn btn-primary") %>
 
 <% end %>

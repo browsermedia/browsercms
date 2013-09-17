@@ -1,35 +1,14 @@
-<%= content_for :html_head do %>
-  <%= javascript_tag do %>
-    jQuery(function($){
-      var cms_access_group_ids = <%= Cms::GroupType.cms_access.to_a.map{|e| e.id.to_s}.to_json.html_safe %>
-      $('#group_group_type_id').change(function() {
-        if ($.inArray($('#group_group_type_id')[0].value, cms_access_group_ids) < 0) {
-          $('#permissions').hide()
-          $('#section-action').text('view')
-        } else {
-          $('#permissions').show()
-          $('#section-action').text('edit')          
-        }
-      }).change()      
-    });
-  <% end %>
-  
-<% end %>
 <div id="permissions">
-  <div class="checkbox_group">
-    <label>Global Permissions</label>
-    <%= hidden_field_tag "group[permission_ids][]", "" %>  
-    <div class="checkboxes">
-        <% Cms::Permission.order(:name).each do |p| %>
-          <div class="checkbox_fields">
-              <%= check_box_tag "group[permission_ids][]", p.id, @group.permissions.include?(p), :id => "permission_ids_#{p.id}", :class => "permission_ids" %>
-              <label for="permission_ids_<%= p.id %>" style="width: 400px;#padding-top: 6px;"><%=h p.full_name %></label>
-          </div>
-          <div class="muted help-block"><%=h p.description %></div>
-        <% end %>
-        <div class="check_uncheck">
-          <%= check_uncheck_tag 'input.permission_ids' %>
-        </div>
-    </div>
+    <%= f.association :permissions,
+                      collection: Cms::Permission.order(:name),
+                      as: :check_boxes,
+                      label: 'Global Permissions',
+                      label_method: lambda { |permission| "#{permission.full_name} (#{permission.description})"},
+                      :input_html => { :class => "check_uncheck" }
+                      # Note: Check/uncheck only works once, and was not broken by this refactoring.
+    %>
+  <div class="check_uncheck">
+    <%= check_uncheck_tag 'input.check_uncheck' %>
   </div>
 </div>
+

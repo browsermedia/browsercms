@@ -20,7 +20,7 @@ class Cms::Group < ActiveRecord::Base
 
   # @override Add extra params
   def self.permitted_params
-    super + [section_ids: [], permission_ids: []]
+    super + [:group_type_id] +[section_ids: [], permission_ids: []]
   end
 
 

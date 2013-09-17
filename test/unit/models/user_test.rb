@@ -13,7 +13,7 @@ module Cms
 
 
     test ".permitted_params" do
-      assert User.permitted_params.include? :group_ids => [], "Allow for bulk submitted group_ids as a collection."
+      assert User.permitted_params.include?(:group_ids => []), "Allow for bulk submitted group_ids as a collection."
     end
 
     def test_authenticate
