@@ -4,26 +4,15 @@
     <%= menu_button "Back to Page", @page.path, pull: 'left' %>
 <% end %>
 
-<%= form_for(@task, :url => @task.new_record? ? page_tasks_path(@page) : page_task_path(@page, @task)) do |f| %>
-
-  <%= f.cms_error_messages %>
-  <div class="fields text_fields">
-    <%= f.label :assigned_to_id, "Assign To" %>
-    <%= f.collection_select :assigned_to_id, Cms::User.active.able_to_edit_or_publish_content.order("first_name, last_name, login"), :id, :full_name_with_login, :include_blank => true, :tabindex => next_tabindex %>
-  </div>
-  
-  <div class="fields text_fields">
-      <%= f.label :due_date %>
-      <%= f.date_picker :due_date %>
-      <div class="muted help-block">Leave blank for no due date</div><br clear="all" />
-  </div>  
-  
-  <div class="fields text_editor_fields">
-    <%= f.label :comment %>
-    <br/>
-    <%= f.text_area :comment, :tabindex => next_tabindex %>
-  </div>
-  <%= f.submit("Save", :class => "submit btn", :tabindex => next_tabindex) %>
-
+<%= simple_form_for(@task, :url => @task.new_record? ? page_tasks_path(@page) : page_task_path(@page, @task)) do |f| %>
+    <%= f.association :assigned_to,
+                      label: "Assign To",
+                      collection: Cms::User.active.able_to_edit_or_publish_content.order("first_name, last_name, login"),
+                      include_blank: false,
+                      label_method: :full_name_with_login
+    %>
+    <%= f.input :due_date, as: :date_picker, hint: "Leave blank for no due date" %>
+    <%= f.input :comment %>
+    <%= f.button :submit, "Save" %>
 <% end %>
 
