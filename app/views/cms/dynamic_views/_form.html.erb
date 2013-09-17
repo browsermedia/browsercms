@@ -1,10 +1,8 @@
-<%= content_for :html_head, stylesheet_link_tag('cms/form_layout') %>
 <%= render 'toolbar' %>
-<%= form_for(@view) do |f| %>
-  <%= f.cms_error_messages %>
-  <%= f.cms_text_field :name %>
-  <%= f.cms_text_field :format %>
-  <%= f.cms_drop_down :handler, ActionView::Template.template_handler_extensions, :default => "erb" %>
-  <%= f.cms_text_area :body, :style => "height: 500px", :cols => 80 %>
-  <%= f.submit("Save", :class => "submit btn", :tabindex => next_tabindex) %>
+<%= simple_form_for(@view) do |f| %>
+    <%= f.input :name %>
+    <%= f.input :format %>
+    <%= f.input :handler, collection: ActionView::Template.template_handler_extensions, default: "erb"  %>
+    <%= f.input :body, as: :text, input_html: {:style => "height: 500px", :cols => 80}  %>
+    <%= f.button :submit, "Save" %>
 <% end %>
