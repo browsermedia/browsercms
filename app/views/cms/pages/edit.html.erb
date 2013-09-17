@@ -1,9 +1,8 @@
 <% use_page_title "Edit Properties / '#{h(@page.name)}' Page" %>
-<%= render partial: 'cms/section_nodes/button_bar' %>
 <%= content_for :button_bar do %>
     <%= link_to "Edit Page Content", @page.path, :class=>"btn btn-primary pull-left" %>
 <% end %>
-<%= form_for(@page) do |f| %>
+<%= simple_form_for(@page) do |f| %>
   <% if @other_version %>
     <%= render :partial => 'cms/shared/version_conflict_error', :locals => {:other_version => @other_version, :your_version => @page} %>
     <%= f.hidden_field :lock_version, :value => @other_version.lock_version %>
@@ -15,5 +14,4 @@
   <% if @other_version %>
     <%= render :partial => "cms/shared/version_conflict_diff", :locals => {:other_version => @other_version, :your_version => @page} %>
   <% end %>
-  <%= f.submit("Save", :class => "submit btn btn-primary", :tabindex => next_tabindex) %>
 <% end %>

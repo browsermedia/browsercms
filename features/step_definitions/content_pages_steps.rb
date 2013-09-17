@@ -253,3 +253,27 @@ end
 When /^I clear the page cache$/ do
   find(:rel, 'clear-cache').click
 end
+Given /^that a page I want to edit exists$/ do
+  @page_to_edit = create(:page, parent: root_section)
+end
+
+Given /^I go to the sitemap$/ do
+  visit cms.sitemap_path
+end
+
+# Ideally would use sitemap buttons to interact, but that requires javascript
+When /^I select the page to edit$/ do
+  visit cms.edit_page_path(@page_to_edit)
+end
+When /^I change the page name$/ do
+  @expected_new_name = "A New Page Name"
+  fill_in "Name", with: @expected_new_name
+  click_on "Save"
+end
+Then /^I should be returned to that page$/ do
+  assert_equal 200, page.status_code
+  assert_equal @page_to_edit.path, current_path
+end
+When /^I should see the new page name$/ do
+  should_see_a_page_titled @expected_new_name
+end

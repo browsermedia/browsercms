@@ -1,31 +1,13 @@
+<%= render 'cms/section_nodes/button_bar' %>
 
-<%= f.cms_error_messages %>
-<%= f.cms_text_field :name %>
-<%= f.cms_text_field :title, :instructions => "(Leave blank if same as name)" %>
-<%= f.cms_text_field :path %>
-<%= f.cms_drop_down :template_file_name, Cms::PageTemplate.options, {:label => "Template"}, :tabindex => next_tabindex %>
-
-<div class="checkbox_group fields no_check_all">
-  <div class="checkbox_fields">
-    <%= f.label :cacheable, "Cache Enabled?" %>
-    <%= f.check_box :cacheable, :tabindex => next_tabindex %>
-  </div>
-</div>
-
-<div class="checkbox_group fields no_check_all">
-  <div class="checkbox_fields">
-    <%= f.label :hidden, "Hide From Menus?" %>
-    <%= f.check_box :hidden, :disabled => (!current_user.able_to?(:publish_content)), :tabindex => next_tabindex %>
-  </div>
-</div>
-
-<div class="checkbox_group fields no_check_all">
-  <div class="checkbox_fields">
-    <%= f.label :archived, "Archived?" %>
-    <%= f.check_box :archived, :disabled => (!current_user.able_to?(:publish_content)), :tabindex => next_tabindex %>
-  </div>
-</div>
-
-<%= f.cms_text_area :description, :size=>"80x5", :instructions=>"(Optional) Often used for the meta-description element of the page." %>
-<%= f.cms_text_area :keywords, :size=>"80x3", :instructions=>"(Optional) Often used for the meta-keyword meta element of the page. Most search engine will ignore this however." %>
-<%= f.cms_text_field :language %>
+<%= f.input :name %>
+<%= f.input :title, :hint => "(Leave blank if same as name)" %>
+<%= f.input :path %>
+<%= f.input :template_file_name, collection: Cms::PageTemplate.options, label: "Template", as: :select, include_blank: false %>
+<%= f.input :cacheable, label: "Cache Enabled?" %>
+<%= f.input :hidden, label: "Hide From Menus?", disabled: (!current_user.able_to?(:publish_content)) %>
+<%= f.input :archived, label: "Archived?", disabled: (!current_user.able_to?(:publish_content)) %>
+<%= f.input :description, input_html: {:size=>"80x5"}, :hint=>"(Optional) Used for the meta-description element of the page." %>
+<%= f.input :keywords, input_html: {:size=>"80x3"}, :hint=>"(Optional) Used for the meta-keyword meta element of the page." %>
+<%= f.input :language %>
+<%= f.button :submit, "Save" %>

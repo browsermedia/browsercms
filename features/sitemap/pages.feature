@@ -1,5 +1,5 @@
-Feature: Create Pages
-  Content Editors should be able to create pages from the sitemap in order to show content to their users.
+Feature:  Pages
+  Content Editors should be able to manage pages from the sitemap.
 
   Background:
     Given I am logged in as a Content Editor
@@ -11,4 +11,11 @@ Feature: Create Pages
     And I select "Default" from "Template"
     And I click on "Save"
     Then I should see a page titled "A New Page"
-    
+
+  Scenario: Edit a Page
+    Given that a page I want to edit exists
+    When I go to the sitemap
+    And I select the page to edit
+    And I change the page name
+    Then I should be returned to that page
+    And I should see the new page name

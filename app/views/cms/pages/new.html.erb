@@ -16,13 +16,11 @@ jQuery(function($){
 </script>
 <% end %>
 <% use_page_title "New Page" %>
-<%= render partial: 'cms/section_nodes/button_bar' %>
 <div class="row-fluid">
     <div class="span12">
-    <%= form_for(@page) do |f| %>
+    <%= simple_form_for(@page) do |f| %>
       <%= hidden_field_tag :section_id, @page.section_id %>
       <%= render :partial => 'form', :locals => {:f => f} %>
-      <%= f.submit("Save", :class => "btn btn-primary", :tabindex => next_tabindex) %>
     <% end %>
     </div>
 </div>
