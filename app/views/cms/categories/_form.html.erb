@@ -1,22 +1,25 @@
 <% if Cms::CategoryType.count > 0 %>
 
   <% @block.category_type ||= (Cms::Category.includes(:category_type).last && Cms::Category.last.category_type) %>
-  <%= f.cms_drop_down :category_type_id, Cms::CategoryType.order("name").map{|c| [c.name, c.id]}, :prompt => "Select a Type of Category", :label => "Type", :class =>"btn btn-primary dropdown-toggle" %>
+  <%= f.association :category_type,
+                    collection: Cms::CategoryType.order("name"),
+                    :prompt => "Select a Type of Category",
+                    :label => "Type" %>
 
-  <% categories = @block.category_type ? @block.category_type.category_list.map{|c| [c.path, c.id]} : [] %>
+  <% categories = @block.category_type ? @block.category_type.category_list : [] %>
   <% unless categories.empty? %>
-    <%= f.cms_drop_down :parent_id, categories, :include_blank => true, :class=>"dropdown-menu" %>
+    <%= f.association :parent, collection: categories, :include_blank => true %>
   <% end %>
 
-  <%= f.cms_text_field :name %>
+  <%= f.input :name %>
 
 <% else %>
   <% use_page_title "Please Create A Category Type" %>
   <%= content_for :html_head do %>
     <script type="text/javascript">
-      jQuery(function($){
-        $('.buttons').remove()
-      })
+      $(function(){
+        $('.buttons').remove();
+      });
     </script>
   <% end %>
   <p>Before you can create a category, you must <%= link_to "create a category type", new_category_type_path %>.  Each category must have a category type.  For example, if you plan to categorize your news releases, you might create a "News Release" category type.</p>
