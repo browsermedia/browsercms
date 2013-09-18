@@ -3,6 +3,7 @@ module Cms
 
     has_many :taggings, :class_name => 'Cms::Tagging'
     extend DefaultAccessible
+    include Concerns::IgnoresPublishing
 
     validates_uniqueness_of :name
 

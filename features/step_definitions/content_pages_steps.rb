@@ -277,3 +277,7 @@ end
 When /^I should see the new page name$/ do
   should_see_a_page_titled @expected_new_name
 end
+
+Given /^I am adding a new tag$/ do
+  visit cms.new_tag_path
+end
