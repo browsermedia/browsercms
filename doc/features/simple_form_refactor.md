@@ -12,6 +12,7 @@ Current: Make sure switching between group types works.
 3. Make sure old widgets are deprecated but still work
 4. Add new widgets for things like section selectors, etc.
 5. Document new widgets on developer manual.
+6. Update generators to use new simple form controls.
 
 10. Move all the manual initializers in dummy into the engine.
 10. Ensure we don't conflict with existing simple_form implementations
