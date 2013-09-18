@@ -1,3 +1,3 @@
 <%= f.input :name %>
 <%= f.input :content, as: :text_editor %>
-<%#= f.cms_tag_list %>
+<%= f.input :tag_list, as: :tag_list, label: "Tags", input_html: {autocomplete: 'off'}, hint: "A space separated list of tags." %>

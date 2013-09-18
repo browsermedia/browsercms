@@ -21,4 +21,9 @@ Current: Make sure switching between group types works.
 ## Cleanup
 
 
-* Remove date_picker html code
+* Deprecate and remove date_picker html code
+* Deprecate tag_list and remove it.
+
+## Bugs
+
+* Tag list does not automatically suggest tags.

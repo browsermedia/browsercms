@@ -137,7 +137,21 @@
     
     createEmptyTagList()
     $(this).keydown(handleNavKeys).keyup(handleInput)
-    $(this).attr('autocomplete', 'off') //Disable autofill on FF
     $(this).blur(function(){getTagList().hide()})
   }
 })(jQuery);
+
+// Autosuggest for tags
+// This does not work and should be refactored to use JSON.
+//$(function(){
+//  $.ajax({
+//    url: '/cms/tags',
+//    dataType: 'json',
+//    success: function(data){
+//      console.log('back');
+//      eval(data);
+//      console.log(tags);
+//      $('.tag_list').tagList(tags);
+//    }
+//  });
+//});
