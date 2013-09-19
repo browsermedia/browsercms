@@ -3,4 +3,4 @@
 <%= f.input :subject, as: :cms_text_field, default: "A link you might be interested in" %>
 <%= f.input :success_url,
   hint: "Leave blank to return the same page" %>
-<%= f.input :template, default: EmailPagePortlet.default_template, as: :cms_text_area  %>
+<%= f.input :template, as: :template_editor  %>
