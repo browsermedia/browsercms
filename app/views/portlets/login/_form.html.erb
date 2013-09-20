@@ -1,6 +1,4 @@
-<%= f.cms_text_field :name %>
-<%= f.cms_text_field :success_url,
-  :instructions => "Leave blank to send the user to the page they were trying to access" %>
-<%= f.cms_text_field :failure_url,
-  :instructions => "Leave blank to send the user to the page they tried to login from" %>
-<%= f.cms_text_area :template, :default_value => LoginPortlet.default_template %>
+<%= f.input :name %>
+<%= f.input :success_url, hint: "Leave blank to send the user to the page they were trying to access" %>
+<%= f.input :failure_url, hint: "Leave blank to send the user to the page they tried to login from" %>
+<%= f.input :template, as: :template_editor %>
