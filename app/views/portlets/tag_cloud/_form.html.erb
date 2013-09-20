@@ -1,4 +1,4 @@
-<%= f.cms_text_field :name %>
-<%= f.cms_text_field :limit, :size => 4 %>
-<%= f.cms_text_field :sizes, :default_value => TagCloudPortlet.default_sizes %>
-<%= f.cms_text_area :template, :default_value => TagCloudPortlet.default_template %>
+<%= f.input :name %>
+<%= f.input :limit, :size => 4 %>
+<%= f.input :sizes, :default => TagCloudPortlet.default_sizes, as: :cms_text_field %>
+<%= f.input :template, as: :template_editor %>
