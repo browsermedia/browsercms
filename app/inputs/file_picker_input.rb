@@ -18,18 +18,25 @@ class FilePickerInput < SimpleForm::Inputs::Base
       end
     end
     @builder.simple_fields_for :attachments do |a|
-      html << a.hidden_field("attachment_name", value: attribute_name.to_s)
-      html << a.file_field(:data, input_html_options.merge('data-purpose' => "cms_file_field"))
-      if render_section_picker?
-        html << a.input(:section_id, collection: sections, label_method: :full_path, include_blank: false, label: "Section", input_html: {'data-purpose' => "section_selector"})
-      end
-      if render_path_input?
-        klass = object.new_record? ? "suggest_file_path" : "keep_existing_path"
-        html << a.input(:data_file_path, label: "Path", input_html: {class: klass})
+      if matching_attachment?(a)
+        html << a.hidden_field("attachment_name", value: attribute_name.to_s)
+        html << a.file_field(:data, input_html_options.merge('data-purpose' => "cms_file_field"))
+        if render_section_picker?
+          html << a.input(:section_id, collection: sections, label_method: :full_path, include_blank: false, label: "Section", input_html: {'data-purpose' => "section_selector"})
+        end
+        if render_path_input?
+          klass = object.new_record? ? "suggest_file_path" : "keep_existing_path"
+          html << a.input(:data_file_path, label: "Path", input_html: {class: klass})
+        end
       end
     end
     html.html_safe
 
+  end
+
+  # Because #attachments holds ALL attachments by all names, need to verify we only render one form control for each one.
+  def matching_attachment?(a)
+    a.object.attachment_name == attribute_name.to_s
   end
 
   def render_path_input?
