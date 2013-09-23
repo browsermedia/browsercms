@@ -1,11 +1,3 @@
 <%= f.input :name %>
-<%= f.cms_file_field :file, :instructions=>"Select a file to upload.", edit_path: true, edit_section: true %>
-
-<%
-  # This isn't right as attachments need to be nested attributes looking like:
-  # "file_block[attachments_attributes][0][attachment_name]
-  # Also need to make sure both section and path editing is configurable.
-
-%>
-<%#= f.input :file, hint: "Select a file to upload.", as: :file_picker %>
+<%= f.input :file, hint: "Select a file to upload.", as: :file_picker, edit_path: true, edit_section: true %>
 <%= f.input :tag_list, as: :tag_list, label: "Tags", input_html: {autocomplete: 'off'}, hint: "A space separated list of tags." %>
