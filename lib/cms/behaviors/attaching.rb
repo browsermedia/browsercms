@@ -140,7 +140,8 @@ module Cms
           end
         end
 
-        # Define at :set_attachment_path if you would like to override the way file_path is set
+        # Define the #set_attachment_path method if you would like to override the way file_path is set.
+        # A path input will be rendered for content types having #set_attachment_path.
         def handle_setting_attachment_path
           if self.respond_to? :set_attachment_path
             set_attachment_path
