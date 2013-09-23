@@ -3,56 +3,24 @@ module Cms
   module Behaviors
     # Allows one or more files to be attached to content blocks.
     #
+    # class Book < ActiveRecord::Base
+    #   acts_as_content_block
+    #   has_attachment :cover
+    # end
+    #
+    #
+    # To add a set of multiple attachments:
+    #
     # class Book
     #   acts_as_content_block
-    #   uses_paperclip
+    #
+    #   has_attachment :cover
+    #   has_many_attachments :drafts
     # end
     #
-    # It would probably be nice to do something like:
-    #
-    # class Book
-    #   acts_as_content_block :uses_paperclip => true
-    # end
-    #
-    # has_attached_asset and has_many_attached_assets are very similar.
-    # They both define a couple of methods in the content block:
-    #
-    # class Book
-    #   uses_paperclip
-    #
-    #   has_attached_asset :cover
-    #   has_many_attached_assets :drafts
-    # end
-    #
-    #  book = Book.new
-    #  book.cover = nil #is basically calling: book.assets.named(:cover).first
-    #  book.drafts = [] #is calling book.assets.named(:drafts)
-    #
-    #  Book#cover and Book#drafts both return Asset objects as opposed to what
-    #  happens with stand alone Paperclip:
-    #
-    #  class Book
-    #     has_attached_file :invoice #straight Paperclip
-    #  end
-    #
-    #  Book.new.invoice # returns an instance of Paperclip::Attachment
-    #
-    #  However, Asset instances respond to most of the same methods
-    #  Paperclip::Attachments do (at least the most usefull ones and the ones
-    #  that make sense for this implementation). Please see asset.rb for more on
-    #  this.
-    #
-    #  At the moment, calling has_attached_asset does not enforce that only
-    #  one asset is created, it only defines a method that returns the first one
-    #  ActiveRecord finds. It would be possible to do if that makes sense.
-    #
-    #  In terms of validations, I'm aiming to expose the same 3 class methods
-    #  Paperclip exposes, apart from those needed by BCMS itself (like enforcing
-    #  unique attachment paths) but this is not ready yet:
-    #
-    #  validates_asset_size
-    #  validates_asset_presence
-    #  validates_asset_content_type
+    #  Adds the following methods to Book:
+    #  - Book#cover @return [Cms::Attachment]
+    #  - Book#drafts @return [Array<Cms::Attachment>]
     #
     module Attaching
 
@@ -83,7 +51,6 @@ module Cms
                                         :allow_destroy => true,
                                         # New attachments must have an uploaded file
                                         :reject_if => lambda { |a| a[:data].blank? && a[:id].blank? }
-         #attr_accessible :attachments_attributes, :attachment_id_list, :attachments_changed
 
           validates_associated :attachments
           before_validation :initialize_attachments, :check_for_updated_attachments

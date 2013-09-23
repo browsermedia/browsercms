@@ -4,7 +4,6 @@
 # @param [Hash] options
 # @option options [String] :label (method) If no label is specified, the human readable name for method will be used.
 # @option options [String] :hint (blank) Helpful tips for the person entering the field, appears blank if nothing is specified.
-# @option options [Boolean] :edit_section (false) If true, render a select box which allows users to choose which section this attachment should be placed in.
 class FilePickerInput < SimpleForm::Inputs::Base
 
   def input
@@ -38,8 +37,7 @@ class FilePickerInput < SimpleForm::Inputs::Base
   end
 
   def render_section_picker?
-    #object.respond_to? :set_attachment_section
-    options[:edit_section]
+    object.respond_to?(:set_attachment_section)
   end
 
 

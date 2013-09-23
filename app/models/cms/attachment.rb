@@ -107,7 +107,6 @@ module Cms
       # @param [Class] block_class The class of a block which has an attachment.
       # @param [String] name_of_attachment The name of the attachment association (i.e. if was 'has_attachment :photos' then pass 'photo')
       # @param [Symbol] key The key for the value to be fetched (i.e. :styles)
-      #
       def configuration_value(block_class, name_of_attachment, key)
         class_definitions = definitions[block_class]
         if class_definitions == nil
