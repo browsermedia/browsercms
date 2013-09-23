@@ -39,6 +39,9 @@ module Cms
 
     class << self
 
+      def permitted_params
+        super + [:attachable_class, :data]
+      end
       # Makes file paths more URL friendly
       def sanitize_file_path(file_path)
         SANITIZATION_REGEXES.inject(file_path.to_s) do |s, (regex, replace)|

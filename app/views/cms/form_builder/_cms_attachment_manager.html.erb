@@ -1,27 +1,22 @@
-<% if asset_definitions.nil? %>
-    <p>This content type (<%= @block.class.name %>) does not have any define any attachments.<p>
-<% else %>
-    <br/>
-    <%= render :partial => 'cms/attachments/attachment_table', :locals => {:block => @block, :can_delete => true} %>
-    <div class="fields">
-      <p>Upload a new attachment:</p>
-    </div>
+<%= render :partial => 'cms/attachments/attachment_table', :locals => {:block => @block, :can_delete => true} %>
+<div class="fields">
+  <p>Upload a new attachment:</p>
+</div>
 
-    <div class="fields select_fields">
-      <%= label_tag "Attachment Type" %>
-      <%= select_tag :asset_types, options_for_select(asset_types) %>
-    </div>
-    <%= f.hidden_field :attachment_id_list, :id => "attachment_manager_ids_list" %>
-    <%= f.hidden_field :attachments_changed, :id => "attachments_manager_changed" %>
+<div class="fields select_fields">
+  <%= label_tag "Attachment Type" %>
+  <%= select_tag :asset_types, options_for_select(asset_types) %>
+</div>
+<%= f.hidden_field :attachment_id_list, :id => "attachment_manager_ids_list" %>
+<%= f.hidden_field :attachments_changed, :id => "attachments_manager_changed" %>
 
-    <div id="asset_add" class="fields file_fields" style="display:<%= asset_types.size > 1 ? "none" : "block" %>">
-      <label for="asset_add">Choose file</label>
+<div id="asset_add" class="fields file_fields" style="display:<%= asset_types.size > 1 ? "none" : "block" %>">
+  <label for="asset_add">Choose file</label>
 
-      <div id="asset_add_div">
-        <input type="file" name="attachment[data]" id="asset_add_file" onchange="$.cms.AttachmentManager.upload(this)"/>
-        <input type="hidden" id="asset_attachable_id" name="asset[attachable_id]" value="<%= @block.id %>"/>
-        <input type="hidden" id="asset_attachable_class" value="<%= @block.class.name %>"/>
-        <iframe src="javascript:false" name="asset_add_uploader" id="asset_add_uploader"></iframe>
-      </div>
-    </div>
-<% end %>
+  <div id="asset_add_div">
+    <input type="file" name="attachment[data]" id="asset_add_file" onchange="$.cms.AttachmentManager.upload(this)"/>
+    <input type="hidden" id="asset_attachable_id" name="asset[attachable_id]" value="<%= object.id %>"/>
+    <input type="hidden" id="asset_attachable_class" value="<%= object.class.name %>"/>
+    <iframe src="javascript:false" name="asset_add_uploader" id="asset_add_uploader"></iframe>
+  </div>
+</div>

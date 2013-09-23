@@ -19,6 +19,7 @@ Current: Make sure switching between group types works.
 
 ## Widgets to Replace
 
+
 ## Cleanup
 
 
@@ -28,3 +29,6 @@ Current: Make sure switching between group types works.
 ## Bugs
 
 * Tag list does not automatically suggest tags.
+* :attachments doesn't correctly upload files.
+    - Widget looks awful
+    - iframe is visible when it shouldn't be.

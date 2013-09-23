@@ -26,7 +26,7 @@ module Cms
     end
 
     def create
-      @attachment = Attachment.new(params[:attachment])
+      @attachment = Attachment.new(permitted_params())
       @attachment.published = true
       if @attachment.save
         render :partial => 'cms/attachments/attachment_wrapper', :locals => {:attachment => @attachment}
@@ -43,6 +43,8 @@ module Cms
     end
 
     private
-
+    def permitted_params
+      params.require(:attachment).permit(Attachment.permitted_params)
+    end
   end
 end
