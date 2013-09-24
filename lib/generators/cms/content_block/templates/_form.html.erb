@@ -16,8 +16,6 @@
           "association :#{attribute.name}, collection: categories_for('#{class_name.titleize}')"
         when :date
           "input :#{attribute.name}, as: :date_picker"
-        when :datetime
-          "datetime_select :#{attribute.name}"
         when :html
           "input :#{attribute.name}, as: :text_editor"
         else

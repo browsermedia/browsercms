@@ -70,6 +70,14 @@ Feature:
     <%= f.input :content, as: :text_editor %>
     """
 
+  # Date times should just be standard Rails widget
+  Scenario: Date Time
+    When I run `rails g cms:content_block sale runs_til:datetime`
+    Then the file "app/views/cms/sales/_form.html.erb" should contain:
+    """
+    <%= f.input :runs_til %>
+    """
+
   Scenario: With Belongs To
     When I run `rails g cms:content_block product size:belongs_to`
     Then the file "app/models/product.rb" should contain:
