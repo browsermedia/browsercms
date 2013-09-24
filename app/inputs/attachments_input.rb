@@ -1,7 +1,6 @@
 class AttachmentsInput < SimpleForm::Inputs::Base
 
   def input
-
     definitions = Cms::Attachment.definitions_for(object.class.name, :multiple)
     if definitions.empty?
       template.render(partial: 'cms/form_builder/cms_no_attachments_defined', locals: {object: object})

@@ -124,7 +124,10 @@ HTML
       select_tag("group_id", options_from_collection_for_select(Group.all.to_a.insert(0, Group.new(:id => nil, :name => "Show All Groups")), "id", "name", params[:group_id].to_i))
     end
 
-    # Fetches a list of categories for a cms_drop_down. Will prompt users to create Categories/Categories types if the proper ones don't exist.
+    # Fetches a list of categories for a cms_drop_down. Will prompt users to create Categories/Categories types if
+    # the proper ones don't exist.
+    #
+    # @deprecated Use <%= f.association :categories %> instead.
     def categories_for(category_type_name, order="name")
       cat_type = CategoryType.named(category_type_name).first
       categories = cat_type ? cat_type.category_list(order) : [Category.new(:name => "-- You must first create a 'Category Type' named '#{category_type_name}'")]

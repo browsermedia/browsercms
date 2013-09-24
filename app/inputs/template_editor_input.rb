@@ -1,6 +1,6 @@
 class TemplateEditorInput < SimpleForm::Inputs::TextInput
 
-  include Cms::Inputs::DefaultInput
+  include Cms::FormBuilder::DefaultInput
 
   def label
     super if render_template_input?

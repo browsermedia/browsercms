@@ -1,0 +1,7 @@
+
+<p><b>Name:</b> <%= @content_block.name %></p>
+<p><b>Content:</b> <%= @content_block.content %></p>
+<p><b>Cover Photo:</b> <%= link_to "Cover Photo", attachment_path_for(@content_block.cover_photo) %></p>
+<p><b>Attachments:</b> <%= attachment_viewer @content_block %></p>
+<p><b>Category:</b> <%= @content_block.category_name %></p>
+<p><b>Tags:</b> <%= @content_block.tags.map {|t| t.name }.join(", ") %></p>

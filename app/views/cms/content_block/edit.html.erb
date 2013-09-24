@@ -5,7 +5,7 @@
 <% if @block.respond_to?(:deleted) && @block.deleted %>
   <div class="header">This <%= @block.class.name %> has been deleted.</div>
 <% else %>
-<%= simple_form_for(@block, :url => block_path(@block), :html => {:multipart => true}) do |f| %>
+<%= content_block_form_for(@block, :url => block_path(@block), :html => {:multipart => true}) do |f| %>
   <%= f.error_notification %>
   <%= render :partial => 'cms/shared/exception', :object => @exception if @exception %>
   <% if @other_version %>

@@ -19,7 +19,8 @@ require 'cms/attachments/configuration'
 require 'cms/default_accessible'
 require 'cms/admin_tab'
 require 'cms/content_filter'
-require 'cms/inputs/default_input'
+require 'cms/form_builder/default_input'
+require 'cms/form_builder/content_block_form_builder'
 
 # This shouldn't be necessary, except for the need to get into the loadpath for testing.
 require 'command_line'

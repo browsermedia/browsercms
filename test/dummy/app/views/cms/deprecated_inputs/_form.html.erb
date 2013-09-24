@@ -1,0 +1,15 @@
+<%= f.cms_text_field :name %>
+<%= f.cms_text_editor :content %>
+<%= f.template_editor :template %>
+<%= f.cms_file_field :cover_photo, :label => "Cover Photo" %>
+<%= f.cms_attachment_manager %>
+<%= f.cms_drop_down :category_id, categories_for('Deprecated Input').map{|c| [c.path, c.id]} %>
+<%= f.cms_tag_list %>
+
+<!--# Generated Input-->
+<%#= f.cms_text_field :name %>
+<%#= f.cms_text_editor :content %>
+<%#= f.cms_file_field :cover_photo, :label => "Cover Photo" %>
+<%#= f.cms_attachment_manager %>
+<%#= f.cms_drop_down :category_id, categories_for('Deprecated Input').map{|c| [c.path, c.id]} %>
+<%#= f.cms_text_field :tags %>

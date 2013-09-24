@@ -1,5 +1,5 @@
 module Cms
-  module Inputs
+  module FormBuilder
     module DefaultInput
 
       # Use a default value if there isn't one specfied already.
