@@ -26,6 +26,20 @@ module Cms
       def cms_tag_list(options={})
         input :tag_list, as: :tag_list, label: "Tags", input_html: {autocomplete: 'off'}, hint: "A space separated list of tags."
       end
+
+      # Displays a concise list of error messages. This is may be unnecessary given that simple form will display error inline.
+      # Handles 'global' messages that aren't specific to a field.
+      def cms_error_messages
+        return unless object.respond_to?(:errors) && object.errors.any?
+
+        errors_list = ""
+        errors_list << @template.content_tag(:h2, "#{object.errors.size} error prohibited this #{object_name.humanize} from being saved.".html_safe)
+        errors_list << @template.content_tag(:p, "There were problems with the following fields:")
+        errors_list << @template.content_tag(:ul, object.errors.full_messages.map { |message| @template.content_tag(:li, message).html_safe }.join("\n").html_safe).html_safe
+
+        @template.content_tag(:div, errors_list.html_safe, :class => "errorExplanation", :id => "errorExplanation")
+      end
+
     end
   end
 end

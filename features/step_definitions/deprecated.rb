@@ -3,7 +3,10 @@ Given /^we are using a Rails 4.0 compatible version of cucumber$/ do
 end
 
 Given /^I'm creating content which uses deprecated input fields$/ do
-  visit new_cms_deprecated_input_path
+  # Avoids printing all the deprecation warnings visiting the following page will result in.
+  ActiveSupport::Deprecation.silence do
+    visit new_cms_deprecated_input_path
+  end
 end
 
 Then /^the form page with deprecated fields should be shown$/ do

@@ -3,7 +3,11 @@
 * Convert the existing forms to use simple rather than our custom form code.
 
 
-Current: Make sure switching between group types works.
+## Remaining Tasks:
+
+* Need an as: :content_name for handling slugs?
+* Generators should create using new format.
+* Add deprecation warnings.
 
 ## Steps
 
@@ -19,17 +23,12 @@ Current: Make sure switching between group types works.
 
 ## Widgets to Replace
 
+* check_box
+* datetime_select
 
 ## Cleanup
 
-
-* Deprecate and remove date_picker html code
-
 ## Bugs
 
+* EmailPagePortlet doesn't actually work when you submit the form.
 * Tag list does not automatically suggest tags.
-
-
-cucumber features/content_blocks/form_controls.feature:20 # Scenario: Multiple Individual Attachments
-cucumber features/content_blocks/manage_custom_blocks.feature:26 # Scenario: Create a new block
-cucumber features/portlets/email_friend_portlet.feature:8 # Scenario: Add New Portlet

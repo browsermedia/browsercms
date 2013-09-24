@@ -5,34 +5,35 @@ module Cms
 
       # @deprecated Use <%= f.input :attribute_name %> instead.
       def cms_text_field(method, options={})
+        method_deprecated_use_instead(:cms_text_field, "<%= f.input :#{method} %>")
         input method, options
       end
 
       def cms_text_editor(method, options={})
+        method_deprecated_use_instead(:cms_text_editor, "<%= f.input :#{method}, as: :text_editor %>")
         input method, options.merge(as: :text_editor)
       end
 
       def template_editor(method, options={})
+        method_deprecated_use_instead(:template_editor, "<%= f.input :#{method}, as: :template_editor %>")
         input method, options.merge(as: :template_editor)
       end
 
       def cms_file_field(method, options={})
+        method_deprecated_use_instead(:cms_file_field, "<%= f.input :#{method}, as: :file_picker %>")
         input method, options.merge(as: :file_picker)
       end
 
       def cms_drop_down(method, collection, options={})
+        method_deprecated_use_instead(:cms_drop_down, "<%= f.association :association_name %>")
         input method, options.merge(collection: collection)
       end
 
-      def cms_error_messages
-        return unless object.respond_to?(:errors) && object.errors.any?
+      protected
 
-        errors_list = ""
-        errors_list << @template.content_tag(:h2, "#{object.errors.size} error prohibited this #{object_name.humanize} from being saved.".html_safe)
-        errors_list << @template.content_tag(:p, "There were problems with the following fields:")
-        errors_list << @template.content_tag(:ul, object.errors.full_messages.map { |message| @template.content_tag(:li, message).html_safe }.join("\n").html_safe).html_safe
-
-        @template.content_tag(:div, errors_list.html_safe, :class => "errorExplanation", :id => "errorExplanation")
+      def method_deprecated_use_instead(original, alternative)
+        full_message = "Calling <%= f.#{original.to_s} %> is deprecated and will be removed in BrowserCMS 4.1. Try instead #{alternative}"
+        ActiveSupport::Deprecation.warn(full_message, caller(3))
       end
     end
   end
