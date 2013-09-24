@@ -21,7 +21,7 @@ Feature: Image Blocks
 
   Scenario: Missing Name
     When I Save And Publish
-    Then I should see "Name can't be blank"
+    Then I should see "can't be blank"
 
   Scenario: Missing File
     When I fill in "Name" with "Giraffe"
@@ -33,7 +33,7 @@ Feature: Image Blocks
     When I fill in "Name" with "Giraffe"
     And I upload an image named "test/fixtures/giraffe.jpeg"
     And I Save And Publish
-    Then I should see "Path can't be blank"
+    Then I should see "can't be blank"
 
   Scenario: With Existing Path
     Given an image with path "/giraffe.jpeg" exists
@@ -42,5 +42,5 @@ Feature: Image Blocks
     And I upload an image named "test/fixtures/giraffe.jpeg"
     And I fill in "Path" with "/giraffe.jpeg"
     When I Save And Publish
-    Then I should see "Path must be unique."
+    Then I should see "must be unique."
 

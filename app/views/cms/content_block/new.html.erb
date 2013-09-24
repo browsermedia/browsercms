@@ -2,6 +2,7 @@
 <% @toolbar_title = "Add New #{content_type.display_name}" %>
 <%= content_for :button_bar,  render('buttonbar') %>
 <%= simple_form_for(@block, :url => blocks_path, :html => {:multipart => true}) do |f| %>
+  <%= f.error_notification %>
   <%= render :partial => 'cms/shared/exception', :object => @exception if @exception %>
   <%= render :partial => 'hidden_fields', :locals => {:f => f} %>
   <%= render :partial => block_form, :locals => {:f => f} %>

@@ -28,13 +28,13 @@ Feature: File Blocks
 
   Scenario: Creating a File block with errors
     When I Save And Publish
-    Then I should see "Name can't be blank"
+    Then I should see "can't be blank"
     When I fill in "Name" with "Perspective"
     And I Save And Publish
     Then I should see "You must upload a file"
     When I attach the file "test/fixtures/perspective.pdf" to "File"
     And I Save And Publish
-    Then I should see "Path can't be blank"
+    Then I should see "can't be blank"
     When I fill in "Path" with "/pdfs/perspective.pdf"
     And I attach the file "test/fixtures/perspective.pdf" to "File"
     And I Save And Publish
@@ -47,7 +47,7 @@ Feature: File Blocks
     And I attach the file "test/fixtures/perspective.pdf" to "File"
     And I fill in "Path" with "/perspective.pdf"
     When I Save And Publish
-    Then I should see "Path must be unique"
+    Then I should see "must be unique"
 
   Scenario: Looking at older versions
     Given a file exists with two versions
