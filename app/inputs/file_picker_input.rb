@@ -34,6 +34,7 @@ class FilePickerInput < SimpleForm::Inputs::Base
           html << a.input(:data_file_path, label: "Path", input_html: {class: klass})
         end
       end
+      html << a.input(:id, as: :hidden)
     end
     html.html_safe
 
