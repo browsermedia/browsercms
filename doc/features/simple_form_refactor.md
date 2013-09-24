@@ -5,7 +5,7 @@
 
 ## Remaining Tasks:
 
-* Make checkbox/datetime(or replace) work.
+* Make datetime (or replace) work.
 
 ## Steps
 

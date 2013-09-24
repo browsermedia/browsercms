@@ -1,5 +1,6 @@
 <p><b>Name:</b> <%= show :name %></p>
 <p><b>Price:</b> <%= show :price %></p>
+<p><b>On Special?:</b> <%= show :on_special %></p>
 <p><b>Photo 1:</b> <%= tag :img,
         :src => attachment_path_for(@content_block.photo_1),
         :alt => h(@content_block.name),
