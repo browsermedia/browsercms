@@ -24,9 +24,12 @@ Current: Make sure switching between group types works.
 
 
 * Deprecate and remove date_picker html code
-* Deprecate tag_list and remove it.
 
 ## Bugs
 
 * Tag list does not automatically suggest tags.
-* Edit the path on imageblock doesn't stick.
+
+
+cucumber features/content_blocks/form_controls.feature:20 # Scenario: Multiple Individual Attachments
+cucumber features/content_blocks/manage_custom_blocks.feature:26 # Scenario: Create a new block
+cucumber features/portlets/email_friend_portlet.feature:8 # Scenario: Add New Portlet

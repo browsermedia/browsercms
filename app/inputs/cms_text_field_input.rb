@@ -1,7 +1,7 @@
 # Adds additional attributes to text field.
 class CmsTextFieldInput < SimpleForm::Inputs::TextInput
 
-  include Cms::Inputs::DefaultInput
+  include Cms::FormBuilder::DefaultInput
 
   # @todo Generating a slug probably shouldn't be done as a side effect of a :name field.
   def input
