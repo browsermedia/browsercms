@@ -5,9 +5,7 @@
 
 ## Remaining Tasks:
 
-* Need an as: :content_name for handling slugs?
-* Generators should create using new format.
-* Add deprecation warnings.
+* Make checkbox/datetime(or replace) work.
 
 ## Steps
 
@@ -27,6 +25,11 @@
 * datetime_select
 
 ## Cleanup
+
+## Upgrade/Documentation notes
+
+* For content_blocks that want to be addressable, they need as: :cms_text_field rather than the default.
+* Docs: Provide reference for content blocks, link to simple form docs as well as provide our specific field types.
 
 ## Bugs
 

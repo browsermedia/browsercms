@@ -26,7 +26,7 @@ Feature: Generate Attachments
     """
     And the file "app/views/cms/products/_form.html.erb" should contain:
     """
-    <%= f.cms_file_field :photo, :label => "Photo" %>
+    <%= f.input :photo, as: :file_picker %>
     """
 
   Scenario: Two Named Attachment
