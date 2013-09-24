@@ -11,6 +11,7 @@ This release includes the following features:
 * Rails 4 Upgrade - BrowserCMS is now designed to work with Rail 4.0.
 * Portlet Descriptions [#619] - Portlets can now have a description that will be used to provide additional context when users are building/placing them.
 * No need to register Content Types [#621] - Content Blocks will automatically appear in the menus without needing to add them to the database.
+* Using SimpleForm [#623] Reworked all forms to use simple_form (https://github.com/plataformatec/simple_form).
 
 UI Redesign
 ----------
@@ -78,6 +79,18 @@ class Widget < ActiveRecord::Base
   acts_as_content_block content_module: false
 end
 
+Refactor to use SimpleForm
+----------
+
+Converted all the internal forms to use SimpleForm rather than our own custom form builder. This provides better consistency with bootstrap forms, as well as well tested API for defining new form inputs. This will primarily affect developers when they create content blocks. New content will be generated using simple_form syntax like so:
+
+<%= f.input :photo, as: :file_picker %>
+
+rather than the older syntax that looks like this:
+
+<%= f.cms_file_field :photo %>
+
+The old form_builder methods like cms_text_field and cms_file_field have been deprecated and will generate warnings when used. These methods are scheduled for removal in BrowserCMS 4.1. It's recommended that custom content blocks be upgraded to use the new syntax when feasible. The deprecation warnings should provide some guideance, but also look at simple_forms documentation http://simple-form.plataformatec.com.br for help.
 
 Upgrading
 --------
@@ -86,6 +99,7 @@ Upgrading
 2. match -> get: Update your config/routes.rb to change any use of 'match' to get or post for your controller.
 3. Install the deprecated finders and other gems to help with upgrade. Once you get rid of the deprecation warnings you can remove the gem.
 4. Content Types - If you have defined content blocks in custom group names, you should edit them to specify the module name. See 'Registering Content Types' above for details. You can delete any seeds that create content types. There will be a deprecation warning if you call save! or create! on ContentTypes.
+5. Forms - Rework existing form fields in content blocks to use SimpleForm.
 
 Deprecations
 ------------

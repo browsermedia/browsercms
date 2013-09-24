@@ -1,7 +1,3 @@
-# Remaining Tasks:
-
-* Move all the manual initializers in dummy into the engine.
-
 [#623] Refactor CMS forms to use SimpleForm
 
 Converted all the internal forms to use SimpleForm rather than our own custom form builder. This provides better consistency with bootstrap forms, as well as well tested API for defining new form inputs. This will primarily affect developers when they create content blocks. New content will be generated using simple_form syntax like so:
