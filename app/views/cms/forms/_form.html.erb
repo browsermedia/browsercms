@@ -1,0 +1,71 @@
+<% if cleanup_before_abandoning %>
+    <span id="cleanup-before-abandoning" data-path="<%= form_path(@block) %>"></span>
+<% end %>
+
+<h3>Form Settings</h3>
+<%= f.input :name, as: :cms_text_field %>
+<%= f.input :description %>
+<%= hidden_field_tag "field_ids", @block.field_ids %>
+<%= f.input :confirmation_behavior, label: "On Confirmation",
+            collection: [["Show Text", :show_text], ['Redirect to Website', :redirect]],
+            as: :radio_buttons %>
+<%= f.input :confirmation_text, label: false %>
+<%= f.input :confirmation_redirect, label: false, hint: "A complete URL (i.e. http://www.yoursite.com/registration) or relative path (/thanks-for-registering)." %>
+<%= f.input :notification_email, placeholder: 'email@example.com', label: "Notification Email", hint: "Notify this email address when an entry is created. (Leave blank for no notification)" %>
+
+<h3> Preview</h3>
+<div id="form-preview">
+  <% if @block.new_record? %>
+      <div id="no-field-instructions">
+        No fields yet! This <b>live preview</b> of your form will show you fields as you add them. Choose a field type
+        below.
+      </div>
+  <% end %>
+  <%= f.simple_fields_for :new_entry do |e| %>
+      <% @block.fields.each do |field| %>
+          <%= render partial: 'cms/form_fields/form',
+                     locals: {f: e, field: field, edit_path: edit_form_field_path(field.id), delete_path: form_field_path(field.id)} %>
+      <% end %>
+  <% end %>
+  <span id="placeHolder" data-new-path="<%= preview_form_field_path(@block) %>"></span>
+</div>
+
+<%= f.simple_fields_for :new_entry do |e| %>
+    <%= e.input :new_field,
+                label: "Add New Field",
+                prompt: "Select a field type:",
+                collection: [["Text Field", :text_field], ["Text Box", :text_area], ["Dropdown", :select]],
+                input_html: {class: 'add-new-field'}
+    %>
+<% end %>
+<%# Can't have a form inside a form, so this must go into the head. %>
+<%= content_for :html_head do %>
+    <div id="modal-edit-field" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="model_label" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>Edit Field</h3>
+      </div>
+      <div class="modal-body">
+
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary" href="#" id="create_field" data-dismiss="modal" type="button">Save</a>
+        <a aria-hidden="true" class="btn" data-dismiss="modal" href="#" type="button">Never Mind</a>
+      </div>
+    </div>
+
+    <div id="modal-confirm-delete-field" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="model_label" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h3>Delete Field</h3>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete this field?
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-primary" href="#" id="delete_field" data-dismiss="modal" type="button">Yes. Remove this field.</a>
+        <a aria-hidden="true" class="btn" data-dismiss="modal" href="#" type="button">Never Mind</a>
+      </div>
+    </div>
+<% end %>
+

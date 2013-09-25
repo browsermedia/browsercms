@@ -57,10 +57,6 @@ module Cms
       File.join(Rails.root, "tmp", "views")
     end
 
-    def self.form_name
-      ::ActiveModel::Naming.singular(self)
-    end
-
     def file_name
       "#{name}.#{format}.#{handler}"
     end
@@ -92,23 +88,6 @@ module Cms
 
     def set_publish_on_save
       self.publish_on_save = true
-    end
-
-    # Get the plural symbol for a particular resource.
-    # i.e. Cms::PageTemplate -> :page_templates
-    def self.resource_name
-      resource_collection_name.pluralize
-    end
-
-    # Default implementation
-    def self.resource_collection_name
-      model_name.plural
-    end
-
-    # So that route lookup works for these resources.
-    # See PathHelper#cms_index_path_for
-    def self.engine
-      "cms"
     end
 
     def set_path

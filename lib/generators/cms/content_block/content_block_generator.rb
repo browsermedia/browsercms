@@ -12,6 +12,15 @@ module Cms
       include Rails::Generators::Migration
       include Rails::Generators::ResourceHelpers
 
+      def set_classpath
+        @in_core_application = false
+        unless namespaced?
+          cms_engine_module_name = Cms::EngineAware.module_name(Rails.application.class).constantize
+          Rails::Generators.namespace = cms_engine_module_name
+          @in_core_application = true
+        end
+      end
+
       hook_for :orm, :in => :rails, :required => true, :as => :model
 
       def alter_the_model
@@ -43,21 +52,22 @@ module Cms
         end
       end
 
-      hook_for :resource_controller, :in => :rails, :as => :controller, :required => true do |controller|
-        invoke controller, [namespaced_controller_name, options[:actions]]
+      hook_for :resource_controller, :in => :rails, :as => :controller, :required => true do |instance, controller|
+        instance.invoke controller, [instance.name.pluralize]
       end
 
+
       def create_controller_and_views
-        gsub_file File.join('app/controllers', cms_or_class_path, "#{file_name.pluralize}_controller.rb"), /ApplicationController/, "Cms::ContentBlockController"
-        template '_form.html.erb', File.join('app/views', cms_or_class_path, file_name.pluralize, "_form.html.erb")
-        template 'render.html.erb', File.join('app/views', cms_or_class_path, file_name.pluralize, "render.html.erb")
+        gsub_file File.join('app/controllers', class_path, "#{file_name.pluralize}_controller.rb"), /ApplicationController/, "Cms::ContentBlockController"
+        template '_form.html.erb', File.join('app/views', class_path, file_name.pluralize, "_form.html.erb")
+        template 'render.html.erb', File.join('app/views', class_path, file_name.pluralize, "render.html.erb")
       end
 
       def create_routes
-        if namespaced?
+        if namespaced? && !@in_core_application
           route "content_blocks :#{file_name.pluralize}"
         else
-          route "namespace :cms  do content_blocks :#{file_name.pluralize} end"
+          route "namespace :#{namespace.name.underscore} do content_blocks :#{file_name.pluralize} end"
         end
       end
 
@@ -69,36 +79,6 @@ module Cms
 
       def attachment_attributes
         self.attributes.select { |attr| attr.type == :attachment }
-      end
-
-
-      def group_name
-        if namespaced?
-          class_name.split("::").first
-        else
-          class_name
-        end
-      end
-
-      def namespaced_controller_name
-        unless namespaced?
-          "cms/#{@controller_name}"
-        else
-          @controller_name
-        end
-      end
-
-      # Modules want to put classes under their namespace folders, i.e
-      #   - app/controllers/bcms_widgets/widget_controller
-      #
-      # while projects want to put it under cms
-      #   - app/controllers/cms/widget_controller
-      def cms_or_class_path
-        if namespaced?
-          class_path
-        else
-          ["cms"]
-        end
       end
     end
   end

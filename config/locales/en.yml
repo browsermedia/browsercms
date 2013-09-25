@@ -7,3 +7,5 @@ en:
         attachments:
           one: The attached file
           other: An attached file
+      cms/form_field:
+        name: Labels

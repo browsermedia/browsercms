@@ -1,0 +1,16 @@
+<%= simple_form_for(@form) do |f| %>
+    <%= f.simple_fields_for :new_entry do |e| %>
+        <%
+           locals = {f: e,
+                     field: @field,
+                     edit_path: new_form_field_path(form_id: @form.id, field_type: @field.field_type)
+           }
+           if @field.persisted?
+             locals[:delete_path] = form_field_path(@field.id)
+           else
+             locals[:delete_path] = ""
+           end
+        %>
+        <%= render partial: 'cms/form_fields/form', locals: locals %>
+    <% end %>
+<% end %>

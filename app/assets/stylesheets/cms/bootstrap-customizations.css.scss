@@ -1,6 +1,17 @@
 @import "bootstrap";
 @import "bootstrap-responsive";
 
+#form-preview {
+
+  // Add hover borders when over an element.
+  .control-group {
+    border: 1px solid transparent;
+  }
+  .control-group:hover {
+    border: 1px dashed #3B699F !important;
+  }
+}
+
 // For classes that need to explicitly extend bootstrap classes.
 // They must go in this file.
 
@@ -95,4 +106,10 @@ textarea,
 
 #asset_add_uploader {
   display: none;
+}
+
+// simpleform f.error generates this class for model wide attributes.
+#base-errors .help-inline {
+  @extend .alert-error;
+  @extend .alert;
 }

@@ -1,0 +1,8 @@
+<% # Override core content blocks menu to add additional buttons. %>
+<% if cleanup_before_abandoning %>
+    <%= link_to("Forms", cms.forms_path, class: 'btn btn-primary') %>
+<% else %>
+<%= link_to("Entries", cms.entries_path(@block), class: "btn btn-primary pull-left") if @block %>
+<%= render 'cms/content_block/buttonbar' %>
+<% end %>
+

@@ -5,7 +5,7 @@ end
 Given /^I'm creating content which uses deprecated input fields$/ do
   # Avoids printing all the deprecation warnings visiting the following page will result in.
   ActiveSupport::Deprecation.silence do
-    visit new_cms_deprecated_input_path
+    visit new_dummy_deprecated_input_path
   end
 end
 
@@ -23,7 +23,7 @@ end
 
 Then /^a new deprecated content block should be created$/ do
   should_be_successful
-  last_block = DeprecatedInput.last
+  last_block = Dummy::DeprecatedInput.last
   assert_not_nil last_block, "Content should have been created."
   assert_equal @expect_name, last_block.name
   assert_equal @expect_content, last_block.content

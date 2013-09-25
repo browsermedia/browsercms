@@ -20,7 +20,7 @@ module Cms
       @view = dynamic_view_type.new(dynamic_view_params)
       if @view.save
         flash[:notice] = "#{dynamic_view_type} '#{@view.name}' was created"
-        redirect_to cms_index_path_for(dynamic_view_type)
+        redirect_to engine_aware_path(dynamic_view_type)
       else
         render :action => "new"
       end
@@ -31,9 +31,9 @@ module Cms
     end
 
     def update
-      if @view.update_attributes(dynamic_view_params)
+      if @view.update(dynamic_view_params)
         flash[:notice] = "#{dynamic_view_type} '#{@view.name}' was updated"
-        redirect_to cms_index_path_for(dynamic_view_type)
+        redirect_to engine_aware_path(dynamic_view_type)
       else
         render :action => "edit"
       end
@@ -42,7 +42,7 @@ module Cms
     def destroy
       @view.destroy
       flash[:notice] = "#{dynamic_view_type} '#{@view.name}' was deleted"
-      redirect_to cms_index_path_for(dynamic_view_type)
+      redirect_to engine_aware_path(dynamic_view_type)
     end
 
     protected
@@ -52,7 +52,7 @@ module Cms
     end
 
     def view_param_name
-      dynamic_view_type.resource_collection_name
+      dynamic_view_type.model_name.param_key
     end
 
     def dynamic_view_type

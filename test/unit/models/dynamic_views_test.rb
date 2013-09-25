@@ -15,27 +15,23 @@ class Cms::DynamicViewsTest < ActiveSupport::TestCase
   end
 
   test "#form_name" do
-    assert_equal "cms_page_template", Cms::PageTemplate.form_name
+    assert_equal "cms_page_template", Cms::PageTemplate.model_name.singular
   end
 
   test "version_foreign_key" do
     assert_equal :original_record_id, Cms::PageTemplate.version_foreign_key
   end
 
-  test "resource_name works for non-namespaced templates" do
-    assert_equal "basic_templates", BasicTemplate.resource_name
+  test "#route_key" do
+    assert_equal "basic_templates", BasicTemplate.model_name.route_key
+    assert_equal "page_templates", Cms::PageTemplate.model_name.route_key
+    assert_equal "page_partials", Cms::PagePartial.model_name.route_key
+
   end
 
-  test "Engine" do
-    assert_equal "cms", Cms::DynamicView.engine
-    assert_equal "cms", Cms::PageTemplate.engine
-    assert_equal "cms", Cms::PagePartial.engine
-  end
-
-  test "path_elements" do
-    assert_equal [Cms::PageTemplate], Cms::PageTemplate.path_elements
-    assert_equal [Cms::PagePartial], Cms::PagePartial.path_elements
-
+  test "#resource_collection_name" do
+    assert_equal "page_template", Cms::PageTemplate.model_name.param_key
+    assert_equal "page_partial", Cms::PagePartial.model_name.param_key
   end
 
   test "Display Name" do

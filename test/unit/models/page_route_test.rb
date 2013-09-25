@@ -17,6 +17,8 @@ class PageRouteTest < ActiveSupport::TestCase
     route.add_requirement(:day, "\\d{2,}")
     route.add_condition(:method, "get")
 
+    route.expects(:reload_routes) # Avoid actual route reloading
+
     assert route.save!
     assert_equal "/things/:year/:month/:day", route.pattern
     assert_equal({

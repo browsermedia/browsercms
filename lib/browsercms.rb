@@ -19,6 +19,7 @@ require 'cms/attachments/configuration'
 require 'cms/default_accessible'
 require 'cms/admin_tab'
 require 'cms/content_filter'
+require 'cms/polymorphic_single_table_inheritance'
 require 'cms/form_builder/default_input'
 require 'cms/form_builder/content_block_form_builder'
 

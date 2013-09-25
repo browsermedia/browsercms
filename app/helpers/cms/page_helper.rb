@@ -44,7 +44,13 @@ module Cms
       if args.first
         deprecated_set_page_title_usage(args)
       else
-        @page_title ? @page_title : current_page.page_title
+        if @page_title
+          @page_title
+        elsif current_page
+          current_page.page_title
+        else
+          "Untitled"
+        end
       end
     end
 

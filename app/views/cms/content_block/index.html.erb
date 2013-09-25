@@ -22,7 +22,7 @@
         <th<%=raw attrs %>>
           <div class="dividers">
             <% if column[:order] %>
-              <%= link_to column[:label], cms_sortable_column_path(content_type, column[:order])%>
+              <%= link_to column[:label], sortable_column_path(content_type, column[:order])%>
             <% else %>
               <%= column[:label] %>
             <% end %>

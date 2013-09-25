@@ -86,7 +86,6 @@ module Cms
           before_validation :initialize_version
           before_save :build_new_version
           attr_accessor :skip_callbacks
-         #attr_accessible :version_comment
 
           #Define the version class
           #puts "is_version called for #{self}"

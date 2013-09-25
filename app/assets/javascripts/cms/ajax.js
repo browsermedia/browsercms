@@ -52,9 +52,9 @@ jQuery(function ($) {
 
     // Defaults for AJAX requests
     $.ajaxSetup({
-        error:function (x, status, error) {
-            alert("A " + x.status + " error occurred: " + error);
-        },
         beforeSend: $.cms_ajax.asJSON()
+    });
+    $(document).ajaxError(function (x, status, error) {
+        alert("A " + x.status + " error occurred: " + error);
     });
 });

@@ -1,16 +1,5 @@
 <% use_page_title "Content Library / View Usages" %>
 <% @toolbar_title = "Pages Using #{content_type.display_name} '#{ @block.name }'".html_safe %>
-<%= content_for :html_head do %>
-  <%= javascript_tag do %>
-    jQuery(function($) {
-      $('#functions .button').addClass('disabled').attr('href','#');
-      $('#view_button').removeClass('disabled')
-        .attr('href', '<%= cms_connectable_path(@block)%>')
-      $('#edit_button').removeClass('disabled')
-        .attr('href', '<%= edit_cms_connectable_path(@block)%>')
-    })
-  <% end %>
-<% end %>
 
 <%= content_for :button_bar, render(:partial => 'buttonbar') %>
 <div class="roundedcorners">

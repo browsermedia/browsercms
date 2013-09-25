@@ -29,7 +29,7 @@ module Cms
     #
     # And have it correctly find the right namespaced class model (i.e. BcmsZoo::Bear)
     def routes
-      Module.current_namespace = ::Cms::EngineHelper.module_name(self.class)
+      Module.current_namespace = ::Cms::EngineAware.module_name(self.class)
       super
     end
   end

@@ -31,6 +31,7 @@ module Cms
       super if defined? super
     ensure
       subclass.class_eval do
+        extend Cms::PolymorphicSingleTableInheritance
 
         # Using the table prefix here is NOT tested, since unloading classes is hard during tests.
         has_dynamic_attributes :class_name => "CmsPortletAttribute",

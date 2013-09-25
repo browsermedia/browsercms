@@ -9,15 +9,21 @@ module Cms
       false
     end
 
-    include EngineHelper
+    extend ::ActiveModel::Naming
   end
 end
 
-class MainAppThing
-  include Cms::EngineHelper
+module Dummy
+  class MainAppThing
+    extend ::ActiveModel::Naming
+  end
 end
 
-class NewThing
+class UnnamespacedBlock
+  extend ::ActiveModel::Naming
+end
+
+class PortletSubclass < Cms::Portlet
 
 end
 
@@ -25,17 +31,18 @@ module BcmsWidgets
   class Engine < Rails::Engine
   end
   class ContentBlock
-    include Cms::EngineHelper
+    extend ::ActiveModel::Naming
   end
 end
 
 class BcmsParts
   class ContentThing
-    include Cms::EngineHelper
+    extend ::ActiveModel::Naming
   end
 end
 
 module ExpectedMockViews
+
   def view_for_cms_engine
     mock_view.expects(:cms).returns(:cms_engine)
     mock_view
@@ -56,93 +63,14 @@ module ExpectedMockViews
     @view = stub()
   end
 end
+
 module Cms
   class EngineHelperTest < ActiveSupport::TestCase
 
-    def setup
-      @cms_block = Cms::CoreContentBlock.new
-      @main_app_block = MainAppThing.new
-    end
-
-    test "main_app?" do
-      assert_equal true, @main_app_block.main_app_model?
-      assert_equal false, @cms_block.main_app_model?
-      assert_equal false, BcmsWidgets::ContentBlock.new.main_app_model?
-    end
-
-    test "If there is no Engine, engine_name should be the main app." do
-      assert_equal "main_app", BcmsParts::ContentThing.new.engine_name
-    end
-
-    test "Module Name" do
-      assert_equal "Cms", EngineHelper.module_name(Cms::CoreContentBlock)
-      assert_nil EngineHelper.module_name(NewThing)
-      assert_equal "BcmsWidgets", EngineHelper.module_name(BcmsWidgets::ContentBlock)
-    end
-
-    test "path_for_widget" do
-      name = BcmsWidgets::ContentBlock.new.engine_name
-      assert_not_nil name
-      assert_equal BcmsWidgets::Engine.engine_name, name
-    end
-
-    test "Decorate" do
-      n = NewThing.new
-      EngineHelper.decorate(n)
-      assert_equal true, n.respond_to?(:engine_name)
-    end
-
-    test "Decorate class" do
-      EngineHelper.decorate(NewThing)
-      assert_equal true, NewThing.respond_to?(:engine_name)
-    end
-
-    test "Don't decorate twice'" do
-      class DecorateOnce
-        include EngineHelper
-
-        def engine_name
-          "Original"
-        end
-      end
-      subject = DecorateOnce.new
-      EngineHelper.decorate(subject)
-      assert_equal "Original", subject.engine_name
-
-    end
-    test "Engine Name" do
-      assert_equal "cms", Cms::Engine.engine_name
-    end
-
-    test "calculate engine_name" do
-      assert_equal "cms", Cms::CoreContentBlock.new.engine_name
-    end
-
-    test "Blocks without namespace should be in main app" do
-      assert_equal "main_app", MainAppThing.new.engine_name
-    end
-
-    test "path_elements for an instance of a class in an application" do
-      assert_equal ["cms", @main_app_block], @main_app_block.path_elements
-    end
-
-    test "path_elements for a class in an application" do
-      MainAppThing.extend EngineHelper
-      assert_equal ["cms", MainAppThing], MainAppThing.path_elements
-    end
-
-    test "path_elements for an instance of in Cms namespace" do
-      assert_equal [@cms_block], @cms_block.path_elements
-    end
-
-    test "path_elements for a class in Cms namespace" do
-      Cms::CoreContentBlock.extend EngineHelper
-      assert_equal [Cms::CoreContentBlock], Cms::CoreContentBlock.path_elements
-    end
-
-    test "path_elements for a class in a module" do
-      BcmsWidgets::ContentBlock.extend EngineHelper
-      assert_equal [BcmsWidgets::ContentBlock], BcmsWidgets::ContentBlock.path_elements
+    test "#module_name" do
+      assert_equal "Cms", EngineAware.module_name(Cms::CoreContentBlock)
+      assert_nil EngineAware.module_name(UnnamespacedBlock)
+      assert_equal "BcmsWidgets", EngineAware.module_name(BcmsWidgets::ContentBlock)
     end
 
   end
@@ -159,14 +87,54 @@ module Cms
       assert_equal Cms::CoreContentBlock, @pathbuilder.subject_class
     end
 
-    test "engine_name" do
-      assert_equal "cms", @pathbuilder.engine_name
+    test "#engine for applications" do
+      assert_equal Rails.application, path_builder(Dummy::MainAppThing).engine_class
+    end
+
+    test "#engine for core Cms types" do
+      assert_equal Cms::Engine, path_builder(Cms::CoreContentBlock).engine_class
+    end
+
+    test "#engine for Engines" do
+      assert_equal BcmsWidgets::Engine, path_builder(BcmsWidgets::ContentBlock).engine_class
+    end
+
+    test "#engine_name" do
+      assert_equal "cms", path_builder(Cms::CoreContentBlock).engine_name
+    end
+
+    test "#engine_name for models with no matching engine" do
+      assert_equal "main_app", path_builder(BcmsParts::ContentThing).engine_name
+    end
+
+    test "#engine_name for models from engine engine" do
+      assert_equal BcmsWidgets::Engine.engine_name, path_builder(BcmsWidgets::ContentBlock).engine_name
+    end
+
+    test "#engine_name for classes that support PolymorphicSTI" do
+      assert_equal "cms", path_builder(PortletSubclass).engine_name
+    end
+
+    test "#engine_name for unnamespaced blocks" do
+      assert_equal "main_app", path_builder(UnnamespacedBlock).engine_name
+    end
+
+    test "#main_app?" do
+      assert_equal true, path_builder(Dummy::MainAppThing).main_app_model?
+      assert_equal false, path_builder(Cms::CoreContentBlock).main_app_model?
+      assert_equal false, path_builder(BcmsWidgets::ContentBlock).main_app_model?
     end
 
     test "build for Core Cms class" do
       assert_equal [:cms_engine, Cms::CoreContentBlock], @pathbuilder.build(view_for_cms_engine)
     end
 
+
+    private
+
+    def path_builder(klass)
+      EngineAwarePathBuilder.new(klass)
+    end
 
   end
 
@@ -186,8 +154,8 @@ module Cms
   class EngineAwarePathsTest < ActiveSupport::TestCase
     include ExpectedMockViews
     test "build for custom block class" do
-      pathbuilder = EngineAwarePathBuilder.new(MainAppThing)
-      assert_equal [:main_app, "cms", MainAppThing], pathbuilder.build(view_for_main_app)
+      pathbuilder = EngineAwarePathBuilder.new(Dummy::MainAppThing)
+      assert_equal [:main_app, Dummy::MainAppThing], pathbuilder.build(view_for_main_app)
     end
 
     test "paths for block from a module" do

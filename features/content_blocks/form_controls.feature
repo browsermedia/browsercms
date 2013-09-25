@@ -22,7 +22,7 @@ Feature: Form Controls
     Then I should see two file uploads
 
   Scenario: Edit content with multiple attachments
-    Given a block exists which configured to have two attachments
+    Given a block exists with two uploaded attachments
     When I edit that block
     Then I should see two file uploads
 

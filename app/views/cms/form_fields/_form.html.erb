@@ -1,0 +1,8 @@
+<%= f.input field.name,
+            label: field.label,
+            hint: field.instructions,
+            wrapper: :append do %>
+    <%= f.input_field field.name, field.options(disabled: true).merge({data: {id: field.id}}) %>
+    <%= link_to("Edit", "#", data: {edit_path: edit_path}, class: "btn edit_form_button") %>
+    <%= link_to("Delete", "#", data: {path: delete_path}, class: "btn delete_field_button") %>
+<% end %>

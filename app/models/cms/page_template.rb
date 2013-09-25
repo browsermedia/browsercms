@@ -20,14 +20,6 @@ module Cms
       "#{name.titleize} (#{format}/#{handler})"
     end
 
-    def self.resource_collection_name
-      "page_template"
-    end
-
-    def self.path_elements
-      [Cms::PageTemplate]
-    end
-
     # This is a combination of file system page templates
     # and database page templates
     def self.options

@@ -1,0 +1,7 @@
+<%= simple_form_for(@field, html: {id: 'ajax_form_field'}) do |f| %>
+  <%= f.hidden_field :form_id %>
+  <%= f.hidden_field :field_type %>
+  <%= f.input :label, hint: @field.new_record? ? "" : "Will not change the database name (i.e. '#{@field.name}') for new or existing entries. " %>
+  <%= render partial: @field.field_type, locals: {f: f, field: @field} %>
+  <%= f.button :submit, "Save", style: 'display: none' %>
+<% end %>

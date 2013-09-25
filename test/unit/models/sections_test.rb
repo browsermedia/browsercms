@@ -281,7 +281,7 @@ module Cms
     end
 
     test "#sitemap should include addressable content blocks" do
-      product = Product.create!(name: "Hello", parent: root_section)
+      product = Dummy::Product.create!(name: "Hello", parent: root_section)
       assert child_nodes_in(root_section).include?(product), "Verify product is in root section"
       assert content_in_root_section.include?(product), "Verify it doesn't get filtered out when returned by sitemap'"
     end

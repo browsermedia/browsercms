@@ -50,9 +50,12 @@ Then /^I should be able to click on a link to see a product$/ do
   assert page.has_content?("A Widget")
 end
 Then /^a new product should be created$/ do
-  assert_equal 1, Product.count
+  assert_equal 1, Dummy::Product.count
 end
 
 Given /^no product with a slug "([^"]*)" exists$/ do |slug|
-  assert_nil Product.with_slug(slug)
+  assert_nil Dummy::Product.with_slug(slug)
+end
+When /^I view products in the content library$/ do
+  visit dummy_products_path
 end

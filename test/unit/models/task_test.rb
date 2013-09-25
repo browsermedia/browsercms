@@ -32,12 +32,12 @@ module Cms
     end
 
     test "Assign task sends email" do
-      Rails.configuration.cms.expects(:site_domain).returns("www.browsercms.org")
+      Rails.configuration.cms.expects(:site_domain).returns("www.browsercms.org").at_least_once
 
       create_the_task!
 
       email = Cms::EmailMessage.order('id asc').first
-      assert_equal @editor_a.email, email.sender
+      assert_equal Cms::EmailMessage.mailbot_address, email.sender
       assert_equal @editor_b.email, email.recipients
       assert_equal "Page '#{@page.name}' has been assigned to you", email.subject
       assert_equal "http://cms.browsercms.org#{@page.path}\n\n#{@task.comment}", email.body

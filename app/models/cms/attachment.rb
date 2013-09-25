@@ -261,14 +261,5 @@ module Cms
       end
 
     end
-
-    # Forces this record to be changed, even if nothing has changed
-    # This is necessary if just the section.id has changed, for example
-    # test if this is necessary now that the attributes are in the
-    # model itself.
-    def dirty!
-      # Seems like a hack, is there a better way?
-      self.updated_at = Time.now
-    end
   end
 end

@@ -18,14 +18,6 @@ module Cms
       "#{name.sub(/^_/, '').titleize} (#{format}/#{handler})"
     end
 
-    def self.resource_collection_name
-      "page_partial"
-    end
-
-    def self.path_elements
-      [Cms::PagePartial]
-    end
-
     def prepend_underscore
       if !name.blank? && name[0, 1] != '_'
         self.name = "_#{name}"

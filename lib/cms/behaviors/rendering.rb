@@ -37,7 +37,6 @@ module Cms
           @instance_variable_name_for_view = options[:instance_variable_name_for_view]
 
           extend ClassMethods
-          extend EngineHelper
           include InstanceMethods
 
           # I'm not pleased with the need to include all of the these rails helpers onto every 'renderable' content item
@@ -82,11 +81,7 @@ module Cms
       # of the renderable, so if you have an Article that is renderable, 
       # the template will be "articles/render"
       def template_path
-        path = "#{name.underscore.pluralize}/render"
-        if main_app_model?
-          path = "cms/#{path}"
-        end
-        path
+        "#{name.underscore.pluralize}/render"
       end
 
       # Instance variables that will not be copied from the renderable to the view

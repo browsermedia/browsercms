@@ -6,12 +6,11 @@ module Cms
     include Cms::ContentRenderingSupport
 
     layout 'cms/content_library'
-    skip_filter :cms_access_required, :login_required
-    before_filter :login_required, except: [:show_via_slug]
-    before_filter :cms_access_required, except: [:show_via_slug]
+
+    allow_guests_to [:show_via_slug]
     before_filter :set_toolbar_tab
 
-    helper_method :block_form, :new_block_path, :block_path, :blocks_path, :content_type
+    helper_method :block_form, :content_type
     helper Cms::RenderingHelper
 
     def index
@@ -76,7 +75,7 @@ module Cms
     def destroy
       do_command("deleted") { @block.destroy }
       respond_to do |format|
-        format.html { redirect_to_first params[:_redirect_to], blocks_path }
+        format.html { redirect_to_first params[:_redirect_to], engine_aware_path(@block.class) }
         format.json { render :json => {:success => true} }
       end
 
@@ -86,14 +85,14 @@ module Cms
 
     def publish
       do_command("published") { @block.publish! }
-      redirect_to_first params[:_redirect_to], block_path(@block)
+      redirect_to_first params[:_redirect_to], engine_aware_path(@block, nil)
     end
 
     def revert_to
       do_command("reverted to version #{params[:version]}") do
         revert_block(params[:version])
       end
-      redirect_to_first params[:_redirect_to], block_path(@block)
+      redirect_to_first params[:_redirect_to], engine_aware_path(@block, nil)
     end
 
     def version
@@ -118,27 +117,10 @@ module Cms
     end
 
     def new_button_path
-      cms_new_path_for(content_type)
+      new_engine_aware_path(content_type)
     end
 
     protected
-
-    def assign_parent_if_specified
-      if params[:parent]
-        @block.parent_id = params[:parent]
-      elsif @block.class.addressable?
-        parent = Cms::Section.with_path(@block.class.path).first
-        unless parent
-          logger.warn "Creating default section for #{@block.display_name} in #{@block.class.path}."
-          parent = Cms::Section.create(:name => @block.class.name.demodulize.pluralize,
-                                       :parent => Cms::Section.root.first,
-                                       :path => @block.class.path,
-                                       :hidden => true,
-                                       allow_groups: :all)
-        end
-        @block.parent_id = parent.id
-      end
-    end
 
     def content_type_name
       self.class.name.sub(/Controller/, '').singularize
@@ -153,7 +135,7 @@ module Cms
     end
 
     def model_form_name
-      content_type.model_class_form_name
+      content_type.param_key
     end
 
     # methods for loading one or a collection of blocks
@@ -189,14 +171,6 @@ module Cms
 
     # path related methods - available in the view as helpers
 
-    def new_block_path(block, options={})
-      cms_new_path_for(block, options)
-    end
-
-    def blocks_path(options={})
-      cms_index_path_for(@content_type.model_class, options)
-    end
-
     # This is the partial that will be used in the form
     def block_form
       @content_type.form
@@ -221,7 +195,6 @@ module Cms
 
     def create_block
       build_block
-      assign_parent_if_specified
       @block.save
     end
 
@@ -231,7 +204,7 @@ module Cms
       if @block.class.connectable? && @block.connected_page
         redirect_to @block.connected_page.path
       else
-        redirect_to_first params[:_redirect_to], block_path(@block)
+        redirect_to_first params[:_redirect_to], engine_aware_path(@block)
       end
     end
 
@@ -266,7 +239,7 @@ module Cms
 
     def after_update_on_success
       flash[:notice] = "#{content_type_name.demodulize.titleize} '#{@block.name}' was updated"
-      redirect_to_first params[:_redirect_to], block_path(@block)
+      redirect_to_first params[:_redirect_to], engine_aware_path(@block)
     end
 
     def after_update_on_failure
@@ -279,18 +252,17 @@ module Cms
     end
 
 
-    # methods for other actions
-
     # A "command" is when you want to perform an action on a content block
     # You pass a ruby block to this method, this calls it
     # and then sets a flash message based on success or failure
     def do_command(result)
       load_block
       if yield
-        flash[:notice] = "#{content_type_name.demodulize.titleize} '#{@block.name}' was #{result}"
+        flash[:notice] = "#{content_type_name.demodulize.titleize} '#{@block.name}' was #{result}" unless request.xhr?
       else
-        flash[:error] = "#{content_type_name.demodulize.titleize} '#{@block.name}' could not be #{result}"
+        flash[:error] = "#{content_type_name.demodulize.titleize} '#{@block.name}' could not be #{result}" unless request.xhr?
       end
+
     end
 
     def revert_block(to_version)
@@ -330,8 +302,7 @@ module Cms
 
     def render_block_in_main_container
       ensure_current_user_can_view(@block)
-      @page = @block # page templates expect a @page attribute
-      @content_block = @block # render.html.erb's expect a @content_block attribute
+      show_content_as_page(@block)
       render 'render_block_in_main_container', layout: @block.class.layout
     end
 

@@ -10,16 +10,6 @@ class PageTemplateTest < ActiveSupport::TestCase
     File.delete(@page_template.file_path) if File.exists?(@page_template.file_path)
   end
 
-
-  test "Name used to build the form" do
-    assert_equal "page_template", Cms::PageTemplate.resource_collection_name
-  end
-
-  test "resource_name works for namespaced templates" do
-    assert_equal "page_templates", Cms::PageTemplate.resource_name
-
-  end
-
   def test_create_and_destroy
     assert !File.exists?(@page_template.file_path), "template file already exists"
     assert_valid @page_template

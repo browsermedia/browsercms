@@ -13,7 +13,7 @@
     <p>Used on: <%= link_to_usages(@block) %> <%= "page".pluralize_unless_one(@block.connected_pages.count)%></p>
   <% end -%>
   <% if @block.respond_to?(:draft_version?) && !@block.draft_version? %>
-    <p>Version: v. <%= @block.version %> ( <%= link_to "Current", block_path(@block) %> )</p>
+    <p>Version: v. <%= @block.version %> ( <%= link_to "Current", engine_aware_path(@block) %> )</p>
   <% end -%>
   <% if @block.class.renderable? %>
     <p>Block Contents:</p>

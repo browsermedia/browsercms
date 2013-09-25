@@ -110,6 +110,12 @@ When /^it should seed the demo data$/ do
   # This output is ugly, but it verifies that seed data completely runs
 end
 
+Then /^the file "([^"]*)" should contain the following content:$/ do |file, table|
+  table.rows.each do |row|
+    check_file_content(file, row[0], true)
+  end
+end
+
 # Opposite of aruba step 'the file "x" should contain:'
 When /^the file "([^"]*)" should not contain:$/ do |file, partial_content|
   check_file_content(file, partial_content, false)

@@ -23,7 +23,7 @@ class CmsTextFieldInput < SimpleForm::Inputs::TextInput
   protected
 
   def should_autogenerate_slug?(method)
-    content_requires_slug_field?(method) && object.new_record?
+    content_requires_slug_field?(method) && (object.new_record? || (object.name.blank? && object.slug.blank?))
   end
 
   def content_requires_slug_field?(method)

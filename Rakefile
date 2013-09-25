@@ -20,11 +20,17 @@ Bundler::GemHelper.install_tasks
 
 require 'rake/testtask'
 
-Rake::TestTask.new('test:units' => ['project:ensure_db_exists', 'app:test:prepare']) do |t|
+Rake::TestTask.new('units') do |t|
   t.libs << 'lib'
   t.libs << 'test'
   t.pattern = 'test/unit/**/*_test.rb'
   t.verbose = false
+end
+
+Rake::TestTask.new('spec') do |t|
+  t.libs << 'lib'
+  t.libs << 'spec'
+  t.pattern = "spec/**/*_spec.rb"
 end
 
 Rake::TestTask.new('test:functionals' => ['project:ensure_db_exists', 'app:test:prepare']) do |t|
@@ -46,11 +52,11 @@ require 'cucumber'
 require 'cucumber/rake/task'
 
 Cucumber::Rake::Task.new(:features => ['project:ensure_db_exists', 'app:test:prepare']) do |t|
-  t.cucumber_opts = "features --format progress"
+  t.cucumber_opts = "launch_on_failure=false features --format progress"
 end
 
 Cucumber::Rake::Task.new('features:fast' => ['project:ensure_db_exists', 'app:test:prepare']) do |t|
-  t.cucumber_opts = "features --format progress --tags ~@cli"
+  t.cucumber_opts = "launch_on_failure=false features --format progress --tags ~@cli"
 end
 
 Cucumber::Rake::Task.new('features:cli' => ['project:ensure_db_exists', 'app:test:prepare']) do |t|
@@ -59,17 +65,26 @@ end
 
 
 desc "Run everything but the command line (slow) tests"
-task 'test:fast' => %w{test:units test:functionals test:integration features:fast}
+task 'test:fast' => %w{app:test:prepare test:units test:functionals test:integration features:fast}
 
-desc 'Runs all the tests'
+desc "Runs all unit level tests"
+task 'test:units' => ['app:test:prepare'] do
+  run_tests ["units", "spec"]
+end
+
+desc 'Runs all the tests, specs and scenarios.'
 task :test => ['project:ensure_db_exists', 'app:test:prepare'] do
-  tests_to_run = ENV['TEST'] ? ["test:single"] : %w(test:units test:functionals test:integration features)
+  tests_to_run = ENV['TEST'] ? ["test:single"] : %w(test:units spec test:functionals test:integration features)
+  run_tests(tests_to_run)
+end
+
+def run_tests(tests_to_run)
   errors = tests_to_run.collect do |task|
     begin
       Rake::Task[task].invoke
       nil
     rescue => e
-      { :task => task, :exception => e }
+      {:task => task, :exception => e}
     end
   end.compact
 

@@ -27,6 +27,12 @@ class Unnamespaced < ActiveRecord::Base
   acts_as_content_block
 end
 
+module Dummy
+  class Widget < ActiveRecord::Base
+    acts_as_content_block
+  end
+end
+
 class Widget < ActiveRecord::Base
   acts_as_content_block
 end
@@ -55,17 +61,12 @@ module Cms
       assert_equal AudioTour, Cms::ContentType.find_by_key('AudioTour').model_class
     end
 
-    test "#find_by_key searches Cms:: then non Cms:: namespace class" do
-      assert_equal Product, Cms::ContentType.find_by_key('Cms::Product').model_class
+    test "#find_by_key finds namespaced models" do
+      assert_equal Dummy::Product, Cms::ContentType.find_by_key('Dummy::Product').model_class
     end
 
     test "#find_by_key using key" do
       assert_equal Cms::HtmlBlock, Cms::ContentType.find_by_key('html_block').model_class
-    end
-
-
-    test "#key" do
-      assert_equal "really_long_name_class", long_name_content_type.key
     end
 
     test "#display_name for blocks from modules" do
@@ -77,13 +78,13 @@ module Cms
       assert_equal "String", Cms::ContentType.new(:name => "String").display_name
     end
 
-    test "#form for unnamespaced blocks" do
-      widget_type = Cms::ContentType.new(:name => "Widget")
-      assert_equal "cms/widgets/form", widget_type.form
+    test "#form for Core modules" do
+      widget_type = Cms::ContentType.new(:name => "Dummy::Widget")
+      assert_equal "dummy/widgets/form", widget_type.form
     end
 
     test "template_path" do
-      assert_equal "cms/widgets/render", Widget.template_path
+      assert_equal "dummy/widgets/render", Dummy::Widget.template_path
     end
 
     test "template_path for modules" do
@@ -94,36 +95,8 @@ module Cms
       assert_equal Unnamespaced, Cms::ContentType.find_by_key("Unnamespaced").model_class
     end
 
-    test "model_resource_name" do
-      assert_equal "really_long_name_class", long_name_content_type().model_class_form_name
-    end
-
-    test "Project specific routes should be still be namespaced under cms_" do
-      assert_equal "main_app.cms_unnamespaced", Unnamespaced.content_type.route_name
-    end
-
-    test "route_name removes cms_ as prefix (no longer needed for engines)" do
-      content_type = Cms::NamespacedBlock.content_type
-      assert_equal "namespaced_block", content_type.route_name
-    end
-
-    test "engine_for using Class" do
-      EngineHelper.decorate(Unnamespaced)
-      assert_equal "main_app", Unnamespaced.engine_name
-    end
-
-    test "engine_name for Cms engine" do
-      cms_namespace = Cms::ContentType.new(:name => "Cms::NamespacedBlock")
-      assert_equal "cms", cms_namespace.engine_name
-    end
-
-    test "path_elements for Cms engine" do
-      cms_namespace = Cms::ContentType.new(:name => "Cms::NamespacedBlock")
-      assert_equal [Cms::NamespacedBlock], cms_namespace.path_elements
-    end
-
-    test "path_elements for an app ContentType" do
-      assert_equal ["cms", Unnamespaced], unnamespaced_type().path_elements
+    test "#param_key" do
+      assert_equal "really_long_name_class", long_name_content_type.param_key
     end
 
     def test_model_class
@@ -156,7 +129,6 @@ module Cms
 
     test "Form for Blocks with Engines" do
       engine_type = Cms::ContentType.new(:name => "BcmsStore::Widget")
-      assert_equal true, engine_type.engine_exists?
       assert_equal "bcms_store/widgets/form", engine_type.form
     end
 
@@ -172,6 +144,41 @@ module Cms
     def unnamespaced_type
       Unnamespaced.content_type
     end
+  end
+
+  class EngineAwareMethodsTest < ActiveSupport::TestCase
+
+
+    test "#path_builder" do
+      assert_equal EngineAwarePathBuilder, path_builder.class
+      assert_equal Dummy::Widget, path_builder.subject_class
+    end
+
+    test "#engine_class" do
+      path_builder.expects(:engine_class).returns(:expected_value)
+      assert_equal :expected_value, content_type.engine_class
+    end
+
+    test "#engine_name" do
+      path_builder.expects(:engine_name).returns(:expected_value)
+      assert_equal :expected_value, content_type.engine_name
+    end
+
+    test "#main_app_model?" do
+      path_builder.expects(:main_app_model?).returns(:expected_value)
+      assert_equal :expected_value, content_type.main_app_model?
+    end
+
+    private
+
+    def path_builder
+      @path_builder ||= content_type.path_builder
+    end
+
+    def content_type
+      @content_type ||= Dummy::Widget.content_type
+    end
+
   end
 end
 

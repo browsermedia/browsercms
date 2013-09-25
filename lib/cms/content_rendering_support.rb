@@ -15,6 +15,11 @@ module Cms
 
     end
 
+    def show_content_as_page(content)
+      @page = content # page templates expect a @page attribute
+      @content_block = content # render.html.erb's expect a @content_block attribute
+    end
+
     def handle_draft_not_found(exception)
       logger.warn "Draft Content Not Found"
       render(:layout => 'cms/application',

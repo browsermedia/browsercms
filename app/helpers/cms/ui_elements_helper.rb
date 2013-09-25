@@ -27,7 +27,7 @@ module Cms
       options = {class: ["btn", "btn-primary", "http_put"], id: "publish_button"}
       path = "#"
       if current_user.able_to?(:publish_content) && !content_item.new_record? && content_item.respond_to?(:live?) && !content_item.live?
-        path = block_path(@block, :publish)
+        path = engine(@block).polymorphic_path([:publish, @block])
       else
         options[:class] << "disabled"
       end
@@ -37,7 +37,7 @@ module Cms
     def edit_content_menu_button(content_item)
       path = "#"
       unless content_item.new_record?
-        path = block_path(content_item, :edit)
+        path = edit_engine_aware_path(content_item)
       end
       link_to "Edit Content", path, class: "btn btn-primary", id: "edit_button"
     end
@@ -45,7 +45,7 @@ module Cms
     def view_content_menu_button(content_item)
       path = "#"
       unless content_item.new_record?
-        path = block_path(content_item)
+        path = engine_aware_path(content_item, nil)
       end
       link_to "View Content", path, class: "btn btn-primary", id: "view_button"
     end
@@ -79,7 +79,7 @@ module Cms
       options = {class: ["btn", "btn-primary"], id: "revisions_button"}
       path = "#"
       if !content_item.new_record? && content_item.class.versioned?
-        path = block_path(content_item, :versions)
+        path = engine(content_item).polymorphic_path([:versions, content_item])
       else
         options[:class] << "disabled"
       end
@@ -106,7 +106,7 @@ module Cms
         classes << 'disabled'
       else
         options[:title] = "Are you sure you want to delete '#{content_item.name}'?"
-        link_to_path = block_path(content_item)
+        link_to_path = engine_aware_path(content_item, nil)
       end
       if opts[:title]
         options[:title] = opts[:title]
@@ -115,7 +115,7 @@ module Cms
     end
 
     def select_content_type_tag(type, &block)
-      options = {:rel => "select-#{type.key}"}
+      options = {:rel => "select-#{type.param_key}"}
       if (defined?(content_type) && content_type == type)
         options[:class] = "on"
       end

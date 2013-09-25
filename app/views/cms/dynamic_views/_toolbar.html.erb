@@ -1,8 +1,8 @@
 <%= content_for :button_bar do %>
     <% if @view %>
-        <%= link_to "Back to #{dynamic_view_type.title.pluralize}", cms_index_path_for(dynamic_view_type), class: 'btn btn-primary pull-left' %>
+        <%= link_to "Back to #{dynamic_view_type.title.pluralize}", engine_aware_path(dynamic_view_type), class: 'btn btn-primary pull-left' %>
     <% else %>
-        <%= add_button cms_new_path_for(dynamic_view_type), bootstrap: true %>
+        <%= add_button new_engine_aware_path(dynamic_view_type), bootstrap: true %>
         <%= edit_button(bootstrap: true) %>
         <%= delete_menu_button nil, :title => "Are you sure you want to delete this #{dynamic_view_type.title}?", class: ["pull-left"] %>
     <% end %>

@@ -22,6 +22,29 @@ class EditablePortlet < Cms::Portlet
 end
 
 
+class PortletPolymorphismTest < ActiveSupport::TestCase
+
+  test ".route_key for Portlet base class" do
+    assert_equal "portlets", Cms::Portlet.model_name.route_key
+  end
+
+  test ".route_key" do
+    assert_equal "portlets", InlinePortlet.model_name.route_key
+  end
+
+  test ".singular" do
+    assert_equal "cms_portlet", InlinePortlet.model_name.singular
+  end
+
+  test ".plural" do
+    assert_equal "cms_portlets", InlinePortlet.model_name.plural
+  end
+
+  test ".model_name should return Cms::Portlet" do
+    assert_equal Cms::Portlet.model_name, InlinePortlet.model_name
+  end
+end
+
 class PortletTest < ActiveSupport::TestCase
 
   def setup
@@ -86,8 +109,8 @@ class PortletTest < ActiveSupport::TestCase
     list = Cms::Portlet.types
     assert list.size > 0
 
-    DynamicPortlet.create!(:name=>"test 1")
-    DynamicPortlet.create!(:name=>"test 2")
+    DynamicPortlet.create!(:name => "test 1")
+    DynamicPortlet.create!(:name => "test 2")
 
     assert_equal list.size, Cms::Portlet.types.size
   end

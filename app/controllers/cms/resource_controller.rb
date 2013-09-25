@@ -36,7 +36,7 @@ class ResourceController < Cms::BaseController
 
   def update
     @object = resource.find(params[:id])
-    if @object.update_attributes(resource_params())
+    if @object.update(resource_params())
       flash[:notice] = "#{resource_name.singularize.titleize} '#{object_name}' was updated"
       redirect_to after_update_url
     else
@@ -95,7 +95,7 @@ class ResourceController < Cms::BaseController
   end
 
   def index_url
-    cms_index_url_for(resource_name)
+    engine_aware_path(resource)
   end
 
   def after_create_url

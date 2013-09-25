@@ -146,11 +146,11 @@ HTML
         model_class = content_type.instance_of?(Class) ? content_type : content_type.model_class
         render :partial => "cms/shared/pagination", :locals => {
             :collection => collection,
-            :first_page_path => cms_connectable_path(model_class, {:page => 1}.merge(options)),
-            :previous_page_path => cms_connectable_path(model_class, {:page => collection.previous_page ? collection.previous_page : 1}.merge(options)),
-            :current_page_path => cms_connectable_path(model_class, options),
-            :next_page_path => cms_connectable_path(model_class, {:page => collection.next_page ? collection.next_page : collection.current_page}.merge(options)),
-            :last_page_path => cms_connectable_path(model_class, {:page => collection.total_pages}.merge(options))
+            :first_page_path => polymorphic_path(engine_aware_path(model_class), {:page => 1}.merge(options)),
+            :previous_page_path => polymorphic_path(engine_aware_path(model_class), {:page => collection.previous_page ? collection.previous_page : 1}.merge(options)),
+            :current_page_path => polymorphic_path(engine_aware_path(model_class), options),
+            :next_page_path => polymorphic_path(engine_aware_path(model_class), {:page => collection.next_page ? collection.next_page : collection.current_page}.merge(options)),
+            :last_page_path => polymorphic_path(engine_aware_path(model_class), {:page => collection.total_pages}.merge(options))
         }
       end
     end

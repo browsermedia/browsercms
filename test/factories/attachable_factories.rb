@@ -79,7 +79,7 @@ FactoryGirl.define do
 
   factory :catalog_attachment, :class => Cms::Attachment do |m|
     m.attachment_name "photos"
-    m.attachable_type "Catalog"
+    m.attachable_type "Dummy::Catalog"
     m.data { mock_text_file }
     m.parent { find_or_create_root_section }
     m.publish_on_save true

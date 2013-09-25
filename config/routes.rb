@@ -2,7 +2,6 @@
 # There are other routes that will be added at the root of the site (i.e. /) which can
 #   be found in lib/cms/route_extensions.rb
 Cms::Engine.routes.draw do
-
   get 'fakemap', to: 'section_nodes#fake'
   get '/content/:id/edit', :to=>"content#edit", :as=>'edit_content'
   get '/dashboard', :to=>"dashboard#index", :as=>'dashboard'
@@ -64,6 +63,24 @@ Cms::Engine.routes.draw do
   resources :attachments, :only=>[:show, :create, :destroy]
 
   content_blocks :html_blocks
+  content_blocks :forms
+  resources :form_fields do
+    member do
+      get :confirm_delete
+    end
+  end
+  post "form_fields/:id/insert_at/:position" => 'form_fields#insert_at'
+  get "/forms/:id/fields/preview" => 'form_fields#preview', as: 'preview_form_field'
+
+  resources :form_entries do
+    collection do
+      post :submit
+    end
+  end
+
+  # Faux nested resource for forms (not sure if #content_blocks allows for it.)
+  get 'forms/:id/entries' => 'form_entries#index', as: 'entries'
+
   content_blocks :portlets
   post '/portlet/:id/:handler', :to=>"portlet#execute_handler", :as=>"portlet_handler"
 
@@ -94,5 +111,6 @@ Cms::Engine.routes.draw do
 
   get "/routes", :to => "routes#index", :as=>'routes'
 
+  add_routes_for_addressable_content_blocks
 end
 

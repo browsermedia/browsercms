@@ -1,11 +1,11 @@
 require 'test_helper'
 
-class Cms::SampleBlocksController < Cms::ContentBlockController
+class Dummy::SampleBlocksController < Cms::ContentBlockController
 end
 
 class PermissionsForContentBlockControllerTest < ActionController::TestCase
   include Cms::ControllerTestHelper
-  tests Cms::SampleBlocksController
+  tests Dummy::SampleBlocksController
 
   # We're stubbing a lot because we *just* want to isolate the behaviour for checking permissions
   def setup
@@ -14,21 +14,20 @@ class PermissionsForContentBlockControllerTest < ActionController::TestCase
     @user = Cms::User.first
     @controller.stubs(:current_user).returns(@user)
     @controller.stubs(:render)
-    @controller.stubs(:model_class).returns(Cms::SampleBlock)
+    @controller.stubs(:model_class).returns(Dummy::SampleBlock)
     @controller.stubs(:set_default_category)
-    @controller.stubs(:blocks_path).returns("/cms/sample_block")
-    @controller.stubs(:block_path).returns("/cms/sample_block")
+    @controller.stubs(:engine_aware_path).returns("/cms/sample_block")
     @controller.stubs(:redirect_to_first).returns("/cms/sample_block")
 
     @block = stub_everything("block")
-    @block.stubs(:class).returns(Cms::SampleBlock)
+    @block.stubs(:class).returns(Dummy::SampleBlock)
     @block.stubs(:as_of_draft_version).returns(@block)
     @block.stubs(:as_of_version).returns(@block)
     @block.stubs(:connected_pages).returns(stub(:all => stub))
 
-    Cms::SampleBlock.stubs(:find).returns(@block)
-    Cms::SampleBlock.stubs(:new).returns(@block)
-    Cms::SampleBlock.stubs(:paginate)
+    Dummy::SampleBlock.stubs(:find).returns(@block)
+    Dummy::SampleBlock.stubs(:new).returns(@block)
+    Dummy::SampleBlock.stubs(:paginate)
   end
 
   def expect_access_denied

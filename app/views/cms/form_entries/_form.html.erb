@@ -1,0 +1,7 @@
+<%= simple_form_for(model, as: :form_entry, url: url) do |f| %>
+    <%= hidden_field_tag :form_id, model.form.id %>
+    <% model.form.fields.each do |field| %>
+        <%= f.input field.name, field.options(entry: model) %>
+    <% end %>
+    <%= f.button :submit, "Submit" %>
+<% end %>

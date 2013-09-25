@@ -2,7 +2,7 @@
                 data: {move_up: cms.move_up_connector_path(connector, format: :json),
                        move_down: cms.move_down_connector_path(connector, format: :json),
                        remove: cms.connector_path(connector, format: :json),
-                       edit_path: edit_cms_connectable_path(connectable, :_redirect_to => @page.path)
+                       edit_path: edit_engine_aware_path(connectable, :_redirect_to => @page.path)
                 } do %>
     <% if (!content_supports_inline_editing?(connector)) %>
         <%= link_to(image_tag('cms/arrow-up.png', class: 'cms-move-up-content-link'),
@@ -22,7 +22,7 @@
         %>
     <% end %>
     <%= link_to(image_tag('cms/pencil.png', class: 'cms-edit-content-link'),
-                edit_cms_connectable_path(connectable, :_redirect_to => @page.path),
+                edit_engine_aware_path(connectable, :_redirect_to => @page.path),
                 title: "Edit this content.") %>
     <%= render_connectable connectable %>
 <% end %>

@@ -12,9 +12,9 @@ Feature: Manage Page Routes
 
   Scenario: Match a path to a Controller
     When I request /cms/routes
-    And I search for a path including "/cms/sample_blocks/1"
+    And I search for a path including "/dummy/sample_blocks/1"
     Then I should see the following content:
-      | {:action=>"show", :controller=>"cms/sample_blocks", :id=>"1"} |
+      | {:action=>"show", :controller=>"dummy/sample_blocks", :id=>"1"} |
 
   Scenario: Create Page Route
     When I request /cms/page_routes

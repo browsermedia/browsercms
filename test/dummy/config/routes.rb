@@ -1,11 +1,11 @@
 Dummy::Application.routes.draw do
 
-  namespace :cms  do content_blocks :deprecated_inputs end
+  namespace :dummy do content_blocks :products end
+  namespace :dummy  do content_blocks :deprecated_inputs end
   get "content-page", :to=>"content_page#index"
   get "custom-page", :to=>"content_page#custom_page"
-  namespace :cms do content_blocks :catalogs end
-  namespace :cms do content_blocks :products end
-  namespace :cms do content_blocks :sample_blocks end
+  namespace :dummy do content_blocks :catalogs end
+  namespace :dummy do content_blocks :sample_blocks end
 
   # For testing Acts::As::Page
   get "/__test__", :to => "cms/content#show_page_route"

@@ -1,0 +1,15 @@
+<% content_for :html_head do %>
+    <%= stylesheet_link_tag Rails.application.config.cms.form_builder_css %>
+<% end %>
+<h1><%= @content_block.name %></h1>
+<p>
+  <%= @content_block.description %>
+</p>
+<%
+   unless @entry
+     @entry = Cms::FormEntry.for(@content_block)
+   end
+%>
+<%= render partial: 'cms/form_entries/form', locals: {model: @entry, url: cms.submit_form_entries_path, form: @content_block} %>
+
+

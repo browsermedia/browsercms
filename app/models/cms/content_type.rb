@@ -5,7 +5,11 @@ module Cms
 
     def initialize(options)
       self.name = options[:name]
+      @path_builder = EngineAwarePathBuilder.new(model_class)
     end
+
+    attr_accessor :path_builder
+    delegate :main_app_model?, :engine_name, :engine_class, to: :path_builder
 
     DEFAULT_CONTENT_TYPE_NAME = 'Cms::HtmlBlock'
 
@@ -110,18 +114,9 @@ module Cms
       model_class.content_module
     end
 
-    # Returns URL friendly 'key' which is used to identify this
-    def key
-      model_class_form_name
-    end
-
     # Returns the partial used to render the form fields for a given block.
     def form
-      f = model_class.respond_to?(:form) ? model_class.form : "#{name.underscore.pluralize}/form"
-      if main_app_model?
-        f = "cms/#{f}"
-      end
-      f
+     model_class.respond_to?(:form) ? model_class.form : "#{name.underscore.pluralize}/form"
     end
 
     def display_name
@@ -136,25 +131,6 @@ module Cms
       name.constantize
     end
 
-    # @deprecated Should be removed eventually
-    def route_name
-      if model_class.name.starts_with?("Cms")
-        model_class_form_name
-      else
-        "main_app.cms_#{model_class_form_name}"
-      end
-    end
-
-    include EngineHelper
-
-    def target_class
-      model_class
-    end
-
-    def path_subject
-      model_class
-    end
-
     # Determines if the content can be connected to other pages.
     def connectable?
       model_class.connectable?
@@ -162,8 +138,8 @@ module Cms
 
     # Cms::HtmlBlock -> html_block
     # ThingBlock -> thing_block
-    def model_class_form_name
-      model_class.model_name.element
+    def param_key
+      model_class.model_name.param_key
     end
 
     # Allows models to show additional columns when being shown in a list.

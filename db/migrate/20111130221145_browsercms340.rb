@@ -6,8 +6,8 @@ class Browsercms340 < ActiveRecord::Migration
   def change
     # Namespace class_names where they are not namespaced.
     %w[HtmlBlock Category CategoryType Portlet FileBlock ImageBlock Tag].each do |content_type|
-      update_content_types(content_type)
-      update_connectors_table(content_type)
+      update_content_types(namespace_model(content_type))
+      update_connectors_table(namespace_model(content_type))
     end
 
     update_sitemap

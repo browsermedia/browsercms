@@ -281,3 +281,49 @@ end
 Given /^I am adding a new tag$/ do
   visit cms.new_tag_path
 end
+
+Given /^I had created a form named "([^"]*)"$/ do |arg|
+  create(:form, name: arg)
+end
+
+When /^I select forms from the content library$/ do
+  visit cms.forms_path
+end
+
+Then(/^I should see the list of forms$/) do
+  should_be_successful
+  should_see_a_page_titled('List Forms')
+end
+
+Then(/^I should see the "([^"]*)" form in the list$/) do |form_name|
+  page_should_have_content(form_name)
+end
+
+When /^I am adding new form$/ do
+  visit cms.new_form_path
+end
+
+When(/^I enter the required form fields$/) do
+  fill_in "Name", with: "Contact Us"
+  click_on 'Save And Publish'
+end
+
+Then(/^after saving I should be redirect to the form page$/) do
+  should_be_successful
+  should_see_a_page_titled "Contact Us"
+end
+
+When(/^I edit that form$/) do
+  @form = Cms::Form.where(name: "Contact Us").first
+  visit cms.edit_form_path(@form)
+end
+
+When(/^I make changes to the form$/) do
+  fill_in "Name", with: "Updated Name"
+  click_on "Save And Publish"
+end
+
+Then(/^I should see the form with with the updated fields$/) do
+  should_be_successful
+  should_see_a_page_titled "Updated Name"
+end

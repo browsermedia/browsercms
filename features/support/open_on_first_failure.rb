@@ -18,7 +18,7 @@ module LaunchOnFirstFailure
 end
 
 After('~@cli')do |scenario|
-  if scenario.failed? && !LaunchOnFirstFailure.failed_tests?
+  if scenario.failed? && !LaunchOnFirstFailure.failed_tests? && ENV['launch_on_failure'] != 'false'
     LaunchOnFirstFailure.failure_occurred
     save_and_open_page
   end

@@ -8,84 +8,64 @@ Feature: Generate Attachments
 
   Scenario: Single Named Attachment
     When I run `rails g cms:content_block Product photo:attachment`
-    Then the file "app/models/product.rb" should contain:
+    Then the file "app/models/petstore/product.rb" should contain:
     """
-    class Product < ActiveRecord::Base
-      acts_as_content_block
-      content_module :products
-      has_attachment :photo
-    end
+    has_attachment :photo
     """
-    And a migration named "create_products.rb" should not contain:
+    And a migration named "create_petstore_products.rb" should not contain:
     """
     t.attachment :photo
     """
-    And the file "app/views/cms/products/render.html.erb" should contain:
+    And the file "app/views/petstore/products/render.html.erb" should contain:
     """
     <p><b>Photo:</b> <%= link_to "Photo", attachment_path_for(@content_block.photo) %></p>
     """
-    And the file "app/views/cms/products/_form.html.erb" should contain:
+    And the file "app/views/petstore/products/_form.html.erb" should contain:
     """
     <%= f.input :photo, as: :file_picker %>
     """
 
   Scenario: Two Named Attachment
     When I run `rails g cms:content_block Product photo:attachment cover:attachment`
-    Then the file "app/models/product.rb" should contain:
-    """
-    class Product < ActiveRecord::Base
-      acts_as_content_block
-      content_module :products
-      has_attachment :photo
-      has_attachment :cover
-    end
-    """
+    Then the file "app/models/petstore/product.rb" should contain the following content:
+      | has_attachment :photo |
+      | has_attachment :cover |
 
   Scenario: Multiple Attachments
     When I run `rails g cms:content_block Product photos:attachments`
-    Then the file "app/models/product.rb" should contain:
+    Then the file "app/models/petstore/product.rb" should contain:
     """
-    class Product < ActiveRecord::Base
-      acts_as_content_block
-      content_module :products
-      has_many_attachments :photos
-    end
+    has_many_attachments :photos
     """
-    And a migration named "create_products.rb" should not contain:
+    And a migration named "create_petstore_products.rb" should not contain:
     """
     t.attachments :photos
     """
-    And the file "app/views/cms/products/render.html.erb" should contain:
+    And the file "app/views/petstore/products/render.html.erb" should contain:
     """
     <p><b>Attachments:</b> <%= attachment_viewer @content_block %></p>
     """
-    And the file "app/views/cms/products/_form.html.erb" should contain:
+    And the file "app/views/petstore/products/_form.html.erb" should contain:
     """
     <%= f.cms_attachment_manager %>
     """
 
   Scenario: Multiple Attachments with different names
     When I run `rails g cms:content_block Product photos:attachments documents:attachments`
-    Then the file "app/models/product.rb" should contain:
-    """
-    class Product < ActiveRecord::Base
-      acts_as_content_block
-      content_module :products
-      has_many_attachments :photos
-      has_many_attachments :documents
-    end
-    """
-    And a migration named "create_products.rb" should not contain:
+    Then the file "app/models/petstore/product.rb" should contain the following content:
+      | has_many_attachments :photos    |
+      | has_many_attachments :documents |
+    And a migration named "create_petstore_products.rb" should not contain:
     """
     t.attachments :photos
     t.attachments :documents
     """
-    And the file "app/views/cms/products/render.html.erb" should not contain:
+    And the file "app/views/petstore/products/render.html.erb" should not contain:
     """
     <p><b>Attachments:</b> <%= attachment_viewer @content_block %></p>
     <p><b>Attachments:</b> <%= attachment_viewer @content_block %></p>
     """
-    And the file "app/views/cms/products/_form.html.erb" should not contain:
+    And the file "app/views/petstore/products/_form.html.erb" should not contain:
     """
     <%= f.cms_attachment_manager %>
     <%= f.cms_attachment_manager %>

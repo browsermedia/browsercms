@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130924162315) do
+ActiveRecord::Schema.define(version: 20131106193042) do
 
   create_table "catalog_versions", force: true do |t|
     t.string   "name"
@@ -212,6 +212,66 @@ ActiveRecord::Schema.define(version: 20130924162315) do
 
   add_index "cms_file_blocks", ["deleted"], name: "index_cms_file_blocks_on_deleted", using: :btree
   add_index "cms_file_blocks", ["type"], name: "index_cms_file_blocks_on_type", using: :btree
+
+  create_table "cms_form_entries", force: true do |t|
+    t.text     "data_columns"
+    t.integer  "form_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "cms_form_fields", force: true do |t|
+    t.integer  "form_id"
+    t.string   "label"
+    t.string   "name"
+    t.string   "field_type"
+    t.boolean  "required"
+    t.integer  "position"
+    t.text     "instructions"
+    t.text     "default_value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "choices"
+  end
+
+  add_index "cms_form_fields", ["form_id", "name"], name: "index_cms_form_fields_on_form_id_and_name", unique: true, using: :btree
+
+  create_table "cms_form_versions", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "confirmation_behavior"
+    t.text     "confirmation_text"
+    t.string   "confirmation_redirect"
+    t.string   "notification_email"
+    t.integer  "original_record_id"
+    t.integer  "version"
+    t.boolean  "published",             default: false
+    t.boolean  "deleted",               default: false
+    t.boolean  "archived",              default: false
+    t.string   "version_comment"
+    t.integer  "created_by_id"
+    t.integer  "updated_by_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "cms_forms", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "confirmation_behavior"
+    t.text     "confirmation_text"
+    t.string   "confirmation_redirect"
+    t.string   "notification_email"
+    t.integer  "version"
+    t.integer  "lock_version",          default: 0
+    t.boolean  "published",             default: false
+    t.boolean  "deleted",               default: false
+    t.boolean  "archived",              default: false
+    t.integer  "created_by_id"
+    t.integer  "updated_by_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "cms_group_permissions", force: true do |t|
     t.integer "group_id"

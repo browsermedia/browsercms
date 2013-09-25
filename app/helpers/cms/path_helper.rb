@@ -20,54 +20,12 @@ module Cms
     #
     # @param [Cms::ContentType] content_type
     # @param [String] column_to_sort The name of the column to sort on.
-    def cms_sortable_column_path(content_type, column_to_sort)
+    def sortable_column_path(content_type, column_to_sort)
       filtered_params = params.clone
       filtered_params.delete(:action)
       filtered_params.delete(:controller)
       filtered_params.merge!(:order => determine_order(filtered_params[:order], column_to_sort))
-      cms_connectable_path(content_type.model_class, filtered_params)
-    end
-
-    # @deprecated Use cms_connectable_path instead.
-    def cms_index_path_for(resource, options={})
-      polymorphic_path(build_path_for(resource), options)
-    end
-
-    # @deprecated Remove all usages of this in favor of cms_index_path_for ()
-    def cms_index_url_for(resource, options={})
-      send("#{resource_collection_name(resource).underscore.pluralize.gsub('/', '_')}_url", options)
-    end
-
-    def cms_new_path_for(resource, options={})
-      new_polymorphic_path(build_path_for(resource), options)
-    end
-
-    # @deprecated Remove all usages of this in favor of cms_new_path_for ()
-    def cms_new_url_for(resource, options={})
-      send("new_#{resource_collection_name(resource).underscore.gsub('/', '_')}_url", options)
-    end
-
-    # @param [Class, String] connectable The model class (i.e. HtmlBlock) or plural collection name (html_blocks) to link to
-    # @param [Hash] options Passed to polymorphic_path
-    #
-    # @return [String] path suitable to give to link_to
-    def cms_connectable_path(connectable, options={})
-      if connectable.is_a?(Class) && connectable < Portlet
-        cms.portlet_path(connectable)
-      else
-        polymorphic_path(build_path_for(connectable), options)
-      end
-    end
-
-    # @todo Really needs to be renamed to match conventions for Engines.
-    # In CMS::Engine, should be edit_connectable_path
-    # From app, should be cms.edit_connectable_path
-    def edit_cms_connectable_path(connectable, options={})
-      if Portlet === connectable
-        edit_portlet_path(connectable, options)
-      else
-        edit_polymorphic_path(build_path_for(connectable), options)
-      end
+      polymorphic_path(engine_aware_path(content_type.model_class), filtered_params)
     end
 
     def link_to_usages(block)
@@ -80,7 +38,7 @@ module Cms
                  p = []
                  p << engine_for(block)
                  p << :usages
-                 p.concat path_elements_for(block)
+                 p << block
                  p
                end
         link_to count, path, :id => block.id, :block_type => block.content_block_type
@@ -89,64 +47,57 @@ module Cms
       end
     end
 
-    # Return the path for a given block. Similar to polymorphic_path but handles resources from different engines.
+
+    # Returns the route proxy (aka engine) for a given resource, which can then have named paths called on it.
+    #  I.e. engine(@block).polymorphic_path([@block, :preview])
+    # 
+    # @param [ActiveRecord::Base] resource
+    # @return [ActionDispatch::Routing::RoutesProxy]
+    def engine(resource)
+      name = EngineAwarePathBuilder.new(resource).engine_name
+      send(name)
+    end
+
+    # @deprecated
+    alias :engine_for :engine
+
+    # Return the path for a given resource. Determines the relevant engine, and the result can be passed to polymporhic_path
     #
-    # @param [Object] block A content block
+    # @param [Object] model_or_class_or_content_type A content block, class or content type.
     # @param [String] action (Optional) i.e. :edit
     # @return [Array] An array of argument suitable to be passed to url_for or link_to helpers. This will be something like:
-    #     [main_app, :cms, :products, @block, :edit]
+    #     [main_app, :dummy_products, @block, :edit]
     #  or [cms, :html_blocks, @block]
     #
     # This will work whether the block is:
-    #   1. A custom unnamespaced block in a project (i.e. Product)
+    #   1. A block in a project (namespaced to the project) (i.e. Dummy::Product)
     #   2. A core CMS block (i.e. Cms::Portlet)
     #   3. A block in a module (i.e. BcmsNews::NewsArticle)
     # e.g.
-    #   block_path(Product.find(1)) => /cms/products/1
-    #   block_path(Cms::HtmlBlock.find(1)) => /cms/html_blocks/1
-    #   block_path(BcmsNews::NewsArticle.find(1)) => /bcms_news/news_articles/1
+    #   engine_aware_path(Dummy::Product.find(1)) => /dummy/products/1
+    #   engine_aware_path(Cms::HtmlBlock.find(1)) => /cms/html_blocks/1
+    #   engine_aware_path(BcmsNews::NewsArticle.find(1)) => /bcms_news/news_articles/1
     #
-    def block_path(block, action=nil)
-      path = []
-      path << engine_for(block)
-      path << action if action
-      path.concat path_elements_for(block)
-      path
+    def engine_aware_path(model_or_class_or_content_type, action = false)
+      elements = build_path_for(model_or_class_or_content_type)
+      elements << action if action
+      elements
     end
 
-    # Returns the Engine Proxy that this resource is from.
-    def engine_for(resource)
-      EngineHelper.decorate(resource)
-      send(resource.engine_name)
+    # Wrappers edit_polymorphic_path to be engine aware.
+    def edit_engine_aware_path(model_or_class_or_content_type, options={})
+      edit_polymorphic_path(build_path_for(model_or_class_or_content_type), options)
     end
 
-    def path_elements_for(resource)
-      EngineHelper.decorate(resource)
-      resource.path_elements
+    # Wrappers new_polymorphic_path to be engine aware.
+    def new_engine_aware_path(subject, options={})
+      new_polymorphic_path(build_path_for(subject), options)
     end
 
     private
 
-
     def build_path_for(model_or_class_or_content_type)
       Cms::EngineAwarePathBuilder.new(model_or_class_or_content_type).build(self)
-    end
-
-    # Returns the name of the collection that this resource belongs to
-    # the resource can be a ContentType, ActiveRecord::Base instance
-    # or just a string or symbol
-    def resource_collection_name(resource)
-      if resource.respond_to?(:resource_collection_name)
-        return resource.resource_collection_name
-      end
-      case resource
-        when ContentType then
-          resource.route_name
-        when ActiveRecord::Base then
-          resource.class.model_name.demodulize
-        else
-          resource.to_s
-      end
     end
 
   end

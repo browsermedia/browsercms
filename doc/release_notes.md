@@ -5,6 +5,7 @@ This release includes the following features:
 
 * User Interface Redesign - Complete UI rework to use Bootstrap.
 * True In Context Editing - Editors can directly edit Html content and page titles using CKEditor's inline capability.
+* Form Builder - Editors can create forms to collect information from site visitors. Forms are addressable content pages.
 * Addressable Content Blocks - Custom content blocks (i.e. Product, Event, News Articles) can be created directly as pages in the sitemap.
 * Refined Content API - Make content blocks closer in behavior to ActiveRecord.
 * Improved Template Storage - Templates stored in the database no longer need to be written out to the file system. This should make it easier to deploy CMS apps to Heroku.
