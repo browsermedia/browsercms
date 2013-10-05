@@ -97,7 +97,8 @@ module Cms
                           :whiny => configuration.whiny,
                           :storage => rail_config(:storage),
                           :s3_credentials => rail_config(:s3_credentials),
-                          :bucket => rail_config(:s3_bucket)
+                          :bucket => rail_config(:s3_bucket),
+                          :s3_host_alias => rail_config(:s3_host_alias)
 
       end
 
