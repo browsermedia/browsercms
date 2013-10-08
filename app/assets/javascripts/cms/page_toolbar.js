@@ -2,7 +2,7 @@
 //  Required javascript for editing pages. Similar to toolbar.js, but adds additional features.
 //
 //= require jquery
-//= require jquery-ui
+//= require jquery.ui.all
 //= require jquery.cookie
 //= require jquery.selectbox
 //= require jquery.taglist

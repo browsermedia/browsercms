@@ -1,5 +1,5 @@
 //= require 'jquery'
-//= require 'jquery-ui'
+//= require 'jquery.ui.all'
 //= require 'jquery.cookie'
 //= require 'bootstrap'
 //= require 'cms/ajax'

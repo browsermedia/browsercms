@@ -13,6 +13,7 @@ require 'ckeditor-rails'
 # Explicitly require this, so that CMS projects do not need to add it to their Gemfile
 # especially while upgrading
 require 'jquery-rails'
+require 'jquery-ui-rails'
 
 require 'underscore-rails'
 require 'will_paginate'
