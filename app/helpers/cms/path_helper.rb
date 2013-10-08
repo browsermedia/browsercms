@@ -53,7 +53,7 @@ module Cms
     # @return [String] path suitable to give to link_to
     def cms_connectable_path(connectable, options={})
       if connectable.is_a?(Class) && connectable < Portlet
-        cms.portlet_path(connectable)
+        cms.portlets_path
       else
         polymorphic_path(build_path_for(connectable), options)
       end
