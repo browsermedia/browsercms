@@ -70,6 +70,8 @@ module Cms
       options.delete(:enabled)
       options[:class] << 'http_put' if options[:method] == :put
       options[:class] << 'http_delete' if options[:method] == :delete
+      options[:class] << 'confirm_with_title' if options[:method] == :delete
+
       options.delete(:method)
       copy_title(options, options)
       link_to(label, path, options)
