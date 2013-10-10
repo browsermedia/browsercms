@@ -60,11 +60,11 @@ module Cms
         html = <<HTML
 jQuery(function($) {
   $('a##{check_id}').click(function() {
-    $('#{selector}').attr('checked', true);
+    $('#{selector}').prop('checked', true);
   });
 
   $('a##{uncheck_id}').click(function() {
-    $('#{selector}').attr('checked', false);
+    $('#{selector}').prop('checked', false);
   });
 })
 HTML
