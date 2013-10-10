@@ -17,6 +17,7 @@ end
 
 group :development do
   gem 'rake'
+  gem 'debugger'
 end
 group :test, :development do
   gem 'minitest'
