@@ -102,14 +102,14 @@ jQuery(function ($) {
 });
 
 // Automatically enable date_picker controls
-$(function () {
+jQuery(function ($) {
     if ($.datepicker) {
         $('input.date_picker').datepicker({ changeFirstDay:false, changeMonth:true, changeYear:true, closeText:'', showButtonPanel:true, dateFormat:'<%= Cms::DatePicker.jquery_format %>' });
     }
 });
 
 // UI Enhancement to suggest paths for uploaded files
-$(function () {
+jQuery(function ($) {
     var path_input = $('.suggest_file_path');
     if (path_input.length) {
         $('select[data-purpose=section_selector], input[data-purpose=cms_file_field]').change(function () {
