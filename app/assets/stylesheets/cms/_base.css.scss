@@ -1,0 +1,38 @@
+/* BLOCKING OUT ELEMENTS */
+article, aside, div, details, figcaption, figure, footer, header, hgroup, nav, section {
+  	display: block;
+  	position: relative;
+}
+audio, canvas, video {
+  	display: inline-block;
+  	*display: inline;
+  	*zoom: 1;
+}
+audio:not([controls]) {
+  display: none;
+}
+
+/* CONTAINER SIZING */
+.center-column {
+	width: 80%;
+	min-width: 960px;
+
+	@include breakpoint(landscape) {
+		width: 960px;
+	}
+}
+.main-container {
+	margin-top: 50px;
+	margin-bottom: 50px;
+	background: white;
+	@include rem(padding,1.5rem 0 2.5rem 0);
+
+	@include border-radius(8px);
+	border: 1px solid rgba(black,0.15);
+}
+
+.padded {
+	width: 100%;
+	padding: 0 2.127659574468085%;
+	*padding: 0 2.074468085106383%;
+}

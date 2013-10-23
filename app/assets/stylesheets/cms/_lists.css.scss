@@ -1,0 +1,115 @@
+/* LIST STYLES */
+ul {
+	@include rem(margin-bottom,1.5rem);
+	padding: 0;
+	list-style-type: none;
+	*list-style-type: disc;
+
+	li {
+		font-family: 'Source Sans Pro', sans-serif;
+		@include rem(font-size, 1.1rem);
+		font-weight: 400;
+		@include rem(margin-bottom, 0.4rem);
+		color: $dark;
+
+		&:before {
+			content: '\25CF';
+			color: $primary;
+			@include rem(font-size,0.8rem);
+			vertical-align: top;
+			display: inline-block;
+			padding-top: 2px;
+			@include rem(margin,0 1rem 0 0);
+		}
+
+		ul {
+			*list-style-type: circle;
+			@include rem(margin, 0.4rem 0 0.5rem 1.5rem);
+
+			li {
+				@include rem(font-size, 1rem);
+
+				&:before {
+					content: '\25CB';
+				}
+			}
+		}
+	}
+
+	&.unstyled {
+		li {
+			&:before {
+				display: none;
+			}
+
+			ul {
+				*list-style-type: circle;
+
+				li {
+					&:before {
+						content: '\25CB';
+						color: $primary;
+						@include rem(font-size,0.8rem);
+						vertical-align: top;
+						display: inline-block;
+						padding-top: 2px;
+						@include rem(margin,0 1rem 0 0);
+					}
+				}
+			}
+		}
+	}
+}
+
+ol {
+	@include rem(margin-bottom,1.5rem);
+	padding: 0;
+	list-style-type: decimal;
+	@include rem(margin-left,1.5rem);
+
+	li {
+		font-family: 'Source Sans Pro', sans-serif;
+		@include rem(font-size, 1.1rem);
+		color: $dark;
+		font-weight: 400;
+		@include rem(margin-bottom, 0.4rem);
+	}
+}
+
+dl {
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 400;
+	color: $dark;
+	@include rem(font-size, 1.1rem);
+	@include rem(margin-bottom,1.5rem);
+
+	dt {
+		font-weight: 600;
+		display: block;
+		width: 30%;
+		float: left;
+		text-align: right;
+		@include rem(padding-right,1.35rem);
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	dd {
+		@include rem(margin-bottom, 0.75rem);
+		display: block;
+		width: 70%;
+		float: left;
+	}
+
+	&:after {
+		clear: both;
+		content: "";
+		display: block;
+		font-size: 0;
+		line-height: 0;
+		visibility: hidden;
+		width: 0;
+		height: 0;
+	}
+}

@@ -1,0 +1,141 @@
+/* TABLE STYLES */
+.table {
+	width: 100%;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 400;
+	@include rem(font-size, 1.1rem);
+	color: $dark;
+	@include rem(margin-bottom,1.5rem);
+	border-spacing: 0;
+	display: table;
+
+	thead {
+		display: table-header-group;
+		background: $light;
+		border-bottom: 1px solid rgba(black,0.07);
+
+		th {
+			display: table-cell;
+			font-weight: 600;
+			@include rem(padding,0.7rem);
+		}
+	}
+
+	tr {
+		display: table-row;
+		border-bottom: 1px solid rgba(black,0.05);
+
+		&:last-child {
+			border: 0;
+		}
+	}
+
+	td {
+		display: table-cell;
+		@include rem(padding,0.7rem);
+	}
+}
+
+.table-striped {
+	thead {
+		border-bottom: 1px solid rgba(black,0.05);
+	}
+	tbody {
+		tr {
+			border-bottom: 1px solid rgba(black,0.035);
+
+			&:nth-child(odd) {
+				background: rgba($light,0.25);
+			}
+			&:last-child {
+				border-bottom: 0;
+			}
+		}
+	}
+}
+
+.table-bordered {
+	border: 1px solid rgba(black,0.1);
+	border-collapse: separate;
+	*border-collapse: collapse;
+	@include border-radius(5px);
+
+	thead {
+		display: table-header-group;
+		@include border-radius(5px 5px 0 0);
+
+		th {
+			border-bottom: 1px solid rgba(black,0.07);
+			border-right: 1px solid rgba(black,0.07);
+
+			&:first-child {
+				@include border-radius(5px 0 0 0);
+			}
+			&:last-child {
+				@include border-radius(0 5px 0 0);
+				border-right: 0;
+			}
+
+			&:only-child {
+				@include border-radius(5px 5px 0 0);
+			}
+		}
+	}
+	tbody {
+		tr {
+			td {
+				border-bottom: 1px solid rgba(black,0.07);
+				border-right: 1px solid rgba(black,0.07);
+
+				&:last-child {
+					border-right: 0;
+				}
+			}
+
+			&:last-child {
+				td {
+					border-bottom: 0;
+
+					&:first-child {
+						@include border-radius(0 0 0 5px);
+					}
+					&:last-child {
+						@include border-radius(0 0 5px 0);
+					}
+
+					&:only-child {
+						@include border-radius(0 0 5px 5px);
+					}
+				}
+			}
+		}
+	}
+}
+
+.table-hover {
+	tbody {
+		tr {
+			&:hover {
+				background: rgba($light,0.65);
+			}
+		}
+	}
+}
+
+.table-condensed {
+	@include rem(font-size,1rem);
+
+	thead th, td {
+		@include rem(padding,0.35rem 0.7rem);
+	}
+}
+
+.success {
+	background: rgba($success,0.3);
+}
+.error {
+	background: rgba($danger,0.3);
+}
+.warning {
+	background: rgba($warning,0.3);
+}

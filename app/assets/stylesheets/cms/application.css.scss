@@ -1,7 +1,146 @@
-/**
-*  Manifest file for the CMS Admin interface
-*
-*= require cms/bootstrap-customizations
-*= require cms/sitemap
-*
-*/
+@import "bootstrap";
+@import "bootstrap-responsive";
+
+@import "cms/bootstrap-customizations";
+
+
+@charset "utf-8";
+
+$experimental-support-for-khtml: false;
+//@import "compass/reset";
+//@import "compass/css3";
+//@import "compass/typography";
+//@import "compass/css3/box";
+
+
+
+
+/* COLORS & MIX-INS */
+@mixin breakpoint($point) {
+  @if $point == large {
+    @media only screen and (min-width : 1401px) { @content; }
+  }
+  @else if $point == landscape {
+    @media only screen and (min-width : 802px) and (max-width : 1025px) { @content; }
+  }
+  @else if $point == portrait {
+    @media only screen and (min-width : 642px) and (max-width : 801px) { @content; }
+  }
+  @else if $point == mobile {
+    @media only screen and (max-width : 641px) { @content; }
+  }
+}
+
+$main-blue: #095aa6;
+$light-blue: #0079c1;
+
+$primary: $main-blue;
+$secondary: $light-blue;
+
+$light: darken(white,6%);
+$gray: #9a9999;
+$dark: #505050;
+
+$success: #2ecc71;
+$warning: #f1c40f;
+$danger: #e74c3c;
+
+
+/* RESET */
+html {
+  min-height: 100%;
+  height: 100%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+
+  background: $light;
+
+  @include breakpoint(landscape) {
+    font-size: 95%;
+  }
+}
+body {
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow-x: hidden;
+}
+* {
+  @include box-sizing(border-box);
+
+  &:after,
+  &:before {
+    @include box-sizing(border-box);
+  }
+}
+
+/* CLEAR & FLOATS */
+.clear {
+  clear: both !important;
+}
+.left {
+  float: left !important;
+}
+.right {
+  float: right !important;
+}
+.clear {
+  clear: both;
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+* html .clearfix {
+  height: 1%;
+}
+.clearfix {
+  display: block;
+  *zoom: 1;
+
+  &:after {
+    clear: both;
+    content: "";
+    display: block;
+    font-size: 0;
+    line-height: 0;
+    visibility: hidden;
+    width: 0;
+    height: 0;
+  }
+}
+
+@import "cms/includes/_rem";
+@import "cms/includes/_animation";
+
+@import "cms/sitemap";
+
+
+/* IMPORTING STYLES */
+@import 'cms/_base-grid';
+@import 'cms/_text';
+@import 'cms/_images';
+@import 'cms/_lists';
+@import 'cms/_buttons';
+@import 'cms/_tables';
+@import 'cms/_forms';
+@import 'cms/_dropdown';
+@import 'cms/_progress';
+@import 'cms/_alerts';
+@import 'cms/_glyph';
+
+
+
+
+/* PAGE STYLE & LAYOUT IMPORTS */
+@import '_base';
+
+@import '_colors';
+@import '_buttons';
+@import '_forms';
+
+@import '_nav';
+@import '_main-area';
+@import '_sitemap';
+@import '_sidebar';

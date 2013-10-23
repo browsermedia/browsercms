@@ -1,0 +1,129 @@
+/* ALERT STYLES */
+.alert {
+    @include rem(padding, 1rem 1.5rem 1.25rem 1.5rem);
+    @include rem(margin-bottom,1.5rem);
+    background: rgba($warning,0.5);
+    border: 1px solid rgba(black,0.05);
+    @include border-radius(5px);
+    color: darken($warning,15%);
+    font-family: 'Source Sans Pro', sans-serif;
+    @include rem(font-size, 1.1rem);
+    line-height: 1.3;
+    font-weight: 400;
+
+    h4 {
+        color: darken($warning,15%);
+        margin: 0;
+    }
+
+    & .close {
+        background: none;
+        border: 0;
+        z-index: 5;
+        position: absolute;
+        top: 2px;
+        right: 2px;
+        @include rem(font-size,1.35rem);
+        color: rgba(black,0.25);
+
+        &:hover {
+            color: rgba(black,0.5);
+        }
+    }
+}
+
+.alert-success {
+    color: darken($success,15%);
+    background: rgba($success,0.35);
+
+    h4 {
+        color: darken($success,15%);
+    }
+}
+
+.alert-danger,
+.alert-error {
+    color: darken($danger,15%);
+    background: rgba($danger,0.3);
+
+    h4 {
+        color: darken($danger,15%);
+    }
+}
+
+.alert-info {
+    color: darken($secondary,10%);
+    background: rgba($secondary,0.25);
+
+    h4 {
+        color: darken($secondary,10%);
+    }
+}
+
+.alert-primary {
+    color: white;
+    background: $primary;
+    -webkit-font-smoothing: antialiased;
+
+    h4 {
+        color: white;
+    }
+
+    & .close {
+        color: rgba(white,0.75);
+        -webkit-font-smoothing: antialiased;
+
+        &:hover {
+            color: white;
+        }
+    }
+}
+
+.alert-inverse {
+    color: white;
+    background: $dark;
+    -webkit-font-smoothing: antialiased;
+
+    h4 {
+        color: white;
+    }
+
+    & .close {
+        color: rgba(white,0.75);
+        -webkit-font-smoothing: antialiased;
+
+        &:hover {
+            color: white;
+        }
+    }
+}
+
+.alert-block {
+    @include rem(padding-top,1.5rem);
+    @include rem(padding-bottom,1.75rem);
+
+    h4 {
+        @include rem(margin-bottom,0.4rem);
+    }
+    p, ul {
+        margin-bottom: 0;
+    }
+    p + p {
+        @include rem(margin-top,0.75rem);
+    }
+}
+
+.alert-small {
+    @include rem(padding, 0.35rem 0.75rem 0.5rem 0.75rem);
+    @include rem(margin-bottom,0.65rem);
+    @include rem(font-size, 1rem);
+    @include rem(line-height,1.1);
+    font-weight: 600;
+
+    & .close {
+        top: 0;
+        line-height: 1;
+        right: 2px;
+        @include rem(font-size,1.25rem);
+    }
+}

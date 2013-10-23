@@ -1,0 +1,56 @@
+/* SIDEBAR BLOCK */
+.sidebar-block {
+	@include border-radius(5px);
+	background: rgba(black,0.02);
+	border: 1px solid rgba(black,0.05);
+	@include rem(padding,1rem 1.25rem 1.25rem 1.25rem);
+	@include rem(margin-top,1rem);
+
+	h4 {
+		&.label {
+			@include rem(margin-bottom,0.25rem);
+		}
+	}
+	label {
+		color: $gray;
+	}
+	select {
+		@include rem(margin-top,0.35rem);
+	}
+
+	div,
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	p {
+		&:last-child {
+			margin-bottom: 0;
+			border-bottom: 0;
+		}
+	}
+	input,
+	label,
+	select,
+	textarea,
+	& .row-fluid {
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}
+.add-link {
+	text-transform: uppercase;
+	font-family: 'Source Sans Pro', sans-serif;
+	@include rem(font-size, 0.9rem);
+	font-weight: 600;
+	border-bottom: 1px dotted $primary;
+	@include rem(margin-top,0.25rem);
+
+	&:hover {
+		text-decoration: none;
+		border-bottom: 1px solid $secondary;
+	}
+}

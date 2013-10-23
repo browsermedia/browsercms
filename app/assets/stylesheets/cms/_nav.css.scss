@@ -1,0 +1,195 @@
+/* MAIN NAV */
+#main-nav {
+	background: white;
+	@include rem(height,7rem);
+	border-bottom: 1px solid rgba(black,0.15);
+
+	.logged-in {
+		@include rem(height,2rem);
+		width: 100%;
+		background: darken($dark,5%);
+		border-bottom: 1px solid rgba(black,0.15);
+	}
+	.primary-nav {
+		@include rem(height,5rem);
+		width: 100%;
+	}
+
+	.container {
+		padding: 0;
+		height: 100%;
+	}
+
+	.main-logo {
+		height: 100%;
+		width: auto;
+		float: left;
+		@include rem(padding, 2.15rem 0 1.35rem 0);
+		@include rem(margin-right,3.5rem);
+	}
+
+	.subnav {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		height: 100%;
+		border-right: 1px solid rgba(black,0.075);
+
+		li {
+			float: left;
+			height: 100%;
+			border-left: 1px solid rgba(black,0.075);
+			color: white;
+			font-weight: 300;
+			@include rem(font-size,0.875rem);
+			@include rem(line-height,1.875rem);
+
+			&:first-child {
+				border-left: 0;
+				@include rem(padding,0 1.5rem);
+			}
+
+			a {
+				color: white;
+				@include rem(padding,0 1.5rem);
+				@include rem(height,100%);
+				display: block;
+
+				&:hover {
+					background: rgba(white,0.04);
+				}
+			}
+
+			&:before {
+				display: none;
+			}
+		}
+	}
+
+	.mainnav {
+		list-style: none;
+		float: left;
+		margin: 0;
+		padding: 0;
+
+		li {
+			float: left;
+			font-family: 'Roboto', sans-serif;
+			font-weight: 400;
+			@include rem(font-size,1.05rem);
+			@include rem(margin-right,2.75rem);
+			position: relative;
+			@include rem(padding, 2.65rem 0 0 0);
+
+			&:last-child {
+				margin-right: 0;
+			}
+
+			a {
+				&:hover {
+					text-decoration: none;
+					border-bottom: 1px solid $secondary;
+				}
+			}
+
+			&.active {
+				a {
+					color: $secondary;
+					border-bottom: 1px dotted $secondary;
+
+					&:hover {
+						text-decoration: none;
+					}
+				}
+				a.caret {
+					border-bottom: 0;
+				}
+			}
+
+			.caret {
+				display: inline-block;
+				@include rem(height,1.1rem);
+				@include rem(width,1.1rem);
+				@include rem(margin-left,0.5rem);
+				background: $light;
+				@include rem(line-height,1rem);
+				@include rem(font-size,0.875rem);
+				vertical-align: top;
+				margin-top: 1px;
+				text-align: center;
+				@include border-radius(50%);
+				@include transition(background 0.1s);
+
+				&:hover {
+					background: $secondary;
+					border: 0;
+					text-decoration: none;
+					color: white;
+				}
+				&:focus {
+					outline: none;
+				}
+			}
+
+			&.open {
+				& .caret {
+					background: $primary;
+					text-decoration: none;
+					color: white;
+				}
+			}
+
+			.dropdown-menu {
+				top: 100%;
+				margin-top: 25px;
+				margin-right: -15px;
+
+				li {
+					font-family: 'Source Sans Pro', sans-serif;
+					@include rem(font-size, 1.1rem);
+					font-weight: 400;
+					color: $dark;
+					width: 100%;
+					padding: 0;
+
+					a {
+						&:hover {
+							border-bottom: 0;
+						}
+					}
+				}
+
+				&:after {
+					right: 15px;
+				}
+			}
+
+			&:before {
+				display: none;
+			}
+		}
+	}
+
+	.btn-group {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		z-index: 999;
+
+		.btn {
+			margin-bottom: 0;
+			@include rem(height,3.75rem);
+
+			&:first-child {
+				@include border-radius(5px 0 0 0);
+			}
+			&:nth-child(2) {
+				@include border-radius(0 5px 0 0);
+			}
+		}
+
+		.dropdown-menu {
+			width: 125%;
+		}
+	}
+}

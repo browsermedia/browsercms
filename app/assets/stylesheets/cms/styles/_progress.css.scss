@@ -1,0 +1,43 @@
+/* PROGRESS BAR STYLES */
+.progress {
+    @include rem(height,1.75rem);
+    @include rem(margin-bottom,1.5rem);
+    overflow: hidden;
+    background: $light;
+    @include border-radius(4px);
+    border: 1px solid rgba(black,0.1);
+
+    .bar {
+        float: left;
+        width: 0;
+        height: 100%;
+        @include rem(font-size,0.75rem);
+        border-right: 1px solid rgba(black,0.05);
+        color: white;
+        -webkit-font-smoothing: antialiased;
+        text-align: center;
+        background: $primary;
+        @include transition(width 0.6s);
+    }
+
+    &.progress-info {
+        .bar {
+            background: $secondary;
+        }
+    }
+    &.progress-success {
+        .bar {
+            background: $success;
+        }
+    }
+    &.progress-warning {
+        .bar {
+            background: $warning;
+        }
+    }
+    &.progress-danger {
+        .bar {
+            background: $danger;
+        }
+    }
+}
