@@ -1,0 +1,719 @@
+/* FORM STYLES */
+form {
+  	@include rem(margin-bottom, 1.5rem);
+  	padding: 0;
+}
+fieldset {
+  	padding: 0;
+  	margin: 0;
+  	border: 0;
+}
+
+.form-inline .btn {
+	@include rem(height,2.5rem);
+	vertical-align: top;
+	@include rem(font-size, 1rem);
+	@include rem(line-height, 1.25rem);
+}
+
+legend {
+	display: block;
+	width: 100%;
+	padding: 0;
+	@include rem(margin-bottom, 1rem);
+	font-family: 'Roboto', sans-serif;
+	@include rem(font-size,1.4rem);
+	@include rem(padding-bottom,0.75rem);
+	font-weight: 500;
+	line-height: 1.25;
+	color: $dark;
+	border-bottom: 1px solid $light;
+
+	small {
+		@include rem(font-size,1.1rem);
+	}
+}
+
+label,
+input,
+select,
+textarea,
+.uneditable-input {
+	font-family: 'Source Sans Pro', sans-serif;
+	@include rem(font-size, 1.1rem);
+	line-height: 1.3;
+	font-weight: 400;
+	color: $dark;
+}
+label {
+	display: block;
+	@include rem(margin-bottom,0.4rem);
+	@include rem(margin-top,0.5rem);
+}
+
+select,
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {
+	@include rem(height, 2.5rem);
+	@include rem(padding, 0.5rem 0.65rem);
+	@include rem(margin-bottom,0.75rem);
+	@include rem(font-size, 1rem);
+	@include rem(line-height, 1.5rem);
+	@include rem(font-size,1rem);
+	vertical-align: middle;
+	color: lighten($dark,10%);
+	@include border-radius(5px);
+}
+
+input,
+textarea,
+.uneditable-input {
+	@include rem(width, 25rem);
+}
+textarea {
+	height: auto;
+	resize: both;
+	max-width: 100%;
+}
+
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {
+	background: white;
+	border: 1px solid rgba(black,0.15);
+	@include transition(border 0.2s, background 0.2s);
+}
+.uneditable-input,
+.uneditable-textarea {
+	display: inline-block;
+  	cursor: not-allowed;
+  	background-color: rgba($light,0.6);
+}
+.uneditable-input {
+	overflow: hidden;
+	white-space: nowrap;
+}
+.uneditable-textarea {
+	width: auto;
+	height: auto;
+}
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {
+	outline: 0;
+	outline: thin dotted \9;
+	border: 1px solid rgba(black,0.35);
+	background: rgba($light,0.5);
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+	@include rem(margin, 0.2rem 1rem 0.5rem 0);
+	margin-top: 1px \9;
+	*margin-top: 0;
+	line-height: normal;
+}
+
+input[type="file"],
+input[type="image"],
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+input[type="radio"],
+input[type="checkbox"] {
+	width: auto;
+}
+select,
+input[type="file"] {
+	@include rem(height, 2.5rem);
+	/* In IE7, the height of the select element cannot be changed by height, only font-size */
+	*margin-top: 4px;
+	/* For IE7, add top margin to align select with labels */
+	@include rem(line-height, 1.5rem);
+}
+
+select {
+	@include rem(width, 25rem);
+	@include rem(padding, 0.5rem 0.65rem);
+	background-color: white;
+	border: 1px solid rgba(black,0.15);
+}
+select[multiple],
+select[size] {
+	height: auto;
+}
+select:focus,
+input[type="file"]:focus,
+input[type="radio"]:focus,
+input[type="checkbox"]:focus {
+	outline: thin dotted #333;
+	outline: 5px auto -webkit-focus-ring-color;
+	outline-offset: -2px;
+}
+
+input:-moz-placeholder,
+textarea:-moz-placeholder {
+  	color: rgba($dark,0.5);
+}
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+  	color: rgba($dark,0.5);
+}
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+  	color: rgba($dark,0.5);
+}
+
+.radio,
+.checkbox {
+	@include rem(min-height,1.5rem);
+	@include rem(padding-left,1.5rem);
+}
+
+.radio input[type="radio"],
+.checkbox input[type="checkbox"] {
+  	float: left;
+  	@include rem(margin-left, -1.5rem);
+  	@include rem(margin-top,0.25rem);
+}
+
+.controls > .radio:first-child,
+.controls > .checkbox:first-child {
+  	@include rem(padding-top, 0.6rem);
+}
+
+.radio.inline,
+.checkbox.inline {
+	display: inline-block;
+	@include rem(padding-top, 0.5rem);
+	margin-bottom: 0;
+	vertical-align: middle;
+	@include rem(margin-right, 0);
+}
+.radio.inline + .radio.inline,
+.checkbox.inline + .checkbox.inline {
+  	@include rem(margin-left,2.5rem);
+}
+
+
+.input-mini {
+  	@include rem(width, 5rem);
+}
+.input-small {
+  	@include rem(width, 9rem);
+}
+.input-medium {
+  	@include rem(width, 12rem);
+}
+.input-large {
+  	@include rem(width, 15rem);
+}
+.input-xlarge {
+  	@include rem(width, 22rem);
+}
+.input-xxlarge {
+  	@include rem(width, 35rem);
+  	@include rem(font-size, 1.2rem !important);
+  	@include rem(height,3.25rem !important);
+  	@include rem(line-height,3.1rem !important);
+}
+.input-block-level {
+  	display: block;
+  	width: 100%;
+}
+
+
+.help-block,
+.help-inline {
+	font-family: 'Source Sans Pro', sans-serif;
+	@include rem(font-size, 0.95rem);
+	line-height: 1;
+	font-weight: 400;
+  	color: $dark;
+}
+.help-block {
+  	display: block;
+  	@include rem(margin-bottom, 1rem);
+}
+.help-inline {
+  	display: inline-block;
+  	*display: inline;
+  	line-height: 1;
+  	@include rem(margin-bottom,0.875rem);
+  	@include rem(padding-left, 1rem);
+  	vertical-align: middle;
+  	*zoom: 1;
+}
+
+
+.input-append,
+.input-prepend {
+	display: inline-block;
+	@include rem(margin-bottom, 1rem);
+	font-size: 0;
+	white-space: nowrap;
+	vertical-align: middle;
+}
+
+.input-append input,
+.input-prepend input,
+.input-append select,
+.input-prepend select,
+.input-append .uneditable-input,
+.input-prepend .uneditable-input,
+.input-append .dropdown-menu,
+.input-prepend .dropdown-menu,
+.input-append .popover,
+.input-prepend .popover {
+  	@include rem(font-size, 1rem);
+}
+
+.input-append input,
+.input-prepend input,
+.input-append select,
+.input-prepend select,
+.input-append .uneditable-input,
+.input-prepend .uneditable-input {
+	position: relative;
+	margin-bottom: 0;
+	*margin-left: 0;
+	vertical-align: top;
+	@include border-radius(0 5px 5px 0);
+}
+
+.input-append input:focus,
+.input-prepend input:focus,
+.input-append select:focus,
+.input-prepend select:focus,
+.input-append .uneditable-input:focus,
+.input-prepend .uneditable-input:focus {
+  	z-index: 2;
+}
+
+.input-append .add-on,
+.input-prepend .add-on {
+  	display: inline-block;
+  	width: auto;
+  	@include rem(height,2.5rem);
+  	@include rem(padding, 0.5rem 0.65rem);
+  	@include rem(font-size, 1rem);
+  	@include rem(line-height, 1.25rem);
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 400;
+  	color: rgba($dark,0.65);
+  	text-align: center;
+  	background: $light;
+  	border: 1px solid rgba(black,0.15);
+  	@include border-radius(5px);
+}
+.input-prepend .btn {
+	@include border-radius(5px 0 0 5px);
+	@include rem(height,2.5rem);
+	@include rem(line-height, 2.1rem);
+	@include rem(font-size,1.1rem);
+	margin-bottom: 0;
+}
+.input-append .btn {
+	@include border-radius(0 5px 5px 0);
+	@include rem(height,2.5rem);
+	@include rem(line-height, 2.1rem);
+	@include rem(font-size,1.1rem);
+	margin-bottom: 0;
+}
+
+.input-append .add-on,
+.input-prepend .add-on,
+.input-append .btn,
+.input-prepend .btn,
+.input-append .btn-group > .dropdown-toggle,
+.input-prepend .btn-group > .dropdown-toggle {
+  	vertical-align: top;
+}
+
+.input-append .active,
+.input-prepend .active {
+  	background-color: #a9dba9;
+  	border-color: #46a546;
+}
+
+.input-prepend .add-on,
+.input-prepend .btn {
+  	margin-right: -1px;
+}
+
+.input-prepend .add-on:first-child,
+.input-prepend .btn:first-child {
+	@include border-radius(5px 0 0 5px);
+}
+
+.input-append input,
+.input-append select,
+.input-append .uneditable-input {
+	@include border-radius(5px 0 0 5px);
+}
+.input-append input + .btn-group .btn:last-child,
+.input-append select + .btn-group .btn:last-child,
+.input-append .uneditable-input + .btn-group .btn:last-child {
+	@include border-radius(0 5px 5px 0);
+}
+.input-append .add-on,
+.input-append .btn,
+.input-append .btn-group {
+	margin-left: -1px;
+	@include border-radius(0);
+}
+.input-append .add-on:last-child,
+.input-append .btn:last-child,
+.input-append .btn-group:last-child > .dropdown-toggle {
+	@include border-radius(0 5px 5px 0);
+}
+
+.input-prepend.input-append input,
+.input-prepend.input-append select,
+.input-prepend.input-append .uneditable-input {
+	@include border-radius(0);
+}
+.input-prepend.input-append input + .btn-group .btn,
+.input-prepend.input-append select + .btn-group .btn,
+.input-prepend.input-append .uneditable-input + .btn-group .btn {
+	@include border-radius(0 5px 5px 0);
+}
+.input-prepend.input-append .add-on:first-child,
+.input-prepend.input-append .btn:first-child {
+	margin-right: -1px;
+	@include border-radius(5px 0 0 5px);
+}
+.input-prepend.input-append .add-on:last-child,
+.input-prepend.input-append .btn:last-child {
+	margin-right: -1px;
+	@include border-radius(0 5px 5px 0);
+}
+.input-prepend.input-append .btn-group:first-child {
+  	margin-left: 0;
+}
+
+input.search-query {
+	@include rem(padding-left,2.5rem);
+	background-image: url("../IMG/search.png");
+	background-repeat: no-repeat;
+	background-position: 10px center;
+	background-size: auto 50%;
+
+	&:focus {
+		background-image: url("../IMG/search.png");
+		background-repeat: no-repeat;
+		background-position: 10px center;
+		background-size: auto 50%;
+	}
+}
+
+.form-search input,
+.form-inline input,
+.form-horizontal input,
+.form-search textarea,
+.form-inline textarea,
+.form-horizontal textarea,
+.form-search select,
+.form-inline select,
+.form-horizontal select,
+.form-search .help-inline,
+.form-inline .help-inline,
+.form-horizontal .help-inline,
+.form-search .uneditable-input,
+.form-inline .uneditable-input,
+.form-horizontal .uneditable-input,
+.form-search .input-prepend,
+.form-inline .input-prepend,
+.form-horizontal .input-prepend,
+.form-search .input-append,
+.form-inline .input-append,
+.form-horizontal .input-append {
+  	display: inline-block;
+  	*display: inline;
+  	margin-bottom: 0;
+  	vertical-align: middle;
+  	*zoom: 1;
+}
+
+.form-search .hide,
+.form-inline .hide,
+.form-horizontal .hide {
+  	display: none;
+}
+
+.form-search label,
+.form-inline label,
+.form-search .btn-group,
+.form-inline .btn-group {
+  	display: inline-block;
+}
+
+.form-search .input-append,
+.form-inline .input-append,
+.form-search .input-prepend,
+.form-inline .input-prepend {
+  	margin-bottom: 0;
+}
+
+.form-search .radio,
+.form-search .checkbox,
+.form-inline .radio,
+.form-inline .checkbox {
+  	padding-left: 0;
+  	margin-bottom: 0;
+  	vertical-align: middle;
+}
+
+.form-search .radio input[type="radio"],
+.form-search .checkbox input[type="checkbox"],
+.form-inline .radio input[type="radio"],
+.form-inline .checkbox input[type="checkbox"] {
+  	float: left;
+  	@include rem(margin-right,0.5rem);
+  	margin-left: 0;
+}
+
+
+input[disabled],
+select[disabled],
+textarea[disabled],
+input[readonly],
+select[readonly],
+textarea[readonly] {
+  	cursor: not-allowed;
+  	background-color: rgba($light,0.6);
+}
+
+input[type="radio"][disabled],
+input[type="checkbox"][disabled],
+input[type="radio"][readonly],
+input[type="checkbox"][readonly] {
+  	background-color: transparent;
+}
+
+
+input:focus:invalid,
+textarea:focus:invalid,
+select:focus:invalid {
+  	color:$danger;
+}
+
+input:focus:invalid:focus,
+textarea:focus:invalid:focus,
+select:focus:invalid:focus {
+	border: 1px solid $danger;
+}
+
+
+.form-actions {
+  	@include rem(padding, 1.5rem 2.127659574468085% 1.75rem 2.127659574468085%);
+  	@include rem(margin, 1rem 0);
+  	background: rgba($light,0.2);
+  	border-top: 1px solid rgba(black,0.05);
+  	*zoom: 1;
+}
+.form-actions:before,
+.form-actions:after {
+  	display: table;
+  	line-height: 0;
+  	content: "";
+}
+.form-actions:after {
+  	clear: both;
+}
+
+
+.control-group {
+  	@include rem(margin-bottom,0.75rem);
+}
+legend + .control-group {
+  	@include rem(margin-top,1.25rem);
+    -webkit-margin-top-collapse: separate;
+}
+.form-horizontal .control-group {
+  	@include rem(margin-bottom,0.75rem);
+  	*zoom: 1;
+}
+.form-horizontal .control-group:before,
+.form-horizontal .control-group:after {
+  	display: table;
+  	line-height: 0;
+  	content: "";
+}
+.form-horizontal .control-group:after {
+  	clear: both;
+}
+
+.form-horizontal .control-label {
+  	float: left;
+  	@include rem(width,10rem);
+  	@include rem(padding-top,0.5rem);
+  	text-align: right;
+}
+.form-horizontal .controls {
+  	*display: inline-block;
+  	*padding-left: 20px;
+  	@include rem(margin-left, 11.5rem);
+  	*margin-left: 0;
+}
+.form-horizontal .controls:first-child {
+  	*padding-left: 180px;
+}
+.form-horizontal .help-block {
+  	margin-bottom: 0;
+}
+.form-horizontal input + .help-block,
+.form-horizontal select + .help-block,
+.form-horizontal textarea + .help-block,
+.form-horizontal .uneditable-input + .help-block,
+.form-horizontal .input-prepend + .help-block,
+.form-horizontal .input-append + .help-block {
+  	@include rem(margin-top,0.75rem);
+}
+.form-horizontal .form-actions {
+  	@include rem(padding-left,11.5rem);
+}
+
+.control-group.warning {
+	background:none;
+}
+.control-group.warning .control-label,
+.control-group.warning .help-block,
+.control-group.warning .help-inline {
+  	color: $warning;
+}
+.control-group.warning .checkbox,
+.control-group.warning .radio,
+.control-group.warning input,
+.control-group.warning select,
+.control-group.warning textarea {
+  	color: $warning;
+}
+.control-group.warning input,
+.control-group.warning select,
+.control-group.warning textarea {
+  	border-color: $warning;
+}
+.control-group.warning input:focus,
+.control-group.warning select:focus,
+.control-group.warning textarea:focus {
+  	border-color: $warning;
+}
+
+.control-group.error {
+	background: none;
+}
+.control-group.error .control-label,
+.control-group.error .help-block,
+.control-group.error .help-inline {
+  	color: $danger;
+}
+.control-group.error .checkbox,
+.control-group.error .radio,
+.control-group.error input,
+.control-group.error select,
+.control-group.error textarea {
+  	color: $danger;
+}
+.control-group.error input,
+.control-group.error select,
+.control-group.error textarea {
+  	border-color: $danger;
+}
+.control-group.error input:focus,
+.control-group.error select:focus,
+.control-group.error textarea:focus {
+  	border-color: $danger;
+}
+
+.control-group.success {
+	background: none;
+}
+.control-group.success .control-label,
+.control-group.success .help-block,
+.control-group.success .help-inline {
+  	color: $success;
+}
+.control-group.success .checkbox,
+.control-group.success .radio,
+.control-group.success input,
+.control-group.success select,
+.control-group.success textarea {
+  	color: $success;
+}
+.control-group.success input,
+.control-group.success select,
+.control-group.success textarea {
+  	border-color: $success;
+}
+.control-group.success input:focus,
+.control-group.success select:focus,
+.control-group.success textarea:focus {
+  	border-color: $success;
+}
+
+
+.control-group.info .control-label,
+.control-group.info .help-block,
+.control-group.info .help-inline {
+  	color: $secondary;
+}
+.control-group.info .checkbox,
+.control-group.info .radio,
+.control-group.info input,
+.control-group.info select,
+.control-group.info textarea {
+  	color: $secondary;
+}
+.control-group.info input,
+.control-group.info select,
+.control-group.info textarea {
+  	border-color: $secondary;
+}
+
+.control-group.info input:focus,
+.control-group.info select:focus,
+.control-group.info textarea:focus {
+  	border-color: $secondary;
+}

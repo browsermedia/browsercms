@@ -1,0 +1,240 @@
+/* LINK & BUTTON STYLES */
+a {
+	color: $primary;
+	text-decoration: none;
+
+	&:hover {
+		text-decoration: underline;
+		color: $secondary;
+	}
+}
+button {
+	cursor: pointer;
+}
+
+.btn {
+	display: inline-block;
+	margin: 0;
+	@include rem(padding,0 1.75rem);
+	@include rem(height,3.25rem);
+	@include rem(line-height,3.1rem);
+	@include rem(font-size,1.2rem);
+	font-family: 'Roboto', sans-serif;
+	font-weight: 500;
+	color: $dark;
+	background: darken($light,4%);
+	border: 1px solid rgba(black,0.05);
+	text-align: center;
+	@include border-radius(6px);
+	@include transition(background 0.2s);
+	@include rem(margin-bottom,0.75rem);
+	outline: 0;
+
+	&:hover {
+		color: $dark;
+		text-decoration: none;
+		background: darken($light,8%);
+	}
+	&.disabled:hover {
+		background: darken($light,4%);
+	}
+
+	&.disabled {
+		@include opacity(.5);
+		cursor: default;
+	}
+}
+
+.btn-large {
+	@include rem(padding,0 2.75rem);
+	@include rem(font-size,1.35rem);
+	@include rem(height,4rem);
+	@include rem(line-height,3.8rem);
+}
+.btn-small {
+	@include rem(padding,0 1.2rem);
+	@include rem(font-size,1rem);
+	@include rem(height,2.5rem);
+	@include rem(line-height,2.3rem);
+}
+.btn-mini {
+	@include rem(padding,0 0.875rem);
+	@include rem(font-size,0.875rem);
+	@include rem(height,2rem);
+	@include rem(line-height,1.9rem);
+}
+.btn-block {
+	width: 100%;
+}
+
+.btn-primary {
+	background: $primary;
+	color: white;
+	-webkit-font-smoothing: antialiased;
+
+	&:hover {
+		color: white;
+		-webkit-font-smoothing: antialiased;
+		background: darken($primary,3%);
+	}
+	&.disabled:hover {
+		background: $primary;
+	}
+}
+.btn-info {
+	background: lighten($secondary,10%);
+	color: white;
+	-webkit-font-smoothing: antialiased;
+
+	&:hover {
+		color: white;
+		-webkit-font-smoothing: antialiased;
+		background: lighten($secondary,6%);
+	}
+	&.disabled:hover{
+		background: lighten($secondary,10%);
+	}
+}
+.btn-inverse {
+	background: $dark;
+	color: white;
+	-webkit-font-smoothing: antialiased;
+
+	&:hover {
+		color: white;
+		-webkit-font-smoothing: antialiased;
+		background: darken($dark,5%);
+	}
+	&.disabled:hover {
+		background: $dark;
+	}
+}
+.btn-success {
+	background: $success;
+	color: white;
+	-webkit-font-smoothing: antialiased;
+
+	&:hover {
+		color: white;
+		-webkit-font-smoothing: antialiased;
+		background: darken($success,4%);
+	}
+	&.disabled:hover {
+		background: $success;
+	}
+}
+.btn-warning {
+	background: $warning;
+	color: white;
+	-webkit-font-smoothing: antialiased;
+
+	&:hover {
+		color: white;
+		-webkit-font-smoothing: antialiased;
+		background: darken($warning,3%);
+	}
+	&.disabled:hover {
+		background: $warning;
+	}
+}
+.btn-danger {
+	background: $danger;
+	color: white;
+	-webkit-font-smoothing: antialiased;
+
+	&:hover {
+		color: white;
+		-webkit-font-smoothing: antialiased;
+		background: darken($danger,6%);
+	}
+	&.disabled:hover {
+		background: $danger;
+	}
+}
+.btn-link {
+	background: none;
+	border: 0;
+	color: $primary;
+	@include transition(0);
+
+	&:hover {
+		text-decoration: underline;
+		color: $secondary;
+		background: none;
+	}
+	&.disabled:hover {
+		color: $primary;
+		text-decoration: none;
+		background: none;
+	}
+}
+
+button.btn,
+input[type="submit"].btn {
+  	*padding-top: 3px;
+  	*padding-bottom: 3px;
+}
+
+button.btn::-moz-focus-inner,
+input[type="submit"].btn::-moz-focus-inner {
+  	padding: 0;
+  	border: 0;
+}
+
+button.btn.btn-large,
+input[type="submit"].btn.btn-large {
+  	*padding-top: 7px;
+  	*padding-bottom: 7px;
+}
+
+button.btn.btn-small,
+input[type="submit"].btn.btn-small {
+  	*padding-top: 3px;
+  	*padding-bottom: 3px;
+}
+
+button.btn.btn-mini,
+input[type="submit"].btn.btn-mini {
+  	*padding-top: 1px;
+  	*padding-bottom: 1px;
+}
+
+.btn-link,
+.btn-link:active,
+.btn-link[disabled] {
+  	background-color: transparent;
+  	background-image: none;
+}
+
+
+.btn-group {
+  	position: relative;
+  	display: inline-block;
+  	*display: inline;
+  	*margin-left: .3em;
+  	font-size: 0;
+  	white-space: nowrap;
+  	vertical-align: middle;
+  	*zoom: 1;
+
+  	& .btn {
+  		@include border-radius(0);
+  		margin-left: -1px;
+
+  		&:first-child,
+  		&:first-of-type {
+  			@include border-radius(5px 0 0 5px);
+  			margin-left: 0;
+  		}
+  		&:last-child,
+  		&:last-of-type {
+  			@include border-radius(0 5px 5px 0);
+  		}
+  	}
+}
+.btn-group:first-child {
+  	*margin-left: 0;
+}
+.btn-group + .btn-group {
+  margin-left: 5px;
+}

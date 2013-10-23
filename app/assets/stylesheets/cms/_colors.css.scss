@@ -1,0 +1,20 @@
+/* COLORS */
+.color-block {
+	@include rem(height,9rem);
+	@include border-radius(4px);
+}
+.primary-back {
+	background-color: $primary;
+}
+.secondary-back {
+	background-color: $secondary;
+}
+.dark-back {
+	background-color: $dark;
+}
+.gray-back {
+	background-color: $gray;
+}
+.light-back {
+	background-color: $light;
+}
