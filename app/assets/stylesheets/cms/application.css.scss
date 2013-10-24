@@ -1,8 +1,8 @@
 @import "bootstrap";
 @import "bootstrap-responsive";
 
-@import "cms/bootstrap-customizations";
-
+//@import "cms/bootstrap-customizations";
+//@import "cms/sitemap";
 
 @charset "utf-8";
 
@@ -118,29 +118,29 @@ body {
 
 
 /* IMPORTING STYLES */
-@import 'cms/_base-grid';
-@import 'cms/_text';
-@import 'cms/_images';
-@import 'cms/_lists';
-@import 'cms/_buttons';
-@import 'cms/_tables';
-@import 'cms/_forms';
-@import 'cms/_dropdown';
-@import 'cms/_progress';
-@import 'cms/_alerts';
-@import 'cms/_glyph';
+@import 'cms/styles/_base-grid';
+@import 'cms/styles/_text';
+@import 'cms/styles/_images';
+@import 'cms/styles/_lists';
+@import 'cms/styles/_buttons';
+@import 'cms/styles/_tables';
+@import 'cms/styles/_forms';
+@import 'cms/styles/_dropdown';
+@import 'cms/styles/_progress';
+@import 'cms/styles/_alerts';
+@import 'cms/styles/_glyph';
 
 
 
 
 /* PAGE STYLE & LAYOUT IMPORTS */
-@import '_base';
+@import 'cms/_base';
 
-@import '_colors';
-@import '_buttons';
-@import '_forms';
+@import 'cms/_colors';
+@import 'cms/_buttons';
+@import 'cms/_forms';
 
-@import '_nav';
-@import '_main-area';
-@import '_sitemap';
-@import '_sidebar';
+@import 'cms/_nav';
+@import 'cms/_main-area';
+@import 'cms/_sitemap';
+@import 'cms/_sidebar';
