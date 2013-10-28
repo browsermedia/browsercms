@@ -16,17 +16,10 @@ jQuery(function($){
 </script>
 <% end %>
 <% use_page_title "Add A New Page" %>
-<%= render 'cms/section_nodes/button_bar' %>
 <div class="padded row-fluid">
     <h1 class="span6"><%= page_title %></h1>
     <span class="span6 top-buttons">
-        <button type="submit" class="right btn btn-small btn-primary">Publish</button>
-
-        <div class="btn-group right">
-          <button type="submit" class="btn btn-small">Cancel</button>
-          <button type="submit" class="btn btn-small">Preview</button>
-          <button type="submit" class="btn btn-small">Save Draft</button>
-        </div>
+      <%= render 'button_bar' %>
     </span>
 </div>
 <div class="padded row-fluid">
@@ -39,9 +32,9 @@ jQuery(function($){
   <div class="span4">
     <div class="sidebar-block">
       <h4 class="gray">Status &nbsp; <span class="dark">Draft</span></h4>
-      <h4 class="gray label">Publish Date</h4>
+      <h4 class="gray">Publish Date</h4>
       <h4>June 31, 2013 <a href="#" class="add-link right">Edit</a></h4>
-      <h4 class="gray label">Visibility</h4>
+      <h4 class="gray">Visibility</h4>
       <select class="input-block-level">
         <option selected="">Public</option>
         <option>Hidden</option>
@@ -50,7 +43,7 @@ jQuery(function($){
     </div>
 
     <div class="sidebar-block">
-      <h4 class="gray label">Assign This Page</h4>
+      <h4 class="gray">Assign This Page</h4>
       <select class="input-block-level">
         <option selected="">Select A Name</option>
         <option>Kyle Conrad</option>
@@ -66,7 +59,7 @@ jQuery(function($){
     </div>
 
     <div class="sidebar-block">
-      <h4 class="gray label">Review Date</h4>
+      <h4 class="gray">Review Date</h4>
       <h4>December 12, 2013 <a href="#" class="add-link right">Edit</a></h4>
     </div>
 
@@ -108,4 +101,9 @@ jQuery(function($){
       </div>
     </div>
   </div>
+</div>
+<div class="padded row-fluid">
+    <span class="span6 top-buttons pull-right">
+      <%= render 'button_bar' %>
+    </span>
 </div>

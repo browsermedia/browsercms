@@ -220,6 +220,7 @@ input[type="submit"].btn.btn-mini {
   	& .btn {
   		@include border-radius(0);
   		margin-left: -1px;
+        font-size: 1rem;
 
   		&:first-child,
   		&:first-of-type {

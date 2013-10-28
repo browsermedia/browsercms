@@ -10,6 +10,8 @@ module Cms
 
     helper Cms::RenderingHelper
 
+    layout 'cms/newadmin'
+
     def new
       @page = Page.new(:section => @section, :cacheable => true)
       if @section.child_nodes.count < 1

@@ -1,5 +1,5 @@
-@import "bootstrap";
-@import "bootstrap-responsive";
+//@import "bootstrap";
+//@import "bootstrap-responsive";
 
 // For classes that need to explicitly extend bootstrap classes.
 // They must go in this file.
@@ -96,3 +96,5 @@ textarea,
 #asset_add_uploader {
   display: none;
 }
+
+.label {background: none; }
