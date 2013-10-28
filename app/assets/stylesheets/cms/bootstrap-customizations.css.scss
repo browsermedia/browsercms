@@ -1,5 +1,5 @@
-@import "bootstrap";
-@import "bootstrap-responsive";
+//@import "bootstrap";
+//@import "bootstrap-responsive";
 
 #form-preview {
 
@@ -113,3 +113,5 @@ textarea,
   @extend .alert-error;
   @extend .alert;
 }
+
+.label {background: none; }

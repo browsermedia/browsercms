@@ -114,8 +114,8 @@ body {
 @import "cms/includes/_rem";
 @import "cms/includes/_animation";
 
-@import "cms/sitemap";
-
+//@import "cms/sitemap";
+@import "cms/bootstrap-customizations";
 
 /* IMPORTING STYLES */
 @import 'cms/styles/_base-grid';

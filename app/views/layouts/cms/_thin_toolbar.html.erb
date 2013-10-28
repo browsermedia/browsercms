@@ -1,8 +1,23 @@
-<div class="navbar navbar-fixed-top">
-  <div class="navbar-inner">
-    <div class="container">
-      <ul class="nav">
-        <li class="dropdown">
+
+
+
+  <div class="logged-in">
+    <div class="container center-column">
+      <ul class="subnav right">
+        <li>Toral Contractor</li>
+        <li><a href="#">Settings</a></li>
+        <li><a href="#">Help</a></li>
+        <li><a href="#">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="primary-nav">
+    <div class="container center-column">
+      <a href="#"><img src="/assets/cms/logo.png" class="main-logo"></a>
+
+      <ul class="mainnav">
+        <li>
           <a href="#">
             <%# This nested li syntax causes functional tests to fail. (i.e. ignoring attempt to close li with div)  %>
             <%= nav_link_to image_tag("cms/home.png"), "/" %>
@@ -10,7 +25,7 @@
           <ul class="dropdown-menu">
           </ul>
         </li>
-        <li class="dropdown">
+        <li>
           <a href="#"
              class="dropdown-toggle"
              data-toggle="dropdown">
@@ -24,7 +39,7 @@
             <%= nav_link_to "Redirects", cms.redirects_path %>
           </ul>
         </li>
-        <li class="dropdown">
+        <li>
           <a href="#"
              class="dropdown-toggle"
              data-toggle="dropdown">
@@ -43,7 +58,7 @@
             <% end %>
           </ul>
         </li>
-        <li class="dropdown">
+        <li>
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<b class="caret"></b></a>
           <ul class="dropdown-menu">
             <%= nav_link_to "Users", cms.users_path %>
@@ -56,65 +71,29 @@
             <%= nav_link_to "Clear Page Cache", cms.cache_path %>
             <%= nav_link_to "Email Messages", cms.email_messages_path %>
             <% Rails.application.config.cms.tools_menu.each do |menu_item| %>
-            <%= nav_link_to(menu_item[:name], self.send(menu_item[:engine]).send(menu_item[:route_name])) %>
-            <% end %>
-          </ul>
-        </li>
-        <li>
-        <form class="navbar-search">
-          <input type="text" class="search-query" placeholder="Search...">
-        </form>
-        </li>
-      </ul>
-      <ul class="nav pull-right">
-        <li>
-          <span id="notifications-badge" class="badge" title="Notifications" data-content="You have 0 notifications. ">0</span>
-        </li>
-        <li class="dropdown">
-          <a href="#"
-             class="dropdown-toggle"
-             data-toggle="dropdown">
-            <%= image_tag "cms/user.png" %>
-            <b class="caret"></b>
-          </a>
-          <ul class="dropdown-menu">
-            <%= nav_link_to current_user.full_name, cms.edit_user_path(current_user) %>
-            <li class="divider">
-              <%= nav_link_to "Logout", cms.logout_path, :class => "http_delete" %>
-          </ul>
-        </li>
-        <li class="btn-group pull-right">
-          <%= menu_button "New", new_button_path, id: 'new-content-button' %>
-          <a href="#" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-            <b class="caret"></b>
-          </a>
-          <ul class="dropdown-menu">
-            <%= render 'cms/toolbar/new_pages_menu'%>
-            <% modules = Cms::ContentType.available_by_module
-               modules.keys.sort.each_with_index do |module_name, i| %>
-                <%= divider_tag(i) %>
-                <% modules[module_name].each do |type| %>
-                    <%= nav_link_to h(type.display_name), new_engine_aware_path(type), id: "create_new_#{type.param_key}" %>
-                <% end -%>
+                <%= nav_link_to(menu_item[:name], self.send(menu_item[:engine]).send(menu_item[:route_name])) %>
             <% end %>
           </ul>
         </li>
       </ul>
-    </div>
-  </div>
-  <div class="navbar-inner">
-    <div class="container">
-      <%= yield :button_bar %>
-      <% flash_class, flash_message = flash.to_a.first %>
 
-      <%# This needs styling work %>
-      <div id="flash" style="display: none">
-        <div id="message" class="<%= flash_class %>">
-          <% if flash_message %>
-              <p><%= flash_message %></p>
+
+      <div class="btn-group">
+        <%= menu_button "New", new_button_path, id: 'new-content-button', class: 'btn btn-primary', tabindex: '-1' %>
+        <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" tabindex="-1">
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu pull-right">
+          <%= render 'cms/toolbar/new_pages_menu'%>
+          <% modules = Cms::ContentType.available_by_module
+             modules.keys.sort.each_with_index do |module_name, i| %>
+              <%= divider_tag(i) %>
+              <% modules[module_name].each do |type| %>
+                  <%= nav_link_to h(type.display_name), cms_new_path_for(type), id: "create_new_#{type.key}" %>
+              <% end -%>
           <% end %>
-        </div>
+        </ul>
+
       </div>
     </div>
   </div>
-</div>
