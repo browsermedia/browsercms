@@ -125,5 +125,6 @@
         line-height: 1;
         right: 2px;
         @include rem(font-size,1.25rem);
+      color: #FFF; font-weight: normal;
     }
 }

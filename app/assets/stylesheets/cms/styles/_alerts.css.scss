@@ -124,6 +124,11 @@
         top: 0;
         line-height: 1;
         right: 2px;
-        @include rem(font-size,1.25rem);
+        color: #FFF; font-weight: normal;
+        opacity: .8;
+        font-size: 1.5rem;
+        text-shadow: none;
+        padding: 2px 6px 3px;
+
     }
 }
