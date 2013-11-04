@@ -78,6 +78,9 @@ input[type="color"],
 	color: lighten($dark,10%);
 	@include border-radius(5px);
 }
+input[type="date"] {
+  min-width: 166px;
+}
 
 input,
 textarea,

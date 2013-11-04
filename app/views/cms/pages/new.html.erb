@@ -16,13 +16,13 @@ jQuery(function($){
 </script>
 <% end %>
 <% use_page_title "Add A New Page" %>
-<div class="padded row-fluid">
+<div class="row-fluid">
     <h1 class="span6"><%= page_title %></h1>
     <span class="span6 top-buttons">
       <%= render 'button_bar' %>
     </span>
 </div>
-<div class="padded row-fluid">
+<div class="row-fluid">
     <div class="span8 main-content">
         <%= simple_form_for(@page) do |f| %>
             <%= hidden_field_tag :section_id, @page.section_id %>
@@ -102,7 +102,7 @@ jQuery(function($){
     </div>
   </div>
 </div>
-<div class="padded row-fluid">
+<div class="row-fluid">
     <span class="span6 top-buttons pull-right">
       <%= render 'button_bar' %>
     </span>
