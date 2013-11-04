@@ -15,6 +15,7 @@ button {
 .btn {
 	display: inline-block;
 	margin: 0;
+  box-shadow: none;
 	@include rem(padding,0 1.75rem);
 	@include rem(height,3.25rem);
 	@include rem(line-height,3.1rem);
