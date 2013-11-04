@@ -178,6 +178,7 @@
 
 		.btn {
 			margin-bottom: 0;
+          box-shadow: none;
 			@include rem(height,3.75rem);
 
 			&:first-child {
