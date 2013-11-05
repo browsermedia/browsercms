@@ -49,7 +49,7 @@ $danger: #e74c3c;
 /* RESET */
 html {
   min-height: 100%;
-  height: 100%;
+  //height: 100%;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
 
@@ -60,10 +60,12 @@ html {
   }
 }
 body {
-  height: 100%;
+  //height: 100%;
   width: 100%;
   position: relative;
   overflow-x: hidden;
+  background: $light;
+
 }
 * {
   @include box-sizing(border-box);
