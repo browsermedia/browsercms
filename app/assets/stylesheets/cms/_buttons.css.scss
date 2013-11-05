@@ -47,3 +47,12 @@
 .bottom-form-btn {
 	padding-bottom: 0;
 }
+
+.btn-group {
+  .btn-primary {
+    font-size: 1.2rem;
+  }
+  .dropdown-toggle {
+    padding: 0 1.75rem !important;
+  }
+}
