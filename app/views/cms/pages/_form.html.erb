@@ -1,8 +1,8 @@
 
 
-<%= f.input :name, input_html: { class: 'input input-block-level input-xxlarge'} %>
-<%= f.input :title, input_html: { class: 'input input-block-level input-xxlarge'}, :hint => "(Leave blank if same as name)" %>
-<%= f.input :path, input_html: { class: 'input input-block-level input-xxlarge'} %>
+<%= f.input :name, label: false, placeholder: 'Page Name', input_html: { class: 'input input-block-level input-xxlarge'} %>
+<%= f.input :title, label: false, placeholder: 'Page Title', input_html: { class: 'input input-block-level input-xxlarge'}, :hint => "(Leave blank if same as name)" %>
+<%= f.input :path, label: false, placeholder: 'Page Path', input_html: { class: 'input input-block-level input-xxlarge'} %>
 <%= f.input :template_file_name, input_html: { class: 'input input-block-level input-xxlarge'}, collection: Cms::PageTemplate.options, label: "Template", as: :select, include_blank: false %>
 
 <%= f.input :cacheable, input_html: { class: 'input input-block-level input-xxlarge'}, label: "Cache Enabled?" %>
@@ -10,5 +10,5 @@
 <%= f.input :archived, input_html: { class: 'input input-block-level input-xxlarge'}, label: "Archived?", disabled: (!current_user.able_to?(:publish_content)) %>
 <%= f.input :description, input_html: { class: 'input input-block-level input-xxlarge'}, input_html: {:size=>"80x5"}, :hint=>"(Optional) Used for the meta-description element of the page." %>
 <%= f.input :keywords, input_html: { class: 'input input-block-level input-xxlarge'}, input_html: {:size=>"80x3"}, :hint=>"(Optional) Used for the meta-keyword meta element of the page." %>
-<%= f.input :language, input_html: { class: 'input input-block-level input-xxlarge'} %>
+<%= f.input :language, label: false, placeholder: 'Language', input_html: { class: 'input input-block-level input-xxlarge'} %>
 <%= f.button :submit, "Save" %>
