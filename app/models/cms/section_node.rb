@@ -1,8 +1,9 @@
 require 'ancestry'
 
 class Cms::SectionNode < ActiveRecord::Base
- #attr_accessible :node, :section, :parent, :node_id, :node_type
   has_ancestry
+
+  validates :slug, uniqueness: { scope: :node_type }, unless: lambda { |sn| sn.slug.blank?}
 
   # This is the parent section for this node
   # For backwards compatiblity

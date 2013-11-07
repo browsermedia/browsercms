@@ -25,18 +25,23 @@ class AnotherAddressable < ActiveRecord::Base;
 end
 
 describe Cms::Concerns::Addressable do
+  TESTING_TABLES = []
 
   def create_testing_table(name, &block)
+
     ActiveRecord::Base.connection.instance_eval do
-      drop_table(name) if table_exists?(name)
-      create_table(name, &block)
-      change_table name do |t|
-        t.timestamps
+      unless table_exists?(name)
+        TESTING_TABLES << name
+        create_table(name, &block)
+        change_table name do |t|
+          t.timestamps
+        end
       end
     end
   end
 
-  before :all do
+
+  before do
     create_testing_table :is_addressables do |t|
       t.string :name
     end
@@ -50,11 +55,22 @@ describe Cms::Concerns::Addressable do
     end
   end
 
+  # Delete any testing tables we created, so next run can create them.
+  MiniTest::Unit.after_tests() {
+    ActiveRecord::Base.connection.instance_eval do
+      TESTING_TABLES.each do |name|
+        drop_table(name)
+      end
+    end
+  }
+
+
   let(:addressable) { IsAddressable.new }
   describe '#is_addressable' do
     it "should have parent relationship" do
       WannabeAddressable.expects(:has_one)
       WannabeAddressable.expects(:after_save)
+      WannabeAddressable.expects(:after_validation)
       WannabeAddressable.is_addressable
       WannabeAddressable.new.must_respond_to :parent
     end
@@ -72,20 +88,6 @@ describe Cms::Concerns::Addressable do
       p.path.must_equal "/custom"
     end
 
-    it "should allow the page template to be used to display a block" do
-      class SpecifyingTemplate < ActiveRecord::Base
-        is_addressable path: "/templates", template: 'subpage'
-      end
-      SpecifyingTemplate.layout.must_equal 'templates/subpage'
-    end
-
-    it "should use the default template if non is specified" do
-      class UsingDefaultTemplate < ActiveRecord::Base
-        is_addressable path: "/templates"
-      end
-      UsingDefaultTemplate.layout.must_equal 'templates/default'
-    end
-
     it "should not require a slug unless a path was specified" do
       HasSelfDefinedPath.requires_slug?.must_equal false
     end
@@ -95,6 +97,29 @@ describe Cms::Concerns::Addressable do
     end
   end
 
+  describe "#layout" do
+    it "should pull template from class" do
+      class SpecifyingTemplate < ActiveRecord::Base
+        is_addressable path: "/templates", template: 'subpage'
+      end
+      SpecifyingTemplate.layout.must_equal 'templates/subpage'
+    end
+
+    it "should use the default template if none is specified" do
+      class UsingDefaultTemplate < ActiveRecord::Base
+        is_addressable path: "/templates"
+      end
+      UsingDefaultTemplate.layout.must_equal 'templates/default'
+    end
+
+    it "should use config to override specified template" do
+      class Dummy::OverrideSpecifiedTemplate < ActiveRecord::Base
+        is_addressable template: 'subpage'
+      end
+      Rails.configuration.cms.expects(:templates).returns('dummy/override_specified_template' => "special")
+      Dummy::OverrideSpecifiedTemplate.layout.must_equal 'templates/special'
+    end
+  end
   describe "#can_have_parent?" do
     it "should be false for non-addressable blocks" do
       WannabeAddressable.addressable?.must_equal false
@@ -129,6 +154,15 @@ describe Cms::Concerns::Addressable do
     it "setting it should mark the record as changed, so it will persist" do
       addressable.slug = 'new'
       addressable.changed?.must_equal true
+    end
+
+    it "should be unique for each class" do
+      first = IsAddressable.create(slug: "first", parent_id: root_section)
+      duplicate = IsAddressable.create(slug: "first", parent_id: root_section)
+
+      duplicate.wont_be :valid?
+      duplicate.section_node.errors[:slug].must_equal ["has already been taken"]
+      duplicate.errors[:slug].must_equal duplicate.section_node.errors[:slug]
     end
   end
 

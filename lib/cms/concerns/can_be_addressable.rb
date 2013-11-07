@@ -10,7 +10,7 @@ module Cms
       # @option options [String] :no_dynamic_path Set as true if the Record has a :path attribute managed as a column in the db. (Default: false)
       # @option options [Symbol] :destroy_if Name of a custom method used to determine when this object should be destroyed. Rather than dependant: destroy to determine if the section node should be destroyed when this object is.
       def is_addressable(options={})
-        has_one_options = {as: :node, inverse_of: :node, class_name: 'Cms::SectionNode'}
+        has_one_options = {as: :node, inverse_of: :node, class_name: 'Cms::SectionNode', validate: true}
         unless options[:destroy_if]
           has_one_options[:dependent] = :destroy
         else
@@ -19,11 +19,19 @@ module Cms
         end
 
         has_one :section_node, has_one_options
-
         # For reasons that aren't clear, just using :autosave doesn't work.
         after_save do
           if section_node && section_node.changed?
             section_node.save
+          end
+        end
+
+        after_validation do
+          # Copy errors from association for slug
+          if section_node && !section_node.valid?
+            section_node.errors[:slug].each do |message|
+              errors.add(:slug, message)
+            end
           end
         end
 
@@ -132,7 +140,10 @@ module Cms
         # Can be specified as is_addressable template: 'subpage'
         # @return [String] template/default unless template was set.
         def layout
-          if @template
+          found = Rails.configuration.cms.templates[name.underscore]
+          if found
+            "templates/#{found}"
+          elsif @template
             "templates/#{@template}"
           else
             "templates/default"

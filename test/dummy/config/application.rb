@@ -51,6 +51,8 @@ module Dummy
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    # Verify that default content templates can be overridden.
+    config.cms.templates['dummy/product'] = 'product'
 
     config.secret_key_base = 'a-fake-key-to-avoid-deprecation-warnings-since-this-is-a-dummy-app-that-wont-be-deployed'
   end

@@ -78,6 +78,12 @@ module Cms
       # By default, this is based on the site_domain, i.e. mailbot@example.com
       app.config.cms.mailbot = :default
 
+      # Allows Addressable content types to set which template will be used for page layouts.
+      # This takes precedence over the :template attribute set on models. Keys are looked up based on Class.name.underscore
+      # Example:
+      #   config.cms.templates['cms/form'] = 'my-form-layout' # app/views/layouts/templates/my-form-layout
+      app.config.cms.templates = {}
+
       # Determines which ckeditor file will be used to configure all instances.
       # There should be at most ONE of these, so use manifest files which require the below one to augement it.
       app.config.cms.ckeditor.configuration_file = 'bcms/ckeditor_standard_config.js'

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= page_title %></title>
+    <%= yield :html_head %>
+  </head>
+  <body style="margin: 0; padding: 0; text-align: center;">
+    <div id="wrapper" style="width: 700px; margin: 0 auto; text-align: left; padding: 30px">
+      This is the special product's template.
+      <h1><%= page_header %></h1>
+      <%= container :main %>
+    </div>
+  </body>
+</html>
