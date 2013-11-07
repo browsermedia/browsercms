@@ -45,7 +45,7 @@ module Cms
 
       # Set default configurations for Attachments.
       def initialize
-        self.url = ":attachment_file_path"
+        self.url = Rails.configuration.cms.attachments[:url] || ":attachment_file_path"
         self.path = ":attachments_root/:id_partition/:style/:fingerprint"
         self.styles = {}
         self.processors = [:thumbnail]
