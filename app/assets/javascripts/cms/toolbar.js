@@ -1,7 +1,7 @@
 //
 //  A manifest file for all CMS toolbar related js.
 //= require jquery
-//= require jquery-ui
+//= require jquery.ui.all
 //= require jquery.cookie
 //= require jquery.selectbox
 //= require jquery.taglist
