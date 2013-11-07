@@ -5,7 +5,7 @@ This release includes the following features:
 
 * User Interface Redesign - Complete UI rework to use Bootstrap.
 * True In Context Editing - Editors can directly edit Html content and page titles using CKEditor's inline capability.
-* Form Builder - Editors can create forms to collect information from site visitors. Forms are addressable content pages.
+* Form Builder [#124] - Allow editors to create form pages that can be used to collect information from visitors
 * Addressable Content Blocks - Custom content blocks (i.e. Product, Event, News Articles) can be created directly as pages in the sitemap.
 * Refined Content API - Make content blocks closer in behavior to ActiveRecord.
 * Improved Template Storage - Templates stored in the database no longer need to be written out to the file system. This should make it easier to deploy CMS apps to Heroku.
@@ -48,6 +48,20 @@ Content blocks can created with as their own pages. To make a block addressable,
 class Product < ActiveRecord::Base
   is_addressable path: "/products", template: "product"
 end
+
+Form Builder
+------------
+
+Allow editors to create form pages that can be used to collect information from visitors (i.e. Contact Us, Support requests, etc). Basically, any quick collect a few fields using a consistent form styling.
+
+h2. Features include:
+
+1. Forms can have multiple fields which can be text fields, textareas or multiple choice dropdowns. Field management is done via AJAX and fields can be added/reordered/removed without leaving the page.
+2. Fields can be required, have instructions and default values. Choices are added as lines of text for each dropdown field. Dropdowns use the first value as the default.
+3. Entries are stored in the database and can optionally notify someone via email when new submissions are created.
+4. Editors can manage entries via the admin (CRUD)
+5. Visitors can be redirected to another URL after submitting their entry or display a customizable 'success' message.
+6. Forms generate the HTML display using bootstrap's CSS by default. Projects can customize this in the application.rb with config.cms.form_builder_css
 
 Refined Content API
 -------------------
