@@ -1,7 +1,7 @@
-<button type="submit" class="right btn btn-small btn-primary">Publish</button>
-
+<%= f.button :submit, "Publish", class: 'right btn btn-small btn-primary' %>
 <div class="btn-group right">
-  <button type="submit" class="btn btn-small">Cancel</button>
-  <button type="submit" class="btn btn-small">Preview</button>
-  <button type="submit" class="btn btn-small">Save Draft</button>
+  <%= f.button :submit, 'Cancel', class: 'btn btn-small' %>
+  <%# Functionality for Preview doesn't exist yet. Needs more definition.
+  = f.button :submit, 'Preview', class: 'btn btn-small' %>
+  <%= f.button :submit, 'Save Draft', class: 'btn btn-small' %>
 </div>

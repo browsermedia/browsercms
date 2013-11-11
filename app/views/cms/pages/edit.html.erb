@@ -1,17 +1,2 @@
-<% use_page_title "Edit Properties / '#{h(@page.name)}' Page" %>
-<%= content_for :button_bar do %>
-    <%= link_to "Edit Page Content", @page.path, :class=>"btn btn-primary pull-left" %>
-<% end %>
-<%= simple_form_for(@page) do |f| %>
-  <% if @other_version %>
-    <%= render :partial => 'cms/shared/version_conflict_error', :locals => {:other_version => @other_version, :your_version => @page} %>
-    <%= f.hidden_field :lock_version, :value => @other_version.lock_version %>
-  <% else %>
-    <%= f.hidden_field :lock_version %>
-  <% end %>
-  
-  <%= render :partial => 'form', :locals => {:f => f} %>
-  <% if @other_version %>
-    <%= render :partial => "cms/shared/version_conflict_diff", :locals => {:other_version => @other_version, :your_version => @page} %>
-  <% end %>
-<% end %>
+<% use_page_title "Configure Page" %>
+<%= render 'form' %>

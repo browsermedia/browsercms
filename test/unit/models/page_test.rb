@@ -28,7 +28,7 @@ module Cms
       assert @page.save
       assert_path_is_unique
 
-      @page.update_attributes(name: "Test v2", publish_on_save: false)
+      @page.update(name: "Test v2", publish_on_save: false)
       page = Cms::Page.find_live_by_path("/test")
       assert_equal "Test", page.name
       assert_equal 1, page.version
@@ -91,7 +91,7 @@ module Cms
     test "live? using latest version" do
       assert @page.live?
 
-      @page.update_attributes(:name => "New", :publish_on_save => false)
+      @page.update(:name => "New", :publish_on_save => false)
       @page.reload
       refute @page.live?
 
@@ -101,7 +101,7 @@ module Cms
     end
 
     test "live? as_of_version" do
-      @page.update_attributes(:name => "New")
+      @page.update(:name => "New")
       @page.publish!
 
       v1 = @page.as_of_version(1)
@@ -179,7 +179,7 @@ module Cms
 
     test "Make a new page with a path shouldn't create section_node'" do
       section = create(:section)
-      original_count =  Cms::SectionNode.count
+      original_count = Cms::SectionNode.count
       Cms::Page.new(name: 'New', path: "/", parent: section)
       assert_equal original_count, Cms::SectionNode.count, "Bug in can_be_addressable means its creating section_node as side effect"
     end
@@ -281,7 +281,7 @@ module Cms
       assert_equal 2, @page.version
       assert_equal 1, @page.connectors.for_page_version(@page.version).count
 
-      @block.update_attributes(:content => "Something else")
+      @block.update(:content => "Something else")
       @page.publish!
       reset(:page, :block)
 
@@ -307,6 +307,49 @@ module Cms
 
   end
 
+  class PageVisibilityTest < ActiveSupport::TestCase
+
+    def page
+      @page ||= build(:page, archived: true, hidden: true)
+    end
+
+    test ".permitted_params" do
+      assert Cms::Page.permitted_params.include? :visibility
+    end
+
+    test "#visiblities" do
+      refute page.visibilities.empty?
+    end
+
+    test "#visibility" do
+      assert_equal :archived, build(:page, archived: true, hidden: false).visibility
+      assert_equal :archived, build(:page, archived: true, hidden: true).visibility
+      assert_equal :public, build(:page, archived: false, hidden: false).visibility
+      assert_equal :hidden, build(:page, archived: false, hidden: true).visibility
+    end
+
+    test "#visibility= public" do
+      page.visibility = 'public'
+      assert_equal :public, page.visibility
+      refute page.archived?
+      refute page.hidden?
+    end
+
+    test "#visibility= archived" do
+      page.visibility = 'archived'
+      assert_equal :archived, page.visibility
+      assert page.archived?
+      refute page.hidden?
+    end
+
+    test "#visibility= hidden" do
+      page.visibility = 'hidden'
+      assert_equal :hidden, page.visibility
+      refute page.archived?
+      assert page.hidden?
+    end
+  end
+
   class UserStampingTest < ActiveSupport::TestCase
 
     def setup
@@ -327,7 +370,7 @@ module Cms
 
       Cms::User.current = @new_guy
 
-      page.update_attributes(:name => "Something Different", :publish_on_save => false)
+      page.update(:name => "Something Different", :publish_on_save => false)
 
       assert_equal "Something Different", page.draft.name
       assert_equal "Original Value", page.reload.name
@@ -402,7 +445,7 @@ module Cms
       connector_count = Cms::Connector.count
 
       page_version = @page.version
-      @page.update_attributes(name: "Foo", publish_on_save: false)
+      @page.update(name: "Foo", publish_on_save: false)
 
       assert_incremented connector_count, Cms::Connector.count
       assert_equal page_version, @page.version
@@ -414,7 +457,7 @@ module Cms
       connector_count = Cms::Connector.count
       page_version = @page.version
 
-      @page.update_attributes(:name => @page.name)
+      @page.update(:name => @page.name)
 
       assert_equal connector_count, Cms::Connector.count
 
@@ -581,7 +624,7 @@ module Cms
 
     def test_editing_one_of_the_blocks_creates_a_new_version_of_the_page
       page_version = @page.draft.version
-      @foo_block.update_attributes(:name => "Something Else")
+      @foo_block.update(:name => "Something Else")
       assert_incremented page_version, @page.draft.version
     end
 
@@ -636,7 +679,7 @@ module Cms
     def test_updating_one_of_the_blocks_and_reverting_to_version_before_the_update
 
       target_version = @page.draft.version
-      @foo_block.update_attributes!(:name => "Foo V2", :publish_on_save => false)
+      @foo_block.update!(:name => "Foo V2", :publish_on_save => false)
       @page.reload
 
       page_version = @page.draft.version
@@ -808,7 +851,7 @@ module Cms
       assert_equal 2, @page2.draft.version
 
       # 5. Edit the block (Page 1, v3, Page 2, v3, Block v2)
-      @block.update_attributes!(:name => "Block v2", :publish_on_save => false)
+      @block.update!(:name => "Block v2", :publish_on_save => false)
       reset(:page1, :page2, :block)
       assert_equal 3, @page1.draft.version
       assert_equal 3, @page2.draft.version
@@ -848,7 +891,7 @@ module Cms
       assert_equal 1, @block.draft.version
 
       # 4. Edit Block A (Page A v4, Block A v3)
-      @block.update_attributes!(:name => "Block 2", :publish_on_save => false)
+      @block.update!(:name => "Block 2", :publish_on_save => false)
       reset(:page, :block)
       assert_equal 2, @page.version
       assert_equal 3, @page.draft.version

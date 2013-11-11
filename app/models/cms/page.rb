@@ -12,12 +12,11 @@ class Cms::Page < ActiveRecord::Base
   is_userstamped
   is_versioned
 
-  has_many :connectors, ->{order("#{Cms::Connector.table_name}.container, #{Cms::Connector.table_name}.position")}, :class_name => 'Cms::Connector'
+  has_many :connectors, -> { order("#{Cms::Connector.table_name}.container, #{Cms::Connector.table_name}.position") }, :class_name => 'Cms::Connector'
   has_many :page_routes, :class_name => 'Cms::PageRoute'
   has_many :tasks
 
   extend Cms::DefaultAccessible
- #attr_accessible :name, :path, :template_file_name, :hidden, :cacheable # Needs to be explicit so seed data will work.
 
   class << self
     def named(name)
@@ -27,8 +26,6 @@ class Cms::Page < ActiveRecord::Base
     def with_path(path)
       where(["#{table_name}.path = ?", path])
     end
-  #scope :named, lambda { |name| {:conditions => ["#{table_name}.name = ?", name]} }
-  #scope :with_path, lambda { |path| {:conditions => ["#{table_name}.path = ?", path]} }
 
     # This scope will accept a connectable object or a Hash.  The Hash is expect to have
     # a value for the key :connectable, which is the connectable object, and possibly
@@ -57,6 +54,11 @@ class Cms::Page < ActiveRecord::Base
       query.includes(:connectors).references(:connectors)
 
     end
+
+    # @override
+    def permitted_params
+      super + [:visibility, :publish_on_save]
+    end
   end
   # currently_connected_to tightens the scope of connected_to by restricting to the 
   # results to matches on current versions of pages only.  This renders obj versions
@@ -67,13 +69,9 @@ class Cms::Page < ActiveRecord::Base
 
     ver = obj.class.versioned? ? obj.version : nil
     if ver
-      where(["#{connectors_table}.connectable_id = ? and #{connectors_table}.connectable_type = ? and #{connectors_table}.connectable_version = ? and #{connectors_table}.page_version = #{Cms::Page.table_name}.version", obj.id, obj.class.base_class.name, ver])
-          .includes(:connectors)
-          .references(:connectors)
+      where(["#{connectors_table}.connectable_id = ? and #{connectors_table}.connectable_type = ? and #{connectors_table}.connectable_version = ? and #{connectors_table}.page_version = #{Cms::Page.table_name}.version", obj.id, obj.class.base_class.name, ver]).includes(:connectors).references(:connectors)
     else
-      where(["#{connectors_table}.connectable_id = ? and #{connectors_table}.connectable_type = ? and #{connectors_table}.page_version = #{Cms::Page.table_name}.version", obj.id, obj.class.base_class.name])
-                .includes(:connectors)
-                .references(:connectors)
+      where(["#{connectors_table}.connectable_id = ? and #{connectors_table}.connectable_type = ? and #{connectors_table}.page_version = #{Cms::Page.table_name}.version", obj.id, obj.class.base_class.name]).includes(:connectors).references(:connectors)
     end
   }
 
@@ -405,4 +403,28 @@ class Cms::Page < ActiveRecord::Base
     assigned_to == user
   end
 
+  # Return a collection of the available visibility statuses this model will accept via #visibility=
+  def visibilities
+    [['Public', :public], ['Archived', :archived], ['Hidden' , :hidden]]
+  end
+
+  def visibility
+    if archived?
+      :archived
+    elsif hidden?
+      :hidden
+    else
+      :public
+    end
+  end
+
+  def visibility=(new_state)
+    self.archived = false
+    self.hidden = false
+    if new_state.to_sym == :archived
+      self.archived = true
+    elsif new_state.to_sym == :hidden
+      self.hidden = true
+    end
+  end
 end

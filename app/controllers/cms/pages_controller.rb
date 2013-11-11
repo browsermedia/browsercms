@@ -1,16 +1,27 @@
 module Cms
   class PagesController < Cms::BaseController
 
+    helper Cms::RenderingHelper
+
     before_filter :set_toolbar_tab
     before_filter :load_section, :only => [:new, :create]
     before_filter :load_page, :only => [:versions, :version, :revert_to, :destroy]
     before_filter :load_draft_page, :only => [:edit, :update]
     before_filter :hide_toolbar, :only => [:new, :create]
-    before_filter :strip_publish_params, :only => [:create, :update]
+    before_action :strip_visibility_params, :only => [:create, :update]
 
-    helper Cms::RenderingHelper
+    before_action :only => [:create] do
+      redirect_to "/" if canceled?
+    end
 
-    layout 'cms/newadmin'
+    before_action :only => [:update] do
+      redirect_to page_path(@page) if canceled?
+    end
+
+    before_action :only => [:create, :update] do
+      params[:page][:publish_on_save] = false if save_draft?
+      params[:page][:publish_on_save] = true if publish?
+    end
 
     def new
       @page = Page.new(:section => @section, :cacheable => true)
@@ -27,7 +38,7 @@ module Cms
     def create
       @page = Page.new(page_params)
       @page.section = @section
-      if @page.save_draft
+      if @page.save
         flash[:notice] = "Page was '#{@page.name}' created."
         redirect_to @page
       else
@@ -36,7 +47,7 @@ module Cms
     end
 
     def update
-      if @page.update_attributes(page_params())
+      if @page.update(page_params)
         flash[:notice] = "Page was '#{@page.name}' updated."
         redirect_to @page
       else
@@ -102,16 +113,30 @@ module Cms
 
     protected
 
+
     private
+
+    def canceled?
+      params[:commit] == "Cancel"
+    end
+
+    def save_draft?
+      params[:commit] == "Save Draft"
+    end
+
+    def publish?
+      params[:commit] == "Publish"
+    end
 
     def page_params
       params.require(:page).permit(Cms::Page.permitted_params)
     end
 
-    def strip_publish_params
+    def strip_visibility_params
       unless current_user.able_to?(:publish_content)
         params[:page].delete :hidden
         params[:page].delete :archived
+        params[:page].delete :visibility
       end
     end
 

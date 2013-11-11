@@ -1,7 +1,6 @@
 module Cms
   class SectionNodesController < Cms::BaseController
 
-    layout 'cms/section_nodes'
     check_permissions :publish_content, :except => [:index]
 
     def index
@@ -12,7 +11,7 @@ module Cms
       @sitemap = Section.sitemap
       @root_section_node = @sitemap.keys.first
       @section = @root_section_node.node
-      render 'show', layout: 'cms/sitemap'
+      render 'show'
     end
 
     def move_to_position

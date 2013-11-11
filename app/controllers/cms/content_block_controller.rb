@@ -5,8 +5,6 @@ module Cms
   class ContentBlockController < Cms::BaseController
     include Cms::ContentRenderingSupport
 
-    layout 'cms/content_library'
-
     allow_guests_to [:show_via_slug]
     before_filter :set_toolbar_tab
 
@@ -325,7 +323,7 @@ module Cms
     def render_toolbar_and_iframe
       @page = @block
       @page_title = @block.page_title
-      render "show", :layout => 'cms/block_editor'
+      render "show", :layout => 'cms/page_editor'
     end
   end
 end

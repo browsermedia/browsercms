@@ -1,4 +1,2 @@
-<%= content_for :button_bar do %>
-    <%= render 'cms/toolbar/toolbar' %>
-<% end %>
-<iframe id="page_content" src="<%= "#{@page.path}?show_page=show" %>" frameborder="0" height="1600px" width="100%"></iframe>
+<%= content_for :button_bar, render('cms/pages/page_buttons') %>
+<iframe name="page_content" src="<%= edit_content_path(current_page) %>" frameborder="0" marginheight="0" marginwidth="0" width="100%" height="100%" scrolling="auto"></iframe>

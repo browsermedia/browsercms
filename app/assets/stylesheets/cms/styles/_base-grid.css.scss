@@ -130,8 +130,8 @@
   	clear: both;
 }
 
-
-.row-fluid [class*="span"] {
+// .row-fluid-span is for use via @extend
+.row-fluid [class*="span"], .row-fluid-span {
   	display: block;
   	float: left;
   	width: 100%;
@@ -139,7 +139,7 @@
   	margin-left: 2.127659574468085%;
   	*margin-left: 2.074468085106383%;
 }
-.row-fluid [class*="span"]:first-child {
+.row-fluid [class*="span"]:first-child, .row-fluid-span:first-child {
   	margin-left: 0;
 }
 .row-fluid .controls-row [class*="span"] + [class*="span"] {
@@ -159,7 +159,7 @@
   	width: 82.97872340425532%;
   	*width: 82.92553191489361%;
 }
-.row-fluid .span9 {
+.row-fluid .span9, .row-fluid-span9 {
   	width: 74.46808510638297%;
   	*width: 74.41489361702126%;
 }
@@ -183,7 +183,7 @@
   	width: 31.914893617021278%;
   	*width: 31.861702127659576%;
 }
-.row-fluid .span3 {
+.row-fluid .span3, .row-fluid-span3 {
   	width: 23.404255319148934%;
   	*width: 23.351063829787233%;
 }

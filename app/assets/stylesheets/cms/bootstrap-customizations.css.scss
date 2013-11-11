@@ -32,8 +32,13 @@
 
 }
 
-.btn-group .btn.pull-left {float: left;}
-.btn-group .btn.dropdown-toggle {float: right;}
+.btn-group .btn.pull-left {
+  float: left;
+}
+
+.btn-group .btn.dropdown-toggle {
+  float: right;
+}
 
 .navbar {
   a {
@@ -53,9 +58,15 @@ body {
   font-varian: normal;
 }
 
-.table thead th {background-color: #b1b4b7;}
+.table thead th {
+  background-color: #b1b4b7;
+}
 
-tbody .block_status {color: #FFF; text-shadow: 0 1px 0 rgba(0,0,0,0.5) !important; text-transform: capitalize;}
+tbody .block_status {
+  color: #FFF;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5) !important;
+  text-transform: capitalize;
+}
 
 tbody .block_status.draft, #sitemap .span1.Draft {
   background: #EE5F5B;
@@ -77,9 +88,14 @@ tbody .block_status.published, #sitemap .span1.Published {
   background: linear-gradient(#62c462, #51a351);
 }
 
-.label {margin: 12px 10px 0 0;}
+.label {
+  margin: 12px 10px 0 0;
+}
 
-#loginmain {margin: 0 auto; float: none;}
+#loginmain {
+  margin: 0 auto;
+  float: none;
+}
 
 .container-fluid {
   padding-top: 20px;
@@ -117,4 +133,25 @@ textarea,
   @extend .alert;
 }
 
-.label {background: none; }
+.sidebar-block {
+  h4 {
+    @extend .gray;
+  }
+}
+// Customization of Design styles to avoid repeated HTML input html
+.control-group {
+
+  label.control-label {
+    @extend .row-fluid-span;
+    background: none;
+  }
+
+  label.control-label:not(.boolean) {
+    @extend .row-fluid-span3;
+  }
+
+  textarea {
+    @extend .input-block-level;
+  }
+}
+

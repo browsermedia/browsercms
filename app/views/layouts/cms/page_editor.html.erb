@@ -1,20 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-  <meta name="viewport" content="width=device-width, maximum-scale=1.0, initial-scale=1.0">
-
-  <title><%= page_title %></title>
-  <%= stylesheet_link_tag 'cms/application', 'cms/page_editor' %>
   <%= javascript_include_tag 'cms/page_toolbar' %>
-  <%= csrf_meta_tags %>
-  <%= yield :html_head %>
-  <style>
-      html, body { height: 100% }
-  </style>
+  <%= render 'layouts/cms/head' %>
+  <%= stylesheet_link_tag 'cms/page_editor' %>
 </head>
 <body>
-<%= render 'layouts/cms/thin_toolbar' %>
-<iframe name="page_content" src="<%= edit_content_path(current_page) %>" frameborder="0" marginheight="0" marginwidth="0" width="100%" height="100%" scrolling="auto"></iframe>
+<nav id="main-nav">
+  <%= render 'layouts/cms/main_menu' %>
+</nav>
+<%= yield :button_bar %>
+<%= yield %>
 </body>
 </html>

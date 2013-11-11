@@ -1,14 +1,105 @@
+<%= simple_form_for(@page) do |f| %>
+    <div class="row-fluid">
+      <h1 class="span6"><%= page_title %></h1>
+    <span class="span6 top-buttons">
+      <%= render partial: 'button_bar', :locals => {:f => f} %>
+    </span>
+    </div>
+    <div class="row-fluid">
+      <div class="span8 main-content">
+        <%= hidden_field_tag :section_id, @page.section_id %>
+        <%= render :partial => 'main_form', :locals => {:f => f} %>
+      </div>
+      <div class="span4">
+        <div class="sidebar-block">
+          <h4>Status &nbsp; <span class="dark">Draft</span></h4>
+          <%# FEATURE: Pages don't have Publish Dates yet.
+      <h4 class="gray">Publish Date</h4>
+      <h4>June 31, 2013 <a href="#" class="add-link right">Edit</a></h4>
+          %>
+          <% if current_user.able_to?(:publish_content) %>
+              <h4>Visibility</h4>
+              <%= f.input :visibility, label: false, collection: @page.visibilities, prompt: false %>
+          <% end %>
+        </div>
 
+        <%# FEATURE: Make Assign from edit page work correctly.
+        <div class="sidebar-block">
+          <h4>Assign This Page</h4>
+          <select class="input-block-level">
+            <option selected="">Select A Name</option>
+            <option>Kyle Conrad</option>
+            <option>Courtney Leonard</option>
+            <option>John Salmon</option>
+          </select>
 
-<%= f.input :name, label: false, placeholder: 'Page Name', input_html: { class: 'input input-block-level input-xxlarge'} %>
-<%= f.input :title, label: false, placeholder: 'Page Title', input_html: { class: 'input input-block-level input-xxlarge'}, :hint => "(Leave blank if same as name)" %>
-<%= f.input :path, label: false, placeholder: 'Page Path', input_html: { class: 'input input-block-level input-xxlarge'} %>
-<%= f.input :template_file_name, input_html: { class: 'input input-block-level input-xxlarge'}, collection: Cms::PageTemplate.options, label: "Template", as: :select, include_blank: false %>
+            <span class="row-fluid">
+                <label for="duedate" class="span4">Due Date</label>
+                <input type="date" name="duedate" id="duedate" class="input span8">
+            </span>
 
-<%= f.input :cacheable, input_html: { class: 'input input-block-level input-xxlarge'}, label: "Cache Enabled?" %>
-<%= f.input :hidden, input_html: { class: 'input input-block-level input-xxlarge'}, label: "Hide From Menus?", disabled: (!current_user.able_to?(:publish_content)) %>
-<%= f.input :archived, input_html: { class: 'input input-block-level input-xxlarge'}, label: "Archived?", disabled: (!current_user.able_to?(:publish_content)) %>
-<%= f.input :description, input_html: { class: 'input input-block-level input-xxlarge'}, input_html: {:size=>"80x5"}, :hint=>"(Optional) Used for the meta-description element of the page." %>
-<%= f.input :keywords, input_html: { class: 'input input-block-level input-xxlarge'}, input_html: {:size=>"80x3"}, :hint=>"(Optional) Used for the meta-keyword meta element of the page." %>
-<%= f.input :language, label: false, placeholder: 'Language', input_html: { class: 'input input-block-level input-xxlarge'} %>
-<%= f.button :submit, "Save" %>
+        </div>
+        %>
+        <div class="sidebar-block">
+          <h4>Performance Tuning</h4>
+          <%= f.input :cacheable, label: "Allow Caching?", hint: "Uncheck for pages that show personalized information." %>
+
+        </div>
+        <%# FEATURE: Pages don't have review dates yet.
+
+    <div class="sidebar-block">
+      <h4 class="gray">Review Date</h4>
+      <h4>December 12, 2013 <a href="#" class="add-link right">Edit</a></h4>
+    </div>
+
+        %>
+        <%# FEATURE: Pages are not tagged yet.
+    <div class="sidebar-block">
+      <h4 class="gray">Tags <a href="#" class="add-link right">Add</a></h4>
+
+      <div class="alert alert-inverse alert-small">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        New Content
+      </div>
+
+      <div class="alert alert-inverse alert-small">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        Creativity
+      </div>
+
+      <div class="alert alert-inverse alert-small">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        Awesome
+      </div>
+    </div>
+        %>
+
+        <%# FEATURE: Pages don't have permissions yet.
+    <div class="sidebar-block">
+      <h4 class="gray">Permissions <a href="#" class="add-link right">Add</a></h4>
+
+      <div class="alert alert-inverse alert-small">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        CMS Admins
+      </div>
+
+      <div class="alert alert-inverse alert-small">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        Content Editors
+      </div>
+
+      <div class="alert alert-inverse alert-small">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        Marketing
+      </div>
+    </div>
+        %>
+
+      </div>
+    </div>
+    <div class="row-fluid">
+    <span class="span6 top-buttons pull-right">
+      <%= render partial: 'button_bar', locals: {f: f} %>
+    </span>
+    </div>
+<% end %>
