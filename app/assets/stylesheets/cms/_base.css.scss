@@ -29,6 +29,10 @@ audio:not([controls]) {
 
 	@include border-radius(8px);
 	border: 1px solid rgba(black,0.15);
+
+	&.no-bottom {
+		@include rem(padding,1.5rem 0 0 0);
+	}
 }
 
 .padded {
