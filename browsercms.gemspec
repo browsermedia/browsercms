@@ -33,6 +33,7 @@ Gem::Specification.new do |s|
   s.add_dependency("rails", "~> 4.0.0")
   s.add_dependency("sass-rails")
   s.add_dependency("bootstrap-sass")
+  s.add_dependency("compass-rails", "~> 2.0.alpha.0")
   s.add_dependency("ancestry", "~> 2.0.0")
   s.add_dependency("ckeditor_rails", "~> 4.0.1.1")
   s.add_dependency("underscore-rails", "~> 1.4")

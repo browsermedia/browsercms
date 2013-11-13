@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:og="http://ogp.me/ns#" xmlns:fb="http://www.facebook.com/2008/fbml" itemscope itemtype="http://schema.org/WebPage">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>BrowserCMS - Add New Page</title>
+
+
+    <%= stylesheet_link_tag 'cms/application'  %>
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto:500' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+
+    <script type="text/javascript" src="JS/headload.js"></script>
+    <script>
+        head.js("http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js")
+            .js("JS/bootstrap.min.js");
+    </script>
+
+    <!--[if lt IE 9]>
+		<script type="text/javascript" src="JS/html5shiv.js"></script>
+        <script type="text/javascript" src="JS/selectivizr.js"></script>
+	<![endif]-->
+</head>
+
+<body>
+    <nav id="main-nav">
+        <div class="logged-in">
+            <div class="container center-column">
+                <ul class="subnav right">
+                    <li>Toral Contractor</li>
+                    <li><a href="#">Settings</a></li>
+                    <li><a href="#">Help</a></li>
+                    <li><a href="#">Logout</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="primary-nav">
+            <div class="container center-column">
+                <a href="#"><img src="IMG/logo.png" class="main-logo"></a>
+
+                <ul class="mainnav">
+                    <li><a href="#">Dashboard</a></li>
+                    <li><a href="#">Pages</a></li>
+                    <li>
+                        <a href="#">Assets</a><a href="#" class="caret dropdown-toggle" data-toggle="dropdown"></a>
+
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="#">Asset Library</a></li>
+
+                            <li class="divider"></li>
+
+                            <li><a href="#">Product</a></li>
+
+                            <li class="divider"></li>
+
+                            <li><a href="#">Category</a></li>
+                            <li><a href="#">Category Type</a></li>
+                            <li><a href="#">Tag</a></li>
+
+                            <li class="divider"></li>
+
+                            <li><a href="#">File</a></li>
+                            <li><a href="#">Text</a></li>
+                            <li><a href="#">Image</a></li>
+                            <li><a href="#">Portlet</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">Admin</a><a href="#" class="caret dropdown-toggle" data-toggle="dropdown"></a>
+
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="#">Users</a></li>
+                            <li><a href="#">Groups</a></li>
+
+                            <li class="divider"></li>
+
+                            <li><a href="#">Partials</a></li>
+                            <li><a href="#">Page Templates</a></li>
+
+                            <li class="divider"></li>
+
+                            <li><a href="#">Routes</a></li>
+                            <li><a href="#">Clear Page Cache</a></li>
+                            <li><a href="#">Email Messages</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <div class="btn-group">
+                    <button class="btn btn-primary" tabindex="-1">New</button>
+                    <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" tabindex="-1">
+                        <span class="caret"></span>
+                    </button>
+
+                    <ul class="dropdown-menu pull-right">
+                        <li><a href="#">Page</a></li>
+                        <li><a href="#">Link</a></li>
+                        <li><a href="#">Section</a></li>
+
+                        <li class="divider"></li>
+
+                        <li><a href="#">Product</a></li>
+
+                        <li class="divider"></li>
+
+                        <li><a href="#">Category</a></li>
+                        <li><a href="#">Category Type</a></li>
+                        <li><a href="#">Tag</a></li>
+
+                        <li class="divider"></li>
+
+                        <li><a href="#">File</a></li>
+                        <li><a href="#">Text</a></li>
+                        <li><a href="#">Image</a></li>
+                        <li><a href="#">Portlet</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+<%= yield %>
+<script type="text/javascript">
+	head.ready(function(){
+		// SITEMAP FUNCTIONALITY
+		//$('.sitemap .level-three, .sitemap .level-four, .sitemap .level-five').slideUp(0);
+
+		$('.sitemap td').click(function(){
+			$('.sitemap td').removeClass('active');
+			$(this).toggleClass('active');
+		});
+
+		//$('.sitemap .level-two').click(function(){
+		//	$('.sitemap .level-three').slideToggle(0);
+		//});
+	});
+</script>
+
+<!--[if lt IE 9]>
+	<script type="text/javascript" src="JS/css3-mediaqueries.js"></script>
+<![endif]-->
+
+</body>
+</html>

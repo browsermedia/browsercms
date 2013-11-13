@@ -15,5 +15,6 @@ Dummy::Application.routes.draw do
   get "/tests/error", :to => "tests/pretend#error"
   get "/tests/not-found", :to => "tests/pretend#not_found"
 
+  get "/design/:page", to: "design#show"
   mount_browsercms
 end

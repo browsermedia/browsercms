@@ -5,6 +5,8 @@ require 'cms/version'
 require 'browsercms'
 
 require 'bootstrap-sass'
+require 'compass-rails'
+
 # Gem name is different than file name
 # Must be required FIRST, so that our assets paths appear before its do.
 # This allows app/assets/ckeditor/config.js to set CMS specific defaults.
