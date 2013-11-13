@@ -55,5 +55,7 @@ module Dummy
     config.cms.templates['dummy/product'] = 'product'
 
     config.secret_key_base = 'a-fake-key-to-avoid-deprecation-warnings-since-this-is-a-dummy-app-that-wont-be-deployed'
+
+    config.assets.paths << Rails.root.join("app", "assets", "fonts")
   end
 end

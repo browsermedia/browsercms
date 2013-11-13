@@ -222,6 +222,7 @@ input[type="submit"].btn.btn-mini {
   		@include border-radius(0);
   		margin-left: -1px;
         font-size: 1rem;
+        vertical-align: top;
 
   		&:first-child,
   		&:first-of-type {
