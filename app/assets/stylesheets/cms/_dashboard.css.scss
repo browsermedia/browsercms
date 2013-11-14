@@ -13,4 +13,13 @@
 		vertical-align: top;
 		float: right;
 	}
+
+	tbody {
+		tr {
+			&:hover {
+				background: rgba($gray,0.175);
+				cursor:pointer;
+			}
+		}
+	}
 }
