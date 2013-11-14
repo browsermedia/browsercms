@@ -21,8 +21,21 @@
 			background: $danger;
 		}
 		&.published {
-			background: $primary;
+			background: $success;
 		}
+	}
+
+	.last-saved {
+		display: inline-block;
+		margin-top: 0.25em;
+		margin-left: 2.5em;
+		text-transform: uppercase;
+		padding: 8px 0 10px;
+		color: $dark;
+		font-family: 'Source Sans Pro', sans-serif;
+		font-weight: 400;
+		@include rem(font-size,0.875rem);
+		@include opacity(0.8);
 	}
 
 	.btn,
