@@ -4,7 +4,7 @@
       <li><%= link_to current_user.full_name, cms.edit_user_path(current_user) %></li>
       <li><a href="#">Settings</a></li>
       <li><%= link_to "Help", 'https://github.com/browsermedia/browsercms/wiki', target: '_blank' %></li>
-      <li><%= link_to "Logout", logout_path %></li>
+      <li><%= link_to "Logout", cms.logout_path %></li>
     </ul>
   </div>
 </div>

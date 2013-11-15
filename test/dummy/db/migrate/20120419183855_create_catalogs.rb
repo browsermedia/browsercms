@@ -1,6 +1,6 @@
 class CreateCatalogs < ActiveRecord::Migration
   def change
-    create_content_table :catalogs, :prefix=>false do |t|
+    create_content_table :catalogs do |t|
       t.string :name
 
       t.timestamps

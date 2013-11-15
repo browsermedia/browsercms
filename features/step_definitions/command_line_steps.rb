@@ -35,7 +35,6 @@ end
 Then /^BrowserCMS should be installed in the project$/ do
   assert_matching_output("BrowserCMS has been installed", all_output)
   # This is a not a really complete check but it at least verifies the generator completes.
-  check_file_content('config/initializers/browsercms.rb', 'Cms.table_prefix = "cms_"', true)
   check_file_content('config/routes.rb', 'mount_browsercms', true)
   verify_seed_data_requires_browsercms_seeds
 end
@@ -152,9 +151,7 @@ When /^it should copy all the migrations into the project$/ do
       "rake  cms:install:migrations",
       "Copied migration",
       "browsercms300.cms.rb from cms",
-      "browsercms305.cms.rb from cms",
-      "browsercms330.cms.rb from cms",
-      "browsercms340.cms.rb from cms"
+      "browsercms400.cms.rb from cms",
   ]
   expected_outputs.each do |expect|
     assert_matching_output expect, all_output
@@ -189,7 +186,7 @@ RUBY
   content = <<RUBY
   class Create#{block_name.capitalize}s < ActiveRecord::Migration
     def change
-      create_content_table :#{block_name}s, :prefix=>false do |t|
+      create_content_table :#{block_name}s do |t|
         t.timestamps
       end
       #{been_migrated_line}
@@ -197,12 +194,6 @@ RUBY
   end
 RUBY
   write_file "db/migrate/001_create_#{block_name}s.rb", content
-end
-
-Then /^I should have a migration for updating the "([^"]*)" versions table$/ do |block_name|
-  migration = find_migration_with_name "update_version_id_columns.rb"
-  check_file_content migration, "models = %w{#{block_name}}", true
-  check_file_content migration, "require 'cms/upgrades/v3_4_0'", true
 end
 
 When /^the project has a "([^"]*)" model$/ do |model_name|

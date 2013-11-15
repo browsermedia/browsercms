@@ -13,7 +13,6 @@ module Cms
     def test_new
       get :new
       assert_response :success
-      assert_select "h1", "Add New Text"
     end
 
     def test_add_to_page
@@ -113,7 +112,6 @@ module Cms
       get :usages, :id => @block.id
 
       assert_response :success
-      assert_select "h1", "Pages Using Text '#{@block.name}'"
       assert_select "td.page_name", "Included"
       assert_select "td.page_name", {:count => 0, :text => "Excluded"}
     end

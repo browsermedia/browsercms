@@ -13,7 +13,7 @@ ActiveRecord::Base.connection.instance_eval do
 
   drop_table(:publishable_blocks) if table_exists?(:publishable_blocks)
   drop_table(:publishable_block_versions) if table_exists?(:publishable_block_versions)
-  create_content_table(:publishable_blocks, :prefix=>false) do |t|
+  create_content_table(:publishable_blocks) do |t|
     t.string :name
   end
 end

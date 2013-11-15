@@ -19,7 +19,7 @@ class HtmlBlockTest < ActiveSupport::TestCase
   end
 
   test "default table_name" do
-    assert_equal Cms::Namespacing.prefix("html_blocks"), Cms::HtmlBlock.table_name
+    assert_equal "cms_html_blocks", Cms::HtmlBlock.table_name
   end
 
   test ".search" do

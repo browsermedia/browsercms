@@ -1,6 +1,6 @@
 module Cms
   class AbstractFileBlock < ActiveRecord::Base
-    self.table_name = Namespacing.prefix("file_blocks")
+    self.table_name = "cms_file_blocks"
 
     def self.with_parent_id(parent_id)
       if parent_id == 'all'
@@ -8,7 +8,7 @@ module Cms
       else
         self.includes({:attachments => :section_node})
             .references(:section_node)
-            .where(["#{Namespacing.prefix("section_nodes")}.ancestry = ?",  Section.find(parent_id).ancestry_path])
+            .where(["#{"cms_section_nodes"}.ancestry = ?",  Section.find(parent_id).ancestry_path])
 
       end
     end

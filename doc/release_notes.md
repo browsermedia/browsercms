@@ -13,6 +13,8 @@ This release includes the following features:
 * Portlet Descriptions [#619] - Portlets can now have a description that will be used to provide additional context when users are building/placing them.
 * No need to register Content Types [#621] - Content Blocks will automatically appear in the menus without needing to add them to the database.
 * Using SimpleForm [#623] Reworked all forms to use simple_form (https://github.com/plataformatec/simple_form).
+* Migration Cleanup [#594] Migrations for previous verisons have been compressed. This has implications for upgrading, but should make new project cleaner.
+* Enforce table prefixes [#639] In addition, all core cms tables must now start with cms_.
 
 UI Redesign
 ----------
@@ -115,6 +117,19 @@ Upgrading
 3. Install the deprecated finders and other gems to help with upgrade. Once you get rid of the deprecation warnings you can remove the gem.
 4. Content Types - If you have defined content blocks in custom group names, you should edit them to specify the module name. See 'Registering Content Types' above for details. You can delete any seeds that create content types. There will be a deprecation warning if you call save! or create! on ContentTypes.
 5. Forms - Rework existing form fields in content blocks to use SimpleForm.
+6. Table Prefixing - In config/initializers/browsercms.rb remove the `Cms.table_prefix = 'cms_' line, which generated deprecation warnings.
+
+### Migration Cleanup
+
+Projects using versions older than 3.5.4 must first upgrade to the latest 3.5.x version. This is because we have compressed the migrations from 3.0.0 up to 4.0.0 into a single migration (browsercms300). Migrations, especially those that alter data get hard to maintain over time. And new projects don't care when they start with fresh data.
+
+After migrating your production environment to 3.5.7 do the following:
+
+1. Record the timestamp for the existing 3_0_0 migration (i.e. 20080815014337).
+2. Delete all the BrowserCMS migrations (3_0_0, 314, etc) from the project.
+3. Add the migrations for 4.0.0.
+4. Change the name of the new browsercms300 migration so it matches the old timestamp of browsercms3_0_0. This will prevent the new migration from running.
+
 
 Deprecations
 ------------

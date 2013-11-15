@@ -7,7 +7,6 @@ Tasks:
 # 3.6.x
 
 * Browser Compatibility Testing - Ensure compatibility with latest versions of Chrome/IE 9/Firefox/Safari. IE 9 probably needs the most works.
-* Simplify Table Prefixing: How much value is there to allow users to pick the table prefix (as compared to the complexity it brings). Would it be better to just force everything to cms_?
 
 
 # 3.4.x

@@ -33,7 +33,7 @@ Feature: Generate Content Blocks
         """
         class CreateBcmsWidgetsProducts < ActiveRecord::Migration
           def change
-            create_content_table :bcms_widgets_products, :prefix=>false do |t|
+            create_content_table :bcms_widgets_products do |t|
               t.string :name
               t.string :price
 

@@ -33,7 +33,7 @@ class LinkTest < ActiveSupport::TestCase
   end
 
   test "updating makes it not live" do
-    @link.update_attributes(:name => "New", :publish_on_save => false)
+    @link.update(:name => "New", :publish_on_save => false)
     @link.reload
     refute @link.live?
 

@@ -1,6 +1,6 @@
 class Browsercms300 < ActiveRecord::Migration
-  def self.up
-    create_table prefix(:users), :force => true do |t|
+  def change
+    create_table :cms_users, :force => true do |t|
       t.column :login, :string, :limit => 40
       t.column :first_name, :string, :limit => 40
       t.column :last_name, :string, :limit => 40
@@ -12,10 +12,11 @@ class Browsercms300 < ActiveRecord::Migration
       t.column :expires_at, :datetime
       t.column :remember_token, :string, :limit => 40
       t.column :remember_token_expires_at, :datetime
+      t.column :reset_token, :string
     end
-    add_index prefix(:users), :login, :unique => true
+    add_index :cms_users, :login, :unique => true
 
-    create_content_table :dynamic_views do |t|
+    create_content_table :cms_dynamic_views do |t|
       t.string :type
       t.string :name
       t.string :format
@@ -24,7 +25,7 @@ class Browsercms300 < ActiveRecord::Migration
       t.timestamps
     end
 
-    create_content_table :pages do |t|
+    create_content_table :cms_pages do |t|
       t.string :name
       t.string :title
       t.string :path
@@ -35,32 +36,33 @@ class Browsercms300 < ActiveRecord::Migration
       t.boolean :cacheable, :default => false
       t.boolean :hidden, :default => false
     end
+    add_column :cms_pages, :latest_version, :integer
 
-    create_table prefix(:content_type_groups) do |t|
+    create_table :cms_content_type_groups do |t|
       t.string :name
       t.timestamps
     end
 
-    create_table prefix(:content_types) do |t|
+    create_table :cms_content_types do |t|
       t.string :name
       t.belongs_to :content_type_group
       t.integer :priority, :default => 2
       t.timestamps
     end
 
-    create_table prefix(:category_types) do |t|
+    create_table :cms_category_types do |t|
       t.string :name
       t.timestamps
     end
 
-    create_table prefix(:categories) do |t|
+    create_table :cms_categories do |t|
       t.belongs_to :category_type
       t.belongs_to :parent
       t.string :name
       t.timestamps
     end
 
-    create_table prefix(:connectors) do |t|
+    create_table :cms_connectors do |t|
       t.integer :page_id
       t.integer :page_version
       t.integer :connectable_id
@@ -71,12 +73,11 @@ class Browsercms300 < ActiveRecord::Migration
       t.timestamps
     end
 
-    create_versioned_table :html_blocks do |t|
-      t.string :name
+    create_content_table :cms_html_blocks do |t|
       t.text :content, :limit => 64.kilobytes + 1
     end
 
-    create_table prefix(:sections) do |t|
+    create_table :cms_sections do |t|
       t.string :name
       t.string :path
       t.boolean :root, :default => false
@@ -84,7 +85,7 @@ class Browsercms300 < ActiveRecord::Migration
       t.timestamps
     end
 
-    create_table prefix(:portlets) do |t|
+    create_table :cms_portlets do |t|
       t.string :type
       t.string :name
       t.boolean :archived, :default => false
@@ -92,99 +93,106 @@ class Browsercms300 < ActiveRecord::Migration
       t.integer :created_by_id, :updated_by_id
       t.timestamps
     end
-    create_table prefix(:portlet_attributes) do |t|
+    create_table :cms_portlet_attributes do |t|
       t.integer :portlet_id
       t.string :name
       t.text :value
     end
 
-    create_table prefix(:redirects) do |t|
+    create_table :cms_redirects do |t|
       t.string :from_path
       t.string :to_path
       t.timestamps
     end
 
-    create_content_table :attachments do |t|
-      t.string :file_path
+    create_content_table :cms_attachments, name: false do |t|
+      t.string :data_file_name
+      t.string :data_file_path
       t.string :file_location
-      t.string :file_extension
-      t.string :file_type
-      t.integer :file_size
-      t.timestamps
+      t.string :data_content_type
+      t.integer :data_file_size
+      t.string :data_fingerprint
+      t.string :attachable_type
+      t.string :attachment_name
+      t.integer :attachable_id
+      t.integer :attachable_version
+      t.string :cardinality
     end
 
-    create_content_table :file_blocks do |t|
+    create_content_table :cms_file_blocks do |t|
       t.string :type
       t.string :name
       t.integer :attachment_id
       t.integer :attachment_version
     end
 
-    create_table prefix(:group_types) do |t|
+    create_table :cms_group_types do |t|
       t.string :name
       t.boolean :guest, :default => false
       t.boolean :cms_access, :default => false
       t.timestamps
     end
-    create_table prefix(:groups) do |t|
+    create_table :cms_groups do |t|
       t.string :name
       t.string :code
       t.integer :group_type_id
       t.timestamps
     end
-    create_table prefix(:user_group_memberships) do |t|
+    create_table :cms_user_group_memberships do |t|
       t.integer :user_id
       t.integer :group_id
     end
 
-    create_table prefix(:permissions) do |t|
+    create_table :cms_permissions do |t|
       t.string :name
       t.string :full_name
       t.string :description
       t.string :for_module
       t.timestamps
     end
-    create_table prefix(:group_permissions) do |t|
+    create_table :cms_group_permissions do |t|
       t.integer :group_id
       t.integer :permission_id
     end
-    create_table prefix(:group_type_permissions) do |t|
+    create_table :cms_group_type_permissions do |t|
       t.integer :group_type_id
       t.integer :permission_id
     end
-    create_table prefix(:group_sections) do |t|
+    create_table :cms_group_sections do |t|
       t.integer :group_id
       t.integer :section_id
     end
 
-    create_table prefix(:sites) do |t|
+    create_table :cms_sites do |t|
       t.string :name
       t.string :domain
       t.boolean :the_default
       t.timestamps
     end
 
-    create_table prefix(:section_nodes) do |t|
-      t.integer :section_id
+    create_table :cms_section_nodes do |t|
       t.string :node_type
       t.integer :node_id
       t.integer :position
+      t.string :ancestry
       t.timestamps
     end
 
-    create_content_table :links do |t|
+    create_content_table :cms_links do |t|
       t.string :name
       t.string :url
       t.boolean :new_window, :default => false
       t.timestamps
     end
+    add_column :cms_links, :latest_version, :integer
 
-    create_table prefix(:tags) do |t|
+
+    create_table :cms_tags do |t|
       t.string :name
       t.timestamps
     end
 
-    create_table prefix(:taggings) do |t|
+    create_table :cms_taggings do |t|
       t.integer :tag_id
       t.integer :taggable_id
       t.string :taggable_type
@@ -192,7 +200,7 @@ class Browsercms300 < ActiveRecord::Migration
       t.timestamps
     end
 
-    create_table prefix(:email_messages) do |t|
+    create_table :cms_email_messages do |t|
       t.string :sender
       t.text :recipients
       t.text :subject
@@ -204,7 +212,7 @@ class Browsercms300 < ActiveRecord::Migration
       t.timestamps
     end
 
-    create_table prefix(:tasks) do |t|
+    create_table :cms_tasks do |t|
       t.integer :assigned_by_id
       t.integer :assigned_to_id
       t.integer :page_id
@@ -214,53 +222,66 @@ class Browsercms300 < ActiveRecord::Migration
       t.timestamps
     end
 
-    create_table prefix(:page_routes) do |t|
+    create_table :cms_page_routes do |t|
       t.string :name
       t.string :pattern
       t.belongs_to :page
       t.text :code
       t.timestamps
     end
-    create_table prefix(:page_route_options) do |t|
+    create_table :cms_page_route_options do |t|
       t.belongs_to :page_route
       t.string :type
       t.string :name
       t.string :value
       t.timestamps
     end
+
+    INDEXES.each do |index|
+      table_name, column = *index
+      add_index cms_(table_name), column
+    end
   end
 
-  def self.down
-    drop_table prefix(:page_route_options)
-    drop_table prefix(:page_routes)
-    drop_table prefix(:tasks)
-    drop_table prefix(:email_messages)
-    drop_table prefix(:taggings)
-    drop_table prefix(:tags)
-    drop_versioned_table :links
-    drop_table prefix(:section_nodes)
-    drop_table prefix(:sites)
-    drop_table prefix(:group_sections)
-    drop_table prefix(:group_type_permissions)
-    drop_table prefix(:group_permissions)
-    drop_table prefix(:permissions)
-    drop_table prefix(:user_group_memberships)
-    drop_table prefix(:groups)
-    drop_table prefix(:group_types)
-    drop_versioned_table :file_blocks
-    drop_versioned_table :attachments
-    drop_table prefix(:redirects)
-    drop_table prefix(:portlet_attributes)
-    drop_table prefix(:portlets)
-    drop_table prefix(:sections)
-    drop_versioned_table :html_blocks
-    drop_table prefix(:connectors)
-    drop_table prefix(:categories)
-    drop_table prefix(:category_types)
-    drop_table prefix(:content_types)
-    drop_table prefix(:content_type_groups)
-    drop_versioned_table :pages
-    drop_versioned_table :dynamic_views
-    drop_table prefix(:users)
-  end
+  # Add some very commonly used indexes to improve the site performance as the # of pages/content grows (i.e. several thousand pages)
+  INDEXES = [
+      [:pages, :deleted],
+      [:pages, :path],
+      [:pages, :version],
+      [:page_versions, :original_record_id],
+      [:groups, :code],
+      [:groups, :group_type_id],
+      [:group_types, :cms_access],
+      [:group_sections, :section_id],
+      [:group_sections, :group_id],
+      [:users, :expires_at],
+      [:user_group_memberships, :group_id],
+      [:user_group_memberships, :user_id],
+      [:group_permissions, :group_id],
+      [:group_permissions, :permission_id],
+      [:group_permissions, [:group_id, :permission_id]],
+      [:section_nodes, :node_type],
+      [:section_nodes, :ancestry],
+      [:connectors, :page_id],
+      [:connectors, :page_version],
+      [:html_blocks, :deleted],
+      [:html_block_versions, :original_record_id],
+      [:html_block_versions, :version],
+      [:portlet_attributes, :portlet_id],
+      [:portlets, :name],
+      [:sections, :path],
+      [:redirects, :from_path],
+      [:connectors, :connectable_version],
+      [:connectors, :connectable_type],
+      [:content_types, :content_type_group_id],
+      [:content_types, :name],
+      [:file_block_versions, :original_record_id],
+      [:file_block_versions, :version],
+      [:file_blocks, :deleted],
+      [:file_blocks, :type],
+      [:attachment_versions, :original_record_id],
+      [:tasks, :page_id],
+      [:tasks, :completed_at],
+      [:tasks, :assigned_to_id],
+  ]
 end

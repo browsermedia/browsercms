@@ -17,7 +17,7 @@ module Cms
     end
 
     test "default table_name" do
-      assert_equal Namespacing.prefix("file_blocks"), ImageBlock.table_name
+      assert_equal "cms_file_blocks", ImageBlock.table_name
     end
 
     test "non_versioned_columns should not include the version_foreign_ken" do

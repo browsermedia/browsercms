@@ -2,31 +2,29 @@ module ActiveRecord
   module ConnectionAdapters # :nodoc:
     module SchemaStatements
 
-      # Applies the current CMS prefix to the given table name.
-      # Useful for where you need CMS related migrations using stock rails migrations (like add_index or create_table)
-      # but still want to dynamically apply the CMS prefixes.
-      def prefix(table_name)
-        Cms::Namespacing.prefixed_table_name(table_name)
+      # Sticks :cms_ in front of a table name.
+      def cms_(table_name)
+        "cms_#{table_name}"
       end
 
-      # Pass in ":versioned => false" in the options hash to create a non-versioned table.
+      # Create a table and its versioned counterpart. Example:
+      #   create_content_table :cms_events
+      #   => :cms_events
+      #   => :cms_event_versions
       #
-      # @param table_name
+      # @param table_name [Symbol] The namespaced versioned of the content table (i.e. :cms_events or :bcms_news_articles)
       # @param options
-      # @option :prefix [Boolean]
+      # @option :versioned [Boolean] false creates a non-versioned table. (Default: true)
+      # @option :name [Boolean] Create a :name column in the generated table. (Default: true)
       def create_content_table(table_name, options={}, &block)
         defaults = {
             versioned: true,
-            prefix: true
+            name: true
         }
         options = defaults.merge(options)
 
         versioned = options.delete(:versioned)
-        prefixed = options.delete(:prefix)
-
-        if prefixed
-          table_name = Cms::Namespacing.prefixed_table_name(table_name)
-        end
+        named = options.delete(:name)
 
         create_table table_name, options, &block
         change_table table_name do |td|
@@ -34,7 +32,7 @@ module ActiveRecord
             td.integer :version
             td.integer :lock_version, :default => 0
           end
-          td.string :name unless column_exists?(table_name.to_sym, :name)
+          td.string :name if !column_exists?(table_name.to_sym, :name) && named
           td.boolean :published, :default => false
           td.boolean :deleted, :default => false
           td.boolean :archived, :default => false
@@ -44,64 +42,50 @@ module ActiveRecord
         end
 
         if versioned
-          versioned_table_name = "#{table_name.to_s.singularize}_versions"
-          create_table versioned_table_name, options, &block
-          change_table versioned_table_name do |vt|
+          table_name_versioned = versioned_(table_name)
+          create_table table_name_versioned, options, &block
+          change_table table_name_versioned do |vt|
             vt.integer :original_record_id
             vt.integer :version
-            vt.string :name unless column_exists?(versioned_table_name.to_sym, :name)
+            vt.string :name if !column_exists?(table_name_versioned, :name) && named
             vt.boolean :published, :default => false
             vt.boolean :deleted, :default => false
             vt.boolean :archived, :default => false
             vt.string :version_comment
             vt.integer :created_by_id
             vt.integer :updated_by_id
-            vt.timestamps unless column_exists?(versioned_table_name.to_sym, :created_at)
+            vt.timestamps unless column_exists?(table_name_versioned, :created_at)
           end
         end
 
       end
 
-      #
-      # @deprecated - create_versioned_table should be considered deprecated and may be removed in a future version.
-      # Use create_content_table instead in your migrations
-      #
-      alias :create_versioned_table :create_content_table
-
-      def drop_versioned_table(table_name)
-        table_name = Cms::Namespacing.prefixed_table_name(table_name)
-        drop_table "#{table_name.singularize}_versions".to_sym
+      def drop_content_table(table_name)
+        drop_table versioned_(table_name)
         drop_table table_name
       end
-
-      alias :drop_content_table :drop_versioned_table
 
       # Rename a column for both its
       def rename_content_column(table_name, old_name, new_name)
         rename_column table_name, old_name, new_name
-        rename_column version_table_name(table_name), old_name, new_name
+        rename_column versioned_(table_name), old_name, new_name
       end
 
       # Adds a column to both the primary and versioned table. Save needing two calls.
       # This is only needed if your content block is versioned, otherwise add_column will work just fine.
       def add_content_column(table_name, column_name, type, options={})
         add_column table_name, column_name, type, options
-        add_column version_table_name(table_name), column_name, type, options
+        add_column versioned_(table_name), column_name, type, options
       end
 
       def remove_content_column(table_name, column_name)
         remove_column table_name, column_name
-        remove_column version_table_name(table_name), column_name
+        remove_column versioned_(table_name), column_name
       end
 
-      # Will namespace the content table
-      def content_table_exists?(table_name)
-        table_exists?(Cms::Namespacing.prefixed_table_name(table_name))
-      end
+      protected
 
-      private
-
-      def version_table_name(table_name)
+      def versioned_(table_name)
         "#{table_name.to_s.singularize}_versions".to_sym
       end
 

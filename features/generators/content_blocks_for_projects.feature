@@ -34,7 +34,7 @@ Feature:
     """
     class CreatePetstoreProducts < ActiveRecord::Migration
       def change
-        create_content_table :petstore_products, :prefix=>false do |t|
+        create_content_table :petstore_products do |t|
           t.string :name
           t.string :price
 
@@ -123,7 +123,7 @@ Feature:
     """
     class CreatePetstoreDogs < ActiveRecord::Migration
       def change
-        create_content_table :petstore_dogs, :prefix=>false do |t|
+        create_content_table :petstore_dogs do |t|
 
           t.timestamps
         end

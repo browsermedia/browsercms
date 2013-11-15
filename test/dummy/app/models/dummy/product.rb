@@ -2,7 +2,6 @@
 class Dummy::Product < ActiveRecord::Base
   acts_as_content_block
   content_module :testing
-  self.table_name = :products
 
   belongs_to_category
 

@@ -8,8 +8,7 @@ require 'active_support/core_ext/array/extract_options'
 require 'active_support/core_ext/string/inflections'
 require 'cms/version'
 require 'cms/commands/actions'
-require 'cms/upgrades/v3_4_0'
-require 'cms/upgrades/v3_5_0'
+
 # This seems to be required only due to a bug in Thor documented here:
 #   https://rails.lighthouseapp.com/projects/8994/tickets/4692-error-when-creating-app-from-template-undefined-method-wrap-for-arrayclass
 # If this bug is fixed the following line can probably be removed.
@@ -25,8 +24,6 @@ class Cms::Install < Thor
   include Thor::Actions
   include Rails::Generators::Actions
   include Cms::Commands::Actions
-  include Cms::Upgrades::V3_4_0
-  include Cms::Upgrades::V3_5_0
 
   def self.common_options
     method_option :database, :aliases => "-d", :desc => "Preconfigure for selected database (options: mysql/oracle/postgresql/sqlite3/frontbase/ibm_db) [Default: sqlite3]"
@@ -85,8 +82,6 @@ class Cms::Install < Thor
     run_bundle_update
     install_migrations
     rake "rails:update" unless options[:skip_rails]
-    generate_rails_3_4_0_migration
-    upgrade_to_3_5_0
     install_cms_seed_data
 
     instructions = <<TEXT
@@ -109,7 +104,6 @@ TEXT
   option_skip_bundle
   def install
     common_setup('.')
-    prefix_cms_tables
     generate_default_template
     puts "BrowserCMS has been installed. Run rake db:install to add the tables then restart your server."
   end
@@ -121,12 +115,6 @@ TEXT
   end
 
   private
-
-  def prefix_cms_tables
-    append_to_file "config/initializers/browsercms.rb", <<-CODE
-Cms.table_prefix = "cms_"
-    CODE
-  end
 
   def create_license_files
     template 'COPYRIGHT.txt'

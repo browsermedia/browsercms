@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131115190735) do
+ActiveRecord::Schema.define(version: 20130924162315) do
 
   create_table "catalog_versions", force: true do |t|
     t.string   "name"
@@ -41,52 +41,52 @@ ActiveRecord::Schema.define(version: 20131115190735) do
   end
 
   create_table "cms_attachment_versions", force: true do |t|
+    t.string   "data_file_name"
     t.string   "data_file_path"
     t.string   "file_location"
     t.string   "data_content_type"
     t.integer  "data_file_size"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.string   "data_fingerprint"
+    t.string   "attachable_type"
+    t.string   "attachment_name"
+    t.integer  "attachable_id"
+    t.integer  "attachable_version"
+    t.string   "cardinality"
     t.integer  "original_record_id"
     t.integer  "version"
-    t.string   "data_file_name"
     t.boolean  "published",          default: false
     t.boolean  "deleted",            default: false
     t.boolean  "archived",           default: false
     t.string   "version_comment"
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
-    t.string   "data_fingerprint"
-    t.string   "attachable_type"
-    t.string   "attachment_name"
-    t.integer  "attachable_id"
-    t.integer  "attachable_version"
-    t.string   "cardinality"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "cms_attachment_versions", ["original_record_id"], name: "index_cms_attachment_versions_on_original_record_id", using: :btree
 
   create_table "cms_attachments", force: true do |t|
+    t.string   "data_file_name"
     t.string   "data_file_path"
     t.string   "file_location"
     t.string   "data_content_type"
     t.integer  "data_file_size"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "version"
-    t.integer  "lock_version",       default: 0
-    t.string   "data_file_name"
-    t.boolean  "published",          default: false
-    t.boolean  "deleted",            default: false
-    t.boolean  "archived",           default: false
-    t.integer  "created_by_id"
-    t.integer  "updated_by_id"
     t.string   "data_fingerprint"
     t.string   "attachable_type"
     t.string   "attachment_name"
     t.integer  "attachable_id"
     t.integer  "attachable_version"
     t.string   "cardinality"
+    t.integer  "version"
+    t.integer  "lock_version",       default: 0
+    t.boolean  "published",          default: false
+    t.boolean  "deleted",            default: false
+    t.boolean  "archived",           default: false
+    t.integer  "created_by_id"
+    t.integer  "updated_by_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "cms_categories", force: true do |t|
@@ -137,8 +137,8 @@ ActiveRecord::Schema.define(version: 20131115190735) do
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
     t.string   "path"
-    t.string   "locale"
-    t.boolean  "partial"
+    t.string   "locale",             default: "en"
+    t.boolean  "partial",            default: false
   end
 
   create_table "cms_dynamic_views", force: true do |t|
@@ -157,7 +157,7 @@ ActiveRecord::Schema.define(version: 20131115190735) do
     t.integer  "created_by_id"
     t.integer  "updated_by_id"
     t.string   "path"
-    t.string   "locale"
+    t.string   "locale",        default: "en"
     t.boolean  "partial",       default: false
   end
 
@@ -229,9 +229,9 @@ ActiveRecord::Schema.define(version: 20131115190735) do
     t.integer  "position"
     t.text     "instructions"
     t.text     "default_value"
+    t.text     "choices"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "choices"
   end
 
   add_index "cms_form_fields", ["form_id", "name"], name: "index_cms_form_fields_on_form_id_and_name", unique: true, using: :btree
@@ -317,10 +317,10 @@ ActiveRecord::Schema.define(version: 20131115190735) do
   add_index "cms_groups", ["group_type_id"], name: "index_cms_groups_on_group_type_id", using: :btree
 
   create_table "cms_html_block_versions", force: true do |t|
-    t.string   "name"
     t.text     "content",            limit: 16777215
     t.integer  "original_record_id"
     t.integer  "version"
+    t.string   "name"
     t.boolean  "published",                           default: false
     t.boolean  "deleted",                             default: false
     t.boolean  "archived",                            default: false
@@ -335,10 +335,10 @@ ActiveRecord::Schema.define(version: 20131115190735) do
   add_index "cms_html_block_versions", ["version"], name: "index_cms_html_block_versions_on_version", using: :btree
 
   create_table "cms_html_blocks", force: true do |t|
-    t.string   "name"
     t.text     "content",       limit: 16777215
     t.integer  "version"
     t.integer  "lock_version",                   default: 0
+    t.string   "name"
     t.boolean  "published",                      default: false
     t.boolean  "deleted",                        default: false
     t.boolean  "archived",                       default: false
@@ -493,9 +493,9 @@ ActiveRecord::Schema.define(version: 20131115190735) do
     t.string   "node_type"
     t.integer  "node_id"
     t.integer  "position"
+    t.string   "ancestry"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "ancestry"
     t.string   "slug"
   end
 

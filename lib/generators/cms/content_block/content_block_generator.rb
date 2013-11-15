@@ -41,9 +41,6 @@ module Cms
         self.attributes.select { |attr| attr.type == :attachments }.each do |attribute|
           gsub_file migration, "t.attachments :#{attribute.name}", ""
         end
-        unless class_name.starts_with?("Cms::")
-          gsub_file migration, " do |t|", ", :prefix=>false do |t|"
-        end
         self.attributes.select { |attr| attr.type == :category }.each do
           gsub_file migration, "t.category", "t.belongs_to"
         end

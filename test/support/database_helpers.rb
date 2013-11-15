@@ -6,7 +6,7 @@ module DatabaseHelpers
     ActiveRecord::Base.connection.instance_eval do
       drop_table(name) rescue nil
       drop_table("#{name.to_s.singularize}_versions".to_sym) rescue nil
-      create_content_table(name, :prefix => false) do |t|
+      create_content_table(name) do |t|
         t.string :name
         t.timestamps
       end
