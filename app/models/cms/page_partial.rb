@@ -28,5 +28,13 @@ module Cms
       true
     end
 
+    def placeholder
+      "_header"
+    end
+
+    # Generates hint for editing
+    def hint
+      "No spaces allowed. Must start with _."
+    end
   end
 end

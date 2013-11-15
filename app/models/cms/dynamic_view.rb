@@ -2,13 +2,7 @@ module Cms
   class DynamicView < ActiveRecord::Base
     store_templates
 
-
-    after_save :write_file_to_disk
-    after_destroy :remove_file_from_disk
-
     extend DefaultAccessible
-    # Need to explicitly define these, since during new project creation, these files aren't discoverable.
-    #attr_accessible :name, :body, :format, :handler, :locale, :path, :partial
 
     def self.with_file_name(file_name)
       conditions = {:name => nil, :format => nil, :handler => nil}
@@ -63,23 +57,6 @@ module Cms
 
     def display_name
       self.class.display_name(file_name)
-    end
-
-    def write_file_to_disk
-      if respond_to?(:file_path) && !file_path.blank?
-        FileUtils.mkpath(File.dirname(file_path))
-        open(file_path, 'w') { |f| f << body }
-      end
-    end
-
-    def self.write_all_to_disk!
-      all(:conditions => {:deleted => false}).each { |v| v.write_file_to_disk }
-    end
-
-    def remove_file_from_disk
-      if respond_to?(:file_path) && File.exists?(file_path)
-        File.delete(file_path)
-      end
     end
 
     def self.default_body

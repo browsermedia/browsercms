@@ -4,9 +4,6 @@ Testing:
 
 ruby -Ilib -Itest test/unit/models/content_type_mini_test.rb --name=/available_by_module/
 
-* Database Templates:
-  - Remove disk writing (no longer necessary)
-  - Add migrations for existing data
 * Make it easier to create controller as pages
   - I.e. a custom login form
   - Should include cms_toolbar (for free) when logged in(?)
@@ -26,23 +23,6 @@ ruby -Ilib -Itest test/unit/models/content_type_mini_test.rb --name=/available_b
 ## Admin Menu
 * Enforce link security for menus
 
-## UI Open Issues
-
-Things that need to be updated in the CSS for the new UI.
-
-* Selecting a row in content tables have no visual indicator.
-* New button looks bad when you hover over it.
-* Flash messages still don't look right.
-* Select boxes are not styled.
-* RTE drop down isn't styled correctly
-* Form pages need to be styled
-
-
-
-# Points of Design Discussion
-
-* What information should be visible on toolbar, what should be hidden?
-* Should we turn the entire toolbar red for draft pages?
 
 ### Known Issues
 

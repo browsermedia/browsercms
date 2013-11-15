@@ -3,11 +3,16 @@ require 'test_helper'
 class PagePartialTest < ActiveSupport::TestCase
   def setup
     @page_partial = build(:page_partial)
-    File.delete(@page_partial.file_path) if File.exists?(@page_partial.file_path)
   end
 
-  def teardown
-    File.delete(@page_partial.file_path) if File.exists?(@page_partial.file_path)
+  test "#hint" do
+    assert_equal String, @page_partial.hint.class
+    refute @page_partial.hint.blank?
+  end
+
+  test "#placeholder" do
+    assert_equal String, @page_partial.placeholder.class
+    refute @page_partial.placeholder.blank?
   end
 
   test "calculates path" do
@@ -25,10 +30,8 @@ class PagePartialTest < ActiveSupport::TestCase
   end
 
   def test_create
-    assert !File.exists?(@page_partial.file_path), "partial file already exists"
     assert_valid @page_partial
     assert @page_partial.save
-    assert File.exists?(@page_partial.file_path), "partial file was not written to disk"
   end
 
   def test_for_valid_name

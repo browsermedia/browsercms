@@ -29,9 +29,17 @@ module Cms
       page_templates.map { |f| [display_name(f), f] }.sort.uniq
     end
 
-		def partial?
-			false
-		end
+    def partial?
+      false
+    end
 
+    def placeholder
+      "subpage"
+    end
+
+    # Generates hint for editing
+    def hint
+      "No spaces allowed. Must start with lowercase letter."
+    end
   end
 end

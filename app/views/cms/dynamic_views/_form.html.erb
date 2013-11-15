@@ -1,6 +1,6 @@
 <%= render 'toolbar' %>
 <%= simple_form_for(@view) do |f| %>
-    <%= f.input :name %>
+    <%= f.input :name, hint: @view.hint, placeholder: @view.placeholder %>
     <%= f.input :format %>
     <%= f.input :handler, collection: ActionView::Template.template_handler_extensions, default: "erb"  %>
     <%= f.input :body, as: :text, input_html: {:style => "height: 500px", :cols => 80}  %>
