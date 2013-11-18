@@ -1,7 +1,7 @@
 //= require 'jquery'
 //= require 'jquery_ujs'
 //= require 'cms/core_library'
-//= require 'bootstrap-modal'
+//= require 'bootstrap/modal'
 //= require 'ckeditor-jquery'
 //= require 'cms/ajax'
 

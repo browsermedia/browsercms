@@ -13,7 +13,6 @@ ruby -Ilib -Itest test/unit/models/content_type_mini_test.rb --name=/available_b
   - DSL for mapping groups to temp users.
   - Groups should have purpose/description field. Explain who this group represents.
   - Groups should have 'external' user flag to prevent deletion.
-* Multisite (for larger sites) 
 * User Management[Devise?]
   - Built in 'Temp' users (store arbitrary attributes in session)
   - Forgot Password (for admins) 
@@ -25,15 +24,7 @@ ruby -Ilib -Itest test/unit/models/content_type_mini_test.rb --name=/available_b
 * Can't edit the root section
 
 ## Admin Menu
-* Reduce the different admin layouts (why are there so many?)
-* Need to highlight active tab
-* Need to highlight the active menu item
 * Enforce link security for menus
-
-## New Features to implement
-
-* Implement search
-* Implement notifications
 
 ## UI Open Issues
 
