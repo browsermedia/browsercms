@@ -4,7 +4,7 @@ module Cms
       load_blocks
       respond_to do |format|
         format.html
-        format.js { render :inline => "var tags = #{@blocks.map { |e| e.name }.to_json};" }
+        format.json { render :inline => @blocks.map { |e| e.name }.to_json }
       end
     end
 

@@ -76,9 +76,11 @@
       switch(event.keyCode) {
         case 38: //Up Arrow
           selectPrevTag()
+          return false
           break;
         case 40: //Down Arrow
           selectNextTag()
+          return false
           break;
         case 9: //Tab
         case 13: //Return
@@ -137,21 +139,17 @@
     
     createEmptyTagList()
     $(this).keydown(handleNavKeys).keyup(handleInput)
-    $(this).blur(function(){getTagList().hide()})
+    $(this).blur(function(){getTagList().fadeOut(200)})
   }
 })(jQuery);
 
 // Autosuggest for tags
-// This does not work and should be refactored to use JSON.
-//$(function(){
-//  $.ajax({
-//    url: '/cms/tags',
-//    dataType: 'json',
-//    success: function(data){
-//      console.log('back');
-//      eval(data);
-//      console.log(tags);
-//      $('.tag_list').tagList(tags);
-//    }
-//  });
-//});
+$(function(){
+  $.ajax({
+    url: '/cms/tags',    
+    dataType: 'json',
+    success: function(data){      
+      $('.tag_list').tagList(data);      
+    }
+  });
+});
