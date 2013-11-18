@@ -18,7 +18,10 @@ $experimental-support-for-khtml: false;
 @import "cms/includes/_rem";
 @import "cms/includes/_animation";
 
-@import "cms/bootstrap-customizations";
+
+//@import "cms/sitemap";
+//@import "cms/bootstrap-customizations";
+
 
 /* IMPORTING STYLES */
 @import 'cms/styles/_base-grid';
@@ -40,9 +43,12 @@ $experimental-support-for-khtml: false;
 @import 'cms/_base';
 
 @import 'cms/_colors';
-@import 'cms/_buttons';
-@import 'cms/_forms';
+@import 'cms/_cms-buttons';
+@import 'cms/_cms-forms';
 @import 'cms/_nav';
+@import 'cms/_submenu';
 @import 'cms/_main-area';
 @import 'cms/_sitemap';
+@import 'cms/_assets';
+@import 'cms/_dashboard';
 @import 'cms/_sidebar';

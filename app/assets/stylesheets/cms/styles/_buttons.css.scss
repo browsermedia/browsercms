@@ -15,7 +15,7 @@ button {
 .btn {
 	display: inline-block;
 	margin: 0;
-  box-shadow: none;
+  	box-shadow: none;
 	@include rem(padding,0 1.75rem);
 	@include rem(height,3.25rem);
 	@include rem(line-height,3.1rem);
@@ -218,10 +218,11 @@ input[type="submit"].btn.btn-mini {
   	vertical-align: middle;
   	*zoom: 1;
 
-  	& .btn {
+  	.btn {
   		@include border-radius(0);
   		margin-left: -1px;
         font-size: 1rem;
+        vertical-align: top;
 
   		&:first-child,
   		&:first-of-type {
@@ -231,6 +232,10 @@ input[type="submit"].btn.btn-mini {
   		&:last-child,
   		&:last-of-type {
   			@include border-radius(0 5px 5px 0);
+  		}
+  		&:only-child,
+  		&:only-of-type {
+  			@include border-radius(5px);
   		}
   	}
 }

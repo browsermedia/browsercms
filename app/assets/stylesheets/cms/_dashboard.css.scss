@@ -1,0 +1,25 @@
+/* DASHBOARD */
+.dashboard {
+	.draft {
+		color: white;
+		text-transform: uppercase;
+		background: $danger;
+		font-weight: 700;
+		padding: 2px 5px;
+		@include border-radius(2px);
+		@include rem(font-size,0.875rem);
+		-webkit-font-smoothing: antialiased;
+		display: inline-block;
+		vertical-align: top;
+		float: right;
+	}
+
+	tbody {
+		tr {
+			&:hover {
+				background: rgba($gray,0.175);
+				cursor:pointer;
+			}
+		}
+	}
+}

@@ -1,0 +1,48 @@
+/* SUBMENU */
+#submenu {
+	background: darken(white,2%);
+	border-bottom: 1px solid rgba(black,0.3);
+	@include rem(padding,0.75rem 0);
+
+	.status {
+		margin-top: 0.25em;
+		color: white;
+		text-transform: uppercase;
+		font-weight: 700;
+		padding: 6px 12px 8px;
+		@include border-radius(4px);
+		@include rem(font-size,1rem);
+		-webkit-font-smoothing: antialiased;
+		display: inline-block;
+		vertical-align: top;
+		font-family: 'Source Sans Pro', sans-serif;
+
+		&.draft {
+			background: $danger;
+		}
+		&.published {
+			background: $success;
+		}
+	}
+
+	.last-saved {
+		display: inline-block;
+		margin-top: 0.25em;
+		margin-left: 2.5em;
+		text-transform: uppercase;
+		padding: 8px 0 10px;
+		color: $dark;
+		font-family: 'Source Sans Pro', sans-serif;
+		font-weight: 400;
+		@include rem(font-size,0.875rem);
+		@include opacity(0.8);
+	}
+
+	.btn,
+	.btn-group {
+		margin-bottom: 0;
+	}
+	.primary-cta {
+		@include rem(margin-left,0.75rem);
+	}
+}

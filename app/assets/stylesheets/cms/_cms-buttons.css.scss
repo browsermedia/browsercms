@@ -2,6 +2,11 @@
 .top-buttons {
 	@include rem(padding-top,0.3rem);
 
+	h4 {
+		@include rem(margin-right,3rem);
+		@include rem(line-height,2.5rem);
+	}
+
 	.btn-primary,
 	.btn-group {
 		@include rem(margin-left,0.5rem);
@@ -55,4 +60,8 @@
   .dropdown-toggle {
     padding: 0 1.75rem !important;
   }
+}
+
+.btn-bottom-margin {
+	@include rem(margin-bottom,1rem);
 }
