@@ -1,17 +1,12 @@
 //= require cms/ajax
 //= require underscore
+//= require jquery.exists
 
 /**
  * The UI for dynamically creating custom forms via the UI.
  * @constructor
  *
  */
-
-// Determine if an element exists.
-//  i.e. if($('.some-class').exists()){ // do something }
-jQuery.fn.exists = function() {
-  return this.length > 0;
-};
 
 var FormBuilder = function() {
 };

@@ -1,35 +1,15 @@
+# Shows a 'Forgot Password' form.
+#
+# This portlet is not typically necessary in CMS 4.0 or later since there is a built
+# in /forgot-password route built in. In previous versions this portlet would have worked with a page that handled
+# the reset password functionality.
+#
 class ForgotPasswordPortlet < Cms::Portlet
-  require 'digest/sha1'  
 
-  enable_template_editor true
-  description "Displays a form that allows users to request to reset their account password."
+  enable_template_editor false
+  description "Displays the forgot password form. (Consider using /forgot-password instead of this)"
 
+  # Just shows the core CMS forgot password form.
   def render
-    logger.warn "Handling Class #{request.class}"
-    logger.warn "Handling FORGOT as #{request.method}"
-    logger.warn "Am I a POST? #{request.post?}"
-    flash[:forgot_password] = {}
-
-    return unless request.post?
-    user = Cms::User.find_by_email(params[:email])
-
-    logger.warn "Send email "
-
-    unless user
-      flash[:forgot_password][:error] = "We were unable to verify your account. Please make sure your email address is accurate."
-      return
-    end
-    
-    user.reset_token = generate_reset_token
-    if user.save
-      flash[:forgot_password][:notice] = "Your password has been sent to #{params[:email]}"
-      Cms::ForgotPasswordMailer.deliver_reset_password(self.reset_password_url + '?token=' + user.reset_token, user.email)
-    end
   end
-
-  private
-  def generate_reset_token
-    Digest::SHA1.hexdigest(Time.now.to_s.split(//).sort_by {rand}.join)
-  end
-
 end

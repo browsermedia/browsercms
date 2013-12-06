@@ -21,7 +21,6 @@ class EditablePortlet < Cms::Portlet
 
 end
 
-
 class PortletPolymorphismTest < ActiveSupport::TestCase
 
   test ".route_key for Portlet base class" do
@@ -90,13 +89,30 @@ class PortletTest < ActiveSupport::TestCase
   end
 
   test ".types is alphabetical" do
-    assert_equal DynamicPortlet, Cms::Portlet.types.first
+    assert_equal AaaPortlet, Cms::Portlet.types.first
+  end
+
+  test '.blacklist' do
+    Rails.configuration.cms.content_types.expects(:blacklist).returns([:dynamic_portlet]).at_least_once
+    assert_equal ["DynamicPortlet"], Cms::Portlet.blacklist
+  end
+
+  test ".types doesn't return portlets on blacklist'" do
+    Cms::Portlet.expects(:blacklist).returns(["DynamicPortlet"]).at_least_once
+    types = Cms::Portlet.types
+    refute types.include?(DynamicPortlet)
+  end
+
+  test '.blacklisted?' do
+    Cms::Portlet.expects(:blacklist).returns(["DynamicPortlet"]).at_least_once
+    assert Cms::Portlet.blacklisted?(:dynamic_portlet)
+    refute Cms::Portlet.blacklisted?(:aaa_portlet)
   end
 
   test ".types returns a list of portlet classes" do
     types = Cms::Portlet.types
     assert types.first.is_a? Class
-    assert types.include? LoginPortlet
+    assert types.include? ProductCatalogPortlet
   end
 
   test ".underscore" do

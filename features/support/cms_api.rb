@@ -6,9 +6,9 @@ module Cms
     # Log in to the CMS admin.
     def login_as(username, password)
       visit '/cms/login'
-      fill_in 'login', :with => username
-      fill_in 'password', :with => password
-      click_button 'LOGIN'
+      fill_in 'Login', :with => username
+      fill_in 'Password', :with => password
+      click_button 'Sign in'
     end
 
     def logout

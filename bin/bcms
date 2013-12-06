@@ -8,6 +8,7 @@ require 'active_support/core_ext/array/extract_options'
 require 'active_support/core_ext/string/inflections'
 require 'cms/version'
 require 'cms/commands/actions'
+require 'cms/commands/to_version400'
 
 # This seems to be required only due to a bug in Thor documented here:
 #   https://rails.lighthouseapp.com/projects/8994/tickets/4692-error-when-creating-app-from-template-undefined-method-wrap-for-arrayclass
@@ -24,6 +25,7 @@ class Cms::Install < Thor
   include Thor::Actions
   include Rails::Generators::Actions
   include Cms::Commands::Actions
+  include Cms::Commands::ToVersion400
 
   def self.common_options
     method_option :database, :aliases => "-d", :desc => "Preconfigure for selected database (options: mysql/oracle/postgresql/sqlite3/frontbase/ibm_db) [Default: sqlite3]"
@@ -68,7 +70,7 @@ class Cms::Install < Thor
     generate_browsercms_project
     generate_installation_script
     generate_default_template
-
+    generate_devise_configuration
     display_instructions(name)
   end
 
@@ -81,7 +83,7 @@ class Cms::Install < Thor
     comment_out_rails_in_gemfile
     run_bundle_update
     install_migrations
-    rake "rails:update" unless options[:skip_rails]
+    generate_devise_configuration
     install_cms_seed_data
 
     instructions = <<TEXT
@@ -262,6 +264,7 @@ TEXT
     run_bundle_install
     generate :jdbc if defined?(JRUBY_VERSION)
     generate_browsercms_project
+    generate_devise_configuration
   end
 
   def generate_default_template
@@ -290,7 +293,6 @@ TEXT
     common_setup name
     create_browsercms_initializer
     generate_default_template
-
   end
 
   def create_browsercms_initializer

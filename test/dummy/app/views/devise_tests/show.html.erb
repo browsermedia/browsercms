@@ -1,0 +1,10 @@
+Devise Test <br>
+
+<h3>Old</h3>
+Current User: <%= current_user.inspect %> <br>
+Thread Local: <%= Cms::User.current.inspect %>      <br>
+Logged in? <%= logged_in? %><br>
+
+<h3>New</h3>
+Current Cms User: <%= current_cms_user.inspect %> <br>
+Signed In <%= cms_user_signed_in? %>

@@ -7,6 +7,7 @@ PATH
       bootstrap-sass
       ckeditor_rails (~> 4.0.1.1)
       compass-rails (~> 2.0.alpha.0)
+      devise (~> 3.0)
       jquery-rails (~> 3.0.4)
       jquery-ui-rails (~> 4.0.5)
       panoramic
@@ -30,7 +31,7 @@ GEM
       erubis (~> 2.7.0)
       rack (~> 1.5.2)
       rack-test (~> 0.6.2)
-    actionpack-page_caching (1.0.1)
+    actionpack-page_caching (1.0.2)
       actionpack (>= 4.0.0, < 5)
     activemodel (4.0.0)
       activesupport (= 4.0.0)
@@ -57,8 +58,9 @@ GEM
       cucumber (>= 1.1.1)
       rspec-expectations (>= 2.7.0)
     atomic (1.1.14)
+    bcrypt-ruby (3.1.2)
     bluecloth (2.2.0)
-    bootstrap-sass (3.0.2.1)
+    bootstrap-sass (3.0.3.0)
       sass (~> 3.2)
     builder (3.1.4)
     capybara (2.1.0)
@@ -101,6 +103,12 @@ GEM
       debugger-ruby_core_source (~> 1.2.3)
     debugger-linecache (1.2.0)
     debugger-ruby_core_source (1.2.3)
+    devise (3.2.2)
+      bcrypt-ruby (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 3.2.6, < 5)
+      thread_safe (~> 0.1)
+      warden (~> 1.2.3)
     diff-lcs (1.2.4)
     erubis (2.7.0)
     eventmachine (1.0.3)
@@ -154,6 +162,7 @@ GEM
     mysql2 (0.3.13)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
+    orm_adapter (0.5.0)
     panoramic (0.0.4)
       rails (>= 3.0.7)
     paperclip (3.5.2)
@@ -169,6 +178,8 @@ GEM
     powerbar (1.0.11)
       ansi (~> 1.4.0)
       hashie (>= 1.1.0)
+    quiet_assets (1.0.2)
+      railties (>= 3.1, < 5.0)
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -194,7 +205,7 @@ GEM
       railties (>= 4.0.0, < 5.0)
       sass (>= 3.1.10)
       sprockets-rails (~> 2.0.0)
-    simple_form (3.0.0)
+    simple_form (3.0.1)
       actionpack (>= 4.0.0, < 4.1)
       activemodel (>= 4.0.0, < 4.1)
     sprockets (2.10.0)
@@ -228,6 +239,8 @@ GEM
       execjs (>= 0.3.0)
       multi_json (~> 1.0, >= 1.0.2)
     underscore-rails (1.5.2)
+    warden (1.2.3)
+      rack (>= 1.0)
     will_paginate (3.0.5)
     xpath (2.0.0)
       nokogiri (~> 1.3)
@@ -254,6 +267,7 @@ DEPENDENCIES
   mocha
   mysql2
   poltergeist
+  quiet_assets
   rake
   ruby-prof
   sqlite3-ruby

@@ -11,6 +11,10 @@
   <%= render 'layouts/cms/main_menu' %>
 </nav>
 <%= yield :button_bar %>   <%# This is a temporary backwards compatible placement while UI is reworked. %>
+<% flash.each do |name, msg| -%>
+  <%= content_tag :div, msg, class: name %>
+<% end -%>
+
 <section class="container center-column main-container bottom-form-btn">
   <div class="padded row-fluid">
     <div class="span12"><%= yield %></div>

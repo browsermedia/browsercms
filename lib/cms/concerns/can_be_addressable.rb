@@ -39,6 +39,7 @@ module Cms
         extend Cms::Concerns::Addressable::ClassMethods
         include Cms::Concerns::Addressable::NodeAccessors
         include Cms::Concerns::Addressable::MarkAsDirty
+        extend Cms::Configuration::ConfigurableTemplate
 
         if options[:path]
           @path = options[:path]
@@ -140,14 +141,7 @@ module Cms
         # Can be specified as is_addressable template: 'subpage'
         # @return [String] template/default unless template was set.
         def layout
-          found = Rails.configuration.cms.templates[name.underscore]
-          if found
-            "templates/#{found}"
-          elsif @template
-            "templates/#{@template}"
-          else
-            "templates/default"
-          end
+          normalize_layout(self, @template)
         end
       end
 

@@ -1,10 +1,11 @@
 <%= content_for :html_head do %>
-<meta name="generator" content="BrowserCMS <%= Cms.version %>"/>
-<% if @show_toolbar %>
-<%= javascript_include_tag 'cms/page_editor' %>
-<%= stylesheet_link_tag 'cms/page_content_editing' %>
-<%= csrf_meta_tags %>
-<% end %>
+    <meta name="generator" content="BrowserCMS <%= Cms.version %>"/>
+    <% if @show_toolbar %>
+        <%= javascript_include_tag 'cms/page_editor' %>
+        <%= stylesheet_link_tag 'cms/page_content_editing' %>
+        <%= csrf_meta_tags %>
+    <% end %>
+    <%= javascript_include_tag 'cms/site' %>
 <% end %>
 <% if @show_toolbar %>
     <% flash.keep %>

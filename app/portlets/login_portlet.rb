@@ -1,12 +1,13 @@
+# Shows a 'Login' form.
+#
+# This portlet should not typically necessary in CMS 4.0 or later since there is a built
+# in /login route built in.
 class LoginPortlet < Cms::Portlet
 
-  description "Displays a form that allows users to login."
+  enable_template_editor false
+  description "Display a login form (Consider using /login instead)."
 
   def render
-    @success_url = (flash[:success_url] || self.success_url)
-    @failure_url = self.failure_url
-    @login = flash[:login] || params[:login]
-    @remember_me = flash[:remember_me] || params[:remember_me]
   end
     
 end

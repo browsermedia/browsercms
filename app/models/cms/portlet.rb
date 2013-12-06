@@ -84,7 +84,22 @@ module Cms
         end
       end.flatten.compact.uniq
       @types.sort! { |a,b| a.name.downcase <=> b.name.downcase }
+      @types.select! { |type| !blacklist.include?(type.name)}
       @types
+    end
+
+    # Determines if a content_type is blacklisted or not.
+    #
+    # @param [Symbol] type (:dynamic_portlet)
+    def self.blacklisted?(type_name)
+      blacklist.include?(type_name.to_s.camelize)
+    end
+
+    # Returns a blacklist of all content types that shouldn't be accessible. Includes both portlets and other CMS types.
+    #
+    # @return [Array<String>] List of class names ['DynamicPortlet', 'LoginPortlet']
+    def self.blacklist
+      @blacklist ||= Rails.configuration.cms.content_types.blacklist.map {|underscore_name| underscore_name.to_s.camelize }
     end
 
     def self.get_subclass(type)

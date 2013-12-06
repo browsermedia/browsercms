@@ -1,49 +1,67 @@
-require 'digest/sha1'
-
 module Cms
   class User < ActiveRecord::Base
 
-    include Cms::Authentication::Model
+    # Include default devise modules. Others available are:
+    # :confirmable, :lockable, :timeoutable and :omniauthable, :registerable, :trackable,
+
+    devise :database_authenticatable,
+           :validatable,
+           # Note that Chrome doesn't expire session cookies immediately so test this in other browsers.
+           # http://stackoverflow.com/questions/16817229/issues-with-devise-rememberable
+           :rememberable,
+           :recoverable,
+           :authentication_keys => [:login]
+
 
     validates_presence_of :login
     validates_uniqueness_of :login, :case_sensitive => false
     validates_format_of :login, :with => /\A\w[\w\.\-_@]+\z/, :message => "use only letters, numbers, and .-_@ please."
 
-    validates_presence_of :email
-    # Rails 4 flagged the following as a security risk (multiline). Use a more generic version on next line.
-    #validates_format_of :email, :with => /^([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})$/i, :message => "should be an email address, ex. xx@xx.com"
-    validates_format_of :email, :with => /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/, :message => "should be an email address, ex. xx@xx.com"
-
-
     has_many :user_group_memberships, :class_name => 'Cms::UserGroupMembership'
     has_many :groups, :through => :user_group_memberships, :class_name => 'Cms::Group'
     has_many :tasks, :foreign_key => "assigned_to_id", :class_name => 'Cms::Task'
 
-    scope :active, -> {where(["expires_at IS NULL OR expires_at > ?", Time.now.utc])}
-    def self.able_to_edit_or_publish_content
-      where(["#{Permission.table_name}.name = ? OR #{Permission.table_name}.name = ?", "edit_content", "publish_content"])
-        .includes({:groups => :permissions})
-        .references(:permissions)
-    end
-
+    scope :active, -> { where(["expires_at IS NULL OR expires_at > ?", Time.now.utc]) }
     extend DefaultAccessible
 
-    def self.permitted_params
-      super + [{:group_ids => []}, :password, :password_confirmation]
+
+    # Class Methods
+    class << self
+
+      # Returns all users that can :edit_content or :publish_content permissions.
+      #
+      # @return [ActiveRelation<Cms::User>] A scope which will find users with the correct permissions.
+      def able_to_edit_or_publish_content
+        where(["#{Permission.table_name}.name = ? OR #{Permission.table_name}.name = ?", "edit_content", "publish_content"]).includes({:groups => :permissions}).references(:permissions)
+      end
+
+      # Change a give user's password.
+      #
+      # @param [String] login
+      # @param [String] new_password
+      def change_password(login, new_password)
+        find_by_login(login).change_password(new_password)
+      end
+
+      def permitted_params
+        super + [{:group_ids => []}, :password, :password_confirmation]
+      end
+
+      def current
+        Thread.current[:cms_user]
+      end
+
+      def current=(user)
+        Thread.current[:cms_user] = user
+      end
+
+      # Return a GuestUser with the given values.
+      def guest(options = {})
+        Cms::GuestUser.new(options)
+      end
     end
 
-    def self.current
-      Thread.current[:cms_user]
-    end
-
-    def self.current=(user)
-      Thread.current[:cms_user] = user
-    end
-
-    def self.guest(options = {})
-      Cms::GuestUser.new(options)
-    end
-
+    # Determines if this user a Guest or not.
     def guest?
       !!@guest
     end
@@ -52,6 +70,11 @@ module Cms
     # which may not need to check the database for that information.
     def cms_access?
       groups.cms_access.count > 0
+    end
+
+    # Change this User's password to a new value.
+    def change_password(new_password)
+      update_attributes(:password => new_password, :password_confirmation => new_password)
     end
 
     def disable
@@ -69,6 +92,18 @@ module Cms
       save!
     end
 
+    # Determines if this user should be authenticated. Hook for Devise.
+    #
+    # @override Devise::Models::Authenticatable#active_for_authentication?
+    # @return [Boolean] true if this user has not expired.
+    def active_for_authentication?
+      is_active = !expired?
+      logger.error "Expired User '#{login}' failed to login. Account expired on #{expires_at_formatted}." unless is_active
+      is_active
+    end
+
+    # Determines if this user has expired or has been disabled.
+    # @return [Boolean]
     def expired?
       expires_at && expires_at <= Time.now
     end
@@ -113,7 +148,7 @@ module Cms
     end
 
     def modifiable_sections
-      @modifiable_sections ||= Cms::Section.where(["#{Cms::User.table_name}.id = ? and #{GroupType.table_name}.cms_access = ?", id, true]).includes(:groups => [:group_type, :users]).references(:users,:groups)
+      @modifiable_sections ||= Cms::Section.where(["#{Cms::User.table_name}.id = ? and #{GroupType.table_name}.cms_access = ?", id, true]).includes(:groups => [:group_type, :users]).references(:users, :groups)
     end
 
     # Expects a list of names of Permissions

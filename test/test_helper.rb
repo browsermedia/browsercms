@@ -104,7 +104,8 @@ class ActiveSupport::TestCase
   end
 
   def login_as(user)
-    @request.session[:user_id] = user ? user.id : nil
+    sign_in user
+    #@request.session[:user_id] = user ? user.id : nil
   end
 
   def login_as_cms_admin
@@ -178,12 +179,17 @@ module Cms::ControllerTestHelper
   end
 end
 
+class ActionController::TestCase
+  include Devise::TestHelpers
+end
+
 module Cms::IntegrationTestHelper
   def login_as(user, password = "password")
     get login_url
     assert_response :success
     post login_url, :login => user.login, :password => password
     assert_response :redirect
+    assert_equal "", @response.body, "Checking post login"
     assert flash[:notice]
   end
 

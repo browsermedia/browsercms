@@ -23,6 +23,7 @@ require 'will_paginate/active_record'
 require 'actionpack/page_caching'
 require 'panoramic'
 require 'simple_form'
+require 'devise'
 
 module Cms
 
@@ -39,6 +40,8 @@ module Cms
     # Define configuration for the CKEditor
     config.cms.ckeditor = ActiveSupport::OrderedOptions.new
 
+    # Configuration for content types.
+    config.cms.content_types = ActiveSupport::OrderedOptions.new
 
     # Make sure we use our rails model template (rather then its default) when `rails g cms:content_block` is run.
     config.app_generators do |g|
@@ -80,10 +83,13 @@ module Cms
       # By default, this is based on the site_domain, i.e. mailbot@example.com
       app.config.cms.mailbot = :default
 
-      # Allows Addressable content types to set which template will be used for page layouts.
-      # This takes precedence over the :template attribute set on models. Keys are looked up based on Class.name.underscore
-      # Example:
+      # Allows Addressable content types and Controllers to set which template will be used for page layouts.
+      # This takes precedence over the :template attribute set on models/controllers.
+      #    Keys are looked up based on Class.name.underscore
+      # @example:
       #   config.cms.templates['cms/form'] = 'my-form-layout' # app/views/layouts/templates/my-form-layout
+      #   config.cms.templates['cms/sites/sessions_controller'] = 'subpage' # For /login
+      #
       app.config.cms.templates = {}
 
       # Determines which ckeditor file will be used to configure all instances.
@@ -93,8 +99,13 @@ module Cms
       # Define menu items to be added dynamically to the CMS Admin tab.
       app.config.cms.tools_menu = []
 
+      # Disable portlets so they don't appear in menus and can't be created. Existing portlets will not be deleted.
+      app.config.cms.content_types.blacklist = [:login_portlet, :forgot_password_portlet, :dynamic_portlet]
+
+      # Initialization
       require 'cms/configure_simple_form'
       require 'cms/configure_simple_form_bootstrap'
+      require 'cms/configuration/devise'
 
       # Sets the default .css file that will be added to forms created via the Forms module.
       # Projects can override this as needed.
@@ -116,6 +127,7 @@ module Cms
       ActiveSupport::Dependencies.autoload_paths += %W( #{self.root}/vendor #{self.root}/app/mailers #{self.root}/app/helpers)
       ActiveSupport::Dependencies.autoload_paths += %W( #{self.root}/app/controllers #{self.root}/app/models #{self.root}/app/portlets)
       ActiveSupport::Dependencies.autoload_paths += %W( #{Rails.root}/app/portlets )
+      ActiveSupport::Dependencies.autoload_paths += %W( #{Rails.root}/app/presenters )
       ActiveSupport::Dependencies.autoload_paths += %W( #{Rails.root}/app/portlets/helpers )
       ActionController::Base.append_view_path DynamicView.base_path
       ActionController::Base.append_view_path %W( #{self.root}/app/views)

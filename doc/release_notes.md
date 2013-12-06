@@ -1,5 +1,4 @@
-v4.0
-====
+# v4.0
 
 This release includes the following features:
 
@@ -10,14 +9,15 @@ This release includes the following features:
 * Refined Content API - Make content blocks closer in behavior to ActiveRecord.
 * Improved Template Storage - Templates stored in the database no longer need to be written out to the file system. This should make it easier to deploy CMS apps to Heroku.
 * Rails 4 Upgrade - BrowserCMS is now designed to work with Rail 4.0.
+* Devise Integration [#641] - Devise is now used as standard authentication tool. Upgrading projects will have passwords reset (See upgrade notes for more details)
 * Portlet Descriptions [#619] - Portlets can now have a description that will be used to provide additional context when users are building/placing them.
 * No need to register Content Types [#621] - Content Blocks will automatically appear in the menus without needing to add them to the database.
 * Using SimpleForm [#623] Reworked all forms to use simple_form (https://github.com/plataformatec/simple_form).
 * Migration Cleanup [#594] Migrations for previous verisons have been compressed. This has implications for upgrading, but should make new project cleaner.
-* Enforce table prefixes [#639] In addition, all core cms tables must now start with cms_.
+* Enforce table prefixes [#639] All core cms tables will now start with cms_.
+* Content Blacklisting - Portlets can be blacklisted via configuration so that they can't be created. Several previously stock types are blacklisted.
 
-UI Redesign
-----------
+## UI Redesign
 
 The entire UI has been reworked to be more streamlined and lightweight. It is now built using Twitter Bootstrap, and makes better use of global menus and toolbars. Here are the notable changes.
 
@@ -25,8 +25,7 @@ The entire UI has been reworked to be more streamlined and lightweight. It is no
 1. Smart 'New' button - Users can add content from any page in the CMS. The "New" button is a split button that can either add a specific type of content, or will 'guess' based on where a user is in the site.
 
 
-In Context Editing
-------------------
+## In Context Editing
 
 Users can now edit most HTML content directly in the page. Icons indicate the area of the pages that are editable. Here are some of the highlights:
 
@@ -39,8 +38,7 @@ Users can now edit most HTML content directly in the page. Icons indicate the ar
 1. Non-incontext Content - Not all content makes sense to be inline editable (for example portlets). For these content types, the previous move/remove/edit links now float in the upper right hand corner of the content block.
 1. [#619] Add descriptions to portlets. Developers can customize these.
 
-Addressable Content Blocks
---------------------------
+## Addressable Content Blocks
 
 Content blocks can created with as their own pages. To make a block addressable, a developer must do the following:
 
@@ -51,8 +49,7 @@ class Product < ActiveRecord::Base
   is_addressable path: "/products", template: "product"
 end
 
-Form Builder
-------------
+## Form Builder
 
 Allow editors to create form pages that can be used to collect information from visitors (i.e. Contact Us, Support requests, etc). Basically, any quick collect a few fields using a consistent form styling.
 
@@ -65,8 +62,7 @@ h2. Features include:
 5. Visitors can be redirected to another URL after submitting their entry or display a customizable 'success' message.
 6. Forms generate the HTML display using bootstrap's CSS by default. Projects can customize this in the application.rb with config.cms.form_builder_css
 
-Refined Content API
--------------------
+## Refined Content API
 
 1. .save now works identically between ActiveRecord and Content Blocks
 
@@ -78,8 +74,7 @@ Previously, calling .save on a block would save a draft copy, rather then updati
     @block.save_draft
 
 
-Registering Content Types
--------------------------
+## Registering Content Types
 
 Content blocks no longer need to have a separate registration in the database to appear in menus.
 
@@ -96,8 +91,7 @@ class Widget < ActiveRecord::Base
   acts_as_content_block content_module: false
 end
 
-Refactor to use SimpleForm
-----------
+## Refactor to use SimpleForm
 
 Converted all the internal forms to use SimpleForm rather than our own custom form builder. This provides better consistency with bootstrap forms, as well as well tested API for defining new form inputs. This will primarily affect developers when they create content blocks. New content will be generated using simple_form syntax like so:
 
@@ -109,8 +103,61 @@ rather than the older syntax that looks like this:
 
 The old form_builder methods like cms_text_field and cms_file_field have been deprecated and will generate warnings when used. These methods are scheduled for removal in BrowserCMS 4.1. It's recommended that custom content blocks be upgraded to use the new syntax when feasible. The deprecation warnings should provide some guideance, but also look at simple_forms documentation http://simple-form.plataformatec.com.br for help.
 
-Upgrading
---------
+## Portlet Blacklists
+
+Portlets can be blacklisted so that new instances cannot be created. This can be used to turn off some portlets for security, convience or otherwise. By default, the following portlet types are blacklisted (as 'deprecated').
+
+* LoginPortlet (:login_portlet)
+* DynamicPortlet (:dynamic_portlet)
+* ForgotPasswordPortlet (:forgot_password_portlet)
+
+### Modifying the blacklist
+
+```
+# Prevention creation
+config.cms.content_types.blacklist += [:email_page_portlet]
+
+# Allowing creation
+config.cms.content_types.blacklist -= [:login_portlet]
+```
+
+## Devise Integration
+
+Devise is now the standard authentication mechanism for BrowserCMS. This adds some new (and improved) authentication features including:
+
+* Reset Password - Admin users have a link to reset passwords.
+* Strong Password storage - Passwords are now encrypted using bcrypt which is a safer method (http://codahale.com/how-to-safely-store-a-password/)
+* Remember Me - Allows users to stay logged in for up to two weeks.
+* Devise/Warden APIs - Developers can use Devise and/or Warden's APIs to customize how authenication works. The previous RESTful Authentication based solution was not really pluggable.
+
+### [Warning] Upgrading/Password Reset
+
+Upgrading to 4.0 means all user passwords will need to be reset. This doesn't apply where external user databases are used (i.e. CAS) for authentication. Just user accounts stored in the CMS itself.
+
+This reset is a side effect of using a more secure password encryption algorithm (bcrypt). When users try to log in, they will have to request a password reset. This feature is provided on /cms/login as a standard feature. Users will need to provide an email, and a link for reseting their password will be sent to them. Alternatively, developers may choose to change passwords via the admin interface (or rails console) before turning over sites to the site maintainers.
+
+### Avoiding a reset
+
+For most sites, the number of admin users is likely limited and part of a cohesive team. So forcing a reset shouldn't be an issue. In the case of sites that have large user databases, a migration strategy to mass update or possibly creating a new Warden/Devise strategy based on the 3.5.x encryption strategy. These two are coding exercises left to the developers working on the project.
+
+For sites that need to keep a record of the old encrypted passwords, remove/comment out the following line from the browsercms400 migration which will preserve the old encrypted passwords.
+
+```
+t.remove :crypted_password
+```
+
+Note that preserving the old password data is just the first step. The new encryption strategy will still be used unless modifications are made to the project.
+
+### Forgot Password
+
+Users can reset their password via the admin UI. On /cms/login, a link to 'Forgot Password' is available. Users can enter an email and have the reset link mailed to them.
+
+Configuration: For Forgot Password to work, need to ensure the following is present for mailer in BrowserCMS setups.
+    * config.action_mailer.default_url_options = { :host => "yourhost" }
+
+The core 'ForgotPassword' portlet has been reworked and is probably 100% unnecessary on most sites. It is now blacklisted by default. The portlet now just renders the stock /forgot-password view and isn't editable. Use /forgot-password instead.
+
+## Upgrading
 
 1. Editable Page Titles: In order to take advantage of the editable pages titles, templates need to use the new Template API Method: page_header(). Used rather that <%= page_title %> within h1/h2 etc, this will output an editable page title element for logging in users.
 2. match -> get: Update your config/routes.rb to change any use of 'match' to get or post for your controller.
@@ -118,6 +165,10 @@ Upgrading
 4. Content Types - If you have defined content blocks in custom group names, you should edit them to specify the module name. See 'Registering Content Types' above for details. You can delete any seeds that create content types. There will be a deprecation warning if you call save! or create! on ContentTypes.
 5. Forms - Rework existing form fields in content blocks to use SimpleForm.
 6. Table Prefixing - In config/initializers/browsercms.rb remove the `Cms.table_prefix = 'cms_' line, which generated deprecation warnings.
+7. Password Reset - Users will need to reset their password after the upgrade. See Devise Integration/Avoiding a reset if this is concern.
+8. Forgot Password - Consider removing any existing ForgotPassword portlets and just use /forgot-password controller.  Creation is disabled by default.
+9. Reset Password Portlet - These have been removed as they were no longer necessary. Any remaining instances have been converted to 'DeprecatedPlaceholders'. Find and remove these portlets (and the page they were on) from your site.
+10. Login Portlet - Consider removing these and using the built in /login route. Creation is disabled by default.
 
 ### Migration Cleanup
 

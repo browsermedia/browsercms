@@ -2,7 +2,6 @@ module Cms
   class AttachmentsController < Cms::BaseController
 
     skip_before_filter :redirect_to_cms_site, :only => [:download]
-    skip_before_filter :login_required, :only => [:download]
     skip_before_filter :cms_access_required, :only => [:download]
 
     include ContentRenderingSupport

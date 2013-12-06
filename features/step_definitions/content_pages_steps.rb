@@ -30,9 +30,9 @@ Given /^I am logged in as a Content Editor(| on the admin subdomain)$/ do |is_ad
     login_at = 'http://cms.mysite.com/cms/login'
   end
   visit login_at
-  fill_in 'login', :with => 'cmsadmin'
-  fill_in 'password', :with => 'cmsadmin'
-  click_button 'LOGIN'
+  fill_in 'Login', :with => 'cmsadmin'
+  fill_in 'Password', :with => 'cmsadmin'
+  click_button 'Sign in'
 end
 
 Given /^there is a LoginPortlet on the homepage$/ do

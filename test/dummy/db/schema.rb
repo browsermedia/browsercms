@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130924162315) do
+ActiveRecord::Schema.define(version: 20131211223908) do
 
   create_table "catalog_versions", force: true do |t|
     t.string   "name"
@@ -560,22 +560,25 @@ ActiveRecord::Schema.define(version: 20130924162315) do
   add_index "cms_user_group_memberships", ["user_id"], name: "index_cms_user_group_memberships_on_user_id", using: :btree
 
   create_table "cms_users", force: true do |t|
-    t.string   "login",                     limit: 40
-    t.string   "first_name",                limit: 40
-    t.string   "last_name",                 limit: 40
-    t.string   "email",                     limit: 40
-    t.string   "crypted_password",          limit: 40
-    t.string   "salt",                      limit: 40
+    t.string   "login",                  limit: 40
+    t.string   "first_name",             limit: 40
+    t.string   "last_name",              limit: 40
+    t.string   "email",                  limit: 40
+    t.string   "crypted_password",       limit: 40
+    t.string   "salt",                   limit: 40
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "expires_at"
-    t.string   "remember_token",            limit: 40
-    t.datetime "remember_token_expires_at"
-    t.string   "reset_token"
+    t.datetime "remember_created_at"
+    t.string   "reset_password_token"
+    t.string   "encrypted_password",                default: "", null: false
+    t.datetime "reset_password_sent_at"
   end
 
+  add_index "cms_users", ["email"], name: "index_cms_users_on_email", unique: true, using: :btree
   add_index "cms_users", ["expires_at"], name: "index_cms_users_on_expires_at", using: :btree
   add_index "cms_users", ["login"], name: "index_cms_users_on_login", unique: true, using: :btree
+  add_index "cms_users", ["reset_password_token"], name: "index_cms_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "deprecated_input_versions", force: true do |t|
     t.string   "name"

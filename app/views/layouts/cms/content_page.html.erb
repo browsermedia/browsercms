@@ -1,0 +1,5 @@
+<%# Sub-layout
+    Wraps a view so it will display in the :main container of a page without needing to call content_for(:main)
+%>
+<% content_for :main do %><%= yield %><% end %>
+<%= render template: cms_template %>

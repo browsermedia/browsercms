@@ -11,6 +11,9 @@ end
 
 module Dummy
   class Application < Rails::Application
+
+    config.action_mailer.default_url_options = { :host => "localhost:3000" }
+
     config.cms.form_builder_css = 'custom-forms'
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
@@ -51,8 +54,12 @@ module Dummy
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+    # Renable for testing
+    config.cms.content_types.blacklist -= [:login_portlet]
+
     # Verify that default content templates can be overridden.
     config.cms.templates['dummy/product'] = 'product'
+    config.cms.templates['cms/sites/sessions_controller'] = :subpage
 
     config.secret_key_base = 'a-fake-key-to-avoid-deprecation-warnings-since-this-is-a-dummy-app-that-wont-be-deployed'
   end

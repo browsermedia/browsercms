@@ -1,6 +1,6 @@
 Tasks:
 
-Testing:
+qTesting:
 
 ruby -Ilib -Itest test/unit/models/content_type_mini_test.rb --name=/available_by_module/
 
@@ -12,8 +12,6 @@ ruby -Ilib -Itest test/unit/models/content_type_mini_test.rb --name=/available_b
   - Groups should have 'external' user flag to prevent deletion.
 * User Management[Devise?]
   - Built in 'Temp' users (store arbitrary attributes in session)
-  - Forgot Password (for admins) 
-  - Public login page (for non-admins)
 * Marketing / Email notifications
 
 ## UI Merge Items

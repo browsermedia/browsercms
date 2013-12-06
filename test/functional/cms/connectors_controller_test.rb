@@ -14,6 +14,7 @@ class ConnectorsControllerTest < ActionController::TestCase
     
     get :new, :page_id => @page, :container => "main"
 
+    #assert_equal "", @response.body
     assert_response :success
     assert_select "title", "Add Existing Content to 'Test Page' Page"
   end

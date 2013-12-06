@@ -28,9 +28,10 @@ Gem::Specification.new do |s|
   #s.test_files = Dir["test/**/*"]
   #s.files -= Dir["test/dummy/*"]
 
-  s.executables = ["bcms", "bcms-upgrade","browsercms"]
+  s.executables = ["bcms", "browsercms"]
 
   s.add_dependency("rails", "~> 4.0.0")
+  s.add_dependency("devise", "~> 3.0")
   s.add_dependency("sass-rails")
   s.add_dependency("bootstrap-sass")
   s.add_dependency("compass-rails", "~> 2.0.alpha.0")

@@ -1,10 +1,10 @@
 <div class="logged-in">
   <div class="container center-column">
     <ul class="subnav right">
-      <li><%= link_to current_user.full_name, cms.edit_user_path(current_user) %></li>
-      <li><a href="#">Settings</a></li>
+      <li><%= link_to current_user.full_name, cms.edit_user_path(current_user) unless current_user.guest? %></li>
+      <li><%= link_to "Settings", "#" unless current_user.guest? %></li>
       <li><%= link_to "Help", 'https://github.com/browsermedia/browsercms/wiki', target: '_blank' %></li>
-      <li><%= link_to "Logout", cms.logout_path %></li>
+      <li><%= link_to "Logout", cms.logout_path unless current_user.guest? %></li>
     </ul>
   </div>
 </div>
@@ -13,6 +13,7 @@
   <div class="container center-column">
     <%= link_to image_tag('cms/logo.png', class: 'main-logo'), "/" %>
     <ul class="mainnav">
+      <% if current_user.able_to?(:edit_content) %>
       <li>
         <%= link_to "Dashboard", cms.dashboard_path %>
         <ul class="dropdown-menu">
@@ -22,6 +23,7 @@
         <%= link_to "Pages", cms.sitemap_path %>
       </li>
       <li>
+
         <a href="#"
            class="dropdown-toggle"
            data-toggle="dropdown">
@@ -40,6 +42,8 @@
           <% end %>
         </ul>
       </li>
+      <% end %>
+      <% if current_user.able_to? :administrate %>
       <li>
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin<b class="caret"></b></a>
         <ul class="dropdown-menu">
@@ -58,9 +62,10 @@
           <% end %>
         </ul>
       </li>
+      <% end %>
     </ul>
 
-
+    <% if current_user.able_to?(:edit_content) %>
     <div class="btn-group">
       <%= menu_button "New", new_button_path, id: 'new-content-button', class: 'btn btn-primary', tabindex: '-1' %>
       <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" tabindex="-1">
@@ -78,5 +83,6 @@
       </ul>
 
     </div>
+    <% end %>
   </div>
 </div>

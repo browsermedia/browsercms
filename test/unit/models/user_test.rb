@@ -8,23 +8,8 @@ module Cms
       @user = create(:user)
     end
 
-    should_validate_presence_of :user => [:login, :password, :password_confirmation]
+    should_validate_presence_of :user => [:login, :password]
     should_validate_uniqueness_of :user => [:login]
-
-
-    test ".permitted_params" do
-      assert User.permitted_params.include?(:group_ids => []), "Allow for bulk submitted group_ids as a collection."
-    end
-
-    def test_authenticate
-      assert_equal @user, Cms::User.authenticate(@user.login, @user.password)
-      assert_nil Cms::User.authenticate(@user.login, 'FAIL')
-    end
-
-    def test_authenticate_expired_user
-      @user.disable!
-      assert_nil Cms::User.authenticate(@user.login, @user.password)
-    end
 
     def test_expiration
       assert_nil @user.expires_at
@@ -82,13 +67,13 @@ module Cms
     test "email validation" do
       assert @user.valid?
 
-      valid_emails = ['t@test.com', 'T@test.com', 'test@somewhere.mobi', 'test@somewhere.tv', 'joe_blow@somewhere.co.nz', 'joe_blow@somewhere.com.au', 't@t-t.co', 'test@somewhere.x']
+      valid_emails = ['t@test.com', 'T@test.com', 'test@somewhere.mobi', 'test@somewhere.tv', 'joe_blow@somewhere.co.nz', 'joe_blow@somewhere.com.au', 't@t-t.co', 'test@somewhere.x', 'test@somewhere..']
       valid_emails.each do |email|
         @user.email = email
         assert @user.valid?
       end
 
-      invalid_emails = ['', '@test.com', '@test', 'test@test', 'test@somewhere', 'test@somewhere.', 'test@somewhere..']
+      invalid_emails = ['', '@test.com', '@test', 'test@test', 'test@somewhere', 'test@somewhere.']
       invalid_emails.each do |email|
         @user.email = email
         assert !@user.valid?, "This email '#{email}' is not considered valid."
