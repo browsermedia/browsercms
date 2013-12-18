@@ -1,21 +1,27 @@
 #!/usr/bin/env ruby
-# This command will automatically be run when you run "rails" with Rails 3 gems installed from the root of your application.
 
-ENGINE_PATH = File.expand_path('../..',  __FILE__)
-load File.expand_path('../../test/dummy/script/rails',  __FILE__)
+#This is standard Rails 4 Engine commands behavior.
+ENGINE_ROOT = File.expand_path('../..', __FILE__)
+ENGINE_PATH = File.expand_path('../../lib/cms/engine', __FILE__)
 
+# Modified the core `rails` script so that commands other than generate/destroy work in context of the test/dummy app.
 
-# Rails 3.2.2 generates the following instead, but you only get access to:
-# - rails generate
-# - rails destroy
-# I kept the above (for now anyway) so I can get access to rails server, though I will need to test that it works for other commands too.
+ARGV << '--help' if ARGV.empty?
 
-# Bugs:  Adding the following would:
-# 1. Enable generators to work correctly (right now they put code into test/dummy)
-# 2. Prevent loading, since engine requires other files directly.
+aliases = {
+    "g" => "generate",
+    "d" => "destroy"
+}
 
-#ENGINE_ROOT = File.expand_path('../..', __FILE__)
-#ENGINE_PATH = File.expand_path('../../lib/cms/engine', __FILE__)
-##
-#require 'rails/all'
-#require 'rails/engine/commands'
+command = ARGV.first
+command = aliases[command] || command
+
+case command
+  when 'generate', 'destroy'
+    require 'rails/all'
+    require 'rails/engine/commands'
+  else
+    # Commands like 'server' and 'console' will use test/dummy's rails script.
+    load File.expand_path('../../test/dummy/script/rails', __FILE__)
+
+end

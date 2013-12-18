@@ -1,3 +1,30 @@
+# Load all dependencies needed at boot time.
+require 'rails'
+require 'cms/configuration'
+require 'cms/version'
+require 'browsercms'
+
+require 'bootstrap-sass'
+require 'compass-rails'
+
+# Gem name is different than file name
+# Must be required FIRST, so that our assets paths appear before its do.
+# This allows app/assets/ckeditor/config.js to set CMS specific defaults.
+require 'ckeditor-rails'
+
+# Explicitly require this, so that CMS projects do not need to add it to their Gemfile
+# especially while upgrading
+require 'jquery-rails'
+require 'jquery-ui-rails'
+
+require 'underscore-rails'
+require 'will_paginate'
+require 'will_paginate/active_record'
+require 'actionpack/page_caching'
+require 'panoramic'
+require 'simple_form'
+require 'devise'
+
 require 'cms/engine'
 require 'cms/extensions'
 require 'cms/route_extensions'
