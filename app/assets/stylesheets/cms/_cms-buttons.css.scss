@@ -47,6 +47,12 @@
 	.btn-primary {
 		@include rem(margin-left,0.75rem);
 	}
+
+	button,
+	.btn,
+	.btn-group {
+		margin-bottom: 0;
+	}
 }
 
 .bottom-form-btn {
