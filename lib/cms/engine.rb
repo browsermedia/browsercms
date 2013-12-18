@@ -18,7 +18,15 @@ module Cms
     # Configuration for content types.
     config.cms.content_types = ActiveSupport::OrderedOptions.new
 
-    # Make sure we use our rails model template (rather then its default) when `rails g cms:content_block` is run.
+    # Configuration for working on BrowserCMS core.
+    # We want these configuration for generators.
+    config.generators do |g|
+      g.test_framework :mini_test, :spec => true, :fixture => false
+      g.stylesheets false
+    end
+
+    # Configuration for projects using BrowserCMS>
+    # Need to use our rails model template (rather then its default) when `rails g cms:content_block` is run.
     config.app_generators do |g|
       path = File::expand_path('../../templates', __FILE__)
       g.templates.unshift path
