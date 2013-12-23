@@ -30,7 +30,7 @@ module Cms
       per_page = params[:per_page] || 10
 
       page_num = params[:page] ? params[:page].to_i : 1
-      @users = User.where(conditions).paginate(page: page_num, per_page: per_page).includes(:user_group_memberships).references(:user_group_memberships).order("first_name, last_name, email")
+      @users = PersistentUser.where(conditions).paginate(page: page_num, per_page: per_page).includes(:user_group_memberships).references(:user_group_memberships).order("first_name, last_name, email")
     end
 
     def change_password
@@ -63,11 +63,11 @@ module Cms
 
     protected
     def after_create_url
-      index_url
+      users_path
     end
 
     def after_update_url
-      index_url
+      users_path
     end
 
     def update_flash
@@ -80,9 +80,17 @@ module Cms
       end
     end
 
+    def resource_name
+      'PersistentUser'
+    end
+
+    def variable_name
+      'user'
+    end
+
     private
     def user
-      @user ||= User.find(params[:id])
+      @user ||= PersistentUser.find(params[:id])
     end
 
     def set_menu_section

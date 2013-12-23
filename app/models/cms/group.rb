@@ -6,7 +6,7 @@ class Cms::Group < ActiveRecord::Base
   GUEST_CODE = "guest"
 
   has_many :user_group_memberships, :class_name => 'Cms::UserGroupMembership'
-  has_many :users, :through => :user_group_memberships, :class_name => 'Cms::User'
+  has_many :users, :through => :user_group_memberships, :class_name => 'Cms::PersistentUser'
 
   has_many :group_permissions, :class_name => 'Cms::GroupPermission'
   has_many :permissions, :through => :group_permissions, :class_name => 'Cms::Permission'

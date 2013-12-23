@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131211223908) do
+ActiveRecord::Schema.define(version: 20131218222005) do
 
   create_table "catalog_versions", force: true do |t|
     t.string   "name"
@@ -564,15 +564,17 @@ ActiveRecord::Schema.define(version: 20131211223908) do
     t.string   "first_name",             limit: 40
     t.string   "last_name",              limit: 40
     t.string   "email",                  limit: 40
-    t.string   "crypted_password",       limit: 40
     t.string   "salt",                   limit: 40
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "expires_at"
     t.datetime "remember_created_at"
     t.string   "reset_password_token"
-    t.string   "encrypted_password",                default: "", null: false
+    t.string   "encrypted_password",                default: "",          null: false
     t.datetime "reset_password_sent_at"
+    t.string   "type",                              default: "Cms::User"
+    t.string   "source"
+    t.text     "external_data"
   end
 
   add_index "cms_users", ["email"], name: "index_cms_users_on_email", unique: true, using: :btree

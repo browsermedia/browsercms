@@ -16,6 +16,7 @@ This release includes the following features:
 * Migration Cleanup [#594] Migrations for previous verisons have been compressed. This has implications for upgrading, but should make new project cleaner.
 * Enforce table prefixes [#639] All core cms tables will now start with cms_.
 * Content Blacklisting - Portlets can be blacklisted via configuration so that they can't be created. Several previously stock types are blacklisted.
+* External Users [#644] - Better support for authenticating/authorizing users from external data sources.
 
 ## UI Redesign
 
@@ -156,6 +157,14 @@ Configuration: For Forgot Password to work, need to ensure the following is pres
     * config.action_mailer.default_url_options = { :host => "yourhost" }
 
 The core 'ForgotPassword' portlet has been reworked and is probably 100% unnecessary on most sites. It is now blacklisted by default. The portlet now just renders the stock /forgot-password view and isn't editable. Use /forgot-password instead.
+
+## External User API [#644]
+
+There is now a core API for handling users that are authenticated/authorized against external data sources. There is a new class (Cms::ExternalUser) which represents a user which has been authenticated using some source other than the Core CMS. This user can have extra information retained as attribute and can be authorized to be part of a specific group(s).
+
+A sample implementation of an authentication strategy can be found in lib/cms/authentication/test_password_strategy. Strategies are implemented as Devise Strategies and should either login or pass to the next strategy.
+
+This implementation is intended to replace CAS based strategies used in BrowserCMS 3.x. It provides the ability to style the login page directly, and avoid having an external CAS server software.
 
 ## Upgrading
 

@@ -31,10 +31,10 @@
           <td>
             <% unless user.expired? %>
                 Active
-                <%= link_to("<span>Disable</span>".html_safe, [:disable, user], :class => "http_put sm_button") if @users.size > 1 %>
+                <%= link_to("<span>Disable</span>".html_safe, [:disable, user.becomes(Cms::User)], :class => "http_put sm_button") if @users.size > 1 %>
             <% else %>
                 Inactive
-                <%= link_to("<span>Enable</span>".html_safe, [:enable, user], :class => "http_put sm_button") %>
+                <%= link_to("<span>Enable</span>".html_safe, [:enable, user.becomes(Cms::User)], :class => "http_put sm_button") %>
             <% end %>
           </td>
         </tr>

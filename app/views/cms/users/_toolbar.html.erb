@@ -2,7 +2,7 @@
     <%= link_to "Add User", new_user_path, :id => "add_user_button", :class => "btn btn-primary pull-left" %>
     <% if @user && !@user.new_record? %>
         <%= link_to("Edit User", edit_user_path(@user), :id => "edit_user_button", :class => "btn btn-primary pull-left") if current_user.able_to?(:administrate)%>
-        <%= link_to("Change Password", [:change_password, @user], :id => "change_password_button", :class => "btn btn-primary pull-left") %>
+        <%= link_to("Change Password", [:change_password, @user.becomes(Cms::User)], :id => "change_password_button", :class => "btn btn-primary pull-left") if @user.password_changeable? %>
     <% end %>
     <% if @users %>
         <div class="pull-right">

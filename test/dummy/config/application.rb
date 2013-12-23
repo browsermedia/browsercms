@@ -12,6 +12,9 @@ end
 module Dummy
   class Application < Rails::Application
 
+    # Silence rails 4.0.2 warning
+    config.i18n.enforce_available_locales = false
+
     config.action_mailer.default_url_options = { :host => "localhost:3000" }
 
     config.cms.form_builder_css = 'custom-forms'

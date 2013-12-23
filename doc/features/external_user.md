@@ -5,3 +5,8 @@ Support a built in way to authenticate external users and store their informatio
 * Permission: Groups would be dynamically assigned on login and recorded as an association with that user until they reauthentice.
 * External Data: Third Party APIs often provide extra information. Provide an easy way to store this information on the user record without needing new columns.
 * Subclasses: Projects/Engines should be able to subclass ExternalUser to provide additional behavior.
+
+Details:
+
+* List source field
+* Figure out what should be editable via the UI for external users.

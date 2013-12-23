@@ -1,4 +1,4 @@
-<%= simple_form_for(@user, html: { autocomplete: 'off' }) do |f| %>
+<%= simple_form_for(@user.becomes(Cms::User), html: { autocomplete: 'off' }) do |f| %>
   <%= render :partial => 'user_fields', :locals => {:f => f} unless @change_password %>
   <%= render :partial => 'password', :locals => {:f => f} if @user.new_record? %>
   <%= f.association :groups, as: :check_boxes %>

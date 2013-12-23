@@ -59,7 +59,7 @@ module Cms
       # what a visitor can do without being logged in.
       def current_user
         @current_user ||= begin
-          Cms::User.current = current_cms_user || Cms::User.guest
+          Cms::PersistentUser.current = current_cms_user || Cms::User.guest
         end
       end
 
@@ -101,8 +101,8 @@ module Cms
       # However, **all session state variables should be unset here**.
       def logout_keeping_session!
         # Kill server-side auth cookie
-        Cms::User.current.forget_me if Cms::User.current.is_a? User
-        Cms::User.current = false # not logged in, and don't do it for me
+        Cms::PersistentUser.current.forget_me if Cms::User.current.is_a? User
+        Cms::PersistentUser.current = false # not logged in, and don't do it for me
         session[:user_id] = nil # keeps the session but kill our variable
         # explicitly kill any other session variables you set
       end

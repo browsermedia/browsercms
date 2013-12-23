@@ -13,7 +13,7 @@ Cms::Engine.routes.draw do
   devise_for :cms_users,
              skip: [:sessions],
              path: :users,
-             class_name: 'Cms::User',
+             class_name: 'Cms::PersistentUser',
              controllers: { passwords: 'cms/passwords' },
              module: :devise
 

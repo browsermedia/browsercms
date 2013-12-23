@@ -22,6 +22,10 @@ describe Cms::User do
     it "should allow :group_ids" do
       assert Cms::User.permitted_params.include?(:group_ids => []), "Allow for bulk submitted group_ids as a collection."
     end
+
+    it "should allow passwords" do
+      Cms::User.permitted_params.must_include :password
+    end
   end
 
   describe '#active_for_authentication?' do
