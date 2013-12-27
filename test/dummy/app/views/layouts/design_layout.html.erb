@@ -6,7 +6,7 @@
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>BrowserCMS - Add New Page</title>
+    <title>BrowserCMS</title>
 
 
     <%= stylesheet_link_tag 'cms/application'  %>
@@ -126,17 +126,7 @@
 <%= yield %>
 <script type="text/javascript">
 	head.ready(function(){
-		// SITEMAP FUNCTIONALITY
-		//$('.sitemap .level-three, .sitemap .level-four, .sitemap .level-five').slideUp(0);
 
-		$('.sitemap td').click(function(){
-			$('.sitemap td').removeClass('active');
-			$(this).toggleClass('active');
-		});
-
-		//$('.sitemap .level-two').click(function(){
-		//	$('.sitemap .level-three').slideToggle(0);
-		//});
 	});
 </script>
 
