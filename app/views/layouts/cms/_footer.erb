@@ -1,4 +1,4 @@
 <div id="footer">
-  <p>&copy; 1998-<%= Time.now.year %> <a href="#">BrowserMedia</a>. All Rights Reserved</p>
-  <p>Browser CMS v<%= Cms.version %> | Rails <%= Rails.version %> | Env <%= Rails.env %></p>
+  <p>&copy; 1998-<%= Time.now.year %> <%= link_to "BrowserMedia", "http://www.browsermedia.com" %>. All Rights Reserved</p>
+  <p><%= link_to "BrowserCMS", "http://www.browsercms.org" %> v<%= Cms.version %> | Rails <%= Rails.version %> | Env <%= Rails.env %></p>
 </div>

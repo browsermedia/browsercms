@@ -18,6 +18,7 @@ Feature: New Project Generator
     And a file named "hello/db/browsercms.seeds.rb" should exist
     And a file named "hello/config/initializers/browsercms.rb" should exist
     And a file named "hello/app/views/layouts/templates/default.html.erb" should exist
+    And a file named "hello/config/initializers/devise.rb" should exist
     And the output should not contain "identical"
     And BrowserCMS should be added the Gemfile
     And the correct version of Rails should be added to the Gemfile

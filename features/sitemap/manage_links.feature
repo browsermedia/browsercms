@@ -9,7 +9,7 @@ Feature: Manage Links
     When I am adding a link on the sitemap
     And I fill in "Name" with "A New Link"
     And I fill in "Url" with "http://www.browsercms.com"
-    And I click on "Save"
+    And I click the Save button
     Then I should see a page named "Sitemap"
     Then I should see the following content:
       | A New Link |

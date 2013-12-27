@@ -1,6 +1,6 @@
 # ex: Then I should see a page named "Home"
 Then /^I should see a page named "([^"]*)"$/ do |page_title|
-  should_see_a_page_title_and_header(page_title)
+  should_see_a_page_named(page_title)
 end
 
 Then /^I should see a page titled "([^"]*)"$/ do |page_title|
@@ -12,7 +12,7 @@ Then /^I should see a page with a header "([^"]*)"$/ do |page_header|
 end
 
 When /^the page header should be "([^"]*)"$/ do |h1|
-  assert page.has_css?("h1", :text => h1), "Expected to see <h1>#{h1}</h1> on the page."
+  should_see_a_page_header(h1)
 end
 
 When /^I am not logged in$/ do
@@ -29,10 +29,7 @@ Given /^I am logged in as a Content Editor(| on the admin subdomain)$/ do |is_ad
   else
     login_at = 'http://cms.mysite.com/cms/login'
   end
-  visit login_at
-  fill_in 'Login', :with => 'cmsadmin'
-  fill_in 'Password', :with => 'cmsadmin'
-  click_button 'Sign in'
+  login_as('cmsadmin', 'cmsadmin', login_at)
 end
 
 Given /^there is a LoginPortlet on the homepage$/ do
@@ -62,10 +59,7 @@ Then /^the response should be (.*)$/ do |response_code|
 end
 
 When /^login as an authorized user$/ do
-  visit "/cms/login"
-  fill_in 'login', :with => "privileged"
-  fill_in 'password', :with => "password"
-  click_button 'LOGIN'
+  login_as('privileged', 'password')
 end
 
 When /^I am editing the page at (#{PATH})$/ do |path|
@@ -95,6 +89,15 @@ When /^I add new content to the page$/ do
 end
 Then /^I should see a list of selectable content types$/ do
   pending
+end
+
+
+When /^I click the Save button$/ do
+  click_save_button
+end
+
+When /^I click the Publish button$/ do
+  click_publish_button
 end
 
 When /^I click on "([^"]*)"$/ do |name|
@@ -133,7 +136,7 @@ end
 
 Then /^I should see the CMS :forbidden page$/ do
   assert_equal 403, page.status_code
-  should_see_a_page_title_and_header("Access Denied")
+  should_see_a_page_named("Access Denied")
 end
 
 Given /^I am adding a page to the root section$/ do
@@ -159,7 +162,7 @@ end
 
 When /^I change the link name to "([^"]*)"$/ do |new_name|
   fill_in "Name", :with => new_name
-  click_on "Save And Publish"
+  click_publish_button
 end
 
 When /^(?:a guest|I) visits* "([^"]*)"$/ do |url|
@@ -200,9 +203,9 @@ end
 
 When /^I create a new page$/ do
   visit '/cms/sections/1/pages/new'
-  fill_in "Name", with: "New Page"
+  fill_in "page_name", with: "New Page"
   fill_in "Path", with: "/new-page"
-  click_on 'Save'
+  find('.top-buttons').click_on 'Save'
 end
 
 Then /^that page should not be published$/ do
@@ -219,7 +222,7 @@ Then /^that page should be published$/ do
 end
 
 Then /^I should end up on that page$/ do
-  should_see_a_page_title_and_header(most_recently_created_page.title)
+  should_see_a_page_titled(most_recently_created_page.title)
 end
 
 Then /^the page frame should contain the following:$/ do |table|
@@ -231,10 +234,11 @@ Then /^the page frame should contain the following:$/ do |table|
 end
 
 Then /^I should the content rendered inside the editor frame$/ do
-  assert page_has_editor_iframe?()
+  assert page_has_editor_iframe?
 end
+
 Then /^I should return to List Users$/ do
-  should_see_a_page_header 'List Users'
+  should_see_a_page_header 'Users'
 end
 
 Then /^I should see the Home page$/ do
@@ -242,7 +246,7 @@ Then /^I should see the Home page$/ do
 end
 
 Then /^I should see the View Text page$/ do
-  should_see_a_page_titled "Content Library / View Text"
+  should_see_a_page_titled "Text"
 end
 When /^choose to view "([^"]*)" from the main menu$/ do |arg|
   within('#content-library-menu') do
@@ -267,8 +271,8 @@ When /^I select the page to edit$/ do
 end
 When /^I change the page name$/ do
   @expected_new_name = "A New Page Name"
-  fill_in "Name", with: @expected_new_name
-  click_on "Save"
+  fill_in "page_name", with: @expected_new_name
+  click_save_button
 end
 Then /^I should be returned to that page$/ do
   assert_equal 200, page.status_code
@@ -290,9 +294,14 @@ When /^I select forms from the content library$/ do
   visit cms.forms_path
 end
 
+Given /^I am on the Groups page$/ do
+  visit cms.groups_path
+  should_see_a_page_titled "Groups"
+end
+
 Then(/^I should see the list of forms$/) do
   should_be_successful
-  should_see_a_page_titled('List Forms')
+  should_see_a_page_titled('Forms')
 end
 
 Then(/^I should see the "([^"]*)" form in the list$/) do |form_name|
@@ -305,7 +314,7 @@ end
 
 When(/^I enter the required form fields$/) do
   fill_in "Name", with: "Contact Us"
-  click_on 'Save And Publish'
+  click_publish_button
 end
 
 Then(/^after saving I should be redirect to the form page$/) do
@@ -320,10 +329,30 @@ end
 
 When(/^I make changes to the form$/) do
   fill_in "Name", with: "Updated Name"
-  click_on "Save And Publish"
+  click_publish_button
 end
 
-Then(/^I should see the form with with the updated fields$/) do
+Then(/^I should see the form with the updated fields$/) do
   should_be_successful
   should_see_a_page_titled "Updated Name"
+end
+
+Then /^I should be returned to the Assets page for "([^"]*)"$/ do |content_type|
+  should_see_a_page_named("Assets")
+  asset_selector_button.has_content?(content_type)
+end
+
+Then /^I should see the login portlet form$/ do
+ steps %Q{ Then I should see the following content:
+    | Login       |
+    | Password    |
+    | Remember me |
+  }
+end
+When /^the content should be published$/ do
+  page_should_have_content 'Published'
+end
+
+When /^I click Change Password for user "([^"]*)"$/ do |user_name|
+  find(:xpath, "//tr[contains(.,'#{user_name}')]/td/a", :text => 'Change Password').click
 end

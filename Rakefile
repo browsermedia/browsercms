@@ -41,13 +41,6 @@ Rake::TestTask.new('test:functionals' => ['project:ensure_db_exists', 'app:test:
 
 end
 
-Rake::TestTask.new('test:integration' => ['project:ensure_db_exists', 'app:test:prepare']) do |t|
-  t.libs << 'lib'
-  t.libs << 'test'
-  t.pattern = 'test/integration/**/*_test.rb'
-  t.verbose = false
-end
-
 require 'cucumber'
 require 'cucumber/rake/task'
 
@@ -63,9 +56,22 @@ Cucumber::Rake::Task.new('features:cli' => ['project:ensure_db_exists', 'app:tes
   t.cucumber_opts = "features --format progress --tags @cli"
 end
 
+Cucumber::Rake::Task.new('features:wip', 'Run all (fast) scenarios without known bugs.') do |t|
+  t.cucumber_opts = "features --format progress --tags ~@cli -t ~@known-bug"
+end
+
+Cucumber::Rake::Task.new('features:wip:all', 'Run all scenarios (including slow) without known bugs.') do |t|
+  t.cucumber_opts = "features --format progress -t ~@known-bug"
+end
+
+Cucumber::Rake::Task.new('features:known-bugs', 'Run all scenarios with known bugs.') do |t|
+  t.cucumber_opts = "features --format progress -t @known-bug"
+end
+
+#Rake::Task['features:wip'].enhance ['project:ensure_db_exists', 'app:test:prepare']
 
 desc "Run everything but the command line (slow) tests"
-task 'test:fast' => %w{app:test:prepare test:units test:functionals test:integration features:fast}
+task 'test:fast' => %w{app:test:prepare test:units test:functionals features:fast}
 
 desc "Runs all unit level tests"
 task 'test:units' => ['app:test:prepare'] do
@@ -74,7 +80,7 @@ end
 
 desc 'Runs all the tests, specs and scenarios.'
 task :test => ['project:ensure_db_exists', 'app:test:prepare'] do
-  tests_to_run = ENV['TEST'] ? ["test:single"] : %w(test:units spec test:functionals test:integration features)
+  tests_to_run = ENV['TEST'] ? ["test:single"] : %w(test:units spec test:functionals features)
   run_tests(tests_to_run)
 end
 

@@ -11,6 +11,14 @@
 			@include rem(margin-bottom,0.25rem);
 		}
 	}
+
+    .draft {
+      @include status-icon($danger);
+    }
+    .published {
+      @include status-icon($success);
+    }
+
 	label {
 		color: $gray;
 	}

@@ -3,24 +3,20 @@ module Cms
 
     helper Cms::RenderingHelper
 
-    before_filter :set_toolbar_tab
     before_filter :load_section, :only => [:new, :create]
     before_filter :load_page, :only => [:versions, :version, :revert_to, :destroy]
     before_filter :load_draft_page, :only => [:edit, :update]
     before_filter :hide_toolbar, :only => [:new, :create]
     before_action :strip_visibility_params, :only => [:create, :update]
 
-    before_action :only => [:create] do
-      redirect_to "/" if canceled?
+    include Cms::PublishWorkflow
+
+    def resource
+      @page
     end
 
-    before_action :only => [:update] do
-      redirect_to page_path(@page) if canceled?
-    end
-
-    before_action :only => [:create, :update] do
-      params[:page][:publish_on_save] = false if save_draft?
-      params[:page][:publish_on_save] = true if publish?
+    def resource_param
+      :page
     end
 
     def new
@@ -116,18 +112,6 @@ module Cms
 
     private
 
-    def canceled?
-      params[:commit] == "Cancel"
-    end
-
-    def save_draft?
-      params[:commit] == "Save Draft"
-    end
-
-    def publish?
-      params[:commit] == "Publish"
-    end
-
     def page_params
       params.require(:page).permit(Cms::Page.permitted_params)
     end
@@ -157,10 +141,6 @@ module Cms
 
     def hide_toolbar
       @hide_page_toolbar = true
-    end
-
-    def set_toolbar_tab
-      @toolbar_tab = :sitemap
     end
 
     def load_templates

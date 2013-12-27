@@ -19,19 +19,20 @@ class FilePickerInput < SimpleForm::Inputs::Base
     if render_section_picker?
       sections = sections_with_full_paths
       sections.each do |s|
-        html << template.tag(:span, :class => "section_id_map", style: 'display: hidden', :data => {:id => s.id, :path => s.prependable_path})
+        html << template.content_tag(:span, "", {:class => "section_id_map", style: 'display: hidden', :data => {:id => s.id, :path => s.prependable_path}})
       end
     end
     @builder.simple_fields_for :attachments do |a|
       if matching_attachment?(a)
         html << a.hidden_field("attachment_name", value: attribute_name.to_s)
         html << a.file_field(:data, input_html_options.merge('data-purpose' => "cms_file_field", id: tag_id))
+        html << a.hint(options.delete(:hint)) if has_hint?
         if render_section_picker?
-          html << a.input(:section_id, collection: sections, label_method: :full_path, include_blank: false, label: "Section", input_html: {'data-purpose' => "section_selector"})
+          html << a.input(:section_id, collection: sections, label_method: :full_path, include_blank: false, label: "Section", wrapper_html: {class: "inline-section-picker"}, input_html: {'data-purpose' => "section_selector"})
         end
         if render_path_input?
           klass = object.new_record? ? "suggest_file_path" : "keep_existing_path"
-          html << a.input(:data_file_path, label: "Path", input_html: {class: klass})
+          html << a.input(:data_file_path, label: "Path", wrapper_html: {class: "inline-path"}, input_html: {class: klass})
         end
       end
       html << a.input(:id, as: :hidden)

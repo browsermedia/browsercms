@@ -263,6 +263,7 @@ module Cms
         end
 
         def draft_version?
+          return true unless draft
           version == draft.version
         end
 

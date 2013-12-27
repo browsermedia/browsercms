@@ -1,2 +1,0 @@
-page["section_#{@section.id}"].remove
-show_notice(page)

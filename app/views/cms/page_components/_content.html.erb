@@ -1,0 +1,18 @@
+<dl>
+  <dt><%= link_to "Add #{@default_type.display_name}", new_engine_aware_path((@default_type),
+            "#{@default_type.param_key}[connect_to_page_id]" => params[:connect_to_page_id],
+            "#{@default_type.param_key}[connect_to_container]" => params[:connect_to_container]
+          ),
+
+                 :class=>"btn btn-small btn-primary" %></dt>
+  <dd>Or choose another content types to add:</p>
+  <ul>
+    <% @content_types.each_with_index do |type, i| %>
+    <li><%= link_to h(type.display_name), new_engine_aware_path(type,
+            "#{type.param_key}[connect_to_page_id]" => params[:connect_to_page_id],
+            "#{type.param_key}[connect_to_container]" => params[:connect_to_container]
+          ), :target=> "_top" %></li>
+    <% end %>
+  </ul></dd>
+</dl>
+

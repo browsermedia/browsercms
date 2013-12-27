@@ -1,51 +1,33 @@
-<% use_page_title @toolbar_title =  "List Page Routes" %>
-<%= content_for(:html_head) do %>
-  <%= javascript_tag do %>
-    jQuery(function($){
-      $('table.data tbody tr').hover(function(){
-        $(this).addClass('hover')
-      }, function(){
-        $(this).removeClass('hover')
-      }).click(function(){
-        var match = this.id.match(/(.*)_(\d+)/) 
-        var type = match[1];
-        var id = match[2];
-        $('table.data tbody tr').removeClass('selected');
-        $(this).addClass('selected');
-        $('#edit_button').removeClass('disabled').attr('href', '/cms/page_routes/'+id+'/edit');
-        $('#delete_button, #view_button').removeClass('disabled').attr('href', '/cms/page_routes/'+id)
-      })
-    })
-  <% end %>
+<% use_page_title "Page Routes" %>
+<%= render layout: 'page_title' do %>
+    <%= button_menu :top do %>
+        <div class="btn-group right">
+          <%= link_to("View Rails Routes", routes_path, :class => "btn btn-primary btn-small") %>
+        </div>
+        <%= link_to "Add", new_page_route_path, class: 'btn btn-primary btn-small right' %>
+    <% end %>
 <% end %>
-
-<%= render 'toolbar' %>
-<div class="roundedcorners">
-  <table class="data cms-content-table table table-striped table-bordered table-hover">
+<%= render layout: 'main_content' do %>
+  <table class="data table table-bordered table-rounded table-hover table-striped">
 	<thead>  
 	    <tr>
-	      <th class="first" colspan="2"><div class="dividers">Name</div></th>
-	      <th colspan="2" class="last"><div class="dividers">Pattern</div></th>
+	      <th>Name</th>
+          <th>Pattern</th>
+          <th>Actions</th>
 	    </tr>
-	<thead>  
+	</thead>
     <% @page_routes.each do |page_route| %>
-      <tr id="page_route_<%= page_route.id %>">
-        <td class="first"></td>
-        <td><%=h page_route.name %></td>
-        <td><%=h page_route.pattern %></td>
-        <td class="last"></td>
+      <tr>
+        <td><%= page_route.name %></td>
+        <td><%= page_route.pattern %></td>
+        <td>
+          <%= link_to "Edit", edit_polymorphic_path(page_route), class: "btn btn-mini" %>
+          <%= link_to "Delete", polymorphic_path(page_route), class: "btn btn-mini btn-danger", method: 'delete',  data:{confirm: 'Are you sure you want to delete this route?'} %>
+        </td>
       </tr>
     <% end %>
-    <tr>
-      <td colspan="4" class="buffer"></td>
-    </tr>
-
   </table>
-<div class="tl"></div>
-<div class="tr"></div>
-<div class="bl"></div>
-<div class="br"></div>
-</div>
+<% end %>
 <% if @page_routes.total_pages > 1 %>
   <%= render_pagination @page_routes, Cms::PageRoute %>
 <% end %>

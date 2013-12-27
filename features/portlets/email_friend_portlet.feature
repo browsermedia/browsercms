@@ -8,10 +8,10 @@ Feature: Email a Friend Portlet
   Scenario: Add New Portlet
     Given I visit /cms/portlets
     When I create a new "Email Page Portlet" portlet
-    Then I should see a page named "Add New Portlet"
+    Then I should see a page named "Add a New Portlet"
     When I fill in "Name" with "Hello"
     And I fill in "Sender" with "hello@browsercms.org"
-    And I click on "Save"
+    And I click the Save button
     Then I should not see "ERROR"
     Then I should see the following content:
     | Recipients |

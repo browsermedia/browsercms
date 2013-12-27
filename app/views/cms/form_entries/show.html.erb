@@ -1,6 +1,13 @@
 <% use_page_title "View Entry" %>
-<%= content_for :button_bar, render(partial: 'buttonbar', locals: {view: :show})%>
 
-<% @entry.form.fields.each do |field|  %>
-    <b><%=  field.label %>:</b> <%= @entry.data_columns[field.name] %> <br>
+<%= render partial: 'buttons', layout: 'page_title' %>
+
+
+<%= render layout: 'main_with_sidebar' do %>
+    <dl>
+      <% @entry.form.fields.each do |field| %>
+          <dt><%= field.label %></dt>
+          <dd><%= @entry.data_columns[field.name] %></dd>
+      <% end %>
+    </dl>
 <% end %>

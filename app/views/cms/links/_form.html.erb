@@ -1,9 +1,8 @@
-<%= render partial: 'cms/section_nodes/button_bar' %>
-
-<%= f.input :name %>
-<%= f.input :url %>
-<%= f.input :new_window, label: "Open In New Window?" %>
-<div class="buttons">
-  <%= publish_button "link" %>
-  <%= f.button :submit,  "Save" %>
+<%= page_title_with_buttons f %>
+<div class="padded row-fluid clearfix">
+  <%= f.input :name %>
+  <%= f.input :url %>
+  <%= f.input :new_window, label: "Open In New Window?" %>
 </div>
+<%= bottom_buttons f %>
+

@@ -20,8 +20,9 @@ Feature: Content Pages
     When I request /protected-page
     Then I should see the CMS :forbidden page
 
+  # Need to make the toolbar display when looking at older versions. (Alternative UX: Leave as is and require that users 'rollback' from the list.)
+  @known-bug
   Scenario: View Older Versions
-    Given a bug: Need to make the toolbar display when looking at older versions. (Alternative UX: Leave as is and require that users 'rollback' from the list.)
     Given a page exists with two versions
     And I am logged in as a Content Editor
     When I view version 1 of that page

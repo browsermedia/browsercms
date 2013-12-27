@@ -1,0 +1,23 @@
+<% live = original.version == revision.version %>
+<% current = i == 0 %>
+<%= tag :tr, {:id => "revision_#{revision.version}"}, false %>
+<td>
+  <%= link_to "v.#{revision.version}", engine(original).polymorphic_path([:version, original], version: revision.version), target: '_blank' %>
+  <%= '(LIVE)' if live %>
+  <%= '(CURRENT)' if current %>
+</td>
+<td>
+  <%= revision.version_comment %>
+</td>
+<td>
+  <%= revision.created_at.strftime("%b %d, %Y %I:%M %p") if revision.created_at %>
+</td>
+<td>
+  <%= revision.updated_by.login if revision.updated_by %>
+</td>
+<td>
+  <% unless current %>
+      <%= link_to 'Revert to', engine(original).polymorphic_path([:revert, original], version: revision.version), class: 'btn btn-mini btn-danger', method: :put %>
+  <% end %>
+</td>
+</tr>

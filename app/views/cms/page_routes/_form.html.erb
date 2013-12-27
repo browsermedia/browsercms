@@ -1,10 +1,12 @@
+<% content_for :buttons, 'save_buttons' %>
 <%= simple_form_for(@page_route) do |f| %>
-  <%= f.association :page,
-                    collection: Cms::Page.order(:path),
-                    include_blank: false,
-                    label_method: lambda {|p| "#{p.path} (#{p.name})"} %>
-  <%= f.input :name %>
-  <%= f.input :pattern %>
-  <%= f.input :code, as: :text, input_html: { style: "height: 200px"} %>
-  <%= f.button :submit, "Save" %>
+    <%= render layout: 'form_with_buttons', locals: {f: f} do %>
+        <%= f.association :page,
+                          collection: Cms::Page.order(:path),
+                          include_blank: false,
+                          label_method: lambda { |p| "#{p.path} (#{p.name})" } %>
+        <%= f.input :name %>
+        <%= f.input :pattern %>
+        <%= f.input :code, as: :text, input_html: {style: "height: 200px"} %>
+    <% end %>
 <% end %>

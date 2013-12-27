@@ -5,6 +5,7 @@ class Cms::FormsController < Cms::ContentBlockController
 
   helper do
     # For new forms, if the user doesn't complete and save them, we need to delete them from the database.
+    # The reason :new creates a form object (which is not conventional) is to allow AJAX FormField creation/association.
     def cleanup_before_abandoning
       ["new", "create"].include? action_name
     end
@@ -26,7 +27,8 @@ class Cms::FormsController < Cms::ContentBlockController
   end
 
 
-  # params[:form][:new_entry] is just a garbage parameter that exists to make displaying forms work. We want to ignore anything submitted here
+  # params[:form][:new_entry] is just a garbage parameter that exists to make displaying forms work.
+  # We want to ignore anything submitted here
   def strip_new_entry_params
     params[:form].delete(:new_entry)
   end

@@ -2,6 +2,15 @@
 module Cms
   module ApplicationHelper
 
+    # Generate the proper link to Preview a Page or Addressable content block (based on type)
+    def preview_content_path(content)
+      if content.class == Cms::Page
+        cms.preview_page_path(content)
+      else
+        content.path
+      end
+    end
+
     # Help with deprecations messages
     # @deprecated
     def cms_handler_path(*args)
@@ -28,6 +37,19 @@ module Cms
                         :onchange => 'this.form.submit(); return false')
       text << javascript_tag("$('version').selectedIndex = 0") if page.live?
       text
+    end
+
+    # Generate HTML for draft icon for content that are in draft
+    # @param [Object] content
+    # @param [Object] options
+    # @option options [Boolean] :force (false) If we should force show :publish icon. In many cases, its the 'default' so it doesn't make sense to show.
+    # @return [String] HTML (HTML safe)
+    def draft_icon_tag(content, options={})
+      if content.respond_to?(:draft?) && content.draft?
+        '<span class="draft">Draft</span>'.html_safe
+      elsif options[:force]
+        '<span class="published">Published</span>'.html_safe
+      end
     end
 
     def action_icon_src(name)
@@ -121,7 +143,13 @@ HTML
     end
 
     def group_filter
-      select_tag("group_id", options_from_collection_for_select(Group.all.to_a.insert(0, Group.new(:id => nil, :name => "Show All Groups")), "id", "name", params[:group_id].to_i))
+      select_tag("group_id",
+                 options_from_collection_for_select(Group.all.to_a.insert(0, Group.new(:id => nil, :name => "Show All Groups")),
+                                                    "id",
+                                                    "name",
+                                                    params[:group_id].to_i),
+                class: 'group_filter'
+      )
     end
 
     # Fetches a list of categories for a cms_drop_down. Will prompt users to create Categories/Categories types if
@@ -144,7 +172,7 @@ HTML
         content_tag(:div, "No Content", :class => "pagination")
       else
         model_class = content_type.instance_of?(Class) ? content_type : content_type.model_class
-        render :partial => "cms/shared/pagination", :locals => {
+        render :partial => "pagination", :locals => {
             :collection => collection,
             :first_page_path => polymorphic_path(engine_aware_path(model_class), {:page => 1}.merge(options)),
             :previous_page_path => polymorphic_path(engine_aware_path(model_class), {:page => collection.previous_page ? collection.previous_page : 1}.merge(options)),
@@ -180,7 +208,7 @@ HTML
     end
 
     # Render a CMS styled 'Edit' button. This button will appear on tool bars, typically set apart visually from other buttons.
-    #
+    # @deprecated Use link_to
     # @param [Hash] options The options for this tag
     # @option options [Path] :path The path or URL to link_to. Takes same types at url_for or link_to. Defaults to '#' if not specified.
     # @option options [Boolean] :enabled If false, the button will be marked disabled. Default to false.

@@ -59,7 +59,7 @@ Given /^an image with path "([^"]*)" exists$/ do |path|
   fill_in "Name", :with => "Giraffe"
   fill_in "Path", :with => path
   attach_file "Image", "test/fixtures/giraffe.jpeg"
-  click_button "true"
+  click_publish_button
 end
 
 Given /^a file block with path "([^"]*)" exists$/ do |path|
@@ -67,7 +67,7 @@ Given /^a file block with path "([^"]*)" exists$/ do |path|
   fill_in "Name", :with => "Perspective"
   fill_in "Path", :with => path
   attach_file "File", "test/fixtures/perspective.pdf"
-  click_button "true"
+  click_publish_button
 end
 
 Then /^There should be a link to "([^"]*)"$/ do |path|
@@ -92,12 +92,11 @@ Given /^an image exists with two versions$/ do
 end
 
 When /^I revert the image to version 1$/ do
-  visit "/cms/image_blocks/#{@image.id}"
-  click_on "List Versions"
-  # Select row (uses javascript)
+  visit cms.image_block_path(@image)
+  click_on "Versions"
   # Clicks 'revert button'
   page.driver.put "/cms/image_blocks/#{@image.id}/revert_to/1"
-  visit "/cms/image_blocks/#{@image.id}"
+  visit cms.image_block_path(@image)
 end
 
 Then /^the image should be reverted to version 1$/ do
@@ -114,7 +113,7 @@ Given /^a file exists with two versions$/ do
 
   visit "/cms/file_blocks/#{@file.id}/edit"
   attach_file "File", "test/fixtures/multipart/version2.txt"
-  click_button "true"
+  click_publish_button
 end
 
 When /^I view the first version of that file$/ do

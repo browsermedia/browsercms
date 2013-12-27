@@ -1,4 +1,4 @@
-<% use_page_title "Edit Properties / '#{h(@section.name)}' Section" %>
+<% use_page_title "Edit Section" %>
 <%= simple_form_for(@section) do |f| %>
-  <%= render :partial => 'form', :locals => {:f => f, :parent => @section.parent} %>
+  <%= render :partial => 'form', :locals => {:f => f, :parent => @section.parent, title: 'Edit Section'} %>
 <% end %>

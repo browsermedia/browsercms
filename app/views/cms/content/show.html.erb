@@ -1,5 +1,7 @@
 <%= content_for :html_head do %>
     <meta name="generator" content="BrowserCMS <%= Cms.version %>"/>
+    <%# JQuery is required both for page_editor and cms/user. But it needs to be included only once.  %>
+    <%= javascript_include_tag 'jquery' %>
     <% if @show_toolbar %>
         <%= javascript_include_tag 'cms/page_editor' %>
         <%= stylesheet_link_tag 'cms/page_content_editing' %>

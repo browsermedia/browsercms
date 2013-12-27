@@ -1,2 +1,1 @@
-<%= content_for :button_bar, render('buttonbar') %>
-<iframe id="page_content" src="<%= url_for engine_aware_path(@block, :inline) %>" frameborder="0" height="1600px" width="100%"></iframe>
+<%= page_content_iframe(url_for engine_aware_path(@block, :inline)) %>

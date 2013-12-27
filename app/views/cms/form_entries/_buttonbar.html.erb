@@ -1,8 +1,0 @@
-<% view = :index if local_assigns[:view].nil? %>
-<%= menu_button("Back to Entries", cms.entries_path(@entry.form)) unless view == :index %>
-<%= link_to("Form", form_path(@entry.form), class: "btn btn-primary pull-left   ") %>
-<span class="btn-group pull-left">
-  <%= view_content_menu_button(@entry) %>
-  <%= edit_content_menu_button(@entry) unless view == :edit %>
-</span>
-<%= link_to("New Entry", new_form_entry_path(form_id: @entry.form), class: "btn btn-primary pull-right") %>

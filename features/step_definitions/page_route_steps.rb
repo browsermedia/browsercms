@@ -3,7 +3,7 @@ When /^create a Page Route with the following:$/ do |table|
   select "/ (Home)", :from=>"Page"
   fill_in "Name", :with=>redirect['name']
   fill_in "Pattern", :with=>"/any/pattern"
-  click_on 'Save'
+  click_save_button
 end
 
 Given /^a Page Route exists$/ do

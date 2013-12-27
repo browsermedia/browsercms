@@ -1,0 +1,5 @@
+<% span = 'span6' unless local_assigns.has_key? :span %>
+<div class="row-fluid padded">
+  <h1 class="<%= span %>"><%= page_title %></h1>
+  <%= yield %>
+</div>

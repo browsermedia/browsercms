@@ -38,7 +38,7 @@
 
 .modal-content {
     //position: relative;
-    display: block;
+    //display: block; // Should not display by default
     background: white;
     background-clip: padding-box;
     @include border-radius(8px);

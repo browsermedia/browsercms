@@ -9,7 +9,82 @@
 <nav id="main-nav">
   <%= render 'layouts/cms/main_menu' %>
 </nav>
-<%= yield :button_bar %>
+<div id="submenu">
+  <div class="container center-column">
+    <% if !@page.live? %>
+        <span class="status draft" id="page-status-label">This page is in draft status</span>
+    <% else %>
+        <span class="status published" id="page-status-label">Published</span>
+    <% end %>
+    <%= render 'add_content_modal' %>
+    <span class="last-saved">Last saved: &nbsp;<strong><%= format_date(@page.updated_at) %></strong></span>
+
+    <%= link_to "Publish",
+                engine(@page).polymorphic_path([:publish, @page]),
+                class: "right btn btn-small btn-primary primary-cta http_put",
+                :id => "publish_button",
+                :target => "_top",
+                :enabled => !(!current_user.able_to?(:publish_content) || !current_user.able_to_edit?(@page) || @page.version != @page.draft.version || @page.live?)
+    %>
+
+    <div class="btn-group">
+      <% if @page.respond_to?(:current_task) %>
+          <% unless @page.current_task %>
+              <%= link_to "Assign",
+                          cms.new_page_task_path(@page),
+                          :id => "assign_button",
+                          :target => "_top",
+                          :align => 'none',
+                          class: 'btn btn-small',
+                          :enabled => !(@page.assigned_to == current_user || !current_user.able_to_edit?(@page))
+              %>
+          <% else %>
+              <%= link_to "Complete Task",
+                          cms.complete_task_path(@page.current_task),
+                          :id => "complete_task_button",
+                          class: 'http_put btn btn-small',
+                          :target => "_top",
+                          :enabled => !(@page.assigned_to != current_user || !current_user.able_to_edit?(@page)) %>
+          <% end %>
+      <% end %>
+      <%= link_to "Versions",
+                  engine(@page).polymorphic_path([:versions, @page]),
+                  :target => "_top",
+                  class: "btn btn-small",
+                  :enabled => current_user.able_to_edit?(@page)
+      %>
+    </div>
+
+    <div class='btn-group'>
+      <%= able_to? :publish_content do %>
+          <%= link_to "Delete",
+                      engine_aware_path(@page),
+                      :id => "delete_button",
+                      title: "Are you sure you want to delete '#{@page.name}'?",
+                      :target => "_top",
+                      :enabled => current_user.able_to_publish?(@page),
+                      class: 'btn btn-small btn-danger http_delete confirm_with_title' %>
+      <% end %>
+    </div>
+    <%= render 'mobile_toolbar' %>
+
+    <div class="btn-group right">
+      <%= link_to "Configure",
+                  edit_engine_aware_path(@page),
+                  class: "btn btn-small",
+                  :id => "edit_properties_button",
+                  :target => "_top",
+                  :enabled => current_user.able_to_edit?(@page)
+      %>
+      <%= link_to "Preview", preview_content_path(@page), id: "preview_button", class: 'btn btn-small', target: "_blank" if @page.class.addressable?  %>
+
+    </div>
+
+    <%= yield :page_buttons if content_for?(:page_buttons) %>
+
+  </div>
+</div>
+<%= render 'cms/sites/flash' %>
 <%= yield %>
 </body>
 </html>

@@ -1,18 +1,22 @@
-<% use_page_title "Assign Page '#{@page.name}'" %>
-
-<%= content_for :button_bar do %>
-    <%= menu_button "Back to Page", @page.path, pull: 'left' %>
+<% use_page_title "Assign Task" %>
+<% content_for :buttons, 'save_buttons' %>
+<% content_for :sidebar do %>
+    <div class="sidebar-block">
+      <h4 class="gray">Assigning Page:</h4>
+      <p><%= link_to @page.name, page_path(@page), target: '_blank' %></p>
+    </div>
 <% end %>
-
 <%= simple_form_for(@task, :url => @task.new_record? ? page_tasks_path(@page) : page_task_path(@page, @task)) do |f| %>
-    <%= f.association :assigned_to,
-                      label: "Assign To",
-                      collection: Cms::User.active.able_to_edit_or_publish_content.order("first_name, last_name, login"),
-                      include_blank: false,
-                      label_method: :full_name_with_login
-    %>
-    <%= f.input :due_date, as: :date_picker, hint: "Leave blank for no due date" %>
-    <%= f.input :comment %>
-    <%= f.button :submit, "Save" %>
+    <%= render layout: 'form_with_buttons', locals: {f: f} do %>
+        <%= f.association :assigned_to,
+                          label: "Assign To",
+                          collection: Cms::User.active.able_to_edit_or_publish_content.order("first_name, last_name, login"),
+                          include_blank: false,
+                          label_method: :full_name_with_login
+        %>
+        <%= f.input :due_date, as: :date_picker, hint: "Leave blank for no due date" %>
+        <%= f.input :comment %>
+
+    <% end %>
 <% end %>
 

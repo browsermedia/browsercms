@@ -1,0 +1,9 @@
+<% content_for :buttons, 'save_buttons' %>
+<%= simple_form_for(model, as: :form_entry, url: url) do |f| %>
+    <%= render layout: 'form_with_buttons', locals: {f: f} do %>
+        <%= hidden_field_tag :form_id, model.form.id %>
+        <% model.form.fields.each do |field| %>
+            <%= f.input field.name, field.options(entry: model) %>
+        <% end %>
+    <% end %>
+<% end %>

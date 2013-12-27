@@ -1,12 +1,3 @@
-<% use_page_title "Content Library / Add New #{content_type.display_name}" %>
-<% @toolbar_title = "Add New #{content_type.display_name}" %>
-<%= content_for :button_bar,  render('buttonbar') %>
-<%= content_block_form_for(@block, :html => {:multipart => true}) do |f| %>
-  <%= render partial: 'form_errors', object: f %>
-  <%= render :partial => 'cms/shared/exception', :object => @exception if @exception %>
-  <%= render :partial => 'hidden_fields', :locals => {:f => f} %>
-  <%= render :partial => block_form, :locals => {:f => f} %>
-  <% unless @hide_buttons %>
-    <%= render partial: 'save_buttons', locals: {block: @block, f: f} %>
-  <% end %>
-<% end %>
+<% use_page_title "Add a New #{content_type.display_name}" %>
+<%= render 'block_form' %>
+

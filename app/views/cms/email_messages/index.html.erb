@@ -1,39 +1,36 @@
-<% use_page_title "Administration / Email Messages" %>
-<% @toolbar_title = "Email Messages" %>
+<% use_page_title "Email Messages" %>
+<%= render layout: 'page_title' do
+end %>
 
-<div class="roundedcorners">
-  <table  class="data" width="100%">
-    <thead>
+<%= render layout: 'main_content' do %>
+    <table class="data table table-striped table-bordered table-hover">
+      <thead>
       <tr>
-        <th class="first" colspan="2"><div class="dividers">To</div></th>
-        <th style="width: 48%;"><div class="dividers">Subject</div></th>
-        <th class="last" colspan="2" style="width: 20%;"><div class="dividers">Delivered</div></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @messages.each do |message|%>
-      <tr>
-        <td class="first"></td>
-        <td><div class="dividers"><%= link_to h(truncate(message.recipients)),  message %></div></td>
-        <td><div class="dividers"><%= link_to h(truncate(message.subject)), message %></div></td>
-        <td style="white-space: nowrap"><%=h time_on_date(message.delivered_at) %></td>
-	<td class="last"></td>
+        <th>To</th>
+        <th>Subject</th>
+        <th>Delivered</th>
       </tr>
-    <% end %>
-    <% if @messages.empty? %>
-      <tr>
-	<td class="first">&nbsp;</td>
-	<td colspan="3" style="height: 30px; padding-top:10px; letter-spacing: 2px;">No email messages.</td>
-	<td class="last">
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-<div class="tl"></div>
-<div class="tr"></div>
-<div class="bl"></div>
-<div class="br"></div>
-</div>
+      </thead>
+      <tbody>
+      <% @messages.each do |message| %>
+          <tr>
+            <td><%= link_to truncate(message.recipients), message %>
+            </td>
+            <td>
+              <%= message.subject %>
+            </td>
+            <td style="white-space: nowrap"><%= h time_on_date(message.delivered_at) %></td>
+          </tr>
+      <% end %>
+      <% if @messages.empty? %>
+          <tr>
+            <td colspan="3">No email messages.</td>
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+
+<% end %>
 <% if @messages.total_pages > 1 %>
-  <%= render_pagination @messages, Cms::EmailMessage %>
+    <%= render_pagination @messages, Cms::EmailMessage %>
 <% end %>

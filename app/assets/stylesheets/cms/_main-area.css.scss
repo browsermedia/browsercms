@@ -27,6 +27,11 @@
 		}
 	}
 	input[type=text],
+	input[type=email],
+	input[type=password],
+	input[type=file],
+	input[type=tag_list],
+	input[type=number],
 	select {
 		display: block;
 		float: left;

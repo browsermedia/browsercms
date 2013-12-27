@@ -1,8 +1,9 @@
 <% use_page_title "Rails Routes" %>
-<% content_for :button_bar  do %>
-    <%= link_to "Back to Routes", page_routes_path, class: 'btn btn-primary pull-left' %>
+<%= render layout: 'page_title' do %>
+    <%= link_to "Page Routes", page_routes_path, class: 'btn btn-primary right' %>
 <% end %>
-<div style="margin: 10px 0">
+
+<div class="padded row-fluid">
   <%= form_tag routes_path, :method => :get do %>
     <label>
       Path to Test: <%= text_field_tag :path, @path, :size => 50 %>
@@ -14,28 +15,21 @@
     <% end %>
   <% end %>
 </div>
-<div class="roundedcorners">
+<%= render layout: 'main_content' do %>
 <table class="data cms-content-table table table-striped table-bordered table-hover">
   <thead>  
 	  <tr>
-	    <th class="first" colspan="2"><div class="dividers">Name</div></th>
-	    <th><div class="dividers" style="width: 50px;">Verb</div></th>
-	    <th><div class="dividers">Pattern</div></th>
-	    <th class="last" colspan="2"><div class="dividers">Result</div></th>
-
+	    <th>Name</th>
+	    <th>Verb</th>
+	    <th>Pattern</th>
+        <th>Result</th>
 	  </tr>
-  <thead>  
+  </thead>
   <% for route in @routes %><tr>
-    <td class="first"></td>
     <td><%=h route[:name] %></td>
     <td><%=h route[:verb] %></td>
     <td><%=h route[:segs] %></td>
     <td><%=h route[:reqs] %></td>
-    <td class="last"></td>
   </tr><% end %>
 </table>
-<div class="tl"></div>
-<div class="tr"></div>
-<div class="bl"></div>
-<div class="br"></div>
-</div>
+  <% end %>

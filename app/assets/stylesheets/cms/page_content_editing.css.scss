@@ -1,44 +1,4 @@
 // Minimalist styles for page editing controls that are added to CMS pages in edit mode.
-image.cms-content-button {
-  text-decoration: none;
-  padding: 0;
-  background: none;
-  margin: 0;
-  float: none;
-  border: none;
-}
 
-a.cms-content-link {
-  textdecoration: none;
-  padding: 0 2px 0 0;
-  background: none;
-  margin: 0;
-  float: none;
-  border: none;
-}
-
-a.cms-content-status {
-  @extend a.cms-content-link;
-  position: absolute;
-  top: -1px;
-  right: 10px;
-}
-
-.cms-outer-container {
-  display: block;
-  height: auto;
-  position: relative;
-  border: 1px solid #999;
-  margin: 1px -6px 0 -6px;
-  padding: 25px 5px 0 5px;
-  background: image-url("cms/containers/beta.png") repeat-x 0 0;
-}
-
-.cms-inner-container {
-  display: block;
-  width: 100%;
-  position: absolute;
-  top: 5px;
-  left: 5px;
-  height: 30px;
-}
+// Need to style 'EDIT'/Pencil button so it floats right and over elements for a content block
+// Need to style 'PLUS' so it fits in the center of a space.

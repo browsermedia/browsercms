@@ -7,7 +7,7 @@ When /^create a Redirect with the following:$/ do |table|
   redirect = table.hashes.first
   fill_in "From", :with=>redirect['from']
   fill_in "To", :with=>redirect['to']
-  click_on 'Save'
+  click_save_button
 end
 
 Given /^the following redirects exist:$/ do |table|

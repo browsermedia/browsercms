@@ -6,10 +6,10 @@ Feature:  Pages
 
   Scenario: Create Page
     Given I am adding a page to the root section
-    And I fill in "Name" with "A New Page"
+    And I fill in "page_name" with "A New Page"
     And I fill in "Path" with "/my-new-page"
     And I select "Default" from "Template"
-    And I click on "Save"
+    And I click the Save button
     Then I should see a page titled "A New Page"
 
   Scenario: Edit a Page

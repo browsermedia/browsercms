@@ -1,22 +1,30 @@
 # v4.0
 
-This release includes the following features:
 
-* User Interface Redesign - Complete UI rework to use Bootstrap.
-* True In Context Editing - Editors can directly edit Html content and page titles using CKEditor's inline capability.
+## Major Features
+
+This release includes the following major features:
+
+* User Interface Redesign - User interface has been complete redesigned from the ground up. The new UI is based on Twitter Bootstrap, has usability enhancements as well as an improved design.
+* True In Context Editing [#566] - Editors can directly edit Html content and page titles using CKEditor's inline capability.
+* Rails 4 Upgrade [#617] - BrowserCMS is now designed to work with Rail 4.0.
 * Form Builder [#124] - Allow editors to create form pages that can be used to collect information from visitors
-* Addressable Content Blocks - Custom content blocks (i.e. Product, Event, News Articles) can be created directly as pages in the sitemap.
-* Refined Content API - Make content blocks closer in behavior to ActiveRecord.
-* Improved Template Storage - Templates stored in the database no longer need to be written out to the file system. This should make it easier to deploy CMS apps to Heroku.
-* Rails 4 Upgrade - BrowserCMS is now designed to work with Rail 4.0.
-* Devise Integration [#641] - Devise is now used as standard authentication tool. Upgrading projects will have passwords reset (See upgrade notes for more details)
+* Addressable Content [#588] - Custom content blocks (i.e. Product, Event, News Articles) can be created directly as pages in the sitemap.
+* Improved Template Storage [#608] - Database managed templates are no longer written out to the file system. Sites should have less permission related issued during deployments. Using Heroku to host sites should be easier as well.
+* Devise Integration [#641] - Devise is now used as standard authentication tool. Upgrading projects will have passwords reset (See upgrade notes for more details).
+* External Users [#644] - Better support for authenticating/authorizing users from external data sources rather than using additional solutions like CAS.
+
+## Other Features/Improvements
+
+In addition to the other major features above, here are some improvements/features of note.
+
 * Portlet Descriptions [#619] - Portlets can now have a description that will be used to provide additional context when users are building/placing them.
 * No need to register Content Types [#621] - Content Blocks will automatically appear in the menus without needing to add them to the database.
 * Using SimpleForm [#623] Reworked all forms to use simple_form (https://github.com/plataformatec/simple_form).
-* Migration Cleanup [#594] Migrations for previous verisons have been compressed. This has implications for upgrading, but should make new project cleaner.
-* Enforce table prefixes [#639] All core cms tables will now start with cms_.
+* Migration Cleanup [#594] Migrations for previous versions have been compressed. This has implications for upgrading, but should make new project cleaner.
+* Consistent table prefixes [#639] All core cms tables will now start with cms_ rather than being configurable.
 * Content Blacklisting - Portlets can be blacklisted via configuration so that they can't be created. Several previously stock types are blacklisted.
-* External Users [#644] - Better support for authenticating/authorizing users from external data sources.
+* Refined Content API [#256] [#582][#584] - Make content blocks closer in behavior to ActiveRecord.
 
 ## UI Redesign
 
@@ -24,7 +32,8 @@ The entire UI has been reworked to be more streamlined and lightweight. It is no
 
 1. Global Menu - Many commons functions can now be invoked directly from the main menu, including adding new content or users.
 1. Smart 'New' button - Users can add content from any page in the CMS. The "New" button is a split button that can either add a specific type of content, or will 'guess' based on where a user is in the site.
-
+1. Sitemap - Each row now has hover buttons to edit/remove content rather than needing to select a row then click a button menu.
+1. Assets/Asset Library - The content library has been renamed to be called assets.
 
 ## In Context Editing
 
@@ -37,7 +46,6 @@ Users can now edit most HTML content directly in the page. Icons indicate the ar
 1. Editable Page titles - Page title can be edited directly from the header.
 1. Preview Page - Editors can now preview the page without a toolbar or editing controls.
 1. Non-incontext Content - Not all content makes sense to be inline editable (for example portlets). For these content types, the previous move/remove/edit links now float in the upper right hand corner of the content block.
-1. [#619] Add descriptions to portlets. Developers can customize these.
 
 ## Addressable Content Blocks
 
@@ -46,15 +54,23 @@ Content blocks can created with as their own pages. To make a block addressable,
 1. Add is_addressable to the model. This will automatically generate a :slug form field when creating/editing instances.
 2. Set the Page Template that should be used (defaults to 'default').
 
+```
 class Product < ActiveRecord::Base
   is_addressable path: "/products", template: "product"
 end
+```
+
+3. Add the following field to the _form.html.erb.
+
+```
+<%= f.input :slug, as: :path %>
+```
 
 ## Form Builder
 
 Allow editors to create form pages that can be used to collect information from visitors (i.e. Contact Us, Support requests, etc). Basically, any quick collect a few fields using a consistent form styling.
 
-h2. Features include:
+### Features include:
 
 1. Forms can have multiple fields which can be text fields, textareas or multiple choice dropdowns. Field management is done via AJAX and fields can be added/reordered/removed without leaving the page.
 2. Fields can be required, have instructions and default values. Choices are added as lines of text for each dropdown field. Dropdowns use the first value as the default.
@@ -96,11 +112,15 @@ end
 
 Converted all the internal forms to use SimpleForm rather than our own custom form builder. This provides better consistency with bootstrap forms, as well as well tested API for defining new form inputs. This will primarily affect developers when they create content blocks. New content will be generated using simple_form syntax like so:
 
+```
 <%= f.input :photo, as: :file_picker %>
+```
 
 rather than the older syntax that looks like this:
 
+```
 <%= f.cms_file_field :photo %>
+```
 
 The old form_builder methods like cms_text_field and cms_file_field have been deprecated and will generate warnings when used. These methods are scheduled for removal in BrowserCMS 4.1. It's recommended that custom content blocks be upgraded to use the new syntax when feasible. The deprecation warnings should provide some guideance, but also look at simple_forms documentation http://simple-form.plataformatec.com.br for help.
 
@@ -191,8 +211,7 @@ After migrating your production environment to 3.5.7 do the following:
 4. Change the name of the new browsercms300 migration so it matches the old timestamp of browsercms3_0_0. This will prevent the new migration from running.
 
 
-Deprecations
-------------
+## Deprecations
 
 * page_title("Some Name") is deprecated in favor of use_page_title("Some Name") for overriding a page title. This will be remove in 4.1. This probably will probably only effect changes make in modules or customizations to the core.
 

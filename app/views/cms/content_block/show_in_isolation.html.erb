@@ -1,0 +1,15 @@
+<% use_page_title "View #{content_type.display_name}" %>
+<%= render layout: 'page_title' do %>
+    <%= link_to 'Edit', edit_engine_aware_path(@block), class: 'btn btn-primary btn-small right' %>
+<% end %>
+<% content_for :sidebar, render('sidebar') %>
+<%= render layout: 'main_with_sidebar' do %>
+    <% if @block.respond_to?(:deleted) && @block.deleted %>
+        <p>This <%= @block.class.name %> has been deleted.</p>
+    <% end %>
+    <% if @block.class.renderable? %>
+        <%= render_connectable(@block) %>
+    <% end %>
+<% end %>
+
+

@@ -27,13 +27,13 @@ end
 When /^I search for a user with "([^"]*)"$/ do |search_term|
   visit "/cms/users"
   fill_in "key_word", with: search_term
-  click_on 'user_search_submit'
+  click_user_search
 end
 
 When /^I search for expired users$/ do
   visit "/cms/users"
   check 'show_expired'
-  click_on 'user_search_submit'
+  click_user_search
 end
 
 When /^there exists some other users$/ do
@@ -48,7 +48,7 @@ end
 When /^I search for users with group "([^"]*)"$/ do |group_name|
   visit "/cms/users"
   select group_name, from: 'group_id'
-  click_on 'user_search_submit'
+  click_user_search
 end
 
 Then /^I should not see that user$/ do
@@ -65,7 +65,7 @@ When /^I add that user to a new group$/ do
 
   visit "/cms/users/#{@that_user.id}/edit"
   check "Sample Group"
-  click_on "Save"
+  click_save_button
 end
 
 Then /^that user should have (\d+) group$/ do |number|
@@ -92,11 +92,13 @@ When /^there is another user$/ do
   @another_user = create(:registered_user)
 end
 
+
+
 When /^I change my password$/ do
-  visit "/cms/users/#{current_user.id}/change_password"
+  visit cms.change_password_user_path(current_user)
   fill_in "Password", with: "new"
   fill_in "Confirm Password", with: "new"
-  click_on "Save"
+  click_save_button
 end
 
 Then /^I should successful$/ do
@@ -128,9 +130,9 @@ When /^fill valid fields for a new user named "([^"]*)"$/ do |username|
   fill_in "Email", :with => "#{username}@example.com"
   fill_in "First Name", :with => "Mr."
   fill_in "Last Name", :with => "Blank"
-  fill_in "Password", :with => "abc123"
-  fill_in "Confirm Password", :with => "abc123"
-  click_on "Save"
+  fill_in "Password", :with => "abc12345"
+  fill_in "Confirm Password", :with => "abc12345"
+  click_save_button
 end
 
 Given /^the following content editor exists:$/ do |table|
@@ -157,5 +159,5 @@ end
 When /^I look at expired users$/ do
   visit cms.users_path
   check "show_expired"
-  click_on "user_search_submit"
+  click_user_search
 end

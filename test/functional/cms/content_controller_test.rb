@@ -23,7 +23,7 @@ module Cms
       get :show, :path => "foo"
       assert_response :not_found
       assert_select "title", "Page Not Found"
-      assert_select "h2", "There is no page at /foo"
+      assert_select "p", "There is no page at /foo"
     end
 
     def test_show_protected_page_to_privileged_user

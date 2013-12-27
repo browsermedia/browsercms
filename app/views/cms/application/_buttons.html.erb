@@ -1,0 +1,7 @@
+<%= button_menu location do %>
+    <%= f.button :publish, location: location %>
+    <div class="btn-group right">
+      <%= cancel_button location %>
+      <%= f.button :save_draft, location: location %>
+    </div>
+<% end %>

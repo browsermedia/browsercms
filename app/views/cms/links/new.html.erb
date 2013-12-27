@@ -1,5 +1,5 @@
-<% use_page_title @link_title = "Add New Link" %>
+<% use_page_title "Add a New Link" %>
 <%= simple_form_for(@link) do |f| %>
     <%= hidden_field_tag :section_id, @link.section_id %>
-    <%= render :partial => 'form', :locals => {:f => f} %>
+    <%= render :partial => 'form', :locals => {:f => f, title: 'Add a New Link'} %>
 <% end %>

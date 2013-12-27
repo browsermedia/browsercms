@@ -1,4 +1,3 @@
-//= require 'jquery'
 //= require 'jquery.exists'
 //= require 'cms/namespace'
 

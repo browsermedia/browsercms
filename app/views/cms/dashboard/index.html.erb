@@ -1,10 +1,13 @@
 <% use_page_title "Dashboard" %>
 
-    <div class="row-fluid">
-        <div class="span6">
-          <%= render :partial => 'page_drafts' %>
-        </div>
-        <div class="span6">
-          <%= render :partial => 'tasks' %>
-        </div>
+<div class="padded row-fluid clearfix">
+  <h1>Dashboard</h1>
+  <div class="row-fluid">
+    <div class="span6">
+      <%= render :partial => 'tasks' %>
     </div>
+    <div class="span6">
+      <%= render :partial => 'page_drafts' %>
+    </div>
+  </div>
+</div>

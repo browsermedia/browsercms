@@ -11,8 +11,8 @@ Feature: Page Templates
     When I fill in the following:
       | Name | hello |
       | Body | World |
-    And I press "Save"
-    Then I should see a page named "List Page Templates"
+    And I click the Save button
+    Then I should see a page named "Page Templates"
     Then I should see the following content:
       | Hello |
 
@@ -31,9 +31,9 @@ Feature: Page Templates
     Then the response should be 200
     And the page header should be "Edit 'hello' Page Template"
     When I fill in "Name" with "hello_world"
-    And I press "Save"
+    And I click the Save button
     Then the response should be 200
-    And the page header should be "List Page Templates"
+    And the page header should be "Page Templates"
     And I should see the following content:
       | Hello World |
 
@@ -44,6 +44,6 @@ Feature: Page Templates
       | hello |
     When I delete that page template
     Then the response should be 200
-    And the page header should be "List Page Templates"
+    And the page header should be "Page Templates"
     And I should not see the "Hello" template in the table
 

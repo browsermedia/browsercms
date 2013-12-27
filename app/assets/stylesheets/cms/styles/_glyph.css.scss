@@ -27,7 +27,7 @@ Instead of a list of all class selectors,
 you can use the generic selector below, but it's slower:
 [class*="icon-"] {
 */
-.icon-search, .icon-cog, .icon-house, .icon-radio-checked, .icon-radio-unchecked, .icon-checkbox-checked, .icon-checkbox-unchecked, .icon-file, .icon-folder, .icon-folder-open, .icon-earth, .icon-list, .icon-eye-blocked, .icon-locked {
+.icon-search, .icon-cog, .icon-house, .icon-link, .icon-radio-checked, .icon-radio-unchecked, .icon-checkbox-checked, .icon-checkbox-unchecked, .icon-file, .icon-folder, .icon-folder-open, .icon-earth, .icon-list, .icon-eye-blocked, .icon-locked {
 	font-family: 'icomoon';
 	speak: none;
 	font-style: normal;
@@ -36,6 +36,11 @@ you can use the generic selector below, but it's slower:
 	text-transform: none;
 	line-height: 1;
 	-webkit-font-smoothing: antialiased;
+}
+
+.icon-link:before {
+    // Replace with correct value (Current is Cog)
+    content: "\e004";
 }
 .icon-search:before {
 	content: "\e003";

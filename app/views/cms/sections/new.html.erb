@@ -1,5 +1,5 @@
-<% use_page_title "New Section" %>
+<% use_page_title "Add a New Section" %>
 <%= simple_form_for(@section, :id => 'section_form') do |f| %>
     <%= hidden_field_tag :section_id, @parent.id %>
-    <%= render :partial => 'form', :locals => {:f => f, :parent => @parent} %>
+    <%= render :partial => 'form', :locals => {:f => f, :parent => @parent, title: 'Add a New Section'} %>
 <% end %>

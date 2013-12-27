@@ -17,6 +17,6 @@ CKEDITOR.config.toolbar_CMSForms = [
 	['TextField','Select','Checkbox','Radio','Textarea','Button','ImageButton','HiddenField']
 ];
 
-CKEDITOR.config.width = 598;
+CKEDITOR.config.width = '100%';
 CKEDITOR.config.height = 400;
 CKEDITOR.config.toolbar = 'CMS';

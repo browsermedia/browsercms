@@ -4,15 +4,16 @@ module Cms
     attr_accessor :current_user
 
     # Log in to the CMS admin.
-    def login_as(username, password)
-      visit '/cms/login'
+    def login_as(username, password, path=cms.login_path)
+      logout
+      visit path
       fill_in 'Login', :with => username
       fill_in 'Password', :with => password
       click_button 'Sign in'
     end
 
     def logout
-      visit '/cms/logout'
+      visit cms.logout_path
     end
 
     def most_recently_created_page
@@ -41,7 +42,27 @@ module Cms
     end
 
     def editor_iframe_selector
-      "iframe[name='page_content']"
+      "iframe[id='page_content']"
+    end
+
+    def top_form_buttons
+      find(".top-buttons")
+    end
+
+    def asset_selector_button
+      find("button[data-purpose=subheader]")
+    end
+
+    def click_save_button
+      top_form_buttons.click_on('Save')
+    end
+
+    def click_publish_button
+      top_form_buttons.click_on('Publish')
+    end
+
+    def click_user_search
+      click_on 'user_search_submit'
     end
   end
 end

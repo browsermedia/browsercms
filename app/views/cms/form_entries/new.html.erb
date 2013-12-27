@@ -1,6 +1,5 @@
 <% use_page_title "New Entry for #{@entry.form.name}" %>
-<%= content_for :button_bar, render(partial: 'buttonbar', locals: {view: :new}) %>
-<%= render partial: 'cms/form_entries/form',
+<%= render partial: 'internal_form',
            locals: {model: @entry,
                     url: form_entries_path(@entry)}
 %>

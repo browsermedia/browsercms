@@ -1,7 +1,8 @@
-<% use_page_title "Administration / Group Browser" %>
-<% @toolbar_title = "List Groups" %>
-<%= render 'toolbar' %>
-
+<% use_page_title "Groups" %>
+<%= render layout: 'page_title' do %>
+    <%= link_to("Add Group", new_group_path, :id => "new_group_button", :class => "btn btn-primary btn-small right") %>
+<% end %>
+<%= render layout: 'main_content' do %>
   <table class="data table table-rounded table-bordered table-hover table-striped">
     <thead>
       <tr>
@@ -29,6 +30,7 @@
       </tr>
     <% end %>
   </table>
+<% end %>
 <% if @groups.total_pages > 1 %>
   <%= render_pagination @groups, Cms::Group %>
 <% end %>

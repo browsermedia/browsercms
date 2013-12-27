@@ -19,10 +19,18 @@ module PageInspector
   end
 
   def should_see_a_page_header(page_header)
-    assert page.has_content?(page_header), "Expected to have a header with '#{page_header}' but couldn't find it.'"
+    message = "Expected find <h1>#{page_header}'</h1>."
+    assert page.has_css?("h1", :text => page_header), failure_message(message) { " Found instead <h1>#{find('h1').text}</h1>."}
   end
 
-  def should_see_a_page_title_and_header(page_title)
+  def failure_message(message)
+    if block_given?
+      message << yield
+    end
+    message
+  end
+  # Both <H1> and <title> should match.
+  def should_see_a_page_named(page_title)
     should_see_a_page_header(page_title)
     should_see_a_page_titled(page_title)
   end
@@ -32,7 +40,7 @@ module PageInspector
   end
 
   def should_see_cms_404_page
-    should_see_a_page_title_and_header "Page Not Found"
+    should_see_a_page_named "Page Not Found"
     assert_equal 404, page.status_code
     assert page.has_content?("Page Not Found")
   end

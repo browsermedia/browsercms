@@ -29,11 +29,9 @@ module Cms
           scope :published, -> { where(:published => true) }
           scope :unpublished, -> {
             if self.versioned?
-              q =  "#{connection.quote_table_name(version_table_name)}.#{connection.quote_column_name('version')} > " +
-                   "#{connection.quote_table_name(table_name)}.#{connection.quote_column_name('version')}"
-              select("distinct #{connection.quote_table_name(table_name)}.*")
-                .where(q)
-                .joins(:versions)
+              q = "#{connection.quote_table_name(version_table_name)}.#{connection.quote_column_name('version')} > " +
+                  "#{connection.quote_table_name(table_name)}.#{connection.quote_column_name('version')}"
+              select("distinct #{connection.quote_table_name(table_name)}.*").where(q).joins(:versions)
             else
               where(:published => false)
             end
@@ -175,6 +173,16 @@ module Cms
           status.to_s.titleize
         end
 
+        # Determines if this resource is in draft mode or not. Opposite of #live?
+        #
+        # @return [Boolean] true if the latest version of the resource is a draft.
+        def draft?
+          !live?
+        end
+
+        # Determines if this resource is in published or not.
+        #
+        # @return [Boolean] true if the latest version of the resource is published.
         def live?
           if self.class.versioned?
             unless persisted?

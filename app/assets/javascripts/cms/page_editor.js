@@ -1,4 +1,3 @@
-//= require 'jquery'
 //= require 'jquery_ujs'
 //= require 'cms/core_library'
 //= require 'bootstrap/modal'
@@ -59,10 +58,9 @@ $(function() {
 
     },
     updatePageStatus: function(data) {
-
       // Update the Page Status indicator
       var status_label = $('#page-status-label', window.parent.document);
-      status_label.removeClass('draft-status published-status');
+      status_label.removeClass('draft published');
       status_label.addClass(data.page_status);
       status_label.html(data.status_label);
 
@@ -126,13 +124,7 @@ $(function() {
 $(function() {
 
   // Click the 'Add Content' button (PLUS) when editing content.
-  //
-  // Rework this function to first update the URLs, then call 'click' on the 'Add content' button
-  // Which should be invisible. This should place the backgroup modal toggle in the correct body (i.e. the parent, not the iframe)
   $('.cms-add-content').click(function() {
-    var link = $("#insert_existing_content", window.parent.document);
-    link.attr('href', $(this).data('insert-existing-content-path'));
-
     $('#modal-add-content', window.parent.document).modal({
       remote: $(this).data('remote')
     });

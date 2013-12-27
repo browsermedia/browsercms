@@ -17,11 +17,13 @@ When /^I create a new BrowserCMS project named "([^"]*)"$/ do |name|
   cmd = "bcms new #{project_name} --skip-bundle"
   run_simple(unescape(cmd), false)
 end
+
 When /^I create a module named "([^"]*)"$/ do |name|
   self.project_name = name
   cmd = "bcms module #{project_name} --skip-bundle"
   run_simple(unescape(cmd), false)
 end
+
 Then /^a rails engine named "([^"]*)" should exist$/ do |engine_name|
   check_directory_presence [engine_name], true
   expect_project_directories %w{ app config lib }

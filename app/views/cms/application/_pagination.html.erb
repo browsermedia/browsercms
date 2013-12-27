@@ -1,0 +1,26 @@
+<p>
+  Displaying
+  <%= collection.offset + 1 %>
+  -
+  <%= collection.offset + collection.size %>
+  of
+  <%= collection.total_entries %>
+</p>
+<div>
+  <%= link_to "<< &nbsp;".html_safe, first_page_path, :id => "first_page_link" %>
+  <%= link_to "< &nbsp;".html_safe, previous_page_path, :id => "previous_page_link" %>
+    <% url = URI.parse(current_page_path) %>
+    <%= form_tag url.path, :method => :get, :class => "current_page", style: 'display:inline' do %>
+        <% url.query.to_s.split('&').each do |p|
+          ; k, v = p.split('=') %>
+            <%= hidden_field_tag(k, CGI::unescape(v.to_s), :id => "pagination_hidden_#{k}") unless k == "page" %>
+        <% end %>
+        <%= label_tag "current_page_number", "Page", style: 'display:inline' %>
+        <%= text_field_tag "page", collection.current_page, :id => "current_page_number", style: 'display:inline' %>
+        <p style="display: inline">of
+        <%= collection.total_pages %></p>
+    <% end %>
+  <%= link_to "&nbsp; >".html_safe, next_page_path, :id => "next_page_link" %>
+  <%= link_to "&nbsp; >>".html_safe, last_page_path, :id => "last_page_link" %>
+</div>
+

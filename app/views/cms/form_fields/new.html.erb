@@ -1,7 +1,26 @@
-<%= simple_form_for(@field, html: {id: 'ajax_form_field'}) do |f| %>
-  <%= f.hidden_field :form_id %>
-  <%= f.hidden_field :field_type %>
-  <%= f.input :label, hint: @field.new_record? ? "" : "Will not change the database name (i.e. '#{@field.name}') for new or existing entries. " %>
-  <%= render partial: @field.field_type, locals: {f: f, field: @field} %>
-  <%= f.button :submit, "Save", style: 'display: none' %>
-<% end %>
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <h3>Edit Field</h3>
+</div>
+<div class="modal-body">
+  <%= simple_form_for(@field, html: {id: 'ajax_form_field'}) do |f| %>
+      <%= f.hidden_field :form_id %>
+      <%= f.hidden_field :field_type %>
+      <%= f.input :label, hint: @field.new_record? ? "" : "Will not change the database name (i.e. '#{@field.name}') for new or existing entries. ", autofocus: true %>
+      <%= render partial: @field.field_type, locals: {f: f, field: @field} %>
+      <%= f.button :submit, "Save", style: 'display: none' %>
+  <% end %>
+</div>
+<div class="modal-footer">
+  <a class="btn btn-primary" href="#" id="create_field" data-dismiss="modal" type="button">Save</a>
+  <a aria-hidden="true" class="btn" data-dismiss="modal" href="#" type="button">Never Mind</a>
+</div>
+
+<%#
+    I would prefer to do this on shown.bs.modal event but that doesn't seem to work.
+    Doing it here guarantees the #create_field exists before we add the click to it.
+  %>
+<script type="text/javascript">
+ $("#create_field").on('click', formBuilder.createField);
+ formBuilder.onEnterSubmitFormViaAjax();
+</script>

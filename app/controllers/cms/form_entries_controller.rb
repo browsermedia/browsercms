@@ -36,11 +36,12 @@ module Cms
     def index
       form = Cms::Form.where(id: params[:id]).first
       @blocks = Cms::FormEntry.where(form_id: params[:id]).paginate({page: params[:page], order: params[:order]})
-      #Shim for buttonbar
-      @content_type = FauxContentType.new(form)
       @entry = Cms::FormEntry.for(form)
 
-      render 'cms/content_block/index'
+      # Allows us to use the content_block/index view
+      @content_type = FauxContentType.new(form)
+      @search_filter = SearchFilter.build(params[:search_filter], Cms::FormEntry)
+      @total_number_of_items = @blocks.size
     end
 
     def edit
@@ -100,6 +101,9 @@ module Cms
         'Entry'
       end
 
+      def display_name_plural
+        "Entries for #{@form.name} form"
+      end
       def columns_for_index
         cols = @form.fields.collect do |field|
           {:label => field.label, :method => field.name}

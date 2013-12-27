@@ -23,10 +23,10 @@ module Cms
     has_many :group_sections, :class_name => 'Cms::GroupSection'
     has_many :groups, :through => :group_sections, :class_name => 'Cms::Group'
 
-    scope :root, -> {where( ['root = ?', true]  )}
-    scope :system, -> {where( {:name => 'system'}  )}
-    scope :hidden, -> {where( {:hidden => true}   )}
-    scope :not_hidden, -> {where( {:hidden => false}   )}
+    scope :root, -> { where(['root = ?', true]) }
+    scope :system, -> { where({:name => 'system'}) }
+    scope :hidden, -> { where({:hidden => true}) }
+    scope :not_hidden, -> { where({:hidden => false}) }
 
     def self.named(name)
       where(["#{table_name}.name = ?", name])
@@ -35,6 +35,7 @@ module Cms
     def self.with_path(path)
       where(["#{table_name}.path = ?", path])
     end
+
     #scope :named, lambda { |name| {-> {where( ["#{table_name}.name = ?", name]} }   )}
     #scope :with_path, lambda { |path| {-> {where( ["#{table_name}.path = ?", path]} }    )}
 
@@ -208,6 +209,15 @@ module Cms
       if code == :all
         self.groups = Cms::Group.all
       end
+    end
+
+    # Sections are accessible to guests if they marked as such. Variables are passed in for performance reasons
+    # since this gets called 'MANY' times on the sitemap.
+    #
+    # @param [Array<Section>] public_sections
+    # @param [Section] parent
+    def accessible_to_guests?(public_sections, parent)
+      public_sections.include?(self)
     end
   end
 end

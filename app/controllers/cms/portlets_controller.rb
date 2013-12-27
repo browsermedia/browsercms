@@ -13,12 +13,6 @@ module Cms
        end
     end
 
-    def load_blocks
-      @blocks = Portlet.where(deleted: false).search(params[:search]).paginate(
-          :page => params[:page],
-      ).order(params[:order] || "name")
-    end
-
     def build_block
       if params[:type].blank?
         @block = model_class.new

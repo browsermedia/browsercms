@@ -4,9 +4,6 @@ Feature:
   Background:
     Given a page exists at /mobile-page with a mobile ready template
 
-  Scenario: Full vs Mobile toggle
-    Given a bug: Full vs Mobile toggle does not toggle locally between full and mobile versions.
-
   Scenario: Desktop Visitor sees Desktop template
     Given a user is browsing the desktop site
     When they request /mobile-page

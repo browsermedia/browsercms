@@ -48,6 +48,11 @@ class Cms::SectionNode < ActiveRecord::Base
     where("#{table_name}.node_type NOT IN (?)", klass)
   end
 
+  # Determines if this node is the homepage of the site.
+  def home?
+    page? && node.home?
+  end
+
   def visible?
     return false unless node
     return false if (node.respond_to?(:hidden?) && node.hidden?)
@@ -68,6 +73,10 @@ class Cms::SectionNode < ActiveRecord::Base
   #Is this node a page
   def page?
     node_type == 'Cms::Page'
+  end
+
+  def link?
+    node_type == 'Cms::Link'
   end
 
   # @param [Section] section

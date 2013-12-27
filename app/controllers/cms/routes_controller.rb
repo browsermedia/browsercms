@@ -3,9 +3,7 @@ class RoutesController < Cms::BaseController
   
   
   def index
-  
-    @toolbar_tab = :administration
-    
+
     unless params[:path].blank?
       @path = params[:path]
       @route = Rails.application.routes.recognize_path(@path)

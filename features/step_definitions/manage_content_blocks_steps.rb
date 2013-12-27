@@ -36,7 +36,7 @@ Then /^"([^"]*)" should be selected as the current Content Type$/ do |name|
 end
 
 When /^I Save And Publish$/ do
-  click_button "Save And Publish"
+  click_publish_button
 end
 
 Given /^there are multiple pages of portlets in the Content Library$/ do
@@ -77,11 +77,6 @@ When /^I create a new "([^"]*)" portlet$/ do |portlet_type|
   click_on portlet_type
 end
 
-When /^the publish button should be (#{ENABLED_OR_DISABLED})$/ do |is_enabled|
-  button = find('#publish_button')
-  assert_equal !is_enabled, button[:class].include?('disabled')
-end
-
 Given /^I have an Html block in draft mode$/ do
   @block = create(:html_block, :content=>"Testing Modes")
   @block.update_attributes(:name => "Should be updated.", :publish_on_save => false)
@@ -93,8 +88,8 @@ When /^I should see that block's content$/ do
 end
 
 When /^I should see it's draft mode$/ do
-  within("#page-status-label") do
-    assert page.has_content?('DRAFT')
+  within(".draft") do
+    assert page.has_content?('Draft')
   end
 end
 When /^I add a new product$/ do

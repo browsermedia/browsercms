@@ -1,0 +1,13 @@
+<%# Buttons for blocks need to be aware of whether the underlying block is publishable or not. %>
+<%= button_menu location do %>
+    <% if @block.class.publishable? %>
+    <%= f.button :publish, location: location %>
+    <% else %>
+    <%= f.button :save, location: location %>
+    <% end %>
+
+    <div class="btn-group right">
+      <%= cancel_button location %>
+      <%= f.button :save_draft, location: location if @block.class.publishable? %>
+    </div>
+<% end %>

@@ -1,7 +1,6 @@
 module Cms
   class TasksController < Cms::BaseController
 
-    before_filter :set_toolbar_tab
     before_filter :load_page, :only => [:new, :create]
 
     def new
@@ -51,10 +50,6 @@ module Cms
 
     def load_page
       @page = Page.find(params[:page_id])
-    end
-
-    def set_toolbar_tab
-      @toolbar_tab = :sitemap
     end
 
   end

@@ -1,0 +1,7 @@
+<%# Shows error message and any errors on the base model. Can be included in any CMS form view. %>
+<div class="row-fluid padded">
+  <%= form.error_notification %>
+  <span id="base-errors">
+  <%= form.error :base %>
+  </span>
+</div>

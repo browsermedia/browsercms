@@ -1,75 +1,87 @@
-<%= content_for(:html_head) do %>
-    <%= javascript_include_tag "cms/content_library" %>
-<% end %>
-<% use_page_title "Content Library / List #{content_type.display_name_plural}" %>
-<% @toolbar_title = "List #{content_type.display_name_plural}" %>
-<%= content_for :button_bar, render('buttonbar') %>
-<table id="blocks" class="data cms-content-table table table-striped table-bordered table-hover"
-       data-content_type="<%= content_type.content_block_type %>"
-       data-versioned="<%= content_type.model_class.versioned? %>"
-       data-can_publish="<%= current_user.able_to?(:publish_content) %>"
-       data-plural_title="<%= content_type.display_name_plural %>"
->
-  <thead>
-    <tr>
-      <% content_type.columns_for_index.each_with_index do |column, i| %>
-        <% attrs = if !content_type.model_class.respond_to?(:updated_at) && 
-                      !content_type.model_class.connectable? && 
-                      !content_type.model_class.publishable? && 
-                      content_type.columns_for_index.size == i + 1
+<% use_page_title "Assets - #{content_type.display_name_plural}" %>
+<div class="padded row-fluid clearfix">
+  <h1 class="span3">Assets</h1>
 
-          end %>
-        <th<%=raw attrs %>>
-          <div class="dividers">
-            <% if column[:order] %>
-              <%= link_to column[:label], sortable_column_path(content_type, column[:order])%>
-            <% else %>
-              <%= column[:label] %>
-            <% end %>
-          </div>
-        </th>
-      <% end %>
-      <% if content_type.model_class.respond_to?(:updated_at) %>
-        <th class="updated <%= 'last" ' unless content_type.model_class.publishable? || content_type.model_class.connectable? %>">Updated</th>
-      <% end %>
-      <% if content_type.model_class.connectable? %><th class="used <%= ' last" ' unless content_type.model_class.publishable? %>">Used</th><% end %>
-      <% if content_type.model_class.publishable? %><th  class="block_status last">Status</th><% end %>
-    </tr>
-  </thead>
-  <tbody>
-    <% col_ct = 2
-       col_ct += content_type.columns_for_index.size
-       col_ct += 1 if content_type.model_class.respond_to?(:updated_at)
-       col_ct += 1 if content_type.model_class.connectable?
-       col_ct += 1 if content_type.model_class.publishable? %>
-    <% @blocks.each do |b| %>
-      <% block = b.class.versioned? ? b.as_of_draft_version : b %>
-    <%= content_block_tr_tag(block) %>
+  <%= form_for @search_filter, url: engine_aware_path(@search_filter.model_class), html: {class: 'form-search'}, method: :get do |f| %>
+      <%= f.text_field :term, class: "span6 search-query right", placeholder: "Search #{content_type.display_name_plural}" %>
+  <% end %>
+</div>
+<%= form_tag engine_aware_path(@search_filter.path), method: :put do %>
+    <div class="padded row-fluid clearfix">
+      <div class="btn-group span3 top-buttons">
+        <button class="btn btn-small dropdown-toggle btn-solo" data-toggle="dropdown" data-purpose="subheader">
+          <%= content_type.display_name_plural %> &nbsp;<span class="caret"></span>
+        </button>
+        <%= render partial: 'layouts/cms/content_types', locals: {library: false, id: 'asset-selector-menu'} %>
+      </div>
 
-        <% content_type.columns_for_index.each_with_index do |column, i| %>
-          <td class="<%= column[:label].gsub(' ', '').underscore %>">
-            <div<%= ' class="dividers"'.html_safe if (i + 3 < col_ct) %>>
-            <%= block.send(column[:method]) %>
-            <% if i.zero? && block.respond_to?(:cannot_be_deleted_message) && block.cannot_be_deleted_message %>
-              <div class="cannot_be_deleted_message" style="display: none">
-                <%=h block.cannot_be_deleted_message %>
-              </div>
-            <% end %>
-            </div>
-          </td>      
+    <span class="span9 top-buttons">
+        <%= submit_tag "Publish", class: "right btn btn-small btn-primary primary-cta" if content_type.model_class.publishable? %>
+
+        <div class="btn-group right">
+          <%= submit_tag "Delete", class: 'btn btn-small', data: {confirm: 'Are you sure you want to delete all these records?'} %>
+        </div>
+
+        <%= yield :bulk_actions if content_for?(:bulk_actions) %>
+        <h4 class="right"><%= @total_number_of_items %> ITEMS</h4>
+    </span>
+    </div>
+
+    <div class="main-content padded row-fluid clearfix">
+      <table class="table table-bordered assets">
+        <thead>
+        <tr>
+          <th class="check-cell"><%#<input type="checkbox">
+        # Only single select for time being.
+                                 %></th>
+          <% content_type.columns_for_index.each_with_index do |column, i| %>
+              <th>
+                <% if column[:order] %>
+                    <%= link_to column[:label], sortable_column_path(content_type, column[:order]) %>
+                    <span class='caret'></span>
+                <% else %>
+                    <%= column[:label] %>
+                <% end %>
+              </th>
+          <% end %>
+          <% if (content_type.model_class.respond_to?(:created_by)) %>
+              <th>Created By</th>
+          <% end %>
+          <% if content_type.model_class.connectable? %>
+              <th>Used</th>
+          <% end %>
+        </tr>
+        </thead>
+
+        <tbody>
+        <% @blocks.each do |block| %>
+            <tr>
+              <td class="check-cell"><%= check_box_tag 'content_id[]', block.id %></td>
+              <% content_type.columns_for_index.each_with_index do |column, i| %>
+                  <td>
+                    <%= link_to_if(i == 0, block.send(column[:method]), edit_engine_aware_path(block)) %>
+                    <%= draft_icon_tag(block) if i == 0 %>
+                  </td>
+              <% end %>
+              <% if (content_type.model_class.respond_to?(:created_by)) %>
+                  <td><%= block.created_by.try(:full_name) %></td>
+              <% end %>
+              <% if content_type.model_class.connectable? %>
+                  <td><%= block.connected_pages.size %></td>
+              <% end %>
+            </tr>
         <% end %>
-        <% if content_type.model_class.respond_to?(:updated_at) %><td class="updated"><%= block.updated_at.to_s(:date) %></td><% end %>
-        <% if content_type.model_class.connectable? %><td class="used"><%= block.connected_pages.size %></td><% end %>
-        <% if content_type.model_class.publishable? %><td class="block_status <%= block.status %>"><%= block.status %></td><% end %>
+        </tbody>
+      </table>
+    </div>
 
-    </tr>
-    <% end %>
-  </tbody>
-</table>
-
-
-<% if params[:search] && @blocks.size == 0 %>
-  <div class="pagination">No results found for '<%= params[:search][:term] %>'</div>
-<% elsif @blocks.total_pages > 1 %>
-  <%= render_pagination @blocks, content_type, :order => params[:order], :search => params[:search] %>
 <% end %>
+
+<div class='padded row-fluid clearfix'>
+  <% if !@search_filter.term.blank? && @blocks.size == 0 %>
+    <div class="pagination">No results found for '<%= @search_filter.term %>'</div>
+  <% elsif @blocks.total_pages > 1 %>
+    <%= render_pagination @blocks, content_type, :order => params[:order], :search => @search_filter.term %>
+  <% end %>
+
+</div>

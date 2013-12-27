@@ -52,7 +52,7 @@ Cms::Engine.routes.draw do
     resources :tasks
   end
   get '/pages/:id/preview', to: 'content#preview', as: 'preview_page'
-  get '/pages/:id/version/:version', :to => 'pages#version', :as => 'version_cms_page'
+  get '/pages/:id/version/:version', :to => 'pages#version', :as => 'version_page'
   put '/pages/:id/revert_to/:version', :to => 'pages#revert_to', :as => 'revert_page'
   resources :tasks do
     member do
@@ -103,7 +103,7 @@ Cms::Engine.routes.draw do
   content_blocks :tags
 
   get 'user' => "user#show", as: :current_user
-  resources :users do
+  resources :users, except: :show do
     member do
       get :change_password
       patch :update_password
@@ -116,7 +116,7 @@ Cms::Engine.routes.draw do
   resources :redirects
   resources :page_partials, :controller => 'dynamic_views'
   resources :page_templates, :controller => 'dynamic_views'
-  resources :page_routes do
+  resources :page_routes, except: :show  do
     resources :conditions, :controller => "page_route_conditions"
     resources :requirements, :controller => "page_route_requirements"
   end

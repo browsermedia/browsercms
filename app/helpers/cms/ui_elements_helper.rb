@@ -4,6 +4,30 @@ module Cms
   # I.e. Menus, Save, Publish buttons and links.
   module UiElementsHelper
 
+    def cancel_button(location, label="Cancel")
+      klass = ['btn']
+      klass << 'btn-small' if location == :top
+      link_to label, :back, class: klass
+    end
+
+    def button_menu(location)
+      container_class = location == :top ? 'span6 top-buttons' : 'form-actions clearfix'
+      container_element = location == :top ? 'span' : 'div'
+      content_tag container_element, class: container_class do
+        yield if block_given?
+      end
+    end
+
+    def page_title_with_buttons(form, partial_name="buttons")
+      render(partial: partial_name, locals: {f: form, location: :top}, layout: 'page_title')
+    end
+
+    def bottom_buttons(form, partial_name="buttons")
+      render(partial: partial_name, locals: {f: form, location: :bottom}, layout: 'row')
+    end
+
+    # @deprecated Everything below.
+
     # Renders a Save And Publish button if:
     # 1. Current User has publish rights
     # 2. Block is publishable

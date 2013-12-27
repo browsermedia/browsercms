@@ -18,13 +18,13 @@ Feature: Manage Page Routes
 
   Scenario: Create Page Route
     When I request /cms/page_routes
-    Then I should see a page named "List Page Routes"
+    Then I should see a page named "Page Routes"
     When I click on "Add"
-    Then I should see a page named "New Page Route"
+    Then I should see a page named "Add a New Page Route"
     When create a Page Route with the following:
       | name     |
       | my_route |
-    Then I should see a page named "'my_route' Page Route"
+    Then I should see a page named "Page Routes"
     And I should see the following content:
       | my_route |
 
@@ -33,8 +33,8 @@ Feature: Manage Page Routes
     When I edit that page route
     Then I should see a page named "Edit Page Route"
     When I fill in "Name" with "My Updated Route"
-    And I click on "Save"
-    Then I should see a page named "'My Updated Route' Page Route"
+    And I click the Save button
+    Then I should see a page named "Page Routes"
     And I should see "My Updated Route"
 
   Scenario: A simple route to a CMS page

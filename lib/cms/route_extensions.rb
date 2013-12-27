@@ -12,13 +12,15 @@ module Cms::RouteExtensions
       member do
         put :publish if model_class.publishable?
         get :versions if model_class.versioned?
-        get :usages if model_class.connectable?
+      end
+      collection do
+        put :update, to: "#{content_block_name}#bulk_update"
       end
     end
-
     if model_class.versioned?
-      get "/#{content_block_name}/:id/version/:version", :to => "#{content_block_name}#version", :as => "#{content_block_name}_version"
-      put "/#{content_block_name}/:id/revert_to/:version", :to => "#{content_block_name}#revert_to", :as => "revert_to_cms_#{content_block_name}"
+      singular_name = content_block_name.to_s.singularize
+      get "/#{content_block_name}/:id/version/:version", :to => "#{content_block_name}#version", :as => "version_#{singular_name}"
+      put "/#{content_block_name}/:id/revert_to/:version", :to => "#{content_block_name}#revert_to", :as => "revert_#{singular_name}"
     end
 
   end

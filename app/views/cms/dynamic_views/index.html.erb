@@ -1,47 +1,30 @@
-<% use_page_title @toolbar_title = "List #{dynamic_view_type.name.demodulize.titleize.pluralize}" %>
-<%= content_for(:html_head) do %>
-  <%= javascript_tag do %>
-    jQuery(function($){
-      $('table.data tbody tr').hover(function(){
-        $(this).addClass('hover')
-      }, function(){
-        $(this).removeClass('hover')
-      }).click(function(){
-        var match = this.id.match(/(.*)_(\d+)/) 
-        var type = match[1];
-        var id = match[2];
-        $('table.data tbody tr').removeClass('selected');
-        $(this).addClass('selected');
-        $('#edit_button').removeClass('disabled').attr('href', '/cms/<%= dynamic_view_type.name.demodulize.underscore.pluralize %>/'+id+'/edit');
-        $('#delete_button').removeClass('disabled').attr('href', '/cms/<%= dynamic_view_type.name.demodulize.underscore.pluralize %>/'+id)
-      })
-    })
-  <% end %>
+<% use_page_title "#{dynamic_view_type.name.demodulize.titleize.pluralize}" %>
+<%= render layout: 'page_title' do %>
+    <%= link_to "Add", new_engine_aware_path(dynamic_view_type), class: 'btn btn-primary btn-small right' %>
 <% end %>
-
-<%= render 'toolbar' %>
-<div class="roundedcorners">
+<%= render layout: 'main_content' do %>
   <table class="data cms-content-table table table-striped table-bordered table-hover">
-	<thead>  
+	<thead>
 		<tr>
-	      <th><div class="dividers">Name</div></th>
-        <th><div>Path</div></th>
-	      <th><div>Updated At</div></th>
+	      <th>Name</th>
+          <th>Path</th>
+	      <th>Updated At</th>
+	      <th>Actions</th>
 	    </tr>
 	</thead>
     <% @views.each do |view| %>
-      <tr id="<%= dynamic_view_type.model_name.singular %>_<%= view.id %>">
-        <td><div class="dividers" title="<%=h view.file_path %>"><%=h view.display_name %></div></td>
-        <td><div class="dividers" title="<%=h view.path %>"><%=h view.path %></div></td>
-        <td><div><%= view.updated_at && view.updated_at.to_s(:date) %></div></td>
+      <tr>
+        <td><%= view.display_name %></td>
+        <td><%= view.path %></td>
+        <td><%= view.updated_at && view.updated_at.to_s(:date) %></td>
+        <td>
+          <%= link_to "Edit", edit_polymorphic_path(view), class: "btn btn-mini" %>
+          <%= link_to "Delete", polymorphic_path(view), class: "btn btn-mini btn-danger", method: 'delete',  data: {confirm: 'Are you sure you want to delete this view?'} %>
+        </td>
       </tr>
     <% end %>
   </table>
-<div class="tl"></div>
-<div class="tr"></div>
-<div class="bl"></div>
-<div class="br"></div>
-</div>
+<% end %>
 <% if @views.size == 0 && params[:key_word]%>
   <div class="pagination">No results found for '<%= params[:key_word] %>'</div>
 <% elsif @views.total_pages > 1 %>

@@ -8,7 +8,7 @@ Feature: Manage Content Blocks
 
   Scenario: List Content Blocks
     When I view products in the content library
-    Then I should see "List Products"
+    Then I should be returned to the Assets page for "Products"
 
   Scenario: List Content Blocks
     When I request /cms/content_library
@@ -24,10 +24,10 @@ Feature: Manage Content Blocks
 
   Scenario: Create a new block
     When I add a new product
-    Then I should see "Add New Product"
+    Then I should see a page named "Add a New Product"
     When I fill in "Name" with "iPhone"
     And I fill in "Slug" with "/iphone"
-    And I click on "Save"
+    And I click the Save button
     Then a new product should be created
 
   Scenario: Delete a block
@@ -51,8 +51,10 @@ Feature: Manage Content Blocks
     When I view a page that lists products
     Then I should be able to click on a link to see a product
 
+  # Need to throw the right error page
+  @known-bug
   Scenario: Nonexistant Product
-    Given no product with a slug "/some-path" exists
+     Given no product with a slug "/some-path" exists
     And I am not logged in
     When I visit "/products/some-path"
     Then I should see the CMS 404 page

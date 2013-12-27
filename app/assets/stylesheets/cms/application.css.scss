@@ -1,7 +1,5 @@
 @charset "utf-8";
 
-
-
 $experimental-support-for-khtml: false;
 @import "compass/reset";
 @import "compass/css3";
@@ -17,10 +15,6 @@ $experimental-support-for-khtml: false;
 
 @import "cms/includes/_rem";
 @import "cms/includes/_animation";
-
-
-//@import "cms/sitemap";
-//@import "cms/bootstrap-customizations";
 
 
 /* IMPORTING STYLES */

@@ -1,0 +1,11 @@
+<ul class="edit-group">
+  <li><%= link_to 'View', engine_aware_path(section_node.node), class: 'add-link' unless section_node.root? %></li>
+  <li><%= link_to 'Edit', edit_engine_aware_path(section_node.node), class: 'add-link' %></li>
+  <!--<% if section_node.page? %>-->
+  <!--<li><a href="#" class="add-link">Archive</a></li>-->
+  <!--<% end %>-->
+  <!--<li><%= link_to("Hide", "#", class: 'add-link') unless section_node.root? %></li>-->
+  <li><%= link_to 'Remove', engine_aware_path(section_node.node),
+                  class: 'add-link http_delete confirm_with_title',
+                  title: "Are you sure you want to remove #{section_node.node.name}?" unless section_node.root? %></li>
+</ul>

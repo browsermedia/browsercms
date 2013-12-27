@@ -1,11 +1,13 @@
-<div class="dashboard_unit" id="page_drafts">
-  <h2 class="left">Page Drafts</h2>
+<div id="page_drafts">
+  <h3>Page Drafts</h3>
 
   <%= form_tag cms.publish_pages_path, :method => :put do %>
       <table class="data table table-bordered table-rounded">
         <thead>
           <tr>
+            <% unless @unpublished_pages.empty? %>
             <th></th>
+            <% end %>
             <th>Name</th>
             <th>User</th>
 	        <th>Date</th>
@@ -13,7 +15,7 @@
         </thead>
         <tbody>
           <% if @unpublished_pages.empty? %>
-            <tr><td colspan="4">All pages are published</td></tr>
+            <tr><td colspan="4">All pages are published.</td></tr>
           <% else %>  
             <% @unpublished_pages.each do |page| %>
               <tr>
@@ -24,11 +26,11 @@
                 <td class="updated_by">
                     <%= h(page.updated_by ? page.updated_by.login : nil) %>
                 </td>
-                <td class="updated_at"><%= page.updated_at.strftime("%b %d") %></td>
+                <td class="updated_at"><%= page.updated_at.strftime("%b %d, %Y") %></td>
               </tr>
             <% end %>
             <tr>
-              <td colspan="4"><%= submit_tag("Publish Selected", :class => "submit btn btn-primary") %></td>
+              <td colspan="4"><%= submit_tag("Publish Selected", :class => "submit btn btn-mini btn-primary") %></td>
             </tr>
           <% end %>
         </tbody>

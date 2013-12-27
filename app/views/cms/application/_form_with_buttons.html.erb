@@ -1,0 +1,10 @@
+<%= page_title_with_buttons(f, yield(:buttons)) %>
+<div class="padded row-fluid">
+  <div class="span8 main-content">
+    <%= yield  %>
+  </div>
+  <div class="span4">
+    <%= yield :sidebar %>
+  </div>
+</div>
+<%= bottom_buttons f, yield(:buttons) %>

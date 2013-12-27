@@ -5,6 +5,11 @@
 module Cms
   module RenderingHelper
 
+    def page_content_iframe(path)
+      content_tag "iframe", "" , src: path, id: 'page_content', frameborder: 0, width: '100%', height: '80%'
+      #<iframe id="page_content" src="<%= url_for engine_aware_path(@block, :inline) %>" frameborder="0" width="100%" height="80%"></iframe>
+
+    end
     # Renders the content for the given field from the current content block.
     # Designed to be used in Block Templates instead of direct output of fields.
     #   Example:
@@ -57,7 +62,6 @@ module Cms
     alias :is_editing_page? :is_current_user_able_to_edit_this_content?
 
     def render_connector_and_connectable(connector, connectable)
-      logger.debug "Rendering #{connectable} "
       if is_current_user_able_to_edit_this_content?(connector.page)
         render(:partial => 'cms/pages/edit_content', :locals => {:connector => connector, :connectable => connectable})
       else
@@ -68,16 +72,16 @@ module Cms
     def render_connectable(content_block)
       if content_block
         if content_block.class.renderable?
-          logger.debug "Rendering connectable #{content_block.class} ##{content_block.id} #{"v#{content_block.version}" if content_block.respond_to?(:version)}"
+          Rails.logger.debug "Rendering connectable #{content_block.class} ##{content_block.id} #{"v#{content_block.version}" if content_block.respond_to?(:version)}"
           content_block.perform_render(controller)
         else
-          logger.warn "Connectable #{content_block.class} ##{content_block.id} is not renderable"
+          Rails.logger.warn "Connectable #{content_block.class} ##{content_block.id} is not renderable"
         end
       else
-        logger.warn "Connectable is null"
+        Rails.logger.warn "Connectable is null"
       end
     rescue Exception => e
-      logger.error "Error occurred while rendering #{content_block.class}##{content_block.id}: #{e.message}\n#{e.backtrace.join("\n")}"
+      Rails.logger.error "Error occurred while rendering #{content_block.class}##{content_block.id}: #{e.message}\n#{e.backtrace.join("\n")}"
       "ERROR: #{e.message}"
     end
 

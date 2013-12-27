@@ -1,15 +1,12 @@
-<p><%= link_to "Add #{@default_type.display_name}", new_engine_aware_path((@default_type),
-          "#{@default_type.param_key}[connect_to_page_id]" => params[:connect_to_page_id],
-          "#{@default_type.param_key}[connect_to_container]" => params[:connect_to_container]
-        ),
-
-               :class=>"btn btn-primary" %></p>
-<p>Or choose another content types to add:</p>
-<ul>
-  <% @content_types.each_with_index do |type, i| %>
-  <li><%= link_to h(type.display_name), new_engine_aware_path(type,
-          "#{type.param_key}[connect_to_page_id]" => params[:connect_to_page_id],
-          "#{type.param_key}[connect_to_container]" => params[:connect_to_container]
-        ), :target=> "_top" %></li>
-  <% end %>
-</ul>
+<div class="modal-header">
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+  <h3>Add Content</h3>
+</div>
+<div class="modal-body">
+  <%= render 'content' %>
+</div>
+<div class="modal-footer">
+  <%= link_to "Never Mind", "#", class: "btn btn-small", data: {dismiss: "modal", }, "aria-hidden" => "true" %>
+  <%= link_to "Reuse Content Instead?", cms.new_connector_path(:page_id => params[:connect_to_page_id], :container => params[:connect_to_container]) , class: "btn btn-small btn-primary", id: "insert_existing_content" %>
+</div>

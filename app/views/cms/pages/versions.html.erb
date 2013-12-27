@@ -1,90 +1,22 @@
-<% use_page_title = @toolbar_title = "List Versions / '#{@page.name}' Page" %>
-<%= content_for(:html_head) do %>
-  <%= javascript_tag do %>
-    jQuery(function($){
-      $('table.data tbody tr').hover(function(){
-        $(this).addClass('hover')
-      }, function(){
-        $(this).removeClass('hover')
-      }).click(function(){
-        var match = this.id.match(/(.*)_(\d+)/) 
-        var type = match[1];
-        var id = match[2];
-        $('table.data tbody tr').removeClass('selected');
-        $(this).addClass('selected');
-        $('#view_button').removeClass('disabled').attr('href', '/cms/pages/<%= @page.id %>/version/'+id+'?mode=view');
-        console.log($(this).attr('class') + ' selected');
-        if ($(this).hasClass('current')){
-          $('#revert_button').addClass('disabled').attr('href', '');
-          $('#revert_form').attr('action', '');
-          $('#revert_form_version').attr('value', '');
-          $('#edit_content_button').removeClass('disabled').attr('href', '/cms/pages/<%= @page.id %>?mode=edit');
-          $('#edit_properties_button').removeClass('disabled').attr('href', '/cms/pages/<%= @page.id %>/edit');
-        } else {
-          $('#revert_button').removeClass('disabled');
-          $('#revert_form').attr('action', '/cms/pages/<%= @page.id %>/revert_to/'+id);
-          $('#revert_form_version').attr('value', id);
-          $('#edit_content_button').addClass('disabled').attr('href', '');
-          $('#edit_properties_button').addClass('disabled').attr('href', '');
-        }
-      })
-    })
-  <% end %>
-  <%= stylesheet_link_tag("cms/form_layout") %>
+<% use_page_title "Versions: '#{@page.name}' Page" %>
+<%= render layout: 'page_title' do %>
+    <%= link_to "Back to Page", :back, class: 'btn btn-small right' %>
 <% end %>
-<%= content_for :button_bar do %>
-  <%= menu_button "Back to Page", page_path(@page) %>
-  <%= menu_button "View", "#", :id => "view_button", enabled: false %>
-  <%= menu_button "Edit Content", "#", :id => "edit_content_button", enabled: false %>
-  <%= menu_button "Edit Properties", "#", :id => "edit_properties_button", enabled: false %>
-  <%= menu_button "Revert", "#", :id => "revert_button", enabled: false, :onclick => "$('#revert_form').submit(); return false;" %>
-  <%= form_tag '', :method => 'put', :id => "revert_form" do %>
-    <%= hidden_field_tag :version, '', :id => 'revert_form_version'  %>
-  <% end %>
-<% end %>
-
-<div class="roundedcorners">
-  <table id="blocks" class="data">
-    <thead>
+<%= render layout: 'main_content' do %>
+    <table class="data table table-rounded table-bordered table-hover table-striped">
+      <thead>
       <tr>
-        <th class="first" colspan="2"><div class="dividers">Version</div></th>
-        <th><div class="dividers">Comment</div></th>
-        <th><div class="dividers">Date</div></th>
-        <th class="last" colspan="2"><div class="dividers">Editor</div></th>
+        <th>Version</th>
+        <th>Comment</th>
+        <th>Date</th>
+        <th>Editor</th>
+        <th>Action</th>
       </tr>
-    </thead>
-    <tbody>
+      </thead>
+      <tbody>
       <% @page.versions.order("version desc").each_with_index do |r, i| %>
-        <% current = @page.version == r.version %>
-        <%= tag :tr, {:id => "revision_#{r.version}", :class => current ? "current" : nil}, false %>
-          <td class="first"></td>
-          <td>
-            <div class="dividers">
-              <%= "v.#{r.version}" %>
-              <%= '(LIVE)' if @page.version == r.version %>
-              <%= '(CURRENT)' if i == 0 %>
-            </div>
-          </td>
-          <td>
-            <div class="dividers"><%=h r.version_comment %></div>
-          </td>
-          <td>
-            <div class="dividers"><%= r.created_at.strftime("%b %d, %Y %I:%M %p") if r.created_at %></div>
-          </td>
-          <td>
-            <div><%= r.updated_by.login if r.updated_by %></div>
-          </td>
-          <td class="last"></td>
-        </tr>
+          <%= render partial: 'version', locals: {revision: r, original: @page,  i: i} %>
       <% end %>
-      <tr>
-	<td colspan="8" class="buffer"></td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="tl"></div>
-  <div class="tr"></div>
-  <div class="bl"></div>
-  <div class="br"></div>
-</div>
-
+      </tbody>
+    </table>
+<% end %>

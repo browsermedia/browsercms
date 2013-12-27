@@ -12,9 +12,9 @@ Feature: Tag Cloud Portlet
     | Green |
     And the a block exist that are tagged with "Green"
     When I create a new "Tag Cloud Portlet" portlet
-    Then I should see a page named "Add New Portlet"
+    Then I should see a page named "Add a New Portlet"
     When I fill in "Name" with "My Cloud"
-    And I click on "Save"
+    And I click the Save button
     Then I should not see "AnNonexistantColor"
     And I should see the following content:
     | Green |

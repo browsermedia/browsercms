@@ -1,43 +1,41 @@
-<div class="dashboard_unit" id="tasks">
-  <h2 class="left">Tasks</h2>
-
-  <%= form_tag cms.complete_tasks_path, :method => :put do %>
-      <table class="data table table-bordered table-rounded">
-        <thead>
+<h3>My Tasks</h3>
+<%= form_tag cms.complete_tasks_path, :method => :put do %>
+    <table class="table table-bordered dashboard">
+      <thead>
+      <tr>
+        <% unless @incomplete_tasks.empty? %>
+            <th></th>
+        <% end %>
+        <th>Page</th>
+        <th>Assigned By</th>
+        <th>Due Date</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% if @incomplete_tasks.empty? %>
           <tr>
-            <th>&nbsp;</th>
-            <th>Name</th>
-            <th>Assigned By</th>
-	        <th>Due Date</th>
+            <td colspan="4">You currently have no assigned tasks.</td>
           </tr>
-        </thead>
-        <tbody>
-          <% if @incomplete_tasks.empty? %>
-            <tr>
-              <td></td>
-              <td colspan="3">You currently have no assigned tasks. </td>
-            </tr>
-          <% else %>  
-            <% @incomplete_tasks.each do |task| %>
+      <% else %>
+          <% @incomplete_tasks.each do |task| %>
               <tr>
                 <td>
                   <%= check_box_tag "task_ids[]", task.id, false, :id => "complete_task_#{task.id}" %>
                 </td>
                 <td>
-                    <%= link_to h(task.page.name_with_section_path), task.page.path %>
+                  <%= link_to h(task.page.name_with_section_path), task.page.path %>
                 </td>
                 <td>
-                  <%=h task.assigned_by.login %>
+                  <%= h task.assigned_by.login %>
                 </td>
-                <td><%= task.due_date ? task.due_date.strftime("%b %d") : nil %></td>
+                <td><%= task.due_date ? task.due_date.strftime("%b %d, %Y") : nil %></td>
               </tr>
-            <% end %>
-            <tr>
-              <td colspan="4"><%= submit_tag("Complete Selected", :class => "submit") %></td>
-            </tr>
           <% end %>
-        </tbody>
-      </table>
+          <tr>
+            <td colspan="4"><%= submit_tag("Complete Selected", :class => "submit btn btn-mini btn-primary") %></td>
+          </tr>
+      <% end %>
+      </tbody>
 
-  <% end %>
-</div>
+    </table>
+<% end %>

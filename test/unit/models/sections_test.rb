@@ -308,5 +308,26 @@ module Cms
     end
   end
 
+  class SectionAccessiblityTest < ActiveSupport::TestCase
 
+      def public_sections
+        [public_section]
+      end
+
+      def public_section
+        @public_section ||= create(:public_section)
+      end
+
+      def protected_section
+        @protected_section ||= create(:protected_section)
+      end
+
+      test "accessible_to_guests?" do
+        assert public_section.accessible_to_guests?(public_sections, public_section.parent)
+      end
+
+      test "pages in restricted sections are not accessible_to_guests?" do
+        refute protected_section.accessible_to_guests?(public_sections, public_section.parent)
+      end
+    end
 end

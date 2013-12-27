@@ -1,10 +1,23 @@
 module Cms
   class LinksController < Cms::BaseController
 
-    before_filter :set_toolbar_tab
     before_filter :load_section, :only => [:new, :create, :move_to]
     before_filter :load_link, :only => [:destroy, :update]
     before_filter :load_draft_link, :only => [:edit]
+
+    include Cms::PublishWorkflow
+
+    def resource
+      @link
+    end
+
+    def resource_param
+      :link
+    end
+
+    def show
+      redirect_to sitemap_path
+    end
 
     def new
       @link = Link.new(:section => @section)
@@ -62,10 +75,6 @@ module Cms
     def load_draft_link
       load_link
       @link = @link.as_of_draft_version
-    end
-
-    def set_toolbar_tab
-      @toolbar_tab = :sitemap
     end
 
   end

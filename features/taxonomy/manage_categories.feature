@@ -11,14 +11,14 @@ Feature: Manage Categories
     And I add a new category
     When I fill in "Name" with "T-Shirts"
     And I select "Product" from "Type"
-    And I click on "Save"
-    Then I should see a page named "List Categories"
+    And I click the Save button
+    Then I should be returned to the Assets page for "Categories"
     And I should see "T-Shirts"
 
   Scenario: Add Category with no category types
     When no category types exist
     And I add a new category
-    Then I should see "create a category type"
+    Then I should see "Add a New Category Type"
 
 
 

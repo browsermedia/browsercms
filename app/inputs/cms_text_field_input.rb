@@ -13,9 +13,6 @@ class CmsTextFieldInput < SimpleForm::Inputs::TextInput
     extract_default
     html = @builder.text_field(attribute_name, input_html_options).html_safe
 
-    if content_requires_slug_field?(attribute_name)
-      html << @builder.input(:slug, as: :path)
-    end
     html
   end
 

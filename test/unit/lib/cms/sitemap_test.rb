@@ -113,12 +113,6 @@ module Cms
       @page = create(:public_page, :section => root_section)
       @link = create(:link, :section => root_section)
     end
-
-    test "access_status" do
-      assert_equal @page.section.status, @page.access_status
-      assert_equal @link.section.status, @link.access_status
-    end
-
   end
   class SitemapTest < ActiveSupport::TestCase
 

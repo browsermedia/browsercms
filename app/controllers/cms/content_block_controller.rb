@@ -6,13 +6,42 @@ module Cms
     include Cms::ContentRenderingSupport
 
     allow_guests_to [:show_via_slug]
-    before_filter :set_toolbar_tab
 
     helper_method :block_form, :content_type
     helper Cms::RenderingHelper
+    helper do
+
+      # Addressable content types don't allow for Mobile Optimized templates.
+      def mobile_template_exists?(block)
+        false
+      end
+    end
+    include Cms::PublishWorkflow
 
     def index
       load_blocks
+    end
+
+    def bulk_update
+      ids = params[:content_id] || []
+      models = ids.collect do |id|
+        model_class.find(id.to_i)
+      end
+      if params[:commit] == 'Delete'
+        deleted = models.select do |m|
+          m.destroy
+        end
+        flash[:notice] = "Deleted #{deleted.size} records."
+      else
+        # Need to do these one at a time since the code logic is more complex than single UPDATE.
+        published = models.select do |m|
+          m.publish!
+        end
+
+        flash[:notice] = "Published #{published.size} records."
+      end
+
+      redirect_to action: :index
     end
 
     # Getting content by its path  (i.e. /products/:slug)
@@ -98,7 +127,7 @@ module Cms
       if params[:version]
         @block = @block.as_of_version(params[:version])
       end
-      render "version"
+      render "show_in_isolation"
     end
 
     def versions
@@ -107,11 +136,6 @@ module Cms
       else
         render :text => "Not Implemented", :status => :not_implemented
       end
-    end
-
-    def usages
-      load_block_draft
-      @pages = @block.connected_pages.order(:name)
     end
 
     def new_button_path
@@ -135,10 +159,17 @@ module Cms
     def model_form_name
       content_type.param_key
     end
+    alias :resource_param :model_form_name
+
+    def resource
+      @block ||= find_block
+    end
 
     # methods for loading one or a collection of blocks
 
     def load_blocks
+      @search_filter = SearchFilter.build(params[:search_filter], model_class)
+
       options = {}
 
       options[:page] = params[:page]
@@ -147,22 +178,28 @@ module Cms
 
       scope = model_class.respond_to?(:list) ? model_class.list : model_class
       if scope.searchable?
-        scope = scope.search(params[:search])
+        scope = scope.search(@search_filter.term)
       end
       if params[:section_id] && model_class.respond_to?(:with_parent_id)
         scope = scope.with_parent_id(params[:section_id])
       end
+      @total_number_of_items = scope.count
       @blocks = scope.paginate(options)
       check_permissions
+
     end
 
     def load_block
-      @block = model_class.find(params[:id])
+      find_block
       check_permissions
     end
 
-    def load_block_draft
+    def find_block
       @block = model_class.find(params[:id])
+    end
+
+    def load_block_draft
+      find_block
       @block = @block.as_of_draft_version if model_class.versioned?
       check_permissions
     end
@@ -279,7 +316,7 @@ module Cms
     # are connected to.
     def check_permissions
       case action_name
-        when "index", "show", "new", "create", "version", "versions", "usages"
+        when "index", "show", "new", "create", "version", "versions"
           # Allow
         when "edit", "update", "inline"
           raise Cms::Errors::AccessDenied unless current_user.able_to_edit?(@block)
@@ -288,12 +325,6 @@ module Cms
         else
           raise Cms::Errors::AccessDenied
       end
-    end
-
-    # methods to setup the view
-
-    def set_toolbar_tab
-      @toolbar_tab = :content_library
     end
 
     private
@@ -305,7 +336,7 @@ module Cms
     end
 
     def render_block_in_content_library
-      render 'version'
+      render 'show_in_isolation'
     end
 
     def render_editing_frame_or_block_in_main_container

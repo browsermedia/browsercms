@@ -1,10 +1,24 @@
-<% r = defined?(root) %>
-<% if section_node.node && %w[Cms::Link Cms::Page Cms::Section].include?(section_node.node_type) %>
-  <%= render :partial => section_node.node_type.demodulize.underscore, :locals => { 
-      :section_node => section_node,
-      :node => section_node.node, 
-      :display => display,
-      :root => r
-    } 
-  %>
-<% end %>
+<ul class="nav nav-list <%= initial_visibility_class(section_node) %>">
+  <li class="nav-list-item">
+    <span class="nav-list-span <%= sitemap_depth_class(section_node) %> <%= draggable_class?(@modifiable_sections, section_node, parent) %>"
+          data-id="<%= section_node.id %>"
+          data-depth="<%= section_node.depth + 1 %>"
+          data-type="<%= row_type_tag(section_node) %>"
+          data-closable="<%= closable_data(section_node, children) %>"
+          data-add-page-path="<%= add_page_path_data(section_node, parent) %>"
+          data-add-link-path="<%= add_link_path_data(section_node, parent) %>"
+          data-add-section-path="<%= add_section_path_data(section_node, parent) %>"
+    >
+        <span class="text">
+          <%= icon_tag(section_node, children) %>
+          <%= section_node.node.name %>
+        </span>
+
+      <% if current_user_can_modify(@modifiable_sections, section_node, parent) %>
+        <%= render partial: 'row_buttons', locals: {section_node: section_node} %>
+      <% end %>
+      <%= render partial: 'status', locals: {parent: parent.node, content: section_node.node} if parent %>
+    </span>
+    <%= render partial: 'children', locals: {parent: section_node, children: children} %>
+  </li>
+</ul>

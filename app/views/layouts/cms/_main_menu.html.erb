@@ -27,20 +27,10 @@
         <a href="#"
            class="dropdown-toggle"
            data-toggle="dropdown">
-          Content
+          Assets
           <b class="caret"></b>
         </a>
-        <ul class="dropdown-menu" id="content-library-menu">
-          <%= nav_link_to "Content Library", cms.content_library_path %>
-          <%= divider_tag %>
-          <% modules = Cms::ContentType.available_by_module
-             modules.keys.sort.each_with_index do |module_name, i| %>
-              <%= divider_tag(i) %>
-              <% modules[module_name].each do |type| %>
-                  <%= nav_link_to h(type.display_name), engine_aware_path(type) %>
-              <% end -%>
-          <% end %>
-        </ul>
+        <%= render partial: 'layouts/cms/content_types', locals: { library: true, id: 'content-library-menu' } %>
       </li>
       <% end %>
       <% if current_user.able_to? :administrate %>
@@ -55,7 +45,7 @@
           <%= divider_tag %>
           <%= nav_link_to "Redirects", cms.redirects_path %>
           <%= nav_link_to "Routes", cms.page_routes_path %>
-          <%= nav_link_to "Clear Page Cache", cms.cache_path %>
+          <%= nav_link_to "Page Cache", cms.cache_path %>
           <%= nav_link_to "Email Messages", cms.email_messages_path %>
           <% Rails.application.config.cms.tools_menu.each do |menu_item| %>
               <%= nav_link_to(menu_item[:name], self.send(menu_item[:engine]).send(menu_item[:route_name])) %>

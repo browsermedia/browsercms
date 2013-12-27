@@ -9,7 +9,7 @@ When /^I create a public section$/ do
   ["Content Editors", "Cms Administrators", "Guest"].each do |checkbox|
     check checkbox
   end
-  click_on "Save"
+  click_save_button
 end
 
 When /^the new section should be accessible to everyone$/ do

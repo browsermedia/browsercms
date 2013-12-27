@@ -67,6 +67,8 @@ input[type="url"],
 input[type="search"],
 input[type="tel"],
 input[type="color"],
+input[type="tag_list"],
+input[type="number"],
 .uneditable-input {
 	@include rem(height, 2.5rem);
 	@include rem(padding, 0.5rem 0.65rem);
@@ -108,6 +110,8 @@ input[type="url"],
 input[type="search"],
 input[type="tel"],
 input[type="color"],
+input[type="tag_list"],
+input[type="number"],
 .uneditable-input {
 	background: white;
 	border: 1px solid rgba(black,0.15);
@@ -143,6 +147,7 @@ input[type="url"]:focus,
 input[type="search"]:focus,
 input[type="tel"]:focus,
 input[type="color"]:focus,
+input[type="tag_list"]:focus,
 .uneditable-input:focus {
 	outline: 0;
 	outline: thin dotted \9;
@@ -438,13 +443,13 @@ textarea::-webkit-input-placeholder {
 
 input.search-query {
 	@include rem(padding-left,2.5rem);
-	background-image: url("../IMG/search.png");
+	background-image: asset-url("cms/search.png");
 	background-repeat: no-repeat;
 	background-position: 10px center;
 	background-size: auto 50%;
 
 	&:focus {
-		background-image: url("../IMG/search.png");
+		background-image: asset-url("cms/search.png");
 		background-repeat: no-repeat;
 		background-position: 10px center;
 		background-size: auto 50%;
@@ -568,7 +573,8 @@ select:focus:invalid:focus {
 
 
 .control-group {
-  	@include rem(margin-bottom,0.75rem);
+  // Removed since input elements themselves have bottom margins.
+  //@include rem(margin-bottom,0.75rem);
 }
 legend + .control-group {
   	@include rem(margin-top,1.25rem);

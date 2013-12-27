@@ -14,7 +14,14 @@
 	position: relative;
 	margin: 0;
 	padding: 0;
+  // Demonstrates positioning of actual list elements
+  //border: 5px solid rgba(black,0.1); // Remove
+  //  margin: 10;
+ 	//padding: 10;
 
+    &.hide {
+      display: none;
+    }
 	.nav-list-item {
 		list-style-type: none;
 		margin: 0;
@@ -33,24 +40,22 @@
 			@include rem(font-size, 1.1rem);
 
 			&:hover {
-				background: rgba($gray,0.175);
-				cursor: pointer;
+                cursor: pointer;
+  				background: rgba($gray,0.175);
 
-				.type-icon {
+              	.type-icon {
 					@include opacity(1);
 				}
 			}
 
+            &.droppable {
+              background: $light-blue;
+            }
 			&.active {
 				background: rgba($gray,0.4);
 
 				.type-icon {
 					@include opacity(1);
-				}
-				.icon-folder {
-					&:before {
-						content: "\e00e";
-					}
 				}
 			}
 
@@ -62,33 +67,35 @@
 				margin-top: 1px;
 			}
 
-			&.level-one {
+			&.level-1 {
+
 			}
-			&.level-two {
-				padding-left: 30px;
+			&.level-2 {
+                padding-left: 30px;
 			}
-			&.level-three {
+			&.level-3 {
 				padding-left: 60px;
+
 			}
-			&.level-four {
+			&.level-4 {
 				padding-left: 90px;
 			}
-			&.level-five {
+			&.level-5 {
 				padding-left: 120px;
 			}
-			&.level-six {
+			&.level-6 {
 				padding-left: 150px;
 			}
-			&.level-seven {
+			&.level-7 {
 				padding-left: 180px;
 			}
-			&.level-eight {
+			&.level-8 {
 				padding-left: 210px;
 			}
-			&.level-nine {
+			&.level-9 {
 				padding-left: 240px;
 			}
-			&.level-ten {
+			&.level-10 {
 				padding-left: 270px;
 			}
 

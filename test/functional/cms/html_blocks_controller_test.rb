@@ -43,10 +43,6 @@ module Cms
       get :index, :search => {:term => 'worked', :include_body => true}
       assert_response :success
       assert_select "td", "Test"
-
-      get :index, :search => {:term => 'invalid'}
-      assert_response :success
-      assert_select "td", {:count => 0, :text => "Test"}
     end
 
     def test_edit
@@ -101,19 +97,6 @@ module Cms
       assert_equal html_block_version_count, HtmlBlock::Version.count
       assert_equal "Html Block 'Test V2' could not be reverted to version 99", flash[:error]
       assert_redirected_to @block
-    end
-
-    def test_usages
-      @page = create(:page, :section => root_section, :name => "Included")
-      @page2 = create(:page, :section => root_section, :path => "/other_path", :name => "Excluded")
-      @block = create(:html_block, :connect_to_page_id => @page.id, :connect_to_container => "main")
-      @page.publish! # usages are only relevant when page is published
-
-      get :usages, :id => @block.id
-
-      assert_response :success
-      assert_select "td.page_name", "Included"
-      assert_select "td.page_name", {:count => 0, :text => "Excluded"}
     end
 
   end

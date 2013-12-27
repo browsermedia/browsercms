@@ -137,3 +137,14 @@
 
     }
 }
+
+.flash-message {
+  @extend .alert;
+  @extend .alert-info;
+  @extend .alert-small;
+  @extend .container;
+  @extend .center-column;
+  margin-top: 10px;
+  margin-bottom: -43px;
+
+}

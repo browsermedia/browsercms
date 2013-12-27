@@ -48,10 +48,12 @@ require 'cms/attachments/configuration'
 require 'cms/controllers/admin_controller'
 require 'cms/default_accessible'
 require 'cms/admin_tab'
+require 'cms/publish_workflow'
 require 'cms/content_filter'
 require 'cms/polymorphic_single_table_inheritance'
 require 'cms/form_builder/default_input'
 require 'cms/form_builder/content_block_form_builder'
+require 'cms/form_builder/workflow_buttons'
 
 # This shouldn't be necessary, except for the need to get into the loadpath for testing.
 require 'command_line'

@@ -5,20 +5,13 @@
   <%= javascript_include_tag *cms_content_editor %>
   <%= render 'layouts/cms/head' %>
 </head>
-<% @toolbar_tab ||= :dashboard %>
 <body>
 <nav id="main-nav">
   <%= render 'layouts/cms/main_menu' %>
 </nav>
-<%= yield :button_bar %>   <%# This is a temporary backwards compatible placement while UI is reworked. %>
-<% flash.each do |name, msg| -%>
-  <%= content_tag :div, msg, class: name %>
-<% end -%>
-
-<section class="container center-column main-container bottom-form-btn">
-  <div class="padded row-fluid">
-    <div class="span12"><%= yield %></div>
-  </div>
+<%= render 'cms/sites/flash' %>
+<section class="container center-column main-container bottom-form-btn clearfix">
+  <%= yield %>
   <div class="padded row-fluid">
     <div class="span12"><%= render :partial => 'layouts/cms/footer' %></div>
   </div>

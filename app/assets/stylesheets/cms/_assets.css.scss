@@ -1,4 +1,18 @@
 /* ASSETS PAGE */
+@mixin status-icon($background) {
+  color: white;
+  text-transform: uppercase;
+  background: $background;
+  font-weight: 700;
+  padding: 2px 5px;
+  @include border-radius(2px);
+  @include rem(font-size,0.875rem);
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  vertical-align: top;
+  float: right;
+}
+
 .assets {
 	input[type=checkbox] {
 		margin-right: 0;
@@ -8,19 +22,14 @@
 		@include rem(width,2rem);
 	}
 
+
 	.draft {
-		color: white;
-		text-transform: uppercase;
-		background: $danger;
-		font-weight: 700;
-		padding: 2px 5px;
-		@include border-radius(2px);
-		@include rem(font-size,0.875rem);
-		-webkit-font-smoothing: antialiased;
-		display: inline-block;
-		vertical-align: top;
-		float: right;
+		@include status-icon($danger);
 	}
+
+    .published {
+        @include status-icon($success);
+    }
 
 	.caret {
 		margin-left: 10px;

@@ -1,9 +1,5 @@
 Tasks:
 
-# 4.0.x
-
-* [REFACTOR] Remove bcms-upgrade as a separate bin
-
 # 3.6.x
 
 * Browser Compatibility Testing - Ensure compatibility with latest versions of Chrome/IE 9/Firefox/Safari. IE 9 probably needs the most works.

@@ -1,73 +1,38 @@
 <%
-   @toolbar_title = "Add Existing Content to '#{@page.page_title}' Page".html_safe
-   use_page_title @toolbar_title
+   use_page_title"Reuse Content"
 %>
-
-<%= content_for :html_head do %>
-    <%= javascript_tag do %>
-        jQuery(function($){
-        var collectionName = '<%= @block_type.content_block_type %>'
-        $('table.data tbody tr').hover(function(){
-        $(this).addClass('hover');
-        }, function(){
-        $(this).removeClass('hover');
-        }).click(function(){
-        var match = this.id.match(/(.*)_(\d+)/);
-        var type = match[1];
-        var id = match[2];
-        $('table.data tbody tr').removeClass('selected');
-        $(this).addClass('selected');
-        $('#connectable_type').attr('value', type);
-        $('#connectable_id').attr('value', id);
-        $('#add_button').removeClass('disabled').click(function(){
-        $('#connect_form').submit();
-        return false;
-        });
-        $('#view_button').removeClass('disabled').attr('href', '/cms/'+collectionName+'/'+id);
-        })
-        })
-    <% end %>
+<%= render layout: 'page_title' do %>
+    <%= link_to "Back to Page", page_path(@page), class: 'btn btn-small right' %>
 <% end %>
 
-<%= content_for :button_bar do %>
-    <%= menu_button "Back to Page", page_path(@page) %>
-    <%= menu_button "Add to Page", "#", :id => "add_button", :enabled => false %>
-    <%= menu_button "View Content", "#", :id => "view_button", :enabled => false %>
-<% end %>
-<%= form_tag connectors_path, :id => 'connect_form' do %>
-    <%= hidden_field_tag :page_id, @page.to_param %>
-    <%= hidden_field_tag :container, @container %>
-    <%= hidden_field_tag :connectable_type, '' %>
-    <%= hidden_field_tag :connectable_id, '' %>
-<% end %>
 <%= form_tag new_connector_path, :method => :get do %>
     <%= hidden_field_tag :page_id, @page.to_param %>
     <%= hidden_field_tag :container, @container %>
-    <div style="margin: 20px 2px;">
-      <label>
+    <div class="row-fluid padded">
+      <label for="block_type">
         Choose Type of Content
         <%= select_tag "block_type", options_for_select(Cms::ContentType.connectable.to_a.map { |ct| [ct.display_name, ct.content_block_type] }, @block_type.content_block_type), :onchange => 'this.form.submit()' %>
       </label>
     </div>
 <% end %>
 
-<table class="data">
-  <thead>
-  <tr>
-    <th class="name first">
-      <div class="dividers">Name</div>
-    </th>
-    <th class="updated">
-      <div class="dividers">Updated</div>
-    </th>
-    <th class="used last">Uses</th>
-  </tr>
-  </thead>
-  <% @blocks.each do |block| %>
-      <tr id="<%= @block_type.content_block_type.singularize %>_<%= block.id %>">
-        <td class="name"><%= block.name %></td>
-        <td class="updated"><%= block.updated_at.to_formatted_s(:date) %></td>
-        <td class="used"><%= link_to_usages(block) %></td>
+<%= render layout: 'main_content' do %>
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <th>Add?</th>
+        <th>Name</th>
+        <th>Updated</th>
+        <th>Uses</th>
       </tr>
-  <% end %>
-</table>
+      </thead>
+      <% @blocks.each do |block| %>
+          <tr>
+            <td><%= link_to "Add", connectors_path(page_id: @page.to_param, container: @container, :connectable_type => @block_type.content_block_type, connectable_id: block.id), class: "btn btn-mini btn-primary", method: :post %></td>
+            <td><%= link_to block.name, engine_aware_path(block), target: '_blank' %></td>
+            <td><%= block.updated_at.to_formatted_s(:date) %></td>
+            <td><%= block.connected_pages.count %></td>
+          </tr>
+      <% end %>
+    </table>
+<% end %>

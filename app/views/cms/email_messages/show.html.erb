@@ -1,57 +1,50 @@
-<%= content_for :html_head do %>
-  <style type="text/css">
-    div.field {
-      margin: 10px 0;
-    }
-    div.field div.label {
-      display: inline;
-      font-weight: bold;
-    }
-    div.field div.value {
-      display: inline;
-    }
-  </style>
-<% end %>
-
 <%= content_for :functions do %>
-  <%= link_to span_tag("List All"), cms_email_messages_path, :class => "button" %>
+    <%= link_to span_tag("List All"), cms.email_messages_path, :class => "button" %>
 <% end %>
 
-<% use_page_title @toolbar_title = "Email Message '#{@message.subject}'" %>
-<div class="field">
-  <div class="label">Delivered At:</div> 
-  <div class="value"><%= time_on_date(@message.delivered_at) %></div>
-</div>
-<% unless @message.content_type.blank? %>
-  <div class="field">
-    <div class="label">Content-Type:</div> 
-    <div class="value"><%=h @message.content_type %></div>  
-  </div>
+<% use_page_title "Email Message" %>
+<%= render layout: 'page_title' do %>
+    <%= link_to "Email Messages", cms.email_messages_path, :class => "btn btn-primary right btn-small" %>
 <% end %>
-<div class="field">
-  <div class="label">From:</div> 
-  <div class="value"><%=h @message.sender %></div>
-</div>
-<div class="field">
-  <div class="label">To:</div> 
-  <div class="value"><%=h @message.recipients %></div>
-</div>
-<% unless @message.cc.blank? %>
-  <div class="field">
-    <div class="label">CC:</div> 
-    <div class="value"><%=h @message.cc %></div>
-  </div>
+
+<%= render layout: 'main_with_sidebar' do %>
+    <dl>
+      <dt>Delivered At:</dt>
+      <dd><%= time_on_date(@message.delivered_at) %></dd>
+    </dl>
+
+    <% unless @message.content_type.blank? %>
+        <dl>
+          <dt>Content-Type:</dt>
+          <dd><%= h @message.content_type %></dd>
+        </dl>
+    <% end %>
+    <dl>
+      <dt>From:</dt>
+      <dd><%= h @message.sender %></dd>
+    </dl>
+    <dl>
+      <dt>To:</dt>
+      <dd><%= h @message.recipients %></dd>
+    </dl>
+    <% unless @message.cc.blank? %>
+        <dl>
+          <dt>CC:</dt>
+          <dd><%= h @message.cc %></dd>
+        </dl>
+    <% end %>
+    <% unless @message.bcc.blank? %>
+        <dl>
+          <dt>BCC:</dt>
+          <dd><%= h @message.bcc %></dd>
+        </dl>
+    <% end %>
+    <dl>
+      <dt>Subject:</dt>
+      <dd><%= h @message.subject %></dd>
+    </dl>
+    <dl>
+      <dt>Body</dt>
+      <dd><%= h @message.body %></dd>
+    </dl>
 <% end %>
-<% unless @message.bcc.blank? %>
-  <div class="field">
-    <div class="label">BCC:</div> 
-    <div class="value"><%=h @message.bcc %></div>
-  </div>
-<% end %>
-<div class="field">
-  <div class="label">Subject:</div> 
-  <div class="value"><%=h @message.subject %></div>
-</div>
-<div class="field">
-  <%=h @message.body %>
-</div>

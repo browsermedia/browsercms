@@ -29,7 +29,10 @@
   </style>
 <% end %>
 
-<div class="cms_error">
+<%= render layout: 'cms/application/page_title' do %>
+    <%= link_to "Back", :back, class: 'btn btn-small right' %>
+<% end %>
+<div class="cms_error padded row-fluid">
   <h2>Message</h2>
   <pre><%=h exception.message %></pre>
   <h2>Stacktrace</h2>

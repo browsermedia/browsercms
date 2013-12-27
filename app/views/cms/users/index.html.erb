@@ -1,54 +1,65 @@
-<% use_page_title "Administration / User Browser" %>
-<% @toolbar_title = "List Users" %>
-<%= render 'toolbar' %>
+<% use_page_title "Users" %>
+<%= render layout: 'page_title', locals: {span: 'span3'} do %>
+    <%= link_to "Add User", new_user_path, :id => "add_user_button", :class => "btn btn-small btn-primary right" %>
+<% end %>
+<div class="row-fluid padded">
+    <%= form_tag(users_path, :method => :get, class: 'form-search right') do %>
+            <%= group_filter %>
+            <%= text_field_tag "key_word", params[:key_word], placeholder: "Search Users...", class: 'search-query' %>
+            <label class="boolean optional control-label checkbox" for="show_expired">
+                      <%= check_box_tag "show_expired", "yes", params[:show_expired] %>
+                      Show inactive?</label>
 
-  <table class="data table table-bordered table-rounded table-hover table-striped" width="100%">
-    <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Groups</th>
-      <th>Expiration</th>
-      <th>Activation</th>
-      <% if @have_external_users %>
-      <th>Source</th>
-      <% end %>
-    </tr>
-    </thead>
-    <% @users.each do |user| %>
-        <tr>
-          <td>
-            <%= link_to "#{user.full_name_or_login}", edit_user_path(user) %>
-          </td>
-          <td>
-            <%= link_to user.email, "mailto:#{user.email}" %>
-          </td>
-          <td>
+            <%= submit_tag "Search", id: 'user_search_submit', class: 'hide' %>
+        <% end %>
+</div>
+<%= render layout: 'main_content' do %>
+    <table class="data table table-bordered table-rounded table-hover table-striped" width="100%">
+      <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Groups</th>
+        <th>Expiration</th>
+        <th>Actions</th>
+        <% if @have_external_users %>
+            <th>Source</th>
+        <% end %>
+      </tr>
+      </thead>
+      <% @users.each do |user| %>
+          <tr>
+            <td>
+              <%= link_to "#{user.full_name_or_login}", edit_user_path(user) %>
+            </td>
+            <td>
+              <%= link_to user.email, "mailto:#{user.email}" %>
+            </td>
+            <td>
               <% user.groups.order("#{Cms::Group.table_name}.name").each do |g| %>
                   <%= g.name %>
               <% end %>
-          </td>
-          <td>
-            <%= user.expires_at ? format_date(user.expires_at) : "Never" %>
-          </td>
-          <td>
-            <% unless user.expired? %>
-                Active
-                <%= link_to("<span>Disable</span>".html_safe, [:disable, user.becomes(Cms::User)], :class => "http_put sm_button") if @users.size > 1 %>
-            <% else %>
-                Inactive
-                <%= link_to("<span>Enable</span>".html_safe, [:enable, user.becomes(Cms::User)], :class => "http_put sm_button") %>
+            </td>
+            <td>
+              <%= user.expires_at ? format_date(user.expires_at) : "Never" %>
+            </td>
+            <td>
+              <%= link_to("Change Password", [:change_password, user.becomes(Cms::User)], :id => "change_password_button", :class => "btn btn-primary btn-mini") if user.password_changeable? %>
+              <% if user.expired? %>
+                  <%= link_to("Enable", [:enable, user.becomes(Cms::User)], :class => "http_put btn btn-mini btn-success") %>
+              <% else %>
+                  <%= link_to("Disable", [:disable, user.becomes(Cms::User)], :class => "http_put btn btn-mini btn-danger") if @users.size > 1 %>
+              <% end %>
+            </td>
+            <% if @have_external_users %>
+                <td><%= user.source %></td>
             <% end %>
-          </td>
-          <% if @have_external_users %>
-          <td><%= user.source %></td>
-          <% end %>
-        </tr>
+          </tr>
+      <% end %>
+    </table>
+    <% if @users.size == 0 && params[:key_word] %>
+        <div class="pagination">No results found for '<%= params[:key_word] %>'</div>
+    <% elsif @users.total_pages > 1 %>
+        <%= render_pagination @users, Cms::User %>
     <% end %>
-  </table>
-<% if @users.size == 0 && params[:key_word] %>
-    <div class="pagination">No results found for '<%= params[:key_word] %>'</div>
-<% elsif @users.total_pages > 1 %>
-    <%= render_pagination @users, Cms::User %>
 <% end %>
-

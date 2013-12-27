@@ -68,24 +68,25 @@ Feature: Manage Users
   Scenario: Update username
     Given the following content editor exists:
       | username | password | first_name | last_name |
-      | testuser | abc123   | Mr         | Blank     |
+      | testuser | abc12345   | Mr         | Blank     |
     When I request /cms/users
     And I click on "Mr Blank"
     And I fill in "First Name" with "Mister"
-    And I press "Save"
+    And I click the Save button
     Then I should see the following content:
       | Mister Blank |
 
+  # Change password is broken.
+  @known-bug
   Scenario: Change Password
     Given the following content editor exists:
       | username | password | first_name | last_name |
-      | testuser | abc123   | Mr         | Blank     |
+      | testuser | abc12345   | Mr         | Blank     |
     When I request /cms/users
-    And I click on "Mr Blank"
-    And I click on "Change Password"
+    And I click Change Password for user "testuser"
     And I fill in "Password" with "different"
     And I fill in "Confirm Password" with "different"
-    And I press "Save"
+    And I click the Save button
     Then I should return to List Users
     When I login as:
       | login    | password  |

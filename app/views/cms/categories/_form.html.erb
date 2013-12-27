@@ -18,9 +18,10 @@
   <%= content_for :html_head do %>
     <script type="text/javascript">
       $(function(){
-        $('.buttons').remove();
+        $('.form-actions, .top-buttons').remove();
       });
     </script>
   <% end %>
-  <p>Before you can create a category, you must <%= link_to "create a category type", new_category_type_path %>.  Each category must have a category type.  For example, if you plan to categorize your news releases, you might create a "News Release" category type.</p>
+  <p>Before you can create a category, you must create at least one category type for that category. For example, if you plan to categorize your news releases, you might create a "News Release" category type.</p>
+    <%= link_to "Add a New Category Type", new_category_type_path, class: 'btn btn-primary btn-small' %>
 <% end %>

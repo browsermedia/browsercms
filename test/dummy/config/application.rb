@@ -12,6 +12,9 @@ end
 module Dummy
   class Application < Rails::Application
 
+    # Disable logging of partials.
+    #config.action_view.logger = nil
+
     # Silence rails 4.0.2 warning
     config.i18n.enforce_available_locales = false
 

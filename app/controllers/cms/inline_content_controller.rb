@@ -7,10 +7,10 @@ module Cms
       content_block.update_attributes(filtered_content(content_block))
       @page = Page.find_draft(params[:page_id].to_i)
       if (!@page.live?)
-        page_status = "draft-status"
-        status_label = "DRAFT"
+        page_status = "draft"
+        status_label = "This page is in draft status"
       else
-        page_status = "published-status"
+        page_status = "published"
         status_label = "Published"
       end
 

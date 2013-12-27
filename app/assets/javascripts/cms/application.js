@@ -10,6 +10,7 @@
 //= require cms/core_library
 //= require cms/attachment_manager
 //= require cms/form_builder
+//= require cms/sitemap
 //= require bootstrap
 //
 

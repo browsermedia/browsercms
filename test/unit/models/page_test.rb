@@ -63,6 +63,13 @@ module Cms
 
   class VersionTest < ActiveSupport::TestCase
 
+    def draft_page
+      return @draft_page if @draft_page
+      @draft_page = create(:public_page)
+      @draft_page.update(:name => "New", :publish_on_save => false)
+      @draft_page.reload
+    end
+
     def setup
       @page = create(:public_page)
       @another_page = create(:public_page)
@@ -98,6 +105,14 @@ module Cms
       @page.publish!
       @page.reload
       assert @page.live?
+    end
+
+    test "draft pages are not live" do
+      refute draft_page.live?
+    end
+
+    test "draft?" do
+      assert draft_page.draft?
     end
 
     test "live? as_of_version" do
@@ -347,6 +362,35 @@ module Cms
       assert_equal :hidden, page.visibility
       refute page.archived?
       assert page.hidden?
+    end
+  end
+
+
+  class PageAccessiblityTest < ActiveSupport::TestCase
+
+    def public_sections
+      [public_section]
+    end
+
+    def public_section
+      @public_section ||= create(:public_section)
+    end
+
+    def protected_section
+      @protected_section ||= create(:protected_section)
+    end
+
+    def protected_page
+      @protected_page ||= create(:page, parent: protected_section)
+    end
+
+    test "accessible_to_guests?" do
+      public_page = create(:public_page, parent: public_section)
+      assert public_page.accessible_to_guests?(public_sections, public_section)
+    end
+
+    test "pages in restricted sections are not accessible_to_guests?" do
+      refute protected_page.accessible_to_guests?(public_sections, protected_section)
     end
   end
 
@@ -923,4 +967,6 @@ module Cms
       assert @page.reload.connectors.for_page_version(@page.draft.version).empty?, "Verify that all connectors for the latest page are removed."
     end
   end
+
+
 end

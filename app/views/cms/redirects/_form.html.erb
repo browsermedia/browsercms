@@ -1,7 +1,7 @@
-<%= content_for :button_bar, menu_button("Back to Redirects", redirects_path) %>
-
+<% content_for :buttons, 'save_buttons' %>
 <%= simple_form_for(@redirect) do |f| %>
-    <%= f.input :from_path, label: "From" %>
-    <%= f.input :to_path, label: "To" %>
-    <%= f.button :submit, "Save" %>
+    <%= render layout: 'form_with_buttons', locals: {f: f} do %>
+        <%= f.input :from_path, label: "From" %>
+        <%= f.input :to_path, label: "To" %>
+    <% end %>
 <% end %>

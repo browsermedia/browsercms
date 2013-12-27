@@ -18,7 +18,7 @@ When /^I fill in all the deprecated fields$/ do
   fill_in "Content", with: @expect_content = "Expected Content"
   fill_in "Template", with: @expect_template = "Expected Template"
   attach_file "Cover Photo", "test/fixtures/#{@expect_file_name = 'giraffe.jpeg'}"
-  click_button "Save And Publish"
+  click_publish_button
 end
 
 Then /^a new deprecated content block should be created$/ do

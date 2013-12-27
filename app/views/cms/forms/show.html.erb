@@ -1,0 +1,6 @@
+<% content_for :page_buttons do %>
+    <div class="btn-group">
+    <%= link_to("Entries", cms.entries_path(@block), class: "btn btn-small") %>
+    </div>
+<% end %>
+<%= render file: 'cms/content_block/show' %>

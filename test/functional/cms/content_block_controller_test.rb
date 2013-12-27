@@ -68,9 +68,4 @@ class PermissionsForContentBlockControllerTest < ActionController::TestCase
     get :versions, :id => 5
   end
 
-  test "GET usages allows any user" do
-    expect_success
-    get :usages, :id => 5
-  end
-
 end

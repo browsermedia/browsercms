@@ -27,7 +27,7 @@ module MultipleAttachments
     fill_in "Name", with: "Have two attachments"
     attach_file "Photo 1", "test/fixtures/giraffe.jpeg"
     attach_file "Photo 2", "test/fixtures/hurricane.jpeg" if upload_both_files
-    click_button "Save"
+    click_save_button
   end
 end
 World(MultipleAttachments)
@@ -50,7 +50,7 @@ When /^I replace both attachments$/ do
   visit edit_dummy_product_path(@block)
   attach_file "Photo 1", "test/fixtures/multipart/version1.txt"
   attach_file "Photo 2", "test/fixtures/multipart/version2.txt"
-  click_button "Save"
+  click_save_button
 end
 
 Then /^I should see the new attachments when I view the block$/ do

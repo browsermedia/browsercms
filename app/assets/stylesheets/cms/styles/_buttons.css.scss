@@ -224,20 +224,20 @@ input[type="submit"].btn.btn-mini {
         font-size: 1rem;
         vertical-align: top;
 
-  		&:first-child,
-  		&:first-of-type {
+  		&:first-child{
   			@include border-radius(5px 0 0 5px);
   			margin-left: 0;
   		}
-  		&:last-child,
-  		&:last-of-type {
+  		&:last-child {
   			@include border-radius(0 5px 5px 0);
   		}
-  		&:only-child,
-  		&:only-of-type {
+  		&:only-child {
   			@include border-radius(5px);
   		}
   	}
+    .btn-solo:only-of-type {
+        @include border-radius(5px);
+    }
 }
 .btn-group:first-child {
   	*margin-left: 0;

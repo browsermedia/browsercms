@@ -55,7 +55,7 @@ FormBuilder.prototype.confirmDeleteFormField = function() {
 FormBuilder.prototype.editFormField = function() {
   // This is the overall container for the entire field.
   formBuilder.field_being_editted = $(this).parents('.control-group');
-  $('#modal-edit-field').removeData('modal').modal({
+  $('#modal-edit-field').modal({
     show: true,
     remote: $(this).attr('data-edit-path')
   });
@@ -154,6 +154,18 @@ FormBuilder.prototype.displayErrorOnField = function(field, json) {
   input_field.after('<span class="help-inline">' + error_message + '</span>');
 };
 
+// Edit Field should handle Enter by submitting the form via AJAX.
+    // Enter within textareas should still add endlines as normal.
+FormBuilder.prototype.onEnterSubmitFormViaAjax = function() {
+  this.newFormField().on("keypress", function(e) {
+    if (e.which == 13 && e.target.tagName != 'TEXTAREA') {
+      formBuilder.createField();
+      e.preventDefault();
+      $('#modal-edit-field').modal('hide');
+      return false;
+    }
+  });
+};
 // Attaches behavior to the proper element.
 FormBuilder.prototype.setup = function() {
   var select_box = $('.add-new-field');
@@ -163,20 +175,10 @@ FormBuilder.prototype.setup = function() {
     });
 
     this.enableFieldButtons();
-    $("#create_field").on('click', formBuilder.createField);
     $("#delete_field").on('click', formBuilder.deleteFormField);
 
-    // Edit Field should handle Enter by submitting the form via AJAX.
-    // Enter within textareas should still add endlines as normal.
-    $('#modal-edit-field').on('shown', function() {
-      formBuilder.newFormField().on("keypress", function(e) {
-        if (e.which == 13 && e.target.tagName != 'TEXTAREA') {
-          formBuilder.createField();
-          e.preventDefault();
-          $('#modal-edit-field').modal('hide');
-          return false;
-        }
-      });
+    $('#modal-edit-field').on('hidden.bs.modal', function(e) {
+      $(this).removeData('bs.modal');
     });
 
     // Allow fields to be sorted.

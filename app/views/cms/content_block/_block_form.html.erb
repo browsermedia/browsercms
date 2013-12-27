@@ -1,0 +1,15 @@
+<%= content_block_form_for(@block) do |f| %>
+    <%= page_title_with_buttons f %>
+    <%= render 'form_errors', form: f %>
+    <%= render 'exception', :object => @exception if @exception %>
+    <%= render :partial => 'version_conflict_error', :locals => {:other_version => @other_version, :your_version => @block} if @other_version %>
+    <%= render 'hidden_fields', f: f %>
+    <div class="padded row-fluid">
+      <div class="span8 main-content">
+        <%= render block_form, f: f %>
+      </div>
+      <%= render partial: 'sidebar', layout: 'sidebar_layout' unless @block.new_record? %>
+    </div>
+    <%= render :partial => "version_conflict_diff", :locals => {:other_version => @other_version, :your_version => @block} if @other_version %>
+    <%= bottom_buttons f %>
+<% end %>

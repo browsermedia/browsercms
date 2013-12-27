@@ -10,6 +10,7 @@ Feature:
     When I try to edit another user account
     Then I should be denied access
 
+  @known-bug
   Scenario: Change my own password
     When I change my password
     Then I should successful

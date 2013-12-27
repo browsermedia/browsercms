@@ -4,9 +4,8 @@ When /^I delete that portlet$/ do
   page.driver.delete "/cms/portlets/#{@subject.id}"
 end
 
-# Why oh why does path lookup with engines not work (i.e. want to say portlet_path(@subject))
 When /^I view that portlet$/ do
-  visit "/cms/portlets/#{@subject.id}"
+  visit cms.portlet_path(@subject)# "/cms/portlets/#{@subject.id}"
 end
 
 When /^I edit that portlet$/ do
@@ -101,5 +100,5 @@ Then /^the page should show content but not the error$/ do
   refute page.has_content?('Exception'), "Exception should not appear on the page"
   refute page.has_content?('Error'), "The word 'Error' should not appear on the page"
   assert page.has_content?('hello'), "Should see other content"
-  should_see_a_page_title_and_header(most_recently_created_page.title)
+  should_see_a_page_named(most_recently_created_page.title)
 end

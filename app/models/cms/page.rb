@@ -60,7 +60,7 @@ class Cms::Page < ActiveRecord::Base
       super + [:visibility, :publish_on_save]
     end
   end
-  # currently_connected_to tightens the scope of connected_to by restricting to the 
+  # currently_connected_to tightens the scope of connected_to by restricting to the
   # results to matches on current versions of pages only.  This renders obj versions
   # useless, as the older objects will very likely have older versions of pages and
   # thus return no results.
@@ -427,4 +427,5 @@ class Cms::Page < ActiveRecord::Base
       self.hidden = true
     end
   end
+
 end

@@ -2,8 +2,7 @@
   <%= content %>
   <%= image_tag "cms/plus.png",
                 :class => 'cms-add-content',
-                :data => {:remote => cms.new_page_component_path(:connect_to_page_id => @page, :connect_to_container => name),
-                          :insert_existing_content_path => cms.new_connector_path(:page_id => @page, :container => name)}
+                :data => {:remote => cms.new_page_component_path(:connect_to_page_id => @page, :connect_to_container => name)}
   %>
 </div>
 
