@@ -8,6 +8,8 @@ module Cms
     after_filter :update_flash, :only => [:update, :create]
 
     def index
+      @have_external_users = Cms::ExternalUser.count > 0
+
       query, conditions = [], []
 
       unless params[:show_expired]

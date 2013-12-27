@@ -2,6 +2,7 @@ require "minitest_helper"
 
 describe Cms::User do
 
+  let(:user){build(:user)}
   describe '.change_password' do
     it "should change" do
       user = create(:user, login: 'testuser')
@@ -10,6 +11,11 @@ describe Cms::User do
     end
   end
 
+  describe '#source' do
+    it "should return hardcoded value" do
+      user.source.must_equal "CMS Users"
+    end
+  end
   describe '#password_confirmation' do
     it 'should exist' do
       user = Cms::User.new()

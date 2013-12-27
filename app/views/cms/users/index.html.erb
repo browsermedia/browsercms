@@ -10,6 +10,9 @@
       <th>Groups</th>
       <th>Expiration</th>
       <th>Activation</th>
+      <% if @have_external_users %>
+      <th>Source</th>
+      <% end %>
     </tr>
     </thead>
     <% @users.each do |user| %>
@@ -37,6 +40,9 @@
                 <%= link_to("<span>Enable</span>".html_safe, [:enable, user.becomes(Cms::User)], :class => "http_put sm_button") %>
             <% end %>
           </td>
+          <% if @have_external_users %>
+          <td><%= user.source %></td>
+          <% end %>
         </tr>
     <% end %>
   </table>

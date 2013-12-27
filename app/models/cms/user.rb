@@ -23,5 +23,12 @@ module Cms
     def change_password(new_password)
       update(:password => new_password, :password_confirmation => new_password)
     end
+
+    # By default, Users are coming from the the CMS database (cms_users). All Cms::User class have have the same source.
+    #
+    # @override #source The otherwise persistent attribute.
+    def source
+      "CMS Users"
+    end
   end
 end

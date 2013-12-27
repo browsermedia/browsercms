@@ -5,7 +5,7 @@ module Cms
 
       def authenticate!
         if(authentication_hash[:login] == password && password == 'test')
-          user = Cms::ExternalUser.authenticate(authentication_hash[:login], 'test_password', {first_name: "Test", last_name: "User"})
+          user = Cms::ExternalUser.authenticate(authentication_hash[:login], 'Test Password', {first_name: "Test", last_name: "User"})
           user.authorize('cms-admin', 'content-editor')
           success!(user)
         else
