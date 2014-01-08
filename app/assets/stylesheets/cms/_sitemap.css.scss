@@ -1,16 +1,36 @@
 /* SITEMAP TABLE */
-.sitemap {
-	tbody {
-		tr {
-			&:first-child {
-				td {
-					@include border-radius(5px 5px 0 0);
-				}
-			}
+#sitemap {
+	display: table;
+	width: 100%;
+	border: 1px solid rgba(black,0.1);
+	@include border-radius(5px);
+	@include rem(margin-bottom,1.5rem);
+}
+
+.nav-list {
+	width: 100%;
+	list-style-type: none;
+	display: block;
+	position: relative;
+	margin: 0;
+	padding: 0;
+
+	.nav-list-item {
+		list-style-type: none;
+		margin: 0;
+		padding: 0;
+
+		&:before {
+			display: none;
 		}
 
-		td {
+		.nav-list-span {
+			display: block;
+			width: 100%;
 			position: relative;
+			border-bottom: 1px solid rgba(black,0.1);
+			@include rem(padding,0.7rem);
+			@include rem(font-size, 1.1rem);
 
 			&:hover {
 				background: rgba($gray,0.175);
@@ -33,38 +53,58 @@
 					}
 				}
 			}
+
+			.type-icon {
+				@include rem(font-size,0.85rem);
+				vertical-align: top;
+				margin-right: 8px;
+				@include opacity(0.8);
+				margin-top: 1px;
+			}
+
+			&.level-one {
+			}
+			&.level-two {
+				padding-left: 30px;
+			}
+			&.level-three {
+				padding-left: 60px;
+			}
+			&.level-four {
+				padding-left: 90px;
+			}
+			&.level-five {
+				padding-left: 120px;
+			}
+			&.level-six {
+				padding-left: 150px;
+			}
+			&.level-seven {
+				padding-left: 180px;
+			}
+			&.level-eight {
+				padding-left: 210px;
+			}
+			&.level-nine {
+				padding-left: 240px;
+			}
+			&.level-ten {
+				padding-left: 270px;
+			}
+
+			&.last-item {
+				border-bottom: 0;
+			}
 		}
-	}
-
-	.level-one {
-	}
-	.level-two {
-		padding-left: 30px;
-	}
-	.level-three {
-		padding-left: 60px;
-	}
-	.level-four {
-		padding-left: 90px;
-	}
-	.level-five {
-		padding-left: 120px;
-	}
-
-	.type-icon {
-		@include rem(font-size,0.85rem);
-		vertical-align: top;
-		margin-right: 8px;
-		@include opacity(0.8);
-		margin-top: 1px;
 	}
 }
 
 .edit-group {
 	height: 70%;
 	position: absolute;
-	top: 15%;
-	left: 45%;
+	top: 0;
+	//left: 45%;
+	right: 15%;
 	@include opacity(0);
 	@include transition(0.15s);
 	list-style-type: none;
@@ -116,8 +156,8 @@
 		}
 	}
 
-	td:hover &,
-	td.active & {
+	.nav-list-span:hover &,
+	.nav-list-span:active & {
 		@include opacity(1);
 	}
 }

@@ -6,4 +6,52 @@
 		@include rem(margin-top,0.75rem);
 		margin-left: 25px;
 	}
+
+
+
+	label {
+		width: 23.404255319148934%;
+		*width: 23.351063829787233%;
+		margin-left: 0;
+		display: block;
+		float: left;
+
+		& + textarea {
+			width: 100%;
+			float: none;
+		}
+
+		&.checkbox {
+			width: 100%;
+			float: none;
+		}
+	}
+	input[type=text],
+	select {
+		display: block;
+		float: left;
+		width: 74.46808510638297%;
+		*width: 74.41489361702126%;
+		margin-left: 2.127659574468085%;
+		*margin-left: 2.074468085106383%;
+
+		&[disabled] {
+			display: block;
+			float: left;
+			width: 65.95744680851064%;
+			*width: 65.90425531914893%;
+			margin-left: 2.127659574468085%;
+			*margin-left: 2.074468085106383%;
+		}
+
+		&.input-block-level {
+			width: 100%;
+			margin-left: 0;
+			float: none;
+		}
+	}
+	textarea {
+		width: 100%;
+		float: none;
+	}
 }
