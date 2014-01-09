@@ -131,7 +131,7 @@ module Cms
           
           item = {}
           item[:id] = "#{section_node.node_type.gsub("::","_").underscore}_#{section_node.node_id}"
-          
+
           # If we are showing a section item, we want to use the path for the first page
           page_or_link = section_node.section? ? node.first_page_or_link : node
           if section_node.section? && page_or_link
@@ -139,7 +139,6 @@ module Cms
           else
             item[:selected] = true if selected_page == page_or_link
           end
-         
           item[:url] = page_or_link.try(:path) || '#'
           item[:name] = node.name
           item[:target] = "_blank" if page_or_link.respond_to?(:new_window?) && page_or_link.new_window?
@@ -154,7 +153,6 @@ module Cms
              !node.visible_child_nodes.empty?
             item[:children] = fn.call(node.visible_child_nodes, current_depth + 1)
           end
-          
           item
         end
       end

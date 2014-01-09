@@ -68,6 +68,12 @@ module Cms
       def default()
         Cms::ContentType.new(name: DEFAULT_CONTENT_TYPE_NAME)
       end
+
+      # Returns only user generated Content Blocks
+      def user_generated_connectables()
+        available.select { |content_type| !content_type.name.starts_with?("Cms::") }
+      end
+
     end
 
 

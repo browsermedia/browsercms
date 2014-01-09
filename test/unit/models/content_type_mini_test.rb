@@ -99,6 +99,19 @@ describe Cms::ContentType do
     end
   end
 
+  describe '.user_generated_connectables' do
+    it "should return only user generated content types" do
+      user_gen = Cms::ContentType.user_generated_connectables
+      user_gen.collect { |ct| ct.name }.wont_include("Cms::HtmlBlock")
+      user_gen.collect { |ct| ct.name }.wont_include("Cms::Category")
+      user_gen.collect { |ct| ct.name }.wont_include("Cms::CategoryType")
+      user_gen.collect { |ct| ct.name }.wont_include("Cms::Tag")
+      user_gen.collect { |ct| ct.name }.wont_include("Cms::ImageBlock")
+      user_gen.collect { |ct| ct.name }.wont_include("Cms::FileBlock")
+      user_gen.collect { |ct| ct.name }.wont_include("Cms::Portlet")
+    end
+  end
+
   describe '.available' do
 
     it "should include categories" do

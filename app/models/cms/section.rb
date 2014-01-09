@@ -168,7 +168,8 @@ module Cms
 
     #The first page that is a decendent of this section
     def first_page_or_link
-      section_node = child_nodes.of_type([LINK, PAGE]).fetch_nodes.in_order.first
+      types=Cms::ContentType.user_generated_connectables.collect(&:name).push(LINK).push(PAGE)
+      section_node = child_nodes.of_type(types).fetch_nodes.in_order.first
       return section_node.node if section_node
       sections.each do |s|
         node = s.first_page_or_link
