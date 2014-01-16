@@ -51,10 +51,14 @@ Feature: Manage Content Blocks
     When I view a page that lists products
     Then I should be able to click on a link to see a product
 
-  # Need to throw the right error page
-  @known-bug
+  Scenario: View Product Page
+    Given I am a guest
+    And a product with a slug "about-us" exists
+    When I visit "/products/about-us"
+    Then I should see that product's page
+
   Scenario: Nonexistant Product
-     Given no product with a slug "/some-path" exists
+    Given no product with a slug "some-path" exists
     And I am not logged in
     When I visit "/products/some-path"
     Then I should see the CMS 404 page

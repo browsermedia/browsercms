@@ -53,9 +53,21 @@ Then /^a new product should be created$/ do
   assert_equal 1, Dummy::Product.count
 end
 
+EXPECTED_PRODUCT_NAME = "About Us"
+
+Given(/^a product with a slug "(.*?)" exists$/) do |slug|
+  FactoryGirl.create(:product, name: EXPECTED_PRODUCT_NAME, slug: slug)
+  assert_not_nil Dummy::Product.with_slug(slug)
+end
+
 Given /^no product with a slug "([^"]*)" exists$/ do |slug|
   assert_nil Dummy::Product.with_slug(slug)
 end
 When /^I view products in the content library$/ do
   visit dummy_products_path
+end
+
+Then /^I should see that product's page$/ do
+  should_be_successful
+  should_see_a_page_titled EXPECTED_PRODUCT_NAME
 end

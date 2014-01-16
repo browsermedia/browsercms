@@ -31,11 +31,10 @@
 * Fix remaining critical bugs before releasing alpha
 
 cucumber features/commands/generate_module.feature:10 # Scenario: Create a BrowserCMS module
-cucumber features/content_blocks/manage_custom_blocks.feature:56 # Scenario: Nonexistant Product
 cucumber features/content_blocks/multiple_attachments.feature:23 # Scenario: A Guest accesses a public attachment
 cucumber features/content_blocks/multiple_attachments.feature:31 # Scenario: A Guest accesses a protected attachment
 cucumber features/content_pages.feature:25 # Scenario: View Older Versions
-cucumber features/portlets/portlets.feature:98 # Scenario: Portlet errors should not blow up the page
+cucumber features/portlets/portlets.feature:93 # Scenario: Portlet errors should not blow up the page
 
 ### Open Issues
 
