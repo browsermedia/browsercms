@@ -78,6 +78,10 @@ module Cms
         available.select { |content_type| !content_type.name.starts_with?("Cms::") }
       end
 
+      # Return content types that can be accessed as pages.
+      def addressable()
+        available.select { |content_type| content_type.model_class.addressable? }
+      end
     end
 
 
@@ -122,7 +126,7 @@ module Cms
 
     # Returns the partial used to render the form fields for a given block.
     def form
-     model_class.respond_to?(:form) ? model_class.form : "#{name.underscore.pluralize}/form"
+      model_class.respond_to?(:form) ? model_class.form : "#{name.underscore.pluralize}/form"
     end
 
     def display_name

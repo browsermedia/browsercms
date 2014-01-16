@@ -99,6 +99,14 @@ describe Cms::ContentType do
     end
   end
 
+  describe '.addressable' do
+    it "should return only content types that can act as pages" do
+      names = Cms::ContentType.addressable.map {|c| c.name}
+      names.must_include("Dummy::Product")
+      names.wont_include("Cms::HtmlBlock")
+    end
+  end
+
   describe '.user_generated_connectables' do
     it "should return only user generated content types" do
       user_gen = Cms::ContentType.user_generated_connectables
