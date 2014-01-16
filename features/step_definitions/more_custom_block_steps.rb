@@ -71,3 +71,16 @@ Then /^I should see that product's page$/ do
   should_be_successful
   should_see_a_page_titled EXPECTED_PRODUCT_NAME
 end
+
+Given(/^a product exists with two versions$/) do
+  @product = FactoryGirl.create(:product, name: "Version 1")
+  @product.name = "Version 2"
+  @product.save!
+  assert_equal 2, @product.versions.size
+end
+
+Then(/^I should be able to see the version history for that product$/) do
+  visit dummy_product_path(@product)
+  click_on "Versions"
+  should_see_a_page_titled "Versions: '#{@product.name}'"
+end

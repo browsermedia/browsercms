@@ -1,4 +1,3 @@
-
 Feature: Manage Content Blocks
   In BrowserCMS projects developers should be able to generate and manage content blocks via the UI.
   This blocks will be generated as Rails resources, with a controller and views.
@@ -63,8 +62,9 @@ Feature: Manage Content Blocks
     When I visit "/products/some-path"
     Then I should see the CMS 404 page
 
-
-
+  Scenario: Looking at older versions
+    Given a product exists with two versions
+    Then I should be able to see the version history for that product
 
 
 

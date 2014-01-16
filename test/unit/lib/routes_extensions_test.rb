@@ -24,41 +24,6 @@ class RoutesTest < ActiveSupport::TestCase
     assert_equal "Kindness", :kindnesses.to_s.classify, "routes will pass 'plural' symbols to 'content_block', rather than single"    
   end
 
-
-  # These tests could be better, but I'm not entirely sure how to mock test syntax that looks like:
-  #
-  # resources content_block_name do
-  #   member do
-  #     put :publish if content_block.publishable?
-  #     get :versions if content_block.versioned?
-  #   end
-  # end
-  #
-  # Which is what 'content_blocks' is currently doing.
-  test "behavior of 'content_blocks' route generator" do
-    rb = RouteBuilder.new
-
-    # Expect
-    rb.expects(:resources).with(:bears)
-    rb.expects(:get).with('/bears/:id/version/:version', {:to => 'bears#version', :as => 'version_bear'})
-    rb.expects(:put)
-    rb.content_blocks :bears
-
-    # Verifies the exact messages being passed to the route generator
-  end
-
-  # Could be better. See previous method.
-  test "model names with s at the end behave identically (since content_blocks expects plural symbols)" do
-    rb = RouteBuilder.new
-    rb.expects(:resources).with(:kindnesses)
-    rb.expects(:get).with('/kindnesses/:id/version/:version', {:to => 'kindnesses#version', :as => 'version_kindness'})
-    rb.expects(:put)
-
-    rb.content_blocks :kindnesses
-
-    # Verifies the exact messages being passed to the route generator
-  end
-
 end
 
 module BcmsZoo

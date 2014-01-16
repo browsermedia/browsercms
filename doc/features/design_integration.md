@@ -32,7 +32,7 @@
 
 ### Open Issues
 
-* [BUG] (Critical) Versions for project specific content types don't work. (Dummy::Product)[Add a scenario]
+* Unit tests are broken.
 * [BUG] (Critical) Cannot click on 'Browse' for products. (Can tab to select though)
 
 ### Open (but not critical) issues

@@ -11,18 +11,16 @@ module Cms::RouteExtensions
     resources content_block_name do
       member do
         put :publish if model_class.publishable?
-        get :versions if model_class.versioned?
+        if model_class.versioned?
+          get :versions
+          get 'version/:version', to: "#{content_block_name}#version", as: 'version'
+          put 'revert_to/:version', to: "#{content_block_name}#revert_to", as: 'revert'
+        end
       end
       collection do
         put :update, to: "#{content_block_name}#bulk_update"
       end
     end
-    if model_class.versioned?
-      singular_name = content_block_name.to_s.singularize
-      get "/#{content_block_name}/:id/version/:version", :to => "#{content_block_name}#version", :as => "version_#{singular_name}"
-      put "/#{content_block_name}/:id/revert_to/:version", :to => "#{content_block_name}#revert_to", :as => "revert_#{singular_name}"
-    end
-
   end
 
   # Adds the routes required for BrowserCMS to function to a routes.rb file. Should be the last route in the file, as
@@ -45,7 +43,7 @@ module Cms::RouteExtensions
                class_name: 'Cms::User',
                path: '',
                skip: :password,
-               path_names: { sign_in: 'login'},
+               path_names: {sign_in: 'login'},
                controllers: {sessions: 'cms/sites/sessions'}
 
     devise_scope :cms_user do
