@@ -10,15 +10,16 @@ Feature:
     When I try to edit another user account
     Then I should be denied access
 
-  @known-bug
   Scenario: Change my own password
     When I change my password
-    Then I should successful
+    Then I should be successful
 
   Scenario: Change other users password
     When I try to change another user's password
     Then I should be denied access
 
-
-
+  Scenario: Login into public site
+    Given I am not logged in
+    When I login to the public site
+    Then I should be successful
 

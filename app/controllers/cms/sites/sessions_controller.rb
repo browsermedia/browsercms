@@ -5,6 +5,7 @@ module Cms
     class SessionsController < Devise::SessionsController
       include Cms::ContentPage
       helper AuthenticationHelper
+      helper UiElementsHelper
 
       template :default
 

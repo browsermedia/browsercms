@@ -30,12 +30,10 @@
 
 ## Tasks
 
-* Squash/merge all UI design changes.
-* Fix remaining critical bugs.
+* Fix remaining critical bugs before releasing alpha
 
 ### Open Issues
 
-* [BUG] (Critical) Changing passwords doesn't work
 * [BUG] (Critical) List portlets includes portlets that have been deleted.
 * [BUG] (Critical) Versions for project specific content types don't work. (Dummy::Product)
 * [BUG] (Critical) Cannot reuse Products on pages (solution might to to just disallow?)
@@ -53,7 +51,6 @@
 * [BUG] View Image is huge rather than natural size.
 * [FEATURE] Sitemap - Implies you can remove sections with content. (Throws error when it fails)
 * [MINOR] Groups should be listed within a cell rather than wrapping.
-* [BUG] New Users -Can save users without emails, with duplicate emails and without passwords.
 * [PERFORMANCE] Google Fonts - Can we include them in the project so it works locally with no internet access.
 
 ## Implied Features by Design

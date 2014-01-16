@@ -4,7 +4,7 @@ module Cms
 
     check_permissions :administrate, :except => [:change_password, :update_password]
     before_filter :only_self_or_administrator, :only => [:change_password, :update_password]
-    after_filter :update_flash, :only => [:update, :create]
+    after_filter :update_flash, :only => [:update]
 
 
     def index
@@ -35,12 +35,26 @@ module Cms
       @users = PersistentUser.where(conditions).paginate(page: page_num, per_page: per_page).includes(:user_group_memberships).references(:user_group_memberships).order("first_name, last_name, email")
     end
 
+    def new
+      @user = Cms::User.new
+    end
+
+    def create
+      @user = Cms::User.new(cms_user_params)
+      if @user.save
+        flash[:notice] = "User '#{@user.login}' was created"
+        redirect_to users_path
+      else
+        render :action => 'new'
+      end
+    end
+
     def change_password
       user
     end
 
     def update_password
-      if user.update(resource_params)
+      if user.update(cms_user_params)
         flash[:notice] = "Password for '#{user.login}' was changed"
         redirect_to(current_user.able_to?(:administrate) ? users_path : user_path(user))
       else
@@ -64,6 +78,11 @@ module Cms
     end
 
     protected
+
+    def cms_user_params
+      params.require("user").permit(Cms::User.permitted_params)
+    end
+
     def after_create_url
       users_path
     end

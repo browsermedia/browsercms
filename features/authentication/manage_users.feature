@@ -77,7 +77,6 @@ Feature: Manage Users
       | Mister Blank |
 
   # Change password is broken.
-  @known-bug
   Scenario: Change Password
     Given the following content editor exists:
       | username | password | first_name | last_name |

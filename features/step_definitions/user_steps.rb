@@ -101,7 +101,7 @@ When /^I change my password$/ do
   click_save_button
 end
 
-Then /^I should successful$/ do
+Then /^I should be successful$/ do
   should_be_successful
 end
 
@@ -160,4 +160,42 @@ When /^I look at expired users$/ do
   visit cms.users_path
   check "show_expired"
   click_user_search
+end
+
+When /^I login to the public site$/ do
+  login_as(current_user.login, current_user.password, "/login")
+end
+
+When(/^I login in as an external user (?:again|for the first time)$/) do
+  login_as_external_user
+end
+
+When /^it should create an external user record in the database$/ do
+  should_be_exactly_one_external_user
+end
+
+Given(/^I have already logged in once as an external user$/) do
+  login_as_external_user
+end
+
+Then(/^it should not create any new user records in the database$/) do
+  should_be_exactly_one_external_user
+end
+
+Given(/^an external user exists$/) do
+  login_as_external_user
+end
+
+When(/^I edit that external user$/) do
+  visit cms.users_path
+  click_on "Test User"
+  should_be_successful
+end
+
+Then(/^I should be able to change some fields$/) do
+  fill_in "First Name", with: "Tester"
+  click_save_button
+  should_be_successful
+  should_see_a_page_titled "Users"
+  assert page.has_content?("Tester User")
 end

@@ -12,6 +12,14 @@ module Cms
       click_button 'Sign in'
     end
 
+    def login_as_external_user
+      login_as(Cms::Authentication::TestPasswordStrategy::EXPECTED_LOGIN, Cms::Authentication::TestPasswordStrategy::EXPECTED_PASSWORD)
+    end
+
+    def should_be_exactly_one_external_user
+      assert_equal 1, Cms::ExternalUser.count
+    end
+
     def logout
       visit cms.logout_path
     end
