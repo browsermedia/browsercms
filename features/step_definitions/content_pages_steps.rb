@@ -187,7 +187,7 @@ Given /^a page exists with two versions$/ do
 end
 
 When /^I view version (\d+) of that page$/ do |version|
-  visit cms.version_cms_page_path(id: @content_page.id, version: version)
+  visit cms.version_page_path(id: @content_page.id, version: version)
 end
 
 Then /^the toolbar should display a revert to button$/ do

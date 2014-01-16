@@ -46,7 +46,7 @@ module PageInspector
   end
 
   def should_be_successful
-    assert_equal 200, page.status_code
+    assert_equal 200, page.status_code, "While on page #{current_url}"
   end
 
 end

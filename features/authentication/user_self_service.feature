@@ -13,6 +13,7 @@ Feature:
   Scenario: Change my own password
     When I change my password
     Then I should be successful
+    And I should be on the homepage
 
   Scenario: Change other users password
     When I try to change another user's password

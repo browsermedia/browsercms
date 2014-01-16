@@ -83,8 +83,7 @@ Feature: Manage Users
       | testuser | abc12345   | Mr         | Blank     |
     When I request /cms/users
     And I click Change Password for user "testuser"
-    And I fill in "Password" with "different"
-    And I fill in "Confirm Password" with "different"
+    And I fill in passwords as "different"
     And I click the Save button
     Then I should return to List Users
     When I login as:

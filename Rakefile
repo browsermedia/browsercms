@@ -44,24 +44,24 @@ end
 require 'cucumber'
 require 'cucumber/rake/task'
 
-Cucumber::Rake::Task.new(:features => ['project:ensure_db_exists', 'app:test:prepare']) do |t|
-  t.cucumber_opts = "launch_on_failure=false features --format progress"
+Cucumber::Rake::Task.new(:features, "Run all (fast) scenarios without known bugs or missing features") do |t|
+  t.cucumber_opts = "launch_on_failure=false features --format progress --tags ~@cli -t ~@missing-feature -t ~@known-bug"
 end
 
-Cucumber::Rake::Task.new('features:fast' => ['project:ensure_db_exists', 'app:test:prepare']) do |t|
-  t.cucumber_opts = "launch_on_failure=false features --format progress --tags ~@cli"
+Cucumber::Rake::Task.new('features:all', 'Runs all scenarios (including slow/missing/etc') do |t|
+  t.cucumber_opts = "launch_on_failure=false features --format progress"
 end
 
 Cucumber::Rake::Task.new('features:cli' => ['project:ensure_db_exists', 'app:test:prepare']) do |t|
   t.cucumber_opts = "features --format progress --tags @cli"
 end
 
-Cucumber::Rake::Task.new('features:wip', 'Run all (fast) scenarios without known bugs.') do |t|
-  t.cucumber_opts = "features --format progress --tags ~@cli -t ~@known-bug"
+Cucumber::Rake::Task.new('features:wip', 'Run all (fast) scenarios without known bugs/features.') do |t|
+  t.cucumber_opts = "features --format progress --tags ~@cli -t ~@known-bug -t ~@missing-feature"
 end
 
-Cucumber::Rake::Task.new('features:wip:all', 'Run all scenarios (including slow) without known bugs.') do |t|
-  t.cucumber_opts = "features --format progress -t ~@known-bug"
+Cucumber::Rake::Task.new('features:wip:all', 'Run all scenarios (including slow) without known bugs/missing features.') do |t|
+  t.cucumber_opts = "features --format progress -t ~@known-bug -t ~@missing-feature"
 end
 
 Cucumber::Rake::Task.new('features:known-bugs', 'Run all scenarios with known bugs.') do |t|

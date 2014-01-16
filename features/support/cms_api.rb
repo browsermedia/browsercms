@@ -12,6 +12,15 @@ module Cms
       click_button 'Sign in'
     end
 
+    def fill_in_password(pw)
+      fill_in "user_password", with: pw
+      fill_in "user_password_confirmation", with: pw
+    end
+
+    def acceptable_password
+      "atleast8chars"
+    end
+
     def login_as_external_user
       login_as(Cms::Authentication::TestPasswordStrategy::EXPECTED_LOGIN, Cms::Authentication::TestPasswordStrategy::EXPECTED_PASSWORD)
     end

@@ -56,7 +56,7 @@ module Cms
     def update_password
       if user.update(cms_user_params)
         flash[:notice] = "Password for '#{user.login}' was changed"
-        redirect_to(current_user.able_to?(:administrate) ? users_path : user_path(user))
+        redirect_to(current_user.able_to?(:administrate) ? users_path : "/")
       else
         render :action => 'change_password'
       end

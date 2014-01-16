@@ -31,17 +31,17 @@
 * Fix remaining critical bugs before releasing alpha
 
 cucumber features/commands/generate_module.feature:10 # Scenario: Create a BrowserCMS module
-cucumber features/content_pages.feature:25 # Scenario: View Older Versions
 cucumber features/portlets/portlets.feature:93 # Scenario: Portlet errors should not blow up the page
 
 ### Open Issues
 
-* [BUG] (Critical) Versions for project specific content types don't work. (Dummy::Product)
+* [BUG] (Critical) Versions for project specific content types don't work. (Dummy::Product)[Add a scenario]
 * [BUG] (Critical) Cannot reuse Products on pages (solution might to to just disallow?)
 * [BUG] (Critical) Cannot click on 'Browse' for products. (Can tab to select though)
 
 ### Open (but not critical) issues
 
+* [BUG] When viewing older versions of page which had a mobile_ready template, it throws an error.
 * [DOCUMENT or IMPROVE] SimpleForms: Label: false should always be paired with: input_html: {class: 'input-block-level'}
 * [BUG] Edit content button should float right and over
 * [BUG] Multiple attachments doesn't work (See Catalog)

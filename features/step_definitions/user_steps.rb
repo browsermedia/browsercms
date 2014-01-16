@@ -92,12 +92,9 @@ When /^there is another user$/ do
   @another_user = create(:registered_user)
 end
 
-
-
 When /^I change my password$/ do
   visit cms.change_password_user_path(current_user)
-  fill_in "Password", with: "new"
-  fill_in "Confirm Password", with: "new"
+  fill_in_password(acceptable_password)
   click_save_button
 end
 
@@ -130,8 +127,7 @@ When /^fill valid fields for a new user named "([^"]*)"$/ do |username|
   fill_in "Email", :with => "#{username}@example.com"
   fill_in "First Name", :with => "Mr."
   fill_in "Last Name", :with => "Blank"
-  fill_in "Password", :with => "abc12345"
-  fill_in "Confirm Password", :with => "abc12345"
+  fill_in_password(acceptable_password)
   click_save_button
 end
 
@@ -198,4 +194,8 @@ Then(/^I should be able to change some fields$/) do
   should_be_successful
   should_see_a_page_titled "Users"
   assert page.has_content?("Tester User")
+end
+
+When /^I fill in passwords as "([^"]*)"$/ do |new_pw|
+  fill_in_password(new_pw)
 end
