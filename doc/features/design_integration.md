@@ -1,8 +1,6 @@
 # Design Integration
 
-## Latest Notes
-
-### [Ask Kyle]
+## [Ask Kyle]
 
 * Fonts for Dashboard table headers/menus are just less bold than in design.
 * Icons for:
@@ -22,7 +20,7 @@
     - Photo 2 is wrapping unnecessarily (Does it without photo 1)
     - Slug path needs styling.
 
-### IA Questions
+## IA Questions
 
 * What Label for first element under Assets? (Assets? Asset library). Or just make Text first.
 * Selecting a section always toggles. Might want to select an open section to add content to it, but not close it.
@@ -32,11 +30,20 @@
 
 * Fix remaining critical bugs before releasing alpha
 
+cucumber features/commands/generate_module.feature:10 # Scenario: Create a BrowserCMS module
+cucumber features/content_blocks/manage_custom_blocks.feature:56 # Scenario: Nonexistant Product
+cucumber features/content_blocks/multiple_attachments.feature:23 # Scenario: A Guest accesses a public attachment
+cucumber features/content_blocks/multiple_attachments.feature:31 # Scenario: A Guest accesses a protected attachment
+cucumber features/content_pages.feature:25 # Scenario: View Older Versions
+cucumber features/portlets/portlets.feature:98 # Scenario: Portlet errors should not blow up the page
+
 ### Open Issues
 
 * [BUG] (Critical) List portlets includes portlets that have been deleted.
 * [BUG] (Critical) Versions for project specific content types don't work. (Dummy::Product)
 * [BUG] (Critical) Cannot reuse Products on pages (solution might to to just disallow?)
+
+### Open (but not critical) issues
 
 * [DOCUMENT or IMPROVE] SimpleForms: Label: false should always be paired with: input_html: {class: 'input-block-level'}
 * [BUG] Edit content button should float right and over
@@ -46,6 +53,7 @@
 * [BUG] Sitemap Performance - Closing large section is slow (Products)
 * [BUG] Sitemap Performance - Need to filter (or condense multiple Products into a single product).
 * [BUG] Editing a block on a page, then canceling, redirects to /cms/content/1/edit rather than /cms/content/1
+* [BUG] Clicking 'Back' if you have submitted a form where validation fails goes to the wrong page.
 * [BUG] Optimistic locking for pages/blocks doesn't work.
 * [BUG] Dashboard is not correctly displaying draft pages.
 * [BUG] View Image is huge rather than natural size.

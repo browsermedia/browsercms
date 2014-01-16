@@ -33,8 +33,6 @@ Feature: Portlets
     Then I should see the following content:
       | Hello World |
 
-  # List Portlets doesn't filter out undeleted portlets.
-  @known-bug
   Scenario: Deleting a portlet
     Given there is a "Portlet" with:
       | name          | template    |
@@ -43,9 +41,6 @@ Feature: Portlets
     And I request /cms/content_library
     And choose to view "Portlet" from the main menu
     And I should not see "A new portlet"
-    When I view that portlet
-    Then I should see the following content:
-      | has been deleted |
 
   Scenario: Editing a portlet
     Given there is a "Portlet" with:

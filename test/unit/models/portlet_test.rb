@@ -72,6 +72,11 @@ class PortletTest < ActiveSupport::TestCase
     assert_equal true, @portlet.deleted?
   end
 
+  test "deleted portlets should not appear in lists" do
+    @portlet.destroy
+    assert_equal 0, Cms::Portlet.all.size
+  end
+
   test "update_attributes" do
     @portlet.update_attributes(:b => "whatever")
     assert_equal "whatever", @portlet.b
