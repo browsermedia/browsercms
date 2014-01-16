@@ -30,13 +30,9 @@
 
 * Fix remaining critical bugs before releasing alpha
 
-cucumber features/commands/generate_module.feature:10 # Scenario: Create a BrowserCMS module
-cucumber features/portlets/portlets.feature:93 # Scenario: Portlet errors should not blow up the page
-
 ### Open Issues
 
 * [BUG] (Critical) Versions for project specific content types don't work. (Dummy::Product)[Add a scenario]
-* [BUG] (Critical) Cannot reuse Products on pages (solution might to to just disallow?)
 * [BUG] (Critical) Cannot click on 'Browse' for products. (Can tab to select though)
 
 ### Open (but not critical) issues

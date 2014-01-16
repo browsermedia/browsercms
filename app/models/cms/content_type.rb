@@ -166,7 +166,8 @@ module Cms
 
     # Used in ERB for pathing
     def content_block_type
-      name.demodulize.pluralize.underscore
+      n = name.starts_with?("Cms::") ? name.demodulize : name
+      n.pluralize.underscore
     end
 
     # This is used for situations where you want different to use a type for the list page

@@ -65,8 +65,17 @@ module Cms
       assert_equal Dummy::Product, Cms::ContentType.find_by_key('Dummy::Product').model_class
     end
 
+    test "#find_by_key finds namespace models by underscorized keys" do
+      assert_equal Dummy::Product, Cms::ContentType.find_by_key('dummy/products').model_class
+    end
+
     test "#find_by_key using key" do
       assert_equal Cms::HtmlBlock, Cms::ContentType.find_by_key('html_block').model_class
+    end
+
+    test "#content_block_type" do
+      assert_equal "html_blocks", Cms::HtmlBlock.content_type.content_block_type
+      assert_equal "dummy/products", Dummy::Product.content_type.content_block_type
     end
 
     test "#display_name for blocks from modules" do
