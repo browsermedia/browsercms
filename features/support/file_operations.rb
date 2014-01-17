@@ -17,9 +17,7 @@ module FileOperations
 
   def text_file(relative_file_path, text)
     file_name = relative_file_path.gsub(/^\//, "")
-    tempfile = Tempfile.new file_name do |f|
-      f << text
-    end
+    tempfile = Tempfile.new file_name
     tempfile << text
     tempfile.flush
     tempfile.close

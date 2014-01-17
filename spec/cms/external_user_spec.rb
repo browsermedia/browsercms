@@ -12,10 +12,12 @@ describe Cms::ExternalUser do
     external_user.valid?.must_equal true
   end
 
-  describe 'Known Rails 4.0.2 bug' do
-    it "prevents creation if external_data isn't specified" do
-      @default_attributes.delete(:external_data)
-      proc {Cms::ExternalUser.create!(@default_attributes)}.must_raise NoMethodError
+  describe 'Known ruby 1.9.3/Rails4 bug' do
+    if RUBY_VERSION == '1.9.3'
+      it "prevents creation if external_data isn't specified" do
+        @default_attributes.delete(:external_data)
+        proc { Cms::ExternalUser.create!(@default_attributes) }.must_raise NoMethodError
+      end
     end
   end
 

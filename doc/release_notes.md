@@ -8,6 +8,7 @@ This release includes the following major features:
 * User Interface Redesign - User interface has been complete redesigned from the ground up. The new UI is based on Twitter Bootstrap, has usability enhancements as well as an improved design.
 * True In Context Editing [#566] - Editors can directly edit Html content and page titles using CKEditor's inline capability.
 * Rails 4 Upgrade [#617] - BrowserCMS is now designed to work with Rail 4.0.
+* Ruby 2.0 [#651] - BrowserCMS is now designed to work with Ruby 2, matching the recommended specs for Rails 4. Ruby 1.9.3 and 1.9.2 may still work.
 * Form Builder [#124] - Allow editors to create form pages that can be used to collect information from visitors
 * Addressable Content [#588] - Custom content blocks (i.e. Product, Event, News Articles) can be created directly as pages in the sitemap.
 * Improved Template Storage [#608] - Database managed templates are no longer written out to the file system. Sites should have less permission related issued during deployments. Using Heroku to host sites should be easier as well.

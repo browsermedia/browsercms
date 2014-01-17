@@ -32,11 +32,10 @@
 
 ### Open Issues
 
-* Verify Ruby 2.0 works (Add ticket)
-* Compass Rails alpha problem
-
 ### Open (but not critical) issues
 
+* [BUG] Inline product editing throws JS error
+* [BUG] Editing block after one has been removed from page without refresh throws JS error.
 * [BUG] When viewing older versions of page which had a mobile_ready template in that version, it throws an error.
 * [DOCUMENT or IMPROVE] SimpleForms: Label: false should always be paired with: input_html: {class: 'input-block-level'}
 * [BUG] Edit content button should float right and over
@@ -53,6 +52,7 @@
 * [FEATURE] Sitemap - Implies you can remove sections with content. (Throws error when it fails)
 * [MINOR] Groups should be listed within a cell rather than wrapping.
 * [PERFORMANCE] Google Fonts - Can we include them in the project so it works locally with no internet access.
+
 
 ## Implied Features by Design
 
