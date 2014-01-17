@@ -32,7 +32,6 @@
 
 ### Open Issues
 
-* Unit tests are broken.
 * [BUG] (Critical) Cannot click on 'Browse' for products. (Can tab to select though)
 
 ### Open (but not critical) issues

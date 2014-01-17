@@ -9,6 +9,9 @@ module Cms
       false
     end
 
+    def self.addressable?
+      false
+    end
     extend ::ActiveModel::Naming
   end
 end
