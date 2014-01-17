@@ -2,6 +2,8 @@
 
 Try it! gem install browsercms --pre
 
+See (and please help with!) current bug list here: https://github.com/browsermedia/browsercms/issues?milestone=22&state=open
+
 ## Major Features
 
 This release includes the following major features:
