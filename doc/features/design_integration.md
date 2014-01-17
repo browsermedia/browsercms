@@ -1,5 +1,7 @@
 # Design Integration
 
+This covers some of the remaining design issues that we need to resolve before the beta/final 4.0 release.
+
 ## [Ask Kyle]
 
 * Fonts for Dashboard table headers/menus are just less bold than in design.
@@ -26,35 +28,9 @@
 * Selecting a section always toggles. Might want to select an open section to add content to it, but not close it.
 * Where should "Settings" link take user to.
 
-## Tasks
-
-* Fix remaining critical bugs before releasing alpha
-
-### Open Issues
-
-### Open (but not critical) issues
-
-* [BUG] Inline product editing throws JS error
-* [BUG] Editing block after one has been removed from page without refresh throws JS error.
-* [BUG] When viewing older versions of page which had a mobile_ready template in that version, it throws an error.
-* [DOCUMENT or IMPROVE] SimpleForms: Label: false should always be paired with: input_html: {class: 'input-block-level'}
-* [BUG] Edit content button should float right and over
-* [BUG] Multiple attachments doesn't work (See Catalog)
-* [BUG] Sitemap - Can remove homepage
-* [BUG] Dashboard - Publishing pages without selecting on throws an error.
-* [BUG] Sitemap Performance - Closing large section is slow (Products)   - Try removing slide and using appear.
-* [BUG] Sitemap Performance - Need to filter (or condense multiple Products into a single product).
-* [BUG] Editing a block on a page, then canceling, redirects to /cms/content/1/edit rather than /cms/content/1
-* [BUG] Clicking 'Back' if you have submitted a form where validation fails goes to the wrong page.
-* [BUG] Optimistic locking for pages/blocks doesn't work.
-* [BUG] Dashboard is not correctly displaying draft pages.
-* [BUG] View Image is huge rather than natural size.
-* [FEATURE] Sitemap - Implies you can remove sections with content. (Throws error when it fails)
-* [MINOR] Groups should be listed within a cell rather than wrapping.
-* [PERFORMANCE] Google Fonts - Can we include them in the project so it works locally with no internet access.
-
-
 ## Implied Features by Design
+
+Features in the original design/IA that didn't get implemented.
 
 * Make 'Assign' on Edit page work.
 * Sitemap filters
