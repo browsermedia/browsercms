@@ -9,11 +9,11 @@
   $.fn.tagList = function(tags) {
     var tagListInput = this;
     var tagSeparator = " ";
-    
+
     var getTagList = function() {
       return $('#'+$(tagListInput).attr('id')+'-tag-list');
     }
-    
+
     var getCurrentTag = function() {
       var value = $(tagListInput).val();
       if(value == "" || value.match(/\s$/)) {
@@ -23,26 +23,26 @@
         return tags[tags.length-1]
       }
     }
-    
+
     var getSelectedTag = function() {
       return getTagList().find('li.selected')
     }
-    
+
     var getFirstTag = function() {
       return getTagList().find('li:first')
     }
-    
+
     var positionAndSizeTagList = function() {
       getTagList().css('top', $(tagListInput).offset().top+$(tagListInput).outerHeight())
         .css('left', $(tagListInput).offset().left)
         .css('width', $(tagListInput).outerWidth())
     }
-    
+
     var createEmptyTagList = function() {
       var id = $(tagListInput).attr('id') + '-tag-list';
       $(tagListInput).after('<ul id="'+id+'" class="tag-list" style="display: none"></ul>')
       positionAndSizeTagList()
-    }          
+    }
 
     var matchesInputValue = function(tag, value) {
       return tag && value && (tag.toLowerCase().indexOf(value.toLowerCase()) == 0);
@@ -52,17 +52,17 @@
       var html = []
       $.each(tags, function(i, tag){
         if(matchesInputValue(tag, value)) {
-          html.push('<li>'+tag+'</li>');  
+          html.push('<li>'+tag+'</li>');
         }
       })
       getTagList().html(html.join("\n")).show()
       getTagList().find('li').click(function(){
-        selectTag(this); 
+        selectTag(this);
         acceptTag();
         return false;
       });
     }
-    
+
     var updateTagList = function() {
       var value = getCurrentTag()
       if(value && value != "") {
@@ -71,7 +71,7 @@
         getTagList().hide();
       }
     }
-    
+
     var handleNavKeys = function(event) {
       switch(event.keyCode) {
         case 38: //Up Arrow
@@ -85,9 +85,9 @@
         case 9: //Tab
         case 13: //Return
           return !getTagList().is(':visible') || acceptTag();
-      }            
+      }
     }
-    
+
     var handleInput = function(event) {
       switch(event.keyCode) {
         case 9:
@@ -99,7 +99,7 @@
           updateTagList();
       }
     }
-    
+
     var selectTag = function(tag) {
       getTagList().find('li').removeClass('selected')
       $(tag).addClass('selected')
@@ -112,7 +112,7 @@
         selectTag(getFirstTag())
       }
     }
-    
+
     var selectNextTag = function() {
       if(getSelectedTag().length > 0 && getSelectedTag().next().length > 0) {
         selectTag(getSelectedTag().next())
@@ -120,23 +120,23 @@
         selectTag(getFirstTag())
       }
     }
-    
+
     var acceptTag = function() {
       if(getSelectedTag().length == 0) {
         if(getTagList().find('li').length > 0) {
-          selectTag(getFirstTag())  
+          selectTag(getFirstTag())
         } else {
           return true;
-        }        
+        }
       }
       var tags = $(tagListInput).val().split(tagSeparator)
       tags.pop()
       tags.push(getSelectedTag().text())
       $(tagListInput).val(tags.join(tagSeparator))
       getTagList().hide()
-      return false;            
+      return false;
     }
-    
+
     createEmptyTagList()
     $(this).keydown(handleNavKeys).keyup(handleInput)
     $(this).blur(function(){getTagList().fadeOut(200)})
@@ -145,11 +145,13 @@
 
 // Autosuggest for tags
 $(function(){
-  $.ajax({
-    url: '/cms/tags',    
-    dataType: 'json',
-    success: function(data){      
-      $('.tag_list').tagList(data);      
-    }
-  });
+  if($(".tag_list").exists()){
+    $.ajax({
+      url: '/cms/tags',
+      dataType: 'json',
+      success: function(data){
+        $('input.tag_list').tagList(data);
+      }
+    });
+  }
 });
