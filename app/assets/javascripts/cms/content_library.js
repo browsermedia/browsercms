@@ -96,7 +96,7 @@ jQuery(function($) {
     };
 })(jQuery);
 
-$(function() {
+jQuery(function ($) {
     $('.cms-content-table').cmsContentToolbar();
 });
 
