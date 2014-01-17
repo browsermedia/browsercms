@@ -1,5 +1,6 @@
-# v4.0
+# v4.0.0.alpha
 
+Try it! gem install browsercms --pre
 
 ## Major Features
 

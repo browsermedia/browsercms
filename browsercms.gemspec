@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.authors = ["BrowserMedia"]
   s.homepage = "http://www.browsercms.org"
   s.summary = %q{Web Content Management in Rails}
-  s.description = %q{BrowserCMS is a general purpose, open source Web Content Management System (CMS) that supports Ruby on Rails v3.2. It can be used as a standalone CMS, added to existing Rails projects or extended using Rails Engines.}
+  s.description = %q{BrowserCMS is a general purpose, open source Web Content Management System (CMS) that supports Ruby on Rails v4.0. It can be used as a standalone CMS, added to existing Rails projects or extended using Rails Engines.}
   s.email = %q{github@browsermedia.com}
   s.extra_rdoc_files = %w{
       LICENSE.txt
