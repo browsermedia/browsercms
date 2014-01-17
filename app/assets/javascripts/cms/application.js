@@ -5,6 +5,7 @@
 //= require jquery_ujs
 //= require jquery.cookie
 //= require jquery.selectbox
+//= require jquery.exists
 //= require jquery.taglist
 //= require jquery.ui.all
 //= require cms/core_library

@@ -5,6 +5,7 @@
 //= require jquery.ui.all
 //= require jquery.cookie
 //= require jquery.selectbox
+//= require jquery.exists
 //= require jquery.taglist
 //= require cms/core_library
 //= require cms/attachment_manager
