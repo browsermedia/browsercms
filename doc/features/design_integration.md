@@ -32,17 +32,18 @@
 
 ### Open Issues
 
-* [BUG] (Critical) Cannot click on 'Browse' for products. (Can tab to select though)
+* Verify Ruby 2.0 works (Add ticket)
+* Compass Rails alpha problem
 
 ### Open (but not critical) issues
 
-* [BUG] When viewing older versions of page which had a mobile_ready template, it throws an error.
+* [BUG] When viewing older versions of page which had a mobile_ready template in that version, it throws an error.
 * [DOCUMENT or IMPROVE] SimpleForms: Label: false should always be paired with: input_html: {class: 'input-block-level'}
 * [BUG] Edit content button should float right and over
 * [BUG] Multiple attachments doesn't work (See Catalog)
 * [BUG] Sitemap - Can remove homepage
 * [BUG] Dashboard - Publishing pages without selecting on throws an error.
-* [BUG] Sitemap Performance - Closing large section is slow (Products)
+* [BUG] Sitemap Performance - Closing large section is slow (Products)   - Try removing slide and using appear.
 * [BUG] Sitemap Performance - Need to filter (or condense multiple Products into a single product).
 * [BUG] Editing a block on a page, then canceling, redirects to /cms/content/1/edit rather than /cms/content/1
 * [BUG] Clicking 'Back' if you have submitted a form where validation fails goes to the wrong page.
