@@ -31,8 +31,19 @@ module Cms
       end
 
       def alter_the_migration
+        puts "Table name: #{table_name}"
+        puts "Namespaced: #{namespaced?}"
+        puts "Coreapplication: #{@in_core_application}"
+
         migration = self.class.migration_exists?(File.absolute_path("db/migrate"), "create_#{table_name}")
+
+        if @in_core_application
+          gsub_file migration, "create_table :#{table_name}", "create_table :#{unnamespaced_table_name}"
+          puts "From #{table_name} to #{unnamespaced_table_name}"
+        end
+
         gsub_file migration, "create_table", "create_content_table"
+
 
         # Attachments do not require a FK from this model to attachments.
         self.attributes.select { |attr| attr.type == :attachment }.each do |attribute|
@@ -69,6 +80,14 @@ module Cms
       end
 
       private
+
+      # @override NamedBase#table_name Copy&Paste of this method to make sure project table names are not actually namespaced in migrations.
+      def unnamespaced_table_name
+        @unnamespaced_table_name ||= begin
+          base = pluralize_table_names? ? plural_name : singular_name
+          (regular_class_path + [base]).join('_')
+        end
+      end
 
       def model_has_attachment?
         !attachment_attributes().empty?
