@@ -21,6 +21,13 @@ module Cms
         end
       end
 
+      def generate_controller
+        application_controller = File.join('app/controllers', class_path, "application_controller.rb")
+        unless File.exists?(application_controller)
+          template 'application_controller.rb.erb', application_controller
+        end
+      end
+
       hook_for :orm, :in => :rails, :required => true, :as => :model
 
       def alter_the_model
@@ -31,15 +38,10 @@ module Cms
       end
 
       def alter_the_migration
-        puts "Table name: #{table_name}"
-        puts "Namespaced: #{namespaced?}"
-        puts "Coreapplication: #{@in_core_application}"
-
         migration = self.class.migration_exists?(File.absolute_path("db/migrate"), "create_#{table_name}")
 
         if @in_core_application
           gsub_file migration, "create_table :#{table_name}", "create_table :#{unnamespaced_table_name}"
-          puts "From #{table_name} to #{unnamespaced_table_name}"
         end
 
         gsub_file migration, "create_table", "create_content_table"

@@ -18,6 +18,13 @@ Feature:
     end
     """
     And a file named "test/models/petstore/product_test.rb" should exist
+    And the file "app/controllers/petstore/application_controller.rb" should contain:
+    """
+    module Petstore
+      class ApplicationController < ActionController::Base
+      end
+    end
+    """
     And the file "app/controllers/petstore/products_controller.rb" should contain:
     """
     module Petstore
