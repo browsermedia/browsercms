@@ -30,11 +30,10 @@ groups(:content_editor).permissions<<permissions(:publish_content)
 
 create_site(:default, :name => "Default", :domain => "example.com")
 create_section(:root, :name => "My Site", :path => "/", :root => true)
-create_section(:system, :name => "system", :parent => sections(:root), :path => "/system", :hidden => true)
-
-Cms::Group.all.each { |g| g.sections = Cms::Section.all }
 
 create_page(:home, :name => "Home", :path => "/", :section => sections(:root), :template_file_name => "default.html.erb", :cacheable => true)
+
+create_section(:system, :name => "system", :parent => sections(:root), :path => "/system", :hidden => true)
 create_page(:not_found, :name => "Page Not Found", :path => "/system/not_found", :section => sections(:system), :template_file_name => "default.html.erb", :publish_on_save => true, :hidden => true, :cacheable => true)
 create_page(:access_denied, :name => "Access Denied", :path => "/system/access_denied", :section => sections(:system), :template_file_name => "default.html.erb", :publish_on_save => true, :hidden => true, :cacheable => true)
 create_page(:server_error, :name => "Server Error", :path => "/system/server_error", :section => sections(:system), :template_file_name => "default.html.erb", :publish_on_save => true, :hidden => true, :cacheable => true)
@@ -51,6 +50,8 @@ create_html_block(:server_error, :name => "Server Error", :content => "<p>The se
 pages(:server_error).create_connector(html_blocks(:server_error), "main")
 pages(:server_error).publish!
 pages(:home).publish!
+
+Cms::Group.all.each { |g| g.sections = Cms::Section.all }
 
 unless Cms::DataLoader.silent_mode
   puts "*************************************************"

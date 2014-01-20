@@ -55,10 +55,40 @@ class Browsercms400 < ActiveRecord::Migration
       t.timestamps
     end
 
+    add_devise_users
+    remove_reset_password_portlet
+    add_external_users
   end
+
+
 
   private
 
+  def add_external_users
+    change_table :cms_users do |t|
+      t.column :type, :string, default: 'Cms::User'
+      t.column :source, :string
+      t.text :external_data
+    end
+  end
+
+  def remove_reset_password_portlet
+    Cms::Portlet.connection.execute("UPDATE cms_portlets SET type = 'DeprecatedPlaceholder' WHERE type = 'ResetPasswordPortlet'")
+  end
+
+  def add_devise_users
+    change_table(:cms_users) do |t|
+      t.string :encrypted_password, :null => false, :default => ""
+      t.rename   :reset_token, :reset_password_token
+      t.datetime :reset_password_sent_at
+      t.rename :remember_token_expires_at, :remember_created_at
+      t.remove :remember_token
+      t.remove :crypted_password
+    end
+
+    add_index :cms_users, :email,                :unique => true
+    add_index :cms_users, :reset_password_token, :unique => true
+  end
   # In 4.x, all core tables MUST start with cms_. See https://github.com/browsermedia/browsercms/issues/639
   def apply_cms_namespace_to_all_core_tables
     unversioned_tables.each do |table_name|

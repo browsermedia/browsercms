@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131218222005) do
+ActiveRecord::Schema.define(version: 20130924162315) do
 
   create_table "catalog_versions", force: true do |t|
     t.string   "name"
