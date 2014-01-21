@@ -29,9 +29,7 @@ module Cms
 
       # Runs `bundle install` inside the correct project directory (unless --skip_bundle was passed to the command)
       def run_bundle_install
-        inside current_project do
-          run "bundle install" unless options[:skip_bundle]
-        end
+        run "bundle install" unless options[:skip_bundle]
       end
 
       # Run `bundle update`, exiting if it doesn't work.

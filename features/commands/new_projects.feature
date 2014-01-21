@@ -16,6 +16,7 @@ Feature: New Project Generator
     And the file "hello/config/routes.rb" should contain "mount_browsercms"
     And the file "hello/db/seeds.rb" should contain "require File.expand_path('../browsercms.seeds.rb', __FILE__)"
     And a file named "hello/db/browsercms.seeds.rb" should exist
+    And a directory named "hello/hello" should not exist
     And a file named "hello/config/initializers/browsercms.rb" should exist
     And a file named "hello/app/views/layouts/templates/default.html.erb" should exist
     And a file named "hello/config/initializers/devise.rb" should exist
