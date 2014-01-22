@@ -4,6 +4,13 @@ img {
 	height: auto;
 	display: inline-block;
 }
+
+// Image blocks viewed within the CMS shouldn't be 100% width.
+img[data-type="image_block"] {
+  width: auto;
+  max-width: 100%;
+}
+
 .img-rounded {
 	@include border-radius(6px);
 }
