@@ -26,13 +26,9 @@ module Cms
     # Return the JS file to load the configured default WYSIWYG editor
     #
     # Ideally, this could be improved if sprockets allows for dynamically determining which js library to use.
-    # @return [Array] Names of the JS files need to load the editor.
+    # @return [String] Names of the JS file needed to load the editor.
     def cms_content_editor
-      if Cms.content_editor.is_a?(Array)
-        Cms.content_editor
-      else
-        "bcms/#{Cms.content_editor}" # Handles existing FCKEditor behavior
-      end
+      "bcms/#{Cms.content_editor}"
     end
 
     # Outputs the title for this page. Used by both internal CMS pages, as well as page templates. Call use_page_title to

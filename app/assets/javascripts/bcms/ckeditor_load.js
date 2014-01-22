@@ -41,7 +41,10 @@ function toggleEditor(id, status) {
 function loadEditor(id) {
     if (typeof(CKEDITOR) != "undefined") {
         if (CKEDITOR.instances[id] == null) {
-            CKEDITOR.replace(id, { customConfig:'<%= asset_path(Rails.application.config.cms.ckeditor.configuration_file) %>' });
+            editor = CKEDITOR.replace(id);
+            editor.config.toolbar = 'Standard';
+            editor.config.width = '100%';
+            editor.config.height = 400;
         }
         $.cookie('editorEnabled', true, { expires:90, path:'/' });
         return true;

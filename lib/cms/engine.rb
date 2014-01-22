@@ -77,7 +77,8 @@ module Cms
 
       # Determines which ckeditor file will be used to configure all instances.
       # There should be at most ONE of these, so use manifest files which require the below one to augement it.
-      app.config.cms.ckeditor.configuration_file = 'bcms/ckeditor_standard_config.js'
+      #app.config.cms.ckeditor.configuration_file = 'bcms/ckeditor_standard_config.js'
+      # Note: This no longer works since we are statically loading it via asset pipeline.
 
       # Define menu items to be added dynamically to the CMS Admin tab.
       app.config.cms.tools_menu = []
@@ -93,6 +94,7 @@ module Cms
       # Sets the default .css file that will be added to forms created via the Forms module.
       # Projects can override this as needed.
       app.config.cms.form_builder_css = 'cms/default-forms'
+
     end
 
     # Needed to ensure routes added to the main app by the Engine are available. (Since engine draws its routes after the main app)
@@ -118,9 +120,17 @@ module Cms
       require 'jdbc_adapter' if defined?(JRUBY_VERSION)
     end
 
-    initializer "browsercms.precompile_assets" do |app|
-      app.config.assets.precompile += ['cms/application.css']
-    end
+    initializer 'browsercms.precompile_assets' do |app|
+      # Ensure all engine specific assets are compiled when rake asset:precompile is run.
+      app.config.assets.precompile += ['cms/page_toolbar.js', 'cms/page_editor.js', 'cms/site.js']
 
+      app.config.assets.precompile += ['cms/page_editor.css', 'cms/page_content_editing.css', 'cms/site.js']
+
+      # Ckeditor
+      app.config.assets.precompile += ['bcms/ckeditor_inline.js', 'bcms/ckeditor.js', 'bcms/ckeditor_standard_config.js']
+
+      # Unsure why jquery isn't getting precompiled.
+      app.config.assets.precompile += ['jquery.js']
+    end
   end
 end

@@ -1,7 +1,8 @@
 //= require 'jquery_ujs'
 //= require 'cms/core_library'
 //= require 'bootstrap/modal'
-//= require 'ckeditor-jquery'
+//= require 'bcms/ckeditor'
+//= require 'bcms/ckeditor_inline'
 //= require 'cms/ajax'
 
 // Since we are within the page editing iframe, add a 'target=_top' to all links so they refresh the entire page.
@@ -136,7 +137,6 @@ $(function() {
   $("#page_title").each(function() {
     var id = $(this).attr('id');
     CKEDITOR.inline(id, {
-      customConfig: '/assets/bcms/ckeditor_inline.js',
       toolbar: 'page_title',
       on: {
         blur: function(event) {
@@ -149,8 +149,7 @@ $(function() {
   // Create editors for each content-block on the page.
   $(".content-block").each(function() {
     var id = $(this).attr('id');
-    CKEDITOR.inline(id, {
-      customConfig: '/assets/bcms/ckeditor_inline.js',
+    editor = CKEDITOR.inline(id, {
       toolbar: 'inline',
       on: {
         blur: function(event) {
@@ -158,6 +157,7 @@ $(function() {
         }
       }
     });
+
   });
 
 

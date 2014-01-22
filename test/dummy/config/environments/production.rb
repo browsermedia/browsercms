@@ -1,8 +1,13 @@
 Dummy::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
+  config.eager_load = true
+
   # Code is not reloaded between requests
   config.cache_classes = true
+
+  # Ensure assets are compiled into single file.
+  config.assets.debug = false
 
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
@@ -12,13 +17,13 @@ Dummy::Application.configure do
   config.cms.use_single_domain = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
-  config.serve_static_assets = false
+  config.serve_static_assets = true # We are in 'faux' production mode, so we want Rails to serve the assets.
 
   # Compress JavaScripts and CSS
   config.assets.compress = true
 
   # Don't fallback to assets pipeline if a precompiled asset is missed
-  config.assets.compile = true
+  config.assets.compile = false
 
   # Generate digests for assets URLs
   config.assets.digest = true
