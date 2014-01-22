@@ -27,7 +27,7 @@ Cms::Engine.routes.draw do
 
   get '/toolbar', :to => "toolbar#index", :as => 'toolbar'
 
-  put "/inline_content/:content_name/:id", to: "inline_content#update", as: "update_inline_content"
+  put "/inline_content/:id", to: "inline_content#update", as: "update_inline_content"
   resources :page_components
   resources :connectors do
     member do

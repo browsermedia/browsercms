@@ -102,7 +102,7 @@ $(function() {
         content: {}
       };
       message["content"][attribute] = data;
-      var path = '/cms/inline_content/' + content_name + "/" + content_id;
+      var path = '/cms/inline_content/' + content_id + "?content_name=" + content_name;
 
       $.cms_ajax.put({
         url: path,

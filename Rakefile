@@ -71,7 +71,7 @@ end
 #Rake::Task['features:wip'].enhance ['project:ensure_db_exists', 'app:test:prepare']
 
 desc "Run everything but the command line (slow) tests"
-task 'test:fast' => %w{app:test:prepare test:units test:functionals features:fast}
+task 'test:fast' => %w{app:test:prepare test:units test:functionals features}
 
 desc "Runs all unit level tests"
 task 'test:units' => ['app:test:prepare'] do
