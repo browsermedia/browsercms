@@ -26,7 +26,7 @@ module Cms
 
     # When sitemap initially renders, we only want to show first level.
     def initial_visibility_class(section_node)
-      section_node.depth > 1 ? 'hide' : ''
+      section_node.depth >= 1 ? 'hide' : ''
     end
 
     # Returns a css class for determine sitemap depth.

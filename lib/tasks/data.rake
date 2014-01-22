@@ -1,6 +1,6 @@
 def create_pages(root)
   (1..20).each do |i|
-    Page.create!(:name=>"Page #{i}", :path=>"#{root.path}/page-#{i}", :section=>root, :template_file_name=>"default.html.erb", :publish_on_save=>true)
+    Cms::Page.create!(:name=>"Page #{i}", :path=>"#{root.path}/page-#{i}", :section=>root, :template_file_name=>"default.html.erb", :publish_on_save=>true)
   end
 end
 
@@ -31,10 +31,10 @@ namespace :cms do
 
   desc "Load some sample pages for performance tuning"
   task "load:pages" => :environment do
-    root = Section.root.first
+    root = Cms::Section.root.first
     create_pages(root)
     (21..40).each do |i|
-      sec = Section.create! :name=>"Section #{i}", :path=>"/section-#{i}/", :parent=>root
+      sec = Cms::Section.create! :name=>"Section #{i}", :path=>"/section-#{i}/", :parent=>root
       create_pages(sec)
     end
 

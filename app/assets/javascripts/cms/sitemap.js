@@ -95,7 +95,7 @@ Sitemap.prototype.open = function(row, options) {
   options = options || {}
   _.defaults(options, {animate: true});
   this.changeIcon(row, 'icon-folder-open');
-  var siblings = row.siblings('ul.nav');
+  var siblings = row.siblings('.children');
   if (options.animate) {
     siblings.slideToggle();
   }
@@ -114,7 +114,7 @@ Sitemap.prototype.attemptOpen = function(row, options) {
 
 Sitemap.prototype.close = function(row) {
   this.changeIcon(row, 'icon-folder');
-  row.siblings('ul.nav').slideToggle();
+  row.siblings('.children').slideToggle();
   this.saveAsClosed(row.data('id'));
 };
 

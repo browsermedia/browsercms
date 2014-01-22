@@ -5,16 +5,26 @@ namespace :db do
   desc 'Creates and populates the initial BrowserCMS database for a new project.'
   task :install => %w{ db:create db:migrate db:seed }
 
+  desc 'Truncates database tables (without dropping like db:reset)'
+  task :clean => :environment do
+    require 'database_cleaner'
+    DatabaseCleaner.clean_with(:truncation)
+  end
 
-end
+  desc '[TEST] Creates sample products'
+  task :many_products => :environment do
+    (1..100).each do |i|
+      Dummy::Product.create(name: "Product #{i}")
+    end
+  end
 
-namespace :yard do
-  desc "Clean up the YARD api docs"
-  task :clean do
-    FileUtils.rm_rf "doc/api"
+  namespace :yard do
+    desc "Clean up the YARD api docs"
+    task :clean do
+      FileUtils.rm_rf "doc/api"
+    end
   end
 end
-
 
 # These are tasks for the core browsercms project, and shouldn't be bundled into the distributable gem
 namespace :project do

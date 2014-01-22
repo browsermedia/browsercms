@@ -11,6 +11,15 @@ describe Cms::User do
     end
   end
 
+  describe "#generate_password" do
+    it "should generate a valid random password" do
+      user = Cms::User.new
+      user.new_password
+      user.password.wont_be_nil
+      user.password.length.must_equal 8
+    end
+  end
+
   describe '#source' do
     it "should return hardcoded value" do
       user.source.must_equal "CMS Users"

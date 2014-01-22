@@ -19,9 +19,18 @@ module Cms
       end
     end
 
+    # Generate a new random password for this user.
+    # @return [String] The newly generated and assigned password
+    def new_password
+      pwd = SecureRandom.hex(4)
+      change_password(pwd)
+      pwd
+    end
+
     # Change this User's password to a new value.
     def change_password(new_password)
       update(:password => new_password, :password_confirmation => new_password)
+      new_password
     end
 
     # By default, Users are coming from the the CMS database (cms_users). All Cms::User class have have the same source.

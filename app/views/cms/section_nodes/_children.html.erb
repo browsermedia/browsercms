@@ -1,3 +1,5 @@
+<span class="children <%= initial_visibility_class(parent) %>">
 <% children.keys.each do |section_node| %>
     <%= render partial: 'section_node', locals: {section_node: section_node, parent: parent, children: children[section_node]} %>
 <% end %>
+</span>
