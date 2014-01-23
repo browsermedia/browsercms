@@ -73,9 +73,9 @@ end
 
 Then /^I should see the attachment manager widget displayed$/ do
   [
-      'Upload a new attachment',
-      'Attachment type',
-      'Choose file'
+      'Upload a New Attachment',
+      'Type',
+      'File'
   ].each do |words|
     page_should_have_content(words)
   end

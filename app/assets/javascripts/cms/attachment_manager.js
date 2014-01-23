@@ -3,12 +3,11 @@
 $(function () {
     $.cms.AttachmentManager = {
         upload:function (file) {
-            var assetName = $('#asset_types').val()
+            var assetName = $('#attachment_attachable_type').val()
                     , attachableClass = $('#asset_attachable_class').val()
-                    , attachableIDField = $('#asset_attachable_id')
-                    , attachableID = attachableIDField.val()
+//                    , attachableIDField = $('#asset_attachable_id')
+                    , attachableID = $('#asset_attachable_id').val()
                     , file = $('#asset_add_file')
-                    , clone = file.clone()
                     , form = $('<form target="asset_add_uploader" method="post" action="/cms/attachments" enctype="multipart/form-data" style="visibility:hidden">')
                     , fields = '';
 
@@ -21,21 +20,24 @@ $(function () {
             $('body').append(form);
             form.append(fields);
             form.append(file);
-            attachableIDField.after(clone);
+            $('label[for="asset_add_file"]').after(file.clone());
 
             var inp = $('<input type="file" name="attachment[data]" id="asset_add_file" onchange="$.cms.AttachmentManager.upload(this)" />');
 
-            clone.after($('<img>')
-                    .css({position:'static', margin:'5px 0 0 5px', 'verticalAlign':'middle'})
-                    .attr({'id':'file-asset-uploader', 'src':'<%= asset_path 'cms/file-uploading.gif' %>'}));
-            clone.replaceWith(inp);
-
             form.submit();
 
-            $('div.buttons').hide();
-
+            $('#upload-attachment').modal('hide');
         },
-
+        enableDeleteButtons:function(){
+          // Handle delete attachment button
+          var delete_attachments_btns = $("a[data-purpose='delete-attachment']");
+          if(delete_attachments_btns.exists()){
+              delete_attachments_btns.off('click').on('click', function(){
+                  var id = $(this).data('id');
+                  $.cms.AttachmentManager.destroy(id);
+              });
+          }
+        },
         // @param [Integer] id The id of the attachment to delete.
         destroy:function (id) {
             if (confirm("Are you sure want to delete this attachment?")) {
@@ -78,5 +80,9 @@ $(function () {
             $('#assets_table > table').append(asset).show();
             $('div.buttons').show();
         }
+        $('.empty-row').hide();
+        $.cms.AttachmentManager.enableDeleteButtons();
     });
+
+  $.cms.AttachmentManager.enableDeleteButtons();
 });

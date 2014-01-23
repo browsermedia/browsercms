@@ -7,4 +7,3 @@ Feature: CKEditor
     When I request /cms/content_library
     And I click on "create_new_html_block"
     Then I should see a widget to select which editor to use
-    And  I should see the CKEditor

@@ -11,6 +11,10 @@ img[data-type="image_block"] {
   max-width: 100%;
 }
 
+// For multiple attachments in the table
+img[data-purpose='attachment'] {
+  width:60px;
+}
 .img-rounded {
 	@include border-radius(6px);
 }

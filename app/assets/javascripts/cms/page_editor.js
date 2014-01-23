@@ -1,3 +1,4 @@
+//= require 'jquery'
 //= require 'jquery_ujs'
 //= require 'cms/core_library'
 //= require 'bootstrap/modal'

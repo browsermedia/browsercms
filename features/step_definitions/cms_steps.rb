@@ -34,11 +34,6 @@ Given /^there are (\d+) send email messages$/ do |i|
   end
 end
 
-Then /^I should see the CKEditor$/ do
-  selector = 'script[src="/assets/bcms/ckeditor_load.js"]'
-  assert page.has_css? selector, visible: false
-end
-
 Then /^I should see a widget to select which editor to use$/ do
   # This just verifies that the text editor selection widget is present.
   assert page.has_selector?('#dhtml_selector')

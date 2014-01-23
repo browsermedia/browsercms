@@ -11,6 +11,9 @@
 </nav>
 <%= render 'cms/sites/flash' %>
 <section class="container center-column main-container bottom-form-btn clearfix">
+  <% if content_for?(:before_main_content) %>
+      <%= yield :before_main_content  %>
+  <% end %>
   <%= yield %>
   <div class="padded row-fluid">
     <div class="span12"><%= render :partial => 'layouts/cms/footer' %></div>

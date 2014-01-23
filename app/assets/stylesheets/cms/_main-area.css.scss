@@ -1,5 +1,5 @@
 /* MAIN FORM AREA */
-.main-content {
+.main-content, .modal-body {
 	@include rem(margin-top,1rem);
 
 	.add-link {
