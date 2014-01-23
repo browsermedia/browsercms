@@ -188,6 +188,14 @@ There is now a core API for handling users that are authenticated/authorized aga
 
 A sample implementation of an authentication strategy can be found in lib/cms/authentication/test_password_strategy. Strategies are implemented as Devise Strategies and should either login or pass to the next strategy.
 
+Don't forget to enable your new strategy in config/initializers/devise.rb
+```
+# Add test_password strategy BEFORE other CMS authentication strategies
+config.warden do |manager|
+  manager.default_strategies(:scope => :cms_user).unshift :my_custom_strategy
+end
+```
+
 This implementation is intended to replace CAS based strategies used in BrowserCMS 3.x. It provides the ability to style the login page directly, and avoid having an external CAS server software.
 
 ## Upgrading
