@@ -241,7 +241,7 @@ FormBuilder.prototype.setupConfirmationBehavior = function() {
 var formBuilder = new FormBuilder();
 
 // Register FormBuilder handlers on page load.
-$(function() {
+jQuery(function($){
   formBuilder.setup();
 
 

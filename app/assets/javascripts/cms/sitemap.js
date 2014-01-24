@@ -138,7 +138,7 @@ Sitemap.prototype.updateDepth = function(element, newDepth) {
 var sitemap = new Sitemap();
 
 // Enable dragging of items around the sitemap.
-$(function() {
+jQuery(function($){
   if ($('#sitemap').exists()) {
 
     $('#sitemap .draggable').draggable({
@@ -188,7 +188,7 @@ $(function() {
 });
 
 // Open/close folders when rows are clicked.
-$(function() {
+jQuery(function($){
   // Ensure this only loads on sitemap page.
   if ($('#sitemap').exists()) {
     sitemap.restoreOpenState();
@@ -201,7 +201,7 @@ $(function() {
 });
 
 // Make Sitemap filters show specific content types.
-$(function() {
+jQuery(function($){
   $('#sitemap li[data-nodetype]').hide();
   $('#filtershow').change(function() {
     $('#sitemap li[data-nodetype]').slideUp();

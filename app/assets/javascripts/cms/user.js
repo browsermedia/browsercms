@@ -26,7 +26,7 @@ Cms.User.current = function(handler) {
 };
 
 // Default Handler for login portlet. Hide the form, show 'Hello $first_name'
-$(function() {
+jQuery(function($){
   if ($('.login-portlet').exists()) {
     Cms.User.current({
         authenticated: function(user) {
