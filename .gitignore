@@ -26,4 +26,5 @@ test/dummy/.powder
 test/dummy/.rvmrc
 .sass-cache
 .rvmrc
+.ruby-version 
 db/backups
