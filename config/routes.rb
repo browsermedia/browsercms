@@ -14,13 +14,13 @@ Cms::Engine.routes.draw do
              skip: [:sessions],
              path: :users,
              class_name: 'Cms::PersistentUser',
-             controllers: { passwords: 'cms/passwords' },
+             controllers: {passwords: 'cms/passwords'},
              module: :devise
 
   devise_scope :cms_user do
     get '/login' => "sessions#new", :as => 'login'
-    get '/login' => "sessions#new", :as =>  :new_cms_user_session
-    post '/login' => "sessions#create", :as =>  :cms_user_session
+    get '/login' => "sessions#new", :as => :new_cms_user_session
+    post '/login' => "sessions#create", :as => :cms_user_session
     get '/logout' => "sessions#destroy", :as => 'logout'
 
   end
@@ -39,6 +39,11 @@ Cms::Engine.routes.draw do
   end
   resources :links
 
+  resources :content_types, only: [] do
+    collection do
+      post :index
+    end
+  end
   resources :pages do
     member do
       put :archive
@@ -116,7 +121,7 @@ Cms::Engine.routes.draw do
   resources :redirects
   resources :page_partials, :controller => 'dynamic_views'
   resources :page_templates, :controller => 'dynamic_views'
-  resources :page_routes, except: :show  do
+  resources :page_routes, except: :show do
     resources :conditions, :controller => "page_route_conditions"
     resources :requirements, :controller => "page_route_requirements"
   end

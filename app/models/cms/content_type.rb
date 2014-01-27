@@ -108,6 +108,12 @@ module Cms
       klass.content_type
     end
 
+    # Returns a list of column names and values for this content type which are allowed be orderable.
+    def orderable_attributes
+      attribute_names = model_class.new.attribute_names
+      attribute_names -= ["id", "version", "lock_version", "created_by_id", "updated_by_id"]
+    end
+
     # @deprecated
     def save!
       ActiveSupport::Deprecation.warn "Cms::ContentType#save! should no longer be called. Content Types do not need to be registered in the database."

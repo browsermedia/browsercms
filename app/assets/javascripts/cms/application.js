@@ -9,6 +9,7 @@
 //= require jquery.taglist
 //= require jquery.ui.all
 //= require cms/core_library
+//= require cms/content_types
 //= require cms/attachment_manager
 //= require cms/form_builder
 //= require cms/sitemap

@@ -1,0 +1,5 @@
+<%= f.input :order,
+            collection: collection,
+            label_method: :humanize,
+            include_blank: false,
+            wrapper_html: {'data-role' => "order-fields", class: 'load'} %>

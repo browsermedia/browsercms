@@ -1,0 +1,3 @@
+<%= simple_form_for ListPortlet.new(order: "name") do |f| %>
+    <%= render partial: 'cms/content_types/order_field', locals: { f: f, collection: @attributes} %>
+<% end %>

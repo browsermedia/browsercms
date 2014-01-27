@@ -5,6 +5,15 @@ module Cms
   # From app, should be cms.xyz_path
   module PathHelper
 
+    # @return A link if content is addressable, name otherwise.
+    # Link_to_if would call content.path even if it doesn't respond to '
+    def link_to_addressable_content(name, content)
+      if content.respond_to? :path
+        link_to name, content.path
+      else
+        name
+      end
+    end
     # Returns the relative path to the given attachment.
     # Content editors will see exact specific version path, while other users will see the 'public' url for the path.
     def attachment_path_for(attachment)

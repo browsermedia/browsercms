@@ -1,3 +1,23 @@
+# v4.0.0.beta
+
+* List Portlet [#678] - A convienant way to find content without custom coding.
+
+## List Portlet
+
+This portlet is provides a configurable option to find and list content via configuration, similar to a greatly simplified Drupal views. The intent is to handle easy cases of finding a few content items without needing to create a full portlet. The following configuration options are supported:
+
+1. Content Type - User can select any available content type to list.
+2. Limit - Restrict the max results to some number (i.e. 5). Can be left blank to find all.
+3. Order - The results list can be ordered based on fields specific to each content type.
+4. Reverse order - Change the sorting order (asc to desc).
+5. View As - Results can be shown as a list or a table. Views can be customized as well.
+
+### Customizable Views
+
+Each list portlet can also have its own specific view that overrides the default list or table view. Developers can add a new file in a specific location, based on the name of the portlet. This view will then be used when showing the portlet. The exact path for each portlet is displayed in the sidebar. If using a table view, this will almost always need to be overriden since there is no way to configure which columns to show in the portlet.
+
+
+
 # v4.0.0.alpha
 
 Try it! gem install browsercms --pre

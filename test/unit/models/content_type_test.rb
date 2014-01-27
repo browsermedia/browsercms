@@ -73,6 +73,12 @@ module Cms
       assert_equal Cms::HtmlBlock, Cms::ContentType.find_by_key('html_block').model_class
     end
 
+    test ".orderable_attributes" do
+      orderable_columns = Cms::HtmlBlock.content_type.orderable_attributes
+      assert orderable_columns.include?("name")
+      refute orderable_columns.include?("id")
+    end
+
     test "#content_block_type" do
       assert_equal "html_blocks", Cms::HtmlBlock.content_type.content_block_type
       assert_equal "dummy/products", Dummy::Product.content_type.content_block_type

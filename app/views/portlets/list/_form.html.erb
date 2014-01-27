@@ -1,0 +1,33 @@
+<%
+   # Setup that would otherwise be done in Controller#new / #edit
+   if @block.content_type.blank?
+     @block.content_type = Cms::HtmlBlock.name
+   end
+   @orderable_attributes = @block.current_content_type.orderable_attributes
+
+   views = {
+           list: "List",
+           table: "Table",
+   }
+%>
+<% if @block.persisted? %>
+    <% content_for :sidebar_after do %>
+    <div class='sidebar-block'>
+      <h4 class="gray">Custom View</h4>
+
+      <p>Create/edit the following file: app/views/<%= @block.view_as_path %></p>
+    </div>
+    <% end %>
+<% end %>
+<%= f.input :name, placeholder: 'Name', label: false, input_html: {class: 'input-block-level input-xxlarge'} %>
+<%= f.input :content_type,
+            collection: Cms::ContentType.available,
+            label_method: :display_name,
+            value_method: :name,
+            include_blank: false,
+            input_html: {'data-role' => "content_type_selector"} %>
+<%= f.input :limit, hint: 'Show at most this many items.', placeholder: 'Displays all items if left blank.' %>
+<%= render partial: 'cms/content_types/order_field', locals: {f: f, collection: @orderable_attributes} %>
+<%= f.input :reverse_order, as: :boolean %>
+<%= f.input :view_as, collection: views.invert, include_blank: false %>
+<%= f.input :template, as: :template_editor %>

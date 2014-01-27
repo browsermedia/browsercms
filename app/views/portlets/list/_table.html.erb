@@ -1,0 +1,13 @@
+<h1 class="cms-list-portlet"><%= @portlet.name %></h1>
+<table class="cms-list-portlet" data-view-as="table">
+  <thead>
+  <tr>
+    <th>Name</th>
+  </tr>
+  </thead>
+  <% collection.each do |content| %>
+      <tr>
+        <td><%= link_to_addressable_content(content.name, content) %></td>
+      </tr>
+  <% end %>
+</table>
