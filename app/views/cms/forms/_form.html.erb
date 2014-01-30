@@ -3,7 +3,7 @@
 <% end %>
 
 <h3>Form Settings</h3>
-<%= f.input :name, as: :cms_text_field %>
+<%= f.input :name, as: :name %>
 <%= f.input :slug, as: :path %>
 <%= f.input :description %>
 <%= hidden_field_tag "field_ids", @block.field_ids %>

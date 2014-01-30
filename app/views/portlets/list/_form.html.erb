@@ -19,7 +19,7 @@
     </div>
     <% end %>
 <% end %>
-<%= f.input :name, placeholder: 'Name', label: false, input_html: {class: 'input-block-level input-xxlarge'} %>
+<%= f.input :name, as: :name %>
 <%= f.input :content_type,
             collection: Cms::ContentType.available,
             label_method: :display_name,

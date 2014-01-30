@@ -1,6 +1,7 @@
 # v4.0.0.beta
 
 * List Portlet [#678] - A convenient way to find content without custom coding.
+* NameInput [#682] - Improved :name input allows for consistent name fields look/feel. New content will be generated with it.
 
 ## [#678] List Portlet
 

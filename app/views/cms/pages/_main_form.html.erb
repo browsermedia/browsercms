@@ -5,7 +5,7 @@
   <%= f.hidden_field :lock_version %>
 <% end %>
 
-<%= f.input :name, label: false, placeholder: 'Page Name', input_html: {class: 'input-block-level input-xxlarge'} %>
+<%= f.input :name, placeholder: 'Page Name', as: :name %>
 <%= f.input :path, placeholder: 'Page Path' %>
 <%= f.input :template_file_name, collection: Cms::PageTemplate.options, label: "Template", as: :select, include_blank: false %>
 

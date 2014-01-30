@@ -16,6 +16,7 @@ module Cms
       Cms::Section.with_path(form_object.object.class.path).first.nil?
     end
 
+
     def slug_source_if(boolean)
       if boolean
         {input_html: {class: 'slug-source'}}

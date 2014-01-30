@@ -2,7 +2,7 @@
 
    name_attribute = attributes.delete_if {|attr| attr.name == 'name'}
    # Assumes every content block should always have a name attribute
--%><%%= f.input :name, as: :cms_text_field %>
+-%><%%= f.input :name, as: :name %>
 <% for attribute in attributes -%>
 <%= field_tag = case attribute.type
         when :attachment

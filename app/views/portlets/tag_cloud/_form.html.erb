@@ -1,4 +1,4 @@
 <%= f.input :name %>
 <%= f.input :limit, :size => 4 %>
-<%= f.input :sizes, :default => TagCloudPortlet.default_sizes, as: :cms_text_field %>
+<%= f.input :sizes, input_html: { value: f.object.sizes || TagCloudPortlet.default_sizes } %>
 <%= f.input :template, as: :template_editor %>

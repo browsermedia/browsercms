@@ -74,7 +74,7 @@ Feature:
     When I run `rails g cms:content_block product content:html`
     Then the file "app/views/petstore/products/_form.html.erb" should contain:
     """
-    <%= f.input :name, as: :cms_text_field %>
+    <%= f.input :name, as: :name %>
     """
     And the file "app/views/petstore/products/_form.html.erb" should contain:
     """

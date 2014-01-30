@@ -1,5 +1,5 @@
 <%= f.input :name %>
 <%= f.input :sender, hint: "Enter the email for the 'from' field on any emails sent out." %>
-<%= f.input :subject, as: :cms_text_field, default: "A link you might be interested in" %>
+<%= f.input :subject, input_html: { value: f.object.subject || "A link you might be interested in" } %>
 <%= f.input :success_url, hint: "Leave blank to return the same page" %>
 <%= f.input :template, as: :template_editor  %>

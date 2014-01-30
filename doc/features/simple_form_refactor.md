@@ -30,10 +30,10 @@ All of the existing simple_form input mappings are available. See http://simple-
 Here are some examples showing how to use the CMS specific inputs.
 
 ```
-<%= f.input :name, as: :cms_text_field, default: "Some Value" %>
+<%= f.input :name %>
 ```
 
-Generates the 'name' field, and a :path input if the content block is addressable. Can supply a default value that will be used when creating a new record.
+Generates the 'name' field as a text field.
 
 ```
 <%= f.input :expires_on, as: :date_picker %>
