@@ -27,5 +27,5 @@ test/dummy/.rvmrc
 test/dummy/public/assets/*
 .sass-cache
 .rvmrc
-.ruby-version 
+.ruby-version
 db/backups
