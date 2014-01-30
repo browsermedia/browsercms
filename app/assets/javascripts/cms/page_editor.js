@@ -7,11 +7,11 @@
 //= require 'cms/ajax'
 
 // Since we are within the page editing iframe, add a 'target=_top' to all links so they refresh the entire page.
-$(function() {
+jQuery(function($){
   $('a').attr('target', '_top');
 });
 
-$(function() {
+jQuery(function($){
   $.cms_editor = {
     // Returns the widget that a user has currently selected.
     // @return [JQuery.Element]
@@ -123,7 +123,7 @@ $(function() {
 });
 
 // On Ready
-$(function() {
+jQuery(function($){
 
   // Click the 'Add Content' button (PLUS) when editing content.
   $('.cms-add-content').click(function() {
