@@ -1,10 +1,10 @@
 # v4.0.0.beta
 
-* List Portlet [#678] - A convienant way to find content without custom coding.
+* List Portlet [#678] - A convenient way to find content without custom coding.
 
-## List Portlet
+## [#678] List Portlet
 
-This portlet is provides a configurable option to find and list content via configuration, similar to a greatly simplified Drupal views. The intent is to handle easy cases of finding a few content items without needing to create a full portlet. The following configuration options are supported:
+This portlet is provides a configurable means to query for and display content without coding, similar to a greatly simplified Drupal views. The intent is to handle easy cases of finding a few content items without needing to create a full portlet. The following configuration options are supported:
 
 1. Content Type - User can select any available content type to list.
 2. Limit - Restrict the max results to some number (i.e. 5). Can be left blank to find all.
