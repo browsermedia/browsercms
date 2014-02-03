@@ -8,6 +8,11 @@ module Cms
       super
     end
 
+    def create
+      use_page_title('Forgot Password')
+      super
+    end
+
     def edit
       use_page_title('Change Password')
       super

@@ -1,0 +1,16 @@
+<%# Overrides devise/passwords/new to add CMS specific styles. %>
+<%= render 'cms/application/page_title' %>
+
+<%= simple_form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
+    <%= render layout: 'cms/application/main_with_sidebar' do %>
+        <%= f.error_notification %>
+        <%= f.input :email, :required => true, :autofocus => true %>
+
+        <%= render "devise/shared/links" %>
+    <% end %>
+    <%= render layout: 'cms/application/row' do %>
+        <%= button_menu :bottom do %>
+            <%= f.button :submit, "Send me reset password instructions", class: 'right btn-primary' %>
+        <% end %>
+    <% end %>
+<% end %>

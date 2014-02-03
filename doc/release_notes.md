@@ -2,6 +2,11 @@
 
 * List Portlet [#678] - A convenient way to find content without custom coding.
 * NameInput [#682] - Improved :name input allows for consistent name fields look/feel. New content will be generated with it.
+* [Fixes #684] Forgot Password
+
+  * /cms/forgot-password doesn't exist
+  * Reenable the forgot password link (/forgot-password)
+  * The edit_password page (pulled from email) doesn't work when followed.
 
 ## [#678] List Portlet
 

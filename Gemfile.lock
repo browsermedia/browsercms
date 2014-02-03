@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    browsercms (4.0.0.alpha)
+    browsercms (4.0.0.beta)
       actionpack-page_caching (~> 1.0)
       ancestry (~> 2.0.0)
       bootstrap-sass
@@ -52,7 +52,7 @@ GEM
     ancestry (2.0.0)
       activerecord (>= 3.0.0)
     ansi (1.4.3)
-    arel (4.0.1)
+    arel (4.0.2)
     aruba (0.5.3)
       childprocess (>= 0.3.6)
       cucumber (>= 1.1.1)
@@ -60,7 +60,7 @@ GEM
     atomic (1.1.14)
     bcrypt-ruby (3.1.2)
     bluecloth (2.2.0)
-    bootstrap-sass (3.1.0.0)
+    bootstrap-sass (3.1.0.2)
       sass (~> 3.2)
     builder (3.1.4)
     capybara (2.1.0)
@@ -71,7 +71,7 @@ GEM
       xpath (~> 2.0)
     childprocess (0.3.9)
       ffi (~> 1.0, >= 1.0.11)
-    chunky_png (1.2.9)
+    chunky_png (1.3.0)
     ckeditor_rails (4.3.1)
       railties (>= 3.0)
     climate_control (0.0.3)
@@ -165,7 +165,7 @@ GEM
     orm_adapter (0.5.0)
     panoramic (0.0.4)
       rails (>= 3.0.7)
-    paperclip (3.5.3)
+    paperclip (3.5.4)
       activemodel (>= 3.0.0)
       activesupport (>= 3.0.0)
       cocaine (~> 0.5.3)
@@ -220,8 +220,8 @@ GEM
     sqlite3 (1.3.7)
     sqlite3-ruby (1.3.3)
       sqlite3 (>= 1.3.3)
-    term-ansicolor (1.2.2)
-      tins (~> 0.8)
+    term-ansicolor (1.3.0)
+      tins (~> 1.0)
     thin (1.5.1)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
@@ -230,7 +230,7 @@ GEM
     thread_safe (0.1.3)
       atomic
     tilt (1.4.1)
-    tins (0.13.1)
+    tins (1.0.0)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)

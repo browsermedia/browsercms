@@ -199,3 +199,55 @@ end
 When /^I fill in passwords as "([^"]*)"$/ do |new_pw|
   fill_in_password(new_pw)
 end
+
+When /^I go to the public login page$/ do
+  visit "/login"
+end
+
+Then /^there should be a forgot password link$/ do
+  assert page.has_content?("Forgot your password?")
+end
+
+When /^I click the forgot password link$/ do
+  click_on "Forgot your password?"
+end
+
+When /^I enter my email address to reset my password$/ do
+  fill_in "Email", with: Cms::User.first.email
+  click_on "Send me reset password instructions"
+end
+
+Then /^I should receive an email with a reset password link.$/ do
+  should_be_successful
+  assert_equal 1, ActionMailer::Base.deliveries.size
+  assert_equal [Cms::User.first.email], ActionMailer::Base.deliveries.first.to
+  assert page.has_content?("You will receive an email")
+end
+
+Given /^I have requested to reset my password$/ do
+  visit forgot_password_path
+  fill_in "Email", with: Cms::User.first.email
+  click_on "Send me reset password instructions"
+end
+
+def cmsadmin
+  Cms::User.first
+end
+
+When /^I follow the link in the email$/ do
+  visit edit_password_path(reset_password_token: cmsadmin.reset_password_token, id: cmsadmin.id)
+  should_see_a_page_titled "Reset Password"
+end
+
+When /^I enter my new password$/ do
+  @new_password = "mynewpassword"
+  fill_in "New password", with: @new_password
+  fill_in "Confirm your new password", with: @new_password
+  click_on "Change my password"
+  should_be_successful
+end
+
+Then /^I should be able to log in with the new password$/ do
+  login_as(Cms::User.first.login, @new_password)
+  should_be_successful
+end
