@@ -98,6 +98,7 @@ module Cms
                           :storage => rail_config(:storage),
                           :s3_credentials => rail_config(:s3_credentials),
                           :bucket => rail_config(:s3_bucket),
+                          :s3_host_name => rail_config(:s3_host_name),
                           :s3_host_alias => rail_config(:s3_host_alias)
 
       end
