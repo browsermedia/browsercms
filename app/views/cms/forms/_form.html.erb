@@ -41,7 +41,8 @@
 <% end %>
 <%# Can't have a form inside a form, so this must go into the head. %>
 <%= content_for :html_head do %>
-    <div id="modal-edit-field" class="modal modal-content" tabindex="-1" role="dialog" aria-labelledby="model_label" aria-hidden="true">
+    <div id="modal-edit-field" class="modal" tabindex="-1" role="dialog" aria-labelledby="model_label" aria-hidden="true">
+      <div class="modal-content"></div>
     </div>
 
     <div id="modal-confirm-delete-field" class="modal modal-content" tabindex="-1" role="dialog" aria-labelledby="model_label" aria-hidden="true">
