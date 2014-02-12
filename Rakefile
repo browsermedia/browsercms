@@ -11,12 +11,12 @@ rescue LoadError
   require 'rake/rdoctask'
   RDoc::Task = Rake::RDocTask
 end
-
+require 'artirix_gem_release'
 APP_RAKEFILE = File.expand_path("../test/dummy/Rakefile", __FILE__)
 load 'rails/tasks/engine.rake'
 
 
-Bundler::GemHelper.install_tasks
+Bundler::GemHelper.install_tasks :name => "browsercms"
 
 require 'rake/testtask'
 
