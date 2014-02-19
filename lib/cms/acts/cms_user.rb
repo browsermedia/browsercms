@@ -100,11 +100,11 @@ module Cms
           # Return a list of the sections associated with this user that can be viewed.
           # Overridden from user so that able_to_view? will work correctly.
           def viewable_sections
-            @viewable_sections ||= Cms::Section.find(:all, :include => :groups, :conditions => ["#{Cms::Group.table_name}.id  in (?)", cms_groups.collect(&:id)])
+            @viewable_sections ||= Cms::Section.includes(:groups).where(["#{Cms::Group.table_name}.id  in (?)", cms_groups.collect(&:id)])
           end
 
           def permissions
-            @permissions ||= Cms::Permission.find(:all, :include => :groups, :conditions => ["#{Cms::Group.table_name}.id  in (?)", cms_groups.collect(&:id)])
+            @permissions ||= Cms::Permission.includes(:groups).where(["#{Cms::Group.table_name}.id  in (?)", cms_groups.collect(&:id)])
           end
 
           def able_to_edit?(section)
