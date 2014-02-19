@@ -1,14 +1,14 @@
-<p><b>Name:</b> <%= show :name %></p>
-<p><b>Price:</b> <%= show :price %></p>
-<p><b>On Special?:</b> <%= show :on_special %></p>
-<p><b>Photo 1:</b> <%= tag :img,
-        :src => attachment_path_for(@content_block.photo_1),
-        :alt => h(@content_block.name),
-        :data => { :type => "photo-1" } %></p>
-<p><b>Photo 2 Link:</b> <%= link_to "Photo 2", attachment_path_for(@content_block.photo_2) %>
-<p><b>Photo 2 Image:</b>  <%= tag :img,
-        :src => attachment_path_for(@content_block.photo_2),
-        :alt => h(@content_block.name),
-        :data => { :type => "photo-2" } %>
-</p>
-<br><br>
+<dl>
+  <dt>Name:</dt><dd><%= show :name %></dd>
+  <dt>Price:</dt><dd><%= show :price %></dd>
+  <dt>Photo 2 Link:</dt><dd><%= link_to "Photo 2", attachment_path_for(@content_block.photo_2) %></dd>
+  <dt>Photo 2 Image:</dt><dd><%= tag :img,
+          :src => attachment_path_for(@content_block.photo_2),
+          :alt => h(@content_block.name),
+          :data => { :type => "photo-2" } %></dd>
+  <dt>Photo 1:</dt><dd><%= tag :img,
+          :src => attachment_path_for(@content_block.photo_1),
+          :alt => h(@content_block.name),
+          :data => { :type => "photo-1" } %></dd>
+
+</dl>

@@ -1,21 +1,23 @@
-<% first_attachments = true
+<dl>
+    <% first_attachments = true
 
-   # This 'unless' can be removed if :name is no longer assumed to be a default attribute.
-   unless attributes.find {|attr| attr.name == 'name'}
-%><p><b>Name:</b> <%%= @content_block.name %></p><% end %>
-<%- for attribute in attributes -%>
-<%- case attribute.type
-    when :attachment -%>
-<p><b><%= attribute.name.titleize %>:</b> <%%= link_to "<%= attribute.name.titleize %>", attachment_path_for(@content_block.<%= attribute.name %>) %></p>
-    <%- when :attachments
-        if first_attachments
-    -%>
-<p><b>Attachments:</b> <%%= attachment_viewer @content_block %></p>
-<%- first_attachments = false
-    end -%>
-    <%- when :category -%>
-<p><b>Category:</b> <%%= @content_block.category_name %></p>
-    <%- else -%>
-<p><b><%= attribute.name.titleize %>:</b> <%%= @content_block.<%= attribute.name %> %></p>
-  <%- end -%>
-<% end %>
+       # This 'unless' can be removed if :name is no longer assumed to be a default attribute.
+       unless attributes.find {|attr| attr.name == 'name'}
+    %><dt>Name:</dt><dd><%%= show :name %></dd><% end %>
+    <%- for attribute in attributes -%>
+    <%- case attribute.type
+        when :attachment -%>
+    <dt><%= attribute.name.titleize %>:</dt><dd><%%= link_to "<%= attribute.name.titleize %>", attachment_path_for(@content_block.<%= attribute.name %>) %></dd>
+        <%- when :attachments
+            if first_attachments
+        -%>
+    <dt>Attachments:</dt><dd><%%= attachment_viewer @content_block %></dd>
+    <%- first_attachments = false
+        end -%>
+        <%- when :category -%>
+    <dt>Category:</dt><dd><%%= @content_block.category_name %></dd>
+        <%- else -%>
+    <dt><%= attribute.name.titleize %>:</dt><dd><%%= show :<%= attribute.name %> %></dd>
+      <%- end -%>
+    <% end %>
+</dl>
