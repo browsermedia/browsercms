@@ -102,3 +102,27 @@ Then /^the page should show content but not the error$/ do
   assert page.has_content?('hello'), "Should see other content"
   should_see_a_page_named(most_recently_created_page.title)
 end
+
+Given /^there is a portlet that finds content by parameter$/ do
+  @expected_page = create(:public_page)
+  @find_content_portlet = FindCategoryPortlet.create(name: 'Find Content')
+  @expected_page.add_content(@find_content_portlet)
+  @expected_page.publish!
+  @content = create(:category, name: 'I worked')
+end
+
+When /^I view that Find Content Portlet$/ do
+  visit "#{@expected_page.path}?category_id=#{@content.id}"
+end
+
+Then /^I should see the content loaded by that Portlet$/ do
+  should_be_successful
+  should_see_a_page_titled @expected_page.name
+  assert page.has_content?(@content.name)
+  assert page.has_content?("Pass.")
+end
+
+When /^I view that Find Content Portlet in the page editor$/ do
+  visit "#{@expected_page.path}?category_id=#{@content.id}"
+  visit_content_iframe
+end
