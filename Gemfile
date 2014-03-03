@@ -3,7 +3,7 @@ source 'http://rubygems.org'
 ruby '2.0.0'
 
 # Load this project as a gem.
-gemspec :name => "browsercms"
+gemspec
 gem "mysql2"
 
 gem 'yard', :groups=>[:development, :test]
@@ -21,7 +21,6 @@ group :development do
   gem 'rake'
   gem 'debugger'
   gem 'quiet_assets'
-  gem 'artirix_gem_release', :git => "git@gitlab.artirix.com:artirix/artirix_gem_release.git"
 end
 group :test, :development do
   gem 'minitest'
