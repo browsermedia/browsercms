@@ -78,6 +78,10 @@ class Cms::SectionNode < ActiveRecord::Base
   def link?
     node_type == 'Cms::Link'
   end
+  
+  def deletable?
+    !self.root? && (!section? || node.deletable?)
+  end
 
   # @param [Section] section
   # @param [Integer] position

@@ -14,16 +14,18 @@ module Cms
         status_label = "Published"
       end
 
-      # After a page update, all the connector ids change. So we need to send
+      # After a page update, all the connector ids can change. So we need to send
       # the new move up/down/remove paths to client so they will work after an inline update.
-      connectors = @page.current_connectors(params[:container].to_sym)
       routes = []
-      connectors.each do |c|
-        routes << {
-            move_up: cms.move_up_connector_path(c, format: :json),
-            move_down: cms.move_down_connector_path(c, format: :json),
-            remove: cms.connector_path(c, format: :json)
-        }
+      if params[:container]
+        connectors = @page.current_connectors(params[:container].to_sym)
+        connectors.each do |c|
+          routes << {
+              move_up: cms.move_up_connector_path(c, format: :json),
+              move_down: cms.move_down_connector_path(c, format: :json),
+              remove: cms.connector_path(c, format: :json)
+          }
+        end
       end
       results = {
           page_status: page_status,

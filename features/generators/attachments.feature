@@ -18,7 +18,7 @@ Feature: Generate Attachments
     """
     And the file "app/views/petstore/products/render.html.erb" should contain:
     """
-    <p><b>Photo:</b> <%= link_to "Photo", attachment_path_for(@content_block.photo) %></p>
+    <dt>Photo:</dt><dd><%= link_to "Photo", attachment_path_for(@content_block.photo) %></dd>
     """
     And the file "app/views/petstore/products/_form.html.erb" should contain:
     """
@@ -43,7 +43,7 @@ Feature: Generate Attachments
     """
     And the file "app/views/petstore/products/render.html.erb" should contain:
     """
-    <p><b>Attachments:</b> <%= attachment_viewer @content_block %></p>
+    <dt>Attachments:</dt><dd><%= attachment_viewer @content_block %></dd>
     """
     And the file "app/views/petstore/products/_form.html.erb" should contain:
     """
@@ -62,8 +62,8 @@ Feature: Generate Attachments
     """
     And the file "app/views/petstore/products/render.html.erb" should not contain:
     """
-    <p><b>Attachments:</b> <%= attachment_viewer @content_block %></p>
-    <p><b>Attachments:</b> <%= attachment_viewer @content_block %></p>
+    <dt>Attachments:</dt><dd><%= attachment_viewer @content_block %></dd>
+    <dt>Attachments:</dt><dd><%= attachment_viewer @content_block %></dd>
     """
     And the file "app/views/petstore/products/_form.html.erb" should not contain:
     """

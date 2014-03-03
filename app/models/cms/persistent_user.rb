@@ -11,6 +11,7 @@ module Cms
            # Note that Chrome doesn't expire session cookies immediately so test this in other browsers.
            # http://stackoverflow.com/questions/16817229/issues-with-devise-rememberable
            :rememberable,
+           :recoverable,  # Needs to be here so forgot password link works.
            :authentication_keys => [:login]
 
 

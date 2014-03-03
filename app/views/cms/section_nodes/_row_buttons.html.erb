@@ -7,5 +7,5 @@
   <!--<li><%= link_to("Hide", "#", class: 'add-link') unless section_node.root? %></li>-->
   <li><%= link_to 'Remove', engine_aware_path(section_node.node),
                   class: 'add-link http_delete confirm_with_title',
-                  title: "Are you sure you want to remove #{section_node.node.name}?" unless section_node.root? %></li>
+                  title: "Are you sure you want to remove #{section_node.node.name}?" if section_node.deletable? %></li>
 </ul>

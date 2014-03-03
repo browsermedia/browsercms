@@ -26,22 +26,25 @@ Feature: Generate Content Blocks
     """
     And the file "app/views/bcms_widgets/products/render.html.erb" should contain:
     """
-    <p><b>Name:</b> <%= @content_block.name %></p>
-    <p><b>Price:</b> <%= @content_block.price %></p>
+    <dt>Name:</dt><dd><%= show :name %></dd>
+    """
+    And the file "app/views/bcms_widgets/products/render.html.erb" should contain:
+    """
+    <dt>Price:</dt><dd><%= show :price %></dd>
     """
     And a migration named "create_bcms_widgets_products.rb" should contain:
-        """
-        class CreateBcmsWidgetsProducts < ActiveRecord::Migration
-          def change
-            create_content_table :bcms_widgets_products do |t|
-              t.string :name
-              t.string :price
+    """
+    class CreateBcmsWidgetsProducts < ActiveRecord::Migration
+      def change
+        create_content_table :bcms_widgets_products do |t|
+          t.string :name
+          t.string :price
 
-              t.timestamps
-            end
-          end
+          t.timestamps
         end
-        """
+      end
+    end
+    """
     And the file "config/routes.rb" should contain:
     """
     BcmsWidgets::Engine.routes.draw do

@@ -49,9 +49,14 @@ module Cms
     #   </pre>
     def within_content_frame
       if page_has_editor_iframe?
-        visit find(editor_iframe_selector)['src']
+        visit_content_iframe
       end
       yield
+    end
+
+    # View the content iframe as a top level page.
+    def visit_content_iframe
+      visit find(editor_iframe_selector)['src']
     end
 
     def page_has_editor_iframe?

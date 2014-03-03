@@ -16,6 +16,11 @@ module Cms
         super
       end
 
+      def edit
+        use_page_title('Reset Password')
+        super
+      end
+
       protected
 
       # @override [Devise::PasswordsController]

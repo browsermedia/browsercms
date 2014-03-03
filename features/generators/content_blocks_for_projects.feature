@@ -34,8 +34,11 @@ Feature:
     """
     And the file "app/views/petstore/products/render.html.erb" should contain:
     """
-    <p><b>Name:</b> <%= @content_block.name %></p>
-    <p><b>Price:</b> <%= @content_block.price %></p>
+    <dt>Name:</dt><dd><%= show :name %></dd>
+    """
+    And the file "app/views/petstore/products/render.html.erb" should contain:
+    """
+    <dt>Price:</dt><dd><%= show :price %></dd>
     """
     And a migration named "create_petstore_products.rb" should contain:
     """

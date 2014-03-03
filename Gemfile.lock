@@ -10,7 +10,7 @@ GIT
 PATH
   remote: .
   specs:
-    browsercms (4.0.0.alpha)
+    browsercms (4.0.0.beta)
       actionpack-page_caching (~> 1.0)
       ancestry (~> 2.0.0)
       bootstrap-sass
@@ -61,7 +61,7 @@ GEM
     ancestry (2.0.0)
       activerecord (>= 3.0.0)
     ansi (1.4.3)
-    arel (4.0.1)
+    arel (4.0.2)
     aruba (0.5.3)
       childprocess (>= 0.3.6)
       cucumber (>= 1.1.1)

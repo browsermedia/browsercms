@@ -1,0 +1,7 @@
+<% if @category %>
+    Pass. Found category <%= @category.name %>
+<% elsif @expected_parameter.blank? %>
+    Fail. param[:category_id] is missing.
+<% else  %>
+    Fail. Could not find category with param[:category_id] = <%= @expected_parameter %>
+<% end %>
