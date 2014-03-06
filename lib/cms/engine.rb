@@ -116,7 +116,6 @@ module Cms
       ActiveSupport::Dependencies.autoload_paths += %W( #{Rails.root}/app/portlets/helpers )
       ActionController::Base.append_view_path DynamicView.base_path
       ActionController::Base.append_view_path %W( #{self.root}/app/views)
-      ActionView::Base.default_form_builder = Cms::FormBuilder::ContentBlockFormBuilder
       require 'jdbc_adapter' if defined?(JRUBY_VERSION)
     end
 
