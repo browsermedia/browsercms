@@ -9,6 +9,15 @@ SimpleForm.setup do |config|
     b.use :hint, wrap_with: {tag: 'p', class: 'help-block'}
   end
 
+  config.wrappers :browsercms, tag: 'div', class: 'control-group row-fluid', error_class: 'error' do |b|
+    b.use :html5
+    b.use :placeholder
+    b.use :label
+    b.use :input
+    b.use :error, wrap_with: {tag: 'span', class: 'help-inline'}
+    b.use :hint, wrap_with: {tag: 'p', class: 'help-block'}
+  end
+
   config.wrappers :checkbox, :tag => 'div', :class => 'control-group row-fluid', :error_class => 'error' do |b|
     b.use :html5
     b.use :placeholder
