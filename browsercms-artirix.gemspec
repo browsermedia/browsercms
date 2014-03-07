@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + "/lib/cms/version.rb"
 
 Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
-  s.name = "browsercms"
+  s.name = "browsercms-artirix"
   s.version = Cms::VERSION
 
   s.authors = ["BrowserMedia"]
