@@ -129,7 +129,7 @@ module Cms
       app.config.assets.precompile += ['bcms/ckeditor_inline.js', 'bcms/ckeditor.js', 'bcms/ckeditor_standard_config.js']
 
       # Unsure why jquery isn't getting precompiled.
-      app.config.assets.precompile += ['jquery.js']
+      app.config.assets.precompile += ['jquery']
     end
   end
 end
