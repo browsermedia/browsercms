@@ -29,7 +29,8 @@ module Cms
 
         validates_presence_of :name, :format, :handler, :path, :locale
         validates_uniqueness_of :name, :scope => [:format, :handler],
-                                :message => "Must have a unique combination of name, format and handler"
+                                :message => "Must have a unique combination of name, format and handler",
+                                conditions: -> { where(deleted: false) }
 
       end
     end

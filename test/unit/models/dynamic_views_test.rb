@@ -38,4 +38,12 @@ class Cms::DynamicViewsTest < ActiveSupport::TestCase
     assert_equal "Page Partial", Cms::PagePartial.title
     assert_equal "Page Template", Cms::PageTemplate.title
   end
+
+  test "#deleted blocks don't affect uniqueness validation'" do
+    deleted_template = create(:page_template, name: "subpage")
+    deleted_template.destroy
+
+    new_template = create(:page_template, name: "subpage")
+    assert_not_nil new_template
+  end
 end
