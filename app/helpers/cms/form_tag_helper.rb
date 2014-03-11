@@ -11,6 +11,13 @@ module Cms
       simple_form_for(engine_aware_path(object), *(args << options.merge(builder: Cms::FormBuilder::ContentBlockFormBuilder)), &block)
     end
 
+    # Simple wrapper for Rails form_for that will use the CMS CustomFormBuilder.
+    # Can be used by portlets or other random public facing views to render content.
+    def cms_form_for(*args, &block)
+      options = args.extract_options!
+      options.merge!(:builder => Cms::FormBuilder::ContentBlockFormBuilder)
+      form_for(*(args + [options]), &block)
+    end
 
     def forecasting_a_new_section?(form_object)
       Cms::Section.with_path(form_object.object.class.path).first.nil?
