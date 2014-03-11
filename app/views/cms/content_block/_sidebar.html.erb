@@ -12,7 +12,7 @@
           <ul class="unstyled">
             <h4 class="gray">Changes will affect:</h4>
             <% @block.connected_pages.each do |page| %>
-                <li><%= link_to page.name, page_path(page), target: "_blank" %></li>
+                <li><%= link_to page.name, cms.page_path(page), target: "_blank" %></li>
             <% end %>
           </ul>
       <% end %>
