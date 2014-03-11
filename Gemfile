@@ -32,6 +32,7 @@ group :test do
   gem 'poltergeist'
   gem 'm', '~> 1.2'
 
+  gem 'single_test'
   gem 'factory_girl_rails', '3.3.0'
   gem "mocha", :require=>false
   gem "sqlite3-ruby", :require => "sqlite3"

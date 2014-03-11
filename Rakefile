@@ -19,6 +19,7 @@ load 'rails/tasks/engine.rake'
 Bundler::GemHelper.install_tasks
 
 require 'rake/testtask'
+require 'single_test/tasks'
 
 Rake::TestTask.new('units') do |t|
   t.libs << 'lib'
@@ -80,7 +81,7 @@ end
 
 desc 'Runs all the tests, specs and scenarios.'
 task :test => ['project:ensure_db_exists', 'app:test:prepare'] do
-  tests_to_run = ENV['TEST'] ? ["test:single"] : %w(test:units spec test:functionals features)
+  tests_to_run =  %w(test:units spec test:functionals features)
   run_tests(tests_to_run)
 end
 

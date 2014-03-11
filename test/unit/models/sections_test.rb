@@ -146,6 +146,13 @@ module Cms
       assert_decremented section_node_count, Cms::SectionNode.count
     end
 
+    test "Homepage should not be #deletable?" do
+      home = build(:page)
+      home.path = "/"
+
+      refute home.section_node.deletable?, "Should not be able to delete the homepage as this will cause problems for sites."
+    end
+
     def test_creating_page_with_reserved_path
       @section = Cms::Section.new(:name => "FAIL", :path => "/cms")
       assert_not_valid @section
