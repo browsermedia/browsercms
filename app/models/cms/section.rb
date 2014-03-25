@@ -67,7 +67,7 @@ module Cms
     def sections
       child_nodes.of_type(SECTION).fetch_nodes.in_order.collect do |section_node|
         section_node.node
-      end
+      end.compact
     end
 
     alias :child_sections :sections
