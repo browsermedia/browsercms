@@ -4,8 +4,8 @@ module Cms
     CANT_ASSIGN_MESSAGE = "must have permission to assign tasks"
     CANT_BE_ASSIGNED_MESSAGE = "must have permission to be assigned tasks"
     include Cms::DomainSupport
-    belongs_to :assigned_by, :class_name => 'Cms::User'
-    belongs_to :assigned_to, :class_name => 'Cms::User'
+    belongs_to :assigned_by, :class_name => 'Cms::PersistentUser'
+    belongs_to :assigned_to, :class_name => 'Cms::PersistentUser'
     belongs_to :page, :class_name => 'Cms::Page'
 
     extend DefaultAccessible
