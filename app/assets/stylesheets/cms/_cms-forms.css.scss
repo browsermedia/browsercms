@@ -55,7 +55,7 @@
 // Making manual corrections to forms.
 .control-group {
   div.editor {
-    @include rem(margin-top, 3rem);
+    @include rem(margin-top, 4rem);
     textarea {
        height: 400px;
        // Should match CKEditor.
