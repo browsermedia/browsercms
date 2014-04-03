@@ -13,12 +13,16 @@ CKEDITOR.plugins.add('move_content', {
         });
         editor.addCommand('moveContentDown', {
             exec:function (editor) {
+              jQuery(function ($) { 
                 $.cms_editor.moveContent(editor, 'move-down');
+              });
             }
         });
         editor.addCommand('moveContentUp', {
             exec:function (editor) {
+              jQuery(function ($) { 
                 $.cms_editor.moveContent(editor, 'move-up');
+              });
             }
         });
     }
