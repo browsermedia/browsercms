@@ -81,7 +81,7 @@
   <% if !@search_filter.term.blank? && @blocks.size == 0 %>
     <div class="pagination">No results found for '<%= @search_filter.term %>'</div>
   <% elsif @blocks.total_pages > 1 %>
-    <%= render_pagination @blocks, content_type, :order => params[:order], :search => @search_filter.term %>
+    <%= render_pagination @blocks, content_type, :order => params[:order], "search_filter[term]" => @search_filter.term %>
   <% end %>
 
 </div>
