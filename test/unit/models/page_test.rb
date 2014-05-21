@@ -158,6 +158,12 @@ module Cms
 
   class PageTest < ActiveSupport::TestCase
 
+    test "#deletable?" do
+      @page = build(:page, path: "/")
+      assert @page.home?
+      refute @page.deletable?
+    end
+
     def test_creating_page_with_reserved_path
       @page = Cms::Page.new(:name => "FAIL", :path => "/cms")
       assert_not_valid @page

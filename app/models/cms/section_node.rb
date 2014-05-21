@@ -80,7 +80,11 @@ class Cms::SectionNode < ActiveRecord::Base
   end
   
   def deletable?
-    !self.root? && (!section? || node.deletable?)
+    return false if self.root?
+    if node.respond_to?(:deletable?)
+      return node.deletable?
+    end
+    true
   end
 
   # @param [Section] section

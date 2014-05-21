@@ -225,6 +225,8 @@ GEM
     simple_form (3.0.1)
       actionpack (>= 4.0.0, < 4.1)
       activemodel (>= 4.0.0, < 4.1)
+    single_test (0.6.0)
+      rake
     sprockets (2.10.1)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -288,6 +290,7 @@ DEPENDENCIES
   quiet_assets
   rake
   ruby-prof
+  single_test
   sqlite3-ruby
   thin
   uglifier

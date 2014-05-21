@@ -1,5 +1,5 @@
 <div class="email-page-portlet">
-  <%= form_for @email_message, :url => cms.portlet_handler_path(@portlet, "deliver"), :method=>'post' do |f| %>
+  <%= cms_form_for @email_message, :url => cms.portlet_handler_path(@portlet, "deliver"), :method=>'post' do |f| %>
     <%= hidden_field_tag :email_page_portlet_url, @email_page_portlet_url %>
     <%= f.cms_error_messages %>
     <p>

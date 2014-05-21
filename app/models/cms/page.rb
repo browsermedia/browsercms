@@ -379,6 +379,12 @@ class Cms::Page < ActiveRecord::Base
     path == "/"
   end
 
+
+  # @return [Boolean] true if this page can be deleted or not.
+  def deletable?
+    !home?
+  end
+
   # This will return the "top level section" for this page, which is the section directly
   # below the root (a.k.a My Site) that this page is in.  If this page is in root,
   # then this will return root.
