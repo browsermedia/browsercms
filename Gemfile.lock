@@ -10,7 +10,7 @@ GIT
 PATH
   remote: .
   specs:
-    browsercms-artirix (4.0.0.beta)
+    browsercms (4.0.0.beta)
       actionpack-page_caching (~> 1.0)
       ancestry (~> 2.0.0)
       bootstrap-sass
@@ -274,7 +274,7 @@ DEPENDENCIES
   artirix_gem_release!
   aruba
   bluecloth
-  browsercms-artirix!
+  browsercms!
   capybara
   cucumber
   cucumber-rails

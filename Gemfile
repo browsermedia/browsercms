@@ -3,7 +3,7 @@ source 'http://rubygems.org'
 ruby '2.0.0'
 
 # Load this project as a gem.
-gemspec :name => "browsercms-artirix"
+gemspec :name => "browsercms"
 gem "mysql2"
 
 gem 'yard', :groups=>[:development, :test]
