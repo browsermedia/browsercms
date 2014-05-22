@@ -10,7 +10,7 @@ GIT
 PATH
   remote: .
   specs:
-    browsercms (4.0.0.beta.pre.art3)
+    browsercms (4.0.0.beta.pre.art4)
       actionpack-page_caching (~> 1.0)
       ancestry (~> 2.0.0)
       bootstrap-sass
