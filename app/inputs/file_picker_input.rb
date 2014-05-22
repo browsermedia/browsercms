@@ -6,7 +6,7 @@
 # @option options [String] :hint (blank) Helpful tips for the person entering the field, appears blank if nothing is specified.
 class FilePickerInput < SimpleForm::Inputs::Base
 
-  def input
+  def input(wrapper_options)
     # New blocks will not have their attachments created yet.
     object.ensure_attachment_exists if object.respond_to?(:ensure_attachment_exists)
 

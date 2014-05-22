@@ -6,7 +6,7 @@ class TemplateEditorInput < SimpleForm::Inputs::TextInput
     super if render_template_input?
   end
 
-  def input
+  def input(wrapper_options)
     if render_template_input?
       options[:default] = object.class.default_template
       options[:default_handler] = "erb" unless options[:default_handler]
