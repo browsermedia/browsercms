@@ -1,7 +1,7 @@
 Feature: Forms
 
   Editors should be able to create and manage forms to collect information from site visitors. They should be able
-  to build these forms dyamically through the UI.
+  to build these forms dynamically through the UI.
 
   Background:
     Given I am logged in as a Content Editor

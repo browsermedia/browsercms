@@ -78,7 +78,6 @@ GEM
       activesupport (>= 3.0)
     cocaine (0.5.3)
       climate_control (>= 0.0.3, < 1.0)
-    columnize (0.3.6)
     compass (0.12.2)
       chunky_png (~> 1.2)
       fssm (>= 0.2.7)
@@ -97,12 +96,6 @@ GEM
       nokogiri (>= 1.5.0)
     daemons (1.1.9)
     database_cleaner (1.2.0)
-    debugger (1.6.2)
-      columnize (>= 0.3.1)
-      debugger-linecache (~> 1.2.0)
-      debugger-ruby_core_source (~> 1.2.3)
-    debugger-linecache (1.2.0)
-    debugger-ruby_core_source (1.2.3)
     devise (3.2.2)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -259,7 +252,6 @@ DEPENDENCIES
   cucumber
   cucumber-rails
   database_cleaner
-  debugger
   factory_girl_rails (= 3.3.0)
   launchy
   m (~> 1.2)

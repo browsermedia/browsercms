@@ -19,7 +19,7 @@ end
 
 group :development do
   gem 'rake'
-  gem 'debugger'
+  # gem 'debugger'
   gem 'quiet_assets'
 end
 group :test, :development do
