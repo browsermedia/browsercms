@@ -52,13 +52,16 @@ module Cms
     # Same behavior as ContentBlockController#index
     def index
       @form = Cms::Form.where(id: params[:id]).first
-      @blocks = Cms::FormEntry.where(form_id: params[:id]).paginate({page: params[:page], order: params[:order]})
-      @entry = Cms::FormEntry.for(@form)
-
+      
       # Allows us to use the content_block/index view
       @content_type = FauxContentType.new(@form)
       @search_filter = SearchFilter.build(params[:search_filter], Cms::FormEntry)
+        
+      @blocks = Cms::FormEntry.where(form_id: params[:id]).search(@search_filter.term).paginate({page: params[:page], order: params[:order]})
+      @entry = Cms::FormEntry.for(@form)
+
       @total_number_of_items = @blocks.size
+     
     end
 
     def edit
