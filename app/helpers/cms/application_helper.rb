@@ -173,11 +173,11 @@ HTML
       else
         render :partial => "pagination", :locals => {
             :collection => collection,
-            :first_page_path => url_for({:page => 1}.merge(options)),
-            :previous_page_path => url_for({:page => collection.previous_page ? collection.previous_page : 1}.merge(options)),
-            :current_page_path => url_for(options),
-            :next_page_path => url_for({:page => collection.next_page ? collection.next_page : collection.current_page}.merge(options)),
-            :last_page_path => url_for({:page => collection.total_pages}.merge(options))
+            :first_page_path => engine(content_type).url_for({:page => 1}.merge(options)),
+            :previous_page_path => engine(content_type).url_for({:page => collection.previous_page ? collection.previous_page : 1}.merge(options)),
+            :current_page_path => engine(content_type).url_for(options),
+            :next_page_path => engine(content_type).url_for({:page => collection.next_page ? collection.next_page : collection.current_page}.merge(options)),
+            :last_page_path => engine(content_type).url_for({:page => collection.total_pages}.merge(options))
         }
       end
     end
