@@ -32,7 +32,12 @@ module Cms
     end
 
     class FilesystemStrategy
-
+      
+      def self.file_cache_directory
+        Rails.configuration.cms.attachments.file_cache_directory
+      end
+      
+      
       def self.attachments_storage_location
         Rails.configuration.cms.attachments.storage_directory
       end
@@ -42,6 +47,7 @@ module Cms
         style = "original" unless style
         path_to_file = attachment.path(style)
         if File.exists?(path_to_file)
+          copy_file_to_cache(path_to_file, attachment.data_file_path)
           Rails.logger.debug "Sending file #{path_to_file}"
           controller.send_file(path_to_file,
                                :filename => attachment.file_name,
@@ -54,6 +60,19 @@ module Cms
           raise ActiveRecord::RecordNotFound.new(msg)
         end
       end
+    
+      def self.copy_file_to_cache(file_path, cache_path)
+        if file_cache_directory
+          cache_path = File.join(file_cache_directory, cache_path)
+          #remove the filename so we can do a mkdir -p
+          unless File.exists?(cache_path)
+            dir_path = cache_path.split("/")[1..-2].join("/")
+            FileUtils.mkdir_p(File.join("/", dir_path))
+            FileUtils.cp(file_path, cache_path)
+          end  
+        end
+      end
+      
     end
   end
 end

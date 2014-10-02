@@ -17,7 +17,7 @@ module Cms
     before_validation :set_cardinality
     before_save :set_section, :sanitized_file_path_and_name
     before_create :setup_attachment
-
+    after_save :clear_cached_files
     belongs_to :attachable, :polymorphic => true
 
     include DefaultAccessible
@@ -269,5 +269,21 @@ module Cms
       # Seems like a hack, is there a better way?
       self.updated_at = Time.now
     end
+    
+    #ensure all versions of this file are cleared from cache
+    def clear_cached_files
+      if Rails.configuration.cms.attachments.file_cache_directory
+        versions.each do |file|
+          #make sure data_file_path does not start with any ../ since this is user generated
+          sanitized_path=file.data_file_path.gsub(/\A(\.{2}\/)*/, '')
+          path = File.join(Rails.configuration.cms.attachments.file_cache_directory, file.data_file_path)
+          d {path}
+          if File.exists?(path)
+            FileUtils.rm(path)
+          end
+        end
+      end
+    end
+    
   end
 end
