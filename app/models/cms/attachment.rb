@@ -277,7 +277,6 @@ module Cms
           #make sure data_file_path does not start with any ../ since this is user generated
           sanitized_path=file.data_file_path.gsub(/\A(\.{2}\/)*/, '')
           path = File.join(Rails.configuration.cms.attachments.file_cache_directory, file.data_file_path)
-          d {path}
           if File.exists?(path)
             FileUtils.rm(path)
           end
