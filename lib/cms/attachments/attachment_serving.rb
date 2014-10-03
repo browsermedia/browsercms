@@ -69,6 +69,7 @@ module Cms
             dir_path = cache_path.split("/")[1..-2].join("/")
             FileUtils.mkdir_p(File.join("/", dir_path))
             FileUtils.cp(file_path, cache_path)
+            FileUtils.chmod(0644, cache_path)
           end  
         end
       end
