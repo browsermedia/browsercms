@@ -150,7 +150,7 @@ module Cms
 
     def try_to_stream_file
       if is_file?
-        @attachment = Attachment.find_live_by_file_path(request.fullpath)
+        @attachment = Attachment.find_live_by_file_path(request.fullpath.split('?').first)
         send_attachment(@attachment)
       end
 
