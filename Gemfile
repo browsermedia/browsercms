@@ -12,6 +12,8 @@ gem 'bluecloth', :groups=>[:development, :test] # For YARD
 
 gem "thin" # To avoid annoying Ruby 1.9.3/Rails/Webrick warnings - See http://stackoverflow.com/questions/7082364/what-does-warn-could-not-determine-content-length-of-response-body-mean-and-h
 
+# Uncomment to confirm that older versions work (for compaitiblity with Spree 2.2.4/bcms_spree)
+# gem 'paperclip', '~> 3.4.1'
 # For testing behavior in production
 group :production do
   gem 'uglifier'
@@ -19,7 +21,7 @@ end
 
 group :development do
   gem 'rake'
-  gem 'debugger'
+  # gem 'debugger'
   gem 'quiet_assets'
   gem 'artirix_gem_release', :git => "git@gitlab.artirix.com:artirix/artirix_gem_release.git"
 end

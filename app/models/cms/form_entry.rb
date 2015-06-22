@@ -23,6 +23,10 @@ module Cms
 
     class << self
 
+      def search(term)
+        where("data_columns like ?", "%#{term}%")
+      end
+      
       # Create an Entry for a specific Form. It will have validation and accessors based on the fields of the form.
       #
       # @param [Cms::Form] form

@@ -1,4 +1,5 @@
 <% content_for :bulk_actions do %>
     <%= render 'buttons' %>
+	<%= hidden_field_tag :form_id, @form.id %>
 <% end %>
 <%=  render file: 'cms/content_block/index' %>

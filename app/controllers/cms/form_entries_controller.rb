@@ -32,16 +32,36 @@ module Cms
       end
     end
 
+    def bulk_update
+      # Duplicates ContentBlockController#bulk_update
+      ids = params[:content_id] || []
+      models = ids.collect do |id|
+        FormEntry.find(id.to_i)
+      end
+      
+      if params[:commit] == 'Delete'
+        deleted = models.select do |m|
+          m.destroy
+        end
+        flash[:notice] = "Deleted #{deleted.size} records."
+      end
+      
+      redirect_to entries_path(params[:form_id])
+    end
+    
     # Same behavior as ContentBlockController#index
     def index
-      form = Cms::Form.where(id: params[:id]).first
-      @blocks = Cms::FormEntry.where(form_id: params[:id]).paginate({page: params[:page], order: params[:order]})
-      @entry = Cms::FormEntry.for(form)
-
+      @form = Cms::Form.where(id: params[:id]).first
+      
       # Allows us to use the content_block/index view
-      @content_type = FauxContentType.new(form)
+      @content_type = FauxContentType.new(@form)
       @search_filter = SearchFilter.build(params[:search_filter], Cms::FormEntry)
+        
+      @blocks = Cms::FormEntry.where(form_id: params[:id]).search(@search_filter.term).paginate({page: params[:page], order: params[:order]})
+      @entry = Cms::FormEntry.for(@form)
+
       @total_number_of_items = @blocks.size
+     
     end
 
     def edit
@@ -115,5 +135,6 @@ module Cms
     def content_type
       @content_type
     end
+    
   end
 end

@@ -10,7 +10,7 @@
   <%= link_to "<< &nbsp;".html_safe, first_page_path, :id => "first_page_link" %>
   <%= link_to "< &nbsp;".html_safe, previous_page_path, :id => "previous_page_link" %>
     <% url = URI.parse(current_page_path) %>
-    <%= form_tag url.path, :method => :get, :class => "current_page", style: 'display:inline' do %>
+    <%= form_tag engine(content_type).url_for({}), :method => :get, :class => "current_page", style: 'display:inline' do %>
         <% url.query.to_s.split('&').each do |p|
           ; k, v = p.split('=') %>
             <%= hidden_field_tag(k, CGI::unescape(v.to_s), :id => "pagination_hidden_#{k}") unless k == "page" %>
