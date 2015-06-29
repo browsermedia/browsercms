@@ -35,17 +35,36 @@ module Cms
       # See what values are getting copied into template
 #      Rails.logger.warn "Assigned these variables: #{attributes_to_assign}"
 
+      # add mounted helpers if present
+      @_mounted_helpers = Rails.application.routes.try(:mounted_helpers)
+      self.class.include @_mounted_helpers if @_mounted_helpers
+    end
+
+    def method_missing(method, *args, &block)
+      # default url options from App routes
+      return Rails.application.routes.default_url_options if method == :default_url_options
+
+      # try mounted helpers (note: we prefer mounted helper than routes.url_helpers)
+      mounted_helper_method = "_#{method}"
+      if @_mounted_helpers && @_mounted_helpers.respond_to?(mounted_helper_method)
+        return send(mounted_helper_method, *args, &block)
+      end
+
+      # try loading engine (ie: cms => Cms::Engine, my_example => MyExample::Engine)
+      begin
+        engine = "#{method.to_s.camelcase}::Engine".constantize
+        return engine.routes.url_helpers
+      rescue NameError
+        # This means there is no Engine for this model, so its from the main Rails App.
+      end
+
+      super
     end
 
     # We want content_for to be called on the controller's view, not this inner view
     def content_for(name, content=nil, &block)
       Rails.logger.warn "content_for(#{name}, #{content}, block) called."
       @controller.instance_variable_get("@template").content_for(name, content, &block)
-    end
-
-    # Returns the routes for the Cms::Engine for view that need to access them.
-    def cms
-      Cms::Engine.routes.url_helpers
     end
   end
 

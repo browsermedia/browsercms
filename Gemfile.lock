@@ -10,7 +10,7 @@ GIT
 PATH
   remote: .
   specs:
-    browsercms (4.0.0.rc1.art1)
+    browsercms (4.0.0.rc1.art2)
       actionpack-page_caching (~> 1.0)
       ancestry (~> 2.0.0)
       bootstrap-sass
@@ -136,7 +136,7 @@ GEM
       railties (>= 3.0.0)
     faye-websocket (0.4.7)
       eventmachine (>= 0.12.0)
-    ffi (1.9.0)
+    ffi (1.9.9)
     gem-release (0.7.3)
     gherkin (2.12.1)
       multi_json (~> 1.3)
@@ -227,7 +227,7 @@ GEM
     rspec-expectations (2.14.1)
       diff-lcs (>= 1.1.3, < 2.0)
     ruby-prof (0.13.0)
-    sass (3.4.14)
+    sass (3.4.15)
     sass-rails (5.0.3)
       railties (>= 4.0.0, < 5.0)
       sass (~> 3.1)
