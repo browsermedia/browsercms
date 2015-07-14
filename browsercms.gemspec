@@ -33,10 +33,9 @@ Gem::Specification.new do |s|
   s.add_dependency 'rails', '~> 4.0.13'
   s.add_dependency 'devise', '~> 3.0'
 
-  # specific dependencies for fixing compass-rails problem
-  s.add_dependency 'sass-rails', '~> 5.0.1'
-  s.add_dependency 'compass', '~> 1.0.3'
-  s.add_dependency 'compass-rails', '~> 2.0.4'
+  s.add_dependency 'sass-rails'
+  s.add_dependency 'compass'
+  s.add_dependency 'compass-rails'
   s.add_dependency 'bootstrap-sass', '~> 3.2'
 
   s.add_dependency 'ancestry', '~> 2.0.0'

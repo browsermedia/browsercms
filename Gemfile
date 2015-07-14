@@ -4,9 +4,11 @@ source 'http://rubygems.org'
 gemspec :name => "browsercms"
 gem "mysql2"
 
-gem 'sass-rails'
-gem 'compass-rails'
-gem 'bootstrap-sass'
+# for fixing assets in tests
+gem 'sass-rails', '5.0.1'
+gem 'compass', '1.0.3'
+gem 'compass-rails', '2.0.4'
+gem 'bootstrap-sass', '~> 3.2'
 
 gem 'yard', :groups=>[:development, :test]
 gem 'bluecloth', :groups=>[:development, :test] # For YARD
