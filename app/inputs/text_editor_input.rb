@@ -1,6 +1,6 @@
 class TextEditorInput < SimpleForm::Inputs::TextInput
 
-  def input(wrapper_options)
+  def input(_wrapper_options)
     tag_id = "#{object_name}_#{attribute_name}"
     s = template.select_tag(:dhtml_selector,
                                   template.options_for_select([["Rich Text", ""],["Simple Text", "disabled"]],

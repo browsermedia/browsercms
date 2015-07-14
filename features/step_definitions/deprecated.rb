@@ -1,7 +1,3 @@
-Given /^we are using a Rails 4.0 compatible version of cucumber$/ do
-  pending
-end
-
 Given /^I'm creating content which uses deprecated input fields$/ do
   # Avoids printing all the deprecation warnings visiting the following page will result in.
   ActiveSupport::Deprecation.silence do

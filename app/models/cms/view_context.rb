@@ -46,9 +46,7 @@ module Cms
 
       # try mounted helpers (note: we prefer mounted helper than routes.url_helpers)
       mounted_helper_method = "_#{method}"
-      if @_mounted_helpers && @_mounted_helpers.respond_to?(mounted_helper_method)
-        return send(mounted_helper_method, *args, &block)
-      end
+      return send(mounted_helper_method, *args, &block) if @_mounted_helpers && respond_to?(mounted_helper_method)
 
       # try loading engine (ie: cms => Cms::Engine, my_example => MyExample::Engine)
       begin
