@@ -37,7 +37,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'sass-rails', '~> 5.0.1'
   s.add_dependency 'compass', '~> 1.0.3'
   s.add_dependency 'compass-rails', '~> 2.0.4'
-  s.add_dependency 'bootstrap-sass', '~> 3.2.0'
+  s.add_dependency 'bootstrap-sass', '~> 3.2'
 
   s.add_dependency 'ancestry', '~> 2.0.0'
   s.add_dependency 'ckeditor_rails', '~> 4.3.0'
