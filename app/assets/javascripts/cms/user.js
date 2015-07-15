@@ -25,12 +25,12 @@ Cms.User.current = function(handler) {
   });
 };
 
-// Default Handler for login portlet. Hide the form, show 'Hello $first_name'
+// Default Handler for login portlet. Hide the form, show 'Hello $full_name'
 jQuery(function($){
   if ($('.login-portlet').exists()) {
     Cms.User.current({
         authenticated: function(user) {
-          $('.authenticated').show().find('.first-name').html(user.first_name);
+          $('.authenticated').show().find('.user-name').html(user.full_name);
           $('.guest').hide();
         }
       }

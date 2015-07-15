@@ -58,6 +58,19 @@ module Cms
             false
           end
 
+          # checks for usage
+          def cms_user_compatible?
+            true
+          end
+
+          def enable_able?
+            false
+          end
+
+          def disable_able?
+            false
+          end
+
           # Determine if this user has permission to view the specific object. Permissions
           #   are always tied to a specific section. This method can take different input parameters
           #   and will attempt to determine the relevant section to check.

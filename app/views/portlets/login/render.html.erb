@@ -1,10 +1,10 @@
 <div class="login-portlet">
   <%= render 'cms/sites/flash' %>
-  <span class='authenticated' style="display: none">
-      <p>Hello, <span class="first-name"></span></p>
+  <div class='authenticated' style="display: none">
+      <p>Hello, <span class="user-name"></span></p>
       <p><%= link_to "Logout", cms.logout_path %></p>
-  </span>
-  <span class='guest'>
+  </div>
+  <div class='guest'>
     <%= render file: 'cms/sessions/new' %>
-  </span>
+  </div>
 </div>

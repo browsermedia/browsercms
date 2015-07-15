@@ -32,6 +32,8 @@ require 'cms/route_extensions'
 require 'cms/caching'
 require 'cms/error_pages'
 
+require 'cms/users_service'
+
 #Load libraries that are included with CMS
 require 'acts_as_list'
 ActiveRecord::Base.send(:include, ActsAsList)
