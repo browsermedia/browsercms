@@ -304,6 +304,7 @@ module Cms
       begin
         @block.revert_to(to_version)
       rescue Exception => @exception
+        Cms::ErrorHandling::NotifierService.notify @exception
         logger.warn "Could not revert #{@block.inspect} to version #{to_version}"
         logger.warn "#{@exception.message}\n:#{@exception.backtrace.join("\n")}"
         false

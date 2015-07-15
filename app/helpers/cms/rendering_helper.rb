@@ -81,6 +81,7 @@ module Cms
         Rails.logger.warn "Connectable is null"
       end
     rescue Exception => e
+      Cms::ErrorHandling::NotifierService.notify e
       Rails.logger.error "Error occurred while rendering #{content_block.class}##{content_block.id}: #{e.message}\n#{e.backtrace.join("\n")}"
       "ERROR: #{e.message}"
     end

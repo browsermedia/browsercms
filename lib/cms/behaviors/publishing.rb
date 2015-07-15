@@ -101,6 +101,7 @@ module Cms
         def publish
           publish!
         rescue Exception => e
+          Cms::ErrorHandling::NotifierService.notify e
           logger.warn("Could not publish, #{e.class}: #{e.message}\n#{e.backtrace.join("\n")}")
           false
         end
