@@ -12,9 +12,6 @@ rescue LoadError
   RDoc::Task = Rake::RDocTask
 end
 
-# ignoring artirix_gem_release in public github repo
-# require 'artirix_gem_release'
-
 APP_RAKEFILE = File.expand_path("../test/dummy/Rakefile", __FILE__)
 load 'rails/tasks/engine.rake'
 

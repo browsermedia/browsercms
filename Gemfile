@@ -27,9 +27,6 @@ group :development do
   gem 'rake'
   # gem 'debugger'
   gem 'quiet_assets'
-
-  # ignoring artirix_gem_release in public github repo
-  # gem 'artirix_gem_release', :git => "git@gitlab.artirix.com:artirix/artirix_gem_release.git"
 end
 group :test, :development do
   gem 'minitest'
