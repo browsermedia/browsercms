@@ -8,6 +8,8 @@ else
 end
 cmsadmin.save
 
+Cms::UsersService.use_user cmsadmin.login
+
 create_permission(:administrate, :name => "administrate", :full_name => "Administer CMS", :description => "Allows users to administer the CMS, including adding users and groups.")
 create_permission(:edit_content, :name => "edit_content", :full_name => "Edit Content", :description => "Allows users to Add, Edit and Delete both Pages and Blocks. Can Save (but not Publish) and Assign them as well.")
 create_permission(:publish_content, :name => "publish_content", :full_name => "Publish Content", :description => "Allows users to Save and Publish, Hide and Archive both Pages and Blocks.")

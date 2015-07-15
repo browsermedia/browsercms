@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130924162315) do
+ActiveRecord::Schema.define(version: 20150715173336) do
 
   create_table "catalog_versions", force: true do |t|
     t.string   "name"
@@ -119,6 +119,16 @@ ActiveRecord::Schema.define(version: 20130924162315) do
   add_index "cms_connectors", ["connectable_version"], name: "index_cms_connectors_on_connectable_version", using: :btree
   add_index "cms_connectors", ["page_id"], name: "index_cms_connectors_on_page_id", using: :btree
   add_index "cms_connectors", ["page_version"], name: "index_cms_connectors_on_page_version", using: :btree
+
+  create_table "cms_default_users", force: true do |t|
+    t.string   "login"
+    t.string   "full_name"
+    t.text     "extra_data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "cms_default_users", ["login"], name: "index_cms_default_users_on_login", unique: true, using: :btree
 
   create_table "cms_dynamic_view_versions", force: true do |t|
     t.string   "type"

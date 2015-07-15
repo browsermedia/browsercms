@@ -42,11 +42,11 @@ module Cms
       end
 
       def current
-        Thread.current[:cms_user]
+        Cms::UsersService.current
       end
 
       def current=(user)
-        Thread.current[:cms_user] = user
+        Cms::UsersService.current = user
       end
 
       # Return a GuestUser with the given values.
@@ -59,6 +59,20 @@ module Cms
     def guest?
       !!@guest
     end
+
+    # checks for usage
+    def cms_user_compatible?
+      true
+    end
+
+    def enable_able?
+      true
+    end
+
+    def disable_able?
+      true
+    end
+
 
     # Determines if this user should have access to the CMS administration tools. Can be overridden by specific users (like GuestUser)
     # which may not need to check the database for that information.
