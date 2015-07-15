@@ -11,7 +11,7 @@ rescue LoadError
   require 'rake/rdoctask'
   RDoc::Task = Rake::RDocTask
 end
-require 'artirix_gem_release'
+
 APP_RAKEFILE = File.expand_path("../test/dummy/Rakefile", __FILE__)
 load 'rails/tasks/engine.rake'
 
@@ -102,8 +102,7 @@ def run_tests(tests_to_run)
 end
 
 # Build and run against MySQL.
-task 'ci:test' => ['project:setup:mysql', 'db:drop', 'db:create:all', 'db:install', 'test']
-task :default => 'ci:test'
+task :default => ['project:setup:mysql', 'db:drop', 'db:create:all', 'db:install', 'test']
 
 require 'yard'
 YARD::Rake::YardocTask.new do |t|

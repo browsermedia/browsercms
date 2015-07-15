@@ -2,7 +2,7 @@
 <div class="padded row-fluid clearfix">
   <h1 class="span3">Assets</h1>
 
-  <%= form_for @search_filter, url: engine(content_type).url_for({}), html: {class: 'form-search'}, method: :get do |f| %>
+  <%= form_for @search_filter, url: engine(content_type).polymorphic_path(build_path_for(content_type)), html: {class: 'form-search'}, method: :get do |f| %>
       <%= f.text_field :term, class: "span6 search-query right", placeholder: "Search #{content_type.display_name_plural}" %>
   <% end %>
 </div>

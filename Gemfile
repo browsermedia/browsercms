@@ -1,10 +1,14 @@
 source 'http://rubygems.org'
 
-ruby '2.0.0'
-
 # Load this project as a gem.
 gemspec :name => "browsercms"
 gem "mysql2"
+
+# for fixing assets in tests
+gem 'sass-rails', '5.0.1'
+gem 'compass', '1.0.3'
+gem 'compass-rails', '2.0.4'
+gem 'bootstrap-sass', '~> 3.2'
 
 gem 'yard', :groups=>[:development, :test]
 gem 'bluecloth', :groups=>[:development, :test] # For YARD
@@ -23,12 +27,16 @@ group :development do
   gem 'rake'
   # gem 'debugger'
   gem 'quiet_assets'
-  gem 'artirix_gem_release', :git => "git@gitlab.artirix.com:artirix/artirix_gem_release.git"
 end
 group :test, :development do
   gem 'minitest'
   gem 'minitest-rails'
   gem 'minitest-reporters'
+  gem 'pry'
+  gem 'pry-nav'
+  gem 'pry-rescue'
+  gem 'pry-stack_explorer'
+  gem 'pry-doc'
 end
 
 group :test do
@@ -49,3 +57,5 @@ group :test do
   gem 'ruby-prof'
   gem 'aruba'
 end
+
+gem 'codeclimate-test-reporter', group: :test, require: nil

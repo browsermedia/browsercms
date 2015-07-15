@@ -3,7 +3,7 @@
 class CmsTextAreaInput < SimpleForm::Inputs::TextInput
 
   include Cms::FormBuilder::DefaultInput
-  def input(wrapper_options)
+  def input(_wrapper_options = nil)
     extract_default
     @builder.text_area(attribute_name, input_html_options).html_safe
   end

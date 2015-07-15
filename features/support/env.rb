@@ -1,5 +1,9 @@
 # Added for BrowserCMS (to test using test/dummy app)
 ENV["RAILS_ENV"] ||= "test"
+
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
+
 require File.expand_path("../../../test/dummy/config/environment.rb", __FILE__)
 ENV["RAILS_ROOT"] ||= File.dirname(__FILE__) + "../../../test/dummy"
 
