@@ -1,8 +1,8 @@
 source 'http://rubygems.org'
 
 # Load this project as a gem.
-gemspec :name => "browsercms"
-gem "mysql2"
+gemspec name: 'browsercms-artirix'
+gem 'mysql2'
 
 # for fixing assets in tests
 gem 'sass-rails', '5.0.1'
@@ -10,11 +10,11 @@ gem 'compass', '1.0.3'
 gem 'compass-rails', '2.0.4'
 gem 'bootstrap-sass', '~> 3.2'
 
-gem 'yard', :groups=>[:development, :test]
-gem 'bluecloth', :groups=>[:development, :test] # For YARD
+gem 'yard', groups: [:development, :test]
+gem 'bluecloth', groups: [:development, :test] # For YARD
 # gem 'query_reviewer' # Enable for performance tuning
 
-gem "thin" # To avoid annoying Ruby 1.9.3/Rails/Webrick warnings - See http://stackoverflow.com/questions/7082364/what-does-warn-could-not-determine-content-length-of-response-body-mean-and-h
+gem 'thin' # To avoid annoying Ruby 1.9.3/Rails/Webrick warnings - See http://stackoverflow.com/questions/7082364/what-does-warn-could-not-determine-content-length-of-response-body-mean-and-h
 
 # Uncomment to confirm that older versions work (for compaitiblity with Spree 2.2.4/bcms_spree)
 # gem 'paperclip', '~> 3.4.1'
@@ -45,13 +45,13 @@ group :test do
 
   gem 'single_test'
   gem 'factory_girl_rails', '3.3.0'
-  gem "mocha", :require=>false
-  gem "sqlite3-ruby", :require => "sqlite3"
+  gem 'mocha', require: false
+  gem 'sqlite3-ruby', require: 'sqlite3'
 
   # Cucumber and dependencies
   gem 'capybara'
   gem 'database_cleaner'
-  gem 'cucumber-rails', :require=> false
+  gem 'cucumber-rails', require: false
   gem 'cucumber'
   gem 'launchy'
   gem 'ruby-prof'

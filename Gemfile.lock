@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    browsercms (4.0.0.rc1.art3)
+    browsercms-artirix (4.0.0.rc1.art3)
       actionpack-page_caching (~> 1.0)
       ancestry (~> 2.0.0)
       bootstrap-sass (~> 3.2)
@@ -293,7 +293,7 @@ DEPENDENCIES
   aruba
   bluecloth
   bootstrap-sass (~> 3.2)
-  browsercms!
+  browsercms-artirix!
   capybara
   codeclimate-test-reporter
   compass (= 1.0.3)
