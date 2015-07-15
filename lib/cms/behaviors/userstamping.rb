@@ -30,7 +30,7 @@ module Cms
 
       module InstanceMethods
         def set_userstamps
-          current_user = Cms::User.current ? Cms::User.current : nil
+          current_user = Cms::UsersService.current.presence
           if new_record?
             self.created_by = current_user
           end

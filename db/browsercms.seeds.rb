@@ -1,6 +1,6 @@
 require 'cms/data_loader'
 
-Cms::User.current = cmsadmin = Cms::User.new(login: "cmsadmin", first_name: "CMS", last_name:  "Administrator", email: "cmsadmin@example.com")
+cmsadmin = Cms::User.new(login: "cmsadmin", first_name: "CMS", last_name:  "Administrator", email: "cmsadmin@example.com")
 if %w[development test dev local].include?(Rails.env)
   pwd = cmsadmin.change_password('cmsadmin')
 else
