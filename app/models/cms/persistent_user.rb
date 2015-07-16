@@ -3,7 +3,7 @@ module Cms
   # A parent class for users that need to be persisted in the CMS database.
   class PersistentUser < ActiveRecord::Base
 
-    include Cms::UsersService::CmsUserCompatibilityModule
+    include Cms::UsersService.user_compatibility_module
 
     self.table_name = 'cms_users'
 

@@ -25,6 +25,7 @@ module Cms
       def self.included(base)
         base.send :helper_method, :current_user, :logged_in? if base.respond_to? :helper_method
         base.extend ClassMethods
+        base.send :include, Cms::UsersService.controller_module
       end
 
 
