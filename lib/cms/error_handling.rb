@@ -65,7 +65,7 @@ module Cms
 
       def register_notifier_call(callable_object = nil, &block)
         raise ArgumentError unless callable_object.respond_to?(:call) || block_given?
-        @notifiers << callable_object || block
+        @notifiers << (callable_object || block)
       end
 
       private
