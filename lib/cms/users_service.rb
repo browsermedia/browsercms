@@ -13,7 +13,7 @@ class Cms::UsersService
   end
 
   class << self
-    delegate :use_user, :use_guest_user, :guest_user, to: :service
+    delegate :login_user, :use_user, :use_guest_user, :guest_user, to: :service
   end
 
   def self.service
@@ -22,6 +22,13 @@ class Cms::UsersService
 
   def self.reload_service
     @service = new
+  end
+
+  def login_user(login, group_codes: nil)
+    use_user login, group_codes: group_codes
+
+    # TODO: call devise's `sign_in` with this!
+    # sign_in :cms_user, self.class.current
   end
 
   def use_user(login, group_codes: nil)

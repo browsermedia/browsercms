@@ -112,8 +112,8 @@ class ActiveSupport::TestCase
   end
 
   def login_as_cms_admin
-    given_there_is_a_cmsadmin if Cms::User.count == 0
-    admin = Cms::User.first
+    given_there_is_a_cmsadmin if Cms.user_class.count == 0
+    admin = Cms.user_class.first
     login_as(admin)
     admin
   end
@@ -197,7 +197,7 @@ module Cms::IntegrationTestHelper
   end
 
   def login_as_cms_admin
-    login_as(Cms::User.first, "cmsadmin")
+    login_as(Cms.user_class.first, "cmsadmin")
   end
 end
 

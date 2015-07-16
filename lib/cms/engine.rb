@@ -7,6 +7,12 @@ module Cms
     isolate_namespace Cms
 
     config.cms = ActiveSupport::OrderedOptions.new
+
+    # USER BASE defaults
+    config.cms.user_class_name = 'Cms::PersistentUser'
+    config.cms.user_key_field  = :login
+    config.cms.user_name_field = :full_name
+
     config.cms.attachments = ActiveSupport::OrderedOptions.new
 
     # Allows additional menu items to be added to the 'Tools' menu on the Admin tab.
