@@ -49,9 +49,12 @@ class Cms::Group < ActiveRecord::Base
 
   # Finds the guest group, which is a special group that represents public non-logged in users.
   def self.guest
-    with_code(GUEST_CODE).first
+    guest_groups.first
   end
 
+  def self.guest_groups
+    with_code(GUEST_CODE)
+  end
 
   def has_permission?(permission)
     permissions.any? do |p|

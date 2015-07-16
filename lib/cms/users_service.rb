@@ -1,7 +1,6 @@
 class Cms::UsersService
 
-  GUEST_LOGIN = 'guest'
-  GUEST_NAME  = 'Anonymous'
+  GUEST_NAME = 'Anonymous User'
 
   # dirty trick needed for compatibility issues
   # https://amitrmohanty.wordpress.com/2014/01/20/how-to-get-current_user-in-model-and-observer-rails/
@@ -25,8 +24,8 @@ class Cms::UsersService
     @service = new
   end
 
-  def use_user(login)
-    self.class.current = user(login)
+  def use_user(login, group_codes: nil)
+    self.class.current = user(login, group_codes: group_codes)
   end
 
   def use_guest_user
@@ -38,14 +37,20 @@ class Cms::UsersService
   end
 
   private
-  def user(login)
+  def user(login, group_codes: nil)
     load_user(login).tap do |user|
       extend_user(user)
+      add_groups_to_user(user, group_codes) if group_codes
     end
+  end
+
+  def add_groups_to_user(user, group_codes)
+    user.group_codes = Array(group_codes)
   end
 
   def extend_user(user)
     user.send :extend, CmsUserCompatibilityModule unless user.try :cms_user_compatible?
+    user.send :extend, UserGroupsByCodesModule unless user.respond_to? :group_codes=
   end
 
   def load_user(login)
@@ -54,7 +59,7 @@ class Cms::UsersService
 
   def load_guest_user
     params = {
-      Cms.user_key_field  => GUEST_LOGIN,
+      Cms.user_key_field  => Cms::Group::GUEST_CODE,
       Cms.user_name_field => GUEST_NAME
     }
 
@@ -63,7 +68,7 @@ class Cms::UsersService
     end
   end
 
-  class GuestUserModule
+  module GuestUserModule
     def guest?
       true
     end
@@ -74,6 +79,39 @@ class Cms::UsersService
 
     def cms_access?
       false
+    end
+
+    def groups
+      @groups ||= Cms::Group.guest_groups.includes(:permissions)
+    end
+
+    def group
+      groups.first
+    end
+
+    def able_to_edit?(_section)
+      false
+    end
+
+    #You shouldn't be able to save a guest user (but do not fail, as in original BrowserCMS)
+    def update_attribute(_name, _value)
+      false
+    end
+
+    def update_attributes(_attrs = {})
+      false
+    end
+
+    def save(_perform_validation = true)
+      false
+    end
+  end
+
+  module UserGroupsByCodesModule
+    attr_accessor :group_codes
+
+    def groups
+      @groups ||= Cms::Group.with_code(group_codes).includes(:permissions)
     end
   end
 
@@ -99,7 +137,7 @@ class Cms::UsersService
       false
     end
 
-    # add expected columns
+    # add expected columns to objects
     def self.extended(base)
       unless base.respond_to? :login
         base.send :alias_method, :login, Cms.user_key_field.to_sym
@@ -128,20 +166,25 @@ class Cms::UsersService
       end
     end
 
+    # Permissions
+
+    def groups_with_cms_access
+      groups.cms_access
+    end
 
     def permissions
-      @permissions ||= Cms::Permission.where(["#{self.class.table_name}.id = ?", id]).includes({ :groups => :users }).references(:users)
+      @permissions ||= Cms::Permission.by_group_ids groups.map(&:id)
     end
 
     def viewable_sections
-      @viewable_sections ||= Cms::Section.where(["#{self.class.table_name}.id = ?", id]).includes(:groups => :users).references(:users)
+      @viewable_sections ||= Cms::Section.by_group_ids groups.map(&:id)
     end
 
     def modifiable_sections
-      @modifiable_sections ||= Cms::Section.where(["#{self.class.table_name}.id = ? and #{GroupType.table_name}.cms_access = ?", id, true]).includes(:groups => [:group_type, :users]).references(:users, :groups)
+      @modifiable_sections ||= Cms::Section.by_group_ids groups_with_cms_access.map(&:id)
     end
 
-    # Expects a list of names of Permissions
+    # Expects a list of codes of Permissions
     # true if the user has any of the permissions
     def able_to?(*required_permissions)
       perms = required_permissions.map(&:to_sym)
@@ -202,7 +245,7 @@ class Cms::UsersService
     end
 
     def cms_access?
-      groups.cms_access.count > 0
+      groups.cms_access.present?
     end
   end
 end
