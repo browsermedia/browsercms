@@ -4,6 +4,7 @@ require 'cms/configuration'
 require 'cms/version'
 require 'browsercms'
 
+require 'sass'
 require 'sass-rails'
 require 'compass-rails'
 require 'bootstrap-sass'

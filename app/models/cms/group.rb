@@ -36,7 +36,8 @@ class Cms::Group < ActiveRecord::Base
     end
   end
 
-  scope :public, -> { where(["#{Cms::GroupType.table_name}.cms_access = ?", false]).includes(:group_type).references(:group_type) }
+  # `public` scope is defined in rails 4.2
+  scope :public_users, -> { where(["#{Cms::GroupType.table_name}.cms_access = ?", false]).includes(:group_type).references(:group_type) }
   scope :cms_access, -> { where(["#{Cms::GroupType.table_name}.cms_access = ?", true]).includes(:group_type).references(:group_type) }
 
   def guest?
