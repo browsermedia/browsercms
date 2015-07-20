@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    browsercms-artirix (4.0.0.rc1.art3)
+    browsercms-artirix (4.0.0.rc1.art4)
       actionpack-page_caching (~> 1.0)
       ancestry (~> 2.0.0)
       bootstrap-sass (~> 3.2)

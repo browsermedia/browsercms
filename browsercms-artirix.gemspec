@@ -5,7 +5,7 @@ Gem::Specification.new do |s|
   s.name = "browsercms-artirix"
   s.version = Cms::VERSION
 
-  s.authors = ["BrowserMedia"]
+  s.authors = ["BrowserMedia", "Artirix Ltd."]
   s.homepage = "http://www.browsercms.org"
   s.summary = %q{Web Content Management in Rails}
   s.description = %q{BrowserCMS is a general purpose, open source Web Content Management System (CMS) that supports Ruby on Rails v4.0. It can be used as a standalone CMS, added to existing Rails projects or extended using Rails Engines.}
