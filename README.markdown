@@ -1,5 +1,4 @@
-# BrowserCMS: Humane Content Management for Rails
-
+# Artirix Fork of BrowserCMS
 
 [![Build Status](https://travis-ci.org/artirix/browsercms.svg?branch=master)](https://travis-ci.org/artirix/browsercms)
 [![Code Climate](https://codeclimate.com/github/artirix/browsercms.png)](https://codeclimate.com/github/artirix/browsercms)
