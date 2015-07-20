@@ -66,7 +66,14 @@ module Cms
     # We want content_for to be called on the controller's view, not this inner view
     def content_for(name, content=nil, &block)
       Rails.logger.warn "content_for(#{name}, #{content}, block) called."
-      @controller.instance_variable_get("@template").content_for(name, content, &block)
+
+      template = @controller && @controller.instance_variable_get("@template")
+      if template
+        template.content_for(name, content, &block)
+      else
+        Rails.logger.warn "@template inside of @controller is nil. Controller: #{@controller.class}"
+        super
+      end
     end
   end
 
