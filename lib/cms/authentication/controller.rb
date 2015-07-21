@@ -59,9 +59,11 @@ module Cms
       # Returns the current user if logged in. If no user is logged in, returns the 'Guest' user which represents a
       # what a visitor can do without being logged in.
       def current_user
-        @current_user ||= begin
-          Cms::UsersService.current = current_cms_user || Cms::User.guest
-        end
+        @current_user ||= load_current_user
+      end
+
+      def load_current_user
+        Cms::UsersService.use_user(current_cms_user || Cms::User.guest)
       end
 
       # Redirect as appropriate when an access request fails.
