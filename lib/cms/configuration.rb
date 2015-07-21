@@ -44,6 +44,82 @@ module Cms
     def user_class
       user_class_name.to_s.constantize
     end
+
+    def user_class_devise_options
+      Rails.application.config.cms.user_class_devise_options
+    end
+
+    def user_cas_extra_attributes_setter
+      Rails.application.config.cms.user_cas_extra_attributes_setter
+    end
+
+    # DEVISE AND CAS
+    def cas_base_url
+      Rails.application.config.cms.cas_base_url
+    end
+
+    def cas_destination_url
+      Rails.application.config.cms.cas_destination_url
+    end
+
+    def cas_follow_url
+      Rails.application.config.cms.cas_follow_url
+    end
+
+    def cas_logout_url_param
+      Rails.application.config.cms.cas_logout_url_param
+    end
+
+    def cas_login_url
+      Rails.application.config.cms.cas_login_url
+    end
+
+    def cas_logout_url
+      Rails.application.config.cms.cas_logout_url
+    end
+
+    def cas_validate_url
+      Rails.application.config.cms.cas_validate_url
+    end
+
+    def cas_destination_logout_param_name
+      Rails.application.config.cms.cas_destination_logout_param_name
+    end
+
+    def cas_create_user
+      Rails.application.config.cms.cas_create_user
+    end
+
+    def cas_enable_single_sign_out
+      Rails.application.config.cms.cas_enable_single_sign_out
+    end
+
+    def cas_user_identifier
+      Rails.application.config.cms.cas_user_identifier
+    end
+
+    def user_class_devise_validatable?
+      Rails.application.config.cms.user_class_devise_validatable
+    end
+
+    def user_class_devise_recoverable?
+      Rails.application.config.cms.user_class_devise_recoverable
+    end
+
+    def routes_devise_for_options
+      opts = Rails.application.config.cms.routes_devise_for_options.dup
+
+      unless opts.key? :class_name
+        opts[:class_name] = user_class_name
+      end
+
+      opts
+    end
+
+    def routes_devise_scope_sessions
+      Rails.application.config.cms.routes_devise_scope_sessions
+    end
+
   end
 
   module Errors

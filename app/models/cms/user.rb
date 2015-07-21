@@ -2,8 +2,8 @@ module Cms
 
   # Represents a CMS users that is managed through the CMS UI.
   class User < PersistentUser
-    include Devise::Models::Validatable
-    include Devise::Models::Recoverable
+    include Devise::Models::Validatable if Cms.user_class_devise_validatable?
+    include Devise::Models::Recoverable if Cms.user_class_devise_recoverable?
 
     class << self
       # Change a given user's password.

@@ -4,13 +4,6 @@ source 'http://rubygems.org'
 gemspec name: 'browsercms-artirix'
 gem 'mysql2'
 
-# # for fixing assets in tests
-# * compass-rails (2.0.4)
-# * sass-rails (5.0.1)
-# * sprockets (2.12.3)
-# * sprockets-rails (2.2.4)
-
-
 gem 'sass-rails', '5.0.1'
 gem 'compass', '1.0.3'
 gem 'compass-rails', '2.0.4'

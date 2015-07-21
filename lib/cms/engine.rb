@@ -13,6 +13,49 @@ module Cms
     config.cms.user_key_field  = :login
     config.cms.user_name_field = :full_name
 
+    # DEVISE and CAS
+    config.cms.user_class_devise_options = [
+      :database_authenticatable,
+      :rememberable,
+      :recoverable,
+      authentication_keys: [:login]
+    ]
+
+    config.cms.routes_devise_for_options = {
+      skip:        [:sessions],
+      path:        :users,
+      router_name: :cms, # we repeat it in the mapping so devise_cas_authenticatable can work nicely
+      controllers: { passwords: 'cms/passwords' },
+      module:      :devise,
+      # class_name:  nil, # this one is set by Cms Config, using Cms.user_class_name if it's not set
+    }
+
+    config.cms.routes_devise_scope_sessions = [
+      :login,
+      :new_cms_user_session,
+      :cms_user_session,
+      :logout
+    ]
+
+    # Override this with a callable object that will get the user and the extra attributes
+    # on a cas_extra_attributes.
+    config.cms.user_cas_extra_attributes_setter = ->(_user, _extra_attributes) { nil }
+
+    config.cms.user_class_devise_validatable = true
+    config.cms.user_class_devise_recoverable = true
+
+    config.cms.cas_base_url                      = "https://cas.myorganization.com"
+    config.cms.cas_destination_url               = nil
+    config.cms.cas_follow_url                    = nil
+    config.cms.cas_logout_url_param              = nil
+    config.cms.cas_login_url                     = nil
+    config.cms.cas_logout_url                    = nil
+    config.cms.cas_validate_url                  = nil
+    config.cms.cas_destination_logout_param_name = nil
+    config.cms.cas_create_user                   = false
+    config.cms.cas_enable_single_sign_out        = true
+    config.cms.cas_user_identifier               = nil
+
     config.cms.attachments = ActiveSupport::OrderedOptions.new
 
     # Allows additional menu items to be added to the 'Tools' menu on the Admin tab.
@@ -104,7 +147,7 @@ module Cms
     end
 
     # Needed to ensure routes added to the main app by the Engine are available. (Since engine draws its routes after the main app)
-    # Borrrow from Spree as documenented here: https://github.com/rails/rails/issues/11895
+    # Borrow from Spree as documented here: https://github.com/rails/rails/issues/11895
     config.after_initialize do
       Rails.application.routes_reloader.reload!
     end

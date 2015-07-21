@@ -9,12 +9,7 @@ module Cms
 
     # Note that Chrome doesn't expire session cookies immediately so test this in other browsers.
     # http://stackoverflow.com/questions/16817229/issues-with-devise-rememberable
-    devise :database_authenticatable,
-           # Note that Chrome doesn't expire session cookies immediately so test this in other browsers.
-           # http://stackoverflow.com/questions/16817229/issues-with-devise-rememberable
-           :rememberable,
-           :recoverable,  # Needs to be here so forgot password link works.
-           :authentication_keys => [:login]
+    devise *Cms.user_class_devise_options
 
 
     has_many :user_group_memberships, :class_name => 'Cms::UserGroupMembership', foreign_key: :user_id
@@ -33,14 +28,14 @@ module Cms
     class << self
 
       def permitted_params
-        super + [{:group_ids => []}]
+        super + [{ :group_ids => [] }]
       end
 
       # Returns all users that can :edit_content or :publish_content permissions.
       #
       # @return [ActiveRelation<Cms::User>] A scope which will find users with the correct permissions.
       def able_to_edit_or_publish_content
-        where(["#{Permission.table_name}.name = ? OR #{Permission.table_name}.name = ?", "edit_content", "publish_content"]).includes({:groups => :permissions}).references(:permissions)
+        where(["#{Permission.table_name}.name = ? OR #{Permission.table_name}.name = ?", "edit_content", "publish_content"]).includes({ :groups => :permissions }).references(:permissions)
       end
 
       def current
@@ -55,6 +50,12 @@ module Cms
       def guest(options = {})
         Cms::GuestUser.new(options)
       end
+    end
+
+    def cas_extra_attributes=(extra_attributes)
+      self.external_data = extra_attributes.to_json
+      extra_attributes = {}.merge(extra_attributes).symbolize_keys
+      Cms.user_cas_extra_attributes_setter.call self, extra_attributes
     end
 
     def group_codes

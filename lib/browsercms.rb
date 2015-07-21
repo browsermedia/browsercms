@@ -26,6 +26,7 @@ require 'actionpack/page_caching'
 require 'panoramic'
 require 'simple_form'
 require 'devise'
+require 'devise_cas_authenticatable'
 
 require 'cms/engine'
 require 'cms/extensions'

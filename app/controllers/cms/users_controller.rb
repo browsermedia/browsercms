@@ -80,7 +80,7 @@ module Cms
     protected
 
     def cms_user_params
-      params.require("user").permit(Cms::User.permitted_params)
+      params.require(:user).permit(Cms::User.permitted_params)
     end
 
     def after_create_url

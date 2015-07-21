@@ -31,7 +31,7 @@ Devise.setup do |config|
   # session. If you need permissions, you should implement that in a before filter.
   # You can also supply a hash where the value is a boolean determining whether
   # or not authentication should be aborted when the value is not present.
-  config.authentication_keys = [ :login ]
+  config.authentication_keys = [:login]
 
   # Configure parameters from the request object used for authentication. Each entry
   # given should be a request method and it will automatically be passed to the
@@ -43,12 +43,12 @@ Devise.setup do |config|
   # Configure which authentication keys should be case-insensitive.
   # These keys will be downcased upon creating or modifying a user and when used
   # to authenticate or find a user. Default is :email.
-  config.case_insensitive_keys = [ :login ]
+  config.case_insensitive_keys = [:login]
 
   # Configure which authentication keys should have whitespace stripped.
   # These keys will have whitespace before and after removed upon creating or
   # modifying a user and when used to authenticate or find a user. Default is :email.
-  config.strip_whitespace_keys = [ :login ]
+  config.strip_whitespace_keys = [:login]
 
   # Tell if authentication through request.params is enabled. True by default.
   # It can be set to an array that will enable params authentication only for the
@@ -224,7 +224,7 @@ Devise.setup do |config|
   # config.navigational_formats = ['*/*', :html]
 
   # The default HTTP method used to sign out a resource. Default is :delete.
-  config.sign_out_via = :delete
+  config.sign_out_via = [:delete, :post, :get]
 
   # ==> OmniAuth
   # Add a new OmniAuth provider. Check the wiki for more information on setting
@@ -253,4 +253,75 @@ Devise.setup do |config|
   # When using omniauth, Devise cannot automatically set Omniauth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
+end
+
+# override DEVISE CAS
+module Devise
+  def self.cas_action_url(base_url, mapping, action)
+    cas_action_url_factory_class.new(base_url, mapping, action).call
+  end
+
+  def self.cas_action_url_factory_class
+    @cas_action_url_factory_class ||= CasActionUrlFactoryBase.prepare_class
+  end
+
+  class CasActionUrlFactoryBase
+    attr_reader :base_url, :mapping, :action
+
+    def self.prepare_class
+      Class.new(self) do
+        include Rails.application.routes.url_helpers
+        include Rails.application.routes.mounted_helpers if Rails.application.routes.try(:mounted_helpers)
+      end
+    end
+
+    def initialize(base_url, mapping, action)
+      @base_url = base_url
+      @mapping  = mapping
+      @action   = action
+    end
+
+    def call
+      uri = URI.parse(base_url).tap { |uri| uri.query = nil }
+      uri.path = load_base_path
+      uri.to_s
+    end
+
+    alias_method :build, :call
+
+    private
+    def load_base_path
+      load_routes_path || load_mapping_path
+    end
+
+    def load_routes_path
+      router_name = mapping.router_name || Devise.available_router_name
+      context = send(router_name)
+
+      route = "#{mapping.singular}_#{action}_path"
+      if context.respond_to? route
+        context.send route
+      else
+        nil
+      end
+    rescue NameError, NoMemoryError
+      nil
+    end
+
+    def load_mapping_path
+      path = mapping_fullpath || mapping_raw_path
+      path << "/" unless path =~ /\/$/
+      path << action
+      path
+    end
+
+    def mapping_fullpath
+      return nil unless mapping.respond_to?(:fullpath)
+      "#{ENV['RAILS_RELATIVE_URL_ROOT']}#{mapping.fullpath}"
+    end
+
+    def mapping_raw_path
+      "#{ENV['RAILS_RELATIVE_URL_ROOT']}#{mapping.raw_path}"
+    end
+  end
 end
