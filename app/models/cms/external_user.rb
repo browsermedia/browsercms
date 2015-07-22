@@ -6,7 +6,7 @@ module Cms
   #  # Assumes there is an external Crm tool that we look up username/passwords from.
   #  if(SouthparkCrm::Client.authenticate(params[:login], params[:password]))
   #   user = Cms::ExternalUser.authenticate('stan.marsh', 'southpark-crm')
-  #   user.authorize('cms-admin')
+  #   user.authorize(Cms::UsersService::GROUP_CMS_ADMIN)
   # end
   # ```
   class ExternalUser < Cms::PersistentUser

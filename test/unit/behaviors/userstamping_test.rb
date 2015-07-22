@@ -11,7 +11,7 @@ class UserStampingTest < ActiveSupport::TestCase
   end
 
   test "if no current user, then timestamp should be nil" do
-    Cms::User.expects(:current).returns(nil).at_least_once
+    Cms::UsersService.expects(:current).returns(nil).at_least_once
     block = Cms::HtmlBlock.create!(:name=>"A")
 
     assert_nil block.created_by
@@ -19,7 +19,7 @@ class UserStampingTest < ActiveSupport::TestCase
   end
 
   test "if no current user is false, then timestamp should be nil" do
-    Cms::User.expects(:current).returns(false).at_least_once
+    Cms::UsersService.expects(:current).returns(false).at_least_once
     block = Cms::HtmlBlock.create!(:name=>"A")
     assert_nil block.created_by
     assert_nil block.updated_by

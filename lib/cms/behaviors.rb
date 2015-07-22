@@ -32,3 +32,18 @@ Dir["#{File.dirname(__FILE__)}/behaviors/*.rb"].each do |b|
   ActiveRecord::Base.send(:include, "Cms::Behaviors::#{File.basename(b, ".rb").camelize}".constantize)
 end
 
+module ARCompatibilityModule
+  # TODO: modification of changed_attributes is forbidden in later rails -> find alternative
+
+  def compatible_clear_changes_information
+    # for rails 4.2 compat
+    if respond_to?(:clear_changes_information) # rails 4.2
+      clear_changes_information
+    elsif respond_to?(:reset_changes) # rails 4.1
+      reset_changes
+    else
+      changed_attributes.clear # rails < 4.1
+    end
+  end
+end
+ActiveRecord::Base.send(:include, ARCompatibilityModule)

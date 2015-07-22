@@ -20,6 +20,12 @@ module Dummy
 
     config.action_mailer.default_url_options = { :host => "localhost:3000" }
 
+    # overrides of default USERS
+    # config.cms.user_class_name = 'Cms::User'
+    # config.cms.user_key_field  = :login
+    # config.cms.user_name_field = :full_name
+
+
     config.cms.form_builder_css = 'custom-forms'
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

@@ -23,17 +23,21 @@ module Cms
     has_many :group_sections, :class_name => 'Cms::GroupSection'
     has_many :groups, :through => :group_sections, :class_name => 'Cms::Group'
 
-    scope :root, -> { where(['root = ?', true]) }
-    scope :system, -> { where({:name => 'system'}) }
-    scope :hidden, -> { where({:hidden => true}) }
-    scope :not_hidden, -> { where({:hidden => false}) }
+    scope :root, -> { where root: true }
+    scope :system, -> { where name: 'system' }
+    scope :hidden, -> { where hidden: true }
+    scope :not_hidden, -> { where hidden: false }
 
     def self.named(name)
-      where(["#{table_name}.name = ?", name])
+      where name: name
     end
 
     def self.with_path(path)
-      where(["#{table_name}.path = ?", path])
+      where path: path
+    end
+
+    def self.by_group_ids(group_ids)
+      distinct.where("#{Cms::Group.table_name}.id" => group_ids).includes(:groups).references(:groups)
     end
 
     #scope :named, lambda { |name| {-> {where( ["#{table_name}.name = ?", name]} }   )}

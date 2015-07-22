@@ -4,11 +4,12 @@ source 'http://rubygems.org'
 gemspec name: 'browsercms-artirix'
 gem 'mysql2'
 
-# for fixing assets in tests
 gem 'sass-rails', '5.0.1'
 gem 'compass', '1.0.3'
 gem 'compass-rails', '2.0.4'
 gem 'bootstrap-sass', '~> 3.2'
+gem 'sprockets', '2.12.3'
+gem 'sprockets-rails', '2.2.4'
 
 gem 'yard', groups: [:development, :test]
 gem 'bluecloth', groups: [:development, :test] # For YARD

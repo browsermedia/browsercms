@@ -30,10 +30,10 @@ Gem::Specification.new do |s|
 
   s.executables = ["bcms", "browsercms"]
 
-  s.add_dependency 'rails', '~> 4.0.13'
+  s.add_dependency 'rails', '~> 4.0.0'
   s.add_dependency 'devise', '~> 3.0'
+  s.add_dependency 'devise_cas_authenticatable'
 
-  # specific dependencies for fixing compass-rails problem
   s.add_dependency 'sass-rails'
   s.add_dependency 'compass'
   s.add_dependency 'compass-rails'
