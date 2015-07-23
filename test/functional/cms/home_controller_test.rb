@@ -58,7 +58,7 @@ class HomeControllerTest < ActionController::TestCase
   def test_redirected_to_cms_site_if_public_site
     @request.host = "foo.com"
     get :index
-    assert_redirected_to "http://foo.com/cms/login"
+    assert_redirected_to "http://foo.com/cms/users/login"
   end
 
   def test_redirected_to_cms_site_if_public_site_and_logged_in

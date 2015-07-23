@@ -12,14 +12,17 @@ Cms::Engine.routes.draw do
 
   devise_for :cms_users, Cms.routes_devise_for_options
 
-  if Cms.routes_devise_scope_sessions.present?
-    devise_scope :cms_user do
-      get '/login' => 'sessions#new', as: :login if Cms.routes_devise_scope_sessions.include? :login
-      get '/login' => 'sessions#new', as: :new_cms_user_session if Cms.routes_devise_scope_sessions.include? :new_cms_user_session
-      post '/login' => 'sessions#create', as: :cms_user_session if Cms.routes_devise_scope_sessions.include? :cms_user_session
-      get '/logout' => 'sessions#destroy', as: :logout if Cms.routes_devise_scope_sessions.include? :logout
-    end
+  devise_scope :cms_user do
+    controller = Cms.routes_devise_sessions_controller
+    get '/login' => "#{controller}#new", as: :login
+    get '/logout' => "#{controller}#destroy", as: :logout
+
+    # get '/login' => redirect { new_cms_user_session_path }, as: :login
+    # get '/logout' => redirect { destroy_cms_user_session_path }, as: :logout
   end
+
+  #user root path => go to dashboard
+  get '/dashboard' => 'dashboard#index', as: :cms_user_root
 
   get '/toolbar', to: 'toolbar#index', as: 'toolbar'
 

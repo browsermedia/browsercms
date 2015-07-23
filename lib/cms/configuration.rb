@@ -46,7 +46,14 @@ module Cms
     end
 
     def user_class_devise_options
-      Rails.application.config.cms.user_class_devise_options
+      Rails.application.config.cms.user_class_devise_options.dup.tap do |opts|
+        if devise_use_cas_only?
+          opts.delete :database_authenticatable
+          opts.delete :rememberable
+          opts.delete :recoverable
+          opts.unshift(:cas_authenticatable) unless opts.include? :cas_authenticatable
+        end
+      end
     end
 
     def user_cas_extra_attributes_setter
@@ -113,13 +120,34 @@ module Cms
         opts[:class_name] = user_class_name
       end
 
+      opts[:skip] ||= []
+
+      # always skip sessions, we'll add them outside, as BCMS intended.
+      # opts[:skip] << :sessions unless opts[:skip].include? :sessions
+
+      unless devise_allow_registrations?
+        opts[:skip] << :registrations unless opts[:skip].include? :registrations
+      end
+
       opts
     end
 
-    def routes_devise_scope_sessions
-      Rails.application.config.cms.routes_devise_scope_sessions
+    def routes_devise_sessions_controller
+      key = devise_use_cas_only? ? :cas_sessions : :sessions
+      cnts = routes_devise_for_options[:controllers] || {}
+      controller_name = cnts[key] || "devise/#{key}"
+
+      # remove 'cms/' prefix
+      controller_name.gsub /^cms\//, ''
     end
 
+    def devise_use_cas_only?
+      !!Rails.application.config.cms.devise_use_cas_only
+    end
+
+    def devise_allow_registrations?
+      !!Rails.application.config.cms.devise_allow_registrations
+    end
   end
 
   module Errors

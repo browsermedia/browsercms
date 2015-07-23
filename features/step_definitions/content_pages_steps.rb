@@ -25,9 +25,9 @@ end
 
 Given /^I am logged in as a Content Editor(| on the admin subdomain)$/ do |is_admin|
   if is_admin.blank?
-    login_at = '/cms/login'
+    login_at = '/cms/users/login'
   else
-    login_at = 'http://cms.mysite.com/cms/login'
+    login_at = 'http://cms.mysite.com/cms/users/login'
   end
   login_as('cmsadmin', 'cmsadmin', login_at)
 end
@@ -105,7 +105,7 @@ When /^I click on "([^"]*)"$/ do |name|
 end
 
 When /^I am a guest$/ do
-  visit '/cms/logout'
+  visit '/cms/users/logout'
 end
 
 Given /^there is a homepage$/ do
@@ -243,6 +243,10 @@ end
 
 Then /^I should see the Home page$/ do
   should_see_a_page_titled 'Home'
+end
+
+Then /^I should see the Dashboard page$/ do
+  should_see_a_page_titled 'Dashboard'
 end
 
 Then /^I should see the View Text page$/ do

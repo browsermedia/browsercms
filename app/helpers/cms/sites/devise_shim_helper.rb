@@ -11,7 +11,7 @@ module Cms
 
       include DeviseHelper
 
-      # Use public routes (/login) for paths
+      # Use public routes (/cms/users/login) for paths
       include Cms::Sites::AuthenticationHelper
 
 

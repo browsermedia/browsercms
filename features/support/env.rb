@@ -91,3 +91,10 @@ end
 at_exit do
   system "growlnotify -t 'Cucumber Scenarios' -m 'Finished!'"
 end
+
+# `FAST=1 cucumber` to stop on first failure
+# `PRY_ON_ERROR=1 cucumber` to pry on first failure
+After do |scenario|
+  Cucumber.wants_to_quit = ENV['FAST'] && scenario.failed?
+  binding.pry if ENV['PRY_ON_ERROR'] && scenario.failed?
+end

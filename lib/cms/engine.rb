@@ -21,21 +21,25 @@ module Cms
       authentication_keys: [:login]
     ]
 
+    config.cms.devise_use_cas_only        = false
+    config.cms.devise_allow_registrations = true
+
     config.cms.routes_devise_for_options = {
-      skip:        [:sessions],
+      skip:        [],
       path:        :users,
+      path_names:  {
+        sign_in:  'login',
+        sign_out: 'logout'
+      },
       router_name: :cms, # we repeat it in the mapping so devise_cas_authenticatable can work nicely
-      controllers: { passwords: 'cms/passwords' },
+      controllers: {
+        sessions:     'cms/sessions',
+        passwords:    'cms/passwords',
+        cas_sessions: 'cms/cas_sessions',
+      },
       module:      :devise,
       # class_name:  nil, # this one is set by Cms Config, using Cms.user_class_name if it's not set
     }
-
-    config.cms.routes_devise_scope_sessions = [
-      :login,
-      :new_cms_user_session,
-      :cms_user_session,
-      :logout
-    ]
 
     # Override this with a callable object that will get the user and the extra attributes
     # on a cas_extra_attributes.
@@ -120,7 +124,7 @@ module Cms
       #    Keys are looked up based on Class.name.underscore
       # @example:
       #   config.cms.templates['cms/form'] = 'my-form-layout' # app/views/layouts/templates/my-form-layout
-      #   config.cms.templates['cms/sites/sessions_controller'] = 'subpage' # For /login
+      #   config.cms.templates['cms/sites/sessions_controller'] = 'subpage' # For /users/login
       #
       app.config.cms.templates = {}
 

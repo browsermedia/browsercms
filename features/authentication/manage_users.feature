@@ -89,7 +89,7 @@ Feature: Manage Users
     When I login as:
       | login    | password  |
       | testuser | different |
-    Then I should see the Home page
+    Then I should see the Dashboard page
 
   Scenario: Multiple Pages of Users
     Given there are 20 users
