@@ -37,6 +37,19 @@ module Cms
       def save(_perform_validation = true)
         false
       end
+
+      def permissions
+        @permissions ||= Cms.allow_guests? ? load_permissions : Cms::Permission.none
+      end
+
+      def viewable_sections
+        @viewable_sections ||= Cms.allow_guests? ? load_viewable_sections : Cms::Section.none
+      end
+
+      def modifiable_sections
+        @modifiable_sections ||= Cms.allow_guests? ? load_modifiable_sections : Cms::Section.none
+      end
+
     end
   end
 end

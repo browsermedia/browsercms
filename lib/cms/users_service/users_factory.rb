@@ -10,7 +10,7 @@ module Cms
       end
 
       def guest_user
-        load_guest_user.tap { |u| extend_user u }
+        load_guest_user
       end
 
       def user(login, group_codes: nil)
@@ -42,6 +42,7 @@ module Cms
         }
 
         Cms.user_class.new(params).tap do |guest_user|
+          extend_user guest_user
           guest_user.send :extend, GuestUserModule
         end
       end

@@ -9,8 +9,14 @@ module Cms
 
     include Cms::UsersService::GuestUserModule
 
+    DEFAULT_ATTRIBUTES = {
+      login:      Cms::Group::GUEST_CODE,
+      first_name: 'Anonymous',
+      last_name:  'User'
+    }
+
     def initialize(attributes={})
-      super({:login => Cms::Group::GUEST_CODE, :first_name => "Anonymous", :last_name => "User"}.merge(attributes))
+      super DEFAULT_ATTRIBUTES.merge(attributes)
       @guest = true
     end
 

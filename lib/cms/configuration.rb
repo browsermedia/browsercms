@@ -21,11 +21,19 @@ module Cms
     end
 
     def markdown?
-      Object.const_defined?("Markdown")
+      Object.const_defined?('Markdown')
     end
 
     def reserved_paths
-      @reserved_paths ||= ["/cms", "/cache"]
+      @reserved_paths ||= ['/cms', '/cache']
+    end
+
+    def allow_dynamic_views?
+      Rails.application.config.cms.allow_dynamic_views
+    end
+
+    def allow_guests?
+      Rails.application.config.cms.allow_guests
     end
 
     # User Class
@@ -153,7 +161,7 @@ module Cms
   module Errors
     class AccessDenied < StandardError
       def initialize
-        super("Access Denied")
+        super('Access Denied')
       end
     end
 

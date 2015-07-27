@@ -58,15 +58,15 @@ module Cms
       end
 
       def permissions
-        @permissions ||= Cms::Permission.by_group_ids groups.map(&:id)
+        @permissions ||= load_permissions
       end
 
       def viewable_sections
-        @viewable_sections ||= Cms::Section.by_group_ids groups.map(&:id)
+        @viewable_sections ||= load_viewable_sections
       end
 
       def modifiable_sections
-        @modifiable_sections ||= Cms::Section.by_group_ids groups_with_cms_access.map(&:id)
+        @modifiable_sections ||= load_modifiable_sections
       end
 
       # Expects a list of codes of Permissions
@@ -131,6 +131,20 @@ module Cms
 
       def cms_access?
         groups.cms_access.present?
+      end
+
+      private
+
+      def load_permissions
+        Cms::Permission.by_group_ids groups.map(&:id)
+      end
+
+      def load_viewable_sections
+        Cms::Section.by_group_ids groups.map(&:id)
+      end
+
+      def load_modifiable_sections
+        Cms::Section.by_group_ids groups_with_cms_access.map(&:id)
       end
     end
   end

@@ -13,6 +13,7 @@ module Cms
     #
     # @param [Array<Symbol>] methods List of methods to disable security for.
     def self.allow_guests_to(methods)
+      return true unless Cms.allow_guests?
       skip_before_action :redirect_to_cms_site, only: methods
       skip_before_action :authenticate_cms_user!, only: methods
       skip_before_action :cms_access_required, only: methods
