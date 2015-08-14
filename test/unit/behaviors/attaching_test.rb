@@ -310,7 +310,7 @@ module Cms
     end
 
     def then_use_this_strategy_to_send_attachments(strategy)
-      self.expects(:current_user).returns(stub(:able_to_view? => true))
+      self.expects(:current_cms_user).returns(stub(:able_to_view? => true))
       strategy.expects(:send_attachment).with(@attachment, self)
     end
 

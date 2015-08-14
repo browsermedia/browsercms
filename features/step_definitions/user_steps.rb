@@ -85,7 +85,7 @@ Given /^I have a content editor account$/ do
 end
 
 When /^I am logged in$/ do
-  login_as(current_user.login, current_user.password)
+  login_as(current_user.login, current_cms_user.password)
 end
 
 When /^there is another user$/ do
@@ -159,7 +159,7 @@ When /^I look at expired users$/ do
 end
 
 When /^I login to the public site$/ do
-  login_as(current_user.login, current_user.password, "/login")
+  login_as(current_user.login, current_cms_user.password, "/login")
 end
 
 When(/^I login in as an external user (?:again|for the first time)$/) do

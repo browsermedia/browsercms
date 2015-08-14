@@ -47,7 +47,7 @@ module Cms
     def preview
       @mode = "view"
       @page = Page.find_draft(params[:id].to_i)
-      ensure_current_user_can_view(@page)
+      ensure_current_cms_user_can_view(@page)
       render_page
     end
 
@@ -114,7 +114,7 @@ module Cms
         logger.debug "Using cms subdomain is enabled"
         if request_is_for_cms_subdomain?
           logger.debug "User has required a page on the cms subdomain."
-          if current_user.able_to?(:edit_content, :publish_content, :administrate)
+          if current_cms_user.able_to?(:edit_content, :publish_content, :administrate)
             logger.debug "User has access to cms"
             @show_toolbar = true
           else
@@ -126,7 +126,7 @@ module Cms
         end
       else
         logger.debug "Using cms subdomain is disabled"
-        if current_user.able_to?(:edit_content, :publish_content, :administrate)
+        if current_cms_user.able_to?(:edit_content, :publish_content, :administrate)
           @show_toolbar = true
         end
       end
@@ -157,7 +157,7 @@ module Cms
     end
 
     def load_page
-      if current_user.able_to?(:edit_content, :publish_content, :administrate)
+      if current_cms_user.able_to?(:edit_content, :publish_content, :administrate)
         logger.debug "Displaying draft version of page"
         @page = Page.find_draft(@path)
       else
@@ -167,7 +167,7 @@ module Cms
     end
 
     def check_access_to_page
-      ensure_current_user_can_view(@page)
+      ensure_current_cms_user_can_view(@page)
     end
   end
 end

@@ -157,7 +157,7 @@ module Cms
 
     # Determines if the current_user is able to do specific permissions.
     def able_to?(*perms, &block)
-      block.call if current_user.able_to?(*perms)
+      block.call if current_cms_user.able_to?(*perms)
       return ''
     end
 

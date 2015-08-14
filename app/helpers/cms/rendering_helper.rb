@@ -55,7 +55,7 @@ module Cms
 
     # Determines if the current user can edit and is currently editing this content.
     def is_current_user_able_to_edit_this_content?(content)
-      content && logged_in? && edit_mode? && current_user.able_to_edit?(content)
+      content && logged_in? && edit_mode? && current_cms_user.able_to_edit?(content)
     end
 
     # @deprecated

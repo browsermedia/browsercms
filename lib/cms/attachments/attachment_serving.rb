@@ -13,7 +13,7 @@ module Cms
       #   storage = :filesystem -> Cms::Attachments::FilesystemStrategy
       def send_attachment(attachment)
         if attachment
-          raise Cms::Errors::AccessDenied unless current_user.able_to_view?(attachment)
+          raise Cms::Errors::AccessDenied unless current_cms_user.able_to_view?(attachment)
           strategy_class = send_attachments_with
           strategy_class.send_attachment(attachment, self)
         end

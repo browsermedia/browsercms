@@ -37,7 +37,7 @@ module Cms
         session[:mobile_mode] = false
       end
 
-      request.subdomain == "m" || (session[:mobile_mode] == true && current_user.able_to?(:edit_content))
+      request.subdomain == "m" || (session[:mobile_mode] == true && current_cms_user.able_to?(:edit_content))
     end
 
     private

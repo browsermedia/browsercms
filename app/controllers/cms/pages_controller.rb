@@ -73,7 +73,7 @@ module Cms
       define_method status do
         if params[:page_ids]
           @pages = params[:page_ids].map { |id| Page.find(id) }
-          raise Cms::Errors::AccessDenied unless @pages.all? { |page| current_user.able_to_edit?(page) }
+          raise Cms::Errors::AccessDenied unless @pages.all? { |page| current_cms_user.able_to_edit?(page) }
           @pages.each { |page| page.send(status) }
           flash[:notice] = "#{params[:page_ids].size} pages #{verb}"
           redirect_to dashboard_url
@@ -117,7 +117,7 @@ module Cms
     end
 
     def strip_visibility_params
-      unless current_user.able_to?(:publish_content)
+      unless current_cms_user.able_to?(:publish_content)
         params[:page].delete :hidden
         params[:page].delete :archived
         params[:page].delete :visibility
@@ -126,7 +126,7 @@ module Cms
 
     def load_page
       @page = Page.find(params[:id])
-      raise Cms::Errors::AccessDenied unless current_user.able_to_edit?(@page)
+      raise Cms::Errors::AccessDenied unless current_cms_user.able_to_edit?(@page)
     end
 
     def load_draft_page
@@ -136,7 +136,7 @@ module Cms
 
     def load_section
       @section = Section.find(params[:section_id])
-      raise Cms::Errors::AccessDenied unless current_user.able_to_edit?(@section)
+      raise Cms::Errors::AccessDenied unless current_cms_user.able_to_edit?(@section)
     end
 
     def hide_toolbar

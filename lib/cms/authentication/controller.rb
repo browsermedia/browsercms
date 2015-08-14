@@ -43,7 +43,7 @@ module Cms
         def check_permissions(*perms)
           opts = Hash === perms.last ? perms.pop : {}
           before_filter(opts) do |controller|
-            raise Cms::Errors::AccessDenied unless controller.send(:current_user).able_to?(*perms)
+            raise Cms::Errors::AccessDenied unless controller.send(:current_cms_user).able_to?(*perms)
           end
         end
       end
@@ -57,20 +57,9 @@ module Cms
 
       # Returns the current user if logged in. If no user is logged in, returns the 'Guest' user which represents a
       # what a visitor can do without being logged in.
-      # def current_cms_user
-      #   @current_cms_user ||= begin
-      #     Cms::PersistentUser.current = current_cms_user || Cms::User.guest
-      #   end
-      # end
-
       def current_cms_user
-
+        @current_cms_user ||= Cms::PersistentUser.current = warden.authenticate(scope: :cms_user) || Cms::User.guest
       end
-
-      def current_cms_user_with_guest
-        @current_cms_user ||= Cms::PersistentUser.current = current_cms_user_without_guest || Cms::User.guest
-      end
-      alias_method_chain :current_cms_user, :guest
 
       # Redirect as appropriate when an access request fails.
       #

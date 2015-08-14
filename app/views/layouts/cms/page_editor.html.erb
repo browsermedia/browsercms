@@ -51,7 +51,7 @@
                   engine(@page).polymorphic_path([:versions, @page]),
                   :target => "_top",
                   class: "btn btn-small",
-                  :enabled => current_user.able_to_edit?(@page)
+                  :enabled => current_cms_user.able_to_edit?(@page)
       %>
     </div>
 
@@ -62,7 +62,7 @@
                       :id => "delete_button",
                       title: "Are you sure you want to delete '#{@page.name}'?",
                       :target => "_top",
-                      :enabled => current_user.able_to_publish?(@page),
+                      :enabled => current_cms_user.able_to_publish?(@page),
                       class: 'btn btn-small btn-danger http_delete confirm_with_title' %>
       <% end %>
     </div>
@@ -74,7 +74,7 @@
                   class: "btn btn-small",
                   :id => "edit_properties_button",
                   :target => "_top",
-                  :enabled => current_user.able_to_edit?(@page)
+                  :enabled => current_cms_user.able_to_edit?(@page)
       %>
       <%= link_to "Preview", preview_content_path(@page), id: "preview_button", class: 'btn btn-small', target: "_blank" if @page.class.addressable?  %>
 
