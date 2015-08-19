@@ -24,7 +24,7 @@
                 class: "right btn btn-small btn-primary primary-cta http_put",
                 :id => "publish_button",
                 :target => "_top",
-                :enabled => !(!current_user.able_to?(:publish_content) || !current_user.able_to_edit?(@page) || @page.version != @page.draft.version || @page.live?)
+                :enabled => !(!current_cms_user.able_to?(:publish_content) || !current_cms_user.able_to_edit?(@page) || @page.version != @page.draft.version || @page.live?)
     %>
 
     <div class="btn-group">
@@ -36,7 +36,7 @@
                           :target => "_top",
                           :align => 'none',
                           class: 'btn btn-small',
-                          :enabled => !(@page.assigned_to == current_user || !current_user.able_to_edit?(@page))
+                          :enabled => !(@page.assigned_to == current_cms_user || !current_cms_user.able_to_edit?(@page))
               %>
           <% else %>
               <%= link_to "Complete Task",
@@ -44,7 +44,7 @@
                           :id => "complete_task_button",
                           class: 'http_put btn btn-small',
                           :target => "_top",
-                          :enabled => !(@page.assigned_to != current_user || !current_user.able_to_edit?(@page)) %>
+                          :enabled => !(@page.assigned_to != current_cms_user || !current_cms_user.able_to_edit?(@page)) %>
           <% end %>
       <% end %>
       <%= link_to "Versions",
