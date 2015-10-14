@@ -68,10 +68,22 @@ module Cms
 
     def new
       build_block
+
+      if readonly?
+        url = [params[:_redirect_to], engine_aware_path(@block, nil)].map(&:presence).compact.first
+        if url
+          return redirect_to url, alert: 'Read only models cannot be created'
+        else
+          return render_not_implemented
+        end
+      end
+
       set_default_category
     end
 
     def create
+      return render_not_implemented if readonly?
+
       if create_block
         after_create_on_success
       else
@@ -84,9 +96,20 @@ module Cms
 
     def edit
       load_block_draft
+
+      if readonly?
+        url = [params[:_redirect_to], engine_aware_path(@block)].map(&:presence).compact.first
+        if url
+          return redirect_to url, alert: 'Read only models cannot be edited'
+        else
+          return render_not_implemented
+        end
+      end
     end
 
     def update
+      return render_not_implemented if readonly?
+
       if update_block
         after_update_on_success
       else
@@ -100,6 +123,8 @@ module Cms
     end
 
     def destroy
+      return render_not_implemented if readonly?
+
       do_command("deleted") { @block.destroy }
       respond_to do |format|
         format.html { redirect_to_first params[:_redirect_to], engine_aware_path(@block.class) }
@@ -111,11 +136,15 @@ module Cms
     # Additional CMS Action
 
     def publish
+      return render_not_implemented if readonly?
+
       do_command("published") { @block.publish! }
       redirect_to_first params[:_redirect_to], engine_aware_path(@block, nil)
     end
 
     def revert_to
+      return render_not_implemented if readonly?
+
       do_command("reverted to version #{params[:version]}") do
         revert_block(params[:version])
       end
@@ -123,6 +152,8 @@ module Cms
     end
 
     def version
+      return render_not_implemented unless versioned?
+
       load_block
       if params[:version]
         @block = @block.as_of_version(params[:version])
@@ -131,18 +162,28 @@ module Cms
     end
 
     def versions
-      if model_class.versioned?
-        load_block
-      else
-        render :text => "Not Implemented", :status => :not_implemented
-      end
+      return render_not_implemented unless versioned?
+
+      load_block
     end
 
     def new_button_path
-      new_engine_aware_path(content_type)
+      new_engine_aware_path(content_type) unless readonly?
     end
 
     protected
+
+    def render_not_implemented
+      render text: 'Not Implemented', status: :not_implemented
+    end
+
+    def versioned?
+      model_class.versioned?
+    end
+
+    def readonly?
+      model_class.readonly?
+    end
 
     def content_type_name
       self.class.name.sub(/Controller/, '').singularize

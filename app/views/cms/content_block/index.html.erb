@@ -44,7 +44,7 @@
                 <% end %>
               </th>
           <% end %>
-          <% if (content_type.model_class.respond_to?(:created_by)) %>
+          <% if content_type.model_class.respond_to?(:created_by) %>
               <th>Created By</th>
           <% end %>
           <% if content_type.model_class.connectable? %>
@@ -55,15 +55,16 @@
 
         <tbody>
         <% @blocks.each do |block| %>
+          <% pth = block.readonly? ? engine_aware_path(block) : edit_engine_aware_path(block)%>
             <tr>
               <td class="check-cell"><%= check_box_tag 'content_id[]', block.id %></td>
               <% content_type.columns_for_index.each_with_index do |column, i| %>
                   <td>
-                    <%= link_to_if(i == 0, block.send(column[:method]), edit_engine_aware_path(block)) %>
+                    <%= link_to_if(i == 0, block.send(column[:method]), pth) %>
                     <%= draft_icon_tag(block) if i == 0 %>
                   </td>
               <% end %>
-              <% if (content_type.model_class.respond_to?(:created_by)) %>
+              <% if content_type.model_class.respond_to?(:created_by) %>
                   <td><%= block.created_by.try(:full_name) %></td>
               <% end %>
               <% if content_type.model_class.connectable? %>
