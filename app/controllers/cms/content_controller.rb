@@ -75,7 +75,7 @@ module Cms
 
     def render_page
       prepare_connectables_for_render
-      prepend_view_path DynamicView.resolver
+      prepend_view_path DynamicView.resolver if Cms.allow_dynamic_views?
       respond_with @page, determine_page_layout
     end
 

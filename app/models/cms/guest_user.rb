@@ -7,50 +7,17 @@
 module Cms
   class GuestUser < Cms::User
 
+    include Cms::UsersService::GuestUserModule
+
+    DEFAULT_ATTRIBUTES = {
+      login:      Cms::Group::GUEST_CODE,
+      first_name: 'Anonymous',
+      last_name:  'User'
+    }
+
     def initialize(attributes={})
-      super({:login => Cms::Group::GUEST_CODE, :first_name => "Anonymous", :last_name => "User"}.merge(attributes))
+      super DEFAULT_ATTRIBUTES.merge(attributes)
       @guest = true
-    end
-
-    def able_to?(*name)
-      group && group.permissions.count(:conditions => ["name in (?)", name.map(&:to_s)]) > 0
-    end
-
-    # Guests never get access to the CMS.
-    # Overridden from user so that able_to_view? will work correctly.
-    def cms_access?
-      false
-    end
-
-    # Return a list of the sections associated with this user that can be viewed.
-    # Overridden from user so that able_to_view? will work correctly.
-    def viewable_sections
-      group.sections
-    end
-
-    def able_to_edit?(section)
-      false
-    end
-
-    def group
-      @group ||= Cms::Group.guest
-    end
-
-    def groups
-      [group]
-    end
-
-    #You shouldn't be able to save a guest user
-    def update_attribute(name, value)
-      false
-    end
-
-    def update_attributes(attrs={})
-      false
-    end
-
-    def save(perform_validation=true)
-      false
     end
 
   end

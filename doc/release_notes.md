@@ -186,7 +186,7 @@ Devise is now the standard authentication mechanism for BrowserCMS. This adds so
 
 Upgrading to 4.0 means all user passwords will need to be reset. This doesn't apply where external user databases are used (i.e. CAS) for authentication. Just user accounts stored in the CMS itself.
 
-This reset is a side effect of using a more secure password encryption algorithm (bcrypt). When users try to log in, they will have to request a password reset. This feature is provided on /cms/login as a standard feature. Users will need to provide an email, and a link for reseting their password will be sent to them. Alternatively, developers may choose to change passwords via the admin interface (or rails console) before turning over sites to the site maintainers.
+This reset is a side effect of using a more secure password encryption algorithm (bcrypt). When users try to log in, they will have to request a password reset. This feature is provided on /cms/users/login as a standard feature. Users will need to provide an email, and a link for reseting their password will be sent to them. Alternatively, developers may choose to change passwords via the admin interface (or rails console) before turning over sites to the site maintainers.
 
 ### Avoiding a reset
 
@@ -202,7 +202,7 @@ Note that preserving the old password data is just the first step. The new encry
 
 ### Forgot Password
 
-Users can reset their password via the admin UI. On /cms/login, a link to 'Forgot Password' is available. Users can enter an email and have the reset link mailed to them.
+Users can reset their password via the admin UI. On /cms/users/login, a link to 'Forgot Password' is available. Users can enter an email and have the reset link mailed to them.
 
 Configuration: For Forgot Password to work, need to ensure the following is present for mailer in BrowserCMS setups.
     * config.action_mailer.default_url_options = { :host => "yourhost" }
@@ -236,7 +236,7 @@ This implementation is intended to replace CAS based strategies used in BrowserC
 7. Password Reset - Users will need to reset their password after the upgrade. See Devise Integration/Avoiding a reset if this is concern.
 8. Forgot Password - Consider removing any existing ForgotPassword portlets and just use /forgot-password controller.  Creation is disabled by default.
 9. Reset Password Portlet - These have been removed as they were no longer necessary. Any remaining instances have been converted to 'DeprecatedPlaceholders'. Find and remove these portlets (and the page they were on) from your site.
-10. Login Portlet - Consider removing these and using the built in /login route. Creation is disabled by default.
+10. Login Portlet - Consider removing these and using the built in /users/login route. Creation is disabled by default.
 
 ### Migration Cleanup
 

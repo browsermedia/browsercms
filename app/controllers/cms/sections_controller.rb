@@ -89,7 +89,7 @@ module Cms
     end
 
     def public_groups
-      @public_groups ||= Cms::Group.public.order("#{Cms::Group.table_name}.name")
+      @public_groups ||= Cms::Group.public_users.order("#{Cms::Group.table_name}.name")
     end
 
     def cms_groups

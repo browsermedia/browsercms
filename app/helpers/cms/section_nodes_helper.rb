@@ -47,10 +47,10 @@ module Cms
     end
 
     def guest_accessible_icon_tag(parent, content)
-      unless content.accessible_to_guests?(@public_sections, parent)
-        '<span aria-hidden="true" class="permission-icon icon-locked"></span>'.html_safe
-      else
+      if content.accessible_to_guests? @public_sections, parent
         ''
+      else
+        '<span aria-hidden="true" class="permission-icon icon-locked"></span>'.html_safe
       end
     end
 
@@ -76,7 +76,7 @@ module Cms
 
     # Marks a section to determine if it can be opened/closed in the sitemap.
     def closable_data(section_node, children)
-      if (section_node.root?)
+      if section_node.root?
         false
       elsif !children.empty?
         true

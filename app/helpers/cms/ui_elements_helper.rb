@@ -80,13 +80,15 @@ module Cms
     # @option options [Boolean] :enabled
     # @option options [Array<String>] :class An array of additional classes to apply
     def menu_button(label, path, options={})
+      return '' unless path.present?
+
       defaults = {
           enabled: true,
           pull: 'left'
       }
       options = defaults.merge!(options)
-      options[:class] = %w{btn btn-primary}
-      if (options[:pull] == 'left' || options[:pull]== 'right')
+      options[:class] = options[:class].presence || %w{btn btn-primary}
+      if options[:pull] == 'left' || options[:pull] == 'right'
         options[:class] << "pull-#{options.delete(:pull)}"
       end
 

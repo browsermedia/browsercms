@@ -178,14 +178,18 @@
 
 		.btn {
 			margin-bottom: 0;
-          box-shadow: none;
-			@include rem(height,3.75rem);
+			box-shadow: none;
+			@include rem(height, 3.75rem);
 
-			&:first-child {
+			&.btn-init {
 				@include border-radius(5px 0 0 0);
-              line-height: 60px;
 			}
-			&:nth-child(2) {
+
+			&.btn-alone {
+				@include border-radius(5px 5px 0 0);
+			}
+
+			&.btn-end {
 				@include border-radius(0 5px 0 0);
 			}
 		}

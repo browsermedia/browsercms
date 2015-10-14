@@ -168,20 +168,30 @@ HTML
     # @param [Cms::ContentType || Class] content_type The content type of the collection (used to generate links to Previous/Next)
     # @param [Hash] options
     def render_pagination(collection, content_type, options={})
-      if collection.blank?
-        content_tag(:div, "No Content", :class => "pagination")
-      else
-        render :partial => "pagination", :locals => {
-            :collection => collection,
-            :first_page_path => engine(content_type).url_for({:page => 1}.merge(options)),
-            :previous_page_path => engine(content_type).url_for({:page => collection.previous_page ? collection.previous_page : 1}.merge(options)),
-            :current_page_path => engine(content_type).url_for(options),
-            :next_page_path => engine(content_type).url_for({:page => collection.next_page ? collection.next_page : collection.current_page}.merge(options)),
-            :last_page_path => engine(content_type).url_for({:page => collection.total_pages}.merge(options))
-        }
+      return content_tag(:div, 'No Content', :class => 'pagination') if collection.blank?
+
+      paths_options = {
+        first_page_path:    { page: 1 },
+        previous_page_path: { page: collection.previous_page || 1 },
+        current_page_path:  {},
+        next_page_path:     { page: collection.next_page || collection.current_page },
+        last_page_path:     { page: collection.total_pages },
+      }
+
+      locals = {
+        collection:   collection,
+        content_type: content_type,
+      }
+
+      path_for_content_type = build_path_for(content_type)
+
+      paths_options.each do |key, path_options|
+        locals[key] = engine(content_type).polymorphic_path(path_for_content_type, path_options.merge(options))
       end
+
+      render partial: 'pagination', locals: locals
     end
-      
+
     def url_with_mode(url, mode)
       url = "" unless url # Handles cases where request.referrer is nil (see cms/_page_toolbar.html.erb for an example)
       uri = URI.parse(url)

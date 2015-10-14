@@ -1,25 +1,56 @@
 module Cms::RouteExtensions
+  DEFAULT_RESOURCE_ACTIONS = [:index, :show, :new, :create, :edit, :update, :destroy]
 
+  DEFAULT_CONTENT_BLOCKS_OPTIONS = { bulk_update: true }
 
   # Adds all necessary routes to manage a new content type. Works very similar to the Rails _resources_ method, adding basic CRUD routes, as well as additional ones
   #   for CMS specific routes (like versioning)
   #
   # @param [Symbol] content_block_name - The plural name of a new Content Type. Should match the name of the model_class, like :dogs or :donation_statuses
-  def content_blocks(content_block_name, options={}, & block)
+  def content_blocks(content_block_name, options = {}, &block)
+    options     = DEFAULT_CONTENT_BLOCKS_OPTIONS.merge options
     model_class = guess_model_class(content_block_name)
 
-    resources content_block_name do
-      member do
-        put :publish if model_class.publishable?
-        if model_class.versioned?
-          get :versions
-          get 'version/:version', to: "#{content_block_name}#version", as: 'version'
-          put 'revert_to/:version', to: "#{content_block_name}#revert_to", as: 'revert'
+    # options to
+    bulk_update = options.delete :bulk_update
+
+    only = options.delete(:only) || DEFAULT_RESOURCE_ACTIONS.dup
+
+    if model_class.readonly?
+      only.delete :new
+      only.delete :create
+      only.delete :edit
+      only.delete :update
+      only.delete :destroy
+
+      bulk_update = false
+    end
+
+    options[:only] = only unless only == DEFAULT_RESOURCE_ACTIONS
+
+    # pass the options only if any present
+    resources_args = [content_block_name]
+    resources_args << options if options.present?
+
+    resources(*resources_args) do
+      if model_class.publishable? || model_class.versioned?
+        member do
+          put :publish if model_class.publishable?
+          if model_class.versioned?
+            get :versions
+            get 'version/:version', to: "#{content_block_name}#version", as: 'version'
+            put 'revert_to/:version', to: "#{content_block_name}#revert_to", as: 'revert'
+          end
         end
       end
-      collection do
-        put :update, to: "#{content_block_name}#bulk_update"
+
+      if bulk_update
+        collection do
+          put :update, to: "#{content_block_name}#bulk_update"
+        end
       end
+
+      yield if block_given?
     end
   end
 
@@ -40,11 +71,11 @@ module Cms::RouteExtensions
 
     # Add User management features
     devise_for :cms_user,
-               class_name: 'Cms::User',
-               path: '',
-               skip: :password,
-               path_names: {sign_in: 'login'},
-               controllers: {sessions: 'cms/sites/sessions'}
+               class_name:  Cms.user_class_name,
+               path:        '',
+               skip:        :password,
+               path_names:  { sign_in: 'login' },
+               controllers: { sessions: 'cms/sites/sessions' }
 
     devise_scope :cms_user do
       get '/forgot-password' => "cms/sites/passwords#new", :as => 'forgot_password'
@@ -70,10 +101,10 @@ module Cms::RouteExtensions
 
   def guess_model_class(content_block_name)
     content_name = content_block_name.to_s.classify
-    prefix = determine_model_prefix
+    prefix       = determine_model_prefix
     begin
       namespaced_model_name = "#{Cms::Module.current_namespace}::#{content_name}"
-      model_class = namespaced_model_name.constantize
+      model_class           = namespaced_model_name.constantize
     rescue NameError
       model_class = "#{prefix}#{content_name}".constantize
     end
@@ -102,8 +133,8 @@ module Cms::RouteExtensions
   # I.e. /cms/forms/:id/inline
   def add_inline_content_route(base_route_name, klass)
     denamespaced_controller = klass.name.demodulize.pluralize.underscore
-    module_name = klass.name.deconstantize.underscore
-    inline_route_name = "#{base_route_name}_inline"
+    module_name             = klass.name.deconstantize.underscore
+    inline_route_name       = "#{base_route_name}_inline"
     unless route_exists?(inline_route_name)
       klass.content_type.engine_class.routes.prepend do
         if klass.content_type.main_app_model?
@@ -129,9 +160,9 @@ module Cms::RouteExtensions
 
   # I.e. /forms/:slug
   def add_show_via_slug_route(base_route_name, klass)
-    slug_path = "#{klass.path}/:slug"
+    slug_path             = "#{klass.path}/:slug"
     namespaced_controller = klass.name.underscore.pluralize
-    slug_path_name = "#{base_route_name}_slug"
+    slug_path_name        = "#{base_route_name}_slug"
     # Add route to main application (By doing this here, we ensure all ContentBlock constants have already been load)
     # Engines don't process their routes until after the main routes are created.
     unless route_exists?(slug_path_name)

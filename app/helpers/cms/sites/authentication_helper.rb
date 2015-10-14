@@ -6,6 +6,7 @@ module Cms
     module AuthenticationHelper
 
       def new_session_path(resource_name)
+        # login_path
         main_app.new_cms_user_session_path
       end
 

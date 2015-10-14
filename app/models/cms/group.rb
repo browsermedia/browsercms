@@ -6,7 +6,7 @@ class Cms::Group < ActiveRecord::Base
   GUEST_CODE = "guest"
 
   has_many :user_group_memberships, :class_name => 'Cms::UserGroupMembership'
-  has_many :users, :through => :user_group_memberships, :class_name => 'Cms::PersistentUser'
+  has_many :users, :through => :user_group_memberships, :class_name => Cms.user_class_name
 
   has_many :group_permissions, :class_name => 'Cms::GroupPermission'
   has_many :permissions, :through => :group_permissions, :class_name => 'Cms::Permission'
@@ -36,7 +36,8 @@ class Cms::Group < ActiveRecord::Base
     end
   end
 
-  scope :public, -> { where(["#{Cms::GroupType.table_name}.cms_access = ?", false]).includes(:group_type).references(:group_type) }
+  # `public` scope is defined in rails 4.2
+  scope :public_users, -> { where(["#{Cms::GroupType.table_name}.cms_access = ?", false]).includes(:group_type).references(:group_type) }
   scope :cms_access, -> { where(["#{Cms::GroupType.table_name}.cms_access = ?", true]).includes(:group_type).references(:group_type) }
 
   def guest?
@@ -49,9 +50,12 @@ class Cms::Group < ActiveRecord::Base
 
   # Finds the guest group, which is a special group that represents public non-logged in users.
   def self.guest
-    with_code(GUEST_CODE).first
+    guest_groups.first
   end
 
+  def self.guest_groups
+    with_code(GUEST_CODE)
+  end
 
   def has_permission?(permission)
     permissions.any? do |p|

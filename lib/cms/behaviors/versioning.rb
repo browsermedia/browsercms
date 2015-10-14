@@ -36,9 +36,7 @@ module Cms
         obj.after_as_of_version if obj.respond_to?(:after_as_of_version)
 
         # Last but not least, clear the changed attributes
-        if changed_attrs = obj.send(:changed_attributes)
-          changed_attrs.clear
-        end
+        obj.compatible_clear_changes_information
 
         obj
       end
@@ -220,15 +218,21 @@ module Cms
           self.skip_callbacks = false
           unless different_from_last_draft?
             logger.debug { "No difference between this version and last. Skipping save" }
-            self.skip_callbacks = true
-            return true
+            if !published && publish_on_save
+              logger.debug { "Publishing current draft version" }
+              return publish
+            else
+              self.skip_callbacks = true
+              return true
+            end
           end
           logger.debug { "Saving #{self.class} #{self.attributes}" }
           if new_record?
             self.version = 1
             # This should call ActiveRecord::Callbacks#create_or_update, which will correctly trigger the :save callback_chain
             saved_correctly = super
-            changed_attributes.clear
+
+            compatible_clear_changes_information
           else
             logger.debug { "#{self.class}#update" }
             # Because we are 'skipping' the normal ActiveRecord update here, we must manually call the save callback chain.

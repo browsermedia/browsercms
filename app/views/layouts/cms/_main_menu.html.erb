@@ -57,16 +57,20 @@
 
     <% if current_user.able_to?(:edit_content) %>
     <div class="btn-group">
-      <%= menu_button "New", new_button_path, id: 'new-content-button', class: 'btn btn-primary', tabindex: '-1' %>
-      <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown" tabindex="-1">
+      <% pth = new_button_path %>
+      <%= menu_button 'New', pth, id: 'new-content-button', class: %w(btn btn-primary btn-init), tabindex: '-1' if pth.present? %>
+      <button class="btn btn-primary dropdown-toggle <%= pth.present? ? 'btn-end' : 'btn-alone' %>" data-toggle="dropdown" tabindex="-1">
         <span class="caret"></span>
       </button>
       <ul class="dropdown-menu pull-right">
         <%= render 'cms/toolbar/new_pages_menu' %>
         <% modules = Cms::ContentType.available_by_module
            modules.keys.sort.each_with_index do |module_name, i| %>
+            <% mods = modules[module_name].reject(&:readonly?) %>
+            <% next unless mods.present? %>
+
             <%= divider_tag(i) %>
-            <% modules[module_name].each do |type| %>
+            <% mods.each do |type| %>
                 <%= nav_link_to h(type.display_name), new_engine_aware_path(type), id: "create_new_#{type.param_key}" %>
             <% end -%>
         <% end %>

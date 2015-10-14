@@ -1,12 +1,17 @@
 require 'cms/data_loader'
 
-Cms::User.current = cmsadmin = Cms::User.new(login: "cmsadmin", first_name: "CMS", last_name:  "Administrator", email: "cmsadmin@example.com")
+cmsadmin = Cms::User.new(login: "cmsadmin", first_name: "CMS", last_name:  "Administrator", email: "cmsadmin@example.com")
 if %w[development test dev local].include?(Rails.env)
   pwd = cmsadmin.change_password('cmsadmin')
 else
   pwd = cmsadmin.new_password
 end
 cmsadmin.save
+
+default_cmsadmin = Cms::DefaultUser.new login: 'cmsadmin', full_name: 'CMS Administrator'
+default_cmsadmin.save!
+
+Cms::UsersService.use_user_by_login cmsadmin.login
 
 create_permission(:administrate, :name => "administrate", :full_name => "Administer CMS", :description => "Allows users to administer the CMS, including adding users and groups.")
 create_permission(:edit_content, :name => "edit_content", :full_name => "Edit Content", :description => "Allows users to Add, Edit and Delete both Pages and Blocks. Can Save (but not Publish) and Assign them as well.")
@@ -20,8 +25,8 @@ group_types(:cms_user).permissions<<permissions(:edit_content)
 group_types(:cms_user).permissions<<permissions(:publish_content)
 
 create_group(:guest, :name => 'Guest', :code => 'guest', :group_type => group_types(:guest_group_type))
-create_group(:content_admin, :name => 'Cms Administrators', :code => 'cms-admin', :group_type => group_types(:cms_user))
-create_group(:content_editor, :name => 'Content Editors', :code => 'content-editor', :group_type => group_types(:cms_user))
+create_group(:content_admin, :name => 'Cms Administrators', :code => Cms::UsersService::GROUP_CMS_ADMIN, :group_type => group_types(:cms_user))
+create_group(:content_editor, :name => 'Content Editors', :code => Cms::UsersService::GROUP_CONTENT_EDITOR, :group_type => group_types(:cms_user))
 cmsadmin.groups << groups(:content_admin)
 cmsadmin.groups << groups(:content_editor)
 

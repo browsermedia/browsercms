@@ -1,5 +1,9 @@
 # Added for BrowserCMS (to test using test/dummy app)
 ENV["RAILS_ENV"] ||= "test"
+
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
+
 require File.expand_path("../../../test/dummy/config/environment.rb", __FILE__)
 ENV["RAILS_ROOT"] ||= File.dirname(__FILE__) + "../../../test/dummy"
 
@@ -86,4 +90,11 @@ end
 
 at_exit do
   system "growlnotify -t 'Cucumber Scenarios' -m 'Finished!'"
+end
+
+# `FAST=1 cucumber` to stop on first failure
+# `PRY_ON_ERROR=1 cucumber` to pry on first failure
+After do |scenario|
+  Cucumber.wants_to_quit = ENV['FAST'] && scenario.failed?
+  binding.pry if ENV['PRY_ON_ERROR'] && scenario.failed?
 end

@@ -15,8 +15,9 @@ module Cms
         def acts_as_content_block(options={})
           defaults = {
               # Set default values here.
-              :allow_attachments => true,
-              :content_module => true
+              allow_attachments: true,
+              content_module: true,
+              readonly: false,
           }
           options = defaults.merge(options)
 
@@ -26,6 +27,7 @@ module Cms
 
           extend Cms::DefaultAccessible
           allow_attachments if options[:allow_attachments]
+          is_readonly if options[:readonly]
           is_archivable(options[:archiveable].is_a?(Hash) ? options[:archiveable] : {}) unless options[:archiveable] == false
           is_connectable(options[:connectable].is_a?(Hash) ? options[:connectable] : {}) unless options[:connectable] == false
           flush_cache_on_change(options[:flush_cache_on_change].is_a?(Hash) ? options[:flush_cache_on_change] : {}) unless options[:flush_cache_on_change] == false

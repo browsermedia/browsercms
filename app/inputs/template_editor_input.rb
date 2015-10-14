@@ -2,11 +2,11 @@ class TemplateEditorInput < SimpleForm::Inputs::TextInput
 
   include Cms::FormBuilder::DefaultInput
 
-  def label
+  def label(_wrapper_options = nil)
     super if render_template_input?
   end
 
-  def input
+  def input(_wrapper_options = nil)
     if render_template_input?
       options[:default] = object.class.default_template
       options[:default_handler] = "erb" unless options[:default_handler]

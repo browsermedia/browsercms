@@ -4,8 +4,10 @@ require 'cms/configuration'
 require 'cms/version'
 require 'browsercms'
 
-require 'bootstrap-sass'
+require 'sass'
+require 'sass-rails'
 require 'compass-rails'
+require 'bootstrap-sass'
 
 # Gem name is different than file name
 # Must be required FIRST, so that our assets paths appear before its do.
@@ -24,12 +26,15 @@ require 'actionpack/page_caching'
 require 'panoramic'
 require 'simple_form'
 require 'devise'
+require 'devise_cas_authenticatable'
 
 require 'cms/engine'
 require 'cms/extensions'
 require 'cms/route_extensions'
 require 'cms/caching'
 require 'cms/error_pages'
+
+require 'cms/users_service'
 
 #Load libraries that are included with CMS
 require 'acts_as_list'

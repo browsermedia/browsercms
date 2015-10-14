@@ -13,6 +13,10 @@ module Cms
 
     DEFAULT_CONTENT_TYPE_NAME = 'Cms::HtmlBlock'
 
+    def readonly?
+      model_class.readonly?
+    end
+
     class << self
       def named(name)
         [Cms::ContentType.new(name: name)]

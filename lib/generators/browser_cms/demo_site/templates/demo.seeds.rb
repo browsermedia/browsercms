@@ -2,7 +2,7 @@ require 'cms/data_loader'
 include Cms::DataLoader
 
 # Load up data that was created in load seed data migration
-Cms::User.current = Cms::User.first(:conditions => {:login => 'cmsadmin'})
+Cms::UsersService.current = Cms::User.first(:conditions => {:login => 'cmsadmin'})
 root_section = Cms::Section.root.first
 home_page = Cms::Page.first(:conditions => {:name => "Home"})
 

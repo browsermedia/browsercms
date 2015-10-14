@@ -85,7 +85,7 @@ module Cms
         end
 
         def validates_attachment_presence(name, options = {})
-          message = options[:message] || "Must provide at least one #{name}"
+          message = options.delete(:message) || "Must provide at least one #{name}"
           validate(options) do |record|
             return if record.deleted?
             unless record.attachments.any? { |a| a.attachment_name == name.to_s }

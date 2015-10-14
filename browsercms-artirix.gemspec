@@ -2,10 +2,10 @@ require File.dirname(__FILE__) + "/lib/cms/version.rb"
 
 Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
-  s.name = "browsercms"
+  s.name = "browsercms-artirix"
   s.version = Cms::VERSION
 
-  s.authors = ["BrowserMedia"]
+  s.authors = ["BrowserMedia", "Artirix Ltd."]
   s.homepage = "http://www.browsercms.org"
   s.summary = %q{Web Content Management in Rails}
   s.description = %q{BrowserCMS is a general purpose, open source Web Content Management System (CMS) that supports Ruby on Rails v4.0. It can be used as a standalone CMS, added to existing Rails projects or extended using Rails Engines.}
@@ -30,24 +30,28 @@ Gem::Specification.new do |s|
 
   s.executables = ["bcms", "browsercms"]
 
-  s.add_dependency("rails", "~> 4.0.0")
-  s.add_dependency("devise", "~> 3.0")
-  s.add_dependency("sass-rails")
-  s.add_dependency("bootstrap-sass")
-  s.add_dependency("compass-rails", "~> 1.1.3")
-  s.add_dependency("ancestry", "~> 2.0.0")
-  s.add_dependency("ckeditor_rails", "~> 4.3.0")
-  s.add_dependency("underscore-rails", "~> 1.4")
-  s.add_dependency("jquery-rails", "~> 3.1")
-  s.add_dependency("jquery-ui-rails", "~> 4.1")
-  s.add_dependency("paperclip", "~> 3.4")
-  s.add_dependency("panoramic")
-  s.add_dependency("will_paginate", "~>3.0.0")
-  s.add_dependency("actionpack-page_caching", "~>1.0")
-  s.add_dependency("simple_form", ">= 3.0.0.rc", "< 3.1")
+  s.add_dependency 'rails', '~> 4.0.0'
+  s.add_dependency 'devise', '~> 3.0'
+  s.add_dependency 'devise_cas_authenticatable', '~> 1.5'
+
+  s.add_dependency 'sass-rails'
+  s.add_dependency 'compass'
+  s.add_dependency 'compass-rails'
+  s.add_dependency 'bootstrap-sass', '~> 3.2'
+
+  s.add_dependency 'ancestry', '~> 2.0.0'
+  s.add_dependency 'ckeditor_rails', '~> 4.3.0'
+  s.add_dependency 'underscore-rails', '~> 1.4'
+  s.add_dependency 'jquery-rails', '~> 3.1'
+  s.add_dependency 'jquery-ui-rails', '~> 4.1'
+  s.add_dependency 'paperclip', '~> 3.4'
+  s.add_dependency 'panoramic'
+  s.add_dependency 'will_paginate', '~>3.0.0'
+  s.add_dependency 'actionpack-page_caching', '~>1.0'
+  s.add_dependency 'simple_form', '>= 3.0.0.rc', '< 3.1'
 
   # Required only for bcms-upgrade
-  s.add_dependency "term-ansicolor"
+  s.add_dependency 'term-ansicolor'
 
 end
 

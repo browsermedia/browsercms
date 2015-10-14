@@ -1,4 +1,9 @@
-# BrowserCMS: Humane Content Management for Rails
+# Artirix Fork of BrowserCMS
+
+[![Build Status](https://travis-ci.org/artirix/browsercms.svg?branch=master)](https://travis-ci.org/artirix/browsercms)
+[![Code Climate](https://codeclimate.com/github/artirix/browsercms.png)](https://codeclimate.com/github/artirix/browsercms)
+[![Code Climate Coverage](https://codeclimate.com/github/artirix/browsercms/coverage.png)](https://codeclimate.com/github/artirix/browsercms)
+
 
 BrowserCMS is a general purpose, open source Web Content Management System (CMS) that supports Ruby on Rails v4.0. It can be used as a standalone CMS, added to existing Rails projects or extended using Rails Engines. It is designed to support three distinct groups of users:
 

@@ -405,11 +405,11 @@ module Cms
     def setup
       @first_guy = create(:user, :login => "first_guy")
       @next_guy = create(:user, :login => "next_guy")
-      Cms::User.current = @first_guy
+      Cms::UsersService.current = @first_guy
     end
 
     def teardown
-      Cms::User.current = nil
+      Cms::UsersService.current = nil
     end
 
     def test_user_stamps_are_applied_to_versions
@@ -418,7 +418,7 @@ module Cms
       assert_equal page, page.draft.page
       assert_equal @first_guy, page.updated_by
 
-      Cms::User.current = @new_guy
+      Cms::UsersService.current = @new_guy
 
       page.update(:name => "Something Different", :publish_on_save => false)
 

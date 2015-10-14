@@ -64,6 +64,12 @@ describe 'Publishing' do
       draft_block.versions.size.must_equal 1
     end
 
+    it "should publish a draft block, without creating a version, when saving 1st draft version as published" do
+      draft_block.save.must_equal true
+      draft_block.must_be_published
+      draft_block.versions.size.must_equal 1
+    end
+
     it "should return false if there was no draft copy to publish" do
       block.publish.must_equal false
       block.must_be_published

@@ -46,9 +46,9 @@
             <td>
               <%= link_to("Change Password", [:change_password, user.becomes(Cms::User)], :id => "change_password_button", :class => "btn btn-primary btn-mini") if user.password_changeable? %>
               <% if user.expired? %>
-                  <%= link_to("Enable", [:enable, user.becomes(Cms::User)], :class => "http_put btn btn-mini btn-success") %>
+                  <%= link_to("Enable", [:enable, user.becomes(Cms::User)], :class => "http_put btn btn-mini btn-success") if user.enable_able? %>
               <% else %>
-                  <%= link_to("Disable", [:disable, user.becomes(Cms::User)], :class => "http_put btn btn-mini btn-danger") if @users.size > 1 %>
+                  <%= link_to("Disable", [:disable, user.becomes(Cms::User)], :class => "http_put btn btn-mini btn-danger") if @users.size > 1 && user.disable_able? %>
               <% end %>
             </td>
             <% if @have_external_users %>
