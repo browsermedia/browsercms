@@ -9,7 +9,7 @@ PATH
       compass
       compass-rails
       devise (~> 3.0)
-      devise_cas_authenticatable (>= 1.4.1)
+      devise_cas_authenticatable (~> 1.5)
       jquery-rails (~> 3.1)
       jquery-ui-rails (~> 4.1)
       panoramic
@@ -22,7 +22,7 @@ PATH
       will_paginate (~> 3.0.0)
 
 GEM
-  remote: http://rubygems.org/
+  remote: http://gemcache.ldn.uk.office.artirix.com/
   specs:
     actionmailer (4.0.13)
       actionpack (= 4.0.13)
@@ -124,7 +124,7 @@ GEM
       responders
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
-    devise_cas_authenticatable (1.4.1)
+    devise_cas_authenticatable (1.5.0)
       devise (>= 1.2.0)
       rubycas-client (>= 2.2.1)
     diff-lcs (1.2.5)
@@ -334,4 +334,4 @@ DEPENDENCIES
   yard
 
 BUNDLED WITH
-   1.10.5
+   1.10.6

@@ -32,7 +32,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency 'rails', '~> 4.0.0'
   s.add_dependency 'devise', '~> 3.0'
-  s.add_dependency 'devise_cas_authenticatable', '>= 1.4.1'
+  s.add_dependency 'devise_cas_authenticatable', '~> 1.5'
 
   s.add_dependency 'sass-rails'
   s.add_dependency 'compass'
