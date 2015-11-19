@@ -1,6 +1,6 @@
 class TextEditorInput < SimpleForm::Inputs::TextInput
 
-  def input
+  def input(wrapper_options = nil)
     tag_id = "#{object_name}_#{attribute_name}"
     path = input_html_options.fetch(:data, {})[:path]
     s = template.select_tag(:dhtml_selector,
