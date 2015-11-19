@@ -48,7 +48,7 @@ FactoryGirl.define do
   factory :file_block, :class => Cms::FileBlock do |m|
     ignore do
       parent { find_or_create_root_section }
-      attachment_file { mock_file(:original_filename => 'sample_upload.txt') }
+      attachment_file { mock_file(:original_filename => 'sample_upload.txt', :content_type => 'text/plain') }
       attachment_file_path { name }
     end
     m.sequence(:name) { |n| "TestFileBlock#{n}" }

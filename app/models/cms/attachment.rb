@@ -100,7 +100,7 @@ module Cms
                           :bucket => rail_config(:s3_bucket),
                           :s3_host_name => rail_config(:s3_host_name),
                           :s3_host_alias => rail_config(:s3_host_alias)
-
+        do_not_validate_attachment_file_type :data
       end
 
       # Looks up a value from Rails config

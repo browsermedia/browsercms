@@ -12,7 +12,7 @@ class MockFileTest < ActiveSupport::TestCase
 
 
   test "mock files can have data read from them" do
-    file = mock_file(:original_filename=>"version1.txt")
+    file = mock_file(:original_filename=>"version1.txt", :content_type => 'text/plain')
     assert_not_nil file.path
     assert_equal "v1", open(file.path) { |f| f.read }
   end

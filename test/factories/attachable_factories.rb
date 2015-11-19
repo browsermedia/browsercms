@@ -55,7 +55,7 @@ FactoryGirl.define do
   factory :has_many_documents, :class => Cms::Attachment do |m|
       m.attachment_name "documents"
       m.attachable_type "HasManyAttachments"
-      m.data { mock_file }
+      m.data { mock_text_file }
       m.parent { find_or_create_root_section }
       m.attachable_version 1
       m.publish_on_save true

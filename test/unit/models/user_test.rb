@@ -67,7 +67,7 @@ module Cms
     test "email validation" do
       assert @user.valid?
 
-      valid_emails = ['t@test.com', 'T@test.com', 'test@somewhere.mobi', 'test@somewhere.tv', 'joe_blow@somewhere.co.nz', 'joe_blow@somewhere.com.au', 't@t-t.co', 'test@somewhere.x', 'test@somewhere..']
+      valid_emails = ['t@test.com', 'T@test.com', 'test@somewhere.mobi', 'test@somewhere.tv', 'joe_blow@somewhere.co.nz', 'joe_blow@somewhere.com.au', 't@t-t.co', 'test@somewhere.x']
       valid_emails.each do |email|
         @user.email = email
         assert @user.valid?

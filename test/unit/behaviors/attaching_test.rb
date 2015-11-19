@@ -159,7 +159,7 @@ module Cms
     test "url for thumbnail" do
       attachment = create(:thumbnail_attachment)
       assert_equal "/attachments/#{attachment.id}/foo.jpg", attachment.url
-      assert_equal "/attachments/#{attachment.id}/foo.jpg?style=thumbnail", attachment.url(:thumbnail)
+      assert_equal "/attachments/#{attachment.id}/foo.jpg%3Fstyle=thumbnail", attachment.url(:thumbnail)
     end
   end
 
@@ -359,7 +359,7 @@ module Cms
 
     def setup
       #file is a mock of the object that Rails wraps file uploads in
-      @file = mock_file(:original_filename => "sample_upload.txt")
+      @file = mock_file(:original_filename => "sample_upload.txt", :content_type => "text/plain")
 
       @section = create(:section, :name => "attachables", :parent => root_section)
     end
@@ -488,7 +488,7 @@ module Cms
     end
 
     test "update the file" do
-      @file = mock_file(:original_filename => 'version2.txt')
+      @file = mock_file(:original_filename => 'version2.txt', :content_type => 'text/plain')
       @attachable.attachments[0].data = @file
       @attachable.save!
 
@@ -637,7 +637,7 @@ module Cms
 
 
     def update_file_for_attachable()
-      new_file = mock_file(:original_filename => "version2.txt")
+      new_file = mock_file(:original_filename => "version2.txt", :content_type => "text/plain")
       @attachable.attachments[0].data = new_file
       @attachable.name = "Force Update"
       @attachable.publish_on_save = true
