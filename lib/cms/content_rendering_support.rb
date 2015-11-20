@@ -33,7 +33,7 @@ module Cms
     end
 
     def handle_access_denied_on_page(exception)
-      logger.warn "Access denied for user '#{current_user.login}': Returning the 403 page."
+      logger.warn "Access denied for user '#{current_cms_user.login}': Returning the 403 page."
       handle_error_with_cms_page(Cms::ErrorPages::FORBIDDEN_PATH, exception, :forbidden)
     end
 
