@@ -55,6 +55,7 @@ FormBuilder.prototype.confirmDeleteFormField = function() {
 FormBuilder.prototype.editFormField = function() {
   // This is the overall container for the entire field.
   formBuilder.field_being_editted = $(this).parents('.control-group');
+  $('#modal-edit-field').find('.modal-content').load($(this).attr('data-edit-path'));
   $('#modal-edit-field').modal({
     show: true,
     remote: $(this).attr('data-edit-path')
