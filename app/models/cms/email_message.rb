@@ -31,8 +31,8 @@ module Cms
     # @param [String] path A relative path (i.e. /cms/your-page)
     # @return [String] (i.e http://cms.example.com/cms/your-page)
     def self.absolute_cms_url(path)
-      host = normalize_domain(Rails.configuration.cms.site_domain)
-      "http://#{cms_domain_prefix}.#{host}#{path}"
+      host = [cms_domain_prefix, normalize_domain(Rails.configuration.cms.site_domain)].compact.join(".")
+      "http://#{host}#{path}"
     end
 
     # Returns a default address that mail will be sent from. (i.e. mailbot@example.com)
