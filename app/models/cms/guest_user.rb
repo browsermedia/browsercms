@@ -13,7 +13,7 @@ module Cms
     end
 
     def able_to?(*name)
-      group && group.permissions.count(:conditions => ["name in (?)", name.map(&:to_s)]) > 0
+      group && group.permissions.where(name: name.map(&:to_s)).exists?
     end
 
     # Guests never get access to the CMS.

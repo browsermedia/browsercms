@@ -27,7 +27,7 @@ class CmsActsAsContentPageTest < ActiveSupport::TestCase
     mock_user.expects(:able_to_view?).with(EXPECTED_SECTION).returns(true)
     mock_user.expects(:login).returns("mock_user_name")
     c = MyController.new
-    c.expects(:current_user).returns(mock_user)
+    c.expects(:current_cms_user).returns(mock_user)
 
 
     c.check_access_to_section

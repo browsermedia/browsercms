@@ -56,7 +56,7 @@ module Cms
     def update_password
       if user.update(cms_user_params)
         flash[:notice] = "Password for '#{user.login}' was changed"
-        redirect_to(current_user.able_to?(:administrate) ? users_path : "/")
+        redirect_to(current_cms_user.able_to?(:administrate) ? users_path : "/")
       else
         render :action => 'change_password'
       end
@@ -119,7 +119,7 @@ module Cms
     end
 
     def only_self_or_administrator
-      raise Cms::Errors::AccessDenied if !current_user.able_to?(:administrate) && params[:id].to_i != current_user.id
+      raise Cms::Errors::AccessDenied if !current_cms_user.able_to?(:administrate) && params[:id].to_i != current_cms_user.id
     end
   end
 end

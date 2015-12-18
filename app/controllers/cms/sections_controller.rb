@@ -27,7 +27,7 @@ module Cms
     def create
       @section = Cms::Section.new(section_params)
       @section.parent = @parent
-      @section.groups = @section.parent.groups unless current_user.able_to?(:administrate)
+      @section.groups = @section.parent.groups unless current_cms_user.able_to?(:administrate)
       if @section.save
         flash[:notice] = "Section '#{@section.name}' was created"
         redirect_to @section
@@ -40,7 +40,7 @@ module Cms
     end
 
     def update
-      params[:section].delete('group_ids') if params[:section] && !current_user.able_to?(:administrate)
+      params[:section].delete('group_ids') if params[:section] && !current_cms_user.able_to?(:administrate)
       @section.attributes = section_params()
       if @section.save
         flash[:notice] = "Section '#{@section.name}' was updated"
@@ -80,12 +80,12 @@ module Cms
 
     def load_parent
       @parent = Cms::Section.find(params[:section_id])
-      raise Cms::Errors::AccessDenied unless current_user.able_to_edit?(@parent)
+      raise Cms::Errors::AccessDenied unless current_cms_user.able_to_edit?(@parent)
     end
 
     def load_section
       @section = Cms::Section.find(params[:id])
-      raise Cms::Errors::AccessDenied unless current_user.able_to_edit?(@section)
+      raise Cms::Errors::AccessDenied unless current_cms_user.able_to_edit?(@section)
     end
 
     def public_groups

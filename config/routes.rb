@@ -15,7 +15,8 @@ Cms::Engine.routes.draw do
              path: :users,
              class_name: 'Cms::PersistentUser',
              controllers: {passwords: 'cms/passwords'},
-             module: :devise
+             module: :devise,
+             router_name: :cms
 
   devise_scope :cms_user do
     get '/login' => "sessions#new", :as => 'login'

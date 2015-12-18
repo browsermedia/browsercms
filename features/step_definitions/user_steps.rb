@@ -81,11 +81,11 @@ Then /^I should be denied access$/ do
 end
 
 Given /^I have a content editor account$/ do
-  self.current_user = create(:content_editor)
+  self.current_cms_user = create(:content_editor)
 end
 
 When /^I am logged in$/ do
-  login_as(current_user.login, current_user.password)
+  login_as(current_cms_user.login, current_cms_user.password)
 end
 
 When /^there is another user$/ do
@@ -93,7 +93,7 @@ When /^there is another user$/ do
 end
 
 When /^I change my password$/ do
-  visit cms.change_password_user_path(current_user)
+  visit cms.change_password_user_path(current_cms_user)
   fill_in_password(acceptable_password)
   click_save_button
 end
@@ -159,7 +159,7 @@ When /^I look at expired users$/ do
 end
 
 When /^I login to the public site$/ do
-  login_as(current_user.login, current_user.password, "/login")
+  login_as(current_cms_user.login, current_cms_user.password, "/login")
 end
 
 When(/^I login in as an external user (?:again|for the first time)$/) do

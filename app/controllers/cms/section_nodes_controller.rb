@@ -4,7 +4,7 @@ module Cms
     check_permissions :publish_content, :except => [:index]
 
     def index
-      @modifiable_sections = current_user.modifiable_sections
+      @modifiable_sections = current_cms_user.modifiable_sections
       @public_sections = Group.guest.sections.to_a # Load once here so that every section doesn't need to.
 
       @sitemap = Section.sitemap

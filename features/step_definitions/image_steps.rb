@@ -109,7 +109,9 @@ end
 
 Given /^a file exists with two versions$/ do
   @original_file_name = "File Version 1"
-  @file = create(:file_block, :name => @original_file_name, :attachment_file => mock_file(:original_filename => 'version1.txt'))
+  @file = create(:file_block,
+                 :name => @original_file_name,
+                 :attachment_file => mock_file(:original_filename => 'version1.txt', :content_type => 'text/plain'))
 
   visit "/cms/file_blocks/#{@file.id}/edit"
   attach_file "File", "test/fixtures/multipart/version2.txt"

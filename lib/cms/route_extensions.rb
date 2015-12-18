@@ -44,7 +44,8 @@ module Cms::RouteExtensions
                path: '',
                skip: :password,
                path_names: {sign_in: 'login'},
-               controllers: {sessions: 'cms/sites/sessions'}
+               controllers: {sessions: 'cms/sites/sessions'},
+               router_name: :cms
 
     devise_scope :cms_user do
       get '/forgot-password' => "cms/sites/passwords#new", :as => 'forgot_password'

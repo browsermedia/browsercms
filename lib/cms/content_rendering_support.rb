@@ -33,7 +33,7 @@ module Cms
     end
 
     def handle_access_denied_on_page(exception)
-      logger.warn "Access denied for user '#{current_user.login}': Returning the 403 page."
+      logger.warn "Access denied for user '#{current_cms_user.login}': Returning the 403 page."
       handle_error_with_cms_page(Cms::ErrorPages::FORBIDDEN_PATH, exception, :forbidden)
     end
 
@@ -52,7 +52,7 @@ module Cms
       if perform_caching
         return handle_server_error(exception, status) if cms_site?
       else
-        return handle_server_error(exception, status) if current_user.able_to?(:edit_content, :publish_content)
+        return handle_server_error(exception, status) if current_cms_user.able_to?(:edit_content, :publish_content)
       end
 
       # We must be showing the page outside of the CMS
@@ -89,7 +89,7 @@ module Cms
       @_connectors = @page.current_connectors
       @_connectables = @page.contents
 
-      unless (logged_in? && current_user.able_to?(:administrate, :edit_content, :publish_content))
+      unless (logged_in? && current_cms_user.able_to?(:administrate, :edit_content, :publish_content))
         worst_exception = nil
         @_connectables.each do |c|
           begin

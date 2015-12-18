@@ -51,7 +51,7 @@ module Cms
     end
 
     def cms_access_required
-      raise Cms::Errors::AccessDenied unless current_user.able_to?(:administrate, :edit_content, :publish_content)
+      raise Cms::Errors::AccessDenied unless current_cms_user.able_to?(:administrate, :edit_content, :publish_content)
     end
 
     def url_with_cms_domain_prefix
@@ -68,8 +68,8 @@ module Cms
       request.url.sub(/#{cms_domain_prefix}\./, '')
     end
 
-    def ensure_current_user_can_view(content)
-      unless current_user.able_to_view?(content)
+    def ensure_current_cms_user_can_view(content)
+      unless current_cms_user.able_to_view?(content)
         store_location
         raise Cms::Errors::AccessDenied
       end

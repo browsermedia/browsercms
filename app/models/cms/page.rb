@@ -204,6 +204,11 @@ class Cms::Page < ActiveRecord::Base
     true
   end
 
+  def main_attributes
+    draft.attributes.slice("description", "archived", "cacheable", "hidden", "keywords", "language", "name",
+                           "template_file_name", "title")
+  end
+
   # Adds a Content block to this page.
   #
   # @param [ContentBlock] connectable The content block to be added
@@ -216,9 +221,9 @@ class Cms::Page < ActiveRecord::Base
       #              connectable.connected_page &&
       #              (connectable.class.publishable? ? connectable.published? : true)
       should_publish = false
-      update_attributes(
+      update_attributes({
           :version_comment => "#{connectable} was added to the '#{container}' container",
-          :publish_on_save => should_publish
+          :publish_on_save => should_publish }.merge(main_attributes)
       )
       connectors.create(
           :page_version => draft.version,
@@ -237,7 +242,7 @@ class Cms::Page < ActiveRecord::Base
       raise "Connector is nil" unless connector
       raise "Direction is nil" unless direction
       orientation = direction[/_/] ? "#{direction.sub('_', ' the ')} of" : "#{direction} within"
-      update_attributes(:version_comment => "#{connector.connectable} was moved #{orientation} the '#{connector.container}' container", :publish_on_save => false)
+      update_attributes({:version_comment => "#{connector.connectable} was moved #{orientation} the '#{connector.container}' container", :publish_on_save => false}.merge(main_attributes))
       connectors.for_page_version(draft.version).like(connector).first.send("move_#{direction}")
     end
   end
@@ -251,7 +256,7 @@ class Cms::Page < ActiveRecord::Base
   def remove_connector(connector)
     transaction do
       raise "Connector is nil" unless connector
-      update_attributes(version_comment: "#{connector.connectable} was removed from the '#{connector.container}' container", publish_on_save: false)
+      update_attributes({version_comment: "#{connector.connectable} was removed from the '#{connector.container}' container", publish_on_save: false}.merge(main_attributes))
 
       #The logic of this is to go ahead and let the container get copied forward, then delete the new connector
       if new_connector = connectors.for_page_version(draft.version).like(connector).first

@@ -8,7 +8,7 @@ module Cms
     protected
 
     def cms_domain_prefix
-      "cms"
+      "cms" if wants_to_use_subdomains?
     end
 
     def request_is_for_cms_subdomain?

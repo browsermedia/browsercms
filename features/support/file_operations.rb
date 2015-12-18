@@ -17,7 +17,8 @@ module FileOperations
 
   def text_file(relative_file_path, text)
     file_name = relative_file_path.gsub(/^\//, "")
-    tempfile = Tempfile.new file_name
+    extension = file_name.split(".").last
+    tempfile = Tempfile.new([file_name, ".#{extension}"])
     tempfile << text
     tempfile.flush
     tempfile.close

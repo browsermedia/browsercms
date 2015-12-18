@@ -319,9 +319,9 @@ module Cms
         when "index", "show", "new", "create", "version", "versions"
           # Allow
         when "edit", "update", "inline"
-          raise Cms::Errors::AccessDenied unless current_user.able_to_edit?(@block)
+          raise Cms::Errors::AccessDenied unless current_cms_user.able_to_edit?(@block)
         when "destroy", "publish", "revert_to"
-          raise Cms::Errors::AccessDenied unless current_user.able_to_publish?(@block)
+          raise Cms::Errors::AccessDenied unless current_cms_user.able_to_publish?(@block)
         else
           raise Cms::Errors::AccessDenied
       end
@@ -330,7 +330,7 @@ module Cms
     private
 
     def render_block_in_main_container
-      ensure_current_user_can_view(@block)
+      ensure_current_cms_user_can_view(@block)
       show_content_as_page(@block)
       render 'render_block_in_main_container', layout: @block.class.layout
     end
@@ -341,7 +341,7 @@ module Cms
 
     def render_editing_frame_or_block_in_main_container
       if @block.class.addressable?
-        if current_user.able_to_edit?(@block)
+        if current_cms_user.able_to_edit?(@block)
           render_toolbar_and_iframe
         else
           render_block_in_main_container

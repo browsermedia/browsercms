@@ -32,7 +32,7 @@ module Cms
     # 1. Current User has publish rights
     # 2. Block is publishable
     def save_and_publish_button(block, content_type)
-      if current_user.able_to?(:publish_content) && block.publishable?
+      if current_cms_user.able_to?(:publish_content) && block.publishable?
         html = %Q{<button type="submit" name="#{content_type.content_block_type.singularize}[publish_on_save]" value="true" class="submit btn btn-primary" tabindex="#{next_tabindex}"><span>Save And Publish</span></button>}
         html.html_safe
       end
@@ -50,7 +50,7 @@ module Cms
     def publish_menu_button(content_item)
       options = {class: ["btn", "btn-primary", "http_put"], id: "publish_button"}
       path = "#"
-      if current_user.able_to?(:publish_content) && !content_item.new_record? && content_item.respond_to?(:live?) && !content_item.live?
+      if current_cms_user.able_to?(:publish_content) && !content_item.new_record? && content_item.respond_to?(:live?) && !content_item.live?
         path = engine(@block).polymorphic_path([:publish, @block])
       else
         options[:class] << "disabled"
@@ -118,7 +118,7 @@ module Cms
     #
     def delete_menu_button(content_item=nil, opts={class: []})
       classes = ["btn", "http_delete", "confirm_with_title"]
-      if current_user.able_to_publish?(content_item)
+      if current_cms_user.able_to_publish?(content_item)
         classes << 'btn-primary'
       else
         classes << 'disabled'

@@ -1,7 +1,7 @@
 module Cms
   module WebApi
 
-    attr_accessor :current_user
+    attr_accessor :current_cms_user
 
     # Log in to the CMS admin.
     def login_as(username, password, path=cms.login_path)

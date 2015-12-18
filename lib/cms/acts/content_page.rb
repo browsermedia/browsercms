@@ -51,7 +51,7 @@ module Cms
 
       # Before filter that determines if the current user can access a specific section.
       def check_access_to_section
-        user = current_user
+        user = current_cms_user
         logger.warn "Checking that current_user '#{user.login}' has access to view section with path '#{self.class.in_section}'."
         unless user.able_to_view?(self.class.in_section)
           store_location

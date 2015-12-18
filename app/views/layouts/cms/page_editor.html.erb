@@ -24,7 +24,7 @@
                 class: "right btn btn-small btn-primary primary-cta http_put",
                 :id => "publish_button",
                 :target => "_top",
-                :enabled => !(!current_user.able_to?(:publish_content) || !current_user.able_to_edit?(@page) || @page.version != @page.draft.version || @page.live?)
+                :enabled => !(!current_cms_user.able_to?(:publish_content) || !current_cms_user.able_to_edit?(@page) || @page.version != @page.draft.version || @page.live?)
     %>
 
     <div class="btn-group">
@@ -36,7 +36,7 @@
                           :target => "_top",
                           :align => 'none',
                           class: 'btn btn-small',
-                          :enabled => !(@page.assigned_to == current_user || !current_user.able_to_edit?(@page))
+                          :enabled => !(@page.assigned_to == current_cms_user || !current_cms_user.able_to_edit?(@page))
               %>
           <% else %>
               <%= link_to "Complete Task",
@@ -44,14 +44,14 @@
                           :id => "complete_task_button",
                           class: 'http_put btn btn-small',
                           :target => "_top",
-                          :enabled => !(@page.assigned_to != current_user || !current_user.able_to_edit?(@page)) %>
+                          :enabled => !(@page.assigned_to != current_cms_user || !current_cms_user.able_to_edit?(@page)) %>
           <% end %>
       <% end %>
       <%= link_to "Versions",
                   engine(@page).polymorphic_path([:versions, @page]),
                   :target => "_top",
                   class: "btn btn-small",
-                  :enabled => current_user.able_to_edit?(@page)
+                  :enabled => current_cms_user.able_to_edit?(@page)
       %>
     </div>
 
@@ -62,7 +62,7 @@
                       :id => "delete_button",
                       title: "Are you sure you want to delete '#{@page.name}'?",
                       :target => "_top",
-                      :enabled => current_user.able_to_publish?(@page),
+                      :enabled => current_cms_user.able_to_publish?(@page),
                       class: 'btn btn-small btn-danger http_delete confirm_with_title' %>
       <% end %>
     </div>
@@ -74,7 +74,7 @@
                   class: "btn btn-small",
                   :id => "edit_properties_button",
                   :target => "_top",
-                  :enabled => current_user.able_to_edit?(@page)
+                  :enabled => current_cms_user.able_to_edit?(@page)
       %>
       <%= link_to "Preview", preview_content_path(@page), id: "preview_button", class: 'btn btn-small', target: "_blank" if @page.class.addressable?  %>
 

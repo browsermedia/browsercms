@@ -6,7 +6,7 @@
         <% content_for :sidebar do %>
             <div class="sidebar-block">
               <h4 class="gray">Status &nbsp; <%= draft_icon_tag(@block, force: true) %></h4>
-              <% if current_user.able_to?(:publish_content) %>
+              <% if current_cms_user.able_to?(:publish_content) %>
                   <h4 class="gray label">Visibility</h4>
                   <%= f.input :visibility, label: false, collection: @page.visibilities, prompt: false, input_html: {class: 'input-block-level'} %>
               <% end %>

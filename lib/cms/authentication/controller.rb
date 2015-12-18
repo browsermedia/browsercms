@@ -23,7 +23,7 @@ module Cms
       # Inclusion hook to make #current_user and #logged_in?
       # available as ActionView helper methods.
       def self.included(base)
-        base.send :helper_method, :current_user, :logged_in? if base.respond_to? :helper_method
+        base.send :helper_method, :logged_in? if base.respond_to? :helper_method
         base.extend ClassMethods
       end
 
@@ -43,7 +43,7 @@ module Cms
         def check_permissions(*perms)
           opts = Hash === perms.last ? perms.pop : {}
           before_filter(opts) do |controller|
-            raise Cms::Errors::AccessDenied unless controller.send(:current_user).able_to?(*perms)
+            raise Cms::Errors::AccessDenied unless controller.send(:current_cms_user).able_to?(*perms)
           end
         end
       end
@@ -52,15 +52,13 @@ module Cms
       # Returns true or false if the user is logged in.
       # Preloads Cms::User.current with the user model if they're logged in.
       def logged_in?
-        !current_user.nil? && !current_user.guest?
+        !current_cms_user.nil? && !current_cms_user.guest?
       end
 
       # Returns the current user if logged in. If no user is logged in, returns the 'Guest' user which represents a
       # what a visitor can do without being logged in.
-      def current_user
-        @current_user ||= begin
-          Cms::PersistentUser.current = current_cms_user || Cms::User.guest
-        end
+      def current_cms_user
+        @current_cms_user ||= Cms::PersistentUser.current = warden.authenticate(scope: :cms_user) || Cms::User.guest
       end
 
       # Redirect as appropriate when an access request fails.
