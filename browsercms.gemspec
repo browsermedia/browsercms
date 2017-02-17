@@ -30,21 +30,21 @@ Gem::Specification.new do |s|
 
   s.executables = ["bcms", "browsercms"]
 
-  s.add_dependency("rails", "~> 4.0.0")
-  s.add_dependency("devise", "~> 3.0")
-  s.add_dependency("sass-rails")
+  s.add_dependency("rails", "~> 5.0.0")
+  s.add_dependency("devise", "~> 4.0.2")
+  s.add_dependency("sass-rails", "~> 5.0.5")
   s.add_dependency("bootstrap-sass")
-  s.add_dependency("compass-rails", "~> 1.1.3")
+  s.add_dependency("compass-rails", "~> 3.0.0")
   s.add_dependency("ancestry", "~> 2.0.0")
   s.add_dependency("ckeditor_rails", "~> 4.3.0")
   s.add_dependency("underscore-rails", "~> 1.4")
-  s.add_dependency("jquery-rails", "~> 3.1")
+  s.add_dependency("jquery-rails", "~> 4.1")
   s.add_dependency("jquery-ui-rails", "~> 4.1")
   s.add_dependency("paperclip", "~> 3.4")
   s.add_dependency("panoramic")
   s.add_dependency("will_paginate", "~>3.0.0")
   s.add_dependency("actionpack-page_caching", "~>1.0")
-  s.add_dependency("simple_form", ">= 3.0.0.rc", "< 3.1")
+  s.add_dependency("simple_form", "~> 3.3.0")
 
   # Required only for bcms-upgrade
   s.add_dependency "term-ansicolor"
