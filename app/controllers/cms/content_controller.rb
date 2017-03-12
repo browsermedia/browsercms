@@ -105,7 +105,6 @@ module Cms
       @_page_route = PageRoute.find(params[:_page_route_id])
       @path = @_page_route.page.path
       @initial_ivars = instance_variables
-      eval @_page_route.code
     end
 
     def redirect_non_cms_users_to_public_site
