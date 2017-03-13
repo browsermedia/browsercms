@@ -1,6 +1,6 @@
 class PathInput < SimpleForm::Inputs::TextInput
 
-  def input
+  def input(wrapper_options)
     if forecasting_a_new_section?
       options[:hint] = "Forecast: Saving this first #{object.class.display_name} will create a new section at #{object.class.path}."
     end

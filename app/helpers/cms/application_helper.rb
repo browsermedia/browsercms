@@ -171,13 +171,15 @@ HTML
       if collection.blank?
         content_tag(:div, "No Content", :class => "pagination")
       else
+        content_type_constant = content_type.name.constantize
         render :partial => "pagination", :locals => {
             :collection => collection,
-            :first_page_path => engine(content_type).url_for({:page => 1}.merge(options)),
-            :previous_page_path => engine(content_type).url_for({:page => collection.previous_page ? collection.previous_page : 1}.merge(options)),
-            :current_page_path => engine(content_type).url_for(options),
-            :next_page_path => engine(content_type).url_for({:page => collection.next_page ? collection.next_page : collection.current_page}.merge(options)),
-            :last_page_path => engine(content_type).url_for({:page => collection.total_pages}.merge(options))
+            :first_page_path => engine(content_type_constant).polymorphic_path(content_type_constant,{:page => 1}.merge(options)),
+            :previous_page_path => engine(content_type_constant).polymorphic_path(content_type_constant,{:page => collection.previous_page ? collection.previous_page : 1}.merge(options)),
+            :current_page_path => engine(content_type_constant.name.constantize).polymorphic_path(content_type_constant, options),
+            :next_page_path => engine(content_type_constant).polymorphic_path(content_type_constant,{:page => collection.next_page ? collection.next_page : collection.current_page}.merge(options)),
+            :last_page_path => engine(content_type_constant).polymorphic_path(content_type_constant,{:page => collection.total_pages}.merge(options)),
+            :content_type => content_type
         }
       end
     end
