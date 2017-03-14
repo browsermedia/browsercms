@@ -37,7 +37,11 @@ module Cms
 
         # Last but not least, clear the changed attributes
         if changed_attrs = obj.send(:changed_attributes)
-          changed_attrs.clear
+          if self.class.private_instance_methods.include? :clear_attribute_changes
+            clear_attribute_changes changed_attrs
+          else
+            changed_attributes.clear
+          end
         end
 
         obj
