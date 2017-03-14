@@ -44,8 +44,7 @@ module Cms
         end
 
         def tag_list=(tag_names)
-          changed_attributes["tag_list"] = tag_list unless @tag_list == tag_names
-          @tag_list = tag_names
+          @tag_list = tag_names unless @tag_list == tag_names
         end
 
         def save_tags

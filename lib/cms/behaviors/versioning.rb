@@ -228,7 +228,11 @@ module Cms
             self.version = 1
             # This should call ActiveRecord::Callbacks#create_or_update, which will correctly trigger the :save callback_chain
             saved_correctly = super
-            changed_attributes.clear
+            if self.class.private_instance_methods.include? :clear_attribute_changes
+              clear_attribute_changes changed_attributes
+            else
+              changed_attributes.clear
+            end
           else
             logger.debug { "#{self.class}#update" }
             # Because we are 'skipping' the normal ActiveRecord update here, we must manually call the save callback chain.
@@ -336,7 +340,7 @@ module Cms
 
         def version_comment=(version_comment)
           @version_comment = version_comment
-          send(:changed_attributes)["version_comment"] = @version_comment
+          #send(:changed_attributes)["version_comment"] = @version_comment
         end
 
         def different_from_last_draft?
