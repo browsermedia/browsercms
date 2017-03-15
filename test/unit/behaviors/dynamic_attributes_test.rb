@@ -5,7 +5,7 @@ ActiveRecord::Base.connection.instance_eval do
   drop_table(:thing_attributes) if table_exists?(:thing_attributes)
   create_table(:things) do |t|
     t.string :name
-    t.timestamps
+    t.timestamps null: false
   end
   create_table(:thing_attributes) do |t|
     t.integer :thing_id

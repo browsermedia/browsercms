@@ -8,7 +8,7 @@ module DatabaseHelpers
       drop_table("#{name.to_s.singularize}_versions".to_sym) rescue nil
       create_content_table(name) do |t|
         t.string :name
-        t.timestamps
+        t.timestamps null: false
       end
     end
   end

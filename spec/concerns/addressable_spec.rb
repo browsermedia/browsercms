@@ -34,7 +34,7 @@ describe Cms::Concerns::Addressable do
         TESTING_TABLES << name
         create_table(name, &block)
         change_table name do |t|
-          t.timestamps
+          t.timestamps null: false
         end
       end
     end

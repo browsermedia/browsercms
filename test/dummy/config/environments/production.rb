@@ -17,7 +17,7 @@ Dummy::Application.configure do
   config.cms.use_single_domain = true
 
   # Disable Rails's static asset server (Apache or nginx will already do this)
-  config.serve_static_assets = true # We are in 'faux' production mode, so we want Rails to serve the assets.
+  config.serve_static_files = true # We are in 'faux' production mode, so we want Rails to serve the assets.
 
   # Compress JavaScripts and CSS
   config.assets.compress = true
@@ -27,6 +27,9 @@ Dummy::Application.configure do
 
   # Generate digests for assets URLs
   config.assets.digest = true
+
+  #Currently, Active Record suppresses errors raised within `after_rollback`/`after_commit` callbacks and only print them to the logs. In the next version, these errors will no longer be suppressed. Instead, the errors will propagate normally just like in other Active Record callbacks.
+  config.active_record.raise_in_transactional_callbacks = true
 
   # Defaults to Rails.root.join("public/assets")
   # config.assets.manifest = YOUR_PATH

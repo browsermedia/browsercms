@@ -6,7 +6,7 @@ class CreateDeprecatedInputs < ActiveRecord::Migration
       t.text :template, :size => (64.kilobytes + 1)
       t.string :template_handler
       t.belongs_to :category
-      t.timestamps
+      t.timestamps null: false
     end
   end
 end

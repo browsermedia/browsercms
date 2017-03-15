@@ -43,7 +43,7 @@ class Browsercms400 < ActiveRecord::Migration
       t.text :instructions
       t.text :default_value
       t.text :choices
-      t.timestamps
+      t.timestamps null: false
     end
 
     # Field names should be unique per form
@@ -52,7 +52,7 @@ class Browsercms400 < ActiveRecord::Migration
     create_table :cms_form_entries do |t|
       t.text :data_columns
       t.integer :form_id
-      t.timestamps
+      t.timestamps null: false
     end
 
     add_devise_users

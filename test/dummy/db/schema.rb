@@ -15,8 +15,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
 
   create_table "catalog_versions", force: :cascade do |t|
     t.string   "name",               limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
     t.integer  "original_record_id", limit: 4
     t.integer  "version",            limit: 4
     t.boolean  "published",                      default: false
@@ -29,8 +29,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
 
   create_table "catalogs", force: :cascade do |t|
     t.string   "name",          limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
     t.integer  "version",       limit: 4
     t.integer  "lock_version",  limit: 4,   default: 0
     t.boolean  "published",                 default: false
@@ -93,14 +93,14 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.integer  "category_type_id", limit: 4
     t.integer  "parent_id",        limit: 4
     t.string   "name",             limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   create_table "cms_category_types", force: :cascade do |t|
     t.string   "name",       limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "cms_connectors", force: :cascade do |t|
@@ -111,8 +111,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.integer  "connectable_version", limit: 4
     t.string   "container",           limit: 255
     t.integer  "position",            limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
   end
 
   add_index "cms_connectors", ["connectable_type"], name: "index_cms_connectors_on_connectable_type", using: :btree
@@ -126,8 +126,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.string   "format",             limit: 255
     t.string   "handler",            limit: 255
     t.text     "body",               limit: 65535
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
     t.integer  "original_record_id", limit: 4
     t.integer  "version",            limit: 4
     t.boolean  "published",                        default: false
@@ -147,8 +147,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.string   "format",        limit: 255
     t.string   "handler",       limit: 255
     t.text     "body",          limit: 65535
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                  null: false
+    t.datetime "updated_at",                                  null: false
     t.integer  "version",       limit: 4
     t.integer  "lock_version",  limit: 4,     default: 0
     t.boolean  "published",                   default: false
@@ -170,8 +170,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.text     "body",         limit: 65535
     t.string   "content_type", limit: 255
     t.datetime "delivered_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "cms_file_block_versions", force: :cascade do |t|
@@ -216,8 +216,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
   create_table "cms_form_entries", force: :cascade do |t|
     t.text     "data_columns", limit: 65535
     t.integer  "form_id",      limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
   end
 
   create_table "cms_form_fields", force: :cascade do |t|
@@ -230,8 +230,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.text     "instructions",  limit: 65535
     t.text     "default_value", limit: 65535
     t.text     "choices",       limit: 65535
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
   end
 
   add_index "cms_form_fields", ["form_id", "name"], name: "index_cms_form_fields_on_form_id_and_name", unique: true, using: :btree
@@ -299,8 +299,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.string   "name",       limit: 255
     t.boolean  "guest",                  default: false
     t.boolean  "cms_access",             default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
   add_index "cms_group_types", ["cms_access"], name: "index_cms_group_types_on_cms_access", using: :btree
@@ -309,8 +309,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.string   "name",          limit: 255
     t.string   "code",          limit: 255
     t.integer  "group_type_id", limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   add_index "cms_groups", ["code"], name: "index_cms_groups_on_code", using: :btree
@@ -354,8 +354,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.string   "name",               limit: 255
     t.string   "url",                limit: 255
     t.boolean  "new_window",                     default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
     t.integer  "original_record_id", limit: 4
     t.integer  "version",            limit: 4
     t.boolean  "published",                      default: false
@@ -370,8 +370,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.string   "name",           limit: 255
     t.string   "url",            limit: 255
     t.boolean  "new_window",                 default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
     t.integer  "version",        limit: 4
     t.integer  "lock_version",   limit: 4,   default: 0
     t.boolean  "published",                  default: false
@@ -387,8 +387,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.string   "type",          limit: 255
     t.string   "name",          limit: 255
     t.string   "value",         limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   create_table "cms_page_routes", force: :cascade do |t|
@@ -396,8 +396,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.string   "pattern",    limit: 255
     t.integer  "page_id",    limit: 4
     t.text     "code",       limit: 65535
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "cms_page_versions", force: :cascade do |t|
@@ -455,8 +455,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.string   "full_name",   limit: 255
     t.string   "description", limit: 255
     t.string   "for_module",  limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "cms_portlet_attributes", force: :cascade do |t|
@@ -474,8 +474,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.boolean  "deleted",                   default: false
     t.integer  "created_by_id", limit: 4
     t.integer  "updated_by_id", limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
   end
 
   add_index "cms_portlets", ["name"], name: "index_cms_portlets_on_name", using: :btree
@@ -483,8 +483,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
   create_table "cms_redirects", force: :cascade do |t|
     t.string   "from_path",  limit: 255
     t.string   "to_path",    limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   add_index "cms_redirects", ["from_path"], name: "index_cms_redirects_on_from_path", using: :btree
@@ -494,8 +494,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.integer  "node_id",    limit: 4
     t.integer  "position",   limit: 4
     t.string   "ancestry",   limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
     t.string   "slug",       limit: 255
   end
 
@@ -507,8 +507,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.string   "path",       limit: 255
     t.boolean  "root",                   default: false
     t.boolean  "hidden",                 default: false
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
   add_index "cms_sections", ["path"], name: "index_cms_sections_on_path", using: :btree
@@ -517,8 +517,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.string   "name",        limit: 255
     t.string   "domain",      limit: 255
     t.boolean  "the_default"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "cms_taggings", force: :cascade do |t|
@@ -526,14 +526,14 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.integer  "taggable_id",      limit: 4
     t.string   "taggable_type",    limit: 255
     t.integer  "taggable_version", limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   create_table "cms_tags", force: :cascade do |t|
     t.string   "name",       limit: 255
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",             null: false
+    t.datetime "updated_at",             null: false
   end
 
   create_table "cms_tasks", force: :cascade do |t|
@@ -543,8 +543,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.text     "comment",        limit: 65535
     t.date     "due_date"
     t.datetime "completed_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   add_index "cms_tasks", ["assigned_to_id"], name: "index_cms_tasks_on_assigned_to_id", using: :btree
@@ -588,8 +588,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.text     "template",           limit: 65535
     t.string   "template_handler",   limit: 255
     t.integer  "category_id",        limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
     t.integer  "original_record_id", limit: 4
     t.integer  "version",            limit: 4
     t.boolean  "published",                        default: false
@@ -606,8 +606,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.text     "template",         limit: 65535
     t.string   "template_handler", limit: 255
     t.integer  "category_id",      limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
     t.integer  "version",          limit: 4
     t.integer  "lock_version",     limit: 4,     default: 0
     t.boolean  "published",                      default: false
@@ -622,8 +622,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.integer  "price",              limit: 4
     t.integer  "category_id",        limit: 4
     t.boolean  "on_special"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
     t.integer  "original_record_id", limit: 4
     t.integer  "version",            limit: 4
     t.boolean  "published",                      default: false
@@ -639,8 +639,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.integer  "price",         limit: 4
     t.integer  "category_id",   limit: 4
     t.boolean  "on_special"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                null: false
+    t.datetime "updated_at",                                null: false
     t.integer  "version",       limit: 4
     t.integer  "lock_version",  limit: 4,   default: 0
     t.boolean  "published",                 default: false

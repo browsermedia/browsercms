@@ -5,7 +5,7 @@ class CreateProducts < ActiveRecord::Migration
       t.integer :price
       t.integer :category_id
       t.boolean :on_special
-      t.timestamps
+      t.timestamps null: false
     end
   end
 end
