@@ -145,7 +145,7 @@ module Cms
                   end
 
                   # Doing the SQL ourselves to avoid callbacks
-                  self.class.unscoped.where(self.class.arel_table[self.class.primary_key].eq(id)).arel.update(quoted_attributes)
+                  ActiveRecord::Base.connection.execute(self.class.unscoped.where(self.class.arel_table[self.class.primary_key].eq(id)).arel.compile_update(quoted_attributes, id).to_sql)
                   did_publish = true
                 end
               else
