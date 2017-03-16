@@ -6,7 +6,7 @@ module Cms
 
     scope :undelivered, -> { where("delivered_at is null") }
     validates_presence_of :recipients
-    after_create :deliver_now
+    after_create :deliver_mail_now
 
     def delivered?
       !!delivered_at
@@ -48,14 +48,14 @@ module Cms
     end
 
     #TODO: Take this out when we have an email queue processor
-    def deliver_now
+    def deliver_mail_now
       deliver!
     end
 
     def deliver!
       return false if delivered?
       self.sender = self.class.mailbot_address if self.sender.blank?
-      Cms::EmailMessageMailer.email_message(self).deliver
+      Cms::EmailMessageMailer.email_message(self).deliver_now
       update_attributes(:delivered_at => Time.now)
     end
 

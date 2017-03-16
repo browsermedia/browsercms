@@ -198,7 +198,8 @@ module Cms
         # Otherwise, if the change isn't detected, this record won't save a new version (since updates are rejected if no changes were made)
         def check_for_updated_attachments
           if attachments_changed == "true" || attachments_were_updated?
-            self.attachments = "Uploaded new files"
+            attr_name = self.attributes.keys.last
+            self.send("#{attr_name}_will_change!")
           end
         end
 

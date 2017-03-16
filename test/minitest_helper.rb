@@ -2,8 +2,9 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path("../dummy/config/environment.rb", __FILE__)
 require "rails/test_help"
 require "minitest/spec"
-#require "minitest/autorun"
+require "minitest/autorun"
 require "minitest/unit"
+require "mocha/setup"
 
 #ENV["RAILS_ENV"] = "test"
 #require File.expand_path("../dummy/config/environment.rb", __FILE__)
