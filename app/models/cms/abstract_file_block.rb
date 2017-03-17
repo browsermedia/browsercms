@@ -4,7 +4,7 @@ module Cms
 
     def self.with_parent_id(parent_id)
       if parent_id == 'all'
-        where(true) # Empty scope for chaining
+        self.all # Empty scope for chaining
       else
         self.includes({:attachments => :section_node})
             .references(:section_node)

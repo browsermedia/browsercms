@@ -345,6 +345,9 @@ module Cms
         def version_comment=(version_comment)
           @version_comment = version_comment
           #send(:changed_attributes)["version_comment"] = @version_comment
+          #attr_name = "version_comment"
+          #self.send("#{attr_name}_will_change!")
+          #self.version_comment = @version_comment
         end
 
         def different_from_last_draft?

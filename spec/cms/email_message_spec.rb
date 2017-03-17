@@ -11,7 +11,7 @@ describe Cms::EmailMessage do
 
   describe "#absolute_cms_url" do
     it "should return a url which points to the cms admin version of a page" do
-      Rails.configuration.cms.expects(:site_domain).returns('www.example.com')
+      Rails.configuration.cms.expects(:site_domain).retu  rns('www.example.com')
       url = Cms::EmailMessage.absolute_cms_url("/some-path")
       url.must_equal "http://cms.example.com/some-path"
     end

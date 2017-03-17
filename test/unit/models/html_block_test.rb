@@ -10,6 +10,12 @@ class HtmlBlockTest < ActiveSupport::TestCase
     blue = create(:html_block, name: 'blue')
 
     results = Cms::HtmlBlock.paginate(page: 1, per_page: 1)
+
+    puts "this is red"
+    puts red
+    puts "this is results"
+    puts results.first
+    puts ""
     assert_equal 1, results.size
     assert_equal red, results.first
   end

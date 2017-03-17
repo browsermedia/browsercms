@@ -66,7 +66,7 @@ module Cms
       @file_block.save!
       assert_not_nil @file_block.file
 
-      found = Cms::FileBlock.find(@file_block)
+      found = Cms::FileBlock.find(@file_block.id)
       assert_not_nil found.file
     end
 
