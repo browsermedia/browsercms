@@ -80,9 +80,9 @@ class ConnectorTest < ActiveSupport::TestCase
 
     log_table_without_stamps Cms::Connector
     
-    assert_nil @page.connectors.for_page_version(2).first.connectable
+    assert_nil @page.connectors.for_page_version(2).first.try(:connectable)
     
-    c = @page.connectors.for_page_version(2).first.connectable_with_deleted
+    c = @page.connectors.for_page_version(2).first.try(:connectable_with_deleted)
     assert !c.nil?
     assert_equal @block.id, c.id
     assert_equal @block.name, c.name
