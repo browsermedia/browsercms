@@ -15,7 +15,6 @@ require "mocha/setup"
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 require 'factories/factories'
 require 'factories/attachable_factories'
-
 require 'minitest/reporters'
 MiniTest::Reporters.use!
 
@@ -35,6 +34,9 @@ class Minitest::Spec
   include FactoryGirl::Syntax::Methods
   include FactoryHelpers
 end
+
+require 'mocha'
+
 
 #class MiniTest::Rails::ActiveSupport::TestCase
 #

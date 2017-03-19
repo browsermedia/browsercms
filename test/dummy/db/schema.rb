@@ -60,8 +60,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.string   "version_comment",    limit: 255
     t.integer  "created_by_id",      limit: 4
     t.integer  "updated_by_id",      limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
   end
 
   add_index "cms_attachment_versions", ["original_record_id"], name: "index_cms_attachment_versions_on_original_record_id", using: :btree
@@ -85,8 +85,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.boolean  "archived",                       default: false
     t.integer  "created_by_id",      limit: 4
     t.integer  "updated_by_id",      limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
   end
 
   create_table "cms_categories", force: :cascade do |t|
@@ -187,8 +187,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.string   "version_comment",    limit: 255
     t.integer  "created_by_id",      limit: 4
     t.integer  "updated_by_id",      limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
   end
 
   add_index "cms_file_block_versions", ["original_record_id"], name: "index_cms_file_block_versions_on_original_record_id", using: :btree
@@ -206,8 +206,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.boolean  "archived",                       default: false
     t.integer  "created_by_id",      limit: 4
     t.integer  "updated_by_id",      limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
   end
 
   add_index "cms_file_blocks", ["deleted"], name: "index_cms_file_blocks_on_deleted", using: :btree
@@ -251,8 +251,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.string   "version_comment",       limit: 255
     t.integer  "created_by_id",         limit: 4
     t.integer  "updated_by_id",         limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
   end
 
   create_table "cms_forms", force: :cascade do |t|
@@ -269,8 +269,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.boolean  "archived",                            default: false
     t.integer  "created_by_id",         limit: 4
     t.integer  "updated_by_id",         limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
   end
 
   create_table "cms_group_permissions", force: :cascade do |t|
@@ -327,8 +327,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.string   "version_comment",    limit: 255
     t.integer  "created_by_id",      limit: 4
     t.integer  "updated_by_id",      limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                          null: false
+    t.datetime "updated_at",                                          null: false
   end
 
   add_index "cms_html_block_versions", ["original_record_id"], name: "index_cms_html_block_versions_on_original_record_id", using: :btree
@@ -344,8 +344,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.boolean  "archived",                       default: false
     t.integer  "created_by_id", limit: 4
     t.integer  "updated_by_id", limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                     null: false
+    t.datetime "updated_at",                                     null: false
   end
 
   add_index "cms_html_blocks", ["deleted"], name: "index_cms_html_blocks_on_deleted", using: :btree
@@ -418,8 +418,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.string   "version_comment",    limit: 255
     t.integer  "created_by_id",      limit: 4
     t.integer  "updated_by_id",      limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
   end
 
   add_index "cms_page_versions", ["original_record_id"], name: "index_cms_page_versions_on_original_record_id", using: :btree
@@ -441,8 +441,8 @@ ActiveRecord::Schema.define(version: 20130924162315) do
     t.boolean  "archived",                         default: false
     t.integer  "created_by_id",      limit: 4
     t.integer  "updated_by_id",      limit: 4
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
     t.integer  "latest_version",     limit: 4
   end
 

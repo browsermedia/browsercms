@@ -4,6 +4,7 @@ require "rails/test_help"
 require "minitest/spec"
 require "minitest/unit"
 
+
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 require File.expand_path("../../test/factories/factories", __FILE__)
 require File.expand_path("../../test/factories/attachable_factories", __FILE__)

@@ -233,7 +233,7 @@ module Cms
           return unless new_attributes
 
           attributes = new_attributes.stringify_keys
-          role = options[:as] || :default
+          options[:as] || :default
 
           multi_parameter_attributes = []
 

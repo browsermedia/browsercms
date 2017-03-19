@@ -8,7 +8,6 @@ Rails.backtrace_cleaner.remove_silencers!
 require 'minitest/unit'
 # Load support files
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
-
 require 'mocha/setup'
 require 'action_view/test_case'
 
@@ -25,9 +24,11 @@ require 'factories/factories'
 require 'factories/attachable_factories'
 
 # Silence warnings (hopefully) primarily from HTML parsing in functional tests.
-$VERBOSE = nil
+#$VERBOSE = nil
 
 require 'support/engine_controller_hacks'
+
+
 
 class ActiveSupport::TestCase
 

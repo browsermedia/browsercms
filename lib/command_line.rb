@@ -29,7 +29,7 @@ class CommandLine
   def self.template_dir
     current_file = File.expand_path(File.dirname(__FILE__))
     gem_dir = File.join(current_file, "..")
-    template_dir = File.join(gem_dir, "templates")
+    File.join(gem_dir, "templates")
   end
 
   # Return the file for the given template.

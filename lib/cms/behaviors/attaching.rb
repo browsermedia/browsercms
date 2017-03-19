@@ -219,7 +219,7 @@ module Cms
         end
 
         def after_publish
-          attachments.each &:publish
+          attachments.each(&:publish)
         end
 
         # Locates the attachment with a given name

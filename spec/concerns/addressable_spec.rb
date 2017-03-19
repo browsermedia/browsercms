@@ -71,6 +71,9 @@ describe Cms::Concerns::Addressable do
       WannabeAddressable.expects(:has_one)
       WannabeAddressable.expects(:after_save)
       WannabeAddressable.expects(:after_validation)
+      puts "heres info"
+      puts WannabeAddressable.class
+      puts WannabeAddressable.to_yaml
       WannabeAddressable.is_addressable
       WannabeAddressable.new.must_respond_to :parent
     end
@@ -132,7 +135,7 @@ describe Cms::Concerns::Addressable do
 
   describe ".destroy" do
     it "should also delete the section node" do
-      add = IsAddressable.create(slug: "coke", parent_id: root_section)
+      add = IsAddressable.create(slug: "coke", parent_id: root_section.id)
       before = Cms::SectionNode.count
       add.destroy
       (Cms::SectionNode.count - before).must_equal -1
@@ -157,8 +160,8 @@ describe Cms::Concerns::Addressable do
     end
 
     it "should be unique for each class" do
-      first = IsAddressable.create(slug: "first", parent_id: root_section)
-      duplicate = IsAddressable.create(slug: "first", parent_id: root_section)
+      first = IsAddressable.create(slug: "first", parent_id: root_section.id)
+      duplicate = IsAddressable.create(slug: "first", parent_id: root_section.id)
 
       duplicate.wont_be :valid?
       duplicate.section_node.errors[:slug].must_equal ["has already been taken"]
@@ -188,7 +191,7 @@ describe Cms::Concerns::Addressable do
     end
 
     it "should find content" do
-      content = IsAddressable.create(slug: "coke", parent_id: root_section)
+      content = IsAddressable.create(slug: "coke", parent_id: root_section.id)
       found = IsAddressable.with_slug("coke")
 
       found.wont_be_nil
@@ -196,8 +199,8 @@ describe Cms::Concerns::Addressable do
     end
 
     it "should find correct type" do
-      AnotherAddressable.create!(slug: "coke", parent_id: root_section)
-      content = IsAddressable.create(slug: "coke", parent_id: root_section)
+      AnotherAddressable.create!(slug: "coke", parent_id: root_section.id)
+      content = IsAddressable.create(slug: "coke", parent_id: root_section.id)
       found = IsAddressable.with_slug("coke")
       found.must_equal content
 
