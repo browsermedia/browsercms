@@ -71,9 +71,6 @@ describe Cms::Concerns::Addressable do
       WannabeAddressable.expects(:has_one)
       WannabeAddressable.expects(:after_save)
       WannabeAddressable.expects(:after_validation)
-      puts "heres info"
-      puts WannabeAddressable.class
-      puts WannabeAddressable.to_yaml
       WannabeAddressable.is_addressable
       WannabeAddressable.new.must_respond_to :parent
     end

@@ -91,7 +91,7 @@ module Cms
         end
 
         def destroy!
-          transaction { super.destroy }
+          transaction { super.destroy if super!=true }
         end
 
         def destroyed?

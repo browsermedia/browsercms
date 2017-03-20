@@ -28,9 +28,11 @@ group :development do
   gem 'quiet_assets'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'pry'
 end
 group :test, :development do
   gem 'minitest', '~>5.3.3'
+  gem "test-unit", "~> 3.0"
   gem 'minitest-rails', '~>2.0.0'
   gem 'minitest-reporters', '~>1.0.0'
 end

@@ -1,5 +1,5 @@
 require "minitest_helper"
-require 'mocha'
+require 'mocha/setup'
 describe Cms::FormField do
 
   describe '.permitted_params' do

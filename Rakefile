@@ -91,7 +91,6 @@ def run_tests(tests_to_run)
       Rake::Task[task].invoke
       nil
     rescue => e
-      puts e
       {:task => task, :exception => e}
     end
   end.compact

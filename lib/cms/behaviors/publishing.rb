@@ -42,7 +42,6 @@ module Cms
       module ClassMethods
       end
       module InstanceMethods
-
         # Can specify whether to save this block as a draft using a terser syntax.
         # These two calls behave identically
         #   - Cms::HtmlBlock.create(name: "Shorter", as: :draft)
@@ -152,7 +151,7 @@ module Cms
                 self.class.connection.update(
                     "UPDATE #{self.class.quoted_table_name} " +
                         "SET published = #{self.class.connection.quote(true, self.class.columns_hash["published"])} " +
-                        "WHERE #{self.class.connection.quote_column_name(self.class.primary_key)} = #{self.class.quote_value(id)}",
+                        "WHERE #{self.class.connection.quote_column_name(self.class.primary_key)} = #{self.class.quote_value(id, nil)}",
                     "#{self.class.name.demodulize} Publish"
                 )
                 did_publish = true

@@ -35,7 +35,7 @@ class Minitest::Spec
   include FactoryHelpers
 end
 
-require 'mocha'
+require 'mocha/setup'
 
 
 #class MiniTest::Rails::ActiveSupport::TestCase

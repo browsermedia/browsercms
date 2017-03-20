@@ -44,7 +44,7 @@ Gem::Specification.new do |s|
   s.add_dependency("panoramic")
   s.add_dependency("will_paginate", "~>3.0.0")
   s.add_dependency("actionpack-page_caching", "~>1.0")
-  s.add_dependency("simple_form", ">= 3.0.0.rc", "< 3.1")
+  s.add_dependency("simple_form", "~>3.1.0")
 
   # Required only for bcms-upgrade
   s.add_dependency "term-ansicolor"

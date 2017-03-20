@@ -14,7 +14,7 @@ module Cms
 
     # Represents a record as of a specific version in the versions table.
     module VersionRecord
-
+      require 'pry'
       # Create an original 'record' of the Versioned about as it existed as of this VersionRecord.
       #
       # @return [Object] i.e. HtmlBlock
@@ -222,6 +222,7 @@ module Cms
         def create_or_update
           logger.debug { "#{self.class}#create_or_update called. Published = #{!!publish_on_save}" }
           self.skip_callbacks = false
+          #binding.pry
           unless different_from_last_draft?
             logger.debug { "No difference between this version and last. Skipping save" }
             self.skip_callbacks = true
@@ -344,10 +345,12 @@ module Cms
 
         def version_comment=(version_comment)
           @version_comment = version_comment
+          # This is not a great solution.  We need to rethink how versioning is done, but for the time being
+          # forcing a random field on the object as dirty should solve the problem of attempting to write to
+          # the frozen changed attributes hash.
+          self.updated_by_id_will_change!
+          #binding.pry
           #send(:changed_attributes)["version_comment"] = @version_comment
-          #attr_name = "version_comment"
-          #self.send("#{attr_name}_will_change!")
-          #self.version_comment = @version_comment
         end
 
         def different_from_last_draft?

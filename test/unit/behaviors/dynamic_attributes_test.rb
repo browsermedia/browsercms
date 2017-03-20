@@ -37,7 +37,7 @@ class DynamicAttributesTest < ActiveSupport::TestCase
   test "can just call properties into existance" do
     @thing.price = 1
 
-    assert_equal(1, @thing.price)
+    assert_equal(1, @thing.price.to_i)
   end
 
   test "Can persist String properties" do
@@ -62,7 +62,7 @@ class DynamicAttributesTest < ActiveSupport::TestCase
 
   test "can bulk set attributes=" do
     @thing.attributes=({:price=>1, :description=>"Paper"})
-    assert_equal(1, @thing.price)
+    assert_equal(1, @thing.price.to_i)
     assert_equal("Paper", @thing.description)
   end
 
