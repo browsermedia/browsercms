@@ -14,7 +14,6 @@ module Cms
 
     # Represents a record as of a specific version in the versions table.
     module VersionRecord
-      require 'pry'
       # Create an original 'record' of the Versioned about as it existed as of this VersionRecord.
       #
       # @return [Object] i.e. HtmlBlock

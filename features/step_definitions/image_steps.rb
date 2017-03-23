@@ -44,10 +44,9 @@ Then /^the attachment "([^"]*)" should be in section "([^"]*)"$/ do |asset_name,
   asset = Cms::Attachment.find_by_data_file_name asset_name
   asset.section.name.should == section_name
 end
-
 Then /^the attachment with path "([^"]*)" should be in section "([^"]*)"$/ do |asset_path, section_name|
   asset = Cms::Attachment.find_by_data_file_path asset_path
-  asset.section.name.should == section_name
+  asset.try(:section) .try(:name).should == section_name
 end
 
 When /^I am adding a New Image$/ do

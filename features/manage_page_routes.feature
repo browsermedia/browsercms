@@ -14,7 +14,7 @@ Feature: Manage Page Routes
     When I request /cms/routes
     And I search for a path including "/dummy/sample_blocks/1"
     Then I should see the following content:
-      | {:action=>"show", :controller=>"dummy/sample_blocks", :id=>"1"} |
+      | {:controller=>"dummy/sample_blocks", :action=>"edit"} |
 
   Scenario: Create Page Route
     When I request /cms/page_routes

@@ -98,7 +98,7 @@ class SoftPublishingTest < ActiveSupport::TestCase
 
   test "find by id should throw an exception for records marked as deleted" do
     @block.destroy
-    assert_raise(ActiveRecord::RecordNotFound) { Cms::HtmlBlock.find(@b) }
+    assert_raise(ActiveRecord::RecordNotFound) { Cms::HtmlBlock.find(@block.id) }
 
   end
 
@@ -155,7 +155,7 @@ class VersionedContentBlockTest < ActiveSupport::TestCase
   test "Calling publish! on a block should save it, and mark that block as published." do
     @block.publish!
 
-    found = Cms::HtmlBlock.find(@block)
+    found = Cms::HtmlBlock.find(@block.id)
     assert_equal true, found.published?
   end
 
@@ -172,7 +172,7 @@ class VersionedContentBlockTest < ActiveSupport::TestCase
     @block.publish_on_save = true
     @block.save
 
-    found = Cms::HtmlBlock.find(@block)
+    found = Cms::HtmlBlock.find(@block.id)
     assert_equal 1, found.version
   end
 
@@ -181,7 +181,7 @@ class VersionedContentBlockTest < ActiveSupport::TestCase
     @block.name = "Anything else"
     @block.save
 
-    found = Cms::HtmlBlock.find(@block)
+    found = Cms::HtmlBlock.find(@block.id)
     assert_equal true, found.published?
   end
 

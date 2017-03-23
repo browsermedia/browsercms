@@ -54,14 +54,10 @@ class HomeControllerTest < ActionController::TestCase
     @request.path = "/cms"
     assert_equal "http://www.cms.foo.com/cms", @controller.send(:url_with_cms_domain_prefix)
   end
-  require 'pry'
   def test_redirected_to_cms_site_if_public_site
-    binding.pry
     @request.host = "foo.com"
-    binding.pry
     get :index
-    binding.pry
-    assert_redirected_to "http://foo.com/cms/login"
+    assert_redirected_to "http://foo.com/login"
   end
 
   def test_redirected_to_cms_site_if_public_site_and_logged_in

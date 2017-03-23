@@ -56,7 +56,7 @@ describe Cms::Concerns::Addressable do
   end
 
   # Delete any testing tables we created, so next run can create them.
-  MiniTest::Unit.after_tests() {
+  Minitest.after_run() {
     ActiveRecord::Base.connection.instance_eval do
       TESTING_TABLES.each do |name|
         drop_table(name)
@@ -97,6 +97,16 @@ describe Cms::Concerns::Addressable do
     end
   end
 
+  describe "#can_have_parent?" do
+    #it "should be false for non-addressable blocks" do
+    #  WannabeAddressable.addressable?.must_equal false
+    #end
+
+    it "should be true for addressable block" do
+      IsAddressable.addressable?.must_equal true
+    end
+  end
+
   describe "#layout" do
     it "should pull template from class" do
       class SpecifyingTemplate < ActiveRecord::Base
@@ -120,15 +130,7 @@ describe Cms::Concerns::Addressable do
       Dummy::OverrideSpecifiedTemplate.layout.must_equal 'templates/special'
     end
   end
-  describe "#can_have_parent?" do
-    it "should be false for non-addressable blocks" do
-      WannabeAddressable.addressable?.must_equal false
-    end
 
-    it "should be true for addressable block" do
-      IsAddressable.addressable?.must_equal true
-    end
-  end
 
   describe ".destroy" do
     it "should also delete the section node" do

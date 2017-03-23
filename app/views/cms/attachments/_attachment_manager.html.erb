@@ -12,7 +12,7 @@
             <h4 class="modal-title">Upload a New Attachment</h4>
           </div>
           <div class="modal-body">
-            <%= simple_form_for Cms::Attachment.new do |af| %>
+            <%= simple_form_for Cms::Attachment.new, :url=>new_engine_aware_path(Cms::Attachment.new) do |af| %>
                 <%= af.input :attachable_type, collection: asset_types, label: 'Type', include_blank: false %>
                 <%= hidden_field_tag :attachment_id_list, "", :id => "attachment_manager_ids_list" %>
                 <%= hidden_field_tag :attachments_changed, "", :id => "attachments_manager_changed" %>

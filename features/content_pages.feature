@@ -45,7 +45,7 @@ Feature: Content Pages
   @page-caching
   Scenario: Guest accesses a CMS action on the public domain
     When I visit "http://www.mysite.com/cms/dashboard"
-    Then they should be redirected to "http://cms.mysite.com/cms/login"
+    Then they should be redirected to "http://cms.mysite.com/login"
     And the response should be 200
 
   @page-caching

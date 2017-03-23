@@ -2,7 +2,6 @@ module Cms
 
   class EngineAwarePathBuilder
 
-
     attr_reader :path_subject
 
     def initialize(model_class_or_content_type_or_model)
