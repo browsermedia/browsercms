@@ -81,7 +81,6 @@ class PortletTest < ActiveSupport::TestCase
     @portlet.update_attributes(:b => "whatever")
     assert_equal "whatever", @portlet.b
   end
-
   test "attributes=" do
     @portlet.attributes=({:b => "b"})
     assert_equal "b", @portlet.b

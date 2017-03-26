@@ -6,7 +6,7 @@ require 'test_helper'
 
 class NamespacesTest < ActiveSupport::TestCase
   
-  
+
   # Fetches all of the subclasses from a given module by grabbing the defined constants
   # and seeing if they are a Class or something else.  Does not check to see if it is an 
   # AR class or if it has a blueprint.
@@ -14,13 +14,13 @@ class NamespacesTest < ActiveSupport::TestCase
     subclasses = []
     mod = module_name.constantize
     if mod.class == Module
-      mod.constants.each do |module_const_name|
+      mod.constants.map do |module_const_name|
         begin
           klass_name = "#{module_name}::#{module_const_name}"
           klass = klass_name.constantize
           if klass.class == Class
             subclasses << klass
-            subclasses += klass.send(:descendants).collect{|x| x.respond_to?(:constantize) ? x.constantize : x}
+            subclasses += klass.send(:descendants).collect{|x| !x.singleton_class? && x.respond_to?(:constantize) ? x.constantize : x}
           else
             subclasses += subclasses_from_module(klass_name)
           end

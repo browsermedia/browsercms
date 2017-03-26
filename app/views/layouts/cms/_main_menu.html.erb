@@ -64,7 +64,7 @@
       <ul class="dropdown-menu pull-right">
         <%= render 'cms/toolbar/new_pages_menu' %>
         <% modules = Cms::ContentType.available_by_module
-           modules.keys.sort.each_with_index do |module_name, i| %>
+           modules.keys.compact.sort.each_with_index do |module_name, i| %>
             <%= divider_tag(i) %>
             <% modules[module_name].each do |type| %>
                 <%= nav_link_to h(type.display_name), new_engine_aware_path(type), id: "create_new_#{type.param_key}" %>
