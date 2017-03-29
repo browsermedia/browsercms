@@ -1,3 +1,12 @@
+// Rails 4 asset dependencies
+//= depend_on_asset "cms/search.png"
+//= depend_on_asset "icomoon.eot"
+//= depend_on_asset "icomoon.svg"
+//= depend_on_asset "icomoon.woff"
+//= depend_on_asset "icomoon.ttf"
+
+
+
 @charset "utf-8";
 
 $experimental-support-for-khtml: false;
