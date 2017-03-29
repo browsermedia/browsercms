@@ -179,6 +179,7 @@ TEXT
 
   def enable_asset_precompiling
     gsub_file "config/environments/production.rb", /config\.assets\.compile = false/, 'config.assets.compile = true'
+    gsub_file "config/initializers/assets.rb", "# Rails.application.config.assets.paths << Emoji.images_path", "Rails.application.config.assets.precompile += %w(cms/*.jpg cms/*.png)"
     gsub_file 'config/application.rb', /^(\s*)(config\.assets\.enabled = true)/, <<-RUBY
 \1\2
 

@@ -1,8 +1,8 @@
 require 'test_helper'
 
 ActiveRecord::Base.connection.instance_eval do
-  drop_table(:things) if table_exists?(:things)
-  drop_table(:thing_attributes) if table_exists?(:thing_attributes)
+  drop_table(:things) if data_source_exists?(:things)
+  drop_table(:thing_attributes) if data_source_exists?(:thing_attributes)
   create_table(:things) do |t|
     t.string :name
     t.timestamps null: false

@@ -302,11 +302,10 @@ class Cms::Page < ActiveRecord::Base
       self.path = "/#{path}"
     end
   end
-
   # remove trailing slash, unless the path is only a slash.  uses capture and
   # substition because ruby regex engine does not support lookbehind
   def remove_trailing_slash_from_path
-    self.path.sub!(/(.+)\/+$/, '\1')
+    self.path = self.path.sub(/(.+)\/+$/, '\1')
   end
 
   def path_not_reserved

@@ -39,7 +39,6 @@ module Cms
       klass
     end
 
-
     def create(model_name, record_name, data={})
       puts "-- create_#{model_name}(:#{record_name})" unless Cms::DataLoader.silent_mode
       @data ||= {}

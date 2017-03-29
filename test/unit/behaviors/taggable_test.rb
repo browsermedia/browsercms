@@ -1,11 +1,11 @@
 require 'test_helper'
 
 ActiveRecord::Base.connection.instance_eval do
-  drop_table(:taggable_articles) if table_exists?(:taggable_articles)
+  drop_table(:taggable_articles) if data_source_exists?(:taggable_articles)
   create_table(:taggable_articles) {|t| t.string :name }
 
-  drop_table(:versioned_taggable_articles) if table_exists?(:versioned_taggable_articles)
-  drop_table(:versioned_taggable_article_versions) if table_exists?(:versioned_taggable_article_versions)
+  drop_table(:versioned_taggable_articles) if data_source_exists?(:versioned_taggable_articles)
+  drop_table(:versioned_taggable_article_versions) if data_source_exists?(:versioned_taggable_article_versions)
   create_content_table(:versioned_taggable_articles) do |t|
     t.string :name
   end

@@ -1,7 +1,7 @@
 module Cms
   class TasksController < Cms::BaseController
 
-    before_filter :load_page, :only => [:new, :create]
+    before_action :load_page, :only => [:new, :create]
 
     def new
       @task = @page.tasks.build(:assigned_by => current_user)

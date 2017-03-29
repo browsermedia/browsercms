@@ -114,6 +114,7 @@ module Cms
         # Publishes the latest draft version of a block. See .publish for more documentation. Can throw errors if publishing failed for unexpected reasons.
         # Note: Having separate .publish! and .publish methods is probably no longer necessary. In practice, only .publish is probably needed.
         # @return [Boolean] true if the block had a draft that was published, false otherwise.
+        #require 'pry'
         def publish!
           did_publish = false
           if new_record?
@@ -130,7 +131,8 @@ module Cms
 
                   d.update_attributes(:published => true)
 
-                  # copy values from the draft to the main record
+                  # copy values from the draft to the main e
+                  #binding.pry
                   quoted_attributes = d.send(:arel_attributes_with_values_for_update, self.class.versioned_columns)
 
                   #the values from the draft MAY have a relation of the versioned module
@@ -139,19 +141,21 @@ module Cms
                   #so remap to the actual arel_table´
                   #I haven't figured out why this is, but I know it happens when you call save! on Page
                   #during seeding of data
+                  #binding.pry
                   if self.class.arel_table.name != quoted_attributes.keys[0].relation.name
                     quoted_attributes = quoted_attributes.inject({}) { |hash, pair| hash[self.class.arel_table[pair[0].name]] = pair[1]; hash }
                   end
-
+#binding.pry
                   # Doing the SQL ourselves to avoid callbacks
-                  ActiveRecord::Base.connection.execute(self.class.unscoped.where(self.class.arel_table[self.class.primary_key].eq(id)).arel.compile_update(quoted_attributes, id).to_sql)
+                  sql = self.class.unscoped.where(self.class.arel_table[self.class.primary_key].eq(Arel::Nodes::Quoted.new(id))).arel.compile_update(quoted_attributes, id).to_sql
+                  ActiveRecord::Base.connection.execute(sql)
                   did_publish = true
                 end
               else
                 self.class.connection.update(
                     "UPDATE #{self.class.quoted_table_name} " +
                         "SET published = #{self.class.connection.quote(true, self.class.columns_hash["published"])} " +
-                        "WHERE #{self.class.connection.quote_column_name(self.class.primary_key)} = #{self.class.quote_value(id, nil)}",
+                        "WHERE #{self.class.connection.quote_column_name(self.class.primary_key)} = #{self.class.quote_value(id)}",
                     "#{self.class.name.demodulize} Publish"
                 )
                 did_publish = true

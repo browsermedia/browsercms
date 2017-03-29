@@ -49,20 +49,20 @@ class CmsActsAsContentPageTest < ActiveSupport::TestCase
   end
 
   test "placing in a section should create a before_filter for that section for all actions" do
-    NewController.expects(:before_filter).with(:check_access_to_section, {})
+    NewController.expects(:before_action).with(:check_access_to_section, {})
 
     NewController.send :requires_permission_for_section, EXPECTED_SECTION
 
   end
 
   test "can put only conditions on filters" do
-    NewController.expects(:before_filter).with(:check_access_to_section, :only=>[:create])
+    NewController.expects(:before_action).with(:check_access_to_section, :only=>[:create])
 
     NewController.send :requires_permission_for_section, EXPECTED_SECTION, :only=>[:create]
   end
 
   test "can put except conditions on filters" do
-    NewController.expects(:before_filter).with(:check_access_to_section, :except=>[:create])
+    NewController.expects(:before_action).with(:check_access_to_section, :except=>[:create])
 
     NewController.send :requires_permission_for_section, EXPECTED_SECTION, :except=>[:create]
   end

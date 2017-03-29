@@ -70,6 +70,7 @@ Capybara.default_selector = :css
 # recommended as it will mask a lot of errors for you!
 #
 ActionController::Base.allow_rescue = false
+$arel_silence_type_casting_deprecation=true
 
 # Remove/comment out the lines below if your app doesn't have a database.
 # For some databases (like MongoDB and CouchDB) you may need to use :truncation instead.
@@ -82,9 +83,8 @@ end
 # Load the seed data once at the start of the test run.
 # By doing this here, and using transaction strategy, we ensure the fastest possible tests.
 DatabaseCleaner.clean_with :truncation
-silence_stream(STDOUT) do
-  require File.join(File.dirname(__FILE__), '../../db/seeds.rb')
-end
+require File.join(File.dirname(__FILE__), '../../db/seeds.rb')
+
 
 require 'test/unit/assertions'
 World Test::Unit::Assertions

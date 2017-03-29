@@ -65,7 +65,7 @@ module Cms
           %w[page mode show_page_toolbar].each do |v|
             @template.instance_variable_set("@#{v}", instance_variable_get("@#{v}"))
           end
-          
+
 
           # clear out any content already captured
           # by previous attempts to render the page within this request

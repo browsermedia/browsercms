@@ -62,6 +62,7 @@ module Dummy
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
 
+
     # Renable for testing
     config.cms.content_types.blacklist -= [:login_portlet]
 

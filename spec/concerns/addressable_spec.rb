@@ -30,7 +30,7 @@ describe Cms::Concerns::Addressable do
   def create_testing_table(name, &block)
 
     ActiveRecord::Base.connection.instance_eval do
-      unless table_exists?(name)
+      unless data_source_exists?(name)
         TESTING_TABLES << name
         create_table(name, &block)
         change_table name do |t|

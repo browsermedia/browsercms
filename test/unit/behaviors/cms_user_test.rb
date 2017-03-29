@@ -1,7 +1,7 @@
 require 'test_helper'
 
 ActiveRecord::Base.connection.instance_eval do
-  drop_table(:external_users) if table_exists?(:external_users)
+  drop_table(:external_users) if data_source_exists?(:external_users)
   create_table(:external_users) do |t| 
     t.string :name
     t.string :type

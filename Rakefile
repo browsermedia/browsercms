@@ -1,5 +1,6 @@
 #!/usr/bin/env rake
 begin
+  $arel_silence_type_casting_deprecation=true
   require 'bundler/setup'
 rescue LoadError
   puts 'You must `gem install bundler` and `bundle install` to run rake tasks'
@@ -104,7 +105,7 @@ def run_tests(tests_to_run)
 end
 
 # Build and run against MySQL.
-task 'ci:test' => ['project:setup:mysql', 'db:drop', 'db:create:all', 'db:install', 'test']
+task 'ci:test' => [ 'project:setup:mysql', 'db:drop', 'db:create:all', 'db:install', 'test']
 task :default => 'ci:test'
 
 require 'yard'

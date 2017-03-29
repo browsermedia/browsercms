@@ -49,11 +49,12 @@ module Cms
         end
         subclasses << Cms::Portlet
         subclasses.uniq! { |k| k.name } # filter duplicate classes
-        subclasses.map do |klass|
+        z=subclasses.map do |klass|
           unless klass < Cms::Portlet
             Cms::ContentType.new(name: klass.name)
           end
         end.compact.sort { |a, b| a.name.to_s <=> b.name.to_s }
+        z.map{|y| y if y.name != nil }.compact
       end
 
       def list

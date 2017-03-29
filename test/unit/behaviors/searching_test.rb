@@ -1,17 +1,17 @@
 require 'test_helper'
 
 ActiveRecord::Base.connection.instance_eval do
-  drop_table(:searchable_content_block_parents) if table_exists?(:searchable_content_block_parents)
+  drop_table(:searchable_content_block_parents) if data_source_exists?(:searchable_content_block_parents)
   create_table(:searchable_content_block_parents) { |t| t.string :name }
-  drop_table(:searchable_content_blocks) if table_exists?(:searchable_content_blocks)
-  drop_table(:searchable_content_block_versions) if table_exists?(:searchable_content_block_versions)
+  drop_table(:searchable_content_blocks) if data_source_exists?(:searchable_content_blocks)
+  drop_table(:searchable_content_block_versions) if data_source_exists?(:searchable_content_block_versions)
   create_content_table(:searchable_content_blocks) do |t|
     t.integer :parent_id
   end
 
   # Verifies that blocks are created with a :name column if one is not specified.
-  drop_table(:searchable_block_without_names) if table_exists?(:searchable_block_without_names)
-  drop_table(:searchable_block_without_name_versions) if table_exists?(:searchable_block_without_name_versions)
+  drop_table(:searchable_block_without_names) if data_source_exists?(:searchable_block_without_names)
+  drop_table(:searchable_block_without_name_versions) if data_source_exists?(:searchable_block_without_name_versions)
   create_content_table(:searchable_block_without_names) do |t|
     t.string :title
   end

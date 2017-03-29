@@ -3,7 +3,7 @@ require File.expand_path("../../test/dummy/config/environment.rb", __FILE__)
 require "rails/test_help"
 require "minitest/spec"
 require "minitest/unit"
-
+$arel_silence_type_casting_deprecation=true
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 require File.expand_path("../../test/factories/factories", __FILE__)
