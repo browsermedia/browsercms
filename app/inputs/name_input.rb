@@ -14,7 +14,7 @@ class NameInput < SimpleForm::Inputs::TextInput
     options[:placeholder] = "Name" if options[:placeholder].nil?
   end
 
-  def input
+  def input(wrapper_options)
     add_slug_source_for_content_that_needs_it
 
     unless options[:label]

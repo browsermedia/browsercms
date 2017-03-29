@@ -1,6 +1,6 @@
 class AttachmentsInput < SimpleForm::Inputs::Base
 
-  def input
+  def input(wrapper_options)
     definitions = Cms::Attachment.definitions_for(object.class.name, :multiple)
     if definitions.empty?
       template.render(partial: 'cms/attachments/no_attachments_defined', locals: {object: object})
