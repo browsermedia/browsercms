@@ -114,7 +114,7 @@ module Cms
         # Publishes the latest draft version of a block. See .publish for more documentation. Can throw errors if publishing failed for unexpected reasons.
         # Note: Having separate .publish! and .publish methods is probably no longer necessary. In practice, only .publish is probably needed.
         # @return [Boolean] true if the block had a draft that was published, false otherwise.
-        #require 'pry'
+        require 'pry'
         def publish!
           did_publish = false
           if new_record?
@@ -131,24 +131,21 @@ module Cms
 
                   d.update_attributes(:published => true)
 
-                  # copy values from the draft to the main e
-                  #binding.pry
-                  quoted_attributes = d.send(:arel_attributes_with_values_for_update, self.class.versioned_columns)
 
                   #the values from the draft MAY have a relation of the versioned module
                   #as opposed to the actual class itself
                   #eg Page::Version, and not Page
-                  #so remap to the actual arel_table´
+                  #so remap to the actual table´
                   #I haven't figured out why this is, but I know it happens when you call save! on Page
                   #during seeding of data
-                  #binding.pry
-                  if self.class.arel_table.name != quoted_attributes.keys[0].relation.name
-                    quoted_attributes = quoted_attributes.inject({}) { |hash, pair| hash[self.class.arel_table[pair[0].name]] = pair[1]; hash }
+                  my_class = self.class.name.split("::Version").first.constantize
+                  versioned_columns = my_class.versioned_columns
+                  update_params = {}
+                  versioned_columns.each do |c|
+                    update_params[c.to_sym] = d.send(c)
                   end
-#binding.pry
-                  # Doing the SQL ourselves to avoid callbacks
-                  sql = self.class.unscoped.where(self.class.arel_table[self.class.primary_key].eq(Arel::Nodes::Quoted.new(id))).arel.compile_update(quoted_attributes, id).to_sql
-                  ActiveRecord::Base.connection.execute(sql)
+
+                  my_class.where(:id=>id).update_all(update_params)
                   did_publish = true
                 end
               else
