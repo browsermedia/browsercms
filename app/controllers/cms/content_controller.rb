@@ -64,12 +64,11 @@ module Cms
     end
 
     private
-
     def render_editing_frame
       @page_title = @page.page_title
 
       # Adds all provided parameters to the iframe
-      @edit_page_path = ActionDispatch::Http::URL.url_for(path: edit_content_path(current_page), params: params.except(:controller, :action, :path), only_path: true)
+      @edit_page_path = edit_content_path(current_page, params.except(:controller, :action, :path).permit! )
       render 'editing_frame', :layout => 'cms/page_editor'
     end
 

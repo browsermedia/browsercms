@@ -114,7 +114,6 @@ module Cms
         # Publishes the latest draft version of a block. See .publish for more documentation. Can throw errors if publishing failed for unexpected reasons.
         # Note: Having separate .publish! and .publish methods is probably no longer necessary. In practice, only .publish is probably needed.
         # @return [Boolean] true if the block had a draft that was published, false otherwise.
-        require 'pry'
         def publish!
           did_publish = false
           if new_record?
