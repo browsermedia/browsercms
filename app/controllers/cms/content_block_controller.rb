@@ -269,7 +269,7 @@ module Cms
     def model_params
       defaults = {"publish_on_save" => false}
       model_params = params[model_form_name]
-      defaults.merge(model_params)
+      defaults.merge(model_params.to_unsafe_h)
     end
 
     def after_update_on_success

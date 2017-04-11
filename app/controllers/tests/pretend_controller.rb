@@ -11,11 +11,11 @@ class Tests::PretendController < ApplicationController
   RESTRICTED_H1 = "Restricted"
 
   def restricted
-    render :text =>"<h1>#{RESTRICTED_H1}</h1> You can see this restricted page."
+    render plain: "<h1>#{RESTRICTED_H1}</h1> You can see this restricted page."
   end
 
   def open
-    render :text =>"<h1>Open Page</h1> You can see this public page."   
+    render plain: "<h1>Open Page</h1> You can see this public page."
   end
 
   def error

@@ -4,7 +4,7 @@ module Cms
 
     check_permissions :administrate, :except => [:change_password, :update_password]
     before_action :only_self_or_administrator, :only => [:change_password, :update_password]
-    after_filter :update_flash, :only => [:update]
+    after_action :update_flash, :only => [:update]
 
     def index
       @have_external_users = Cms::ExternalUser.count > 0

@@ -30,7 +30,7 @@ class SchemaStatementsTest < ActiveSupport::TestCase
     connection.drop_table :non_versioned_block_versions rescue nil
     connection.create_content_table :non_versioned_blocks, :versioned=>false do |t| ; end
 
-    assert_equal false, ActiveRecord::Base.connection.table_exists?(:non_versioned_block_versions)
+    assert_equal false, ActiveRecord::Base.connection.data_source_exists?(:non_versioned_block_versions)
   end
 
 
