@@ -48,7 +48,7 @@ Feature:
           t.string :name
           t.string :price
 
-          t.timestamps
+          t.timestamps null:false
         end
       end
     end
@@ -135,7 +135,7 @@ Feature:
       def change
         create_content_table :dogs do |t|
 
-          t.timestamps
+          t.timestamps null: false
         end
       end
     end

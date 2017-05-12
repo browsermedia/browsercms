@@ -89,10 +89,10 @@ class SectionsControllerPermissionsTest < ActionController::TestCase
   def test_create_permissions
     login_as(@user)
 
-    post :create, :section_id => @editable_section, section: {:name => "Another editable subsection"}
+    post :create, :section_id => @editable_section.id, section: {:name => "Another editable subsection"}
     assert_response :success
 
-    post :create, :section_id => @noneditable_section, section: {:name => "Another non-editable subsection"}
+    post :create, :section_id => @noneditable_section.id, section: {:name => "Another non-editable subsection"}
     assert_response 403
     assert_template "cms/shared/access_denied"
   end

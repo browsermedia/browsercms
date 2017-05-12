@@ -21,7 +21,7 @@ module Cms
 
     def add_section_path_data(section_node, parent_section_node)
       section = figure_out_target_section(parent_section_node, section_node)
-      new_section_path(section_id: section)
+      new_section_path(section_id: section.id)
     end
 
     # When sitemap initially renders, we only want to show first level.

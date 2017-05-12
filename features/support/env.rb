@@ -17,6 +17,8 @@ require 'capybara/dsl'
 #Capybara.javascript_driver = :poltergeist
 #Capybara.default_driver = :poltergeist
 
+
+
 Before do
   # Configure where Aruba generates files.
   # You can't generate rails projects within rails projects', so it needs to be parallel to the browsercms project
@@ -84,3 +86,5 @@ silence_stream(STDOUT) do
   require File.join(File.dirname(__FILE__), '../../db/seeds.rb')
 end
 
+require 'test/unit/assertions'
+World Test::Unit::Assertions

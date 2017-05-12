@@ -12,8 +12,8 @@ gem 'bluecloth', :groups=>[:development, :test] # For YARD
 
 gem "thin" # To avoid annoying Ruby 1.9.3/Rails/Webrick warnings - See http://stackoverflow.com/questions/7082364/what-does-warn-could-not-determine-content-length-of-response-body-mean-and-h
 
-gem 'sass-rails'
-
+gem 'sass-rails', '~>5.0.0'
+gem 'sprockets-rails', '~>2.3.1'
 
 # Uncomment to confirm that older versions work (for compaitiblity with Spree 2.2.4/bcms_spree)
 # gem 'paperclip', '~> 3.4.1'
@@ -26,13 +26,15 @@ group :development do
   gem 'rake'
   # gem 'debugger'
   gem 'quiet_assets'
-  #gem 'better_errors'
-  #gem 'binding_of_caller'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'pry'
 end
 group :test, :development do
-  gem 'minitest'
-  gem 'minitest-rails'
-  gem 'minitest-reporters'
+  gem 'minitest', '~>5.3.3'
+  gem "test-unit", "~> 3.0"
+  gem 'minitest-rails', '~>2.0.0'
+  gem 'minitest-reporters', '~>1.0.0'
 end
 
 group :test do

@@ -21,7 +21,6 @@ module Cms
       assert !section.valid?
       assert_has_error_on section, :name, "cannot contain '/'"
     end
-
     test "sections return all child sections of a section" do
       s = create(:public_section)
       assert_equal [s], s.parent.sections

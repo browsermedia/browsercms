@@ -189,7 +189,7 @@ RUBY
   class Create#{block_name.capitalize}s < ActiveRecord::Migration
     def change
       create_content_table :#{block_name}s do |t|
-        t.timestamps
+        t.timestamps null: false
       end
       #{been_migrated_line}
     end

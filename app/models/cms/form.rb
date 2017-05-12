@@ -26,6 +26,7 @@ module Cms
     end
 
     def required?(name)
+      name = name.to_s if name.class==Symbol
       field = field(name)
       field ? field.required? : false
     end

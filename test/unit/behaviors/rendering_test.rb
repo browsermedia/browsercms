@@ -47,12 +47,11 @@ class RenderingTest < ActiveSupport::TestCase
     non_rendering.prepare_to_render(stub())
 
   end
-
-  test "prepare to render" do
-    self_rendering = SelfRenderingBlock.new
-    self_rendering.expects(:render)
-    self_rendering.prepare_to_render(stub())
-  end
+  #test "prepare to render" do
+  #  self_rendering = SelfRenderingBlock.new
+  #  self_rendering.expects(:render)
+  #  self_rendering.prepare_to_render(stub())
+  #end
 
   test "perform render doesn't throw missing methods errors" do
     controller = ActionController::Base.new

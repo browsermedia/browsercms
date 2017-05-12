@@ -3,7 +3,7 @@ class CreateCatalogs < ActiveRecord::Migration
     create_content_table :catalogs do |t|
       t.string :name
 
-      t.timestamps
+      t.timestamps null: false
     end
   end
 end

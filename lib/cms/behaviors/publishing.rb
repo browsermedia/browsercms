@@ -42,7 +42,6 @@ module Cms
       module ClassMethods
       end
       module InstanceMethods
-
         # Can specify whether to save this block as a draft using a terser syntax.
         # These two calls behave identically
         #   - Cms::HtmlBlock.create(name: "Shorter", as: :draft)
@@ -145,14 +144,14 @@ module Cms
                   end
 
                   # Doing the SQL ourselves to avoid callbacks
-                  self.class.unscoped.where(self.class.arel_table[self.class.primary_key].eq(id)).arel.update(quoted_attributes)
+                  ActiveRecord::Base.connection.execute(self.class.unscoped.where(self.class.arel_table[self.class.primary_key].eq(id)).arel.compile_update(quoted_attributes, id).to_sql)
                   did_publish = true
                 end
               else
                 self.class.connection.update(
                     "UPDATE #{self.class.quoted_table_name} " +
                         "SET published = #{self.class.connection.quote(true, self.class.columns_hash["published"])} " +
-                        "WHERE #{self.class.connection.quote_column_name(self.class.primary_key)} = #{self.class.quote_value(id)}",
+                        "WHERE #{self.class.connection.quote_column_name(self.class.primary_key)} = #{self.class.quote_value(id, nil)}",
                     "#{self.class.name.demodulize} Publish"
                 )
                 did_publish = true

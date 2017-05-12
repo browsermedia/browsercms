@@ -294,7 +294,7 @@ module Cms
         end
 
         def section_id=(sec_id)
-          self.section = Section.find(sec_id)
+          self.section = Section.find(sec_id.class==Fixnum || sec_id.class==String ? sec_id.to_i : sec_id.id)
         end
 
         def section

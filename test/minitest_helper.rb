@@ -2,8 +2,9 @@ ENV["RAILS_ENV"] = "test"
 require File.expand_path("../dummy/config/environment.rb", __FILE__)
 require "rails/test_help"
 require "minitest/spec"
-#require "minitest/autorun"
+require "minitest/autorun"
 require "minitest/unit"
+require "mocha/setup"
 
 #ENV["RAILS_ENV"] = "test"
 #require File.expand_path("../dummy/config/environment.rb", __FILE__)
@@ -14,7 +15,6 @@ require "minitest/unit"
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each { |f| require f }
 require 'factories/factories'
 require 'factories/attachable_factories'
-
 require 'minitest/reporters'
 MiniTest::Reporters.use!
 
@@ -34,6 +34,9 @@ class Minitest::Spec
   include FactoryGirl::Syntax::Methods
   include FactoryHelpers
 end
+
+require 'mocha/setup'
+
 
 #class MiniTest::Rails::ActiveSupport::TestCase
 #

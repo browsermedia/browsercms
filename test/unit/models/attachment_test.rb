@@ -5,7 +5,7 @@ class AttachmentTest < ActiveSupport::TestCase
   test "#attachable_class sets #attachable_type attribute" do
     a = Cms::Attachment.new
     a.attachable_class = Cms::FileBlock
-    assert_equal Cms::FileBlock, a.attachable_type
+    assert_equal Cms::FileBlock.to_s, a.attachable_type
   end
 
   test "Attachments are configured" do

@@ -40,7 +40,7 @@ Feature: Generate Content Blocks
           t.string :name
           t.string :price
 
-          t.timestamps
+          t.timestamps null: false
         end
       end
     end

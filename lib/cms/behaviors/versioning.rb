@@ -14,7 +14,6 @@ module Cms
 
     # Represents a record as of a specific version in the versions table.
     module VersionRecord
-
       # Create an original 'record' of the Versioned about as it existed as of this VersionRecord.
       #
       # @return [Object] i.e. HtmlBlock
@@ -37,7 +36,11 @@ module Cms
 
         # Last but not least, clear the changed attributes
         if changed_attrs = obj.send(:changed_attributes)
-          changed_attrs.clear
+          if self.class.private_instance_methods.include? :clear_attribute_changes
+            clear_attribute_changes changed_attrs
+          else
+            changed_attributes.clear
+          end
         end
 
         obj
@@ -218,6 +221,7 @@ module Cms
         def create_or_update
           logger.debug { "#{self.class}#create_or_update called. Published = #{!!publish_on_save}" }
           self.skip_callbacks = false
+          #binding.pry
           unless different_from_last_draft?
             logger.debug { "No difference between this version and last. Skipping save" }
             self.skip_callbacks = true
@@ -228,7 +232,11 @@ module Cms
             self.version = 1
             # This should call ActiveRecord::Callbacks#create_or_update, which will correctly trigger the :save callback_chain
             saved_correctly = super
-            changed_attributes.clear
+            if self.class.private_instance_methods.include? :clear_attribute_changes
+              clear_attribute_changes changed_attributes
+            else
+              changed_attributes.clear
+            end
           else
             logger.debug { "#{self.class}#update" }
             # Because we are 'skipping' the normal ActiveRecord update here, we must manually call the save callback chain.
@@ -336,7 +344,12 @@ module Cms
 
         def version_comment=(version_comment)
           @version_comment = version_comment
-          send(:changed_attributes)["version_comment"] = @version_comment
+          # This is not a great solution.  We need to rethink how versioning is done, but for the time being
+          # forcing a random field on the object as dirty should solve the problem of attempting to write to
+          # the frozen changed attributes hash.
+          self.updated_by_id_will_change!
+          #binding.pry
+          #send(:changed_attributes)["version_comment"] = @version_comment
         end
 
         def different_from_last_draft?

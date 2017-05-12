@@ -38,7 +38,7 @@ module ActiveRecord
           td.boolean :archived, :default => false
           td.integer :created_by_id
           td.integer :updated_by_id
-          td.timestamps unless column_exists?(table_name.to_sym, :created_at)
+          td.timestamps  null: false unless column_exists?(table_name.to_sym, :created_at)
         end
 
         if versioned
@@ -54,7 +54,7 @@ module ActiveRecord
             vt.string :version_comment
             vt.integer :created_by_id
             vt.integer :updated_by_id
-            vt.timestamps unless column_exists?(table_name_versioned, :created_at)
+            vt.timestamps null: false unless column_exists?(table_name_versioned, :created_at)
           end
         end
 

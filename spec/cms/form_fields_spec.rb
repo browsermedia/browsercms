@@ -1,5 +1,5 @@
 require "minitest_helper"
-
+require 'mocha/setup'
 describe Cms::FormField do
 
   describe '.permitted_params' do
@@ -34,18 +34,18 @@ describe Cms::FormField do
   describe '#name' do
     it "should return a symbol that can be used as the name for inputs" do
       field = Cms::FormField.create!(label: 'Name')
-      field.name.must_equal :name
+      field.name.must_equal "name"
     end
 
     it "should underscore names" do
       field = Cms::FormField.create!(label: 'Full Name')
-      field.name.must_equal :full_name
+      field.name.must_equal "full_name"
     end
 
     it "should not change after being saved even when the label is changed" do
       field = Cms::FormField.create!(label: 'Name')
       field.update(label: 'Full Name')
-      field.name.must_equal :name
+      field.name.must_equal "name"
     end
 
 

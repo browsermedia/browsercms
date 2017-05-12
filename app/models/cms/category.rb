@@ -30,7 +30,7 @@ module Cms
     def ancestors
       fn = lambda do |cat, parents|
         if cat.parent_id
-          p = self.class.find(cat.parent)
+          p = self.class.find(cat.parent.id)
           fn.call(p, (parents << p))
         else
           parents.reverse

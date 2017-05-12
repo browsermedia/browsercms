@@ -22,7 +22,7 @@ class Browsercms300 < ActiveRecord::Migration
       t.string :format
       t.string :handler
       t.text :body
-      t.timestamps
+      t.timestamps null: false
     end
 
     create_content_table :cms_pages do |t|
@@ -40,26 +40,26 @@ class Browsercms300 < ActiveRecord::Migration
 
     create_table :cms_content_type_groups do |t|
       t.string :name
-      t.timestamps
+      t.timestamps null: false
     end
 
     create_table :cms_content_types do |t|
       t.string :name
       t.belongs_to :content_type_group
       t.integer :priority, :default => 2
-      t.timestamps
+      t.timestamps null: false
     end
 
     create_table :cms_category_types do |t|
       t.string :name
-      t.timestamps
+      t.timestamps null: false
     end
 
     create_table :cms_categories do |t|
       t.belongs_to :category_type
       t.belongs_to :parent
       t.string :name
-      t.timestamps
+      t.timestamps null: false
     end
 
     create_table :cms_connectors do |t|
@@ -70,7 +70,7 @@ class Browsercms300 < ActiveRecord::Migration
       t.integer :connectable_version
       t.string :container
       t.integer :position
-      t.timestamps
+      t.timestamps null: false
     end
 
     create_content_table :cms_html_blocks do |t|
@@ -82,7 +82,7 @@ class Browsercms300 < ActiveRecord::Migration
       t.string :path
       t.boolean :root, :default => false
       t.boolean :hidden, :default => false
-      t.timestamps
+      t.timestamps null: false
     end
 
     create_table :cms_portlets do |t|
@@ -91,7 +91,7 @@ class Browsercms300 < ActiveRecord::Migration
       t.boolean :archived, :default => false
       t.boolean :deleted, :default => false
       t.integer :created_by_id, :updated_by_id
-      t.timestamps
+      t.timestamps null: false
     end
     create_table :cms_portlet_attributes do |t|
       t.integer :portlet_id
@@ -102,7 +102,7 @@ class Browsercms300 < ActiveRecord::Migration
     create_table :cms_redirects do |t|
       t.string :from_path
       t.string :to_path
-      t.timestamps
+      t.timestamps null: false
     end
 
     create_content_table :cms_attachments, name: false do |t|
@@ -130,13 +130,13 @@ class Browsercms300 < ActiveRecord::Migration
       t.string :name
       t.boolean :guest, :default => false
       t.boolean :cms_access, :default => false
-      t.timestamps
+      t.timestamps null: false
     end
     create_table :cms_groups do |t|
       t.string :name
       t.string :code
       t.integer :group_type_id
-      t.timestamps
+      t.timestamps null: false
     end
     create_table :cms_user_group_memberships do |t|
       t.integer :user_id
@@ -148,7 +148,7 @@ class Browsercms300 < ActiveRecord::Migration
       t.string :full_name
       t.string :description
       t.string :for_module
-      t.timestamps
+      t.timestamps null: false
     end
     create_table :cms_group_permissions do |t|
       t.integer :group_id
@@ -167,7 +167,7 @@ class Browsercms300 < ActiveRecord::Migration
       t.string :name
       t.string :domain
       t.boolean :the_default
-      t.timestamps
+      t.timestamps null: false
     end
 
     create_table :cms_section_nodes do |t|
@@ -175,21 +175,21 @@ class Browsercms300 < ActiveRecord::Migration
       t.integer :node_id
       t.integer :position
       t.string :ancestry
-      t.timestamps
+      t.timestamps null: false
     end
 
     create_content_table :cms_links do |t|
       t.string :name
       t.string :url
       t.boolean :new_window, :default => false
-      t.timestamps
+      t.timestamps null: false
     end
     add_column :cms_links, :latest_version, :integer
 
 
     create_table :cms_tags do |t|
       t.string :name
-      t.timestamps
+      t.timestamps null: false
     end
 
     create_table :cms_taggings do |t|
@@ -197,7 +197,7 @@ class Browsercms300 < ActiveRecord::Migration
       t.integer :taggable_id
       t.string :taggable_type
       t.integer :taggable_version
-      t.timestamps
+      t.timestamps null: false
     end
 
     create_table :cms_email_messages do |t|
@@ -209,7 +209,7 @@ class Browsercms300 < ActiveRecord::Migration
       t.text :body
       t.string :content_type
       t.datetime :delivered_at
-      t.timestamps
+      t.timestamps null: false
     end
 
     create_table :cms_tasks do |t|
@@ -219,7 +219,7 @@ class Browsercms300 < ActiveRecord::Migration
       t.text :comment
       t.date :due_date
       t.datetime :completed_at
-      t.timestamps
+      t.timestamps null: false
     end
 
     create_table :cms_page_routes do |t|
@@ -227,14 +227,14 @@ class Browsercms300 < ActiveRecord::Migration
       t.string :pattern
       t.belongs_to :page
       t.text :code
-      t.timestamps
+      t.timestamps null: false
     end
     create_table :cms_page_route_options do |t|
       t.belongs_to :page_route
       t.string :type
       t.string :name
       t.string :value
-      t.timestamps
+      t.timestamps null: false
     end
 
     INDEXES.each do |index|
