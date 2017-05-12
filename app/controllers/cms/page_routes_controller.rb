@@ -1,7 +1,7 @@
 module Cms
   class PageRoutesController < Cms::BaseController
 
-    before_filter :load_page_route, :only => [:edit, :update, :destroy]
+    before_action :load_page_route, :only => [:edit, :update, :destroy]
 
     def index
       @page_routes = PageRoute.paginate(:page => params[:page]).order("name")

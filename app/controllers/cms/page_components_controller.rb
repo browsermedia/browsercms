@@ -2,7 +2,6 @@ module Cms
   class PageComponentsController < Cms::ApplicationController
     layout false
     respond_to :json
-
     def new
       @default_type = Cms::ContentType.default
       @content_types = Cms::ContentType.other_connectables

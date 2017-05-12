@@ -8,15 +8,15 @@ module Cms
     include Cms::MobileAware
     helper MobileHelper
 
-    skip_before_filter :redirect_to_cms_site
-    before_filter :redirect_non_cms_users_to_public_site, :only => [:show, :show_page_route]
-    before_filter :construct_path, :only => [:show]
-    before_filter :construct_path_from_route, :only => [:show_page_route]
-    before_filter :try_to_redirect, :only => [:show]
-    before_filter :try_to_stream_file, :only => [:show]
-    before_filter :load_page, :only => [:show, :show_page_route]
-    before_filter :check_access_to_page, :except => [:edit, :preview]
-    before_filter :select_cache_directory
+    #skip_before_filter :redirect_to_cms_site
+    before_action :redirect_non_cms_users_to_public_site, :only => [:show, :show_page_route]
+    before_action :construct_path, :only => [:show]
+    before_action :construct_path_from_route, :only => [:show_page_route]
+    before_action :try_to_redirect, :only => [:show]
+    before_action :try_to_stream_file, :only => [:show]
+    before_action :load_page, :only => [:show, :show_page_route]
+    before_action :check_access_to_page, :except => [:edit, :preview]
+    before_action :select_cache_directory
 
     self.responder = Cms::ContentResponder
 
@@ -64,12 +64,11 @@ module Cms
     end
 
     private
-
     def render_editing_frame
       @page_title = @page.page_title
 
       # Adds all provided parameters to the iframe
-      @edit_page_path = ActionDispatch::Http::URL.url_for(path: edit_content_path(current_page), params: params.except(:controller, :action, :path), only_path: true)
+      @edit_page_path = edit_content_path(current_page, params.except(:controller, :action, :path).permit! )
       render 'editing_frame', :layout => 'cms/page_editor'
     end
 

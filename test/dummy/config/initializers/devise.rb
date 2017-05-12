@@ -10,6 +10,8 @@ Devise.setup do |config|
   config.warden do |manager|
     manager.default_strategies(:scope => :cms_user).unshift :test_password
   end
+
+  config.email_regexp = /\A[^@\s]+@([^@\s]+\.)+[^@\W]+\z/
 end
 
 

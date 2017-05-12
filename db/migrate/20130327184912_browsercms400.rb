@@ -115,6 +115,6 @@ class Browsercms400 < ActiveRecord::Migration
   end
 
   def needs_namespacing(table_name)
-    table_exists?(table_name) && !table_exists?(cms_(table_name))
+    data_source_exists?(table_name) && !data_source_exists?(cms_(table_name))
   end
 end

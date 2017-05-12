@@ -9,12 +9,12 @@ class NewFileTest < ActiveSupport::TestCase
 
   test "#valid? requires attached file" do
     refute @file.valid?
-    assert_equal ["You must upload a file"], @file.errors.get(:attachment)
+    assert_equal ["You must upload a file"], @file.errors[:attachment]
   end
 
   test "#valid? requires Name" do
     refute @file.valid?
-    assert_equal ["can't be blank"], @file.errors.get(:name)
+    assert_equal ["can't be blank"], @file.errors[:name]
   end
 
   test "New FileBlock should have 1 blank attachment" do

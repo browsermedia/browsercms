@@ -21,7 +21,6 @@ module EngineControllerHacks
   end
 
   private
-
   def process_action(action, parameters = nil, session = nil, flash = nil, method = "GET")
     parameters ||= {}
     merge = { :use_route => :cms }

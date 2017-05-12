@@ -48,9 +48,8 @@ class Cms::TasksControllerTest < ActionController::TestCase
     assert_redirected_to dashboard_path
     assert_equal "Tasks marked as complete", flash[:notice]
   end
-
   def test_complete_no_tasks
-    put :complete, :task_ids => nil
+    put :complete
     assert_response :redirect
     assert_redirected_to dashboard_path
     assert_equal "No tasks were marked for completion", flash[:error]

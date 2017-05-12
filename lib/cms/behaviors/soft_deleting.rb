@@ -42,11 +42,14 @@ module Cms
       # 2. TODO: Allow a record to define its own default_scope that doesn't 'override' this one.
       # See http://github.com/fernandoluizao/acts_as_active for an implementation of this
       module ClassMethods
-
         # Returns a content block even if it is marked as deleted.
         # @param [Hash] options Hash suitable to be passed to '#where'
         def find_with_deleted(options)
-          self.unscoped.where(options).first
+          if options.class==Fixnum
+            self.unscoped.where(:id=>options).first
+          else
+            self.unscoped.where(options).first
+          end
         end
 
         # Returns a count of all records of this type, including those marked as deleted.

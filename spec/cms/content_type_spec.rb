@@ -36,11 +36,10 @@ describe Cms::ContentType do
       JustHasContentType.content_type.module_name.must_equal :widgets
     end
   end
-
   describe '.available_by_module' do
     it "should return a list of modules in alphabetical order" do
       modules = Cms::ContentType.available_by_module
-      modules.keys.sort.first.must_equal :categorization
+      modules.keys.compact.sort.first.must_equal :categorization
       modules[:core].map { |t| t.name }.must_include 'Cms::HtmlBlock'
     end
 
@@ -142,10 +141,9 @@ describe Cms::ContentType do
       types = Cms::ContentType.available
       types.first.class.must_equal Cms::ContentType
     end
-
     it "should be ordered alphabetically" do
-      content_type_names.first.must_equal "AAAFirstBlock"
-      content_type_names.last.must_equal "Widget"
+      content_type_names.compact.first.must_equal "AAAFirstBlock"
+      content_type_names.compact.last.must_equal "Widget"
     end
 
 

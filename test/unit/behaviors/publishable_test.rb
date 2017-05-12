@@ -1,18 +1,18 @@
 require 'test_helper'
 
 ActiveRecord::Base.connection.instance_eval do
-  drop_table(:publishables) if table_exists?(:publishables)
+  drop_table(:publishables) if data_source_exists?(:publishables)
   create_table(:publishables) do |t|
     t.string :name
     t.boolean :published, :default => false
   end
-  drop_table(:unpublishables) if table_exists?(:unpublishables)
+  drop_table(:unpublishables) if data_source_exists?(:unpublishables)
   create_table(:unpublishables) do |t|
     t.string :name
   end
 
-  drop_table(:publishable_blocks) if table_exists?(:publishable_blocks)
-  drop_table(:publishable_block_versions) if table_exists?(:publishable_block_versions)
+  drop_table(:publishable_blocks) if data_source_exists?(:publishable_blocks)
+  drop_table(:publishable_block_versions) if data_source_exists?(:publishable_block_versions)
   create_content_table(:publishable_blocks) do |t|
     t.string :name
   end
@@ -66,7 +66,6 @@ class PublishableTestCase < ActiveSupport::TestCase
     assert @object.save
     assert !@object.published?
   end
-
   def test_publish_on_save
     @object.publish_on_save = true
     assert @object.save!

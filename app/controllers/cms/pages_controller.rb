@@ -3,10 +3,10 @@ module Cms
 
     helper Cms::RenderingHelper
 
-    before_filter :load_section, :only => [:new, :create]
-    before_filter :load_page, :only => [:versions, :version, :revert_to, :destroy]
-    before_filter :load_draft_page, :only => [:edit, :update]
-    before_filter :hide_toolbar, :only => [:new, :create]
+    before_action :load_section, :only => [:new, :create]
+    before_action :load_page, :only => [:versions, :version, :revert_to, :destroy]
+    before_action :load_draft_page, :only => [:edit, :update]
+    before_action :hide_toolbar, :only => [:new, :create]
     before_action :strip_visibility_params, :only => [:create, :update]
 
     include Cms::PublishWorkflow

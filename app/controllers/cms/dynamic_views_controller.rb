@@ -4,7 +4,7 @@ module Cms
     include Cms::AdminTab
     check_permissions :administrate
 
-    before_filter :load_view, :only => [:show, :edit, :update, :destroy]
+    before_action :load_view, :only => [:show, :edit, :update, :destroy]
 
     helper_method :dynamic_view_type
 

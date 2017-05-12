@@ -77,7 +77,7 @@ module Cms
         def requires_permission_for_section(path, options={})
           logger.warn "Setting path #{path}"
           @section_path = path
-          before_filter :check_access_to_section, options
+          before_action :check_access_to_section, options
         end
 
         def in_section

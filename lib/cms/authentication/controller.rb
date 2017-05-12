@@ -42,7 +42,7 @@ module Cms
         # end
         def check_permissions(*perms)
           opts = Hash === perms.last ? perms.pop : {}
-          before_filter(opts) do |controller|
+          before_action(opts) do |controller|
             raise Cms::Errors::AccessDenied unless controller.send(:current_user).able_to?(*perms)
           end
         end

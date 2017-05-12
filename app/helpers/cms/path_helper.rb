@@ -34,7 +34,7 @@ module Cms
       filtered_params.delete(:action)
       filtered_params.delete(:controller)
       filtered_params.merge!(:order => determine_order(filtered_params[:order], column_to_sort))
-      polymorphic_path(engine_aware_path(content_type.model_class), filtered_params)
+      polymorphic_path(engine_aware_path(content_type.model_class), filtered_params.to_unsafe_h)
     end
 
     def link_to_usages(block)

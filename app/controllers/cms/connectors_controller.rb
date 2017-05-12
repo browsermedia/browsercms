@@ -1,7 +1,7 @@
 module Cms
 class ConnectorsController < Cms::BaseController
-  
-  before_filter :load_page, :only => [:new, :create]
+
+  before_action :load_page, :only => [:new, :create]
   
   def new    
     @block_type = ContentType.find_by_key(params[:block_type] || session[:last_block_type] || 'html_block')

@@ -1,7 +1,7 @@
 class Cms::FormsController < Cms::ContentBlockController
 
-  before_filter :associate_form_fields, only: [:create, :update]
-  before_filter :strip_new_entry_params, only: [:create, :update]
+  before_action :associate_form_fields, only: [:create, :update]
+  before_action :strip_new_entry_params, only: [:create, :update]
 
   helper do
     # For new forms, if the user doesn't complete and save them, we need to delete them from the database.

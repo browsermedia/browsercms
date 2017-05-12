@@ -1,9 +1,9 @@
 module Cms
   class BaseController < Cms::ApplicationController
 
-    before_filter :redirect_to_cms_site
+    before_action :redirect_to_cms_site
     before_action :authenticate_cms_user!
-    before_filter :cms_access_required
+    before_action :cms_access_required
 
     layout 'cms/application'
 

@@ -1,8 +1,8 @@
 module Cms
   class SectionsController < Cms::BaseController
 
-    before_filter :load_parent, :only => [:new, :create]
-    before_filter :load_section, :only => [:edit, :update, :destroy, :move]
+    before_action :load_parent, :only => [:new, :create]
+    before_action :load_section, :only => [:edit, :update, :destroy, :move]
 
     helper_method :public_groups
     helper_method :cms_groups

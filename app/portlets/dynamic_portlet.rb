@@ -4,4 +4,8 @@ class DynamicPortlet < Cms::Portlet
     eval(@portlet.code) unless @portlet.code.blank?
   end
 
+  def attributes=(new_attributes, guard_protected_attributes = true)
+    self.assign_attributes(new_attributes)
+  end
+
 end

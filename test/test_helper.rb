@@ -13,7 +13,7 @@ require 'action_view/test_case'
 
 # Allows Generators to be unit tested
 require "rails/generators/test_case"
-
+$arel_silence_type_casting_deprecation=true
 require 'mock_file'
 require 'support/factory_helpers'
 require 'support/database_helpers'
@@ -28,7 +28,7 @@ require 'factories/attachable_factories'
 
 require 'support/engine_controller_hacks'
 
-
+$arel_silence_type_casting_deprecation = true
 
 class ActiveSupport::TestCase
 
@@ -181,7 +181,7 @@ module Cms::ControllerTestHelper
 end
 
 class ActionController::TestCase
-  include Devise::TestHelpers
+  include Devise::Test::ControllerHelpers
 end
 
 module Cms::IntegrationTestHelper

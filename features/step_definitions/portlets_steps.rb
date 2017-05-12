@@ -108,13 +108,13 @@ Given /^there is a portlet that finds content by parameter$/ do
   @find_content_portlet = FindCategoryPortlet.create(name: 'Find Content')
   @expected_page.add_content(@find_content_portlet)
   @expected_page.publish!
-  @content = create(:category, name: 'I worked')
+  @category_type = create(:category_type, name: "mytype")
+  @content = create(:category, name: 'I worked', category_type_id: @category_type.id)
 end
 
 When /^I view that Find Content Portlet$/ do
   visit "#{@expected_page.path}?category_id=#{@content.id}"
 end
-
 Then /^I should see the content loaded by that Portlet$/ do
   should_be_successful
   should_see_a_page_titled @expected_page.name

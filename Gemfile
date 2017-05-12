@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-ruby '2.0.0'
+ruby '2.3.0'
 
 # Load this project as a gem.
 gemspec
@@ -25,16 +25,16 @@ end
 group :development do
   gem 'rake'
   # gem 'debugger'
-  gem 'quiet_assets'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'pry'
 end
 group :test, :development do
-  gem 'minitest', '~>5.3.3'
+  gem 'minitest'
   gem "test-unit", "~> 3.0"
-  gem 'minitest-rails', '~>2.0.0'
+  gem 'minitest-rails'
   gem 'minitest-reporters', '~>1.0.0'
+  gem 'rails-controller-testing'
 end
 
 group :test do

@@ -1,8 +1,8 @@
 module Cms
 class PageRouteOptionsController < Cms::BaseController
 
-  before_filter :load_page_route
-  before_filter :load_model, :only => [:edit, :update, :destroy]
+  before_action :load_page_route
+  before_action :load_model, :only => [:edit, :update, :destroy]
   
   def new
     @model = resource.new

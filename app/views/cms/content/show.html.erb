@@ -3,11 +3,11 @@
     <%# JQuery is required both for page_editor and cms/user. But it needs to be included only once.  %>
     <%= javascript_include_tag 'jquery' %>
     <% if @show_toolbar %>
-        <%= javascript_include_tag 'cms/page_editor' %>
-        <%= stylesheet_link_tag 'cms/page_content_editing' %>
+        <%= javascript_include_tag '/assets/cms/page_editor' %>
+        <%= stylesheet_link_tag '/assets/cms/page_content_editing' %>
         <%= csrf_meta_tags %>
     <% end %>
-    <%= javascript_include_tag 'cms/site' %>
+    <%= javascript_include_tag '/assets/cms/site' %>
 <% end %>
 <% if @show_toolbar %>
     <% flash.keep %>

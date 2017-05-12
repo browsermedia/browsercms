@@ -32,9 +32,8 @@ module Cms
           modules[content_type.module_name] = [] unless modules[content_type.module_name]
           modules[content_type.module_name] << content_type
         end
-        modules
+        modules.compact
       end
-
       # Returns a list of all ContentTypes in the system. Content Types can opt out of this list by specifying:
       #
       #   class MyWidget < ActiveRecord::Base
@@ -50,11 +49,12 @@ module Cms
         end
         subclasses << Cms::Portlet
         subclasses.uniq! { |k| k.name } # filter duplicate classes
-        subclasses.map do |klass|
+        z=subclasses.map do |klass|
           unless klass < Cms::Portlet
             Cms::ContentType.new(name: klass.name)
           end
-        end.compact.sort { |a, b| a.name <=> b.name }
+        end.compact.sort { |a, b| a.name.to_s <=> b.name.to_s }
+        z.map{|y| y if y.name != nil }.compact
       end
 
       def list
@@ -75,12 +75,12 @@ module Cms
 
       # Returns only user generated Content Blocks
       def user_generated_connectables()
-        available.select { |content_type| !content_type.name.starts_with?("Cms::") }
+        available.select { |content_type| !content_type&.name&.starts_with?("Cms::") }
       end
 
       # Return content types that can be accessed as pages.
       def addressable()
-        available.select { |content_type| content_type.model_class.addressable? }
+        available.select { |content_type| content_type.model_class.try(:addressable?) }
       end
     end
 
@@ -127,7 +127,7 @@ module Cms
     # configured to specify this.
     # @return [Symbol]
     def module_name
-      model_class.content_module
+      model_class&.content_module
     end
 
     # Returns the partial used to render the form fields for a given block.
@@ -144,12 +144,12 @@ module Cms
     end
 
     def model_class
-      name.constantize
+      name.try(:constantize)
     end
 
     # Determines if the content can be connected to other pages.
     def connectable?
-      model_class.connectable?
+      model_class.try(:connectable?)
     end
 
     # Cms::HtmlBlock -> html_block
