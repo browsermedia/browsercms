@@ -168,7 +168,7 @@ module Cms
     # methods for loading one or a collection of blocks
 
     def load_blocks
-      @search_filter = SearchFilter.build(params[:search_filter], model_class)
+      @search_filter = SearchFilter.build(search_params, model_class)
 
       options = {}
 
@@ -187,6 +187,10 @@ module Cms
       @blocks = scope.paginate(options)
       check_permissions
 
+    end
+
+    def search_params
+      params[:search_filter].permit(:term)
     end
 
     def load_block

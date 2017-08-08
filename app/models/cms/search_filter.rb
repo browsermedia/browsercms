@@ -4,7 +4,6 @@ module Cms
     include ::ActiveModel::Model
 
     attr_accessor :model_class, :term
-
     def self.build(params_hash, model_class)
       model = self.new(params_hash)
       model.model_class = model_class

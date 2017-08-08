@@ -55,7 +55,7 @@ module Cms
       
       # Allows us to use the content_block/index view
       @content_type = FauxContentType.new(@form)
-      @search_filter = SearchFilter.build(params[:search_filter], Cms::FormEntry)
+      @search_filter = SearchFilter.build(search_params, Cms::FormEntry)
         
       @blocks = Cms::FormEntry.where(form_id: params[:id]).search(@search_filter.term).paginate({page: params[:page], order: params[:order]})
       @entry = Cms::FormEntry.for(@form)
@@ -99,6 +99,10 @@ module Cms
     end
 
     protected
+
+    def search_params
+      params[:search_filter].permit(:term)
+    end
 
     def find_form_and_populate_entry
       @form = Cms::Form.find(params[:form_id])
