@@ -1,5 +1,5 @@
 <div id="file_block_<%= @content_block.id %>" class="file_block">
-  <%= image_tag "cms/icons/file_types/#{@content_block.file.icon}.png", :alt=>@content_block.file.icon %>
+  <%= image_tag "cms/icons/file_types/#{@content_block.file.icon}.png", :style => "width:18px;height:18px;", :alt=>@content_block.file.icon %>
   <%= link_to @content_block.name, attachment_path_for(@content_block.file) %>
   <%= @content_block.file_size %>
 </div>

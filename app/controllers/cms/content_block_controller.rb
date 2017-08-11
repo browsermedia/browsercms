@@ -190,7 +190,7 @@ module Cms
     end
 
     def search_params
-      params[:search_filter].permit(:term)
+      params[:search_filter].permit(:term) if params[:search_filter].present?
     end
 
     def load_block

@@ -6,7 +6,7 @@
   <% if attachment.is_image? %>
       <td><%= link_to(image_tag(attachment_path_for(attachment), :size => '60x60', :data => {:purpose => 'attachment'}), attachment_path_for(attachment), target: "_blank") %></td>
   <% else %>
-      <td><%= image_tag "cms/icons/file_types/#{attachment.icon}.png" %>
+      <td><%= image_tag "cms/icons/file_types/#{attachment.icon}.png", :style => "width:18px;height:18px;" %>
   <% end %>
   <td><%= attachment.attachment_name.singularize.capitalize %></td>
   <td><%= number_to_human_size(attachment.size) %></td>
