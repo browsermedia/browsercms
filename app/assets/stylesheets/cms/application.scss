@@ -32,6 +32,12 @@ $experimental-support-for-khtml: false;
 @import 'cms/styles/_glyph';
 
 
+/* IMPORTS JQUERY-UI CSS FROM GEM */
+@import "/assets/jquery.ui.core.css";
+@import "/assets/jquery.ui.datepicker.css";
+@import "/assets/jquery.ui.theme.css";
+
+
 
 
 /* PAGE STYLE & LAYOUT IMPORTS */
