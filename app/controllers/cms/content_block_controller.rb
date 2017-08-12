@@ -166,7 +166,6 @@ module Cms
     end
 
     # methods for loading one or a collection of blocks
-
     def load_blocks
       @search_filter = SearchFilter.build(search_params, model_class)
 
@@ -184,7 +183,7 @@ module Cms
         scope = scope.with_parent_id(params[:section_id])
       end
       @total_number_of_items = scope.count
-      @blocks = scope.paginate(options)
+      @blocks = scope.paginate(:page=>options[:page]).order(options[:order])
       check_permissions
 
     end
