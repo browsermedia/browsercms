@@ -11,10 +11,14 @@ CKEDITOR.plugins.add('edit_content', {
         editor.addCommand('editContent', {
             exec:function (editor) {
                 var goto_edit = function(){
+                  jQuery(function ($) { 
                     window.parent.location = $.cms_editor.selectedConnector().data('edit-path');
+                  });
                 };
                 if (editor.checkDirty()) {
+                  jQuery(function ($) { 
                     $.cms_editor.saveChanges(editor, goto_edit);
+                  });
                 } else {
                     goto_edit.apply();
                 }
