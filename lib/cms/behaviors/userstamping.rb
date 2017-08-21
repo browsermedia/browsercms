@@ -13,8 +13,8 @@ module Cms
           extend ClassMethods
           include InstanceMethods
         
-          belongs_to :created_by, :class_name => "Cms::User"
-          belongs_to :updated_by, :class_name => "Cms::User"
+          belongs_to :created_by, :class_name => "Cms::PersistentUser"
+          belongs_to :updated_by, :class_name => "Cms::PersistentUser"
         
           before_save :set_userstamps
         

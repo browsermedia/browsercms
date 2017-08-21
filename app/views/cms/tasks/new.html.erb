@@ -10,7 +10,7 @@
     <%= render layout: 'form_with_buttons', locals: {f: f} do %>
         <%= f.association :assigned_to,
                           label: "Assign To",
-                          collection: Cms::User.active.able_to_edit_or_publish_content.order("first_name, last_name, login"),
+                          collection: Cms::PersistentUser.active.able_to_edit_or_publish_content.order("first_name, last_name, login"),
                           include_blank: false,
                           label_method: :full_name_with_login
         %>
