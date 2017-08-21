@@ -40,7 +40,7 @@ module Cms::RouteExtensions
 
     # Add User management features
     devise_for :cms_user,
-               class_name: 'Cms::User',
+               class_name: 'Cms::PersistentUser',
                path: '',
                skip: :password,
                path_names: {sign_in: 'login'},
