@@ -73,12 +73,22 @@ module Cms
       define_method status do
         if params[:page_ids]
           @pages = params[:page_ids].map { |id| Page.find(id) }
-          raise Cms::Errors::AccessDenied unless @pages.all? { |page| current_user.able_to_edit?(page) }
+          if status == :publish
+            raise Cms::Errors::AccessDenied unless @pages.all? { |page| current_user.able_to_publish?(page) }
+          else
+            raise Cms::Errors::AccessDenied unless @pages.all? { |page| current_user.able_to_edit?(page) }
+          end
           @pages.each { |page| page.send(status) }
           flash[:notice] = "#{params[:page_ids].size} pages #{verb}"
           redirect_to dashboard_url
         else
           load_page
+          if status == :publish
+            raise Cms::Errors::AccessDenied unless current_user.able_to_publish?(@page)
+          else
+            raise Cms::Errors::AccessDenied unless current_user.able_to_edit?(@page)
+          end
+          
           if @page.send(status)
             flash[:notice] = "Page '#{@page.name}' was #{verb}"
           end
