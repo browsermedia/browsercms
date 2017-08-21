@@ -6,6 +6,7 @@ module Cms
       @unpublished_pages = @unpublished_pages.select { |page| current_user.able_to_publish?(page) }
       @incomplete_tasks = current_user.tasks.incomplete.
           includes(:page).
+          where(Page.table_name => {:deleted => false}).
           order("#{Task.table_name}.due_date desc, #{Page.table_name}.name").
           references(:page)
     end
