@@ -296,7 +296,7 @@ GEM
     thread_safe (0.3.6)
     tilt (2.0.7)
     tins (1.13.2)
-    tzinfo (1.2.3)
+    tzinfo (1.2.10)
       thread_safe (~> 0.1)
     uglifier (3.1.9)
       execjs (>= 0.3.0, < 3)
